@@ -1,0 +1,30 @@
+{
+  "name": "@oe/builder",
+  "version": "0.3.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.tsx"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf .turbo && rm -rf node_modules"
+  },
+  "peerDependencies": {
+    "@oe/ui": "workspace:*",
+    "next": "15.0.4-canary.12",
+    "react": "19.0.0-rc-b01722d5-20241114",
+    "react-dom": "19.0.0-rc-b01722d5-20241114"
+  },
+  "dependencies": {
+    "grapesjs": "^0.22.3",
+    "grapesjs-blocks-basic": "^1.0.2",
+    "grapesjs-tailwind": "^1.0.11"
+  },
+  "devDependencies": {
+    "@oe/config": "workspace:*",
+    "@oe/types": "workspace:*",
+    "@types/node": "^22.9.0",
+    "@types/react": "npm:types-react@rc",
+    "@types/react-dom": "npm:types-react-dom@rc"
+  }
+}

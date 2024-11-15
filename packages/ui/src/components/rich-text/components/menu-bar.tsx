@@ -1,0 +1,54 @@
+'use client';
+import type { Editor } from '@tiptap/core';
+import type React from 'react';
+import { cn } from '#utils/cn';
+import type { MenuItem } from './menu-items';
+import { useSharedMenu } from './useSharedMenu';
+
+const defaultMenuItems: MenuItem[] = [
+  'bold',
+  'italic',
+  'strikethrough',
+  'underline',
+  'codeBlock',
+  'quote',
+  'alignLeft',
+  'alignCenter',
+  'alignRight',
+  'alignJustify',
+  'list',
+  'listOrdered',
+  'taskList',
+  'textColor',
+  'highlight',
+  'imagePopover',
+  'videoPopover',
+  'table',
+  'linkPopover',
+  'heading',
+  'fontFamily',
+  'fontSize',
+  'undo',
+  'redo',
+  'aiGenerate',
+];
+
+export const MenuBar: React.FC<{
+  editor: Editor | null;
+  menuItems?: MenuItem[];
+  className?: string;
+  aiParams?: Record<string, string>;
+  onAIApply?: () => void;
+}> = ({ editor, className, aiParams, onAIApply, menuItems = [] }) => {
+  const { renderMenuItems } = useSharedMenu({ editor, menuItems, defaultMenuItems });
+
+  if (!(editor && renderMenuItems)) {
+    return null;
+  }
+
+  return (
+    <div className={cn('flex flex-wrap gap-2 border-b bg-background p-2', className)}>
+      {renderMenuItems(aiParams, onAIApply)}
+    </div>
+  );
+};

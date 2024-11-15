@@ -1,0 +1,6 @@
+export const systemConfigKeys = {
+  builderData: 'builder_data',
+  buiderTranslations: 'builder_translations',
+  i18nConfig: 'i18n_config',
+  i18nTranslations: 'i18n_translations',
+} as const;

@@ -1,0 +1,7 @@
+{
+  "extends": "@oe/config/tsconfig/react.json",
+  "compilerOptions": {
+    "types": ["node", "@oe/types/global.d.ts"]
+  },
+  "include": ["src/**/*.tsx"]
+}

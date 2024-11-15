@@ -1,0 +1,40 @@
+{
+  "name": "@oe/core",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "imports": {
+    "#utils/*": "./src/utils/*.ts",
+    "#types/*": "./src/types/*.ts",
+    "#store/*": "./src/store/*.ts",
+    "#hooks/*": "./src/hooks/*.ts"
+  },
+  "exports": {
+    "./utils/*": "./src/utils/*.ts",
+    "./types/*": "./src/types/*.ts",
+    "./store/*": "./src/store/*.ts",
+    "./hooks/*": "./src/hooks/*.ts",
+    "./package.json": "./package.json",
+    "./global.css": "./src/global.css"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "peerDependencies": {
+    "@oe/i18n": "workspace:*",
+    "next": "15.0.4-canary.12",
+    "next-intl": "3.25.1",
+    "react": "19.0.0-rc-b01722d5-20241114",
+    "zustand": "^5.0.1"
+  },
+  "dependencies": {
+    "cookies-next": "^5.0.2"
+  },
+  "devDependencies": {
+    "@oe/config": "workspace:*",
+    "@oe/types": "workspace:*",
+    "@types/node": "^22.9.0",
+    "@types/wicg-file-system-access": "^2023.10.5"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "oe",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "dev:builder": "turbo run dev:builder",
+    "start": "turbo run start",
+    "typecheck": "turbo run typecheck",
+    "lint": "biome check .",
+    "lint:fix": "biome check . --write",
+    "deps": "sherif",
+    "deps:fix": "sherif --fix --no-install",
+    "ui": "pnpm run --filter @oe/ui ui",
+    "clean": "turbo run clean && rm -rf .turbo && rm -rf node_modules && rm pnpm-lock.yaml"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@commitlint/config-conventional": "^19.5.0",
+    "lefthook": "^1.8.2",
+    "sherif": "^1.0.1",
+    "turbo": "^2.3.0",
+    "typescript": "^5.6.3"
+  },
+  "packageManager": "pnpm@9.13.2",
+  "engines": {
+    "node": ">=20"
+  }
+}

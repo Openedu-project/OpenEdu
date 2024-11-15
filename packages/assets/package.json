@@ -1,0 +1,22 @@
+{
+  "name": "@oe/assets",
+  "private": true,
+  "version": "0.3.0",
+  "description": "",
+  "exports": {
+    "./images/*": "./src/images/*",
+    "./icons/*": "./src/icons/*.tsx",
+    "./icons/svg/*": "./src/icons/svg/*.svg",
+    "./package.json": "./package.json"
+  },
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "devDependencies": {
+    "@oe/config": "workspace:*",
+    "@oe/types": "workspace:*",
+    "@types/node": "^22.9.0"
+  }
+}

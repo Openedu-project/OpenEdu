@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig/base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "types": ["node", "@oe/types/global.d.ts"],
+    "skipLibCheck": true
+  },
+  "include": ["./tailwindcss/tailwind.config.ts", "./next/index.ts"],
+  "exclude": ["node_modules"]
+}

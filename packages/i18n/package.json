@@ -1,0 +1,25 @@
+{
+  "name": "@oe/i18n",
+  "private": true,
+  "version": "0.3.0",
+  "description": "",
+  "exports": {
+    "./*": "./src/*.ts",
+    "./messages": "./src/messages/index.ts",
+    "./package.json": "./package.json"
+  },
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "peerDependencies": {
+    "@oe/api": "workspace:*",
+    "next": "15.0.4-canary.12",
+    "next-intl": "3.25.1"
+  },
+  "devDependencies": {
+    "@oe/config": "workspace:*",
+    "@oe/types": "workspace:*"
+  }
+}

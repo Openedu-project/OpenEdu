@@ -1,0 +1,104 @@
+import { Check, ChevronsUpDown } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useCallback, useEffect, useState } from 'react';
+import { Button } from '#shadcn/button';
+import { CommandItem } from '#shadcn/command';
+import { Popover, PopoverContent, PopoverTrigger } from '#shadcn/popover';
+import { cn } from '#utils/cn';
+import { DEFAULT_HEIGHT, DEFAULT_WIDTH, ITEM_HEIGHT } from './constants';
+import type { BaseAutocompleteProps, OptionType } from './types';
+import { useOptionFiltering } from './use-option-filtering';
+import { VirtualizedCommandBase } from './virtualized-command-base';
+
+export type AutocompleteProps<T extends OptionType | string> = BaseAutocompleteProps<T> & {
+  searchPlaceholder?: string;
+  showSearch?: boolean;
+  value?: T | null;
+  onChange?: (option: T | null) => void;
+};
+
+export function Autocomplete<T extends OptionType | string>({
+  options,
+  searchPlaceholder,
+  width = DEFAULT_WIDTH,
+  height = DEFAULT_HEIGHT,
+  showSearch,
+  value,
+  onChange,
+  getOptionLabel = (option: T) => (typeof option === 'string' ? option : option.label),
+  getOptionValue = (option: T) => (typeof option === 'string' ? option : option.value),
+  filterOption = (option: T, searchValue: string) =>
+    getOptionLabel(option).toLowerCase().includes(searchValue.toLowerCase()),
+  renderOption,
+}: AutocompleteProps<T>) {
+  const t = useTranslations('general');
+  const [open, setOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<T | null>(null);
+  const [searchValue, setSearchValue] = useState('');
+
+  const { filteredOptions } = useOptionFiltering({
+    options,
+    searchValue,
+    filterOption,
+    getOptionValue,
+  });
+
+  useEffect(() => {
+    setSelectedOption(value || null);
+  }, [value]);
+
+  const handleSelectOption = useCallback(
+    (option: T) => {
+      const newValue = selectedOption && getOptionValue(selectedOption) === getOptionValue(option) ? null : option;
+      setSelectedOption(newValue);
+      setSearchValue('');
+      setOpen(false);
+      onChange?.(newValue);
+    },
+    [selectedOption, getOptionValue, onChange]
+  );
+
+  const renderCommandItem = useCallback(
+    (option: T) => (
+      <CommandItem
+        key={getOptionValue(option)}
+        value={String(getOptionValue(option))}
+        onSelect={() => handleSelectOption(option)}
+        style={{
+          height: `${ITEM_HEIGHT}px`,
+        }}
+      >
+        <Check
+          className={cn(
+            'mr-2 h-4 w-4',
+            selectedOption && getOptionValue(selectedOption) === getOptionValue(option) ? 'opacity-100' : 'opacity-0'
+          )}
+        />
+        {renderOption ? renderOption(option) : getOptionLabel(option)}
+      </CommandItem>
+    ),
+    [selectedOption, getOptionValue, getOptionLabel, handleSelectOption, renderOption]
+  );
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button variant="outline" aria-expanded={open} className="justify-between" style={{ width }}>
+          {selectedOption ? getOptionLabel(selectedOption) : (searchPlaceholder ?? `${t('search')}...`)}
+          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="max-h-[--radix-popover-content-available-height] w-[--radix-popover-trigger-width] p-0">
+        <VirtualizedCommandBase
+          height={height}
+          options={filteredOptions}
+          showSearch={showSearch}
+          searchValue={searchValue}
+          placeholder={searchPlaceholder}
+          onSearch={setSearchValue}
+          renderItem={renderCommandItem}
+        />
+      </PopoverContent>
+    </Popover>
+  );
+}

@@ -1,0 +1,22 @@
+export const languagesMessages = {
+  languages: {
+    search: 'Search language...',
+    languages: 'Languages',
+    language: 'Language',
+    translations: 'Translations',
+    translation: 'Translation',
+    settings: 'Settings',
+    defaultLanguage: 'Default language',
+    selectDefaultLanguage: 'Select default language',
+    languageCode: 'Language code',
+    translated: 'Translated',
+    untranslated: 'Untranslated',
+    selectLanguages: 'Select languages',
+    saveSuccess: 'Save languages config success.',
+    saveError: 'Save languages config error.',
+    status: 'Status',
+    key: 'Key',
+    value: 'Value',
+    english: 'English',
+  },
+};
