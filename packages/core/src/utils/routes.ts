@@ -11,12 +11,15 @@ export const PLATFORM_ROUTES = {
   notFound: '/not-found',
   terms: '/terms',
   specificTerms: '/terms/:terms',
-};
+} as const;
 
 export const AUTH_ROUTES = {
   login: '/login',
   signUp: '/signup',
-};
+  forgotPasswordSuccess: '/forgot-password-success',
+  setPassword: '/set-password',
+  socialLogin: '/social-login',
+} as const;
 
 export const ADMIN_ROUTES = {
   dashboard: '/admin',
@@ -25,7 +28,11 @@ export const ADMIN_ROUTES = {
   generalSettings: '/admin/site-settings/general',
   languageSettings: '/admin/site-settings/languages',
   pagesSettings: '/admin/site-settings/pages',
-};
+} as const;
+
+export const CREATOR_ROUTES = {
+  dashboard: '/creator',
+} as const;
 
 export const PROTECTED_ROUTES = {
   admin: '/admin',
@@ -33,7 +40,7 @@ export const PROTECTED_ROUTES = {
   learner: '/learner',
   blog: '/blog/admin',
   affiliate: '/affiliate',
-};
+} as const;
 
 export const ZONE_ROUTES = {
   platform: '/',

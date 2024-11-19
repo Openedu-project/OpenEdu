@@ -1,4 +1,6 @@
+import type { ICreatorAcceptResponse } from './creators';
 import type { IFileResponse } from './file';
+import type { IDataPagination } from './pagination';
 
 export interface IUserSettingsOption {
   facebook?: string;
@@ -61,6 +63,7 @@ export interface IUser {
   update_at?: number;
   username: string;
 }
+export interface IUsersRes extends IDataPagination<IUser[]> {}
 
 interface IWriterInOrg {
   id: string;
@@ -81,4 +84,54 @@ export interface IUserProfile extends IUser {
   total_blogs: number;
   writer_in_orgs?: IWriterInOrg[];
   is_following?: boolean;
+}
+
+export interface IListUserProfileRes extends IDataPagination<IUserProfile[]> {}
+
+export interface IUserInvite {
+  user_emails: string[];
+  event: string;
+  object_type?: string;
+  object_id?: string;
+}
+
+export interface IUserInvitePayload extends IUserInvite {}
+
+interface IUserRoleParams {
+  role_id: string[];
+  user_id: string;
+}
+
+export interface IUserRoleAction {
+  add_ids?: IUserRoleParams[];
+  remove_ids?: IUserRoleParams[];
+}
+
+export interface IAcceptUserInvitePayload {
+  token: string;
+}
+
+export interface IAcceptUserInviteRes extends ICreatorAcceptResponse {}
+
+export interface IUserInvitationItem {
+  id: string;
+  create_at: number;
+  update_at: number;
+  delete_at: number;
+  user: null;
+  user_id: null;
+  org_id: string;
+  email: string;
+  token: string;
+  event: string;
+  is_expired: boolean;
+  is_verified: boolean;
+  send_email: number;
+  redirect_url: string;
+}
+
+export interface IUserInvitationRes extends IDataPagination<IUserInvitationItem[]> {}
+
+export interface IUserInvitationPayload {
+  user_token_ids: string[];
 }

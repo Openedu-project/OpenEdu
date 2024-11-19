@@ -4,6 +4,8 @@ import { loginService } from '#services/auth';
 import { fromErrorToFormState } from '#utils/form';
 
 import { setCookie } from '@oe/core/utils/cookie';
+import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { redirect } from 'next/navigation';
 import type { FormActionState } from '#utils/form';
 
 export async function loginAction(_: FormActionState, formData: FormData): Promise<FormActionState> {
@@ -40,6 +42,6 @@ export async function logoutAction() {
     setCookie(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, '', { maxAge: 0 }),
     setCookie(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, '', { maxAge: 0 }),
   ]);
-
+  redirect(PLATFORM_ROUTES.homepage);
   // revalidatePath(pathname);
 }
