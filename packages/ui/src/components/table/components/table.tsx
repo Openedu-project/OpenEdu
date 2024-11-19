@@ -133,7 +133,7 @@ export default function Table<TData>({
   const { rows } = table.getRowModel();
 
   return (
-    <div className="space-y-4">
+    <div className="flex h-full flex-col space-y-4">
       <TableFilterSearch
         filterOptions={filterOptions}
         setGlobalFilter={setGlobalFilter}

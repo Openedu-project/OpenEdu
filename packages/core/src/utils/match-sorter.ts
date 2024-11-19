@@ -53,7 +53,7 @@ export type Ranking = (typeof rankings)[keyof typeof rankings];
  */
 export function rankItem<TItem>(item: TItem, value: string, initialOptions?: RankItemOptions<TItem>): RankingInfo {
   const options = initialOptions || {};
-  const threshold = options.threshold ?? rankings.MATCHES;
+  const threshold = options.threshold ?? rankings.CONTAINS;
 
   if (!options.accessors) {
     // if keys is not specified, then we assume the item given is ready to be matched

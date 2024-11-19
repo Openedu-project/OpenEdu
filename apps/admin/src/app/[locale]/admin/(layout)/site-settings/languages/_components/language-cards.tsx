@@ -22,25 +22,29 @@ export function LanguageCards() {
               )}
             </CardTitle>
             <CardDescription>
-              {tLanguages('languageCode')}: {stats.language}
+              {tLanguages('languageCode')}: {stats.locale}
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="flex gap-4">
-              <Link
-                href={`/admin/site-settings/languages/translations?lang=${stats.language}&status=translated`}
-                className="flex flex-col items-center"
-              >
-                <span className="font-bold text-2xl text-primary">{stats.translated}</span>
+            <div className="flex justify-between gap-4">
+              <div className="flex flex-col items-center">
+                <Link
+                  href={`/admin/site-settings/languages/translations?lang=${stats.language}&status=translated`}
+                  className="font-bold text-2xl text-primary"
+                >
+                  {stats.translated}
+                </Link>
                 <span className="text-muted-foreground text-sm">{tLanguages('translated')}</span>
-              </Link>
-              <Link
-                href={`/admin/site-settings/languages/translations?lang=${stats.language}&status=untranslated`}
-                className="flex flex-col items-center"
-              >
-                <span className="font-bold text-2xl text-destructive">{stats.untranslated}</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <Link
+                  href={`/admin/site-settings/languages/translations?lang=${stats.language}&status=untranslated`}
+                  className="font-bold text-2xl text-destructive"
+                >
+                  {stats.untranslated}
+                </Link>
                 <span className="text-muted-foreground text-sm">{tLanguages('untranslated')}</span>
-              </Link>
+              </div>
             </div>
           </CardContent>
         </Card>

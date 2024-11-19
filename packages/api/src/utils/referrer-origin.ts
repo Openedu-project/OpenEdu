@@ -16,15 +16,26 @@ export function getReferrerAndOriginForAPIByUserUrl(userUrl: string) {
   return { referrer, origin, host };
 }
 
+export async function getAPIReferrerAndOriginServer() {
+  const { cookies } = await import('next/headers');
+  const cookiesList = await cookies();
+
+  const origin = cookiesList.get(process.env.NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY)?.value;
+  const referrer = cookiesList.get(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)?.value;
+
+  return { origin, referrer, host: origin ? new URL(origin).host : '' };
+}
+
+export function getAPIReferrerAndOriginClient() {
+  if (typeof window === 'undefined') {
+    return { origin: '', referrer: '', host: '' };
+  }
+  return getReferrerAndOriginForAPIByUserUrl(window.location.href);
+}
+
 export async function getAPIReferrerAndOrigin() {
   if (typeof window === 'undefined') {
-    const { cookies } = await import('next/headers');
-    const cookiesList = await cookies();
-
-    const origin = cookiesList.get(process.env.NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY)?.value;
-    const referrer = cookiesList.get(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)?.value;
-
-    return { origin, referrer, host: origin ? new URL(origin).host : '' };
+    return await getAPIReferrerAndOriginServer();
   }
   return getReferrerAndOriginForAPIByUserUrl(window.location.href);
 }

@@ -14,6 +14,8 @@ export const languagesMessages = {
     selectLanguages: 'Select languages',
     saveSuccess: 'Save languages config success.',
     saveError: 'Save languages config error.',
+    saveTranslationsSuccess: 'Save translations success.',
+    saveTranslationsError: 'Save translations error.',
     status: 'Status',
     key: 'Key',
     value: 'Value',

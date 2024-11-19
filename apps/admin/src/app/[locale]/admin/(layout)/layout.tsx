@@ -12,6 +12,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           label: 'Dashboard',
           icon: <House className="h-5 w-5" />,
           href: ADMIN_ROUTES.dashboard,
+          isRoot: true,
         },
         {
           id: 'users',

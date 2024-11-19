@@ -1,4 +1,6 @@
+import type { LanguageCode } from '@oe/i18n/languages';
 import type { systemConfigKeys } from '#utils/system-config';
+import type { IFileResponse } from './file';
 
 export type ISystemConfigKey = (typeof systemConfigKeys)[keyof typeof systemConfigKeys];
 
@@ -13,6 +15,8 @@ export interface ISystemConfigPayload<T> {
   org_id?: string;
   domain?: string;
   data_type?: 'jsonb' | 'json_array' | 'string';
+  locale?: LanguageCode;
+  is_storage_in_file?: boolean;
 }
 
 export interface ISystemConfigRes<T> {
@@ -24,4 +28,7 @@ export interface ISystemConfigRes<T> {
   value: T;
   org_id: string;
   data_type: string;
+  locale: LanguageCode;
+  domain: string;
+  files: IFileResponse[];
 }

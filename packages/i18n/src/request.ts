@@ -8,6 +8,8 @@ export default getRequestConfig(async ({ requestLocale }) => {
   const cookieStore = await cookies();
   let locale = await requestLocale;
 
+  console.log('--------------------------------', locale);
+
   locale = locale ?? cookieStore.get(process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY)?.value;
   const locales = cookieStore.get(process.env.NEXT_PUBLIC_COOKIE_LOCALES_KEY)?.value;
   if (!(locale && locales && JSON.parse(locales).includes(locale as LanguageCode))) {

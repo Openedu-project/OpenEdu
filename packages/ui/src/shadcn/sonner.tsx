@@ -23,6 +23,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
           info: 'group toast group-[.toaster]:!bg-info group-[.toaster]:!text-info-foreground',
         },
       }}
+      position="top-right"
       {...props}
     />
   );

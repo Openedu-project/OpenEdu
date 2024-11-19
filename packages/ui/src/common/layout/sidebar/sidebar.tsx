@@ -15,6 +15,7 @@ export interface SidebarItem {
   href?: string;
   items?: SidebarItem[];
   icon?: ReactNode;
+  isRoot?: boolean;
 }
 
 interface SidebarItemProps {
@@ -42,7 +43,11 @@ const SidebarItem: FC<SidebarItemProps> = ({ item, depth, maxDepth, pathname }) 
       return false;
     }
     return item.items?.some(
-      subItem => subItem.href === pathname || subItem.items?.some(grandChild => grandChild.href === pathname)
+      subItem =>
+        (subItem.isRoot ? subItem.href === pathname : pathname.includes(subItem.href as string)) ||
+        subItem.items?.some(grandChild =>
+          grandChild.isRoot ? grandChild.href === pathname : pathname.includes(grandChild.href as string)
+        )
     );
   }, [hasChildren, item.items, pathname]);
 

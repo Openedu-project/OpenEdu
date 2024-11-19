@@ -22,7 +22,7 @@ export function DashboardLayout({
             className="hidden md:block"
           />
         )}
-        <div className="scrollbar w-full overflow-y-auto p-4 pt-0">{children}</div>
+        <div className="scrollbar flex w-full flex-col overflow-y-auto p-4 pt-0">{children}</div>
       </main>
     </div>
   );

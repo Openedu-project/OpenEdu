@@ -1,6 +1,9 @@
+import type { IFileResponse } from '@oe/api/types/file';
+import type { LanguageStats } from '@oe/api/types/i18n';
 import { DEFAULT_LOCALE, DEFAULT_LOCALES } from '@oe/i18n/constants';
 import { type LanguageCode, languages } from '@oe/i18n/languages';
 import { messages } from '@oe/i18n/messages';
+import type { I18nMessage } from '@oe/i18n/types';
 import { create } from 'zustand';
 
 export type LanguageOption = {
@@ -25,28 +28,26 @@ export interface TranslationSubItem {
   translated: boolean;
 }
 
-export interface LanguageStats {
-  language: string;
-  locale: LanguageCode;
-  translated: number;
-  untranslated: number;
-  total: number;
-}
-
 interface LanguageState {
   id?: string;
-  locales: LanguageOption[];
-  locale: LanguageCode;
-  translations: TranslationItem[];
-  languageStats: LanguageStats[];
+  locales?: LanguageOption[];
+  locale?: LanguageCode;
+  translations?: TranslationItem[];
+  languageStats?: LanguageStats[];
+  translationFiles?: IFileResponse[];
 }
 
 interface LanguageActions {
   setSelectedLocales: (locales: LanguageOption[]) => void;
   setDefaultLocale: (locale: LanguageCode) => void;
   setId: (id?: string) => void;
-  reset: (data?: { locales?: LanguageOption[]; locale?: LanguageCode; id?: string }) => void;
-  updateTranslations: () => void;
+  init: (data?: {
+    locales?: LanguageOption[];
+    locale?: LanguageCode;
+    id?: string;
+    languageStats?: LanguageStats[];
+  }) => void;
+  updateTranslations: (translations?: Record<LanguageCode, I18nMessage>) => void;
   updateTableData: (rowIndex: number, columnId: string, value: string, isParent?: boolean) => void;
 }
 
@@ -89,41 +90,61 @@ export const updateTranslation = (
 };
 
 const convertMessagesToTableData = (
-  messages: Record<string, string | Record<string, unknown>>,
-  locales: LanguageCode[],
-  parentKey = ''
+  translations: Record<LanguageCode, I18nMessage>,
+  locales: LanguageCode[]
 ): TranslationItem[] => {
   const result: TranslationItem[] = [];
   const nonDefaultLocales = locales.filter(l => l !== DEFAULT_LOCALE);
+  const defaultMessages = translations[DEFAULT_LOCALE] || {};
 
-  const processEntry = (value: string | Record<string, unknown>, fullKey: string) => {
-    if (typeof value === 'object') {
-      for (const [k, v] of Object.entries(value)) {
-        processEntry(v as string | Record<string, unknown>, fullKey ? `${fullKey}.${k}` : k);
+  const processEntry = (
+    defaultValue: string | I18nMessage,
+    translations: Record<string, I18nMessage>,
+    fullKey: string
+  ) => {
+    if (typeof defaultValue === 'object') {
+      for (const [k, v] of Object.entries(defaultValue)) {
+        const translationValues = Object.fromEntries(
+          Object.entries(translations).map(([locale, msgs]) => [
+            locale,
+            typeof msgs === 'object' && msgs ? (msgs as Record<string, I18nMessage>)[k] : null,
+          ])
+        ) as Record<string, I18nMessage>;
+        processEntry(v as string | Record<string, I18nMessage>, translationValues, fullKey ? `${fullKey}.${k}` : k);
       }
       return;
     }
 
+    // Thêm vào kết quả
     result.push({
       id: fullKey,
       key: fullKey,
       locale: DEFAULT_LOCALE,
-      translation: String(value),
+      translation: String(defaultValue),
       translated: true,
-      subRows: nonDefaultLocales.map(locale => ({
-        id: `${fullKey}-${locale}`,
-        locale: locale,
-        language: languages[locale],
-        translation: null,
-        translated: false,
-      })),
+      subRows: nonDefaultLocales.map(locale => {
+        return {
+          id: `${fullKey}-${locale}`,
+          locale: locale,
+          language: languages[locale],
+          translation: translations[locale] ? String(translations[locale]) : null, // Sửa chỗ này
+          translated: Boolean(translations[locale]),
+        };
+      }),
     });
   };
 
-  for (const [key, value] of Object.entries(messages)) {
-    processEntry(value, parentKey ? `${parentKey}.${key}` : key);
-  }
+  const processMessages = (defaultMessages: I18nMessage) => {
+    for (const [key, value] of Object.entries(defaultMessages)) {
+      const translationValues = Object.fromEntries(
+        locales.map(locale => [locale, translations[locale]?.[key] || null])
+      );
 
+      processEntry(value, translationValues as Record<string, I18nMessage>, key);
+    }
+  };
+
+  processMessages(defaultMessages);
   return result;
 };
 
@@ -169,10 +190,10 @@ const defaultLocales = DEFAULT_LOCALES.map(locale => ({ value: locale, label: la
 
 export const useLanguageStore = create<LanguageState & LanguageActions>()((set, get) => ({
   id: undefined,
-  locales: defaultLocales,
+  locales: undefined,
   locale: DEFAULT_LOCALE,
-  translations: [],
-  languageStats: [],
+  translations: undefined,
+  languageStats: undefined,
 
   setSelectedLocales: locales => {
     set(state => ({
@@ -189,35 +210,58 @@ export const useLanguageStore = create<LanguageState & LanguageActions>()((set, 
 
   setId: id => set({ id }),
 
-  reset: data => {
+  init: data => {
     set({
       locales: data?.locales || defaultLocales,
       locale: data?.locale || DEFAULT_LOCALE,
       id: data?.id,
+      languageStats: data?.languageStats,
     });
     get().updateTranslations();
   },
 
   updateTableData: (rowIndex: number, columnId: string, value: string, isParent?: boolean) => {
     set(state => ({
-      translations: updateTranslation(state.translations, rowIndex, columnId, value, isParent),
+      translations: updateTranslation(state.translations ?? [], rowIndex, columnId, value, isParent),
     }));
     get().updateTranslations();
   },
 
-  updateTranslations: () => {
-    const localeList = get().locales.map(l => l.value);
+  updateTranslations: (translations?: Record<LanguageCode, I18nMessage>) => {
+    const localeList = get().locales?.map(l => l.value) ?? [];
     const currentTranslations = get().translations;
-    if (currentTranslations.length === 0) {
-      const translations = convertMessagesToTableData(messages, localeList);
-      set({
-        translations,
-        languageStats: calculateLanguageStats(translations, localeList),
-      });
-    } else {
-      set({
-        languageStats: calculateLanguageStats(currentTranslations, localeList),
-      });
+    const stats = get().languageStats;
+
+    let newTranslations = currentTranslations;
+
+    if (!newTranslations) {
+      newTranslations = convertMessagesToTableData(
+        { [DEFAULT_LOCALE]: messages } as Record<LanguageCode, I18nMessage>,
+        localeList
+      );
+    } else if (translations) {
+      newTranslations = convertMessagesToTableData(translations, localeList);
     }
+
+    // Merge translations cũ với mới
+    // const mergedTranslations = newTranslations.map(newItem => {
+    //   const existingItem = currentTranslations?.find(item => item.key === newItem.key);
+    //   if (!existingItem) {
+    //     return newItem;
+    //   }
+
+    //   return {
+    //     ...newItem,
+    //     subRows: newItem.subRows.map(newSubRow => {
+    //       const existingSubRow = existingItem.subRows.find(sub => sub.locale === newSubRow.locale);
+    //       return existingSubRow || newSubRow;
+    //     }),
+    //   };
+    // });
+
+    set({
+      translations: newTranslations,
+      languageStats: stats ?? calculateLanguageStats(newTranslations, localeList),
+    });
   },
 }));

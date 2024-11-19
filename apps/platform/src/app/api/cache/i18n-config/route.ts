@@ -5,19 +5,6 @@ import { systemConfigKeys } from '@oe/api/utils/system-config';
 import type { LanguageCode } from '@oe/i18n/languages';
 import { type NextRequest, NextResponse } from 'next/server';
 
-// export async function GET() {
-//   try {
-//     const i18nConfigResponse = await getSystemConfig<{ locales: LanguageCode[]; defaultLocale: LanguageCode }>(
-//       undefined,
-//       {
-//         key: systemConfigKeys.i18nConfig,
-//       }
-//     );
-//     return NextResponse.json(i18nConfigResponse?.value);
-//   } catch {
-//     return NextResponse.json({});
-//   }
-// }
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const referrer = url.searchParams.get('referrer') as string;

@@ -30,8 +30,8 @@ export interface CookieOptions {
   secure?: boolean | undefined;
 }
 
-// export const defaultExpiredTime = 7 * 86400; // 7 days for refresh token expired
-export const defaultExpiredTime = 40; // 40s
+export const defaultExpiredTime = 7 * 86400; // 7 days for refresh token expired
+// export const defaultExpiredTime = 40; // 40s
 export const cookieOptions = (options?: CookieOptions): CookieOptions => {
   return {
     secure: process.env.NODE_ENV !== 'development',

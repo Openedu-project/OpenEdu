@@ -1,5 +1,6 @@
 'use client';
-import { type RankingInfo, rankItem, rankings } from '@oe/core/utils/match-sorter';
+import { createOrUpdateTranslations } from '@oe/api/services/i18n';
+import { type RankingInfo, rankItem } from '@oe/core/utils/match-sorter';
 import { DEFAULT_LOCALE } from '@oe/i18n/constants';
 import type { CustomFilterPayload, FilterOption } from '@oe/ui/components/filter-search';
 import {
@@ -12,11 +13,12 @@ import {
 } from '@oe/ui/components/table';
 import { Badge } from '@oe/ui/shadcn/badge';
 import { Button } from '@oe/ui/shadcn/button';
-// import { type RankingInfo, rankItem, rankings } from '@tanstack/match-sorter-utils';
+import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useI18nTranslations } from '../_hooks';
 import { type TranslationItem, type TranslationSubItem, useLanguageStore } from '../_store/useLanguageStore';
-
+import { convertTranslation, handleSaveI18nConfig } from '../_utils';
 type TranslationFilterValue = {
   locale: string;
   [key: string]: string | boolean;
@@ -38,9 +40,7 @@ const filterTranslations: FilterFn<TranslationItem> = (row, columnId, filterValu
 
     if (!itemRank?.passed) {
       for (const subRow of row.original.subRows) {
-        const subItemRank = rankItem(subRow[columnId], filterValue, {
-          threshold: rankings.MATCHES,
-        });
+        const subItemRank = rankItem(subRow[columnId], filterValue);
         if (subItemRank?.passed) {
           itemRank = subItemRank;
           break;
@@ -81,8 +81,12 @@ const customFilter = (columnId: string, { filter, value, prev }: CustomFilterPay
 export default function Translations() {
   const t = useTranslations('languages');
   const tGeneral = useTranslations('general');
-  const { translations, locales, updateTranslations, updateTableData } = useLanguageStore();
+  const { translations, locales, locale, languageStats, updateTranslations, updateTableData, id, setId } =
+    useLanguageStore();
   const tableRef = useRef<TableRef<TranslationItem>>(null);
+
+  const { isLoading, systemConfig } = useI18nTranslations();
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     tableRef.current?.table.toggleAllRowsExpanded(true);
@@ -96,35 +100,37 @@ export default function Translations() {
     },
     [updateTranslations, updateTableData]
   );
-
-  const filterOptions: FilterOption[] = useMemo(
-    () => [
-      {
-        id: 'key',
-        value: 'key',
-        label: t('key'),
-        type: 'search',
-      },
-      {
-        id: 'translation',
-        value: 'translation',
-        label: t('translation'),
-        type: 'search',
-      },
-      ...(locales.map(locale => ({
-        id: locale.value,
-        value: locale.value,
-        label: locale.label,
-        type: 'select',
-        options: [
-          { value: true, label: t('translated') },
-          { value: false, label: t('untranslated') },
-        ],
-        customFilter: (payload: CustomFilterPayload) => customFilter('translated', payload),
-      })) as FilterOption[]),
-    ],
+  const filterOptions = useMemo(
+    () =>
+      [
+        {
+          id: 'key',
+          value: 'key',
+          label: t('key'),
+          type: 'search',
+        },
+        {
+          id: 'translation',
+          value: 'translation',
+          label: t('translation'),
+          type: 'search',
+        },
+        ...(locales
+          ? locales.map(locale => ({
+              id: locale.value,
+              value: locale.value,
+              label: locale.label,
+              type: 'select',
+              options: [
+                { value: true, label: t('translated') },
+                { value: false, label: t('untranslated') },
+              ],
+              customFilter: (payload: CustomFilterPayload) => customFilter('translated', payload),
+            }))
+          : []),
+      ].filter(Boolean),
     [t, locales]
-  );
+  ) as FilterOption[];
 
   const columns: ColumnDef<TranslationItem>[] = [
     {
@@ -202,20 +208,44 @@ export default function Translations() {
     },
   ];
 
-  const handleSave = () => {
-    console.info('save', translations);
+  const handleSave = async () => {
+    setIsSaving(true);
+    const messagesMap = convertTranslation(translations ?? []);
+    console.info('save', id, messagesMap);
+
+    try {
+      if (!locales || locales.length === 0) {
+        throw new Error('Locales are not defined');
+      }
+      await Promise.all([
+        ...locales.map(locale =>
+          createOrUpdateTranslations({
+            messages: messagesMap[locale.value],
+            id: systemConfig?.find(c => c.locale === locale.value)?.id,
+            locale: locale.value,
+          })
+        ),
+        handleSaveI18nConfig({ locales, locale, languageStats, id, setId }),
+      ]);
+      toast.success(t('saveTranslationsSuccess'));
+    } catch (error) {
+      console.error(error);
+      toast.error(t('saveTranslationsError'));
+    }
+    setIsSaving(false);
   };
 
   return (
-    <div className="space-y-4 rounded bg-background p-4">
+    <div className="flex-1 space-y-4 rounded bg-background p-4">
       <Table
         columns={columns}
-        data={translations}
+        data={translations ?? []}
         filterOptions={filterOptions}
-        height="500px"
+        height="100%"
         hasVirtualized
         hasExpand
         ref={tableRef}
+        isLoading={isLoading}
         renderSubComponent={({ row }) => {
           return (
             <Table
@@ -228,7 +258,9 @@ export default function Translations() {
           );
         }}
       >
-        <Button onClick={handleSave}>{tGeneral('save')}</Button>
+        <Button onClick={handleSave} loading={isSaving}>
+          {tGeneral('save')}
+        </Button>
       </Table>
     </div>
   );
