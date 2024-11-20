@@ -88,3 +88,52 @@ export const createQueryParams = <T extends Record<string, unknown>>(obj: T): st
       return [`${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`];
     })
     .join('&');
+
+export function isEmptyValue(value: string | NestedObject): boolean {
+  return value === undefined || value === null || value === '';
+}
+
+export function deepMergeWithCleanup(source: NestedObject, target: NestedObject, useSourceValue = true): NestedObject {
+  const result = { ...target };
+
+  for (const key in result) {
+    if (!(key in source)) {
+      delete result[key];
+    }
+  }
+
+  for (const key in source) {
+    if (!(key in result)) {
+      result[key] = useSourceValue ? (source[key] as NestedObject) : (result[key] as NestedObject);
+    } else if (typeof source[key] === 'object' && !isEmptyValue(source[key] as string | NestedObject)) {
+      result[key] = deepMergeWithCleanup(source[key] as NestedObject, result[key] as NestedObject);
+    }
+  }
+
+  return result;
+}
+
+export function deepMerge(source: NestedObject, target: NestedObject): NestedObject {
+  const result: NestedObject = {};
+
+  const allKeys = new Set([...Object.keys(source), ...Object.keys(target)]);
+
+  for (const key of allKeys) {
+    const sourceValue = source[key];
+    const targetValue = target[key];
+
+    if (typeof sourceValue === 'object' && typeof targetValue === 'object') {
+      result[key] = deepMerge(sourceValue as NestedObject, targetValue as NestedObject);
+    } else if (typeof sourceValue === 'object') {
+      result[key] = sourceValue;
+    } else if (typeof targetValue === 'object') {
+      result[key] = targetValue;
+    } else if (!isEmptyValue(targetValue as string | NestedObject)) {
+      result[key] = targetValue;
+    } else if (!isEmptyValue(sourceValue as string | NestedObject)) {
+      result[key] = sourceValue;
+    }
+  }
+
+  return result;
+}

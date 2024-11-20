@@ -1,10 +1,12 @@
 import type { IFileResponse } from '@oe/api/types/file';
 import type { LanguageStats } from '@oe/api/types/i18n';
+import { deepMergeWithCleanup } from '@oe/core/utils/object';
 import { DEFAULT_LOCALE, DEFAULT_LOCALES } from '@oe/i18n/constants';
 import { type LanguageCode, languages } from '@oe/i18n/languages';
 import { messages } from '@oe/i18n/messages';
 import type { I18nMessage } from '@oe/i18n/types';
 import { create } from 'zustand';
+// import { deepMergeWithCleanup } from '../_utils';
 
 export type LanguageOption = {
   value: LanguageCode;
@@ -35,6 +37,7 @@ interface LanguageState {
   translations?: TranslationItem[];
   languageStats?: LanguageStats[];
   translationFiles?: IFileResponse[];
+  files?: Record<LanguageCode, string>;
 }
 
 interface LanguageActions {
@@ -46,9 +49,11 @@ interface LanguageActions {
     locale?: LanguageCode;
     id?: string;
     languageStats?: LanguageStats[];
+    files?: Record<LanguageCode, string>;
   }) => void;
   updateTranslations: (translations?: Record<LanguageCode, I18nMessage>) => void;
   updateTableData: (rowIndex: number, columnId: string, value: string, isParent?: boolean) => void;
+  setFiles: (files: Record<LanguageCode, string>) => void;
 }
 
 const updateTranslationStatus = (value: string | null) => {
@@ -210,12 +215,15 @@ export const useLanguageStore = create<LanguageState & LanguageActions>()((set, 
 
   setId: id => set({ id }),
 
+  setFiles: (files: Record<LanguageCode, string>) => set({ files }),
+
   init: data => {
     set({
       locales: data?.locales || defaultLocales,
       locale: data?.locale || DEFAULT_LOCALE,
       id: data?.id,
       languageStats: data?.languageStats,
+      files: data?.files,
     });
     get().updateTranslations();
   },
@@ -230,7 +238,6 @@ export const useLanguageStore = create<LanguageState & LanguageActions>()((set, 
   updateTranslations: (translations?: Record<LanguageCode, I18nMessage>) => {
     const localeList = get().locales?.map(l => l.value) ?? [];
     const currentTranslations = get().translations;
-    const stats = get().languageStats;
 
     let newTranslations = currentTranslations;
 
@@ -240,28 +247,18 @@ export const useLanguageStore = create<LanguageState & LanguageActions>()((set, 
         localeList
       );
     } else if (translations) {
-      newTranslations = convertMessagesToTableData(translations, localeList);
+      const mergedTranslations = Object.fromEntries(
+        Object.entries(translations).map(([locale, msgs]) => [
+          locale,
+          deepMergeWithCleanup(messages, msgs, locale === DEFAULT_LOCALE),
+        ])
+      ) as Record<LanguageCode, I18nMessage>;
+      newTranslations = convertMessagesToTableData(mergedTranslations, localeList);
     }
-
-    // Merge translations cũ với mới
-    // const mergedTranslations = newTranslations.map(newItem => {
-    //   const existingItem = currentTranslations?.find(item => item.key === newItem.key);
-    //   if (!existingItem) {
-    //     return newItem;
-    //   }
-
-    //   return {
-    //     ...newItem,
-    //     subRows: newItem.subRows.map(newSubRow => {
-    //       const existingSubRow = existingItem.subRows.find(sub => sub.locale === newSubRow.locale);
-    //       return existingSubRow || newSubRow;
-    //     }),
-    //   };
-    // });
 
     set({
       translations: newTranslations,
-      languageStats: stats ?? calculateLanguageStats(newTranslations, localeList),
+      languageStats: calculateLanguageStats(newTranslations, localeList),
     });
   },
 }));

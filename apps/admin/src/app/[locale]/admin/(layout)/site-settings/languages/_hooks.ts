@@ -1,80 +1,47 @@
 import { useSystemConfig } from '@oe/api/hooks/useSystemConfig';
+import { fetchTranslationFile } from '@oe/api/services/i18n';
 import { systemConfigKeys } from '@oe/api/utils/system-config';
 import type { LanguageCode } from '@oe/i18n/languages';
 import type { I18nMessage } from '@oe/i18n/types';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
+import useSWR from 'swr';
 import { useLanguageStore } from './_store/useLanguageStore';
-import { getCurrentI18nFile, groupI18nConfigsByLocale } from './_utils';
+import { getUrls } from './_utils';
 
 export const useI18nTranslations = () => {
-  const { locales, updateTranslations } = useLanguageStore();
+  const { locales, updateTranslations, setFiles } = useLanguageStore();
 
   const { systemConfig, systemConfigIsLoading } = useSystemConfig<I18nMessage>({
     key: systemConfigKeys.i18nTranslations,
     shouldFetch: (locales?.length ?? 0) > 0,
   });
 
-  // const processedRef = useRef<{
-  //   systemConfigId?: string;
-  //   locales?: string;
-  // }>({});
+  const urls = getUrls({ locales, systemConfig });
 
-  const fetchTranslationFile = useCallback(async (url: string) => {
-    try {
-      const response = await fetch(url);
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching translation file:', error);
-      return null;
+  const { data: translations } = useSWR(
+    Object.keys(urls).length > 0 ? urls : null,
+    async (urlMap: Record<LanguageCode, string>) => {
+      const results = {} as Record<LanguageCode, I18nMessage>;
+
+      await Promise.all(
+        Object.entries(urlMap).map(async ([locale, url]) => {
+          const data = await fetchTranslationFile(url);
+          if (data) {
+            results[locale as LanguageCode] = data;
+          }
+        })
+      );
+
+      return results;
     }
-  }, []);
+  );
 
   useEffect(() => {
-    const localesMap = locales?.map(l => l.value) ?? [];
-
-    const processTranslations = async () => {
-      if (!systemConfig || systemConfig.length === 0) {
-        return;
-      }
-
-      // const systemConfigId = systemConfig.map(c => c.id).join(',');
-      // const localesKey = localesMap?.join(',');
-
-      // if (processedRef.current.systemConfigId === systemConfigId && processedRef.current.locales === localesKey) {
-      //   return;
-      // }
-
-      const configsByLocale = groupI18nConfigsByLocale(systemConfig);
-      const translations = {} as Record<LanguageCode, I18nMessage>;
-      console.log(11111);
-
-      const fetchPromises = localesMap.map(async locale => {
-        const config = configsByLocale[locale];
-        if (!config) {
-          return;
-        }
-
-        const currentFile = getCurrentI18nFile(config.files, locale);
-        if (currentFile) {
-          const fileData = await fetchTranslationFile(currentFile.url);
-          if (fileData) {
-            translations[locale] = fileData;
-          }
-        }
-      });
-
-      await Promise.all(fetchPromises);
-
-      // processedRef.current = {
-      //   systemConfigId,
-      //   locales: localesKey,
-      // };
-
+    if (translations && urls) {
+      setFiles(urls);
       updateTranslations(translations);
-    };
-
-    processTranslations();
-  }, [systemConfig, locales, fetchTranslationFile, updateTranslations]);
+    }
+  }, [translations, urls, setFiles, updateTranslations]);
 
   return {
     isLoading: systemConfigIsLoading,

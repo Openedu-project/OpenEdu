@@ -37,6 +37,7 @@ export default function Table<TData>({
   hasNoColumn = false,
   isLoading,
   className,
+  filterSearchProps,
   renderSubComponent,
 }: TableProps<TData>) {
   const memoizedColumns = useMemo(() => {
@@ -139,6 +140,7 @@ export default function Table<TData>({
         setGlobalFilter={setGlobalFilter}
         setColumnFilters={setColumnFilters}
         resetColumnFilters={table.resetColumnFilters}
+        {...filterSearchProps}
       >
         {children}
       </TableFilterSearch>

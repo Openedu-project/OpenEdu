@@ -9,14 +9,14 @@ import { handleSaveI18nConfig } from '../_utils';
 export function SaveButton() {
   const tLanguages = useTranslations('languages');
   const tGeneral = useTranslations('general');
-  const { locales, locale, id, languageStats, setId } = useLanguageStore();
+  const { locales, locale, id, files, languageStats, setId } = useLanguageStore();
   const [isLoading, setIsLoading] = useState(false);
   // const { mutate } = useSWRConfig();
 
   const handleSave = async () => {
     setIsLoading(true);
     try {
-      await handleSaveI18nConfig({ locales, locale, languageStats, id, setId });
+      await handleSaveI18nConfig({ locales, locale, languageStats, id, files, setId });
       // mutate(createSystemConfigSWRKey({ key: systemConfigKeys.i18nConfig }));
       toast.success(tLanguages('saveSuccess'));
     } catch {

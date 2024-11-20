@@ -12,4 +12,5 @@ export interface I18nConfig {
   locales: LanguageCode[];
   locale: LanguageCode;
   stats?: LanguageStats[];
+  files?: Record<LanguageCode, string>;
 }

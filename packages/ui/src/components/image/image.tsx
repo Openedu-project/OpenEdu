@@ -18,10 +18,10 @@ interface ExtendedImageProps extends Omit<ImageProps, 'src'> {
 const DEFAULT_SIZES = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw';
 
 const getImageUrl = (src: string, useCdn: boolean): string => {
-  if (useCdn && (src.startsWith('http://') || src.startsWith('https://'))) {
+  if (useCdn && src.startsWith('https://')) {
     const cdnDomain = process.env.NEXT_PUBLIC_MEDIA_CDN_HOST;
 
-    return `${cdnDomain}/${encodeURIComponent(src)}`;
+    return src.replace(new URL(src).origin, cdnDomain);
   }
   return src;
 };
@@ -55,7 +55,7 @@ export function Image({
   objectFit = 'cover',
   rounded = 'none',
   backgroundImage = false,
-  useCdn = false,
+  useCdn = true,
   priority = false,
   quality = 85,
   placeholder,

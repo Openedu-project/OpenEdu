@@ -1,6 +1,6 @@
 import type { ColumnDef as ColumnDefTanstack, Row, Table, TableOptions } from '@tanstack/react-table';
 import type { ReactNode, Ref } from 'react';
-import type { FilterOption } from '../filter-search';
+import type { FilterOption, FilterSearchProps } from '../filter-search';
 
 export type TableBorder = 'bordered' | 'bordered-rows';
 
@@ -37,6 +37,7 @@ export type TableProps<TData> = {
   hasSelection?: boolean;
   hasNoColumn?: boolean;
   className?: string;
+  filterSearchProps?: Omit<FilterSearchProps, 'filterOptions'>;
   mutate?: () => void;
   renderSubComponent?: (props: { row: Row<TData> }) => ReactNode;
 };

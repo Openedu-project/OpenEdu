@@ -29,7 +29,7 @@ export function LanguageCards() {
             <div className="flex justify-between gap-4">
               <div className="flex flex-col items-center">
                 <Link
-                  href={`/admin/site-settings/languages/translations?lang=${stats.language}&status=translated`}
+                  href={`/admin/site-settings/languages/translations?filter=${stats.locale}&value=true`}
                   className="font-bold text-2xl text-primary"
                 >
                   {stats.translated}
@@ -38,7 +38,7 @@ export function LanguageCards() {
               </div>
               <div className="flex flex-col items-center">
                 <Link
-                  href={`/admin/site-settings/languages/translations?lang=${stats.language}&status=untranslated`}
+                  href={`/admin/site-settings/languages/translations?lang=${stats.locale}&value=false`}
                   className="font-bold text-2xl text-destructive"
                 >
                   {stats.untranslated}

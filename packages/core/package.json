@@ -23,9 +23,9 @@
   },
   "peerDependencies": {
     "@oe/i18n": "workspace:*",
-    "next": "15.0.4-canary.12",
+    "next": "15.0.4-canary.20",
     "next-intl": "3.25.1",
-    "react": "19.0.0-rc-b01722d5-20241114",
+    "react": "19.0.0-rc-6f0dc294-20241119",
     "zustand": "^5.0.1"
   },
   "dependencies": {
@@ -34,7 +34,7 @@
   "devDependencies": {
     "@oe/config": "workspace:*",
     "@oe/types": "workspace:*",
-    "@types/node": "^22.9.0",
+    "@types/node": "^22.9.1",
     "@types/wicg-file-system-access": "^2023.10.5"
   }
 }

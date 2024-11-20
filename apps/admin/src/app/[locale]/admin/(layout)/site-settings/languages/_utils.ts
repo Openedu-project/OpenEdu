@@ -75,12 +75,14 @@ export const handleSaveI18nConfig = async ({
   locale,
   languageStats,
   id,
+  files,
   setId,
 }: {
   locales?: LanguageOption[];
   locale?: LanguageCode;
   languageStats?: LanguageStats[];
   id?: string;
+  files?: Record<LanguageCode, string>;
   setId: (id: string) => void;
 }) => {
   const localeValues = locales?.map(locale => locale.value);
@@ -88,11 +90,38 @@ export const handleSaveI18nConfig = async ({
     throw new Error('Locales or locale is not defined');
   }
   const response = await createOrUpdateI18nConfig({
-    config: { locales: localeValues, locale, stats: languageStats },
+    config: { locales: localeValues, locale, stats: languageStats, files },
     id,
   });
 
   setId(response?.id);
   setCookie(process.env.NEXT_PUBLIC_COOKIE_LOCALES_KEY, localeValues);
   setCookie(process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY, locale);
+  setCookie(process.env.NEXT_PUBLIC_COOKIE_LOCALE_FILES_KEY, JSON.stringify(files));
+};
+
+export const getUrls = ({
+  locales,
+  systemConfig,
+}: { locales?: LanguageOption[]; systemConfig?: ISystemConfigRes<I18nMessage>[] }) => {
+  const localesMap = locales?.map(l => l.value) ?? [];
+  const configsByLocale = systemConfig
+    ? groupI18nConfigsByLocale(systemConfig)
+    : ({} as Record<LanguageCode, ISystemConfigRes<I18nMessage>>);
+
+  return localesMap.reduce(
+    (acc, locale) => {
+      const config = configsByLocale[locale as LanguageCode];
+      if (!config) {
+        return acc;
+      }
+
+      const currentFile = getCurrentI18nFile(config.files, locale);
+      if (currentFile) {
+        acc[locale] = currentFile.name;
+      }
+      return acc;
+    },
+    {} as Record<LanguageCode, string>
+  );
 };

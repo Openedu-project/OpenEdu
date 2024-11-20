@@ -1,33 +1,35 @@
 import { ADMIN_ROUTES } from '@oe/core/utils/routes';
 import { DashboardLayout } from '@oe/ui/common/layout';
 import { File, Globe, House, Mail, Settings, Settings2, User, UserCog, Users } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 
 export default function Layout({ children }: { children: ReactNode }) {
+  const tDashboard = useTranslations('dashboardSidebar');
   return (
     <DashboardLayout
       sidebarItems={[
         {
           id: 'dashboard',
-          label: 'Dashboard',
+          label: tDashboard('dashboard'),
           icon: <House className="h-5 w-5" />,
           href: ADMIN_ROUTES.dashboard,
           isRoot: true,
         },
         {
           id: 'users',
-          label: 'Users management',
+          label: tDashboard('userManagement'),
           icon: <UserCog className="h-5 w-5" />,
           items: [
             {
               id: 'all-users',
-              label: 'All users',
+              label: tDashboard('allUsers'),
               icon: <Users className="h-5 w-5" />,
               href: ADMIN_ROUTES.allUsers,
             },
             {
               id: 'users',
-              label: 'Users',
+              label: tDashboard('users'),
               icon: <User className="h-5 w-5" />,
               href: ADMIN_ROUTES.allUsers,
             },
@@ -35,30 +37,30 @@ export default function Layout({ children }: { children: ReactNode }) {
         },
         {
           id: 'site-settings',
-          label: 'Site settings',
+          label: tDashboard('siteSettings.siteSettings'),
           icon: <Settings className="h-5 w-5" />,
           items: [
             {
               id: 'general',
-              label: 'General',
+              label: tDashboard('siteSettings.general'),
               icon: <Settings2 className="h-5 w-5" />,
               href: ADMIN_ROUTES.generalSettings,
             },
             {
               id: 'emails',
-              label: 'Emails',
+              label: tDashboard('siteSettings.email'),
               icon: <Mail className="h-5 w-5" />,
               href: ADMIN_ROUTES.emailSettings,
             },
             {
               id: 'languages',
-              label: 'Languages',
+              label: tDashboard('siteSettings.languages'),
               icon: <Globe className="h-5 w-5" />,
               href: ADMIN_ROUTES.languageSettings,
             },
             {
               id: 'pages',
-              label: 'Pages',
+              label: tDashboard('siteSettings.pages'),
               icon: <File className="h-5 w-5" />,
               href: ADMIN_ROUTES.pagesSettings,
             },

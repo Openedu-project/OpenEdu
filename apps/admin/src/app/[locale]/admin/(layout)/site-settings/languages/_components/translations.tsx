@@ -18,7 +18,7 @@ import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useI18nTranslations } from '../_hooks';
 import { type TranslationItem, type TranslationSubItem, useLanguageStore } from '../_store/useLanguageStore';
-import { convertTranslation, handleSaveI18nConfig } from '../_utils';
+import { convertTranslation, getUrls, handleSaveI18nConfig } from '../_utils';
 type TranslationFilterValue = {
   locale: string;
   [key: string]: string | boolean;
@@ -104,15 +104,15 @@ export default function Translations() {
     () =>
       [
         {
-          id: 'key',
-          value: 'key',
-          label: t('key'),
-          type: 'search',
-        },
-        {
           id: 'translation',
           value: 'translation',
           label: t('translation'),
+          type: 'search',
+        },
+        {
+          id: 'key',
+          value: 'key',
+          label: t('key'),
           type: 'search',
         },
         ...(locales
@@ -217,7 +217,7 @@ export default function Translations() {
       if (!locales || locales.length === 0) {
         throw new Error('Locales are not defined');
       }
-      await Promise.all([
+      const res = await Promise.all([
         ...locales.map(locale =>
           createOrUpdateTranslations({
             messages: messagesMap[locale.value],
@@ -225,8 +225,9 @@ export default function Translations() {
             locale: locale.value,
           })
         ),
-        handleSaveI18nConfig({ locales, locale, languageStats, id, setId }),
       ]);
+      const files = getUrls({ locales, systemConfig: res });
+      await handleSaveI18nConfig({ locales, locale, languageStats, id, files, setId });
       toast.success(t('saveTranslationsSuccess'));
     } catch (error) {
       console.error(error);
@@ -246,6 +247,7 @@ export default function Translations() {
         hasExpand
         ref={tableRef}
         isLoading={isLoading}
+        filterSearchProps={{ useQueryParams: true }}
         renderSubComponent={({ row }) => {
           return (
             <Table

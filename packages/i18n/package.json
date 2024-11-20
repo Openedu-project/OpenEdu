@@ -15,7 +15,8 @@
   },
   "peerDependencies": {
     "@oe/api": "workspace:*",
-    "next": "15.0.4-canary.12",
+    "@oe/core": "workspace:*",
+    "next": "15.0.4-canary.20",
     "next-intl": "3.25.1"
   },
   "devDependencies": {

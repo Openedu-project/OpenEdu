@@ -8,18 +8,21 @@ import { useLanguageStore } from '../_store/useLanguageStore';
 
 export function InitLanguageState() {
   const { init, updateTranslations } = useLanguageStore();
-  const { systemConfig } = useSystemConfig<I18nConfig>({ key: systemConfigKeys.i18nConfig });
+  const { systemConfig, systemConfigIsLoading } = useSystemConfig<I18nConfig>({ key: systemConfigKeys.i18nConfig });
 
   useEffect(() => {
-    const { value, id } = systemConfig?.[0] ?? {};
-    init({
-      locales: value?.locales?.map(code => ({ value: code, label: languages[code] })),
-      locale: value?.locale,
-      id,
-      languageStats: value?.stats,
-    });
-    updateTranslations();
-  }, [init, updateTranslations, systemConfig]);
+    if (!systemConfigIsLoading) {
+      const { value, id } = systemConfig?.[0] ?? {};
+      init({
+        locales: value?.locales?.map(code => ({ value: code, label: languages[code] })),
+        locale: value?.locale,
+        id,
+        languageStats: value?.stats,
+        files: value?.files,
+      });
+      updateTranslations();
+    }
+  }, [init, updateTranslations, systemConfig, systemConfigIsLoading]);
 
   return null;
 }

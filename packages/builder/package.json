@@ -11,9 +11,9 @@
   },
   "peerDependencies": {
     "@oe/ui": "workspace:*",
-    "next": "15.0.4-canary.12",
-    "react": "19.0.0-rc-b01722d5-20241114",
-    "react-dom": "19.0.0-rc-b01722d5-20241114"
+    "next": "15.0.4-canary.20",
+    "react": "19.0.0-rc-6f0dc294-20241119",
+    "react-dom": "19.0.0-rc-6f0dc294-20241119"
   },
   "dependencies": {
     "grapesjs": "^0.22.3",
@@ -23,7 +23,7 @@
   "devDependencies": {
     "@oe/config": "workspace:*",
     "@oe/types": "workspace:*",
-    "@types/node": "^22.9.0",
+    "@types/node": "^22.9.1",
     "@types/react": "npm:types-react@rc",
     "@types/react-dom": "npm:types-react-dom@rc"
   }
