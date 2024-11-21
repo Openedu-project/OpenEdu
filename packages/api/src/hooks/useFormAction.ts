@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 
 // import type { FormActionState } from '@oe/core/types/form';
 import type { FieldValues, Path, UseFormProps } from 'react-hook-form';
+import { customErrorMap } from '#utils/zod';
 import type { FormActionState } from '../utils/form';
 
 type UseFormActionProps<TFieldValues extends FieldValues = FieldValues, TContext = unknown> = UseFormProps<
@@ -24,6 +25,7 @@ export function useFormAction<TFieldValues extends FieldValues = FieldValues, TC
 }: UseFormActionProps<TFieldValues, TContext>) {
   const tErrors = useTranslations('errors');
   const tToast = useTranslations('toast');
+  const tForms = useTranslations('forms');
   const form = useForm({
     ...props,
   });
@@ -47,8 +49,11 @@ export function useFormAction<TFieldValues extends FieldValues = FieldValues, TC
         }
 
         for (const [key, issues] of Object.entries(fieldErrors)) {
+          const errorMessages = issues
+            ?.map(issue => customErrorMap({ issue, defaultError: issue.message, t: tForms }).message)
+            .join('\n');
           form.setError(key as Path<TFieldValues>, {
-            message: issues?.map(issue => issue.message).join('. '),
+            message: errorMessages,
           });
         }
         break;
@@ -68,9 +73,7 @@ export function useFormAction<TFieldValues extends FieldValues = FieldValues, TC
     }
   }, [formState, form, tErrors, tToast, onSuccess]);
 
-  return {
-    ...form,
-  };
+  return form;
 }
 
 const hasState = (formState?: FormActionState | null): formState is FormActionState => {

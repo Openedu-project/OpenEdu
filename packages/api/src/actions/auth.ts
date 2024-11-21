@@ -1,7 +1,4 @@
 'use server';
-
-import { revalidatePath } from 'next/cache';
-import { headers } from 'next/headers';
 import { loginSchema } from '#schemas/loginSchema';
 import { loginService } from '#services/auth';
 import { fromErrorToFormState } from '#utils/form';
@@ -23,7 +20,7 @@ export async function loginAction(_: FormActionState, formData: FormData): Promi
       setCookie(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, res.refresh_token),
     ]);
 
-    revalidatePath('/');
+    // revalidatePath('/');
 
     return {
       status: 'SUCCESS',
@@ -35,14 +32,14 @@ export async function loginAction(_: FormActionState, formData: FormData): Promi
 }
 
 export async function logoutAction() {
-  const headersList = await headers();
-  const url = headersList.get('referer') || '';
-  const { pathname } = new URL(url);
+  // const headersList = await headers();
+  // const url = headersList.get('referer') || '';
+  // const { pathname } = new URL(url);
 
   await Promise.all([
     setCookie(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, '', { maxAge: 0 }),
     setCookie(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, '', { maxAge: 0 }),
   ]);
 
-  revalidatePath(pathname);
+  // revalidatePath(pathname);
 }

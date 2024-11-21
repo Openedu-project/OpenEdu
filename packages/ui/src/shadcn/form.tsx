@@ -138,7 +138,12 @@ const FormMessage = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagrap
     }
 
     return (
-      <p ref={ref} id={formMessageId} className={cn('font-medium text-destructive text-sm', className)} {...props}>
+      <p
+        ref={ref}
+        id={formMessageId}
+        className={cn('whitespace-pre font-medium text-destructive text-sm', className)}
+        {...props}
+      >
         {body}
       </p>
     );

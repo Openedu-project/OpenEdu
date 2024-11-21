@@ -2,7 +2,12 @@ import type { TFunction } from '@oe/i18n/types';
 // biome-ignore lint/nursery/noRestrictedImports: <explanation>
 import { type TypeOf, ZodError, type ZodIssue, type ZodTooBigIssue, type ZodTooSmallIssue, z } from 'zod';
 
-const customErrorMap = (issue: z.ZodIssueOptionalMessage, ctx: z.ErrorMapCtx, t: TFunction) => {
+const customErrorMap = ({
+  issue,
+  defaultError,
+  t,
+}: { issue: z.ZodIssueOptionalMessage | z.ZodIssue; defaultError: string; t: TFunction }) => {
+  // console.log('------customErrorMap', issue, ctx);
   switch (issue.code) {
     case z.ZodIssueCode.too_small:
       return {
@@ -23,12 +28,14 @@ const customErrorMap = (issue: z.ZodIssueOptionalMessage, ctx: z.ErrorMapCtx, t:
     case z.ZodIssueCode.invalid_string:
       return { ...issue, message: t(`invalid_string.${issue.validation}`) };
     default:
-      return { ...issue, message: ctx.defaultError };
+      return { ...issue, message: defaultError };
   }
 };
 
 const registerCustomZodErrorMap = (t: TFunction) => {
-  z.setErrorMap((issue, ctx) => customErrorMap(issue, ctx, t));
+  z.setErrorMap((issue, ctx) => {
+    return customErrorMap({ issue, defaultError: ctx.defaultError, t });
+  });
 };
 
 export {
@@ -38,5 +45,6 @@ export {
   type ZodTooBigIssue,
   type ZodTooSmallIssue,
   type TypeOf,
+  customErrorMap,
   registerCustomZodErrorMap,
 };
