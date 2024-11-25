@@ -82,7 +82,7 @@ function deploy({ appPath, env = 'production' }) {
 // Handle CLI arguments
 const args = process.argv.slice(2);
 const appPath = args.find(arg => arg.startsWith('--appPath='))?.split('=')[1];
-const env = args.includes('--env-file');
+const env = args.includes('--envFile');
 
 if (!appPath) {
   throw new Error('--appPath is required');
