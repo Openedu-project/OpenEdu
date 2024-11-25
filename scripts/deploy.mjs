@@ -33,6 +33,7 @@ function runWithEnv(command, cwd, env) {
       `--token=${process.env.VERCEL_TOKEN}`,
       '--yes',
       envArgs,
+      '--debug',
     ]
       .filter(Boolean)
       .join(' ');
