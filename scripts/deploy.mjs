@@ -49,6 +49,8 @@ function deploy({ appPath, env = 'production' }) {
     .map(([key, value]) => `--env ${key}=${value}`)
     .join(' ');
 
+  console.info(`🔑 Using env file: ${envPath}`, envArgs);
+
   try {
     // Run build using Turbo
     console.info('🛠️ Building...');
@@ -56,9 +58,6 @@ function deploy({ appPath, env = 'production' }) {
 
     // Build deploy command
     const deployCommand = [
-      'cd',
-      appPath,
-      '&&',
       'vercel',
       appPath,
       '--prod',
