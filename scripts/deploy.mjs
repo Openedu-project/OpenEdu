@@ -61,9 +61,10 @@ function deploy({ appPath, env = 'production' }) {
       '--prod',
       `--token=${process.env.VERCEL_TOKEN}`,
       '--yes',
-      `--cwd=${absolutePath}`,
+      // `--cwd=${appPath}`,
       '--build-env NEXT_TELEMETRY_DISABLED=1',
       envArgs,
+      '--debug',
     ]
       .filter(Boolean)
       .join(' ');
