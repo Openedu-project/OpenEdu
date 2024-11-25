@@ -57,11 +57,11 @@ function deploy({ appPath, env = 'production' }) {
     // Build deploy command
     const deployCommand = [
       'vercel',
-      'deploy',
+      appPath,
       '--prod',
       `--token=${process.env.VERCEL_TOKEN}`,
       '--yes',
-      `--cwd=${appPath}`,
+      `--cwd=${absolutePath}`,
       '--build-env NEXT_TELEMETRY_DISABLED=1',
       envArgs,
     ]

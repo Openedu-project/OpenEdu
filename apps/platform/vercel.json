@@ -3,7 +3,6 @@
   "outputDirectory": ".next",
   "installCommand": "cd ../.. && pnpm install",
   "framework": "nextjs",
-  "rootDirectory": "apps/platform",
   "git": {
     "deploymentEnabled": {
       "main": false
