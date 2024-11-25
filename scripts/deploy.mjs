@@ -52,7 +52,7 @@ function deploy({ appPath, env = 'production' }) {
   try {
     // Run build using Turbo
     console.info('🛠️ Building...');
-    runCommand(`pnpm turbo run build --filter=${app}...`, process.cwd());
+    runCommand(`pnpm run build --filter=${app}...`, process.cwd());
 
     // Build deploy command
     const deployCommand = [
@@ -61,7 +61,7 @@ function deploy({ appPath, env = 'production' }) {
       '--prod',
       `--token=${process.env.VERCEL_TOKEN}`,
       '--yes',
-      `--cwd=${absolutePath}`,
+      `--cwd=${appPath}`,
       envArgs,
     ]
       .filter(Boolean)
@@ -69,7 +69,7 @@ function deploy({ appPath, env = 'production' }) {
 
     // Deploy
     console.info('🚀 Deploying...');
-    const output = runCommand(deployCommand, absolutePath);
+    const output = runCommand(deployCommand, process.cwd());
 
     console.info(`✅ ${app} deployed successfully!\n`);
     return output.toString();
