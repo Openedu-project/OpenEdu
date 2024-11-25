@@ -64,6 +64,7 @@ function deploy({ appPath, env = 'production' }) {
       '--yes',
       // `--cwd=${appPath}`,
       '--build-env NEXT_TELEMETRY_DISABLED=1',
+      '--prebuilt',
       envArgs,
       '--debug',
     ]
