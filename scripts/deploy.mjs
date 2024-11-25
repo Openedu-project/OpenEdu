@@ -16,12 +16,12 @@ function runCommand(command, cwd) {
   }
 }
 
-function deploy({ appPath, isProd = true }) {
+function deploy({ appPath, env = 'production' }) {
   const app = path.basename(appPath);
   console.info(`\n📦 Processing ${app}...\n`);
 
   // Load env file
-  const envPath = path.join(process.cwd(), appPath, isProd ? '.env.production' : '.env');
+  const envPath = path.join(process.cwd(), appPath, env ? `.env.${env}` : '.env.production');
   const envConfig = config({ path: envPath });
 
   if (envConfig.error) {
@@ -39,14 +39,7 @@ function deploy({ appPath, isProd = true }) {
     runCommand(`pnpm turbo run build --filter=${app}...`, process.cwd());
 
     // Build deploy command
-    const deployCommand = [
-      'vercel',
-      'deploy',
-      isProd ? '--prod' : '',
-      `--token=${process.env.VERCEL_TOKEN}`,
-      '--yes',
-      envArgs,
-    ]
+    const deployCommand = ['vercel', 'deploy', '--prod', `--token=${process.env.VERCEL_TOKEN}`, '--yes', envArgs]
       .filter(Boolean)
       .join(' ');
 
@@ -65,13 +58,13 @@ function deploy({ appPath, isProd = true }) {
 // Handle CLI arguments
 const args = process.argv.slice(2);
 const appPath = args.find(arg => arg.startsWith('--appPath='))?.split('=')[1];
-const isProd = args.includes('--prod');
+const env = args.includes('--env-file');
 
 if (!appPath) {
   throw new Error('--appPath is required');
 }
 
-deploy({ appPath, isProd }).catch(error => {
+deploy({ appPath, env }).catch(error => {
   console.error('Deploy failed:', error);
   process.exit(1);
 });
