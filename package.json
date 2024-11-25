@@ -21,7 +21,8 @@
     "lefthook": "^1.8.4",
     "sherif": "^1.0.2",
     "turbo": "^2.3.0",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "dotenv": "^16.4.5"
   },
   "packageManager": "pnpm@9.14.2",
   "engines": {
