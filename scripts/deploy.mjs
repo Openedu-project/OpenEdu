@@ -58,7 +58,12 @@ function deploy({ appPath, env = 'production' }) {
     // Build deploy command
     const deployCommand = [
       'vercel',
-      appPath,
+      'link',
+      '--repo',
+      '--yes',
+      `--token ${process.env.VERCEL_TOKEN}`,
+      '&&',
+      'vercel',
       '--prod',
       `--token ${process.env.VERCEL_TOKEN}`,
       '--yes',
