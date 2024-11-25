@@ -71,6 +71,7 @@ function deploy({ appPath, env = 'production' }) {
 
     // Deploy
     console.info('🚀 Deploying...');
+    runCommand(`cd ${appPath}`, process.cwd());
     const output = runCommand(deployCommand, process.cwd());
 
     console.info(`✅ ${app} deployed successfully!\n`);
