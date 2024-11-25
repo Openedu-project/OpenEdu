@@ -4,10 +4,9 @@ import path from 'node:path';
 // scripts/deploy.ts
 import { config } from 'dotenv';
 
-function runCommand(command, cwd) {
+function runCommand(command) {
   try {
     return execSync(command, {
-      cwd,
       stdio: 'inherit',
       env: { ...process.env, FORCE_COLOR: 'true' },
     });
@@ -49,12 +48,12 @@ function deploy({ appPath, env = 'production' }) {
     .map(([key, value]) => `--env ${key}=${value}`)
     .join(' ');
 
-  console.info(`🔑 Using env file: ${envPath}`, envArgs);
+  console.info(`🔑 Using env file: ${envPath}`, absolutePath, envArgs);
 
   try {
     // Run build using Turbo
     console.info('🛠️ Building...');
-    runCommand(`pnpm run build --filter=${app}...`, process.cwd());
+    runCommand(`pnpm run build --filter=${app}...`);
 
     // Build deploy command
     const deployCommand = [
@@ -73,7 +72,7 @@ function deploy({ appPath, env = 'production' }) {
 
     // Deploy
     console.info('🚀 Deploying...');
-    const output = runCommand(deployCommand, process.cwd());
+    const output = runCommand(deployCommand);
 
     console.info(`✅ ${app} deployed successfully!\n`);
     return output.toString();
