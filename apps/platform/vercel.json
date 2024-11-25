@@ -1,8 +1,9 @@
 {
   "buildCommand": "cd ../.. && pnpm run build --filter=platform...",
-  "outputDirectory": "apps/platform/.next",
+  "outputDirectory": ".next",
   "installCommand": "cd ../.. && pnpm install",
   "framework": "nextjs",
+  "rootDirectory": "apps/platform",
   "git": {
     "deploymentEnabled": {
       "main": false
