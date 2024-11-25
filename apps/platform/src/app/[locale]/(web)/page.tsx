@@ -17,9 +17,7 @@ export default function Home() {
     <>
       <nav>
         <Link href="/">Home</Link>
-        <Link href={PROTECTED_ROUTES.admin} nextZone="admin">
-          Admin
-        </Link>
+        <Link href={PROTECTED_ROUTES.admin}>Admin</Link>
         <Link href={PLATFORM_ROUTES.aboutUs}>About US</Link>
         <Link href={PROTECTED_ROUTES.blog}>Blog</Link>
         <Link href={PROTECTED_ROUTES.learner}>Learner</Link>

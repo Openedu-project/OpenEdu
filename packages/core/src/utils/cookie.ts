@@ -39,7 +39,7 @@ export const cookieOptions = (options?: CookieOptions): CookieOptions => {
     path: '/',
     maxAge: defaultExpiredTime,
     ...(process.env.NODE_ENV === 'development'
-      ? { domain: 'localexample.com' }
+      ? { domain: 'localhost' }
       : { domain: process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN }),
     ...options,
   };

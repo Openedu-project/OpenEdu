@@ -9,7 +9,12 @@ const config: Omit<Config, 'content'> = {
     optimizeUniversalDefaults: true,
   },
   darkMode: ['class'],
-  content: ['src/**/*.{ts,tsx}', '../../packages/ui/src/**/*.{ts,tsx}', '../../packages/builder/src/**/*.{ts,tsx}'],
+  content: [
+    'src/**/*.{ts,tsx}',
+    '../../packages/ui/src/**/*.{ts,tsx}',
+    '../../packages/dashboard/src/**/*.{ts,tsx}',
+    '../../packages/themes/src/**/*.{ts,tsx}',
+  ],
   theme: {
     container: {
       center: 'true',

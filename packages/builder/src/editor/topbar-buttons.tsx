@@ -1,6 +1,6 @@
 import { Button } from '@oe/ui/shadcn/button';
 import { cn } from '@oe/ui/utils/cn';
-import { CornerUpLeft, CornerUpRight, Maximize, Square } from 'lucide-react';
+import { CornerUpLeft, CornerUpRight, Eye, Maximize, Square } from 'lucide-react';
 import type React from 'react';
 import { useEffect, useState } from 'react';
 import { useEditor } from '../grapesjs';
@@ -41,6 +41,10 @@ export default function TopbarButtons({ className }: React.HTMLAttributes<HTMLDi
       id: 'core:redo',
       icon: <CornerUpRight className="h-4 w-4" />,
       disabled: () => !UndoManager.hasRedo(),
+    },
+    {
+      id: 'core:preview',
+      icon: <Eye className="h-4 w-4" />,
     },
   ];
 

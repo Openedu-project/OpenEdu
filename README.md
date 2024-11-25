@@ -9,17 +9,17 @@ This is an official openedu repo for the Frontend team.
 - Pnpm: latest version [https://pnpm.io/installation](https://pnpm.io/installation)
   - update latest version: `npm install -g pnpm`.
 - Editor: `vscode`, `cursor`.
-- Change localexample.com to localexample.com from /etc/hosts file
+- Change localhost to localhost from /etc/hosts file
 
 ```js
 // window: C:\Windows\System32\drivers\etc\hosts
 // mac & Linux: /etc/hosts
-127.0.0.1 localexample.com
-127.0.0.1 vbi.localexample.com
-127.0.0.1 not-org.localexample.com
+127.0.0.1 localhost
+127.0.0.1 vbi.localhost
+127.0.0.1 not-org.localhost
 ```
 
-Open [http://localexample.com:3000](http://localexample.com:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ### Structure - monorepo
 

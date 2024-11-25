@@ -37,12 +37,12 @@ export const PROTECTED_ROUTES = {
 
 export const ZONE_ROUTES = {
   platform: '/',
-  admin: '/admin',
-  creator: '/creator',
-  learner: '/learner',
-  affiliate: '/affiliate',
+  // admin: '/admin',
+  // creator: '/creator',
+  // learner: '/learner',
+  // affiliate: '/affiliate',
   blog: '/blog',
-  landing: '/landing',
+  // landing: '/landing',
 } as const;
 
 export const REFERRER_ROUTES = {

@@ -71,7 +71,7 @@ export function useFormAction<TFieldValues extends FieldValues = FieldValues, TC
       default:
       // Skip
     }
-  }, [formState, form, tErrors, tToast, onSuccess]);
+  }, [formState, form, tErrors, tToast, tForms, onSuccess]);
 
   return form;
 }

@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev -H localexample.com",
+    "dev": "next dev -H localhost",
     "dev:builder": "pnpm dlx concurrently \"pnpm run tailwind\"  \"next dev\"",
     "build": "next build",
     "start": "next start",
@@ -17,6 +17,7 @@
     "@oe/assets": "workspace:*",
     "@oe/builder": "workspace:*",
     "@oe/core": "workspace:*",
+    "@oe/dashboard": "workspace:*",
     "@oe/i18n": "workspace:*",
     "@oe/ui": "workspace:*",
     "lucide-react": "^0.460.0",

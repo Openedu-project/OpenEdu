@@ -20,11 +20,11 @@ import { MAIN_BORDER_COLOR } from './utils';
 
 const gjsOptions: EditorConfig = {
   height: '100dvh',
-  storageManager: false,
+  // storageManager: true,
   undoManager: { trackSelection: false },
   selectorManager: { componentFirst: true },
   canvas: {
-    styles: ['builder-tailwind.css'],
+    styles: [`${process.env.NEXT_PUBLIC_APP_ADMIN_ORIGIN}/builder-tailwind.css`],
     frameContent: '<!DOCTYPE html><html><body class="scrollbar"></body></html>',
   },
   projectData: {
@@ -43,6 +43,8 @@ const gjsOptions: EditorConfig = {
     ],
   },
 };
+
+export type EditorInstance = Editor;
 
 export default function Builder({ onEditor }: { onEditor?: (editor: Editor) => void }) {
   const messages = useMessages();

@@ -1,7 +1,7 @@
 import { type IReferrerRoutes, REFERRER_ROUTES } from '@oe/core/utils/routes';
 import { getUnlocalizedPathname } from '@oe/i18n/utils';
 
-const localhostPattern = /localexample.com(:\d+)?/g;
+const localhostPattern = /localhost(:\d+)?/g;
 export function getReferrerAndOriginForAPIByUserUrl(userUrl: string) {
   const url =
     process.env.NODE_ENV === 'development'
