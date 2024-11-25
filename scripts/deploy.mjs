@@ -1,4 +1,5 @@
 import { execSync } from 'node:child_process';
+import fs from 'node:fs';
 import path from 'node:path';
 // scripts/deploy.ts
 import { config } from 'dotenv';
@@ -16,12 +17,27 @@ function runCommand(command, cwd) {
   }
 }
 
+function validateAppPath(appPath) {
+  const absolutePath = path.resolve(process.cwd(), appPath);
+  if (!fs.existsSync(absolutePath)) {
+    throw new Error(`App path ${appPath} does not exist`);
+  }
+
+  const vercelConfigPath = path.join(absolutePath, 'vercel.json');
+  if (!fs.existsSync(vercelConfigPath)) {
+    throw new Error(`vercel.json not found in ${appPath}. Please create one.`);
+  }
+
+  return absolutePath;
+}
+
 function deploy({ appPath, env = 'production' }) {
+  const absolutePath = validateAppPath(appPath);
   const app = path.basename(appPath);
   console.info(`\n📦 Processing ${app}...\n`);
 
   // Load env file
-  const envPath = path.join(process.cwd(), appPath, env ? `.env.${env}` : '.env.production');
+  const envPath = path.join(absolutePath, env ? `.env.${env}` : '.env.production');
   const envConfig = config({ path: envPath });
 
   if (envConfig.error) {
@@ -39,13 +55,21 @@ function deploy({ appPath, env = 'production' }) {
     runCommand(`pnpm turbo run build --filter=${app}...`, process.cwd());
 
     // Build deploy command
-    const deployCommand = ['vercel', 'deploy', '--prod', `--token=${process.env.VERCEL_TOKEN}`, '--yes', envArgs]
+    const deployCommand = [
+      'vercel',
+      'deploy',
+      '--prod',
+      `--token=${process.env.VERCEL_TOKEN}`,
+      '--yes',
+      `--cwd=${absolutePath}`,
+      envArgs,
+    ]
       .filter(Boolean)
       .join(' ');
 
     // Deploy
     console.info('🚀 Deploying...');
-    const output = runCommand(deployCommand, appPath);
+    const output = runCommand(deployCommand, absolutePath);
 
     console.info(`✅ ${app} deployed successfully!\n`);
     return output.toString();
