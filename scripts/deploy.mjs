@@ -60,11 +60,10 @@ function deploy({ appPath, env = 'production' }) {
       'vercel',
       appPath,
       '--prod',
-      `--token=${process.env.VERCEL_TOKEN}`,
+      `--token ${process.env.VERCEL_TOKEN}`,
       '--yes',
-      // `--cwd=${appPath}`,
+      `--cwd ${appPath}`,
       '--build-env NEXT_TELEMETRY_DISABLED=1',
-      '--prebuilt',
       envArgs,
       '--debug',
     ]
