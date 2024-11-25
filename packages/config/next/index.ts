@@ -12,6 +12,7 @@ const bundleAnalyzer = withBundleAnalyzer({
 export function getNextConfig(config: NextConfig = {}): NextConfig {
   const nextConfig: NextConfig = {
     reactStrictMode: true,
+    output: 'standalone',
     transpilePackages: ['@oe/core', '@oe/ui', '@oe/i18n', '@oe/api', '@oe/assets'],
     // experimental: {
     //   optimizePackageImports: ['icon-library'],
