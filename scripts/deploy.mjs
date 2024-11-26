@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import { execSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -77,19 +75,17 @@ function deploy({ appPath, envFileName }) {
   }
 }
 
-if (require.main === module) {
-  const args = process.argv.slice(2);
-  const appPath = args.find(arg => arg.startsWith('--appPath='))?.split('=')[1];
-  const envFileName = args.includes('--envFileName');
+const args = process.argv.slice(2);
+const appPath = args.find(arg => arg.startsWith('--appPath='))?.split('=')[1];
+const envFileName = args.includes('--envFileName');
 
-  if (!appPath) {
-    throw new Error('--appPath is required');
-  }
-
-  deploy({ appPath, envFileName }).catch(error => {
-    console.error('Deploy failed:', error);
-    process.exit(1);
-  });
+if (!appPath) {
+  throw new Error('--appPath is required');
 }
+
+deploy({ appPath, envFileName }).catch(error => {
+  console.error('Deploy failed:', error);
+  process.exit(1);
+});
 
 export { deploy };
