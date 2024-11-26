@@ -1,5 +1,6 @@
 import { getCookies } from '@oe/core/utils/cookie';
 
+import { DEFAULT_LOCALE } from '@oe/i18n/constants';
 import { refreshTokenService } from '#services/auth';
 import type { IToken } from '#types/auth';
 import type { HTTPResponse } from '#types/fetch';
@@ -53,9 +54,6 @@ export const createAPIUrl = ({ endpoint, params, queryParams }: ICreateAPIUrl) =
 
 export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Promise<HTTPResponse<T>> {
   const urlAPI = url.startsWith('https://') ? url : `${process.env.NEXT_PUBLIC_API_ORIGIN}${url}`;
-  const urlAPIInternal = new URL(urlAPI);
-  const queryParams = urlAPIInternal.searchParams.toString();
-  const tag = `${urlAPIInternal.pathname}${queryParams ? `?${queryParams}` : ''}`;
   const defaultOptions: FetchOptions = {
     headers: {
       'Content-Type': 'application/json',
@@ -67,6 +65,12 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
   const origin = cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY];
   const referrer = cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY];
   const accessToken = cookies?.[process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY];
+  const locale = cookies?.[process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY];
+
+  const urlAPIWithLocale = new URL(urlAPI);
+  urlAPIWithLocale.searchParams.set('locale', locale ?? DEFAULT_LOCALE);
+  const queryParams = urlAPIWithLocale.searchParams.toString();
+  const tag = `${urlAPIWithLocale.pathname}${queryParams ? `?${queryParams}` : ''}`;
 
   const headers = {
     ...defaultOptions.headers,
@@ -90,7 +94,7 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
   const MAX_RETRIES = 1;
 
   async function attemptFetch(): Promise<Response> {
-    const response = await fetch(urlAPI, mergedOptions);
+    const response = await fetch(urlAPIWithLocale, mergedOptions);
 
     if (response.status === 401 && shouldRefreshToken && retryCount < MAX_RETRIES) {
       retryCount++;

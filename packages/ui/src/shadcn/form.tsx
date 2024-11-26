@@ -24,6 +24,7 @@ import {
 } from 'react-hook-form';
 
 import type { TypeOf } from '@oe/api/utils/zod';
+import { useTranslations } from 'next-intl';
 import { useFormStatus } from 'react-dom';
 import { Label, LabelWithInfo } from '#shadcn/label';
 import { cn } from '#utils/cn';
@@ -131,19 +132,15 @@ FormDescription.displayName = 'FormDescription';
 const FormMessage = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagraphElement>>(
   ({ className, children, ...props }, ref) => {
     const { error, formMessageId } = useFormField();
-    const body = error ? String(error?.message) : children;
+    const t = useTranslations();
+    const body = error ? t(String(error?.message)) : children;
 
     if (!body) {
       return null;
     }
 
     return (
-      <p
-        ref={ref}
-        id={formMessageId}
-        className={cn('whitespace-pre font-medium text-destructive text-sm', className)}
-        {...props}
-      >
+      <p ref={ref} id={formMessageId} className={cn('font-medium text-destructive text-sm', className)} {...props}>
         {body}
       </p>
     );

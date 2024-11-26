@@ -2,20 +2,61 @@ import { isLogin } from '#utils/auth';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { fetchAPI, postAPI } from '#utils/fetch';
 
-import type { ILoginPayload, IToken } from '@oe/api/types/auth';
+import type { ILoginPayload, ISignUpPayload, ISignUpResponse, IToken } from '@oe/api/types/auth';
 import { cookieOptions, getCookies, setCookie } from '@oe/core/utils/cookie';
 import type { NextRequest } from 'next/server';
 import type { NextResponse } from 'next/server';
 import type { HTTPResponse } from '#types/fetch';
+import type { IResetPasswordPayload, IResetPasswordResponse } from '#types/reset-password';
+import type { ISetPasswordPayload, ISetPasswordResponse } from '#types/set-password';
 import type { IUser } from '#types/user';
 import { HTTPError } from '#utils/http-error';
 import { HTTPErrorCodeMessages } from '#utils/http-error';
+
+export const postSignUpService = async (
+  endpoint: string | null | undefined,
+  { payload, init }: { payload: ISignUpPayload; init?: RequestInit }
+) => {
+  const response = await postAPI<ISignUpResponse, ISignUpPayload>(
+    endpoint ?? API_ENDPOINT.AUTH_REGISTER,
+    payload,
+    init
+  );
+
+  return response.data;
+};
 
 export const loginService = async (
   endpoint: string | null | undefined,
   { payload, init }: { payload: ILoginPayload; init?: RequestInit }
 ) => {
   const response = await postAPI<IToken, ILoginPayload>(endpoint ?? API_ENDPOINT.AUTH_LOGIN, payload, init);
+
+  return response.data;
+};
+
+export const postSetPasswordService = async (
+  endpoint: string | null | undefined,
+  { payload, init }: { payload: ISetPasswordPayload; init?: RequestInit }
+) => {
+  const response = await postAPI<ISetPasswordResponse, ISetPasswordPayload>(
+    endpoint ?? API_ENDPOINT.AUTH_SET_PASSWORD,
+    payload,
+    init
+  );
+
+  return response.data;
+};
+
+export const postResetPasswordService = async (
+  endpoint: string | null | undefined,
+  { payload, init }: { payload: IResetPasswordPayload; init?: RequestInit }
+) => {
+  const response = await postAPI<IResetPasswordResponse, IResetPasswordPayload>(
+    endpoint ?? API_ENDPOINT.AUTH_RESET_PASSWORD,
+    payload,
+    init
+  );
 
   return response.data;
 };
