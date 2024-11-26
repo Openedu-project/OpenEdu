@@ -43,6 +43,8 @@ function deploy({ appPath, envFileName }) {
   console.info(`\n📦 Processing ${app}...`);
 
   try {
+    const isProd = envFileName === 'production' || !envFileName;
+
     console.info('📄 Loading environment variables...');
     const envVars = loadEnvFile(absolutePath, envFileName);
 
@@ -50,11 +52,20 @@ function deploy({ appPath, envFileName }) {
       .map(([key, value]) => `--env ${key}=${value}`)
       .join(' ');
 
+    console.info('📥 Pulling Vercel project settings...');
+    runWithEnv(`vercel pull --yes --environment=production --token=${process.env.VERCEL_TOKEN}`, absolutePath, envVars);
+
     console.info('🛠️ Building...');
-    runWithEnv('vercel build', absolutePath, envVars);
+    runWithEnv(
+      ['vercel build', `--token=${process.env.VERCEL_TOKEN}`, isProd ? '--prod' : '', '--yes']
+        .filter(Boolean)
+        .join(' '),
+      absolutePath,
+      envVars
+    );
 
     console.info('🚀 Deploying...');
-    const isProd = envFileName === 'production' || !envFileName;
+
     const deployCommand = [
       'vercel deploy',
       '--prebuilt',
