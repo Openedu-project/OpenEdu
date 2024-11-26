@@ -54,14 +54,14 @@ function deploy({ appPath, envFileName }) {
 
     console.info('📥 Pulling Vercel project settings...');
     runWithEnv(
-      `vercel@39.1.1 pull --yes --environment=production --token=${process.env.VERCEL_TOKEN}`,
+      `npx vercel@39.1.1 pull --yes --environment=production --token=${process.env.VERCEL_TOKEN}`,
       absolutePath,
       envVars
     );
 
     console.info('🛠️ Building...');
     runWithEnv(
-      ['vercel@39.1.1 build', `--token=${process.env.VERCEL_TOKEN}`, isProd ? '--prod' : '', '--yes']
+      ['npx vercel@39.1.1 build', `--token=${process.env.VERCEL_TOKEN}`, isProd ? '--prod' : '', '--yes']
         .filter(Boolean)
         .join(' '),
       absolutePath,
@@ -71,7 +71,7 @@ function deploy({ appPath, envFileName }) {
     console.info('🚀 Deploying...');
 
     const deployCommand = [
-      'vercel@39.1.1 deploy',
+      'npx vercel@39.1.1 deploy',
       '--prebuilt',
       isProd ? '--prod' : '',
       `--token=${process.env.VERCEL_TOKEN}`,
