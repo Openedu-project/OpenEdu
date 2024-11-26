@@ -92,7 +92,7 @@ importers:
         version: link:../../packages/types
       '@types/node':
         specifier: ^22.9.1
-        version: 22.9.3
+        version: 22.9.1
       '@types/react':
         specifier: npm:types-react@rc
         version: types-react@19.0.0-rc.1
@@ -174,7 +174,7 @@ importers:
         version: link:../../packages/types
       '@types/node':
         specifier: ^22.9.1
-        version: 22.9.3
+        version: 22.9.1
       '@types/react':
         specifier: npm:types-react@rc
         version: types-react@19.0.0-rc.1
@@ -218,6 +218,9 @@ importers:
       '@oe/types':
         specifier: workspace:*
         version: link:../types
+      js-sha256:
+        specifier: ^0.11.0
+        version: 0.11.0
 
   packages/assets:
     devDependencies:
@@ -229,7 +232,7 @@ importers:
         version: link:../types
       '@types/node':
         specifier: ^22.9.1
-        version: 22.9.3
+        version: 22.9.1
 
   packages/builder:
     dependencies:
@@ -263,7 +266,7 @@ importers:
         version: link:../types
       '@types/node':
         specifier: ^22.9.1
-        version: 22.9.3
+        version: 22.9.1
       '@types/react':
         specifier: npm:types-react@rc
         version: types-react@19.0.0-rc.1
@@ -288,7 +291,7 @@ importers:
         version: link:../types
       '@types/node':
         specifier: ^22.9.1
-        version: 22.9.3
+        version: 22.9.1
       tailwindcss:
         specifier: ^3.4.15
         version: 3.4.15
@@ -325,7 +328,7 @@ importers:
         version: link:../types
       '@types/node':
         specifier: ^22.9.1
-        version: 22.9.3
+        version: 22.9.1
       '@types/wicg-file-system-access':
         specifier: ^2023.10.5
         version: 2023.10.5
@@ -368,7 +371,7 @@ importers:
         version: link:../types
       '@types/node':
         specifier: ^22.9.1
-        version: 22.9.3
+        version: 22.9.1
       '@types/wicg-file-system-access':
         specifier: ^2023.10.5
         version: 2023.10.5
@@ -424,7 +427,7 @@ importers:
         version: link:../types
       '@types/node':
         specifier: ^22.9.1
-        version: 22.9.3
+        version: 22.9.1
       '@types/wicg-file-system-access':
         specifier: ^2023.10.5
         version: 2023.10.5
@@ -679,7 +682,7 @@ importers:
         version: link:../types
       '@types/node':
         specifier: ^22.9.1
-        version: 22.9.3
+        version: 22.9.1
       '@types/react':
         specifier: npm:types-react@rc
         version: types-react@19.0.0-rc.1
@@ -1918,8 +1921,8 @@ packages:
   '@types/mdurl@2.0.0':
     resolution: {integrity: sha512-RGdgjQUZba5p6QEFAVx2OGb8rQDL/cPRG7GiedRzMcJ1tYnUANBncjbSB1NRGwbvjcPeikRABz2nshyPk1bhWg==}
 
-  '@types/node@22.9.3':
-    resolution: {integrity: sha512-F3u1fs/fce3FFk+DAxbxc78DF8x0cY09RRL8GnXLmkJ1jvx3TtPdWoTT5/NiYfI5ASqXBmfqJi9dZ3gxMx4lzw==}
+  '@types/node@22.9.1':
+    resolution: {integrity: sha512-p8Yy/8sw1caA8CdRIQBG5tiLHmxtQKObCijiAa9Ez+d4+PRffM4054xbju0msf+cvhJpnFEeNjxmVT/0ipktrg==}
 
   '@types/prop-types@15.7.13':
     resolution: {integrity: sha512-hCZTSvwbzWGvhqxp/RqVqwU999pBf2vp7hzIjiYOsl8wqOmUxkQ6ddw1cV3l8811+kdUFus/q4d1Y3E3SyEifA==}
@@ -2385,6 +2388,9 @@ packages:
   jiti@1.21.6:
     resolution: {integrity: sha512-2yTgeWTWzMWkHu6Jp9NKgePDaYHbntiwvYuuJLbbN9vl7DC9DvXKOB2BC3ZZ92D3cvV/aflH0osDfwpHepQ53w==}
     hasBin: true
+
+  js-sha256@0.11.0:
+    resolution: {integrity: sha512-6xNlKayMZvds9h1Y1VWc0fQHQ82BxTXizWPEtEeGvmOUYpBRy4gbWroHLpzowe6xiQhHpelCQiE7HEdznyBL9Q==}
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -4389,7 +4395,7 @@ snapshots:
 
   '@types/conventional-commits-parser@5.0.0':
     dependencies:
-      '@types/node': 22.9.3
+      '@types/node': 22.9.1
 
   '@types/d3-array@3.2.1': {}
 
@@ -4428,7 +4434,7 @@ snapshots:
 
   '@types/mdurl@2.0.0': {}
 
-  '@types/node@22.9.3':
+  '@types/node@22.9.1':
     dependencies:
       undici-types: 6.19.8
 
@@ -4847,6 +4853,8 @@ snapshots:
       '@pkgjs/parseargs': 0.11.0
 
   jiti@1.21.6: {}
+
+  js-sha256@0.11.0: {}
 
   js-tokens@4.0.0: {}
 

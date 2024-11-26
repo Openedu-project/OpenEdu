@@ -7,6 +7,7 @@ import { getI18nResponseMiddleware } from '#services/i18n';
 import { getOrganizationByHostMiddleware } from '#services/organizations';
 import { isTokenExpired } from './jwt';
 
+import { decodedToken } from '@oe/core/utils/decoded-token';
 import { getLocaleFromPathname } from '@oe/i18n/utils';
 import type { IToken } from '#types/auth';
 import { getReferrerAndOriginForAPIByUserUrl } from './referrer-origin';
@@ -16,9 +17,9 @@ export async function baseMiddleware(request: NextRequest, host?: string | null)
   const appUrl = request.nextUrl.toString();
   const userHost = host ?? request.headers.get('x-forwarded-host') ?? appHost;
   const userUrl = appUrl.replace(appHost, userHost);
-
   const { origin, referrer } = getReferrerAndOriginForAPIByUserUrl(userUrl);
-
+  const url = new URL(request.url);
+  const oauthToken = url.searchParams.get('oauth_token');
   let i18nResponse = await getI18nResponseMiddleware(referrer, origin, request);
 
   i18nResponse.cookies.set({
@@ -58,6 +59,29 @@ export async function baseMiddleware(request: NextRequest, host?: string | null)
       accessToken = (rest as IToken).access_token;
     }
   }
+
+  // Sign in with social
+  if (oauthToken) {
+    const authToken = decodedToken(oauthToken);
+
+    const { access_token, refresh_token } = authToken as unknown as IToken;
+    const locale = getLocaleFromPathname(request.nextUrl.pathname);
+    const response = NextResponse.rewrite(new URL(`/${locale}${PLATFORM_ROUTES.homepage}`, appUrl));
+
+    response.cookies.set({
+      name: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY,
+      value: access_token,
+      ...cookieOptions(),
+    });
+    response.cookies.set({
+      name: process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY,
+      value: refresh_token,
+      ...cookieOptions(),
+    });
+
+    return response;
+  }
+
   const isProtected = isProtectedRoute(request.nextUrl.pathname);
   if (isProtected) {
     const me = await meMiddlewareService({ referrer, origin, accessToken, req: request, res: i18nResponse });

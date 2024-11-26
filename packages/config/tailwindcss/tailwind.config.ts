@@ -2,7 +2,8 @@ import animate from 'tailwindcss-animate';
 import { fontFamily } from 'tailwindcss/defaultTheme';
 
 import type { Config } from 'tailwindcss';
-import type { PluginAPI } from 'tailwindcss/types/config';
+import type { CSSRuleObject, PluginAPI } from 'tailwindcss/types/config';
+import { fontClasses } from './fontClasses';
 
 const config: Omit<Config, 'content'> = {
   experimental: {
@@ -130,6 +131,7 @@ const config: Omit<Config, 'content'> = {
             {},
         },
       });
+      plugin.addUtilities(fontClasses as unknown as CSSRuleObject);
     },
   ],
 };

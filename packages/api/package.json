@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@oe/config": "workspace:*",
-    "@oe/types": "workspace:*"
+    "@oe/types": "workspace:*",
+    "js-sha256": "^0.11.0"
   }
 }
