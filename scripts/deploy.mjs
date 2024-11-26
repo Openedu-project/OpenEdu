@@ -100,9 +100,6 @@ if (!appPath) {
   throw new Error('--appPath is required');
 }
 
-deploy({ appPath, envFileName }).catch(error => {
-  console.error('Deploy failed:', error);
-  process.exit(1);
-});
+deploy({ appPath, envFileName });
 
 export { deploy };
