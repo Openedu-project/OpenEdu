@@ -38,6 +38,7 @@ export async function baseMiddleware(request: NextRequest, host?: string | null)
   if (new URL(origin).host !== process.env.NEXT_PUBLIC_APP_ROOT_DOMAIN_NAME) {
     const organization = await getOrganizationByHostMiddleware(referrer, origin);
 
+    console.info('----------------------organization---------------------', organization);
     if (!organization) {
       return NextResponse.rewrite(new URL(`/${DEFAULT_LOCALE}${PLATFORM_ROUTES.orgNotFound}`, appUrl));
     }
