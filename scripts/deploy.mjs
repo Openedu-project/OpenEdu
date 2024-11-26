@@ -77,7 +77,9 @@ function deploy({ appPath, envFileName }) {
 
 const args = process.argv.slice(2);
 const appPath = args.find(arg => arg.startsWith('--appPath='))?.split('=')[1];
-const envFileName = args.includes('--envFileName');
+const envFileName = args.includes('--envFileName')
+  ? args.find(arg => arg.startsWith('--envFileName='))?.split('=')[1]
+  : null;
 
 if (!appPath) {
   throw new Error('--appPath is required');
