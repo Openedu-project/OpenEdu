@@ -1,14 +1,36 @@
+#!/usr/bin/env node
+
 import { execSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-// scripts/deploy.ts
 import { config } from 'dotenv';
 
-function runCommand(command) {
+function loadEnvFile(appPath, envFileName) {
+  const envFile = envFileName ? `.env.${envFileName}` : '.env.production';
+  const envPath = path.join(appPath, envFile);
+
+  if (!fs.existsSync(envPath)) {
+    throw new Error(`Environment file ${envFile} not found in ${appPath}`);
+  }
+
+  const { parsed: envConfig } = config({ path: envPath });
+  if (!envConfig) {
+    throw new Error(`Failed to parse ${envFile}`);
+  }
+
+  return envConfig;
+}
+
+function runWithEnv(command, cwd, env) {
   try {
     return execSync(command, {
+      cwd,
       stdio: 'inherit',
-      env: { ...process.env, FORCE_COLOR: 'true' },
+      env: {
+        ...process.env,
+        ...env,
+        FORCE_COLOR: 'true',
+      },
     });
   } catch (error) {
     console.error(`Failed to run command: ${command}`);
@@ -16,89 +38,58 @@ function runCommand(command) {
   }
 }
 
-function validateAppPath(appPath) {
+function deploy({ appPath, envFileName }) {
   const absolutePath = path.resolve(process.cwd(), appPath);
-  if (!fs.existsSync(absolutePath)) {
-    throw new Error(`App path ${appPath} does not exist`);
-  }
-
-  const vercelConfigPath = path.join(absolutePath, 'vercel.json');
-  if (!fs.existsSync(vercelConfigPath)) {
-    throw new Error(`vercel.json not found in ${appPath}. Please create one.`);
-  }
-
-  return absolutePath;
-}
-
-function deploy({ appPath, env = 'production' }) {
-  const absolutePath = validateAppPath(appPath);
   const app = path.basename(appPath);
-  console.info(`\n📦 Processing ${app}...\n`);
 
-  // Load env file
-  const envPath = path.join(absolutePath, env ? `.env.${env}` : '.env.production');
-  const envConfig = config({ path: envPath });
-
-  if (envConfig.error) {
-    throw new Error(`Error loading env file: ${envConfig.error.message}`);
-  }
-
-  // Convert env to CLI arguments
-  const envArgs = Object.entries(envConfig.parsed || {})
-    .map(([key, value]) => `--env ${key}=${value}`)
-    .join(' ');
-
-  console.info(`🔑 Using env file: ${envPath}`, absolutePath, envArgs);
+  console.info(`\n📦 Processing ${app}...`);
 
   try {
-    // Run build using Turbo
-    console.info('🛠️ Building...');
-    runCommand(`pnpm run build --filter=${app}...`);
+    console.info('📄 Loading environment variables...');
+    const envVars = loadEnvFile(absolutePath, envFileName);
 
-    // Build deploy command
+    const envArgs = Object.entries(envVars)
+      .map(([key, value]) => `--env ${key}=${value}`)
+      .join(' ');
+
+    console.info('🛠️ Building...');
+    runWithEnv('vercel build', absolutePath, envVars);
+
+    console.info('🚀 Deploying...');
+    const isProd = envFileName === 'production' || !envFileName;
     const deployCommand = [
-      'vercel',
-      'link',
-      '--repo',
+      'vercel deploy',
+      '--prebuilt',
+      isProd ? '--prod' : '',
+      `--token=${process.env.VERCEL_TOKEN}`,
       '--yes',
-      `--token ${process.env.VERCEL_TOKEN}`,
-      '&&',
-      'vercel',
-      '--prod',
-      `--token ${process.env.VERCEL_TOKEN}`,
-      '--yes',
-      `--cwd ${appPath}`,
-      '--build-env NEXT_TELEMETRY_DISABLED=1',
       envArgs,
-      '--debug',
     ]
       .filter(Boolean)
       .join(' ');
 
-    // Deploy
-    console.info('🚀 Deploying...');
-    const output = runCommand(deployCommand);
+    runWithEnv(deployCommand, absolutePath, envVars);
 
     console.info(`✅ ${app} deployed successfully!\n`);
-    return output.toString();
   } catch (error) {
     console.error(`❌ Failed to process ${app}:`, error);
     throw error;
   }
 }
 
-// Handle CLI arguments
-const args = process.argv.slice(2);
-const appPath = args.find(arg => arg.startsWith('--appPath='))?.split('=')[1];
-const env = args.includes('--envFile');
+if (require.main === module) {
+  const args = process.argv.slice(2);
+  const appPath = args.find(arg => arg.startsWith('--appPath='))?.split('=')[1];
+  const envFileName = args.includes('--envFileName');
 
-if (!appPath) {
-  throw new Error('--appPath is required');
+  if (!appPath) {
+    throw new Error('--appPath is required');
+  }
+
+  deploy({ appPath, envFileName }).catch(error => {
+    console.error('Deploy failed:', error);
+    process.exit(1);
+  });
 }
-
-deploy({ appPath, env }).catch(error => {
-  console.error('Deploy failed:', error);
-  process.exit(1);
-});
 
 export { deploy };
