@@ -56,7 +56,8 @@ export const getOrganizationByHostMiddleware = async (referrer: string, origin: 
     const organization = (await organizationResponse.json()) as HTTPResponse<HTTPPagination<IOrganization>>;
 
     return organization?.data?.results?.[0];
-  } catch {
+  } catch (error) {
+    console.error('----------------------error---------------------', error);
     return undefined;
   }
 };
