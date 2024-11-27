@@ -12,6 +12,7 @@ export const dashboardMessages = {
       email: 'Email',
       notification: 'Notification',
       pages: 'Pages',
+      themes: 'Theme',
     },
     courses: {
       courseManagement: 'Course Management',

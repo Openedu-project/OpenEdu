@@ -7,7 +7,11 @@ export function DashboardLayout({
   children,
   sidebarItems,
   pathnamesNoSidebar = [],
-}: { children: ReactNode; sidebarItems?: SidebarItem[]; pathnamesNoSidebar?: string[] }) {
+}: {
+  children: ReactNode;
+  sidebarItems?: SidebarItem[];
+  pathnamesNoSidebar?: string[];
+}) {
   return (
     <div className="flex h-dvh flex-col bg-background">
       <Header sidebarItems={sidebarItems} pathnamesNoSidebar={pathnamesNoSidebar}>
@@ -19,7 +23,7 @@ export function DashboardLayout({
             items={sidebarItems}
             maxDepth={2}
             pathnamesNoSidebar={pathnamesNoSidebar}
-            className="hidden md:block"
+            className="hidden md:flex"
           />
         )}
         <div className="scrollbar flex w-full flex-col overflow-y-auto p-4 pt-0">{children}</div>
