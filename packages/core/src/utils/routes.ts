@@ -32,7 +32,10 @@ export const ADMIN_ROUTES = {
   languageSettings: '/admin/site-settings/languages',
   pagesSettings: '/admin/site-settings/pages',
   themesSettings: '/admin/site-settings/themes',
+<<<<<<< HEAD
   themeDetail: (themeName: string) => `/admin/themes/${themeName}`,
+=======
+>>>>>>> 497b945 (feat: add collapse sidebar fe#2)
 } as const;
 
 export const CREATOR_ROUTES = {

@@ -164,8 +164,12 @@ const SidebarItem: FC<SidebarItemProps> = ({ item, depth, maxDepth, pathname, is
 export const Sidebar: FC<SidebarProps> = ({ items, maxDepth = 2, pathnamesNoSidebar = [], className, isDrawer }) => {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
+<<<<<<< HEAD
 
   const noSidebar = pathnamesNoSidebar?.some(path => pathname.includes(path));
+=======
+  const noSidebar = pathnamesNoSidebar.includes(pathname);
+>>>>>>> 497b945 (feat: add collapse sidebar fe#2)
 
   if (noSidebar) {
     return null;
