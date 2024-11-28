@@ -14,6 +14,6 @@
     "utils": "#utils/cn",
     "components": "@/components",
     "hooks": "#hooks",
-    "ui": "src/shadcn"
+    "ui": "#shadcn"
   }
 }

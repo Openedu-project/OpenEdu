@@ -5,14 +5,14 @@ import { type VariantProps, cva } from 'class-variance-authority';
 import { PanelLeft } from 'lucide-react';
 import React from 'react';
 
-import { Button } from 'src/shadcn/button';
-import { Input } from 'src/shadcn/input';
-import { Separator } from 'src/shadcn/separator';
-import { Sheet, SheetContent } from 'src/shadcn/sheet';
-import { Skeleton } from 'src/shadcn/skeleton';
-import { Tooltip, type TooltipContent, TooltipProvider, TooltipTrigger } from 'src/shadcn/tooltip';
-import { useIsMobile } from '#hooks/use-mobile';
+import { Button } from '#shadcn/button';
+import { Input } from '#shadcn/input';
+import { Separator } from '#shadcn/separator';
+import { Sheet, SheetContent } from '#shadcn/sheet';
+import { Skeleton } from '#shadcn/skeleton';
+import { Tooltip, type TooltipContent, TooltipProvider, TooltipTrigger } from '#shadcn/tooltip';
 import { cn } from '#utils/cn';
+import { useIsMobile } from './use-mobile';
 
 const SIDEBAR_COOKIE_NAME = 'sidebar:state';
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
