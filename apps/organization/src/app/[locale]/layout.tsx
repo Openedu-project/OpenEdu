@@ -35,8 +35,8 @@ export default async function RootLayout({
     .join(' ');
 
   return (
-    <html lang={locale ?? 'en'} suppressHydrationWarning>
-      <body className={`${fontVariables} scrollbar antialiased`}>
+    <html lang={locale ?? 'en'} suppressHydrationWarning className={fontVariables}>
+      <body className="scrollbar font-primary antialiased">
         <Provider messages={messages ?? {}} locale={locale}>
           {children}
           <Toaster />
