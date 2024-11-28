@@ -29,12 +29,19 @@ TooltipContent.displayName = Content.displayName;
 const Tooltip = ({
   content,
   children,
+  contentProps,
   ...props
-}: { content: ReactNode; children: ReactNode } & ComponentPropsWithoutRef<typeof RadixTooltip>) => (
+}: {
+  content: ReactNode;
+  children: ReactNode;
+  contentProps?: ComponentPropsWithoutRef<typeof TooltipContent>;
+} & ComponentPropsWithoutRef<typeof RadixTooltip>) => (
   <TooltipProvider>
     <RadixTooltip {...props}>
       <TooltipTrigger asChild>{children}</TooltipTrigger>
-      <TooltipContent sideOffset={0}>{content}</TooltipContent>
+      <TooltipContent sideOffset={0} {...contentProps}>
+        {content}
+      </TooltipContent>
     </RadixTooltip>
   </TooltipProvider>
 );
