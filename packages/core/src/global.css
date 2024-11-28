@@ -36,6 +36,9 @@
     --success-foreground: 123 58% 93%;
     --info: 209 100% 44%;
     --info-foreground: 208 100% 93%;
+    --font-primary: var(--font-inter);
+    --font-secondary: var(--font-montserrat);
+    --font-sub: var(--font-roboto-mono);
   }
 
   .dark {
@@ -70,6 +73,9 @@
     --success-foreground: 122 59% 41%;
     --info: 208 100% 93%;
     --info-foreground: 209 100% 44%;
+    --font-primary: var(--font-inter);
+    --font-secondary: var(--font-montserrat);
+    --font-sub: var(--font-roboto-mono);
   }
 }
 

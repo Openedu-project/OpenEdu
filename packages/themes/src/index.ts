@@ -1,5 +1,6 @@
 // 'use client';
 import { AcademiaAboutUs, AcademiaHomePage } from './academia';
+import { fonts } from './fonts';
 import { ScholarAboutUs, ScholarHomePage } from './scholar';
 
 export const THEMES = {
@@ -86,3 +87,5 @@ export const THEMES = {
 } as const;
 
 export type ThemeName = keyof typeof THEMES;
+
+export { fonts };

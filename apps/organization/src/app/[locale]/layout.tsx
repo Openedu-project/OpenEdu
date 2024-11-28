@@ -1,21 +1,22 @@
 import type { Metadata } from 'next';
-import localFont from 'next/font/local';
+// import localFont from 'next/font/local';
 
+import { fonts } from '@oe/themes';
 import { Provider } from '@oe/ui/common/providers';
 import { Toaster } from '@oe/ui/shadcn/sonner';
 import { getLocale, getMessages } from 'next-intl/server';
 import type { ReactNode } from 'react';
 
-const geistSans = localFont({
-  src: './fonts/GeistVF.woff',
-  variable: '--font-geist-sans',
-  weight: '100 900',
-});
-const geistMono = localFont({
-  src: './fonts/GeistMonoVF.woff',
-  variable: '--font-geist-mono',
-  weight: '100 900',
-});
+// const geistSans = localFont({
+//   src: './fonts/GeistVF.woff',
+//   variable: '--font-geist-sans',
+//   weight: '100 900',
+// });
+// const geistMono = localFont({
+//   src: './fonts/GeistMonoVF.woff',
+//   variable: '--font-geist-mono',
+//   weight: '100 900',
+// });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -29,9 +30,13 @@ export default async function RootLayout({
 }>) {
   const [locale, messages] = await Promise.all([getLocale(), getMessages()]);
 
+  const fontVariables = Object.values(fonts)
+    .map(font => font.variable)
+    .join(' ');
+
   return (
     <html lang={locale ?? 'en'} suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} scrollbar antialiased`}>
+      <body className={`${fontVariables} scrollbar antialiased`}>
         <Provider messages={messages ?? {}} locale={locale}>
           {children}
           <Toaster />

@@ -216,7 +216,7 @@ export function AutocompeteMultiple<T extends OptionType | string>({
                 handleClearAll();
               }}
               variant="ghost"
-              className="h-10 w-10 shrink-0 p-0"
+              className="mr-[2px] h-10 w-10 shrink-0 p-0"
             >
               <X size={16} />
             </Button>

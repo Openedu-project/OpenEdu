@@ -135,6 +135,9 @@ importers:
       '@oe/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
+      '@oe/themes':
+        specifier: workspace:*
+        version: link:../../packages/themes
       '@oe/ui':
         specifier: workspace:*
         version: link:../../packages/ui
