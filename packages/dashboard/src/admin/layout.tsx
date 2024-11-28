@@ -1,4 +1,3 @@
-import { ADMIN_ROUTES } from '@oe/core/utils/routes';
 import { DashboardLayout } from '@oe/ui/common/layout';
 import {
   Book,
@@ -18,6 +17,7 @@ import {
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
+import { ADMIN_ROUTES } from '../../../../core/src/utils/routes';
 
 export default function Layout({ children }: { children: ReactNode }) {
   const tDashboard = useTranslations('dashboard');
@@ -113,6 +113,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           ],
         },
       ]}
+      pathnamesNoSidebar={[ADMIN_ROUTES.themesSettings]}
     >
       {children}
     </DashboardLayout>

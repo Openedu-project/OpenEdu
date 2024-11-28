@@ -8,7 +8,14 @@ export function Header({
   pathnamesNoSidebar,
   className,
   children,
-}: { sidebarItems?: SidebarItem[]; pathnamesNoSidebar?: string[]; className?: string; children?: ReactNode }) {
+  isHideAuthMenu = false,
+}: {
+  sidebarItems?: SidebarItem[];
+  pathnamesNoSidebar?: string[];
+  className?: string;
+  isHideAuthMenu?: boolean;
+  children?: ReactNode;
+}) {
   return (
     <header
       className={cn(
@@ -26,7 +33,7 @@ export function Header({
         />
       )}
       {children}
-      <AuthMenu />
+      {!isHideAuthMenu && <AuthMenu />}
     </header>
   );
 }
