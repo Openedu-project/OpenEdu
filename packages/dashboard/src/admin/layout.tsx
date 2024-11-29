@@ -113,7 +113,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           ],
         },
       ]}
-      pathnamesNoSidebar={[ADMIN_ROUTES.themesSettings]}
+      pathnamesNoSidebar={[`${ADMIN_ROUTES.themesSettings}/`]}
     >
       {children}
     </DashboardLayout>

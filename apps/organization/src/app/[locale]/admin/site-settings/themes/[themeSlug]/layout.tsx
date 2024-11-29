@@ -8,15 +8,18 @@ import ThemeSidebar from './_components/theme-sidebar';
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex h-screen flex-col">
-      <Header className="fixed top-0 z-50 h-16 supports-[backdrop-filter]:bg-background" isHideAuthMenu>
+    <div className="flex h-screen flex-col bg-mute">
+      <Header
+        className="fixed top-0 z-50 h-[var(--header-height)] supports-[backdrop-filter]:bg-background"
+        isHideAuthMenu
+      >
         <ThemeHeaderContent />
       </Header>
 
-      <SidebarProvider>
+      <SidebarProvider className="p-0">
         <ThemeSidebar />
 
-        <main className="mt-2">
+        <main className="mt-4 w-full rounded-lg bg-background p-4 ">
           <SidebarTrigger />
           {children}
         </main>

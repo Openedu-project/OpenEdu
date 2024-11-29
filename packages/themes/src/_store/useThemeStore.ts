@@ -1,5 +1,6 @@
 import type { TThemeTypeConfig } from '@oe/themes/types';
 import { create } from 'zustand';
+import type { ThemeName } from '../index';
 
 interface ThemeStore {
   // For system-wide settings (Components/SEO)
@@ -10,11 +11,14 @@ interface ThemeStore {
   selectedPage: string;
   // selectedPageSection: string | null;
 
+  selectedTheme: ThemeName | null;
+
   // Actions
   setSelectedMenu: (menu: TThemeTypeConfig) => void;
   setSelectedSettingKey: (key: string) => void;
   setSelectedPage: (page: string) => void;
   // setSelectedPageSection: (section: string) => void;
+  setSelectedTheme: (theme: ThemeName) => void;
 }
 
 export const useThemeStore = create<ThemeStore>(set => ({
@@ -22,6 +26,7 @@ export const useThemeStore = create<ThemeStore>(set => ({
   selectedSettingKey: null,
   selectedPage: 'homepage',
   // selectedPageSection: null,
+  selectedTheme: null,
 
   setSelectedMenu: menu =>
     set({
@@ -36,4 +41,5 @@ export const useThemeStore = create<ThemeStore>(set => ({
       // selectedPageSection: null, // Reset section when page changes
     }),
   // setSelectedPageSection: section => set({ selectedPageSection: section }),
+  setSelectedTheme: selectedTheme => set({ selectedTheme }),
 }));

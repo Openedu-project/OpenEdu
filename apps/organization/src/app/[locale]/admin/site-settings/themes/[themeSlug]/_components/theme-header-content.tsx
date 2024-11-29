@@ -6,13 +6,13 @@ import { useThemeStore } from '@oe/themes/store/useThemeStore';
 import type { TThemeTypeConfig } from '@oe/themes/types';
 import { Button } from '@oe/ui/shadcn/button';
 import { CircleArrowLeft, PanelTop } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@oe/ui/shadcn/select';
 import { ToggleGroup, ToggleGroupItem } from '@oe/ui/shadcn/toggle-group';
 import { ComponentIcon, PaletteIcon, Settings } from 'lucide-react';
 
+import { Link } from '@oe/ui/common/navigation';
 import type React from 'react';
 
 const PAGE_OPTIONS = [
@@ -25,13 +25,13 @@ const PAGE_OPTIONS = [
 const TOGGLE_OPTIONS = [
   {
     value: 'page' as const,
-    label: 'Page settings',
+    label: 'Page',
     icon: PanelTop,
     ariaLabel: 'Select Page Settings',
   },
   {
     value: 'theme-setting' as const,
-    label: 'Theme settings',
+    label: 'Theme',
     icon: PaletteIcon,
     ariaLabel: 'Select Theme Settings',
   },
@@ -43,7 +43,7 @@ const TOGGLE_OPTIONS = [
   },
   {
     value: 'site-setting' as const,
-    label: 'Site settings',
+    label: 'Site',
     icon: Settings,
     ariaLabel: 'Select Site Settings',
   },
@@ -82,9 +82,14 @@ export const MenuToggleGroup: React.FC<MenuToggleGroupProps> = ({ selectedMenu, 
   return (
     <ToggleGroup type="single" value={selectedMenu} className="flex-1 justify-start" onValueChange={onMenuChange}>
       {TOGGLE_OPTIONS.map(({ value, label, icon: Icon, ariaLabel }) => (
-        <ToggleGroupItem key={value} value={value} aria-label={ariaLabel} className="flex h-[32px] gap-1">
+        <ToggleGroupItem
+          key={value}
+          value={value}
+          aria-label={ariaLabel}
+          className="flex h-[32px] gap-1 data-[state=on]:text-primary"
+        >
           <Icon size={16} />
-          <span className="hidden md:inline">{label}</span>
+          <span className="hidden md:inline ">{label}</span>
         </ToggleGroupItem>
       ))}
     </ToggleGroup>
@@ -93,7 +98,6 @@ export const MenuToggleGroup: React.FC<MenuToggleGroupProps> = ({ selectedMenu, 
 
 export default function ThemeHeaderContent() {
   const { selectedMenu, setSelectedMenu, selectedPage, setSelectedPage } = useThemeStore();
-  const router = useRouter();
 
   const handleMenuChange = useCallback(
     (value: TThemeTypeConfig) => {
@@ -101,10 +105,6 @@ export default function ThemeHeaderContent() {
     },
     [setSelectedMenu]
   );
-
-  const handleBack = useCallback(() => {
-    router.push(ADMIN_ROUTES.dashboard);
-  }, [router]);
 
   const handlePageChange = useCallback(
     (page: string) => {
@@ -115,8 +115,10 @@ export default function ThemeHeaderContent() {
 
   return (
     <>
-      <Button onClick={handleBack} title="Back to Dashboard" size="sm" variant="ghost">
-        <CircleArrowLeft focusable="false" size={20} />
+      <Button title="Back to Dashboard" size="sm" variant="ghost">
+        <Link href={ADMIN_ROUTES.themesSettings} className="border-none hover:bg-transparent">
+          <CircleArrowLeft focusable="false" size={20} />
+        </Link>
       </Button>
 
       <PageSelector selectedPage={selectedPage} onPageChange={handlePageChange} />

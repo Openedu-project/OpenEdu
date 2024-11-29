@@ -116,7 +116,7 @@ export default function ThemeContent() {
   };
 
   return (
-    <Card className="m-6">
+    <Card className="m-6 bg-background">
       <CardHeader>
         <CardTitle>{config.title}</CardTitle>
         <CardDescription>{config.description}</CardDescription>

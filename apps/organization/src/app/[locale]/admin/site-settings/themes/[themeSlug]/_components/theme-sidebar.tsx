@@ -104,7 +104,7 @@ export default function ThemeSidebar() {
   };
 
   return (
-    <Sidebar className="top-16 mt-2">
+    <Sidebar className="top-[var(--header-small-height)] bg-background p-4 md:top-[var(--header-height)]">
       <SidebarContent>
         <SidebarGroupContent>
           <SidebarMenu>{renderMenuContent()}</SidebarMenu>

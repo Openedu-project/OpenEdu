@@ -154,7 +154,8 @@ const SidebarItem: FC<SidebarItemProps> = ({ item, depth, maxDepth, pathname, is
 export const Sidebar: FC<SidebarProps> = ({ items, maxDepth = 2, pathnamesNoSidebar = [], className, isDrawer }) => {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const noSidebar = pathnamesNoSidebar.includes(pathname);
+
+  const noSidebar = pathnamesNoSidebar?.some(path => pathname.includes(path));
 
   if (noSidebar) {
     return null;
