@@ -2,12 +2,12 @@ import { z } from '#utils/zod';
 
 export const loginSchema = z.object({
   email: z.string().min(1).max(100).email({
-    message: 'Please enter a valid email address.',
+    message: 'auth.signin.errors.emailInvalid',
   }),
   password: z
     .string()
     .min(8, {
-      message: 'Password must be at least 8 characters long.',
+      message: 'auth.signin.errors.passwordLength',
     })
     .max(100),
 });

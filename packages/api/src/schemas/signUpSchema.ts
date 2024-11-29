@@ -4,16 +4,16 @@ import { z } from '#utils/zod';
 export const signUpSchema = z
   .object({
     display_name: z.string().min(6, {
-      message: 'signUp.errors.usernameLength',
+      message: 'auth.signup.errors.usernameLength',
     }),
     email: z.string().email({
-      message: 'Please enter a valid email address.',
+      message: 'auth.signup.errors.emailInvalid',
     }),
     password: z.string().superRefine((val, ctx) => {
       if (val.length < 8 || !PASSWORD_REGEX.test(val)) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: 'signUp.errors.passwordInvalid',
+          message: 'auth.signup.errors.passwordInvalid',
         });
       }
     }),
@@ -21,16 +21,16 @@ export const signUpSchema = z
       if (val.length < 8 || !PASSWORD_REGEX.test(val)) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: 'signUp.errors.passwordInvalid',
+          message: 'auth.signup.errors.passwordInvalid',
         });
       }
     }),
     isAgree: z.boolean().refine(val => val === true, {
-      message: 'signUp.errors.agreeInvalid',
+      message: 'auth.signup.errors.agreeInvalid',
     }),
   })
   .refine(data => data.password === data.confirmPassword, {
-    message: 'signUp.errors.passwordMissMatch',
+    message: 'auth.signup.errors.passwordMissMatch',
     path: ['confirmPassword'],
   });
 

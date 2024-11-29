@@ -2,25 +2,7 @@ import { getPermissionMyAccessService } from '@oe/api/services/permissions';
 import { ADMIN_ROUTES } from '@oe/core/utils/routes';
 import { checkSidebarPermissions } from '@oe/core/utils/sidebar-menu';
 import { DashboardLayout } from '@oe/ui/common/layout';
-import {
-  Book,
-  BookOpen,
-  BookUp,
-  File,
-  FileLock,
-  Globe,
-  House,
-  Mail,
-  Network,
-  Palette,
-  PencilLine,
-  Settings,
-  Settings2,
-  StickyNote,
-  User,
-  UserCog,
-  Users,
-} from 'lucide-react';
+import { Book, BookOpen, BookUp, House, Network, User, UserCog, Users } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
 
@@ -82,68 +64,12 @@ export default async function Layout({ children }: { children: ReactNode }) {
           },
         ],
       },
-      {
-        id: 'site-settings',
-        label: tDashboard('siteSettings.siteSettings'),
-        icon: <Settings className="h-5 w-5" />,
-        items: [
-          {
-            id: 'general',
-            label: tDashboard('siteSettings.general'),
-            icon: <Settings2 className="h-5 w-5" />,
-            href: ADMIN_ROUTES.generalSettings,
-          },
-          {
-            id: 'emails',
-            label: tDashboard('siteSettings.email'),
-            icon: <Mail className="h-5 w-5" />,
-            href: ADMIN_ROUTES.emailSettings,
-          },
-          {
-            id: 'languages',
-            label: tDashboard('siteSettings.languages'),
-            icon: <Globe className="h-5 w-5" />,
-            href: ADMIN_ROUTES.languageSettings,
-          },
-          {
-            id: 'pages',
-            label: tDashboard('siteSettings.pages'),
-            icon: <File className="h-5 w-5" />,
-            href: ADMIN_ROUTES.pagesSettings,
-          },
-          {
-            id: 'themes',
-            label: tDashboard('siteSettings.themes'),
-            icon: <Palette className="h-5 w-5" />,
-            href: ADMIN_ROUTES.themesSettings,
-          },
-        ],
-      },
-      {
-        id: 'permission-setting',
-        label: tDashboard('permissionSettings.title'),
-        icon: <FileLock className="h-5 w-5" />,
-        items: [
-          {
-            id: 'permission-action',
-            label: tDashboard('permissionSettings.action'),
-            icon: <PencilLine className="h-5 w-5" />,
-            href: ADMIN_ROUTES.permissionActionSettings,
-          },
-          {
-            id: 'permission-pages',
-            label: tDashboard('permissionSettings.pages'),
-            icon: <StickyNote className="h-5 w-5" />,
-            href: ADMIN_ROUTES.permissionPageSettings,
-          },
-          {
-            id: 'permission-role',
-            label: tDashboard('permissionSettings.role'),
-            icon: <UserCog className="h-5 w-5" />,
-            href: ADMIN_ROUTES.permissionRoleSettings,
-          },
-        ],
-      },
+      // {
+      //   id: 'permission-setting',
+      //   label: tDashboard('permissionSettings.title'),
+      //   icon: <FileLock className="h-5 w-5" />,
+      //   href: ADMIN_ROUTES.permissionRoleSettings,
+      // },
     ],
     permissions ?? []
   );

@@ -1,4 +1,4 @@
-import AdminLayout from '@oe/dashboard/admin/layout';
+import AdminLayout from '@oe/dashboard/admin/org-layout';
 import type { ReactNode } from 'react';
 
 export default function Layout({ children }: { children: ReactNode }) {
