@@ -23,7 +23,10 @@ export const AUTH_ROUTES = {
 
 export const ADMIN_ROUTES = {
   dashboard: '/admin',
-  allUsers: '/admin/users',
+  courses: '/admin/course/list',
+  courseCategories: '/admin/course/categories',
+  coursesReviewing: '/admin/course/reviewing',
+  allUsers: '/admin/user/list',
   emailSettings: '/admin/site-settings/emails',
   generalSettings: '/admin/site-settings/general',
   languageSettings: '/admin/site-settings/languages',

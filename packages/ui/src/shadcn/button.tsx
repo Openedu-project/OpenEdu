@@ -6,7 +6,7 @@ import { type ButtonHTMLAttributes, type ReactNode, forwardRef } from 'react';
 import { cn } from '#utils/cn';
 
 const buttonVariants = cva(
-  'giant-iheading-semibold16 select-none inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-normal ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'select-none inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-normal ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
@@ -29,7 +29,7 @@ const buttonVariants = cva(
           'border border-border-negative-600 text-bg-negative-600 hover:bg-bg-base-canvas hover:border-bg-negative-500 hover:text-bg-negative-500',
       },
       size: {
-        default: 'h-12 px-4 py-2',
+        default: 'h-10 px-4 py-2',
         superLarge: `h-[56px]
           rounded-[4px] md:rounded-[8px] lg:rounded-[12px]
           px-[16px] py-[12px] lg:px-[32px] lg:py-[32px]`,

@@ -1,5 +1,5 @@
-export const dashboardSidebarMessages = {
-  dashboardSidebar: {
+export const dashboardMessages = {
+  dashboard: {
     dashboard: 'Dashboard',
     userManagement: 'User Management',
     allUsers: 'All Users',
@@ -12,6 +12,12 @@ export const dashboardSidebarMessages = {
       email: 'Email',
       notification: 'Notification',
       pages: 'Pages',
+    },
+    courses: {
+      courseManagement: 'Course Management',
+      courses: 'Courses',
+      courseCategories: 'Categories',
+      coursesReviewing: 'Reviewing',
     },
   },
 };

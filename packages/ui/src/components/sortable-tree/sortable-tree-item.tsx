@@ -7,6 +7,7 @@ import type { UniqueIdentifier } from '@dnd-kit/core';
 import type { AnimateLayoutChanges } from '@dnd-kit/sortable';
 import type { CSSProperties, ReactNode } from 'react';
 
+import { DeleteButton } from '#components/delete-button';
 import { Button } from '#shadcn/button';
 import { Checkbox } from '#shadcn/checkbox';
 import { Input } from '#shadcn/input';
@@ -28,8 +29,10 @@ interface Props {
   isInvalid?: boolean;
   dragable?: boolean;
   isSelected?: boolean;
+  deleteModalTitle?: string;
+  deleteModalDescription?: string;
   onCollapse?: () => void;
-  onRemove?: () => void;
+  onRemove?: (onClose?: () => void) => void;
   onCheckboxChange?: (id: UniqueIdentifier, checked: boolean) => void;
   onEdit?: (id: UniqueIdentifier) => void;
   onChange?: (id: UniqueIdentifier, value: string) => void;
@@ -44,21 +47,23 @@ export function SortableTreeItemNotMemoized({
   depth,
   indentationWidth,
   collapsed,
-  onCollapse,
-  onRemove,
   title,
   children,
   checkboxState,
   checkable = false,
+  deleteModalTitle,
+  deleteModalDescription,
+  isEditing = false,
+  isInvalid = false,
+  isSelected = false,
+  dragable,
+  onCollapse,
+  onRemove,
   onCheckboxChange,
   onEdit,
   onChange,
   onSelect,
   onAddItem,
-  isEditing = false,
-  isInvalid = false,
-  isSelected = false,
-  dragable,
   ...props
 }: Props) {
   const {
@@ -85,7 +90,7 @@ export function SortableTreeItemNotMemoized({
     <div
       {...attributes}
       className={cn(
-        'flex items-center p-2',
+        'flex items-center gap-1 p-2',
         // clone && 'inline-block pointer-events-none pl-[10px] pt-[5px]',
         isDragging && 'opacity-50',
         // isDragging && indicator && 'opacity-100 relative z-[1] mb-[-1px]',
@@ -99,13 +104,12 @@ export function SortableTreeItemNotMemoized({
       onKeyDown={() => {
         void 0;
       }}
-      aria-hidden
       {...props}
     >
       {children ?? (
         <>
           {dragable && (
-            <Button variant="ghost" size="icon" className="cursor-grab" {...listeners}>
+            <Button variant="ghost" size="icon" className="h-8 w-8 cursor-grab" {...listeners}>
               <GripVertical className="h-4 w-4" />
             </Button>
           )}
@@ -127,11 +131,11 @@ export function SortableTreeItemNotMemoized({
             </Button>
           )}
           {isEditing ? (
-            <div className="flex flex-col">
+            <div className="flex flex-grow flex-col">
               <Input
                 value={title}
                 onChange={e => onChange?.(id, e.target.value)}
-                className={`w-40 ${isInvalid ? 'border-red-500' : ''}`}
+                className={`w-full ${isInvalid ? 'border-red-500' : ''}`}
               />
               {/* {isInvalid && <span className="text-red-500 text-xs mt-1">This field is required</span>} */}
             </div>
@@ -139,19 +143,21 @@ export function SortableTreeItemNotMemoized({
             <span className="flex-grow overflow-hidden text-ellipsis whitespace-nowrap pl-2">{title}</span>
           )}
           {onAddItem && (
-            <Button variant="ghost" size="icon" onClick={() => onAddItem?.(id)} className="ml-auto">
+            <Button variant="ghost" size="icon" onClick={() => onAddItem?.(id)} className="ml-auto h-8 w-8">
               <Plus className="h-4 w-4" />
             </Button>
           )}
           {onEdit && (
-            <Button variant="ghost" size="icon" onClick={() => onEdit?.(id)} className="mr-1">
+            <Button variant="ghost" size="icon" onClick={() => onEdit?.(id)} className="mr-1 h-8 w-8">
               <Edit className="h-4 w-4" />
             </Button>
           )}
           {onRemove && (
-            <Button variant="ghost" size="icon" onClick={onRemove}>
-              <Trash className="h-4 w-4" />
-            </Button>
+            <DeleteButton title={deleteModalTitle} description={deleteModalDescription} onDelete={onRemove}>
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Trash className="h-4 w-4" />
+              </Button>
+            </DeleteButton>
           )}
         </>
       )}

@@ -1,6 +1,6 @@
-import AdminLayout from '@oe/dashboard/admin/home-page/layout';
+import CreatorLayout from '@oe/dashboard/creator/layout';
 import type { ReactNode } from 'react';
 
 export default function Layout({ children }: { children: ReactNode }) {
-  return <AdminLayout>{children}</AdminLayout>;
+  return <CreatorLayout>{children}</CreatorLayout>;
 }

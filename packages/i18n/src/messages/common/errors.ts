@@ -31,6 +31,7 @@ export const errorMessages = {
       description: 'You are not authorized to access this page.',
     },
     initializationFailed: 'Initialization failed',
+    fillContentSaving: 'Please fill in all items before saving.',
     '200': 'Ok',
     '201': 'Ok',
     '204': 'Ok',

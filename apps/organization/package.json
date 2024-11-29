@@ -21,7 +21,7 @@
     "@oe/themes": "workspace:*",
     "@oe/ui": "workspace:*",
     "@oe/dashboard": "workspace:*",
-    "lucide-react": "^0.460.0",
+    "lucide-react": "0.462.0",
     "next": "15.0.4-canary.20",
     "next-intl": "3.25.1",
     "react": "19.0.0-rc-6f0dc294-20241119",

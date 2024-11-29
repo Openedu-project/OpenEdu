@@ -13,6 +13,7 @@ export const generalMessages = {
     no: 'No',
     confirmDelete: 'Are you sure you want to delete this item?',
     submit: 'Submit',
+    submitting: 'Submitting...',
     reset: 'Reset',
     apply: 'Apply',
     delete: 'Delete',
@@ -48,5 +49,7 @@ export const generalMessages = {
     contact: 'Contact',
     noItemFound: 'No item found.',
     default: 'Default',
+    deleteModalTitle: 'Delete item',
+    deleteModalDescription: 'Are you sure you want to delete this item?',
   },
 };

@@ -1,11 +1,25 @@
 import { ADMIN_ROUTES } from '@oe/core/utils/routes';
 import { DashboardLayout } from '@oe/ui/common/layout';
-import { File, Globe, House, Mail, Settings, Settings2, User, UserCog, Users } from 'lucide-react';
+import {
+  Book,
+  BookOpen,
+  BookUp,
+  File,
+  Globe,
+  House,
+  Mail,
+  Network,
+  Settings,
+  Settings2,
+  User,
+  UserCog,
+  Users,
+} from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 
 export default function Layout({ children }: { children: ReactNode }) {
-  const tDashboard = useTranslations('dashboardSidebar');
+  const tDashboard = useTranslations('dashboard');
   return (
     <DashboardLayout
       sidebarItems={[
@@ -15,6 +29,31 @@ export default function Layout({ children }: { children: ReactNode }) {
           icon: <House className="h-5 w-5" />,
           href: ADMIN_ROUTES.dashboard,
           isRoot: true,
+        },
+        {
+          id: 'course-management',
+          label: tDashboard('courses.courseManagement'),
+          icon: <Book className="h-5 w-5" />,
+          items: [
+            {
+              id: 'courses',
+              label: tDashboard('courses.courses'),
+              icon: <BookOpen className="h-5 w-5" />,
+              href: ADMIN_ROUTES.courses,
+            },
+            {
+              id: 'course-categories',
+              label: tDashboard('courses.courseCategories'),
+              icon: <Network className="h-5 w-5" />,
+              href: ADMIN_ROUTES.courseCategories,
+            },
+            {
+              id: 'courses-reviewing',
+              label: tDashboard('courses.coursesReviewing'),
+              icon: <BookUp className="h-5 w-5" />,
+              href: ADMIN_ROUTES.coursesReviewing,
+            },
+          ],
         },
         {
           id: 'users',

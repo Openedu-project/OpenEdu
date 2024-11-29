@@ -7,6 +7,7 @@ import { Form } from '#shadcn/form';
 
 import type { z } from '@oe/api/utils/zod';
 import type { DialogProps } from '@radix-ui/react-dialog';
+import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import type { DefaultValues, UseFormReturn } from 'react-hook-form';
 
@@ -33,8 +34,8 @@ interface BaseModalProps extends Omit<DialogProps, 'children'> {
 
 interface FormModalProps<TSchema extends FormSchema> extends BaseModalProps {
   children: (form: UseFormReturn<z.infer<TSchema>>) => ReactNode;
-  onSubmit: (data: z.infer<TSchema>) => Promise<void>;
-  validationSchema: TSchema;
+  onSubmit?: (data: z.infer<TSchema>) => Promise<void>;
+  validationSchema?: TSchema;
   defaultValues?: DefaultValues<z.infer<TSchema>>;
 }
 
@@ -56,13 +57,13 @@ const FormModalContent = <TSchema extends FormSchema>({
   onClose,
 }: FormModalProps<TSchema>) => {
   const form = useForm<z.infer<TSchema>>({
-    resolver: zodResolver(validationSchema),
-    defaultValues: defaultValues || (validationSchema.partial().parse({}) as DefaultValues<z.infer<TSchema>>),
+    resolver: validationSchema ? zodResolver(validationSchema as TSchema) : undefined,
+    defaultValues: defaultValues || (validationSchema?.partial().parse({}) as DefaultValues<z.infer<TSchema>>),
   });
 
   const handleSubmit = async (data: z.infer<TSchema>) => {
     try {
-      await onSubmit(data);
+      await onSubmit?.(data);
       onClose?.();
     } catch (error) {
       console.error('Form submission error:', error);
@@ -100,6 +101,7 @@ const renderButtons = (
   isFormModal: boolean,
   onClose?: () => void
 ) => {
+  const tGeneral = useTranslations('general');
   if (buttons && buttons.length > 0) {
     return buttons.map(button => (
       <Button
@@ -118,12 +120,12 @@ const renderButtons = (
     <>
       {onClose && (
         <Button type="button" variant="outline" onClick={onClose}>
-          Close
+          {tGeneral('close')}
         </Button>
       )}
       {isFormModal && (
         <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Submitting...' : 'Submit'}
+          {isSubmitting ? tGeneral('submitting') : tGeneral('submit')}
         </Button>
       )}
     </>

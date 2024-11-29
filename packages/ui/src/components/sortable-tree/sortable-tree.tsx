@@ -28,7 +28,9 @@ import type {
 } from '@dnd-kit/core';
 import type { FlattenedItem, SensorContext, TreeItem, TreeItems } from './types';
 
+import { useTranslations } from 'next-intl';
 import { Button } from '#shadcn/button';
+import { Input } from '#shadcn/input';
 import { sortableTreeKeyboardCoordinates } from './keyboard-coordinates';
 import { SortableTreeItem } from './sortable-tree-item';
 import {
@@ -80,13 +82,17 @@ export interface ITreeProps {
   removable?: boolean;
   dragable?: boolean;
   checkable?: boolean;
+  searchable?: boolean;
   addParentButtonLabel?: string;
   newParentDefaultLabel?: string;
   newItemDefaultLabel?: string;
   saveButtonLabel?: string;
   selectedId?: string;
+  deleteModalTitle?: string;
+  deleteModalDescription?: string;
   onChange?: (items: TreeItems) => void;
-  onSave?: (items: TreeItems) => void;
+  onSave?: (items: TreeItems) => Promise<void>;
+  onDelete?: (id: UniqueIdentifier) => Promise<void>;
   onSelect?: (item: TreeItem) => void;
   renderItem?: (item: TreeItem) => ReactNode;
 }
@@ -101,20 +107,25 @@ export function SortableTree({
   removable,
   dragable,
   checkable,
+  searchable,
   newParentDefaultLabel = 'New Parent',
   newItemDefaultLabel = 'New Item',
   addParentButtonLabel,
   saveButtonLabel,
+  deleteModalTitle,
+  deleteModalDescription,
   selectedId,
   onChange,
   onSave,
+  onDelete,
   onSelect,
   renderItem,
 }: ITreeProps) {
+  const tGeneral = useTranslations('general');
+  const tErrors = useTranslations('errors');
   const id = useId();
   const [editingId, setEditingId] = useState<UniqueIdentifier | null>(null);
   const [invalidInputs, setInvalidInputs] = useState<Set<UniqueIdentifier>>(new Set());
-  // const [items, setItems] = useState(() => defaultItems);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [overId, setOverId] = useState<UniqueIdentifier | null>(null);
   const [offsetLeft, setOffsetLeft] = useState(0);
@@ -123,15 +134,47 @@ export function SortableTree({
     overId: UniqueIdentifier;
   } | null>(null);
   const [selectedItems, setSelectedItems] = useState<Set<UniqueIdentifier>>(new Set());
+  const [searchValue, setSearchValue] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
+
+  const filteredItems = useMemo(() => {
+    if (!searchValue.trim()) {
+      return items;
+    }
+
+    const filterTreeItems = (items: TreeItems): TreeItems => {
+      return items.reduce((acc, item) => {
+        const matchesSearch = item.title.toLowerCase().includes(searchValue.toLowerCase());
+        let filteredChildren: TreeItems = [];
+
+        if (item.children) {
+          filteredChildren = filterTreeItems(item.children);
+        }
+
+        if (matchesSearch || filteredChildren.length > 0) {
+          acc.push({
+            ...item,
+            children: filteredChildren,
+            collapsed: false,
+          });
+        }
+
+        return acc;
+      }, [] as TreeItems);
+    };
+
+    return filterTreeItems(items);
+  }, [items, searchValue]);
 
   const flattenedItems = useMemo(() => {
-    const flattenedTree = flattenTree(items);
+    const flattenedTree = flattenTree(filteredItems);
     const collapsedItems = flattenedTree
       .filter(({ children, collapsed }) => collapsed && (children?.length ?? 0) > 0)
       .map(({ id }) => id);
 
     return removeChildrenOf(flattenedTree, activeId ? [activeId, ...collapsedItems] : collapsedItems);
-  }, [activeId, items]);
+  }, [activeId, filteredItems]);
+
   const projected =
     activeId && overId ? getProjection(flattenedItems, activeId, overId, offsetLeft, indentationWidth) : null;
   const sensorContext: SensorContext = useRef({
@@ -157,8 +200,11 @@ export function SortableTree({
     if (checkable && selectedItems.size === 0) {
       return true;
     }
+    if (items.length === 0) {
+      return true;
+    }
     return false;
-  }, [invalidInputs, checkable, selectedItems]);
+  }, [invalidInputs, checkable, selectedItems, items]);
 
   useEffect(() => {
     sensorContext.current = {
@@ -245,8 +291,17 @@ export function SortableTree({
     document.body.style.setProperty('cursor', '');
   };
 
-  const handleRemove = (id: UniqueIdentifier) => {
+  const handleRemove = async (id: UniqueIdentifier, onClose?: () => void) => {
+    if (invalidInputs.has(id)) {
+      setInvalidInputs(prev => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
+    }
     onChange?.(removeItem(items, id));
+    await onDelete?.(id);
+    onClose?.();
   };
 
   const handleCollapse = useCallback(
@@ -396,7 +451,6 @@ export function SortableTree({
             } else if (!someDescendantsSelected) {
               next.delete(parentItem.id);
             }
-            // If some but not all descendants are selected, parent remains in its current state
 
             currentItem = parentItem;
           } else {
@@ -418,10 +472,8 @@ export function SortableTree({
       };
 
       if (parentId === null) {
-        // Add as a root item
         onChange?.([...items, newItem]);
       } else {
-        // Add as a child item
         const childItem = () => {
           const updatedItems = JSON.parse(JSON.stringify(items)) as TreeItems;
           const addChildToParent = (items: TreeItems): boolean => {
@@ -443,7 +495,6 @@ export function SortableTree({
 
         onChange?.(childItem());
       }
-      // Start editing the new item
       setEditingId(newItem.id);
     },
     [items, newItemDefaultLabel, onChange]
@@ -466,7 +517,6 @@ export function SortableTree({
       });
 
       onChange?.(updatedItems);
-      // Validate input
       if (value.trim() === '') {
         setInvalidInputs(prev => new Set(prev).add(id));
       } else {
@@ -491,7 +541,7 @@ export function SortableTree({
     setEditingId(newItem.id);
   }, [items, newParentDefaultLabel, onChange]);
 
-  const handleSave = useCallback(() => {
+  const handleSave = useCallback(async () => {
     const validateItems = (items: TreeItems): boolean => {
       for (const item of items) {
         if (item.title.trim() === '') {
@@ -506,9 +556,7 @@ export function SortableTree({
     };
 
     if (!validateItems(items)) {
-      toast.error('Please fill in all selected items before saving.', {
-        className: '!text-destructive',
-      });
+      toast.error(tErrors('fillContentSaving'));
       return;
     }
 
@@ -530,15 +578,39 @@ export function SortableTree({
 
       const selectedTreeItems = filterSelectedItemsWithParents(items);
 
-      onSave?.(selectedTreeItems);
+      setIsSaving(true);
+      await onSave?.(selectedTreeItems);
+      setIsSaving(false);
     } else {
-      // If no checkbox, save all items
-      onSave?.(items);
+      setIsSaving(true);
+      await onSave?.(items);
+      setIsSaving(false);
     }
-  }, [items, selectedItems, checkable, onSave]);
+  }, [items, selectedItems, checkable, onSave, tErrors]);
 
   return (
     <>
+      <div className="mb-4 flex flex-col gap-2 md:flex-row md:items-center">
+        {searchable && (
+          <Input
+            placeholder={tGeneral('search')}
+            value={searchValue}
+            onChange={e => setSearchValue(e.target.value)}
+            className="order-2 mr-auto max-w-sm md:order-1"
+          />
+        )}
+        {(addParentButtonLabel || saveButtonLabel) && (
+          <div className="order-1 flex gap-2">
+            {addParentButtonLabel && <Button onClick={handleAddParent}>{addParentButtonLabel}</Button>}
+            {saveButtonLabel && onSave && (
+              <Button onClick={handleSave} disabled={isSaveDisabled || isSaving} loading={isSaving}>
+                {saveButtonLabel}
+              </Button>
+            )}
+          </div>
+        )}
+      </div>
+
       <DndContext
         accessibility={{ announcements }}
         sensors={sensors}
@@ -560,7 +632,8 @@ export function SortableTree({
                 title={item.title}
                 depth={item.id === activeId && projected ? projected.depth : item.depth}
                 indentationWidth={indentationWidth}
-                // indicator={indicator}
+                deleteModalTitle={deleteModalTitle}
+                deleteModalDescription={deleteModalDescription}
                 collapsed={Boolean(item.collapsed && (item.children?.length ?? 0) > 0)}
                 onCollapse={collapsible && (item.children?.length ?? 0) > 0 ? () => handleCollapse(item.id) : undefined}
                 onCheckboxChange={handleCheckboxChange}
@@ -568,7 +641,7 @@ export function SortableTree({
                 checkable={checkable}
                 onChange={handleChange}
                 dragable={dragable}
-                onRemove={removable ? () => handleRemove(item.id) : undefined}
+                onRemove={removable ? (onClose?: () => void) => handleRemove(item.id, onClose) : undefined}
                 onEdit={editable ? handleEdit : undefined}
                 onAddItem={addable ? handleAddItem : undefined}
                 isEditing={editingId === item.id}
@@ -585,17 +658,16 @@ export function SortableTree({
               <SortableTreeItem
                 id={activeId}
                 depth={0}
-                // clone
-                // childCount={getChildCount(items, activeId) + 1}
                 title={activeItem.title}
                 indentationWidth={indentationWidth}
-                // indicator={indicator}
+                deleteModalTitle={deleteModalTitle}
+                deleteModalDescription={deleteModalDescription}
                 collapsed={Boolean(activeItem.collapsed && (activeItem.children?.length ?? 0) > 0)}
                 onCollapse={
                   collapsible && (activeItem.children?.length ?? 0) > 0 ? () => handleCollapse(id) : undefined
                 }
                 dragable={dragable}
-                onRemove={removable ? () => handleRemove(id) : undefined}
+                onRemove={removable ? (onClose?: () => void) => handleRemove(id, onClose) : undefined}
                 checkboxState={getCheckboxState(flattenedItems.find(item => item.id === activeId))}
                 checkable={checkable}
                 onCheckboxChange={handleCheckboxChange}
@@ -609,14 +681,6 @@ export function SortableTree({
           </DragOverlay>
         </SortableContext>
       </DndContext>
-      <div className="mt-4 flex space-x-2">
-        {addParentButtonLabel && <Button onClick={handleAddParent}>{addParentButtonLabel}</Button>}
-        {saveButtonLabel && onSave && (
-          <Button onClick={handleSave} disabled={isSaveDisabled}>
-            {saveButtonLabel}
-          </Button>
-        )}
-      </div>
     </>
   );
 }
