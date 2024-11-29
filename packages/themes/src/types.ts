@@ -7,7 +7,7 @@ export type Theme = {
   [page: string]: React.ComponentType;
 };
 
-export const themeTypeConfigSchema = z.enum(['components', 'theme-setting', 'site-setting']);
+export const themeTypeConfigSchema = z.enum(['page', 'components', 'theme-setting', 'site-setting']);
 
 export const themeSiteSettingSchema = z.object({
   title: z.string().min(1, 'Title is required').max(60, 'Title should be at most 60 characters'),
@@ -32,5 +32,30 @@ export const themeSiteSettingSchema = z.object({
   viewport: z.string().optional(),
 });
 
+export const themeCssSchema = z.object({});
+
 export type IThemeSiteSetting = z.infer<typeof themeSiteSettingSchema>;
 export type TThemeTypeConfig = z.infer<typeof themeTypeConfigSchema>;
+
+export interface MenuItem {
+  key: string;
+  label: string;
+  href: string;
+  items: MenuItem[];
+}
+
+export interface MenuGroup {
+  key: string;
+  label: string;
+  items: MenuItem[];
+}
+
+export interface SimpleMenuItem extends MenuItem {
+  type: 'item';
+}
+
+export interface GroupMenuItem extends MenuGroup {
+  type: 'group';
+}
+
+export type TThemeMenuDefinition = Array<SimpleMenuItem | GroupMenuItem>;

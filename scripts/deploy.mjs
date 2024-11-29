@@ -29,11 +29,54 @@ function runWithEnv(command, cwd, env) {
         ...env,
         FORCE_COLOR: 'true',
       },
+    });
+  } catch (error) {
+    console.error(`Failed to run command: ${command}`);
+    throw error;
+  }
+}
+
+function deploy({ appPath, envFileName }) {
+  const absolutePath = path.resolve(process.cwd(), appPath);
+  const app = path.basename(appPath);
+
+  console.info(`\n📦 Processing ${app}...`);
+
+  try {
+    const isProd = envFileName === 'production' || !envFileName;
+
+    console.info('📄 Loading environment variables...');
+    const envVars = loadEnvFile(absolutePath, envFileName);
+
+    const envArgs = Object.entries(envVars)
+      .map(([key, value]) => `--env ${key}=${value}`)
+      .join(' ');
+
+    console.info('📥 Pulling Vercel project settings...');
+    runWithEnv(
+      `pnpm dlx vercel@33.2.0 pull --yes --environment=production --token=${process.env.VERCEL_TOKEN}`,
+      absolutePath,
+      envVars
+    );
+
+    console.info('🛠️ Building...');
+    runWithEnv(
+      ['pnpm dlx vercel@33.2.0 build', `--token=${process.env.VERCEL_TOKEN}`, isProd ? '--prod' : '', '--yes']
+        .filter(Boolean)
+        .join(' '),
+      absolutePath,
+      envVars
+    );
+
+    console.info('🚀 Deploying...');
+
+    const deployCommand = [
+      'pnpm dlx vercel@33.2.0 deploy',
+      '--prebuilt',
       isProd ? '--prod' : '',
       `--token=${process.env.VERCEL_TOKEN}`,
       '--yes',
       envArgs,
-      '--debug',
     ]
       .filter(Boolean)
       .join(' ');

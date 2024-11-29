@@ -6,10 +6,13 @@
     "#types": "./src/types.ts"
   },
   "exports": {
+    "./*": "./src/*.tsx",
     ".": "./src/index.ts",
     "./homepage": "./src/scholar/homepage.tsx",
     "./types": "./src/types.ts",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./store/*": "./src/_store/*.ts",
+    "./config/*": "./src/_config/*.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
