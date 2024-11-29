@@ -32,7 +32,7 @@ export const ADMIN_ROUTES = {
   languageSettings: '/admin/site-settings/languages',
   pagesSettings: '/admin/site-settings/pages',
   themesSettings: '/admin/site-settings/themes',
-  themeDetail: (themeName: string) => `/admin/site-settings/themes/${themeName}`,
+  themeDetail: (themeName: string) => `/admin/themes/${themeName}`,
 } as const;
 
 export const CREATOR_ROUTES = {

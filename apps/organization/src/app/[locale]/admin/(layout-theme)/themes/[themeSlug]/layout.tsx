@@ -19,7 +19,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <SidebarProvider className="p-0">
         <ThemeSidebar />
 
-        <main className="mt-4 w-full rounded-lg bg-background p-4 ">
+        <main className="mt-[var(--header-height)] w-full rounded-lg bg-background p-4 ">
           <SidebarTrigger />
           {children}
         </main>

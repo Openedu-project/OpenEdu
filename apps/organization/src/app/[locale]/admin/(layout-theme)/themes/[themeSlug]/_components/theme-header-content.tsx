@@ -109,8 +109,9 @@ export default function ThemeHeaderContent() {
   const handlePageChange = useCallback(
     (page: string) => {
       setSelectedPage(page);
+      setSelectedMenu('page');
     },
-    [setSelectedPage]
+    [setSelectedPage, setSelectedMenu]
   );
 
   return (
