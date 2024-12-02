@@ -38,7 +38,7 @@ pre-commit:
   parallel: true
   commands:
     typecheck:
-      glob: "**/*.{ts,tsx}"
+      glob: "*.{ts,tsx}"
       run: pnpm run typecheck
     check:
       glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
