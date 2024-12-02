@@ -31,6 +31,8 @@ export const ADMIN_ROUTES = {
   generalSettings: '/admin/site-settings/general',
   languageSettings: '/admin/site-settings/languages',
   pagesSettings: '/admin/site-settings/pages',
+  themesSettings: '/admin/site-settings/themes',
+  themeDetail: '/admin/themes/:themeName',
 } as const;
 
 export const CREATOR_ROUTES = {

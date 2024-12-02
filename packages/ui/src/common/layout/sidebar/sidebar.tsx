@@ -1,8 +1,7 @@
 'use client';
 
-import { ChevronDown, ChevronRight, Menu } from 'lucide-react';
-
 import { HeaderLogo } from '@oe/assets/icons/header-logo';
+import { ChevronDown, ChevronLeftCircle, ChevronRight, ChevronRightCircle, Menu } from 'lucide-react';
 import { type FC, type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, usePathname } from '#common/navigation';
 import { Button } from '#shadcn/button';
@@ -23,6 +22,7 @@ interface SidebarItemProps {
   depth: number;
   maxDepth: number;
   pathname: string;
+  isCollapsed: boolean;
 }
 
 interface SidebarProps {
@@ -33,7 +33,7 @@ interface SidebarProps {
   isDrawer?: boolean;
 }
 
-const SidebarItem: FC<SidebarItemProps> = ({ item, depth, maxDepth, pathname }) => {
+const SidebarItem: FC<SidebarItemProps> = ({ item, depth, maxDepth, pathname, isCollapsed }) => {
   const [isOpen, setIsOpen] = useState(false);
   const hasChildren = item.items && item.items.length > 0 && depth < maxDepth;
   const contentRef = useRef<HTMLDivElement>(null);
@@ -82,8 +82,9 @@ const SidebarItem: FC<SidebarItemProps> = ({ item, depth, maxDepth, pathname }) 
   const ButtonContent = () => (
     <>
       {item.icon && <span className="shrink-0">{item.icon}</span>}
-      {item.label && <span className="truncate">{item.label}</span>}
-      {hasChildren &&
+      {!isCollapsed && item.label && <span className="truncate">{item.label}</span>}
+      {!isCollapsed &&
+        hasChildren &&
         (isOpen ? (
           <ChevronDown className="ml-auto h-4 w-4 shrink-0" />
         ) : (
@@ -91,33 +92,52 @@ const SidebarItem: FC<SidebarItemProps> = ({ item, depth, maxDepth, pathname }) 
         ))}
     </>
   );
+
   return (
     <li>
       {item.href ? (
         <Link
           href={item.href}
           variant="ghost"
-          className={cn('w-full justify-start gap-4 px-2 font-normal hover:text-primary')}
+          className={cn(
+            'w-full justify-start gap-4 px-2 font-normal hover:text-primary',
+            isCollapsed && 'justify-center'
+          )}
           exact={item.isRoot}
-          style={{ paddingLeft: `${depth * 1 + 0.5}rem` }}
+          style={{
+            paddingLeft: isCollapsed ? '0.5rem' : `${depth * 1 + 0.5}rem`,
+          }}
         >
           <ButtonContent />
+          {isCollapsed && item.label && (
+            <div className="absolute left-full ml-2 hidden rounded-md bg-secondary px-2 py-1 group-hover:block">
+              {item.label}
+            </div>
+          )}
         </Link>
       ) : (
         <Button
           variant="ghost"
           className={cn(
-            'w-full justify-start gap-4 px-2 font-normal hover:text-primary',
-            isAncestorActive && 'text-primary'
+            'group relative flex w-full justify-start gap-4 px-2 font-normal hover:text-primary',
+            isAncestorActive && 'text-primary',
+            isCollapsed && 'justify-center'
           )}
-          style={{ paddingLeft: `${depth * 1 + 0.5}rem` }}
+          style={{
+            paddingLeft: isCollapsed ? '0.5rem' : `${depth * 1 + 0.5}rem`,
+          }}
           onClick={handleItemClick}
         >
           <ButtonContent />
+          {isCollapsed && item.label && (
+            <div className="absolute left-full ml-2 hidden rounded-md bg-secondary px-2 py-1 group-hover:block">
+              {item.label}
+            </div>
+          )}
         </Button>
       )}
 
-      {hasChildren && (
+      {hasChildren && !isCollapsed && (
         <div
           ref={contentRef}
           className="overflow-hidden transition-all duration-300 ease-in-out"
@@ -125,7 +145,14 @@ const SidebarItem: FC<SidebarItemProps> = ({ item, depth, maxDepth, pathname }) 
         >
           <ul className="mt-2 space-y-2">
             {item.items?.map(subItem => (
-              <SidebarItem key={subItem.id} item={subItem} depth={depth + 1} maxDepth={maxDepth} pathname={pathname} />
+              <SidebarItem
+                key={subItem.id}
+                item={subItem}
+                depth={depth + 1}
+                maxDepth={maxDepth}
+                pathname={pathname}
+                isCollapsed={isCollapsed}
+              />
             ))}
           </ul>
         </div>
@@ -136,21 +163,48 @@ const SidebarItem: FC<SidebarItemProps> = ({ item, depth, maxDepth, pathname }) 
 
 export const Sidebar: FC<SidebarProps> = ({ items, maxDepth = 2, pathnamesNoSidebar = [], className, isDrawer }) => {
   const pathname = usePathname();
-  const noSidebar = pathnamesNoSidebar.includes(pathname);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const noSidebar = pathnamesNoSidebar?.some(path => pathname.includes(path));
 
   if (noSidebar) {
     return null;
   }
 
   const renderSidebar = () => (
-    <aside className={cn('scrollbar w-64 shrink-0 overflow-y-auto border-r bg-background', className)}>
-      <nav className="p-2">
+    <aside
+      className={cn(
+        'scrollbar relative flex flex-col justify-around border-r bg-background transition-all duration-300 ease-in-out',
+        isCollapsed ? 'w-16' : 'w-64',
+        className
+      )}
+    >
+      <nav className="flex-1 p-2">
         <ul className="space-y-2">
           {items.map(item => (
-            <SidebarItem key={item.id} item={item} depth={0} maxDepth={maxDepth} pathname={pathname} />
+            <SidebarItem
+              key={item.id}
+              item={item}
+              depth={0}
+              maxDepth={maxDepth}
+              pathname={pathname}
+              isCollapsed={isCollapsed}
+            />
           ))}
         </ul>
       </nav>
+
+      {/* Collapse button at bottom */}
+      <div className="border-t p-2">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="flex h-8 w-full items-center justify-center hover:bg-accent"
+          onClick={() => setIsCollapsed(!isCollapsed)}
+        >
+          {isCollapsed ? <ChevronRightCircle className="h-5 w-5" /> : <ChevronLeftCircle className="h-5 w-5" />}
+        </Button>
+      </div>
     </aside>
   );
 

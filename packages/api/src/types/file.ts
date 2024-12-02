@@ -1,15 +1,21 @@
-export interface IFileResponse {
-  name: string;
-  mime: string;
-  ext: string;
-  url: string;
-  thumbnail_url: string;
-  id: string;
-  create_at: number;
-  update_at: number;
-  delete_at: number;
-  width: number;
-  height: number;
-  size: number;
-  bunny_video_id?: string;
-}
+import { z } from '../utils/zod';
+
+export const fileResponseScheme = z.object({
+  name: z.string(),
+  mime: z.string(),
+  ext: z.string(),
+  url: z.string(),
+  thumbnail_url: z.string(),
+  id: z.string(),
+  create_at: z.number(),
+  update_at: z.number(),
+  delete_at: z.number(),
+  width: z.number(),
+  height: z.number(),
+  size: z.number(),
+  bunny_video_id: z.string().optional(),
+  duration: z.number(),
+  // status: z.literal('done'),
+});
+
+export type IFileResponse = z.infer<typeof fileResponseScheme>;

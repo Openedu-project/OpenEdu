@@ -17,6 +17,6 @@
   "devDependencies": {
     "@oe/config": "workspace:*",
     "@oe/types": "workspace:*",
-    "@types/node": "^22.9.1"
+    "@types/node": "^22.10.1"
   }
 }

@@ -7,10 +7,14 @@ export const THEMES = {
   academia: {
     HomePage: AcademiaHomePage,
     AboutUs: AcademiaAboutUs,
+    description: 'Giao diện hiện đại, chuyên nghiệp',
+    homePage: '',
   },
   scholar: {
     HomePage: ScholarHomePage,
     AboutUs: ScholarAboutUs,
+    description: 'Giao diện hiện đại, chuyên nghiệp',
+    homePage: '',
   },
   professional: {
     description: 'Giao diện hiện đại, chuyên nghiệp',

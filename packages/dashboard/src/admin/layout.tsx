@@ -9,6 +9,7 @@ import {
   House,
   Mail,
   Network,
+  Palette,
   Settings,
   Settings2,
   User,
@@ -103,9 +104,16 @@ export default function Layout({ children }: { children: ReactNode }) {
               icon: <File className="h-5 w-5" />,
               href: ADMIN_ROUTES.pagesSettings,
             },
+            {
+              id: 'themes',
+              label: tDashboard('siteSettings.themes'),
+              icon: <Palette className="h-5 w-5" />,
+              href: ADMIN_ROUTES.themesSettings,
+            },
           ],
         },
       ]}
+      pathnamesNoSidebar={[`${ADMIN_ROUTES.themesSettings}/`]}
     >
       {children}
     </DashboardLayout>
