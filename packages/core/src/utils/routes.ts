@@ -37,6 +37,7 @@ export const ADMIN_ROUTES = {
 
 export const CREATOR_ROUTES = {
   dashboard: '/creator',
+  courses: '/creator/courses',
 } as const;
 
 export const PROTECTED_ROUTES = {
@@ -45,6 +46,13 @@ export const PROTECTED_ROUTES = {
   learner: '/learner',
   blog: '/blog/admin',
   affiliate: '/affiliate',
+} as const;
+
+export const DYNAMIC_FORMS_ROUTES = {
+  formList: '/forms',
+  createForm: '/forms/create',
+  formDetail: '/forms/:id',
+  formTemplates: '/forms/templates',
 } as const;
 
 export const ZONE_ROUTES = {

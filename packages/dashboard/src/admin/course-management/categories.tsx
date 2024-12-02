@@ -72,6 +72,7 @@ export default function CourseCategories() {
           { label: tDashboard('courseManagement'), disabled: true },
           { label: tDashboard('courseCategories') },
         ]}
+        dashboard="admin"
       >
         <h1 className="mb-4 text-2xl">{tCourses('categories.title')}</h1>
       </DashboardHeaderCard>
