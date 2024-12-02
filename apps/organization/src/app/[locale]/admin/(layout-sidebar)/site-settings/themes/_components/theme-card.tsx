@@ -1,5 +1,6 @@
 'use client';
 
+import { createAPIUrl } from '@oe/api/utils/fetch';
 import { ADMIN_ROUTES } from '@oe/core/utils/routes';
 import { THEMES, type ThemeName } from '@oe/themes';
 import { Link } from '@oe/ui/common/navigation';
@@ -59,7 +60,10 @@ export const ThemeCard = ({ name, isSelected, onSelect }: ThemeCardProps) => {
           <div className="absolute inset-0 flex items-center justify-center hover:bg-primary/10">
             <Badge className="absolute top-4 right-4">Selected</Badge>
             <Button variant="outlinePrimary" className="hover:bg-primary">
-              <Link href={ADMIN_ROUTES.themeDetail(name)} className="hover:text-white hover:no-underline">
+              <Link
+                href={createAPIUrl({ endpoint: ADMIN_ROUTES.themeDetail, params: { themeName: name } })}
+                className="hover:text-white hover:no-underline"
+              >
                 Edit Theme
               </Link>
             </Button>
