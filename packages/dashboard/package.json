@@ -19,9 +19,9 @@
     "@oe/i18n": "workspace:*",
     "@oe/ui": "workspace:*",
     "lucide-react": "0.462.0",
-    "next": "15.0.4-canary.20",
-    "next-intl": "3.25.1",
-    "react": "19.0.0-rc-6f0dc294-20241119",
+    "next": "15.0.4-canary.33",
+    "next-intl": "3.25.3",
+    "react": "19.0.0-rc-7670501b-20241124",
     "zustand": "^5.0.1"
   },
   "dependencies": {
@@ -30,7 +30,7 @@
   "devDependencies": {
     "@oe/config": "workspace:*",
     "@oe/types": "workspace:*",
-    "@types/node": "^22.9.1",
+    "@types/node": "^22.10.1",
     "@types/wicg-file-system-access": "^2023.10.5"
   }
 }
