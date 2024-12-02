@@ -15,9 +15,14 @@ export const dashboardMessages = {
     },
     courses: {
       courseManagement: 'Course Management',
-      courses: 'Courses',
+      title: 'Courses',
       courseCategories: 'Categories',
       coursesReviewing: 'Reviewing',
+    },
+    forms: {
+      title: 'Forms Management',
+      formTemplates: 'Form Templates',
+      formList: 'Forms',
     },
   },
 };

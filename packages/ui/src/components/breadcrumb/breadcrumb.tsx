@@ -1,5 +1,6 @@
 'use client';
 
+import type { IProtectedRoutes } from '@oe/core/utils/routes';
 import { HomeIcon } from 'lucide-react';
 import { Fragment, useEffect, useState } from 'react';
 import { Link, usePathname } from '#common/navigation';
@@ -22,9 +23,10 @@ export interface IBreadcrumbItem {
 
 interface BreadcrumbProps {
   items?: IBreadcrumbItem[];
+  dashboard?: IProtectedRoutes;
 }
 
-export function Breadcrumb({ items = [] }: BreadcrumbProps) {
+export function Breadcrumb({ items = [], dashboard }: BreadcrumbProps) {
   const pathname = usePathname();
   const pathSegments = pathname.split('/').filter(Boolean);
   const [isMobile, setIsMobile] = useState(false);
@@ -44,7 +46,11 @@ export function Breadcrumb({ items = [] }: BreadcrumbProps) {
         <>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link className="p-0 font-medium text-foreground/50" activeClassName="border-0" href="/">
+              <Link
+                className="p-0 font-medium text-foreground/50"
+                activeClassName="border-0"
+                href={dashboard ? `/${dashboard}` : '/'}
+              >
                 <HomeIcon className="h-4 w-4" />
               </Link>
             </BreadcrumbLink>

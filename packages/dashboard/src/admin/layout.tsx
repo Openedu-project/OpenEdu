@@ -37,7 +37,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           items: [
             {
               id: 'courses',
-              label: tDashboard('courses.courses'),
+              label: tDashboard('courses.title'),
               icon: <BookOpen className="h-5 w-5" />,
               href: ADMIN_ROUTES.courses,
             },

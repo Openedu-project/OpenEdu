@@ -42,13 +42,23 @@ const SidebarItem: FC<SidebarItemProps> = ({ item, depth, maxDepth, pathname }) 
     if (!hasChildren) {
       return false;
     }
-    return item.items?.some(
-      subItem =>
-        (subItem.isRoot ? subItem.href === pathname : pathname.includes(subItem.href as string)) ||
-        subItem.items?.some(grandChild =>
-          grandChild.isRoot ? grandChild.href === pathname : pathname.includes(grandChild.href as string)
-        )
-    );
+
+    const checkActive = (items: SidebarItem[]): boolean => {
+      return items.some(subItem => {
+        const isCurrentActive = subItem.isRoot ? subItem.href === pathname : pathname.includes(subItem.href as string);
+
+        if (isCurrentActive) {
+          return true;
+        }
+
+        if (subItem.items && subItem.items.length > 0) {
+          return checkActive(subItem.items);
+        }
+
+        return false;
+      });
+    };
+    return checkActive(item.items || []);
   }, [hasChildren, item.items, pathname]);
 
   useEffect(() => {
@@ -87,10 +97,8 @@ const SidebarItem: FC<SidebarItemProps> = ({ item, depth, maxDepth, pathname }) 
         <Link
           href={item.href}
           variant="ghost"
-          className={cn(
-            'w-full justify-start gap-4 px-2 font-normal hover:text-primary',
-            isAncestorActive && 'text-primary'
-          )}
+          className={cn('w-full justify-start gap-4 px-2 font-normal hover:text-primary')}
+          exact={item.isRoot}
           style={{ paddingLeft: `${depth * 1 + 0.5}rem` }}
         >
           <ButtonContent />

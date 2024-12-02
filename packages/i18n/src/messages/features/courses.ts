@@ -1,5 +1,6 @@
 export const coursesMessages = {
   courses: {
+    title: 'Courses',
     categories: {
       title: 'Course Categories',
       addCategory: 'Add category',
@@ -11,6 +12,11 @@ export const coursesMessages = {
       saveError: 'Error saving categories',
       deleted: 'Category deleted',
       deleteError: 'Error deleting category',
+    },
+    create: {
+      title: 'Create New Course',
+      youtube: 'Course From YouTube',
+      ai: 'AI Generate Course',
     },
   },
 };

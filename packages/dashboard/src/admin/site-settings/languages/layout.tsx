@@ -14,6 +14,7 @@ export default async function LanguagesLayout({ children }: { children: ReactNod
     <>
       <InitLanguageState />
       <DashboardHeaderCard
+        dashboard="admin"
         breadcrumbs={[
           { label: tSiteSettings('siteSettings'), disabled: true },
           { label: tSiteSettings('languages') },
