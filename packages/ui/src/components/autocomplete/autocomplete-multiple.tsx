@@ -1,29 +1,41 @@
-import { X } from 'lucide-react';
-import { Check } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { useCallback, useRef, useState } from 'react';
-import type { KeyboardEvent } from 'react';
-import { useDebouncedCallback } from 'use-debounce';
-import { Button } from '#shadcn/button';
-import { CommandItem } from '#shadcn/command';
-import { Input } from '#shadcn/input';
-import { Popover, PopoverContent, PopoverTrigger } from '#shadcn/popover';
-import { cn } from '#utils/cn';
-import { DEFAULT_HEIGHT, DEFAULT_SEARCH_DELAY, DEFAULT_WIDTH, ITEM_HEIGHT } from './constants';
-import { OptionBadge } from './option-badge';
-import type { BaseAutocompleteProps, OptionType, OptionValue } from './types';
-import { useOptionFiltering } from './use-option-filtering';
-import { VirtualizedCommandBase } from './virtualized-command-base';
+import { Plus, X } from "lucide-react";
+import { Check } from "lucide-react";
+import { useTranslations } from "next-intl";
+import type React from "react";
+import { useCallback, useRef, useState } from "react";
+import type { KeyboardEvent } from "react";
+import { useDebouncedCallback } from "use-debounce";
+import { Badge } from "#shadcn/badge";
+import { Button } from "#shadcn/button";
+import { CommandItem } from "#shadcn/command";
+import { Input } from "#shadcn/input";
+import { Popover, PopoverContent, PopoverTrigger } from "#shadcn/popover";
+import { cn } from "#utils/cn";
+import {
+  DEFAULT_HEIGHT,
+  DEFAULT_SEARCH_DELAY,
+  DEFAULT_WIDTH,
+  ITEM_HEIGHT,
+} from "./constants";
+import { OptionBadge } from "./option-badge";
+import type { BaseAutocompleteProps, OptionType, OptionValue } from "./types";
+import { useOptionFiltering } from "./use-option-filtering";
+import { VirtualizedCommandBase } from "./virtualized-command-base";
 
-export type AutocompleteMultipleProps<T extends OptionType | string> = BaseAutocompleteProps<T> & {
-  onChange?: (selectedOptions: T[]) => void;
-  value?: T[];
-  maxSelected?: number;
-  onSearch?: (value: string) => void;
-  delay?: number;
-  fixedValue?: OptionValue[];
-  onKeyDown?: (e: KeyboardEvent<HTMLInputElement>, handleSelectOptions?: (currentValue: T) => void) => void;
-};
+export type AutocompleteMultipleProps<T extends OptionType | string> =
+  BaseAutocompleteProps<T> & {
+    onChange?: (selectedOptions: T[]) => void;
+    value?: T[];
+    maxSelected?: number;
+    onSearch?: (value: string) => void;
+    delay?: number;
+    fixedValue?: OptionValue[];
+    onKeyDown?: (
+      e: KeyboardEvent<HTMLInputElement>,
+      handleSelectOptions?: (currentValue: T) => void
+    ) => void;
+    displayItems?: number;
+  };
 
 export function AutocompeteMultiple<T extends OptionType | string>({
   options,
@@ -31,8 +43,10 @@ export function AutocompeteMultiple<T extends OptionType | string>({
   width = DEFAULT_WIDTH,
   height = DEFAULT_HEIGHT,
   disabled = false,
-  getOptionLabel = (option: T) => (typeof option === 'object' ? option.label : option),
-  getOptionValue = (option: T) => (typeof option === 'object' ? option.value : option),
+  getOptionLabel = (option: T) =>
+    typeof option === "object" ? option.label : option,
+  getOptionValue = (option: T) =>
+    typeof option === "object" ? option.value : option,
   filterOption = (option: T, searchValue: string) =>
     getOptionLabel(option)?.toLowerCase().includes(searchValue.toLowerCase()),
   renderOption,
@@ -43,13 +57,15 @@ export function AutocompeteMultiple<T extends OptionType | string>({
   delay = DEFAULT_SEARCH_DELAY,
   fixedValue = [],
   onKeyDown,
+  displayItems,
 }: AutocompleteMultipleProps<T>) {
-  const t = useTranslations('general');
+  const t = useTranslations("general");
   const inputRef = useRef<HTMLInputElement>(null);
   const [open, setOpen] = useState(false);
   // const [selectedOptions, setSelectedOptions] = useState<T[]>(value || []);
   const [loading, setLoading] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const { filteredOptions } = useOptionFiltering({
     options,
@@ -76,11 +92,16 @@ export function AutocompeteMultiple<T extends OptionType | string>({
         return;
       }
 
-      const isSelected = value?.some(selected => getOptionValue(selected) === getOptionValue(currentValue));
+      const isSelected = value?.some(
+        (selected) => getOptionValue(selected) === getOptionValue(currentValue)
+      );
 
       let newOptions: T[];
       if (isSelected) {
-        newOptions = value?.filter(selected => getOptionValue(selected) !== getOptionValue(currentValue));
+        newOptions = value?.filter(
+          (selected) =>
+            getOptionValue(selected) !== getOptionValue(currentValue)
+        );
       } else {
         if (maxSelected && value?.length >= maxSelected) {
           return;
@@ -89,7 +110,7 @@ export function AutocompeteMultiple<T extends OptionType | string>({
       }
 
       onChange?.(newOptions);
-      setSearchValue('');
+      setSearchValue("");
       inputRef.current?.focus();
     },
     [maxSelected, value, fixedValue, getOptionValue, onChange]
@@ -101,7 +122,9 @@ export function AutocompeteMultiple<T extends OptionType | string>({
         return;
       }
 
-      const newSelected = value.filter(item => getOptionValue(item) !== getOptionValue(option));
+      const newSelected = value.filter(
+        (item) => getOptionValue(item) !== getOptionValue(option)
+      );
       onChange?.(newSelected);
       inputRef.current?.focus();
     },
@@ -147,31 +170,46 @@ export function AutocompeteMultiple<T extends OptionType | string>({
           value={String(getOptionValue(option))}
           onSelect={() => handleSelectOptions(option)}
           disabled={disabled || isFixed}
-          className={cn(isFixed && 'bg-muted opacity-70')}
+          className={cn(isFixed && "bg-muted opacity-70")}
           style={{
             height: `${ITEM_HEIGHT}px`,
           }}
         >
           <Check
             className={cn(
-              'mr-2 h-4 w-4',
-              value.some(s => getOptionValue(s) === getOptionValue(option)) ? 'opacity-100' : 'opacity-0'
+              "mr-2 h-4 w-4",
+              value.some((s) => getOptionValue(s) === getOptionValue(option))
+                ? "opacity-100"
+                : "opacity-0"
             )}
           />
           {renderOption ? renderOption(option) : getOptionLabel(option)}
         </CommandItem>
       );
     },
-    [value, disabled, fixedValue, getOptionValue, getOptionLabel, handleSelectOptions, renderOption]
+    [
+      value,
+      disabled,
+      fixedValue,
+      getOptionValue,
+      getOptionLabel,
+      handleSelectOptions,
+      renderOption,
+    ]
   );
+
+  const toggleExpand = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsExpanded((prev) => !prev);
+  }, []);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <div
           className={cn(
-            'flex min-h-11 items-center rounded-md border border-input text-sm',
-            disabled && 'cursor-not-allowed opacity-50'
+            "flex min-h-11 items-center rounded-md border border-input text-sm",
+            disabled && "cursor-not-allowed opacity-50"
           )}
           onClick={() => !disabled && inputRef.current?.focus()}
           style={{ width }}
@@ -192,7 +230,11 @@ export function AutocompeteMultiple<T extends OptionType | string>({
                 }
                 return 0;
               })
-              .map(option => (
+              .slice(
+                0,
+                isExpanded ? value.length : displayItems ?? value?.length ?? 0
+              )
+              .map((option) => (
                 <OptionBadge
                   key={getOptionValue(option)}
                   label={getOptionLabel(option) ?? ''}
@@ -201,23 +243,49 @@ export function AutocompeteMultiple<T extends OptionType | string>({
                   onRemove={() => handleClearOption(option)}
                 />
               ))}
+            {displayItems &&
+              value?.length > 0 &&
+              !isExpanded &&
+              displayItems < value?.length && (
+                <Badge
+                  className="cursor-pointer"
+                  onClick={toggleExpand}
+                  variant="secondary"
+                >
+                  <Plus className="mr-1 h-2 w-2" />
+                  {value.length - displayItems}
+                </Badge>
+              )}
+            {displayItems &&
+              value?.length > 0 &&
+              isExpanded &&
+              displayItems < value?.length && (
+                <Badge
+                  className="cursor-pointer"
+                  variant="secondary"
+                  onClick={toggleExpand}
+                >
+                  <X className="mr-1 h-2 w-2" />
+                  {t("showLess")}
+                </Badge>
+              )}
             <Input
               ref={inputRef}
               wrapperClassName="w-auto"
               className="h-auto w-auto min-w-20 flex-1 border-none p-0 outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-              placeholder={placeholder ?? `${t('search')}...`}
-              onChange={e => handleSearch(e.target.value)}
+              placeholder={placeholder ?? `${t("search")}...`}
+              onChange={(e) => handleSearch(e.target.value)}
               value={searchValue}
               disabled={disabled}
               autoComplete="off"
               name="search"
-              onKeyDown={e => onKeyDown?.(e, handleSelectOptions)}
+              onKeyDown={(e) => onKeyDown?.(e, handleSelectOptions)}
             />
           </div>
           {!disabled && value.length > 0 && (
             <Button
               type="button"
-              onClick={e => {
+              onClick={(e) => {
                 e.stopPropagation();
                 handleClearAll();
               }}
@@ -230,7 +298,7 @@ export function AutocompeteMultiple<T extends OptionType | string>({
         </div>
       </PopoverTrigger>
       <PopoverContent
-        onOpenAutoFocus={e => e.preventDefault()}
+        onOpenAutoFocus={(e) => e.preventDefault()}
         className="max-h-[--radix-popover-content-available-height] w-[--radix-popover-trigger-width] p-0"
       >
         <VirtualizedCommandBase

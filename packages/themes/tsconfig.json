@@ -2,8 +2,8 @@
   "extends": "@oe/config/tsconfig/react.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "types": ["node", "@oe/types/global.d.ts", "@types/wicg-file-system-access"]
+    "types": ["node", "@oe/types/global.d.ts", "@types/wicg-file-system-access", "next/image-types/global"]
   },
-  "include": ["src"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", ".next/types/**/*.ts", "tailwind.config.ts"],
   "exclude": ["node_modules"]
 }

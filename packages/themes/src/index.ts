@@ -1,95 +1,60 @@
-// 'use client';
-import { AcademiaAboutUs, AcademiaHomePage } from './academia';
+import { defaultThemeSystemConfig } from './_config/initial';
+import { getMetadata } from './_config/theme-metadata';
+import type { ThemeRender } from './_types/theme-page';
+import {
+  AcademiaAboutUs,
+  AcademiaAuthLayout,
+  AcademiaHomePage,
+  AcademiaHomepageExplores,
+  AcademiaHomepageFeatures,
+  AcademiaHomepageHero,
+  AcademiaHomepageOrganizations,
+  AcademiaHomepagePartners,
+} from './academia';
+
+import { updateGlobalTheme } from './_components/theme-settings/theme-global/_utils';
+import { initialThemeGlobal } from './_config/theme-global-initial';
+import AcademiaForgotPassword from './academia/auth/forgot-password';
+import AcademiaLogin from './academia/auth/login';
+import AcademiaAuthLayoutSignUp from './academia/auth/sign-up';
 import { fonts } from './fonts';
 import { ScholarAboutUs, ScholarHomePage } from './scholar';
 
-export const THEMES = {
+export const THEMES: ThemeRender = {
   academia: {
-    HomePage: AcademiaHomePage,
-    AboutUs: AcademiaAboutUs,
-    description: 'Giao diện hiện đại, chuyên nghiệp',
-    homePage: '',
+    homepage: {
+      theme: AcademiaHomePage,
+      hero: AcademiaHomepageHero,
+      features: AcademiaHomepageFeatures,
+      partners: AcademiaHomepagePartners,
+      explores: AcademiaHomepageExplores,
+      organizations: AcademiaHomepageOrganizations,
+    },
+    'about-us': {
+      theme: AcademiaAboutUs,
+    },
+    auth: {
+      theme: AcademiaAuthLayout,
+      login: AcademiaLogin,
+      signUp: AcademiaAuthLayoutSignUp,
+      forgotPassword: AcademiaForgotPassword,
+      // emailVerify: AcademiaEmailVerify,
+      // authConfirm: AcademiaAuthConfirm,
+    },
   },
   scholar: {
-    HomePage: ScholarHomePage,
-    AboutUs: ScholarAboutUs,
-    description: 'Giao diện hiện đại, chuyên nghiệp',
-    homePage: '',
-  },
-  professional: {
-    description: 'Giao diện hiện đại, chuyên nghiệp',
-    homePage: '',
-  },
-  wisdom: {
-    description: 'Tông màu trầm ấm, tạo không khí học tập',
-    homePage: '',
-  },
-  nova: {
-    description: 'Thiết kế tối giản, hiện đại',
-    homePage: '',
-  },
-  spark: {
-    description: 'Năng động, tươi sáng',
-    homePage: '',
-  },
-  dynamix: {
-    description: 'Linh hoạt và sinh động',
-    homePage: '',
-  },
-  quantum: {
-    description: 'Đột phá và sáng tạo',
-    homePage: '',
-  },
-  techHub: {
-    description: 'Cho các khóa học công nghệ',
-    homePage: '',
-  },
-  creative: {
-    description: 'Cho các khóa học thiết kế, nghệ thuật',
-    homePage: '',
-  },
-  business: {
-    description: 'Cho các khóa học kinh doanh',
-    homePage: '',
-  },
-  scienceLab: {
-    description: 'Cho các khóa học khoa học',
-    homePage: '',
-  },
-  spring: {
-    description: 'Tươi sáng, nhiều màu pastel',
-    homePage: '',
-  },
-  summer: {
-    description: 'Rực rỡ, năng động',
-    homePage: '',
-  },
-  autumn: {
-    description: 'Ấm áp, trầm ấm',
-    homePage: '',
-  },
-  winter: {
-    description: 'Thanh lịch, tinh tế',
-    homePage: '',
-  },
-  azure: {
-    description: 'Chủ đạo màu xanh dương',
-    homePage: '',
-  },
-  forest: {
-    description: 'Chủ đạo màu xanh lá',
-    homePage: '',
-  },
-  sunset: {
-    description: 'Chủ đạo màu cam, đỏ',
-    homePage: '',
-  },
-  midnight: {
-    description: 'Chủ đạo màu tối, thanh lịch',
-    homePage: '',
+    homepage: {
+      theme: ScholarHomePage,
+    },
+    'about-us': {
+      theme: ScholarAboutUs,
+    },
+    auth: {
+      theme: AcademiaAuthLayout,
+      login: AcademiaLogin,
+      // signUp: AcademiaAuthLayoutSignUp,
+    },
   },
 } as const;
 
-export type ThemeName = keyof typeof THEMES;
-
-export { fonts };
+export { fonts, defaultThemeSystemConfig, getMetadata, initialThemeGlobal, updateGlobalTheme };

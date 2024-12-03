@@ -97,6 +97,7 @@ export const ADMIN_ROUTES = {
   pagesSettings: '/admin/site-settings/pages',
   themesSettings: '/admin/site-settings/themes',
   themeDetail: '/admin/themes/:themeName',
+  themeConfig: '/admin/themes/:themeName/:themeConfig/:groupSettingKey/:itemSettingKey',
   permissionActionSettings: '/admin/permissions/actions',
   permissionPageSettings: '/admin/permissions/pages',
   permissionRoleSettings: '/admin/permissions/roles',

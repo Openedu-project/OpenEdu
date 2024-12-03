@@ -3,15 +3,22 @@ import { type AuthEventName, authEvents } from '@oe/api/utils/auth';
 import loginBanner from '@oe/assets/images/login-banner.png';
 import { base64ToJson } from '@oe/core/utils/decoded-token';
 import { AUTH_ROUTES, PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import type { ThemeName } from '@oe/themes/types/theme-page';
 import { getTranslations } from 'next-intl/server';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { Link } from '#common/navigation';
+import type { FileType } from '#components/uploader';
 import { AuthLayout } from '../auth-layout';
 import { AuthConfirmForm } from './auth-confirm-form';
 
-export async function AuthConfirmPage({ banner, slogan }: { banner?: { src: string; alt: string }; slogan?: string }) {
+interface AuthConfirmProps {
+  themeName?: ThemeName;
+  banner?: FileType;
+}
+export async function AuthConfirmPage({ banner, themeName = 'academia' }: AuthConfirmProps) {
   const tAuth = await getTranslations('auth');
+  const tThemeAuth = await getTranslations(`themePage.${themeName}.auth`);
   const tGeneral = await getTranslations('general');
   const tErrors = await getTranslations('errors');
   const headersList = await headers();
@@ -35,9 +42,9 @@ export async function AuthConfirmPage({ banner, slogan }: { banner?: { src: stri
       if (response.require_set_password) {
         return (
           <AuthLayout
-            title={tAuth('authConfirm.title')}
-            banner={banner ?? { src: loginBanner.src, alt: 'Auth confirmation background' }}
-            slogan={slogan ?? tAuth('authConfirm.slogan')}
+            title={tThemeAuth('authConfirm.title')}
+            banner={{ src: banner?.url ?? loginBanner.src, alt: 'Auth confirmation background' }}
+            slogan={tThemeAuth('authConfirm.slogan')}
           >
             <>
               <p className="text-muted-foreground text-sm">{tAuth('authConfirm.setPasswordDescription')}</p>
@@ -57,9 +64,9 @@ export async function AuthConfirmPage({ banner, slogan }: { banner?: { src: stri
       } else {
         return (
           <AuthLayout
-            title={tAuth('authConfirm.title')}
-            banner={banner ?? { src: loginBanner.src, alt: 'Auth confirmation background' }}
-            slogan={slogan ?? tAuth('authConfirm.slogan')}
+            title={tThemeAuth('authConfirm.title')}
+            banner={{ src: banner?.url ?? loginBanner.src, alt: 'Auth confirmation background' }}
+            slogan={tThemeAuth('authConfirm.slogan')}
           >
             <div className="flex flex-col gap-y-4">
               <p className="text-muted-foreground text-sm">{tAuth('authConfirm.confirmDescriptionWithoutLogin')}</p>
@@ -79,8 +86,8 @@ export async function AuthConfirmPage({ banner, slogan }: { banner?: { src: stri
       return (
         <AuthLayout
           title={tAuth('authConfirm.failedTitle')}
-          banner={banner ?? { src: loginBanner.src, alt: 'Auth confirmation background' }}
-          slogan={slogan ?? tAuth('authConfirm.slogan')}
+          banner={{ src: banner?.url ?? loginBanner.src, alt: 'Auth confirmation background' }}
+          slogan={tThemeAuth('authConfirm.slogan')}
           className="text-destructive"
         >
           <div className="flex flex-col gap-y-4">
@@ -101,8 +108,8 @@ export async function AuthConfirmPage({ banner, slogan }: { banner?: { src: stri
   return (
     <AuthLayout
       title={tAuth('authConfirm.setPasswordTitle')}
-      banner={banner ?? { src: loginBanner.src, alt: 'Auth confirmation background' }}
-      slogan={slogan ?? tAuth('authConfirm.slogan')}
+      banner={{ src: banner?.url ?? loginBanner.src, alt: 'Auth confirmation background' }}
+      slogan={tThemeAuth('authConfirm.slogan')}
     >
       <AuthConfirmForm event={event} token={decodedToken.token} email={decodedToken.email} nextPath={nextPath} />
     </AuthLayout>

@@ -14,7 +14,7 @@ import { Alert, AlertDescription } from '#shadcn/alert';
 import { forgotPasswordAction } from '../_action/forgot-password-action';
 import { ForgotPasswordButton } from './forgot-password-button';
 
-export function LoginForm() {
+export function ForgotPasswordForm() {
   const tAuth = useTranslations('auth');
   const tErrors = useTranslations('errors');
   const tGeneral = useTranslations('general');

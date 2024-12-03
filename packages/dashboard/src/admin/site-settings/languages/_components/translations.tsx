@@ -1,8 +1,11 @@
-'use client';
-import { createOrUpdateTranslations } from '@oe/api/services/i18n';
-import { type RankingInfo, rankItem } from '@oe/core/utils/match-sorter';
-import { DEFAULT_LOCALE } from '@oe/i18n/constants';
-import type { CustomFilterPayload, FilterOption } from '@oe/ui/components/filter-search';
+"use client";
+import { createOrUpdateTranslations } from "@oe/api/services/i18n";
+import { type RankingInfo, rankItem } from "@oe/core/utils/match-sorter";
+import { DEFAULT_LOCALE } from "@oe/i18n/constants";
+import type {
+  CustomFilterPayload,
+  FilterOption,
+} from "@oe/ui/components/filter-search";
 import {
   type ColumnDef,
   type FilterFn,
@@ -10,15 +13,19 @@ import {
   Table,
   TableEditableCell,
   type TableRef,
-} from '@oe/ui/components/table';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { Button } from '@oe/ui/shadcn/button';
-import { toast } from '@oe/ui/shadcn/sonner';
-import { useTranslations } from 'next-intl';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useI18nTranslations } from '../_hooks';
-import { type TranslationItem, type TranslationSubItem, useLanguageStore } from '../_store/useLanguageStore';
-import { convertTranslation, getUrls, handleSaveI18nConfig } from '../_utils';
+} from "@oe/ui/components/table";
+import { Badge } from "@oe/ui/shadcn/badge";
+import { Button } from "@oe/ui/shadcn/button";
+import { toast } from "@oe/ui/shadcn/sonner";
+import { useTranslations } from "next-intl";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useI18nTranslations } from "../_hooks";
+import {
+  type TranslationItem,
+  type TranslationSubItem,
+  useLanguageStore,
+} from "../_store/useLanguageStore";
+import { convertTranslation, getUrls, handleSaveI18nConfig } from "../_utils";
 type TranslationFilterValue = {
   locale: string;
   [key: string]: string | boolean;
@@ -29,13 +36,21 @@ type FilterValue = {
   value: TranslationFilterValue;
 };
 
-const filterTranslations: FilterFn<TranslationItem> = (row, columnId, filterValue) => {
+interface TranslationsProps {
+  className?: string;
+}
+
+const filterTranslations: FilterFn<TranslationItem> = (
+  row,
+  columnId,
+  filterValue
+) => {
   let itemRank: RankingInfo | undefined;
 
-  if (columnId === 'key') {
+  if (columnId === "key") {
     itemRank = rankItem(row.original[columnId], filterValue);
   }
-  if (columnId === 'translation') {
+  if (columnId === "translation") {
     itemRank = rankItem(row.original[columnId], filterValue);
 
     if (!itemRank?.passed) {
@@ -49,19 +64,26 @@ const filterTranslations: FilterFn<TranslationItem> = (row, columnId, filterValu
     }
   }
 
-  if (columnId === 'translated') {
-    const value = (filterValue as TranslationFilterValue)[columnId]?.toString() ?? '';
+  if (columnId === "translated") {
+    const value =
+      (filterValue as TranslationFilterValue)[columnId]?.toString() ?? "";
     const locale = (filterValue as TranslationFilterValue).locale;
     if (locale === DEFAULT_LOCALE) {
       itemRank = rankItem(row.original[columnId], value);
     } else {
-      itemRank = rankItem(row.original.subRows.find(sub => sub.locale === locale)?.[columnId], value);
+      itemRank = rankItem(
+        row.original.subRows.find((sub) => sub.locale === locale)?.[columnId],
+        value
+      );
     }
   }
   return itemRank?.passed ?? false;
 };
 
-const customFilter = (columnId: string, { filter, value, prev }: CustomFilterPayload) => {
+const customFilter = (
+  columnId: string,
+  { filter, value, prev }: CustomFilterPayload
+) => {
   const newFilter: FilterValue = {
     id: columnId,
     value: {
@@ -70,19 +92,27 @@ const customFilter = (columnId: string, { filter, value, prev }: CustomFilterPay
     },
   };
 
-  const existingFilter = prev?.find(f => f.id === columnId);
+  const existingFilter = prev?.find((f) => f.id === columnId);
   if (existingFilter) {
-    return prev?.map(f => (f.id === columnId ? newFilter : f));
+    return prev?.map((f) => (f.id === columnId ? newFilter : f));
   }
 
   return [...(prev ?? []), newFilter];
 };
 
-export default function Translations() {
-  const t = useTranslations('languages');
-  const tGeneral = useTranslations('general');
-  const { translations, locales, locale, languageStats, updateTranslations, updateTableData, id, setId } =
-    useLanguageStore();
+export default function Translations({ className }: TranslationsProps) {
+  const t = useTranslations("languages");
+  const tGeneral = useTranslations("general");
+  const {
+    translations,
+    locales,
+    locale,
+    languageStats,
+    updateTranslations,
+    updateTableData,
+    id,
+    setId,
+  } = useLanguageStore();
   const tableRef = useRef<TableRef<TranslationItem>>(null);
 
   const { isLoading, systemConfig } = useI18nTranslations();
@@ -93,8 +123,13 @@ export default function Translations() {
   }, []);
 
   const handleTranslationUpdate = useCallback(
-    (row: Row<TranslationItem | TranslationSubItem>, value: string, columnId: string, isParent?: boolean) => {
-      row.original.translated = value.trim() !== '';
+    (
+      row: Row<TranslationItem | TranslationSubItem>,
+      value: string,
+      columnId: string,
+      isParent?: boolean
+    ) => {
+      row.original.translated = value.trim() !== "";
       updateTableData(row.index, columnId, value, isParent);
       updateTranslations();
     },
@@ -104,28 +139,29 @@ export default function Translations() {
     () =>
       [
         {
-          id: 'translation',
-          value: 'translation',
-          label: t('translation'),
-          type: 'search',
+          id: "translation",
+          value: "translation",
+          label: t("translation"),
+          type: "search",
         },
         {
-          id: 'key',
-          value: 'key',
-          label: t('key'),
-          type: 'search',
+          id: "key",
+          value: "key",
+          label: t("key"),
+          type: "search",
         },
         ...(locales
-          ? locales.map(locale => ({
+          ? locales.map((locale) => ({
               id: locale.value,
               value: locale.value,
               label: locale.label,
-              type: 'select',
+              type: "select",
               options: [
-                { value: true, label: t('translated') },
-                { value: false, label: t('untranslated') },
+                { value: true, label: t("translated") },
+                { value: false, label: t("untranslated") },
               ],
-              customFilter: (payload: CustomFilterPayload) => customFilter('translated', payload),
+              customFilter: (payload: CustomFilterPayload) =>
+                customFilter("translated", payload),
             }))
           : []),
       ].filter(Boolean),
@@ -134,33 +170,37 @@ export default function Translations() {
 
   const columns: ColumnDef<TranslationItem>[] = [
     {
-      header: t('key'),
-      accessorKey: 'key',
+      header: t("key"),
+      accessorKey: "key",
       size: 200,
       filterFn: filterTranslations,
     },
     {
-      id: 'translation',
-      header: t('english'),
-      accessorKey: 'translation',
+      id: "translation",
+      header: t("english"),
+      accessorKey: "translation",
       size: 500,
-      cell: info => (
+      cell: (info) => (
         <TableEditableCell
           {...info}
           textarea
-          onUpdate={(row, value) => handleTranslationUpdate(row, value, 'translation', true)}
+          onUpdate={(row, value) =>
+            handleTranslationUpdate(row, value, "translation", true)
+          }
         />
       ),
-      className: 'flex-1',
+      className: "flex-1",
       filterFn: filterTranslations,
     },
     {
-      header: t('status'),
-      accessorKey: 'translated',
+      header: t("status"),
+      accessorKey: "translated",
       cell: ({ row }) => {
         return (
-          <Badge variant={row.getValue('translated') ? 'success' : 'destructive'}>
-            {row.original.translated ? t('translated') : t('untranslated')}
+          <Badge
+            variant={row.getValue("translated") ? "success" : "destructive"}
+          >
+            {row.original.translated ? t("translated") : t("untranslated")}
           </Badge>
         );
       },
@@ -172,36 +212,38 @@ export default function Translations() {
 
   const subColumns: ColumnDef<TranslationSubItem>[] = [
     {
-      id: 'id',
+      id: "id",
       size: 50,
-      className: 'bg-background border-r',
+      className: "bg-background border-r",
     },
     {
-      id: 'language',
-      header: t('language'),
-      accessorKey: 'language',
+      id: "language",
+      header: t("language"),
+      accessorKey: "language",
       size: 200,
     },
     {
-      id: 'translation',
-      header: t('translation'),
-      accessorKey: 'translation',
+      id: "translation",
+      header: t("translation"),
+      accessorKey: "translation",
       size: 500,
-      cell: info => (
+      cell: (info) => (
         <TableEditableCell
           {...info}
           textarea
-          onUpdate={(row, value) => handleTranslationUpdate(row, value, 'translation')}
+          onUpdate={(row, value) =>
+            handleTranslationUpdate(row, value, "translation")
+          }
         />
       ),
-      className: 'flex-1',
+      className: "flex-1",
     },
     {
-      header: t('status'),
-      accessorKey: 'translated',
-      cell: info => (
-        <Badge variant={info.getValue() ? 'success' : 'destructive'}>
-          {info.getValue() ? t('translated') : t('untranslated')}
+      header: t("status"),
+      accessorKey: "translated",
+      cell: (info) => (
+        <Badge variant={info.getValue() ? "success" : "destructive"}>
+          {info.getValue() ? t("translated") : t("untranslated")}
         </Badge>
       ),
       size: 200,
@@ -212,27 +254,34 @@ export default function Translations() {
   const handleSave = async () => {
     setIsSaving(true);
     const messagesMap = convertTranslation(translations ?? []);
-    console.info('save', id, messagesMap);
+    console.info("save", id, messagesMap);
 
     try {
       if (!locales || locales.length === 0) {
-        throw new Error('Locales are not defined');
+        throw new Error("Locales are not defined");
       }
       const res = await Promise.all([
-        ...locales.map(locale =>
+        ...locales.map((locale) =>
           createOrUpdateTranslations({
             messages: messagesMap[locale.value],
-            id: systemConfig?.find(c => c.locale === locale.value)?.id,
+            id: systemConfig?.find((c) => c.locale === locale.value)?.id,
             locale: locale.value,
           })
         ),
       ]);
       const files = getUrls({ locales, systemConfig: res });
-      await handleSaveI18nConfig({ locales, locale, languageStats, id, files, setId });
-      toast.success(t('saveTranslationsSuccess'));
+      await handleSaveI18nConfig({
+        locales,
+        locale,
+        languageStats,
+        id,
+        files,
+        setId,
+      });
+      toast.success(t("saveTranslationsSuccess"));
     } catch (error) {
       console.error(error);
-      toast.error(t('saveTranslationsError'));
+      toast.error(t("saveTranslationsError"));
     }
     setIsSaving(false);
   };
@@ -249,7 +298,8 @@ export default function Translations() {
         ref={tableRef}
         isLoading={isLoading}
         filterSearchProps={{ useQueryParams: true }}
-        expandColumnProps={{ className: 'border-r' }}
+        expandColumnProps={{ className: "border-r" }}
+        className={className}
         renderSubComponent={({ row }) => {
           return (
             <Table
@@ -263,7 +313,7 @@ export default function Translations() {
         }}
       >
         <Button onClick={handleSave} loading={isSaving}>
-          {tGeneral('save')}
+          {tGeneral("save")}
         </Button>
       </Table>
     </div>

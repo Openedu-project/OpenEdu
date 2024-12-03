@@ -52,3 +52,18 @@ export const isDuplicateFile = (newFile: File, existingFiles: File[]) => {
       existingFile.lastModified === newFile.lastModified
   );
 };
+
+export function isFileType(value: FileType) {
+  // return (
+  //   typeof value === 'object' &&
+  //   value !== null &&
+  //   'url' in value &&
+  //   'mime' in value &&
+  //   'name' in value &&
+  //   'ext' in value
+  // );
+  // return (
+  //   typeof value === 'object' &&value !== null&& 'url' in value
+  // );
+  return MIME.includes(value?.mime || '');
+}

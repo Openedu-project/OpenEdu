@@ -1,18 +1,24 @@
 import forgotPasswordBanner from '@oe/assets/images/forgot-password-banner.png';
+import type { ThemeName } from '@oe/themes/types/index';
 import { useTranslations } from 'next-intl';
+import type { FileType } from '#components/uploader';
 import { AuthLayout } from '../auth-layout';
-import { LoginForm } from './forgot-password-form';
+import { ForgotPasswordForm } from './forgot-password-form';
 
-export function ForgotPasswordPage({ banner, slogan }: { banner?: { src: string; alt: string }; slogan?: string }) {
-  const tAuth = useTranslations('auth');
+interface ForgotPasswordProps {
+  themeName?: ThemeName;
+  banner?: FileType;
+}
+export function ForgotPasswordPage({ themeName = 'academia', banner }: ForgotPasswordProps) {
+  const tAuth = useTranslations(`themePage.${themeName}.auth`);
 
   return (
     <AuthLayout
       title={tAuth('forgotPassword.title')}
-      banner={banner ?? { src: forgotPasswordBanner.src, alt: 'Forgot password background' }}
-      slogan={slogan ?? tAuth('forgotPassword.slogan')}
+      banner={{ src: banner?.url || forgotPasswordBanner.src, alt: 'Forgot password background' }}
+      slogan={tAuth('forgotPassword.slogan')}
     >
-      <LoginForm />
+      <ForgotPasswordForm />
     </AuthLayout>
   );
 }

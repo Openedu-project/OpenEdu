@@ -31,7 +31,7 @@ export const passwordSchema = z
     message: 'formValidation.too_big.string.inclusive--type:password--maximum:20',
   })
   .refine(val => PASSWORD_REGEX.test(val), {
-    message: 'auth.errors.passwordInvalid--minimum:8',
+    message: 'themePage.auth.errors.passwordInvalid--minimum:8',
   });
 
 export const passwordConfirmSchema = z.object({
@@ -52,12 +52,12 @@ export const signUpSchema = z
   })
   .merge(passwordConfirmSchema)
   .refine(data => data.password === data.confirmPassword, {
-    message: 'auth.errors.passwordMissMatch',
+    message: 'themePage.auth.errors.passwordMissMatch',
     path: ['confirmPassword'],
   });
 
 export const setPasswordSchema = passwordConfirmSchema.refine(data => data.password === data.confirmPassword, {
-  message: 'auth.errors.passwordMissMatch',
+  message: 'themePage.auth.errors.passwordMissMatch',
   path: ['confirmPassword'],
 });
 

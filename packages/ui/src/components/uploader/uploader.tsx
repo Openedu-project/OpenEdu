@@ -198,6 +198,7 @@ export const Uploader = (props: UploaderProps) => {
     (file: FileType) => {
       const updated = files.filter(f => f.fileId !== file.fileId);
       onChange?.(updated as IFileResponse[]);
+      // setFiles(updated); // update files
 
       trigger.current?.clearInput();
     },

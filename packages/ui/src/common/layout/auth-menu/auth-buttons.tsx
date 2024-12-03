@@ -6,7 +6,7 @@ import { Link } from '#common/navigation';
 
 export function AuthButtons() {
   const pathname = usePathname();
-  const tAuth = useTranslations('auth');
+  const tAuth = useTranslations('auth.btn');
 
   return (
     <>

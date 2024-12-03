@@ -170,8 +170,9 @@ export const fetchTranslationFile = async (path: string, fallbackData?: I18nMess
   if (!path) {
     return fallbackData;
   }
+
   try {
-    const url = `https://${process.env.NEXT_PUBLIC_MEDIA_CDN_HOST}/configs/${path}`;
+    const url = `https://${process.env.NEXT_PUBLIC_MEDIA_S3_HOST}/configs/${path}`;
     const response = await fetch(url);
     return (await response.json()) as I18nMessage;
   } catch (error) {

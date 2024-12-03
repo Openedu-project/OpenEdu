@@ -11,11 +11,11 @@ export const authMessages = {
     alreadyAccount: 'Alreay have account?',
     sendYourEmail: 'Send Your Email',
     termsAndConditions: 'terms and conditions',
-    signin: {
-      title: 'Login',
-      slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
+    login: {
+      // title: 'Login', // MOVE TO themepage.${themeName}.auth...
+      // slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
       success: 'Login success.',
-      seperate: 'Or continue with',
+      // seperate: 'Or continue with',
       noAccount: "Don't have an account?",
       terms: "By logging in, you agree to our's",
       errors: {
@@ -24,10 +24,10 @@ export const authMessages = {
       },
     },
     signup: {
-      title: 'Sign Up',
-      slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
+      // title: 'Sign Up',
+      // slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
       success: 'Signup success.',
-      seperate: 'Or signup with your email',
+      // seperate: 'Or signup with your email',
       displayName: 'Display Name',
       displayNamePlaceholder: 'Enter your display name',
       noAccount: 'Already have an account?',
@@ -43,8 +43,8 @@ export const authMessages = {
       },
     },
     forgotPassword: {
-      title: 'Forgot Your Password?',
-      slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
+      // title: 'Forgot Your Password?',
+      // slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
       success: 'Sent email to reset password. Please check your email.',
       sendEmail: 'Send Email',
     },
@@ -59,9 +59,13 @@ export const authMessages = {
       resendEmail: 'Resend Verification Email',
       resendTimeRemaining: 'Time Remaining',
     },
-    verifyEmail: {
-      title: 'Verify Email',
+    emailVerify: {
+      // title: 'Verify Email',
+      // slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
       backToHome: 'Back To Home',
+      congratTitle: 'Congratulations, your account has been verified.',
+      congratDescription:
+        "We're redirecting you to the home page in {seconds, plural, =1 {1 second} other {# seconds}}",
       successTitle: 'Congratulations, your account has been verified.',
       successDescription: 'Please click the button below to continue to the home page',
       slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
@@ -74,8 +78,8 @@ export const authMessages = {
       setPasswordSuccessDescription:
         'Please wait {seconds, plural, =1 {1 second} other {# seconds}} to redirect to the previous page.',
       gotoLogin: 'Go to Login',
-      title: 'Confirm Invitation',
-      slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
+      // title: 'Confirm Invitation',
+      // slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
       setPassword: 'Set Password',
       failedTitle: 'Accept Invitation Failed',
       confirmDescription:
@@ -86,6 +90,10 @@ export const authMessages = {
       passwordInvalid:
         'Password must contain at least one uppercase letter, one lowercase letter, and be at least {minimum, plural, =1 {1 character} other {# characters}} long.',
       passwordMissMatch: "Passwords don't match",
+    },
+    btn: {
+      login: 'Login',
+      signUp: 'Sign Up',
     },
   },
 };
