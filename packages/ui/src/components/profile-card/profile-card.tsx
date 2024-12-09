@@ -1,5 +1,5 @@
 'use client';
-import type { IUserProfile } from '@oe/api/types/user';
+import type { IUserProfile } from '@oe/api/types/user-profile';
 import { pickCharacters } from '@oe/core/utils/helpers';
 import { Avatar, AvatarFallback, AvatarImage } from '@oe/ui/shadcn/avatar';
 import { Card } from '@oe/ui/shadcn/card';

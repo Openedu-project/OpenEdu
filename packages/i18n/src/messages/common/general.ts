@@ -54,5 +54,8 @@ export const generalMessages = {
     deleteModalDescription: 'Are you sure you want to delete this item?',
     publish: 'Publish',
     language: 'Language',
+    follow: 'Follow',
+    following: 'Following',
+    write: 'Write',
   },
 };

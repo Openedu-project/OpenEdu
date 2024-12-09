@@ -22,7 +22,7 @@ interface IBlogCardProps extends HTMLAttributes<HTMLDivElement> {
   showAuthor?: boolean;
 }
 
-export default function BlogCard({
+export function BlogCard({
   blog,
   contentRight = false,
   className,

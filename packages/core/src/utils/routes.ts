@@ -18,6 +18,7 @@ export const PLATFORM_ROUTES = {
   notFound: '/not-found',
   terms: '/terms',
   specificTerms: '/terms/:terms',
+  userProfile: '/user/:username',
 } as const;
 
 export const BLOG_ROUTES = {

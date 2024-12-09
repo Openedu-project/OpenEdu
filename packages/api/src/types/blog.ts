@@ -1,7 +1,7 @@
 import type { HTTPPagination } from './fetch';
 import type { IHashtag } from './hashtag';
 import type { IOrganization } from './organizations';
-import type { IUserProfile } from './user';
+import type { IUserProfile } from './user-profile';
 
 interface IBlogCategory {
   id: string;
