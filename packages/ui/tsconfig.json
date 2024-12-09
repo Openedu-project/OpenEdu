@@ -3,7 +3,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "baseUrl": ".",
-    "types": ["@oe/types/global.d.ts"]
+    "types": ["@oe/types/global.d.ts", "next/image-types/global"]
   },
   "include": ["src"],
   "exclude": ["node_modules"]

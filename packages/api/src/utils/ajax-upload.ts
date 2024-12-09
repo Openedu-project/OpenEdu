@@ -70,7 +70,7 @@ export async function ajaxUpload(options: Options) {
     }
   }
 
-  const [{ referrer, origin }, accessToken] = await Promise.all([
+  const [{ referrer }, accessToken] = await Promise.all([
     getAPIReferrerAndOrigin(),
     getCookie(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY),
   ]);
@@ -81,10 +81,6 @@ export async function ajaxUpload(options: Options) {
 
   if (referrer) {
     xhr.setRequestHeader('X-referrer', referrer);
-  }
-
-  if (origin) {
-    xhr.setRequestHeader('Origin', origin);
   }
 
   for (const key of Object.keys(headers)) {

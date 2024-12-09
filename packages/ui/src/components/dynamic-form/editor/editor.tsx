@@ -1,32 +1,115 @@
-import type { IProtectedRoutes } from '@oe/core/utils/routes';
-import { useTranslations } from 'next-intl';
-import { DashboardHeaderCard } from '#common/layout';
+'use client';
 
-export default function FormEditor({ dashboard }: { dashboard: IProtectedRoutes }) {
-  const tDynamicForms = useTranslations('dynamicForms');
+import {
+  DndContext,
+  type DragEndEvent,
+  KeyboardSensor,
+  PointerSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import {
+  SortableContext,
+  arrayMove,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { zodResolver } from '@hookform/resolvers/zod';
+import type { z } from '@oe/api/utils/zod';
+import { useEffect, useMemo } from 'react';
+// import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { Form } from '#shadcn/form';
+import { useFormEditorStore } from '../store';
+import type { FormFieldOrGroup, FormFieldType, FormValues } from '../types';
+import { generateDefaultValues, generateZodSchema } from '../utils';
+import { FormField } from './form-field';
+
+export function Editor() {
+  const { fields, updateFields } = useFormEditorStore();
+
+  const formSchema = generateZodSchema(fields);
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: useMemo(() => zodResolver(formSchema), [formSchema]),
+    mode: 'onSubmit',
+  });
+
+  useEffect(() => {
+    const defaults = generateDefaultValues(fields);
+    form.reset(defaults);
+  }, [fields, form]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    console.log(111);
+    const { active, over } = event;
+    if (!over) {
+      return;
+    }
+
+    if (active.id !== over.id) {
+      const containerIndex = fields.findIndex(Array.isArray);
+      if (containerIndex !== -1) {
+        const container = fields[containerIndex] as FormFieldType[];
+        const oldItemIndex = container?.findIndex(item => item.name === active.id);
+        const newItemIndex = container?.findIndex(item => item.name === over.id);
+
+        if (oldItemIndex !== -1 && newItemIndex !== -1) {
+          const newItems = [...fields];
+          newItems[containerIndex] = arrayMove(container, oldItemIndex, newItemIndex);
+          updateFields(newItems);
+        }
+      }
+
+      const oldIndex = fields.findIndex(
+        field =>
+          (Array.isArray(field) && field.some(i => i.name === active.id)) ||
+          (!Array.isArray(field) && field.name === active.id)
+      );
+      const newIndex = fields.findIndex(
+        field =>
+          (Array.isArray(field) && field.some(i => i.name === over.id)) ||
+          (!Array.isArray(field) && field.name === over.id)
+      );
+
+      updateFields(arrayMove(fields, oldIndex, newIndex));
+    }
+  };
+
+  const onSubmit = (values: FormValues) => {
+    console.log('Form values:', values);
+  };
+
   return (
-    <>
-      <DashboardHeaderCard
-        dashboard={dashboard}
-        breadcrumbs={[{ label: tDynamicForms('formList') }, { label: tDynamicForms('createForm') }]}
-        className="mb-0 border-b"
-      >
-        <h1 className="flex justify-between text-2xl">{tDynamicForms('createForm')}</h1>
-      </DashboardHeaderCard>
-      <div className="flex gap-4">
-        <div className="w-[280px] border-r">
-          {/* Cột bên trái */}
-          Cột bên trái
-        </div>
-        <div className="flex-1">
-          {/* Editor ở giữa */}
-          Editor ở giữa
-        </div>
-        <div className="flex-1">
-          {/* Form preview bên phải */}
-          Form preview bên phải
-        </div>
-      </div>
-    </>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+          modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+        >
+          <SortableContext
+            items={fields.map((field: FormFieldOrGroup) =>
+              Array.isArray(field) ? (field[0]?.name ?? '') : field?.name
+            )}
+            strategy={verticalListSortingStrategy}
+          >
+            {fields.map((field: FormFieldOrGroup, index: number) => (
+              <FormField key={Array.isArray(field) ? field[0]?.name : field?.name} config={field} index={index} />
+            ))}
+          </SortableContext>
+        </DndContext>
+      </form>
+    </Form>
   );
 }

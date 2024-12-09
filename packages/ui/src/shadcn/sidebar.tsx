@@ -8,7 +8,7 @@ import React from 'react';
 import { Button } from '#shadcn/button';
 import { Input } from '#shadcn/input';
 import { Separator } from '#shadcn/separator';
-import { Sheet, SheetContent } from '#shadcn/sheet';
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '#shadcn/sheet';
 import { Skeleton } from '#shadcn/skeleton';
 import { Tooltip, type TooltipContent, TooltipProvider, TooltipTrigger } from '#shadcn/tooltip';
 import { cn } from '#utils/cn';
@@ -166,6 +166,10 @@ const Sidebar = React.forwardRef<
           }
           side={side}
         >
+          <SheetHeader className="hidden">
+            <SheetTitle />
+            <SheetDescription />
+          </SheetHeader>
           <div className="flex h-full w-full flex-col">{children}</div>
         </SheetContent>
       </Sheet>

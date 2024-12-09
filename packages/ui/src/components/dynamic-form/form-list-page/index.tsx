@@ -1,12 +1,12 @@
 import { DYNAMIC_FORMS_ROUTES, type IProtectedRoutes } from '@oe/core/utils/routes';
 import { Plus } from 'lucide-react';
-import { getTranslations } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
 import { DashboardHeaderCard } from '#common/layout/dashboard-layout';
 import { Link } from '#common/navigation';
 import Forms from './forms';
 
-export default async function FormsListPage({ dashboard }: { dashboard: IProtectedRoutes }) {
-  const tDynamicForms = await getTranslations('dynamicForms');
+export function FormsListPage({ dashboard }: { dashboard: IProtectedRoutes }) {
+  const tDynamicForms = useTranslations('dynamicForms');
 
   return (
     <>

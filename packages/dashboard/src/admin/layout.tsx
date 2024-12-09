@@ -23,6 +23,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   const tDashboard = useTranslations('dashboard');
   return (
     <DashboardLayout
+      className="p-4 pt-0"
       sidebarItems={[
         {
           id: 'dashboard',
@@ -113,7 +114,6 @@ export default function Layout({ children }: { children: ReactNode }) {
           ],
         },
       ]}
-      pathnamesNoSidebar={[`${ADMIN_ROUTES.themesSettings}/`]}
     >
       {children}
     </DashboardLayout>

@@ -1,0 +1,65 @@
+import {
+  AtSign,
+  CaseSensitive,
+  Hash,
+  HeadingIcon,
+  ImageIcon,
+  SquareCheck,
+  SquareDashed,
+  TextCursorInput,
+  Type,
+} from 'lucide-react';
+import type { FormComponents } from '../types';
+import { Checkbox } from './checkbox';
+import { EmailInput } from './email';
+import { Heading } from './heading';
+import { FormImage } from './image';
+import { Input } from './input';
+import { InputNumber } from './input-number';
+import { Paragraph } from './paragraph';
+import { Space } from './space';
+import { SubmitButton } from './submit-button';
+import { Textarea } from './textarea';
+
+export const formComponents: FormComponents = {
+  heading: {
+    component: Heading,
+    icon: HeadingIcon,
+  },
+  paragraph: {
+    component: Paragraph,
+    icon: CaseSensitive,
+  },
+  space: {
+    component: Space,
+    icon: SquareDashed,
+  },
+  input: {
+    component: Input,
+    icon: Type,
+  },
+  textarea: {
+    component: Textarea,
+    icon: TextCursorInput,
+  },
+  inputNumber: {
+    component: InputNumber,
+    icon: Hash,
+  },
+  email: {
+    component: EmailInput,
+    icon: AtSign,
+  },
+  checkbox: {
+    component: Checkbox,
+    icon: SquareCheck,
+  },
+  image: {
+    component: FormImage,
+    icon: ImageIcon,
+  },
+  submitButton: {
+    component: SubmitButton,
+    icon: SquareCheck,
+  },
+};

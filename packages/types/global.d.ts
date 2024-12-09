@@ -30,7 +30,7 @@ declare global {
       NEXT_PUBLIC_APP_LANDING_ORIGIN: string;
 
       NEXT_PUBLIC_MEDIA_CDN_HOST: string;
-
+      NEXT_PUBLIC_MEDIA_S3_HOST: string;
       NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY: string;
       NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY: string;
       NEXT_PUBLIC_COOKIE_LOCALE_KEY: string;

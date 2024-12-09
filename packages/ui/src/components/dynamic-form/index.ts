@@ -1,5 +1,5 @@
 import { DynamicForm, type IFormItem } from './dynamic-form';
-import { FormEditor } from './editor';
-import FormsListPage from './forms/page';
+import { FormEditorLayout } from './editor';
+import { FormsListPage } from './form-list-page';
 
-export { DynamicForm, type IFormItem, FormsListPage, FormEditor };
+export { DynamicForm, type IFormItem, FormsListPage, FormEditorLayout };

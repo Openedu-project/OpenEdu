@@ -68,7 +68,7 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
   const locale = cookies?.[process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY];
 
   const urlAPIWithLocale = new URL(urlAPI);
-  urlAPIWithLocale.searchParams.set('locale', locale ?? DEFAULT_LOCALE);
+  urlAPIWithLocale.searchParams.set('locale', urlAPIWithLocale.searchParams.get('locale') ?? locale ?? DEFAULT_LOCALE);
   const queryParams = urlAPIWithLocale.searchParams.toString();
   const tag = `${urlAPIWithLocale.pathname}${queryParams ? `?${queryParams}` : ''}`;
 

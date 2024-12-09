@@ -10,6 +10,7 @@ import { Switch } from '@oe/ui/shadcn/switch';
 import { Tabs, TabsList, TabsTrigger } from '@oe/ui/shadcn/tabs';
 import { Toggle } from '@oe/ui/shadcn/toggle';
 import { Camera, User2 } from 'lucide-react';
+import DndSortDemo from './_components/dnd-sort-demo';
 import TableDemo from './_components/table-demo';
 
 export default function Home() {
@@ -81,6 +82,7 @@ export default function Home() {
           </Button>
         </Uploader>
         <Uploader draggable listType="picture" crop />
+        <DndSortDemo />
       </main>
     </>
   );

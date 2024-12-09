@@ -1,3 +1,3 @@
-import FormEditor from './editor';
+import { FormEditorLayout } from './layout';
 
-export { FormEditor };
+export { FormEditorLayout };

@@ -23,8 +23,7 @@ import {
   useFormContext,
 } from 'react-hook-form';
 
-import type { TypeOf } from '@oe/api/utils/zod';
-import { useTranslations } from 'next-intl';
+import type { TypeOf, z } from '@oe/api/utils/zod';
 import { useFormStatus } from 'react-dom';
 import { Label, LabelWithInfo } from '#shadcn/label';
 import { cn } from '#utils/cn';
@@ -132,8 +131,9 @@ FormDescription.displayName = 'FormDescription';
 const FormMessage = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagraphElement>>(
   ({ className, children, ...props }, ref) => {
     const { error, formMessageId } = useFormField();
-    const t = useTranslations();
-    const body = error ? t(String(error?.message)) : children;
+
+    // const t = useTranslations();
+    const body = error ? error?.message : children;
 
     if (!body) {
       return null;
@@ -181,9 +181,15 @@ const FormLabelInfo = ({ className, children, ref, ...props }: ComponentProps<ty
 const FormFieldWithLabel = forwardRef<
   ComponentRef<typeof Slot>,
   ComponentPropsWithoutRef<typeof Slot> &
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    FormFieldContextValue & { label: string; form?: UseFormReturn<TypeOf<any>, any, undefined>; infoText?: string }
->(({ name, label, form, infoText, ...props }, ref) => {
+    FormFieldContextValue & {
+      label?: string;
+      form?: UseFormReturn<TypeOf<z.ZodAny>, z.ZodAny, undefined>;
+      infoText?: string;
+      description?: string;
+      required?: boolean;
+      fieldType?: string;
+    }
+>(({ name, label, form, infoText, description, className, required, fieldType, ...props }, ref) => {
   const formContext = useFormContext();
 
   return (
@@ -191,10 +197,37 @@ const FormFieldWithLabel = forwardRef<
       control={form ? form.control : formContext.control}
       name={name}
       render={({ field }) => (
-        <FormItem>
-          <FormLabelInfo infoText={infoText}>{label}</FormLabelInfo>
-          <FormControlSlot field={field} ref={ref} {...props} />
-          <FormMessage />
+        <FormItem
+          className={cn(
+            fieldType === 'checkbox' && 'flex flex-row items-start space-x-3 space-y-0 rounded-md',
+            className
+          )}
+        >
+          {fieldType === 'checkbox' ? (
+            <>
+              <FormControlSlot field={field} ref={ref} {...props} />
+              <div className="space-y-1 leading-none">
+                {label && (
+                  <FormLabelInfo infoText={infoText}>
+                    {label} {required && <span className="ml-1 text-destructive">*</span>}
+                  </FormLabelInfo>
+                )}
+                {description && <FormDescription>{description}</FormDescription>}
+                <FormMessage />
+              </div>
+            </>
+          ) : (
+            <>
+              {label && (
+                <FormLabelInfo infoText={infoText}>
+                  {label} {required && <span className="ml-1 text-destructive">*</span>}
+                </FormLabelInfo>
+              )}
+              <FormControlSlot field={field} ref={ref} {...props} />
+              {description && <FormDescription>{description}</FormDescription>}
+              <FormMessage />
+            </>
+          )}
         </FormItem>
       )}
     />

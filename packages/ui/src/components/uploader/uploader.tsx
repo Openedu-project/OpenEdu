@@ -2,6 +2,7 @@
 import type { IFileResponse } from '@oe/api/types/file';
 import type { ErrorStatus } from '@oe/api/utils/ajax-upload';
 import { ajaxUpload } from '@oe/api/utils/ajax-upload';
+import { API_ENDPOINT } from '@oe/api/utils/endpoints';
 import type React from 'react';
 import { Fragment, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { cn } from '#utils/cn';
@@ -33,7 +34,7 @@ const Uploader = (props: UploaderProps) => {
     maxPreviewFileSize,
     method = 'POST',
     autoUpload = true,
-    action,
+    action = API_ENDPOINT.UPLOADS,
     headers,
     withCredentials = false,
     disableMultipart,
