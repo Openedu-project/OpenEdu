@@ -7,6 +7,7 @@
     "./images/*": "./src/images/*",
     "./icons/*": "./src/icons/*.tsx",
     "./icons/svg/*": "./src/icons/svg/*.svg",
+    "./icons/social-icon/*": "./src/icons/social-icon/*.tsx",
     "./package.json": "./package.json"
   },
   "type": "module",

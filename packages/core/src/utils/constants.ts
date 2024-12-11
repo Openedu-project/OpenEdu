@@ -54,3 +54,6 @@ export const FORM_EVENT = {
   others: 'Others',
   contact_organization: 'Contact Organization',
 };
+
+export const EMAIL_REGEX =
+  /^(([^\s"(),.:;<>@[\]]+(\.[^\s"(),.:;<>@[\]]+)*)|(".+"))@(([^\s"(),.:;<>@[\]]+\.)+[^\s"(),.:;<>@[\]]{2,})$/i;
