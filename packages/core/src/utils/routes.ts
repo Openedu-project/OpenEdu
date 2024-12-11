@@ -33,6 +33,9 @@ export const ADMIN_ROUTES = {
   pagesSettings: '/admin/site-settings/pages',
   themesSettings: '/admin/site-settings/themes',
   themeDetail: '/admin/themes/:themeName',
+  permissionActionSettings: '/admin/permissions/actions',
+  permissionPageSettings: '/admin/permissions/pages',
+  permissionRoleSettings: '/admin/permissions/roles',
 } as const;
 
 export const CREATOR_ROUTES = {

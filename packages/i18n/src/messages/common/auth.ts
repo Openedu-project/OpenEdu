@@ -17,5 +17,20 @@ export const authMessages = {
     forgotPassword: 'Forgot Your Password?',
     sendYourEmail: 'Send Your Email',
     slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
+    signin: {
+      errors: {
+        emailInvalid: 'Please enter a valid email address.',
+        passwordLength: 'Password must be at least 8 characters long.',
+      },
+    },
+    signup: {
+      errors: {
+        usernameLength: 'Name must be at least 6 characters',
+        passwordInvalid: 'Password must be at least 8 characters long.',
+        passwordMissMatch: "Passwords don't match",
+        emailInvalid: 'Invalid email address.',
+        agreeInvalid: 'You must agree to the terms and conditions',
+      },
+    },
   },
 };

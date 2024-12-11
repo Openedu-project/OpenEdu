@@ -157,11 +157,16 @@ async function postRefreshToken(referrer?: string, origin?: string, refreshToken
 
   if (!refreshTokenResponse.ok) {
     const error = await refreshTokenResponse.json();
+    console.info('================ refresh token - before error response ================', refreshToken);
+    console.info('================ refresh token error response ================', error);
     throw new HTTPError({ message: error?.message ?? HTTPErrorCodeMessages.AUTHENTICATION_ERROR });
   }
 
   const refreshTokenData = (await refreshTokenResponse.json()) as HTTPResponse<IToken>;
   const data = refreshTokenData?.data;
+
+  console.info('================ refresh token - before success response ================', refreshToken);
+  console.info('================ refresh token success response ================', data);
 
   if (!data) {
     throw new Error(HTTPErrorCodeMessages.NOT_FOUND);
@@ -204,8 +209,8 @@ export const refreshTokenMiddlewareService = async ({
     res.cookies.set(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, data.refresh_token, { ...cookieOptions() });
     return { ...data, response: res };
   } catch (error) {
-    res.cookies.set(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, '', { maxAge: 0, ...cookieOptions() });
-    res.cookies.set(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, '', { maxAge: 0, ...cookieOptions() });
+    res.cookies.set(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, '', { ...cookieOptions(), maxAge: 0 });
+    res.cookies.set(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, '', { ...cookieOptions(), maxAge: 0 });
     console.error('==========refreshToken error=============', error);
 
     return { response: res };

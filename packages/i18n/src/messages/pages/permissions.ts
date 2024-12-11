@@ -1,0 +1,42 @@
+export const permissionMessage = {
+  permissionActionList: {
+    title: 'Action Configurations',
+    addAction: 'Add Action',
+    id: 'ID',
+    name: 'Name',
+    description: 'Description',
+    noActionFound: 'No actions found',
+    success: 'Success',
+  },
+  permissionActionFormModal: {
+    addNewAction: 'Add New Action',
+    name: 'Name',
+    namePlaceholder: 'Action Name',
+    description: 'Description',
+    descriptionPlaceholder: 'Action description',
+    save: 'Save',
+    cancel: 'Cancel',
+    errors: {
+      nameRequired: 'Name is required',
+    },
+  },
+  permissionPagesList: {
+    pagePermission: 'Page Permissions',
+    searchPage: 'Search pages',
+    save: 'Save',
+    pages: 'Pages',
+    pageName: 'Page Name',
+    path: 'Path',
+    selectAll: 'Select All',
+    success: 'Success',
+  },
+  permissionRoleList: {
+    pagePermission: 'Role Permissions',
+    searchPage: 'Search pages',
+    save: 'Save',
+    pages: 'Pages',
+    pageName: 'Page Name',
+    selectAll: 'Select All',
+    success: 'Success',
+  },
+};

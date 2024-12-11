@@ -25,5 +25,11 @@ export const dashboardMessages = {
       formTemplates: 'Form Templates',
       formList: 'Forms',
     },
+    permissionSettings: {
+      title: 'Permissions',
+      action: 'Actions',
+      role: 'Roles',
+      pages: 'Pages',
+    },
   },
 };
