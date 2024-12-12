@@ -31,5 +31,6 @@ export const dashboardMessages = {
       role: 'Roles',
       pages: 'Pages',
     },
+    coupon: 'Coupon',
   },
 };

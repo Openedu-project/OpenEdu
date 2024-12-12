@@ -94,7 +94,7 @@ export function TablePagination<TData>({
             }}
             className="h-8 w-14"
           />
-          <span className="font-medium text-sm"> / {pageCount.toLocaleString()}</span>
+          <span className="whitespace-nowrap font-medium text-sm"> / {pageCount.toLocaleString()}</span>
         </div>
 
         <div className="flex items-center space-x-2">

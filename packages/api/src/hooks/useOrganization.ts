@@ -20,8 +20,8 @@ export function useGetOrganization({ params }: { params: IFilter }) {
 
 export function useGetOrganizationByDomain({ domain, init = undefined }: { domain: string; init?: RequestInit }) {
   const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.ADMIN_ORGANIZATIONS, queryParams: { domain } });
-  const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
-    getOrgByDomainService(endpoint, { domain, init })
+  const { data, isLoading, error, mutate } = useSWR(endpointKey, () =>
+    getOrgByDomainService(API_ENDPOINT.ADMIN_ORGANIZATIONS, { domain, init })
   );
 
   return {

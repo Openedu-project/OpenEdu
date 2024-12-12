@@ -6,4 +6,8 @@ export interface IFilter {
   search_categories?: string;
   org_id?: string;
   type?: string;
+  user_id?: string;
+  preloads?: string;
+  is_pay?: boolean;
+  latest?: boolean;
 }

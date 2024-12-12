@@ -41,6 +41,7 @@ export const ADMIN_ROUTES = {
 export const CREATOR_ROUTES = {
   dashboard: '/creator',
   courses: '/creator/courses',
+  coupon: '/creator/coupon',
 } as const;
 
 export const PROTECTED_ROUTES = {
