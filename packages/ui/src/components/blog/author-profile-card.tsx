@@ -17,7 +17,7 @@ interface IAuthorProfile {
   handleFollow?: () => void;
 }
 export default function AuthorProfileCard({ profile, className, handleFollow, isMe = false }: IAuthorProfile) {
-  const t = useTranslations('authorProfile');
+  const t = useTranslations('authorProfileCard');
   const tGeneral = useTranslations('general');
 
   return (

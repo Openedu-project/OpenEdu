@@ -57,5 +57,6 @@ export const generalMessages = {
     follow: 'Follow',
     following: 'Following',
     write: 'Write',
+    noData: 'No data available',
   },
 };

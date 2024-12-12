@@ -88,7 +88,7 @@ interface Props {
   reject_org_reason?: string;
 }
 
-export interface IBlogsResponse extends HTTPPagination<IBlog[]> {}
+export interface IBlogsResponse extends HTTPPagination<IBlog> {}
 
 export interface IBlogRequest {
   banner_id: string;
