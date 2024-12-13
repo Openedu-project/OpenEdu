@@ -1,3 +1,5 @@
+## Example
+```jsx
 'use client';
 
 import {
@@ -304,3 +306,6 @@ export default function KanbanDemo() {
     </>
   );
 }
+
+
+```

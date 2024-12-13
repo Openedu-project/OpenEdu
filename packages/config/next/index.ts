@@ -18,7 +18,7 @@ export function getNextConfig(config: NextConfig = {}): NextConfig {
     //   optimizePackageImports: ['icon-library'],
     // },
     experimental: {
-      ppr: 'incremental',
+      // ppr: 'incremental',
       reactCompiler: true,
       optimizeServerReact: true,
     },

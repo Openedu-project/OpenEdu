@@ -1,17 +1,17 @@
 import { PLATFORM_ROUTES, PROTECTED_ROUTES } from '@oe/core/utils/routes';
 import { Link } from '@oe/ui/common/navigation';
-import { FilterSearch } from '@oe/ui/components/filter-search';
-import { Uploader } from '@oe/ui/components/uploader';
-import { Button } from '@oe/ui/shadcn/button';
-import { Checkbox } from '@oe/ui/shadcn/checkbox';
-import { RadioGroup, RadioGroupItem } from '@oe/ui/shadcn/radio-group';
-import { Slider } from '@oe/ui/shadcn/slider';
-import { Switch } from '@oe/ui/shadcn/switch';
-import { Tabs, TabsList, TabsTrigger } from '@oe/ui/shadcn/tabs';
-import { Toggle } from '@oe/ui/shadcn/toggle';
-import { Camera, User2 } from 'lucide-react';
+// import { FilterSearch } from '@oe/ui/components/filter-search';
+// import { Uploader } from '@oe/ui/components/uploader';
+// import { Button } from '@oe/ui/shadcn/button';
+// import { Checkbox } from '@oe/ui/shadcn/checkbox';
+// import { RadioGroup, RadioGroupItem } from '@oe/ui/shadcn/radio-group';
+// import { Slider } from '@oe/ui/shadcn/slider';
+// import { Switch } from '@oe/ui/shadcn/switch';
+// import { Tabs, TabsList, TabsTrigger } from '@oe/ui/shadcn/tabs';
+// import { Toggle } from '@oe/ui/shadcn/toggle';
+// import { Camera, User2 } from 'lucide-react';
+// import TableDemo from './_components/table-demo';
 import DndSortDemo from './_components/dnd-sort-demo';
-import TableDemo from './_components/table-demo';
 
 export default function Home() {
   return (
@@ -26,7 +26,7 @@ export default function Home() {
         <Link href="/about">About</Link>
       </nav>
       <main>
-        <TableDemo />
+        {/* <TableDemo />
         <Checkbox />
         <RadioGroup>
           <RadioGroupItem value="apple" />
@@ -81,7 +81,7 @@ export default function Home() {
             <User2 />
           </Button>
         </Uploader>
-        <Uploader draggable listType="picture" crop />
+        <Uploader draggable listType="picture" crop /> */}
         <DndSortDemo />
       </main>
     </>

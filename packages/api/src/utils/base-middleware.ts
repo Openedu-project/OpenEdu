@@ -8,7 +8,7 @@ import { getOrganizationByHostMiddleware } from '#services/organizations';
 import { isTokenExpired } from './jwt';
 
 import { decodedToken } from '@oe/core/utils/decoded-token';
-import { getLocaleFromPathname } from '@oe/i18n/utils';
+import { getLocaleFromPathname, getUnlocalizedPathname } from '@oe/i18n/utils';
 import type { IToken } from '#types/auth';
 import { getReferrerAndOriginForAPIByUserUrl } from './referrer-origin';
 
@@ -34,6 +34,8 @@ export async function baseMiddleware(request: NextRequest, host?: string | null)
     ...cookieOptions(),
     maxAge: 60 * 60 * 24 * 365, // 1 year
   });
+
+  request.headers.set('x-pathname', getUnlocalizedPathname(request.nextUrl.pathname));
 
   // OpenEdu no need to check
   if (new URL(origin).host !== process.env.NEXT_PUBLIC_APP_ROOT_DOMAIN_NAME) {
