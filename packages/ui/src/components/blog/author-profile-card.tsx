@@ -5,18 +5,19 @@ import { BLOG_ROUTES, PLATFORM_ROUTES, generateRoute } from '@oe/core/utils/rout
 import { useTranslations } from 'next-intl';
 import { Link } from '#common/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from '#shadcn/avatar';
-import { Button, buttonVariants } from '#shadcn/button';
+import { buttonVariants } from '#shadcn/button';
 import { ScrollArea, ScrollBar } from '#shadcn/scroll-area';
 import { cn } from '#utils/cn';
+import FollowButton from '../follow-button/follow-button';
 import { Image } from '../image';
 
 interface IAuthorProfile {
   profile: IUserProfile;
   className?: string;
   isMe?: boolean;
-  handleFollow?: () => void;
+  validateTags?: string[];
 }
-export default function AuthorProfileCard({ profile, className, handleFollow, isMe = false }: IAuthorProfile) {
+export default function AuthorProfileCard({ profile, className, isMe = false, validateTags }: IAuthorProfile) {
   const t = useTranslations('authorProfileCard');
   const tGeneral = useTranslations('general');
 
@@ -76,9 +77,12 @@ export default function AuthorProfileCard({ profile, className, handleFollow, is
           </Link>
         </>
       ) : (
-        <Button className="min-w-[80%]" onClick={handleFollow}>
-          {profile?.status === 'followed' ? tGeneral('following') : tGeneral('follow')}
-        </Button>
+        <FollowButton
+          className="min-w-[80%]"
+          userId={profile.id}
+          isFollowed={profile.status === 'followed'}
+          validateTags={validateTags}
+        />
       )}
 
       {profile.writer_in_orgs && profile.writer_in_orgs.length > 0 && (
@@ -90,7 +94,7 @@ export default function AuthorProfileCard({ profile, className, handleFollow, is
                 <Link
                   key={org.id}
                   className="flex h-auto flex-col items-center p-2 hover:bg-primary/10"
-                  href={`https://en/${org.domain}${BLOG_ROUTES.blog}`}
+                  href={`https://${org.domain}/en${BLOG_ROUTES.blog}`}
                   target="_blank"
                 >
                   <div className="relative flex min-w-[50px] justify-center rounded-full border-2">

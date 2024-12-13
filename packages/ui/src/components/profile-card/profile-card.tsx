@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@oe/ui/shadcn/avatar';
 import { Card } from '@oe/ui/shadcn/card';
 import type React from 'react';
 import type { HTMLAttributes } from 'react';
+import { FollowButton } from '#components/follow-button';
 import { cn } from '#utils/cn';
 interface IProfileCardProps extends HTMLAttributes<HTMLDivElement> {
   profileData: IUserProfile;
@@ -14,6 +15,7 @@ interface IProfileCardProps extends HTMLAttributes<HTMLDivElement> {
   wrapperClassName?: string;
   infoClassName?: string;
   handleClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  followBtn?: boolean;
 }
 export default function ProfileCard({
   profileData,
@@ -24,6 +26,7 @@ export default function ProfileCard({
   wrapperClassName = '',
   infoClassName = '',
   desc,
+  followBtn = false,
 }: IProfileCardProps) {
   return (
     <Card
@@ -52,6 +55,7 @@ export default function ProfileCard({
             </p>
             {desc && <p className={cn('mcaption-regular9 mt-1 line-clamp-3 text-foreground')}>{desc}</p>}
           </div>
+          {followBtn && <FollowButton isFollowed={profileData.status === 'followed'} userId={profileData.id} />}
         </div>
       </div>
     </Card>

@@ -4,11 +4,13 @@ import { getUserProfileService } from '@oe/api/services/user';
 import type { HTTPError } from '@oe/api/utils/http-error';
 import { AuthorProfileCard, PersonalBlogSection, TopBlogs } from '@oe/ui/components/blog';
 import { getTranslations } from 'next-intl/server';
-import { cookies } from 'next/headers';
 
 const getUserProfile = async (username: string) => {
   try {
-    return await getUserProfileService(undefined, { id: username, init: { ...cookies } });
+    return await getUserProfileService(undefined, {
+      id: username,
+      init: { next: { tags: [`author-profile_${username}`] } },
+    });
   } catch (error) {
     return error as HTTPError;
   }
@@ -18,7 +20,6 @@ const getOrgBlog = async (id: string) => {
   try {
     return await getUserBlogService('org', undefined, id, {
       params: { page: 1, per_page: 10, sort: 'update_at desc' },
-      init: { ...cookies },
     });
   } catch (error) {
     return error as HTTPError;
@@ -35,9 +36,9 @@ const getOrgBlog = async (id: string) => {
 // };
 
 export default async function AuthorPage({ params }: { params: { username: string } }) {
-  const t = await getTranslations('blogSectionTitle');
   const { username } = await params;
-  const [me, profileData] = await Promise.all([
+  const [t, me, profileData] = await Promise.all([
+    getTranslations('blogSectionTitle'),
     getMeServiceWithoutError(),
     getUserProfile(username),
     // getTopAuthor(),
@@ -56,7 +57,12 @@ export default async function AuthorPage({ params }: { params: { username: strin
   return (
     <div className="grid min-h-screen grid-cols-1 p-6 pb-10 md:px-10 lg:grid-cols-10 lg:gap-10">
       <div className="lg:order-1 lg:col-span-3">
-        <AuthorProfileCard profile={profileData} isMe={me?.username === username} className="mb-6" />
+        <AuthorProfileCard
+          profile={profileData}
+          isMe={me?.username === username}
+          validateTags={[`author-profile_${username}`]}
+          className="mb-6"
+        />
         {!(orgBlogs instanceof Error || orgBlogs?.results.length === 0) && (
           <TopBlogs title={t('articlesOnOrg')} blogs={orgBlogs?.results} />
         )}

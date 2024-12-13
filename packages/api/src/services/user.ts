@@ -1,7 +1,7 @@
 import type { IFilter } from '#types/filter';
 import type { IListUserProfileRes, IUserProfile } from '#types/user-profile';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI, postAPI, putAPI } from '#utils/fetch';
+import { createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 import type {
   IAcceptUserInvitePayload,
   IAcceptUserInviteRes,
@@ -26,10 +26,8 @@ export async function getUserProfileService(
       },
     });
   }
-  console.log(endpointKey, 'keyyyyyyyy');
   try {
     const response = await fetchAPI<IUserProfile>(endpointKey, init);
-
     return response.data;
   } catch {
     return null;
@@ -165,6 +163,25 @@ export const postUserEmailService = async (
     payload,
     init
   );
+
+  return response.data;
+};
+
+export const followUserService = async (
+  type: 'follow' | 'unfollow',
+  endpoint?: string | undefined,
+  id?: string,
+  { payload, init }: { payload?: Record<string, unknown>; init?: RequestInit } = {}
+) => {
+  const endpointKey = endpoint ?? createAPIUrl({ endpoint: API_ENDPOINT.USERS_ID_FOLLOW, params: { id } });
+  const response = type === 'follow' ? await postAPI(endpointKey, payload, init) : await deleteAPI(endpointKey, init);
+
+  return response.data;
+};
+
+export const unfollowUserService = async (endpoint?: string | undefined, id?: string, init?: RequestInit) => {
+  const endpointKey = endpoint ?? createAPIUrl({ endpoint: API_ENDPOINT.USERS_ID_FOLLOW, params: { id } });
+  const response = await deleteAPI(endpointKey, init);
 
   return response.data;
 };
