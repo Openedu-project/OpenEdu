@@ -205,6 +205,7 @@ export function AutocompeteMultiple<T extends OptionType | string>({
               onChange={e => handleSearch(e.target.value)}
               value={searchValue}
               disabled={disabled}
+              autoComplete="off"
               name="search"
             />
           </div>

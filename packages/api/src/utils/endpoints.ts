@@ -130,6 +130,7 @@ export const API_ENDPOINT = {
   USERS_ID_ORG_BLOGS: '/api/v1/users/:id/org-blogs',
   USER_SETTINGS: '/api/v1/user-settings',
   COUPONS: '/api/v1/coupons',
+  COUPONS_USE: '/api/v1/coupons/use',
   COUPONS_ID: '/api/v1/coupons/:id',
   EMAILS_TEMPLATES: '/api/v1/emails/templates',
   EMAILS_TEMPLATES_VARIABLES: '/api/v1/emails/templates/variables',

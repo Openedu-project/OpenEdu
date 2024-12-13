@@ -129,6 +129,7 @@ export default function Table<TData>({
   useImperativeHandle(ref, () => ({
     getData: () => tableData,
     table: table,
+    mutate: mutate,
   }));
 
   const { rows } = table.getRowModel();

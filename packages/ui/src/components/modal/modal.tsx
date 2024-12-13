@@ -29,6 +29,7 @@ interface BaseModalProps extends Omit<DialogProps, 'children'> {
   buttons?: ButtonConfig[];
   isOpen?: boolean;
   className?: string;
+  hasCancelButton?: boolean;
   onClose?: () => void;
 }
 
@@ -54,6 +55,7 @@ const FormModalContent = <TSchema extends FormSchema>({
   validationSchema,
   defaultValues,
   buttons,
+  hasCancelButton = true,
   onClose,
 }: FormModalProps<TSchema>) => {
   const form = useForm<z.infer<TSchema>>({
@@ -81,17 +83,19 @@ const FormModalContent = <TSchema extends FormSchema>({
       >
         {children(form)}
         <div className="mt-4 flex justify-end space-x-2">
-          {renderButtons(buttons, form.formState.isSubmitting, true, onClose)}
+          {renderButtons(buttons, form.formState.isSubmitting, true, hasCancelButton, onClose)}
         </div>
       </form>
     </Form>
   );
 };
 
-const NonFormModalContent = ({ children, buttons, onClose }: NonFormModalProps) => (
+const NonFormModalContent = ({ children, buttons, hasCancelButton = true, onClose }: NonFormModalProps) => (
   <>
     {children}
-    <div className="mt-4 flex justify-end space-x-2">{renderButtons(buttons, false, false, onClose)}</div>
+    <div className="mt-4 flex justify-end space-x-2">
+      {renderButtons(buttons, false, false, hasCancelButton, onClose)}
+    </div>
   </>
 );
 
@@ -99,6 +103,7 @@ const renderButtons = (
   buttons: ButtonConfig[] | undefined,
   isSubmitting: boolean,
   isFormModal: boolean,
+  hasCancelButton: boolean,
   onClose?: () => void
 ) => {
   const tGeneral = useTranslations('general');
@@ -118,7 +123,7 @@ const renderButtons = (
 
   return (
     <>
-      {onClose && (
+      {onClose && hasCancelButton && (
         <Button type="button" variant="outline" onClick={onClose}>
           {tGeneral('close')}
         </Button>
@@ -133,7 +138,16 @@ const renderButtons = (
 };
 
 export const Modal = <TSchema extends FormSchema = never>(props: ModalProps<TSchema>) => {
-  const { title, description, trigger, isOpen: externalIsOpen, className, onClose, ...rest } = props;
+  const {
+    title,
+    description,
+    trigger,
+    isOpen: externalIsOpen,
+    className,
+    onClose,
+    hasCancelButton = true,
+    ...rest
+  } = props;
   const [internalIsOpen, setInternalIsOpen] = useState(false);
 
   useEffect(() => {
@@ -151,14 +165,16 @@ export const Modal = <TSchema extends FormSchema = never>(props: ModalProps<TSch
 
   const modalContent = (
     <DialogContent onPointerDownOutside={e => e.preventDefault()} className={className}>
-      <DialogHeader>
-        <DialogTitle>{title}</DialogTitle>
-        <DialogDescription>{description}</DialogDescription>
-      </DialogHeader>
+      {(title || description) && (
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
+        </DialogHeader>
+      )}
       {isFormModal(props) ? (
-        <FormModalContent {...props} onClose={() => handleOpenChange(false)} />
+        <FormModalContent {...props} onClose={() => handleOpenChange(false)} hasCancelButton={hasCancelButton} />
       ) : (
-        <NonFormModalContent {...props} onClose={() => handleOpenChange(false)} />
+        <NonFormModalContent {...props} onClose={() => handleOpenChange(false)} hasCancelButton={hasCancelButton} />
       )}
     </DialogContent>
   );

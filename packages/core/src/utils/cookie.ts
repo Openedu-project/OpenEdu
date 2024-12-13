@@ -38,9 +38,7 @@ export const cookieOptions = (options?: CookieOptions): CookieOptions => {
     sameSite: 'lax',
     path: '/',
     maxAge: defaultExpiredTime,
-    ...(process.env.NODE_ENV === 'development'
-      ? { domain: 'localhost' }
-      : { domain: process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN }),
+    ...(process.env.NODE_ENV === 'development' ? {} : { domain: process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN }),
     ...options,
   };
 };

@@ -15,6 +15,7 @@
   },
   "peerDependencies": {
     "@oe/api": "workspace:*",
+    "@oe/assets": "workspace:*",
     "@oe/core": "workspace:*",
     "@oe/i18n": "workspace:*",
     "@oe/ui": "workspace:*",

@@ -298,6 +298,9 @@ importers:
       '@oe/api':
         specifier: workspace:*
         version: link:../api
+      '@oe/assets':
+        specifier: workspace:*
+        version: link:../assets
       '@oe/core':
         specifier: workspace:*
         version: link:../core

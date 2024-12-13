@@ -1,0 +1,82 @@
+import type React from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { Input } from '#shadcn/input';
+import { cn } from '#utils/cn';
+
+interface InputCurrencyProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value'> {
+  value: number | undefined;
+  onChange: (value?: number) => void;
+  locale?: string;
+  className?: string;
+  maxValue?: number;
+}
+
+const parseNumber = (str: string): number => Number.parseInt(str.replaceAll(/\D/g, ''), 10);
+
+export function InputCurrency({
+  value,
+  onChange,
+  locale = 'en-US',
+  className,
+  maxValue = Number.MAX_SAFE_INTEGER,
+  ...props
+}: InputCurrencyProps) {
+  const [displayValue, setDisplayValue] = useState('');
+
+  const formatter = useCallback(
+    () =>
+      new Intl.NumberFormat(locale, {
+        useGrouping: true,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      }),
+    [locale]
+  );
+
+  const formatNumber = useCallback(
+    (num: number | undefined): string => (num === undefined ? '' : formatter().format(num)),
+    [formatter]
+  );
+
+  useEffect(() => {
+    setDisplayValue(formatNumber(value));
+  }, [value, formatNumber]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+
+    if (inputValue === '') {
+      onChange(0);
+      setDisplayValue('');
+      return;
+    }
+
+    const parsedValue = parseNumber(inputValue);
+
+    if (parsedValue !== undefined && parsedValue <= maxValue) {
+      onChange(parsedValue);
+      setDisplayValue(inputValue);
+    }
+  };
+
+  const handleBlur = () => {
+    if (value === 0 || value === undefined) {
+      setDisplayValue('');
+      return;
+    }
+    setDisplayValue(formatNumber(value));
+  };
+
+  return (
+    <Input
+      type="text"
+      value={displayValue}
+      onChange={handleChange}
+      onBlur={handleBlur}
+      className={cn(className)}
+      {...props}
+    />
+  );
+}
+
+InputCurrency.displayName = 'InputCurrency';
