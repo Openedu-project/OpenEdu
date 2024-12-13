@@ -24,7 +24,7 @@ export default function AuthorProfileCard({ profile, className, isMe = false, va
   return (
     <div
       className={cn(
-        'flex flex-col items-center justify-center gap-4 rounded-2 p-4 text-foreground shadow-lg',
+        'flex flex-col items-center justify-center gap-4 rounded-lg p-4 text-foreground shadow-lg',
         className
       )}
     >
@@ -45,13 +45,13 @@ export default function AuthorProfileCard({ profile, className, isMe = false, va
       <p className="giant-iheading-semibold28 text-center">{profile.display_name ?? profile.username}</p>
       <div className="mcaption-semibold16 flex flex-wrap gap-3 text-foreground">
         <span>
-          {(profile.followers ?? 0 > 1)
+          {(profile.followers ?? 0) > 1
             ? t.rich('numberFollowers', { number: abbreviateNumber(profile.followers) })
             : t.rich('numberFollower', { number: abbreviateNumber(profile.followers ?? 0) })}
         </span>
         <span>&#x2022;</span>
         <span>
-          {(profile.total_blogs ?? 0 > 1)
+          {(profile.total_blogs ?? 0) > 1
             ? t.rich('numberArticles', { number: abbreviateNumber(profile.total_blogs) })
             : t.rich('numberArticle', { number: abbreviateNumber(profile.total_blogs ?? 0) })}
         </span>

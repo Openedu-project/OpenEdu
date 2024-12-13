@@ -1,7 +1,7 @@
 import type { IFilter } from '#types/filter';
 import type { IListUserProfileRes, IUserProfile } from '#types/user-profile';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
+import { type FetchOptions, createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 import type {
   IAcceptUserInvitePayload,
   IAcceptUserInviteRes,
@@ -15,7 +15,7 @@ import type {
 
 export async function getUserProfileService(
   url?: string,
-  { id, init }: { id?: string; init?: RequestInit } = {}
+  { id, init }: { id?: string; init?: FetchOptions } = {}
 ): Promise<IUserProfile | null> {
   let endpointKey = url;
   if (!endpointKey) {
@@ -98,7 +98,7 @@ export const postUserRolesService = async (
 
 export async function getTopAuthorService(
   url?: string,
-  { params, init }: { params?: IFilter; init?: RequestInit } = {}
+  { params, init }: { params?: IFilter; init?: FetchOptions } = {}
 ): Promise<IListUserProfileRes | null> {
   let endpointKey = url;
   if (!endpointKey) {

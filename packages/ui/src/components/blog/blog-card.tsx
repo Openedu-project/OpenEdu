@@ -69,10 +69,7 @@ export function BlogCard({
 
   return (
     <Card
-      className={cn(
-        '!shadow-md flex w-full cursor-pointer flex-col bg-background hover:border hover:border-primary hover:shadow-md',
-        className
-      )}
+      className={cn('w-full cursor-pointer bg-background hover:border hover:border-primary', className)}
       onClick={handleClick}
       {...props}
     >
@@ -93,12 +90,14 @@ export function BlogCard({
             </p>
           </div>
         )}
+
         <Image
           src={blog?.banner?.url}
           alt={blog?.title}
           className="w-full flex-0 rounded"
           fill
           aspectRatio="16:9"
+          containerHeight="auto"
           sizes="(max-width: 768px) 280px, 380px"
           quality={100}
         />

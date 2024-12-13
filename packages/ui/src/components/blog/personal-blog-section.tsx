@@ -1,21 +1,19 @@
 'use client';
 
+import { getUserBlog } from '@oe/api/actions/blog';
 import type { IBlog } from '@oe/api/types/blog';
-import { useRouter } from '@oe/ui/common/navigation';
-import { Loader2 } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { Fragment, useEffect, useRef, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
-
-import { useGetUserBlog } from '@oe/api/hooks/useBlog';
 import type { IUserProfile } from '@oe/api/types/user-profile';
 import WhaleNoData from '@oe/assets/images/whale-no-data.png';
 import { PAGE_SIZE } from '@oe/core/utils/constants';
 import { abbreviateNumber } from '@oe/core/utils/helpers';
 import { BLOG_ROUTES, generateRoute } from '@oe/core/utils/routes';
+import { useRouter } from '@oe/ui/common/navigation';
+import { Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { Fragment, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { ProfileCard } from '#components/profile-card';
 import { ScrollArea, ScrollBar } from '#shadcn/scroll-area';
-import { Skeleton } from '#shadcn/skeleton';
 import { Image } from '../image';
 import { BlogCard } from './blog-card';
 
@@ -56,59 +54,47 @@ export default function PersonalBlogSection({
   name,
   className,
   topAuthor = [],
-}: { id: string; name: string; className?: string; topAuthor?: IUserProfile[] }) {
-  const [blogData, setBlogData] = useState<IBlog[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  initData = [],
+  totalPages,
+}: {
+  id: string;
+  name: string;
+  className?: string;
+  topAuthor?: IUserProfile[];
+  initData?: IBlog[];
+  totalPages: number;
+}) {
+  const [blogData, setBlogData] = useState<IBlog[]>(initData);
+  const [nextPage, setNextPage] = useState(2);
   const tPersonalBlogs = useTranslations('personalBlogSection');
-  const personalKey = useRef(Date.now());
 
-  const { data: personBlogs, isLoading: personBlogLoading } = useGetUserBlog(
-    'personal',
-    id,
-    {
-      page: currentPage,
-      per_page: PAGE_SIZE,
-      sort: 'update_at desc',
-    },
-    personalKey
-  );
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    if (personBlogs) {
-      if (currentPage === 1) {
-        setBlogData(personBlogs.results);
-      } else {
-        setBlogData([...blogData, ...personBlogs.results]);
-      }
+  const loadMoreBlog = async () => {
+    const data = await getUserBlog({ type: 'personal', id, page: nextPage, noCache: true });
+    if (data instanceof Error) {
+      return;
     }
-  }, [personBlogs]);
+
+    setBlogData(prev => [...prev, ...(data?.results ?? [])]);
+    setNextPage(prev => prev + 1);
+  };
 
   return (
     <div className={className}>
       <h2 className="giant-iheading-semibold20 mb-6 border-primary border-l-[2px] pl-1 text-primary uppercase">
         {tPersonalBlogs.rich('userArticles', { name: name })}
       </h2>
-      {personBlogLoading ? (
-        <div className="flex flex-col gap-4">
-          {Array.from({ length: 3 }, (_, i) => (
-            <Skeleton key={`personal_blog_${i}`} className="h-[300px] w-full rounded-xl" />
-          ))}
-        </div>
-      ) : (
+      {
         <div className="flex flex-col gap-4">
           {blogData.length > 0 ? (
             <InfiniteScroll
               className="flex flex-col items-center justify-center gap-4"
               dataLength={PAGE_SIZE}
-              next={() => {
-                setCurrentPage(prev => prev + 1);
-              }}
-              hasMore={currentPage < (personBlogs?.pagination.total_pages ?? 1)}
-              loader={<Loader2 className="ml-2 h-4 w-4 animate-spin" />}
+              next={loadMoreBlog}
+              hasMore={nextPage < totalPages}
+              loader={<Loader2 className="ml-2 h-4 w-4 animate-spin text-primary" />}
             >
               {blogData.map((blog, index) => {
-                if (index === 0 && topAuthor.length === 0) {
+                if (index === 5 && topAuthor.length > 0) {
                   return (
                     <Fragment key={blog.id}>
                       <TopAuthor topAuthor={topAuthor} />
@@ -118,7 +104,7 @@ export default function PersonalBlogSection({
                 }
                 return <BlogCard key={blog.id} blog={blog} contentRight />;
               })}
-              {blogData.length < 3 && topAuthor.length > 0 && <TopAuthor topAuthor={topAuthor} />}
+              {blogData.length < 5 && topAuthor.length > 0 && <TopAuthor topAuthor={topAuthor} />}
             </InfiniteScroll>
           ) : (
             <div className="h-full w-full">
@@ -138,7 +124,7 @@ export default function PersonalBlogSection({
             </div>
           )}
         </div>
-      )}
+      }
     </div>
   );
 }

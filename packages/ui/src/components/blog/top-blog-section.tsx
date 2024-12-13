@@ -22,7 +22,7 @@ export default function TopBlogs({ blogs = [], className, title, contentRight = 
         {title}
       </h2>
       <div className="relative h-[calc(100%-80px)]">
-        <div className="absolute top-0 left-0 h-full w-full rounded-radius-sm bg-primary/10 p-3">
+        <div className="absolute top-0 left-0 h-full w-full rounded-lg bg-primary/10 p-3">
           <ScrollArea className="h-full pr-2">
             {blogs.length > 0 ? (
               blogs.map((item, index) => (
