@@ -1,4 +1,4 @@
-import AuthorPage from './blog-author';
+import AuthorPage from './author-blog';
 import BlogCreationPage from './blog/blog-creation';
 import ErrorPage from './error';
 import NotFoundPage from './not-found';

@@ -5,13 +5,13 @@ import { formatDateHourMinute } from '@oe/core/utils/datetime';
 import { BLOG_ROUTES, generateRoute } from '@oe/core/utils/routes';
 import { getLocaleFromPathname } from '@oe/i18n/utils';
 import { useRouter } from '@oe/ui/common/navigation';
-import dayjs from 'dayjs';
+import { formatDistanceToNow } from 'date-fns';
 import type React from 'react';
 import { type HTMLAttributes, useCallback } from 'react';
+import { Image } from '#components/image';
 import { ProfileCard } from '#components/profile-card';
 import { Card, CardContent } from '#shadcn/card';
 import { cn } from '#utils/cn';
-import { Image } from '../image';
 
 interface IBlogCardProps extends HTMLAttributes<HTMLDivElement> {
   blog: IBlog;
@@ -85,7 +85,7 @@ export function BlogCard({
 
             <p className="mcaption-regular9 text-foreground">
               {Date.now() - Number(blog?.update_at) < 60 * 60 * 24 * 1000
-                ? dayjs(blog?.update_at ?? 0).fromNow(true)
+                ? formatDistanceToNow(blog?.update_at)
                 : formatDateHourMinute(blog?.update_at)}
             </p>
           </div>
@@ -106,7 +106,7 @@ export function BlogCard({
             {!authorOnTop && (
               <p className="mcaption-regular9 mb-2 text-foreground">
                 {Date.now() - Number(blog?.update_at) < 60 * 60 * 24 * 1000
-                  ? dayjs(blog?.update_at ?? 0).fromNow(true)
+                  ? formatDistanceToNow(blog?.update_at)
                   : formatDateHourMinute(blog?.update_at)}
               </p>
             )}

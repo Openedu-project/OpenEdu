@@ -93,7 +93,7 @@ export default function AuthorProfileCard({ profile, className, isMe = false, va
               {profile.writer_in_orgs?.map(org => (
                 <Link
                   key={org.id}
-                  className="flex h-auto flex-col items-center p-2 hover:bg-primary/10"
+                  className="flex h-auto flex-col items-center justify-start p-2 hover:bg-primary/10"
                   href={`https://${org.domain}/en${BLOG_ROUTES.blog}`}
                   target="_blank"
                 >

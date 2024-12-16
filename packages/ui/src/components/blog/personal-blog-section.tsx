@@ -8,12 +8,12 @@ import { PAGE_SIZE } from '@oe/core/utils/constants';
 import { abbreviateNumber } from '@oe/core/utils/helpers';
 import { BLOG_ROUTES, generateRoute } from '@oe/core/utils/routes';
 import { useRouter } from '@oe/ui/common/navigation';
-import { Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Fragment, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { ProfileCard } from '#components/profile-card';
 import { ScrollArea, ScrollBar } from '#shadcn/scroll-area';
+import { Skeleton } from '#shadcn/skeleton';
 import { Image } from '../image';
 import { BlogCard } from './blog-card';
 
@@ -90,8 +90,11 @@ export default function PersonalBlogSection({
               className="flex flex-col items-center justify-center gap-4"
               dataLength={PAGE_SIZE}
               next={loadMoreBlog}
-              hasMore={nextPage < totalPages}
-              loader={<Loader2 className="ml-2 h-4 w-4 animate-spin text-primary" />}
+              hasMore={nextPage <= totalPages}
+              loader={Array.from({ length: 5 }, (_, i) => (
+                // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                <Skeleton key={`loading-card-${i}`} className="h-[300px] w-full rounded-xl" />
+              ))}
             >
               {blogData.map((blog, index) => {
                 if (index === 5 && topAuthor.length > 0) {

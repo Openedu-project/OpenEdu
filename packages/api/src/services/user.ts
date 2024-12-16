@@ -178,10 +178,3 @@ export const followUserService = async (
 
   return response.data;
 };
-
-export const unfollowUserService = async (endpoint?: string | undefined, id?: string, init?: RequestInit) => {
-  const endpointKey = endpoint ?? createAPIUrl({ endpoint: API_ENDPOINT.USERS_ID_FOLLOW, params: { id } });
-  const response = await deleteAPI(endpointKey, init);
-
-  return response.data;
-};
