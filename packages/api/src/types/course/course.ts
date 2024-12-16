@@ -1,5 +1,6 @@
 import type { KeyedMutator } from 'swr';
 import type { IBookmark } from '#types/bookmark';
+import type { ICategory, ILevel } from '#types/categories';
 import type { IDataPagination } from '#types/pagination';
 import type { IAICourse, IAICourseStatus } from './ai-course';
 import type {
@@ -14,7 +15,6 @@ import type {
   TCourseRoles,
   TCourseStatus,
 } from './basic';
-import type { ICategory } from './category';
 import type { ISection } from './segment';
 
 export interface ICourse {
@@ -22,6 +22,7 @@ export interface ICourse {
   id: string;
   version: number;
   latest: boolean;
+
   name: string;
   slug: string;
   description: string;
@@ -34,7 +35,9 @@ export interface ICourse {
   medias: ICourseFile[];
   docs: ICourseFile[];
   has_certificate: boolean;
-  levels: [];
+  levels: ILevel[];
+  learner_count: number;
+  rating: number;
 
   org: ICourseOrganization;
   owner: ICourseOwner;
@@ -70,17 +73,16 @@ export interface ICourse {
   active_section: number;
   video_count: number;
   quiz_count: number;
-  learner_count: number;
 
   accesses: TCourseRoles | null;
+  categories: ICategory[] | null;
   partners: null;
-  categories: null;
-  reviewing: ICourseVersion | null;
+  form_relations: null;
+
   root_request: null;
   org_request: null;
+
   published: ICourseVersion[] | null;
-  form_relations: null;
-  rating: number;
 
   is_ai_generated: boolean;
   ai_generate_status: IAICourseStatus;
@@ -89,6 +91,7 @@ export interface ICourse {
 
 export interface ICourseOutline extends ICourse {
   outline: ISection[];
+  reviewing: ICourseVersion | null;
   learning_progress_overview: null;
 }
 
