@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useGetMe } from '@oe/api/hooks/useMe';
 import type { IFileResponse } from '@oe/api/types/file';
 import { type DownloadFileProps, downloadAllFiles, processFileName } from '@oe/core/utils/download-file';
-import { useLoginRequiredStore } from '#components/require-login-modal';
+import { useLoginRequiredStore } from '#components/login-required-modal';
 import { Button } from '#shadcn/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '#shadcn/collapsible';
 import { FileDownloader } from './attached-file';

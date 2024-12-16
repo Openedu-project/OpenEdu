@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 import type { IUser } from '@oe/api/types/user';
 import { type DownloadFileProps, downloadFile, processFileName } from '@oe/core/utils/download-file';
-import { useLoginRequiredStore } from '#components/require-login-modal';
+import { useLoginRequiredStore } from '#components/login-required-modal';
 import { Button } from '#shadcn/button';
 
 interface Props extends DownloadFileProps {

@@ -21,3 +21,13 @@ export function setFormValues<T extends FieldValues, U extends object>(data: U, 
     }
   }
 }
+
+export const getCurrentRouter = () => {
+  if (typeof window !== 'undefined') {
+    const { protocol, host: domain, pathname, search, hash } = window.location;
+
+    return `${protocol}//${domain}${pathname}${search}${hash}`;
+  }
+
+  return '/';
+};

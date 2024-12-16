@@ -1,10 +1,13 @@
-'use client';
-import { AUTH_ROUTES } from '@oe/core/utils/routes';
-import { AlertTriangle } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
-import type { MouseEvent } from 'react';
-import { Link } from '#common/navigation';
+"use client";
+
+import { AlertTriangle } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import type React from "react";
+
+import { AUTH_ROUTES } from "@oe/core/utils/routes";
+import { getCurrentRouter } from "@oe/core/utils/utils";
+import { Link } from "#common/navigation";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,23 +17,23 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '#shadcn/alert-dialog';
-import { useLoginRequiredStore } from './_store';
+} from "#shadcn/alert-dialog";
+import { useLoginRequiredStore } from "./_store";
 
-export const LoginRequiredModal = () => {
-  const t = useTranslations('loginRequiredModal');
-  const tGeneral = useTranslations('general');
+export const LoginWarningModal = () => {
+  const t = useTranslations("loginRequiredModal");
   const { isOpen, hasCancel, setLoginRequiredModal } = useLoginRequiredStore();
   const router = useRouter();
 
   const handleRedirectLogin = () => {
-    router.push(AUTH_ROUTES.login);
+    router.push(`${AUTH_ROUTES.login}?next=${getCurrentRouter()}`);
     setLoginRequiredModal(false);
   };
 
-  const handleRedirectSignUp = (e: MouseEvent<HTMLAnchorElement>) => {
+  const handleRedirectSignUp = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    router.push(AUTH_ROUTES.signUp);
+    router.push(`${AUTH_ROUTES.signUp}?next=${getCurrentRouter()}`);
+
     setLoginRequiredModal(false);
   };
 
@@ -43,24 +46,28 @@ export const LoginRequiredModal = () => {
       <AlertDialogContent>
         <AlertDialogHeader className="flex flex-col items-center">
           <AlertTriangle className="mb-4 h-12 w-12 animate-pulse text-yellow-500" />
-          <AlertDialogTitle>{t('title')}</AlertDialogTitle>
+          <AlertDialogTitle>{t("title")}</AlertDialogTitle>
           <AlertDialogDescription>
-            {t('desc')}
+            {t("desc")}
             <Link
-              href={AUTH_ROUTES.signUp}
+              href={`${AUTH_ROUTES.signUp}?next=${getCurrentRouter()}`}
               onClick={handleRedirectSignUp}
-              className="h-auto p-1 text-content-primary-light-600"
+              className="ml-1 p-0 text-primary hover:underline"
             >
-              {t('signupLinkText')}
+              {t("signupLinkText")}
             </Link>
             .
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           {hasCancel && (
-            <AlertDialogCancel onClick={() => setLoginRequiredModal(false)}>{tGeneral('cancel')}</AlertDialogCancel>
+            <AlertDialogCancel onClick={() => setLoginRequiredModal(false)}>
+              {t("cancel")}
+            </AlertDialogCancel>
           )}
-          <AlertDialogAction onClick={handleRedirectLogin}>{t('button')}</AlertDialogAction>
+          <AlertDialogAction onClick={handleRedirectLogin}>
+            {t("button")}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
