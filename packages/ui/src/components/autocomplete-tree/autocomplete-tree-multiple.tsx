@@ -1,7 +1,6 @@
 import { Check, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useCallback, useRef, useState } from 'react';
-import type { FlattenedItem, TreeItem } from '#components/sortable-tree';
 import { Button } from '#shadcn/button';
 import { CommandItem } from '#shadcn/command';
 import { Input } from '#shadcn/input';
@@ -10,9 +9,8 @@ import { cn } from '#utils/cn';
 import { DEFAULT_HEIGHT, DEFAULT_WIDTH, ITEM_HEIGHT } from '../autocomplete/constants';
 import { OptionBadge } from '../autocomplete/option-badge';
 import { VirtualizedCommandBase } from '../autocomplete/virtualized-command-base';
-import { flattenTree } from '../sortable-tree/utilities';
-import type { BaseAutocompleteTreeProps } from './types';
-import { getDescendantIds } from './utils';
+import type { BaseAutocompleteTreeProps, FlattenedItem, TreeItem } from './types';
+import { flattenTree, getDescendantIds } from './utils';
 import { getParentIds } from './utils';
 
 export interface AutocompleteTreeMultipleProps extends BaseAutocompleteTreeProps<TreeItem> {

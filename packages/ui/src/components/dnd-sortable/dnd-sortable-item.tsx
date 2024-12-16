@@ -1,21 +1,22 @@
 import { type AnimateLayoutChanges, defaultAnimateLayoutChanges, useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
 import type { CSSProperties } from 'react';
-import type { IContainerItem, IContainerProps } from './types';
-import { SortableContainerContext } from './utils/context';
+import { DndSortableItemContext } from './dnd-sortable-context';
+import type { IDndSortableItemProps } from './types';
 
 const animateLayoutChanges: AnimateLayoutChanges = args => defaultAnimateLayoutChanges({ ...args, wasDragging: true });
 
-export function SortableDndContainer<T, K>({
+export function DndSortableItem<ItemType, ChildItemType>({
   children,
   id,
   item,
   style,
+  className,
+  content,
   adapter,
-  count,
-  renderItem,
+  descendants,
+  toggleCollapse,
   ...props
-}: IContainerProps<T, K>) {
+}: IDndSortableItemProps<ItemType, ChildItemType>) {
   const { active, attributes, isDragging, listeners, over, setNodeRef, transition, transform } = useSortable({
     id,
     data: {
@@ -31,20 +32,22 @@ export function SortableDndContainer<T, K>({
 
   const itemStyle: CSSProperties = {
     ...style,
-    transform: CSS.Transform.toString(transform),
+    transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0) scaleX(1) scaleY(1)` : undefined,
     transition,
     opacity: isDragging ? 0.5 : 1,
     ...(adapter?.config.type === 'tree' && {
-      marginLeft: (item?.depth ?? 0) * (adapter?.config?.indent ?? adapter?.DEFAULT_INDENT_SIZE),
+      paddingLeft: (item?.depth ?? 0) * (adapter?.config?.indent ?? adapter?.DEFAULT_INDENT_SIZE),
     }),
   };
 
   return (
-    <SortableContainerContext.Provider value={{ attributes, listeners, isOverContainer, ref: setNodeRef }}>
-      <div {...props} style={itemStyle} ref={setNodeRef}>
-        {renderItem?.({ item: item as IContainerItem<T, K>, count })}
+    <DndSortableItemContext.Provider
+      value={{ attributes, listeners, isOverContainer, activeItem: item, descendants, setNodeRef, toggleCollapse }}
+    >
+      <div {...props} className={className} style={itemStyle} ref={setNodeRef}>
+        {content}
         {children}
       </div>
-    </SortableContainerContext.Provider>
+    </DndSortableItemContext.Provider>
   );
 }

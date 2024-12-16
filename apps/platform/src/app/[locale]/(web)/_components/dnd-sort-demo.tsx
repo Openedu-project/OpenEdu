@@ -1,15 +1,22 @@
 'use client';
 
+import { DeleteButton } from '@oe/ui/components/delete-button';
 import {
-  DragButtonContainer,
-  DragButtonItem,
-  SortableDnd,
+  DndSortable,
+  DndSortableCollapseButton,
+  DndSortableDragButton,
+  DndSortableDragButtonChildItem,
+  type IDndSortableRef,
   restrictToHorizontalAxis,
   restrictToParentElement,
   restrictToVerticalAxis,
-} from '@oe/ui/components/sortable-dnd';
+} from '@oe/ui/components/dnd-sortable';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@oe/ui/shadcn/accordion';
 import { Badge } from '@oe/ui/shadcn/badge';
-import { useState } from 'react';
+import { Button } from '@oe/ui/shadcn/button';
+import { cn } from '@oe/ui/utils/cn';
+import { PencilIcon, PlusIcon, Trash2Icon } from 'lucide-react';
+import { useRef, useState } from 'react';
 
 interface Task {
   id: string;
@@ -174,6 +181,7 @@ export default function KanbanDemo() {
   ]);
   const [treeItems, setTreeItems] = useState<TreeItem[]>(treeData);
   const [nestedArrayItems, setNestedArrayItems] = useState<(Task | Task[])[]>(nestedArrayData);
+  const kanbanBoardRef = useRef<IDndSortableRef<Column, Task>>(null);
 
   const handleSort = (newData: Column[]) => {
     setData(newData);
@@ -187,7 +195,7 @@ export default function KanbanDemo() {
       <div className="p-8">
         <h1 className="mb-8 font-bold text-2xl">Nested Array Demo</h1>
 
-        <SortableDnd<Task | Task[], Task>
+        <DndSortable<Task | Task[], Task>
           data={nestedArrayItems}
           dataConfig={{
             idItemProp: 'id',
@@ -203,30 +211,47 @@ export default function KanbanDemo() {
           }}
           className="flex flex-col gap-2"
           renderConfig={{
-            className: 'flex flex-row gap-2',
-            renderItem: ({ item }) => (
-              <div className="flex items-center justify-between">
-                <DragButtonContainer />
-                {item?.items ? null : <h3 className="font-medium">{(item?.original as Task).title}</h3>}
-              </div>
+            className: 'flex flex-row gap-2 items-center',
+            renderItem: ({ item, onAddChild }) => (
+              <>
+                <DndSortableDragButton />
+                {item?.items ? null : <span className="font-medium">{(item?.original as Task).title}</span>}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() =>
+                    onAddChild?.({
+                      id: Math.random().toString(),
+                      title: `New item ${Math.random().toString()}`,
+                      completed: false,
+                    })
+                  }
+                  className="order-last"
+                >
+                  <PlusIcon className="h-4 w-4" />
+                </Button>
+              </>
             ),
             renderChildItem: ({ item }) => (
-              <div className="group/field flex items-center justify-between rounded-lg bg-white p-4 shadow-sm">
+              <div className="group/field flex items-center justify-between rounded-lg shadow-sm">
                 <div className="flex items-center gap-2">
                   <input type="checkbox" checked={item.original.completed} readOnly />
                   <span>{item.original.title}</span>
                 </div>
-                <DragButtonItem className="opacity-0" />
+                <DndSortableDragButtonChildItem className="opacity-0" />
               </div>
             ),
           }}
-          onSort={setNestedArrayItems}
+          onChange={setNestedArrayItems}
+          dragOverlayProps={{
+            adjustScale: true,
+          }}
         />
       </div>
       <div className="p-8">
         <h1 className="mb-8 font-bold text-2xl">Tree Demo</h1>
 
-        <SortableDnd<TreeItem, unknown>
+        <DndSortable<TreeItem, unknown>
           data={treeItems}
           dataConfig={{
             idProp: 'id',
@@ -237,44 +262,82 @@ export default function KanbanDemo() {
           }}
           className="flex flex-col gap-4"
           renderConfig={{
-            renderItem: ({ item, count }) => (
-              <div className="w-full gap-2 bg-background">
-                <DragButtonContainer className="group-hover/field:opacity-100" />
-                <span>{item?.original.label}</span>
-                {count && <Badge variant="outline">{count}</Badge>}
-              </div>
-            ),
+            renderItem: ({ item, descendants, dragOverlay, onAddChild, onRemoveItem, onUpdateItem }) => {
+              return (
+                <div className={cn('w-full gap-2 bg-background p-2', dragOverlay && 'bg-background shadow')}>
+                  <DndSortableDragButton className="group-hover/field:opacity-100" />
+                  <DndSortableCollapseButton />
+                  <span>{item?.original.label}</span>
+                  {(descendants?.length ?? 0) > 0 && item.collapsed ? (
+                    <Badge variant="outline">{descendants?.length}</Badge>
+                  ) : null}
+                  <Button variant="ghost" size="icon" onClick={() => onUpdateItem?.('new label', 'label', item)}>
+                    <PencilIcon className="h-4 w-4" />
+                  </Button>
+                  <DeleteButton
+                    title="Delete item"
+                    description="Are you sure you want to delete this item?"
+                    onDelete={async onClose => {
+                      await onRemoveItem?.();
+                      onClose?.();
+                    }}
+                  >
+                    <Trash2Icon className="h-4 w-4" />
+                  </DeleteButton>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() =>
+                      onAddChild?.({ id: Math.random().toString(), label: `New item ${Math.random().toString()}` })
+                    }
+                  >
+                    <PlusIcon className="h-4 w-4" />
+                  </Button>
+                </div>
+              );
+            },
           }}
-          onSort={handleTreeSort}
+          onChange={handleTreeSort}
         />
       </div>
       <div className="p-8">
         <h1 className="mb-8 font-bold text-2xl">Simple Array Demo</h1>
 
-        <SortableDnd<SimpleItem, unknown>
-          data={items}
-          dataConfig={{
-            idProp: 'id',
-            type: 'array',
-            direction: 'vertical',
-          }}
-          className="flex flex-col gap-4"
-          renderConfig={{
-            renderItem: ({ item }) => (
-              <div className="flex items-center gap-2 rounded bg-background p-4 shadow">
-                <DragButtonContainer />
-                <span className="font-semibold">{item?.original.label}</span>
-              </div>
-            ),
-          }}
-          onSort={setItems}
-        />
+        <Accordion type="single" collapsible className="w-full">
+          <DndSortable<SimpleItem, unknown>
+            data={items}
+            dataConfig={{
+              idProp: 'id',
+              type: 'array',
+              direction: 'vertical',
+            }}
+            className="flex flex-col gap-4"
+            renderConfig={{
+              renderItem: ({ item }) => (
+                <AccordionItem value={item?.original.id}>
+                  <AccordionTrigger asChild>
+                    <div className="flex items-center gap-2 rounded bg-background p-4 shadow">
+                      <DndSortableDragButton />
+                      <span>{item?.original.label}</span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>Yes. It adheres to the WAI-ARIA design pattern.</AccordionContent>
+                </AccordionItem>
+              ),
+            }}
+            onChange={setItems}
+          />
+        </Accordion>
       </div>
       <div className="p-8">
         <h1 className="mb-8 font-bold text-2xl">Kanban Board Demo</h1>
+        <Button onClick={() => kanbanBoardRef.current?.addItem({ id: '1', title: 'New item', completed: false })}>
+          Add item
+        </Button>
 
-        <SortableDnd<Column, Task>
+        <DndSortable<Column, Task>
           data={data}
+          ref={kanbanBoardRef}
           dataConfig={{
             idProp: 'id',
             childrenProp: 'tasks',
@@ -285,20 +348,53 @@ export default function KanbanDemo() {
           }}
           renderConfig={{
             className: 'bg-gray-100 p-4 rounded-lg min-w-[300px] min-h-[400px]',
-            renderItem: ({ item }) => (
+            renderItem: ({ item, onAddChild, onRemoveItem }) => (
               <div className="mb-4 flex items-center justify-between">
                 <h2 className="font-semibold">{item?.original.title}</h2>
-                <DragButtonContainer />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => {
+                    onAddChild?.({
+                      id: Math.random().toString(),
+                      title: `New item ${Math.random().toString()}`,
+                      completed: false,
+                    });
+                  }}
+                >
+                  <PlusIcon className="h-4 w-4" />
+                </Button>
+                <DeleteButton
+                  title="Delete item"
+                  description="Are you sure you want to delete this item?"
+                  onDelete={async onClose => {
+                    await onRemoveItem?.();
+                    onClose?.();
+                  }}
+                >
+                  <Trash2Icon className="h-4 w-4" />
+                </DeleteButton>
+                <DndSortableDragButton />
               </div>
             ),
-            renderChildItem: ({ item }) => (
+            renderChildItem: ({ item, onRemoveItem }) => (
               <div className="group/field mb-2 flex items-center justify-between rounded bg-white p-3 shadow-sm">
                 <span>{item.original.title}</span>
-                <DragButtonItem className="opacity-0" />
+                <DndSortableDragButtonChildItem className="opacity-0" />
+                <DeleteButton
+                  title="Delete item"
+                  description="Are you sure you want to delete this item?"
+                  onDelete={async onClose => {
+                    await onRemoveItem?.();
+                    onClose?.();
+                  }}
+                >
+                  <Trash2Icon className="h-4 w-4" />
+                </DeleteButton>
               </div>
             ),
           }}
-          onSort={handleSort}
+          onChange={handleSort}
         />
       </div>
     </>

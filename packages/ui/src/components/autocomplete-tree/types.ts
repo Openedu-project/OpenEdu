@@ -1,5 +1,16 @@
 import type { BaseAutocompleteProps } from '../autocomplete/types';
-import type { TreeItem } from '../sortable-tree/types';
+
+export interface FlattenedItem extends TreeItem {
+  parentId: number | string | null;
+  depth: number;
+  index: number;
+}
+export interface TreeItem {
+  id: number | string;
+  children?: TreeItem[];
+  collapsed?: boolean;
+  title: string;
+}
 
 export interface BaseAutocompleteTreeProps<T> extends BaseAutocompleteProps<T> {
   // treeData: TreeItems;

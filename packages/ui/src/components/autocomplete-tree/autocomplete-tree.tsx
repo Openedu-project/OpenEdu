@@ -7,9 +7,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '#shadcn/popover';
 import { cn } from '#utils/cn';
 import { DEFAULT_HEIGHT, DEFAULT_WIDTH, ITEM_HEIGHT } from '../autocomplete/constants';
 import { VirtualizedCommandBase } from '../autocomplete/virtualized-command-base';
-import type { FlattenedItem, TreeItem } from '../sortable-tree/types';
-import { flattenTree } from '../sortable-tree/utilities';
-import type { AutocompleteTreeProps } from './types';
+import type { AutocompleteTreeProps, FlattenedItem, TreeItem } from './types';
+import { flattenTree } from './utils';
 
 export function AutocompleteTree({
   options,

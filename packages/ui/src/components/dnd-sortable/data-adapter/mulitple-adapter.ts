@@ -3,6 +3,7 @@ import {
   type DroppableContainer,
   KeyboardCode,
   type KeyboardCoordinateGetter,
+  type UniqueIdentifier,
   closestCenter,
   closestCorners,
   getFirstCollision,
@@ -13,31 +14,63 @@ import { arrayMove } from '@dnd-kit/sortable';
 import { uniqueID } from '@oe/core/utils/unique';
 import type {
   ICollisionDetectionStrategyProps,
-  IContainerItem,
+  IDndSortableItem,
   IHandleDragEndProps,
   IHandleDragOverProps,
 } from '../types';
 import { DataAdapter } from './base-adapter';
 
-export class MultipleAdapter<T, K> extends DataAdapter<T, K> {
+export class MultipleAdapter<ItemType, ChildItemType> extends DataAdapter<ItemType, ChildItemType> {
   directions: string[] = [KeyboardCode.Down, KeyboardCode.Right, KeyboardCode.Up, KeyboardCode.Left];
 
-  convertToContainerItem(data: T[]): IContainerItem<T, K>[] {
+  convertToContainerItem(data: ItemType[]): IDndSortableItem<ItemType, ChildItemType>[] {
     return data.map(column => ({
-      id: column[this.config.idProp as keyof T] ?? uniqueID(),
+      id: column[this.config.idProp as keyof ItemType] ?? uniqueID(),
       original: column,
-      items: (column[this.config.childrenProp as keyof T] as K[])?.map(item => ({
-        id: item[this.config.idItemProp as keyof K] ?? uniqueID(),
+      items: (column[this.config.childrenProp as keyof ItemType] as ChildItemType[])?.map(item => ({
+        id: item[this.config.idItemProp as keyof ChildItemType] ?? uniqueID(),
         original: item,
       })),
-    })) as IContainerItem<T, K>[];
+    })) as IDndSortableItem<ItemType, ChildItemType>[];
   }
 
-  convertToOriginal(data: IContainerItem<T, K>[]): T[] {
+  convertToOriginal(data: IDndSortableItem<ItemType, ChildItemType>[]): ItemType[] {
     return data.map(column => ({
       ...column.original,
-      [this.config.childrenProp as keyof T]: column.items?.map(item => item.original),
+      [this.config.childrenProp as keyof ItemType]: column.items?.map(item => item.original),
     }));
+  }
+
+  addItem(
+    items: IDndSortableItem<ItemType, ChildItemType>[],
+    parentId: UniqueIdentifier | null,
+    newItem: ItemType | ChildItemType,
+    toLast = true
+  ): IDndSortableItem<ItemType, ChildItemType>[] {
+    const newItems = [...items];
+
+    if (!parentId) {
+      return toLast
+        ? [...items, { id: uniqueID(), original: newItem as ItemType }]
+        : [{ id: uniqueID(), original: newItem as ItemType }, ...items];
+    }
+
+    const parent = items.find(item => item.id === parentId);
+    const parentIndex = items.findIndex(item => item.id === parent?.id);
+    if (!(parent && parentIndex !== -1)) {
+      return items;
+    }
+
+    if (parent?.items && (parent?.items?.length ?? 0) > 0) {
+      parent.items[toLast ? 'push' : 'unshift']({
+        id: uniqueID(),
+        original: newItem as ChildItemType,
+      });
+    } else {
+      parent.items = [{ id: uniqueID(), original: newItem as ChildItemType }];
+    }
+    newItems[parentIndex] = parent;
+    return newItems;
   }
 
   coordinateGetter: KeyboardCoordinateGetter = (
@@ -147,7 +180,7 @@ export class MultipleAdapter<T, K> extends DataAdapter<T, K> {
     items,
     lastOverId,
     recentlyMovedToNewContainer,
-  }: ICollisionDetectionStrategyProps<T, K>): CollisionDetection {
+  }: ICollisionDetectionStrategyProps<ItemType, ChildItemType>): CollisionDetection {
     return args => {
       if (activeId !== null && items.find(item => item.id === activeId)) {
         return closestCenter({
@@ -189,7 +222,7 @@ export class MultipleAdapter<T, K> extends DataAdapter<T, K> {
     };
   }
 
-  handleDragOver({ active, items, over, recentlyMovedToNewContainer }: IHandleDragOverProps<T, K>) {
+  handleDragOver({ active, items, over, recentlyMovedToNewContainer }: IHandleDragOverProps<ItemType, ChildItemType>) {
     const overId = over?.id;
 
     if (overId == null || (active?.id && items.find(item => item.id === active?.id))) {
@@ -251,34 +284,23 @@ export class MultipleAdapter<T, K> extends DataAdapter<T, K> {
     return null;
   }
 
-  handleDragEnd({ active, items, over, setContainers, setActiveId, setItems, onSort }: IHandleDragEndProps<T, K>) {
+  handleDragEnd({ active, items, over, setItems, onChange }: IHandleDragEndProps<ItemType, ChildItemType>) {
+    if (!(active?.id && over?.id)) {
+      return;
+    }
     if (active?.id && items.find(item => item.id === active.id) && over?.id) {
       const containers = items.map(item => item.id);
       const activeIndex = containers.indexOf(active.id);
       const overIndex = containers.indexOf(over.id);
-      const newContainers = arrayMove(containers, activeIndex, overIndex);
       const newItems = arrayMove(items, activeIndex, overIndex);
 
-      setContainers(newContainers);
       setItems(newItems);
-      setActiveId(null);
-      onSort(this.convertToOriginal(newItems));
+      onChange(this.convertToOriginal(newItems));
       return;
     }
 
     const activeContainer = active?.id ? this.findId(items, active.id) : null;
-
-    if (!activeContainer) {
-      setActiveId(null);
-      return;
-    }
-
     const overId = over?.id;
-
-    if (overId == null) {
-      setActiveId(null);
-      return;
-    }
 
     const overContainer = this.findId(items, overId);
     if (overContainer) {
@@ -301,10 +323,8 @@ export class MultipleAdapter<T, K> extends DataAdapter<T, K> {
         });
 
         setItems(newItems);
-        onSort(this.convertToOriginal(newItems));
+        onChange(this.convertToOriginal(newItems));
       }
     }
-
-    setActiveId(null);
   }
 }

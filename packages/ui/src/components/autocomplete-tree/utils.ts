@@ -1,8 +1,20 @@
-import type { UniqueIdentifier } from '@dnd-kit/core';
-import type { FlattenedItem } from '../sortable-tree/types';
+import type { FlattenedItem, TreeItem } from './types';
 
-export function getParentIds(flattenedItems: FlattenedItem[], itemId: UniqueIdentifier): UniqueIdentifier[] {
-  const parents: UniqueIdentifier[] = [];
+function flatten(items: TreeItem[], parentId: number | string | null = null, depth = 0): FlattenedItem[] {
+  return (
+    items?.flatMap((item, index) => [
+      { ...item, parentId, depth, index },
+      ...flatten(item?.children ?? [], item.id, depth + 1),
+    ]) ?? []
+  );
+}
+
+export function flattenTree(items: TreeItem[]): FlattenedItem[] {
+  return flatten(items);
+}
+
+export function getParentIds(flattenedItems: FlattenedItem[], itemId: number | string): (number | string)[] {
+  const parents: (number | string)[] = [];
   let currentItem = flattenedItems.find(item => item.id === itemId);
 
   while (currentItem?.parentId) {
@@ -18,8 +30,8 @@ export function getParentIds(flattenedItems: FlattenedItem[], itemId: UniqueIden
   return parents;
 }
 
-export function getDescendantIds(flattenedItems: FlattenedItem[], itemId: UniqueIdentifier): UniqueIdentifier[] {
-  const descendants: UniqueIdentifier[] = [];
+export function getDescendantIds(flattenedItems: FlattenedItem[], itemId: number | string): (number | string)[] {
+  const descendants: (number | string)[] = [];
   const stack = [flattenedItems.find(item => item.id === itemId)];
 
   while (stack.length > 0) {

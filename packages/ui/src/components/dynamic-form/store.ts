@@ -1,13 +1,16 @@
 import { z } from '@oe/api/utils/zod';
-import { createStore } from '@oe/core/store/create';
+import { createStore } from '@oe/core/store';
 import type { FormEditorStore, FormFieldOrGroup } from './types';
 
-export const useFormEditorStore = createStore<FormEditorStore>(set => ({
+const initialState = {
   fields: [],
   selectedFieldId: null,
   defaultValues: {},
   zodSchema: z.object({}),
+};
 
+export const useFormEditorStore = createStore<FormEditorStore>(set => ({
+  ...initialState,
   addField: (config, index) =>
     set(state => {
       const fields = [...state.fields];
@@ -87,4 +90,7 @@ export const useFormEditorStore = createStore<FormEditorStore>(set => ({
     }),
 
   setSelectedField: name => set({ selectedFieldId: name }),
+  reset: () => {
+    set(initialState);
+  },
 }));

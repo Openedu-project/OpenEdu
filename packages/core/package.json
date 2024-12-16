@@ -6,13 +6,13 @@
   "imports": {
     "#utils/*": "./src/utils/*.ts",
     "#types/*": "./src/types/*.ts",
-    "#store/*": "./src/store/*.ts",
+    "#store": "./src/store/index.ts",
     "#hooks/*": "./src/hooks/*.ts"
   },
   "exports": {
     "./utils/*": "./src/utils/*.ts",
     "./types/*": "./src/types/*.ts",
-    "./store/*": "./src/store/*.ts",
+    "./store": "./src/store/index.ts",
     "./hooks/*": "./src/hooks/*.ts",
     "./package.json": "./package.json",
     "./global.css": "./src/global.css"
