@@ -8,7 +8,8 @@
     "#components/*": "./src/components/*/index.ts",
     "#utils/*": "./src/utils/*.ts",
     "#common/*": "./src/common/*/index.ts",
-    "#hooks/*": "./src/hooks/*.ts"
+    "#hooks/*": "./src/hooks/*.ts",
+    "#pages/*": "./src/pages/*/page.tsx"
   },
   "exports": {
     "./global.css": "./src/global.css",
@@ -16,7 +17,8 @@
     "./shadcn/*": "./src/shadcn/*.tsx",
     "./utils/*": "./src/utils/*.ts",
     "./common/*": "./src/common/*/index.ts",
-    "./hooks/*": "./src/hooks/*.ts"
+    "./hooks/*": "./src/hooks/*.ts",
+    "./pages/*": "./src/pages/*/page.tsx"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
