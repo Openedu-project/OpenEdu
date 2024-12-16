@@ -10,7 +10,7 @@ export default function Facebook({ className, color = '#0866FF', width = 24, hei
       viewBox="0 0 24 24"
       fill="none"
       role="img"
-      aria-label="Social icon"
+      aria-label="social icon"
     >
       <g clipPath="url(#clip0_9_23795)">
         <path

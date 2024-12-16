@@ -9,6 +9,8 @@ export default function Telegram({ width = 24, height = 24, className = '', colo
       height={height}
       viewBox="0 0 24 24"
       fill="none"
+      role="img"
+      aria-label="social icon"
     >
       <g clip-path="url(#clip0_9_23944)">
         <path

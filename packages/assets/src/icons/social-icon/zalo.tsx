@@ -9,6 +9,8 @@ export default function Zalo({ width = 24, height = 24, className = '', color = 
       height={height}
       viewBox="0 0 26 26"
       fill="none"
+      role="img"
+      aria-label="social icon"
     >
       <rect x="-0.000732422" width="26" height="26" rx="13" fill={color} />
       <path
