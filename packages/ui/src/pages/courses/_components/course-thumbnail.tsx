@@ -1,10 +1,12 @@
 import Eye from '@oe/assets/icons/eye';
 import PlayFilled from '@oe/assets/icons/play-filled';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 import { Image } from '#components/image';
 import { AspectRatio } from '#shadcn/aspect-ratio';
 import { cn } from '#utils/cn';
 import { useCourseOutlineDetailStore } from '../_store/useCourseOutlineStore';
+import CoursePreviewModal from './preview-video-modal';
 
 interface CourseThumbnailProps {
   className?: string;
@@ -15,7 +17,7 @@ interface PreviewOverlayProps {
 }
 
 const PreviewOverlay = ({ totalMedias }: PreviewOverlayProps) => {
-  const t = useTranslations('courseOutline.courseThumbnail');
+  const t = useTranslations('courseOutline.coursePreview');
 
   return (
     <div className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 flex w-full flex-col items-center">
@@ -50,6 +52,7 @@ const ThumbnailImage = ({
 );
 
 const CourseThumbnail = ({ className }: CourseThumbnailProps) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const { courseOutline, getPreviewLessonVideo } = useCourseOutlineDetailStore();
 
   const { thumbnail } = courseOutline;
@@ -61,12 +64,24 @@ const CourseThumbnail = ({ className }: CourseThumbnailProps) => {
   const thumbnailName = thumbnail?.name ?? '';
 
   return (
-    <div className={cn('mb-5 w-full overflow-hidden', !medias && 'max-h-[222px]', className)}>
-      <AspectRatio ratio={16 / 9} className={cn('rounded-lg bg-muted', hasOverlay && 'relative hover:cursor-pointer')}>
-        <ThumbnailImage url={thumbnailUrl} name={thumbnailName} hasOverlay={hasOverlay} />
-        {medias && medias?.length > 0 && <PreviewOverlay totalMedias={medias.length} />}
-      </AspectRatio>
-    </div>
+    <>
+      <div className={cn('mb-5 w-full overflow-hidden', !medias && 'max-h-[222px]', className)}>
+        <AspectRatio
+          ratio={16 / 9}
+          className={cn('rounded-lg bg-muted', hasOverlay && 'relative hover:cursor-pointer')}
+          onClick={() => {
+            if (medias && medias?.length > 0) {
+              setIsOpen(true);
+            }
+          }}
+        >
+          <ThumbnailImage url={thumbnailUrl} name={thumbnailName} hasOverlay={hasOverlay} />
+          {medias && medias?.length > 0 && <PreviewOverlay totalMedias={medias.length} />}
+        </AspectRatio>
+      </div>
+
+      <CoursePreviewModal medias={medias} open={isOpen} onClose={() => setIsOpen(false)} />
+    </>
   );
 };
 

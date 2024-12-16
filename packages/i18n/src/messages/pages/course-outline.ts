@@ -28,6 +28,13 @@ export const courseOutlineMessages = {
       downloading: 'Downloading',
     },
 
+    coursePreview: {
+      title: 'Course Preview',
+      freeSampleVideo: 'Free sample video',
+      courseReview: 'Course Preview',
+      previewLesson: '{total} Preview Video',
+    },
+
     lastUpdated: 'Last updated {updateAt}',
     markAsComplete: 'Mark as complete',
     course: 'Course: {title}',
@@ -37,9 +44,5 @@ export const courseOutlineMessages = {
     videoCount: '{count} video',
     embedCount: '{count} embedded',
     lesson: 'Lesson {index}',
-
-    courseThumbnail: {
-      previewLesson: 'Preview Video',
-    },
   },
 };

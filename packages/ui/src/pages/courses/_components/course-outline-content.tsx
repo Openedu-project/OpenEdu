@@ -25,24 +25,26 @@ export default function CourseOutlineContent({
   }, [courseData]);
 
   return (
-    <div className="p-2 sm:p-10 md:p-6 xl:p-10">
-      {courseData ? (
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-5 lg:grid-cols-3 ">
-          <div className="md:col-span-3 lg:col-span-2">
-            <div ref={courseContentRef}>
-              <CourseThumbnail className="md:hidden" />
-              <CourseInfo />
-              <CourseAchievements />
-              <CourseContent />
-              <SupportingChannels />
+    <>
+      <div className="p-2 sm:p-10 md:p-6 xl:p-10">
+        {courseData ? (
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-5 lg:grid-cols-3 ">
+            <div className="md:col-span-3 lg:col-span-2">
+              <div ref={courseContentRef}>
+                <CourseThumbnail className="md:hidden" />
+                <CourseInfo />
+                <CourseAchievements />
+                <CourseContent />
+                <SupportingChannels />
+              </div>
             </div>
-          </div>
 
-          {courseOutline?.thumbnail ? <StickyCourseSidebar courseContentRef={courseContentRef} /> : null}
-        </div>
-      ) : (
-        <>There is no data</>
-      )}
-    </div>
+            {courseOutline?.thumbnail ? <StickyCourseSidebar courseContentRef={courseContentRef} /> : null}
+          </div>
+        ) : (
+          <>There is no data</>
+        )}
+      </div>
+    </>
   );
 }
