@@ -41,6 +41,12 @@ export const courseOutlineMessages = {
       desc: 'Upon completing this course, you will receive a certificate of completion. This certificate can be showcased on your own LinkedIn profile, added to your resume, or displayed in your portfolio to highlight your new skills and achievements.',
     },
 
+    courseStats: {
+      learners: '{learnerCount} learners',
+      learner: '{learnerCount} learner',
+      contentCompleted: 'Content Completed',
+    },
+
     lastUpdated: 'Last updated {updateAt}',
     markAsComplete: 'Mark as complete',
     course: 'Course: {title}',
