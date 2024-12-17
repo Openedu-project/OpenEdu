@@ -27,6 +27,8 @@ export const dynamicFormsMessages = {
       datePicker: 'Date Picker',
       locationInput: 'Location Input',
       slider: 'Slider',
+      inputCurrency: 'Input Currency',
+      inputPhoneNumber: 'Phone Number',
       signatureInput: 'Signature Input',
       number: 'Number',
       switch: 'Switch',

@@ -83,7 +83,7 @@ export interface IDndSortableProps<ItemType, ChildItemType> {
   dndContextProps?: DndContextProps;
   dragOverlayProps?: DragOverlayProps;
   ref?: Ref<IDndSortableRef<ItemType, ChildItemType>>;
-  onChange: (items: ItemType[]) => void;
+  onChange?: (items: ItemType[]) => void;
 }
 
 export type IDndSortableContextValue<ItemType, ChildItemType> = Partial<ReturnType<typeof useSortable>> & {
@@ -123,7 +123,7 @@ export type IHandleDragEndProps<ItemType, ChildItemType> = Partial<DragEndEvent>
   // setContainers: Dispatch<SetStateAction<UniqueIdentifier[]>>;
   // setActiveId: Dispatch<SetStateAction<UniqueIdentifier | null>>;
   setItems: Dispatch<SetStateAction<IDndSortableItem<ItemType, ChildItemType>[]>>;
-  onChange: (items: ItemType[]) => void;
+  onChange?: (items: ItemType[]) => void;
 };
 
 export type ICollisionDetectionStrategyProps<ItemType, ChildItemType> = {

@@ -18,13 +18,13 @@ import {
 } from '@dnd-kit/sortable';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { z } from '@oe/api/utils/zod';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 // import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Form } from '#shadcn/form';
 import { useFormEditorStore } from '../store';
 import type { FormFieldOrGroup, FormFieldType, FormValues } from '../types';
-import { generateDefaultValues, generateZodSchema } from '../utils';
+import { generateZodSchema } from '../utils';
 import { FormField } from './form-field';
 
 export function Editor() {
@@ -37,10 +37,11 @@ export function Editor() {
     mode: 'onSubmit',
   });
 
-  useEffect(() => {
-    const defaults = generateDefaultValues(fields);
-    form.reset(defaults);
-  }, [fields, form]);
+  // useEffect(() => {
+  //   const defaults = generateDefaultValues(fields);
+  //   console.log(fields);
+  //   // form.reset(defaults);
+  // }, [fields, form]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),

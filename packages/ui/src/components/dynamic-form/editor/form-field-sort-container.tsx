@@ -46,7 +46,7 @@ export const FormFieldSortableContainer = ({ fields, form, index, onSelect, onRe
       modifiers={[restrictToHorizontalAxis, restrictToParentElement]}
     >
       <SortableContext items={fields.map(item => item.name)} strategy={horizontalListSortingStrategy}>
-        <div className="flex gap-4">
+        <div className="flex flex-1 gap-4">
           {fields.map(field => (
             <FormFieldSortItem key={field.name} field={field} form={form} onSelect={onSelect} onRemove={onRemove} />
           ))}

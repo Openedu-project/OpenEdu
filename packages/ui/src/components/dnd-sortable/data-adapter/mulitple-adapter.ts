@@ -295,7 +295,7 @@ export class MultipleAdapter<ItemType, ChildItemType> extends DataAdapter<ItemTy
       const newItems = arrayMove(items, activeIndex, overIndex);
 
       setItems(newItems);
-      onChange(this.convertToOriginal(newItems));
+      onChange?.(this.convertToOriginal(newItems));
       return;
     }
 
@@ -323,7 +323,7 @@ export class MultipleAdapter<ItemType, ChildItemType> extends DataAdapter<ItemTy
         });
 
         setItems(newItems);
-        onChange(this.convertToOriginal(newItems));
+        onChange?.(this.convertToOriginal(newItems));
       }
     }
   }

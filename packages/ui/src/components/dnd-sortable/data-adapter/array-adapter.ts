@@ -29,7 +29,7 @@ export class ArrayAdapter<ItemType, ChildItemType = ItemType> extends DataAdapte
     if (activeIndex !== -1 && overIndex !== -1) {
       const newItems = arrayMove(items, activeIndex, overIndex);
       setItems(newItems);
-      onChange(this.convertToOriginal(newItems));
+      onChange?.(this.convertToOriginal(newItems));
     }
   }
 }

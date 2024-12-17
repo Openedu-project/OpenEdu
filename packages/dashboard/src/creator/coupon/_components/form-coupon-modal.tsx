@@ -8,7 +8,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@oe/ui/shadcn/input';
 import { Switch } from '@oe/ui/shadcn/switch';
 import { PercentCircle } from 'lucide-react';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import type React from 'react';
 import { Suspense, useCallback, useEffect, useMemo } from 'react';
 import type { ControllerRenderProps } from 'react-hook-form';
@@ -50,7 +50,7 @@ export default function CouponDialog({
 }: CouponDialogProps) {
   const t = useTranslations('coupon');
   const tCouponForm = useTranslations('coupon.couponForm');
-  const locale = useLocale();
+  // const locale = useLocale();
   const { dataMe } = useGetMe();
   const { dataListCourses: dataCoursesPublish } = useGetCourses({
     params: {
@@ -295,10 +295,10 @@ export default function CouponDialog({
                   value={
                     field.value === undefined || field.value === '' ? 0 : Number.parseFloat(field.value.toString())
                   }
-                  onChange={value => field.onChange(value === undefined || value === 0 ? '0' : value.toString())}
-                  locale={locale}
+                  onChange={value => field.onChange(value)}
+                  // locale={locale}
                   placeholder={tCouponForm('placeholderMaximumTotalUsage')}
-                  maxValue={9_999_999}
+                  // maxValue={9_999_999}
                 />
               </FormControl>
               <FormMessage />

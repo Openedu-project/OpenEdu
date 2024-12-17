@@ -4,7 +4,9 @@ import { CheckboxFieldConfig } from '../form-components/checkbox/checkbox-field-
 import { EmailFieldConfig } from '../form-components/email/email-field-config';
 import { HeadingFieldConfig } from '../form-components/heading/heading-field-config';
 import { ImageFieldConfig } from '../form-components/image/image-field-config';
+import { InputCurrencyFieldConfig } from '../form-components/input-currency/input-currency-field-config';
 import { InputNumberFieldConfig } from '../form-components/input-number/input-number-field-config';
+import { InputPhoneNumberFieldConfig } from '../form-components/input-phonenumber/input-phonenumber-field-config';
 import { InputFieldConfig } from '../form-components/input/input-field-config';
 import { ParagraphFieldConfig } from '../form-components/paragraph/paragraph-field-config';
 import { SpaceFieldConfig } from '../form-components/space/space-field-config';
@@ -53,6 +55,8 @@ export function FieldConfig() {
         <TextareaFieldConfig field={field} handleConfigChange={handleConfigChange} />
         <InputNumberFieldConfig field={field} handleConfigChange={handleConfigChange} />
         <EmailFieldConfig field={field} handleConfigChange={handleConfigChange} />
+        <InputCurrencyFieldConfig field={field} handleConfigChange={handleConfigChange} />
+        <InputPhoneNumberFieldConfig field={field} handleConfigChange={handleConfigChange} />
         <CheckboxFieldConfig field={field} handleConfigChange={handleConfigChange} />
         <ImageFieldConfig field={field} handleConfigChange={handleConfigChange} />
         <SubmitFieldConfig field={field} handleConfigChange={handleConfigChange} />

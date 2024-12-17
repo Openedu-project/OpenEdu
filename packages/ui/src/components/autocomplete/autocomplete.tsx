@@ -23,6 +23,8 @@ export function Autocomplete<T extends OptionType | string>({
   width = DEFAULT_WIDTH,
   height = DEFAULT_HEIGHT,
   showSearch,
+  className,
+  triggerProps,
   value,
   onChange,
   getOptionLabel = (option: T) => (typeof option === 'string' ? option : option.label),
@@ -30,6 +32,7 @@ export function Autocomplete<T extends OptionType | string>({
   filterOption = (option: T, searchValue: string) =>
     getOptionLabel(option).toLowerCase().includes(searchValue.toLowerCase()),
   renderOption,
+  renderTrigger,
 }: AutocompleteProps<T>) {
   const t = useTranslations('general');
   const [open, setOpen] = useState(false);
@@ -44,18 +47,19 @@ export function Autocomplete<T extends OptionType | string>({
   });
 
   useEffect(() => {
-    setSelectedOption(value || null);
+    if (value) {
+      setSelectedOption(value);
+    }
   }, [value]);
 
   const handleSelectOption = useCallback(
     (option: T) => {
-      const newValue = selectedOption && getOptionValue(selectedOption) === getOptionValue(option) ? null : option;
-      setSelectedOption(newValue);
+      setSelectedOption(option);
       setSearchValue('');
       setOpen(false);
-      onChange?.(newValue);
+      onChange?.(option);
     },
-    [selectedOption, getOptionValue, onChange]
+    [onChange]
   );
 
   const renderCommandItem = useCallback(
@@ -83,12 +87,29 @@ export function Autocomplete<T extends OptionType | string>({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" aria-expanded={open} className="justify-between" style={{ width }}>
-          {selectedOption ? getOptionLabel(selectedOption) : (searchPlaceholder ?? `${t('search')}...`)}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        <Button
+          variant="outline"
+          aria-expanded={open}
+          className={cn('justify-between', triggerProps?.className)}
+          style={{ width }}
+          {...triggerProps}
+        >
+          {renderTrigger ? (
+            renderTrigger(selectedOption)
+          ) : (
+            <>
+              {selectedOption ? getOptionLabel(selectedOption) : (searchPlaceholder ?? `${t('search')}...`)}
+              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            </>
+          )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="max-h-[--radix-popover-content-available-height] w-[--radix-popover-trigger-width] p-0">
+      <PopoverContent
+        className={cn(
+          'max-h-[--radix-popover-content-available-height] w-[--radix-popover-trigger-width] p-0',
+          className
+        )}
+      >
         <VirtualizedCommandBase
           height={height}
           options={filteredOptions}

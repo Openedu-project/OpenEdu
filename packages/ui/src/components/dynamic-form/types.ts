@@ -48,6 +48,7 @@ export interface FormEditorStore {
 export type FormComponent =
   | 'input'
   | 'inputNumber'
+  | 'inputCurrency'
   | 'textarea'
   | 'heading'
   | 'paragraph'
@@ -60,6 +61,7 @@ export type FormComponent =
   | 'image'
   | 'datetimePicker'
   | 'smartDatetimeInput'
+  | 'inputPhoneNumber'
   | 'datePicker'
   | 'locationInput'
   | 'slider'

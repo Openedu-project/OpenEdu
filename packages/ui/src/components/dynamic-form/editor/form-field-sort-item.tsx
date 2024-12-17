@@ -5,7 +5,7 @@ import { Button } from '#shadcn/button';
 import type { SortableItemProps } from '../types';
 import FormFieldItem from './form-field-item';
 
-export function FormFieldSortItem({ field, form, shouldSort, onSelect, onRemove }: SortableItemProps) {
+export function FormFieldSortItem({ field, form, shouldSort = true, onSelect, onRemove }: SortableItemProps) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: field.name });
 
   const style = {
@@ -25,7 +25,7 @@ export function FormFieldSortItem({ field, form, shouldSort, onSelect, onRemove 
     <div
       {...(shouldSort && { ref: setNodeRef })}
       {...(shouldSort && { style })}
-      className="group/field relative flex-1 cursor-pointer rounded-lg hover:ring-2 hover:ring-primary/50 hover:ring-inset"
+      className="group/field relative flex-1 cursor-pointer rounded-lg bg-background hover:ring-2 hover:ring-primary/50 hover:ring-inset"
       onClick={handleClick}
       onKeyDown={() => {
         void 0;

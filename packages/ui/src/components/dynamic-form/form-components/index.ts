@@ -1,9 +1,11 @@
 import {
   AtSign,
   CaseSensitive,
+  DollarSign,
   Hash,
   HeadingIcon,
   ImageIcon,
+  Phone,
   SquareCheck,
   SquareDashed,
   TextCursorInput,
@@ -15,7 +17,9 @@ import { EmailInput } from './email';
 import { Heading } from './heading';
 import { FormImage } from './image';
 import { Input } from './input';
+import { InputCurrency } from './input-currency';
 import { InputNumber } from './input-number';
+import { InputPhoneNumber } from './input-phonenumber';
 import { Paragraph } from './paragraph';
 import { Space } from './space';
 import { SubmitButton } from './submit-button';
@@ -49,6 +53,14 @@ export const formComponents: FormComponents = {
   email: {
     component: EmailInput,
     icon: AtSign,
+  },
+  inputCurrency: {
+    component: InputCurrency,
+    icon: DollarSign,
+  },
+  inputPhoneNumber: {
+    component: InputPhoneNumber,
+    icon: Phone,
   },
   checkbox: {
     component: Checkbox,

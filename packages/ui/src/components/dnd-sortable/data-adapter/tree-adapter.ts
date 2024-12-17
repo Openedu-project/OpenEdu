@@ -196,7 +196,7 @@ export class TreeAdapter<ItemType, ChildItemType> extends DataAdapter<ItemType, 
     }) as IDndSortableItem<ItemType, ChildItemType>[];
 
     setItems(finalItems);
-    onChange(this.convertToOriginal(finalItems));
+    onChange?.(this.convertToOriginal(finalItems));
   }
 
   findAllDescendants(

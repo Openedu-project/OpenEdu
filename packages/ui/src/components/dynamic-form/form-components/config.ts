@@ -3,7 +3,9 @@ import { checkboxDefaultConfig } from './checkbox/config';
 import { emailDefaultConfig } from './email/config';
 import { headingConfig } from './heading/config';
 import { formImageDefaultConfig } from './image/config';
+import { inputCurrencyDefaultConfig } from './input-currency/config';
 import { inputNumberDefaultConfig } from './input-number/config';
+import { inputPhoneNumberDefaultConfig } from './input-phonenumber/config';
 import { inputDefaultConfig } from './input/config';
 import { paragraphConfig } from './paragraph/config';
 import { spaceConfig } from './space/config';
@@ -18,6 +20,8 @@ export const config: Partial<Record<FormComponent, FormFieldType>> = {
   textarea: textareaDefaultConfig,
   inputNumber: inputNumberDefaultConfig,
   email: emailDefaultConfig,
+  inputCurrency: inputCurrencyDefaultConfig,
+  inputPhoneNumber: inputPhoneNumberDefaultConfig,
   checkbox: checkboxDefaultConfig,
   image: formImageDefaultConfig,
   submitButton: submitButtonDefaultConfig,
