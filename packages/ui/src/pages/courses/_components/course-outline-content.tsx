@@ -3,6 +3,7 @@ import type { ICourseOutline } from '@oe/api/types/course/course';
 import { useEffect, useRef } from 'react';
 import { useCourseOutlineDetailStore } from '../_store/useCourseOutlineStore';
 import CourseAchievements from './course-achievement';
+import CourseCertificate from './course-certificate';
 import CourseContent from './course-content';
 import { CourseInfo } from './course-info';
 import SupportingChannels from './course-support-channels';
@@ -36,6 +37,7 @@ export default function CourseOutlineContent({
                 <CourseAchievements />
                 <CourseContent />
                 <SupportingChannels />
+                <CourseCertificate />
               </div>
             </div>
 
