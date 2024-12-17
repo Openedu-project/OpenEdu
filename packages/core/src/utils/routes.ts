@@ -36,6 +36,9 @@ export const ADMIN_ROUTES = {
   permissionActionSettings: '/admin/permissions/actions',
   permissionPageSettings: '/admin/permissions/pages',
   permissionRoleSettings: '/admin/permissions/roles',
+  creatorManagementCreators: '/admin/creator-management/creators',
+  creatorManagementRequests: '/admin/creator-management/requests',
+  creatorManagementInvitations: '/admin/creator-management/invitations',
 } as const;
 
 export const CREATOR_ROUTES = {

@@ -64,6 +64,31 @@ export default async function Layout({ children }: { children: ReactNode }) {
         ],
       },
       {
+        id: 'creator-management',
+        label: tDashboard('creators.title'),
+        icon: <Book className="h-5 w-5" />,
+        items: [
+          {
+            id: 'creators',
+            label: tDashboard('creators.creators'),
+            icon: <BookOpen className="h-5 w-5" />,
+            href: ADMIN_ROUTES.creatorManagementCreators,
+          },
+          {
+            id: 'creators-request',
+            label: tDashboard('creators.requests'),
+            icon: <Network className="h-5 w-5" />,
+            href: ADMIN_ROUTES.creatorManagementRequests,
+          },
+          {
+            id: 'creators-invitation',
+            label: tDashboard('creators.invitations'),
+            icon: <BookUp className="h-5 w-5" />,
+            href: ADMIN_ROUTES.creatorManagementInvitations,
+          },
+        ],
+      },
+      {
         id: 'users',
         label: tDashboard('userManagement'),
         icon: <UserCog className="h-5 w-5" />,

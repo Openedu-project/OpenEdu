@@ -64,7 +64,7 @@ export const postResetPasswordService = async (
 export async function getMeService(url?: string, init?: RequestInit): Promise<IUser | null> {
   const isLoggedIn = await isLogin();
   if (isLoggedIn) {
-    const res = await fetchAPI<IUser>(url ?? API_ENDPOINT.USERS_ME, init);
+    const res = await fetchAPI<IUser>(url ?? API_ENDPOINT.USERS_ME, { ...init, shouldRefreshToken: false });
 
     return res?.data as IUser;
   }

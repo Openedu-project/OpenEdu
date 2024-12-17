@@ -90,8 +90,9 @@ export function InputCurrency({
   value,
   onChange,
   className,
+  hasCurrency = true,
   ...props
-}: CurrencyInputProps & { onChange: (value: string | undefined) => void }) {
+}: CurrencyInputProps & { hasCurrency?: boolean; onChange: (value: string | undefined) => void }) {
   const locale = useLocale();
 
   const handleChange = (value: string | undefined) => {
@@ -106,7 +107,10 @@ export function InputCurrency({
         'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background transition-colors file:border-0 file:bg-transparent file:font-medium file:text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
         className
       )}
-      intlConfig={{ locale: locale, currency: languageWithCurrency[locale as LanguageCode]?.currencyCode ?? 'USD' }}
+      intlConfig={{
+        locale: locale,
+        currency: hasCurrency ? (languageWithCurrency[locale as LanguageCode]?.currencyCode ?? 'USD') : '',
+      }}
       {...props}
     />
   );

@@ -112,7 +112,7 @@ export const useGetTopAuthor = (params: IFilter) => {
     error,
   };
 };
-export const useGetUserInvitationsList = (params: IFilter) => {
+export const useGetUserInvitationsList = ({ params }: { params: IFilter }) => {
   const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.USER_INVITATIONS, queryParams: { ...params } });
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
     getUserInvitationsListService(endpoint, { params })

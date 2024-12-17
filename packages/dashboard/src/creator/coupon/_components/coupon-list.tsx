@@ -10,6 +10,7 @@ import type { ICouponItemRes, ICouponPayload } from '@oe/api/types/coupon';
 import { API_ENDPOINT } from '@oe/api/utils/endpoints';
 import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
 import { formatDateTime } from '@oe/core/utils/datetime';
+import { formatCurrency } from '@oe/ui/components/input-currency';
 import type { ColumnDef, TableRef } from '@oe/ui/components/table';
 import { Badge } from '@oe/ui/shadcn/badge';
 import { Button } from '@oe/ui/shadcn/button';
@@ -72,23 +73,35 @@ export default function CouponList() {
     setIsOpenDeleteModal(false);
   }, []);
 
-  const handleSubmit = async (value: ICouponPayload) => {
-    try {
-      const res = await (isCreating ? triggerPostCoupon(value) : triggerPutCoupon({ ...selectedItem, ...value }));
-      handleCloseFormModal();
-      if (isCreating) {
-        handleOpenSuccessModal(res);
-      } else {
-        toast.success(t('updateSuccess'));
+  const handleSubmit = useCallback(
+    async (value: ICouponPayload) => {
+      try {
+        const res = await (isCreating ? triggerPostCoupon(value) : triggerPutCoupon({ ...selectedItem, ...value }));
+        handleCloseFormModal();
+        if (isCreating) {
+          handleOpenSuccessModal(res);
+        } else {
+          toast.success(t('updateSuccess'));
+        }
+        tableRef.current?.mutate();
+      } catch (error) {
+        console.error(error);
+        toast.error(tError((error as HTTPErrorMetadata).code.toString()));
       }
-      tableRef.current?.mutate();
-    } catch (error) {
-      console.error(error);
-      toast.error(tError((error as HTTPErrorMetadata).code.toString()));
-    }
-  };
+    },
+    [
+      handleCloseFormModal,
+      t,
+      handleOpenSuccessModal,
+      tError,
+      isCreating,
+      triggerPostCoupon,
+      triggerPutCoupon,
+      selectedItem,
+    ]
+  );
 
-  const handleDeleteCoupon = async () => {
+  const handleDeleteCoupon = useCallback(async () => {
     try {
       await triggerDeleteCoupon({ id: selectedItem?.id ?? '' });
       handleCloseDeleteModal();
@@ -98,7 +111,7 @@ export default function CouponList() {
       console.error(error);
       toast.error(tError((error as HTTPErrorMetadata).code.toString()));
     }
-  };
+  }, [triggerDeleteCoupon, tError, selectedItem?.id, handleCloseDeleteModal, t]);
 
   const columns: ColumnDef<ICouponItemRes>[] = useMemo(() => {
     return [
@@ -138,6 +151,7 @@ export default function CouponList() {
       {
         header: tCouponForm('quantity'),
         accessorKey: 'maximum_total_usage',
+        cell: info => <>{formatCurrency(String(info.getValue()), false)}</>,
       },
       {
         header: tCouponForm('startDate'),
