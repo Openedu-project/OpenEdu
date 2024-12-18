@@ -20,6 +20,12 @@ export const PLATFORM_ROUTES = {
   specificTerms: '/terms/:terms',
 } as const;
 
+export const BLOG_ROUTES = {
+  blogDetail: '/blog/:slug',
+  personBlogDetail: 'blog/author/:username/:slug',
+  blogManagement: '/blog/author/management',
+};
+
 export const AUTH_ROUTES = {
   login: '/login',
   signUp: '/signup',
@@ -66,6 +72,12 @@ export const CREATOR_ROUTES = {
   formDetail: `/creator${DYNAMIC_FORMS_ROUTES.formDetail}`,
   formTemplates: `/creator${DYNAMIC_FORMS_ROUTES.formTemplates}`,
 } as const;
+
+export const BLOG_ADMIN_ROUTES = {
+  dashboard: '/blog/admin',
+  blogManagement: '/blog/admin/management',
+  myBlogManagement: '/blog/admin/my-blog',
+};
 
 export const PROTECTED_ROUTES = {
   admin: '/admin',
@@ -140,6 +152,15 @@ export function isZoneRoute(pathname: string, zone: IZoneRoutes) {
   return Object.entries(ZONE_ROUTES).some(
     ([zoneName, path]) => zoneName === zone && unlocalizedPathname.startsWith(path)
   );
+}
+
+export function generateRoute(pathname: string, params: Record<string, unknown>) {
+  let url = pathname;
+
+  for (const [key, value] of Object.entries(params)) {
+    url = url.replace(`:${key}`, value as string);
+  }
+  return url;
 }
 
 export type IZoneRoutes = keyof typeof ZONE_ROUTES;

@@ -99,6 +99,11 @@ export interface IBlogRequest {
   blog_type: string;
   is_publish: boolean;
   is_ai_generated: boolean;
+  description?: string;
+  image_description?: string;
+}
+
+export interface IEditBlogRequest extends IBlogRequest {
   id: string;
 }
 

@@ -5,7 +5,7 @@ import { createAPIUrl } from '#utils/fetch';
 
 export const getCategoriesTreeService = async (
   url?: string,
-  init?: RequestInit & { queryParams?: Record<string, string> }
+  init?: RequestInit & { queryParams?: Record<string, string | boolean> }
 ) => {
   const defaultUrl = createAPIUrl({ endpoint: API_ENDPOINT.CATEGORIES_TREE, queryParams: init?.queryParams });
   const response = await fetchAPI<ICategoryTree[]>(url ?? defaultUrl, init);

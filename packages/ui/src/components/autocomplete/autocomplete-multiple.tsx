@@ -2,6 +2,7 @@ import { X } from 'lucide-react';
 import { Check } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useCallback, useRef, useState } from 'react';
+import type { KeyboardEvent } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { Button } from '#shadcn/button';
 import { CommandItem } from '#shadcn/command';
@@ -21,6 +22,7 @@ export type AutocompleteMultipleProps<T extends OptionType | string> = BaseAutoc
   onSearch?: (value: string) => void;
   delay?: number;
   fixedValue?: OptionValue[];
+  onKeyDown?: (e: KeyboardEvent<HTMLInputElement>, handleSelectOptions?: (currentValue: T) => void) => void;
 };
 
 export function AutocompeteMultiple<T extends OptionType | string>({
@@ -40,6 +42,7 @@ export function AutocompeteMultiple<T extends OptionType | string>({
   onSearch,
   delay = DEFAULT_SEARCH_DELAY,
   fixedValue = [],
+  onKeyDown,
 }: AutocompleteMultipleProps<T>) {
   const t = useTranslations('general');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -207,6 +210,7 @@ export function AutocompeteMultiple<T extends OptionType | string>({
               disabled={disabled}
               autoComplete="off"
               name="search"
+              onKeyDown={e => onKeyDown?.(e, handleSelectOptions)}
             />
           </div>
           {!disabled && value.length > 0 && (

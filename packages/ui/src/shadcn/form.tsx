@@ -189,10 +189,11 @@ export type FormFieldWithLabelProps = ComponentPropsWithoutRef<typeof Slot> &
     description?: string;
     required?: boolean;
     fieldType?: string;
+    labelClassName?: string;
   };
 
 const FormFieldWithLabel = forwardRef<ComponentRef<typeof Slot>, FormFieldWithLabelProps>(
-  ({ name, label, form, infoText, description, className, required, fieldType, ...props }, ref) => {
+  ({ name, label, form, infoText, description, className, labelClassName, required, fieldType, ...props }, ref) => {
     const formContext = useFormContext();
 
     return (
@@ -211,7 +212,7 @@ const FormFieldWithLabel = forwardRef<ComponentRef<typeof Slot>, FormFieldWithLa
                 <FormControlSlot field={field} ref={ref} {...props} />
                 <div className="space-y-1 leading-none">
                   {label && (
-                    <FormLabelInfo infoText={infoText}>
+                    <FormLabelInfo infoText={infoText} className={labelClassName}>
                       {label} {required && <span className="ml-1 text-destructive">*</span>}
                     </FormLabelInfo>
                   )}
@@ -222,7 +223,7 @@ const FormFieldWithLabel = forwardRef<ComponentRef<typeof Slot>, FormFieldWithLa
             ) : (
               <>
                 {label && (
-                  <FormLabelInfo infoText={infoText}>
+                  <FormLabelInfo infoText={infoText} className={labelClassName}>
                     {label} {required && <span className="ml-1 text-destructive">*</span>}
                   </FormLabelInfo>
                 )}

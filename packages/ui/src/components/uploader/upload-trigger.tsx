@@ -186,7 +186,7 @@ export const UploadTrigger = (props: UploadTriggerProps) => {
         accept={accept}
         ref={inputRef}
         onChange={handleChange}
-        className="-left-[999px] absolute"
+        className="-left-[999px] absolute w-0"
         {...rest}
       />
       {renderTrigger()}

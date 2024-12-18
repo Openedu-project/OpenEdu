@@ -52,5 +52,7 @@ export const generalMessages = {
     default: 'Default',
     deleteModalTitle: 'Delete item',
     deleteModalDescription: 'Are you sure you want to delete this item?',
+    publish: 'Publish',
+    language: 'Language',
   },
 };

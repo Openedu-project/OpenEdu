@@ -22,6 +22,7 @@ export interface RichTextEditorProps {
   floatingMenuItems?: MenuItem[];
   aiParams?: Record<string, string>;
   onAIApply?: () => void;
+  aiButton?: boolean;
 }
 
 export interface RichTextEditorRef {
@@ -38,6 +39,7 @@ export const RichTextEditor = ({
   floatingMenuItems,
   aiParams,
   onAIApply,
+  aiButton,
   onChange,
   ref,
 }: RichTextEditorProps) => {
@@ -63,10 +65,16 @@ export const RichTextEditor = ({
 
   return (
     <div className={cn('flex flex-col overflow-hidden rounded-lg border', className)}>
-      <MenuBar editor={editor} menuItems={menuBarItems} aiParams={aiParams} onAIApply={onAIApply} />
+      <MenuBar editor={editor} menuItems={menuBarItems} aiParams={aiParams} onAIApply={onAIApply} aiButton={aiButton} />
       <div className="relative z-10 grow overflow-hidden">
         <EditorContent editor={editor} className="scrollbar flex h-full min-h-40 overflow-auto [&>div]:grow" />
-        <BubbleMenu editor={editor} menuItems={bubbleMenuItems} aiParams={aiParams} onAIApply={onAIApply} />
+        <BubbleMenu
+          editor={editor}
+          menuItems={bubbleMenuItems}
+          aiParams={aiParams}
+          onAIApply={onAIApply}
+          aiButton={aiButton}
+        />
         <FloatingMenu editor={editor} menuItems={floatingMenuItems} aiParams={aiParams} onAIApply={onAIApply} />
       </div>
     </div>

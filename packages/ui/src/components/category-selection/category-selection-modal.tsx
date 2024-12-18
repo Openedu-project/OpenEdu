@@ -12,16 +12,16 @@ import { CategorySelection } from './category-selection';
 interface ICategorySelectionModal {
   className?: string;
   categories: ICategoryTree[];
-  initialCategories: ITreeCheckedItem[];
-  onSave: (value: ITreeCheckedItem[]) => void;
+  value?: ITreeCheckedItem[];
+  onChange?: (value: ITreeCheckedItem[]) => void;
   title?: string;
 }
 export default function CategorySelectionModal({
   className,
   categories,
-  initialCategories,
+  value,
   title,
-  onSave,
+  onChange,
 }: ICategorySelectionModal) {
   const t = useTranslations('categorySelectionModal');
   const tGeneral = useTranslations('general');
@@ -31,7 +31,11 @@ export default function CategorySelectionModal({
     <Modal
       title={title ?? t('title')}
       trigger={
-        <Button variant="ghost" className={cn('flex w-full justify-between', className)} rightSection={<Settings />}>
+        <Button
+          variant="ghost"
+          className={cn('flex w-full justify-between', className)}
+          rightSection={<Settings className="h-4 w-4" />}
+        >
           {t('category')}
         </Button>
       }
@@ -46,7 +50,7 @@ export default function CategorySelectionModal({
         {
           label: tGeneral('save'),
           onClick: onClose => {
-            onSave(values);
+            onChange?.(values);
             onClose?.();
           },
         },
@@ -54,7 +58,7 @@ export default function CategorySelectionModal({
     >
       <ScrollArea className="h-[55dvh]">
         <CategorySelection
-          initialCategories={initialCategories}
+          initialCategories={value}
           className={className}
           categories={categories}
           onCategoriesChange={setValues}
