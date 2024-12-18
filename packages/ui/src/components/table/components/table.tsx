@@ -1,8 +1,22 @@
-'use no memo';
-import { type RowData, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
-import { useSWRConfig } from 'swr';
-import { createExpandingColumn, createNoColumn, createSelectionColumn } from '../columns';
+"use no memo";
+import {
+  type RowData,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import {
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+} from "react";
+import { useSWRConfig } from "swr";
+import {
+  createExpandingColumn,
+  createNoColumn,
+  createSelectionColumn,
+} from "../columns";
 import {
   useTableData,
   useTableExpand,
@@ -11,13 +25,13 @@ import {
   useTablePagination,
   useTableSelection,
   useTableSorting,
-} from '../hooks';
-import type { TableProps } from '../types';
-import { TableFilterSearch } from './table-filter-search';
-import { TablePagination } from './table-pagination';
-import { useTable } from './table-provider';
-import { TableUnvirtualized } from './table-unvirtualized';
-import { TableVirtualized } from './table-virtualized';
+} from "../hooks";
+import type { TableProps } from "../types";
+import { TableFilterSearch } from "./table-filter-search";
+import { TablePagination } from "./table-pagination";
+import { useTable } from "./table-provider";
+import { TableUnvirtualized } from "./table-unvirtualized";
+import { TableVirtualized } from "./table-virtualized";
 
 export default function Table<TData>({
   api,
@@ -28,7 +42,7 @@ export default function Table<TData>({
   ref,
   tableOptions,
   children,
-  border = 'bordered-rows',
+  border = "bordered-rows",
   height,
   hasPagination = true,
   stickyHeader = true,
@@ -50,7 +64,10 @@ export default function Table<TData>({
       innerColumns = [createNoColumn(), ...innerColumns];
     }
     if (hasExpand) {
-      innerColumns = [createExpandingColumn(expandColumnProps), ...innerColumns];
+      innerColumns = [
+        createExpandingColumn(expandColumnProps),
+        ...innerColumns,
+      ];
     }
     if (hasSelection) {
       innerColumns = [createSelectionColumn(), ...innerColumns];
@@ -59,9 +76,17 @@ export default function Table<TData>({
   }, [columns, hasExpand, hasSelection, hasNoColumn, expandColumnProps]);
 
   const { sorting, sortingOptions } = useTableSorting<TData>(tableOptions);
-  const { columnFilters, globalFilter, tableFilterOptions, setColumnFilters, setGlobalFilter } =
-    useTableFilters<TData>(tableOptions);
-  const { expanded, expandOptions } = useTableExpand<TData>({ options: tableOptions, hasExpand });
+  const {
+    columnFilters,
+    globalFilter,
+    tableFilterOptions,
+    setColumnFilters,
+    setGlobalFilter,
+  } = useTableFilters<TData>(tableOptions);
+  const { expanded, expandOptions } = useTableExpand<TData>({
+    options: tableOptions,
+    hasExpand,
+  });
   const { rowSelection, selectionOptions } = useTableSelection<TData>({
     options: tableOptions,
     hasSelection,
@@ -136,8 +161,12 @@ export default function Table<TData>({
   }));
 
   const mutateAndClearCache = useCallback(() => {
-    if (api?.split('?')?.[0]) {
-      globalMutate((key: string) => !!key?.includes(api.split('?')[0] as string), undefined, { revalidate: false });
+    if (api?.split("?")?.[0]) {
+      globalMutate(
+        (key: string) => !!key?.includes(api.split("?")[0] as string),
+        undefined,
+        { revalidate: false }
+      );
       mutate();
     }
   }, [mutate, globalMutate, api]);
@@ -207,7 +236,7 @@ export default function Table<TData>({
   );
 }
 
-declare module '@tanstack/react-table' {
+declare module "@tanstack/react-table" {
   interface TableMeta<TData extends RowData> {
     updateData: (rowIndex: number, columnId: string, value: TData) => void;
   }

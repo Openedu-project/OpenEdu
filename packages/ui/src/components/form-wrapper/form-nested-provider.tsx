@@ -1,9 +1,14 @@
-import { useCallback, useContext, useRef, useState } from 'react';
+import { useCallback, useContext, useRef, useState } from "react";
 
-import type { z } from '@oe/api/utils/zod';
-import { createContext } from 'react';
-import type { IFormContextValue, IFormMetadata, IFormNestedProviderProps, ITabMetadata } from './types';
-import { scrollToError } from './utils';
+import type { z } from "@oe/api/utils/zod";
+import { createContext } from "react";
+import type {
+  IFormContextValue,
+  IFormMetadata,
+  IFormNestedProviderProps,
+  ITabMetadata,
+} from "./types";
+import { scrollToError } from "./utils";
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const FormContext = createContext<IFormContextValue<any> | null>(null);
@@ -11,7 +16,7 @@ export const FormContext = createContext<IFormContextValue<any> | null>(null);
 export const useFormContext = () => {
   const context = useContext(FormContext);
   if (!context) {
-    throw new Error('useFormContext must be used within a FormProvider');
+    throw new Error("useFormContext must be used within a FormProvider");
   }
   return context;
 };
@@ -26,15 +31,21 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
   onChange,
 }: IFormNestedProviderProps<TFormSchema>) {
   const formsRef = useRef<Map<string, IFormMetadata<TFormSchema>>>(new Map());
-  const [tabsMetadata, setTabsMetadata] = useState<Map<string, ITabMetadata>>(new Map());
+  const [tabsMetadata, setTabsMetadata] = useState<Map<string, ITabMetadata>>(
+    new Map()
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState<string | undefined>(defaultTab);
-  const [activeFormId, setActiveFormId] = useState<string | undefined>(undefined);
+  const [activeFormId, setActiveFormId] = useState<string | undefined>(
+    undefined
+  );
 
   const getForms = useCallback((specificFormIds?: string[]) => {
-    const ids = specificFormIds ? specificFormIds : Array.from(formsRef.current.values()).map(form => form.id);
+    const ids = specificFormIds
+      ? specificFormIds
+      : Array.from(formsRef.current.values()).map((form) => form.id);
     return ids
-      .map(id => formsRef.current.get(id))
+      .map((id) => formsRef.current.get(id))
       .filter((form): form is IFormMetadata<TFormSchema> => form !== undefined);
   }, []);
 
@@ -51,7 +62,7 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
       formsRef.current.set(metadata.id, metadata);
       if (onChange) {
         const unsubscribe = metadata.watch((_, { type }) => {
-          if (type === 'change') {
+          if (type === "change") {
             const allValues = getAllFormValues();
             onChange(allValues);
           }
@@ -79,10 +90,13 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
         setActiveTab(tabId);
         setActiveFormId(formMetadata?.id);
         tabsMetadata.set(tabId, {
-          formIds: Array.from(formsRef.current.values()).map(form => form.id),
+          formIds: Array.from(formsRef.current.values()).map((form) => form.id),
           id: tabId,
           order: tabsMetadata.size,
-          status: (formMetadata?.dependencies?.length ?? 0) > 0 ? 'disabled' : 'incomplete',
+          status:
+            (formMetadata?.dependencies?.length ?? 0) > 0
+              ? "disabled"
+              : "incomplete",
           validationSummary: {
             isValid: false,
             errors: [],
@@ -110,41 +124,48 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
     [tabsMetadata.delete, tabsMetadata.get]
   );
 
-  const validateSingleForm = useCallback(async (form: IFormMetadata<TFormSchema>, shouldTriggerSubmit = true) => {
-    if (shouldTriggerSubmit) {
-      const submitButton = form.formRef.current?.querySelector('button[type="submit"]');
-      if (submitButton instanceof HTMLButtonElement) {
-        submitButton.click();
+  const validateSingleForm = useCallback(
+    async (form: IFormMetadata<TFormSchema>, shouldTriggerSubmit = true) => {
+      if (shouldTriggerSubmit) {
+        const submitButton = form.formRef.current?.querySelector(
+          'button[type="submit"]'
+        );
+        if (submitButton instanceof HTMLButtonElement) {
+          submitButton.click();
+        }
       }
-    }
 
-    const isValid = await form.validate();
+      const isValid = await form.validate();
 
-    setTabsMetadata(prev => {
-      const newTabsMetadata = new Map(prev);
-      const tab = form.tabId ? newTabsMetadata.get(form.tabId) : undefined;
-      if (tab) {
-        tab.status = isValid ? 'valid' : 'invalid';
-      }
-      return newTabsMetadata;
-    });
-
-    if (!isValid) {
-      const formFields = Array.from(form.formRef.current?.querySelectorAll('[data-field]') || []);
-
-      const errorFields = form.getValidationErrors();
-      const firstErrorElement = formFields.find(field => {
-        const fieldName = field.getAttribute('data-field');
-        return errorFields.some(error => error.field === fieldName);
+      setTabsMetadata((prev) => {
+        const newTabsMetadata = new Map(prev);
+        const tab = form.tabId ? newTabsMetadata.get(form.tabId) : undefined;
+        if (tab) {
+          tab.status = isValid ? "valid" : "invalid";
+        }
+        return newTabsMetadata;
       });
 
-      if (firstErrorElement) {
-        return { isValid, errorElement: firstErrorElement as HTMLElement };
-      }
-    }
+      if (!isValid) {
+        const formFields = Array.from(
+          form.formRef.current?.querySelectorAll("[data-field]") || []
+        );
 
-    return { isValid, errorElement: null };
-  }, []);
+        const errorFields = form.getValidationErrors();
+        const firstErrorElement = formFields.find((field) => {
+          const fieldName = field.getAttribute("data-field");
+          return errorFields.some((error) => error.field === fieldName);
+        });
+
+        if (firstErrorElement) {
+          return { isValid, errorElement: firstErrorElement as HTMLElement };
+        }
+      }
+
+      return { isValid, errorElement: null };
+    },
+    []
+  );
 
   const validateForm = useCallback(async () => {
     if (!activeFormId) {
@@ -168,7 +189,7 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
       let firstErrorElement: HTMLElement | null = null;
 
       const results = await Promise.all(
-        forms.map(async form => {
+        forms.map(async (form) => {
           const { isValid, errorElement } = await validateSingleForm(form);
           if (!firstErrorElement && errorElement) {
             firstErrorElement = errorElement;
@@ -202,7 +223,9 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
           return;
         }
         const formsToSubmit = getForms(formIds);
-        const values = formsToSubmit.reduce<Record<string, z.infer<TFormSchema>>>((acc, form) => {
+        const values = formsToSubmit.reduce<
+          Record<string, z.infer<TFormSchema>>
+        >((acc, form) => {
           acc[form.id] = form.getValues();
           return acc;
         }, {});

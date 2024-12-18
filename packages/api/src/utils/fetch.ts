@@ -1,6 +1,7 @@
 import { getCookies } from '@oe/core/utils/cookie';
 
 import { DEFAULT_LOCALE } from '@oe/i18n/constants';
+import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 import { refreshTokenService } from '#services/auth';
 import type { IToken } from '#types/auth';
 import type { HTTPResponse } from '#types/fetch';
@@ -21,6 +22,13 @@ export type FetchOptions = RequestInit & {
   referrer?: string;
   origin?: string;
 };
+
+export interface RequestInitAPI extends RequestInit {
+  host?: string;
+  token?: string;
+  cookies?: () => ReadonlyRequestCookies;
+  [key: string]: unknown;
+}
 
 let isRefreshing = false;
 let refreshPromise: Promise<IToken | null> | null = null;

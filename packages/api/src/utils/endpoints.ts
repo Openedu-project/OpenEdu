@@ -109,6 +109,7 @@ export const API_ENDPOINT = {
   USERS_ME_ORDERS: '/api/v1/users/me/orders',
   USERS_ME_WALLETS: '/api/v1/users/me/wallets',
   USERS_ME_WALLETS_ID_WITHDRAW: '/api/v1/users/me/wallets/:id/withdraw',
+  USERS_ME_WALLETS_ID_WITHDRAW_CRYPTO: '/api/v1/users/me/wallets/:id/withdrawals',
   USERS_ME_APPROVALS: '/api/v1/users/me/approvals',
   USERS_ME_TRANSACTIONS: '/api/v1/users/me/transactions',
   USERS_ME_REFERRALS: '/api/v1/users/me/referrals',
@@ -217,11 +218,16 @@ export const API_ENDPOINT = {
   COM_REPORTS_BLOGS_TOP_VIEWED: '/api/com-v1/reports/blogs/top-viewed',
   COM_REPORTS_USERS_TOP_BLOG_VIEWED: '/api/com-v1/reports/users/top-blog-viewed',
   NEWSLETTERS: '/api/v1/newsletters',
+  NOTIFICATIONS_BADGES: '/api/v1/notifications/badges',
+  NOTIFICATIONS: '/api/v1/notifications',
+  NOTIFICATIONS_READ: '/api/v1/notifications/read',
   COM_NOTIFICATIONS: '/api/com-v1/notifications',
   COM_NOTIFICATIONS_READ: '/api/com-v1/notifications/read',
-
   // WS
-  WEBSOCKET: '/websocket',
+  WEBSOCKET: 'websocket',
+  EXCHANGE_RATES: '/api/v1/exchange-rates',
+  CLAIM_EARNING: '/api/v1/wallets/:id/claim-earning',
+  CHAIN_ACCOUNT_INFO: '/api/v1/chains/:network/accounts/:address',
 } as const;
 
 export type API_ENDPOINT_KEY = keyof typeof API_ENDPOINT;

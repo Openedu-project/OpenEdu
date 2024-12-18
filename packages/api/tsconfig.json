@@ -4,5 +4,5 @@
     "baseUrl": ".",
     "types": ["@oe/types/global.d.ts"]
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "../../apps/platform/src/app/[locale]/(web)/wallet/_hooks/useBankAccount.ts"]
 }

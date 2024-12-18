@@ -1,12 +1,12 @@
-import { Slot } from '@radix-ui/react-slot';
-import { useFormContext } from './form-nested-provider';
+import { Slot } from "@radix-ui/react-slot";
+import { useFormContext } from "./form-nested-provider";
 
-import type { IFormSubmitButtonProps } from './types';
+import type { IFormSubmitButtonProps } from "./types";
 
-import { useTranslations } from 'next-intl';
-import type { FC, MouseEvent } from 'react';
-import { Button } from '#shadcn/button';
-import { cn } from '#utils/cn';
+import { useTranslations } from "next-intl";
+import type { FC, MouseEvent } from "react";
+import { Button } from "#shadcn/button";
+import { cn } from "#utils/cn";
 
 export const SubmitFormsButton: FC<IFormSubmitButtonProps> = ({
   children,
@@ -16,7 +16,7 @@ export const SubmitFormsButton: FC<IFormSubmitButtonProps> = ({
   onClick,
   ...props
 }) => {
-  const tGeneral = useTranslations('general');
+  const tGeneral = useTranslations("general");
   const { isSubmitting, submitForm } = useFormContext();
 
   const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
@@ -34,8 +34,8 @@ export const SubmitFormsButton: FC<IFormSubmitButtonProps> = ({
     <Component
       type="button"
       className={cn(
-        'inline-flex items-center justify-center',
-        isSubmitting && 'cursor-not-allowed opacity-50',
+        "inline-flex items-center justify-center",
+        isSubmitting && "cursor-not-allowed opacity-50",
         className
       )}
       disabled={disabled || isSubmitting}
@@ -43,7 +43,7 @@ export const SubmitFormsButton: FC<IFormSubmitButtonProps> = ({
       loading={isSubmitting}
       {...props}
     >
-      {children ? children : <span>{tGeneral('submit')}</span>}
+      {children ? children : <span>{tGeneral("submit")}</span>}
     </Component>
   );
 };
