@@ -1,5 +1,7 @@
+import { getCourseOutlineService } from '@oe/api/services/course';
 import { formatCurrency } from '@oe/core/utils/format-currency';
 import { PaymentButton } from '#components/payment-button';
+import { WishlistButton } from '#components/wishlist-button';
 import { Card, CardContent, CardFooter } from '#shadcn/card';
 import { cn } from '#utils/cn';
 import { useCourseOutlineDetailStore } from '../_store/useCourseOutlineStore';
@@ -62,11 +64,11 @@ const PriceRow = ({ label, value, isBold, discount, currency = 'VND', isPay }: P
 };
 
 const PaymentCard = () => {
-  const { courseOutline } = useCourseOutlineDetailStore();
+  const { courseOutline, setCourseOutline } = useCourseOutlineDetailStore();
   const isPaidOrEnrolled = courseOutline.is_paid || courseOutline.is_enrolled;
 
   return (
-    <Card className="w-full border-0 shadow-none lg:max-w-sm">
+    <Card className="w-full border-0 shadow-none">
       <CardContent className={cn(!isPaidOrEnrolled && 'px-0 pt-4 pb-4')}>
         {!isPaidOrEnrolled && (
           <PriceRow
@@ -80,16 +82,26 @@ const PaymentCard = () => {
       <CardFooter className="p-0">
         <div className="flex w-full items-center space-x-4">
           <PaymentButton className="mbutton-regular16 h-fit flex-grow" courseData={courseOutline} isCourseDetail />
-          {/* <WishlistButton
+          <WishlistButton
             bookmarkId={courseOutline.bookmark?.id}
             entityId={courseOutline.cuid}
             entityType="course"
             isWishlist={courseOutline.is_wishlist}
             className="flex-shrink-0"
             onClick={async () => {
-              await mutateCourseOutline();
+              const courseData = await getCourseOutlineService(undefined, {
+                id: courseOutline.slug,
+              });
+
+              if (courseData) {
+                setCourseOutline({
+                  ...courseData,
+                  bookmark: courseData.bookmark,
+                  is_wishlist: courseData.is_wishlist,
+                });
+              }
             }}
-          /> */}
+          />
         </div>
       </CardFooter>
     </Card>
