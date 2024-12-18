@@ -14,4 +14,5 @@ export const componentMessages = {
   ...dateTimePickerMessages,
   ...blogFormMessages,
   ...dialogMessages,
+  ...blogFormMessages,
 };

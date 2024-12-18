@@ -191,6 +191,7 @@ export type FormFieldWithLabelProps = ComponentPropsWithoutRef<typeof Slot> &
     required?: boolean;
     fieldType?: string;
     labelClassName?: string;
+<<<<<<< HEAD
     render?: (props: { field: ControllerRenderProps<FieldValues, string> }) => ReactNode;
   };
 
@@ -199,6 +200,12 @@ const FormFieldWithLabel = forwardRef<ComponentRef<typeof Slot>, FormFieldWithLa
     { name, label, form, infoText, description, className, labelClassName, required, fieldType, render, ...props },
     ref
   ) => {
+=======
+  };
+
+const FormFieldWithLabel = forwardRef<ComponentRef<typeof Slot>, FormFieldWithLabelProps>(
+  ({ name, label, form, infoText, description, className, labelClassName, required, fieldType, ...props }, ref) => {
+>>>>>>> 2f3aa1c (feat: blog form #14)
     const formContext = useFormContext();
 
     return (
