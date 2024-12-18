@@ -3,8 +3,8 @@ import MedalStar from '@oe/assets/icons/medal-start';
 import MessageQuestion from '@oe/assets/icons/message-question';
 import VideoSquare from '@oe/assets/icons/video-square';
 import { useTranslations } from 'next-intl';
-
 import type { ReactNode } from 'react';
+import { cn } from '#utils/cn';
 import { useCourseOutlineDetailStore } from '../_store/useCourseOutlineStore';
 import CourseResources from './course-resources';
 import { CourseSection } from './course-section';
@@ -16,7 +16,7 @@ interface CourseFeature {
   content: ReactNode;
 }
 
-export default function CourseIncludes() {
+export default function CourseIncludes({ className }: { className?: string }) {
   const tCourse = useTranslations('courseOutline.thisCourseIncludes');
   const { courseOutline } = useCourseOutlineDetailStore();
 
@@ -68,20 +68,23 @@ export default function CourseIncludes() {
   }
 
   return (
-    <CourseSection title={tCourse('title')} containerClass="!mb-0">
-      <div className="mcaption-regular16 grid grid-cols-1 gap-1 text-content-neutral-light-700">
-        {courseFeatures?.map(
-          feature =>
-            feature.condition && (
-              <div key={feature.key} className="flex items-center gap-3">
-                {feature.icon}
-                {feature.content}
-              </div>
-            )
-        )}
+    <>
+      <hr className="mb-6 md:hidden" />
+      <CourseSection title={tCourse('title')} containerClass={cn(className)}>
+        <div className="mcaption-regular16 grid grid-cols-1 gap-1 text-foreground/80">
+          {courseFeatures?.map(
+            feature =>
+              feature.condition && (
+                <div key={feature.key} className="flex items-center gap-3">
+                  {feature.icon}
+                  {feature.content}
+                </div>
+              )
+          )}
 
-        {filteredResources?.length > 0 && <CourseResources docs={filteredResources} />}
-      </div>
-    </CourseSection>
+          {filteredResources?.length > 0 && <CourseResources docs={filteredResources} />}
+        </div>
+      </CourseSection>
+    </>
   );
 }

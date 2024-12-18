@@ -1,6 +1,6 @@
 'use client';
 import type { ICourseOutline } from '@oe/api/types/course/course';
-import { useEffect, useRef } from 'react';
+import { type HTMLAttributes, useEffect, useRef } from 'react';
 import { useCourseOutlineDetailStore } from '../_store/useCourseOutlineStore';
 import CourseAchievements from './course-achievement';
 import CourseCertificate from './course-certificate';
@@ -9,6 +9,8 @@ import { CourseInfo } from './course-info';
 import SupportingChannels from './course-support-channels';
 import CourseThumbnail from './course-thumbnail';
 import StickyCourseSidebar from './sticky-course-sidebar';
+
+interface CourseOutlineDetailsProps extends HTMLAttributes<HTMLDivElement> {}
 
 export default function CourseOutlineContent({
   courseData,
@@ -25,23 +27,33 @@ export default function CourseOutlineContent({
     }
   }, [courseData]);
 
+  const CourseOutlineDetails = ({ className, ...props }: CourseOutlineDetailsProps) => {
+    return (
+      <div className={className} {...props}>
+        <CourseAchievements />
+        <CourseContent />
+        <SupportingChannels />
+        <CourseCertificate />
+      </div>
+    );
+  };
+
   return (
     <>
       <div className="p-2 sm:p-10 md:p-6 xl:p-10">
         {courseData ? (
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-5 lg:grid-cols-3 ">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-5 lg:grid-cols-3 ">
             <div className="md:col-span-3 lg:col-span-2">
               <div ref={courseContentRef}>
                 <CourseThumbnail className="md:hidden" />
                 <CourseInfo />
-                <CourseAchievements />
-                <CourseContent />
-                <SupportingChannels />
-                <CourseCertificate />
+                <CourseOutlineDetails className="hidden md:block" />
               </div>
             </div>
 
             {courseOutline?.thumbnail ? <StickyCourseSidebar courseContentRef={courseContentRef} /> : null}
+
+            <CourseOutlineDetails className="md:hidden" />
           </div>
         ) : (
           <>There is no data</>

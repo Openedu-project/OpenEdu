@@ -55,7 +55,7 @@ export const OutlineLesson = ({ completedPercentage, isActive, isAvailable, less
         href=""
         // href={webRoutes.learning(courseSlug, sectionUid, uid)}
         className={cn(
-          'flex h-fit items-center gap-1 rounded-radius-s border-[0.4px] p-2 shadow-shadow-6',
+          'flex h-fit items-center gap-1 whitespace-normal rounded-radius-s border-[0.4px] p-2 shadow-shadow-6',
           'hover:border-primary',
           isActive ? 'border-primary' : 'border-border-neutral-50',
           !isAvailable && 'pointer-events-none'

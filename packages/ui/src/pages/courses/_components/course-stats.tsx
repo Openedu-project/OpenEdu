@@ -14,7 +14,7 @@ export default function CourseStats({ learner_count, levels, mark_as_completed }
   const tCourse = useTranslations('courseOutline.courseStats');
 
   return (
-    <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-6">
+    <div className="flex flex-col flex-wrap gap-4 md:flex-row md:items-center md:gap-6">
       <div className="flex items-center gap-5 text-foreground/40 sm:gap-6">
         {!!learner_count && learner_count > 0 && (
           <div className="flex items-center">

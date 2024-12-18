@@ -15,6 +15,7 @@ import type {
   TCourseRoles,
   TCourseStatus,
 } from './basic';
+import type { ILearningProgressOverview } from './learning-progress';
 import type { ISection } from './segment';
 
 export interface ICourse {
@@ -92,7 +93,7 @@ export interface ICourse {
 export interface ICourseOutline extends ICourse {
   outline: ISection[];
   reviewing: ICourseVersion | null;
-  learning_progress_overview: null;
+  learning_progress_overview: ILearningProgressOverview | null;
 }
 
 export type IMutateCourse<T> = KeyedMutator<IDataPagination<T[]>>;

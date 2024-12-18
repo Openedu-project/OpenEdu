@@ -10,7 +10,7 @@ export const CourseInfo = () => {
   const { name, owner, description, update_at, mark_as_completed, learner_count, levels } = courseOutline;
 
   return courseOutline ? (
-    <div className="mb-4 flex flex-col gap-6 md:mb-10">
+    <div className="flex flex-col gap-6 md:mb-10">
       <h1 className="giant-iheading-semibold24 md:giant-iheading-semibold32 mb-0 text-primary">{name}</h1>
 
       <div className="flex flex-col gap-1 text-foreground/40 lg:flex-row lg:items-center lg:gap-4">

@@ -18,7 +18,7 @@ const CourseContent = () => {
             ?.sort((a, b) => a.order - b.order)
             ?.map((section, index) => (
               <AccordionItem className="border-none" key={section.id} value={`section-${section.id}`}>
-                <AccordionTrigger className="giant-iheading-semibold16 mb-3 rounded-[4px] border-[0.4px] border-border-neutral-50 bg-bg-neutral-20 p-3 text-left text-primary shadow-shadow-6">
+                <AccordionTrigger className="giant-iheading-semibold16 rounded-[4px] border-[0.4px] border-border-neutral-50 bg-bg-neutral-20 p-3 text-left text-primary shadow-shadow-6">
                   {`Section ${index + 1}: ${section.title}`}
                 </AccordionTrigger>
                 <AccordionContent>

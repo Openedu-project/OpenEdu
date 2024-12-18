@@ -25,12 +25,13 @@ const PriceDisplay = ({
   isBold?: boolean;
 }) => {
   const unitPrice = Number(discount ?? 0) + Number(value ?? 0);
-  const textStyle = cn('giant-iheading-semibold24', 'text-content-neutral-medium-800', isBold && 'font-bold');
+  const textStyle = cn('giant-iheading-semibold24 text-primary', isBold && 'font-bold');
 
   return (
     <>
       <span className={textStyle}>
-        {currency} {formatCurrency(Number(value ?? 0))}
+        <span className="mr-1 text-foreground">{currency}</span>
+        {formatCurrency(Number(value ?? 0))}
       </span>
       {Number(discount) > 0 && (
         <span className="mcaption-regular16 line-through">
@@ -43,7 +44,7 @@ const PriceDisplay = ({
 
 const PriceRow = ({ label, value, isBold, discount, currency = 'VND', isPay }: PriceRowProps) => {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex flex-wrap items-center justify-between gap-1">
       {label && (
         <span className={cn('giant-iheading-semibold16', 'text-content-neutral-light-700', isBold && 'font-bold')}>
           {label}
