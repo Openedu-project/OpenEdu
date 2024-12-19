@@ -11,7 +11,9 @@ import { Link as LinkIcon } from 'lucide-react';
 import type React from 'react';
 import { Link } from '#common/navigation';
 import { cn } from '#utils/cn';
-import { type IconProps, SOCIAL_PATTERNS, type SocialIconLinkProps, type SocialType } from './type';
+import { type IconProps, SOCIAL_PATTERNS, type SocialIconLinkProps, type SocialType } from './types';
+
+const HTTP_REGEX = '/^(https?://)/';
 
 const ICON_MAP: Record<SocialType, React.ComponentType<IconProps>> = {
   email: Mail,
@@ -28,7 +30,9 @@ const ICON_MAP: Record<SocialType, React.ComponentType<IconProps>> = {
 export const getSocialType = (url: string): SocialType => {
   const lowercaseUrl = url.toLowerCase();
 
-  if (EMAIL_REGEX.test(lowercaseUrl)) return 'email';
+  if (EMAIL_REGEX.test(lowercaseUrl)) {
+    return 'email';
+  }
 
   for (const [social, patterns] of Object.entries(SOCIAL_PATTERNS)) {
     if (patterns.some(pattern => lowercaseUrl.includes(pattern))) {
@@ -50,13 +54,13 @@ export const formatUrl = (
   // Format linkUrl
   if (type === 'email' && !url.startsWith('mailto:')) {
     linkUrl = `mailto:${url}`;
-  } else if (!url.startsWith('http://') && !url.startsWith('https://') && type !== 'email') {
+  } else if (!(url.startsWith('http://') || url.startsWith('https://')) && type !== 'email') {
     linkUrl = `https://${url}`;
   }
 
   // Format displayUrl
   if (shortenedLink) {
-    displayUrl = url.replace(/^(https?:\/\/)/, '');
+    displayUrl = url.replace(HTTP_REGEX, '');
     if (type === 'email' && url.startsWith('mailto:')) {
       displayUrl = url.replace('mailto:', '');
     }

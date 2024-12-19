@@ -87,7 +87,7 @@ const PaymentCard = () => {
             entityId={courseOutline.cuid}
             entityType="course"
             isWishlist={courseOutline.is_wishlist}
-            className="flex-shrink-0"
+            className="flex-shrink-0 border-foreground/20"
             onClick={async () => {
               const courseData = await getCourseOutlineService(undefined, {
                 id: courseOutline.slug,

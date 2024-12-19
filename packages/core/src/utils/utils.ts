@@ -31,3 +31,9 @@ export const getCurrentRouter = () => {
 
   return '/';
 };
+
+export const copyToClipboard = (text: string, message: string, duration?: number) => {
+  void navigator.clipboard.writeText(text).then(
+    () => console.log(message, duration) // TODO: add toast message
+  );
+};

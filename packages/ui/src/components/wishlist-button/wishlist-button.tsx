@@ -91,7 +91,13 @@ export default function WishlistButton({
   });
 
   return (
-    <Button size="icon" variant="outline" className={cn('p-2', className)} onClick={handleWishlist} {...props}>
+    <Button
+      size="icon"
+      variant="outline"
+      className={cn('p-2 focus:border', className)}
+      onClick={handleWishlist}
+      {...props}
+    >
       {children ?? <WishlistIcon isBookmark={isBookmark} />}
     </Button>
   );

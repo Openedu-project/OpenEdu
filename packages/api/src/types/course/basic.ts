@@ -84,6 +84,7 @@ export interface ICourseProps {
   default_language: TCourseDefaultLang;
   telegram_channel: string;
   preview_lessons: ICoursePreviewVideo[] | null;
+  is_affiliate: boolean;
 }
 
 export interface ICourseCertCondition {
