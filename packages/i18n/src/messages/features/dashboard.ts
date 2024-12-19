@@ -32,5 +32,11 @@ export const dashboardMessages = {
       pages: 'Pages',
     },
     coupon: 'Coupon',
+    creators: {
+      title: 'Creators Management',
+      creators: 'Creators',
+      requests: 'Requests',
+      invitations: 'Invitations',
+    },
   },
 };

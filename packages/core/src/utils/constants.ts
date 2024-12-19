@@ -15,3 +15,42 @@ export const USER_ROLE_EVENT: Record<string, string> = {
 };
 
 export const GENERATING_STATUS = ['pending', 'generating'];
+export const QUESTION_OBJECT_TYPE = {
+  checkbox: 'Checkbox',
+  multiple_choice: 'Multiple Choice',
+  file: 'File',
+  dropdown: 'Dropdown',
+};
+
+export const QUESTION_TYPE = {
+  ...QUESTION_OBJECT_TYPE,
+  checkbox_grid: 'Checkbox Grid',
+  multiple_choice_grid: 'Multiple Choice Grid',
+  long_text: 'Long Text',
+  phone: 'Phone',
+  number: 'Number',
+  sub_domain: 'Sub Domain',
+  email: 'Email',
+  text: 'Text',
+} as const;
+
+export const FORM_TYPE = {
+  page: 'Page',
+  slide: 'Slide',
+};
+
+export const FORM_STATUS = {
+  draft: 'Draft',
+  published_org: 'Published in organization',
+  published_all: 'Published all',
+  unpublished: 'Unpublished',
+};
+
+export const FORM_EVENT = {
+  // register_org: 'Register organization',
+  // register_creator: 'Register instructor',
+  // survey_course: 'Survey course',
+  register_course: 'Register course', // Add 3 fields user-info
+  others: 'Others',
+  contact_organization: 'Contact Organization',
+};

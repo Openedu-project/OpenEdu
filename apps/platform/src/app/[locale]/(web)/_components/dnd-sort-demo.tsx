@@ -16,7 +16,7 @@ import { Badge } from '@oe/ui/shadcn/badge';
 import { Button } from '@oe/ui/shadcn/button';
 import { cn } from '@oe/ui/utils/cn';
 import { PencilIcon, PlusIcon, Trash2Icon } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface Task {
   id: string;
@@ -173,6 +173,10 @@ interface SimpleItem {
 }
 
 export default function KanbanDemo() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    setTimeout(() => setCount(count + 1), 1000);
+  }, [count]);
   const [data, setData] = useState<Column[]>(initialData);
   const [items, setItems] = useState<SimpleItem[]>([
     { id: '1', label: 'Item 1' },
@@ -193,6 +197,7 @@ export default function KanbanDemo() {
   return (
     <>
       <div className="p-8">
+        <h1>Time {count}</h1>
         <h1 className="mb-8 font-bold text-2xl">Nested Array Demo</h1>
 
         <DndSortable<Task | Task[], Task>

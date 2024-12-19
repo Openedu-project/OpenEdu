@@ -12,7 +12,7 @@ interface ICreateAPIUrl {
   queryParams?: Record<string, unknown>;
 }
 
-type FetchOptions = RequestInit & {
+export type FetchOptions = RequestInit & {
   next?: {
     revalidate?: number | false;
     tags?: string[];

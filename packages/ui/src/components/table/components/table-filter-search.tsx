@@ -44,7 +44,7 @@ export function TableFilterSearch({
     [resetColumnFilters, setGlobalFilter, setColumnFilters]
   );
 
-  if (!(filterOptions && children)) {
+  if (!filterOptions) {
     return null;
   }
 

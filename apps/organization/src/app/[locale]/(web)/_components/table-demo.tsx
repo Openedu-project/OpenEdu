@@ -6,7 +6,7 @@ import type { FilterOption } from '@oe/ui/components/filter-search';
 import { type ColumnDef, Table, TableEditableCell, type TableRef } from '@oe/ui/components/table';
 import { Badge } from '@oe/ui/shadcn/badge';
 import { Button } from '@oe/ui/shadcn/button';
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 const filterOptions: FilterOption[] = [
   { value: 'global', label: 'All', type: 'search', id: 'global' },
@@ -23,6 +23,10 @@ const filterOptions: FilterOption[] = [
 ];
 
 export default function TableDemo() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    setTimeout(() => setCount(count + 1), 1000);
+  }, [count]);
   const columns: ColumnDef<IOrganization>[] = useMemo(() => {
     return [
       {
@@ -61,6 +65,7 @@ export default function TableDemo() {
 
   return (
     <div>
+      Time: {count}
       <Table
         // data={data}
         api={API_ENDPOINT.ADMIN_ORGANIZATIONS}

@@ -185,7 +185,7 @@ export const FilterSearch = ({
             placeholder={`${t('searchBy')} ${selectedFilterLabel}...`}
             value={searchValue as string}
             onChange={handleSearchChange}
-            className="h-full rounded-l-none pr-10 focus-visible:ring-offset-0"
+            className="h-10 rounded-l-none pr-10 focus-visible:ring-offset-0"
             name={selectedFilter as string}
           />
           <Button

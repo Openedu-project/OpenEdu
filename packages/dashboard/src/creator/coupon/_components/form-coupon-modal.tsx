@@ -296,9 +296,8 @@ export default function CouponDialog({
                     field.value === undefined || field.value === '' ? 0 : Number.parseFloat(field.value.toString())
                   }
                   onChange={value => field.onChange(value)}
-                  // locale={locale}
+                  hasCurrency={false}
                   placeholder={tCouponForm('placeholderMaximumTotalUsage')}
-                  // maxValue={9_999_999}
                 />
               </FormControl>
               <FormMessage />
