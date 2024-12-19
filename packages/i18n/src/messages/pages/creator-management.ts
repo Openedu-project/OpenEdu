@@ -73,6 +73,13 @@ export const creatorManagementMessage = {
       reviewing: 'Reviewing',
       approvedSuccess: 'Approved successfully',
       rejectSuccess: 'Rejected',
+    },
+    rejectCreatorModal: {
+      title: 'Reject Creator Request',
+      placeReason: 'Please enter the reason',
+      save: 'Save',
+      cancel: 'Cancel',
+      reason: 'Reason',
       errors: {
         note: 'Reason must be at least 5 characters long',
       },

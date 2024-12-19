@@ -12,7 +12,7 @@ interface IModalReject {
 }
 
 export default function RejectCreatorModal({ onSubmit, onClose }: IModalReject) {
-  const t = useTranslations('creatorManagement');
+  const t = useTranslations('creatorManagement.rejectCreatorModal');
 
   const handleSubmit = useCallback(
     async (value: IRejectCreatorSchemaType) => {

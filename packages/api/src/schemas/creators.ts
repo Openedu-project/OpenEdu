@@ -18,7 +18,7 @@ export type IInviteCreatorSchemaType = z.infer<typeof inviteCreatorSchema>;
 
 export const rejectCreatorSchema = z.object({
   note: z.string().min(5, {
-    message: 'creatorManagement.requestCreator.errors.note',
+    message: 'creatorManagement.rejectCreatorModal.errors.note',
   }),
 });
 
