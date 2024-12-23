@@ -24,6 +24,7 @@ const useWishlist = ({
   onClick,
 }: Pick<WishlistButtonProps, 'isWishlist' | 'entityId' | 'entityType' | 'bookmarkId' | 'onClick'>) => {
   const [isBookmark, setIsBookmark] = React.useState(initialIsWishlist);
+  const [isBookmarking, setIsBookmarking] = React.useState<boolean>(false);
   const { dataMe } = useGetMe();
   const { setLoginRequiredModal } = useLoginRequiredStore();
 
@@ -35,6 +36,7 @@ const useWishlist = ({
     async (e: MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
       e.preventDefault();
+      setIsBookmarking(true);
       const { id } = e.currentTarget;
 
       if (!dataMe) {
@@ -58,15 +60,17 @@ const useWishlist = ({
 
         setIsBookmark(prev => !prev);
         onClick?.(e, id);
+        setIsBookmarking(false);
       } catch (error) {
         console.error('Wishlist operation failed:', error);
+        setIsBookmarking(false);
         return error;
       }
     },
     [dataMe, entityId, entityType, onClick, isBookmark, bookmarkId, setLoginRequiredModal]
   );
 
-  return { isBookmark, handleWishlist };
+  return { isBookmark, isBookmarking, handleWishlist };
 };
 
 const WishlistIcon = ({ isBookmark }: { isBookmark: boolean }) =>
@@ -82,7 +86,7 @@ export default function WishlistButton({
   onClick,
   ...props
 }: WishlistButtonProps) {
-  const { isBookmark, handleWishlist } = useWishlist({
+  const { isBookmark, isBookmarking, handleWishlist } = useWishlist({
     isWishlist,
     entityId,
     entityType,
@@ -96,6 +100,7 @@ export default function WishlistButton({
       variant="outline"
       className={cn('p-2 focus:border', className)}
       onClick={handleWishlist}
+      disabled={isBookmarking}
       {...props}
     >
       {children ?? <WishlistIcon isBookmark={isBookmark} />}

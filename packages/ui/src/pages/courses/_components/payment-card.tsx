@@ -1,4 +1,5 @@
 import { getCourseOutlineService } from '@oe/api/services/course';
+import type { ICourseOutline } from '@oe/api/types/course/course';
 import { formatCurrency } from '@oe/core/utils/format-currency';
 import { PaymentButton } from '#components/payment-button';
 import { WishlistButton } from '#components/wishlist-button';
@@ -63,19 +64,20 @@ const PriceRow = ({ label, value, isBold, discount, currency = 'VND', isPay }: P
   );
 };
 
-const PaymentCard = () => {
-  const { courseOutline, setCourseOutline } = useCourseOutlineDetailStore();
-  const isPaidOrEnrolled = courseOutline.is_paid || courseOutline.is_enrolled;
+const PaymentCard = ({ courseOutline }: { courseOutline: ICourseOutline }) => {
+  const { courseOutline: courseDataStore, setCourseOutline } = useCourseOutlineDetailStore();
+  const { cuid, slug, is_paid, is_enrolled, price_settings } = courseOutline;
+  const isPaidOrEnrolled = is_paid || is_enrolled;
 
   return (
     <Card className="w-full border-0 shadow-none">
       <CardContent className={cn(!isPaidOrEnrolled && 'px-0 pt-4 pb-4')}>
         {!isPaidOrEnrolled && (
           <PriceRow
-            value={courseOutline?.price_settings?.fiat_price ?? 0}
-            discount={courseOutline?.price_settings?.fiat_discount_price}
-            currency={courseOutline?.price_settings?.fiat_currency}
-            isPay={courseOutline?.price_settings?.is_pay}
+            value={price_settings?.fiat_price ?? 0}
+            discount={price_settings?.fiat_discount_price}
+            currency={price_settings?.fiat_currency}
+            isPay={price_settings?.is_pay}
           />
         )}
       </CardContent>
@@ -83,14 +85,14 @@ const PaymentCard = () => {
         <div className="flex w-full items-center space-x-4">
           <PaymentButton className="mbutton-regular16 h-fit flex-grow" courseData={courseOutline} isCourseDetail />
           <WishlistButton
-            bookmarkId={courseOutline.bookmark?.id}
-            entityId={courseOutline.cuid}
+            bookmarkId={courseDataStore.bookmark?.id}
+            entityId={cuid}
             entityType="course"
-            isWishlist={courseOutline.is_wishlist}
+            isWishlist={courseDataStore.is_wishlist}
             className="flex-shrink-0 border-foreground/20"
             onClick={async () => {
               const courseData = await getCourseOutlineService(undefined, {
-                id: courseOutline.slug,
+                id: slug,
               });
 
               if (courseData) {

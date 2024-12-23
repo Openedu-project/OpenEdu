@@ -1,3 +1,4 @@
+import type { ICourseOutline } from '@oe/api/types/course/course';
 import Eye from '@oe/assets/icons/eye';
 import PlayFilled from '@oe/assets/icons/play-filled';
 import { useTranslations } from 'next-intl';
@@ -10,6 +11,7 @@ import CoursePreviewModal from './preview-video-modal';
 
 interface CourseThumbnailProps {
   className?: string;
+  courseOutline: ICourseOutline;
 }
 
 interface PreviewOverlayProps {
@@ -51,11 +53,11 @@ const ThumbnailImage = ({
   />
 );
 
-const CourseThumbnail = ({ className }: CourseThumbnailProps) => {
+const CourseThumbnail = ({ className, courseOutline }: CourseThumbnailProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { courseOutline, getPreviewLessonVideo } = useCourseOutlineDetailStore();
+  const { getPreviewLessonVideo } = useCourseOutlineDetailStore();
 
-  const { thumbnail } = courseOutline;
+  const thumbnail = courseOutline?.thumbnail;
 
   const medias = getPreviewLessonVideo();
   const hasOverlay = medias && medias?.length > 0;

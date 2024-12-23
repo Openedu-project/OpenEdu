@@ -26,7 +26,7 @@ const sizeConfig = {
   },
 } as const;
 
-export const ProgressBar = ({ progress = 0, size = 'md' }: ProgressBarProps) => {
+export const CircleProgressBar = ({ progress = 0, size = 'md' }: ProgressBarProps) => {
   const progressPercent = Math.min(Math.floor(progress) || 0, 100);
   const { container, checkIcon, border } = sizeConfig[size];
 
@@ -62,4 +62,4 @@ export const ProgressBar = ({ progress = 0, size = 'md' }: ProgressBarProps) => 
   );
 };
 
-export default ProgressBar;
+export default CircleProgressBar;

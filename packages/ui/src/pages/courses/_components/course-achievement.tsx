@@ -1,12 +1,10 @@
+import type { ICourseOutline } from '@oe/api/types/course/course';
 import { Check } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useCourseOutlineDetailStore } from '../_store/useCourseOutlineStore';
 import { CourseSection } from './course-section';
 
-export default function CourseAchievements() {
+export default function CourseAchievements({ courseOutline }: { courseOutline: ICourseOutline }) {
   const tCourse = useTranslations('courseOutline');
-
-  const { courseOutline } = useCourseOutlineDetailStore();
 
   const achievements = courseOutline?.props?.achievements;
 

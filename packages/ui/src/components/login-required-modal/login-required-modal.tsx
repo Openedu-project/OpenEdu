@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import type React from "react";
 
 import { AUTH_ROUTES } from "@oe/core/utils/routes";
-import { getCurrentRouter } from "@oe/core/utils/utils";
 import { Link } from "#common/navigation";
 import {
   AlertDialog,
@@ -22,17 +21,20 @@ import { useLoginRequiredStore } from "./_store";
 
 export const LoginWarningModal = () => {
   const t = useTranslations("loginRequiredModal");
-  const { isOpen, hasCancel, setLoginRequiredModal } = useLoginRequiredStore();
+
+  const currentRouter = typeof window !== "undefined" ? window.location : "/";
   const router = useRouter();
 
+  const { isOpen, hasCancel, setLoginRequiredModal } = useLoginRequiredStore();
+
   const handleRedirectLogin = () => {
-    router.push(`${AUTH_ROUTES.login}?next=${getCurrentRouter()}`);
+    router.push(`${AUTH_ROUTES.login}?next=${currentRouter}`);
     setLoginRequiredModal(false);
   };
 
   const handleRedirectSignUp = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    router.push(`${AUTH_ROUTES.signUp}?next=${getCurrentRouter()}`);
+    router.push(`${AUTH_ROUTES.signUp}?next=${currentRouter}`);
 
     setLoginRequiredModal(false);
   };
@@ -50,7 +52,7 @@ export const LoginWarningModal = () => {
           <AlertDialogDescription>
             {t("desc")}
             <Link
-              href={`${AUTH_ROUTES.signUp}?next=${getCurrentRouter()}`}
+              href={`${AUTH_ROUTES.signUp}?next=${currentRouter}`}
               onClick={handleRedirectSignUp}
               className="ml-1 p-0 text-primary hover:underline"
             >

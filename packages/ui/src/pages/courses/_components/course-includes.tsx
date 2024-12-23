@@ -1,3 +1,4 @@
+import type { ICourseOutline } from '@oe/api/types/course/course';
 import Book from '@oe/assets/icons/book';
 import MedalStar from '@oe/assets/icons/medal-start';
 import MessageQuestion from '@oe/assets/icons/message-question';
@@ -5,7 +6,6 @@ import VideoSquare from '@oe/assets/icons/video-square';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import { cn } from '#utils/cn';
-import { useCourseOutlineDetailStore } from '../_store/useCourseOutlineStore';
 import CourseResources from './course-resources';
 import { CourseSection } from './course-section';
 
@@ -16,9 +16,14 @@ interface CourseFeature {
   content: ReactNode;
 }
 
-export default function CourseIncludes({ className }: { className?: string }) {
+export default function CourseIncludes({
+  className,
+  courseOutline,
+}: {
+  className?: string;
+  courseOutline: ICourseOutline;
+}) {
   const tCourse = useTranslations('courseOutline.thisCourseIncludes');
-  const { courseOutline } = useCourseOutlineDetailStore();
 
   const { quiz_count, video_count, active_section, active_lesson, has_certificate, docs } = courseOutline;
 

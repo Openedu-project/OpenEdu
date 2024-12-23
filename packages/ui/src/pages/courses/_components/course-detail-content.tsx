@@ -10,9 +10,11 @@ import SupportingChannels from './course-support-channels';
 import CourseThumbnail from './course-thumbnail';
 import StickyCourseSidebar from './sticky-course-sidebar';
 
-interface CourseOutlineDetailsProps extends HTMLAttributes<HTMLDivElement> {}
+interface CourseOutlineDetailsProps extends HTMLAttributes<HTMLDivElement> {
+  courseOutline: ICourseOutline;
+}
 
-export default function CourseOutlineContent({
+export default function CourseDetailContent({
   courseData,
 }: {
   courseData: ICourseOutline;
@@ -27,13 +29,13 @@ export default function CourseOutlineContent({
     }
   }, [courseData]);
 
-  const CourseOutlineDetails = ({ className, ...props }: CourseOutlineDetailsProps) => {
+  const CourseOutlineDetails = ({ className, courseOutline, ...props }: CourseOutlineDetailsProps) => {
     return (
       <div className={className} {...props}>
-        <CourseAchievements />
-        <CourseContent />
-        <SupportingChannels />
-        <CourseCertificate />
+        <CourseAchievements courseOutline={courseOutline} />
+        <CourseContent courseOutline={courseOutline} />
+        <SupportingChannels courseOutline={courseOutline} />
+        <CourseCertificate courseOutline={courseOutline} />
       </div>
     );
   };
@@ -45,15 +47,17 @@ export default function CourseOutlineContent({
           <div className="grid grid-cols-1 gap-6 md:grid-cols-5 lg:grid-cols-3 ">
             <div className="md:col-span-3 lg:col-span-2">
               <div ref={courseContentRef}>
-                <CourseThumbnail className="md:hidden" />
-                <CourseInfo />
-                <CourseOutlineDetails className="hidden md:block" />
+                <CourseThumbnail className="md:hidden" courseOutline={courseData} />
+                <CourseInfo courseData={courseData} />
+                <CourseOutlineDetails className="hidden md:block" courseOutline={courseData} />
               </div>
             </div>
 
-            {courseOutline?.thumbnail ? <StickyCourseSidebar courseContentRef={courseContentRef} /> : null}
+            {courseOutline?.thumbnail ? (
+              <StickyCourseSidebar courseContentRef={courseContentRef} courseData={courseData} />
+            ) : null}
 
-            <CourseOutlineDetails className="md:hidden" />
+            <CourseOutlineDetails className="md:hidden" courseOutline={courseData} />
           </div>
         ) : (
           <>There is no data</>

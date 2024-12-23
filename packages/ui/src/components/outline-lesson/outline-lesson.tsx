@@ -2,7 +2,7 @@ import type { ILesson } from '@oe/api/types/course/segment';
 import { Lock } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Link } from '#common/navigation';
-import { ProgressBar } from '#components/progress-bar';
+import { CircleProgressBar } from '#components/circle-progress-bar';
 import { cn } from '#utils/cn';
 
 interface IOutlineLessonProps {
@@ -61,7 +61,7 @@ export const OutlineLesson = ({ completedPercentage, isActive, isAvailable, less
           !isAvailable && 'pointer-events-none'
         )}
       >
-        {isAvailable ? <ProgressBar progress={completedPercentage} /> : <Lock size={16} />}
+        {isAvailable ? <CircleProgressBar progress={completedPercentage} /> : <Lock size={16} />}
 
         <div className="flex flex-1 flex-col gap-[2px]">
           <span className="mcaption-semibold12 text-foreground/60">{tCourse('lesson', { index })}</span>

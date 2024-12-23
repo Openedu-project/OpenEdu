@@ -13,7 +13,9 @@ import { Link } from '#common/navigation';
 import { cn } from '#utils/cn';
 import { type IconProps, SOCIAL_PATTERNS, type SocialIconLinkProps, type SocialType } from './types';
 
-const HTTP_REGEX = '/^(https?://)/';
+const HTTP_REGEX = /^(https?:\/\/)/;
+const MAILTO_PREFIX = 'mailto:';
+const HTTP_PREFIX = 'https://';
 
 const ICON_MAP: Record<SocialType, React.ComponentType<IconProps>> = {
   email: Mail,
@@ -43,30 +45,26 @@ export const getSocialType = (url: string): SocialType => {
   return 'other';
 };
 
-export const formatUrl = (
-  url: string,
-  type: SocialType,
-  shortenedLink: boolean
-): { displayUrl: string; linkUrl: string } => {
-  let linkUrl = url;
-  let displayUrl = url;
+type UrlFormat = {
+  displayUrl: string;
+  linkUrl: string;
+};
+
+export const formatUrl = (url: string, type: SocialType, shortenedLink: boolean): UrlFormat => {
+  // Early returns for empty URLs
+  if (!url) {
+    return { displayUrl: '', linkUrl: '' };
+  }
+
+  const isEmail = type === 'email';
+  const hasMailto = url.startsWith(MAILTO_PREFIX);
+  const hasHttp = HTTP_REGEX.test(url);
 
   // Format linkUrl
-  if (type === 'email' && !url.startsWith('mailto:')) {
-    linkUrl = `mailto:${url}`;
-  } else if (!(url.startsWith('http://') || url.startsWith('https://')) && type !== 'email') {
-    linkUrl = `https://${url}`;
-  }
+  const linkUrl = isEmail ? (hasMailto ? url : `${MAILTO_PREFIX}${url}`) : hasHttp ? url : `${HTTP_PREFIX}${url}`;
 
   // Format displayUrl
-  if (shortenedLink) {
-    displayUrl = url.replace(HTTP_REGEX, '');
-    if (type === 'email' && url.startsWith('mailto:')) {
-      displayUrl = url.replace('mailto:', '');
-    }
-  } else if (type === 'email' && !url.startsWith('mailto:')) {
-    displayUrl = url;
-  }
+  const displayUrl = shortenedLink ? (isEmail ? url.replace(MAILTO_PREFIX, '') : url.replace(HTTP_REGEX, '')) : url;
 
   return { displayUrl, linkUrl };
 };
@@ -82,7 +80,7 @@ export const SocialIcon: React.FC<SocialIconLinkProps> = ({
   className,
   iconSize = 24,
   iconColor,
-  linkClassName = 'text-neutral-900 ml-3 line-clamp-1',
+  linkClassName = 'text-foreground/90 ml-3 line-clamp-1',
   shortenedLink = false,
 }) => {
   const socialType = getSocialType(url);

@@ -1,19 +1,22 @@
 import { useGetMe } from '@oe/api/hooks/useMe';
 import { getCourseOutlineService } from '@oe/api/services/course';
+import type { ICourseOutline } from '@oe/api/types/course/course';
 import { createAPIUrl } from '@oe/api/utils/fetch';
-import Heart from '@oe/assets/icons/heart';
-import HeartOutline from '@oe/assets/icons/heart-outline';
 import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { ShareButton, type ShareConfig } from '#components/share-button';
 import { WishlistButton } from '#components/wishlist-button';
 import { cn } from '#utils/cn';
 import { useCourseOutlineDetailStore } from '../_store/useCourseOutlineStore';
 
-export default function CourseHeader() {
+export default function CourseHeader({
+  courseOutline,
+}: {
+  courseOutline: ICourseOutline;
+}) {
   const { dataMe } = useGetMe();
 
-  const { courseOutline, setCourseOutline } = useCourseOutlineDetailStore();
-  const { name, props, slug, bookmark, cuid, is_wishlist } = courseOutline;
+  const { courseOutline: courseDataStore, setCourseOutline } = useCourseOutlineDetailStore();
+  const { name, props, slug, cuid } = courseOutline;
 
   const url = createAPIUrl({
     endpoint: PLATFORM_ROUTES.courseDetail,
@@ -35,10 +38,10 @@ export default function CourseHeader() {
 
       <div className="flex gap-1 md:gap-3">
         <WishlistButton
-          bookmarkId={bookmark?.id}
+          bookmarkId={courseDataStore?.bookmark?.id}
           entityId={cuid}
           entityType="course"
-          isWishlist={is_wishlist}
+          isWishlist={courseDataStore?.is_wishlist}
           className="flex h-6 w-6 items-center border-foreground/20 p-1 md:h-8 md:w-8"
           onClick={async () => {
             const courseData = await getCourseOutlineService(undefined, {
@@ -54,11 +57,17 @@ export default function CourseHeader() {
             }
           }}
         >
-          {courseOutline?.bookmark ? (
-            <Heart className="h-3 w-3 md:h-4 md:w-4" color="hsl(var(--primary))" />
+          {/* {courseOutline?.is_wishlist ? (
+            <Heart
+              className="h-3 w-3 md:h-4 md:w-4"
+              color="hsl(var(--primary))"
+            />
           ) : (
-            <HeartOutline className="h-3 w-3 md:h-4 md:w-4" color="hsl(var(--foreground))" />
-          )}
+            <HeartOutline
+              className="h-3 w-3 md:h-4 md:w-4"
+              color="hsl(var(--foreground))"
+            />
+          )} */}
         </WishlistButton>
 
         <ShareButton

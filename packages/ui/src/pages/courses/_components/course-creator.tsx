@@ -1,15 +1,12 @@
+import type { ICourseOwner } from '@oe/api/types/course/basic';
 import { createAPIUrl } from '@oe/api/utils/fetch';
 import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { useTranslations } from 'next-intl';
 import { Link } from '#common/navigation';
 import { UserAvatar } from '#components/user-avatar';
-import { useCourseOutlineDetailStore } from '../_store/useCourseOutlineStore';
 
-export default function CourseCreator() {
+export default function CourseCreator({ owner }: { owner: ICourseOwner }) {
   const tCourse = useTranslations('courseOutline');
-  const { courseOutline } = useCourseOutlineDetailStore();
-
-  const owner = courseOutline?.owner;
 
   return (
     <Link

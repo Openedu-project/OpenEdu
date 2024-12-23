@@ -1,5 +1,6 @@
 'use client';
 
+import type { ICourseOutline } from '@oe/api/types/course/course';
 import type React from 'react';
 import { useEffect, useRef } from 'react';
 import CourseSidebar from './course-sidebar';
@@ -12,6 +13,7 @@ interface Position {
 
 interface StickyCourseSidebarProps {
   courseContentRef: React.RefObject<HTMLElement | null>;
+  courseData: ICourseOutline;
 }
 
 const HEADER_HEIGHT = 68;
@@ -54,7 +56,7 @@ const calculateSidebarPosition = (contentRect: DOMRect, sidebarHeight: number, s
   return getDefaultPosition();
 };
 
-const StickyCourseSidebar = ({ courseContentRef }: StickyCourseSidebarProps) => {
+const StickyCourseSidebar = ({ courseContentRef, courseData }: StickyCourseSidebarProps) => {
   const sidebarRef = useRef<HTMLDivElement>(null);
 
   const updateSidebarStyles = (styles: Position) => {
@@ -96,7 +98,7 @@ const StickyCourseSidebar = ({ courseContentRef }: StickyCourseSidebarProps) => 
   return (
     <div className="relative md:col-span-2 lg:col-span-1">
       <div ref={sidebarRef}>
-        <CourseSidebar />
+        <CourseSidebar courseData={courseData} />
       </div>
     </div>
   );

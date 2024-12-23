@@ -1,8 +1,8 @@
 import { getCourseOutlineService } from '@oe/api/services/course';
-import CourseOutlineContent from './_components/course-outline-content';
+import CourseDetailContent from './_components/course-detail-content';
 
-export default async function CourseOutlinePage({ slug }: { slug: string }) {
+export default async function CourseDetailPage({ slug }: { slug: string }) {
   const course = await getCourseOutlineService(undefined, { id: slug });
 
-  return course && course !== null ? <CourseOutlineContent courseData={course} /> : <p>There's no data available</p>;
+  return course && course !== null ? <CourseDetailContent courseData={course} /> : <p>There's no data available</p>;
 }

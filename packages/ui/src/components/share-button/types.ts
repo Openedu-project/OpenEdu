@@ -8,7 +8,7 @@ import {
 } from 'react-share';
 import type { ButtonProps } from '#shadcn/button';
 
-type ShareButtonComponent =
+export type ShareButtonComponent =
   | typeof FacebookShareButton
   | typeof TwitterShareButton
   | typeof LinkedinShareButton
@@ -45,7 +45,7 @@ export const SOCIAL_MEDIA_CONFIG: Record<string, SocialMediaConfig> = {
     Component: TelegramShareButton,
     url: 't.me',
     label: 'Telegram',
-    sourceParam: 'tele',
+    sourceParam: 'telegram',
   },
   email: {
     Component: EmailShareButton,
@@ -57,7 +57,7 @@ export const SOCIAL_MEDIA_CONFIG: Record<string, SocialMediaConfig> = {
 
 type SocialMediaType = keyof typeof SOCIAL_MEDIA_CONFIG;
 
-interface SocialShare {
+export interface SocialShare {
   id: SocialMediaType;
   label?: string;
   className?: string;

@@ -1,12 +1,11 @@
+import type { ICourseOutline } from '@oe/api/types/course/course';
 import { useTranslations } from 'next-intl';
 import { SocialIcon } from '#components/social-icon';
-import { useCourseOutlineDetailStore } from '../_store/useCourseOutlineStore';
 import { CourseSection } from './course-section';
 
-const SupportingChannels = () => {
+const SupportingChannels = ({ courseOutline }: { courseOutline: ICourseOutline }) => {
   const tCourse = useTranslations('courseOutline');
 
-  const { courseOutline } = useCourseOutlineDetailStore();
   const channels = courseOutline?.props?.support_channel?.channels;
 
   return (

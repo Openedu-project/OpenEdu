@@ -1,4 +1,4 @@
-import CourseOutlinePage from '@oe/ui/pages/courses';
+import CourseDetailPage from '@oe/ui/pages/courses';
 
 export default async function CourseDetailsPage({
   params,
@@ -9,7 +9,7 @@ export default async function CourseDetailsPage({
 
   return (
     <div>
-      <CourseOutlinePage slug={slug} />
+      <CourseDetailPage slug={slug} />
     </div>
   );
 }

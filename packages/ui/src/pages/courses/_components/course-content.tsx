@@ -1,13 +1,12 @@
+import type { ICourseOutline } from '@oe/api/types/course/course';
 import { useTranslations } from 'next-intl';
 import { OutlineLesson } from '#components/outline-lesson';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '#shadcn/accordion';
-import { useCourseOutlineDetailStore } from '../_store/useCourseOutlineStore';
 import { CourseSection } from './course-section';
 
-const CourseContent = () => {
+const CourseContent = ({ courseOutline }: { courseOutline: ICourseOutline }) => {
   const t = useTranslations('courseOutline');
 
-  const { courseOutline } = useCourseOutlineDetailStore();
   const outline = courseOutline?.outline;
 
   return outline?.length > 0 ? (
