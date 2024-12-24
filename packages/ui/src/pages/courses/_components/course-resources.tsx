@@ -1,6 +1,7 @@
 import ArrowSquareDown from '@oe/assets/icons/arrow-square-down';
 import ArrowSquareUp from '@oe/assets/icons/arrow-square-up';
 import DocumentDownload from '@oe/assets/icons/document-download';
+import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
@@ -17,7 +18,6 @@ export default function CourseResources({ docs }: { docs: IFileResponse[] }) {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const { setLoginRequiredModal } = useLoginRequiredStore();
 
@@ -33,11 +33,11 @@ export default function CourseResources({ docs }: { docs: IFileResponse[] }) {
 
     if (dataMe && dataMe !== null) {
       setIsLoading(true);
-      setError(null);
       try {
         await downloadAllFiles(files);
+        toast.success(t('downloadSuccess'));
       } catch {
-        setError('Failed to download file. Please try again.');
+        toast.error(t('downloadFail'));
       } finally {
         setIsLoading(false);
       }
@@ -61,18 +61,15 @@ export default function CourseResources({ docs }: { docs: IFileResponse[] }) {
             <div className="flex justify-between space-x-spacing-mml">
               <span className="mcaption-semibold16 text-foreground/90">{t('resources')}</span>
               {docs?.length > 1 && (
-                <>
-                  <Button
-                    size="small"
-                    variant="link"
-                    onClick={handleDownload}
-                    disabled={isLoading}
-                    className="mcaption-regular12 text-primary"
-                  >
-                    {isLoading ? t('downloading') : t('downloadAll')}
-                  </Button>
-                  {error && <p className="text-destructive">{error}</p>}
-                </>
+                <Button
+                  size="small"
+                  variant="link"
+                  onClick={handleDownload}
+                  disabled={isLoading}
+                  className="mcaption-regular12 text-primary"
+                >
+                  {isLoading ? t('downloading') : t('downloadAll')}
+                </Button>
               )}
             </div>
             <div className="grid max-h-24 grid-cols-1 gap-2 overflow-y-auto">

@@ -1,6 +1,6 @@
 import { getCourseOutlineService } from '@oe/api/services/course';
 import type { ICourseOutline } from '@oe/api/types/course/course';
-import { formatCurrency } from '@oe/core/utils/format-currency';
+import { formatCurrency } from '#components/input-currency';
 import { PaymentButton } from '#components/payment-button';
 import { WishlistButton } from '#components/wishlist-button';
 import { Card, CardContent, CardFooter } from '#shadcn/card';
@@ -22,7 +22,7 @@ const PriceDisplay = ({
   discount,
   isBold,
 }: {
-  value: number;
+  value: number | string;
   currency?: string;
   discount?: number;
   isBold?: boolean;
@@ -34,11 +34,11 @@ const PriceDisplay = ({
     <>
       <span className={textStyle}>
         <span className="mr-1 text-foreground">{currency}</span>
-        {formatCurrency(Number(value ?? 0))}
+        {formatCurrency(String(value ?? 0), false)}
       </span>
       {Number(discount) > 0 && (
         <span className="mcaption-regular16 line-through">
-          {currency} {formatCurrency(unitPrice)}
+          {currency} {formatCurrency(String(unitPrice), false)}
         </span>
       )}
     </>
@@ -54,7 +54,7 @@ const PriceRow = ({ label, value, isBold, discount, currency = 'VND', isPay }: P
         </span>
       )}
       {isPay ? (
-        <PriceDisplay value={Number(value)} currency={currency} discount={Number(discount)} isBold={isBold} />
+        <PriceDisplay value={value} currency={currency} discount={Number(discount)} isBold={isBold} />
       ) : (
         <span className={cn('giant-iheading-semibold24', 'text-content-neutral-medium-800', isBold && 'font-bold')}>
           FREE

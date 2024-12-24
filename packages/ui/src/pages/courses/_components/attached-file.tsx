@@ -1,6 +1,7 @@
 'use client';
 
 import Import from '@oe/assets/icons/import';
+import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
 import type React from 'react';
 import { useState } from 'react';
@@ -19,7 +20,6 @@ const FileDownloader: React.FC<Props> = ({ fileUrl, fileName, me }) => {
   const t = useTranslations('courseOutline.attachedDocs');
 
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const { setLoginRequiredModal } = useLoginRequiredStore();
 
@@ -28,11 +28,11 @@ const FileDownloader: React.FC<Props> = ({ fileUrl, fileName, me }) => {
   const handleDownload = async () => {
     if (me && me !== null) {
       setIsLoading(true);
-      setError(null);
       try {
         await downloadFile({ fileUrl, fileName: docsName });
+        toast.success(t('downloadSuccess'));
       } catch {
-        setError('Failed to download file. Please try again.');
+        toast.error(t('downloadFail'));
       } finally {
         setIsLoading(false);
       }
@@ -54,7 +54,6 @@ const FileDownloader: React.FC<Props> = ({ fileUrl, fileName, me }) => {
       >
         {isLoading ? t('downloading') : <Import color="hsl(var(--primary))" />}
       </Button>
-      {error && <p className="text-destructive">{error}</p>}
     </div>
   );
 };

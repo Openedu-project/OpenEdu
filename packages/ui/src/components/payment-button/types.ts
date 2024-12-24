@@ -13,6 +13,7 @@ export interface CourseActionProps {
 }
 
 export const ACTION_TYPES = {
+  LOGIN_REQUIRED: 'loginRequired',
   PAY_NOT_PAID: 'payNotPaid',
   NOT_PAY_ENROLLED: 'notPayEnrolled',
   TRIGGER: 'turnOnTrigger',

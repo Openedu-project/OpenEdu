@@ -26,6 +26,8 @@ export const courseOutlineMessages = {
       resources: 'Resources',
       downloadAll: 'Download All',
       downloading: 'Downloading',
+      downloadFail: 'Failed to download file. Please try again.',
+      downloadSuccess: 'Download successfully',
     },
 
     coursePreview: {

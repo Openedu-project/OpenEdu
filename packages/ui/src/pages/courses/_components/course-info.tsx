@@ -1,5 +1,5 @@
 import type { ICourseOutline } from '@oe/api/types/course/course';
-import { CollapseText } from '#components/collapse-text';
+import { ExpandableText } from '#components/expandable-text';
 import CourseCreator from './course-creator';
 import CourseHeader from './course-header';
 import CourseStats from './course-stats';
@@ -22,7 +22,7 @@ export const CourseInfo = ({ courseData }: { courseData: ICourseOutline }) => {
         <LastUpdated update_at={update_at} />
       </div>
 
-      <CollapseText content={description} className="rounded-[12px] border border-foreground/20 p-2 md:p-5" />
+      <ExpandableText content={description} className="rounded-[12px] border border-foreground/20 p-2 md:p-5" />
 
       <CourseStats learner_count={learner_count} mark_as_completed={mark_as_completed} levels={levels} />
     </div>

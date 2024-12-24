@@ -8,7 +8,7 @@ export interface ICollapseText {
   className?: string;
 }
 
-export const CollapseText = ({ content, maxLineLength = 3, className }: ICollapseText) => {
+export const ExpandableText = ({ content, maxLineLength = 3, className }: ICollapseText) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [showButton, setShowButton] = useState<boolean>(false);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
