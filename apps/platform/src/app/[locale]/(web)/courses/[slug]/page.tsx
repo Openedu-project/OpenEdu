@@ -1,4 +1,4 @@
-import CourseDetailPage from '@oe/ui/pages/courses';
+import CourseDetailPage from '@oe/ui/pages/course';
 
 export default async function CourseDetailsPage({
   params,
