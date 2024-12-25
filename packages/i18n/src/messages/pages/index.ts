@@ -4,6 +4,7 @@ import { builderMessages } from './builder';
 import { couponMessage } from './coupon';
 import { creatorManagementMessage } from './creator-management';
 import { forgotPasswordMessage } from './forgot-password';
+import { organizationsMessage } from './organizations';
 import { permissionMessage } from './permissions';
 import { setPasswordMessage } from './set-password';
 import { verifyEmailMessage } from './verify-email';
@@ -18,4 +19,5 @@ export const pageMessages = {
   ...permissionMessage,
   ...couponMessage,
   ...creatorManagementMessage,
+  ...organizationsMessage,
 };

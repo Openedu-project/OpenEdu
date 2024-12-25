@@ -2,7 +2,23 @@ import { getPermissionMyAccessService } from '@oe/api/services/permissions';
 import { ADMIN_ROUTES } from '@oe/core/utils/routes';
 import { checkSidebarPermissions } from '@oe/core/utils/sidebar-menu';
 import { DashboardLayout } from '@oe/ui/common/layout';
-import { Book, BookOpen, BookUp, House, Network, User, UserCog, Users } from 'lucide-react';
+import {
+  Book,
+  BookOpen,
+  BookUp,
+  Building,
+  GitPullRequest,
+  GitPullRequestCreateArrow,
+  House,
+  Network,
+  User,
+  UserCheck2Icon,
+  UserCog,
+  UserPenIcon,
+  UserRoundPlusIcon,
+  Users,
+  Users2Icon,
+} from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
 
@@ -42,6 +58,50 @@ export default async function Layout({ children }: { children: ReactNode }) {
             label: tDashboard('courses.coursesReviewing'),
             icon: <BookUp className="h-5 w-5" />,
             href: ADMIN_ROUTES.coursesReviewing,
+          },
+        ],
+      },
+      {
+        id: 'organization-management',
+        label: tDashboard('creators.title'),
+        icon: <GitPullRequest className="h-5 w-5" />,
+        items: [
+          {
+            id: 'organization-request',
+            label: tDashboard('organizations.requests'),
+            icon: <GitPullRequestCreateArrow className="h-5 w-5" />,
+            href: ADMIN_ROUTES.organizationRequests,
+          },
+          {
+            id: 'organization-list',
+            label: tDashboard('organizations.organizations'),
+            icon: <Building className="h-5 w-5" />,
+            href: ADMIN_ROUTES.organizationManagement,
+          },
+        ],
+      },
+      {
+        id: 'creator-management',
+        label: tDashboard('creators.title'),
+        icon: <UserPenIcon className="h-5 w-5" />,
+        items: [
+          {
+            id: 'creators',
+            label: tDashboard('creators.creators'),
+            icon: <Users2Icon className="h-5 w-5" />,
+            href: ADMIN_ROUTES.creatorManagementCreators,
+          },
+          {
+            id: 'creators-request',
+            label: tDashboard('creators.requests'),
+            icon: <UserCheck2Icon className="h-5 w-5" />,
+            href: ADMIN_ROUTES.creatorManagementRequests,
+          },
+          {
+            id: 'creators-invitation',
+            label: tDashboard('creators.invitations'),
+            icon: <UserRoundPlusIcon className="h-5 w-5" />,
+            href: ADMIN_ROUTES.creatorManagementInvitations,
           },
         ],
       },

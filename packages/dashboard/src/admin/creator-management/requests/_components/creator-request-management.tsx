@@ -12,7 +12,6 @@ import type { FilterOption } from '@oe/ui/components/filter-search';
 import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
 import { Badge } from '@oe/ui/shadcn/badge';
 import { Button } from '@oe/ui/shadcn/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@oe/ui/shadcn/card';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useRef, useState } from 'react';
@@ -176,35 +175,27 @@ export default function CreatorRequestMngmList() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>{t('requestTitle')}</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <Table
-            columns={columns}
-            api={
-              formRegister?.id
-                ? createAPIUrl({ endpoint: API_ENDPOINT.FORMS_ID_SESSIONS, params: { id: formRegister?.id } })
-                : undefined
-            }
-            hasNoColumn
-            apiParams={{
-              page: 1,
-              per_page: 10,
-            }}
-            height="100%"
-            ref={tableRef}
-            filterOptions={filterOptions}
-            filterSearchProps={{ useQueryParams: true }}
-            tableOptions={{
-              manualPagination: true,
-            }}
-          />
-        </CardContent>
-      </Card>
+      <Table
+        columns={columns}
+        api={
+          formRegister?.id
+            ? createAPIUrl({ endpoint: API_ENDPOINT.FORMS_ID_SESSIONS, params: { id: formRegister?.id } })
+            : undefined
+        }
+        hasNoColumn
+        apiParams={{
+          page: 1,
+          per_page: 10,
+          sort: 'create_at desc',
+        }}
+        height="100%"
+        ref={tableRef}
+        filterOptions={filterOptions}
+        filterSearchProps={{ useQueryParams: true }}
+        tableOptions={{
+          manualPagination: true,
+        }}
+      />
       {isOpenRejectModal && <RejectCreatorModal onSubmit={handleRejectCreator} onClose={handleCloseRejectModal} />}
     </div>
   );

@@ -1,10 +1,10 @@
 import { DashboardHeaderCard } from '@oe/ui/common/layout';
 import { useTranslations } from 'next-intl';
-import CreatorRequestMngmList from './_components/creator-request-management';
+import OrganizationRequest from './_components/organization-requests';
 
-export default function CreatorRequestManagement() {
-  const tDashboard = useTranslations('dashboard.creators');
-  const t = useTranslations('creatorManagement.requestCreator');
+export default function OrganizationRequests() {
+  const tDashboard = useTranslations('dashboard.organizations');
+  const t = useTranslations('organizationRequests');
 
   return (
     <>
@@ -12,10 +12,11 @@ export default function CreatorRequestManagement() {
         breadcrumbs={[{ label: tDashboard('title'), disabled: true }, { label: tDashboard('requests') }]}
         dashboard="admin"
       >
-        <h1 className="mb-4 text-2xl">{t('requestTitle')}</h1>
+        <h1 className="mb-4 text-2xl">{t('organizationRequests')}</h1>
       </DashboardHeaderCard>
+
       <div className="rounded bg-background p-4">
-        <CreatorRequestMngmList />
+        <OrganizationRequest />
       </div>
     </>
   );

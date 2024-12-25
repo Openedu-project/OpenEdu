@@ -41,6 +41,8 @@ export const ADMIN_ROUTES = {
   creatorManagementCreators: '/admin/creator-management/creators',
   creatorManagementRequests: '/admin/creator-management/requests',
   creatorManagementInvitations: '/admin/creator-management/invitations',
+  organizationRequests: '/admin/organizations/organization-requests',
+  organizationManagement: '/admin/organizations/organizations-management',
 } as const;
 
 export const CREATOR_ROUTES = {

@@ -38,5 +38,10 @@ export const dashboardMessages = {
       requests: 'Requests',
       invitations: 'Invitations',
     },
+    organizations: {
+      title: 'Organizations Management',
+      requests: 'Requests',
+      organizations: 'Organizations',
+    },
   },
 };
