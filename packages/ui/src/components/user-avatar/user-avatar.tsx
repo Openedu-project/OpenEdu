@@ -21,17 +21,24 @@ export const pickCharacters = (input: string): string => {
   return input.slice(0, 2).toUpperCase();
 };
 
-const getRandomColorPair = (): ColorPair => {
-  if (PREDEFINED_COLORS.length === 0) {
+const getColorPairFromName = (name: string): ColorPair => {
+  if (!name || PREDEFINED_COLORS.length === 0) {
     return DEFAULT_COLOR_PAIR;
   }
 
-  const randomIndex = Math.floor(Math.random() * PREDEFINED_COLORS.length);
-  return PREDEFINED_COLORS[randomIndex] ?? DEFAULT_COLOR_PAIR;
+  // Create a number from the name string
+  const hash = name.split('').reduce((acc, char) => {
+    return acc + char.charCodeAt(0);
+  }, 0);
+
+  // Get index based on hash
+  const index = hash % PREDEFINED_COLORS.length;
+
+  return PREDEFINED_COLORS[index] ?? DEFAULT_COLOR_PAIR;
 };
 
 export const UserAvatar = ({ src, name, size = 'sm', customColors, ...props }: IUserAvatar) => {
-  const colors = useMemo(() => customColors || getRandomColorPair(), [customColors]);
+  const colors = useMemo(() => customColors || getColorPairFromName(name), [customColors, name]);
   const { dimensions, fontClass } = AVATAR_SIZES[size];
 
   return (

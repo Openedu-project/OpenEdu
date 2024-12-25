@@ -17,7 +17,7 @@ const CourseContent = ({ courseOutline }: { courseOutline: ICourseOutline }) => 
             ?.sort((a, b) => a.order - b.order)
             ?.map((section, index) => (
               <AccordionItem className="border-none" key={section.id} value={`section-${section.id}`}>
-                <AccordionTrigger className="giant-iheading-semibold16 rounded-[4px] border-[0.4px] border-border-neutral-50 bg-bg-neutral-20 p-3 text-left text-primary shadow-shadow-6">
+                <AccordionTrigger className="giant-iheading-semibold16 rounded-[4px] border-[0.4px] border-foreground/5 bg-foreground/5 p-3 text-left text-primary hover:no-underline">
                   {`Section ${index + 1}: ${section.title}`}
                 </AccordionTrigger>
                 <AccordionContent>
@@ -31,7 +31,7 @@ const CourseContent = ({ courseOutline }: { courseOutline: ICourseOutline }) => 
                           completedPercentage={0}
                           courseSlug=""
                           sectionUid={section.uid}
-                          isAvailable={false}
+                          isAvailable={lesson.free}
                           isActive={false}
                           lesson={lesson}
                         />

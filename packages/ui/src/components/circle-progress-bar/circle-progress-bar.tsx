@@ -53,11 +53,11 @@ export const CircleProgressBar = ({ progress = 0, size = 'md' }: ProgressBarProp
       style={{
         background: `conic-gradient(
           hsl(var(--primary)) 0% ${progressPercent}%,
-          var(--color-base-neutral-color-neutral-100) ${progressPercent}% 100%
+          hsl(var(--muted)) ${progressPercent}% 100%
         )`,
       }}
     >
-      <span className="mcaption-regular8 z-10 text-content-neutral-light-600">{progressPercent}%</span>
+      <span className="mcaption-regular8 z-10 text-foreground/60">{progressPercent}%</span>
     </div>
   );
 };
