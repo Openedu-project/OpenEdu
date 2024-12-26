@@ -111,7 +111,7 @@ if (typeof window !== 'undefined') {
  */
 export function formatDate(timestamp: number): string {
   const locale = LocaleManager.getInstance().getLocale();
-  return format(fromUnixTime(timestamp / 1000), FORMAT_PATTERNS.DATE, { locale });
+  return format(fromUnixTime((timestamp ?? 0) / 1000), FORMAT_PATTERNS.DATE, { locale });
 }
 
 /**
@@ -119,7 +119,7 @@ export function formatDate(timestamp: number): string {
  */
 export function formatDateTime(timestamp: number): string {
   const locale = LocaleManager.getInstance().getLocale();
-  return format(fromUnixTime(timestamp / 1000), FORMAT_PATTERNS.DATE_TIME, { locale });
+  return format(fromUnixTime((timestamp ?? 0) / 1000), FORMAT_PATTERNS.DATE_TIME, { locale });
 }
 
 /**
@@ -127,14 +127,14 @@ export function formatDateTime(timestamp: number): string {
  */
 export function formatDateHourMinute(timestamp: number): string {
   const locale = LocaleManager.getInstance().getLocale();
-  return format(fromUnixTime(timestamp / 1000), FORMAT_PATTERNS.DATE_HOUR_MINUTE, { locale });
+  return format(fromUnixTime((timestamp ?? 0) / 1000), FORMAT_PATTERNS.DATE_HOUR_MINUTE, { locale });
 }
 
 /**
  * Formats a timestamp to time with contextual format based on how recent it is
  */
 export function formatTimeHourMinute(timestamp: number): string {
-  const date = fromUnixTime(timestamp / 1000);
+  const date = fromUnixTime((timestamp ?? 0) / 1000);
   const now = new Date();
   const diffDays = differenceInDays(now, date);
   const locale = LocaleManager.getInstance().getLocale();
@@ -153,7 +153,7 @@ export function formatTimeHourMinute(timestamp: number): string {
  */
 export function formatDateTimeZone(timestamp: number): string {
   const locale = LocaleManager.getInstance().getLocale();
-  return format(fromUnixTime(timestamp / 1000), FORMAT_PATTERNS.DATE_TIME_ZONE, { locale });
+  return format(fromUnixTime((timestamp ?? 0) / 1000), FORMAT_PATTERNS.DATE_TIME_ZONE, { locale });
 }
 
 /**
@@ -161,7 +161,7 @@ export function formatDateTimeZone(timestamp: number): string {
  */
 export function formatRelativeTime(timestamp: number): string {
   const locale = LocaleManager.getInstance().getLocale();
-  return formatRelative(fromUnixTime(timestamp / 1000), new Date(), { locale });
+  return formatRelative(fromUnixTime((timestamp ?? 0) / 1000), new Date(), { locale });
 }
 
 /**

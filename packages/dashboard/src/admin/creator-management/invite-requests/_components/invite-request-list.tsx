@@ -9,7 +9,6 @@ import { formatDate } from '@oe/core/utils/datetime';
 import { CountdownButton } from '@oe/ui/components/countdown-button';
 import type { FilterOption } from '@oe/ui/components/filter-search';
 import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
-import { Card, CardContent, CardHeader, CardTitle } from '@oe/ui/shadcn/card';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useRef } from 'react';
@@ -79,37 +78,25 @@ export default function InviteRequestMngmList() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>{t('title')}</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <Table
-            columns={columns}
-            api={API_ENDPOINT.USER_INVITATIONS}
-            hasNoColumn
-            apiParams={{
-              page: 1,
-              per_page: 10,
-              is_verified: false,
-              event: USER_ROLE_EVENT.creator,
-              sort: 'update_at desc',
-            }}
-            height="100%"
-            filterOptions={filterOptions}
-            ref={tableRef}
-            filterSearchProps={{ useQueryParams: true }}
-            tableOptions={{
-              manualPagination: true,
-            }}
-          >
-            {/* biome-ignore lint/complexity/noUselessFragments: <explanation> */}
-            <></>
-          </Table>
-        </CardContent>
-      </Card>
+      <Table
+        columns={columns}
+        api={API_ENDPOINT.USER_INVITATIONS}
+        hasNoColumn
+        apiParams={{
+          page: 1,
+          per_page: 10,
+          is_verified: false,
+          event: USER_ROLE_EVENT.creator,
+          sort: 'update_at desc',
+        }}
+        height="100%"
+        filterOptions={filterOptions}
+        ref={tableRef}
+        filterSearchProps={{ useQueryParams: true }}
+        tableOptions={{
+          manualPagination: true,
+        }}
+      />
     </div>
   );
 }

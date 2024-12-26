@@ -1,6 +1,14 @@
 import useSWR from 'swr';
-import { getOrgByDomainService, organizationsService } from '#services/organizations';
+import useSWRMutation from 'swr/mutation';
+import {
+  getOrgByDomainService,
+  getOrgByIdService,
+  organizationsService,
+  postCreateOrganizationService,
+  putUpdateOrganizationService,
+} from '#services/organizations';
 import type { IFilter } from '#types/filter';
+import type { IOrganization, IOrganizationPayload } from '#types/organizations';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
 
@@ -18,6 +26,20 @@ export function useGetOrganization({ params }: { params: IFilter }) {
   };
 }
 
+export function useGetOrganizationById({ id, init = undefined }: { id: string; init?: RequestInit }) {
+  const endpointKey = `${API_ENDPOINT.ADMIN_ORGANIZATIONS}/${id}`;
+  const { data, isLoading, error, mutate } = useSWR(endpointKey, () =>
+    getOrgByIdService(API_ENDPOINT.ADMIN_ORGANIZATIONS, { id, init })
+  );
+
+  return {
+    dataListOrganizationById: data,
+    errorOrganizationById: error,
+    mutateListOrganizationById: mutate,
+    isLoadingOrganizationById: isLoading,
+  };
+}
+
 export function useGetOrganizationByDomain({ domain, init = undefined }: { domain: string; init?: RequestInit }) {
   const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.ADMIN_ORGANIZATIONS, queryParams: { domain } });
   const { data, isLoading, error, mutate } = useSWR(endpointKey, () =>
@@ -29,5 +51,33 @@ export function useGetOrganizationByDomain({ domain, init = undefined }: { domai
     errorOrganizationByDomain: error,
     mutateListOrganizationByDomain: mutate,
     isLoadingOrganizationByDomain: isLoading,
+  };
+}
+
+export function useCreateOrganization() {
+  const { trigger, isMutating, error } = useSWRMutation(
+    API_ENDPOINT.ADMIN_ORGANIZATIONS,
+    async (endpoint: string, { arg }: { arg: IOrganizationPayload }): Promise<IOrganization> =>
+      postCreateOrganizationService(endpoint, { payload: arg })
+  );
+  return {
+    triggerCreateOrganiation: trigger,
+    isLoadingCreateOrganiation: isMutating,
+    errorCreateOrganiation: error,
+  };
+}
+
+export function useUpdateOrganization(id: string) {
+  const endpointKey = `${API_ENDPOINT.ADMIN_ORGANIZATIONS}/${id}`;
+
+  const { trigger, isMutating, error } = useSWRMutation(
+    endpointKey,
+    async (_endpoint: string, { arg }: { arg: IOrganizationPayload }): Promise<IOrganization> =>
+      putUpdateOrganizationService(endpointKey, { payload: arg })
+  );
+  return {
+    triggerUpdateOrganiation: trigger,
+    isLoadingUpdateOrganiation: isMutating,
+    errorUpdateOrganiation: error,
   };
 }

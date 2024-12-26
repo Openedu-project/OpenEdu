@@ -3,7 +3,6 @@
 import { useCreateCreator, useDeleteCreator, useInviteCreators } from '@oe/api/hooks/useCreator';
 import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
 import { Button } from '@oe/ui/shadcn/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@oe/ui/shadcn/card';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
@@ -193,48 +192,40 @@ export default function CreatorsManagementList() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>{t('title')}</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <Table
-            columns={columns}
-            api={API_ENDPOINT.ADMIN_CREATORS}
-            hasNoColumn
-            apiParams={{
-              page: 1,
-              per_page: 10,
-            }}
-            height="100%"
-            ref={tableRef}
-            filterOptions={filterOptions}
-            filterSearchProps={{ useQueryParams: true }}
-            tableOptions={{
-              manualPagination: true,
-            }}
-          >
-            <Button
-              onClick={() => {
-                handleOpenInviteModal();
-              }}
-            >
-              <UserRoundPlus className="mr-2 h-4 w-4" />
-              {t('inviteCreatorBtn')}
-            </Button>
-            <Button
-              onClick={() => {
-                handleOpenCreateModal();
-              }}
-            >
-              <Plus className="mr-2 h-4 w-4" />
-              {t('createNewCreator')}
-            </Button>
-          </Table>
-        </CardContent>
-      </Card>
+      <Table
+        columns={columns}
+        api={API_ENDPOINT.ADMIN_CREATORS}
+        hasNoColumn
+        apiParams={{
+          page: 1,
+          per_page: 10,
+          sort: 'create_at desc',
+        }}
+        height="100%"
+        ref={tableRef}
+        filterOptions={filterOptions}
+        filterSearchProps={{ useQueryParams: true }}
+        tableOptions={{
+          manualPagination: true,
+        }}
+      >
+        <Button
+          onClick={() => {
+            handleOpenInviteModal();
+          }}
+        >
+          <UserRoundPlus className="mr-2 h-4 w-4" />
+          {t('inviteCreatorBtn')}
+        </Button>
+        <Button
+          onClick={() => {
+            handleOpenCreateModal();
+          }}
+        >
+          <Plus className="mr-2 h-4 w-4" />
+          {t('createNewCreator')}
+        </Button>
+      </Table>
       {isCreateModalOpen && <CreateCreatorModal onSubmit={handleCreateCreator} onClose={handleCloseCreateModal} />}
       {isOpenDeleteModal && (
         <ConfirmDeleteCreatorModal onSubmit={handleDeleteCreator} onClose={handleCloseDeleteModal} />

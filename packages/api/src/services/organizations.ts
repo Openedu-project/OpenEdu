@@ -1,8 +1,8 @@
 import type { HTTPPagination, HTTPResponse } from '#types/fetch';
-import type { IOrganization } from '#types/organizations';
+import type { IOrganization, IOrganizationPayload } from '#types/organizations';
 
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI, postAPI } from '#utils/fetch';
+import { createAPIUrl, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 
 export const organizationsService = async (
   endpoint: string | null | undefined,
@@ -14,6 +14,17 @@ export const organizationsService = async (
   );
 
   return response.data;
+};
+
+export const getOrgByIdService = async (
+  endpoint: string | null | undefined,
+  { id, init }: { id: string; init?: RequestInit }
+) => {
+  const endpointKey = endpoint ?? `${API_ENDPOINT.ADMIN_ORGANIZATIONS}/${id}`;
+
+  const response = await organizationsService(endpointKey, { queryParams: {}, init });
+
+  return response.results?.[0];
 };
 
 export const getOrgByDomainService = async (
@@ -60,4 +71,29 @@ export const getOrganizationByHostMiddleware = async (referrer: string, origin: 
     console.error('----------------------error---------------------', error);
     return undefined;
   }
+};
+
+export const postCreateOrganizationService = async (
+  endpoint: string | null | undefined,
+  { payload, init }: { payload: IOrganizationPayload; init?: RequestInit }
+) => {
+  const response = await postAPI<IOrganization, IOrganizationPayload>(
+    endpoint ?? API_ENDPOINT.ADMIN_ORGANIZATIONS,
+    payload,
+    init
+  );
+
+  return response.data;
+};
+export const putUpdateOrganizationService = async (
+  endpoint: string | null | undefined,
+  { payload, init }: { payload: IOrganizationPayload; init?: RequestInit }
+) => {
+  const response = await putAPI<IOrganization, IOrganizationPayload>(
+    endpoint ?? API_ENDPOINT.ADMIN_ORGANIZATIONS,
+    payload,
+    init
+  );
+
+  return response.data;
 };

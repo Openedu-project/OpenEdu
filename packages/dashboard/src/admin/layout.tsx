@@ -6,8 +6,11 @@ import {
   Book,
   BookOpen,
   BookUp,
+  Building,
   File,
   FileLock,
+  GitPullRequest,
+  GitPullRequestCreateArrow,
   Globe,
   House,
   Mail,
@@ -18,8 +21,12 @@ import {
   Settings2,
   StickyNote,
   User,
+  UserCheck2Icon,
   UserCog,
+  UserPenIcon,
+  UserRoundPlusIcon,
   Users,
+  Users2Icon,
 } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
@@ -64,26 +71,45 @@ export default async function Layout({ children }: { children: ReactNode }) {
         ],
       },
       {
+        id: 'organization-management',
+        label: tDashboard('organizations.title'),
+        icon: <GitPullRequest className="h-5 w-5" />,
+        items: [
+          {
+            id: 'organization-request',
+            label: tDashboard('organizations.requests'),
+            icon: <GitPullRequestCreateArrow className="h-5 w-5" />,
+            href: ADMIN_ROUTES.organizationRequests,
+          },
+          {
+            id: 'organization-list',
+            label: tDashboard('organizations.organizations'),
+            icon: <Building className="h-5 w-5" />,
+            href: ADMIN_ROUTES.organizationManagement,
+          },
+        ],
+      },
+      {
         id: 'creator-management',
         label: tDashboard('creators.title'),
-        icon: <Book className="h-5 w-5" />,
+        icon: <UserPenIcon className="h-5 w-5" />,
         items: [
           {
             id: 'creators',
             label: tDashboard('creators.creators'),
-            icon: <BookOpen className="h-5 w-5" />,
+            icon: <Users2Icon className="h-5 w-5" />,
             href: ADMIN_ROUTES.creatorManagementCreators,
           },
           {
             id: 'creators-request',
             label: tDashboard('creators.requests'),
-            icon: <Network className="h-5 w-5" />,
+            icon: <UserCheck2Icon className="h-5 w-5" />,
             href: ADMIN_ROUTES.creatorManagementRequests,
           },
           {
             id: 'creators-invitation',
             label: tDashboard('creators.invitations'),
-            icon: <BookUp className="h-5 w-5" />,
+            icon: <UserRoundPlusIcon className="h-5 w-5" />,
             href: ADMIN_ROUTES.creatorManagementInvitations,
           },
         ],
