@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useResetPassword, useSetPassword } from '@oe/api/hooks/useAuth';
-import { type SetPasswordSchemaType, setPaswordFormSchema } from '@oe/api/schemas/setPasswordSchema';
+import { type SetPasswordSchemaType, setPasswordSchema } from '@oe/api/schemas/authSchema';
 import { loginService } from '@oe/api/services/auth';
 import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
 import { decodedToken } from '@oe/core/utils/decoded-token';
@@ -35,7 +35,7 @@ export default function SetPasswordForm() {
   const tError = useTranslations('errors');
   const router = useRouter();
   const form = useForm<SetPasswordSchemaType>({
-    resolver: zodResolver(setPaswordFormSchema),
+    resolver: zodResolver(setPasswordSchema),
     defaultValues: { password: '', confirmPassword: '' },
   });
   const [isLoading, setLoading] = useState(false);
@@ -149,7 +149,7 @@ export default function SetPasswordForm() {
               </FormItem>
             )}
           />
-          <Button variant="primary" className="mt-[32px]" type="submit" loading={isLoading}>
+          <Button variant="default" className="mt-[32px]" type="submit" loading={isLoading}>
             <SendHorizonal className="mr-[12px]" />
             {t('submit')}
           </Button>

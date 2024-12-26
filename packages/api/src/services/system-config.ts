@@ -11,6 +11,7 @@ import { API_ENDPOINT } from '../utils/endpoints';
 
 export const createSystemConfigSWRKey = ({ key, locales }: { key: ISystemConfigKey; locales?: LanguageCode[] }) => {
   const { host } = getAPIReferrerAndOriginClient();
+  console.info('host', host);
   return createAPIUrl({
     endpoint: API_ENDPOINT.SYSTEM_CONFIGS,
     queryParams: {

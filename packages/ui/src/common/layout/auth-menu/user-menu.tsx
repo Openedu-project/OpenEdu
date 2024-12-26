@@ -4,7 +4,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 
 import type { IUser } from '@oe/api/types/user';
 
-import { LogoutButton } from './logout-button';
+import { LogoutButton } from '#common/auth';
 
 export function UserMenu({ me }: { me: IUser }) {
   return (

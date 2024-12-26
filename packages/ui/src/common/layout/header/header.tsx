@@ -1,4 +1,5 @@
-import type { ReactNode } from 'react';
+import { type ReactNode, Suspense } from 'react';
+import { Skeleton } from '#shadcn/skeleton';
 import { cn } from '#utils/cn';
 import { AuthMenu } from '../auth-menu';
 import { Sidebar, type SidebarItem } from '../sidebar';
@@ -33,7 +34,11 @@ export function Header({
         />
       )}
       {children}
-      {!isHideAuthMenu && <AuthMenu />}
+      {!isHideAuthMenu && (
+        <Suspense fallback={<Skeleton className="h-10 w-10" />}>
+          <AuthMenu />
+        </Suspense>
+      )}
     </header>
   );
 }

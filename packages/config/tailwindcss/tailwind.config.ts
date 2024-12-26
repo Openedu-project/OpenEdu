@@ -87,6 +87,9 @@ const config: Omit<Config, 'content'> = {
           ring: 'hsl(var(--sidebar-ring))',
         },
       },
+      backgroundImage: {
+        'auth-background': 'var(--auth-background)',
+      },
       borderRadius: {
         default: 'var(--radius)',
         sm: 'calc(var(--radius) - 2px)',

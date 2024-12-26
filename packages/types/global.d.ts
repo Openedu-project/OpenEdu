@@ -39,6 +39,11 @@ declare global {
       NEXT_PUBLIC_USER_URL_KEY: string;
       NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY: string;
       NEXT_PUBLIC_COOKIE_API_REFERRER_KEY: string;
+
+      NEXT_PUBLIC_AUTH_GOOGLE_ID: string;
+      NEXT_PUBLIC_AUTH_FACEBOOK_ID: string;
+      NEXT_PUBLIC_AUTH_TWITTER_ID: string;
+      NEXT_PUBLIC_AUTH_LINKEDIN_ID: string;
     }
   }
 }

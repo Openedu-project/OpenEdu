@@ -1,13 +1,13 @@
-import { formMessages } from './form';
-import { resendEmailMessage } from './resend-email';
+import { dateTimePickerMessages } from './date-time-picker';
+import { formValidationMessages } from './form-validation';
 import { richTextMessages } from './rich-text';
 import { tableMessages } from './table';
 import { uploaderMessages } from './uploader';
 
 export const componentMessages = {
-  ...formMessages,
+  ...formValidationMessages,
   ...richTextMessages,
   ...tableMessages,
   ...uploaderMessages,
-  ...resendEmailMessage,
+  ...dateTimePickerMessages,
 };

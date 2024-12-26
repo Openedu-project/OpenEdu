@@ -7,15 +7,23 @@ import { Button } from '#shadcn/button';
 import { formComponents } from '../form-components';
 import { config } from '../form-components/config';
 import { useFormEditorStore } from '../store';
+import type { FormComponent } from '../types';
 
 export function Components() {
   const tComponents = useTranslations('dynamicForms.components');
   const components = Object.values(config);
   const { addField } = useFormEditorStore();
 
+  const handleAddField = (fieldType?: FormComponent) => {
+    const component = components.find(component => component.fieldType === fieldType);
+    if (component) {
+      addField(component);
+    }
+  };
+
   return (
     <div className="flex min-w-40 flex-1 flex-col gap-2">
-      <p className="font-medium text-sm">{tComponents('title')}</p>
+      <p className="font-medium text-sm">{tComponents('addComponent')}</p>
       <Combobox
         placeholder={tComponents('placeholder')}
         searchPlaceholder={tComponents('searchPlaceholder')}
@@ -24,6 +32,7 @@ export function Components() {
           label: component.label,
         }))}
         className="md:hidden"
+        onChange={value => handleAddField(value as FormComponent)}
       />
       <div className="hidden flex-col gap-2 md:flex">
         {components.map(component => {

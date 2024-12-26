@@ -1,10 +1,14 @@
 import {
   AtSign,
+  Calendar,
   CaseSensitive,
   DollarSign,
+  EyeOff,
   Hash,
   HeadingIcon,
   ImageIcon,
+  Link,
+  List,
   Phone,
   SquareCheck,
   SquareDashed,
@@ -13,14 +17,18 @@ import {
 } from 'lucide-react';
 import type { FormComponents } from '../types';
 import { Checkbox } from './checkbox';
+import { DateTimePicker } from './date-time-picker';
 import { EmailInput } from './email';
 import { Heading } from './heading';
 import { FormImage } from './image';
 import { Input } from './input';
 import { InputCurrency } from './input-currency';
 import { InputNumber } from './input-number';
+import { InputPassword } from './input-password';
 import { InputPhoneNumber } from './input-phonenumber';
+import { InputURL } from './input-url';
 import { Paragraph } from './paragraph';
+import { Selectbox } from './selectbox';
 import { Space } from './space';
 import { SubmitButton } from './submit-button';
 import { Textarea } from './textarea';
@@ -61,6 +69,22 @@ export const formComponents: FormComponents = {
   inputPhoneNumber: {
     component: InputPhoneNumber,
     icon: Phone,
+  },
+  inputPassword: {
+    component: InputPassword,
+    icon: EyeOff,
+  },
+  inputUrl: {
+    component: InputURL,
+    icon: Link,
+  },
+  selectbox: {
+    component: Selectbox,
+    icon: List,
+  },
+  datetimePicker: {
+    component: DateTimePicker,
+    icon: Calendar,
   },
   checkbox: {
     component: Checkbox,

@@ -1,23 +1,27 @@
 import { isLogin } from '#utils/auth';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { fetchAPI, postAPI } from '#utils/fetch';
+import { type FetchOptions, fetchAPI, postAPI } from '#utils/fetch';
 
-import type { ILoginPayload, ISignUpPayload, ISignUpResponse, IToken } from '@oe/api/types/auth';
+import type { IAccessTokenResponse, ISignUpResponse, ISocialLoginPayload, IToken } from '@oe/api/types/auth';
 import { cookieOptions, getCookies, setCookie } from '@oe/core/utils/cookie';
 import type { NextRequest } from 'next/server';
 import type { NextResponse } from 'next/server';
+import type { LoginSchemaType, SignUpSchemaType } from '#schemas/authSchema';
+import type { IForgotPasswordPayload, IForgotPasswordResponse } from '#types/auth';
 import type { HTTPResponse } from '#types/fetch';
+import type { IResendEmailPayload } from '#types/resend-email';
+import type { IResendEmailResponse } from '#types/resend-email';
 import type { IResetPasswordPayload, IResetPasswordResponse } from '#types/reset-password';
 import type { ISetPasswordPayload, ISetPasswordResponse } from '#types/set-password';
 import type { IUser } from '#types/user';
 import { HTTPError } from '#utils/http-error';
 import { HTTPErrorCodeMessages } from '#utils/http-error';
 
-export const postSignUpService = async (
+export const signUpService = async (
   endpoint: string | null | undefined,
-  { payload, init }: { payload: ISignUpPayload; init?: RequestInit }
+  { payload, init }: { payload: SignUpSchemaType; init?: FetchOptions }
 ) => {
-  const response = await postAPI<ISignUpResponse, ISignUpPayload>(
+  const response = await postAPI<ISignUpResponse, SignUpSchemaType>(
     endpoint ?? API_ENDPOINT.AUTH_REGISTER,
     payload,
     init
@@ -28,16 +32,38 @@ export const postSignUpService = async (
 
 export const loginService = async (
   endpoint: string | null | undefined,
-  { payload, init }: { payload: ILoginPayload; init?: RequestInit }
+  { payload, init }: { payload: LoginSchemaType; init?: FetchOptions }
 ) => {
-  const response = await postAPI<IToken, ILoginPayload>(endpoint ?? API_ENDPOINT.AUTH_LOGIN, payload, init);
+  const response = await postAPI<IToken, LoginSchemaType>(endpoint ?? API_ENDPOINT.AUTH_LOGIN, payload, {
+    ...init,
+    shouldRefreshToken: false,
+  });
 
   return response.data;
 };
 
+export const forgotPasswordService = async (
+  endpoint: string | null | undefined,
+  { payload, init }: { payload: IForgotPasswordPayload; init?: FetchOptions }
+) => {
+  const response = await postAPI<IForgotPasswordResponse, IForgotPasswordPayload>(
+    endpoint ?? API_ENDPOINT.AUTH_FORGOT_PASSWORD,
+    payload,
+    init
+  );
+
+  return response.data;
+};
+
+export const socialLoginService = async (payload: ISocialLoginPayload, init?: FetchOptions) => {
+  const response = await postAPI<IAccessTokenResponse, ISocialLoginPayload>(API_ENDPOINT.AUTH, payload, init);
+
+  return response;
+};
+
 export const postSetPasswordService = async (
   endpoint: string | null | undefined,
-  { payload, init }: { payload: ISetPasswordPayload; init?: RequestInit }
+  { payload, init }: { payload: ISetPasswordPayload; init?: FetchOptions }
 ) => {
   const response = await postAPI<ISetPasswordResponse, ISetPasswordPayload>(
     endpoint ?? API_ENDPOINT.AUTH_SET_PASSWORD,
@@ -50,7 +76,7 @@ export const postSetPasswordService = async (
 
 export const postResetPasswordService = async (
   endpoint: string | null | undefined,
-  { payload, init }: { payload: IResetPasswordPayload; init?: RequestInit }
+  { payload, init }: { payload: IResetPasswordPayload; init?: FetchOptions }
 ) => {
   const response = await postAPI<IResetPasswordResponse, IResetPasswordPayload>(
     endpoint ?? API_ENDPOINT.AUTH_RESET_PASSWORD,
@@ -61,7 +87,20 @@ export const postResetPasswordService = async (
   return response.data;
 };
 
-export async function getMeService(url?: string, init?: RequestInit): Promise<IUser | null> {
+export const resendEmailService = async (
+  endpoint: string | null | undefined,
+  { payload, init }: { payload: IResendEmailPayload; init?: FetchOptions }
+) => {
+  const response = await postAPI<IResendEmailResponse, IResendEmailPayload>(
+    endpoint ?? API_ENDPOINT.AUTH_RESEND_MAIL,
+    payload,
+    init
+  );
+
+  return response.data;
+};
+
+export async function getMeService(url?: string, init?: FetchOptions): Promise<IUser | null> {
   const isLoggedIn = await isLogin();
   if (isLoggedIn) {
     const res = await fetchAPI<IUser>(url ?? API_ENDPOINT.USERS_ME, { ...init, shouldRefreshToken: false });
@@ -71,7 +110,7 @@ export async function getMeService(url?: string, init?: RequestInit): Promise<IU
   return null;
 }
 
-export function getMeServiceWithoutError(url?: string, init?: RequestInit) {
+export function getMeServiceWithoutError(url?: string, init?: FetchOptions) {
   try {
     return getMeService(url, init);
   } catch {

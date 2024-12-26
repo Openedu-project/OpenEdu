@@ -12,6 +12,7 @@ import { Link } from '@oe/ui/common/navigation';
 // import { Camera, User2 } from 'lucide-react';
 // import TableDemo from './_components/table-demo';
 import DndSortDemo from './_components/dnd-sort-demo';
+import { RegistrationForm } from './_components/form-demo';
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
         <Link href="/about">About</Link>
       </nav>
       <main>
+        <RegistrationForm />
         {/* <TableDemo />
         <Checkbox />
         <RadioGroup>

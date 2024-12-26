@@ -29,7 +29,7 @@
     "@oe/core": "workspace:*",
     "@oe/i18n": "workspace:*",
     "@oe/ui": "workspace:*",
-    "next": "15.1.0",
+    "next": "15.1.2",
     "zod": "^3.24.1"
   },
   "devDependencies": {

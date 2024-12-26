@@ -24,9 +24,11 @@ import {
 } from 'react-hook-form';
 
 import type { TypeOf, z } from '@oe/api/utils/zod';
+import { useTranslations } from 'next-intl';
 import { useFormStatus } from 'react-dom';
 import { Label, LabelWithInfo } from '#shadcn/label';
 import { cn } from '#utils/cn';
+import { parseFormMessage } from '#utils/form-message';
 import { Button, type ButtonProps } from './button';
 
 const Form = FormProvider;
@@ -132,8 +134,9 @@ const FormMessage = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagrap
   ({ className, children, ...props }, ref) => {
     const { error, formMessageId } = useFormField();
 
-    // const t = useTranslations();
-    const body = error ? error?.message : children;
+    const t = useTranslations();
+    const message = error?.message ? parseFormMessage(error.message) : undefined;
+    const body = message ? t(message.key, message) : children;
 
     if (!body) {
       return null;
@@ -178,61 +181,62 @@ const FormLabelInfo = ({ className, children, ref, ...props }: ComponentProps<ty
   );
 };
 
-const FormFieldWithLabel = forwardRef<
-  ComponentRef<typeof Slot>,
-  ComponentPropsWithoutRef<typeof Slot> &
-    FormFieldContextValue & {
-      label?: string;
-      form?: UseFormReturn<TypeOf<z.ZodAny>, z.ZodAny, undefined>;
-      infoText?: string;
-      description?: string;
-      required?: boolean;
-      fieldType?: string;
-    }
->(({ name, label, form, infoText, description, className, required, fieldType, ...props }, ref) => {
-  const formContext = useFormContext();
+export type FormFieldWithLabelProps = ComponentPropsWithoutRef<typeof Slot> &
+  FormFieldContextValue & {
+    label?: string;
+    form?: UseFormReturn<TypeOf<z.ZodAny>, z.ZodAny, undefined>;
+    infoText?: string;
+    description?: string;
+    required?: boolean;
+    fieldType?: string;
+  };
 
-  return (
-    <FormField
-      control={form ? form.control : formContext.control}
-      name={name}
-      render={({ field }) => (
-        <FormItem
-          className={cn(
-            fieldType === 'checkbox' && 'flex flex-row items-start space-x-3 space-y-0 rounded-md',
-            className
-          )}
-        >
-          {fieldType === 'checkbox' ? (
-            <>
-              <FormControlSlot field={field} ref={ref} {...props} />
-              <div className="space-y-1 leading-none">
+const FormFieldWithLabel = forwardRef<ComponentRef<typeof Slot>, FormFieldWithLabelProps>(
+  ({ name, label, form, infoText, description, className, required, fieldType, ...props }, ref) => {
+    const formContext = useFormContext();
+
+    return (
+      <FormField
+        control={form ? form.control : formContext.control}
+        name={name}
+        render={({ field }) => (
+          <FormItem
+            className={cn(
+              fieldType === 'checkbox' && 'flex flex-row items-start space-x-3 space-y-0 rounded-md',
+              className
+            )}
+          >
+            {fieldType === 'checkbox' ? (
+              <>
+                <FormControlSlot field={field} ref={ref} {...props} />
+                <div className="space-y-1 leading-none">
+                  {label && (
+                    <FormLabelInfo infoText={infoText}>
+                      {label} {required && <span className="ml-1 text-destructive">*</span>}
+                    </FormLabelInfo>
+                  )}
+                  {description && <FormDescription>{description}</FormDescription>}
+                  <FormMessage />
+                </div>
+              </>
+            ) : (
+              <>
                 {label && (
                   <FormLabelInfo infoText={infoText}>
                     {label} {required && <span className="ml-1 text-destructive">*</span>}
                   </FormLabelInfo>
                 )}
+                <FormControlSlot field={field} ref={ref} {...props} />
                 {description && <FormDescription>{description}</FormDescription>}
                 <FormMessage />
-              </div>
-            </>
-          ) : (
-            <>
-              {label && (
-                <FormLabelInfo infoText={infoText}>
-                  {label} {required && <span className="ml-1 text-destructive">*</span>}
-                </FormLabelInfo>
-              )}
-              <FormControlSlot field={field} ref={ref} {...props} />
-              {description && <FormDescription>{description}</FormDescription>}
-              <FormMessage />
-            </>
-          )}
-        </FormItem>
-      )}
-    />
-  );
-});
+              </>
+            )}
+          </FormItem>
+        )}
+      />
+    );
+  }
+);
 
 const FormSubmitButton = forwardRef<HTMLButtonElement, ButtonProps & { label: string }>(({ label, ...props }, ref) => {
   const { pending } = useFormStatus();

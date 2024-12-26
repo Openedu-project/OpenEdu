@@ -19,9 +19,9 @@
     "@oe/core": "workspace:*",
     "@oe/i18n": "workspace:*",
     "@oe/ui": "workspace:*",
-    "lucide-react": "0.468.0",
-    "next": "15.1.0",
-    "next-intl": "3.26.1",
+    "lucide-react": "0.469.0",
+    "next": "15.1.2",
+    "next-intl": "3.26.3",
     "react": "19.0.0",
     "zustand": "^5.0.2"
   },

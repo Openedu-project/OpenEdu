@@ -16,8 +16,8 @@
   "peerDependencies": {
     "@oe/api": "workspace:*",
     "@oe/core": "workspace:*",
-    "next": "15.1.0",
-    "next-intl": "3.26.1"
+    "next": "15.1.2",
+    "next-intl": "3.26.3"
   },
   "devDependencies": {
     "@oe/config": "workspace:*",

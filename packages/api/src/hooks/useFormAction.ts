@@ -34,7 +34,7 @@ export function useFormAction<TFieldValues extends FieldValues = FieldValues, TC
     if (!hasState(formState)) {
       return;
     }
-    form.clearErrors();
+    // form.clearErrors();
 
     switch (formState.status) {
       case 'ERROR': {
@@ -65,7 +65,7 @@ export function useFormAction<TFieldValues extends FieldValues = FieldValues, TC
       case 'SUCCESS': {
         toast.success(tToast(formState.message));
         (async () => await onSuccess?.())();
-        form.reset();
+        // form.reset();
         break;
       }
       default:

@@ -4,6 +4,7 @@ import type { ComponentType, FC, SVGProps } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
 import type { FieldValues } from 'react-hook-form';
 import type { ExtendedImageProps } from '#components/image';
+import type { SelectboxOption } from '#components/selectbox';
 // Form Editor Store types
 export interface FormField {
   id: string;
@@ -48,6 +49,8 @@ export interface FormEditorStore {
 export type FormComponent =
   | 'input'
   | 'inputNumber'
+  | 'inputPassword'
+  | 'inputUrl'
   | 'inputCurrency'
   | 'textarea'
   | 'heading'
@@ -59,6 +62,7 @@ export type FormComponent =
   | 'multiSelect'
   | 'tagsInput'
   | 'image'
+  | 'selectbox'
   | 'datetimePicker'
   | 'smartDatetimeInput'
   | 'inputPhoneNumber'
@@ -168,6 +172,7 @@ export type FormFieldType = Partial<Omit<ExtendedImageProps, 'placeholder' | 'bl
   align?: 'start' | 'center' | 'end';
   headingType?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   height?: number;
+  options?: SelectboxOption[];
 };
 
 export type FieldType = { name: string; isNew: boolean; index?: number };

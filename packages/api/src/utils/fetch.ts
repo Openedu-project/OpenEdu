@@ -18,6 +18,8 @@ export type FetchOptions = RequestInit & {
     tags?: string[];
   };
   shouldRefreshToken?: boolean;
+  referrer?: string;
+  origin?: string;
 };
 
 let isRefreshing = false;
@@ -62,8 +64,8 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
   const shouldRefreshToken = options.shouldRefreshToken ?? true;
 
   const cookies = await getCookies();
-  const origin = cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY];
-  const referrer = cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY];
+  const origin = options.origin ?? cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY];
+  const referrer = options.referrer ?? cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY];
   const accessToken = cookies?.[process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY];
   const locale = cookies?.[process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY];
 
@@ -80,7 +82,7 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
     ...(origin ? { Origin: decodeURIComponent(origin) } : {}),
   };
   const mergedOptions: FetchOptions = {
-    cache: 'force-cache',
+    // cache: 'force-cache',
     next: {
       ...options.next,
       tags: [...(options.next?.tags || []), tag],
@@ -120,7 +122,6 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
 
   try {
     const response = await attemptFetch();
-
     const res = await handleResponse(response);
     return res as HTTPResponse<T>;
   } catch (error) {

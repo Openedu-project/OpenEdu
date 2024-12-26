@@ -18,7 +18,12 @@ export function DashboardLayout({
   return (
     <div className="flex h-dvh flex-col bg-background">
       <Header sidebarItems={sidebarItems}>
-        <Link href={PLATFORM_ROUTES.homepage} className="p-0">
+        <Link
+          href={PLATFORM_ROUTES.homepage}
+          className="p-0 hover:bg-transparent"
+          variant="ghost"
+          activeClassName="border-0"
+        >
           <HeaderLogo className="w-[115px] md:w-[172px]" />
         </Link>
       </Header>

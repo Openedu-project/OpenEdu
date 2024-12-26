@@ -1,29 +1,39 @@
 export const authMessages = {
   auth: {
-    login: 'Login',
     logout: 'Logout',
-    signUp: 'Signup',
     email: 'Email',
     emailPlaceholder: 'Enter your email',
     password: 'Password',
     passwordPlaceholder: 'Enter your password',
     confirmPassword: 'Confirm Password',
     confirmPasswordPlaceholder: 'Enter your confirm password',
-    displayName: 'Display Name',
-    displayNamePlaceholder: 'Enter your display name',
     agreement: 'I agreed to the {link}',
     alreadyAccount: 'Alreay have account?',
-    loginSeperate: 'Or continue with',
-    forgotPassword: 'Forgot Your Password?',
     sendYourEmail: 'Send Your Email',
-    slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
+    termsAndConditions: 'terms and conditions',
     signin: {
+      title: 'Login',
+      slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
+      success: 'Login success.',
+      seperate: 'Or continue with',
+      noAccount: "Don't have an account?",
+      terms: "By logging in, you agree to our's",
       errors: {
         emailInvalid: 'Please enter a valid email address.',
         passwordLength: 'Password must be at least 8 characters long.',
       },
     },
     signup: {
+      title: 'Sign Up',
+      slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
+      success: 'Signup success.',
+      seperate: 'Or signup with your email',
+      displayName: 'Display Name',
+      displayNamePlaceholder: 'Enter your display name',
+      noAccount: 'Already have an account?',
+      terms: "By signing up to create an account, you agree to our's",
+      verification: 'Please check your email to verify your account.',
+      successVerification: 'You have signed up successfully!',
       errors: {
         usernameLength: 'Name must be at least 6 characters',
         passwordInvalid: 'Password must be at least 8 characters long.',
@@ -31,6 +41,41 @@ export const authMessages = {
         emailInvalid: 'Invalid email address.',
         agreeInvalid: 'You must agree to the terms and conditions',
       },
+    },
+    forgotPassword: {
+      title: 'Forgot Your Password?',
+      slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
+      success: 'Sent email to reset password. Please check your email.',
+      sendEmail: 'Send Email',
+    },
+    social: {
+      dialogTitle: 'Cannot open browser',
+      dialogDescription: 'Please open this link in a web browser to continue logging in',
+      copyUrlButton: 'Copy URL',
+      signInWithGoogleButton: 'Login with Google',
+      copyUrlSuccess: 'Copied URL to clipboard',
+    },
+    resendEmailButton: {
+      resendEmail: 'Resend Verification Email',
+      resendTimeRemaining: 'Time Remaining',
+    },
+    verifyEmail: {
+      title: 'Verify Email',
+      backToHome: 'Back To Home',
+      congratTitle: 'Congratulations, your account has been verified.',
+      congratDescription:
+        "We're redirecting you to the home page in {seconds, plural, =1 {1 second} other {# seconds}}",
+      slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
+    },
+    confirmInvitation: {
+      title: 'Confirm Invitation',
+      slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
+      setPassword: 'Set Password',
+    },
+    errors: {
+      passwordInvalid:
+        'Password must contain at least one uppercase letter, one lowercase letter, and be at least {minimum, plural, =1 {1 character} other {# characters}} long.',
+      passwordMissMatch: "Passwords don't match",
     },
   },
 };

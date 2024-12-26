@@ -35,7 +35,8 @@ export async function baseMiddleware(request: NextRequest, host?: string | null)
     maxAge: 60 * 60 * 24 * 365, // 1 year
   });
 
-  request.headers.set('x-pathname', getUnlocalizedPathname(request.nextUrl.pathname));
+  i18nResponse.headers.set('x-pathname', getUnlocalizedPathname(request.nextUrl.pathname));
+  i18nResponse.headers.set('x-url', request.nextUrl.toString());
 
   // OpenEdu no need to check
   if (new URL(origin).host !== process.env.NEXT_PUBLIC_APP_ROOT_DOMAIN_NAME) {

@@ -16,8 +16,10 @@ export const PLATFORM_ROUTES = {
 export const AUTH_ROUTES = {
   login: '/login',
   signUp: '/signup',
+  forgotPassword: '/forgot-password',
   forgotPasswordSuccess: '/forgot-password-success',
   setPassword: '/set-password',
+  confirmInvitation: '/confirm-invitation',
   socialLogin: '/social-login',
 } as const;
 

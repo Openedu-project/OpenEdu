@@ -1,22 +1,28 @@
+'use client';
+
 import { format } from 'date-fns';
 import { Calendar as CalendarIcon, Clock } from 'lucide-react';
 import React, { useEffect } from 'react';
 import type { DateRange, Matcher } from 'react-day-picker';
 
+import { useLocale, useTranslations } from 'next-intl';
+// biome-ignore lint/style/noNamespaceImport: <explanation>
+import * as locales from 'react-day-picker/locale';
 import { Button } from '#shadcn/button';
-import { Calendar } from '#shadcn/calendar';
+import { Calendar, type CalendarProps } from '#shadcn/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '#shadcn/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '#shadcn/select';
 import { cn } from '#utils/cn';
 
 export type IDate = Date | DateRange;
 
-type DateTimePickerProps = {
+type DateTimePickerProps = CalendarProps & {
   isRange?: boolean;
+  hasTime?: boolean;
   className?: string;
-  onChange?: (date: IDate) => void;
   value?: IDate;
   disabled?: Matcher | Matcher[] | undefined;
+  onChange?: (date: IDate) => void;
 };
 
 const TimeSelect = ({
@@ -53,8 +59,20 @@ const TimeSelect = ({
   </div>
 );
 
-export function DateTimePicker({ isRange = false, className, onChange, value, disabled }: DateTimePickerProps) {
-  const [date, setDate] = React.useState<Date | undefined>(isRange ? undefined : (value as Date | undefined));
+export function DateTimePicker({
+  isRange = false,
+  hasTime = true,
+  className,
+  onChange,
+  value,
+  disabled,
+  ...props
+}: DateTimePickerProps) {
+  const t = useTranslations('dateTimePicker');
+  const locale = useLocale();
+  const [date, setDate] = React.useState<Date | undefined>(
+    (isRange ? undefined : (value as Date | undefined)) ?? new Date()
+  );
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>(
     isRange ? (value as DateRange | undefined) : undefined
   );
@@ -131,57 +149,63 @@ export function DateTimePicker({ isRange = false, className, onChange, value, di
                   format(dateRange.from, 'LLL dd, y HH:mm:ss')
                 )
               ) : (
-                <span>Pick a date and time range</span>
+                <span>{t('pickDateAndTimeRange')}</span>
               )
             ) : date ? (
               format(date, 'PPP HH:mm:ss')
             ) : (
-              <span>Pick a date and time</span>
+              <span>{t('pickDateAndTime')}</span>
             )}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
           {isRange ? (
             <Calendar
+              {...props}
               mode="range"
               selected={dateRange}
               defaultMonth={dateRange?.from ?? new Date()}
               onSelect={handleSelect}
               numberOfMonths={2}
               disabled={disabled}
+              locale={locales[locale as keyof typeof locales]}
             />
           ) : (
             <>
               <Calendar
+                {...props}
                 mode="single"
                 selected={date}
                 defaultMonth={date ?? new Date()}
                 onSelect={handleSelect}
                 disabled={disabled}
+                locale={locales[locale as keyof typeof locales]}
               />
-              <div className="flex items-end justify-between gap-2 border-t p-4">
-                <div className="flex space-x-4">
-                  <TimeSelect
-                    max={24}
-                    label="HH"
-                    value={date?.getHours()}
-                    onChange={value => handleTimeChange(value, 'hour')}
-                  />
-                  <TimeSelect
-                    max={60}
-                    label="MM"
-                    value={date?.getMinutes()}
-                    onChange={value => handleTimeChange(value, 'minute')}
-                  />
-                  <TimeSelect
-                    max={60}
-                    label="SS"
-                    value={date?.getSeconds()}
-                    onChange={value => handleTimeChange(value, 'second')}
-                  />
+              {hasTime && (
+                <div className="flex items-end justify-between gap-2 border-t p-4">
+                  <div className="flex space-x-4">
+                    <TimeSelect
+                      max={24}
+                      label="HH"
+                      value={date?.getHours()}
+                      onChange={value => handleTimeChange(value, 'hour')}
+                    />
+                    <TimeSelect
+                      max={60}
+                      label="MM"
+                      value={date?.getMinutes()}
+                      onChange={value => handleTimeChange(value, 'minute')}
+                    />
+                    <TimeSelect
+                      max={60}
+                      label="SS"
+                      value={date?.getSeconds()}
+                      onChange={value => handleTimeChange(value, 'second')}
+                    />
+                  </div>
+                  <Clock className="mb-2 h-5 w-5 text-muted-foreground" />
                 </div>
-                <Clock className="mb-2 h-5 w-5 text-muted-foreground" />
-              </div>
+              )}
             </>
           )}
         </PopoverContent>

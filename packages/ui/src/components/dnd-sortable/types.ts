@@ -69,6 +69,7 @@ export type RenderItemFunction<ItemType, ChildItemType> = ({
 }: IRenderItemProps<ItemType, ChildItemType>) => ReactNode;
 
 export interface IDndSortableRef<ItemType, ChildItemType> {
+  items: (ItemType | ChildItemType)[];
   addItem: (defaultItem: ItemType | ChildItemType) => void;
 }
 

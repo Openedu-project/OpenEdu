@@ -2,6 +2,7 @@ import { closestCenter } from '@dnd-kit/core';
 
 import type { CollisionDetection, KeyboardCoordinateGetter, UniqueIdentifier } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
+import { uniqueID } from '@oe/core/utils/unique';
 import type {
   ICollisionDetectionStrategyProps,
   IDndSortableChildItem,
@@ -97,12 +98,43 @@ export abstract class DataAdapter<ItemType, ChildItemType = ItemType> {
   }
 
   addItem(
-    _: IDndSortableItem<ItemType, ChildItemType>[],
-    __: UniqueIdentifier | null,
-    ___: ItemType | ChildItemType,
-    ____?: boolean
+    items: IDndSortableItem<ItemType, ChildItemType>[],
+    parentId: UniqueIdentifier | null,
+    newItem: ItemType | ChildItemType,
+    toLast = true
   ): IDndSortableItem<ItemType, ChildItemType>[] {
-    return [];
+    if (!parentId) {
+      return toLast
+        ? [
+            ...items,
+            {
+              id: (newItem as ItemType)[this.config.idProp as keyof ItemType] ?? uniqueID(),
+              original: newItem,
+              depth: 0,
+            } as IDndSortableItem<ItemType, ChildItemType>,
+          ]
+        : [
+            {
+              id: (newItem as ItemType)[this.config.idProp as keyof ItemType] ?? uniqueID(),
+              original: newItem,
+              depth: 0,
+            } as IDndSortableItem<ItemType, ChildItemType>,
+            ...items,
+          ];
+    }
+
+    const parent = items.find(item => item.id === parentId);
+    if (!parent) {
+      return items;
+    }
+
+    return [
+      ...items,
+      { id: uniqueID(), original: newItem, depth: (parent.depth ?? 0) + 1 } as IDndSortableItem<
+        ItemType,
+        ChildItemType
+      >,
+    ];
   }
 
   removeItem(

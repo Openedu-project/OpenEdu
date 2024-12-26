@@ -59,7 +59,7 @@ export const ThemeCard = ({ name, isSelected, onSelect }: ThemeCardProps) => {
         {isSelected && (
           <div className="absolute inset-0 flex items-center justify-center hover:bg-primary/10">
             <Badge className="absolute top-4 right-4">Selected</Badge>
-            <Button variant="outlinePrimary" className="hover:bg-primary">
+            <Button variant="outline" className="hover:bg-primary">
               <Link
                 href={createAPIUrl({ endpoint: ADMIN_ROUTES.themeDetail, params: { themeName: name } })}
                 className="hover:text-white hover:no-underline"

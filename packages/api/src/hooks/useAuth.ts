@@ -1,12 +1,13 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
+import type { SignUpSchemaType } from '#schemas/authSchema';
 import {
   getMeServiceWithoutError,
   postResetPasswordService,
   postSetPasswordService,
-  postSignUpService,
+  signUpService,
 } from '#services/auth';
-import type { ISignUpPayload, ISignUpResponse } from '#types/auth';
+import type { ISignUpResponse } from '#types/auth';
 import type { IResetPasswordPayload, IResetPasswordResponse } from '#types/reset-password';
 import type { ISetPasswordPayload, ISetPasswordResponse } from '#types/set-password';
 import { API_ENDPOINT } from '#utils/endpoints';
@@ -22,8 +23,8 @@ export const useMe = () => {
 export const useSignUp = () => {
   const { trigger, isMutating, error } = useSWRMutation(
     API_ENDPOINT.AUTH_REGISTER,
-    async (endpoint: string, { arg }: { arg: ISignUpPayload }): Promise<ISignUpResponse> =>
-      postSignUpService(endpoint, { payload: arg })
+    async (endpoint: string, { arg }: { arg: SignUpSchemaType }): Promise<ISignUpResponse> =>
+      signUpService(endpoint, { payload: arg })
   );
 
   return { triggerSignUp: trigger, isLoading: isMutating, error };

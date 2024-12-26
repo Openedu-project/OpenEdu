@@ -13,7 +13,7 @@ export interface ExtendedImageProps extends Omit<ImageProps, 'src'> {
   objectFit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
   rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
   backgroundImage?: boolean;
-  containerHeight?: number;
+  containerHeight?: number | string;
   align?: 'start' | 'center' | 'end';
 }
 
@@ -98,8 +98,6 @@ export function Image({
     ...(placeholder && { placeholder }),
     ...(blurDataURL && { blurDataURL }),
   };
-
-  console.log(backgroundImage);
 
   return (
     <div

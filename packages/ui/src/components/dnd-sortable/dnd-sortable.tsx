@@ -177,11 +177,13 @@ export function DndSortable<ItemType, ChildItemType>({
   useImperativeHandle(
     ref,
     () => ({
+      items: items.map(item => item.original),
       addItem: (defaultItem: ItemType | ChildItemType) => addItem(null, defaultItem),
     }),
-    [addItem]
+    [addItem, items]
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     requestAnimationFrame(() => {
       recentlyMovedToNewContainer.current = false;

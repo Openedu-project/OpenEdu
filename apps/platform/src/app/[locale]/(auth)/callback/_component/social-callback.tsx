@@ -1,4 +1,5 @@
 import { convertToBase64, socialLoginService } from '@oe/api/services/social-login';
+import type { SocialProvider } from '@oe/api/types/auth';
 import type { ISNSStateData } from '@oe/api/types/social-login';
 import { redirect } from 'next/navigation';
 
@@ -34,7 +35,7 @@ export default async function AuthCallbackPage({
     }
     const verifier = stateData?.verifier ?? null;
 
-    const res = await socialLoginService({ code, provider, code_verifier: verifier });
+    const res = await socialLoginService({ code, provider: provider as SocialProvider, code_verifier: verifier });
 
     const token = encodeURIComponent(convertToBase64(res?.data ?? {}));
 

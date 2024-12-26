@@ -6,7 +6,7 @@ import { DataAdapter } from './base-adapter';
 export class ArrayAdapter<ItemType, ChildItemType = ItemType> extends DataAdapter<ItemType, ChildItemType> {
   convertToContainerItem(data: ItemType[]): IDndSortableItem<ItemType, ChildItemType>[] {
     return data.map(item => ({
-      id: item[this.config.idProp as keyof ItemType] ?? uniqueID(),
+      id: item[this.config.idProp as keyof ItemType] || uniqueID(),
       original: item,
     })) as IDndSortableItem<ItemType, ChildItemType>[];
   }
@@ -14,7 +14,9 @@ export class ArrayAdapter<ItemType, ChildItemType = ItemType> extends DataAdapte
   convertToOriginal(data: IDndSortableItem<ItemType, ChildItemType>[]): ItemType[] {
     return data.map(item => ({
       ...item.original,
-      [this.config.childrenProp as keyof ItemType]: item.items?.map(item => item.original),
+      ...(this.config.childrenProp
+        ? { [this.config.childrenProp as keyof ItemType]: item.items?.map(item => item.original) }
+        : {}),
     }));
   }
 

@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 
 import { HeaderLogo } from '@oe/assets/icons/header-logo';
+import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { Link } from '#common/navigation';
 import { Footer } from '../footer';
 import { Header } from '../header';
 import type { SidebarItem } from '../sidebar';
@@ -9,7 +11,14 @@ export function MainLayout({ children, sidebarItems }: { children: ReactNode; si
   return (
     <>
       <Header sidebarItems={sidebarItems}>
-        <HeaderLogo className="w-[115px] md:w-[172px]" />
+        <Link
+          href={PLATFORM_ROUTES.homepage}
+          className="p-0 hover:bg-transparent"
+          variant="ghost"
+          activeClassName="border-0"
+        >
+          <HeaderLogo className="w-[115px] md:w-[172px]" />
+        </Link>
       </Header>
       {children}
       <Footer />
