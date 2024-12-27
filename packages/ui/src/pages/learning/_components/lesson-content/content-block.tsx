@@ -1,6 +1,7 @@
 import type { TLessonContent } from '@oe/api/types/course/basic';
 import { cn } from '#utils/cn';
 import type { ContentRenderer, ContentRendererProps } from './_types/types';
+import ContentText from './content-text';
 
 interface ContentElementProps extends ContentRendererProps {
   type: TLessonContent;
@@ -12,7 +13,7 @@ const CONTENT_STYLES = {
     multi: 'min-h-[calc(100%-24px)]',
   },
   video: 'mx-auto flex w-full max-w-full flex-col',
-  text: 'flex flex-col items-end',
+  // text: 'flex flex-col items-end',
 } as const;
 
 const DEFAULT_CLASSNAME = (isOnlyContent: boolean) => cn(CONTENT_STYLES.common[isOnlyContent ? 'default' : 'multi']);
@@ -39,8 +40,9 @@ export const CONTENT_RENDERERS: Record<TLessonContent, ContentRenderer> = {
   },
 
   text: {
-    render: () => <p>text</p>,
-    getClassName: () => CONTENT_STYLES.text,
+    render: props => <ContentText data={props?.data} />,
+
+    getClassName: DEFAULT_CLASSNAME,
   },
 };
 

@@ -1,4 +1,3 @@
-import type { TLessonContent } from '@oe/api/types/course/basic';
 import type { ILessonContent } from '@oe/api/types/course/segment';
 import type React from 'react';
 import { cn } from '#utils/cn';
@@ -22,7 +21,7 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({ contents = [],
   return (
     <div className={getWrapperClassName(contents)}>
       {contents?.map(item => {
-        const contentType = item.type as TLessonContent;
+        const contentType = item.type;
         const renderer = CONTENT_RENDERERS[contentType];
 
         if (!renderer) {
@@ -35,6 +34,7 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({ contents = [],
               type={contentType}
               courseId={courseId}
               contents={contents}
+              data={item}
               isOnlyContent={contents.length === 1}
             />
           </div>

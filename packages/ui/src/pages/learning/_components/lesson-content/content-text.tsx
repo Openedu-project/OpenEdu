@@ -1,10 +1,14 @@
+import type { ILessonContent } from '@oe/api/types/course/segment';
+
 interface ITextProps {
-  uid: string;
-  content?: string;
+  data?: ILessonContent;
   onCompleteContent?: () => void;
 }
 
-export default function ContentText({ content, uid }: ITextProps) {
+export default function ContentText({ data }: ITextProps) {
+  const content = data?.content;
+  const uid = data?.uid;
+
   return (
     <>
       {content && content?.length > 0 && (

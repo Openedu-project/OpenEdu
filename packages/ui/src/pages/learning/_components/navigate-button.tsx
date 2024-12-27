@@ -65,7 +65,7 @@ const NavigateButton = () => {
   };
 
   return (
-    <div className="hidden sm:flex sm:justify-end sm:gap-4">
+    <div className="hidden sm:flex sm:justify-end sm:gap-2">
       {renderNavigationButton('prev')}
       {renderNavigationButton('next')}
     </div>

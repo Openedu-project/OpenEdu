@@ -5,6 +5,7 @@ import type React from 'react';
 export interface ContentRendererProps {
   courseId: string;
   contents: ILessonContent[];
+  data?: ILessonContent;
   isOnlyContent: boolean;
 }
 
