@@ -1,7 +1,6 @@
 import { getMeServiceWithoutError } from '@oe/api/services/auth';
-import { Bell } from 'lucide-react';
-import { Button } from '#shadcn/button';
 import { AuthButtons } from './auth-buttons';
+import { NotificationButton } from './notifications/notification-button';
 import { UserMenu } from './user-menu';
 
 export async function AuthMenu() {
@@ -11,12 +10,10 @@ export async function AuthMenu() {
   console.info(`==========getMeServiceWithoutError took ${end - start}ms==========`);
 
   return (
-    <div className="ml-auto flex items-center space-x-2">
+    <div className="itxems-center ml-auto flex space-x-2">
       {me ? (
         <>
-          <Button variant="ghost" size="icon">
-            <Bell className="h-5 w-5" />
-          </Button>
+          <NotificationButton />
           <UserMenu me={me} />
         </>
       ) : (

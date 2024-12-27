@@ -1,15 +1,15 @@
-import type { z } from '@oe/api/utils/zod';
-import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
-import type { ReactNode } from 'react';
-import type { UseFormReturn } from 'react-hook-form';
+import type { TypeOf, z } from "@oe/api/utils/zod";
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
+import type { DefaultValues, UseFormReturn } from "react-hook-form";
 import {
   FormNestedProvider,
   FormNestedWrapper,
   type INestedFormsValues,
   SubmitFormsButton,
-} from '#components/form-wrapper';
-import { Button } from '#shadcn/button';
+} from "#components/form-wrapper";
+import { Button } from "#shadcn/button";
 import {
   Dialog,
   DialogContent,
@@ -18,16 +18,22 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '#shadcn/dialog';
-import { cn } from '#utils/cn';
+} from "#shadcn/dialog";
+import { cn } from "#utils/cn";
 
-type ButtonVariant = 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
+type ButtonVariant =
+  | "default"
+  | "destructive"
+  | "outline"
+  | "secondary"
+  | "ghost"
+  | "link";
 
 export interface ButtonConfig {
   label: string;
   onClick?: (handleClose?: () => void) => void;
   variant?: ButtonVariant;
-  type?: 'button' | 'submit' | 'reset';
+  type?: "button" | "submit" | "reset";
 }
 
 type FormSchema = z.ZodObject<Record<string, z.ZodTypeAny>>;
@@ -43,7 +49,7 @@ interface ModalProps<TSchema extends FormSchema = never> {
   onClose?: () => void;
   hasCancelButton?: boolean;
   buttons?: ButtonConfig[];
-
+  defaultValues?: DefaultValues<TypeOf<TSchema>> | undefined;
   showSubmit?: boolean;
   validationSchema?: TSchema;
   onSubmit?: (data: z.infer<TSchema>) => Promise<void>;
@@ -62,25 +68,25 @@ const ModalButtons = ({
   hasCancelButton?: boolean;
   handleClose?: () => void;
 }) => {
-  const t = useTranslations('general');
+  const t = useTranslations("general");
 
   if (buttons && buttons.length > 0) {
     return (
       <div className="flex justify-end space-x-2">
-        {buttons.map(button =>
-          button.type === 'submit' ? (
+        {buttons.map((button) =>
+          button.type === "submit" ? (
             <SubmitFormsButton key={button.label} />
           ) : (
             <Button
               key={button.label}
-              type={button.type ?? 'button'}
-              variant={button.variant ?? 'default'}
+              type={button.type ?? "button"}
+              variant={button.variant ?? "default"}
               onClick={
                 button.onClick
                   ? () => button.onClick?.(handleClose)
-                  : button.type === 'button'
-                    ? handleClose
-                    : undefined
+                  : button.type === "button"
+                  ? handleClose
+                  : undefined
               }
             >
               {button.label}
@@ -95,12 +101,12 @@ const ModalButtons = ({
     <div className="flex justify-end space-x-2">
       {hasCancelButton && handleClose && (
         <Button type="button" variant="outline" onClick={handleClose}>
-          {t('close')}
+          {t("close")}
         </Button>
       )}
       {showSubmit && (
         <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? t('submitting') : t('submit')}
+          {isSubmitting ? t("submitting") : t("submit")}
         </Button>
       )}
     </div>
@@ -118,6 +124,7 @@ export const Modal = <TSchema extends FormSchema = never>({
   buttons,
   validationSchema,
   showSubmit,
+  defaultValues,
   onClose,
   onSubmit,
   ...rest
@@ -139,7 +146,7 @@ export const Modal = <TSchema extends FormSchema = never>({
   };
 
   const handleSubmit = async (data: INestedFormsValues) => {
-    await onSubmit?.(data['modal-form']);
+    await onSubmit?.(data["modal-form"]);
     handleOpenChange(false);
   };
 
@@ -150,22 +157,38 @@ export const Modal = <TSchema extends FormSchema = never>({
     <FormNestedWrapper
       id="modal-form"
       schema={validationSchema}
-      className={cn('scrollbar px-4', hasTitleOrDescription && hasButtons ? 'overflow-y-auto' : '')}
+      className={cn(
+        "scrollbar px-4",
+        hasTitleOrDescription && hasButtons ? "overflow-y-auto" : ""
+      )}
+      useFormProps={{ defaultValues }}
     >
-      {({ form }) => (typeof children === 'function' ? children(form) : children)}
+      {({ form }) =>
+        typeof children === "function" ? children(form) : children
+      }
     </FormNestedWrapper>
   ) : (
-    <div className={cn('scrollbar px-4', hasTitleOrDescription && hasButtons ? 'overflow-y-auto' : '')}>
+    <div
+      className={cn(
+        "scrollbar px-4",
+        hasTitleOrDescription && hasButtons ? "overflow-y-auto" : ""
+      )}
+    >
       {children as ReactNode}
     </div>
   );
 
   const modalContent = (
     <DialogContent
-      onPointerDownOutside={e => e.preventDefault()}
-      className={cn('flex max-w-[90vw] flex-col overflow-hidden p-0 md:max-w-lg', className)}
+      onPointerDownOutside={(e) => e.preventDefault()}
+      className={cn(
+        "flex max-w-[90vw] flex-col overflow-hidden p-0 md:max-w-lg",
+        className
+      )}
     >
-      <DialogHeader className={cn('p-4 pb-0', hasTitleOrDescription ? '' : 'hidden')}>
+      <DialogHeader
+        className={cn("p-4 pb-0", hasTitleOrDescription ? "" : "hidden")}
+      >
         <DialogTitle>{title}</DialogTitle>
         <DialogDescription>{description}</DialogDescription>
       </DialogHeader>
@@ -186,7 +209,9 @@ export const Modal = <TSchema extends FormSchema = never>({
   return (
     <Dialog open={internalIsOpen} onOpenChange={handleOpenChange} {...rest}>
       {trigger ? <DialogTrigger asChild>{trigger}</DialogTrigger> : null}
-      <FormNestedProvider onSubmit={handleSubmit}>{modalContent}</FormNestedProvider>
+      <FormNestedProvider onSubmit={handleSubmit}>
+        {modalContent}
+      </FormNestedProvider>
     </Dialog>
   );
 };

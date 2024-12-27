@@ -154,9 +154,10 @@ export const putAPI = async <Data, Payload>(endpoint: string, payload: Payload, 
     ...(payload && { body: JSON.stringify(payload) }),
   });
 
-export const deleteAPI = async <Data>(endpoint: string, init: FetchOptions = {}) =>
+export const deleteAPI = async <Data, Payload>(endpoint: string, payload?: Payload, init: FetchOptions = {}) =>
   await fetchAPI<Data>(endpoint, {
     cache: 'no-store',
     ...init,
     method: 'DELETE',
+    ...(payload && { body: JSON.stringify(payload) }),
   });

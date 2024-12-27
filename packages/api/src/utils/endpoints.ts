@@ -208,12 +208,15 @@ export const API_ENDPOINT = {
   REFERRALS: '/api/v1/referrals',
   REFERRALS_SUMMARIES: '/api/v1/referrals/summaries',
   CRON_JOBS_GENERATE_BLOG: '/api/v1/cron-jobs/generate-blog',
-  COM_NOTIFICATIONS: '/api/com-v1/notifications',
   COM_BROADCAST_MESSAGES: '/api/com-v1/broadcast/messages',
   COM_REPORTS_BLOGS_TOP_VIEWED: '/api/com-v1/reports/blogs/top-viewed',
   COM_REPORTS_USERS_TOP_BLOG_VIEWED: '/api/com-v1/reports/users/top-blog-viewed',
   NEWSLETTERS: '/api/v1/newsletters',
-  NOTIFICATIONS_BADGES: '/api/v1/notifications/badges',
-  NOTIFICATIONS: '/api/v1/notifications',
-  NOTIFICATIONS_READ: '/api/v1/notifications/read',
+  COM_NOTIFICATIONS: '/api/com-v1/notifications',
+  COM_NOTIFICATIONS_BADGES: '/api/com-v1/notifications/badges',
+  COM_NOTIFICATIONS_READ: '/api/com-v1/notifications/read',
+
+  // WS
+  WEBSOCKET: `/websocket` as const,
+
 } as const;

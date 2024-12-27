@@ -7,6 +7,7 @@ import {
   BookOpen,
   BookUp,
   Building,
+  CircleDollarSign,
   File,
   FileLock,
   GitPullRequest,
@@ -169,6 +170,12 @@ export default async function Layout({ children }: { children: ReactNode }) {
             href: ADMIN_ROUTES.themesSettings,
           },
         ],
+      },
+      {
+        id: 'withdraw-request',
+        label: tDashboard('withdrawRequest'),
+        icon: <CircleDollarSign size={18} />,
+        href: ADMIN_ROUTES.withdrawRequest,
       },
       {
         id: 'permission-setting',

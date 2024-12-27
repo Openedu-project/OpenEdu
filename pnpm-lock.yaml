@@ -618,6 +618,9 @@ importers:
       react-resizable-panels:
         specifier: ^2.1.7
         version: 2.1.7(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      react-use-websocket:
+        specifier: ^4.11.1
+        version: 4.11.1
       react-virtuoso:
         specifier: 4.12.3
         version: 4.12.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -2800,6 +2803,9 @@ packages:
     peerDependencies:
       react: '>=16.6.0'
       react-dom: '>=16.6.0'
+
+  react-use-websocket@4.11.1:
+    resolution: {integrity: sha512-39e8mK2a2A1h8uY3ePF45b2q0vwMOmaEy7J5qEhQg4n7vYa5oDLmqutG36kZQgAQ/3KCZS0brlGRbbZJ0+zfKQ==}
 
   react-virtuoso@4.12.3:
     resolution: {integrity: sha512-6X1p/sU7hecmjDZMAwN+r3go9EVjofKhwkUbVlL8lXhBZecPv9XVCkZ/kBPYOr0Mv0Vl5+Ziwgexg9Kh7+NNXQ==}
@@ -5251,6 +5257,8 @@ snapshots:
       prop-types: 15.8.1
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
+
+  react-use-websocket@4.11.1: {}
 
   react-virtuoso@4.12.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
