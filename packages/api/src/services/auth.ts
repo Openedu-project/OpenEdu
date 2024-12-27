@@ -1,6 +1,6 @@
-import { isLogin } from '#utils/auth';
+import { type AuthEventName, authEvents, isLogin } from '#utils/auth';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { type FetchOptions, fetchAPI, postAPI } from '#utils/fetch';
+import { type FetchOptions, createAPIUrl, fetchAPI, postAPI } from '#utils/fetch';
 
 import type { IAccessTokenResponse, ISignUpResponse, ISocialLoginPayload, IToken } from '@oe/api/types/auth';
 import { cookieOptions, getCookies, setCookie } from '@oe/core/utils/cookie';
@@ -8,11 +8,8 @@ import type { NextRequest } from 'next/server';
 import type { NextResponse } from 'next/server';
 import type { LoginSchemaType, SignUpSchemaType } from '#schemas/authSchema';
 import type { IForgotPasswordPayload, IForgotPasswordResponse } from '#types/auth';
+import type { IResendEmailPayload, IResendEmailResponse, ISetPasswordPayload, ISetPasswordResponse } from '#types/auth';
 import type { HTTPResponse } from '#types/fetch';
-import type { IResendEmailPayload } from '#types/resend-email';
-import type { IResendEmailResponse } from '#types/resend-email';
-import type { IResetPasswordPayload, IResetPasswordResponse } from '#types/reset-password';
-import type { ISetPasswordPayload, ISetPasswordResponse } from '#types/set-password';
 import type { IUser } from '#types/user';
 import { HTTPError } from '#utils/http-error';
 import { HTTPErrorCodeMessages } from '#utils/http-error';
@@ -61,26 +58,14 @@ export const socialLoginService = async (payload: ISocialLoginPayload, init?: Fe
   return response;
 };
 
-export const postSetPasswordService = async (
+export const setPasswordService = async (
   endpoint: string | null | undefined,
-  { payload, init }: { payload: ISetPasswordPayload; init?: FetchOptions }
+  { payload, init }: { payload: ISetPasswordPayload & { event: AuthEventName }; init?: FetchOptions }
 ) => {
+  const { event, ...rest } = payload;
   const response = await postAPI<ISetPasswordResponse, ISetPasswordPayload>(
-    endpoint ?? API_ENDPOINT.AUTH_SET_PASSWORD,
-    payload,
-    init
-  );
-
-  return response.data;
-};
-
-export const postResetPasswordService = async (
-  endpoint: string | null | undefined,
-  { payload, init }: { payload: IResetPasswordPayload; init?: FetchOptions }
-) => {
-  const response = await postAPI<IResetPasswordResponse, IResetPasswordPayload>(
-    endpoint ?? API_ENDPOINT.AUTH_RESET_PASSWORD,
-    payload,
+    (endpoint ?? event === authEvents.setPassword) ? API_ENDPOINT.AUTH_SET_PASSWORD : API_ENDPOINT.AUTH_RESET_PASSWORD,
+    rest,
     init
   );
 
@@ -99,6 +84,24 @@ export const resendEmailService = async (
 
   return response.data;
 };
+
+export async function verifyEmailService(
+  url: string | undefined,
+  { token, init }: { token: string; init?: RequestInit }
+): Promise<IResendEmailResponse> {
+  let endpointKey = url;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.AUTH_VERIFY,
+      queryParams: {
+        token,
+      },
+    });
+  }
+
+  const response = await fetchAPI<IResendEmailResponse>(endpointKey, init);
+  return response?.data;
+}
 
 export async function getMeService(url?: string, init?: FetchOptions): Promise<IUser | null> {
   const isLoggedIn = await isLogin();

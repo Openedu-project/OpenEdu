@@ -65,7 +65,7 @@ export const forgotPasswordSchema = z.object({
   email: emailSchema,
 });
 
-export type SignUpSchemaType = z.infer<typeof signUpSchema>;
-export type LoginSchemaType = z.infer<typeof loginSchema>;
+export type SignUpSchemaType = z.infer<typeof signUpSchema> & { next_path?: string };
+export type LoginSchemaType = z.infer<typeof loginSchema> & { next_path?: string };
 export type SetPasswordSchemaType = z.infer<typeof setPasswordSchema>;
 export type ForgotPasswordSchemaType = z.infer<typeof forgotPasswordSchema>;

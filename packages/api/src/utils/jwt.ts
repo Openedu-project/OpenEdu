@@ -1,5 +1,6 @@
 export interface JWT {
   exp?: number;
+  next_path?: string;
 }
 
 export function parseJwt(token: string) {

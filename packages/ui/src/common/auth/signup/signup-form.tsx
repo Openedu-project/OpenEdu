@@ -1,6 +1,7 @@
 'use client';
 
 import { type SignUpSchemaType, signUpSchema } from '@oe/api/schemas/authSchema';
+import { authEvents } from '@oe/api/utils/auth';
 import type { HTTPError } from '@oe/api/utils/http-error';
 import { AUTH_ROUTES, PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { Link } from '@oe/ui/common/navigation';
@@ -10,6 +11,7 @@ import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
 import { Input } from '@oe/ui/shadcn/input';
 import { MailIcon, UserIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 import { useState } from 'react';
 import { SuccessDialog } from '#components/dialog';
@@ -22,6 +24,8 @@ export default function SignUpForm() {
   const tAuth = useTranslations('auth');
   const tErrors = useTranslations('errors');
   const tGeneral = useTranslations('general');
+  const searchParams = useSearchParams();
+  const nextPath = searchParams.get('next') ?? '/';
   const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
@@ -31,11 +35,14 @@ export default function SignUpForm() {
     setError((error as HTTPError).message);
   }, []);
 
-  const onSubmit = useCallback(async (values: SignUpSchemaType) => {
-    await signUpAction(values);
-    setOpen(true);
-    setEmail(values.email);
-  }, []);
+  const onSubmit = useCallback(
+    async (values: SignUpSchemaType) => {
+      await signUpAction({ ...values, next_path: nextPath });
+      setOpen(true);
+      setEmail(values.email);
+    },
+    [nextPath]
+  );
 
   const handleResendEmailError = useCallback((error: HTTPError) => {
     setResendEmailError(error.message);
@@ -81,7 +88,7 @@ export default function SignUpForm() {
             </div>
             <div className="flex items-center justify-center">
               <p className="text-sm">{tAuth('signup.noAccount')}</p>
-              <Link href={`${AUTH_ROUTES.login}?next=${window.location.href}`} className="ml-1 h-auto p-0 font-medium">
+              <Link href={`${AUTH_ROUTES.login}?next=${nextPath}`} className="ml-1 h-auto p-0 font-medium">
                 {tAuth('signin.title')}
               </Link>
             </div>
@@ -102,7 +109,7 @@ export default function SignUpForm() {
               </Alert>
             )}
             <div className="flex w-full justify-center gap-2">
-              <ResendButton event="REGISTER" email={email} onError={handleResendEmailError} />
+              <ResendButton event={authEvents.register} email={email} onError={handleResendEmailError} />
               <Link href={PLATFORM_ROUTES.homepage} variant="outline">
                 {tGeneral('backToHomepage')}
               </Link>

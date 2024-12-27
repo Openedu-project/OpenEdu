@@ -11,10 +11,10 @@ export function AuthButtons() {
   return (
     <>
       <Link href={`${AUTH_ROUTES.login}?next=${pathname}`} variant="ghost">
-        {tAuth('login')}
+        {tAuth('signin.title')}
       </Link>
       <Link href={`${AUTH_ROUTES.signUp}?next=${pathname}`} variant="default">
-        {tAuth('signUp')}
+        {tAuth('signup.title')}
       </Link>
     </>
   );

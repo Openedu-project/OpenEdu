@@ -90,6 +90,7 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
     ...defaultOptions,
     ...options,
     headers,
+    referrer: origin,
   };
 
   let retryCount = 0;
@@ -97,7 +98,6 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
 
   async function attemptFetch(): Promise<Response> {
     const response = await fetch(urlAPIWithLocale, mergedOptions);
-
     if (response.status === 401 && shouldRefreshToken && retryCount < MAX_RETRIES) {
       retryCount++;
       if (!isRefreshing) {
@@ -125,6 +125,7 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
     const res = await handleResponse(response);
     return res as HTTPResponse<T>;
   } catch (error) {
+    console.error('--------------Fetch Error--------------------', (error as Error).message);
     throw handleError(error);
   }
 }

@@ -3,8 +3,10 @@
 import type { SignUpSchemaType } from '@oe/api/schemas/authSchema';
 import { signUpService } from '@oe/api/services/auth';
 
-export async function signUpAction({ display_name, email, password, confirmPassword }: SignUpSchemaType) {
-  await signUpService(undefined, { payload: { display_name, email, password, confirmPassword, isAgree: true } });
+export async function signUpAction({ display_name, email, password, confirmPassword, next_path }: SignUpSchemaType) {
+  await signUpService(undefined, {
+    payload: { display_name, email, password, confirmPassword, isAgree: true, next_path },
+  });
 
   // await Promise.all([
   //   setCookie(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, res.access_token),

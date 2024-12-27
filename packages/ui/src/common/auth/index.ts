@@ -1,10 +1,11 @@
-import { ConfirmInvitationPage } from './confirm-invitation/confirm-invitation-page';
-import { EmailVerifyPage } from './email-verify/email-verify-page';
-import { ForgotPasswordPage } from './forgot-password/forgot-password-page';
-import { LoginPage } from './login/login-page';
-import { LogoutButton } from './logout/logout-button';
-import { SetPasswordPage } from './set-password/set-password-page';
-import { SignUpPage } from './signup/signup-page';
+import { AuthCallbackPage } from './auth-callback-page';
+import { AuthConfirmPage } from './auth-confirm-page';
+import { ForgotPasswordPage } from './forgot-password-page';
+import { LoginPage } from './login-page';
+import { LogoutButton } from './logout-button';
+import { ResendButton } from './resend-button';
+import { EmailVerifyPage, SignUpPage } from './signup';
+import { SocialLoginPage } from './social-login-page';
 
 export {
   LoginPage,
@@ -12,6 +13,8 @@ export {
   LogoutButton,
   ForgotPasswordPage,
   EmailVerifyPage,
-  SetPasswordPage,
-  ConfirmInvitationPage,
+  AuthConfirmPage,
+  SocialLoginPage,
+  ResendButton,
+  AuthCallbackPage,
 };

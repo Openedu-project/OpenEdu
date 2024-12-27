@@ -42,7 +42,7 @@ const createSocialAuthorizeUrl = ({
   const authorizeUrl = AUTHORIZE_ENDPOINT[provider];
   const url = new URL(authorizeUrl);
   url.searchParams.set('state', JSON.stringify({ referrer, provider, originUrl, verifier }));
-  url.searchParams.set('redirect_uri', `${process.env.NEXT_PUBLIC_APP_ORIGIN}/auth/callback`);
+  url.searchParams.set('redirect_uri', `${process.env.NEXT_PUBLIC_APP_ORIGIN}/callback`);
   url.searchParams.set('response_type', 'code');
   for (const [key, value] of Object.entries(socialOptions)) {
     if (value) {
@@ -53,31 +53,31 @@ const createSocialAuthorizeUrl = ({
 };
 
 export const createGoogleAuthorizeUrl = (referrer: string, originUrl: string) => {
-  const { verifier, challenge } = generatePKCEPair();
   return createSocialAuthorizeUrl({
     provider: 'google',
     referrer,
     originUrl,
-    verifier,
     socialOptions: {
       client_id: process.env.NEXT_PUBLIC_AUTH_GOOGLE_ID,
       prompt: 'select_account',
       scope: 'openid profile email',
-      code_challenge: challenge,
-      code_challenge_method: 'S256',
-      nonce: verifier,
     },
   });
 };
 
 export const createFacebookAuthorizeUrl = (referrer: string, originUrl: string) => {
+  const { verifier, challenge } = generatePKCEPair();
   return createSocialAuthorizeUrl({
     provider: 'facebook',
     referrer,
     originUrl,
+    verifier,
     socialOptions: {
       client_id: process.env.NEXT_PUBLIC_AUTH_FACEBOOK_ID,
       scope: 'email,public_profile',
+      code_challenge: challenge,
+      code_challenge_method: 'S256',
+      nonce: verifier,
     },
   });
 };

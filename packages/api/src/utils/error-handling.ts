@@ -17,6 +17,8 @@ export async function handleResponse<T>(response: Response): Promise<HTTPRespons
       metadata = undefined;
     }
 
+    console.log('-------Fetch metadata-------', metadata);
+
     const error = new HTTPError({
       status: response.status,
       message: metadata ? String(metadata.code) : getErrorCodeFromStatus(response.status),

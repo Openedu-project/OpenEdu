@@ -62,15 +62,25 @@ export const authMessages = {
     verifyEmail: {
       title: 'Verify Email',
       backToHome: 'Back To Home',
-      congratTitle: 'Congratulations, your account has been verified.',
-      congratDescription:
-        "We're redirecting you to the home page in {seconds, plural, =1 {1 second} other {# seconds}}",
+      successTitle: 'Congratulations, your account has been verified.',
+      successDescription: 'Please click the button below to continue to the home page',
       slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
+      failedTitle: 'Verification Failed',
     },
-    confirmInvitation: {
+    authConfirm: {
+      setPasswordTitle: 'Set your password',
+      setPasswordDescription: 'Please set your password to continue.',
+      setPasswordSuccess: 'Set password success.',
+      setPasswordSuccessDescription:
+        'Please wait {seconds, plural, =1 {1 second} other {# seconds}} to redirect to the previous page.',
+      gotoLogin: 'Go to Login',
       title: 'Confirm Invitation',
       slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
       setPassword: 'Set Password',
+      failedTitle: 'Accept Invitation Failed',
+      confirmDescription:
+        'You are logging in to your account with {currentEmail}, please click the login button below to continue processing with {email}.',
+      confirmDescriptionWithoutLogin: 'Confirmation success, please click the login button below to continue.',
     },
     errors: {
       passwordInvalid:

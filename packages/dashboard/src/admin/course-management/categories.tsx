@@ -1,6 +1,6 @@
 'use client';
 
-import { useCategoriesTree } from '@oe/api/hooks/categories';
+import { useCategoriesTree } from '@oe/api/hooks/useCategories';
 import { bulkDeleteCategoryService, createUpdateCategoriesTreeService } from '@oe/api/services/categories';
 import type { ICategoryBulkUpsert, ICategoryTree } from '@oe/api/types/categories';
 import { DashboardHeaderCard } from '@oe/ui/common/layout/dashboard-layout';

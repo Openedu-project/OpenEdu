@@ -2,6 +2,7 @@ export const generalMessages = {
   general: {
     backToHomepage: 'Back to Homepage',
     backToOpenedu: 'Back to Openedu',
+    backToPreviousPage: 'Back to Previous Page',
     noResults: 'No results found.',
     search: 'Search',
     searchBy: 'Search by',
