@@ -46,11 +46,11 @@ const FileDownloader: React.FC<Props> = ({ fileUrl, fileName, me }) => {
       <span className="mcaption-regular14 line-clamp-1">{docsName}</span>
 
       <Button
-        size="small"
+        size="xs"
         variant="link"
         onClick={handleDownload}
         disabled={isLoading}
-        className="mcaption-regular14 text-primary"
+        className="mcaption-regular14 h-fit text-primary"
       >
         {isLoading ? t('downloading') : <Import color="hsl(var(--primary))" />}
       </Button>

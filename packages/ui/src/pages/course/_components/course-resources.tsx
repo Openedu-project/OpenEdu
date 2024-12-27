@@ -58,15 +58,15 @@ export default function CourseResources({ docs }: { docs: IFileResponse[] }) {
         </CollapsibleTrigger>
         <CollapsibleContent>
           <div className="mt-3 grid grid-cols-1 gap-3 rounded-lg border border-foreground/20 bg-white p-4 shadow-shadow-2">
-            <div className="flex justify-between space-x-spacing-mml">
+            <div className="flex items-center justify-between space-x-spacing-mml">
               <span className="mcaption-semibold16 text-foreground/90">{t('resources')}</span>
               {docs?.length > 1 && (
                 <Button
-                  size="small"
+                  size="xs"
                   variant="link"
                   onClick={handleDownload}
                   disabled={isLoading}
-                  className="mcaption-regular12 text-primary"
+                  className="mcaption-regular12 h-fit text-primary"
                 >
                   {isLoading ? t('downloading') : t('downloadAll')}
                 </Button>

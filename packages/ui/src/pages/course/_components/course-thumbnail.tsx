@@ -59,7 +59,7 @@ const CourseThumbnail = ({ className, courseOutline }: CourseThumbnailProps) => 
 
   const thumbnail = courseOutline?.thumbnail;
 
-  const medias = getPreviewLessonVideo();
+  const medias = getPreviewLessonVideo(courseOutline);
   const hasOverlay = medias && medias?.length > 0;
 
   const thumbnailUrl = thumbnail?.mime?.includes('image') && thumbnail?.url ? thumbnail.url : '';

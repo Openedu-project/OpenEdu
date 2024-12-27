@@ -9,7 +9,7 @@ export interface PreviewVideo extends ICourseFile {
 interface CourseOutlineDetailState {
   courseOutline: ICourseOutline;
   setCourseOutline: (courseOutline?: ICourseOutline) => void;
-  getPreviewLessonVideo: () => PreviewVideo[] | undefined;
+  getPreviewLessonVideo: (courseData?: ICourseOutline) => PreviewVideo[] | undefined;
 }
 
 // Helper functions
@@ -48,9 +48,9 @@ export const useCourseOutlineDetailStore = create<CourseOutlineDetailState>()((s
     }));
   },
 
-  getPreviewLessonVideo() {
+  getPreviewLessonVideo(courseData?: ICourseOutline) {
     const { courseOutline } = get();
-    const { medias, props } = courseOutline;
+    const { medias, props } = courseData ?? courseOutline;
 
     if (!medias) {
       return undefined;
