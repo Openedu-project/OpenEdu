@@ -18,5 +18,6 @@ export const blogFormMessages = {
     createSuccess: 'Create Blog Successfully',
     publishSuccess: 'Publish Blog Successfully',
     updateSuccess: 'Update Blog Successfully',
+    ownerBlog: "{name}'s Blog",
   },
 };
