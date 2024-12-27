@@ -10,6 +10,7 @@ import { courseListMessages } from './courses-list';
 import { creatorManagementMessage } from './creator-management';
 import { forgotPasswordMessage } from './forgot-password';
 import { homePageMessage } from './home-page';
+import { courseLearningMessages } from './learning';
 import { notificationMessage } from './notification';
 import { organizationsMessage } from './organizations';
 import { permissionMessage } from './permissions';
@@ -40,4 +41,5 @@ export const pageMessages = {
   ...courseListMessages,
   ...coursePaymentMessages,
   ...userProfileMessages,
+  ...courseLearningMessages,
 };
