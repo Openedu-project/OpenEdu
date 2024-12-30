@@ -18,11 +18,8 @@ export const blogFormMessages = {
     createSuccess: 'Create Blog Successfully',
     publishSuccess: 'Publish Blog Successfully',
     updateSuccess: 'Update Blog Successfully',
-<<<<<<< HEAD
     ownerBlog: "{name}'s Blog",
     selectCategories: 'Select Categories',
     searchCategories: 'Search Categories',
-=======
->>>>>>> 2f3aa1c (feat: blog form #14)
   },
 };

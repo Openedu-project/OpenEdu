@@ -54,9 +54,5 @@ export const generalMessages = {
     deleteModalDescription: 'Are you sure you want to delete this item?',
     publish: 'Publish',
     language: 'Language',
-<<<<<<< HEAD
-    somethingWentWrong: 'Something went wrong!',
-=======
->>>>>>> 2f3aa1c (feat: blog form #14)
   },
 };

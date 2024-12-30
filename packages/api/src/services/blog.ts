@@ -1,10 +1,6 @@
 import type { IBlog, IBlogRequest, IBlogURL } from '#types/blog';
 import { API_ENDPOINT } from '#utils/endpoints';
-<<<<<<< HEAD
 import { type FetchOptions, createAPIUrl, fetchAPI, postAPI, putAPI } from '#utils/fetch';
-=======
-import { createAPIUrl, fetchAPI, postAPI, putAPI } from '#utils/fetch';
->>>>>>> 2f3aa1c (feat: blog form #14)
 
 export const postBlogAI = async (
   endpoint: string | null | undefined,
@@ -46,11 +42,7 @@ export const updateBlog = async (
 export const getBlogDraftContent = async (
   url?: string,
   payload?: { id: string; queryParams?: Record<string, string> },
-<<<<<<< HEAD
   init?: FetchOptions
-=======
-  init?: RequestInit
->>>>>>> 2f3aa1c (feat: blog form #14)
 ) => {
   const defaultUrl = createAPIUrl({
     endpoint: API_ENDPOINT.BLOGS_ID_EDIT,
@@ -59,9 +51,5 @@ export const getBlogDraftContent = async (
   });
   const response = await fetchAPI<IBlog>(url ?? defaultUrl, init);
 
-<<<<<<< HEAD
   return response.data;
-=======
-  return { data: response.data, revalidatePath: defaultUrl };
->>>>>>> 2f3aa1c (feat: blog form #14)
 };

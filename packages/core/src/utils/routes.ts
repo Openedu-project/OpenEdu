@@ -21,7 +21,6 @@ export const PLATFORM_ROUTES = {
 } as const;
 
 export const BLOG_ROUTES = {
-<<<<<<< HEAD
   blog: '/blog',
   blogDetail: '/blog/organization/:slug',
   personBlogDetail: '/blog/:username/:slug',
@@ -47,11 +46,6 @@ export const BLOG_ADMIN_ROUTES = {
   createBlog: '/blog-admin/create',
   editBlog: '/blog-admin/:id/edit',
   previewBlog: '/blog-admin/:id/preview',
-=======
-  blogDetail: '/blog/:slug',
-  personBlogDetail: 'blog/author/:username/:slug',
-  blogManagement: '/blog/author/management',
->>>>>>> 2f3aa1c (feat: blog form #14)
 };
 
 export const AUTH_ROUTES = {
@@ -103,12 +97,6 @@ export const CREATOR_ROUTES = {
   aiSettingUp: '/creator/courses/:courseId/settings',
   aiYoutubePlaylist: '/creator/courses/ai-creation/youtube-playlist',
 } as const;
-
-export const BLOG_ADMIN_ROUTES = {
-  dashboard: '/blog/admin',
-  blogManagement: '/blog/admin/management',
-  myBlogManagement: '/blog/admin/my-blog',
-};
 
 export const PROTECTED_ROUTES = {
   admin: '/admin',
