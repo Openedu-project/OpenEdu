@@ -18,7 +18,6 @@ import { CategorySelectionModal } from '#components/category-selection';
 import { FormWrapper } from '#components/form-wrapper';
 import { RichTextEditor } from '#components/rich-text';
 import { Uploader } from '#components/uploader';
-import { Badge } from '#shadcn/badge';
 import { Button } from '#shadcn/button';
 import { FormControl, FormField, FormFieldWithLabel, FormItem, FormMessage } from '#shadcn/form';
 import { Input } from '#shadcn/input';
@@ -206,16 +205,9 @@ export default function BlogForm({
                   <CategorySelectionModal
                     className="giant-iheading-semibold12 md:giant-iheading-semibold16 px-2"
                     categories={categories}
+                    showValue
                   />
                 </FormFieldWithLabel>
-
-                <div className="flex flex-wrap gap-2">
-                  {form.getValues('category_ids')?.map(value => (
-                    <Badge key={value.id} variant="default">
-                      {value.name}
-                    </Badge>
-                  ))}
-                </div>
               </div>
 
               <div className="border-b py-4">

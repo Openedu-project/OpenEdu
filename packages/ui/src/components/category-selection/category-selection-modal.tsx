@@ -3,6 +3,7 @@ import { Settings } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Modal } from '#components/modal';
+import { Badge } from '#shadcn/badge';
 import { Button } from '#shadcn/button';
 import { ScrollArea, ScrollBar } from '#shadcn/scroll-area';
 import { cn } from '#utils/cn';
@@ -15,6 +16,7 @@ interface ICategorySelectionModal {
   value?: ITreeCheckedItem[];
   onChange?: (value: ITreeCheckedItem[]) => void;
   title?: string;
+  showValue?: boolean;
 }
 export default function CategorySelectionModal({
   className,
@@ -22,49 +24,61 @@ export default function CategorySelectionModal({
   value,
   title,
   onChange,
+  showValue = false,
 }: ICategorySelectionModal) {
   const t = useTranslations('categorySelectionModal');
   const tGeneral = useTranslations('general');
   const [values, setValues] = useState<ITreeCheckedItem[]>([]);
 
   return (
-    <Modal
-      title={title ?? t('title')}
-      trigger={
-        <Button
-          variant="ghost"
-          className={cn('flex w-full justify-between', className)}
-          rightSection={<Settings className="h-4 w-4" />}
-        >
-          {t('category')}
-        </Button>
-      }
-      buttons={[
-        {
-          label: tGeneral('cancel'),
-          variant: 'outline',
-          onClick: onClose => {
-            onClose?.();
+    <div>
+      <Modal
+        title={title ?? t('title')}
+        trigger={
+          <Button
+            variant="ghost"
+            className={cn('flex w-full justify-between', className)}
+            rightSection={<Settings className="h-4 w-4" />}
+          >
+            {t('category')}
+          </Button>
+        }
+        buttons={[
+          {
+            label: tGeneral('cancel'),
+            variant: 'outline',
+            onClick: onClose => {
+              onClose?.();
+            },
           },
-        },
-        {
-          label: tGeneral('save'),
-          onClick: onClose => {
-            onChange?.(values);
-            onClose?.();
+          {
+            label: tGeneral('save'),
+            onClick: onClose => {
+              onChange?.(values);
+              onClose?.();
+            },
           },
-        },
-      ]}
-    >
-      <ScrollArea className="h-[55dvh]">
-        <CategorySelection
-          initialCategories={value}
-          className={className}
-          categories={categories}
-          onCategoriesChange={setValues}
-        />
-        <ScrollBar />
-      </ScrollArea>
-    </Modal>
+        ]}
+      >
+        <ScrollArea className="h-[55dvh]">
+          <CategorySelection
+            initialCategories={value}
+            className={className}
+            categories={categories}
+            onCategoriesChange={setValues}
+          />
+          <ScrollBar />
+        </ScrollArea>
+      </Modal>
+      {showValue && value && value?.length > 0 && (
+        <div className="mt-3 flex flex-wrap gap-2">
+          {value?.map(value => (
+            <Badge key={value.id} variant="default">
+              {value.name}
+            </Badge>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
