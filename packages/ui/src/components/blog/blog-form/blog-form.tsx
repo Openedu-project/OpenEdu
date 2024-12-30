@@ -261,8 +261,8 @@ export default function BlogForm({
                     <FormControl>
                       <Uploader
                         listType="picture"
-                        fileList={field.value ? [field.value] : []}
-                        onSuccess={value => field.onChange(value)}
+                        value={field.value ? [field.value] : []}
+                        onChange={files => field.onChange(files[0])}
                         accept="image/*"
                       />
                     </FormControl>
