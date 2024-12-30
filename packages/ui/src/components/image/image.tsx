@@ -15,6 +15,7 @@ export interface ExtendedImageProps extends Omit<ImageProps, 'src'> {
   backgroundImage?: boolean;
   containerHeight?: number | string;
   align?: 'start' | 'center' | 'end';
+  noContainer?: boolean;
 }
 
 const DEFAULT_SIZES = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw';
@@ -65,6 +66,7 @@ export function Image({
   containerHeight = 200,
   externalSrc,
   align = 'center',
+  noContainer = false,
   ...props
 }: ExtendedImageProps) {
   const imageUrl = getImageUrl(src) || defaultImage;
@@ -99,7 +101,9 @@ export function Image({
     ...(blurDataURL && { blurDataURL }),
   };
 
-  return (
+  return noContainer ? (
+    <NextImage {...commonProps} fill className={imageClasses} {...props} />
+  ) : (
     <div
       className={cn(
         'flex w-full border-2 border-transparent',

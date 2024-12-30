@@ -44,5 +44,16 @@ export const dashboardMessages = {
       organizations: 'Organizations',
     },
     withdrawRequest: 'Withdraw Request',
+    blog: {
+      title: 'Blog Management',
+      writerMgt: 'Writer Management',
+      editorMgt: 'Editor Management',
+      inviteMgt: 'Invitation Management',
+      category: 'Blog Category',
+      orgBlog: 'Organization Blog',
+      userBlog: 'User Blog',
+      publishRequest: 'Publish Request',
+      myBlog: 'My Blog',
+    },
   },
 };

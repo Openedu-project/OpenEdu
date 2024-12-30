@@ -138,11 +138,11 @@ export default function BlogForm({
   };
 
   const handleSubmitDraft = async (blogData: IBlogFormType) => {
-    const res = await blogFormAction({ blogData, blogType, action });
+    const res = await blogFormAction({ blogData, blogType, action, id: data?.id });
     if (res.status === 'SUCCESS') {
       toast.success(tBlogs(res.message));
       onSuccess?.();
-      router.push(blogType === 'org' ? BLOG_ADMIN_ROUTES.myBlogManagement : BLOG_ROUTES.blogManagement);
+      router.push(blogType === 'org' ? BLOG_ADMIN_ROUTES.myBlog : BLOG_ROUTES.blogManagement);
     } else {
       toast.error(tErrors(res.message ?? 'unknown.title'));
       onError?.();
@@ -150,11 +150,11 @@ export default function BlogForm({
   };
 
   const handleSubmitPublish = async (blogData: IBlogFormType) => {
-    const res = await blogFormAction({ blogData, blogType, action, isPublish: true });
+    const res = await blogFormAction({ blogData, blogType, action, isPublish: true, id: data?.id });
     if (res.status === 'SUCCESS') {
       toast.success(tBlogs('publishSuccess'));
       onSuccess?.();
-      router.push(blogType === 'org' ? BLOG_ADMIN_ROUTES.myBlogManagement : BLOG_ROUTES.blogManagement);
+      router.push(blogType === 'org' ? BLOG_ADMIN_ROUTES.myBlog : BLOG_ROUTES.blogManagement);
     } else {
       toast.error(tErrors(res.message ?? 'unknown.title'));
       onError?.();

@@ -1,16 +1,16 @@
-import { getMeServiceWithoutError } from '@oe/api/services/auth';
 import { getBlogDraftContent } from '@oe/api/services/blog';
+import { getCategoriesTreeService } from '@oe/api/services/categories';
+import { getHashtagService } from '@oe/api/services/hashtag';
 import { getI18nConfigServer } from '@oe/api/services/i18n';
+import { getOrgByDomainService } from '@oe/api/services/organizations';
 import BannerBg from '@oe/assets/images/blog-creation-bg.png';
+import OpenEdu from '@oe/assets/images/openedu.png';
 import WhaleError from '@oe/assets/images/whale/whale-error.png';
-import { AUTH_ROUTES } from '@oe/core/utils/routes';
-import { pickCharacters } from '@oe/core/utils/string';
+import { getCookie } from '@oe/core/utils/cookie';
 import { BlogForm, type BlogType, type IFormAction } from '@oe/ui/components/blog';
 import { Image } from '@oe/ui/components/image';
+import { cn } from '@oe/ui/utils/cn';
 import { getTranslations } from 'next-intl/server';
-import { redirect } from 'next/navigation';
-import { Avatar, AvatarFallback, AvatarImage } from '#shadcn/avatar';
-import { cn } from '#utils/cn';
 
 interface ICreationProps {
   className?: string;
@@ -19,6 +19,35 @@ interface ICreationProps {
   aiButton?: boolean;
   id?: string;
 }
+
+const getHastTag = async (shouldFetch: boolean) => {
+  try {
+    if (!shouldFetch) {
+      return [];
+    }
+
+    const res = await getHashtagService();
+    return res.results;
+  } catch (error) {
+    console.error(error);
+
+    return [];
+  }
+};
+
+const getCategories = async (shouldFetch: boolean) => {
+  try {
+    if (!shouldFetch) {
+      return [];
+    }
+
+    return await getCategoriesTreeService(undefined, { queryParams: { active: true, type: 'blog' } });
+  } catch (error) {
+    console.error(error);
+
+    return [];
+  }
+};
 
 const getBlogContent = async (id?: string) => {
   try {
@@ -34,16 +63,20 @@ const getBlogContent = async (id?: string) => {
   }
 };
 
-export default async function BlogCreationPage({ className, blogType, aiButton, id, action }: ICreationProps) {
-  const [t, i18nConfigData, blogData, me] = await Promise.all([
+export default async function OrgBlogCreation({ className, blogType, aiButton, id, action }: ICreationProps) {
+  const domain = (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? '';
+
+  const [t, hashtags, categories, i18nConfigData, blogData, orgData] = await Promise.all([
     getTranslations(),
+    getHastTag(blogType === 'org'),
+    getCategories(blogType === 'org'),
     getI18nConfigServer(),
     getBlogContent(id),
-    getMeServiceWithoutError(),
+    getOrgByDomainService(undefined, {
+      domain,
+    }),
   ]);
-  if (!me) {
-    redirect(AUTH_ROUTES.login);
-  }
+
   if (blogData instanceof Error) {
     return (
       <div className="flex flex-col items-center gap-4 p-4">
@@ -59,23 +92,30 @@ export default async function BlogCreationPage({ className, blogType, aiButton, 
         <Image
           src={BannerBg.src}
           alt="creation-banner"
-          priority
           noContainer
           fill
+          priority
           sizes="100vw"
           style={{ objectFit: 'cover' }}
           className="h-full w-full rounded-xl"
         />
         <div className="flex flex-col flex-wrap items-center gap-4 md:flex-row">
-          <Avatar className="h-[80px] w-[80px] flex-inline">
-            <AvatarImage src={me.avatar ?? ''} alt={me.username} />
-            <AvatarFallback>
-              {pickCharacters(me.display_name?.length > 0 ? me.display_name : me.username)}
-            </AvatarFallback>
-          </Avatar>
+          <div>
+            <Image
+              src={orgData?.thumbnail?.url ?? OpenEdu.src}
+              alt="creation-banner"
+              priority
+              quality={100}
+              aspectRatio="1:1"
+              fill
+              style={{ objectFit: 'contain' }}
+              className="h-[80px] w-[80px] rounded-full border bg-background"
+              containerHeight="auto"
+            />
+          </div>
           <p className="giant-iheading-bold20 lg:giant-iheading-bold40 z-10 text-foreground">
             {t.rich('blogForm.ownerBlog', {
-              name: me.display_name?.length > 0 ? me.display_name : me.username,
+              name: orgData?.name ?? 'Organization',
             })}
           </p>
         </div>
@@ -85,6 +125,8 @@ export default async function BlogCreationPage({ className, blogType, aiButton, 
         className={cn('p-4', className)}
         blogType={blogType}
         aiButton={aiButton}
+        hashtags={hashtags}
+        categories={categories}
         locales={i18nConfigData?.[0]?.value?.locales}
         data={blogData}
         action={action}
