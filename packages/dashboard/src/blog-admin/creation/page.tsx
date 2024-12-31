@@ -7,7 +7,9 @@ import BannerBg from '@oe/assets/images/blog-creation-bg.png';
 import OpenEdu from '@oe/assets/images/openedu.png';
 import WhaleError from '@oe/assets/images/whale/whale-error.png';
 import { getCookie } from '@oe/core/utils/cookie';
+import { BLOG_ADMIN_ROUTES } from '@oe/core/utils/routes';
 import { BlogForm, type BlogType, type IFormAction } from '@oe/ui/components/blog';
+import { BreadcrumbWithPath } from '@oe/ui/components/breadcrumb';
 import { Image } from '@oe/ui/components/image';
 import { cn } from '@oe/ui/utils/cn';
 import { getTranslations } from 'next-intl/server';
@@ -86,6 +88,16 @@ export default async function OrgBlogCreation({ className, blogType, aiButton, i
     );
   }
 
+  const breakcrumbItems = [
+    {
+      label: t('blogNavigation.myBlog'),
+      path: BLOG_ADMIN_ROUTES.myBlog,
+    },
+    {
+      label: t(action === 'create' ? 'blogNavigation.blogCreation' : 'blogNavigation.blogEditer'),
+    },
+  ];
+
   return (
     <div className="bg-background p-4">
       <div className={cn('relative mb-6 min-h-[120px] w-full p-6', className)}>
@@ -120,6 +132,8 @@ export default async function OrgBlogCreation({ className, blogType, aiButton, i
           </p>
         </div>
       </div>
+
+      <BreadcrumbWithPath items={breakcrumbItems} />
 
       <BlogForm
         className={cn('p-4', className)}

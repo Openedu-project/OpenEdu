@@ -1,3 +1,3 @@
 import { Breadcrumb, type IBreadcrumbItem } from './breadcrumb';
-
-export { Breadcrumb, type IBreadcrumbItem };
+import { BreadcrumbWithPath, type IBreadcrumbWithPathItem } from './breadcrumb-with-path';
+export { Breadcrumb, type IBreadcrumbItem, BreadcrumbWithPath, type IBreadcrumbWithPathItem };

@@ -31,6 +31,7 @@ export const BLOG_ROUTES = {
   createBlog: '/blog/me/create',
   editBlog: '/blog/me/:id/edit',
   previewBlog: '/blog/me/:id/preview',
+  authorBlog: '/blog/author/:username',
 };
 
 export const BLOG_ADMIN_ROUTES = {

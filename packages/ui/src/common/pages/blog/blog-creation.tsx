@@ -3,12 +3,13 @@ import { getBlogDraftContent } from '@oe/api/services/blog';
 import { getI18nConfigServer } from '@oe/api/services/i18n';
 import BannerBg from '@oe/assets/images/blog-creation-bg.png';
 import WhaleError from '@oe/assets/images/whale/whale-error.png';
-import { AUTH_ROUTES } from '@oe/core/utils/routes';
+import { AUTH_ROUTES, BLOG_ROUTES, generateRoute } from '@oe/core/utils/routes';
 import { pickCharacters } from '@oe/core/utils/string';
 import { BlogForm, type BlogType, type IFormAction } from '@oe/ui/components/blog';
 import { Image } from '@oe/ui/components/image';
 import { getTranslations } from 'next-intl/server';
 import { redirect } from 'next/navigation';
+import { BreadcrumbWithPath } from '#components/breadcrumb';
 import { Avatar, AvatarFallback, AvatarImage } from '#shadcn/avatar';
 import { cn } from '#utils/cn';
 
@@ -53,6 +54,20 @@ export default async function BlogCreationPage({ className, blogType, aiButton, 
     );
   }
 
+  const breakcrumbItems = [
+    {
+      label: t('blogNavigation.myBlog'),
+      path: generateRoute(BLOG_ROUTES.authorBlog, { username: me.username }),
+    },
+    {
+      label: t('blogNavigation.blogManagement'),
+      path: BLOG_ROUTES.blogManagement,
+    },
+    {
+      label: t(action === 'create' ? 'blogNavigation.blogCreation' : 'blogNavigation.blogEditer'),
+    },
+  ];
+
   return (
     <div className="bg-background p-4">
       <div className={cn('relative mb-6 min-h-[120px] w-full p-6', className)}>
@@ -80,7 +95,7 @@ export default async function BlogCreationPage({ className, blogType, aiButton, 
           </p>
         </div>
       </div>
-
+      <BreadcrumbWithPath items={breakcrumbItems} />
       <BlogForm
         className={cn('p-4', className)}
         blogType={blogType}
