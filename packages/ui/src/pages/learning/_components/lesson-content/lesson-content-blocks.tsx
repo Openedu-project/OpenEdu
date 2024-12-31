@@ -6,7 +6,7 @@ import { CONTENT_RENDERERS, ContentElement } from './content-block';
 
 const getWrapperClassName = (contents: ILessonContent[]): string => {
   return cn(
-    'mb-spacing-ml flex h-full max-h-full flex-col gap-spacing-mml overflow-y-auto p-spacing-sm pb-0 last:mb-0',
+    'mb-spacing-ml flex h-full max-h-full flex-col gap-spacing-mml p-spacing-sm pb-0 last:mb-0',
     contents.every(item => item.type !== 'embedded') && 'flex-1',
     contents.length === 1 && 'flex-1',
     contents.length === 1 && contents[0] && contents[0].type === 'video' && 'overflow-y-hidden'

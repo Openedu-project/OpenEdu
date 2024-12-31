@@ -13,11 +13,10 @@ interface IContentSectionProps extends HTMLAttributes<HTMLDivElement> {
 
 const ContentSection = ({ courseData, lesson, className, ...props }: IContentSectionProps) => {
   return (
-    <div className={cn('grid grid-rows-5 gap-3', className)} {...props}>
-      <LessonContent className="row-span-4" courseId={courseData?.id ?? ''} contents={lesson?.contents ?? []} />
+    <div className={cn('flex flex-col gap-3', className)} {...props}>
+      <LessonContent courseId={courseData?.id ?? ''} contents={lesson?.contents ?? []} />
 
       <LessonMetadata
-        className="row-span-1"
         title={lesson?.title ?? ''}
         courseName={courseData?.name ?? ''}
         slug={courseData?.slug ?? ''}

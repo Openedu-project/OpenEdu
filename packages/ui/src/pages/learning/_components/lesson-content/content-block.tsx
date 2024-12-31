@@ -1,6 +1,8 @@
 import type { TLessonContent } from '@oe/api/types/course/basic';
 import { cn } from '#utils/cn';
 import type { ContentRenderer, ContentRendererProps } from './_types/types';
+import ContentEmbedded from './content-player/content-embedded';
+import ContentVideo from './content-player/content-video';
 import ContentText from './content-text';
 
 interface ContentElementProps extends ContentRendererProps {
@@ -12,7 +14,7 @@ const CONTENT_STYLES = {
     default: 'h-full',
     multi: 'min-h-[calc(100%-24px)]',
   },
-  video: 'mx-auto flex w-full max-w-full flex-col',
+  video: 'mx-auto flex justify-center w-full max-w-full aspect-video h-auto',
   // text: 'flex flex-col items-end',
 } as const;
 
@@ -20,7 +22,11 @@ const DEFAULT_CLASSNAME = (isOnlyContent: boolean) => cn(CONTENT_STYLES.common[i
 
 export const CONTENT_RENDERERS: Record<TLessonContent, ContentRenderer> = {
   video: {
-    render: () => <p>video</p>,
+    render: props => {
+      const file = props?.data?.files?.[0];
+
+      return <ContentVideo src={file?.url} title={file?.name} />;
+    },
     getClassName: isOnlyContent => cn(DEFAULT_CLASSNAME(isOnlyContent), CONTENT_STYLES.video),
   },
 
@@ -30,7 +36,7 @@ export const CONTENT_RENDERERS: Record<TLessonContent, ContentRenderer> = {
   },
 
   embedded: {
-    render: () => <p>embedded</p>,
+    render: props => <ContentEmbedded url={props?.data?.content} />,
     getClassName: DEFAULT_CLASSNAME,
   },
 

@@ -33,14 +33,14 @@ export default function CourseLearning({
   }, [course, dataMe]);
 
   return (
-    <div className="grid h-[calc(100vh-var(--header-height))] grid-cols-3 px-3 py-4">
-      <ContentSection courseData={course} lesson={lesson} className="col-span-2" />
+    <div className="grid h-[calc(100vh-var(--header-height))] px-3 py-4 md:grid-cols-3">
+      <ContentSection courseData={course} lesson={lesson} className="md:col-span-2" />
       <ScrollArea>
         <CourseOutline
           courseData={course}
           activeSection={section}
           activeLesson={lesson?.uid}
-          className="col-span-1 px-3"
+          className="hidden px-3 md:col-span-1 md:block"
         />
       </ScrollArea>
     </div>
