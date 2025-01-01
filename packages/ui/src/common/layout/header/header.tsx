@@ -2,7 +2,7 @@ import { type ReactNode, Suspense } from 'react';
 import { Skeleton } from '#shadcn/skeleton';
 import { cn } from '#utils/cn';
 import { AuthMenu } from '../auth-menu';
-import { Sidebar, type SidebarItem } from '../sidebar';
+import { type ISidebarItem, Sidebar } from '../sidebar';
 
 export function Header({
   sidebarItems,
@@ -11,7 +11,7 @@ export function Header({
   children,
   isHideAuthMenu = false,
 }: {
-  sidebarItems?: SidebarItem[];
+  sidebarItems?: ISidebarItem[];
   pathnamesNoSidebar?: string[];
   className?: string;
   isHideAuthMenu?: boolean;

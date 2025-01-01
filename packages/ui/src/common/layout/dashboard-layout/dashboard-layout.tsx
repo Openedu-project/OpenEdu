@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 import { Link } from '#common/navigation';
 import { cn } from '#utils/cn';
 import { Header } from '../header';
-import { Sidebar, type SidebarItem } from '../sidebar';
+import { type ISidebarItem, Sidebar } from '../sidebar';
 
 export function DashboardLayout({
   children,
@@ -12,7 +12,7 @@ export function DashboardLayout({
   className,
 }: {
   children: ReactNode;
-  sidebarItems?: SidebarItem[];
+  sidebarItems?: ISidebarItem[];
   className?: string;
 }) {
   return (

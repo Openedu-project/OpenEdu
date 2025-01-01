@@ -12,7 +12,7 @@ export interface UrlInputProps extends React.InputHTMLAttributes<HTMLInputElemen
 }
 
 export const InputURL = ({ multiple = false, error, onValidate, onChange, ref, ...props }: UrlInputProps) => {
-  const t = useTranslations('forms');
+  const t = useTranslations('formValidation');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (onChange) {

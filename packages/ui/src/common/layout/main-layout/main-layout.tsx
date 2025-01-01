@@ -5,9 +5,9 @@ import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { Link } from '#common/navigation';
 import { Footer } from '../footer';
 import { Header } from '../header';
-import type { SidebarItem } from '../sidebar';
+import type { ISidebarItem } from '../sidebar';
 
-export function MainLayout({ children, sidebarItems }: { children: ReactNode; sidebarItems?: SidebarItem[] }) {
+export function MainLayout({ children, sidebarItems }: { children: ReactNode; sidebarItems?: ISidebarItem[] }) {
   return (
     <>
       <Header sidebarItems={sidebarItems}>

@@ -3,8 +3,7 @@ import { Button } from '#shadcn/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '#shadcn/dropdown-menu';
 
 import type { IUser } from '@oe/api/types/user';
-
-import { LogoutButton } from '#common/auth';
+import { LogoutButton } from '#common/auth/logout-button';
 
 export function UserMenu({ me }: { me: IUser }) {
   return (

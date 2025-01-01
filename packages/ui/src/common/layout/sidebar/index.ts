@@ -1,3 +1,4 @@
-import { Sidebar, type SidebarItem } from './sidebar';
+import { Sidebar } from './sidebar';
+import type { ISidebarItem } from './types';
 
-export { Sidebar, type SidebarItem };
+export { Sidebar, type ISidebarItem };

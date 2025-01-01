@@ -27,7 +27,7 @@ export function TreeItem<TreeItem>({
   onRemoveItem,
   onUpdateItem,
 }: IRenderItemProps<TreeItem, unknown> & ITreeItem<TreeItem>) {
-  const tForms = useTranslations('forms');
+  const tForms = useTranslations('formValidation');
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(item?.original[labelKey] as string);
   const [isDeleting, setIsDeleting] = useState(false);
