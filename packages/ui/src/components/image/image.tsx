@@ -108,7 +108,7 @@ export function Image({
         align === 'start' && 'justify-start'
       )}
     >
-      {fill || backgroundImage || (aspectRatio && aspectRatio !== 'none') ? (
+      {fill || backgroundImage || (aspectRatio && aspectRatio !== 'none') || externalSrc ? (
         <div className={containerClasses} style={containerStyles}>
           {externalSrc ? (
             <img {...props} src={externalSrc} alt={props.alt || 'image'} className={imageClasses} />

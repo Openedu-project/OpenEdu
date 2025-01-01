@@ -1,5 +1,6 @@
 'use client';
 import type { IFileResponse } from '@oe/api/types/file';
+import { Image } from '@oe/ui/components/image';
 import { Uploader } from '@oe/ui/components/uploader';
 import { Button } from '@oe/ui/shadcn/button';
 import { Camera, User2 } from 'lucide-react';
@@ -11,6 +12,12 @@ export default function UploadDemo() {
   console.log('fileList', fileList);
   return (
     <div>
+      <Image
+        alt="image"
+        externalSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmCy16nhIbV3pI1qLYHMJKwbH2458oiC9EmA&s"
+        containerHeight="auto"
+        aspectRatio="21:9"
+      />
       <Uploader listType="picture-text" aspectRatio={4 / 3} crop={{ locked: false }} accept="image/*">
         <Button>Select files...</Button>
       </Uploader>
