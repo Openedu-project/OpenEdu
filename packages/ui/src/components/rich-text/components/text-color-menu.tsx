@@ -19,7 +19,7 @@ export const TextColorMenu: React.FC<TextColorMenuProps> = ({ editor }) => {
     <Label
       className={cn(
         buttonVariants({ variant: 'ghost' }),
-        'flex h-8 w-8 cursor-pointer flex-col overflow-hidden px-1 py-0 '
+        'flex h-8 w-8 cursor-pointer flex-col overflow-hidden border bg-background px-1 py-0'
       )}
     >
       <span className="mb-[1px]">A</span>

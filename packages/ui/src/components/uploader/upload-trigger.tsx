@@ -152,7 +152,7 @@ export const UploadTrigger = (props: UploadTriggerProps) => {
         {...buttonProps}
         variant="outline"
         className={cn(
-          'h-full w-full flex-col border-2 border-dashed p-4 text-center font-normal font-secondary [&_*]:pointer-events-none',
+          'h-full w-full flex-col whitespace-normal border-2 border-dashed p-4 text-center font-normal font-secondary [&_*]:pointer-events-none',
           dragOver ? 'border-primary' : '',
           disabled ? 'cursor-not-allowed opacity-50' : ''
         )}
@@ -161,7 +161,7 @@ export const UploadTrigger = (props: UploadTriggerProps) => {
           <UploadFileItem {...fileItemProps} file={file} />
         ) : (
           <>
-            <Upload className="mx-auto h-10 w-10 text-muted-foreground" />
+            <Upload className="mx-auto h-8 w-8 text-muted-foreground" />
             <span className="mt-2">{t('dragAndDrop')}</span>
             <span className="mt-1 text-xs">
               {accept ? t('acceptedFormats', { formats: accept }) : t('allFileTypesAccepted')}

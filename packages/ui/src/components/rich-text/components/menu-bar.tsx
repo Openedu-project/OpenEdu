@@ -48,7 +48,7 @@ export const MenuBar: React.FC<{
   }
 
   return (
-    <div className={cn('flex flex-wrap gap-2 border-b bg-background p-2', className)}>
+    <div className={cn('flex flex-wrap gap-1 border-b bg-muted p-2', className)}>
       {renderMenuItems(aiParams, onAIApply)}
     </div>
   );

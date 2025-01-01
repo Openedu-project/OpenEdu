@@ -70,8 +70,9 @@ export const BoldMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => {
   const editorState = useEditorStateSelector(editor);
   return (
     <Toggle
-      className="h-8 w-8 p-0"
+      className="h-8 w-8 bg-background p-0 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
       pressed={editorState?.isBold}
+      variant="outline"
       onPressedChange={() => editor.chain().focus().toggleBold().run()}
       title={t('bold')}
     >
@@ -85,8 +86,9 @@ export const ItalicMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => {
   const editorState = useEditorStateSelector(editor);
   return (
     <Toggle
-      className="h-8 w-8 p-0"
+      className="h-8 w-8 bg-background p-0 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
       pressed={editorState?.isItalic}
+      variant="outline"
       onPressedChange={() => editor.chain().focus().toggleItalic().run()}
       title={t('italic')}
     >
@@ -100,8 +102,9 @@ export const StrikethroughMenuItem: React.FC<{ editor: Editor }> = ({ editor }) 
   const editorState = useEditorStateSelector(editor);
   return (
     <Toggle
-      className="h-8 w-8 p-0"
+      className="h-8 w-8 bg-background p-0 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
       pressed={editorState?.isStrike}
+      variant="outline"
       onPressedChange={() => editor.chain().focus().toggleStrike().run()}
       title={t('strikethrough')}
     >
@@ -115,10 +118,11 @@ export const UnderlineMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => {
   const editorState = useEditorStateSelector(editor);
   return (
     <Toggle
-      className="h-8 w-8 p-0"
+      className="h-8 w-8 bg-background p-0 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
       pressed={editorState?.isUnderline}
       onPressedChange={() => editor.chain().focus().toggleUnderline().run()}
       title={t('underline')}
+      variant="outline"
     >
       <Underline className="h-4 w-4" />
     </Toggle>
@@ -130,10 +134,11 @@ export const ListMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => {
   const t = useTranslations('richText.menuItems');
   return (
     <Toggle
-      className="h-8 w-8 p-0"
+      className="h-8 w-8 bg-background p-0 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
       pressed={editorState?.isBulletList}
       onPressedChange={() => editor.chain().focus().toggleBulletList().run()}
       title={t('list')}
+      variant="outline"
     >
       <List className="h-4 w-4" />
     </Toggle>
@@ -145,10 +150,11 @@ export const ListOrderedMenuItem: React.FC<{ editor: Editor }> = ({ editor }) =>
   const editorState = useEditorStateSelector(editor);
   return (
     <Toggle
-      className="h-8 w-8 p-0"
+      className="h-8 w-8 bg-background p-0 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
       pressed={editorState?.isOrderedList}
       onPressedChange={() => editor.chain().focus().toggleOrderedList().run()}
       title={t('listOrdered')}
+      variant="outline"
     >
       <ListOrdered className="h-4 w-4" />
     </Toggle>
@@ -160,10 +166,11 @@ export const QuoteMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => {
   const editorState = useEditorStateSelector(editor);
   return (
     <Toggle
-      className="h-8 w-8 p-0"
+      className="h-8 w-8 bg-background p-0 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
       pressed={editorState?.isBlockquote}
       onPressedChange={() => editor.chain().focus().toggleBlockquote().run()}
       title={t('quote')}
+      variant="outline"
     >
       <Quote className="h-4 w-4" />
     </Toggle>
@@ -175,10 +182,11 @@ export const CodeBlockMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => {
   const editorState = useEditorStateSelector(editor);
   return (
     <Toggle
-      className="h-8 w-8 p-0"
+      className="h-8 w-8 bg-background p-0 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
       pressed={editorState?.isCodeBlock}
       onPressedChange={() => editor.chain().focus().toggleCodeBlock().run()}
       title={t('codeBlock')}
+      variant="outline"
     >
       <FileCode className="h-4 w-4" />
     </Toggle>
@@ -206,10 +214,11 @@ export const CheckSquareMenuItem: React.FC<{ editor: Editor }> = ({ editor }) =>
   const editorState = useEditorStateSelector(editor);
   return (
     <Toggle
-      className="h-8 w-8 p-0"
+      className="h-8 w-8 bg-background p-0 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
       pressed={editorState?.isTaskList}
       onPressedChange={() => editor.chain().focus().toggleTaskList().run()}
       title={t('taskList')}
+      variant="outline"
     >
       <CheckSquare className="h-4 w-4" />
     </Toggle>
@@ -221,10 +230,11 @@ export const AlignLeftMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => {
   const editorState = useEditorStateSelector(editor);
   return (
     <Toggle
-      className="h-8 w-8 p-0"
+      className="h-8 w-8 bg-background p-0 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
       pressed={editorState?.isTextAlignLeft}
       onPressedChange={() => editor.chain().focus().setTextAlign('left').run()}
       title={t('alignLeft')}
+      variant="outline"
     >
       <AlignLeft className="h-4 w-4" />
     </Toggle>
@@ -236,10 +246,11 @@ export const AlignCenterMenuItem: React.FC<{ editor: Editor }> = ({ editor }) =>
   const editorState = useEditorStateSelector(editor);
   return (
     <Toggle
-      className="h-8 w-8 p-0"
+      className="h-8 w-8 bg-background p-0 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
       pressed={editorState?.isTextAlignCenter}
       onPressedChange={() => editor.chain().focus().setTextAlign('center').run()}
       title={t('alignCenter')}
+      variant="outline"
     >
       <AlignCenter className="h-4 w-4" />
     </Toggle>
@@ -251,10 +262,11 @@ export const AlignRightMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => 
   const editorState = useEditorStateSelector(editor);
   return (
     <Toggle
-      className="h-8 w-8 p-0"
+      className="h-8 w-8 bg-background p-0 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
       pressed={editorState?.isTextAlignRight}
       onPressedChange={() => editor.chain().focus().setTextAlign('right').run()}
       title={t('alignRight')}
+      variant="outline"
     >
       <AlignRight className="h-4 w-4" />
     </Toggle>
@@ -266,10 +278,11 @@ export const AlignJustifyMenuItem: React.FC<{ editor: Editor }> = ({ editor }) =
   const editorState = useEditorStateSelector(editor);
   return (
     <Toggle
-      className="h-8 w-8 p-0"
+      className="h-8 w-8 bg-background p-0 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
       pressed={editorState?.isTextAlignJustify}
       onPressedChange={() => editor.chain().focus().setTextAlign('justify').run()}
       title={t('alignJustify')}
+      variant="outline"
     >
       <AlignJustify className="h-4 w-4" />
     </Toggle>
@@ -488,12 +501,12 @@ export const HighlightMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => {
     <Label
       className={cn(
         buttonVariants({ variant: 'ghost' }),
-        'flex h-8 w-8 cursor-pointer flex-col gap-[3px] overflow-hidden px-1 py-0'
+        'flex h-8 w-8 cursor-pointer flex-col gap-[3px] overflow-hidden border bg-background px-1 py-0'
       )}
       title={t('highlight')}
     >
       <PaintBucket className="h-4 w-4" />
-      <div className="relative h-1 w-full overflow-hidden">
+      <div className="relative mt-[1px] h-1 w-full overflow-hidden">
         <Input
           type="color"
           defaultValue="#ffffff"

@@ -36,8 +36,10 @@ const getBlogContent = async (id?: string) => {
 };
 
 export default async function BlogCreationPage({ className, blogType, aiButton, id, action }: ICreationProps) {
-  const [t, i18nConfigData, blogData, me] = await Promise.all([
-    getTranslations(),
+  const [tError, tBlogNavigation, tBlogForm, i18nConfigData, blogData, me] = await Promise.all([
+    getTranslations('errors'),
+    getTranslations('blogNavigation'),
+    getTranslations('blogForm'),
     getI18nConfigServer(),
     getBlogContent(id),
     getMeServiceWithoutError(),
@@ -49,22 +51,23 @@ export default async function BlogCreationPage({ className, blogType, aiButton, 
     return (
       <div className="flex flex-col items-center gap-4 p-4">
         <Image src={WhaleError.src} alt="error" priority quality={100} className="rounded-full" aspectRatio="1:1" />
-        <p className="giant-iheading-semibold18 text-foreground">{t('general.somethingWentWrong')}</p>
+        <p className="giant-iheading-semibold18 text-foreground">{tError('unknown.title')}</p>
+        <p className="text-sm">{tError('unknown.description')}</p>
       </div>
     );
   }
 
   const breakcrumbItems = [
     {
-      label: t('blogNavigation.myBlog'),
+      label: tBlogNavigation('myBlog'),
       path: generateRoute(BLOG_ROUTES.authorBlog, { username: me.username }),
     },
     {
-      label: t('blogNavigation.blogManagement'),
+      label: tBlogNavigation('blogManagement'),
       path: BLOG_ROUTES.blogManagement,
     },
     {
-      label: t(action === 'create' ? 'blogNavigation.blogCreation' : 'blogNavigation.blogEditer'),
+      label: tBlogNavigation(action === 'create' ? 'blogCreation' : 'blogEditer'),
     },
   ];
 
@@ -89,7 +92,7 @@ export default async function BlogCreationPage({ className, blogType, aiButton, 
             </AvatarFallback>
           </Avatar>
           <p className="giant-iheading-bold20 lg:giant-iheading-bold40 z-10 text-foreground">
-            {t.rich('blogForm.ownerBlog', {
+            {tBlogForm.rich('ownerBlog', {
               name: me.display_name?.length > 0 ? me.display_name : me.username,
             })}
           </p>

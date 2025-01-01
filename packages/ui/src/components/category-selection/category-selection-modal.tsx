@@ -31,45 +31,44 @@ export default function CategorySelectionModal({
   const [values, setValues] = useState<ITreeCheckedItem[]>([]);
 
   return (
-    <div>
-      <Modal
-        title={title ?? t('title')}
-        trigger={
-          <Button
-            variant="ghost"
-            className={cn('flex w-full justify-between', className)}
-            rightSection={<Settings className="h-4 w-4" />}
-          >
-            {t('category')}
-          </Button>
-        }
-        buttons={[
-          {
-            label: tGeneral('cancel'),
-            variant: 'outline',
-            onClick: onClose => {
-              onClose?.();
+    <>
+      <div className="flex items-center justify-between">
+        <p className="giant-iheading-semibold16 flex-1 text-foreground">{t('category')}</p>
+        <Modal
+          title={title ?? t('title')}
+          trigger={
+            <Button variant="ghost" className={cn('h-8 w-8 p-0', className)}>
+              <Settings className="h-4 w-4" />
+            </Button>
+          }
+          buttons={[
+            {
+              label: tGeneral('cancel'),
+              variant: 'outline',
+              onClick: onClose => {
+                onClose?.();
+              },
             },
-          },
-          {
-            label: tGeneral('save'),
-            onClick: onClose => {
-              onChange?.(values);
-              onClose?.();
+            {
+              label: tGeneral('save'),
+              onClick: onClose => {
+                onChange?.(values);
+                onClose?.();
+              },
             },
-          },
-        ]}
-      >
-        <ScrollArea className="h-[55dvh]">
-          <CategorySelection
-            initialCategories={value}
-            className={className}
-            categories={categories}
-            onCategoriesChange={setValues}
-          />
-          <ScrollBar />
-        </ScrollArea>
-      </Modal>
+          ]}
+        >
+          <ScrollArea className="h-[55dvh]">
+            <CategorySelection
+              initialCategories={value}
+              className={className}
+              categories={categories}
+              onCategoriesChange={setValues}
+            />
+            <ScrollBar />
+          </ScrollArea>
+        </Modal>
+      </div>
       {showValue && value && value?.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-2">
           {value?.map(value => (
@@ -79,6 +78,6 @@ export default function CategorySelectionModal({
           ))}
         </div>
       )}
-    </div>
+    </>
   );
 }

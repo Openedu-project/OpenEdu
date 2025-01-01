@@ -7,6 +7,7 @@ import {
   type ComponentPropsWithoutRef,
   type ComponentRef,
   type HTMLAttributes,
+  type ReactNode,
   createContext,
   forwardRef,
   useContext,
@@ -183,17 +184,21 @@ const FormLabelInfo = ({ className, children, ref, ...props }: ComponentProps<ty
 
 export type FormFieldWithLabelProps = ComponentPropsWithoutRef<typeof Slot> &
   FormFieldContextValue & {
-    label?: string;
+    label?: ReactNode;
     form?: UseFormReturn<TypeOf<z.ZodAny>, z.ZodAny, undefined>;
     infoText?: string;
     description?: string;
     required?: boolean;
     fieldType?: string;
     labelClassName?: string;
+    render?: (props: { field: ControllerRenderProps<FieldValues, string> }) => ReactNode;
   };
 
 const FormFieldWithLabel = forwardRef<ComponentRef<typeof Slot>, FormFieldWithLabelProps>(
-  ({ name, label, form, infoText, description, className, labelClassName, required, fieldType, ...props }, ref) => {
+  (
+    { name, label, form, infoText, description, className, labelClassName, required, fieldType, render, ...props },
+    ref
+  ) => {
     const formContext = useFormContext();
 
     return (
@@ -227,7 +232,11 @@ const FormFieldWithLabel = forwardRef<ComponentRef<typeof Slot>, FormFieldWithLa
                     {label} {required && <span className="ml-1 text-destructive">*</span>}
                   </FormLabelInfo>
                 )}
-                <FormControlSlot field={field} ref={ref} {...props} />
+                {typeof render === 'function' ? (
+                  render({ field })
+                ) : (
+                  <FormControlSlot field={field} ref={ref} {...props} />
+                )}
                 {description && <FormDescription>{description}</FormDescription>}
                 <FormMessage />
               </>

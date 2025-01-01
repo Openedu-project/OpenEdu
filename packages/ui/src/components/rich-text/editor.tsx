@@ -4,6 +4,7 @@ import { type Editor, EditorContent } from '@tiptap/react';
 import './styles.css';
 
 import { cn } from '@oe/ui/utils/cn';
+import { useTranslations } from 'next-intl';
 import { type Ref, useEffect, useImperativeHandle } from 'react';
 import { BubbleMenu } from './components/bubble-menu';
 import { FloatingMenu } from './components/floating-menu';
@@ -43,8 +44,10 @@ export const RichTextEditor = ({
   onChange,
   ref,
 }: RichTextEditorProps) => {
+  const tRichText = useTranslations('richText');
   const editor = useRichTextEditor({
     content: defaultValue || value,
+    placeholder: tRichText('placeholder'),
     onUpdate: (editor: Editor) => {
       onChange?.(editor.getHTML());
     },

@@ -68,33 +68,37 @@ const getBlogContent = async (id?: string) => {
 export default async function OrgBlogCreation({ className, blogType, aiButton, id, action }: ICreationProps) {
   const domain = (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? '';
 
-  const [t, hashtags, categories, i18nConfigData, blogData, orgData] = await Promise.all([
-    getTranslations(),
-    getHastTag(blogType === 'org'),
-    getCategories(blogType === 'org'),
-    getI18nConfigServer(),
-    getBlogContent(id),
-    getOrgByDomainService(undefined, {
-      domain,
-    }),
-  ]);
+  const [tError, tBlogNavigation, tBlogForm, hashtags, categories, i18nConfigData, blogData, orgData] =
+    await Promise.all([
+      getTranslations('errors'),
+      getTranslations('blogNavigation'),
+      getTranslations('blogForm'),
+      getHastTag(blogType === 'org'),
+      getCategories(blogType === 'org'),
+      getI18nConfigServer(),
+      getBlogContent(id),
+      getOrgByDomainService(undefined, {
+        domain,
+      }),
+    ]);
 
   if (blogData instanceof Error) {
     return (
       <div className="flex flex-col items-center gap-4 p-4">
         <Image src={WhaleError.src} alt="error" priority quality={100} className="rounded-full" aspectRatio="1:1" />
-        <p className="giant-iheading-semibold18 text-foreground">{t('general.somethingWentWrong')}</p>
+        <p className="giant-iheading-semibold18 text-foreground">{tError('unknown.title')}</p>
+        <p className="text-sm">{tError('unknown.description')}</p>
       </div>
     );
   }
 
   const breakcrumbItems = [
     {
-      label: t('blogNavigation.myBlog'),
+      label: tBlogNavigation('myBlog'),
       path: BLOG_ADMIN_ROUTES.myBlog,
     },
     {
-      label: t(action === 'create' ? 'blogNavigation.blogCreation' : 'blogNavigation.blogEditer'),
+      label: tBlogNavigation(action === 'create' ? 'blogCreation' : 'blogEditer'),
     },
   ];
 
@@ -126,7 +130,7 @@ export default async function OrgBlogCreation({ className, blogType, aiButton, i
             />
           </div>
           <p className="giant-iheading-bold20 lg:giant-iheading-bold40 z-10 text-foreground">
-            {t.rich('blogForm.ownerBlog', {
+            {tBlogForm.rich('ownerBlog', {
               name: orgData?.name ?? 'Organization',
             })}
           </p>

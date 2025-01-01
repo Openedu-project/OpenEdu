@@ -19,7 +19,7 @@ import { FormWrapper } from '#components/form-wrapper';
 import { RichTextEditor } from '#components/rich-text';
 import { Uploader } from '#components/uploader';
 import { Button } from '#shadcn/button';
-import { FormControl, FormField, FormFieldWithLabel, FormItem, FormMessage } from '#shadcn/form';
+import { FormFieldWithLabel } from '#shadcn/form';
 import { Input } from '#shadcn/input';
 import { toast } from '#shadcn/sonner';
 import { Textarea } from '#shadcn/textarea';
@@ -164,22 +164,15 @@ export default function BlogForm({
     <FormWrapper
       id="blog_form"
       schema={blogSchema}
-      className={cn('grid grid-cols-1 gap-6 bg-background py-6 md:grid-cols-3 lg:grid-cols-4', className)}
+      className={cn('grid grid-cols-1 gap-4 space-y-0 bg-background py-6 md:grid-cols-3 lg:grid-cols-4', className)}
       resetOnSuccess
       useFormProps={{ defaultValues: defaultValues ?? { locale: 'en', is_ai_generated: false }, mode: 'all' }}
     >
       {({ loading, form }) => (
         <>
-          <div
-            className={cn(
-              'col-span-full flex w-full flex-wrap items-center justify-between gap-4 border-foreground/50 border-b bg-white py-2'
-            )}
-          >
-            <FormFieldWithLabel name="title">
-              <Input
-                className="!giant-iheading-semibold16 md:!giant-iheading-semibold24 !border-none p-2 focus-visible:ring-0"
-                placeholder={tBlogs('nameOfArticle')}
-              />
+          <div className={cn('col-span-full flex w-full flex-wrap justify-between gap-4 py-2')}>
+            <FormFieldWithLabel name="title" className="flex-1">
+              <Input className="giant-iheading-semibold16 p-2" placeholder={`${tBlogs('nameOfArticle')}...`} />
             </FormFieldWithLabel>
 
             <div className="hidden gap-4 md:flex">
@@ -198,99 +191,84 @@ export default function BlogForm({
               </Button>
             </div>
           </div>
-          <div className="mb-8 h-fit rounded-lg border px-4 shadow md:order-1">
-            <div className={cn(blogType === 'personal' && 'hidden')}>
-              <div className="border-b py-4">
-                <FormFieldWithLabel name="category_ids">
-                  <CategorySelectionModal
-                    className="giant-iheading-semibold12 md:giant-iheading-semibold16 px-2"
-                    categories={categories}
-                    showValue
-                  />
-                </FormFieldWithLabel>
-              </div>
+          <div className="h-fit rounded-lg md:order-1">
+            <div className={cn('flex flex-col gap-4', blogType === 'personal' && 'hidden')}>
+              <FormFieldWithLabel name="category_ids">
+                <CategorySelectionModal className="giant-iheading-semibold16" categories={categories} showValue />
+              </FormFieldWithLabel>
 
-              <div className="border-b py-4">
-                <div className="mb-4 flex justify-between px-2">
-                  <p className="giant-iheading-semibold12 md:giant-iheading-semibold16 text-foreground">
-                    {tBlogs('hashtag')}
-                  </p>
-                  <Settings className="h-4 w-4" />
-                </div>
-                <FormFieldWithLabel name="hashtag_names">
-                  <AutocompeteMultiple
-                    options={hashtagsName}
-                    placeholder={tBlogs('inputHashtag')}
-                    onKeyDown={handleKeyDown}
-                  />
-                </FormFieldWithLabel>
-              </div>
-            </div>
-            <div className="border-b py-4">
               <FormFieldWithLabel
-                name="locale"
-                label={tBlogs('language')}
-                labelClassName="giant-iheading-semibold12 md:giant-iheading-semibold16 mb-4"
+                name="hashtag_names"
+                labelClassName="justify-between mb-4"
+                label={
+                  <>
+                    <p className="giant-iheading-semibold16 text-foreground">{tBlogs('hashtag')}</p>
+                    <Button variant="ghost" className="h-8 w-8 cursor-default p-0 hover:bg-transparent">
+                      <Settings className="h-4 w-4" />
+                    </Button>
+                  </>
+                }
               >
-                <Autocomplete
-                  options={locales}
-                  getOptionLabel={locale => languages[locale]}
-                  getOptionValue={locale => locale}
+                <AutocompeteMultiple
+                  options={hashtagsName}
+                  placeholder={tBlogs('inputHashtag')}
+                  onKeyDown={handleKeyDown}
                 />
               </FormFieldWithLabel>
             </div>
+            <FormFieldWithLabel
+              name="locale"
+              label={tBlogs('language')}
+              labelClassName="giant-iheading-semibold16"
+              className="mb-4 space-y-4"
+            >
+              <Autocomplete
+                options={locales}
+                getOptionLabel={locale => languages[locale]}
+                getOptionValue={locale => locale}
+              />
+            </FormFieldWithLabel>
 
-            <div className="flex flex-col gap-4 border-b px-2 py-6">
-              <p className="giant-iheading-semibold12 md:giant-iheading-semibold16 mb-6 text-foreground">
-                {tBlogs('thumbnail')}
-              </p>
-              <FormField
-                control={form.control}
+            <div className="flex flex-col gap-4">
+              <p className="giant-iheading-semibold16 text-foreground">{tBlogs('thumbnail')}</p>
+              <FormFieldWithLabel
+                label={tBlogs('image')}
                 name="thumbnail"
                 render={({ field }) => (
-                  <FormItem>
-                    <p className="mbutton-bold12 md:mbutton-semibold12 text-foreground/70">{tBlogs('image')}</p>
-                    <FormControl>
-                      <Uploader
-                        listType="picture"
-                        value={field.value ? [field.value] : []}
-                        onChange={files => field.onChange(files[0])}
-                        accept="image/*"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
+                  <Uploader
+                    listType="picture"
+                    value={field.value ? [field.value] : []}
+                    onChange={files => field.onChange(files[0])}
+                    fileListVisible={false}
+                    accept="image/*"
+                  />
                 )}
               />
 
-              <FormFieldWithLabel
-                label={tBlogs('imageDesc')}
-                name="image_description"
-                labelClassName="mbutton-bold12 md:mbutton-semibold12 mb-4 text-foreground/70"
-              >
+              <FormFieldWithLabel label={tBlogs('imageDesc')} name="image_description">
                 <Input placeholder={tBlogs('desc')} />
               </FormFieldWithLabel>
             </div>
           </div>
 
-          <div className={cn('flex flex-col gap-6 md:col-span-2 lg:col-span-3')}>
+          <div className={cn('flex flex-col gap-4 md:col-span-2 lg:col-span-3')}>
             <FormFieldWithLabel
               label={tBlogs('desc')}
               name="description"
-              className="rounded-lg border p-6 shadow"
-              labelClassName="giant-iheading-semibold12 md:giant-iheading-semibold16 mb-4"
+              className="rounded"
+              labelClassName="giant-iheading-semibold16 mb-4"
             >
-              <Textarea className="border-none bg-foreground/5" rows={5} placeholder={tBlogs('placeholderDesc')} />
+              <Textarea rows={5} placeholder={tBlogs('placeholderDesc')} />
             </FormFieldWithLabel>
 
             <FormFieldWithLabel
               label={tBlogs('write')}
               name="content"
-              className="rounded-lg border p-6 shadow"
-              labelClassName="giant-iheading-semibold12 md:giant-iheading-semibold16 mb-4"
+              className="rounded"
+              labelClassName="giant-iheading-semibold16 mb-4"
             >
               <RichTextEditor
-                className="bg-foreground/5 md:h-[calc(100vh-150px)]"
+                className="md:h-[calc(100vh-150px)]"
                 defaultValue={converter.makeHtml(data?.content ?? '')}
                 aiParams={{ blog_cuid: data?.cuid ?? '' }}
                 aiButton={blogType === 'org'}
