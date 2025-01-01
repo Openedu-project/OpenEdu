@@ -1,4 +1,6 @@
+import type { IFileResponse } from '@oe/api/types/file';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 import { Uploader } from '#components/uploader';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '#shadcn/tabs';
 import FormAlignConfig from '../../form-config/form-align-config';
@@ -20,6 +22,7 @@ export function ImageFieldConfig({
   handleConfigChange: (key: keyof FormFieldType, value: string | number | boolean) => void;
 }) {
   const t = useTranslations('dynamicForms.fieldConfig');
+  const [files, setFiles] = useState<IFileResponse[]>([]);
 
   if (field.fieldType !== 'image') {
     return null;
@@ -55,12 +58,10 @@ export function ImageFieldConfig({
           <Uploader
             listType="picture"
             accept="image/*"
-            multiple={false}
-            maxSizeBytes={5 * 1024 * 1024}
-            onSuccess={file => {
-              if (file.url) {
-                handleConfigChange('src', file.url);
-              }
+            value={files}
+            onChange={files => {
+              setFiles(files);
+              handleConfigChange('src', files[0]?.url ?? '');
             }}
           />
           <FormQualityConfig field={field} handleConfigChange={handleConfigChange} />

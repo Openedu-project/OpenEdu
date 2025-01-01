@@ -1,154 +1,117 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { Button } from '#shadcn/button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '#shadcn/dialog';
-import { Form } from '#shadcn/form';
-
 import type { z } from '@oe/api/utils/zod';
-import type { DialogProps } from '@radix-ui/react-dialog';
 import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import type { DefaultValues, UseFormReturn } from 'react-hook-form';
+import type { UseFormReturn } from 'react-hook-form';
+import { FormNestedProvider, FormWrapper, type INestedFormsValues } from '#components/form-wrapper';
+import { Button } from '#shadcn/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '#shadcn/dialog';
+import { cn } from '#utils/cn';
 
 type ButtonVariant = 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
 
 export interface ButtonConfig {
   label: string;
-  onClick?: (onClose?: () => void) => void;
+  onClick?: (handleClose?: () => void) => void;
   variant?: ButtonVariant;
   type?: 'button' | 'submit' | 'reset';
 }
 
 type FormSchema = z.ZodObject<Record<string, z.ZodTypeAny>>;
 
-interface BaseModalProps extends Omit<DialogProps, 'children'> {
+interface ModalProps<TSchema extends FormSchema = never> {
   title: string;
   description?: string;
   trigger?: ReactNode;
-  buttons?: ButtonConfig[];
-  isOpen?: boolean;
+  children?: ReactNode | ((form: UseFormReturn<z.infer<TSchema>>) => ReactNode);
   className?: string;
-  hasCancelButton?: boolean;
+
+  open?: boolean;
   onClose?: () => void;
-}
+  hasCancelButton?: boolean;
+  buttons?: ButtonConfig[];
 
-interface FormModalProps<TSchema extends FormSchema> extends BaseModalProps {
-  children: (form: UseFormReturn<z.infer<TSchema>>) => ReactNode;
-  onSubmit?: (data: z.infer<TSchema>) => Promise<void>;
+  showSubmit?: boolean;
   validationSchema?: TSchema;
-  defaultValues?: DefaultValues<z.infer<TSchema>>;
+  onSubmit?: (data: z.infer<TSchema>) => Promise<void>;
 }
 
-interface NonFormModalProps extends BaseModalProps {
-  children?: ReactNode;
-}
-
-type ModalProps<TSchema extends FormSchema> = FormModalProps<TSchema> | NonFormModalProps;
-
-const isFormModal = <TSchema extends FormSchema>(props: ModalProps<TSchema>): props is FormModalProps<TSchema> =>
-  'onSubmit' in props && 'validationSchema' in props;
-
-const FormModalContent = <TSchema extends FormSchema>({
-  children,
-  onSubmit,
-  validationSchema,
-  defaultValues,
+const ModalButtons = ({
   buttons,
+  isSubmitting,
+  showSubmit,
   hasCancelButton = true,
-  onClose,
-}: FormModalProps<TSchema>) => {
-  const form = useForm<z.infer<TSchema>>({
-    resolver: validationSchema ? zodResolver(validationSchema as TSchema) : undefined,
-    defaultValues: defaultValues || (validationSchema?.partial().parse({}) as DefaultValues<z.infer<TSchema>>),
-  });
+  handleClose,
+}: {
+  buttons?: ButtonConfig[];
+  isSubmitting?: boolean;
+  showSubmit?: boolean;
+  hasCancelButton?: boolean;
+  handleClose?: () => void;
+}) => {
+  const t = useTranslations('general');
 
-  const handleSubmit = async (data: z.infer<TSchema>) => {
-    try {
-      await onSubmit?.(data);
-      onClose?.();
-    } catch (error) {
-      console.error('Form submission error:', error);
-    }
-  };
-
-  return (
-    <Form {...form}>
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          e.stopPropagation();
-          form.handleSubmit(handleSubmit)(e);
-        }}
-      >
-        {children(form)}
-        <div className="mt-4 flex justify-end space-x-2">
-          {renderButtons(buttons, form.formState.isSubmitting, true, hasCancelButton, onClose)}
-        </div>
-      </form>
-    </Form>
-  );
-};
-
-const NonFormModalContent = ({ children, buttons, hasCancelButton = true, onClose }: NonFormModalProps) => (
-  <>
-    {children}
-    <div className="mt-4 flex justify-end space-x-2">
-      {renderButtons(buttons, false, false, hasCancelButton, onClose)}
-    </div>
-  </>
-);
-
-const renderButtons = (
-  buttons: ButtonConfig[] | undefined,
-  isSubmitting: boolean,
-  isFormModal: boolean,
-  hasCancelButton: boolean,
-  onClose?: () => void
-) => {
-  const tGeneral = useTranslations('general');
   if (buttons && buttons.length > 0) {
-    return buttons.map(button => (
-      <Button
-        key={button.label}
-        type={button.type ?? 'button'}
-        variant={button.variant ?? 'default'}
-        onClick={button.onClick ? () => button.onClick?.(onClose) : button.type === 'button' ? onClose : undefined}
-        disabled={isSubmitting && button.type === 'submit'}
-      >
-        {button.label}
-      </Button>
-    ));
+    return (
+      <div className="flex justify-end space-x-2">
+        {buttons.map(button => (
+          <Button
+            key={button.label}
+            type={button.type ?? 'button'}
+            variant={button.variant ?? 'default'}
+            onClick={
+              button.onClick ? () => button.onClick?.(handleClose) : button.type === 'button' ? handleClose : undefined
+            }
+            disabled={isSubmitting && button.type === 'submit'}
+          >
+            {button.label}
+          </Button>
+        ))}
+      </div>
+    );
   }
 
   return (
-    <>
-      {onClose && hasCancelButton && (
-        <Button type="button" variant="outline" onClick={onClose}>
-          {tGeneral('close')}
+    <div className="flex justify-end space-x-2">
+      {hasCancelButton && handleClose && (
+        <Button type="button" variant="outline" onClick={handleClose}>
+          {t('close')}
         </Button>
       )}
-      {isFormModal && (
+      {showSubmit && (
         <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? tGeneral('submitting') : tGeneral('submit')}
+          {isSubmitting ? t('submitting') : t('submit')}
         </Button>
       )}
-    </>
+    </div>
   );
 };
 
-export const Modal = <TSchema extends FormSchema = never>(props: ModalProps<TSchema>) => {
-  const {
-    title,
-    description,
-    trigger,
-    isOpen: externalIsOpen,
-    className,
-    onClose,
-    hasCancelButton = true,
-    ...rest
-  } = props;
+export const Modal = <TSchema extends FormSchema = never>({
+  title,
+  description,
+  trigger,
+  children,
+  open: externalIsOpen,
+  className,
+  hasCancelButton = true,
+  buttons,
+  validationSchema,
+  showSubmit,
+  onClose,
+  onSubmit,
+  ...rest
+}: ModalProps<TSchema>) => {
   const [internalIsOpen, setInternalIsOpen] = useState(false);
+  const isForm = !!validationSchema && !!onSubmit;
 
   useEffect(() => {
     if (externalIsOpen !== undefined) {
@@ -163,34 +126,55 @@ export const Modal = <TSchema extends FormSchema = never>(props: ModalProps<TSch
     }
   };
 
+  const handleSubmit = async (data: INestedFormsValues) => {
+    await onSubmit?.(data['modal-form']);
+    handleOpenChange(false);
+  };
+
+  const hasTitleOrDescription = !!title || !!description;
+  const hasButtons = !!buttons || !!hasCancelButton || !!showSubmit;
+
+  const content = isForm ? (
+    <FormWrapper
+      id="modal-form"
+      schema={validationSchema}
+      className={cn('scrollbar px-4', hasTitleOrDescription && hasButtons ? 'overflow-y-auto' : '')}
+    >
+      {({ form }) => (typeof children === 'function' ? children(form) : children)}
+    </FormWrapper>
+  ) : (
+    <div className={cn('scrollbar px-4', hasTitleOrDescription && hasButtons ? 'overflow-y-auto' : '')}>
+      {children as ReactNode}
+    </div>
+  );
+
   const modalContent = (
-    <DialogContent onPointerDownOutside={e => e.preventDefault()} className={className}>
-      {(title || description) && (
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
-        </DialogHeader>
-      )}
-      {isFormModal(props) ? (
-        <FormModalContent {...props} onClose={() => handleOpenChange(false)} hasCancelButton={hasCancelButton} />
-      ) : (
-        <NonFormModalContent {...props} onClose={() => handleOpenChange(false)} hasCancelButton={hasCancelButton} />
+    <DialogContent
+      onPointerDownOutside={e => e.preventDefault()}
+      className={cn('flex max-w-[90vw] flex-col overflow-hidden p-0 md:max-w-lg', className)}
+    >
+      <DialogHeader className={cn('p-4 pb-0', hasTitleOrDescription ? '' : 'hidden')}>
+        <DialogTitle>{title}</DialogTitle>
+        <DialogDescription>{description}</DialogDescription>
+      </DialogHeader>
+      {content}
+      {hasButtons && (
+        <DialogFooter className="p-4 pt-0">
+          <ModalButtons
+            buttons={buttons}
+            hasCancelButton={hasCancelButton}
+            showSubmit={showSubmit}
+            handleClose={() => handleOpenChange(false)}
+          />
+        </DialogFooter>
       )}
     </DialogContent>
   );
 
-  if (trigger) {
-    return (
-      <Dialog open={internalIsOpen} onOpenChange={handleOpenChange} {...rest}>
-        <DialogTrigger asChild>{trigger}</DialogTrigger>
-        {modalContent}
-      </Dialog>
-    );
-  }
-
   return (
     <Dialog open={internalIsOpen} onOpenChange={handleOpenChange} {...rest}>
-      {modalContent}
+      {trigger ? <DialogTrigger asChild>{trigger}</DialogTrigger> : null}
+      <FormNestedProvider onSubmit={handleSubmit}>{modalContent}</FormNestedProvider>
     </Dialog>
   );
 };

@@ -1,6 +1,7 @@
 'use client';
 
 import { useCreateOrganization, useUpdateOrganization } from '@oe/api/hooks/useOrganization';
+import type { ICreateOrganizationSchemaType } from '@oe/api/schemas/organization';
 import type { IOrganization, IOrganizationPayload } from '@oe/api/types/organizations';
 import { API_ENDPOINT } from '@oe/api/utils/endpoints';
 import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
@@ -118,8 +119,8 @@ export default function OrganizationsManagement() {
   );
 
   const handleEditOrganization = useCallback(
-    async (value: IOrganizationPayload) => {
-      const thumbnail_id = value.thumbnail_id === '' ? null : value.thumbnail_id;
+    async (value: ICreateOrganizationSchemaType) => {
+      const thumbnail_id = value.thumbnail?.id ?? null;
 
       try {
         await triggerUpdateOrganiation({
@@ -246,7 +247,7 @@ export default function OrganizationsManagement() {
       {isOpenCreateModal && (
         <ViewOrganizationModal
           isEdit={false}
-          onSubmit={value => handleCreateOrganization(value as IOrganizationPayload)}
+          onSubmit={value => handleCreateOrganization(value as ICreateOrganizationSchemaType)}
           onClose={handleCloseCreateModal}
           data={null}
         />
@@ -254,7 +255,7 @@ export default function OrganizationsManagement() {
       {isOpenEditModal && (
         <ViewOrganizationModal
           isEdit={true}
-          onSubmit={value => handleEditOrganization(value as IOrganizationPayload)}
+          onSubmit={value => handleEditOrganization(value as ICreateOrganizationSchemaType)}
           onClose={handleCloseEditModal}
           data={itemSelected as IOrganization}
         />

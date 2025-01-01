@@ -49,7 +49,7 @@ export const AIModal: React.FC<IAIModal> = ({ open = false, loading, text, onCon
 
   return (
     <Modal
-      isOpen={open}
+      open={open}
       title={t('title')}
       description={text ? t('description') : ' '}
       buttons={

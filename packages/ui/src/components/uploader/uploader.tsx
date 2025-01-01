@@ -1,410 +1,282 @@
-'use client';
 import type { IFileResponse } from '@oe/api/types/file';
-import type { ErrorStatus } from '@oe/api/utils/ajax-upload';
-import { ajaxUpload } from '@oe/api/utils/ajax-upload';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import type React from 'react';
-import { Fragment, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { type ErrorStatus, ajaxUpload } from '@oe/api/utils/ajax-upload';
+import { uniqueID } from '@oe/core/utils/unique';
+import { useTranslations } from 'next-intl';
+import { type RefObject, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { cn } from '#utils/cn';
 import { CropModal } from './crop-modal';
-import type { FileType, UploadTriggerInstance, UploaderProps } from './types';
+import { ImagePreviewModal } from './image-preview-modal';
+import type { FileStatusType, FileType, UploadTriggerInstance, UploaderProps } from './types';
 import { UploadFileItem } from './upload-file-item';
 import { UploadTrigger } from './upload-trigger';
-import { useFileList } from './useFileList';
-import { getFiles, isImage } from './utils';
+import { MAX_SIZE_BYTES, MIN_SIZE_BYTES, createFile, formatSize, isDuplicateFile, isImage } from './utils';
 
-const Uploader = (props: UploaderProps) => {
+export const Uploader = (props: UploaderProps) => {
   const {
-    className,
-    itemClassName,
     listType = 'text',
-    defaultFileList,
-    fileList: fileListProp,
-    fileListVisible = true,
-    draggable,
-    name = 'files',
-    multiple = false,
-    disabled = false,
-    readOnly,
-    plaintext,
-    accept,
-    children,
-    removable = true,
-    disabledFileItem,
-    maxPreviewFileSize,
-    method = 'POST',
-    autoUpload = true,
-    action = API_ENDPOINT.UPLOADS,
-    headers,
-    withCredentials = false,
-    disableMultipart,
-    timeout = 0,
-    data = {},
-    ref,
-    minSizeBytes = 0,
-    maxSizeBytes = 5 * 1024 * 1024,
-    aspectRatio = 4 / 3,
+    minSizeBytes = MIN_SIZE_BYTES,
+    maxSizeBytes = MAX_SIZE_BYTES,
+    aspectRatio,
     crop = false,
-    onRemove,
-    onUpload,
-    shouldUpload,
-    shouldQueueUpdate,
-    renderFileInfo,
-    renderThumbnail,
-    onPreview,
+    removable = true,
+    draggable = true,
+    defaultFileList = [],
+    children,
+    multiple,
+    fileListVisible = true,
+    ref,
+    fileItemProps,
+    triggerProps,
+    cropProps,
+    className,
+    accept,
+    value,
     onChange,
-    onSuccess,
-    onError,
-    onProgress,
-    onReupload,
-    ...rest
+    ...restProps
   } = props;
-  const [cropFile, setCropFile] = useState<File | null>(null);
-  const rootRef = useRef<HTMLDivElement>(null);
-  const xhrs = useRef<Record<string, XMLHttpRequest>>({});
+  const t = useTranslations('uploader');
+  const [files, setFiles] = useState<FileType[]>(defaultFileList.map(createFile));
+  const [cropFile, setCropFile] = useState<FileType | null>(null);
+
+  const xhrRef = useRef<XMLHttpRequest>(null);
   const trigger = useRef<UploadTriggerInstance>(null);
 
-  const [fileList, dispatch] = useFileList(fileListProp || defaultFileList);
-
   useEffect(() => {
-    if (typeof fileListProp !== 'undefined') {
-      dispatch({ type: 'init', files: fileListProp });
+    if (value) {
+      setFiles(value.map(createFile));
     }
-  }, [dispatch, fileListProp]);
+  }, [value]);
 
-  const validateAndProcessFile = (file: FileType): FileType => {
-    const updatedFile = { ...file };
-    if (file.blobFile) {
-      if (file.blobFile.size < minSizeBytes || file.blobFile.size > maxSizeBytes) {
-        updatedFile.status = 'error';
-        updatedFile.error = file.blobFile.size < minSizeBytes ? 'fileTooSmall' : 'fileTooBig';
-      } else if (crop && isImage(file.blobFile)) {
-        updatedFile.status = 'uploading';
-        setCropFile(file.blobFile);
-      } else {
-        updatedFile.status = 'inited';
+  useImperativeHandle(ref, () => ({
+    upload: () => {
+      const pendingFiles = files.filter(f => f.status === 'inited');
+      for (const file of pendingFiles) {
+        uploadFile(file, files);
       }
-    }
-    return updatedFile;
-  };
-
-  const updateFileStatus = useCallback(
-    (nextFile: FileType) => {
-      dispatch({ type: 'updateFile', file: nextFile });
     },
-    [dispatch]
+    abort: () => {
+      if (xhrRef.current) {
+        xhrRef.current.abort();
+        xhrRef.current = null;
+      }
+    },
+  }));
+
+  const [previewIndex, setPreviewIndex] = useState<number | null>(null);
+
+  const handlePreview = useCallback(
+    (file: FileType) => {
+      const index = files.findIndex(f => f.fileId === file.fileId);
+      setPreviewIndex(index);
+    },
+    [files]
   );
 
-  const cleanInputValue = useCallback(() => {
-    trigger.current?.clearInput();
+  const validateFile = useCallback(
+    (file: FileType): FileType => {
+      const updatedFile = { ...file };
+      if (file.originFile) {
+        if (file.originFile.size < minSizeBytes || file.originFile.size > maxSizeBytes) {
+          updatedFile.status = 'error';
+          updatedFile.error = file.originFile.size < minSizeBytes ? 'fileTooSmall' : 'fileTooBig';
+        } else if (crop && isImage(file.originFile) && !multiple) {
+          updatedFile.status = 'uploading';
+          setCropFile(file);
+        } else {
+          updatedFile.status = 'inited';
+        }
+      }
+      return updatedFile;
+    },
+    [minSizeBytes, maxSizeBytes, crop, multiple]
+  );
+
+  const handleChange = useCallback(
+    (inputFiles: FileList | File[]) => {
+      let newFiles: FileType[] = Array.from(inputFiles)
+        .filter(file => !isDuplicateFile(file, files.map(f => f.originFile).filter(Boolean) as File[]))
+        .map(file => ({
+          fileId: uniqueID(),
+          name: file.name,
+          status: 'inited',
+          originFile: file,
+        }));
+
+      if (!multiple) {
+        newFiles = newFiles.slice(-1);
+      }
+
+      const validatedFileList = newFiles.map(validateFile);
+
+      let nextFileList: FileType[];
+      if (multiple) {
+        nextFileList = [...files, ...validatedFileList];
+      } else {
+        nextFileList = validatedFileList;
+      }
+
+      setFiles(nextFileList);
+
+      for (const file of nextFileList) {
+        if (file.status === 'inited') {
+          uploadFile(file, nextFileList);
+        }
+      }
+    },
+    [multiple, validateFile, files]
+  );
+
+  const handleAjaxUploadProgress = useCallback((file: FileType, files: FileType[], percent: number) => {
+    const updated = files.map(f => (f.fileId === file.fileId ? { ...f, percent } : f));
+    setFiles(updated);
   }, []);
 
   const handleAjaxUploadSuccess = useCallback(
-    (file: FileType, response: IFileResponse, event: ProgressEvent, xhr: XMLHttpRequest) => {
-      const nextFile: FileType = {
+    (file: FileType, files: FileType[], response: IFileResponse) => {
+      const successFile = {
         ...file,
-        status: 'finished',
-        progress: 100,
-      };
-      updateFileStatus(nextFile);
-      onSuccess?.(response, nextFile, event, xhr);
-    },
-    [onSuccess, updateFileStatus]
-  );
-
-  const handleAjaxUploadError = useCallback(
-    (file: FileType, status: ErrorStatus, event: ProgressEvent, xhr: XMLHttpRequest) => {
-      const nextFile: FileType = {
-        ...file,
-        status: 'error',
-      };
-      updateFileStatus(nextFile);
-      onError?.(status, nextFile, event, xhr);
-    },
-    [onError, updateFileStatus]
-  );
-
-  const handleAjaxUploadProgress = useCallback(
-    (file: FileType, percent: number, event: ProgressEvent, xhr: XMLHttpRequest) => {
-      const nextFile: FileType = {
-        ...file,
-        status: 'uploading',
-        progress: percent,
+        ...response,
+        fileId: file.fileId,
+        status: 'finished' as FileStatusType,
       };
 
-      updateFileStatus(nextFile);
-      onProgress?.(percent, nextFile, event, xhr);
+      const updated = files.map(f => (f.fileId === file.fileId ? successFile : f)) as IFileResponse[];
+      onChange?.(updated);
     },
-    [onProgress, updateFileStatus]
+    [onChange]
   );
 
-  const handleUploadFile = useCallback(
-    async (file: FileType) => {
-      const { xhr, data: uploadData } = await ajaxUpload({
-        name,
-        timeout,
-        headers,
-        data,
-        method,
-        withCredentials,
-        disableMultipart,
-        file: file.blobFile as File,
-        url: action,
-        onError: handleAjaxUploadError.bind(null, file),
-        onSuccess: handleAjaxUploadSuccess.bind(null, file),
-        onProgress: handleAjaxUploadProgress.bind(null, file),
-      });
+  const handleAjaxUploadError = useCallback((file: FileType, files: FileType[], status: ErrorStatus) => {
+    const updated = files.map(f =>
+      f.fileId === file.fileId ? ({ ...f, status: 'error', error: status.errorCode } as FileType) : f
+    );
+    setFiles(updated);
+  }, []);
 
-      updateFileStatus({ ...file, status: 'uploading' });
-
-      if (file.id) {
-        xhrs.current[file.id] = xhr;
-      }
-
-      onUpload?.(file, uploadData, xhr);
-      setCropFile(null);
-    },
-    [
-      name,
-      timeout,
-      headers,
-      data,
-      method,
-      withCredentials,
-      disableMultipart,
-      action,
-      handleAjaxUploadError,
-      handleAjaxUploadSuccess,
-      handleAjaxUploadProgress,
-      updateFileStatus,
-      onUpload,
-    ]
-  );
-
-  const handleAjaxUpload = useCallback(() => {
-    for (const file of fileList.current) {
-      const checkState = shouldUpload?.(file);
-
-      if (checkState instanceof Promise) {
-        checkState.then(res => {
-          if (res) {
-            handleUploadFile(file);
-          }
-        });
-        return;
-      }
-      if (checkState === false) {
+  const uploadFile = useCallback(
+    async (file: FileType, files: FileType[]) => {
+      if (!file.originFile) {
         return;
       }
 
-      if (file.status === 'inited') {
-        handleUploadFile(file);
-      }
-    }
+      const updatedFile = { ...file, status: 'uploading' as FileStatusType, percent: 0 };
+      const updated = files.map(f => (f.fileId === file.fileId ? updatedFile : f));
 
-    cleanInputValue();
-  }, [cleanInputValue, fileList, handleUploadFile, shouldUpload]);
-
-  const handleUploadTriggerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = getFiles(event);
-    let newFileList: FileType[] = Array.from(files || []).map(file => ({
-      blobFile: file,
-      name: file.name,
-      status: 'inited',
-      id: `_${Math.random().toString(36).substring(2, 12)}`,
-    }));
-
-    if (!multiple) {
-      newFileList = newFileList.slice(-1);
-    }
-
-    const validatedFileList = newFileList.map(validateAndProcessFile);
-
-    let nextFileList: FileType[];
-    if (multiple) {
-      nextFileList = [...fileList.current, ...validatedFileList];
-    } else {
-      nextFileList = validatedFileList;
-    }
-
-    const checkState = shouldQueueUpdate?.(nextFileList, validatedFileList);
-
-    if (checkState === false) {
-      cleanInputValue();
-      return;
-    }
-
-    const upload = () => {
-      onChange?.(nextFileList, event);
-      if (rootRef.current) {
-        dispatch({ type: multiple ? 'push' : 'replace', files: validatedFileList }, () => {
-          autoUpload && handleAjaxUpload();
-        });
-      }
-    };
-
-    if (checkState instanceof Promise) {
-      checkState.then(res => {
-        res && upload();
+      const { xhr } = await ajaxUpload({
+        name: 'files',
+        file: file.originFile,
+        onProgress: handleAjaxUploadProgress.bind(null, file, updated),
+        onSuccess: handleAjaxUploadSuccess.bind(null, file, updated),
+        onError: handleAjaxUploadError.bind(null, file, updated),
       });
-      return;
-    }
+      xhrRef.current = xhr;
+      trigger.current?.clearInput();
+    },
+    [handleAjaxUploadProgress, handleAjaxUploadSuccess, handleAjaxUploadError]
+  );
 
-    upload();
-  };
+  const handleRemove = useCallback(
+    (file: FileType) => {
+      const updated = files.filter(f => f.fileId !== file.fileId);
+      onChange?.(updated as IFileResponse[]);
+
+      trigger.current?.clearInput();
+    },
+    [files, onChange]
+  );
 
   const handleCropComplete = useCallback(
-    (croppedFile: File) => {
-      const uploadFiles = fileList.current.map(f =>
-        f.status === 'uploading' && f.name === croppedFile.name
-          ? { ...f, blobFile: croppedFile, status: 'inited' as const }
-          : f
+    async (croppedFile: FileType) => {
+      const updated = files.map(f =>
+        f.fileId === croppedFile.fileId ? ({ ...f, originFile: croppedFile.originFile } as FileType) : f
       );
 
-      dispatch({ type: 'init', files: uploadFiles }, () => {
-        handleAjaxUpload();
-      });
+      setFiles(updated);
+      uploadFile(croppedFile, updated);
+      trigger.current?.clearInput();
     },
-    [fileList, handleAjaxUpload, dispatch]
+    [files, uploadFile]
   );
 
   const handleCropCancel = useCallback(() => {
     setCropFile(null);
-    dispatch({
-      type: 'init',
-      files: fileList.current.filter(f => f.status !== 'uploading'),
-    });
-  }, [fileList, dispatch]);
-
-  const handleRemoveFile = (id: string | number, event: React.MouseEvent) => {
-    const file = fileList.current.find(f => f.id === id);
-    const nextFileList = fileList.current.filter(f => f.id !== id);
-
-    if (file?.id && xhrs.current?.[file.id]?.readyState !== 4) {
-      xhrs.current[file.id]?.abort();
-    }
-
-    dispatch({ type: 'remove', id });
-
-    onRemove?.(file as FileType);
-    onChange?.(nextFileList, event);
-    cleanInputValue();
-  };
-
-  const handleReupload = (file: FileType) => {
-    const validatedFile = validateAndProcessFile(file);
-
-    if (validatedFile.status === 'inited' && autoUpload) {
-      handleUploadFile(validatedFile);
-    }
-    onReupload?.(validatedFile);
-  };
-
-  // public API
-  const start = (file?: FileType) => {
-    if (file) {
-      const validatedFile = validateAndProcessFile(file);
-      if (validatedFile.status === 'inited') {
-        handleUploadFile(validatedFile);
-      }
-      return;
-    }
-    const validatedFileList = fileList.current.map(validateAndProcessFile);
-    dispatch({ type: 'init', files: validatedFileList }, () => {
-      handleAjaxUpload();
-    });
-  };
-
-  const handleFileItemClick = () => {
+    setFiles(files.filter(f => f.status !== 'uploading'));
     trigger.current?.clearInput();
-    trigger.current?.input?.click();
-  };
-
-  useImperativeHandle(ref, () => ({
-    root: rootRef.current,
-    start,
-  }));
-
-  const renderList: React.ReactNode[] = [
-    <UploadTrigger
-      {...rest}
-      name={name}
-      key="trigger"
-      multiple={multiple}
-      draggable={draggable}
-      disabled={disabled}
-      readOnly={readOnly}
-      accept={accept}
-      maxSizeBytes={maxSizeBytes}
-      ref={trigger as React.RefObject<UploadTriggerInstance>}
-      onChange={handleUploadTriggerChange}
-      singleImage={!multiple && listType === 'picture'}
-      file={fileList.current.length > 0 ? fileList.current[0] : undefined}
-    >
-      {children}
-    </UploadTrigger>,
-  ];
-
-  if (fileListVisible) {
-    renderList.push(
-      <Fragment key="items">
-        {fileList.current.map((file, index) => (
-          <UploadFileItem
-            key={file.id || file.id || index}
-            file={file}
-            maxPreviewFileSize={maxPreviewFileSize}
-            listType={listType}
-            disabled={disabledFileItem}
-            onPreview={onPreview}
-            onReupload={handleReupload}
-            onCancel={handleRemoveFile}
-            renderFileInfo={renderFileInfo}
-            renderThumbnail={renderThumbnail}
-            removable={removable && !readOnly && !plaintext}
-            allowReupload={!(readOnly || plaintext)}
-            singleImage={!multiple && listType === 'picture'}
-            onClick={!multiple && listType === 'picture' ? handleFileItemClick : undefined}
-            className={itemClassName}
-          />
-        ))}
-      </Fragment>
-    );
-  }
-
-  if (plaintext) {
-    return (
-      <div className={listType === 'picture' ? 'flex flex-wrap' : ''}>
-        {fileList.current.length > 0 ? renderList[1] : null}
-      </div>
-    );
-  }
-
-  if (listType === 'picture') {
-    renderList.reverse();
-  }
+  }, [files]);
 
   return (
-    <div
-      ref={rootRef}
-      className={cn(
-        'relative flex w-full gap-2 rounded p-4',
-        listType === 'picture' ? 'flex-wrap' : 'flex-col',
-        !children && 'flex h-48 flex-col items-center justify-center border p-0',
-        className
-      )}
-    >
-      {renderList}
-      {cropFile && (
-        <CropModal
-          file={cropFile as File}
-          aspectRatio={aspectRatio}
-          onComplete={handleCropComplete}
-          onCancel={handleCropCancel}
-          cropProps={crop}
-        />
+    <div className="flex flex-col gap-2">
+      <div
+        className={cn(
+          'relative flex w-full gap-2 rounded',
+          listType === 'picture' ? 'flex-wrap' : 'flex-col',
+          !children && 'flex h-48 flex-col items-center justify-center p-0',
+          !children && fileListVisible && 'h-full min-h-48',
+          className
+        )}
+      >
+        <UploadTrigger
+          {...triggerProps}
+          onChange={handleChange}
+          file={fileListVisible || multiple ? undefined : files[0]}
+          ref={trigger as RefObject<UploadTriggerInstance>}
+          maxSizeBytes={maxSizeBytes}
+          draggable={draggable}
+          multiple={multiple}
+          accept={accept}
+          fileItemProps={{
+            ...fileItemProps,
+            listType,
+            onRemove: handleRemove,
+            onReupload: (file: FileType) => uploadFile(file, files),
+            minSizeBytes,
+            maxSizeBytes,
+          }}
+          {...restProps}
+        >
+          {children}
+        </UploadTrigger>
+        {fileListVisible
+          ? files.map(file => (
+              <UploadFileItem
+                {...fileItemProps}
+                key={file.fileId}
+                file={file}
+                listType={listType}
+                minSizeBytes={minSizeBytes}
+                maxSizeBytes={maxSizeBytes}
+                onRemove={handleRemove}
+                onReupload={(file: FileType) => uploadFile(file, files)}
+                onPreview={handlePreview}
+              />
+            ))
+          : null}
+        {cropFile?.originFile ? (
+          <CropModal
+            cropProps={cropProps}
+            file={cropFile}
+            onCancel={handleCropCancel}
+            onComplete={handleCropComplete}
+            aspectRatio={aspectRatio}
+          />
+        ) : null}
+        {previewIndex !== null && (
+          <ImagePreviewModal
+            images={files}
+            initialIndex={previewIndex}
+            isOpen={previewIndex !== null}
+            onClose={() => setPreviewIndex(null)}
+          />
+        )}
+      </div>
+      {maxSizeBytes && children && (
+        <>
+          <span className="text-xs italic">
+            {accept ? t('acceptedFormats', { formats: accept }) : t('allFileTypesAccepted')}
+          </span>
+          <span className="text-xs italic">{t('maxFileSize', { size: formatSize(maxSizeBytes) })}</span>
+        </>
       )}
     </div>
   );
 };
-
-export default Uploader;

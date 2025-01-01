@@ -1,4 +1,5 @@
 'use client';
+import type { IFileResponse } from '@oe/api/types/file';
 import type { Editor } from '@tiptap/react';
 import { VideoIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -11,6 +12,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '#shadcn/popover';
 export const VideoPopover = ({ editor }: { editor: Editor }) => {
   const t = useTranslations('richText.popover');
   const [url, setUrl] = useState('');
+  const [files, setFiles] = useState<IFileResponse[]>([]);
 
   const addVideo = (src: string) => {
     if (src) {
@@ -36,8 +38,11 @@ export const VideoPopover = ({ editor }: { editor: Editor }) => {
           <Uploader
             accept="video/*"
             listType="picture"
-            onSuccess={file => {
-              addVideo(file.url as string);
+            value={files}
+            onChange={files => {
+              setFiles(files);
+              setUrl(files[0]?.url ?? '');
+              addVideo(files[0]?.url ?? '');
             }}
           />
         </div>

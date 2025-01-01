@@ -16,7 +16,7 @@ export default function CouponSuccessModal({ open = true, onClose, startDate, en
   const t = useTranslations('coupon.successModal');
 
   return (
-    <Modal isOpen={open} title="" onClose={onClose} hasCancelButton={false}>
+    <Modal open={open} title="" onClose={onClose} hasCancelButton={false}>
       <div className="m-auto w-[200px]">
         <Image src={whaleSuccess.src} alt="whale Success" objectFit="contain" priority height={200} width={200} />
       </div>

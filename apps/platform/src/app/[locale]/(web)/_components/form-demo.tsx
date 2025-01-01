@@ -1,5 +1,6 @@
 // schemas.ts
 'use client';
+import { fileResponseScheme } from '@oe/api/types/file';
 // import { personalSchema, accountSchema, addressSchema, preferencesSchema } from './schemas';
 // import { toast } from '@oe/ui/shadcn/use-toast';
 import { z } from '@oe/api/utils/zod';
@@ -16,6 +17,7 @@ import {
   SubmitFormsButton,
 } from '@oe/ui/components/form-wrapper';
 import { Selectbox } from '@oe/ui/components/selectbox';
+import { Uploader } from '@oe/ui/components/uploader';
 import { Button } from '@oe/ui/shadcn/button';
 import { Checkbox } from '@oe/ui/shadcn/checkbox';
 import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
@@ -29,6 +31,7 @@ export const personalSchema = z.object({
   lastName: z.string().min(2, 'Last name must be at least 2 characters'),
   dob: z.string().min(1, 'Date of birth is required'),
   phone: z.string().min(10, 'Phone number must be at least 10 characters'),
+  files: z.array(fileResponseScheme).min(1, 'Please upload at least one file'),
 });
 
 export const accountSchema = z
@@ -102,6 +105,13 @@ export function RegistrationForm() {
             </FormFieldWithLabel>
             <FormFieldWithLabel label="Phone" name="phone">
               <Input type="tel" />
+            </FormFieldWithLabel>
+            <FormFieldWithLabel label="Files" name="files">
+              <Uploader multiple listType="picture" triggerProps={{ className: 'order-1 h-24 w-24' }} className="p-0">
+                <Button variant="outline" className="h-full w-full">
+                  Upload
+                </Button>
+              </Uploader>
             </FormFieldWithLabel>
             <Button type="submit" loading={loading}>
               Submit

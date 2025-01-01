@@ -31,6 +31,7 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
+    "react-zoom-pan-pinch": "^3.6.1",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/modifiers": "^9.0.0",
     "@dnd-kit/sortable": "^10.0.0",

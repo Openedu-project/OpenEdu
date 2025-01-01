@@ -4,6 +4,7 @@ import React, { useCallback, useRef, useState, useImperativeHandle } from 'react
 import { Button } from '#shadcn/button';
 import { cn } from '#utils/cn';
 import type { UploadTriggerProps } from './types';
+import { UploadFileItem } from './upload-file-item';
 import { formatSize } from './utils';
 
 export const UploadTrigger = (props: UploadTriggerProps) => {
@@ -17,18 +18,13 @@ export const UploadTrigger = (props: UploadTriggerProps) => {
     className,
     draggable,
     maxSizeBytes,
-    singleImage,
+    fileItemProps,
     file,
     onChange,
-    onDragEnter,
-    onDragLeave,
-    onDragOver,
-    onDrop,
     ref,
     ...rest
   } = props;
   const t = useTranslations('uploader');
-  const rootRef = useRef<HTMLDivElement>(null);
   const [dragOver, setDragOver] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -48,9 +44,8 @@ export const UploadTrigger = (props: UploadTriggerProps) => {
         event.preventDefault();
         setDragOver(true);
       }
-      onDragEnter?.(event);
     },
-    [draggable, onDragEnter]
+    [draggable]
   );
 
   const handleDragLeave = useCallback(
@@ -59,9 +54,8 @@ export const UploadTrigger = (props: UploadTriggerProps) => {
         event.preventDefault();
         setDragOver(false);
       }
-      onDragLeave?.(event);
     },
-    [draggable, onDragLeave]
+    [draggable]
   );
 
   const handleDragOver = useCallback(
@@ -69,9 +63,8 @@ export const UploadTrigger = (props: UploadTriggerProps) => {
       if (draggable) {
         event.preventDefault();
       }
-      onDragOver?.(event);
     },
-    [draggable, onDragOver]
+    [draggable]
   );
 
   const handleDrop = useCallback(
@@ -79,28 +72,27 @@ export const UploadTrigger = (props: UploadTriggerProps) => {
       if (draggable) {
         event.preventDefault();
         setDragOver(false);
-        onChange?.(event as unknown as React.ChangeEvent<HTMLInputElement>);
+        onChange?.(event.dataTransfer.files);
       }
-      onDrop?.(event);
     },
-    [draggable, onChange, onDrop]
+    [draggable, onChange]
   );
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      onChange?.(event);
+      if (event.target.files) {
+        onChange?.(event.target.files);
+      }
     },
     [onChange]
   );
 
   useImperativeHandle(ref, () => ({
-    root: rootRef.current,
     clearInput: handleClearInput,
     input: inputRef.current,
   }));
 
   const buttonProps: React.ButtonHTMLAttributes<HTMLButtonElement> = {
-    ...rest,
     disabled,
   };
 
@@ -112,48 +104,79 @@ export const UploadTrigger = (props: UploadTriggerProps) => {
     buttonProps.onDrop = handleDrop;
   }
 
-  const trigger = children ? (
-    React.cloneElement(React.Children.only(children as React.ReactElement), {
-      ...buttonProps,
-      className: cn(
-        '[&_*]:pointer-events-none px-4 py-2 rounded border',
-        dragOver ? 'border-primary' : '',
-        disabled ? 'cursor-not-allowed opacity-50' : '',
-        singleImage ? 'w-24 h-24 flex items-center justify-center' : '',
-        React.isValidElement(children)
-          ? (children.props as React.ButtonHTMLAttributes<HTMLButtonElement>).className
-          : undefined
-      ),
-    } as React.ButtonHTMLAttributes<HTMLButtonElement>)
-  ) : (
-    <Button
-      {...buttonProps}
-      variant="outline"
-      className={cn(
-        'h-full w-full flex-col border-0 p-2 text-center font-normal font-secondary [&_*]:pointer-events-none',
-        dragOver ? 'border border-primary' : '',
-        disabled ? 'cursor-not-allowed opacity-50' : ''
-      )}
-    >
-      <Upload className="mx-auto" />
-      <span className="mt-2">{t('dragAndDrop')}</span>
-      <span className="mt-1 text-xs">
-        {accept ? t('acceptedFormats', { formats: accept }) : t('allFileTypesAccepted')}
-      </span>
-      <span className="mt-1 text-xs">{t('maxFileSize', { size: formatSize(maxSizeBytes) })}</span>
-    </Button>
-  );
+  const renderTrigger = () => {
+    if (children) {
+      if (!multiple && file) {
+        return (
+          <UploadFileItem
+            {...fileItemProps}
+            file={file}
+            className={cn(
+              React.isValidElement(children)
+                ? (children.props as React.ButtonHTMLAttributes<HTMLButtonElement>).className
+                : undefined
+            )}
+          />
+        );
+      }
+
+      return React.cloneElement(React.Children.only(children as React.ReactElement), {
+        ...buttonProps,
+        className: cn(
+          '[&_*]:pointer-events-none px-4 py-2 rounded',
+          dragOver ? 'border-primary' : '',
+          disabled ? 'cursor-not-allowed opacity-50' : '',
+          React.isValidElement(children)
+            ? (children.props as React.ButtonHTMLAttributes<HTMLButtonElement>).className
+            : undefined
+        ),
+      } as React.ButtonHTMLAttributes<HTMLButtonElement>);
+    }
+
+    if (!multiple && file) {
+      return (
+        <UploadFileItem
+          {...fileItemProps}
+          file={file}
+          className={cn(
+            'h-full w-full flex-col border-2 border-dashed p-4 text-center font-normal font-secondary',
+            dragOver ? 'border-primary' : '',
+            disabled ? 'cursor-not-allowed opacity-50' : ''
+          )}
+        />
+      );
+    }
+
+    return (
+      <Button
+        {...buttonProps}
+        variant="outline"
+        className={cn(
+          'h-full w-full flex-col border-2 border-dashed p-4 text-center font-normal font-secondary [&_*]:pointer-events-none',
+          dragOver ? 'border-primary' : '',
+          disabled ? 'cursor-not-allowed opacity-50' : ''
+        )}
+      >
+        {!multiple && file ? (
+          <UploadFileItem {...fileItemProps} file={file} />
+        ) : (
+          <>
+            <Upload className="mx-auto h-10 w-10 text-muted-foreground" />
+            <span className="mt-2">{t('dragAndDrop')}</span>
+            <span className="mt-1 text-xs">
+              {accept ? t('acceptedFormats', { formats: accept }) : t('allFileTypesAccepted')}
+            </span>
+            {maxSizeBytes && (
+              <span className="mt-1 text-xs">{t('maxFileSize', { size: formatSize(maxSizeBytes) })}</span>
+            )}
+          </>
+        )}
+      </Button>
+    );
+  };
 
   return (
-    <div
-      ref={rootRef}
-      className={cn(
-        'inline-flex flex-col',
-        singleImage ? 'grow' : '',
-        !children && 'w-full',
-        file && singleImage && 'w-0'
-      )}
-    >
+    <div className={cn('inline-flex flex-col', !children && 'h-full w-full', className)}>
       <input
         type="file"
         name={name}
@@ -164,11 +187,12 @@ export const UploadTrigger = (props: UploadTriggerProps) => {
         ref={inputRef}
         onChange={handleChange}
         className="-left-[999px] absolute"
+        {...rest}
       />
-      {file && singleImage ? null : trigger}
-      {maxSizeBytes && !singleImage && (
+      {renderTrigger()}
+      {/* {maxSizeBytes && !singleImage && (
         <span className="text-xs italic">{t('maxFileSize', { size: formatSize(maxSizeBytes) })}</span>
-      )}
+      )} */}
     </div>
   );
 };

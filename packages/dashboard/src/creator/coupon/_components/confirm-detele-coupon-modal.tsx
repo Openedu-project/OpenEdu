@@ -13,7 +13,7 @@ export default function ConfirmDeleteCouponModal({ open = true, id, onClose, onS
 
   return (
     <Modal
-      isOpen={open}
+      open={open}
       title=""
       onClose={onClose}
       hasCancelButton={false}

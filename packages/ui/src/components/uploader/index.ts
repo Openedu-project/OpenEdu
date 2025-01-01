@@ -1,4 +1,4 @@
-import Uploader from './uploader';
+import { Uploader } from './uploader';
 export type { UploaderProps, FileStatusType, FileType } from './types';
 
 export { Uploader };

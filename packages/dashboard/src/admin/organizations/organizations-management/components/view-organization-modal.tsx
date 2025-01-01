@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { type ICreateOrganizationSchemaType, createOrganizationSchema } from '@oe/api/schemas/organization';
+import type { IFileResponse } from '@oe/api/types/file';
 import type { IOrganization } from '@oe/api/types/organizations';
 import { Modal } from '@oe/ui/components/modal';
 import { Uploader } from '@oe/ui/components/uploader';
@@ -28,7 +29,7 @@ export function ViewOrganizationModal({ onSubmit, onClose, isEdit = false, data 
       phone: '',
       name: '',
       domain: '',
-      thumbnail_id: '',
+      thumbnail: undefined,
     },
   });
 
@@ -72,13 +73,13 @@ export function ViewOrganizationModal({ onSubmit, onClose, isEdit = false, data 
       ]}
       validationSchema={createOrganizationSchema}
       onSubmit={handleSubmit}
-      defaultValues={
-        {
-          ...data,
-          email: data?.user.email,
-          phone: data?.user.phone,
-        } as unknown as ICreateOrganizationSchemaType
-      }
+      // defaultValues={
+      //   {
+      //     ...data,
+      //     email: data?.user.email,
+      //     phone: data?.user.phone,
+      //   } as unknown as ICreateOrganizationSchemaType
+      // }
     >
       {form => (
         <>
@@ -141,7 +142,7 @@ export function ViewOrganizationModal({ onSubmit, onClose, isEdit = false, data 
 
           <FormField
             control={form.control}
-            name="thumbnail_id"
+            name="thumbnail"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t('thumbnail')}</FormLabel>
@@ -150,8 +151,9 @@ export function ViewOrganizationModal({ onSubmit, onClose, isEdit = false, data 
                     draggable
                     accept="image/*"
                     listType="picture"
-                    onSuccess={file => {
-                      field.onChange(file.id as string);
+                    value={[field.value as unknown as IFileResponse]}
+                    onChange={files => {
+                      field.onChange(files[0]);
                     }}
                   />
                 </FormControl>

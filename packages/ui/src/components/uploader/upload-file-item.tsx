@@ -1,15 +1,17 @@
-import { Loader2, Paperclip, RotateCw, X } from 'lucide-react';
+import { Eye, Loader2, Paperclip, RotateCw, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type React from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { Button } from '#shadcn/button';
 import { Progress } from '#shadcn/progress';
 import { cn } from '#utils/cn';
 import type { UploadFileItemProps } from './types';
-import { formatSize, previewFile } from './utils';
+import { usePreviewImage } from './usePreview';
+import { MAX_SIZE_BYTES, MIN_SIZE_BYTES, formatSize, isImage } from './utils';
 
 export const UploadFileItem = (props: UploadFileItemProps) => {
   const t = useTranslations('uploader');
+  const tErrors = useTranslations('errors');
   const {
     disabled,
     allowReupload = true,
@@ -17,54 +19,20 @@ export const UploadFileItem = (props: UploadFileItemProps) => {
     listType = 'text',
     className,
     removable = true,
-    maxPreviewFileSize = 1024 * 1024 * 5, // 5MB
-    minSizeBytes = 0,
-    maxSizeBytes = 5 * 1024 * 1024,
-    singleImage,
-    onClick,
+    minSizeBytes = MIN_SIZE_BYTES,
+    maxSizeBytes = MAX_SIZE_BYTES,
+    thumbnailClassName,
+    removeClassName,
+    buttonsPosition = 'top-right',
     renderFileInfo,
     renderThumbnail,
-    onPreview,
-    onCancel,
     onReupload,
-    ref,
+    onRemove,
+    onPreview,
     ...rest
   } = props;
-
-  const [previewImage, setPreviewImage] = useState(file.url ? file.url : null);
-
-  const getThumbnail = useCallback(
-    (callback: (previewImage: string | ArrayBuffer | null) => void) => {
-      if (!~['picture-text', 'picture'].indexOf(listType)) {
-        return;
-      }
-
-      if (!file.blobFile || file?.blobFile?.size > maxPreviewFileSize) {
-        return;
-      }
-
-      previewFile(file.blobFile, callback);
-    },
-    [file, listType, maxPreviewFileSize]
-  );
-
-  useEffect(() => {
-    if (!file.url) {
-      getThumbnail(previewImage => {
-        setPreviewImage(previewImage as string);
-      });
-    }
-  }, [file.url, getThumbnail]);
-
-  const handlePreview = useCallback(
-    (event: React.MouseEvent) => {
-      if (disabled) {
-        return;
-      }
-      onPreview?.(file, event);
-    },
-    [disabled, file, onPreview]
-  );
+  // const [showPreview, setShowPreview] = useState(false);
+  const { previewImage } = usePreviewImage(file, listType);
 
   const handleRemove = useCallback(
     (event: React.MouseEvent) => {
@@ -72,9 +40,9 @@ export const UploadFileItem = (props: UploadFileItemProps) => {
       if (disabled) {
         return;
       }
-      onCancel?.(file.id as number | string, event);
+      onRemove?.(file);
     },
-    [disabled, file.id, onCancel]
+    [disabled, file, onRemove]
   );
 
   const handleReupload = useCallback(
@@ -83,17 +51,29 @@ export const UploadFileItem = (props: UploadFileItemProps) => {
       if (disabled) {
         return;
       }
-      onReupload?.(file, event);
+      onReupload?.(file);
     },
     [disabled, file, onReupload]
   );
 
+  const handlePreview = useCallback(
+    (event: React.MouseEvent) => {
+      event.stopPropagation();
+      if (disabled || !isImage(file.originFile as File)) {
+        return;
+      }
+      // setShowPreview(true);
+      onPreview?.(file);
+    },
+    [disabled, file, onPreview]
+  );
+
   const renderProgressBar = () => {
-    const { progress = 0, status } = file;
+    const { percent = 0, status } = file;
 
     return (
       <Progress
-        value={progress}
+        value={percent}
         className={cn(
           'absolute bottom-0 left-12 h-1 w-full',
           !disabled && status === 'uploading' ? 'visible' : 'invisible'
@@ -103,28 +83,31 @@ export const UploadFileItem = (props: UploadFileItemProps) => {
   };
 
   const renderPreview = () => {
-    const thumbnail = previewImage ? (
-      <img
-        role="presentation"
-        src={previewImage}
-        alt={file.name}
-        onClick={handlePreview}
-        aria-label={`Preview: ${file.name}`}
-        onKeyDown={() => {
-          void 0;
-        }}
-        className="h-full w-full object-contain"
-      />
-    ) : (
-      <Paperclip className="h-4 w-4" />
-    );
+    const thumbnail =
+      previewImage || file.url ? (
+        <img
+          role="presentation"
+          src={previewImage || file.url}
+          alt={file.name}
+          aria-label={`Preview: ${file.name}`}
+          className={cn('h-full w-full object-contain', thumbnailClassName)}
+          onClick={handlePreview}
+          onKeyDown={() => {
+            void 0;
+          }}
+        />
+      ) : (
+        <Paperclip className="h-4 w-4" />
+      );
 
     return (
-      <div
-        className={cn('flex items-center justify-center', listType === 'picture' ? 'absolute inset-0' : 'h-12 w-12')}
-      >
-        {renderThumbnail ? renderThumbnail(file, thumbnail) : thumbnail}
-      </div>
+      <>
+        <div
+          className={cn('flex items-center justify-center', listType === 'picture' ? 'absolute inset-0' : 'h-12 w-12')}
+        >
+          {renderThumbnail ? renderThumbnail(file, thumbnail) : thumbnail}
+        </div>
+      </>
     );
   };
 
@@ -166,9 +149,9 @@ export const UploadFileItem = (props: UploadFileItemProps) => {
         onClick={handleRemove}
         disabled={disabled}
         className={cn(
-          'flex w-10 items-center justify-center p-0',
-          listType === 'picture' ? 'absolute top-1 right-1 hidden h-6 w-6 bg-muted p-0 group-hover:flex' : '',
-          file.status === 'error' ? 'hover:text-destructive' : ''
+          'mr-1 flex h-8 w-8 items-center justify-center rounded-full p-0',
+          file.status === 'error' ? 'hover:text-destructive' : '',
+          removeClassName
         )}
       >
         <X className="h-4 w-4" />
@@ -183,7 +166,7 @@ export const UploadFileItem = (props: UploadFileItemProps) => {
           ? t('fileTooSmall', { size: formatSize(minSizeBytes) })
           : file.error === 'fileTooBig'
             ? t('fileTooBig', { size: formatSize(maxSizeBytes) })
-            : t('uploadFail');
+            : tErrors(file.error);
       return (
         <div
           className={cn(
@@ -191,8 +174,8 @@ export const UploadFileItem = (props: UploadFileItemProps) => {
             listType === 'picture' && 'absolute inset-0 flex flex-col items-center justify-center bg-foreground/70'
           )}
         >
-          <span className="text-center">{errorMessage}</span>
-          {allowReupload && (
+          <span className="mt-1 text-center text-xs">{errorMessage}</span>
+          {allowReupload && file.error !== 'fileTooSmall' && file.error !== 'fileTooBig' && (
             <Button
               onClick={handleReupload}
               variant="ghost"
@@ -212,23 +195,15 @@ export const UploadFileItem = (props: UploadFileItemProps) => {
   };
 
   const renderFileSize = () => {
-    if (file.status !== 'error' && file.blobFile) {
-      return <span className="text-xs">{formatSize(file?.blobFile?.size)}</span>;
+    if (file.status !== 'error' && file.originFile) {
+      return <span className="text-muted-foreground text-xs">{formatSize(file?.originFile?.size)}</span>;
     }
     return null;
   };
 
   const renderFilePanel = () => {
     const fileElement = (
-      <div
-        className="truncate"
-        tabIndex={-1}
-        onKeyDown={() => {
-          void 0;
-        }}
-        onClick={handlePreview}
-        aria-label={`Preview: ${file.name}`}
-      >
+      <div className="truncate text-sm" tabIndex={-1} aria-label={`Preview: ${file.name}`}>
         {file.name}
       </div>
     );
@@ -241,24 +216,66 @@ export const UploadFileItem = (props: UploadFileItemProps) => {
     );
   };
 
+  const renderActionButtons = () => {
+    if (!(removable || isImage(file.originFile as File))) {
+      return null;
+    }
+
+    const containerClasses = cn('absolute inset-0 hidden group-hover:block', 'bg-foreground/30 backdrop-blur-sm');
+
+    const buttonClasses = cn(
+      'flex items-center justify-center gap-1',
+      buttonsPosition === 'center' ? 'absolute inset-0 flex' : 'absolute top-1 right-1 flex'
+    );
+
+    const actionButtonClass = cn(
+      'flex items-center justify-center rounded-full p-0',
+      'bg-muted transition-colors',
+      buttonsPosition === 'center' ? 'h-8 w-8' : 'h-6 w-6'
+    );
+
+    return (
+      <div className={containerClasses}>
+        <div className={buttonClasses}>
+          {isImage(file.originFile as File) && (
+            <Button variant="ghost" onClick={handlePreview} disabled={disabled} className={actionButtonClass}>
+              <Eye className="h-4 w-4" />
+            </Button>
+          )}
+          {removable && (
+            <Button
+              variant="ghost"
+              onClick={handleRemove}
+              disabled={disabled}
+              className={cn(
+                actionButtonClass,
+                file.status === 'error' ? 'hover:text-destructive' : '',
+                removeClassName
+              )}
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   if (listType === 'picture') {
     return (
       <div
         {...rest}
-        ref={ref}
         className={cn(
           'group relative h-24 w-24 overflow-hidden rounded border',
           file.status === 'error' ? 'border-destructive text-destructive' : '',
           disabled ? 'opacity-50' : '',
-          singleImage && 'h-full w-full',
           className
         )}
-        onClick={onClick}
       >
         {renderIcon()}
         {renderPreview()}
         {renderErrorStatus()}
-        {renderRemoveButton()}
+        {renderActionButtons()}
       </div>
     );
   }
@@ -266,7 +283,6 @@ export const UploadFileItem = (props: UploadFileItemProps) => {
   return (
     <div
       {...rest}
-      ref={ref}
       className={cn(
         'relative flex h-12 w-full items-center gap-2 overflow-hidden rounded border',
         file.status === 'error' ? 'border-destructive text-destructive' : '',

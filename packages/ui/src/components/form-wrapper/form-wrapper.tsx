@@ -68,7 +68,16 @@ export function FormWrapper<TFormSchema extends z.ZodType>({
 
   return (
     <RHFFormProvider {...form}>
-      <form ref={formRef} className={cn('space-y-4', className)} onSubmit={form.handleSubmit(handleSubmit)} {...props}>
+      <form
+        ref={formRef}
+        className={cn('space-y-4', className)}
+        onSubmit={e => {
+          e.preventDefault();
+          e.stopPropagation();
+          form.handleSubmit(handleSubmit)(e);
+        }}
+        {...props}
+      >
         {typeof children === 'function' ? children({ loading, form }) : children}
         {isFormNoSubmitButton && <button type="submit" className="hidden" />}
       </form>

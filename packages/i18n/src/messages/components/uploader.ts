@@ -7,7 +7,7 @@ export const uploaderMessages = {
     fileTooSmall: 'Minimum size is {size}.',
     fileTooBig: 'Maximum size is {size}.',
     maxFileSize: 'Max file size is {size}.',
-    dragAndDrop: 'Click to select file',
+    dragAndDrop: 'Click or drag file to this area to upload',
     acceptedFormats: 'Accepted formats: {formats}.',
     allFileTypesAccepted: 'All file types accepted',
   },

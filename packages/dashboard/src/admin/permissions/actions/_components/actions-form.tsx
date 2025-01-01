@@ -30,7 +30,7 @@ export default function ActionsFormModal({ open = true, onClose, onSubmit }: IAc
 
   return (
     <Modal
-      isOpen={open}
+      open={open}
       title={t('addNewAction')}
       onClose={onClose}
       buttons={[

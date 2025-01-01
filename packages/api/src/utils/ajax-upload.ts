@@ -6,7 +6,7 @@ import { getAPIReferrerAndOrigin } from './referrer-origin';
 
 export interface ErrorStatus {
   type: 'timeout' | 'server_error' | 'xhr_error';
-  response?: IFileResponse;
+  errorCode?: string | number;
 }
 
 interface Options {
@@ -34,6 +34,20 @@ function getResponse(xhr: XMLHttpRequest) {
   try {
     const response = JSON.parse(text) as HTTPResponse<IFileResponse[]>;
     return response.data[0] as IFileResponse;
+  } catch {
+    return text;
+  }
+}
+
+function getErrorCode(xhr: XMLHttpRequest) {
+  const text = xhr.responseText;
+  if (!text) {
+    return text;
+  }
+
+  try {
+    const response = JSON.parse(text) as HTTPResponse<IFileResponse[]>;
+    return response.code;
   } catch {
     return text;
   }
@@ -105,11 +119,12 @@ export async function ajaxUpload(options: Options) {
   }
 
   xhr.onload = event => {
-    const resp = getResponse(xhr);
     if (xhr.status < 200 || xhr.status >= 300) {
-      onError?.({ type: 'server_error', response: resp as IFileResponse }, event, xhr);
+      const errorCode = getErrorCode(xhr);
+      onError?.({ type: 'server_error', errorCode }, event, xhr);
       return;
     }
+    const resp = getResponse(xhr);
     onSuccess?.(resp as IFileResponse, event, xhr);
   };
 
