@@ -19,5 +19,7 @@ export const blogFormMessages = {
     publishSuccess: 'Publish Blog Successfully',
     updateSuccess: 'Update Blog Successfully',
     ownerBlog: "{name}'s Blog",
+    selectCategories: 'Select Categories',
+    searchCategories: 'Search Categories',
   },
 };

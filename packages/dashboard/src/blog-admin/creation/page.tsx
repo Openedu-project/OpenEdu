@@ -22,12 +22,8 @@ interface ICreationProps {
   id?: string;
 }
 
-const getHastTag = async (shouldFetch: boolean) => {
+const getHastTag = async () => {
   try {
-    if (!shouldFetch) {
-      return [];
-    }
-
     const res = await getHashtagService();
     return res.results;
   } catch (error) {
@@ -37,12 +33,8 @@ const getHastTag = async (shouldFetch: boolean) => {
   }
 };
 
-const getCategories = async (shouldFetch: boolean) => {
+const getCategories = async () => {
   try {
-    if (!shouldFetch) {
-      return [];
-    }
-
     return await getCategoriesTreeService(undefined, { queryParams: { active: true, type: 'blog' } });
   } catch (error) {
     console.error(error);
@@ -73,8 +65,8 @@ export default async function OrgBlogCreation({ className, blogType, aiButton, i
       getTranslations('errors'),
       getTranslations('blogNavigation'),
       getTranslations('blogForm'),
-      getHastTag(blogType === 'org'),
-      getCategories(blogType === 'org'),
+      getHastTag(),
+      getCategories(),
       getI18nConfigServer(),
       getBlogContent(id),
       getOrgByDomainService(undefined, {
@@ -120,10 +112,11 @@ export default async function OrgBlogCreation({ className, blogType, aiButton, i
             <Image
               src={orgData?.thumbnail?.url ?? OpenEdu.src}
               alt="creation-banner"
-              priority
-              quality={100}
               aspectRatio="1:1"
               fill
+              sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
               style={{ objectFit: 'contain' }}
               className="h-[80px] w-[80px] rounded-full border bg-background"
               containerHeight="auto"

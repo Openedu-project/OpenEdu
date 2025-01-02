@@ -3,7 +3,7 @@ import { getBlogDraftContent } from '@oe/api/services/blog';
 import { getI18nConfigServer } from '@oe/api/services/i18n';
 import BannerBg from '@oe/assets/images/blog-creation-bg.png';
 import WhaleError from '@oe/assets/images/whale/whale-error.png';
-import { AUTH_ROUTES } from '@oe/core/utils/routes';
+import { AUTH_ROUTES, BLOG_ROUTES, generateRoute } from '@oe/core/utils/routes';
 import { pickCharacters } from '@oe/core/utils/string';
 import { BlogForm, type BlogType, type IFormAction } from '@oe/ui/components/blog';
 import { Image } from '@oe/ui/components/image';
@@ -60,11 +60,11 @@ export default async function BlogCreationPage({ className, blogType, aiButton, 
   const breakcrumbItems = [
     {
       label: tBlogNavigation('myBlog'),
-      // path: generateRoute(BLOG_ROUTES.authorBlog, { username: me.username }),
+      path: generateRoute(BLOG_ROUTES.authorBlog, { username: me.username }),
     },
     {
       label: tBlogNavigation('blogManagement'),
-      // path: BLOG_ROUTES.blogManagement,
+      path: BLOG_ROUTES.blogManagement,
     },
     {
       label: tBlogNavigation(action === 'create' ? 'blogCreation' : 'blogEditer'),
@@ -77,10 +77,11 @@ export default async function BlogCreationPage({ className, blogType, aiButton, 
         <Image
           src={BannerBg.src}
           alt="creation-banner"
-          priority
           noContainer
           fill
-          sizes="100vw"
+          sizes="(max-width: 768px) 100vw,
+          (max-width: 1200px) 50vw,
+          33vw"
           style={{ objectFit: 'cover' }}
           className="h-full w-full rounded-xl"
         />

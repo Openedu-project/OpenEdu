@@ -14,9 +14,9 @@ import type { KeyboardEvent } from 'react';
 import showdown from 'showdown';
 import { useRouter } from '#common/navigation';
 import { AutocompeteMultiple, Autocomplete } from '#components/autocomplete';
-import { CategorySelectionModal } from '#components/category-selection';
 import { FormWrapper } from '#components/form-wrapper';
 import { RichTextEditor } from '#components/rich-text';
+import { SelectTree } from '#components/select-tree';
 import { Uploader } from '#components/uploader';
 import { Button } from '#shadcn/button';
 import { FormFieldWithLabel } from '#shadcn/form';
@@ -60,12 +60,15 @@ const blogFormAction = async ({
   id,
 }: IBlogFormAction): Promise<IActionStatus> => {
   try {
-    const { thumbnail, hashtag_names, ...baseData } = blogData;
+    const { thumbnail, hashtag_names, category_ids, ...baseData } = blogData;
     const payload: IBlogRequest = {
       ...baseData,
       is_publish: isPublish,
       blog_type: blogType,
       banner_id: thumbnail.id,
+      category_ids: category_ids.map(obj => {
+        return { id: obj.id };
+      }),
       hashtag_names: hashtag_names?.map(name => {
         return { name };
       }),
@@ -172,7 +175,10 @@ export default function BlogForm({
         <>
           <div className={cn('col-span-full flex w-full flex-wrap justify-between gap-4 py-2')}>
             <FormFieldWithLabel name="title" className="flex-1">
-              <Input className="giant-iheading-semibold16 p-2" placeholder={`${tBlogs('nameOfArticle')}...`} />
+              <Input
+                className="giant-iheading-semibold16 rounded-none border-0 border-b-2 p-2 focus:border-b-2 focus-visible:ring-0"
+                placeholder={`${tBlogs('nameOfArticle')}...`}
+              />
             </FormFieldWithLabel>
 
             <div className="hidden gap-4 md:flex">
@@ -192,9 +198,27 @@ export default function BlogForm({
             </div>
           </div>
           <div className="h-fit rounded-lg md:order-1">
-            <div className={cn('flex flex-col gap-4', blogType === 'personal' && 'hidden')}>
-              <FormFieldWithLabel name="category_ids">
-                <CategorySelectionModal className="giant-iheading-semibold16" categories={categories} showValue />
+            <div className={cn('mb-4 flex flex-col gap-4', blogType === 'personal' && 'hidden')}>
+              <FormFieldWithLabel
+                name="category_ids"
+                labelClassName="justify-between mb-4"
+                label={
+                  <>
+                    <p className="giant-iheading-semibold16 text-foreground">{tBlogs('category')}</p>
+                    <Button variant="ghost" className="h-8 w-8 cursor-default p-0 hover:bg-transparent">
+                      <Settings className="h-4 w-4" />
+                    </Button>
+                  </>
+                }
+              >
+                <SelectTree<ICategoryTree, IBlogFormType['category_ids'][number]>
+                  data={categories}
+                  placeholder={tBlogs('selectCategories')}
+                  searchPlaceholder={tBlogs('searchCategories')}
+                  getLabel={node => node.name}
+                  getValue={node => ({ id: node.id, name: node.name })}
+                  checkable
+                />
               </FormFieldWithLabel>
 
               <FormFieldWithLabel
@@ -245,7 +269,7 @@ export default function BlogForm({
                 )}
               />
 
-              <FormFieldWithLabel label={tBlogs('imageDesc')} name="image_description">
+              <FormFieldWithLabel label={tBlogs('imageDesc')} name="image_description" className="mt-4">
                 <Input placeholder={tBlogs('desc')} />
               </FormFieldWithLabel>
             </div>
