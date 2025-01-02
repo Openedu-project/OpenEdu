@@ -17,7 +17,7 @@ export function NotificationButton() {
         <Button variant="ghost" size="icon" className="relative">
           <Bell className="h-5 w-5" />
           {typeof unreadCount === 'number' && unreadCount > 0 && (
-            <span className="-top-1 -right-1 absolute flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-destructive-foreground text-xs">
+            <span className="-top-1 -right-1 absolute flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-[11px] text-destructive-foreground">
               {unreadCount > 99 ? '99+' : unreadCount}
             </span>
           )}

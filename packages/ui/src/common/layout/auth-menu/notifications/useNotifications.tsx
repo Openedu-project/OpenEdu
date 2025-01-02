@@ -1,4 +1,4 @@
-import { useGetNotification, useUpdateNotification } from '@oe/api/hooks/useNotification';
+import { useGetNotification, useGetNotificationBadge, useUpdateNotification } from '@oe/api/hooks/useNotification';
 import type { INotificationItem } from '@oe/api/types/notification';
 import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
 import { useTranslations } from 'next-intl';
@@ -14,6 +14,7 @@ export function useNotifications() {
     sort: 'create_at desc',
   });
   const { triggerUpdateNotification } = useUpdateNotification();
+  const { mutateNotificationBadge } = useGetNotificationBadge();
 
   const [notifications, setNotifications] = useState<INotificationItem[]>([]);
   const [hasMore, setHasMore] = useState(true);
@@ -41,12 +42,13 @@ export function useNotifications() {
           read_all: false,
         });
         setNotifications(prev => prev.map(notif => (notif.id === id ? { ...notif, read_at: Date.now() } : notif)));
+        mutateNotificationBadge();
       } catch (error) {
         console.error('Failed to mark notification as read:', error);
         toast.error(tError((error as HTTPErrorMetadata).code.toString()));
       }
     },
-    [tError, triggerUpdateNotification]
+    [tError, mutateNotificationBadge, triggerUpdateNotification]
   );
 
   const markAllAsRead = useCallback(async () => {
@@ -57,11 +59,12 @@ export function useNotifications() {
         read_all: true,
       });
       setNotifications(prev => prev.map(notif => ({ ...notif, read_at: Date.now() })));
+      mutateNotificationBadge();
     } catch (error) {
       console.error('Failed to mark all as read:', error);
       toast.error(tError((error as HTTPErrorMetadata).code.toString()));
     }
-  }, [tError, triggerUpdateNotification]);
+  }, [tError, triggerUpdateNotification, mutateNotificationBadge]);
 
   return {
     notifications,
