@@ -6,6 +6,7 @@ import type { SWRConfiguration } from 'swr';
 import IntlProvider from './intl-provider';
 import SWRProvider from './swr-provider';
 import ThemeProvider from './theme-provider';
+import SocketProvider from './socket-provider';
 
 export default function Provider({
   messages,
@@ -21,7 +22,10 @@ export default function Provider({
     <IntlProvider messages={messages} locale={locale}>
       <ThemeProvider>
         {/* <AuthProvider> */}
-        <SWRProvider {...rest}>{children}</SWRProvider>
+        <SWRProvider {...rest}>
+          <SocketProvider />
+          {children}
+        </SWRProvider>
         {/* </AuthProvider> */}
       </ThemeProvider>
     </IntlProvider>

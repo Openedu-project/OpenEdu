@@ -113,7 +113,7 @@ export const deleteCouponService = async (
       },
     });
   }
-  const response = await deleteAPI<ICouponItemRes>(endpointKey, init);
+  const response = await deleteAPI<ICouponItemRes, null>(endpointKey, null, init);
 
   return response.data;
 };

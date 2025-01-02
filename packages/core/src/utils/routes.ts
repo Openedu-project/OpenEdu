@@ -54,6 +54,7 @@ export const ADMIN_ROUTES = {
   createForm: `/admin${DYNAMIC_FORMS_ROUTES.createForm}`,
   formDetail: `/admin${DYNAMIC_FORMS_ROUTES.formDetail}`,
   formTemplates: `/admin${DYNAMIC_FORMS_ROUTES.formTemplates}`,
+  withdrawRequest: '/admin/withdraw-request',
 } as const;
 
 export const CREATOR_ROUTES = {

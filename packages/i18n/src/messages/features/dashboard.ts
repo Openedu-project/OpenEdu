@@ -43,5 +43,6 @@ export const dashboardMessages = {
       requests: 'Requests',
       organizations: 'Organizations',
     },
+    withdrawRequest: 'Withdraw Request',
   },
 };
