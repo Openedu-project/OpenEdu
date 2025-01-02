@@ -267,6 +267,9 @@ importers:
       cookies-next:
         specifier: ^5.0.2
         version: 5.0.2(next@15.1.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
+      dayjs:
+        specifier: ^1.11.13
+        version: 1.11.13
       next:
         specifier: 15.1.2
         version: 15.1.2(babel-plugin-react-compiler@19.0.0-beta-37ed2a7-20241206)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -612,6 +615,9 @@ importers:
       react-image-crop:
         specifier: ^11.0.7
         version: 11.0.7(react@19.0.0)
+      react-infinite-scroll-component:
+        specifier: ^6.1.0
+        version: 6.1.0(react@19.0.0)
       react-phone-number-input:
         specifier: ^3.4.10
         version: 3.4.10(react-dom@19.0.0(react@19.0.0))(react@19.0.0)

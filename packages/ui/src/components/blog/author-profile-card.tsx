@@ -57,7 +57,7 @@ export default function AuthorProfileCard({ profile, className, isMe = false, va
         </span>
       </div>
 
-      <p className="mcaption-regular12 text-center">{profile.about}</p>
+      <p className="mcaption-regular12 line-clamp-5 text-center">{profile.about}</p>
       {isMe ? (
         <>
           <Link
@@ -65,12 +65,12 @@ export default function AuthorProfileCard({ profile, className, isMe = false, va
               buttonVariants({ variant: 'outline' }),
               '!no-underline min-w-[80%] border-primary text-primary'
             )}
-            href={BLOG_ROUTES.blogCreation}
+            href={BLOG_ROUTES.createBlog}
           >
             {tGeneral('write')}
           </Link>
           <Link
-            className={cn(buttonVariants({ variant: 'primary' }), '!no-underline min-w-[80%]')}
+            className={cn(buttonVariants({ variant: 'default' }), '!no-underline min-w-[80%]')}
             href={BLOG_ROUTES.blogManagement}
           >
             {t('blogManagement')}

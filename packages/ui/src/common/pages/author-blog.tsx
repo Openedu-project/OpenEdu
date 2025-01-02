@@ -38,8 +38,8 @@ export default async function AuthorPage({ params }: { params: { username: strin
   ]);
 
   return (
-    <div className="grid min-h-screen grid-cols-1 p-6 pb-10 md:px-10 lg:grid-cols-10 lg:gap-10">
-      <div className="lg:order-1 lg:col-span-3">
+    <div className="grid min-h-screen grid-cols-1 p-6 pb-4 md:px-10 lg:grid-cols-10 lg:gap-10">
+      <div className="mb-4 lg:order-1 lg:col-span-3 lg:mb-0">
         <AuthorProfileCard
           profile={profileData}
           isMe={me?.username === username}

@@ -122,25 +122,6 @@ export function BlogCard({
               <p className={cn('mcaption-regular12 line-clamp-4 text-foreground')}>{blog?.description}</p>
             )}
           </div>
-
-          {/* TODO */}
-          {/* <CardFooter className="mt-spacing-m flex justify-between items-center border-t !px-0 !py-3 flex-wrap">
-            <div className="flex space-x-2 items-center p-2">
-              <Eye />
-              <span className="mcaption-regular12 text-foreground">{abbreviateNumber(blog?.time_read ?? 0)}</span>
-            </div>
-            <Button variant="ghost" className="!p-2 gap-spacing-xs h-auto">
-              <Message />
-              <span className="mcaption-regular12 text-foreground">{abbreviateNumber(blog?.cmt_count ?? 0)}</span>
-            </Button>
-            <Button variant="ghost" className="!p-2 gap-spacing-xs h-auto">
-              <LikeOutline />
-              <span className="mcaption-regular12 text-foreground">{abbreviateNumber(blog?.like_count ?? 0)}</span>
-            </Button>
-            <Button variant="ghost" size="icon" className="!p-2 gap-spacing-xs h-auto">
-              <BookMark width={20} height={20} />
-            </Button>
-          </CardFooter> */}
         </div>
       </CardContent>
     </Card>

@@ -1,4 +1,3 @@
-import { authorProfileCard } from './author-profile-card';
 import { blogFormMessages } from './blog-form';
 import { dateTimePickerMessages } from './date-time-picker';
 import { dialogMessages } from './dialog';
@@ -18,6 +17,5 @@ export const componentMessages = {
   ...dialogMessages,
   ...blogFormMessages,
   ...dialogMessages,
-  ...authorProfileCard,
   ...loginRequiredMessages,
 };

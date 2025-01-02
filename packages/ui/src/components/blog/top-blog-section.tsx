@@ -2,7 +2,7 @@ import type { IBlog } from '@oe/api/types/blog';
 
 import WhaleNoData from '@oe/assets/images/whale-no-data.png';
 import { useTranslations } from 'next-intl';
-import { ScrollArea } from '#shadcn/scroll-area';
+import { ScrollArea, ScrollBar } from '#shadcn/scroll-area';
 import { cn } from '#utils/cn';
 import { Image } from '../image';
 import { BlogCard } from './blog-card';
@@ -17,23 +17,25 @@ export default function TopBlogs({ blogs = [], className, title, contentRight = 
   const t = useTranslations('general');
 
   return (
-    <div className={cn('h-[500px]', className)}>
+    <div className={cn('lg:h-[500px]', className)}>
       <h2 className={cn('giant-iheading-semibold20 mb-4 line-clamp-2 border-primary border-l-[2px] pl-1 text-primary')}>
         {title}
       </h2>
-      <div className="relative h-[calc(100%-80px)]">
-        <div className="absolute top-0 left-0 h-full w-full rounded-lg bg-primary/10 p-3">
-          <ScrollArea className="h-full pr-2">
+      <div className="relative lg:h-[calc(100%-80px)]">
+        <div className="top-0 left-0 h-full w-full rounded-lg bg-primary/10 p-3 lg:absolute">
+          <ScrollArea className="h-full">
             {blogs.length > 0 ? (
-              blogs.map((item, index) => (
-                <BlogCard
-                  key={`rank-${index + 1}`}
-                  blog={item}
-                  className="mb-3 bg-white"
-                  authorOnTop={!contentRight}
-                  contentRight={contentRight}
-                />
-              ))
+              <div className="flex gap-2 lg:flex-col">
+                {blogs.map((item, index) => (
+                  <BlogCard
+                    key={`rank-${index + 1}`}
+                    blog={item}
+                    className="w-[250px] bg-white lg:w-auto"
+                    authorOnTop={!contentRight}
+                    contentRight={contentRight}
+                  />
+                ))}
+              </div>
             ) : (
               <div className="py-6">
                 <Image
@@ -49,6 +51,7 @@ export default function TopBlogs({ blogs = [], className, title, contentRight = 
                 <p className="mcaption-regular16 lg:mcaption-regular20 w-full p-6 text-center">{t('noData')}</p>
               </div>
             )}
+            <ScrollBar orientation="horizontal" />
           </ScrollArea>
         </div>
       </div>
