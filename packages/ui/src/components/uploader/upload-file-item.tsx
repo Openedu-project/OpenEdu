@@ -62,6 +62,7 @@ export const UploadFileItem = (props: UploadFileItemProps) => {
       if (disabled || !isImage(file.originFile as File)) {
         return;
       }
+      console.log('handlePreview', file);
       // setShowPreview(true);
       onPreview?.(file);
     },

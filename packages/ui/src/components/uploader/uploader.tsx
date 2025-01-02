@@ -227,10 +227,11 @@ export const Uploader = (props: UploaderProps) => {
           fileItemProps={{
             ...fileItemProps,
             listType,
-            onRemove: handleRemove,
-            onReupload: (file: FileType) => uploadFile(file, files),
             minSizeBytes,
             maxSizeBytes,
+            onRemove: handleRemove,
+            onReupload: (file: FileType) => uploadFile(file, files),
+            onPreview: handlePreview,
           }}
           {...restProps}
         >
