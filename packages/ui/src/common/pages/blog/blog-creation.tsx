@@ -3,13 +3,13 @@ import { getBlogDraftContent } from '@oe/api/services/blog';
 import { getI18nConfigServer } from '@oe/api/services/i18n';
 import BannerBg from '@oe/assets/images/blog-creation-bg.png';
 import WhaleError from '@oe/assets/images/whale/whale-error.png';
-import { AUTH_ROUTES, BLOG_ROUTES, generateRoute } from '@oe/core/utils/routes';
+import { AUTH_ROUTES } from '@oe/core/utils/routes';
 import { pickCharacters } from '@oe/core/utils/string';
 import { BlogForm, type BlogType, type IFormAction } from '@oe/ui/components/blog';
 import { Image } from '@oe/ui/components/image';
 import { getTranslations } from 'next-intl/server';
 import { redirect } from 'next/navigation';
-import { BreadcrumbWithPath } from '#components/breadcrumb';
+import { Breadcrumb } from '#components/breadcrumb';
 import { Avatar, AvatarFallback, AvatarImage } from '#shadcn/avatar';
 import { cn } from '#utils/cn';
 
@@ -60,11 +60,11 @@ export default async function BlogCreationPage({ className, blogType, aiButton, 
   const breakcrumbItems = [
     {
       label: tBlogNavigation('myBlog'),
-      path: generateRoute(BLOG_ROUTES.authorBlog, { username: me.username }),
+      // path: generateRoute(BLOG_ROUTES.authorBlog, { username: me.username }),
     },
     {
       label: tBlogNavigation('blogManagement'),
-      path: BLOG_ROUTES.blogManagement,
+      // path: BLOG_ROUTES.blogManagement,
     },
     {
       label: tBlogNavigation(action === 'create' ? 'blogCreation' : 'blogEditer'),
@@ -98,7 +98,7 @@ export default async function BlogCreationPage({ className, blogType, aiButton, 
           </p>
         </div>
       </div>
-      <BreadcrumbWithPath items={breakcrumbItems} />
+      <Breadcrumb items={breakcrumbItems} />
       <BlogForm
         className={cn('p-4', className)}
         blogType={blogType}

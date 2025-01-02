@@ -9,7 +9,7 @@ import WhaleError from '@oe/assets/images/whale/whale-error.png';
 import { getCookie } from '@oe/core/utils/cookie';
 import { BLOG_ADMIN_ROUTES } from '@oe/core/utils/routes';
 import { BlogForm, type BlogType, type IFormAction } from '@oe/ui/components/blog';
-import { BreadcrumbWithPath } from '@oe/ui/components/breadcrumb';
+import { Breadcrumb } from '@oe/ui/components/breadcrumb';
 import { Image } from '@oe/ui/components/image';
 import { cn } from '@oe/ui/utils/cn';
 import { getTranslations } from 'next-intl/server';
@@ -137,7 +137,7 @@ export default async function OrgBlogCreation({ className, blogType, aiButton, i
         </div>
       </div>
 
-      <BreadcrumbWithPath items={breakcrumbItems} />
+      <Breadcrumb items={breakcrumbItems} />
 
       <BlogForm
         className={cn('p-4', className)}
