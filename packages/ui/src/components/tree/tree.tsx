@@ -60,7 +60,7 @@ export function Tree<T>({
   };
 
   return (
-    <div>
+    <>
       <div className="mb-4 flex flex-col gap-2 md:flex-row md:items-center">
         {searchable && (
           <Input
@@ -112,6 +112,6 @@ export function Tree<T>({
         }}
         onChange={handleChange}
       />
-    </div>
+    </>
   );
 }

@@ -13,7 +13,6 @@ import type {
   IPermissionSelectedActions,
 } from '@oe/api/types/permissions';
 import { Button } from '@oe/ui/shadcn/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@oe/ui/shadcn/card';
 import { Input } from '@oe/ui/shadcn/input';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@oe/ui/shadcn/table';
@@ -149,8 +148,57 @@ export default function PagesList() {
   );
 
   return (
-    <div className="space-y-4">
-      <Card className="w-full overflow-hidden">
+    <div className="flex h-full flex-col gap-4">
+      <div className="flex flex-col gap-2 md:flex-row md:items-center">
+        <Input
+          placeholder={t('searchPage')}
+          className="w-64 pl-8"
+          value={searchTerm}
+          prefixIcon={<Search className="h-4 w-4" />}
+          onChange={e => setSearchTerm(e.target.value)}
+        />
+        <div className="flex items-center gap-2">
+          <Button onClick={handleSave} className="flex items-center gap-2" disabled={isSaving} loading={isSaving}>
+            <Save className="h-4 w-4" />
+            {t('save')}
+          </Button>
+        </div>
+      </div>
+      <div className="scrollbar overflow-auto">
+        <Table>
+          <TableHeader className="sticky top-0 z-10 bg-background shadow">
+            <TableHeaderActions
+              selectedActions={selectedActions}
+              groupedRoutes={groupedRoutes}
+              onSelectAllAction={handleSelectAllForAction}
+            />
+          </TableHeader>
+          <TableBody>
+            {Object.entries(groupedRoutes).map(([group, routes]) => (
+              <React.Fragment key={group}>
+                <TableRow className="bg-slate-50">
+                  <TableCell
+                    colSpan={DEFAULT_ACTIONS_PERMISSION.length + 3}
+                    className="sticky left-0 bg-slate-50 font-medium capitalize"
+                  >
+                    {group} {t('pages')}
+                  </TableCell>
+                </TableRow>
+                {filterRoutes(routes).map(route => (
+                  <RouteRow
+                    key={route.key}
+                    route={route}
+                    selectedActions={selectedActions}
+                    onActionToggle={handleActionToggle}
+                    onSelectAllForRoute={handleSelectAllForRoute}
+                  />
+                ))}
+              </React.Fragment>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+      {/* <Card className="w-full overflow-hidden">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
           <CardTitle>{t('pagePermission')}</CardTitle>
           <div className="flex items-center space-x-4">
@@ -205,7 +253,7 @@ export default function PagesList() {
             </Table>
           </div>
         </CardContent>
-      </Card>
+      </Card> */}
     </div>
   );
 }

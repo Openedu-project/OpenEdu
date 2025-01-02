@@ -149,6 +149,7 @@ export default function OrganizationRequest() {
         header: t('organizationName'),
         accessorKey: 'answers.company_name.answer_text',
         enableSorting: false,
+        size: 200,
         cell: ({ row }) => {
           return getAnswerText('company_name', row.original.answers as IFormUserResponseAnswerItem[]);
         },
@@ -178,7 +179,7 @@ export default function OrganizationRequest() {
         size: 220,
         cell: ({ row }) =>
           row.original.status === 'reviewing' ? (
-            <div className="flex w-[220px] justify-center gap-4">
+            <div className="flex w-[220px] justify-center gap-2">
               <Button variant="destructive" onClick={() => handleOpenRejectModal(row.original)}>
                 {t('reject')}
               </Button>

@@ -41,7 +41,7 @@ const RoleHeader = memo(
     }, [allRoutes.filter, permissionConfig, role.permissions]);
 
     return (
-      <div className="space-y-2">
+      <div className="space-y-2 p-2">
         <div className="text-center font-medium">{role.name}</div>
         <div className="flex justify-around gap-2">
           {actionAvailability.map(({ action, allChecked, isDisabled }) => (

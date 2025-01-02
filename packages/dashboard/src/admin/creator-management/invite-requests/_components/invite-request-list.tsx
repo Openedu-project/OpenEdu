@@ -77,7 +77,7 @@ export default function InviteRequestMngmList() {
   );
 
   return (
-    <div className="space-y-4">
+    <>
       <Table
         columns={columns}
         api={API_ENDPOINT.USER_INVITATIONS}
@@ -97,6 +97,6 @@ export default function InviteRequestMngmList() {
           manualPagination: true,
         }}
       />
-    </div>
+    </>
   );
 }

@@ -191,7 +191,7 @@ export default function CreatorsManagementList() {
   }, [t, handleOpenDeleteModal]);
 
   return (
-    <div className="space-y-4">
+    <>
       <Table
         columns={columns}
         api={API_ENDPOINT.ADMIN_CREATORS}
@@ -231,6 +231,6 @@ export default function CreatorsManagementList() {
         <ConfirmDeleteCreatorModal onSubmit={handleDeleteCreator} onClose={handleCloseDeleteModal} />
       )}
       {isInviteModalOpen && <InviteCreatorModal onSubmit={handleSendInvitation} onClose={handleCloseInviteModal} />}
-    </div>
+    </>
   );
 }

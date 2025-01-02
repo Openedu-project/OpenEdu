@@ -31,10 +31,12 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
   const [activeTab, setActiveTab] = useState<string | undefined>(defaultTab);
   const registerForm = useCallback((metadata: IFormMetadata<TFormSchema>) => {
     formsRef.current.set(metadata.id, metadata);
+    setFormIds(prev => [...prev, metadata.id]);
   }, []);
 
   const unregisterForm = useCallback((id: string) => {
     formsRef.current.delete(id);
+    setFormIds(prev => prev.filter(formId => formId !== id));
   }, []);
 
   const registerTab = useCallback(
@@ -221,7 +223,7 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
       if (isSubmitting) {
         return;
       }
-
+      setIsSubmitting(true);
       try {
         const isValid = await validateForms(formIds, true);
         if (!isValid) {

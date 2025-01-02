@@ -29,7 +29,7 @@ export const SubmitFormsButton: FC<IFormSubmitButtonProps> = ({
   };
 
   const Component = asChild ? Slot : Button;
-
+  console.log('isSubmitting', isSubmitting);
   return (
     <Component
       type="button"
@@ -40,6 +40,7 @@ export const SubmitFormsButton: FC<IFormSubmitButtonProps> = ({
       )}
       disabled={disabled || isSubmitting}
       onClick={handleClick}
+      loading={isSubmitting}
       {...props}
     >
       {children ? children : <span>{tGeneral('submit')}</span>}

@@ -1,5 +1,12 @@
 import { getUnlocalizedPathname } from '@oe/i18n/utils';
 
+export const DYNAMIC_FORMS_ROUTES = {
+  formList: '/forms',
+  createForm: '/forms/create',
+  formDetail: '/forms/:id',
+  formTemplates: '/forms/templates',
+} as const;
+
 export const PLATFORM_ROUTES = {
   homepage: '/',
   orgNotFound: '/org-not-found',
@@ -43,12 +50,20 @@ export const ADMIN_ROUTES = {
   creatorManagementInvitations: '/admin/creator-management/invitations',
   organizationRequests: '/admin/organizations/organization-requests',
   organizationManagement: '/admin/organizations/organizations-management',
+  formList: `/admin${DYNAMIC_FORMS_ROUTES.formList}`,
+  createForm: `/admin${DYNAMIC_FORMS_ROUTES.createForm}`,
+  formDetail: `/admin${DYNAMIC_FORMS_ROUTES.formDetail}`,
+  formTemplates: `/admin${DYNAMIC_FORMS_ROUTES.formTemplates}`,
 } as const;
 
 export const CREATOR_ROUTES = {
   dashboard: '/creator',
   courses: '/creator/courses',
   coupon: '/creator/coupon',
+  formList: `/creator${DYNAMIC_FORMS_ROUTES.formList}`,
+  createForm: `/creator${DYNAMIC_FORMS_ROUTES.createForm}`,
+  formDetail: `/creator${DYNAMIC_FORMS_ROUTES.formDetail}`,
+  formTemplates: `/creator${DYNAMIC_FORMS_ROUTES.formTemplates}`,
 } as const;
 
 export const PROTECTED_ROUTES = {
@@ -57,13 +72,6 @@ export const PROTECTED_ROUTES = {
   learner: '/learner',
   blog: '/blog/admin',
   affiliate: '/affiliate',
-} as const;
-
-export const DYNAMIC_FORMS_ROUTES = {
-  formList: '/forms',
-  createForm: '/forms/create',
-  formDetail: '/forms/:id',
-  formTemplates: '/forms/templates',
 } as const;
 
 export const ZONE_ROUTES = {

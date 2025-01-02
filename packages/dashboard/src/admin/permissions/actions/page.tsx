@@ -1,19 +1,27 @@
-import { DashboardHeaderCard } from '@oe/ui/common/layout';
+import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import { TableProvider } from '@oe/ui/components/table';
 import { useTranslations } from 'next-intl';
 import ActionsList from './_components/actions-list';
+import CreateActionButton from './_components/create-action-button';
 
 export default function ActionSettings() {
   const tDashboard = useTranslations('dashboard.permissionSettings');
+  const tPermissionActionList = useTranslations('permissionActionList');
 
   return (
-    <>
-      <DashboardHeaderCard
-        breadcrumbs={[{ label: tDashboard('title'), disabled: true }, { label: tDashboard('action') }]}
+    <TableProvider>
+      <DashboardMainPageLayout
+        breadcrumbs={[{ label: tDashboard('title'), disabled: true }, { label: tPermissionActionList('title') }]}
         dashboard="admin"
-      />
-      <div className="rounded bg-background p-4">
+        title={
+          <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+            <h2 className="mb-0 text-2xl">{tPermissionActionList('title')}</h2>
+            <CreateActionButton />
+          </div>
+        }
+      >
         <ActionsList />
-      </div>
-    </>
+      </DashboardMainPageLayout>
+    </TableProvider>
   );
 }

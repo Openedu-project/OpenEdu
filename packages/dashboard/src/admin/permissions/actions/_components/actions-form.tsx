@@ -1,7 +1,7 @@
 import { type IPermissionActionConfigSchema, permissionActionConfigSchema } from '@Oe/api/schemas/permission';
 import type { IPermissionConfigPayload } from '@oe/api/types/permissions';
 import { Modal } from '@oe/ui/components/modal';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
+import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
 import { Input } from '@oe/ui/shadcn/input';
 import { Textarea } from '@oe/ui/shadcn/textarea';
 import { useTranslations } from 'next-intl';
@@ -49,37 +49,15 @@ export default function ActionsFormModal({ open = true, onClose, onSubmit }: IAc
       validationSchema={permissionActionConfigSchema}
       onSubmit={handleSubmit}
     >
-      {form => (
-        <>
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t('name')}</FormLabel>
-                <FormControl>
-                  <Input placeholder={t('namePlaceholder')} {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+      <>
+        <FormFieldWithLabel label={t('name')} name="name">
+          <Input placeholder={t('namePlaceholder')} />
+        </FormFieldWithLabel>
 
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t('description')}</FormLabel>
-                <FormControl>
-                  <Textarea placeholder={t('descriptionPlaceholder')} className="resize-none" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </>
-      )}
+        <FormFieldWithLabel label={t('description')} name="description">
+          <Textarea placeholder={t('descriptionPlaceholder')} className="resize-none" />
+        </FormFieldWithLabel>
+      </>
     </Modal>
   );
 }

@@ -3,7 +3,12 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
-import { FormNestedProvider, FormWrapper, type INestedFormsValues } from '#components/form-wrapper';
+import {
+  FormNestedProvider,
+  FormNestedWrapper,
+  type INestedFormsValues,
+  SubmitFormsButton,
+} from '#components/form-wrapper';
 import { Button } from '#shadcn/button';
 import {
   Dialog,
@@ -62,19 +67,26 @@ const ModalButtons = ({
   if (buttons && buttons.length > 0) {
     return (
       <div className="flex justify-end space-x-2">
-        {buttons.map(button => (
-          <Button
-            key={button.label}
-            type={button.type ?? 'button'}
-            variant={button.variant ?? 'default'}
-            onClick={
-              button.onClick ? () => button.onClick?.(handleClose) : button.type === 'button' ? handleClose : undefined
-            }
-            disabled={isSubmitting && button.type === 'submit'}
-          >
-            {button.label}
-          </Button>
-        ))}
+        {buttons.map(button =>
+          button.type === 'submit' ? (
+            <SubmitFormsButton key={button.label} />
+          ) : (
+            <Button
+              key={button.label}
+              type={button.type ?? 'button'}
+              variant={button.variant ?? 'default'}
+              onClick={
+                button.onClick
+                  ? () => button.onClick?.(handleClose)
+                  : button.type === 'button'
+                    ? handleClose
+                    : undefined
+              }
+            >
+              {button.label}
+            </Button>
+          )
+        )}
       </div>
     );
   }
@@ -135,13 +147,13 @@ export const Modal = <TSchema extends FormSchema = never>({
   const hasButtons = !!buttons || !!hasCancelButton || !!showSubmit;
 
   const content = isForm ? (
-    <FormWrapper
+    <FormNestedWrapper
       id="modal-form"
       schema={validationSchema}
       className={cn('scrollbar px-4', hasTitleOrDescription && hasButtons ? 'overflow-y-auto' : '')}
     >
       {({ form }) => (typeof children === 'function' ? children(form) : children)}
-    </FormWrapper>
+    </FormNestedWrapper>
   ) : (
     <div className={cn('scrollbar px-4', hasTitleOrDescription && hasButtons ? 'overflow-y-auto' : '')}>
       {children as ReactNode}

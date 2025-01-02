@@ -22,10 +22,10 @@ export const TableHeaderActions = ({
 
   return (
     <TableRow>
-      <TableHead className="w-[250px] whitespace-nowrap bg-white">{t('pageName')}</TableHead>
-      <TableHead className="w-[250px] whitespace-nowrap bg-white">{t('path')}</TableHead>
+      <TableHead className="w-[250px] whitespace-nowrap bg-muted">{t('pageName')}</TableHead>
+      <TableHead className="w-[250px] whitespace-nowrap bg-muted">{t('path')}</TableHead>
       {DEFAULT_ACTIONS_PERMISSION.map(action => (
-        <TableHead key={action} className="min-w-[100px] text-center">
+        <TableHead key={action} className="min-w-[100px] bg-muted text-center">
           <div className="flex flex-col items-center gap-2">
             <span className="whitespace-nowrap capitalize">{action}</span>
             <Checkbox
@@ -37,7 +37,7 @@ export const TableHeaderActions = ({
           </div>
         </TableHead>
       ))}
-      <TableHead className="min-w-[100px] whitespace-nowrap text-center">{t('selectAll')}</TableHead>
+      <TableHead className="min-w-[100px] whitespace-nowrap bg-muted text-center">{t('selectAll')}</TableHead>
     </TableRow>
   );
 };

@@ -52,8 +52,10 @@ export function getDefaultValuesFromSchema<T extends z.ZodType>(schema: T): z.in
       acc[key] = getDefaultValuesFromSchema(field);
     } else if (field instanceof z.ZodEnum) {
       acc[key] = field.options[0] || '';
-    } else if (field instanceof z.ZodOptional || field instanceof z.ZodNullable) {
+    } else if (field instanceof z.ZodNullable) {
       acc[key] = null;
+    } else if (field instanceof z.ZodOptional && field._def.innerType instanceof z.ZodString) {
+      acc[key] = '';
     } else {
       acc[key] = undefined;
     }

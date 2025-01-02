@@ -1,4 +1,4 @@
-import { DashboardHeaderCard } from '@oe/ui/common/layout';
+import { DashboardMainPageLayout } from '@oe/ui/common/layout';
 import { useTranslations } from 'next-intl';
 import CreatorRequestMngmList from './_components/creator-request-management';
 
@@ -7,16 +7,12 @@ export default function CreatorRequestManagement() {
   const t = useTranslations('creatorManagement.requestCreator');
 
   return (
-    <>
-      <DashboardHeaderCard
-        breadcrumbs={[{ label: tDashboard('title'), disabled: true }, { label: tDashboard('requests') }]}
-        dashboard="admin"
-      >
-        <h1 className="mb-4 text-2xl">{t('requestTitle')}</h1>
-      </DashboardHeaderCard>
-      <div className="rounded bg-background p-4">
-        <CreatorRequestMngmList />
-      </div>
-    </>
+    <DashboardMainPageLayout
+      breadcrumbs={[{ label: tDashboard('title'), disabled: true }, { label: tDashboard('requests') }]}
+      dashboard="admin"
+      title={t('requestTitle')}
+    >
+      <CreatorRequestMngmList />
+    </DashboardMainPageLayout>
   );
 }

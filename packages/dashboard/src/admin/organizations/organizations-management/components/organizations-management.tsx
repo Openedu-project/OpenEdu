@@ -218,29 +218,27 @@ export default function OrganizationsManagement() {
 
   return (
     <>
-      <div className="h-full">
-        <Table
-          columns={columns}
-          api={API_ENDPOINT.ADMIN_ORGANIZATIONS}
-          hasNoColumn
-          apiParams={{
-            page: 1,
-            per_page: 10,
-            sort: 'create_at desc',
-          }}
-          height="100%"
-          ref={tableRef}
-          filterOptions={filterOptions}
-          filterSearchProps={{ useQueryParams: true }}
-          tableOptions={{
-            manualPagination: true,
-          }}
-        >
-          <Button className="flex gap-[12px]" onClick={handleOpenCreateModal}>
-            <Plus className="h-4 w-4" /> {t('createOrganization')}
-          </Button>
-        </Table>
-      </div>
+      <Table
+        columns={columns}
+        api={API_ENDPOINT.ADMIN_ORGANIZATIONS}
+        hasNoColumn
+        apiParams={{
+          page: 1,
+          per_page: 10,
+          sort: 'create_at desc',
+        }}
+        height="100%"
+        ref={tableRef}
+        filterOptions={filterOptions}
+        filterSearchProps={{ useQueryParams: true }}
+        tableOptions={{
+          manualPagination: true,
+        }}
+      >
+        <Button className="flex gap-[12px]" onClick={handleOpenCreateModal}>
+          <Plus className="h-4 w-4" /> {t('createOrganization')}
+        </Button>
+      </Table>
       {isOpenChangeStatusModal && (
         <ChangeStatusOrgModal onSubmit={handleChangeStatus} onClose={handleCloseChangeStatusModal} />
       )}

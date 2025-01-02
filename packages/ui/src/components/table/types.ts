@@ -41,6 +41,7 @@ export type TableProps<TData> = {
   hasNoColumn?: boolean;
   className?: string;
   filterSearchProps?: Omit<FilterSearchProps, 'filterOptions'>;
-  mutate?: () => void;
+  expandColumnProps?: Partial<ColumnDef<TData>>;
+  mutate?: KeyedMutator<HTTPPagination<TData>>;
   renderSubComponent?: (props: { row: Row<TData> }) => ReactNode;
 };

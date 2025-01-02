@@ -3,7 +3,7 @@
 import { useCategoriesTree } from '@oe/api/hooks/useCategories';
 import { bulkDeleteCategoryService, createUpdateCategoriesTreeService } from '@oe/api/services/categories';
 import type { ICategoryBulkUpsert, ICategoryTree } from '@oe/api/types/categories';
-import { DashboardHeaderCard } from '@oe/ui/common/layout/dashboard-layout';
+import { DashboardMainPageLayout } from '@oe/ui/common/layout';
 import { Tree } from '@oe/ui/components/tree';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
@@ -60,16 +60,15 @@ export default function CourseCategories() {
 
   return (
     <>
-      <DashboardHeaderCard
+      <DashboardMainPageLayout
         breadcrumbs={[
           { label: tDashboard('courseManagement'), disabled: true },
           { label: tDashboard('courseCategories') },
         ]}
         dashboard="admin"
+        title={tCourses('categories.title')}
+        mainClassName="overflow-hidden"
       >
-        <h1 className="mb-4 text-2xl">{tCourses('categories.title')}</h1>
-      </DashboardHeaderCard>
-      <div className="rounded bg-background p-4">
         <Tree<ICategoryTree>
           data={items}
           dataConfig={{
@@ -93,8 +92,9 @@ export default function CourseCategories() {
           saveButtonLabel={tCourses('categories.save')}
           onSave={handleSave}
           onDelete={handleDelete}
+          className="scrollbar h-full flex-col overflow-auto"
         />
-      </div>
+      </DashboardMainPageLayout>
     </>
   );
 }

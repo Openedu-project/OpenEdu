@@ -174,6 +174,7 @@ export default function Translations() {
     {
       id: 'id',
       size: 50,
+      className: 'bg-background border-r',
     },
     {
       id: 'language',
@@ -248,6 +249,7 @@ export default function Translations() {
         ref={tableRef}
         isLoading={isLoading}
         filterSearchProps={{ useQueryParams: true }}
+        expandColumnProps={{ className: 'border-r' }}
         renderSubComponent={({ row }) => {
           return (
             <Table

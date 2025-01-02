@@ -54,6 +54,20 @@ export function useGetPermissionPageConfig({ params }: { params: IFilter }) {
   };
 }
 
+export function useGetPermissionPageForPages({ params }: { params: IFilter }) {
+  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.PAGE_CONFIGS, queryParams: { ...params } });
+  const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
+    getPermissionPageConfigService(endpoint, { params })
+  );
+
+  return {
+    permissions: data?.results,
+    permissionsError: error,
+    mutatePermissions: mutate,
+    isLoadingPermissions: isLoading,
+  };
+}
+
 export function useCreatePermissionConfig() {
   const { trigger, isMutating, error } = useSWRMutation(
     API_ENDPOINT.PAGE_CONFIGS,

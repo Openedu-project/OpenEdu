@@ -100,7 +100,7 @@ export const SidebarItem: FC<ISidebarItemProps> = ({ item, depth, maxDepth, path
 
   const renderTooltipContent = () => (
     <div className="min-w-[200px] p-3">
-      <div className="mb-2 flex items-center gap-2 border-b pb-2">
+      <div className={cn('mb-2 flex items-center gap-2 border-b pb-2', !hasChildren && 'mb-0 border-none pb-0')}>
         {item.icon && <span className="text-muted-foreground">{item.icon}</span>}
         <span className="font-medium">{item.label}</span>
       </div>
@@ -128,7 +128,7 @@ export const SidebarItem: FC<ISidebarItemProps> = ({ item, depth, maxDepth, path
 
   return (
     <li>
-      {isCollapsed && hasChildren ? (
+      {isCollapsed ? (
         <Tooltip
           content={renderTooltipContent()}
           contentProps={{ side: 'right', sideOffset: 8, className: 'p-0 shadow-lg' }}

@@ -174,7 +174,7 @@ export default function CreatorRequestMngmList() {
   ];
 
   return (
-    <div className="space-y-4">
+    <>
       <Table
         columns={columns}
         api={
@@ -197,6 +197,6 @@ export default function CreatorRequestMngmList() {
         }}
       />
       {isOpenRejectModal && <RejectCreatorModal onSubmit={handleRejectCreator} onClose={handleCloseRejectModal} />}
-    </div>
+    </>
   );
 }

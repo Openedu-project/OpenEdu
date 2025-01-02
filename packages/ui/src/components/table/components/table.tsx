@@ -1,7 +1,7 @@
 'use no memo';
 
 import { type RowData, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { useImperativeHandle, useMemo, useRef } from 'react';
+import { useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { createExpandingColumn, createNoColumn, createSelectionColumn } from '../columns';
 import {
   useTableData,
@@ -15,6 +15,7 @@ import {
 import type { TableProps } from '../types';
 import { TableFilterSearch } from './table-filter-search';
 import { TablePagination } from './table-pagination';
+import { useTable } from './table-provider';
 import { TableUnvirtualized } from './table-unvirtualized';
 import { TableVirtualized } from './table-virtualized';
 
@@ -38,6 +39,7 @@ export default function Table<TData>({
   isLoading,
   className,
   filterSearchProps,
+  expandColumnProps,
   renderSubComponent,
 }: TableProps<TData>) {
   const memoizedColumns = useMemo(() => {
@@ -47,13 +49,13 @@ export default function Table<TData>({
       innerColumns = [createNoColumn(), ...innerColumns];
     }
     if (hasExpand) {
-      innerColumns = [createExpandingColumn(), ...innerColumns];
+      innerColumns = [createExpandingColumn(expandColumnProps), ...innerColumns];
     }
     if (hasSelection) {
       innerColumns = [createSelectionColumn(), ...innerColumns];
     }
     return innerColumns;
-  }, [columns, hasExpand, hasSelection, hasNoColumn]);
+  }, [columns, hasExpand, hasSelection, hasNoColumn, expandColumnProps]);
 
   const { sorting, sortingOptions } = useTableSorting<TData>(tableOptions);
   const { columnFilters, globalFilter, tableFilterOptions, setColumnFilters, setGlobalFilter } =
@@ -123,14 +125,17 @@ export default function Table<TData>({
     ...paginationOptions,
     ...tableOptions,
   });
-
-  // const tableRef = useRef(table);
+  const { setMutate } = useTable();
 
   useImperativeHandle(ref, () => ({
     getData: () => tableData,
     table: table,
-    mutate: mutate,
+    mutate,
   }));
+
+  useEffect(() => {
+    setMutate?.(mutate);
+  }, [mutate, setMutate]);
 
   const { rows } = table.getRowModel();
 

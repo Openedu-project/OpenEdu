@@ -8,7 +8,6 @@ import {
 } from '@oe/api/hooks/usePermission';
 import type { IPermissionAccessItemPayload, IPermissionRouteInfo } from '@oe/api/types/permissions';
 import { Button } from '@oe/ui/shadcn/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@oe/ui/shadcn/card';
 import { Input } from '@oe/ui/shadcn/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@oe/ui/shadcn/select';
 import { toast } from '@oe/ui/shadcn/sonner';
@@ -251,105 +250,102 @@ export default function RolesList() {
   }, [t, roles, groupedRoutes, permissionConfigMap, selectedOrgId, triggerCreatePermissionAccess]);
 
   return (
-    <div className="space-y-4">
-      <Card className="w-full overflow-hidden">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-          <CardTitle>{t('pagePermission')}</CardTitle>
-          <div className="flex items-center space-x-4">
-            <Select value={selectedOrgId} onValueChange={setSelectedOrgId}>
-              <SelectTrigger className="w-48">
-                <SelectValue placeholder="Select organization" />
-              </SelectTrigger>
-              <SelectContent>
-                {dataListOrganization?.results?.map(org => (
-                  <SelectItem key={org.id} value={org.id}>
-                    {org.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <div className="relative">
-              <Search className="absolute top-3 left-2 h-4 w-4 text-gray-500" />
-              <Input
-                placeholder={t('searchPage')}
-                className="w-64 pl-8"
-                defaultValue={searchTerm}
-                onChange={e => debouncedSetSearch(e.target.value)}
-              />
-            </div>
-            <Button onClick={handleSave} className="flex items-center gap-2" disabled={isSaving || !selectedOrgId}>
-              <Save className="h-4 w-4" />
-              {t('save')}
-            </Button>
-          </div>
-        </CardHeader>
-        <CardContent className="overflow-auto">
-          <div className="relative w-full min-w-[1000px]">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="-left-[24px] sticky z-20 w-[250px] bg-white">
+    <div className="flex h-full flex-col gap-4">
+      <div className="flex flex-col gap-2 md:flex-row md:items-center">
+        <Select value={selectedOrgId} onValueChange={setSelectedOrgId}>
+          <SelectTrigger className="w-48">
+            <SelectValue placeholder="Select organization" />
+          </SelectTrigger>
+          <SelectContent>
+            {dataListOrganization?.results?.map(org => (
+              <SelectItem key={org.id} value={org.id}>
+                {org.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Input
+          placeholder={t('searchPage')}
+          className="w-48 pl-8 md:w-64"
+          defaultValue={searchTerm}
+          prefixIcon={<Search className="h-4 w-4" />}
+          onChange={e => debouncedSetSearch(e.target.value)}
+        />
+        <div>
+          <Button
+            onClick={handleSave}
+            className="flex items-center gap-2 md:ml-auto"
+            disabled={isSaving || !selectedOrgId}
+          >
+            <Save className="h-4 w-4" />
+            {t('save')}
+          </Button>
+        </div>
+      </div>
+      <div className="scrollbar overflow-auto">
+        <Table>
+          <TableHeader className="sticky top-0 z-10 shadow">
+            <TableRow>
+              <TableHead className="min-w-[250px] bg-muted">
+                <div className="flex items-center">
+                  <span>{t('pageName')}</span>
+                </div>
+              </TableHead>
+              {roles?.map(role => (
+                <TableHead key={role.name} className="min-w-[200px] bg-muted">
+                  <RoleHeader
+                    role={role}
+                    groupedRoutes={groupedRoutes}
+                    permissionConfig={permissionConfigMap}
+                    onToggleAll={action => {
+                      const allRoutes = [...groupedRoutes.admin, ...groupedRoutes.creator];
+                      for (const route of allRoutes) {
+                        handleTogglePermission(role.name, route.key, action);
+                      }
+                    }}
+                  />
+                </TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {Object.entries(filteredRoutes).map(([group, routes]) => (
+              <React.Fragment key={group}>
+                <TableRow className="bg-slate-50">
+                  <TableCell className="-left-[24px] bg-slate-50 font-medium capitalize">
                     <div className="flex items-center">
-                      <span>{t('pageName')}</span>
+                      <span>
+                        {group} {t('pages')}
+                      </span>
                     </div>
-                  </TableHead>
+                  </TableCell>
                   {roles?.map(role => (
-                    <TableHead key={role.name} className="min-w-[200px]">
-                      <RoleHeader
-                        role={role}
-                        groupedRoutes={groupedRoutes}
-                        permissionConfig={permissionConfigMap}
-                        onToggleAll={action => {
-                          const allRoutes = [...groupedRoutes.admin, ...groupedRoutes.creator];
-                          for (const route of allRoutes) {
-                            handleTogglePermission(role.name, route.key, action);
-                          }
-                        }}
-                      />
-                    </TableHead>
+                    <TableCell key={role.name} className="bg-slate-50" />
                   ))}
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {Object.entries(filteredRoutes).map(([group, routes]) => (
-                  <React.Fragment key={group}>
-                    <TableRow className="bg-slate-50">
-                      <TableCell className="-left-[24px] sticky z-20 bg-slate-50 font-medium capitalize">
-                        <div className="flex items-center">
-                          <span>
-                            {group} {t('pages')}
-                          </span>
-                        </div>
+                {routes?.map((route: IPermissionRouteInfo) => (
+                  <TableRow key={route.key}>
+                    <TableCell className="-left-[24px] bg-white font-medium capitalize">
+                      <span>{route.name}</span>
+                    </TableCell>
+                    {roles.map(role => (
+                      <TableCell key={role.name} className="text-center">
+                        <RoleRowActions
+                          role={role}
+                          route={route}
+                          permissionConfig={permissionConfigMap}
+                          onToggleRowRole={handleToggleRowRole}
+                          onTogglePermission={handleTogglePermission}
+                        />
                       </TableCell>
-                      {roles?.map(role => (
-                        <TableCell key={role.name} className="bg-slate-50" />
-                      ))}
-                    </TableRow>
-                    {routes?.map((route: IPermissionRouteInfo) => (
-                      <TableRow key={route.key}>
-                        <TableCell className="-left-[24px] sticky z-20 bg-white font-medium capitalize">
-                          <span>{route.name}</span>
-                        </TableCell>
-                        {roles.map(role => (
-                          <TableCell key={role.name} className="text-center">
-                            <RoleRowActions
-                              role={role}
-                              route={route}
-                              permissionConfig={permissionConfigMap}
-                              onToggleRowRole={handleToggleRowRole}
-                              onTogglePermission={handleTogglePermission}
-                            />
-                          </TableCell>
-                        ))}
-                      </TableRow>
                     ))}
-                  </React.Fragment>
+                  </TableRow>
                 ))}
-              </TableBody>
-            </Table>
-          </div>
-        </CardContent>
-      </Card>
+              </React.Fragment>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }

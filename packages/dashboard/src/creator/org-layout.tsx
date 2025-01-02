@@ -1,5 +1,5 @@
 import { getPermissionMyAccessService } from '@oe/api/services/permissions';
-import { CREATOR_ROUTES, DYNAMIC_FORMS_ROUTES } from '@oe/core/utils/routes';
+import { CREATOR_ROUTES } from '@oe/core/utils/routes';
 import { checkSidebarPermissions } from '@oe/core/utils/sidebar-menu';
 import { DashboardLayout } from '@oe/ui/common/layout';
 import { BookOpen, CirclePercent, FileText, House, LayoutTemplate, ReceiptText } from 'lucide-react';
@@ -42,13 +42,13 @@ export default async function Layout({ children }: { children: ReactNode }) {
             id: 'form-templates',
             label: tDashboard('forms.formTemplates'),
             icon: <LayoutTemplate className="h-5 w-5" />,
-            href: `${CREATOR_ROUTES.dashboard}${DYNAMIC_FORMS_ROUTES.formTemplates}`,
+            href: CREATOR_ROUTES.formTemplates,
           },
           {
             id: 'form-list',
             label: tDashboard('forms.formList'),
             icon: <ReceiptText className="h-5 w-5" />,
-            href: `${CREATOR_ROUTES.dashboard}${DYNAMIC_FORMS_ROUTES.formList}`,
+            href: CREATOR_ROUTES.formList,
           },
         ],
       },

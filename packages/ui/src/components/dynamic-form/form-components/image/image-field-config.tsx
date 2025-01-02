@@ -59,6 +59,7 @@ export function ImageFieldConfig({
             listType="picture"
             accept="image/*"
             value={files}
+            fileListVisible={false}
             onChange={files => {
               setFiles(files);
               handleConfigChange('src', files[0]?.url ?? '');
