@@ -8,6 +8,7 @@ import {
 } from '@oe/api/hooks/usePermission';
 import type { IPermissionAccessItemPayload, IPermissionRouteInfo } from '@oe/api/types/permissions';
 import { Button } from '@oe/ui/shadcn/button';
+import { Checkbox } from '@oe/ui/shadcn/checkbox';
 import { Input } from '@oe/ui/shadcn/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@oe/ui/shadcn/select';
 import { toast } from '@oe/ui/shadcn/sonner';
@@ -18,17 +19,16 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { mutate } from 'swr';
 import { useDebouncedCallback } from 'use-debounce';
 import { DEFAULT_ACTIONS_PERMISSION, DEFAULT_ROLES_PERMISSION } from '../../permission-constant';
-import { type IRoleHeader, RoleHeader } from './roles-list-header';
-import { RoleRowActions } from './roles-list-row';
 
 export default function RolesList() {
   const t = useTranslations('permissionRoleList');
 
   const groupedRoutes = usePermissionRoutes();
   const [searchTerm, setSearchTerm] = useState('');
-  const [roles, setRoles] = useState<IRoleHeader[]>([]);
-  const [isSaving, setIsSaving] = useState(false);
   const [selectedOrgId, setSelectedOrgId] = useState<string>('');
+  const [selectedRole, setSelectedRole] = useState<string>('');
+  const [permissions, setPermissions] = useState<Record<string, Record<string, boolean>>>({});
+  const [isSaving, setIsSaving] = useState(false);
 
   const { dataListOrganization } = useGetOrganization({
     params: { page: 1, per_page: 9999 },
@@ -48,29 +48,23 @@ export default function RolesList() {
       page: 1,
       per_page: 999999,
       org_id: selectedOrgId,
+      role: selectedRole,
     },
   });
+
   const allRoutes = useMemo(() => [...groupedRoutes.admin, ...groupedRoutes.creator], [groupedRoutes]);
 
   const { triggerCreatePermissionAccess } = useCreatePermissionAccess();
 
   const createInitialPermissions = useCallback(() => {
-    const permissions: Record<string, Record<string, boolean>> = {};
-
+    const perms: Record<string, Record<string, boolean>> = {};
     for (const route of allRoutes) {
       if (!route.key) {
         continue;
       }
-
-      const actionMap: Record<string, boolean> = {};
-      for (const action of DEFAULT_ACTIONS_PERMISSION) {
-        actionMap[action] = false;
-      }
-
-      permissions[route.key] = actionMap;
+      perms[route.key] = Object.fromEntries(DEFAULT_ACTIONS_PERMISSION.map(action => [action, false]));
     }
-
-    return permissions;
+    return perms;
   }, [allRoutes]);
 
   useEffect(() => {
@@ -80,17 +74,8 @@ export default function RolesList() {
   }, [dataListOrganization]);
 
   useEffect(() => {
-    if (roles.length === 0) {
-      const initialRoles: IRoleHeader[] = [];
-
-      for (const roleName of DEFAULT_ROLES_PERMISSION) {
-        initialRoles.push({
-          name: roleName,
-          permissions: createInitialPermissions(),
-        });
-      }
-
-      setRoles(initialRoles);
+    if (!(selectedRole && selectedOrgId)) {
+      setPermissions(createInitialPermissions());
       return;
     }
 
@@ -98,42 +83,23 @@ export default function RolesList() {
       return;
     }
 
-    setRoles(prevRoles => {
-      const newRoles: IRoleHeader[] = prevRoles.map(role => ({
-        name: role.name,
-        permissions: { ...role.permissions },
-      }));
+    if (dataListPermissionPageAccess.results.length === 0) {
+      setPermissions(createInitialPermissions());
+      return;
+    }
 
-      if (dataListPermissionPageAccess.results.length === 0) {
-        for (const role of newRoles) {
-          role.permissions = createInitialPermissions();
-        }
-        return newRoles;
+    const newPermissions: Record<string, Record<string, boolean>> = createInitialPermissions();
+
+    for (const access of dataListPermissionPageAccess.results) {
+      if (access.role === selectedRole) {
+        const entityPermissions = (newPermissions[access.entity] || {}) as Record<string, boolean>;
+        newPermissions[access.entity] = entityPermissions;
+        entityPermissions[access.action] = access.allow;
       }
+    }
 
-      const roleMap = new Map(newRoles.map(role => [role.name, role]));
-
-      for (const access of dataListPermissionPageAccess.results) {
-        const role = roleMap.get(access.role);
-        if (!role) {
-          continue;
-        }
-
-        if (!(access.entity in role.permissions)) {
-          role.permissions[access.entity] = {};
-        }
-
-        role.permissions[access.entity] = {
-          ...role.permissions[access.entity],
-          [access.action]: access.allow,
-        };
-      }
-
-      return newRoles;
-    });
-  }, [roles.length, dataListPermissionPageAccess, createInitialPermissions]);
-
-  const debouncedSetSearch = useDebouncedCallback((value: string) => setSearchTerm(value), 300);
+    setPermissions(newPermissions);
+  }, [selectedRole, selectedOrgId, dataListPermissionPageAccess, createInitialPermissions]);
 
   const permissionConfigMap = useMemo(() => {
     if (!dataListPermissionPageConfig?.results) {
@@ -144,6 +110,89 @@ export default function RolesList() {
       return acc;
     }, {});
   }, [dataListPermissionPageConfig]);
+
+  const handleTogglePermission = useCallback(
+    (routeKey: string, action: string) => {
+      const availableActions = permissionConfigMap[routeKey] || [];
+      if (!availableActions.includes(action)) {
+        return;
+      }
+
+      setPermissions(prev => ({
+        ...prev,
+        [routeKey]: {
+          ...prev[routeKey],
+          [action]: !prev[routeKey]?.[action],
+        },
+      }));
+    },
+    [permissionConfigMap]
+  );
+
+  const handleToggleAll = useCallback(
+    (action: string, checked: boolean) => {
+      setPermissions(prev => {
+        const newPermissions = { ...prev };
+        for (const route of allRoutes) {
+          if (route.key && permissionConfigMap[route.key]?.includes(action)) {
+            newPermissions[route.key] = {
+              ...newPermissions[route.key],
+              [action]: checked,
+            };
+          }
+        }
+        return newPermissions;
+      });
+    },
+    [allRoutes, permissionConfigMap]
+  );
+
+  const handleRowToggleAll = useCallback(
+    (routeKey: string, checked: boolean) => {
+      const availableActions = permissionConfigMap[routeKey] || [];
+      if (availableActions.length === 0) {
+        return;
+      }
+
+      setPermissions(prev => ({
+        ...prev,
+        [routeKey]: Object.fromEntries(
+          DEFAULT_ACTIONS_PERMISSION.map(action => [action, checked && availableActions.includes(action)])
+        ),
+      }));
+    },
+    [permissionConfigMap]
+  );
+
+  const handleSave = useCallback(async () => {
+    if (!(selectedOrgId && selectedRole)) {
+      return;
+    }
+
+    try {
+      setIsSaving(true);
+      const pageAccesses = allRoutes.flatMap(route => {
+        const availableActions = permissionConfigMap[route.key] || [];
+        return availableActions.map(action => ({
+          role: selectedRole,
+          entity: route.key,
+          action,
+          allow: !!permissions[route.key]?.[action],
+          org_id: selectedOrgId,
+        }));
+      }) as IPermissionAccessItemPayload[];
+
+      await triggerCreatePermissionAccess({ page_access: pageAccesses });
+      mutate(() => true);
+      toast.success(t('success'));
+    } catch (error) {
+      console.error('Error saving permissions:', error);
+    } finally {
+      setIsSaving(false);
+    }
+  }, [t, permissions, allRoutes, permissionConfigMap, selectedOrgId, selectedRole, triggerCreatePermissionAccess]);
+
+  const debouncedSetSearch = useDebouncedCallback((value: string) => setSearchTerm(value), 300);
 
   const filteredRoutes = useMemo(() => {
     if (!searchTerm.trim()) {
@@ -162,93 +211,44 @@ export default function RolesList() {
     };
   }, [searchTerm, groupedRoutes]);
 
-  const handleTogglePermission = useCallback(
-    (roleName: string, routeKey: string, action: string) => {
-      const availableActions = permissionConfigMap[routeKey] || [];
-      if (!availableActions.includes(action)) {
-        return;
-      }
-
-      setRoles(prev =>
-        prev.map(role => {
-          if (role.name !== roleName) {
-            return role;
-          }
-          return {
-            ...role,
-            permissions: {
-              ...role.permissions,
-              [routeKey]: {
-                ...role.permissions[routeKey],
-                [action]: !role.permissions[routeKey]?.[action],
-              },
-            },
-          };
-        })
-      );
+  const isActionAllChecked = useCallback(
+    (action: string) => {
+      const routesWithAction = allRoutes.filter(route => permissionConfigMap[route.key]?.includes(action));
+      return routesWithAction.length > 0 && routesWithAction.every(route => permissions[route.key]?.[action]);
     },
-    [permissionConfigMap]
+    [allRoutes, permissionConfigMap, permissions]
   );
+  const isAllRowsChecked = useCallback(() => {
+    const routesWithActions = allRoutes.filter(route => Object.keys(permissionConfigMap[route.key] || {}).length > 0);
+    return (
+      routesWithActions.length > 0 &&
+      routesWithActions.every(route =>
+        DEFAULT_ACTIONS_PERMISSION.every(
+          action => !(permissionConfigMap[route.key] || []).includes(action) || permissions[route.key]?.[action]
+        )
+      )
+    );
+  }, [allRoutes, permissionConfigMap, permissions]);
 
-  const handleToggleRowRole = useCallback(
-    (roleName: string, routeKey: string, checked: boolean) => {
-      const availableActions = permissionConfigMap[routeKey] || [];
-      if (availableActions.length === 0) {
-        return;
-      }
-
-      setRoles(prev =>
-        prev.map(role => {
-          if (role.name !== roleName) {
-            return role;
-          }
-          return {
-            ...role,
-            permissions: {
-              ...role.permissions,
-              [routeKey]: Object.fromEntries(
+  const handleToggleAllRows = useCallback(
+    (checked: boolean) => {
+      setPermissions(prev => {
+        const newPermissions = { ...prev };
+        for (const route of allRoutes) {
+          if (route.key) {
+            const availableActions = permissionConfigMap[route.key] || [];
+            if (availableActions.length > 0) {
+              newPermissions[route.key] = Object.fromEntries(
                 DEFAULT_ACTIONS_PERMISSION.map(action => [action, checked && availableActions.includes(action)])
-              ),
-            },
-          };
-        })
-      );
+              );
+            }
+          }
+        }
+        return newPermissions;
+      });
     },
-    [permissionConfigMap]
+    [allRoutes, permissionConfigMap]
   );
-
-  const handleSave = useCallback(async () => {
-    if (!selectedOrgId) {
-      return;
-    }
-
-    try {
-      setIsSaving(true);
-
-      const allRoutes = [...groupedRoutes.admin, ...groupedRoutes.creator];
-      const pageAccesses = roles.flatMap(role =>
-        allRoutes.flatMap(route => {
-          const availableActions = permissionConfigMap[route.key] || [];
-          return availableActions.map(action => ({
-            role: role.name,
-            entity: route.key,
-            action,
-            allow: !!role.permissions[route.key]?.[action],
-            org_id: selectedOrgId,
-          }));
-        })
-      ) as IPermissionAccessItemPayload[];
-
-      await triggerCreatePermissionAccess({ page_access: pageAccesses });
-      mutate(() => true);
-      toast.success(t('success'));
-    } catch (error) {
-      console.error('Error saving permissions:', error);
-    } finally {
-      setIsSaving(false);
-    }
-  }, [t, roles, groupedRoutes, permissionConfigMap, selectedOrgId, triggerCreatePermissionAccess]);
-
   return (
     <div className="flex h-full flex-col gap-4">
       <div className="flex flex-col gap-2 md:flex-row md:items-center">
@@ -264,6 +264,20 @@ export default function RolesList() {
             ))}
           </SelectContent>
         </Select>
+
+        <Select value={selectedRole} onValueChange={setSelectedRole}>
+          <SelectTrigger className="w-48">
+            <SelectValue placeholder="Select role" />
+          </SelectTrigger>
+          <SelectContent>
+            {DEFAULT_ROLES_PERMISSION.map(role => (
+              <SelectItem key={role} value={role}>
+                {role}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
         <Input
           placeholder={t('searchPage')}
           className="w-48 pl-8 md:w-64"
@@ -275,13 +289,14 @@ export default function RolesList() {
           <Button
             onClick={handleSave}
             className="flex items-center gap-2 md:ml-auto"
-            disabled={isSaving || !selectedOrgId}
+            disabled={isSaving || !selectedOrgId || !selectedRole}
           >
             <Save className="h-4 w-4" />
             {t('save')}
           </Button>
         </div>
       </div>
+
       <div className="scrollbar overflow-auto">
         <Table>
           <TableHeader className="sticky top-0 z-10 shadow">
@@ -291,23 +306,26 @@ export default function RolesList() {
                   <span>{t('pageName')}</span>
                 </div>
               </TableHead>
-              {roles?.map(role => (
-                <TableHead key={role.name} className="min-w-[200px] bg-muted">
-                  <RoleHeader
-                    role={role}
-                    groupedRoutes={groupedRoutes}
-                    permissionConfig={permissionConfigMap}
-                    onToggleAll={action => {
-                      const allRoutes = [...groupedRoutes.admin, ...groupedRoutes.creator];
-                      for (const route of allRoutes) {
-                        handleTogglePermission(role.name, route.key, action);
-                      }
-                    }}
-                  />
+              {DEFAULT_ACTIONS_PERMISSION.map(action => (
+                <TableHead key={action} className="bg-muted text-center">
+                  <div className="flex flex-col items-center gap-1">
+                    <span className="text-xs capitalize">{action}</span>
+                    <Checkbox
+                      checked={isActionAllChecked(action)}
+                      onCheckedChange={checked => handleToggleAll(action, !!checked)}
+                    />
+                  </div>
                 </TableHead>
               ))}
+              <TableHead className="bg-muted text-center">
+                <div className="flex flex-col items-center gap-1">
+                  <span className="text-xs capitalize">{t('selectAll')}</span>
+                  <Checkbox checked={isAllRowsChecked()} onCheckedChange={checked => handleToggleAllRows(!!checked)} />
+                </div>
+              </TableHead>
             </TableRow>
           </TableHeader>
+
           <TableBody>
             {Object.entries(filteredRoutes).map(([group, routes]) => (
               <React.Fragment key={group}>
@@ -319,26 +337,43 @@ export default function RolesList() {
                       </span>
                     </div>
                   </TableCell>
-                  {roles?.map(role => (
-                    <TableCell key={role.name} className="bg-slate-50" />
+                  {DEFAULT_ACTIONS_PERMISSION.map(action => (
+                    <TableCell key={action} className="bg-slate-50" />
                   ))}
+                  <TableCell className="bg-slate-50" />
                 </TableRow>
+
                 {routes?.map((route: IPermissionRouteInfo) => (
                   <TableRow key={route.key}>
                     <TableCell className="-left-[24px] bg-white font-medium capitalize">
                       <span>{route.name}</span>
                     </TableCell>
-                    {roles.map(role => (
-                      <TableCell key={role.name} className="text-center">
-                        <RoleRowActions
-                          role={role}
-                          route={route}
-                          permissionConfig={permissionConfigMap}
-                          onToggleRowRole={handleToggleRowRole}
-                          onTogglePermission={handleTogglePermission}
-                        />
-                      </TableCell>
-                    ))}
+                    {DEFAULT_ACTIONS_PERMISSION.map(action => {
+                      const isAvailable = (permissionConfigMap[route.key] || []).includes(action);
+                      return (
+                        <TableCell key={action} className="text-center">
+                          <Checkbox
+                            checked={permissions[route.key]?.[action]}
+                            disabled={!isAvailable}
+                            onCheckedChange={() => handleTogglePermission(route.key, action)}
+                            className={isAvailable ? '' : 'bg-slate-300 opacity-50'}
+                          />
+                        </TableCell>
+                      );
+                    })}
+                    <TableCell className="text-center">
+                      <Checkbox
+                        checked={DEFAULT_ACTIONS_PERMISSION.every(
+                          action =>
+                            !(permissionConfigMap[route.key] || []).includes(action) || permissions[route.key]?.[action]
+                        )}
+                        disabled={Object.keys(permissionConfigMap[route.key] || {}).length === 0}
+                        onCheckedChange={checked => handleRowToggleAll(route.key, !!checked)}
+                        className={
+                          Object.keys(permissionConfigMap[route.key] || {}).length > 0 ? '' : 'bg-slate-300 opacity-50'
+                        }
+                      />
+                    </TableCell>
                   </TableRow>
                 ))}
               </React.Fragment>

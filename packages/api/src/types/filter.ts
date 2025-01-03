@@ -9,6 +9,7 @@ export interface IFilter {
   user_id?: string;
   preloads?: string;
   event?: string;
+  role?: string;
   is_pay?: boolean;
   latest?: boolean;
   is_verified?: boolean;
