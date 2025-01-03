@@ -1,4 +1,5 @@
 'use client';
+
 import type {
   IPermissionAction,
   IPermissionGroupedRoutes,
@@ -7,6 +8,7 @@ import type {
 import { Checkbox } from '@oe/ui/shadcn/checkbox';
 import { TableHead, TableRow } from '@oe/ui/shadcn/table';
 import { useTranslations } from 'next-intl';
+import { useMemo } from 'react';
 import { DEFAULT_ACTIONS_PERMISSION } from '../../permission-constant';
 
 export const TableHeaderActions = ({
@@ -19,6 +21,21 @@ export const TableHeaderActions = ({
   onSelectAllAction: (action: IPermissionAction) => void;
 }) => {
   const t = useTranslations('permissionPagesList');
+
+  const isAllChecked = useMemo(() => {
+    const allRoutes = [...(groupedRoutes?.admin ?? []), ...(groupedRoutes?.creator ?? [])];
+    return allRoutes.every(route => DEFAULT_ACTIONS_PERMISSION.every(action => selectedActions[route.key]?.[action]));
+  }, [groupedRoutes, selectedActions]);
+
+  const handleSelectAll = () => {
+    const allRoutes = [...(groupedRoutes?.admin ?? []), ...(groupedRoutes?.creator ?? [])];
+    const shouldCheck = !isAllChecked;
+    for (const action of DEFAULT_ACTIONS_PERMISSION) {
+      if (shouldCheck !== allRoutes.every(route => selectedActions[route.key]?.[action])) {
+        onSelectAllAction(action);
+      }
+    }
+  };
 
   return (
     <TableRow>
@@ -37,7 +54,12 @@ export const TableHeaderActions = ({
           </div>
         </TableHead>
       ))}
-      <TableHead className="min-w-[100px] whitespace-nowrap bg-muted text-center">{t('selectAll')}</TableHead>
+      <TableHead className="min-w-[100px] whitespace-nowrap bg-muted text-center">
+        <div className="flex flex-col items-center gap-2">
+          <span>{t('selectAll')}</span>
+          <Checkbox checked={isAllChecked} onCheckedChange={handleSelectAll} />
+        </div>
+      </TableHead>
     </TableRow>
   );
 };
