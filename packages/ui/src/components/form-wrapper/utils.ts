@@ -12,6 +12,7 @@ export const scrollToError = (element: HTMLElement | null, options?: ScrollOptio
       block: 'center',
       ...options,
     });
+    element.focus();
   }, 100);
 };
 

@@ -1,7 +1,7 @@
 'use no memo';
-
 import { type RowData, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { useSWRConfig } from 'swr';
 import { createExpandingColumn, createNoColumn, createSelectionColumn } from '../columns';
 import {
   useTableData,
@@ -42,6 +42,7 @@ export default function Table<TData>({
   expandColumnProps,
   renderSubComponent,
 }: TableProps<TData>) {
+  const { mutate: globalMutate } = useSWRConfig();
   const memoizedColumns = useMemo(() => {
     let innerColumns = columns;
 
@@ -125,17 +126,26 @@ export default function Table<TData>({
     ...paginationOptions,
     ...tableOptions,
   });
-  const { setMutate } = useTable();
+  const { setMutate, setMutateAndClearCache } = useTable();
 
   useImperativeHandle(ref, () => ({
     getData: () => tableData,
     table: table,
     mutate,
+    mutateAndClearCache,
   }));
+
+  const mutateAndClearCache = useCallback(() => {
+    if (api?.split('?')?.[0]) {
+      globalMutate((key: string) => !!key?.includes(api.split('?')[0] as string), undefined, { revalidate: false });
+      mutate();
+    }
+  }, [mutate, globalMutate, api]);
 
   useEffect(() => {
     setMutate?.(mutate);
-  }, [mutate, setMutate]);
+    setMutateAndClearCache?.(mutateAndClearCache);
+  }, [mutate, setMutate, mutateAndClearCache, setMutateAndClearCache]);
 
   const { rows } = table.getRowModel();
 

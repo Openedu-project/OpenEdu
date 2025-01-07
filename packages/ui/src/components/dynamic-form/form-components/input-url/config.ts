@@ -1,6 +1,7 @@
 import type { FormFieldType } from '../../types';
 
 export const inputUrlDefaultConfig: FormFieldType = {
+  fieldId: 'input-url',
   fieldType: 'inputUrl',
   name: 'input-url',
   label: 'Input URL',

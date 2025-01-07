@@ -5,7 +5,6 @@ import { fileResponseScheme } from '@oe/api/types/file';
 // import { toast } from '@oe/ui/shadcn/use-toast';
 import { z } from '@oe/api/utils/zod';
 import {
-  FormNavigation,
   FormNestedProvider,
   FormNestedWrapper,
   FormTabs,
@@ -267,9 +266,6 @@ export function RegistrationForm() {
         </FormTabs>
 
         <div className="mt-6 flex gap-4">
-          {/* <FormPrevButton />
-          <FormNextButton /> */}
-          <FormNavigation />
           <SubmitFormsButton />
         </div>
       </FormNestedProvider>

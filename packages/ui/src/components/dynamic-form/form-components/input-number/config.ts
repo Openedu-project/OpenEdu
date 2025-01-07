@@ -1,6 +1,7 @@
 import type { FormFieldType } from '../../types';
 
 export const inputNumberDefaultConfig: FormFieldType = {
+  fieldId: 'input-number',
   fieldType: 'inputNumber',
   name: 'input-number',
   label: 'Number Input',

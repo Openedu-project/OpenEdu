@@ -1,6 +1,7 @@
 import type { FormFieldType } from '../../types';
 
 export const textareaDefaultConfig: FormFieldType = {
+  fieldId: 'textarea',
   fieldType: 'textarea',
   name: 'textarea',
   label: 'Textarea',

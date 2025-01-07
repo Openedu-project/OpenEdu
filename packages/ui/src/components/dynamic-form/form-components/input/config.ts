@@ -1,6 +1,7 @@
 import type { FormFieldType } from '../../types';
 
 export const inputDefaultConfig: FormFieldType = {
+  fieldId: 'input',
   fieldType: 'input',
   name: 'input',
   label: 'Input',

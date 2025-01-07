@@ -1,6 +1,7 @@
 import type { FormFieldType } from '../../types';
 
 export const checkboxDefaultConfig: FormFieldType = {
+  fieldId: 'checkbox',
   fieldType: 'checkbox',
   name: 'checkbox',
   label: 'Checkbox',

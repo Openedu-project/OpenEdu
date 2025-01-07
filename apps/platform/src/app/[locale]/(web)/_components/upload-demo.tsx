@@ -9,7 +9,6 @@ import { useState } from 'react';
 export default function UploadDemo() {
   const [fileList, setFileList] = useState<IFileResponse[]>([]);
 
-  console.log('fileList', fileList);
   return (
     <div>
       <Image

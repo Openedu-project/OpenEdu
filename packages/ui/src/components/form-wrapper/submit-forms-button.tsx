@@ -29,7 +29,6 @@ export const SubmitFormsButton: FC<IFormSubmitButtonProps> = ({
   };
 
   const Component = asChild ? Slot : Button;
-  console.log('isSubmitting', isSubmitting);
   return (
     <Component
       type="button"

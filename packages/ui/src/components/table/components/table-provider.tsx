@@ -5,6 +5,8 @@ interface TableContextType {
   mutate?: () => Promise<any>;
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   setMutate?: (fn: () => Promise<any>) => void;
+  mutateAndClearCache?: () => void;
+  setMutateAndClearCache?: (fn: () => void) => void;
 }
 
 const TableContext = createContext<TableContextType>({});
@@ -16,7 +18,17 @@ export function TableProvider({ children }: { children: ReactNode }) {
     setMutateState(() => fn);
   }, []);
 
-  return <TableContext.Provider value={{ mutate, setMutate }}>{children}</TableContext.Provider>;
+  const [mutateAndClearCache, setMutateAndClearCacheState] = useState<(() => void) | undefined>();
+
+  const setMutateAndClearCache = useCallback((fn: () => void) => {
+    setMutateAndClearCacheState(() => fn);
+  }, []);
+
+  return (
+    <TableContext.Provider value={{ mutate, setMutate, mutateAndClearCache, setMutateAndClearCache }}>
+      {children}
+    </TableContext.Provider>
+  );
 }
 
 export function useTable() {

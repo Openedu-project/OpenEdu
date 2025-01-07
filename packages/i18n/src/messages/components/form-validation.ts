@@ -59,5 +59,6 @@ export const formValidationMessages = {
     multipleUrlsDescription: 'URLs should be entered on separate lines, separated by commas, or spaces.',
     singleUrlError: 'Invalid URL',
     multipleUrlError: 'One of the URLs is invalid',
+    arrayError: 'Please select at least one item',
   },
 };

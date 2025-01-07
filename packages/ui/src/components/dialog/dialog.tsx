@@ -1,5 +1,12 @@
 import type { ReactNode } from 'react';
-import { DialogContent, DialogDescription, DialogHeader, Dialog as DialogShadcn, DialogTitle } from '#shadcn/dialog';
+import {
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  Dialog as DialogShadcn,
+  DialogTitle,
+} from '#shadcn/dialog';
 import { cn } from '#utils/cn';
 
 export interface IDialogProps {
@@ -21,7 +28,7 @@ export function Dialog({ title, description, open, className, icon, setOpen, ren
           <DialogTitle className="text-center font-bold text-2xl">{title}</DialogTitle>
           <DialogDescription className="text-center text-sm">{description}</DialogDescription>
         </DialogHeader>
-        {renderActions}
+        <DialogFooter>{renderActions}</DialogFooter>
       </DialogContent>
     </DialogShadcn>
   );

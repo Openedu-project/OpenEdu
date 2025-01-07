@@ -1,6 +1,7 @@
 import type { FormFieldType } from '../../types';
 
 export const emailDefaultConfig: FormFieldType = {
+  fieldId: 'email',
   fieldType: 'email',
   name: 'email',
   label: 'Email',

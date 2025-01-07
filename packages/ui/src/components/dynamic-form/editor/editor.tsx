@@ -16,12 +16,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { zodResolver } from '@hookform/resolvers/zod';
-import type { z } from '@oe/api/utils/zod';
-import { useMemo } from 'react';
-// import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { Form } from '#shadcn/form';
+import { FormWrapper } from '#components/form-wrapper';
 import { useFormEditorStore } from '../store';
 import type { FormFieldOrGroup, FormFieldType, FormValues } from '../types';
 import { generateZodSchema } from '../utils';
@@ -32,10 +27,10 @@ export function Editor() {
 
   const formSchema = generateZodSchema(fields);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: useMemo(() => zodResolver(formSchema), [formSchema]),
-    mode: 'onSubmit',
-  });
+  // const form = useForm<z.infer<typeof formSchema>>({
+  //   resolver: useMemo(() => zodResolver(formSchema), [formSchema]),
+  //   mode: 'onSubmit',
+  // });
 
   // useEffect(() => {
   //   const defaults = generateDefaultValues(fields);
@@ -51,7 +46,6 @@ export function Editor() {
   );
 
   const handleDragEnd = (event: DragEndEvent) => {
-    console.log(111);
     const { active, over } = event;
     if (!over) {
       return;
@@ -91,26 +85,24 @@ export function Editor() {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-          modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+    <FormWrapper id="dynamic-form" schema={formSchema} onSubmit={onSubmit}>
+      {/* <form onSubmit={form.handleSubmit(onSubmit)}> */}
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+        modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+      >
+        <SortableContext
+          items={fields.map((field: FormFieldOrGroup) => (Array.isArray(field) ? (field[0]?.name ?? '') : field?.name))}
+          strategy={verticalListSortingStrategy}
         >
-          <SortableContext
-            items={fields.map((field: FormFieldOrGroup) =>
-              Array.isArray(field) ? (field[0]?.name ?? '') : field?.name
-            )}
-            strategy={verticalListSortingStrategy}
-          >
-            {fields.map((field: FormFieldOrGroup, index: number) => (
-              <FormField key={Array.isArray(field) ? field[0]?.name : field?.name} config={field} index={index} />
-            ))}
-          </SortableContext>
-        </DndContext>
-      </form>
-    </Form>
+          {fields.map((field: FormFieldOrGroup, index: number) => (
+            <FormField key={Array.isArray(field) ? field[0]?.fieldId : field?.name} config={field} index={index} />
+          ))}
+        </SortableContext>
+      </DndContext>
+      {/* </form> */}
+    </FormWrapper>
   );
 }

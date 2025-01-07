@@ -1,6 +1,7 @@
 import type { FormFieldType } from '../../types';
 
 export const inputCurrencyDefaultConfig: FormFieldType = {
+  fieldId: 'input-currency',
   fieldType: 'inputCurrency',
   name: 'input-currency',
   label: 'Input Currency',

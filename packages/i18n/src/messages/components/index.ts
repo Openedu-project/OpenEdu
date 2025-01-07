@@ -1,5 +1,6 @@
 import { blogFormMessages } from './blog-form';
 import { dateTimePickerMessages } from './date-time-picker';
+import { dialogMessages } from './dialog';
 import { formValidationMessages } from './form-validation';
 import { richTextMessages } from './rich-text';
 import { tableMessages } from './table';
@@ -12,4 +13,5 @@ export const componentMessages = {
   ...uploaderMessages,
   ...dateTimePickerMessages,
   ...blogFormMessages,
+  ...dialogMessages,
 };

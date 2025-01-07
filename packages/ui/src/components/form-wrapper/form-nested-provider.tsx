@@ -25,31 +25,26 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
   onError,
 }: IFormNestedProviderProps) {
   const formsRef = useRef<Map<string, IFormMetadata<TFormSchema>>>(new Map());
-  const [formIds, setFormIds] = useState<string[]>([]);
   const [tabsMetadata, setTabsMetadata] = useState<Map<string, ITabMetadata>>(new Map());
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState<string | undefined>(defaultTab);
+  const [activeFormId, setActiveFormId] = useState<string | undefined>(undefined);
   const registerForm = useCallback((metadata: IFormMetadata<TFormSchema>) => {
     formsRef.current.set(metadata.id, metadata);
-    setFormIds(prev => [...prev, metadata.id]);
+    setActiveFormId(metadata.id);
   }, []);
 
   const unregisterForm = useCallback((id: string) => {
     formsRef.current.delete(id);
-    setFormIds(prev => prev.filter(formId => formId !== id));
+    setActiveFormId(undefined);
   }, []);
 
   const registerTab = useCallback(
-    (tabId: string, formId: string, formMetadata?: IFormMetadata<TFormSchema>) => {
+    (tabId: string, formMetadata?: IFormMetadata<TFormSchema>) => {
       if (!tabsMetadata.has(tabId)) {
-        setFormIds(prev => [...prev, formId]);
-
-        if (!defaultTab && tabsMetadata.size === 0) {
-          setActiveTab(tabId);
-        }
-
+        setActiveTab(tabId);
         tabsMetadata.set(tabId, {
-          formIds,
+          formIds: Array.from(formsRef.current.values()).map(form => form.id),
           id: tabId,
           order: tabsMetadata.size,
           status: (formMetadata?.dependencies?.length ?? 0) > 0 ? 'disabled' : 'incomplete',
@@ -63,14 +58,13 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
         setTabsMetadata(new Map(tabsMetadata));
       }
     },
-    [tabsMetadata, defaultTab, formIds]
+    [tabsMetadata]
   );
 
   const unregisterTab = useCallback(
-    (tabId: string, formId: string) => {
+    (tabId: string) => {
       const tabMetadata = tabsMetadata.get(tabId);
       if (tabMetadata) {
-        setFormIds(prev => prev.filter(id => id !== formId));
         if (tabMetadata.formIds.length === 0) {
           tabsMetadata.delete(tabId);
         }
@@ -79,153 +73,59 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
     [tabsMetadata.delete, tabsMetadata.get]
   );
 
-  const getForms = useCallback(
-    (specificFormIds?: string[]) => {
-      const ids = specificFormIds ? specificFormIds : formIds;
-      return ids
-        .map(id => formsRef.current.get(id))
-        .filter((form): form is IFormMetadata<TFormSchema> => form !== undefined);
-    },
-    [formIds]
-  );
+  const getForms = useCallback((specificFormIds?: string[]) => {
+    const ids = specificFormIds ? specificFormIds : Array.from(formsRef.current.values()).map(form => form.id);
+    return ids
+      .map(id => formsRef.current.get(id))
+      .filter((form): form is IFormMetadata<TFormSchema> => form !== undefined);
+  }, []);
 
-  const validateForm = useCallback(
-    async (form: IFormMetadata<TFormSchema>) => {
-      const submitButton = form.formRef.current?.querySelector('button[type="submit"]');
-      if (submitButton instanceof HTMLButtonElement) {
-        submitButton.click();
+  const validateForm = useCallback(async () => {
+    if (!activeFormId) {
+      return false;
+    }
+    const form = formsRef.current.get(activeFormId);
+    if (!form) {
+      return false;
+    }
+    const submitButton = form.formRef.current?.querySelector('button[type="submit"]');
+    if (submitButton instanceof HTMLButtonElement) {
+      submitButton.click();
+    }
+    const isValid = await form.validate();
+    setTabsMetadata(prev => {
+      const newTabsMetadata = new Map(prev);
+      const tab = form.tabId ? newTabsMetadata.get(form.tabId) : undefined;
+      if (tab) {
+        tab.status = isValid ? 'valid' : 'invalid';
       }
-      const isValid = await form.validate();
-      setTabsMetadata(prev => {
-        const newTabsMetadata = new Map(prev);
-        const tab = form.tabId ? newTabsMetadata.get(form.tabId) : undefined;
-        if (tab) {
-          tab.status = isValid ? 'valid' : 'invalid';
-        }
-        return newTabsMetadata;
-      });
-      if (!isValid) {
-        const firstError = form.formRef.current?.querySelector('[aria-invalid="true"]');
-        if (firstError) {
-          scrollToError(firstError as HTMLElement, scrollOptions);
-        }
-        return false;
+      return newTabsMetadata;
+    });
+    if (!isValid) {
+      const firstError = form.formRef.current?.querySelector('[aria-invalid="true"]');
+      if (firstError) {
+        scrollToError(firstError as HTMLElement, scrollOptions);
+        // if (firstError instanceof HTMLElement) {
+        //   firstError.focus();
+        // }
       }
-      return true;
-    },
-    [scrollOptions]
-  );
-
-  const validateForms = useCallback(
-    async (formIds?: string[], validateAll?: boolean) => {
-      const formsToCheck = getForms(formIds);
-      const validatedFormIds = new Set<string>();
-      const errors = new Map<string, boolean>();
-
-      if (validateAll) {
-        const validationPromises = formsToCheck.map(async form => {
-          const isValid = await validateForm(form);
-          errors.set(form.id, isValid);
-          validatedFormIds.add(form.id);
-        });
-
-        await Promise.all(validationPromises);
-        const isAllValid = Array.from(errors.values()).every(Boolean);
-
-        if (isAllValid) {
-          return isAllValid;
-        }
-
-        if (activeTab) {
-          const sortedTabs = Array.from(tabsMetadata.values())
-            .sort((a, b) => a.order - b.order)
-            .map(tab => tab.id);
-
-          if (isAllValid) {
-            setActiveTab(sortedTabs[sortedTabs.length - 1]);
-            return isAllValid;
-          }
-
-          const currentIndex = sortedTabs.indexOf(activeTab);
-          const currentTabStatus = tabsMetadata.get(activeTab)?.status;
-
-          if (currentTabStatus === 'invalid') {
-            return isAllValid;
-          }
-
-          if (currentTabStatus === 'valid') {
-            const previousTabs = sortedTabs.slice(0, currentIndex);
-            const hasInvalidPreviousTab = previousTabs.some(tabId => {
-              const tab = tabsMetadata.get(tabId);
-              return tab?.status === 'invalid';
-            });
-
-            if (hasInvalidPreviousTab) {
-              const firstInvalidTab = previousTabs.find(tabId => {
-                const tab = tabsMetadata.get(tabId);
-                return tab?.status === 'invalid';
-              });
-              if (firstInvalidTab) {
-                setActiveTab(firstInvalidTab);
-              }
-            } else if (currentIndex < sortedTabs.length - 1) {
-              setActiveTab(sortedTabs[currentIndex + 1]);
-            }
-          }
-        }
-
-        return isAllValid;
-      }
-      for (const form of formsToCheck) {
-        if (validatedFormIds.has(form.id)) {
-          continue;
-        }
-
-        if (form.dependencies) {
-          for (const depId of form.dependencies) {
-            if (validatedFormIds.has(depId)) {
-              continue;
-            }
-
-            const depForm = formsRef.current.get(depId);
-            if (!depForm) {
-              continue;
-            }
-
-            const isValid = await validateForm(depForm);
-            validatedFormIds.add(depId);
-
-            if (!isValid) {
-              setActiveTab(depForm.tabId);
-              return false;
-            }
-          }
-        }
-
-        const isValid = await validateForm(form);
-        validatedFormIds.add(form.id);
-
-        if (!isValid) {
-          if (form.tabId) {
-            setActiveTab(form.tabId);
-          }
-          return false;
-        }
-      }
-
-      return true;
-    },
-    [validateForm, getForms, activeTab, tabsMetadata]
-  );
+      return false;
+    }
+    return true;
+  }, [scrollOptions, activeFormId]);
 
   const submitForm = useCallback(
     async (formIds?: string[]) => {
-      if (isSubmitting) {
+      if (isSubmitting || !activeFormId) {
         return;
       }
       setIsSubmitting(true);
       try {
-        const isValid = await validateForms(formIds, true);
+        const currentForm = formsRef.current.get(activeFormId);
+        if (!currentForm) {
+          return;
+        }
+        const isValid = await validateForm();
         if (!isValid) {
           return;
         }
@@ -242,13 +142,13 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
         setIsSubmitting(false);
       }
     },
-    [isSubmitting, onSubmit, validateForms, getForms, onError]
+    [isSubmitting, onSubmit, getForms, onError, validateForm, activeFormId]
   );
 
   return (
     <FormContext.Provider
       value={{
-        formIds,
+        formsRef,
         isSubmitting,
         tabsMetadata,
         activeTab,
@@ -258,7 +158,7 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
         registerTab,
         unregisterTab,
         submitForm,
-        validateForms,
+        validateForm,
       }}
     >
       <div className={className}>{children}</div>
