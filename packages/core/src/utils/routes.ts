@@ -20,6 +20,34 @@ export const PLATFORM_ROUTES = {
   specificTerms: '/terms/:terms',
 } as const;
 
+export const BLOG_ROUTES = {
+  blog: '/blog',
+  blogDetail: '/blog/organization/:slug',
+  personBlogDetail: '/blog/:username/:slug',
+  blogHashtag: '/blog/hashtag/:id',
+  blogCategory: '/blog/category/:id',
+  blogSearchResult: '/blog/search-result',
+  blogManagement: '/blog/me/management',
+  createBlog: '/blog/me/create',
+  editBlog: '/blog/me/:id/edit',
+  previewBlog: '/blog/me/:id/preview',
+  authorBlog: '/blog/author/:username',
+};
+
+export const BLOG_ADMIN_ROUTES = {
+  writerMgt: '/blog-admin/writer-management',
+  editorMgt: '/blog-admin/editor-management',
+  inviteMgt: '/blog-admin/invitation-management',
+  orgBlogMgt: '/blog-admin/org-blog',
+  userBlogMgt: '/blog-admin/user-blog',
+  requestMgt: '/blog-admin/request',
+  blogCategory: '/blog-admin/blog-category',
+  myBlog: '/blog-admin/my-blog',
+  createBlog: '/blog-admin/create',
+  editBlog: '/blog-admin/:id/edit',
+  previewBlog: '/blog-admin/:id/preview',
+};
+
 export const AUTH_ROUTES = {
   login: '/login',
   signUp: '/signup',
@@ -74,7 +102,7 @@ export const PROTECTED_ROUTES = {
   admin: '/admin',
   creator: '/creator',
   learner: '/learner',
-  blog: '/blog/admin',
+  blog: '/blog-admin',
   affiliate: '/affiliate',
 } as const;
 
@@ -143,6 +171,15 @@ export function isZoneRoute(pathname: string, zone: IZoneRoutes) {
   return Object.entries(ZONE_ROUTES).some(
     ([zoneName, path]) => zoneName === zone && unlocalizedPathname.startsWith(path)
   );
+}
+
+export function generateRoute(pathname: string, params: Record<string, unknown>) {
+  let url = pathname;
+
+  for (const [key, value] of Object.entries(params)) {
+    url = url.replace(`:${key}`, value as string);
+  }
+  return url;
 }
 
 export type IZoneRoutes = keyof typeof ZONE_ROUTES;

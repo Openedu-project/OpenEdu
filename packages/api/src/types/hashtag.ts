@@ -10,4 +10,4 @@ export interface IHashtag {
   formatted_hashtag: string;
 }
 
-export interface IHashtagResponse extends HTTPPagination<IHashtag[]> {}
+export interface IHashtagResponse extends HTTPPagination<IHashtag> {}

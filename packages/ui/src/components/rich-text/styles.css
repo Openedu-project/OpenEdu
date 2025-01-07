@@ -148,3 +148,12 @@
 .rich-text ul[data-type="taskList"] li > label input[type="checkbox"] {
   top: 0;
 }
+
+.rich-text p.is-editor-empty:first-child::before {
+  color: hsl(var(--muted-foreground));
+  font-size: 0.875rem;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}

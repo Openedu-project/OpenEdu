@@ -4,6 +4,7 @@ import { type Editor, EditorContent } from '@tiptap/react';
 import './styles.css';
 
 import { cn } from '@oe/ui/utils/cn';
+import { useTranslations } from 'next-intl';
 import { type Ref, useEffect, useImperativeHandle } from 'react';
 import { BubbleMenu } from './components/bubble-menu';
 import { FloatingMenu } from './components/floating-menu';
@@ -22,6 +23,7 @@ export interface RichTextEditorProps {
   floatingMenuItems?: MenuItem[];
   aiParams?: Record<string, string>;
   onAIApply?: () => void;
+  aiButton?: boolean;
 }
 
 export interface RichTextEditorRef {
@@ -38,11 +40,14 @@ export const RichTextEditor = ({
   floatingMenuItems,
   aiParams,
   onAIApply,
+  aiButton,
   onChange,
   ref,
 }: RichTextEditorProps) => {
+  const tRichText = useTranslations('richText');
   const editor = useRichTextEditor({
     content: defaultValue || value,
+    placeholder: tRichText('placeholder'),
     onUpdate: (editor: Editor) => {
       onChange?.(editor.getHTML());
     },
@@ -63,10 +68,16 @@ export const RichTextEditor = ({
 
   return (
     <div className={cn('flex flex-col overflow-hidden rounded-lg border', className)}>
-      <MenuBar editor={editor} menuItems={menuBarItems} aiParams={aiParams} onAIApply={onAIApply} />
+      <MenuBar editor={editor} menuItems={menuBarItems} aiParams={aiParams} onAIApply={onAIApply} aiButton={aiButton} />
       <div className="relative z-10 grow overflow-hidden">
         <EditorContent editor={editor} className="scrollbar flex h-full min-h-40 overflow-auto [&>div]:grow" />
-        <BubbleMenu editor={editor} menuItems={bubbleMenuItems} aiParams={aiParams} onAIApply={onAIApply} />
+        <BubbleMenu
+          editor={editor}
+          menuItems={bubbleMenuItems}
+          aiParams={aiParams}
+          onAIApply={onAIApply}
+          aiButton={aiButton}
+        />
         <FloatingMenu editor={editor} menuItems={floatingMenuItems} aiParams={aiParams} onAIApply={onAIApply} />
       </div>
     </div>

@@ -13,8 +13,10 @@ export const BubbleMenu: React.FC<{
   aiParams?: Record<string, string>;
   onAIApply?: () => void;
   menuItems?: MenuItem[];
-}> = ({ editor, className, aiParams, onAIApply, menuItems = [] }) => {
-  const { renderMenuItems } = useSharedMenu({ editor, menuItems, defaultMenuItems });
+  aiButton?: boolean;
+}> = ({ editor, className, aiParams, onAIApply, menuItems = [], aiButton }) => {
+  const defaultItems = aiButton ? ([...defaultMenuItems, 'aiRewrite'] as MenuItem[]) : defaultMenuItems;
+  const { renderMenuItems } = useSharedMenu({ editor, menuItems, defaultMenuItems: defaultItems });
 
   if (!(editor && renderMenuItems)) {
     return null;

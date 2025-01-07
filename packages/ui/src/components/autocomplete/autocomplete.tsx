@@ -88,11 +88,11 @@ export function Autocomplete<T extends OptionType | string>({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
+          {...triggerProps}
           variant="outline"
           aria-expanded={open}
           className={cn('justify-between', triggerProps?.className)}
           style={{ width }}
-          {...triggerProps}
         >
           {renderTrigger ? (
             renderTrigger(selectedOption)

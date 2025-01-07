@@ -21,6 +21,7 @@ const LabelWithInfo = ({
   children,
   infoText,
   ref,
+  className,
   ...rest
 }: {
   children: ReactNode;
@@ -28,7 +29,7 @@ const LabelWithInfo = ({
   ref?: Ref<HTMLLabelElement>;
 } & ComponentPropsWithoutRef<typeof Root> &
   VariantProps<typeof labelVariants>) => (
-  <FormLabel ref={ref} {...rest} className="flex items-center space-x-2">
+  <FormLabel ref={ref} {...rest} className={cn('flex items-center space-x-2', className)}>
     {children}
     {infoText ? (
       <Tooltip content={infoText} className="ml-1">

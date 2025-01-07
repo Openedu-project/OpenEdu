@@ -1,6 +1,7 @@
 import FontFamily from '@tiptap/extension-font-family';
 import Highlight from '@tiptap/extension-highlight';
 import Link from '@tiptap/extension-link';
+import Placeholder from '@tiptap/extension-placeholder';
 import Table from '@tiptap/extension-table';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
@@ -19,11 +20,12 @@ import { Video } from './extensions/video';
 
 interface UseRichTextEditorProps {
   content?: string;
+  placeholder?: string;
   editable?: boolean;
   onUpdate?: (editor: Editor) => void;
 }
 
-export const useRichTextEditor = ({ content, editable = true, onUpdate }: UseRichTextEditorProps) => {
+export const useRichTextEditor = ({ content, placeholder, editable = true, onUpdate }: UseRichTextEditorProps) => {
   return useEditor({
     extensions: [
       StarterKit,
@@ -47,6 +49,9 @@ export const useRichTextEditor = ({ content, editable = true, onUpdate }: UseRic
       }),
       TaskList,
       TaskItem.configure({ nested: true }),
+      Placeholder.configure({
+        placeholder,
+      }),
     ],
     content,
     editable,

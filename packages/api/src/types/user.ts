@@ -47,7 +47,7 @@ export interface IUser {
   cover_photo?: string;
   create_at?: number;
   delete_at?: number;
-  display_name?: string;
+  display_name: string;
   email: string;
   followers?: number;
   following?: number;
