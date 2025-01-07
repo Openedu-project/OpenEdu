@@ -1,7 +1,7 @@
 import type { IFileResponse } from './file';
 import type { IOrganization } from './organizations';
 import type { IDataPagination } from './pagination';
-import type { IUserProfile } from './user';
+import type { IUserProfile } from './user-profile';
 
 export interface IApproval<T, R> {
   id: string;
