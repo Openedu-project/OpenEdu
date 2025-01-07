@@ -15,4 +15,5 @@ export const componentMessages = {
   ...blogFormMessages,
   ...dialogMessages,
   ...blogFormMessages,
+  ...dialogMessages,
 };
