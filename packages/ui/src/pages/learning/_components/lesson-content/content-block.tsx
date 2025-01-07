@@ -3,6 +3,7 @@ import { cn } from '#utils/cn';
 import type { ContentRenderer, ContentRendererProps } from './_types/types';
 import ContentEmbedded from './content-player/content-embedded';
 import ContentVideo from './content-player/content-video';
+import ContentQuiz from './content-quiz/content-quiz';
 import ContentText from './content-text';
 
 interface ContentElementProps extends ContentRendererProps {
@@ -41,7 +42,13 @@ export const CONTENT_RENDERERS: Record<TLessonContent, ContentRenderer> = {
   },
 
   quiz: {
-    render: () => <p>quiz</p>,
+    render: props => {
+      const quizzes = props?.data?.quizzes;
+
+      const quiz = quizzes && quizzes.length > 0 ? quizzes[0] : undefined;
+
+      return <ContentQuiz quiz={quiz} course_id={props.courseId} />;
+    },
     getClassName: DEFAULT_CLASSNAME,
   },
 
@@ -59,5 +66,5 @@ export const ContentElement = ({ type, ...props }: ContentElementProps) => {
     return null;
   }
 
-  return <div className="content-wrapper">{renderer.render(props)}</div>;
+  return <div className="h-full p-1 content-wrapper">{renderer.render(props)}</div>;
 };

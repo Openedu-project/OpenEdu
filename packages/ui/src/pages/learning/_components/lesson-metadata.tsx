@@ -21,7 +21,9 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, ...props }: ILesson
   return (
     <div {...props}>
       <div className="flex justify-between gap-2">
-        <h3 className="giant-iheading-semibold16 md:giant-iheading-semibold24 text-primary md:line-clamp-1">{title}</h3>
+        <h3 className="giant-iheading-semibold16 md:giant-iheading-semibold24 mb-0 text-primary md:line-clamp-1">
+          {title}
+        </h3>
         <NavigateButton />
       </div>
       <Link

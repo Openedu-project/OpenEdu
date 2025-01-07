@@ -14,14 +14,20 @@ export interface ContentRenderer {
   getClassName: (isOnlyContent: boolean) => string;
 }
 
+interface ICompleteContentProps {
+  uid: string;
+  type: TLessonContent;
+  duration?: number;
+  pause_at?: number;
+  quiz_id?: string;
+}
+
 export interface LessonContentBlockProps {
   contents?: ILessonContent[];
   courseId: string;
-  onCompleteContent?: (
-    uid: string,
-    type: TLessonContent,
-    duration?: number,
-    pause_at?: number,
-    quizId?: string
-  ) => void;
+  onCompleteContent?: ({ uid, type, duration, pause_at, quiz_id }: ICompleteContentProps) => void;
 }
+
+export type TAnswerInput = {
+  answers: string | string[];
+};

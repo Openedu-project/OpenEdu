@@ -21,3 +21,7 @@ export const fileResponseScheme = z.object({
 });
 
 export type IFileResponse = z.infer<typeof fileResponseScheme>;
+
+export interface IFilePayload {
+  id: string;
+}
