@@ -1,6 +1,6 @@
 'use client';
 
-import VideoSquare from '@oe/assets/icons/video-square';
+import { VideoSquare } from '@oe/assets/icons/video-square';
 import { convertSecondsToTimeString } from '@oe/core/utils/datetime';
 import { useTranslations } from 'next-intl';
 import { useRef, useState } from 'react';
@@ -47,7 +47,7 @@ export default function CoursePreviewModal({ medias, open = false, onClose }: IC
 
   return (
     <Modal
-      isOpen={open}
+      open={open}
       title={t('title')}
       description={name}
       className="min-w-[50vw]"
@@ -71,7 +71,7 @@ export default function CoursePreviewModal({ medias, open = false, onClose }: IC
             src={videoStatus?.video?.url}
             title={videoStatus?.video?.name}
             loading="lazy"
-            className="aspect-video h-full w-full border-none pt-2"
+            className="aspect-video h-full w-full rounded-lg border-none pt-2"
             allow="fullscreen"
             allowFullScreen
             onLoad={() =>
@@ -81,8 +81,10 @@ export default function CoursePreviewModal({ medias, open = false, onClose }: IC
             }
           />
         </div>
-        <div>
-          <span className="giant-iheading-semibold20 mb-2 block">{t('freeSampleVideo')}</span>
+        <div className="mt-4">
+          {/* <span className="giant-iheading-semibold20 mb-2 block">
+            {t("freeSampleVideo")}
+          </span> */}
           <div className="flex flex-col items-start gap-1">
             {medias?.map(item => (
               <Button
@@ -94,7 +96,7 @@ export default function CoursePreviewModal({ medias, open = false, onClose }: IC
                   videoStatus?.video?.id === item?.id && 'bg-primary/15'
                 )}
               >
-                <VideoSquare />
+                <VideoSquare color="#2C2C2C" />
                 <span className="line-clamp-1 w-full flex-1 text-left">{item.title}</span>
                 <span>{convertSecondsToTimeString(item?.duration)}</span>
               </Button>

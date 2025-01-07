@@ -2,7 +2,7 @@ import type { ICourseOutline } from '@oe/api/types/course/course';
 import Book from '@oe/assets/icons/book';
 import MedalStar from '@oe/assets/icons/medal-start';
 import MessageQuestion from '@oe/assets/icons/message-question';
-import VideoSquare from '@oe/assets/icons/video-square';
+import { VideoSquare } from '@oe/assets/icons/video-square';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import { cn } from '#utils/cn';
