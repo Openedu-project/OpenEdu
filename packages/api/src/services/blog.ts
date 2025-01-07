@@ -1,4 +1,5 @@
-import type { IBlog, IBlogRequest, IBlogURL } from '#types/blog';
+import type { IBlog, IBlogRequest, IBlogURL, IBlogsResponse } from '#types/blog';
+import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { type FetchOptions, createAPIUrl, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 
@@ -22,6 +23,24 @@ export const postBlog = async (
   const response = await postAPI<IBlog, IBlogRequest>(endpoint ?? API_ENDPOINT.BLOGS, payload, init);
 
   return response.data;
+};
+
+export const getUserBlogService = async (
+  type: 'personal' | 'org',
+  url?: string,
+  id?: string,
+  { params, init }: { params?: IFilter; init?: RequestInit } = {}
+): Promise<IBlogsResponse | null> => {
+  const key =
+    url ??
+    createAPIUrl({
+      endpoint: type === 'personal' ? API_ENDPOINT.USERS_ID_PERSON_BLOGS : API_ENDPOINT.USERS_ID_ORG_BLOGS,
+      params: { id },
+      queryParams: { ...params },
+    });
+  const res = await fetchAPI<IBlogsResponse>(key, init);
+
+  return res.data;
 };
 
 export const updateBlog = async (
