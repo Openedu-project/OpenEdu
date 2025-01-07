@@ -1,6 +1,7 @@
 import type { FormFieldType } from '../../types';
 
 export const selectboxDefaultConfig: FormFieldType = {
+  fieldId: 'selectbox',
   fieldType: 'selectbox',
   name: 'selectbox',
   label: 'Selectbox',

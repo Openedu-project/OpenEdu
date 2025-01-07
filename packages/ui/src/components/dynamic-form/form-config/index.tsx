@@ -1,7 +1,7 @@
 'use client';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import type { InputValue } from '#components/input-select';
 import type { SelectboxOption } from '#components/selectbox';
 import { Button } from '#shadcn/button';
 import { cn } from '#utils/cn';
@@ -27,14 +27,13 @@ import type { FormFieldType } from '../types';
 export function FieldConfig() {
   const tDynamicForms = useTranslations('dynamicForms.fieldConfig');
   const tDynamicComponents = useTranslations('dynamicForms.components');
-  const { fields, selectedFieldId, updateField } = useFormEditorStore();
-  const [isOpen, setIsOpen] = useState(false);
+  const { fields, selectedFieldId, updateField, setSelectedField } = useFormEditorStore();
 
   const selectedField = fields.find(field => {
     if (Array.isArray(field)) {
-      return field.find(f => f.name === selectedFieldId);
+      return field.find(f => f.fieldId === selectedFieldId);
     }
-    return field.name === selectedFieldId;
+    return field.fieldId === selectedFieldId;
   });
 
   if (!selectedField) {
@@ -47,8 +46,10 @@ export function FieldConfig() {
     return null;
   }
 
-  const handleConfigChange = (key: keyof FormFieldType, value: string | number | boolean | SelectboxOption[]) => {
-    // console.log('--------------------------', key, value);
+  const handleConfigChange = (
+    key: keyof FormFieldType,
+    value: string | number | boolean | SelectboxOption[] | InputValue
+  ) => {
     updateField(field?.name, { [key]: value });
   };
 
@@ -56,15 +57,15 @@ export function FieldConfig() {
     <div
       className={cn(
         'absolute right-4 z-10 h-[calc(100%-2rem)] bg-background shadow-lg transition-all duration-300 md:relative md:right-auto md:h-full md:w-full md:flex-1 md:shadow-none',
-        isOpen ? 'max-w-[300px]' : 'w-0'
+        selectedFieldId ? 'max-w-[300px]' : 'w-0'
       )}
     >
       <Button
         variant="outline"
         className="-translate-x-full absolute top-4 z-10 h-8 w-8 rounded-r-none border border-r-0 bg-background p-0 focus:border focus:border-r-0 md:hidden"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => setSelectedField(selectedFieldId ? null : field.fieldId)}
       >
-        {isOpen ? <ChevronRightIcon className="h-4 w-4" /> : <ChevronLeftIcon className="h-4 w-4" />}
+        {selectedFieldId ? <ChevronRightIcon className="h-4 w-4" /> : <ChevronLeftIcon className="h-4 w-4" />}
       </Button>
       <div className="scrollbar h-full overflow-auto p-4">
         <h5 className="mb-4 font-medium">
@@ -82,10 +83,10 @@ export function FieldConfig() {
           <InputCurrencyFieldConfig field={field} handleConfigChange={handleConfigChange} />
           <InputPhoneNumberFieldConfig field={field} handleConfigChange={handleConfigChange} />
           <InputPasswordFieldConfig field={field} handleConfigChange={handleConfigChange} />
+          <DateTimePickerFieldConfig field={field} handleConfigChange={handleConfigChange} />
           <InputUrlFieldConfig field={field} handleConfigChange={handleConfigChange} />
           <CheckboxFieldConfig field={field} handleConfigChange={handleConfigChange} />
           <ImageFieldConfig field={field} handleConfigChange={handleConfigChange} />
-          <DateTimePickerFieldConfig field={field} handleConfigChange={handleConfigChange} />
           <SelectboxFieldConfig field={field} handleConfigChange={handleConfigChange} />
           <SubmitFieldConfig field={field} handleConfigChange={handleConfigChange} />
         </div>

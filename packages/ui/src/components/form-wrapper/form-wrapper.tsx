@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { z } from '@oe/api/utils/zod';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { FormProvider as RHFFormProvider, useForm } from 'react-hook-form';
+import { type DefaultValues, FormProvider as RHFFormProvider, useForm } from 'react-hook-form';
 import { cn } from '#utils/cn';
 import type { IFormWrapperProps } from './types';
 import { getDefaultValuesFromSchema } from './utils';
@@ -22,14 +22,14 @@ export function FormWrapper<TFormSchema extends z.ZodType>({
   const formRef = useRef<HTMLFormElement>(null);
   const defaultValues = useMemo(() => {
     return {
-      ...getDefaultValuesFromSchema(schema),
+      ...(schema ? getDefaultValuesFromSchema(schema) : {}),
       ...(useFormProps?.defaultValues || {}),
-    };
+    } as DefaultValues<z.infer<TFormSchema>>;
   }, [schema, useFormProps?.defaultValues]);
 
   const form = useForm<z.infer<TFormSchema>>({
     ...useFormProps,
-    resolver: zodResolver(schema),
+    resolver: schema ? zodResolver(schema) : undefined,
     defaultValues,
   });
   const [loading, setLoading] = useState(false);
@@ -40,10 +40,10 @@ export function FormWrapper<TFormSchema extends z.ZodType>({
   }, [formRef.current]);
 
   useEffect(() => {
-    if (useFormProps?.defaultValues) {
-      form.reset(useFormProps.defaultValues);
+    if (defaultValues) {
+      form.reset(defaultValues);
     }
-  }, [form.reset, useFormProps?.defaultValues]);
+  }, [form.reset, defaultValues]);
 
   const handleSubmit = useCallback(
     async (values: z.infer<TFormSchema>) => {
@@ -69,6 +69,7 @@ export function FormWrapper<TFormSchema extends z.ZodType>({
   return (
     <RHFFormProvider {...form}>
       <form
+        {...props}
         ref={formRef}
         className={cn('space-y-4', className)}
         onSubmit={e => {
@@ -76,7 +77,7 @@ export function FormWrapper<TFormSchema extends z.ZodType>({
           e.stopPropagation();
           form.handleSubmit(handleSubmit)(e);
         }}
-        {...props}
+        noValidate
       >
         {typeof children === 'function' ? children({ loading, form }) : children}
         {isFormNoSubmitButton && <button type="submit" className="hidden" />}

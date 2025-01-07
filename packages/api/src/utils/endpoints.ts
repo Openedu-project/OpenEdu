@@ -220,3 +220,6 @@ export const API_ENDPOINT = {
   WEBSOCKET: `/websocket` as const,
 
 } as const;
+
+export type API_ENDPOINT_KEY = keyof typeof API_ENDPOINT;
+export type API_ENDPOINT_VALUE = (typeof API_ENDPOINT)[API_ENDPOINT_KEY];

@@ -42,7 +42,7 @@ export interface ITabMetadata {
 export interface IFormWrapperProps<TFormSchema extends z.ZodType>
   extends Omit<HTMLAttributes<HTMLFormElement>, 'onSubmit' | 'children'> {
   id: string;
-  schema: TFormSchema;
+  schema?: TFormSchema;
   tabId?: string;
   dependencies?: string[];
   useFormProps?: Omit<UseFormProps<z.infer<TFormSchema>>, 'resolver'>;
@@ -53,17 +53,17 @@ export interface IFormWrapperProps<TFormSchema extends z.ZodType>
 }
 
 export interface IFormContextValue<TFormSchema extends z.ZodType> {
-  formIds: string[];
+  formsRef: RefObject<Map<string, IFormMetadata<TFormSchema>>>;
   isSubmitting: boolean;
   tabsMetadata: Map<string, ITabMetadata>;
   activeTab: string | undefined;
   setActiveTab: (tabId: string) => void;
   registerForm: (metadata: IFormMetadata<TFormSchema>) => void;
   unregisterForm: (formId: string) => void;
-  registerTab: (tabId: string, formId: string, metadata: IFormMetadata<TFormSchema>) => void;
-  unregisterTab: (tabId: string, formId: string) => void;
+  registerTab: (tabId: string, metadata: IFormMetadata<TFormSchema>) => void;
+  unregisterTab: (tabId: string) => void;
   submitForm: (formIds?: string[]) => Promise<void>;
-  validateForms: (formIds?: string[], validateAll?: boolean) => Promise<boolean>;
+  validateForm: () => Promise<boolean>;
 }
 
 export interface INestedFormsValues {

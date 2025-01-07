@@ -148,6 +148,7 @@ export interface FormFieldProps {
 export type ValidationRules = Record<string, FormFieldValidation>;
 
 export type FormFieldType = Partial<Omit<ExtendedImageProps, 'placeholder' | 'blurDataURL' | 'defaultValue'>> & {
+  fieldId: string;
   fieldType: FormComponent;
   name: string;
   label: string;

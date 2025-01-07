@@ -71,7 +71,11 @@ export async function baseMiddleware(request: NextRequest, host?: string | null)
 
   let accessToken = request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY)?.value;
   const isAccessTokenExpired = isTokenExpired(accessToken);
-  console.info('================accessToken==============', accessToken);
+  console.info(
+    '================accessToken==============',
+    accessToken,
+    request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY)?.value
+  );
   console.info('================isAccessTokenExpired==============', isAccessTokenExpired);
   if (accessToken) {
     if (isAccessTokenExpired) {

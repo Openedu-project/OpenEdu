@@ -8,7 +8,7 @@ import { inputCurrencyDefaultConfig } from './input-currency/config';
 import { inputNumberDefaultConfig } from './input-number/config';
 import { inputPasswordDefaultConfig } from './input-password/config';
 import { inputPhoneNumberDefaultConfig } from './input-phonenumber/config';
-import { inputUrlDefaultConfig } from './input-url/config';
+// import { inputUrlDefaultConfig } from './input-url/config';
 import { inputDefaultConfig } from './input/config';
 import { paragraphConfig } from './paragraph/config';
 import { selectboxDefaultConfig } from './selectbox/config';
@@ -27,7 +27,7 @@ export const config: Partial<Record<FormComponent, FormFieldType>> = {
   inputCurrency: inputCurrencyDefaultConfig,
   inputPhoneNumber: inputPhoneNumberDefaultConfig,
   inputPassword: inputPasswordDefaultConfig,
-  inputUrl: inputUrlDefaultConfig,
+  // inputUrl: inputUrlDefaultConfig,
   datetimePicker: dateTimePickerDefaultConfig,
   checkbox: checkboxDefaultConfig,
   selectbox: selectboxDefaultConfig,

@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { z } from '@oe/api/utils/zod';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { FormProvider as RHFFormProvider, useForm } from 'react-hook-form';
+import { type DefaultValues, FormProvider as RHFFormProvider, useForm } from 'react-hook-form';
 import { cn } from '#utils/cn';
 import { useFormContext } from './form-nested-provider';
 import type { IFormMetadata, IFormWrapperProps } from './types';
@@ -23,14 +23,14 @@ export function FormNestedWrapper<TFormSchema extends z.ZodType>({
   const formRef = useRef<HTMLFormElement>(null);
   const defaultValues = useMemo(() => {
     return {
-      ...getDefaultValuesFromSchema(schema),
+      ...(schema ? getDefaultValuesFromSchema(schema) : {}),
       ...(useFormProps?.defaultValues || {}),
-    };
+    } as DefaultValues<z.infer<TFormSchema>>;
   }, [schema, useFormProps?.defaultValues]);
 
   const form = useForm<z.infer<TFormSchema>>({
     ...useFormProps,
-    resolver: zodResolver(schema),
+    resolver: schema ? zodResolver(schema) : undefined,
     defaultValues,
   });
   const [loading, setLoading] = useState(false);
@@ -63,7 +63,7 @@ export function FormNestedWrapper<TFormSchema extends z.ZodType>({
       getFieldCount: () => {
         const values = form.getValues();
         const completed = Object.keys(values).filter(key => values[key] !== undefined && values[key] !== '').length;
-        const schemaShape = getSchemaShape(schema);
+        const schemaShape = schema ? getSchemaShape(schema) : undefined;
         return {
           completed,
           total: schemaShape ? Object.keys(schemaShape).length : 0,
@@ -79,9 +79,16 @@ export function FormNestedWrapper<TFormSchema extends z.ZodType>({
 
     context.registerForm(metadata);
     if (tabId) {
-      context.registerTab(tabId, id, metadata);
+      context.registerTab(tabId, metadata);
     }
-  }, []);
+
+    return () => {
+      context.unregisterForm(id);
+      if (tabId) {
+        context.unregisterTab(tabId);
+      }
+    };
+  }, [tabId]);
 
   const handleSubmit = useCallback(
     async (values: z.infer<TFormSchema>) => {

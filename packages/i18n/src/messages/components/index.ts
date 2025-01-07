@@ -1,4 +1,5 @@
 import { dateTimePickerMessages } from './date-time-picker';
+import { dialogMessages } from './dialog';
 import { formValidationMessages } from './form-validation';
 import { richTextMessages } from './rich-text';
 import { tableMessages } from './table';
@@ -10,4 +11,5 @@ export const componentMessages = {
   ...tableMessages,
   ...uploaderMessages,
   ...dateTimePickerMessages,
+  ...dialogMessages,
 };

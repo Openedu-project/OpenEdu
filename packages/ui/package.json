@@ -7,14 +7,16 @@
     "#shadcn/*": "./src/shadcn/*.tsx",
     "#components/*": "./src/components/*/index.ts",
     "#utils/*": "./src/utils/*.ts",
-    "#common/*": "./src/common/*/index.ts"
+    "#common/*": "./src/common/*/index.ts",
+    "#hooks/*": "./src/hooks/*.ts"
   },
   "exports": {
     "./global.css": "./src/global.css",
     "./components/*": "./src/components/*/index.ts",
     "./shadcn/*": "./src/shadcn/*.tsx",
     "./utils/*": "./src/utils/*.ts",
-    "./common/*": "./src/common/*/index.ts"
+    "./common/*": "./src/common/*/index.ts",
+    "./hooks/*": "./src/hooks/*.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

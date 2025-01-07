@@ -14,7 +14,7 @@ export default function FormBorderRadiusConfig({
         type="single"
         value={field.rounded || 'none'}
         onValueChange={value => handleConfigChange('rounded', value)}
-        className="justify-start"
+        className="flex-wrap justify-start"
       >
         <ToggleGroupItem value="none">{tDynamicForms('none')}</ToggleGroupItem>
         <ToggleGroupItem value="sm">{tDynamicForms('small')}</ToggleGroupItem>

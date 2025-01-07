@@ -1,8 +1,8 @@
-import { FormNavigation } from './form-navigation';
 import { FormNestedProvider } from './form-nested-provider';
 import { FormNestedWrapper } from './form-nested-wrapper';
 import { FormTabs, FormTabsContent, FormTabsList, FormTabsTrigger } from './form-tabs';
 import { FormWrapper } from './form-wrapper';
+import { StepperForm } from './stepper-form';
 import { SubmitFormsButton } from './submit-forms-button';
 import type {
   FormErrorHandler,
@@ -17,7 +17,7 @@ export {
   FormWrapper,
   FormNestedProvider,
   FormNestedWrapper,
-  FormNavigation,
+  StepperForm,
   SubmitFormsButton,
   FormTabs,
   FormTabsContent,

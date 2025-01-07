@@ -1,6 +1,7 @@
 import type { FormFieldType } from '../../types';
 
 export const inputPasswordDefaultConfig: FormFieldType = {
+  fieldId: 'input-password',
   fieldType: 'inputPassword',
   name: 'input-password',
   label: 'Input Password',

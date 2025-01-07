@@ -8,7 +8,7 @@ import { formComponents } from '../form-components';
 import type { FormComponentConfig, FormFieldType } from '../types';
 
 export default function FormFieldItem({ field, form }: { field: FormFieldType; form: UseFormReturn<FieldValues> }) {
-  const { fieldType, ...rest } = field;
+  const { fieldType, fieldId, ...rest } = field;
   const Component = formComponents[fieldType]?.component as ComponentType<
     Partial<FormComponentConfig> & { className?: string }
   >;

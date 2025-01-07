@@ -10,6 +10,7 @@ export interface TableRef<T> {
   getData: () => T[];
   table: Table<T>;
   mutate: KeyedMutator<HTTPPagination<T>>;
+  mutateAndClearCache: () => void;
 }
 
 export type ColumnDef<T> = ColumnDefTanstack<T> & {

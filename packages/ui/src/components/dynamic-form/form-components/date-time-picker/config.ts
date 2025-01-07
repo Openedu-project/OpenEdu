@@ -1,6 +1,7 @@
 import type { FormFieldType } from '../../types';
 
 export const dateTimePickerDefaultConfig: FormFieldType = {
+  fieldId: 'datetime-picker',
   fieldType: 'datetimePicker',
   name: 'dateTime-picker',
   label: 'Date Time Picker',

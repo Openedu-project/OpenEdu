@@ -15,10 +15,10 @@ export function FormFieldSortItem({ field, form, shouldSort = true, onSelect, on
     transition,
   };
 
-  const handleClick = () => onSelect(field.name);
+  const handleClick = () => onSelect(field.fieldId);
   const handleRemove = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    onRemove(field.name);
+    onRemove(field.fieldId);
   };
 
   return (
