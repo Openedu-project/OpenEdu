@@ -1,4 +1,4 @@
-import type { BaseAutocompleteTreeProps } from '../autocomplete-tree/types';
+import type { BaseAutocompleteProps } from '../autocomplete/types';
 
 export interface ITreeItem<TreeItem> {
   labelKey: keyof TreeItem;
@@ -17,7 +17,9 @@ export interface ITreeItem<TreeItem> {
   onDelete?: (item: TreeItem, descendants: TreeItem[]) => Promise<void>;
 }
 
-export interface TreeSelectProps<TreeItem> extends BaseAutocompleteTreeProps<TreeItem> {
+export interface TreeSelectProps<TreeItem> extends BaseAutocompleteProps<TreeItem> {
+  showSearch?: boolean;
+  searchPlaceholder?: string;
   value?: TreeItem | null;
   onChange?: (option: TreeItem | null) => void;
 }

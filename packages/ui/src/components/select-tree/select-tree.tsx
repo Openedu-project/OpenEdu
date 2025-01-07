@@ -199,7 +199,7 @@ export function SelectTree<T, V extends { id: string }>({
           className={cn('flex items-center gap-2')}
           style={{ marginLeft: level * 16 }}
         >
-          {node.child && node.child.length > 0 && (
+          {node.child && node.child.length > 0 ? (
             <Button
               type="button"
               variant="ghost"
@@ -213,6 +213,8 @@ export function SelectTree<T, V extends { id: string }>({
                 <ChevronRight className="h-4 w-4" />
               )}
             </Button>
+          ) : (
+            <div className="h-6 w-6 p-0" />
           )}
           <div className={cn('flex flex-1 cursor-pointer items-center gap-2', !checkable && 'justify-between')}>
             {checkable && (
