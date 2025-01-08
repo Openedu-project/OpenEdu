@@ -5,12 +5,14 @@ import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
 
 import { type LoginSchemaType, loginSchema } from '@oe/api/schemas/authSchema';
+import { API_ENDPOINT } from '@oe/api/utils/endpoints';
 import type { HTTPError } from '@oe/api/utils/http-error';
 import { AUTH_ROUTES, PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { InputPassword } from '@oe/ui/components/input-password';
 import { Mail } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
+import { mutate } from 'swr';
 import { Link } from '#common/navigation';
 import { FormWrapper } from '#components/form-wrapper';
 import { Alert, AlertDescription } from '#shadcn/alert';
@@ -26,8 +28,6 @@ export function LoginForm() {
   const loginError = searchParams.get('error');
   const [error, setError] = useState<string | null>(null);
 
-  console.log('loginError', loginError);
-
   const handleError = useCallback((error: unknown) => {
     setError((error as HTTPError).message);
   }, []);
@@ -35,6 +35,8 @@ export function LoginForm() {
   const handleSubmit = useCallback(
     async (values: LoginSchemaType) => {
       await loginAction({ ...values, next_path: nextPath });
+
+      await mutate(API_ENDPOINT.USERS_ME);
       toast.success(tAuth('signin.success'));
       router.replace(nextPath);
     },

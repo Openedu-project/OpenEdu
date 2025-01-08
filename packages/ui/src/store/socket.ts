@@ -1,7 +1,24 @@
+import type {
+  EventData,
+  IAIBlogStatusData,
+  IAICourseStatusData,
+  IBadgeEventData,
+  ICertificateEventData,
+  ICourseEventData,
+  IPaymentEventData,
+  ISocketRes,
+  ISocketStore,
+} from '@oe/api/types/socket';
 import { create } from 'zustand';
-import { EventData, IAIBlogStatusData, IAICourseStatusData, IBadgeEventData, ICertificateEventData, ICourseEventData, IPaymentEventData, ISocketRes, ISocketStore } from '@oe/api/types/socket';
 
-type ISocketKey = 'badge' | 'course' | 'payment' | 'notification' | 'certificate' | 'ai_blog_status' | 'ai_course_status';
+type ISocketKey =
+  | 'badge'
+  | 'course'
+  | 'payment'
+  | 'notification'
+  | 'certificate'
+  | 'ai_blog_status'
+  | 'ai_course_status';
 
 export const useSocketStore = create<ISocketStore>(set => {
   return {
@@ -44,9 +61,7 @@ export const useSocketStore = create<ISocketStore>(set => {
           }
         }
       }),
-    resetSocketData: (
-      key: ISocketKey
-    ) =>
+    resetSocketData: (key: ISocketKey) =>
       set(state => {
         switch (key) {
           case 'badge': {

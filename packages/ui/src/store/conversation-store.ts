@@ -1,4 +1,4 @@
-import { IAIModel, IAIStatus, IMessage } from '@oe/api/types/conversation';
+import type { IAIModel, IAIStatus, IMessage } from '@oe/api/types/conversation';
 import { create } from 'zustand';
 
 export interface IAIAction {
@@ -7,18 +7,18 @@ export interface IAIAction {
 }
 interface IConversationStore {
   messages: IMessage[];
+  isNewChat: boolean;
+  status?: IAIStatus;
+  selectedModel?: IAIModel;
+  action?: IAIAction;
   setMessages: (value: IMessage[]) => void;
   resetMessages: () => void;
   updateMessages: (value: IMessage, index?: number, callback?: () => void, id?: string) => void;
   addMessage: (messageData: IMessage, callback?: () => void) => void;
-  isNewChat: boolean;
   setIsNewChat: (value: boolean) => void;
-  status?: IAIStatus;
   setStatus: (value: IAIStatus) => void;
-  selectedModel?: IAIModel;
   setSelectedModel: (value: IAIModel) => void;
   resetStatus: () => void;
-  action?: IAIAction;
   setAction: (action: IAIAction) => void;
   resetAction: () => void;
 }
@@ -38,7 +38,9 @@ export const useConversationStore = create<IConversationStore>(set => {
       set(state => {
         const newChatMessages = id
           ? state.messages.map(msg => {
-              if (msg.id === id) return messageData;
+              if (msg.id === id) {
+                return messageData;
+              }
               return msg;
             })
           : [...state.messages.slice(0, index ?? state.messages.length), messageData];

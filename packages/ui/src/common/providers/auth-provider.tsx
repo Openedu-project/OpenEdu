@@ -1,41 +1,40 @@
 'use client';
 
-import { getCookie } from '@oe/core/utils/cookie';
-import { useRouter } from 'next/navigation';
-import { type FC, type ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import { useGetMe } from '@oe/api/hooks/useMe';
+import type { IUser } from '@oe/api/types/user';
+import type { HTTPError } from '@oe/api/utils/http-error';
+import type React from 'react';
+import { createContext, useContext, useMemo } from 'react';
+import { useSocket } from '#hooks/socket';
 
 interface AuthContextType {
-  isAuthenticated: boolean;
+  me: IUser | null;
+  isLoading: boolean;
+  error: HTTPError | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const router = useRouter();
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const { dataMe, isLoadingMe, errorMe } = useGetMe();
+  const authContextValue = useMemo(
+    () => ({
+      me: dataMe,
+      isLoading: isLoadingMe,
+      error: errorMe,
+    }),
+    [dataMe, isLoadingMe, errorMe]
+  );
+  const isAuthenticated = !!dataMe;
+  useSocket(isAuthenticated);
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      const token = await getCookie(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY);
-      setIsAuthenticated(!!token);
-      if (!token) {
-        router.refresh();
-      }
-    };
-    checkAuth();
+  return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
+}
 
-    const interval = setInterval(checkAuth, 1000);
-
-    return () => clearInterval(interval);
-  }, [router.refresh]);
-
-  return <AuthContext.Provider value={{ isAuthenticated }}>{children}</AuthContext.Provider>;
-};
-
-export const useAuth = () => {
+export function useAuth() {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+  if (context === undefined) {
+    throw new Error('useAuth must be used within a AuthProvider');
   }
   return context;
-};
+}

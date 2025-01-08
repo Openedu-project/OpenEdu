@@ -10,7 +10,7 @@ export function useGetMe() {
   return {
     isLoadingMe: isLoading,
     errorMe: error,
-    dataMe: data,
+    dataMe: data ?? null,
     mutateMe: mutate,
   };
 }

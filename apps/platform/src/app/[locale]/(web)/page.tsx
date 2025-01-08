@@ -1,8 +1,9 @@
-import { PLATFORM_ROUTES, PROTECTED_ROUTES } from '@oe/core/utils/routes';
-import { Link } from '@oe/ui/common/navigation';
-import { RegistrationForm } from './_components/form-demo';
-import { Registration } from './_components/stepper-demo';
-import UploadDemo from './_components/upload-demo';
+import { PLATFORM_ROUTES, PROTECTED_ROUTES } from "@oe/core/utils/routes";
+import { Link } from "@oe/ui/common/navigation";
+import { RegistrationForm } from "./_components/form-demo";
+import { Registration } from "./_components/stepper-demo";
+import UploadDemo from "./_components/upload-demo";
+
 export default function Home() {
   return (
     <>

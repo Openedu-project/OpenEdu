@@ -2,11 +2,11 @@ import type { AbstractIntlMessages } from 'next-intl';
 import type { ReactNode } from 'react';
 
 import type { SWRConfiguration } from 'swr';
+import { AuthProvider } from './auth-provider';
 // import { AuthProvider } from './auth-provider';
 import IntlProvider from './intl-provider';
 import SWRProvider from './swr-provider';
 import ThemeProvider from './theme-provider';
-import SocketProvider from './socket-provider';
 
 export default function Provider({
   messages,
@@ -20,14 +20,11 @@ export default function Provider({
 } & Omit<SWRConfiguration, 'children'>) {
   return (
     <IntlProvider messages={messages} locale={locale}>
-      <ThemeProvider>
-        {/* <AuthProvider> */}
-        <SWRProvider {...rest}>
-          <SocketProvider />
-          {children}
-        </SWRProvider>
-        {/* </AuthProvider> */}
-      </ThemeProvider>
+      <SWRProvider {...rest}>
+        <AuthProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </AuthProvider>
+      </SWRProvider>
     </IntlProvider>
   );
 }

@@ -8,6 +8,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useCallback } from 'react';
+import { mutate } from 'swr';
 import { SuccessDialog } from '#components/dialog';
 import { FormWrapper } from '#components/form-wrapper';
 import { InputPassword } from '#components/input-password';
@@ -21,7 +22,12 @@ export function AuthConfirmForm({
   token,
   email,
   nextPath,
-}: { event: AuthEventName; token: string; email: string; nextPath: string }) {
+}: {
+  event: AuthEventName;
+  token: string;
+  email: string;
+  nextPath: string;
+}) {
   const tAuth = useTranslations('auth');
   const tErrors = useTranslations('errors');
   const [error, setError] = useState<string | null>(null);
@@ -31,8 +37,11 @@ export function AuthConfirmForm({
 
   const handleSubmit = useCallback(
     async ({ password }: SetPasswordSchemaType) => {
-      await setPasswordService(null, { payload: { event, token, email, password } });
+      await setPasswordService(null, {
+        payload: { event, token, email, password },
+      });
       await loginAction({ email, password, next_path: nextPath });
+      mutate(() => true, undefined, { revalidate: true });
       setOpen(true);
     },
     [event, token, email, nextPath]

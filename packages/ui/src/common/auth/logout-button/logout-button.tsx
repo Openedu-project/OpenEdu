@@ -14,9 +14,10 @@ export function LogoutButton() {
   const tAuth = useTranslations('auth');
 
   const handleLogout = async () => {
-    await Promise.all([logoutAction(), mutate(() => true, undefined, { revalidate: false })]);
     resetAllStores();
     toast.success(tToast('logoutSuccess'));
+    await mutate(() => true, undefined, { revalidate: false });
+    await logoutAction();
   };
 
   return (
