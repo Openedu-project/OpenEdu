@@ -4,6 +4,7 @@ import { postBlog, updateBlog } from '@oe/api/services/blog';
 import type { IBlog, IBlogRequest } from '@oe/api/types/blog';
 import type { ICategoryTree } from '@oe/api/types/categories';
 import type { IHashtag } from '@oe/api/types/hashtag';
+import { API_ENDPOINT } from '@oe/api/utils/endpoints';
 import type { HTTPError } from '@oe/api/utils/http-error';
 import { BLOG_ADMIN_ROUTES, BLOG_ROUTES } from '@oe/core/utils/routes';
 import { type LanguageCode, languages } from '@oe/i18n/languages';
@@ -12,6 +13,7 @@ import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import type { KeyboardEvent } from 'react';
 import showdown from 'showdown';
+import { mutate } from 'swr';
 import { useRouter } from '#common/navigation';
 import { AutocompeteMultiple, Autocomplete } from '#components/autocomplete';
 import { FormWrapper } from '#components/form-wrapper';
@@ -66,7 +68,7 @@ const blogFormAction = async ({
       is_publish: isPublish,
       blog_type: blogType,
       banner_id: thumbnail.id,
-      category_ids: category_ids.map(obj => {
+      category_ids: category_ids?.map(obj => {
         return { id: obj.id };
       }),
       hashtag_names: hashtag_names?.map(name => {
@@ -78,6 +80,7 @@ const blogFormAction = async ({
       ? await updateBlog(blogType, undefined, id, { payload })
       : await postBlog(undefined, { payload });
 
+    mutate((key: string) => !!key?.includes(API_ENDPOINT.USERS_ME_BLOGS), undefined, { revalidate: false });
     return { status: 'SUCCESS', message: `${action}Success` };
   } catch (error) {
     return { status: 'ERROR', message: (error as HTTPError).message };
@@ -115,7 +118,7 @@ export default function BlogForm({
       content: converter.makeHtml(data.content),
       image_description: data.image_description,
       thumbnail: data.banner,
-      category_ids: data.categories,
+      category_ids: data.categories?.map(cate => ({ id: cate.id, name: cate.name })),
       hashtag_names: data.hashtag?.map(hashtag => hashtag.name),
       is_ai_generated: data.is_ai_generated,
     };
@@ -228,7 +231,7 @@ export default function BlogForm({
                   </>
                 }
               >
-                <SelectTree<ICategoryTree, IBlogFormType['category_ids'][number]>
+                <SelectTree<ICategoryTree, NonNullable<IBlogFormType['category_ids']>[number]>
                   data={categories}
                   placeholder={tBlogs('selectCategories')}
                   searchPlaceholder={tBlogs('searchCategories')}

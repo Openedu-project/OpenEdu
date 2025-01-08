@@ -69,7 +69,7 @@ const ModalButtons = ({
       <>
         {buttons.map(button =>
           button.type === 'submit' ? (
-            <SubmitFormsButton key={button.label} />
+            <SubmitFormsButton key={button.label} variant={button.variant}>{button.label}</SubmitFormsButton>
           ) : (
             <Button
               {...button}

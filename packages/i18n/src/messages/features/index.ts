@@ -1,4 +1,5 @@
 import { blogMessages } from './blog';
+import { blogManagementMessages } from './blog-management';
 import { coursesMessages } from './courses';
 import { dashboardMessages } from './dashboard';
 import { dynamicFormsMessages } from './dynamic-forms';
@@ -12,4 +13,5 @@ export const featuresMessages = {
   ...dynamicFormsMessages,
   ...blogMessages,
   ...walletMessages,
+  ...blogManagementMessages,
 };

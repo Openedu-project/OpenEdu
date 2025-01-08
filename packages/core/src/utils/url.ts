@@ -8,8 +8,10 @@ export const isValidUrl = (url: string): boolean => {
 };
 
 const urlRegex = /[\s,]+/;
+export const getURLs = (input: string) => input.split(urlRegex).filter(Boolean);
+
 export const validateMultipleUrls = (input: string): boolean => {
-  const urls = input.split(urlRegex).filter(Boolean);
+  const urls = getURLs(input);
   return urls.every(isValidUrl);
 };
 

@@ -92,7 +92,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
   );
 
   return (
-    <DashboardLayout className="p-4 pt-0" sidebarItems={filteredMenu}>
+    <DashboardLayout className="px-4" sidebarItems={filteredMenu}>
       {children}
     </DashboardLayout>
   );

@@ -8,7 +8,7 @@ import OpenEdu from '@oe/assets/images/openedu.png';
 import WhaleError from '@oe/assets/images/whale/whale-error.png';
 import { getCookie } from '@oe/core/utils/cookie';
 import { BLOG_ADMIN_ROUTES } from '@oe/core/utils/routes';
-import { BlogForm, type BlogType, type IFormAction } from '@oe/ui/components/blog';
+import { BlogForm, type IFormAction } from '@oe/ui/components/blog';
 import { Breadcrumb } from '@oe/ui/components/breadcrumb';
 import { Image } from '@oe/ui/components/image';
 import { cn } from '@oe/ui/utils/cn';
@@ -16,7 +16,6 @@ import { getTranslations } from 'next-intl/server';
 
 interface ICreationProps {
   className?: string;
-  blogType: BlogType;
   action: IFormAction;
   aiButton?: boolean;
   id?: string;
@@ -59,7 +58,7 @@ const getBlogContent = async (id?: string) => {
   }
 };
 
-export default async function OrgBlogCreation({ className, blogType, aiButton, id, action }: ICreationProps) {
+export default async function OrgBlogCreation({ className, aiButton, id, action }: ICreationProps) {
   const domain = (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? '';
 
   const [tError, tBlogNavigation, tBlogForm, hashtags, categories, i18nConfigData, blogData, orgData] =
@@ -136,7 +135,7 @@ export default async function OrgBlogCreation({ className, blogType, aiButton, i
 
       <BlogForm
         className={cn('p-4', className)}
-        blogType={blogType}
+        blogType="org"
         aiButton={aiButton}
         hashtags={hashtags}
         categories={categories}

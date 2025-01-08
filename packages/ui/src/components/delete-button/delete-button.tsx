@@ -11,12 +11,14 @@ export function DeleteButton({
   description,
   className,
   onDelete,
+  onClose,
   ...buttonProps
 }: ButtonProps & {
   children: ReactNode;
   title?: string;
   description?: string;
   className?: string;
+  onClose?: () => void;
   onDelete: (onClose?: () => void) => Promise<void>;
 }) {
   const tGeneral = useTranslations('general');
@@ -27,6 +29,8 @@ export function DeleteButton({
           {children}
         </Button>
       }
+      onClose={onClose}
+
       title={
         <span className="flex flex-col items-center gap-4 text-destructive">
           <CircleX className="h-8 w-8" />

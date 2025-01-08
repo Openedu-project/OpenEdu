@@ -5,6 +5,7 @@ import WhaleNoData from '@oe/assets/images/whale-no-data.png';
 import { AuthorProfileCard, PersonalBlogSection, TopBlogs } from '@oe/ui/components/blog';
 import { Image } from '@oe/ui/components/image';
 import { getTranslations } from 'next-intl/server';
+import { cn } from '#utils/cn';
 
 export default async function AuthorPage({ params }: { params: { username: string } }) {
   const { username } = await params;
@@ -47,7 +48,11 @@ export default async function AuthorPage({ params }: { params: { username: strin
           className="mb-6"
         />
         {!(orgBlogs instanceof Error || orgBlogs?.results.length === 0) && (
-          <TopBlogs title={t('blogSectionTitle.articlesOnOrg')} blogs={orgBlogs?.results} />
+          <TopBlogs
+            title={t('blogSectionTitle.articlesOnOrg')}
+            blogs={orgBlogs?.results}
+            className={cn((orgBlogs?.results ?? []).length > 3 && 'lg:h-[1000px]')}
+          />
         )}
       </div>
       <PersonalBlogSection

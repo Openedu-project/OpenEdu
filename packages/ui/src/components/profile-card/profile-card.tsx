@@ -46,7 +46,7 @@ export default function ProfileCard({
           <Avatar className="h-[36px] w-[36px]" style={{ height: `${avatarSize}px`, width: `${avatarSize}px` }}>
             <AvatarImage src={profileData?.avatar ?? ''} alt={profileData?.username} />
             <AvatarFallback className="mcaption-semibold12">
-              {pickCharacters(profileData.display_name ?? profileData?.username)}
+              {pickCharacters(profileData.display_name.length > 0 ? profileData.display_name : profileData?.username)}
             </AvatarFallback>
           </Avatar>
           <div className={cn('w-full', align && 'text-center', infoClassName)}>

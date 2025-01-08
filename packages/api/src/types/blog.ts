@@ -1,3 +1,4 @@
+import type { LanguageCode } from '@oe/i18n/languages';
 import type { HTTPPagination } from './fetch';
 import type { IFileResponse } from './file';
 import type { IHashtag } from './hashtag';
@@ -60,7 +61,7 @@ export interface IBlog {
   time_read: number;
   status: string;
   schedule_at: number;
-  blog_type: string;
+  blog_type: 'org' | 'personal';
   cuid: string;
   version: number;
   latest: boolean;
@@ -80,7 +81,7 @@ export interface IBlog {
   unpublished?: IBlogHistory[];
   is_ai_generated: boolean;
   ai_generated_info?: IAIInfo;
-  locale: string;
+  locale: LanguageCode;
   // TODO: adjust later
   cmt_count?: number;
   like_count?: number;
@@ -131,4 +132,14 @@ export interface ICategoryBlogsResponse {
 export interface IBlogURL {
   link: string;
   blog_type: string;
+}
+
+export interface IAIBlogRequest {
+  ai_blog_request_type: 'generate_blog' | 'rewrite_paragraph' | 'rewrite_from_link';
+  blog_cuid?: string;
+  link?: string;
+  text?: string;
+  blogs?: IBlogURL[];
+  language?: string;
+  tone?: string;
 }

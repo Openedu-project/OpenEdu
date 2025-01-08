@@ -25,9 +25,10 @@ export interface IBreadcrumbItem {
 interface BreadcrumbProps {
   items?: IBreadcrumbItem[];
   dashboard?: IProtectedRoutes;
+  className?: string;
 }
 
-export function Breadcrumb({ items = [], dashboard }: BreadcrumbProps) {
+export function Breadcrumb({ items = [], dashboard, className }: BreadcrumbProps) {
   const pathname = usePathname();
   const pathSegments = pathname.split('/').filter(Boolean);
   const [isMobile, setIsMobile] = useState(false);
@@ -162,7 +163,7 @@ export function Breadcrumb({ items = [], dashboard }: BreadcrumbProps) {
 
   return (
     <UIBreadcrumb>
-      <BreadcrumbList className="flex-nowrap">{renderBreadcrumbItems()}</BreadcrumbList>
+      <BreadcrumbList className={cn('flex-nowrap', className)}>{renderBreadcrumbItems()}</BreadcrumbList>
     </UIBreadcrumb>
   );
 }

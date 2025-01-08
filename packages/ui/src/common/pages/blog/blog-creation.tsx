@@ -3,9 +3,10 @@ import { getBlogDraftContent } from '@oe/api/services/blog';
 import { getI18nConfigServer } from '@oe/api/services/i18n';
 import BannerBg from '@oe/assets/images/blog-creation-bg.png';
 import WhaleError from '@oe/assets/images/whale/whale-error.png';
+import { getCookies } from '@oe/core/utils/cookie';
 import { AUTH_ROUTES, BLOG_ROUTES, generateRoute } from '@oe/core/utils/routes';
 import { pickCharacters } from '@oe/core/utils/string';
-import { BlogForm, type BlogType, type IFormAction } from '@oe/ui/components/blog';
+import { BlogForm, type IFormAction } from '@oe/ui/components/blog';
 import { Image } from '@oe/ui/components/image';
 import { getTranslations } from 'next-intl/server';
 import { redirect } from 'next/navigation';
@@ -15,7 +16,6 @@ import { cn } from '#utils/cn';
 
 interface ICreationProps {
   className?: string;
-  blogType: BlogType;
   action: IFormAction;
   aiButton?: boolean;
   id?: string;
@@ -35,17 +35,21 @@ const getBlogContent = async (id?: string) => {
   }
 };
 
-export default async function BlogCreationPage({ className, blogType, aiButton, id, action }: ICreationProps) {
-  const [tError, tBlogNavigation, tBlogForm, i18nConfigData, blogData, me] = await Promise.all([
+export default async function BlogCreationPage({ className, aiButton, id, action }: ICreationProps) {
+  const [tError, tBlogNavigation, tBlogForm, i18nConfigData, blogData, me, cookies] = await Promise.all([
     getTranslations('errors'),
     getTranslations('blogNavigation'),
     getTranslations('blogForm'),
     getI18nConfigServer(),
     getBlogContent(id),
     getMeServiceWithoutError(),
+    getCookies(),
   ]);
+
   if (!me) {
-    redirect(AUTH_ROUTES.login);
+    redirect(
+      `${AUTH_ROUTES.login}?next=/${cookies?.[process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY] ?? 'en'}${BLOG_ROUTES.createBlog}`
+    );
   }
   if (blogData instanceof Error) {
     return (
@@ -102,7 +106,7 @@ export default async function BlogCreationPage({ className, blogType, aiButton, 
       <Breadcrumb items={breakcrumbItems} />
       <BlogForm
         className={cn('p-4', className)}
-        blogType={blogType}
+        blogType="personal"
         aiButton={aiButton}
         locales={i18nConfigData?.[0]?.value?.locales}
         data={blogData}

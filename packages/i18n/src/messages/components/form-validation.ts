@@ -60,5 +60,6 @@ export const formValidationMessages = {
     singleUrlError: 'Invalid URL',
     multipleUrlError: 'One of the URLs is invalid',
     arrayError: 'Please select at least one item',
+    urlNote: 'You can copy paste again to get the right URL format.',
   },
 };

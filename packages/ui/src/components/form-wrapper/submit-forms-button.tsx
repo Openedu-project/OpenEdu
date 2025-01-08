@@ -5,10 +5,10 @@ import type { IFormSubmitButtonProps } from "./types";
 
 import { useTranslations } from "next-intl";
 import type { FC, MouseEvent } from "react";
-import { Button } from "#shadcn/button";
+import { Button, type ButtonProps } from "#shadcn/button";
 import { cn } from "#utils/cn";
 
-export const SubmitFormsButton: FC<IFormSubmitButtonProps> = ({
+export const SubmitFormsButton: FC<IFormSubmitButtonProps & ButtonProps> = ({
   children,
   className,
   disabled,

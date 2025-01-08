@@ -12,12 +12,14 @@ export const blogSchema = z.object({
   image_description: z.string().optional(),
   description: z.string().optional(),
   content: z.string().min(20, { message: 'blogForm.contentMessage' }),
-  category_ids: z.array(
-    z.object({
-      id: z.string(),
-      name: z.string(),
-    })
-  ),
+  category_ids: z
+    .array(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+      })
+    )
+    .optional(),
   hashtag_names: z.array(z.string()).optional(),
   is_ai_generated: z.boolean(),
 });

@@ -37,7 +37,7 @@ export function TableHeaderRows<TData>({
           ) : header.isPlaceholder ? null : (
             <div
               className={cn(
-                'flex items-center gap-2',
+                'flex w-full items-center gap-2',
                 header.column.getCanSort() ? 'cursor-pointer select-none' : '',
                 (header.column.columnDef as ColumnDef<TData>).align &&
                   `justify-${(header.column.columnDef as ColumnDef<TData>).align}`

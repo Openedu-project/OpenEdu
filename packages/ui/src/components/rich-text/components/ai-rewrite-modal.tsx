@@ -38,7 +38,7 @@ export const AIRewriteModal: React.FC<{
     try {
       const res = await postAIBlog({
         ...aiParams,
-        ai_blog_request_type: 'rewrite_blog',
+        ai_blog_request_type: 'rewrite_paragraph',
         text: selectionContainsText,
       });
 

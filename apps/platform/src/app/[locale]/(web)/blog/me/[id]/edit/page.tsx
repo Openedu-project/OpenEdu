@@ -7,5 +7,5 @@ export default async function CreationPage({
 }) {
   const { id } = await params;
 
-  return <BlogCreationPage blogType="personal" id={id} action="update" />;
+  return <BlogCreationPage id={id} action="update" />;
 }

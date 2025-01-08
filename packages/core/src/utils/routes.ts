@@ -28,13 +28,13 @@ export const PLATFORM_ROUTES = {
 
 export const BLOG_ROUTES = {
   blog: '/blog',
-  blogDetail: '/blog/organization/:slug',
-  personBlogDetail: '/blog/:username/:slug',
+  blogDetail: '/blog/:slug',
+  personBlogDetail: '/blog/author/:username/:slug',
   blogHashtag: '/blog/hashtag/:id',
   blogCategory: '/blog/category/:id',
   blogSearchResult: '/blog/search-result',
   blogManagement: '/blog/me/management',
-  createBlog: '/blog/me/create',
+  createBlog: '/blog/me/creation',
   editBlog: '/blog/me/:id/edit',
   previewBlog: '/blog/me/:id/preview',
   authorBlog: '/blog/author/:username',
@@ -49,7 +49,7 @@ export const BLOG_ADMIN_ROUTES = {
   requestMgt: '/blog-admin/request',
   blogCategory: '/blog-admin/blog-category',
   myBlog: '/blog-admin/my-blog',
-  createBlog: '/blog-admin/create',
+  createBlog: '/blog-admin/creation',
   editBlog: '/blog-admin/:id/edit',
   previewBlog: '/blog-admin/:id/preview',
 } as const;
