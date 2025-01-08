@@ -40,9 +40,9 @@ export function BlogDetails({
           alt="blog-thumbnail"
           fill
           className="w-full"
-          aspectRatio="21:9"
+          aspectRatio="16:9"
+          objectFit="contain"
           containerHeight="auto"
-          style={{ objectFit: 'contain' }}
           src={data?.banner?.url}
         />
         <p className="mcaption-regular12 text-center text-foreground italic">{data.image_description}</p>
