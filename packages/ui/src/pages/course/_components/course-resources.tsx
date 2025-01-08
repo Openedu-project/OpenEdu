@@ -49,7 +49,7 @@ export default function CourseResources({ docs }: { docs: IFileResponse[] }) {
     <>
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger className="flex w-full items-center justify-between">
-          <div className="mcaption-regular16 flex items-center gap-3 text-content-neutral-light-700">
+          <div className="mcaption-regular14 flex items-center gap-3 text-content-neutral-light-700">
             <DocumentDownload width={20} height={20} color="hsl(var(--muted-foreground))" />
             <span className="line-clamp-1 text-left">{t('title', { total: docs?.length })}</span>
           </div>

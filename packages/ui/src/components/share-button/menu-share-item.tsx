@@ -4,6 +4,7 @@ import type { ICourseOutline } from '@oe/api/types/course/course';
 import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
 import { copyToClipboard } from '@oe/core/utils/utils';
+import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { SocialIcon } from '#components/social-icon';
@@ -82,7 +83,6 @@ const MenuItem = ({ url, title, label, onClick, socialUrl, ShareComponent, class
 );
 
 export const MenuContent = ({ align = 'end', courseData }: MenuContentProps) => {
-  // console.log("courseData - MenuContent", courseData);
   const { dataMe } = useGetMe();
   const tCommonAction = useTranslations('general');
   const tCourses = useTranslations('courses');
@@ -110,6 +110,7 @@ export const MenuContent = ({ align = 'end', courseData }: MenuContentProps) => 
     //   : url;
     const permalinkUrl = shareConfig.url;
     copyToClipboard(permalinkUrl, tCommonAction('copied'), 2000);
+    toast.success(tCommonAction('copied'));
   };
 
   return (
