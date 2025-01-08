@@ -58,5 +58,6 @@ export const generalMessages = {
     following: 'Following',
     write: 'Write',
     noData: 'No data available',
+    copied: 'Copied',
   },
 };

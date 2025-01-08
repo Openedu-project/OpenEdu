@@ -15,6 +15,8 @@ export const PLATFORM_ROUTES = {
   contactUs: '/contact-us',
   courses: '/courses',
   courseDetail: '/courses/:slug',
+  courseLearning: '/courses/:slug/:section/:lesson',
+  payment: '/courses/:slug/payment',
   notFound: '/not-found',
   terms: '/terms',
   specificTerms: '/terms/:terms',

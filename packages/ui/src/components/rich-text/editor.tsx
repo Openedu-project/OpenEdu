@@ -1,7 +1,7 @@
 'use client';
 import { type Editor, EditorContent } from '@tiptap/react';
 
-import './styles.css';
+// import './styles.css';
 
 import { cn } from '@oe/ui/utils/cn';
 import { useTranslations } from 'next-intl';

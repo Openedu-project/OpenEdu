@@ -1,0 +1,106 @@
+import Mail from '@oe/assets/icons/mail';
+import Discord from '@oe/assets/icons/social-icon/discord';
+import Facebook from '@oe/assets/icons/social-icon/facebook';
+import Github from '@oe/assets/icons/social-icon/github';
+import Linkedin from '@oe/assets/icons/social-icon/linkedin';
+import Telegram from '@oe/assets/icons/social-icon/telegram';
+import Twitter from '@oe/assets/icons/social-icon/twitter';
+import Zalo from '@oe/assets/icons/social-icon/zalo';
+import { EMAIL_REGEX } from '@oe/core/utils/constants';
+import { Link as LinkIcon } from 'lucide-react';
+import type React from 'react';
+import { Link } from '#common/navigation';
+import { cn } from '#utils/cn';
+import { type IconProps, SOCIAL_PATTERNS, type SocialIconLinkProps, type SocialType } from './types';
+
+const HTTP_REGEX = /^(https?:\/\/)/;
+const MAILTO_PREFIX = 'mailto:';
+const HTTP_PREFIX = 'https://';
+
+const ICON_MAP: Record<SocialType, React.ComponentType<IconProps>> = {
+  email: Mail,
+  facebook: Facebook,
+  telegram: Telegram,
+  twitter: Twitter,
+  zalo: Zalo,
+  discord: Discord,
+  linkedin: Linkedin,
+  github: Github,
+  other: LinkIcon,
+};
+
+export const getSocialType = (url: string): SocialType => {
+  const lowercaseUrl = url.toLowerCase();
+
+  if (EMAIL_REGEX.test(lowercaseUrl)) {
+    return 'email';
+  }
+
+  for (const [social, patterns] of Object.entries(SOCIAL_PATTERNS)) {
+    if (patterns.some(pattern => lowercaseUrl.includes(pattern))) {
+      return social as SocialType;
+    }
+  }
+
+  return 'other';
+};
+
+type UrlFormat = {
+  displayUrl: string;
+  linkUrl: string;
+};
+
+export const formatUrl = (url: string, type: SocialType, shortenedLink: boolean): UrlFormat => {
+  // Early returns for empty URLs
+  if (!url) {
+    return { displayUrl: '', linkUrl: '' };
+  }
+
+  const isEmail = type === 'email';
+  const hasMailto = url.startsWith(MAILTO_PREFIX);
+  const hasHttp = HTTP_REGEX.test(url);
+
+  // Format linkUrl
+  const linkUrl = isEmail ? (hasMailto ? url : `${MAILTO_PREFIX}${url}`) : hasHttp ? url : `${HTTP_PREFIX}${url}`;
+
+  // Format displayUrl
+  const displayUrl = shortenedLink ? (isEmail ? url.replace(MAILTO_PREFIX, '') : url.replace(HTTP_REGEX, '')) : url;
+
+  return { displayUrl, linkUrl };
+};
+
+export const getSocialIcon = (type: SocialType, props: IconProps) => {
+  const Icon = ICON_MAP[type] || ICON_MAP.other;
+  return <Icon {...props} className="h-4 w-4" />;
+};
+
+export const SocialIcon: React.FC<SocialIconLinkProps> = ({
+  url,
+  children,
+  className,
+  iconSize = 24,
+  iconColor,
+  linkClassName = 'text-foreground/90 ml-3 line-clamp-1',
+  shortenedLink = false,
+}) => {
+  const socialType = getSocialType(url);
+  const { displayUrl, linkUrl } = formatUrl(url, socialType, shortenedLink);
+
+  const iconProps = {
+    size: iconSize,
+    width: iconSize,
+    height: iconSize,
+    color: iconColor,
+  };
+
+  return (
+    <div className={cn('flex items-center', className)}>
+      {getSocialIcon(socialType, iconProps)}
+      {children ?? (
+        <Link href={linkUrl} target="_blank" rel="noopener noreferrer" className={cn(linkClassName, 'h-fit')}>
+          {displayUrl}
+        </Link>
+      )}
+    </div>
+  );
+};

@@ -3,6 +3,7 @@ import { acceptUserInviteMessage } from './accept-user-invitation';
 import { bankAccountMessage } from './bank-account';
 import { builderMessages } from './builder';
 import { couponMessage } from './coupon';
+import { courseOutlineMessages } from './course-outline';
 import { creatorManagementMessage } from './creator-management';
 import { forgotPasswordMessage } from './forgot-password';
 import { notificationMessage } from './notification';
@@ -26,4 +27,5 @@ export const pageMessages = {
   ...withdrawRequestMessage,
   ...bankAccountMessage,
   ...notificationMessage,
+  ...courseOutlineMessages,
 };

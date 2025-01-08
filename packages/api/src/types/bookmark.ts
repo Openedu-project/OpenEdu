@@ -12,3 +12,8 @@ export interface IBookmark {
 }
 
 export type TBookmark = 'course';
+
+export interface IBookmarkRequest {
+  entity_id: string;
+  entity_type: string;
+}
