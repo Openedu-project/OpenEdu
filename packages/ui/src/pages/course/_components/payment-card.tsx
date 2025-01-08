@@ -1,11 +1,11 @@
-import { getCourseOutlineService } from '@oe/api/services/course';
 import type { ICourseOutline } from '@oe/api/types/course/course';
+import { useTranslations } from 'next-intl';
 import { formatCurrency } from '#components/input-currency';
 import { PaymentButton } from '#components/payment-button';
 import { WishlistButton } from '#components/wishlist-button';
 import { Card, CardContent, CardFooter } from '#shadcn/card';
 import { cn } from '#utils/cn';
-import { useCourseOutlineDetailStore } from '../_store/useCourseOutlineStore';
+// import { useCourseOutlineDetailStore } from "../_store/useCourseOutlineStore";
 
 interface PriceRowProps {
   label?: string;
@@ -28,7 +28,7 @@ const PriceDisplay = ({
   isBold?: boolean;
 }) => {
   const unitPrice = Number(discount ?? 0) + Number(value ?? 0);
-  const textStyle = cn('giant-iheading-semibold24 text-primary', isBold && 'font-bold');
+  const textStyle = cn('giant-iheading-semibold20 text-primary', isBold && 'font-bold');
 
   return (
     <>
@@ -46,27 +46,23 @@ const PriceDisplay = ({
 };
 
 const PriceRow = ({ label, value, isBold, discount, currency = 'VND', isPay }: PriceRowProps) => {
+  const tCourse = useTranslations('courses.payment');
   return (
     <div className="flex flex-wrap items-center justify-between gap-1">
-      {label && (
-        <span className={cn('giant-iheading-semibold16', 'text-content-neutral-light-700', isBold && 'font-bold')}>
-          {label}
-        </span>
-      )}
+      {label && <span className={cn('giant-iheading-semibold16', isBold && 'font-bold')}>{label}</span>}
       {isPay ? (
         <PriceDisplay value={value} currency={currency} discount={Number(discount)} isBold={isBold} />
       ) : (
-        <span className={cn('giant-iheading-semibold24', 'text-content-neutral-medium-800', isBold && 'font-bold')}>
-          FREE
-        </span>
+        <span className={cn('giant-iheading-semibold20 uppercase', isBold && 'font-bold')}>{tCourse('free')}</span>
       )}
     </div>
   );
 };
 
 const PaymentCard = ({ courseOutline }: { courseOutline: ICourseOutline }) => {
-  const { courseOutline: courseDataStore, setCourseOutline } = useCourseOutlineDetailStore();
-  const { cuid, slug, is_paid, is_enrolled, price_settings } = courseOutline;
+  // const { courseOutline: courseDataStore, setCourseOutline } =
+  //   useCourseOutlineDetailStore();
+  const { is_paid, is_enrolled, price_settings } = courseOutline;
   const isPaidOrEnrolled = is_paid || is_enrolled;
 
   return (
@@ -84,12 +80,13 @@ const PaymentCard = ({ courseOutline }: { courseOutline: ICourseOutline }) => {
       <CardFooter className="p-0">
         <div className="flex w-full items-center space-x-4">
           <PaymentButton className="mbutton-regular16 h-fit flex-grow" courseData={courseOutline} isCourseDetail />
-          <WishlistButton
+          <WishlistButton courseData={courseOutline} className="flex-shrink-0 border-foreground/20 " />
+          {/* <WishlistButton
             bookmarkId={courseDataStore.bookmark?.id}
             entityId={cuid}
             entityType="course"
             isWishlist={courseDataStore.is_wishlist}
-            className="flex-shrink-0 border-foreground/20"
+            className="flex-shrink-0 border-foreground/20 "
             onClick={async () => {
               const courseData = await getCourseOutlineService(undefined, {
                 id: slug,
@@ -103,7 +100,7 @@ const PaymentCard = ({ courseOutline }: { courseOutline: ICourseOutline }) => {
                 });
               }
             }}
-          />
+          /> */}
         </div>
       </CardFooter>
     </Card>

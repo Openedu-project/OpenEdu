@@ -19,5 +19,12 @@ export const coursesMessages = {
       youtube: 'Course From YouTube',
       ai: 'AI Generate Course',
     },
+    share: {
+      referral: 'Referral',
+      permalink: 'Permalink',
+    },
+    payment: {
+      free: 'Free',
+    },
   },
 };

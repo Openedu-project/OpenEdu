@@ -217,8 +217,7 @@ export const API_ENDPOINT = {
   COM_NOTIFICATIONS_READ: '/api/com-v1/notifications/read',
 
   // WS
-  WEBSOCKET: `/websocket` as const,
-
+  WEBSOCKET: '/websocket',
 } as const;
 
 export type API_ENDPOINT_KEY = keyof typeof API_ENDPOINT;

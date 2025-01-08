@@ -1,5 +1,7 @@
+'use client';
+
 import { Share2 } from 'lucide-react';
-import type React from 'react';
+import { useTranslations } from 'next-intl';
 import { Badge } from '#shadcn/badge';
 import { Button } from '#shadcn/button';
 import { DropdownMenu, DropdownMenuTrigger } from '#shadcn/dropdown-menu';
@@ -7,36 +9,50 @@ import { cn } from '#utils/cn';
 import { MenuContent } from './menu-share-item';
 import type { ShareButtonComponentProps } from './types';
 
-export const addParamsToUrl = (url: string, params: Record<string, string>) => {
-  const urlObj = new URL(url);
-
-  for (const [key, value] of Object.entries(params)) {
-    urlObj.searchParams.set(key, value);
-  }
-  return urlObj.toString();
-};
-
 export default function ShareButton({
-  config,
-  children,
-  onShareClick,
+  // config,
+  // children,
+  // onShareClick,
   className,
-  isAffiliate,
+  // isAffiliate,
+  courseData,
   ...props
 }: ShareButtonComponentProps) {
-  const handleShare = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    e.preventDefault();
-    onShareClick?.(e);
-  };
+  // console.log("courseData", courseData);
+  // const { dataMe } = useGetMe();
+  const tCourse = useTranslations('courses');
+  // const handleShare = (e: React.MouseEvent<HTMLButtonElement>) => {
+  //   e.stopPropagation();
+  //   e.preventDefault();
+  //   // onShareClick?.(e);
+  // };
 
-  const AffiliatedBadge = isAffiliate && (
-    <Badge className="mcaption-regular8 absolute bottom-[75%] left-[65%] rounded-[8px] bg-[#09BEC9] p-1 text-white">
-      Referral
+  // const url = buildUrl({
+  //   endpoint: PLATFORM_ROUTES.courseDetail,
+  //   params: { slug: courseData?.slug },
+  // });
+
+  // const shareConfig: ShareConfig = {
+  //   url: `https://${courseData?.org?.domain}${url}/${
+  //     dataMe ? `?ref_by=${dataMe?.id}` : ""
+  //   }`,
+  //   title: courseData?.name,
+  //   permalink: {
+  //     enabled: true,
+  //   },
+  //   socials: [{ id: "facebook" }, { id: "twitter" }, { id: "telegram" }],
+  // };
+
+  const AffiliatedBadge = courseData?.props?.is_affiliate && (
+    <Badge
+      variant="default"
+      className="mcaption-regular8 absolute bottom-[75%] left-[65%] z-10 rounded-md bg-primary p-1 text-background"
+    >
+      {tCourse('share.referral')}
     </Badge>
   );
 
-  const DefaultShareIcon = <Share2 className="h-3 w-3 md:h-4 md:w-4" color="hsl(var(--foreground))" />;
+  // const DefaultShareIcon = <Share2 className="h-3 w-3 md:h-4 md:w-4" />;
 
   return (
     <DropdownMenu>
@@ -44,16 +60,19 @@ export default function ShareButton({
         <Button
           size="icon"
           variant="outline"
-          className={cn('relative border-foreground/20 p-2 focus:border focus-visible:ring-0', className)}
-          onClick={handleShare}
+          className={cn(
+            'relative flex h-6 w-6 items-center border-foreground/20 focus:border focus-visible:ring-0 md:h-8 md:w-8 md:p-2',
+            courseData?.props?.is_affiliate && '!mr-spacing-mml',
+            className
+          )}
           {...props}
         >
-          {children ?? DefaultShareIcon}
+          <Share2 className="h-3 w-3 md:h-4 md:w-4" />
           {AffiliatedBadge}
         </Button>
       </DropdownMenuTrigger>
 
-      <MenuContent config={config} />
+      <MenuContent courseData={courseData} />
     </DropdownMenu>
   );
 }

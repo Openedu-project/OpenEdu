@@ -3,7 +3,11 @@ import { useTranslations } from 'next-intl';
 import { SocialIcon } from '#components/social-icon';
 import { CourseSection } from './course-section';
 
-const SupportingChannels = ({ courseOutline }: { courseOutline: ICourseOutline }) => {
+const SupportingChannels = ({
+  courseOutline,
+}: {
+  courseOutline: ICourseOutline;
+}) => {
   const tCourse = useTranslations('courseOutline');
 
   const channels = courseOutline?.props?.support_channel?.channels;
@@ -20,7 +24,7 @@ const SupportingChannels = ({ courseOutline }: { courseOutline: ICourseOutline }
                   key={`channel_${index}`}
                   url={channel}
                   shortenedLink
-                  linkClassName="mcaption-regular16 text-foreground/90 ml-3 line-clamp-1 p-0"
+                  linkClassName="mcaption-regular14 ml-3 line-clamp-1 p-0"
                 />
               ))}
           </div>

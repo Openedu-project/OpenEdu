@@ -1,3 +1,4 @@
+import { getLocaleFromPathname } from '@oe/i18n/utils';
 import { type Locale, differenceInDays, format, formatRelative, fromUnixTime, getTime, parseISO } from 'date-fns';
 import { enUS } from 'date-fns/locale';
 
@@ -49,7 +50,7 @@ class LocaleManager {
         const selectedLocale = localeModule[normalizedCode as keyof typeof localeModule];
 
         if (selectedLocale) {
-          this.currentLocale = selectedLocale;
+          this.currentLocale = selectedLocale as Locale;
           return;
         }
       } catch (normalizedError) {
@@ -67,7 +68,7 @@ class LocaleManager {
           const selectedLocale = localeModule[baseLocaleCode as keyof typeof localeModule];
 
           if (selectedLocale) {
-            this.currentLocale = selectedLocale;
+            this.currentLocale = selectedLocale as Locale;
             return;
           }
         } catch (baseError) {
@@ -83,11 +84,12 @@ class LocaleManager {
 
   async initializeLocale(): Promise<void> {
     if (!this.loadingPromise) {
-      const browserLocale = navigator.language;
+      // const browserLocale = navigator.language;
       // Create and store the promise
       this.loadingPromise = (async () => {
         try {
-          await this.loadLocale(browserLocale);
+          const locale = getLocaleFromPathname(new URL(window.location.href).pathname);
+          await this.loadLocale(locale);
         } catch (error) {
           console.error('Failed to initialize locale:', error);
           // Reset the promise on error so we can try again

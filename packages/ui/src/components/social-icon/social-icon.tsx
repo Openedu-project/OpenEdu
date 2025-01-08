@@ -71,7 +71,7 @@ export const formatUrl = (url: string, type: SocialType, shortenedLink: boolean)
 
 export const getSocialIcon = (type: SocialType, props: IconProps) => {
   const Icon = ICON_MAP[type] || ICON_MAP.other;
-  return <Icon {...props} />;
+  return <Icon {...props} className="h-4 w-4" />;
 };
 
 export const SocialIcon: React.FC<SocialIconLinkProps> = ({

@@ -32,19 +32,19 @@ export default function CourseIncludes({
   const courseFeatures: CourseFeature[] = [
     {
       condition: has_certificate,
-      icon: <MedalStar />,
+      icon: <MedalStar width={20} height={20} color="hsl(var(--muted-foreground))" />,
       content: <span>{tCourse('completionCertificate')}</span>,
       key: 'has_certificate',
     },
     {
       condition: quiz_count > 0,
-      icon: <MessageQuestion width={24} height={24} color="#2C2C2C" />,
+      icon: <MessageQuestion width={20} height={20} color="hsl(var(--muted-foreground))" />,
       content: <span>{tCourse('totalQuizzes', { total: quiz_count ?? 0 })}</span>,
       key: 'total_quiz',
     },
     {
       condition: active_section > 0 || active_lesson > 1,
-      icon: <Book width={24} height={24} color="#2C2C2C" />,
+      icon: <Book width={20} height={20} color="hsl(var(--muted-foreground))" />,
       content: (
         <span>
           {active_section > 1
@@ -60,7 +60,7 @@ export default function CourseIncludes({
     },
     {
       condition: video_count > 0,
-      icon: <VideoSquare width={24} height={24} color="#2C2C2C" />,
+      icon: <VideoSquare width={20} height={20} color="hsl(var(--muted-foreground))" />,
       content: <span>{tCourse('totalVideos', { total: video_count ?? 0 })}</span>,
       key: 'total_video',
     },
@@ -76,7 +76,7 @@ export default function CourseIncludes({
     <>
       <hr className="mb-6 md:hidden" />
       <CourseSection title={tCourse('title')} containerClass={cn(className)}>
-        <div className="mcaption-regular16 grid grid-cols-1 gap-1 text-foreground/80">
+        <div className="mcaption-regular14 grid grid-cols-1 gap-1">
           {courseFeatures?.map(
             feature =>
               feature.condition && (

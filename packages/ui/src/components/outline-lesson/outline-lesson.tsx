@@ -1,3 +1,4 @@
+'use client';
 import type { ILesson } from '@oe/api/types/course/segment';
 import { createAPIUrl } from '@oe/api/utils/fetch';
 import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
@@ -96,7 +97,7 @@ export const OutlineLesson = ({
 
         <div className="flex flex-1 flex-col items-start gap-[2px]">
           <span className="mcaption-semibold12 text-foreground/60">{tCourse('lesson', { index })}</span>
-          <span className="mbutton-semibold16 flex-1 text-foreground/90">{title}</span>
+          <span className="mbutton-semibold14 flex-1 text-left text-foreground/90">{title}</span>
 
           <LessonCountDisplay lesson={lesson} tCourse={tCourse} />
         </div>

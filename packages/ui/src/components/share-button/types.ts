@@ -1,3 +1,4 @@
+import type { ICourseOutline } from '@oe/api/types/course/course';
 import type { MouseEvent, ReactNode } from 'react';
 import {
   EmailShareButton,
@@ -77,7 +78,8 @@ export interface ShareConfig {
 }
 
 export interface ShareButtonComponentProps extends Omit<ButtonProps, 'onClick'> {
-  config: ShareConfig;
+  courseData?: ICourseOutline;
+  config?: ShareConfig;
   children?: ReactNode;
   onShareClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   className?: string;

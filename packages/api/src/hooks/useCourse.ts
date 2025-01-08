@@ -1,5 +1,6 @@
 import useSWR from 'swr';
 import { getCourseOutlineService, getCourseService } from '#services/course';
+import type { ICourseOutline } from '#types/course/course';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
@@ -21,7 +22,7 @@ export function useGetCourses({ params }: { params: IFilter }) {
   };
 }
 
-export function useGetCourseOutline(id: string, shouldFetch = true) {
+export function useGetCourseOutline(id: string, fallback: ICourseOutline | null = null) {
   const endpointKey = createAPIUrl({
     endpoint: API_ENDPOINT.COURSES_ID_OUTLINE,
     params: { id },
@@ -29,9 +30,12 @@ export function useGetCourseOutline(id: string, shouldFetch = true) {
       preloads: ['FormRelations', 'Medias', 'Owner', 'Levels', 'Docs'],
     },
   });
-
-  const { data, isLoading, error, mutate } = useSWR(shouldFetch ? endpointKey : null, (endpoint: string) =>
-    getCourseOutlineService(endpoint, { id })
+  const { data, isLoading, error, mutate } = useSWR(
+    id ? endpointKey : null,
+    (endpoint: string) => getCourseOutlineService(endpoint, { id }),
+    {
+      fallbackData: fallback,
+    }
   );
 
   return {

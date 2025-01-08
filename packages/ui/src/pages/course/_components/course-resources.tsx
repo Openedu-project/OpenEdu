@@ -1,5 +1,3 @@
-import ArrowSquareDown from '@oe/assets/icons/arrow-square-down';
-import ArrowSquareUp from '@oe/assets/icons/arrow-square-up';
 import DocumentDownload from '@oe/assets/icons/document-download';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
@@ -8,6 +6,7 @@ import { useState } from 'react';
 import { useGetMe } from '@oe/api/hooks/useMe';
 import type { IFileResponse } from '@oe/api/types/file';
 import { type DownloadFileProps, downloadAllFiles, processFileName } from '@oe/core/utils/download-file';
+import { CircleChevronDown, CircleChevronUp } from 'lucide-react';
 import { useLoginRequiredStore } from '#components/login-required-modal';
 import { Button } from '#shadcn/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '#shadcn/collapsible';
@@ -49,15 +48,19 @@ export default function CourseResources({ docs }: { docs: IFileResponse[] }) {
   return (
     <>
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <CollapsibleTrigger className="flex w-full justify-between">
+        <CollapsibleTrigger className="flex w-full items-center justify-between">
           <div className="mcaption-regular16 flex items-center gap-3 text-content-neutral-light-700">
-            <DocumentDownload width={24} height={24} color="#2C2C2C" />
+            <DocumentDownload width={20} height={20} color="hsl(var(--muted-foreground))" />
             <span className="line-clamp-1 text-left">{t('title', { total: docs?.length })}</span>
           </div>
-          {isOpen ? <ArrowSquareUp /> : <ArrowSquareDown />}
+          {isOpen ? (
+            <CircleChevronUp className="h-5 w-5 text-muted-foreground" />
+          ) : (
+            <CircleChevronDown className="h-5 w-5 text-muted-foreground" />
+          )}
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className="mt-3 grid grid-cols-1 gap-3 rounded-lg border border-foreground/20 bg-white p-4 shadow-shadow-2">
+          <div className="mt-3 grid grid-cols-1 gap-3 rounded-lg border border-foreground/20 bg-background p-2 shadow">
             <div className="flex items-center justify-between space-x-spacing-mml">
               <span className="mcaption-semibold16 text-foreground/90">{t('resources')}</span>
               {docs?.length > 1 && (

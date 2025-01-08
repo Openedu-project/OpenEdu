@@ -2,19 +2,19 @@
 
 import { useGetMe } from '@oe/api/hooks/useMe';
 import { getCookie } from 'cookies-next';
-import { usePathname, useRouter } from 'next/navigation';
+// import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useSocket } from '../../hooks/useSocket';
 
 export default function SocketProvider() {
-  const { dataMe: me, mutateMe } = useGetMe();
-  const pathName = usePathname();
-  const router = useRouter();
+  const { dataMe: me } = useGetMe();
+  // const pathName = usePathname();
+  // const router = useRouter();
   const [accessToken, setAccessToken] = useState<string>('');
 
-  useEffect(() => {
-    router.refresh();
-  }, [mutateMe, pathName, router]);
+  // useEffect(() => {
+  //   router.refresh();
+  // }, [mutateMe, pathName, router]);
 
   useEffect(() => {
     if (me) {

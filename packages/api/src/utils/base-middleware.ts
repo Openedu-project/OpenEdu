@@ -77,18 +77,16 @@ export async function baseMiddleware(request: NextRequest, host?: string | null)
     request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY)?.value
   );
   console.info('================isAccessTokenExpired==============', isAccessTokenExpired);
-  if (accessToken) {
-    if (isAccessTokenExpired) {
-      const { response, ...rest } = await refreshTokenMiddlewareService({
-        referrer,
-        origin,
-        req: request,
-        res: i18nResponse,
-      });
-      i18nResponse = response;
+  if (accessToken && isAccessTokenExpired) {
+    const { response, ...rest } = await refreshTokenMiddlewareService({
+      referrer,
+      origin,
+      req: request,
+      res: i18nResponse,
+    });
+    i18nResponse = response;
 
-      accessToken = (rest as IToken).access_token;
-    }
+    accessToken = (rest as IToken).access_token;
   }
 
   const isProtected = isProtectedRoute(request.nextUrl.pathname);

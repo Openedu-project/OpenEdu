@@ -343,7 +343,7 @@ export const fontClasses = {
 
   '.mbutton-semibold14': {
     fontFamily: 'var(--font-secondary), sans-serif',
-    fontSize: '16px',
+    fontSize: '14px',
     fontWeight: 600,
     lineHeight: '140%' /* 20px */,
   },

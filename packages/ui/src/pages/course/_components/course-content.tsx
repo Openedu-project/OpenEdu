@@ -4,7 +4,11 @@ import { OutlineLesson } from '#components/outline-lesson';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '#shadcn/accordion';
 import { CourseSection } from './course-section';
 
-const CourseContent = ({ courseOutline }: { courseOutline: ICourseOutline }) => {
+const CourseContent = ({
+  courseOutline,
+}: {
+  courseOutline: ICourseOutline;
+}) => {
   const t = useTranslations('courseOutline');
 
   const outline = courseOutline?.outline;
@@ -17,7 +21,7 @@ const CourseContent = ({ courseOutline }: { courseOutline: ICourseOutline }) => 
             ?.sort((a, b) => a.order - b.order)
             ?.map((section, index) => (
               <AccordionItem className="border-none" key={section.id} value={`section-${section.id}`}>
-                <AccordionTrigger className="giant-iheading-semibold16 rounded-[4px] border-[0.4px] border-foreground/5 bg-foreground/5 p-3 text-left text-primary hover:no-underline">
+                <AccordionTrigger className="giant-iheading-semibold16 rounded-[4px] border-[0.4px] border-foreground/5 bg-foreground/5 p-3 text-left hover:no-underline data-[state=open]:bg-muted">
                   {`Section ${index + 1}: ${section.title}`}
                 </AccordionTrigger>
                 <AccordionContent>

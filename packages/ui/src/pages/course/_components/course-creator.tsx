@@ -21,9 +21,9 @@ export default function CourseCreator({ owner }: { owner: ICourseOwner }) {
       className="max-w-fit flex-1 p-0 hover:no-underline"
     >
       <div className="flex items-center gap-2">
-        <div className="mcaption-semibold14 md:mcaption-semibold18 line-clamp-1 flex items-center gap-1">
+        <div className="mcaption-semibold16 line-clamp-1 flex items-center gap-1">
           <span className="text-foreground/70">{tCourse('creator')}:</span>
-          <h2 className="mcaption-semibold14 md:mcaption-semibold18 mb-0 line-clamp-1 text-primary">
+          <h2 className="mcaption-semibold16 mb-0 line-clamp-1 text-primary">
             {owner?.display_name && owner.display_name?.length > 0 ? owner.display_name : owner?.username}
           </h2>
         </div>

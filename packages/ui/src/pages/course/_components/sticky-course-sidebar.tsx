@@ -1,8 +1,7 @@
 'use client';
 
 import type { ICourseOutline } from '@oe/api/types/course/course';
-import type React from 'react';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import CourseSidebar from './course-sidebar';
 
 interface Position {
@@ -12,7 +11,7 @@ interface Position {
 }
 
 interface StickyCourseSidebarProps {
-  courseContentRef: React.RefObject<HTMLElement | null>;
+  // courseContentRef: React.RefObject<HTMLElement | null>;
   courseData: ICourseOutline;
 }
 
@@ -56,20 +55,23 @@ const calculateSidebarPosition = (contentRect: DOMRect, sidebarHeight: number, s
   return getDefaultPosition();
 };
 
-const StickyCourseSidebar = ({ courseContentRef, courseData }: StickyCourseSidebarProps) => {
+const StickyCourseSidebar = ({
+  // courseContentRef,
+  courseData,
+}: StickyCourseSidebarProps) => {
   const sidebarRef = useRef<HTMLDivElement>(null);
 
-  const updateSidebarStyles = (styles: Position) => {
+  const updateSidebarStyles = useCallback((styles: Position) => {
     if (!sidebarRef.current) {
       return;
     }
 
     Object.assign(sidebarRef.current.style, styles);
-  };
+  }, []);
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     const sidebar = sidebarRef.current;
-    const courseContent = courseContentRef.current;
+    const courseContent = document.getElementById('course-content');
 
     if (!(sidebar && courseContent) || window.innerWidth < MOBILE_BREAKPOINT) {
       updateSidebarStyles(getDefaultPosition());
@@ -83,7 +85,7 @@ const StickyCourseSidebar = ({ courseContentRef, courseData }: StickyCourseSideb
     const newPosition = calculateSidebarPosition(contentRect, sidebarHeight, sidebarWidth);
 
     updateSidebarStyles(newPosition);
-  };
+  }, [updateSidebarStyles]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -93,7 +95,7 @@ const StickyCourseSidebar = ({ courseContentRef, courseData }: StickyCourseSideb
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
     };
-  }, [courseContentRef]);
+  }, [handleScroll]);
 
   return (
     <div className="relative md:col-span-2 lg:col-span-1">

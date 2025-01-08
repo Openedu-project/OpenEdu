@@ -1,5 +1,7 @@
 'use client';
 
+import type { ICourseFile } from '@oe/api/types/course/basic';
+import type { ICourseOutline } from '@oe/api/types/course/course';
 import { VideoSquare } from '@oe/assets/icons/video-square';
 import { convertSecondsToTimeString } from '@oe/core/utils/datetime';
 import { useTranslations } from 'next-intl';
@@ -8,9 +10,17 @@ import { Modal } from '#components/modal';
 import { Spinner } from '#components/spinner';
 import { Button } from '#shadcn/button';
 import { cn } from '#utils/cn';
-import { type PreviewVideo, useCourseOutlineDetailStore } from '../_store/useCourseOutlineStore';
+// import {
+//   type PreviewVideo,
+//   useCourseOutlineDetailStore,
+// } from "../_store/useCourseOutlineStore";
+
+export interface PreviewVideo extends ICourseFile {
+  title: string;
+}
 
 interface ICoursePreview {
+  courseOutline: ICourseOutline;
   medias?: PreviewVideo[];
   open: boolean;
   onClose: () => void;
@@ -20,7 +30,7 @@ interface IVideo {
   video?: PreviewVideo;
 }
 
-export default function CoursePreviewModal({ medias, open = false, onClose }: ICoursePreview) {
+export default function CoursePreviewModal({ medias, courseOutline, open = false, onClose }: ICoursePreview) {
   const t = useTranslations('courseOutline.coursePreview');
 
   const [videoStatus, setVideoStatus] = useState<IVideo>({
@@ -29,7 +39,7 @@ export default function CoursePreviewModal({ medias, open = false, onClose }: IC
   });
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  const { courseOutline } = useCourseOutlineDetailStore();
+  // const { courseOutline } = useCourseOutlineDetailStore();
   const { name } = courseOutline;
 
   const videoContainerRef = useRef<HTMLDivElement>(null);
@@ -92,11 +102,11 @@ export default function CoursePreviewModal({ medias, open = false, onClose }: IC
                 key={item?.id}
                 onClick={() => handleVideoClick(item)}
                 className={cn(
-                  'w-full justify-between gap-2 shadow-shadow-1',
+                  'w-full justify-between gap-2 shadow',
                   videoStatus?.video?.id === item?.id && 'bg-primary/15'
                 )}
               >
-                <VideoSquare color="#2C2C2C" />
+                <VideoSquare color="hsl(var(--muted-foreground))" />
                 <span className="line-clamp-1 w-full flex-1 text-left">{item.title}</span>
                 <span>{convertSecondsToTimeString(item?.duration)}</span>
               </Button>
