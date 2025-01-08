@@ -1,7 +1,7 @@
-import type { IBlog, IBlogListResponse, IBlogRequest, IBlogURL, IBlogsResponse } from '#types/blog';
+import type { IAIBlogRequest, IBlog, IBlogListResponse, IBlogRequest, IBlogsResponse } from '#types/blog';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { type FetchOptions, createAPIUrl, fetchAPI, postAPI, putAPI } from '#utils/fetch';
+import { type FetchOptions, createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 
 export const getBlogListService = async (
   url: string | undefined,
@@ -27,13 +27,44 @@ export const getBlogListService = async (
 
 export const postBlogAI = async (
   endpoint: string | null | undefined,
-  { payload, init }: { payload: Record<string, string | IBlogURL[]>; init?: RequestInit }
+  { payload, init }: { payload: IAIBlogRequest; init?: RequestInit }
 ) => {
-  const response = await postAPI<IBlog, Record<string, string | IBlogURL[]>>(
-    endpoint ?? API_ENDPOINT.BLOGS_AI,
-    payload,
-    init
-  );
+  const response = await postAPI<IBlog, IAIBlogRequest>(endpoint ?? API_ENDPOINT.BLOGS_AI, payload, init);
+
+  return response.data;
+};
+
+export const publishBlog = async (
+  endpoint: string | null | undefined,
+  id: string | undefined,
+  { payload, init }: { payload?: Record<string, string>; init?: RequestInit }
+) => {
+  const endpointKey = endpoint ?? createAPIUrl({ endpoint: API_ENDPOINT.BLOGS_ID_PUBLISH, params: { id } });
+  const response = await postAPI<{ message: string }, Record<string, string> | undefined>(endpointKey, payload, init);
+
+  return response.data;
+};
+
+export const unpublishBlog = async (
+  type: 'org' | 'personal',
+  endpoint: string | null | undefined,
+  id: string | undefined,
+  init?: RequestInit
+) => {
+  const endpointKey =
+    endpoint ??
+    createAPIUrl({
+      endpoint: type === 'org' ? API_ENDPOINT.BLOGS_ID_PUBLISH_ORG : API_ENDPOINT.BLOGS_ID_PUBLISH_PERSON,
+      params: { id },
+    });
+  const response = await deleteAPI<{ message: string }, RequestInit>(endpointKey, init);
+
+  return response.data;
+};
+
+export const deleteBlog = async (endpoint: string | null | undefined, id: string | undefined, init?: RequestInit) => {
+  const endpointKey = endpoint ?? createAPIUrl({ endpoint: API_ENDPOINT.BLOGS_ID, params: { id } });
+  const response = await deleteAPI<{ message: string }, RequestInit>(endpointKey, init);
 
   return response.data;
 };
@@ -91,6 +122,37 @@ export const getBlogDraftContent = async (
     queryParams: payload?.queryParams,
   });
   const response = await fetchAPI<IBlog>(url ?? defaultUrl, init);
+
+  return response.data;
+};
+
+export const getBlogContent = async (
+  url?: string,
+  payload?: { type: 'org' | 'personal'; slug: string; queryParams?: Record<string, string> },
+  init?: FetchOptions
+) => {
+  const defaultUrl = createAPIUrl({
+    endpoint: payload?.type === 'org' ? API_ENDPOINT.BLOGS_ID_ORG : API_ENDPOINT.BLOGS_ID_PERSONAL,
+    params: { id: payload?.slug },
+    queryParams: payload?.queryParams,
+  });
+  const response = await fetchAPI<IBlog>(url ?? defaultUrl, init);
+
+  return response.data;
+};
+
+export const getBlogsByCategoryId = async (
+  url: string | undefined,
+  queryParams: { id: string } & Record<string, string>,
+  init?: RequestInit
+) => {
+  const endpointKey =
+    url ??
+    createAPIUrl({
+      endpoint: API_ENDPOINT.BLOGS_CATEGORIES,
+      queryParams,
+    });
+  const response = await fetchAPI<IBlogsResponse>(endpointKey, init);
 
   return response.data;
 };

@@ -173,7 +173,7 @@ const CarouselItem = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
 CarouselItem.displayName = 'CarouselItem';
 
 const CarouselPrevious = forwardRef<HTMLButtonElement, ComponentProps<typeof Button>>(
-  ({ className, variant = 'outline', size = 'icon', ...props }, ref) => {
+  ({ className, variant = 'outline', size = 'icon', children, ...props }, ref) => {
     const { orientation, scrollPrev, canScrollPrev } = useCarousel();
 
     return (
@@ -192,7 +192,7 @@ const CarouselPrevious = forwardRef<HTMLButtonElement, ComponentProps<typeof But
         onClick={scrollPrev}
         {...props}
       >
-        <ArrowLeft className="h-4 w-4" />
+        {children ?? <ArrowLeft className="h-4 w-4" />}
         <span className="sr-only">Previous slide</span>
       </Button>
     );
@@ -201,7 +201,7 @@ const CarouselPrevious = forwardRef<HTMLButtonElement, ComponentProps<typeof But
 CarouselPrevious.displayName = 'CarouselPrevious';
 
 const CarouselNext = forwardRef<HTMLButtonElement, ComponentProps<typeof Button>>(
-  ({ className, variant = 'outline', size = 'icon', ...props }, ref) => {
+  ({ className, variant = 'outline', size = 'icon', children, ...props }, ref) => {
     const { orientation, scrollNext, canScrollNext } = useCarousel();
 
     return (
@@ -220,7 +220,7 @@ const CarouselNext = forwardRef<HTMLButtonElement, ComponentProps<typeof Button>
         onClick={scrollNext}
         {...props}
       >
-        <ArrowRight className="h-4 w-4" />
+        {children ?? <ArrowRight className="h-4 w-4" />}
         <span className="sr-only">Next slide</span>
       </Button>
     );

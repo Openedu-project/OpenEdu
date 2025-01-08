@@ -2,6 +2,7 @@
 .rich-text {
   /* @apply prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none; */
   margin: 1rem;
+
 }
 .rich-text:focus-visible {
   /* List styles */
@@ -66,7 +67,7 @@
   font-size: 0.85rem;
   padding: 0.25em 0.3em;
 }
-.rich-text p + p {
+.rich-text p {
   margin-bottom: 0.5rem;
 }
 

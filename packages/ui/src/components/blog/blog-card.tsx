@@ -13,7 +13,7 @@ import { ProfileCard } from '#components/profile-card';
 import { Card, CardContent } from '#shadcn/card';
 import { cn } from '#utils/cn';
 
-interface IBlogCardProps extends HTMLAttributes<HTMLDivElement> {
+export interface IBlogCardProps extends HTMLAttributes<HTMLDivElement> {
   blog: IBlog;
   contentRight?: boolean;
   authorOnTop?: boolean;
@@ -35,15 +35,17 @@ export function BlogCard({
   const router = useRouter();
 
   const handleClick = () => {
+    const targetPath = generateRoute(blog.blog_type === 'org' ? BLOG_ROUTES.blogDetail : BLOG_ROUTES.personBlogDetail, {
+      slug: blog?.slug,
+      username: blog?.author?.username,
+    });
+
     if (typeof window !== 'undefined') {
       if (blog?.org?.domain !== window?.location?.hostname) {
         const locale = getLocaleFromPathname(window?.location?.pathname);
-        window.open(
-          `https://${blog?.org?.domain}/${locale}${generateRoute(BLOG_ROUTES.blogDetail, { slug: blog?.slug })}`,
-          '_blank'
-        );
+        window.open(`https://${blog?.org?.domain}/${locale}${targetPath}`, '_blank');
       } else {
-        router.push(generateRoute(BLOG_ROUTES.blogDetail, { slug: blog?.slug }));
+        router.push(targetPath);
       }
     }
   };
