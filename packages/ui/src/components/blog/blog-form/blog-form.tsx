@@ -6,13 +6,13 @@ import type { ICategoryTree } from '@oe/api/types/categories';
 import type { IHashtag } from '@oe/api/types/hashtag';
 import { API_ENDPOINT } from '@oe/api/utils/endpoints';
 import type { HTTPError } from '@oe/api/utils/http-error';
+import { marked } from '@oe/core/utils/marker';
 import { BLOG_ADMIN_ROUTES, BLOG_ROUTES } from '@oe/core/utils/routes';
 import { type LanguageCode, languages } from '@oe/i18n/languages';
 import { Settings } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import type { KeyboardEvent } from 'react';
-import showdown from 'showdown';
 import { mutate } from 'swr';
 import { useRouter } from '#common/navigation';
 import { AutocompeteMultiple, Autocomplete } from '#components/autocomplete';
@@ -99,7 +99,6 @@ export default function BlogForm({
   categories = [],
 }: IBlogCreationFormProps) {
   const tBlogs = useTranslations('blogForm');
-  const converter = new showdown.Converter();
   const tGeneral = useTranslations('general');
   const tErrors = useTranslations('errors');
   const router = useRouter();
@@ -115,14 +114,14 @@ export default function BlogForm({
       locale: data.locale,
       title: data.title,
       description: data.description,
-      content: converter.makeHtml(data.content),
+      content: data.is_ai_generated ? marked.parse(data?.content, { async: false }) : data?.content,
       image_description: data.image_description,
       thumbnail: data.banner,
       category_ids: data.categories?.map(cate => ({ id: cate.id, name: cate.name })),
       hashtag_names: data.hashtag?.map(hashtag => hashtag.name),
       is_ai_generated: data.is_ai_generated,
     };
-  }, [data, converter]);
+  }, [data]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, handleSelectOptions?: (value: string) => void) => {
     if (
@@ -313,7 +312,7 @@ export default function BlogForm({
             >
               <RichTextEditor
                 className="md:h-[calc(100vh-150px)]"
-                defaultValue={converter.makeHtml(data?.content ?? '')}
+                defaultValue={defaultValues?.content ?? ''}
                 aiParams={{ blog_cuid: data?.cuid ?? '' }}
                 aiButton={blogType === 'org'}
               />

@@ -1,7 +1,7 @@
+import { marked } from '@oe/core/utils/marker';
 import { Loader2, TriangleAlert } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type React from 'react';
-import showdown from 'showdown';
 import { Modal } from '#components/modal';
 
 interface IAIModal {
@@ -14,8 +14,7 @@ interface IAIModal {
 
 export const AIModal: React.FC<IAIModal> = ({ open = false, loading, text, onConfirm, onRewrite }) => {
   const t = useTranslations('richText.ai.modal');
-  const converter = new showdown.Converter();
-  const htmlText = converter.makeHtml(text ?? '');
+  const htmlText = marked.parse(text ?? '', { async: false });
 
   const renderContent = () => {
     if (loading) {

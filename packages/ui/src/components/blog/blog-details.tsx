@@ -35,7 +35,7 @@ export function BlogDetails({
         </div>
       </div>
 
-      <div className="w-full">
+      <div className="m-auto w-full lg:w-3/4">
         <Image
           alt="blog-thumbnail"
           fill
