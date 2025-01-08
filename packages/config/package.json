@@ -20,12 +20,12 @@
   },
   "peerDependencies": {
     "@oe/i18n": "workspace:*",
-    "next": "15.1.2"
+    "next": "15.1.4"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^15.1.2",
+    "@next/bundle-analyzer": "^15.1.4",
     "@oe/types": "workspace:*",
-    "@types/node": "^22.10.2",
+    "@types/node": "^22.10.5",
     "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7"
   }
