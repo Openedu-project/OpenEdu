@@ -40,12 +40,8 @@ pre-commit:
     typecheck:
       glob: "*.{ts,tsx}"
       run: pnpm run typecheck
-    check-packages:
-      glob: "./packages/**/*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}"
-      run: pnpm dlx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
-      stage_fixed: true
     check-ts:
-      glob: "./apps/**/*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}"
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}"
       run: pnpm dlx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
       stage_fixed: true
     check:
