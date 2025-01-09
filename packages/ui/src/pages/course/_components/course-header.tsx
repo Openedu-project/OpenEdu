@@ -1,13 +1,10 @@
-// "use client";
-import type { ICourseOutline } from '@oe/api/types/course/course';
+'use client';
 import { ShareButton } from '#components/share-button';
 import { WishlistButton } from '#components/wishlist-button';
+import { useCourseContext } from './course-context';
 
-export default function CourseHeader({
-  courseData,
-}: {
-  courseData: ICourseOutline;
-}) {
+export default function CourseHeader() {
+  const { courseData, updateWishlistStatus } = useCourseContext();
   // const { dataMe } = useGetMe();
 
   // const { courseOutline: courseDataStore, setCourseOutline } =
@@ -36,12 +33,15 @@ export default function CourseHeader({
 
       <div className="flex gap-1 md:gap-3">
         <WishlistButton
-          // bookmarkId={courseDataStore?.bookmark?.id}
-          // entityId={cuid}
-          // entityType="course"
-          // isWishlist={courseDataStore?.is_wishlist}
-          courseData={courseData}
+          bookmarkId={courseData?.bookmark?.id ?? ''}
+          entityId={courseData?.cuid}
+          entityType="course"
+          isWishlist={courseData?.is_wishlist}
+          // courseData={courseData}
           className="flex h-6 w-6 items-center border-foreground/20 p-1 md:h-8 md:w-8"
+          onSuccess={(bookmarkId, isWishlist) => {
+            updateWishlistStatus(bookmarkId, isWishlist);
+          }}
           // onClick={async () => {
           //   const courseData = await getCourseOutlineService(undefined, {
           //     id: slug,

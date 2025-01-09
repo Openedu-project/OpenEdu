@@ -1,10 +1,11 @@
-import type { ICourseOutline } from '@oe/api/types/course/course';
+'use client';
 import { useTranslations } from 'next-intl';
 import { formatCurrency } from '#components/input-currency';
 import { PaymentButton } from '#components/payment-button';
 import { WishlistButton } from '#components/wishlist-button';
 import { Card, CardContent, CardFooter } from '#shadcn/card';
 import { cn } from '#utils/cn';
+import { useCourseContext } from './course-context';
 // import { useCourseOutlineDetailStore } from "../_store/useCourseOutlineStore";
 
 interface PriceRowProps {
@@ -59,10 +60,11 @@ const PriceRow = ({ label, value, isBold, discount, currency = 'VND', isPay }: P
   );
 };
 
-const PaymentCard = ({ courseOutline }: { courseOutline: ICourseOutline }) => {
+const PaymentCard = () => {
   // const { courseOutline: courseDataStore, setCourseOutline } =
   //   useCourseOutlineDetailStore();
-  const { is_paid, is_enrolled, price_settings } = courseOutline;
+  const { courseData, updateWishlistStatus } = useCourseContext();
+  const { is_paid, is_enrolled, price_settings } = courseData;
   const isPaidOrEnrolled = is_paid || is_enrolled;
 
   return (
@@ -79,8 +81,17 @@ const PaymentCard = ({ courseOutline }: { courseOutline: ICourseOutline }) => {
       </CardContent>
       <CardFooter className="p-0">
         <div className="flex w-full items-center space-x-4">
-          <PaymentButton className="mbutton-regular16 h-fit flex-grow" courseData={courseOutline} isCourseDetail />
-          <WishlistButton courseData={courseOutline} className="flex-shrink-0 border-foreground/20 " />
+          <PaymentButton className="mbutton-regular16 h-fit flex-grow" courseData={courseData} isCourseDetail />
+          <WishlistButton
+            bookmarkId={courseData?.bookmark?.id ?? ''}
+            entityId={courseData?.cuid}
+            entityType="course"
+            isWishlist={courseData?.is_wishlist}
+            className="flex-shrink-0 border-foreground/20 "
+            onSuccess={(bookmarkId, isWishlist) => {
+              updateWishlistStatus(bookmarkId, isWishlist);
+            }}
+          />
           {/* <WishlistButton
             bookmarkId={courseDataStore.bookmark?.id}
             entityId={cuid}

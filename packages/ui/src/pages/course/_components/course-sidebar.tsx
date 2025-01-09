@@ -8,7 +8,7 @@ const CourseSidebar = ({ courseData }: { courseData: ICourseOutline }) => (
     <CourseThumbnail className="hidden md:block" courseOutline={courseData} />
     <CourseIncludes className="!mb-4" courseOutline={courseData} />
     <hr />
-    <PaymentCard courseOutline={courseData} />
+    <PaymentCard />
   </div>
 );
 

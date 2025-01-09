@@ -1,23 +1,19 @@
 'use client';
-import { useGetCourseOutline } from '@oe/api/hooks/useCourse';
 import { useGetMe } from '@oe/api/hooks/useMe';
 import { postBookmarkService, removeBookmarkService } from '@oe/api/services/bookmark';
-import type { ICourseOutline } from '@oe/api/types/course/course';
 import Heart from '@oe/assets/icons/heart';
 import HeartOutline from '@oe/assets/icons/heart-outline';
-import { type MouseEvent, type ReactNode, useCallback, useState } from 'react';
+import { type MouseEvent, useCallback, useState } from 'react';
 import { useLoginRequiredStore } from '#components/login-required-modal';
 import { Button, type ButtonProps } from '#shadcn/button';
 import { cn } from '#utils/cn';
 
 interface WishlistButtonProps extends ButtonProps {
-  bookmarkId?: string;
-  entityId?: string;
-  entityType?: string;
-  children?: ReactNode;
-  courseData: ICourseOutline;
-  isWishlist?: boolean;
-  onClick?: (e: MouseEvent<HTMLButtonElement>, id?: string) => void;
+  bookmarkId: string;
+  entityId: string;
+  entityType: string;
+  isWishlist: boolean;
+  onSuccess?: (bookmarkId: string, isWishlist: boolean) => void | Promise<void>;
 }
 
 // const useWishlist = ({
@@ -98,11 +94,12 @@ interface WishlistButtonProps extends ButtonProps {
 export default function WishlistButton({
   className,
   // children,
-  // bookmarkId,
-  // entityType,
-  // isWishlist,
-  // entityId,
-  courseData,
+  bookmarkId,
+  entityType,
+  isWishlist,
+  entityId,
+  onSuccess,
+  // courseData,
   // onClick,
   ...props
 }: WishlistButtonProps) {
@@ -117,11 +114,14 @@ export default function WishlistButton({
   // const [isBookmark, setIsBookmark] = useState(courseData?.is_wishlist);
   const [isBookmarking, setIsBookmarking] = useState(false);
   const { dataMe } = useGetMe();
-  const { course, mutateCourse } = useGetCourseOutline(courseData?.slug ?? '', courseData);
+  // const { course, mutateCourse } = useGetCourseOutline(courseData?.slug ?? '', courseData);
   const { setLoginRequiredModal } = useLoginRequiredStore();
 
   const handleWishlist = useCallback(
     async (e: MouseEvent<HTMLButtonElement>) => {
+      if (!bookmarkId) {
+        return;
+      }
       e.stopPropagation();
       e.preventDefault();
       setIsBookmarking(true);
@@ -132,19 +132,22 @@ export default function WishlistButton({
       }
 
       try {
-        if (course?.is_wishlist) {
+        let id = bookmarkId;
+        if (isWishlist) {
           await removeBookmarkService(undefined, {
-            payload: { id: course?.bookmark?.id ?? '' },
+            payload: { id: bookmarkId ?? '' },
           });
         } else {
-          await postBookmarkService(undefined, {
+          const bookmark = await postBookmarkService(undefined, {
             payload: {
-              entity_id: course?.cuid ?? '',
-              entity_type: 'course',
+              entity_id: entityId ?? '',
+              entity_type: entityType ?? '',
             },
           });
+          id = bookmark.id;
         }
-        await mutateCourse();
+        // await mutateCourse();
+        await onSuccess?.(id, !isWishlist);
         setIsBookmarking(false);
       } catch (error) {
         console.error('Wishlist operation failed:', error);
@@ -152,7 +155,7 @@ export default function WishlistButton({
         return error;
       }
     },
-    [dataMe, setLoginRequiredModal, course, mutateCourse]
+    [dataMe, bookmarkId, entityId, entityType, isWishlist, setLoginRequiredModal, onSuccess]
   );
 
   return (
@@ -164,7 +167,7 @@ export default function WishlistButton({
       disabled={isBookmarking}
       {...props}
     >
-      {course?.is_wishlist ? (
+      {isWishlist ? (
         <Heart width={18} height={18} color="hsl(var(--primary))" />
       ) : (
         <HeartOutline width={18} height={18} />

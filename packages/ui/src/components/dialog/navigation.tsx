@@ -1,3 +1,4 @@
+'use client';
 import { useTranslations } from 'next-intl';
 import { useNavigationGuard } from '#hooks/useNavigationGuard';
 import { Button } from '#shadcn/button';

@@ -11,7 +11,7 @@ export const CourseInfo = ({ courseData }: { courseData: ICourseOutline }) => {
 
   return (
     <div className="flex flex-col gap-4 md:mb-10">
-      <CourseHeader courseData={courseData} />
+      <CourseHeader />
 
       <div className="flex flex-col gap-1 text-foreground/40 lg:flex-row lg:items-center lg:gap-4">
         {owner && (
