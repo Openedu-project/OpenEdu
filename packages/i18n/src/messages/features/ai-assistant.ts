@@ -1,0 +1,26 @@
+export const aiAssistantMessages = {
+  aiAssistant: {
+    title: 'AI Assistant',
+    aiImage: 'AI Image Generator',
+    aiChat: 'AI Chat',
+    aiSearch: 'AI Search',
+    aiVideo: 'AI Video',
+    commingSoon: 'comming soon',
+    startNewChat: 'Start New Chat',
+    noHistory: 'No History Here',
+    imageAnalysis: 'Image Analysis',
+    scrapURLLink: 'Scrap URL Link',
+    placeholderMessage: 'Type your message',
+    messageURL: 'Review content from this link:',
+    messageImage: 'Generate text from this screeshot',
+    aiChatDesc: 'Create content by AI chat',
+    aiSearchDesc: 'Search for anything by AI engine',
+    aiImageDesc: 'Promt to generate an image',
+    aiVideoDesc: 'Promt to generate a video',
+    aiHelloText: 'Hello {name}! What can i help you?',
+    delTitle: 'Delete chat?',
+    delDesc: 'This will delete <strong>{chat_name}</strong> .',
+    modelLimitedWarning:
+      "You've reached the daily token limit for this model. Please try again tomorrow or switch to another model.",
+  },
+};

@@ -1,3 +1,4 @@
+import { aiAssistantMessages } from './ai-assistant';
 import { blogMessages } from './blog';
 import { blogManagementMessages } from './blog-management';
 import { coursesMessages } from './courses';
@@ -16,4 +17,5 @@ export const featuresMessages = {
   ...walletMessages,
   ...blogManagementMessages,
   ...mintCertificateMessages,
+  ...aiAssistantMessages,
 };

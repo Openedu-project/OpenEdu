@@ -76,6 +76,15 @@ export const AFFILIATE_ROUTES = {
   campaignReportDetail: '/affiliate/report/report-detail',
 } as const;
 
+export const AI_ROUTES = {
+  assistant: '/ai-assistant',
+  chat: '/ai-assistant/chat',
+  chatDetail: '/ai-assistant/chat/:id',
+  search: '/ai-assistant/search',
+  imageGenerator: '/ai-assistant/image-generator',
+  video: '/ai-assistant/video',
+};
+
 export const AUTH_ROUTES = {
   login: '/login',
   signUp: '/signup',
