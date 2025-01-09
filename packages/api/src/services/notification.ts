@@ -15,15 +15,6 @@ export const getNotificationService = async (
   return response.data;
 };
 
-export const getNotificationBadgeService = async (
-  endpoint: string | null | undefined,
-  { init }: { init?: RequestInit }
-) => {
-  const response = await fetchAPI<INotificationRes>(endpoint ?? API_ENDPOINT.COM_NOTIFICATIONS_BADGES, init);
-
-  return response.data;
-};
-
 export const putNotification = async (
   endpoint: string | null | undefined,
   { payload, init }: { payload: INotificationReadPayload; init?: RequestInit }

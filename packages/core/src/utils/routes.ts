@@ -99,6 +99,12 @@ export const CREATOR_ROUTES = {
   aiGeneralInfo: '/creator/courses/ai-creation/general-info',
   aiSettingUp: '/creator/courses/:courseId/settings',
   aiYoutubePlaylist: '/creator/courses/ai-creation/youtube-playlist',
+  campaigns: '/creator/affiliate-campaigns/campaigns',
+  campaignDetail: '/creator/affiliate-campaigns/:id',
+  campaignDetailCourses: '/creator/affiliate-campaigns/:id/campaign-courses',
+  campaignDetailCommissions: '/creator/affiliate-campaigns/:id/commissions',
+  campaignDetailReferrers: '/creator/affiliate-campaigns/:id/referrers',
+  campaignReport: '/creator/affiliate-campaigns/report',
 } as const;
 
 export const PROTECTED_ROUTES = {

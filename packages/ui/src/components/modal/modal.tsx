@@ -36,9 +36,9 @@ export interface ButtonConfig {
   type?: "button" | "submit" | "reset";
 }
 
-type FormSchema = z.ZodObject<Record<string, z.ZodTypeAny>>;
+// type FormSchema = z.ZodObject<Record<string, z.ZodTypeAny>>;
 
-interface ModalProps<TSchema extends FormSchema = never> {
+interface ModalProps<TSchema extends z.ZodType> {
   title: string;
   description?: string;
   trigger?: ReactNode;
@@ -113,7 +113,7 @@ const ModalButtons = ({
   );
 };
 
-export const Modal = <TSchema extends FormSchema = never>({
+export const Modal = <TSchema  extends z.ZodType>({
   title,
   description,
   trigger,

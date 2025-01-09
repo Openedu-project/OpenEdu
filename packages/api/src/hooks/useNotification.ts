@@ -1,12 +1,7 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
-import {
-  deleteNotificationService,
-  getNotificationBadgeService,
-  getNotificationService,
-  putNotification,
-} from '#services/notification';
+import { deleteNotificationService, getNotificationService, putNotification } from '#services/notification';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
@@ -27,19 +22,6 @@ export function useGetNotification(params: IFilter) {
     isLoadingNotification: isLoading,
     errorNotificationList: error,
     mutateNotificationList: mutate,
-  };
-}
-
-export function useGetNotificationBadge() {
-  const { data, isLoading, error, mutate } = useSWR(API_ENDPOINT.COM_NOTIFICATIONS_BADGES, (endpoint: string) =>
-    getNotificationBadgeService(endpoint, {})
-  );
-
-  return {
-    dataNotificationBadge: data,
-    isLoadingNotificationBadge: isLoading,
-    errorNotificationBadge: error,
-    mutateNotificationBadge: mutate,
   };
 }
 

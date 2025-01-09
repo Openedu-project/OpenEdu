@@ -1,8 +1,18 @@
 import { getPermissionMyAccessService } from '@oe/api/services/permissions';
+import { Affiliate } from '@oe/assets/icons/affliliate';
 import { CREATOR_ROUTES } from '@oe/core/utils/routes';
 import { checkSidebarPermissions } from '@oe/core/utils/sidebar-menu';
 import { DashboardLayout } from '@oe/ui/common/layout';
-import { BookOpen, CirclePercent, FileText, House, LayoutTemplate, ReceiptText } from 'lucide-react';
+import {
+  BookOpen,
+  CirclePercent,
+  FileText,
+  House,
+  LayoutTemplate,
+  NotebookText,
+  Receipt,
+  ReceiptText,
+} from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
 
@@ -49,6 +59,25 @@ export default async function Layout({ children }: { children: ReactNode }) {
             label: tDashboard('forms.formList'),
             icon: <ReceiptText className="h-5 w-5" />,
             href: CREATOR_ROUTES.formList,
+          },
+        ],
+      },
+      {
+        id: 'affiliate-campaigns',
+        label: tDashboard('affiliateCampaign.title'),
+        icon: <Affiliate className="text-content" color="#000" height={18} width={18} />,
+        items: [
+          {
+            id: 'affiliate-campaigns-list',
+            label: tDashboard('affiliateCampaign.campaigns'),
+            icon: <NotebookText className="h-5 w-5" />,
+            href: CREATOR_ROUTES.campaigns,
+          },
+          {
+            id: 'report-affiliate-campaigns',
+            label: tDashboard('affiliateCampaign.reportAffiliateCampaigns'),
+            icon: <Receipt className="h-5 w-5" />,
+            href: CREATOR_ROUTES.campaignReport,
           },
         ],
       },
