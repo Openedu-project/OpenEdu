@@ -1,4 +1,4 @@
-import { IDataPagination } from './pagination';
+import type { IDataPagination } from './pagination';
 
 export interface INotificationItem {
   id: string;
@@ -33,7 +33,9 @@ export interface INotificationItem {
   update_at: number;
 }
 
-export interface INotificationRes extends IDataPagination<INotificationItem[]> {}
+export interface INotificationRes extends IDataPagination<INotificationItem[]> {
+  badge_count: number;
+}
 
 export interface INotificationReadPayload {
   ids: string[];

@@ -27,3 +27,40 @@ export const copyToClipboard = (text: string, message: string, duration?: number
     () => console.log(message, duration) // TODO: add toast message
   );
 };
+
+export function formatPrice(price: number, currency = 'VND', isFree = false): string {
+  if (isFree) {
+    return 'Free';
+  }
+
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  });
+
+  return formatter.format(price);
+}
+
+export const getAlphabetLabel = (index: number): string => String.fromCodePoint(65 + index); // 65 is ASCII for 'A'
+
+export const formatNumber = (value: string | number): string => {
+  if (!value && value !== 0) {
+    return '';
+  }
+
+  // Convert to string and remove non-digit characters except decimal
+  const cleanValue = value.toString().replace(/[^\d.]/g, '');
+
+  // Handle decimal points
+  const parts = cleanValue.split('.');
+  if (parts.length > 2) {
+    parts.splice(2);
+  }
+
+  // Format with commas
+  return (
+    (parts[0] ? parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '') + (parts[1] ? `.${parts[1].slice(0, 2)}` : '')
+  );
+};

@@ -1,5 +1,5 @@
 import { getLocaleFromPathname } from '@oe/i18n/utils';
-import { type Locale, differenceInDays, format, formatRelative, fromUnixTime, getTime, parseISO } from 'date-fns';
+import { type Locale, differenceInDays, format, formatRelative, fromUnixTime } from 'date-fns';
 import { enUS } from 'date-fns/locale';
 
 export const TIME_ZONE = 'Asia/Bangkok';
@@ -229,9 +229,9 @@ export function calculateRemainingTime(startAt: number, limitTime: string): numb
  * Converts an ISO date string to timestamp
  */
 export function convertToTimeStamp(dateString: string): number {
-  const date = parseISO(dateString);
+  const date = new Date(dateString);
   if (Number.isNaN(date.getTime())) {
     throw new Error('Invalid date string format');
   }
-  return getTime(date);
+  return date.getTime();
 }

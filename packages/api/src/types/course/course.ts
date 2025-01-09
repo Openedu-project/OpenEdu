@@ -1,6 +1,7 @@
 import type { KeyedMutator } from 'swr';
 import type { IBookmark } from '#types/bookmark';
 import type { ICategory, ILevel } from '#types/categories';
+import type { IFileResponse } from '#types/file';
 import type { IDataPagination } from '#types/pagination';
 import type { IAICourse, IAICourseStatus } from './ai-course';
 import type {
@@ -17,6 +18,8 @@ import type {
 } from './basic';
 import type { ILearningProgressOverview } from './learning-progress';
 import type { ISection } from './segment';
+
+export interface IThumbnail extends Omit<IFileResponse, 'bunny_video_id'> {}
 
 export interface ICourse {
   cuid: string;

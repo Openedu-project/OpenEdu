@@ -4,6 +4,7 @@ export interface IFilter {
   sort?: string;
   search_term?: string;
   search_categories?: string;
+  campaign_id?: string;
   org_id?: string;
   type?: string;
   user_id?: string;
@@ -12,5 +13,6 @@ export interface IFilter {
   role?: string;
   is_pay?: boolean;
   latest?: boolean;
+  parent_id_null?: boolean;
   is_verified?: boolean;
 }

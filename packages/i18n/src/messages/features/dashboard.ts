@@ -55,5 +55,19 @@ export const dashboardMessages = {
       publishRequest: 'Publish Request',
       myBlog: 'My Blog',
     },
+    affiliateCampaign: {
+      title: 'Affiliate Campaigns',
+      campaigns: 'Campaigns',
+      detail: 'Affiliate Campaign Detail',
+      reportAffiliateCampaigns: 'Report',
+      course: 'Course',
+      commission: 'Commission',
+      referrers: 'Referrers',
+      menu: {
+        course: 'Course',
+        commission: 'Commission',
+        referrers: 'Referrers',
+      },
+    },
   },
 };

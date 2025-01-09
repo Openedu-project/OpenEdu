@@ -1,32 +1,37 @@
-'use client';
+"use client";
 
-import { useDeleteCoupon, usePostCoupon, usePutCoupon } from '@oe/api/hooks/useCoupon';
-import { Table } from '@oe/ui/components/table';
-import { useTranslations } from 'next-intl';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import {
+  useDeleteCoupon,
+  usePostCoupon,
+  usePutCoupon,
+} from "@oe/api/hooks/useCoupon";
+import { Table } from "@oe/ui/components/table";
+import { useTranslations } from "next-intl";
+import { useCallback, useMemo, useRef, useState } from "react";
 
-import { useGetOrganizationByDomain } from '@oe/api/hooks/useOrganization';
-import type { ICouponItemRes, ICouponPayload } from '@oe/api/types/coupon';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { formatDateTime } from '@oe/core/utils/datetime';
-import { formatCurrency } from '@oe/ui/components/input-currency';
-import type { ColumnDef, TableRef } from '@oe/ui/components/table';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { Button } from '@oe/ui/shadcn/button';
-import { toast } from '@oe/ui/shadcn/sonner';
-import { getCookie } from 'cookies-next';
-import { Pencil, Trash2 } from 'lucide-react';
-import ConfirmDeleteCouponModal from './confirm-detele-coupon-modal';
-import CouponSuccessModal from './coupon-success-modal';
-import FormCouponModal from './form-coupon-modal';
+import { useGetOrganizationByDomain } from "@oe/api/hooks/useOrganization";
+import type { ICouponItemRes, ICouponPayload } from "@oe/api/types/coupon";
+import { API_ENDPOINT } from "@oe/api/utils/endpoints";
+import type { HTTPErrorMetadata } from "@oe/api/utils/http-error";
+import { formatDateTime } from "@oe/core/utils/datetime";
+import type { FilterOption } from "@oe/ui/components/filter-search";
+import { formatCurrency } from "@oe/ui/components/input-currency";
+import type { ColumnDef, TableRef } from "@oe/ui/components/table";
+import { Badge } from "@oe/ui/shadcn/badge";
+import { Button } from "@oe/ui/shadcn/button";
+import { toast } from "@oe/ui/shadcn/sonner";
+import { getCookie } from "cookies-next";
+import { Pencil, Trash2 } from "lucide-react";
+import ConfirmDeleteCouponModal from "./confirm-detele-coupon-modal";
+import CouponSuccessModal from "./coupon-success-modal";
+import FormCouponModal from "./form-coupon-modal";
 
 export default function CouponList() {
-  const t = useTranslations('coupon');
-  const tError = useTranslations('errors');
+  const t = useTranslations("coupon");
+  const tError = useTranslations("errors");
 
   const tableRef = useRef<TableRef<ICouponItemRes>>(null);
-  const tCouponForm = useTranslations('coupon.couponForm');
+  const tCouponForm = useTranslations("coupon.couponForm");
 
   const [selectedItem, setSelectedItem] = useState<ICouponItemRes | null>(null);
   const [isFormModalOpen, setIsFormModalOpen] = useState<boolean>(false);
@@ -38,14 +43,20 @@ export default function CouponList() {
   const { triggerPutCoupon, isLoadingPutCoupon } = usePutCoupon();
   const { triggerDeleteCoupon } = useDeleteCoupon();
   const { dataListOrganizationByDomain } = useGetOrganizationByDomain({
-    domain: (getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY) as string)?.split('/')?.[0] ?? '',
+    domain:
+      (
+        getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY) as string
+      )?.split("/")?.[0] ?? "",
   });
 
-  const handleOpenFormModal = useCallback((item: ICouponItemRes | null = null) => {
-    setSelectedItem(item);
-    setIsCreating(!item);
-    setIsFormModalOpen(true);
-  }, []);
+  const handleOpenFormModal = useCallback(
+    (item: ICouponItemRes | null = null) => {
+      setSelectedItem(item);
+      setIsCreating(!item);
+      setIsFormModalOpen(true);
+    },
+    []
+  );
 
   const handleCloseFormModal = useCallback(() => {
     setSelectedItem(null);
@@ -53,20 +64,26 @@ export default function CouponList() {
     setIsFormModalOpen(false);
   }, []);
 
-  const handleOpenSuccessModal = useCallback((item: ICouponItemRes | null = null) => {
-    setSelectedItem(item);
-    setIsSuccessModalOpen(true);
-  }, []);
+  const handleOpenSuccessModal = useCallback(
+    (item: ICouponItemRes | null = null) => {
+      setSelectedItem(item);
+      setIsSuccessModalOpen(true);
+    },
+    []
+  );
 
   const handleCloseSuccessModal = useCallback(() => {
     setSelectedItem(null);
     setIsSuccessModalOpen(false);
   }, []);
 
-  const handleOpenDeleteModal = useCallback((item: ICouponItemRes | null = null) => {
-    setSelectedItem(item);
-    setIsOpenDeleteModal(true);
-  }, []);
+  const handleOpenDeleteModal = useCallback(
+    (item: ICouponItemRes | null = null) => {
+      setSelectedItem(item);
+      setIsOpenDeleteModal(true);
+    },
+    []
+  );
 
   const handleCloseDeleteModal = useCallback(() => {
     setSelectedItem(null);
@@ -76,12 +93,14 @@ export default function CouponList() {
   const handleSubmit = useCallback(
     async (value: ICouponPayload) => {
       try {
-        const res = await (isCreating ? triggerPostCoupon(value) : triggerPutCoupon({ ...selectedItem, ...value }));
+        const res = await (isCreating
+          ? triggerPostCoupon(value)
+          : triggerPutCoupon({ ...selectedItem, ...value }));
         handleCloseFormModal();
         if (isCreating) {
           handleOpenSuccessModal(res);
         } else {
-          toast.success(t('updateSuccess'));
+          toast.success(t("updateSuccess"));
         }
         tableRef.current?.mutate();
       } catch (error) {
@@ -103,20 +122,26 @@ export default function CouponList() {
 
   const handleDeleteCoupon = useCallback(async () => {
     try {
-      await triggerDeleteCoupon({ id: selectedItem?.id ?? '' });
+      await triggerDeleteCoupon({ id: selectedItem?.id ?? "" });
       handleCloseDeleteModal();
-      toast.success(t('deleteSuccess'));
+      toast.success(t("deleteSuccess"));
       tableRef.current?.mutate();
     } catch (error) {
       console.error(error);
       toast.error(tError((error as HTTPErrorMetadata).code.toString()));
     }
-  }, [triggerDeleteCoupon, tError, selectedItem?.id, handleCloseDeleteModal, t]);
+  }, [
+    triggerDeleteCoupon,
+    tError,
+    selectedItem?.id,
+    handleCloseDeleteModal,
+    t,
+  ]);
 
   const columns: ColumnDef<ICouponItemRes>[] = useMemo(() => {
     return [
       {
-        header: 'No',
+        header: "No",
         size: 50,
         cell: ({ row, table }) => {
           const pageSize = table.getState().pagination.pageSize;
@@ -125,60 +150,64 @@ export default function CouponList() {
         },
       },
       {
-        header: tCouponForm('name'),
-        accessorKey: 'name',
+        header: tCouponForm("name"),
+        accessorKey: "name",
         size: 180,
       },
       {
-        header: tCouponForm('couponCode'),
-        accessorKey: 'coupon_code',
+        header: tCouponForm("couponCode"),
+        accessorKey: "coupon_code",
       },
       {
-        header: tCouponForm('discountAmount'),
-        accessorKey: 'type',
+        header: tCouponForm("discountAmount"),
+        accessorKey: "type",
         size: 180,
         cell: ({ row }) => {
           const rowData = row.original;
 
           return (
             <p className="flex min-w-[120px] flex-col">
-              {rowData.fiat_discount_enabled && <span>Fiat: {rowData.fiat_discount_percentage}%</span>}
-              {rowData.crypto_discount_enabled && <span>Token: {rowData.crypto_discount_percentage}%</span>}
+              {rowData.fiat_discount_enabled && (
+                <span>Fiat: {rowData.fiat_discount_percentage}%</span>
+              )}
+              {rowData.crypto_discount_enabled && (
+                <span>Token: {rowData.crypto_discount_percentage}%</span>
+              )}
             </p>
           );
         },
       },
       {
-        header: tCouponForm('quantity'),
-        accessorKey: 'maximum_total_usage',
-        cell: info => <>{formatCurrency(String(info.getValue()), false)}</>,
+        header: tCouponForm("quantity"),
+        accessorKey: "maximum_total_usage",
+        cell: (info) => <>{formatCurrency(String(info.getValue()), false)}</>,
       },
       {
-        header: tCouponForm('startDate'),
-        accessorKey: 'start_date',
-        cell: info => <>{formatDateTime(Number(info.getValue()))}</>,
+        header: tCouponForm("startDate"),
+        accessorKey: "start_date",
+        cell: (info) => <>{formatDateTime(Number(info.getValue()))}</>,
         size: 180,
       },
       {
-        header: tCouponForm('endDate'),
-        accessorKey: 'end_date',
-        cell: info => <>{formatDateTime(Number(info.getValue()))}</>,
+        header: tCouponForm("endDate"),
+        accessorKey: "end_date",
+        cell: (info) => <>{formatDateTime(Number(info.getValue()))}</>,
         size: 180,
       },
       {
-        header: tCouponForm('status'),
-        accessorKey: 'is_active',
-        cell: info => (
+        header: tCouponForm("status"),
+        accessorKey: "is_active",
+        cell: (info) => (
           <Badge
-            variant={info.getValue() ? 'success' : 'destructive'}
+            variant={info.getValue() ? "success" : "destructive"}
             className="w-[120px] justify-center py-1 capitalize"
           >
-            {info.getValue() ? tCouponForm('active') : tCouponForm('inActive')}
+            {info.getValue() ? tCouponForm("active") : tCouponForm("inActive")}
           </Badge>
         ),
       },
       {
-        header: 'Actions',
+        header: "Actions",
         cell: ({ row }) => {
           return (
             <div className="flex gap-2">
@@ -205,42 +234,55 @@ export default function CouponList() {
     ];
   }, [tCouponForm, handleOpenDeleteModal, handleOpenFormModal]);
 
+  const filterOptions = useMemo(
+    () => [
+      {
+        id: "name",
+        value: "name",
+        label: tCouponForm("name"),
+        type: "search",
+      },
+      {
+        id: "code",
+        value: "code",
+        label: tCouponForm("code"),
+        type: "search",
+      },
+    ],
+    [tCouponForm]
+  ) as FilterOption[];
+
   return (
     <>
-      <div className="mb-2 flex justify-between gap-4 rounded-b-2xl bg-bg-base-canvas p-4 shadow-shadow-5">
-        <h1 className="giant-iheading-semibold32 tracking-tight md:text-3xl">{t('title')}</h1>
-        <div className="flex gap-spacing-m">
-          <Button onClick={() => handleOpenFormModal()} className="btn btn-primary">
-            {t('createCoupon')}
-          </Button>
-        </div>
-      </div>
-      <div className="rounded-2xl border bg-bg-base-canvas p-6">
-        <Table
-          api={API_ENDPOINT.ADMIN_COUPONS}
-          apiParams={{
-            page: 1,
-            per_page: 10,
-            sort: 'create_at desc',
-          }}
-          columns={columns}
-          ref={tableRef}
-          height="550px"
-          border="bordered-rows"
-          tableOptions={{
-            manualPagination: true,
-          }}
+      <Table
+        api={API_ENDPOINT.ADMIN_COUPONS}
+        apiParams={{
+          page: 1,
+          per_page: 10,
+          sort: "create_at desc",
+        }}
+        columns={columns}
+        ref={tableRef}
+        height="550px"
+        border="bordered-rows"
+        tableOptions={{
+          manualPagination: true,
+        }}
+        filterOptions={filterOptions}
+      >
+        <Button
+          onClick={() => handleOpenFormModal()}
+          className="btn btn-primary"
         >
-          <Button onClick={() => console.log(tableRef.current?.getData())}>save</Button>
-          <Button>Add</Button>
-        </Table>
-      </div>
+          {t("createCoupon")}
+        </Button>
+      </Table>
 
       {isFormModalOpen && (
         <FormCouponModal
           isCreate={isCreating}
           data={selectedItem}
-          orgId={dataListOrganizationByDomain?.id ?? ''}
+          orgId={dataListOrganizationByDomain?.id ?? ""}
           onSubmit={handleSubmit}
           onClose={handleCloseFormModal}
           loading={isCreating ? isLoadingPostCoupon : isLoadingPutCoupon}
@@ -256,7 +298,7 @@ export default function CouponList() {
       )}
       {isOpenDeleteModal && (
         <ConfirmDeleteCouponModal
-          id={selectedItem?.id ?? ''}
+          id={selectedItem?.id ?? ""}
           onSubmit={handleDeleteCoupon}
           onClose={handleCloseDeleteModal}
           open={isOpenDeleteModal}
