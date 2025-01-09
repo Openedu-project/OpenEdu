@@ -47,7 +47,7 @@ export const CONTENT_RENDERERS: Record<TLessonContent, ContentRenderer> = {
 
       const quiz = quizzes && quizzes.length > 0 ? quizzes[0] : undefined;
 
-      return <ContentQuiz quiz={quiz} course_id={props.courseId} />;
+      return <ContentQuiz quiz={quiz} course_id={props.courseId} settings={quiz?.settings} />;
     },
     getClassName: DEFAULT_CLASSNAME,
   },
@@ -66,5 +66,5 @@ export const ContentElement = ({ type, ...props }: ContentElementProps) => {
     return null;
   }
 
-  return <div className="h-full p-1 content-wrapper">{renderer.render(props)}</div>;
+  return <>{renderer.render(props)}</>;
 };

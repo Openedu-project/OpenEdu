@@ -1,43 +1,33 @@
+'use client';
+
 import {
   useGetCurrentQuestion,
   useGetQuizSubmissionById,
   usePostQuizSubmission,
   useSubmitAnswer,
 } from '@oe/api/hooks/useQuiz';
-import type { IQuizItemResponse } from '@oe/api/types/course/quiz';
-import type { ICurrentQuestion, IQuizSubmissionResponse } from '@oe/api/types/quiz';
+import type { IQuizItemResponse, IQuizSettings } from '@oe/api/types/course/quiz';
+import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
 import type { HTTPError } from '@oe/api/utils/http-error';
-import background from '@oe/assets/images/learning-page/quiz.png';
-import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { Image } from '#components/image';
-import { Button } from '#shadcn/button';
-import type { TAnswerInput } from '../_types/types';
+import type { IQuizzSubmissionState, TAnswerInput } from '../_types/types';
 import { transformAnswers } from '../_utils/utils';
-import QuizAssessment from './quiz-assessment';
-
-interface IQuizzSubmissionState {
-  id: string;
-  num_questions: number;
-  data: ICurrentQuestion | null;
-  start_at: number;
-}
+import QuizContainer from './quiz-container';
 
 interface IContentQuizProps {
   quiz?: IQuizItemResponse;
+  settings?: IQuizSettings;
   course_id: string;
 }
 
-export default function ContentQuiz({ quiz, course_id }: IContentQuizProps) {
-  const tContentQuiz = useTranslations('learningPage.quiz');
-
+export default function ContentQuiz({ quiz, course_id, settings }: IContentQuizProps) {
   const [quizSubmission, setQuizSubmission] = useState<IQuizzSubmissionState>({
     id: '',
     num_questions: 0,
     data: null,
     start_at: 0,
   });
-  const [_quizResultState, setQuizResultState] = useState<IQuizSubmissionResponse>();
+  const [quizResultState, setQuizResultState] = useState<IQuizSubmissionResponse>();
 
   const { triggerPostQuizSubmission } = usePostQuizSubmission();
   const { triggerCurrentQuestion } = useGetCurrentQuestion(quizSubmission?.id);
@@ -54,23 +44,26 @@ export default function ContentQuiz({ quiz, course_id }: IContentQuizProps) {
     setQuizResultState(result);
   };
 
-  const getCurrentQuestion = async () => {
-    // If has_next_question is true, then get the next question, else get the result of the quiz
-    if (quizSubmission.data?.has_next_question) {
-      try {
-        const data = await triggerCurrentQuestion();
-
-        setQuizSubmission(prevState => {
-          return {
-            ...prevState,
-            data,
-          };
-        });
-      } catch (error) {
-        console.error(error);
+  const getCurrentQuestion = async (isFirstQuestion?: boolean) => {
+    try {
+      if (!(quizSubmission.data?.has_next_question || isFirstQuestion)) {
+        await getQuizSubmissionResults();
+        return;
       }
-    } else {
-      await getQuizSubmissionResults();
+
+      const data = await triggerCurrentQuestion();
+      setQuizSubmission(prevState => ({
+        ...prevState,
+        data,
+      }));
+    } catch (error) {
+      console.error(error);
+
+      const code = (error as HTTPError)?.metadata?.code;
+      if (code === 6032) {
+        // No more questions remaining
+        await getQuizSubmissionResults().catch(console.error);
+      }
     }
   };
 
@@ -88,6 +81,8 @@ export default function ContentQuiz({ quiz, course_id }: IContentQuizProps) {
               start_at,
             };
           });
+
+          return res;
         })
         .catch(err => console.log(err));
     }
@@ -119,59 +114,35 @@ export default function ContentQuiz({ quiz, course_id }: IContentQuizProps) {
     }
   };
 
+  const onTryAgainQuiz = () => {
+    setQuizSubmission({
+      id: '',
+      num_questions: 0,
+      data: undefined,
+      start_at: 0,
+    });
+
+    setQuizResultState(undefined);
+  };
+
   useEffect(() => {
-    const fetchCurrentQuestion = async () => {
-      try {
-        const data = await triggerCurrentQuestion();
-
-        setQuizSubmission(prevState => {
-          return {
-            ...prevState,
-            data,
-          };
-        });
-      } catch (error) {
-        const code = (error as HTTPError)?.metadata?.code;
-
-        // code 6032: all answers have been already submitted => move to the result section
-        if (code === 6032) {
-          getQuizSubmissionResults().catch(error => console.error(error));
-        }
-      }
-    };
+    const isFirstQuestion = true;
 
     if (quizSubmission.id.length > 0) {
-      fetchCurrentQuestion().catch(error => {
+      getCurrentQuestion(isFirstQuestion).catch(error => {
         console.error(error);
       });
     }
   }, [quizSubmission?.id]);
 
   return (
-    <>
-      {quizSubmission?.data ? (
-        <QuizAssessment
-          data={quizSubmission.data}
-          numQuestion={quizSubmission?.num_questions}
-          quizStartAt={quizSubmission.start_at}
-          onSubmitAnswer={onSubmitAnswer}
-        />
-      ) : (
-        <div className="relative mx-auto flex aspect-video h-full max-h-full w-auto flex-col rounded-2xl border border-primary">
-          <Image
-            src={background?.src}
-            alt="quiz-bg"
-            aspectRatio="16:9"
-            className="!h-full -z-10 absolute top-0 left-0 w-full rounded-2xl"
-          />
-          <div className="z-0 my-auto flex h-2/3 flex-col items-center justify-between">
-            <h3 className="giant-iheading-bold18 sm:giant-iheading-bold24 lg:giant-iheading-bold44 text-primary uppercase">
-              {tContentQuiz('quizTime')}
-            </h3>
-            <Button onClick={onStartQuiz}>{tContentQuiz('start')}</Button>
-          </div>
-        </div>
-      )}
-    </>
+    <QuizContainer
+      quizResultState={quizResultState}
+      quizSubmission={quizSubmission}
+      onTryAgainQuiz={onTryAgainQuiz}
+      onSubmitAnswer={onSubmitAnswer}
+      onStartQuiz={onStartQuiz}
+      settings={settings}
+    />
   );
 }

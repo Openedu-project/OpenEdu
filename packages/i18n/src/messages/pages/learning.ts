@@ -12,6 +12,19 @@ export const courseLearningMessages = {
       finish: 'Finish',
       next: 'Next',
       questionNum: 'Question {questionNum}',
+
+      quizResult: {
+        tryAgain: 'Try again',
+        viewAnswer: 'View answer',
+        finishQuiz: 'Finish quiz',
+        questionNum: 'Question {questionNum}',
+        answer: 'Answer',
+        correctAnswer: 'Correct answer',
+        explanation: 'Explanation',
+        yourScore: 'Your score',
+        highestStreak: 'Highest streak',
+        highestScore: 'Highest score',
+      },
     },
   },
 };

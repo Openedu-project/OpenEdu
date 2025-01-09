@@ -1,9 +1,11 @@
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+'use client';
+
+import { useTranslations } from 'next-intl';
 import type { HTMLAttributes } from 'react';
 import { Link } from '#common/navigation';
 import { LastUpdated } from '../../_components/last-updated';
-import NavigateButton from './navigate-button';
+import { createCourseUrl } from '../../_utils/course-url';
+import { NavigationButtons } from './navigate-button';
 
 interface ILessonMetadataProps extends HTMLAttributes<HTMLDivElement> {
   title: string;
@@ -13,10 +15,9 @@ interface ILessonMetadataProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const LessonMetadata = ({ title, courseName, slug, updateAt, ...props }: ILessonMetadataProps) => {
-  const courseHref = createAPIUrl({
-    endpoint: PLATFORM_ROUTES.courseDetail,
-    params: { slug },
-  });
+  const tLessonNavigate = useTranslations('learningPage.navigation');
+
+  const courseHref = createCourseUrl('detail', { slug });
 
   return (
     <div {...props}>
@@ -24,7 +25,14 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, ...props }: ILesson
         <h3 className="giant-iheading-semibold16 md:giant-iheading-semibold24 mb-0 text-primary md:line-clamp-1">
           {title}
         </h3>
-        <NavigateButton />
+
+        <NavigationButtons
+          mode="lesson"
+          // currentIndex={currentLessonIndex}
+          // totalItems={lessonIds.length}
+          // onNavigate={handleNavigateLesson}
+          t={tLessonNavigate}
+        />
       </div>
       <Link
         href={courseHref}

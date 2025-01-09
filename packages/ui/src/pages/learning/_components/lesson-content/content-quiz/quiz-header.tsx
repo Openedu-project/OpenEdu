@@ -1,14 +1,14 @@
 'use client';
 
 import type { TimeLimitType } from '@oe/api/types/course/quiz';
+import Clock from '@oe/assets/icons/clock';
 import { calculateRemainingTime, convertSecondsToTimeString } from '@oe/core/utils/datetime';
-import { Clock } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface QuizHeaderProps {
   timeLimit?: string;
-  startAt: number; // check start_at value after reloading page
+  startAt: number;
   curQuesIndex: number;
   numQuestion: number;
   timeLimitType?: TimeLimitType;
@@ -26,40 +26,44 @@ const QuizHeader = ({
   onTimeUp,
 }: QuizHeaderProps) => {
   const t = useTranslations('learningPage.quiz');
+  const [remainingTime, setRemainingTime] = useState<number>(() => calculateRemainingTime(startAt, timeLimit));
+  const intervalRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
-  const [, forceUpdate] = useState({});
-  const timerRef = useRef<number | null>(null);
-
-  const getRemainingTime = (): number => {
+  const getRemainingTime = useCallback((): number => {
     if (timeLimitType === 'overall') {
       return calculateRemainingTime(startAt, timeLimit);
     }
     const questionStartAt = startAt + curQuesIndex * calculateRemainingTime(0, timeLimit);
-
     return calculateRemainingTime(questionStartAt, timeLimit);
-  };
+  }, [startAt, timeLimit, curQuesIndex, timeLimitType]);
 
   useEffect(() => {
-    const updateTimer = () => {
-      forceUpdate({});
+    setRemainingTime(getRemainingTime());
 
-      const remainingTime = getRemainingTime();
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
 
-      if (remainingTime > 0) {
-        timerRef.current = requestAnimationFrame(updateTimer);
-      } else if (onTimeUp) {
-        onTimeUp();
+    intervalRef.current = setInterval(() => {
+      const newRemainingTime = getRemainingTime();
+      setRemainingTime(newRemainingTime);
+
+      if (newRemainingTime <= 0) {
+        if (onTimeUp) {
+          onTimeUp();
+        }
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+        }
       }
-    };
-
-    updateTimer();
+    }, 1000);
 
     return () => {
-      if (timerRef.current !== null) {
-        cancelAnimationFrame(timerRef.current);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
       }
     };
-  }, [startAt, timeLimit, timeLimitType, curQuesIndex]);
+  }, [getRemainingTime, onTimeUp]);
 
   return (
     <div className="flex justify-between">
@@ -69,11 +73,12 @@ const QuizHeader = ({
           <span className="text-primary">{curQuesIndex}</span>/{numQuestion}
         </p>
       </div>
+
       <div className="flex items-end gap-2">
-        {timeLimitEnabled && (
+        {timeLimitEnabled && remainingTime > 0 && (
           <div className="relative">
             <span className="mcaption-semibold12 absolute right-1/2 bottom-1/2 translate-x-1/2 translate-y-1/2 pt-spacing-s text-content-neutral-medium-800">
-              {convertSecondsToTimeString(getRemainingTime())}
+              {convertSecondsToTimeString(remainingTime)}
             </span>
             <Clock color="hsl(var(--primary))" />
           </div>

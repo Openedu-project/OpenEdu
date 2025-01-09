@@ -6,6 +6,7 @@ import { FormWrapper } from '#components/form-wrapper';
 import { Image } from '#components/image';
 import { Button } from '#shadcn/button';
 import { Progress } from '#shadcn/progress';
+import { ScrollArea } from '#shadcn/scroll-area';
 import type { TAnswerInput } from '../_types/types';
 import QuizAnswers, { quizAnswerSchema } from './quiz-answers';
 import QuizHeader from './quiz-header';
@@ -26,7 +27,7 @@ const QuizAssessment = ({ numQuestion, data, settings, onTimeUp, quizStartAt, on
   const { question, has_next_question, current_question_index, start_at } = data;
 
   return (
-    <div className="flex h-full max-h-full w-full flex-col rounded-2xl border border-primary md:aspect-video md:flex-row">
+    <div className="flex h-full max-h-full max-w-full flex-col md:flex-row">
       <div className="relative z-10 flex w-full flex-col rounded-2xl bg-[#F2F1FF] p-4 md:w-1/2 md:p-6">
         <QuizHeader
           timeLimit={settings?.time_limit_type === 'per_question' ? question.settings.time_limit : settings?.time_limit}
@@ -42,7 +43,7 @@ const QuizAssessment = ({ numQuestion, data, settings, onTimeUp, quizStartAt, on
 
         <div className="flex w-full flex-1 flex-col items-center justify-center">
           <div className="w-full rounded-2xl bg-white p-4 text-center shadow-shadow-6 md:p-6">
-            <span className="mcaption-regular16 text-current">
+            <span className="mcaption-regular16">
               {tContentQuiz('questionNum', {
                 questionNum: current_question_index,
               })}
@@ -51,7 +52,7 @@ const QuizAssessment = ({ numQuestion, data, settings, onTimeUp, quizStartAt, on
           </div>
 
           {question?.files?.length > 0 && (
-            <div className="mt-6 w-full rounded-radius-m border-[3px] border-bg-secondary-600 bg-bg-secondary-50 p-spacing-sm text-center shadow-shadow-6">
+            <div className="mt-6 w-full rounded-2xl bg-white p-3 text-center shadow-shadow-6">
               <Image
                 src={question?.files[0]?.url ?? ''}
                 alt={question?.files[0]?.name ?? ''}
@@ -63,7 +64,7 @@ const QuizAssessment = ({ numQuestion, data, settings, onTimeUp, quizStartAt, on
         </div>
       </div>
 
-      <div className="flex h-full w-full flex-1 flex-col items-center justify-center overflow-y-auto p-spacing-mml md:w-1/2">
+      <ScrollArea className="flex h-full w-full flex-1 flex-col items-center justify-center p-6 md:w-1/2">
         {question?.items?.length > 0 && (
           <FormWrapper
             id={`quiz_ans_${question.id}`}
@@ -76,7 +77,7 @@ const QuizAssessment = ({ numQuestion, data, settings, onTimeUp, quizStartAt, on
             onSubmit={values => {
               onSubmitAnswer(values as TAnswerInput);
             }}
-            className="flex w-full flex-col p-4 md:p-6"
+            className="flex w-full flex-col justify-center"
           >
             {({ loading }) => (
               <>
@@ -88,7 +89,7 @@ const QuizAssessment = ({ numQuestion, data, settings, onTimeUp, quizStartAt, on
             )}
           </FormWrapper>
         )}
-      </div>
+      </ScrollArea>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import type { ILesson } from '@oe/api/types/course/segment';
 
 import type { HTMLAttributes } from 'react';
 import { cn } from '#utils/cn';
-import LessonContent from './lesson-content/lesson-content';
+import LessonContentBlocks from './lesson-content/lesson-content-blocks';
 import LessonMetadata from './lesson-metadata';
 
 interface IContentSectionProps extends HTMLAttributes<HTMLDivElement> {
@@ -14,7 +14,7 @@ interface IContentSectionProps extends HTMLAttributes<HTMLDivElement> {
 const ContentSection = ({ courseData, lesson, className, ...props }: IContentSectionProps) => {
   return (
     <div className={cn('flex flex-col gap-3', className)} {...props}>
-      <LessonContent courseId={courseData?.id ?? ''} contents={lesson?.contents ?? []} />
+      <LessonContentBlocks courseId={courseData?.id ?? ''} contents={lesson?.contents ?? []} />
 
       <LessonMetadata
         title={lesson?.title ?? ''}

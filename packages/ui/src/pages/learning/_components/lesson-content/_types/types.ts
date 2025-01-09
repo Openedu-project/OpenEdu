@@ -1,5 +1,6 @@
 import type { TLessonContent } from '@oe/api/types/course/basic';
 import type { ILessonContent } from '@oe/api/types/course/segment';
+import type { ICurrentQuestion } from '@oe/api/types/quiz';
 import type React from 'react';
 
 export interface ContentRendererProps {
@@ -31,3 +32,10 @@ export interface LessonContentBlockProps {
 export type TAnswerInput = {
   answers: string | string[];
 };
+
+export interface IQuizzSubmissionState {
+  id: string;
+  num_questions: number;
+  data?: ICurrentQuestion | null;
+  start_at: number;
+}
