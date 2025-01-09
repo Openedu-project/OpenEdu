@@ -5,6 +5,7 @@ import { bankAccountMessage } from './bank-account';
 import { builderMessages } from './builder';
 import { couponMessage } from './coupon';
 import { courseOutlineMessages } from './course-outline';
+import { courseListMessages } from './courses-list';
 import { creatorManagementMessage } from './creator-management';
 import { forgotPasswordMessage } from './forgot-password';
 import { homePageMessage } from './home-page';
@@ -34,4 +35,5 @@ export const pageMessages = {
   ...affiliateCampaignMessage,
   ...homePageMessage,
   ...userAffiliateCampaignMessage,
+  ...courseListMessages,
 };

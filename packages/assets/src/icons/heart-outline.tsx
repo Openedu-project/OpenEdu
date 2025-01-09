@@ -1,6 +1,11 @@
-import type { ISvgProps } from './types';
+import type { ISvgProps } from "./types";
 
-export default function HeartOutline({ className = '', color = '#585858', width = 24, height = 24 }: ISvgProps) {
+export default function HeartOutline({
+  className = "",
+  color = "#585858",
+  width = 24,
+  height = 24,
+}: ISvgProps) {
   return (
     <svg
       width={width}

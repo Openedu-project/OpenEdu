@@ -8,7 +8,7 @@ export interface IFilter {
   org_id?: string;
   type?: string;
   user_id?: string;
-  preloads?: string;
+  preloads?: string | string[];
   event?: string;
   role?: string;
   currency?: string;
@@ -17,4 +17,5 @@ export interface IFilter {
   parent_id_null?: boolean;
   is_verified?: boolean;
   is_active?: boolean;
+  enable_root?: boolean;
 }

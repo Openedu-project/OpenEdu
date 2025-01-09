@@ -76,3 +76,20 @@ export function useGetLevels(params: Record<string, string | boolean>) {
     isLevelsLoading: isLoading,
   };
 }
+
+export function useGetCoursesPublish({ params }: { params: IFilter }) {
+  const endpointKey = createAPIUrl({
+    endpoint: API_ENDPOINT.COURSES_PUBLISH,
+    queryParams: { ...params },
+  });
+  const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
+    getCourseService(endpoint, { params })
+  );
+
+  return {
+    dataListCourses: data,
+    errorCourses: error,
+    mutateListCourses: mutate,
+    isLoadingCourses: isLoading,
+  };
+}

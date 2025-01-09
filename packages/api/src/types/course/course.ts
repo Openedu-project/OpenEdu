@@ -79,8 +79,9 @@ export interface ICourse {
   quiz_count: number;
 
   accesses: TCourseRoles | null;
-  categories: ICategory[] | null;
   partners: null;
+  categories?: ICategory[];
+  reviewing: ICourseVersion | null;
   form_relations: null;
 
   root_request: null;

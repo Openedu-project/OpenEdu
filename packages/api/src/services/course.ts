@@ -9,7 +9,7 @@ import { type FetchOptions, createAPIUrl, deleteAPI, fetchAPI, postAPI } from '#
 export async function getCoursesService(
   url: string,
   { params, init }: { params: IFilter; init?: RequestInit }
-): Promise<ICourseResponse | null> {
+): Promise<ICourseResponse | undefined> {
   let endpointKey = url;
   if (!endpointKey) {
     endpointKey = createAPIUrl({
@@ -25,7 +25,7 @@ export async function getCoursesService(
 
     return response.data;
   } catch {
-    return null;
+    return undefined;
   }
 }
 

@@ -1,12 +1,15 @@
-'use client';
-import { useGetMe } from '@oe/api/hooks/useMe';
-import { postBookmarkService, removeBookmarkService } from '@oe/api/services/bookmark';
-import Heart from '@oe/assets/icons/heart';
-import HeartOutline from '@oe/assets/icons/heart-outline';
-import { type MouseEvent, useCallback, useState } from 'react';
-import { useLoginRequiredStore } from '#components/login-required-modal';
-import { Button, type ButtonProps } from '#shadcn/button';
-import { cn } from '#utils/cn';
+"use client";
+import { useGetMe } from "@oe/api/hooks/useMe";
+import {
+  postBookmarkService,
+  removeBookmarkService,
+} from "@oe/api/services/bookmark";
+import Heart from "@oe/assets/icons/heart";
+import HeartOutline from "@oe/assets/icons/heart-outline";
+import { type MouseEvent, useCallback, useState } from "react";
+import { useLoginRequiredStore } from "#components/login-required-modal";
+import { Button, type ButtonProps } from "#shadcn/button";
+import { cn } from "#utils/cn";
 
 interface WishlistButtonProps extends ButtonProps {
   bookmarkId: string;
@@ -135,13 +138,13 @@ export default function WishlistButton({
         let id = bookmarkId;
         if (isWishlist) {
           await removeBookmarkService(undefined, {
-            payload: { id: bookmarkId ?? '' },
+            payload: { id: bookmarkId ?? "" },
           });
         } else {
           const bookmark = await postBookmarkService(undefined, {
             payload: {
-              entity_id: entityId ?? '',
-              entity_type: entityType ?? '',
+              entity_id: entityId ?? "",
+              entity_type: entityType ?? "",
             },
           });
           id = bookmark.id;
@@ -150,19 +153,27 @@ export default function WishlistButton({
         await onSuccess?.(id, !isWishlist);
         setIsBookmarking(false);
       } catch (error) {
-        console.error('Wishlist operation failed:', error);
+        console.error("Wishlist operation failed:", error);
         setIsBookmarking(false);
         return error;
       }
     },
-    [dataMe, bookmarkId, entityId, entityType, isWishlist, setLoginRequiredModal, onSuccess]
+    [
+      dataMe,
+      bookmarkId,
+      entityId,
+      entityType,
+      isWishlist,
+      setLoginRequiredModal,
+      onSuccess,
+    ]
   );
 
   return (
     <Button
       size="icon"
       variant="outline"
-      className={cn('p-0 focus:border md:p-2', className)}
+      className={cn("p-0 focus:border md:p-2", className)}
       onClick={handleWishlist}
       disabled={isBookmarking}
       {...props}

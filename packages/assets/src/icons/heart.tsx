@@ -1,6 +1,11 @@
-import type { ISvgProps } from './types';
+import type { ISvgProps } from "./types";
 
-export default function Heart({ className, color = '#5055D7', width = 17, height = 15 }: ISvgProps) {
+export default function Heart({
+  className,
+  color = "#5055D7",
+  width = 17,
+  height = 15,
+}: ISvgProps) {
   return (
     <svg
       className={className}
