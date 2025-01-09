@@ -224,7 +224,7 @@ export const API_ENDPOINT = {
   COM_NOTIFICATIONS: '/api/com-v1/notifications',
   COM_NOTIFICATIONS_READ: '/api/com-v1/notifications/read',
   // WS
-  WEBSOCKET: 'websocket',
+  WEBSOCKET: '/websocket',
   EXCHANGE_RATES: '/api/v1/exchange-rates',
   CLAIM_EARNING: '/api/v1/wallets/:id/claim-earning',
   CHAIN_ACCOUNT_INFO: '/api/v1/chains/:network/accounts/:address',
