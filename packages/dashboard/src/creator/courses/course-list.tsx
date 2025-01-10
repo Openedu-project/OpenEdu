@@ -3,13 +3,9 @@ import { ButtonDropdown } from '@oe/ui/components/button-dropdown';
 import { NavigationDialog } from '@oe/ui/components/dialog';
 import { PlusIcon, SparklesIcon, YoutubeIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import type { ReactNode } from 'react';
+import Courses from './course-table/course-table';
 
-export default function CourseListLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function CourseListPagge() {
   const tDashboard = useTranslations('dashboard');
   const tCourses = useTranslations('courses');
 
@@ -49,7 +45,7 @@ export default function CourseListLayout({
           </div>
         }
       >
-        {children}
+        <Courses />
       </DashboardMainPageLayout>
       <NavigationDialog />
     </>

@@ -97,7 +97,7 @@ export const CREATOR_ROUTES = {
   formDetail: `/creator${DYNAMIC_FORMS_ROUTES.formDetail}`,
   formTemplates: `/creator${DYNAMIC_FORMS_ROUTES.formTemplates}`,
   aiGeneralInfo: '/creator/courses/ai-creation/general-info',
-  aiSettingUp: '/creator/courses/:courseId/settings',
+  courseSettingUp: '/creator/courses/:courseId/settings',
   aiYoutubePlaylist: '/creator/courses/ai-creation/youtube-playlist',
   campaigns: '/creator/affiliate-campaigns/campaigns',
   campaignDetail: '/creator/affiliate-campaigns/:id',

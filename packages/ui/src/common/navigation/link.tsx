@@ -22,6 +22,7 @@ export interface LinkProps
   activeClassName?: string;
   locale?: LanguageCode;
   exact?: boolean;
+  external?: boolean;
 }
 
 export const Link: FC<LinkProps> = ({
@@ -35,12 +36,13 @@ export const Link: FC<LinkProps> = ({
   activeClassName = 'border border-primary text-primary',
   locale,
   exact,
+  external,
   ...props
 }) => {
   const { getFinalHref, isExternal, isActive } = useHref();
 
   const finalHref = getFinalHref(href, { locale, nextZone });
-  const isExternalLink = isExternal(href, nextZone);
+  const isExternalLink = external ?? isExternal(href, nextZone);
   const linkProps = {
     href: finalHref,
     ref,

@@ -10,7 +10,8 @@ export function getCellClassName<TData>(
 ) {
   const isSticky = (cell.column.columnDef as ColumnDef<TData>).sticky;
   const alignClass =
-    (cell.column.columnDef as ColumnDef<TData>).align && `text-${(cell.column.columnDef as ColumnDef<TData>).align}`;
+    (cell.column.columnDef as ColumnDef<TData>).align &&
+    `text-${(cell.column.columnDef as ColumnDef<TData>).align} justify-${(cell.column.columnDef as ColumnDef<TData>).align}`;
 
   const stickyClasses = isSticky
     ? [
@@ -50,6 +51,9 @@ export function getHeaderClassName<TData>({
   className?: string;
 }) {
   const isSticky = (header.column.columnDef as ColumnDef<TData>).sticky;
+  const alignClass =
+    (header.column.columnDef as ColumnDef<TData>).align &&
+    `text-${(header.column.columnDef as ColumnDef<TData>).align} justify-${(header.column.columnDef as ColumnDef<TData>).align}`;
   const stickyClasses = isSticky
     ? [
         'sticky isolate z-20',
@@ -69,5 +73,5 @@ export function getHeaderClassName<TData>({
         ? 'border-t border-r first:border-l'
         : '[&:has([role=checkbox])]:pr-0 border-b';
 
-  return cn('flex items-center bg-muted', stickyClasses, header.id === 'expander' ? 'p-0' : '', className);
+  return cn('flex items-center bg-muted', alignClass, stickyClasses, header.id === 'expander' ? 'p-0' : '', className);
 }

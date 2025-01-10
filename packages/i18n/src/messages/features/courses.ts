@@ -26,5 +26,27 @@ export const coursesMessages = {
     payment: {
       free: 'Free',
     },
+    status: {
+      draft: 'Draft',
+      published: 'Published',
+      archived: 'Archived',
+      reviewing: 'Reviewing',
+      publish_root: 'Publish Root',
+      cancelled: 'Cancelled',
+      reject: 'Reject',
+      un_publish: 'Un Publish',
+      generating: 'Generating',
+      pending: 'Pending',
+      waiting: 'Waiting',
+      completed: 'Completed',
+      manual: 'Manual',
+      failed: 'Failed',
+    },
+    type: {
+      youtube: 'Youtube',
+      ai: 'AI',
+      manual: 'Manual',
+    },
+    noName: '[No name]',
   },
 };

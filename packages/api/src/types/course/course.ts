@@ -17,6 +17,7 @@ import type {
   TCourseStatus,
 } from './basic';
 import type { ILearningProgressOverview } from './learning-progress';
+import type { ICourseOrganizationRequest } from './org-request';
 import type { ISection } from './segment';
 
 export interface IThumbnail extends Omit<IFileResponse, 'bunny_video_id'> {}
@@ -84,7 +85,7 @@ export interface ICourse {
   form_relations: null;
 
   root_request: null;
-  org_request: null;
+  org_request: ICourseOrganizationRequest | null;
 
   published: ICourseVersion[] | null;
 

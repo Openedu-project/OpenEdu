@@ -40,7 +40,7 @@ const Tooltip = ({
   contentProps?: ComponentPropsWithoutRef<typeof TooltipContent>;
   className?: string;
 } & ComponentPropsWithoutRef<typeof RadixTooltip>) => (
-  <TooltipProvider>
+  <TooltipProvider delayDuration={100}>
     <RadixTooltip {...props}>
       <TooltipTrigger asChild className={className}>
         {children}
