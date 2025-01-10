@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '#shadcn/avatar';
+import { Image } from '#components/image';
+import { cn } from '#utils/cn';
 import { AVATAR_SIZES, type ColorPair, type IUserAvatar, PREDEFINED_COLORS } from './type';
 
 const RE_WORD_SEPARATOR = /\s+/;
@@ -42,17 +43,20 @@ export const UserAvatar = ({ src, name, size = 'sm', customColors, ...props }: I
   const { dimensions, fontClass } = AVATAR_SIZES[size];
 
   return (
-    <Avatar className={dimensions} {...props}>
-      <AvatarImage src={src} alt={name ?? 'avatar'} />
-      <AvatarFallback
-        className={fontClass}
-        style={{
-          backgroundColor: colors.background,
-          color: colors.text,
-        }}
-      >
-        {pickCharacters(name)}
-      </AvatarFallback>
-    </Avatar>
+    <div className={cn('relative', dimensions)} {...props}>
+      {src ? (
+        <Image src={src} alt={name ?? 'avatar'} fill className="!h-full absolute top-0 left-0 w-full rounded-full" />
+      ) : (
+        <div
+          className={cn('flex h-full w-full items-center justify-center rounded-full', fontClass)}
+          style={{
+            backgroundColor: colors.background,
+            color: colors.text,
+          }}
+        >
+          {pickCharacters(name)}
+        </div>
+      )}
+    </div>
   );
 };
