@@ -12,6 +12,8 @@ import {
   AcademiaHomepagePartners,
 } from './academia';
 
+import { ScholarHomepageAboutUs, ScholarHomepageHero, ScholarHomepageService } from './scholar';
+
 import { updateGlobalTheme } from './_components/theme-settings/theme-global/_utils';
 import { initialThemeGlobal } from './_config/theme-global-initial';
 import AcademiaForgotPassword from './academia/auth/forgot-password';
@@ -45,6 +47,9 @@ export const THEMES: ThemeRender = {
   scholar: {
     homepage: {
       theme: ScholarHomePage,
+      scholarHero: ScholarHomepageHero,
+      scholarService: ScholarHomepageService,
+      scholarAboutUs: ScholarHomepageAboutUs,
     },
     'about-us': {
       theme: ScholarAboutUs,

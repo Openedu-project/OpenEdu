@@ -1,9 +1,9 @@
-import { academiaHomepage } from '../academia/homepage';
 import { authMessages } from '../auth';
+import { scholarHomepage } from './homepage';
 
 export const ScholarMessage = {
   scholar: {
-    ...academiaHomepage,
+    ...scholarHomepage,
     ...authMessages,
   },
 };

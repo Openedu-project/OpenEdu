@@ -40,8 +40,9 @@ const OutlineThemeSettingPages = ({ selectedSidebarPageKey }: OutlineThemeSettin
 
     try {
       setIsLoading(true);
-      console.log(currentThemeSystem);
-      const res = await createOrUpdateThemeConfig({ config: currentThemeSystem });
+      const res = await createOrUpdateThemeConfig({
+        config: currentThemeSystem,
+      });
       // console.log(res);
       if (res) {
         setIsLoading(false);
@@ -57,6 +58,7 @@ const OutlineThemeSettingPages = ({ selectedSidebarPageKey }: OutlineThemeSettin
       <ThemeSettingPages
         isLoading={isLoading}
         themeConfig={theme[0].value?.availableThemes?.[themeName as ThemeName]}
+        // themeConfig={undefined}
         themeName={themeName as ThemeName}
         selectedPage={themePageKey as ThemePageKey}
         selectedSidebarPageKey={selectedSidebarPageKey}

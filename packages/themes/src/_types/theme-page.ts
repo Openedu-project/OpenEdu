@@ -9,6 +9,7 @@ import type {
   AcademiaHomepagePartnersProps,
 } from '../academia';
 import type { AcademiaAuthLayoutLoginProps } from '../academia/auth/login';
+import type { ScholarHomepageAboutUsProps, ScholarHomepageHeroProps, ScholarHomepageServiceProps } from '../scholar';
 import type { ThemeMetadata } from './theme-metadata';
 
 // Core Types
@@ -16,7 +17,16 @@ export type ThemeName = 'academia' | 'scholar';
 export type ThemePageKey = 'homepage' | 'about-us' | 'auth';
 
 // Section Definitions
-export type HomeSection = 'theme' | 'hero' | 'features' | 'partners' | 'explores' | 'organizations'; // Add new page key - HERE
+export type HomeSection =
+  | 'theme'
+  | 'hero'
+  | 'features'
+  | 'partners'
+  | 'explores'
+  | 'organizations'
+  | 'scholarHero'
+  | 'scholarService'
+  | 'scholarAboutUs'; // Add new page key - HERE
 export type AboutSection = 'theme' | 'team';
 export type AuthLayout = 'theme' | 'login' | 'forgotPassword' | 'emailVerify' | 'signUp' | 'authConfirm';
 
@@ -101,6 +111,11 @@ export interface SectionPropsMap<K extends ThemePageKey> {
   forgotPassword: DynamicProps<K, AcademiaAuthLayoutLoginProps>;
   emailVerify: DynamicProps<K, AcademiaAuthLayoutLoginProps>;
   authConfirm: DynamicProps<K, AcademiaAuthLayoutLoginProps>;
+
+  /**SCHOLAR */
+  scholarHero: DynamicProps<K, ScholarHomepageHeroProps>;
+  scholarService: DynamicProps<K, ScholarHomepageServiceProps>;
+  scholarAboutUs: DynamicProps<K, ScholarHomepageAboutUsProps>;
 }
 
 // Component Types
