@@ -8,7 +8,7 @@ export default async function OpeneduLayout({
 }: {
   children: ReactNode;
 }) {
-  const t = await getTranslations('userMenu');
+  const t = await getTranslations('headerMenu');
   const sidebarItems = [
     {
       id: 'ai-assistant',

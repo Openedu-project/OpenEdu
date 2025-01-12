@@ -35,7 +35,7 @@ export const BLOG_ROUTES = {
   editBlog: '/blog/me/:id/edit',
   previewBlog: '/blog/me/:id/preview',
   authorBlog: '/blog/author/:username',
-};
+} as const;
 
 export const BLOG_ADMIN_ROUTES = {
   writerMgt: '/blog-admin/writer-management',
@@ -49,7 +49,15 @@ export const BLOG_ADMIN_ROUTES = {
   createBlog: '/blog-admin/create',
   editBlog: '/blog-admin/:id/edit',
   previewBlog: '/blog-admin/:id/preview',
-};
+} as const;
+
+export const AFFILIATE_ROUTES = {
+  dashboard: '/affiliate',
+  campaigns: '/affiliate/campaigns',
+  campaignDetail: '/affiliate/campaigns/:id',
+  campaignReport: '/affiliate/report',
+  campaignReportDetail: '/affiliate/report/report-detail',
+} as const;
 
 export const AUTH_ROUTES = {
   login: '/login',

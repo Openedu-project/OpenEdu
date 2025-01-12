@@ -24,7 +24,7 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '
 import { Label } from '@oe/ui/shadcn/label';
 import { Textarea } from '@oe/ui/shadcn/textarea';
 
-interface CouponDialogProps {
+interface IFormCouponModalProps {
   isCreate?: boolean;
   orgId: string;
   onSubmit: (value: ICouponPayload) => Promise<void>;
@@ -40,14 +40,14 @@ const DEFAULT_USER_PER_PAGE = 9999;
 
 const REGEX_DISCOUNT = /^\d*\.?\d*$/;
 
-export default function CouponDialog({
+export default function FormCouponModal({
   onSubmit,
   onClose,
   loading = false,
   isCreate = true,
   data,
   orgId,
-}: CouponDialogProps) {
+}: IFormCouponModalProps) {
   const t = useTranslations('coupon');
   const tCouponForm = useTranslations('coupon.couponForm');
   // const locale = useLocale();

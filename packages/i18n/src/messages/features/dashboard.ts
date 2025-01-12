@@ -69,5 +69,13 @@ export const dashboardMessages = {
         referrers: 'Referrers',
       },
     },
+    userAffiliateDashboard: {
+      affiliate: 'Affiliate',
+      campaignDetail: 'Campaign Detail',
+      campaigns: 'Campaigns',
+      course: 'Course',
+      price: 'Price',
+      reportAffiliateCampaigns: 'Report',
+    },
   },
 };

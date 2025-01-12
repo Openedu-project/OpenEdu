@@ -8,6 +8,32 @@ export const FORMAT_DAY_HOUR_MIN_A = 'ddd h:mm a';
 export const FORMAT_MON_DAY_TIME = 'MMM D, h:mm a';
 export const PAGE_SIZE = 10;
 
+export const ROLE_LIST = {
+  SYSTEM_ADMIN: 'system_admin',
+  ADMIN: 'admin',
+  MODERATOR: 'moderator',
+  ORG_ADMIN: 'org_admin',
+  ORG_MODERATOR: 'org_moderator',
+  PARTNER: 'partner',
+  LEARNER: 'learner',
+  GUEST: 'guest',
+  ORG_EDITOR: 'org_editor',
+  ORG_WRITER: 'org_writer',
+};
+
+export const DEFAULT_ROLES_PERMISSION = [
+  ROLE_LIST.SYSTEM_ADMIN,
+  ROLE_LIST.ADMIN,
+  ROLE_LIST.MODERATOR,
+  ROLE_LIST.ORG_ADMIN,
+  ROLE_LIST.ORG_MODERATOR,
+  ROLE_LIST.PARTNER,
+  ROLE_LIST.LEARNER,
+  ROLE_LIST.GUEST,
+  ROLE_LIST.ORG_EDITOR,
+  ROLE_LIST.ORG_WRITER,
+] as const;
+
 export const USER_ROLE_EVENT: Record<string, string> = {
   org_editor: 'INVITE_ORG_EDITOR',
   org_writer: 'INVITE_ORG_WRITER',

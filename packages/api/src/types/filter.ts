@@ -1,5 +1,5 @@
 export interface IFilter {
-  page: number;
+  page?: number;
   per_page?: number;
   sort?: string;
   search_term?: string;

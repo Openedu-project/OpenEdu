@@ -3,6 +3,7 @@ import { dateTimePickerMessages } from './date-time-picker';
 import { dialogMessages } from './dialog';
 import { footerMessages } from './footer';
 import { formValidationMessages } from './form-validation';
+import { headerMenuMessages } from './header-menu';
 import { loginRequiredMessages } from './login-required-modal';
 import { paymentButtonMessages } from './payment-button';
 import { richTextMessages } from './rich-text';
@@ -23,5 +24,6 @@ export const componentMessages = {
   ...loginRequiredMessages,
   ...paymentButtonMessages,
   ...userMenuMessages,
+  ...headerMenuMessages,
   ...footerMessages,
 };

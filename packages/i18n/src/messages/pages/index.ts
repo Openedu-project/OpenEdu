@@ -12,6 +12,7 @@ import { notificationMessage } from './notification';
 import { organizationsMessage } from './organizations';
 import { permissionMessage } from './permissions';
 import { setPasswordMessage } from './set-password';
+import { userAffiliateCampaignMessage } from './user-affiliate-campaign';
 import { verifyEmailMessage } from './verify-email';
 import { withdrawRequestMessage } from './withdraw-request';
 
@@ -32,4 +33,5 @@ export const pageMessages = {
   ...courseOutlineMessages,
   ...affiliateCampaignMessage,
   ...homePageMessage,
+  ...userAffiliateCampaignMessage,
 };

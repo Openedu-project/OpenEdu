@@ -7,6 +7,7 @@ import {
   usePermissionRoutes,
 } from '@oe/api/hooks/usePermission';
 import type { IPermissionAccessItemPayload, IPermissionRouteInfo } from '@oe/api/types/permissions';
+import { ROLE_LIST } from '@oe/core/utils/constants';
 import { Button } from '@oe/ui/shadcn/button';
 import { Checkbox } from '@oe/ui/shadcn/checkbox';
 import { Input } from '@oe/ui/shadcn/input';
@@ -18,7 +19,7 @@ import { useTranslations } from 'next-intl';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { mutate } from 'swr';
 import { useDebouncedCallback } from 'use-debounce';
-import { DEFAULT_ACTIONS_PERMISSION, DEFAULT_ROLES_PERMISSION } from '../../permission-constant';
+import { DEFAULT_ACTIONS_PERMISSION } from '../../permission-constant';
 
 export default function RolesList() {
   const t = useTranslations('permissionRoleList');
@@ -270,7 +271,7 @@ export default function RolesList() {
             <SelectValue placeholder="Select role" />
           </SelectTrigger>
           <SelectContent>
-            {DEFAULT_ROLES_PERMISSION.map(role => (
+            {Object.values(ROLE_LIST).map(role => (
               <SelectItem key={role} value={role}>
                 {role}
               </SelectItem>
