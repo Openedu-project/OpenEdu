@@ -24,6 +24,7 @@ const defaultMetadataAtPage = {
 export const createThemePageConfig = (t: (key: string) => string): Record<ThemeName, PagesConfig<ThemePageKey>> => {
   const academiaT = createTranslationGetter(t, 'academia');
   const scholarT = createTranslationGetter(t, 'scholar');
+  const vbiT = createTranslationGetter(t, 'vbi');
 
   const createHomepageConfig = (getThemeTranslation: typeof academiaT) => ({
     hero: createSection<'homepage', 'hero'>({
@@ -195,6 +196,201 @@ export const createThemePageConfig = (t: (key: string) => string): Record<ThemeN
     }),
   });
 
+  const createVbiHomepageConfig = (getThemeTranslation: typeof vbiT) => ({
+    vbiHero: createSection<'homepage', 'vbiHero'>({
+      props: {
+        title: getThemeTranslation(['homepage', 'vbiHero', 'title']),
+        titleSub: getThemeTranslation(['homepage', 'vbiHero', 'titleSub']),
+        button: {
+          text: getThemeTranslation(['homepage', 'vbiHero', 'button', 'text']),
+          link: getThemeTranslation(['homepage', 'vbiHero', 'button', 'link']),
+        },
+        banner: {
+          image: { mime: 'image/png' },
+          bannerContent1: {
+            label: getThemeTranslation(['homepage', 'vbiHero', 'banner', 'bannerContent1', 'label']),
+            value: 20000,
+          },
+          bannerContent2: {
+            label: getThemeTranslation(['homepage', 'vbiHero', 'banner', 'bannerContent2', 'label']),
+            value: 30000,
+          },
+          bannerContent3: {
+            label: getThemeTranslation(['homepage', 'vbiHero', 'banner', 'bannerContent3', 'label']),
+            value: 46000,
+          },
+        },
+      },
+      order: 0,
+    }),
+    vbiPartners: createSection<'homepage', 'vbiPartners'>({
+      props: {
+        partners: new Array(9).fill({ mime: 'image/png' }),
+      },
+      order: 1,
+    }),
+    vbiAchievements: createSection<'homepage', 'vbiAchievements'>({
+      props: {
+        title: getThemeTranslation(['homepage', 'vbiAchievements', 'title']),
+        titleSub: getThemeTranslation(['homepage', 'vbiAchievements', 'titleSub']),
+        button: {
+          text: getThemeTranslation(['homepage', 'vbiAchievements', 'button', 'text']),
+          link: getThemeTranslation(['homepage', 'vbiAchievements', 'button', 'link']),
+        },
+        achievements: {
+          achievement1: {
+            title: getThemeTranslation(['homepage', 'vbiAchievements', 'achievements', 'achievement1', 'title']),
+            description: getThemeTranslation([
+              'homepage',
+              'vbiAchievements',
+              'achievements',
+              'achievement1',
+              'description',
+            ]),
+            stats: {
+              stat1: {
+                label: getThemeTranslation([
+                  'homepage',
+                  'vbiAchievements',
+                  'achievements',
+                  'achievement1',
+                  'stats',
+                  'stat1',
+                  'label',
+                ]),
+                value: 20000,
+              },
+              stat2: {
+                label: getThemeTranslation([
+                  'homepage',
+                  'vbiAchievements',
+                  'achievements',
+                  'achievement1',
+                  'stats',
+                  'stat2',
+                  'label',
+                ]),
+                value: 10000,
+              },
+              stat3: {
+                label: getThemeTranslation([
+                  'homepage',
+                  'vbiAchievements',
+                  'achievements',
+                  'achievement1',
+                  'stats',
+                  'stat3',
+                  'label',
+                ]),
+                value: 20000,
+              },
+            },
+            image: { mime: 'image/png' },
+          },
+          achievement2: {
+            title: getThemeTranslation(['homepage', 'vbiAchievements', 'achievements', 'achievement2', 'title']),
+            description: getThemeTranslation([
+              'homepage',
+              'vbiAchievements',
+              'achievements',
+              'achievement2',
+              'description',
+            ]),
+            stats: {
+              stat1: {
+                label: getThemeTranslation([
+                  'homepage',
+                  'vbiAchievements',
+                  'achievements',
+                  'achievement2',
+                  'stats',
+                  'stat2',
+                  'label',
+                ]),
+                value: 20000,
+              },
+              stat2: {
+                label: getThemeTranslation([
+                  'homepage',
+                  'vbiAchievements',
+                  'achievements',
+                  'achievement1',
+                  'stats',
+                  'stat2',
+                  'label',
+                ]),
+                value: 2000,
+              },
+              stat3: {
+                label: getThemeTranslation([
+                  'homepage',
+                  'vbiAchievements',
+                  'achievements',
+                  'achievement2',
+                  'stats',
+                  'stat3',
+                  'label',
+                ]),
+                value: 6000,
+              },
+            },
+            image: { mime: 'image/png' },
+          },
+          achievement3: {
+            title: getThemeTranslation(['homepage', 'vbiAchievements', 'achievements', 'achievement3', 'title']),
+            description: getThemeTranslation([
+              'homepage',
+              'vbiAchievements',
+              'achievements',
+              'achievement3',
+              'description',
+            ]),
+            stats: {
+              stat1: {
+                label: getThemeTranslation([
+                  'homepage',
+                  'vbiAchievements',
+                  'achievements',
+                  'achievement3',
+                  'stats',
+                  'stat1',
+                  'label',
+                ]),
+                value: 25000,
+              },
+              stat2: {
+                label: getThemeTranslation([
+                  'homepage',
+                  'vbiAchievements',
+                  'achievements',
+                  'achievement3',
+                  'stats',
+                  'stat2',
+                  'label',
+                ]),
+                value: 2000000,
+              },
+              stat3: {
+                label: getThemeTranslation([
+                  'homepage',
+                  'vbiAchievements',
+                  'achievements',
+                  'achievement3',
+                  'stats',
+                  'stat3',
+                  'label',
+                ]),
+                value: 200,
+              },
+            },
+            image: { mime: 'image/png' },
+          },
+        },
+      },
+      order: 2,
+    }),
+  });
+
   return {
     academia: {
       homepage: {
@@ -237,6 +433,23 @@ export const createThemePageConfig = (t: (key: string) => string): Record<ThemeN
       homepage: {
         label: t('labels.homepage'),
         config: createScholarHomepageConfig(scholarT),
+        metadata: defaultMetadataAtPage,
+      },
+      'about-us': {
+        label: t('labels.aboutus'),
+        config: undefined,
+        metadata: defaultMetadataAtPage,
+      },
+      auth: {
+        label: t('labels.authLayout'),
+        config: createAuthLayoutConfig(academiaT),
+        metadata: undefined,
+      },
+    },
+    vbi: {
+      homepage: {
+        label: t('labels.homepage'),
+        config: createVbiHomepageConfig(vbiT),
         metadata: defaultMetadataAtPage,
       },
       'about-us': {

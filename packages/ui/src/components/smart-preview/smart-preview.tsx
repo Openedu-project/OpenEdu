@@ -32,7 +32,7 @@ export default function SmartPreview({ children, containerPadding = 48 }: Previe
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const viewportWidths = {
-    desktop: window.innerWidth > 1024 ? 1024 : window.innerWidth,
+    desktop: 1024,
     tablet: 768,
     mobile: 375,
   };
@@ -176,7 +176,6 @@ export default function SmartPreview({ children, containerPadding = 48 }: Previe
   }, []);
 
   // Effect for updating iframe viewport
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!iframeRef.current?.contentWindow) {
       return;

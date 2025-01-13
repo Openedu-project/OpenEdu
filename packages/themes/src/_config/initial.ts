@@ -17,6 +17,12 @@ export const defaultThemeSystemConfig = (t: (key: string) => string): ThemeSyste
         components: undefined,
         globals: undefined,
       },
+      vbi: {
+        pages: createThemePageConfig(t).vbi,
+        metadata: undefined,
+        globals: undefined,
+        components: undefined,
+      },
     },
   };
 };

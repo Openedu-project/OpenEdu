@@ -7,6 +7,7 @@ import { ScholarMessage } from './scholar';
 import { sidbarMessages } from './sidebar';
 import { themeListMessages } from './theme-list';
 import { ThemeUIMessage } from './theme-ui';
+import { vbiMessage } from './vbi';
 
 export const themeMessages = {
   ...headerMessages,
@@ -23,6 +24,7 @@ export const themeMessages = {
     ...AcademiaMessage,
     ...ScholarMessage,
     ...authMessages,
+    ...vbiMessage,
   },
   ...ThemeUIMessage,
   ...ThemeNotiMessages,

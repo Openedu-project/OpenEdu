@@ -25,6 +25,7 @@ export default function ThemeListPage({ themeSystem }: { themeSystem?: ThemeSyst
       {themeSystem && (
         <ThemeList
           themesData={Object.keys(themeSystem.availableThemes) as ThemeName[]}
+          // themesData={['academia','scholar','vbi']}
           selectedTheme={themeSystem.activedTheme}
         />
       )}

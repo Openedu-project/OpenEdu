@@ -21,6 +21,7 @@ import AcademiaLogin from './academia/auth/login';
 import AcademiaAuthLayoutSignUp from './academia/auth/sign-up';
 import { fonts } from './fonts';
 import { ScholarAboutUs, ScholarHomePage } from './scholar';
+import { VbiHomepage, VbiHomepageAchievements, VbiHomepageHero, VbiHomepagePartners } from './vbi/index';
 
 export const THEMES: ThemeRender = {
   academia: {
@@ -50,6 +51,22 @@ export const THEMES: ThemeRender = {
       scholarHero: ScholarHomepageHero,
       scholarService: ScholarHomepageService,
       scholarAboutUs: ScholarHomepageAboutUs,
+    },
+    'about-us': {
+      theme: ScholarAboutUs,
+    },
+    auth: {
+      theme: AcademiaAuthLayout,
+      login: AcademiaLogin,
+      // signUp: AcademiaAuthLayoutSignUp,
+    },
+  },
+  vbi: {
+    homepage: {
+      theme: VbiHomepage,
+      vbiHero: VbiHomepageHero,
+      vbiPartners: VbiHomepagePartners,
+      vbiAchievements: VbiHomepageAchievements,
     },
     'about-us': {
       theme: ScholarAboutUs,
