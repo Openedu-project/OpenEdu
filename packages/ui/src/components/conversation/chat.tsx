@@ -1,8 +1,8 @@
 import type { IMessage, InputType } from '@oe/api/types/conversation';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
-import { useConversationStore } from '../../_stores/conversation-store';
 import useIsScrolledToBottom from '../../hooks/useScrollPosition';
 import MessageBox from './message/message-box';
 import type { ISendMessageParams } from './type';

@@ -246,6 +246,14 @@ export const API_ENDPOINT = {
   AI_MODELS: '/api/v1/ai/models',
   COM_CHANNELS: '/api/com-v1/channels',
   COM_CHANNELS_ID: '/api/com-v1/channels/:id',
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 51ab894 (feat: ai-chat#30)
+=======
+  COM_CHANNELS_ID_CANCEL: '/api/com-v1/channels/:id/cancel',
+>>>>>>> 697dd56 (feat: cancel chat #30)
+>>>>>>> 1f66ccfa (feat: cancel chat #30)
 } as const;
 
 export type API_ENDPOINT_KEY = keyof typeof API_ENDPOINT;

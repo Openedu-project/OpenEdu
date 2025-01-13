@@ -20,13 +20,9 @@ interface IConversationStore {
   setStatus: (value: IAIStatus) => void;
   setSelectedModel: (value: IAIModel) => void;
   resetStatus: () => void;
-<<<<<<< HEAD:packages/ui/src/store/conversation-store.ts
-  setAction: (action: IAIAction) => void;
-  resetAction: () => void;
-=======
->>>>>>> 2001002 (fix: re-gen message #30):packages/ui/src/_stores/conversation-store.ts
   genMessage?: IMessage;
   setGenMessage: (value: IMessage, callback?: () => void, shortenedIndex?: number) => void;
+  resetGenMessage: () => void;
 }
 
 export const useConversationStore = create<IConversationStore>(set => {
@@ -115,5 +111,6 @@ export const useConversationStore = create<IConversationStore>(set => {
         };
       });
     },
+    resetGenMessage: () => set({ genMessage: undefined }),
   };
 });

@@ -9,8 +9,8 @@ import { CircleAlert } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { useRouter } from '#common/navigation';
+import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
-import { useConversationStore } from '../../_stores/conversation-store';
 import { ChatWithMessage } from './chat';
 import MessageInput from './message/message-input';
 import type { ISendMessageParams } from './type';
@@ -38,8 +38,10 @@ export function ChatWindow({
     addMessage,
     status,
     setStatus,
+    resetStatus,
     selectedModel,
     setGenMessage,
+    resetGenMessage,
   } = useConversationStore();
 
   const [modelWarning, setModelWarning] = useState<boolean>(false);
@@ -49,6 +51,8 @@ export function ChatWindow({
   useEffect(() => {
     if (!id) {
       resetMessages();
+      resetStatus();
+      resetGenMessage();
       return;
     }
 
@@ -123,6 +127,7 @@ export function ChatWindow({
     } catch (error) {
       setStatus('error');
       setMessages(prevMessage);
+      resetGenMessage();
       if ((error as HTTPError).metadata?.code.toString() === '32002') {
         setModelWarning(true);
         // revalidateTag('ai-models');

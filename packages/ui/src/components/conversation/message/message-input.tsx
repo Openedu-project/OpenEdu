@@ -1,7 +1,9 @@
 'use client';
 import type { InputType } from '@oe/api/types/conversation';
 import { type IFileResponse, fileResponseScheme } from '@oe/api/types/file';
+import { usePathname } from 'next/navigation';
 
+import { cancelConversation } from '@oe/api/services/conversation';
 import { isLogin } from '@oe/api/utils/auth';
 import { z } from '@oe/api/utils/zod';
 import { Image } from '@oe/ui/components/image';
@@ -36,7 +38,6 @@ export interface MessageInputProps {
     role,
     // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   }: ISendMessageParams) => void | Promise<unknown>;
-  handleCancel?: () => void;
   className?: string;
   placeholder?: string;
   initialMessage?: string;
@@ -260,7 +261,6 @@ const createFormSchema = (inputType: InputType) => {
 const MessageInput: React.FC<MessageInputProps> = ({
   generating = false,
   sendMessage,
-  handleCancel,
   className,
   initialMessage = '',
   messageId,
@@ -271,6 +271,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
   images,
 }) => {
   const tAI = useTranslations('aiAssistant');
+  const pathname = usePathname();
 
   const [inputType, setInputType] = useState(type);
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
@@ -302,6 +303,13 @@ const MessageInput: React.FC<MessageInputProps> = ({
       setInputType(type);
     }
   }, [type]);
+
+  const handleCancel = async () => {
+    const id = pathname.split('/').pop();
+    if (id) {
+      await cancelConversation(undefined, id);
+    }
+  };
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>,

@@ -28,3 +28,10 @@ export const postConversation = async (url: string | undefined, payload: IConver
 
   return response.data;
 };
+
+export const cancelConversation = async (url: string | undefined, id: string, payload?: Record<string, string>) => {
+  const endpointKey = url ?? createAPIUrl({ endpoint: API_ENDPOINT.COM_CHANNELS_ID_CANCEL, params: { id } });
+  const response = await postAPI<{ message: string }, Record<string, string> | undefined>(endpointKey, payload);
+
+  return response.data;
+};
