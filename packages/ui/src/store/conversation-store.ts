@@ -1,4 +1,5 @@
 import type { IAIModel, IAIStatus, IMessage } from '@oe/api/types/conversation';
+import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { create } from 'zustand';
 
 export interface IAIAction {
@@ -21,6 +22,8 @@ interface IConversationStore {
   resetStatus: () => void;
   setAction: (action: IAIAction) => void;
   resetAction: () => void;
+  genMessage?: IMessage;
+  setGenMessage: (value: IMessage, callback?: () => void) => void;
 }
 
 export const useConversationStore = create<IConversationStore>(set => {
@@ -30,6 +33,7 @@ export const useConversationStore = create<IConversationStore>(set => {
     status: undefined,
     action: undefined,
     selectedModel: undefined,
+    genMessage: undefined,
     setMessages: (messages: IMessage[]) =>
       set(() => {
         return { messages };
@@ -68,25 +72,7 @@ export const useConversationStore = create<IConversationStore>(set => {
         });
 
         if (!add) {
-          newMessages =
-            messageData.sender.role === 'user'
-              ? [
-                  ...state.messages,
-                  messageData,
-                  {
-                    id: 'tempid',
-                    content: '',
-                    status: 'pending',
-                    conversation_id: messageData.conversation_id,
-                    sender: { role: 'assistant' },
-                    ai_model: messageData.ai_model,
-                    content_type: 'text',
-                    configs: messageData.configs,
-                    create_at: messageData.create_at,
-                    is_ai: true,
-                  },
-                ]
-              : [...state.messages.filter(msg => msg.id !== 'tempid'), messageData];
+          newMessages = [...state.messages, messageData];
         }
         callback?.();
         return {
@@ -113,5 +99,22 @@ export const useConversationStore = create<IConversationStore>(set => {
       }),
     resetStatus: () => set({ status: undefined }),
     resetAction: () => set({ action: undefined }),
+
+    setGenMessage: (data: IMessage, callback?: () => void) => {
+      set(state => {
+        const newMessages = { ...data, content: (state.genMessage?.content ?? '') + data?.content };
+        callback?.();
+
+        if (!GENERATING_STATUS.includes(data?.status ?? '')) {
+          return {
+            messages: [...state.messages, newMessages],
+            genMessage: undefined,
+          };
+        }
+        return {
+          genMessage: newMessages,
+        };
+      });
+    },
   };
 });

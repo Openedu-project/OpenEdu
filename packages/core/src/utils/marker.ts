@@ -11,9 +11,5 @@ export const marked = new Marked(
 
       return hljs.highlight(code, { language }).value;
     },
-  }),
-  {
-    gfm: true, // GitHub Flavored Markdown
-    breaks: true, // Convert line breaks to <br>
-  }
+  })
 );

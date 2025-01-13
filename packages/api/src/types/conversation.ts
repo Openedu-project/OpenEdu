@@ -33,14 +33,6 @@ export type IProvider =
   | 'gpt-4o'
   | 'o1-mini';
 
-// export interface IAIModel {
-//   id: IProvider;
-//   name: string;
-//   type: 'chatgpt' | 'claude' | 'gemini' | 'o1' | 'qwen' | 'llama';
-//   imageAnalysis: boolean;
-//   disable: boolean;
-// }
-
 export interface IAIModel {
   id: string;
   name: IProvider;
@@ -95,6 +87,8 @@ export interface IMessageData {
   conversation_id: string;
   message_id: string;
   ai_model: IProvider;
+  ai_model_display_name: string;
+  ai_model_thumbnail_url: string;
   status: IAIStatus;
   error?: null | { code: number; msg: string };
   parent_message_id: string;
@@ -106,6 +100,8 @@ export type IAIStatus = 'generating' | 'pending' | 'completed' | 'error' | 'stop
 export type IContextType = 'text';
 
 export type IChatHistoryResponse = HTTPPagination<IChatHistory>;
+
+export type IConversationDetails = IDataPagination<IConversation>;
 
 export interface IConversation {
   id: string;
@@ -174,6 +170,8 @@ interface IMessageAIModel {
   configs?: IModelConfigs;
   org_id?: string;
   org_schema?: string;
+  thumbnail_url?: string;
+  display_name?: string;
 }
 
 interface IModelConfigs {

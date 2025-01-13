@@ -1,0 +1,44 @@
+import { getAIModels } from '@oe/api/services/conversation';
+import AIBg from '@oe/assets/images/ai-bg.png';
+import { AI_ROUTES } from '@oe/core/utils/routes';
+import { Plus } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
+import type { ReactNode } from 'react';
+import { Link } from '#common/navigation';
+import { AIModelDropdown } from '#components/conversation';
+import { Image } from '#components/image';
+import { cn } from '#utils/cn';
+
+type Props = {
+  children: ReactNode;
+};
+
+export default async function AIChatLayout({ children }: Props) {
+  const [AIChatModels, tAI] = await Promise.all([getAIModels(), getTranslations('aiAssistant')]);
+
+  return (
+    <div className={cn('flex h-[calc(100vh-var(--header-height))] flex-col gap-4 p-4')}>
+      <div className="flex flex-wrap justify-between gap-2">
+        {AIChatModels?.length > 0 && <AIModelDropdown AIModels={AIChatModels} />}
+        <Link variant="default" className="hover:no-underline" activeClassName="" href={AI_ROUTES.chat}>
+          <Plus size={16} />
+          <span className="ml-2 hidden md:block">{tAI('startNewChat')}</span>
+        </Link>
+      </div>
+      <div className="relative flex grow flex-col overflow-hidden">
+        <Image
+          src={AIBg.src}
+          noContainer
+          alt="ai-assistant"
+          fill
+          objectFit="contain"
+          sizes="(max-width: 768px) 100vw,
+    (max-width: 1200px) 50vw,
+    33vw"
+          className="z-[-1]"
+        />
+        {children}
+      </div>
+    </div>
+  );
+}

@@ -3,21 +3,18 @@ import { useEffect, useRef } from "react";
 import useWebSocket from "react-use-websocket";
 
 import type { IMessage, IMessageData, IRole } from "@oe/api/types/conversation";
-
-import type { EventData, ISocketRes } from "@oe/api/types/socket";
-import { API_ENDPOINT } from "@oe/api/utils/endpoints";
-import { createAPIUrl } from "@oe/api/utils/fetch";
-import { GENERATING_STATUS } from "@oe/core/utils/constants";
-import { useConversationStore } from "#store/conversation-store";
-import { useSocketStore } from "#store/socket";
+import type { EventData, ISocketRes } from '@oe/api/types/socket';
+import { API_ENDPOINT } from '@oe/api/utils/endpoints';
+import { createAPIUrl } from '@oe/api/utils/fetch';
+import { GENERATING_STATUS } from '@oe/core/utils/constants';
+import { useConversationStore } from '../_stores/conversation-store';
+import { useSocketStore } from '../_stores/socket';
 
 export const useSocket = (token: string) => {
   const isUnmounted = useRef(false);
   const { setSocketData } = useSocketStore();
-  const { addMessage, setStatus, status, action } = useConversationStore();
-  const referrer = getCookie(
-    process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY as string
-  );
+  const { setGenMessage, setStatus, status, action } = useConversationStore();
+  const referrer = getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY as string);
   const endpoint = token
     ? `${process.env.NEXT_PUBLIC_WS_ORIGIN}${createAPIUrl({
         endpoint: API_ENDPOINT.WEBSOCKET,
@@ -64,7 +61,11 @@ export const useSocket = (token: string) => {
             conversation_id: data.conversation_id,
             create_at: Date.now(),
             content: data.content,
-            ai_model: { name: data.ai_model },
+            ai_model: {
+              name: data.ai_model,
+              display_name: data.ai_model_display_name,
+              thumbnail_url: data.ai_model_thumbnail_url,
+            },
             status: data.status,
             sender: { role: "assistant" as IRole },
             configs: { is_image_analysis: data.is_image_analysis },
@@ -72,8 +73,10 @@ export const useSocket = (token: string) => {
             is_ai: true,
           };
 
-          addMessage(newMessage, () => {
-            setStatus(data?.status);
+          setGenMessage(newMessage, () => {
+            if (!GENERATING_STATUS.includes(data.status)) {
+              setStatus(data?.status);
+            }
           });
         } else {
           setSocketData(parsedData);

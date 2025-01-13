@@ -54,6 +54,7 @@ export function FormWrapper<TFormSchema extends z.ZodType>({
       setLoading(true);
       try {
         await onSubmit?.(values);
+
         if (resetOnSuccess) {
           form.reset(undefined, useFormProps?.resetOptions);
         }
