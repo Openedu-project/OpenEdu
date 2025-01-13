@@ -13,7 +13,8 @@ import { useSocketStore } from '../_stores/socket';
 export const useSocket = (token: string) => {
   const isUnmounted = useRef(false);
   const { setSocketData } = useSocketStore();
-  const { setGenMessage, setStatus, status, action } = useConversationStore();
+  const { setGenMessage, setStatus, status, genMessage } = useConversationStore();
+
   const referrer = getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY as string);
   const endpoint = token
     ? `${process.env.NEXT_PUBLIC_WS_ORIGIN}${createAPIUrl({
@@ -49,18 +50,21 @@ export const useSocket = (token: string) => {
 
           const { data } = parsedData as ISocketRes<IMessageData>;
 
-          if (
-            !action ||
-            (action.key === "new" && data.parent_message_id !== action.id) ||
-            (action.key === "rewrite" && data.message_id !== action.id)
-          ) {
+          // if (
+          //   !action ||
+          //   (action.key === 'new' && data.parent_message_id !== action.id) ||
+          //   (action.key === 'rewrite' && data.message_id !== action.id)
+          // ) {
+          //   return;
+          // }
+          if (!genMessage || genMessage.id !== data.message_id) {
             return;
           }
           const newMessage: IMessage = {
             id: data.message_id,
             conversation_id: data.conversation_id,
             create_at: Date.now(),
-            content: data.content,
+            content: data.status === 'error' ? (data.error?.msg ?? 'Error') : data.content,
             ai_model: {
               name: data.ai_model,
               display_name: data.ai_model_display_name,

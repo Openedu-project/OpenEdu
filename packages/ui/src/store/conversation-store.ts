@@ -20,10 +20,13 @@ interface IConversationStore {
   setStatus: (value: IAIStatus) => void;
   setSelectedModel: (value: IAIModel) => void;
   resetStatus: () => void;
+<<<<<<< HEAD:packages/ui/src/store/conversation-store.ts
   setAction: (action: IAIAction) => void;
   resetAction: () => void;
+=======
+>>>>>>> 2001002 (fix: re-gen message #30):packages/ui/src/_stores/conversation-store.ts
   genMessage?: IMessage;
-  setGenMessage: (value: IMessage, callback?: () => void) => void;
+  setGenMessage: (value: IMessage, callback?: () => void, shortenedIndex?: number) => void;
 }
 
 export const useConversationStore = create<IConversationStore>(set => {
@@ -31,7 +34,6 @@ export const useConversationStore = create<IConversationStore>(set => {
     messages: [],
     isNewChat: false,
     status: undefined,
-    action: undefined,
     selectedModel: undefined,
     genMessage: undefined,
     setMessages: (messages: IMessage[]) =>
@@ -93,26 +95,23 @@ export const useConversationStore = create<IConversationStore>(set => {
       set(() => {
         return { selectedModel };
       }),
-    setAction: (action: IAIAction) =>
-      set(() => {
-        return { action };
-      }),
-    resetStatus: () => set({ status: undefined }),
-    resetAction: () => set({ action: undefined }),
 
-    setGenMessage: (data: IMessage, callback?: () => void) => {
+    resetStatus: () => set({ status: undefined }),
+
+    setGenMessage: (data: IMessage, callback?: () => void, shortenedIndex?: number) => {
       set(state => {
         const newMessages = { ...data, content: (state.genMessage?.content ?? '') + data?.content };
         callback?.();
 
         if (!GENERATING_STATUS.includes(data?.status ?? '')) {
           return {
-            messages: [...state.messages, newMessages],
+            messages: [...state.messages.slice(0, shortenedIndex ?? state.messages.length), newMessages],
             genMessage: undefined,
           };
         }
         return {
           genMessage: newMessages,
+          messages: state.messages.slice(0, shortenedIndex ?? state.messages.length),
         };
       });
     },

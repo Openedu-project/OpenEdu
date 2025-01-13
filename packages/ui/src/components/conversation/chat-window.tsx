@@ -38,7 +38,6 @@ export function ChatWindow({
     addMessage,
     status,
     setStatus,
-    setAction,
     selectedModel,
     setGenMessage,
   } = useConversationStore();
@@ -85,15 +84,18 @@ export function ChatWindow({
     if (index === -1) {
       addMessage(newMessage, () => {
         setStatus('pending');
-        setAction({ key: 'new', id: messageID });
       });
+    } else if (role === 'assistant') {
+      setGenMessage(
+        newMessage,
+        () => {
+          setStatus('pending');
+        },
+        index
+      );
     } else {
       updateMessages(newMessage, index, () => {
         setStatus('pending');
-        setAction({
-          key: role === 'assistant' ? 'rewrite' : 'new',
-          id: messageID,
-        });
       });
     }
 
@@ -108,10 +110,10 @@ export function ChatWindow({
         message_id,
       });
 
+      setGenMessage(data.messages?.at(-1) as IMessage);
+
       if (messageID.includes('id')) {
-        setAction({ key: 'new', id: data.messages?.at(0)?.id ?? '' });
         updateMessages(data.messages?.at(0) as IMessage, undefined, undefined, messageID);
-        setGenMessage(data.messages?.at(-1) as IMessage);
       }
 
       if (!id) {

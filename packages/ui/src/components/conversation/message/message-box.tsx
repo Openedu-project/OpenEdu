@@ -213,7 +213,12 @@ const MessageBox = ({
 
                 <p className="mcaption-semibold14">{message?.ai_model?.display_name ?? 'AI Assistant'}</p>
               </div>
-              {message.content.length > 0 ? (
+              {GENERATING_STATUS.includes(message.status ?? '') && message.content.length === 0 ? (
+                <div className="relative ml-3 flex h-6 w-6 items-center justify-center">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-secondary opacity-75" />
+                  <span className="relative inline-flex h-4 w-4 rounded-full bg-secondary" />
+                </div>
+              ) : (
                 <div className="relative w-full bg-background">
                   <div
                     className={cn(
@@ -232,14 +237,9 @@ const MessageBox = ({
                     </div>
                   )}
                 </div>
-              ) : (
-                <div className="relative ml-3 flex h-6 w-6 items-center justify-center">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-secondary opacity-75" />
-                  <span className="relative inline-flex h-4 w-4 rounded-full bg-secondary" />
-                </div>
               )}
 
-              {['completed', 'stopped', 'error'].includes(message.status ?? '') && (
+              {!GENERATING_STATUS.includes(message.status ?? '') && (
                 <div className="flex w-fit items-center rounded-[20px] border-2 px-2">
                   <Copy disabled={loading} message={message} initialMessage={message.content} />
                   <LikeButton
