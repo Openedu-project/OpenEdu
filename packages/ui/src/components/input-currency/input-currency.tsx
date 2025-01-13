@@ -86,13 +86,16 @@ import CurrencyInput, { type CurrencyInputProps } from 'react-currency-input-fie
 import { cn } from '#utils/cn';
 import { type LanguageCode, languageWithCurrency } from './languages-map';
 
-export function InputCurrency({
+function InputCurrency({
   value,
   onChange,
   className,
   hasCurrency = true,
   ...props
-}: CurrencyInputProps & { hasCurrency?: boolean; onChange: (value: string | undefined) => void }) {
+}: CurrencyInputProps & {
+  hasCurrency?: boolean;
+  onChange: (value: string | undefined) => void;
+}) {
   const locale = useLocale();
 
   const handleChange = (value: string | undefined) => {
@@ -115,3 +118,5 @@ export function InputCurrency({
     />
   );
 }
+
+export { InputCurrency };

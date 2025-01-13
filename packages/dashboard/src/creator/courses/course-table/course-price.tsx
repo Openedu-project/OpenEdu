@@ -1,7 +1,7 @@
 import type { ICourse } from '@oe/api/types/course/course';
 import { formatCurrency } from '@oe/core/utils/currency';
 import type { LanguageCode } from '@oe/i18n/languages';
-import { languageWithCurrency } from 'node_modules/@oe/ui/src/components/input-currency/languages-map';
+import { languageWithCurrency } from '@oe/ui/components/input-currency';
 
 const findLocaleForCurrency = (currencyCode: string): LanguageCode => {
   const entry = Object.entries(languageWithCurrency).find(([_, details]) => details.currencyCode === currencyCode);
@@ -10,8 +10,10 @@ const findLocaleForCurrency = (currencyCode: string): LanguageCode => {
 
 export default function CoursePrice({
   priceSettings,
+  variant = 'block',
 }: {
   priceSettings: ICourse['price_settings'];
+  variant?: 'block' | 'inline';
 }) {
   if (!priceSettings) {
     return <span className="giant-iheading-semibold20 text-primary">-</span>;
@@ -27,16 +29,16 @@ export default function CoursePrice({
 
   return (
     <div className="flex flex-col gap-2 text-sm">
-      <div className="flex flex-col gap-0.5">
+      <div className={`flex gap-0.5 ${variant === 'block' ? 'flex-col' : 'flex-row flex-wrap items-center gap-2'} `}>
         {hasFiatDiscount ? (
           <>
-            <span>
+            <span className="mcaption-bold16 lg:mcaption-bold20">
               {formatCurrency(Number(priceSettings.fiat_discount_price), {
                 currency: priceSettings.fiat_currency,
                 locale: fiatLocale,
               })}
             </span>
-            <span className="text-muted-foreground text-xs line-through">
+            <span className="mcaption-regular12 lg:mcaption-regular16 text-muted-foreground line-through">
               {formatCurrency(Number(priceSettings.fiat_price), {
                 currency: priceSettings.fiat_currency,
                 locale: fiatLocale,
@@ -44,7 +46,7 @@ export default function CoursePrice({
             </span>
           </>
         ) : (
-          <span>
+          <span className="mcaption-bold16 lg:mcaption-bold20">
             {formatCurrency(Number(priceSettings.fiat_price), {
               currency: priceSettings.fiat_currency,
               locale: fiatLocale,
@@ -53,17 +55,17 @@ export default function CoursePrice({
         )}
       </div>
 
-      <div className="flex flex-col gap-0.5">
+      <div className={`flex gap-0.5 ${variant === 'block' ? 'flex-col' : 'flex-row flex-wrap items-center gap-2'} `}>
         {hasCryptoDiscount ? (
           <>
-            <span>
+            <span className="mcaption-bold16 lg:mcaption-bold20">
               {formatCurrency(Number(priceSettings.crypto_discount_price), {
                 currency: priceSettings.crypto_currency,
                 type: 'crypto',
                 decimals: 2,
               })}
             </span>
-            <span className="text-muted-foreground text-xs line-through">
+            <span className="mcaption-regular12 lg:mcaption-regular16 text-muted-foreground line-through">
               {formatCurrency(Number(priceSettings.crypto_price), {
                 currency: priceSettings.crypto_currency,
                 type: 'crypto',
@@ -72,7 +74,7 @@ export default function CoursePrice({
             </span>
           </>
         ) : (
-          <span>
+          <span className="mcaption-bold16 lg:mcaption-bold20">
             {formatCurrency(Number(priceSettings.crypto_price), {
               currency: priceSettings.crypto_currency,
               type: 'crypto',

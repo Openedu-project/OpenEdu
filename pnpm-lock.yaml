@@ -438,6 +438,9 @@ importers:
       '@oe/core':
         specifier: workspace:*
         version: link:../core
+      '@oe/dashboard':
+        specifier: workspace:*
+        version: link:../dashboard
       '@oe/i18n':
         specifier: workspace:*
         version: link:../i18n
