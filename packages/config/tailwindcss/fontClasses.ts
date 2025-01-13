@@ -75,6 +75,13 @@ export const fontClasses = {
     lineHeight: '140%' /* 50px */,
   },
 
+  '.giant-iheading-bold32': {
+    fontFamily: 'var(--font-primary), sans-serif',
+    fontSize: '32px',
+    fontWeight: 700,
+    lineHeight: '140%' /* 50px */,
+  },
+
   '.giant-iheading-bold24': {
     fontFamily: 'var(--font-primary), sans-serif',
     fontSize: '24px',

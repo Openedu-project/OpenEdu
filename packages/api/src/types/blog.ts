@@ -89,6 +89,7 @@ interface Props {
 }
 
 export interface IBlogsResponse extends HTTPPagination<IBlog> {}
+export interface IBlogListResponse extends HTTPPagination<IBlog[]> {}
 
 export interface IBlogRequest {
   banner_id: string;
