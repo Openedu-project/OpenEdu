@@ -83,7 +83,7 @@ export function useGetCoursesPublish({ params }: { params: IFilter }) {
     queryParams: { ...params },
   });
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
-    getCourseService(endpoint, { params })
+    getCoursesService(endpoint, { params })
   );
 
   return {
