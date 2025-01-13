@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { getCourseOutlineService, getCourseService } from '#services/course';
+import { getCourseOutlineService, getCoursesService, getLevelsService } from '#services/course';
 import type { ICourseOutline } from '#types/course/course';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
@@ -11,7 +11,7 @@ export function useGetCourses({ params }: { params: IFilter }) {
     queryParams: { ...params },
   });
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
-    getCourseService(endpoint, { params })
+    getCoursesService(endpoint, { params })
   );
 
   return {
@@ -43,5 +43,22 @@ export function useGetCourseOutline(id: string, fallback: ICourseOutline | null 
     courseError: error,
     mutateCourse: mutate,
     courseLoading: isLoading,
+  };
+}
+
+export function useGetLevels(params: Record<string, string | boolean>) {
+  const endpointKey = createAPIUrl({
+    endpoint: API_ENDPOINT.CATEGORIES_TREE,
+    queryParams: { ...params },
+  });
+  const { data, isLoading, error, mutate } = useSWR(params.org_id ? endpointKey : null, (endpoint: string) =>
+    getLevelsService(endpoint, { queryParams: params })
+  );
+
+  return {
+    levels: data,
+    levelsError: error,
+    mutateLevels: mutate,
+    isLevelsLoading: isLoading,
   };
 }

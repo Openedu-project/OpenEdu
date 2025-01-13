@@ -27,12 +27,13 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   prefixIcon?: React.ReactNode;
   suffixIcon?: React.ReactNode;
   loading?: boolean;
+  wrapperClassName?: string;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, error, prefixIcon, suffixIcon, loading, ...props }, ref) => {
+  ({ className, type, error, prefixIcon, suffixIcon, loading, wrapperClassName, ...props }, ref) => {
     return (
-      <div className="relative w-full">
+      <div className={cn('relative w-full', wrapperClassName)}>
         {/* Prefix Icon */}
         {prefixIcon && (
           <div className="-translate-y-1/2 absolute top-1/2 left-3 text-muted-foreground">{prefixIcon}</div>

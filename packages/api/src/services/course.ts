@@ -1,10 +1,12 @@
-import type { ICourseResponse } from '#types/course/course';
+import { buildUrl } from '@oe/core/utils/url';
+import type { ICategoryTree } from '#types/categories';
+import type { ICourse, ICourseResponse } from '#types/course/course';
 import type { ICourseOutline } from '#types/course/course';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI } from '#utils/fetch';
+import { type FetchOptions, createAPIUrl, deleteAPI, fetchAPI, postAPI } from '#utils/fetch';
 
-export async function getCourseService(
+export async function getCoursesService(
   url: string,
   { params, init }: { params: IFilter; init?: RequestInit }
 ): Promise<ICourseResponse | null> {
@@ -55,3 +57,25 @@ export async function getCourseOutlineService(
     return null;
   }
 }
+
+export async function duplicateCourseService(id: string, { init }: { init?: RequestInit } = {}) {
+  return await postAPI<ICourse, null>(
+    buildUrl({ endpoint: API_ENDPOINT.COURSES_ID_DUPLICATE, params: { id } }),
+    null,
+    init
+  );
+}
+
+export async function deleteCourseService(id: string, { init }: { init?: RequestInit } = {}) {
+  return await deleteAPI(buildUrl({ endpoint: API_ENDPOINT.COURSES_ID, params: { id } }), undefined, init);
+}
+
+export const getLevelsService = async (
+  url?: string,
+  init?: FetchOptions & { queryParams?: Record<string, string | boolean> }
+) => {
+  const defaultUrl = createAPIUrl({ endpoint: API_ENDPOINT.CATEGORIES_TREE, queryParams: init?.queryParams });
+  const response = await fetchAPI<ICategoryTree[]>(url ?? defaultUrl, init);
+
+  return response.data;
+};

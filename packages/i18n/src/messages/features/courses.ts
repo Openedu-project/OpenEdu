@@ -48,5 +48,17 @@ export const coursesMessages = {
       manual: 'Manual',
     },
     noName: '[No name]',
+    actions: {
+      duplicate: 'Duplicate',
+      delete: 'Delete',
+      deleteTitle: 'Delete Course',
+      deleteDescription: 'Are you sure you want to delete this course?',
+    },
+    toast: {
+      duplicateSuccess: 'Course duplicated successfully',
+      deleteSuccess: 'Course deleted successfully',
+      deleteError: 'Error deleting course',
+      duplicateError: 'Error duplicating course',
+    },
   },
 };

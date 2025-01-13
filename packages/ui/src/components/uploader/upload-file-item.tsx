@@ -1,8 +1,9 @@
-import { Eye, Loader2, Paperclip, RotateCw, X } from 'lucide-react';
+import { Check, Eye, Loader2, Paperclip, Pencil, RotateCw, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type React from 'react';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { Button } from '#shadcn/button';
+import { Input } from '#shadcn/input';
 import { Progress } from '#shadcn/progress';
 import { cn } from '#utils/cn';
 import type { UploadFileItemProps } from './types';
@@ -24,15 +25,59 @@ export const UploadFileItem = (props: UploadFileItemProps) => {
     thumbnailClassName,
     removeClassName,
     buttonsPosition = 'top-right',
+    allowRename = false,
     renderFileInfo,
     renderThumbnail,
     onReupload,
     onRemove,
     onPreview,
+    onFileNameChange,
     ...rest
   } = props;
   // const [showPreview, setShowPreview] = useState(false);
   const { previewImage } = usePreviewImage(file, listType);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editName, setEditName] = useState(file.name);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleNameChange = useCallback(() => {
+    if (!editName) {
+      setError('Name is required');
+      return;
+    }
+
+    if (editName !== file.name) {
+      onFileNameChange?.(file, editName);
+    }
+    setIsEditing(false);
+  }, [editName, file, onFileNameChange]);
+
+  const renderFileName = () => {
+    return (
+      <div className="flex min-w-0 flex-1 items-center gap-2">
+        {isEditing ? (
+          <div className="flex flex-1 items-center gap-2">
+            <Input
+              value={editName}
+              onChange={e => setEditName(e.target.value)}
+              onBlur={handleNameChange}
+              onKeyDown={e => e.key === 'Enter' && handleNameChange()}
+              autoFocus
+              className={cn('h-6 w-full p-1 text-sm', error && 'border-destructive')}
+            />
+            {error && <span className="text-destructive text-xs">{error}</span>}
+          </div>
+        ) : (
+          <span className="truncate text-sm">{file.name}</span>
+        )}
+        {allowRename ? (
+          <Button variant="ghost" className="h-6 w-6 p-0" onClick={() => setIsEditing(!isEditing)}>
+            {isEditing ? <Check className="h-4 w-4" /> : <Pencil className="h-4 w-4" />}
+          </Button>
+        ) : null}
+      </div>
+    );
+  };
 
   const handleRemove = useCallback(
     (event: React.MouseEvent) => {
@@ -62,8 +107,6 @@ export const UploadFileItem = (props: UploadFileItemProps) => {
       if (disabled || !isImage(file.originFile as File)) {
         return;
       }
-      console.log('handlePreview', file);
-      // setShowPreview(true);
       onPreview?.(file);
     },
     [disabled, file, onPreview]
@@ -203,11 +246,7 @@ export const UploadFileItem = (props: UploadFileItemProps) => {
   };
 
   const renderFilePanel = () => {
-    const fileElement = (
-      <div className="truncate text-sm" tabIndex={-1} aria-label={`Preview: ${file.name}`}>
-        {file.name}
-      </div>
-    );
+    const fileElement = renderFileName();
     return (
       <div className="relative flex min-w-0 flex-1 flex-col pb-1">
         {renderFileInfo ? renderFileInfo(file, fileElement) : fileElement}

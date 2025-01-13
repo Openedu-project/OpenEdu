@@ -35,7 +35,11 @@ export interface UploaderProps extends Omit<InputHTMLAttributes<HTMLInputElement
   fileItemProps?: Partial<UploadFileItemProps>;
   triggerProps?: Partial<UploadTriggerProps>;
   value?: IFileResponse[];
+  allowRename?: boolean; // Flag cho phép đổi tên file
   onChange?: (files: IFileResponse[]) => void;
+  renderTrigger?: (triggerProps: UploadTriggerProps) => ReactNode; // Cho phép custom render trigger
+  renderFileList?: (files: FileType[], fileItemProps: Partial<UploadFileItemProps>) => ReactNode; // Cho phép custom render file list
+  onFileNameChange?: (file: FileType, newName: string) => void; // Callback khi tên file thay đổi
 }
 
 export type UploadTriggerInstance = {
@@ -65,6 +69,8 @@ export interface UploadFileItemProps {
   minSizeBytes?: number;
   maxSizeBytes?: number;
   buttonsPosition?: 'top-right' | 'center';
+  allowRename?: boolean;
+  onFileNameChange?: (file: FileType, name: string) => void;
   onClick?: (event: MouseEvent<HTMLDivElement>) => void;
   renderFileInfo?: (file: FileType, fileElement: ReactNode) => ReactNode;
   renderThumbnail?: (file: FileType, thumbnail: ReactNode) => ReactNode;

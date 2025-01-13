@@ -1,3 +1,4 @@
+import { getCookieClient } from '@oe/core/utils/cookie';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import {
@@ -11,6 +12,7 @@ import type { IFilter } from '#types/filter';
 import type { IOrganization, IOrganizationPayload } from '#types/organizations';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
+// import { getCookie } from '@oe/core/utils/cookie';
 
 export function useGetOrganization({ params }: { params: IFilter }) {
   const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.ADMIN_ORGANIZATIONS, queryParams: { ...params } });
@@ -40,16 +42,17 @@ export function useGetOrganizationById({ id, init = undefined }: { id: string; i
   };
 }
 
-export function useGetOrganizationByDomain({ domain, init = undefined }: { domain: string; init?: RequestInit }) {
+export function useGetOrganizationByDomain(init?: RequestInit) {
+  const domain = getCookieClient(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)?.split('/')?.[0] ?? '';
   const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.ADMIN_ORGANIZATIONS, queryParams: { domain } });
   const { data, isLoading, error, mutate } = useSWR(endpointKey, () =>
     getOrgByDomainService(API_ENDPOINT.ADMIN_ORGANIZATIONS, { domain, init })
   );
 
   return {
-    dataListOrganizationByDomain: data,
+    organizationByDomain: data,
     errorOrganizationByDomain: error,
-    mutateListOrganizationByDomain: mutate,
+    mutateOrganizationByDomain: mutate,
     isLoadingOrganizationByDomain: isLoading,
   };
 }

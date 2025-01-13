@@ -1,3 +1,5 @@
+'use client';
+
 import { FormNestedProvider } from './form-nested-provider';
 import { FormNestedWrapper } from './form-nested-wrapper';
 import { FormTabs, FormTabsContent, FormTabsList, FormTabsTrigger } from './form-tabs';

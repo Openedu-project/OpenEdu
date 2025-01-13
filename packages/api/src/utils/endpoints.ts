@@ -48,6 +48,7 @@ export const API_ENDPOINT = {
   COURSES: '/api/v1/courses',
   COURSES_PUBLISH: '/api/v1/courses/publish',
   COURSES_ID: '/api/v1/courses/:id',
+  COURSES_ID_DUPLICATE: '/api/v1/courses/:id/duplicate',
   COURSES_ID_PARTNERS: '/api/v1/courses/:id/partners',
   COURSES_ID_OUTLINE: '/api/v1/courses/:id/outline',
   COURSES_ID_PUBLISH: '/api/v1/courses/:id/publish',

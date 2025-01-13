@@ -1,6 +1,6 @@
 import { DashboardMainPageLayout } from '@oe/ui/common/layout';
 import { ButtonDropdown } from '@oe/ui/components/button-dropdown';
-import { NavigationDialog } from '@oe/ui/components/dialog';
+// import { NavigationDialog } from '@oe/ui/components/dialog';
 import { PlusIcon, SparklesIcon, YoutubeIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Courses from './course-table/course-table';
@@ -47,7 +47,7 @@ export default function CourseListPagge() {
       >
         <Courses />
       </DashboardMainPageLayout>
-      <NavigationDialog />
+      {/* <NavigationDialog /> */}
     </>
   );
 }

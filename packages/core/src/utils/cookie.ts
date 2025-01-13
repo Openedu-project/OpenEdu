@@ -43,6 +43,10 @@ export const cookieOptions = (options?: CookieOptions): CookieOptions => {
   };
 };
 
+export const getCookieClient = (key: string, options?: CookieOptions) => {
+  return getCookieNextClient(key, cookieOptions(options));
+};
+
 export const getCookie = async (key: string, options?: CookieOptions): Promise<CookieValueTypes> => {
   if (typeof window === 'undefined') {
     const { cookies } = await import('next/headers');

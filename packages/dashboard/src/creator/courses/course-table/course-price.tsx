@@ -13,6 +13,10 @@ export default function CoursePrice({
 }: {
   priceSettings: ICourse['price_settings'];
 }) {
+  if (!priceSettings) {
+    return <span className="giant-iheading-semibold20 text-primary">-</span>;
+  }
+
   if (!priceSettings.is_pay) {
     return <div className="font-medium text-sm text-success">Free</div>;
   }

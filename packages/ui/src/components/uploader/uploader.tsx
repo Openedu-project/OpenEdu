@@ -6,7 +6,7 @@ import { type RefObject, useCallback, useEffect, useImperativeHandle, useRef, us
 import { cn } from '#utils/cn';
 import { CropModal } from './crop-modal';
 import { ImagePreviewModal } from './image-preview-modal';
-import type { FileStatusType, FileType, UploadTriggerInstance, UploaderProps } from './types';
+import type { FileStatusType, FileType, UploadTriggerInstance, UploadTriggerProps, UploaderProps } from './types';
 import { UploadFileItem } from './upload-file-item';
 import { UploadTrigger } from './upload-trigger';
 import { MAX_SIZE_BYTES, MIN_SIZE_BYTES, createFile, formatSize, isDuplicateFile, isImage } from './utils';
@@ -31,6 +31,10 @@ export const Uploader = (props: UploaderProps) => {
     className,
     accept,
     value,
+    allowRename,
+    renderTrigger,
+    renderFileList,
+    onFileNameChange,
     onChange,
     ...restProps
   } = props;
@@ -63,6 +67,15 @@ export const Uploader = (props: UploaderProps) => {
   }));
 
   const [previewIndex, setPreviewIndex] = useState<number | null>(null);
+
+  const handleFileNameChange = useCallback(
+    (file: FileType, newName: string) => {
+      const updated = files.map(f => (f.fileId === file.fileId ? { ...f, name: newName } : f));
+      setFiles(updated);
+      onFileNameChange?.(file, newName);
+    },
+    [files, onFileNameChange]
+  );
 
   const handlePreview = useCallback(
     (file: FileType) => {
@@ -159,7 +172,11 @@ export const Uploader = (props: UploaderProps) => {
         return;
       }
 
-      const updatedFile = { ...file, status: 'uploading' as FileStatusType, percent: 0 };
+      const updatedFile = {
+        ...file,
+        status: 'uploading' as FileStatusType,
+        percent: 0,
+      };
       const updated = files.map(f => (f.fileId === file.fileId ? updatedFile : f));
 
       const { xhr } = await ajaxUpload({
@@ -204,6 +221,28 @@ export const Uploader = (props: UploaderProps) => {
     trigger.current?.clearInput();
   }, [files]);
 
+  const defaultTriggerProps: UploadTriggerProps = {
+    onChange: handleChange,
+    file: fileListVisible || multiple ? undefined : files[0],
+    ref: trigger as RefObject<UploadTriggerInstance>,
+    maxSizeBytes,
+    draggable,
+    multiple,
+    accept,
+    fileItemProps: {
+      ...fileItemProps,
+      listType,
+      minSizeBytes,
+      maxSizeBytes,
+      onRemove: handleRemove,
+      onReupload: (file: FileType) => uploadFile(file, files),
+      onPreview: handlePreview,
+      allowRename,
+      onFileNameChange: handleFileNameChange,
+    },
+    ...restProps,
+  };
+
   return (
     <div className="flex flex-col gap-2">
       <div
@@ -211,47 +250,31 @@ export const Uploader = (props: UploaderProps) => {
           'relative flex w-full gap-2 rounded',
           listType === 'picture' ? 'flex-wrap' : 'flex-col',
           !children && 'flex h-48 flex-col items-center justify-center p-0',
-          !children && fileListVisible && 'h-full min-h-48',
+          !children && fileListVisible && !renderTrigger && 'h-full min-h-48',
           className
         )}
       >
-        <UploadTrigger
-          {...triggerProps}
-          onChange={handleChange}
-          file={fileListVisible || multiple ? undefined : files[0]}
-          ref={trigger as RefObject<UploadTriggerInstance>}
-          maxSizeBytes={maxSizeBytes}
-          draggable={draggable}
-          multiple={multiple}
-          accept={accept}
-          fileItemProps={{
-            ...fileItemProps,
-            listType,
-            minSizeBytes,
-            maxSizeBytes,
-            onRemove: handleRemove,
-            onReupload: (file: FileType) => uploadFile(file, files),
-            onPreview: handlePreview,
-          }}
-          {...restProps}
-        >
-          {children}
-        </UploadTrigger>
-        {fileListVisible
-          ? files.map(file => (
-              <UploadFileItem
-                {...fileItemProps}
-                key={file.fileId}
-                file={file}
-                listType={listType}
-                minSizeBytes={minSizeBytes}
-                maxSizeBytes={maxSizeBytes}
-                onRemove={handleRemove}
-                onReupload={(file: FileType) => uploadFile(file, files)}
-                onPreview={handlePreview}
-              />
-            ))
-          : null}
+        {renderTrigger ? (
+          renderTrigger(defaultTriggerProps)
+        ) : (
+          <UploadTrigger {...defaultTriggerProps}>{children}</UploadTrigger>
+        )}
+        {fileListVisible &&
+          files.map(file => (
+            <UploadFileItem
+              {...fileItemProps}
+              key={file.fileId}
+              file={file}
+              listType={listType}
+              minSizeBytes={minSizeBytes}
+              maxSizeBytes={maxSizeBytes}
+              onRemove={handleRemove}
+              onReupload={(file: FileType) => uploadFile(file, files)}
+              onPreview={handlePreview}
+              allowRename={allowRename}
+              onFileNameChange={handleFileNameChange}
+            />
+          ))}
         {cropFile?.originFile ? (
           <CropModal
             cropProps={cropProps}

@@ -2,10 +2,11 @@
 import type { ICourse } from '@oe/api/types/course/course';
 import { API_ENDPOINT } from '@oe/api/utils/endpoints';
 import { formatDateTime } from '@oe/core/utils/datetime';
-import { type ColumnDef, Table } from '@oe/ui/components/table';
+import { type ColumnDef, Table, TableProvider } from '@oe/ui/components/table';
 import { Badge } from '@oe/ui/shadcn/badge';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
+import CourseActions from './course-actions';
 import { CourseBadgeVersion } from './course-badge-version';
 import CourseName from './course-name';
 import CoursePrice from './course-price';
@@ -72,13 +73,25 @@ export default function Courses() {
         size: 150,
         // accessorKey: "updated_at",
         align: 'center',
-        cell: item => formatDateTime(item.row.original.update_at ?? item.row.original.create_at),
+        cell: item =>
+          (item.row.original.update_at ?? item.row.original.create_at) ? (
+            formatDateTime(item.row.original.update_at ?? item.row.original.create_at)
+          ) : (
+            <span className="giant-iheading-semibold20 text-primary">-</span>
+          ),
+      },
+      {
+        header: 'Actions',
+        size: 250,
+        align: 'center',
+        sticky: 'right',
+        cell: item => <CourseActions data={item.row.original} />,
       },
     ];
   }, [tCourses]);
 
   return (
-    <>
+    <TableProvider>
       <Table
         columns={columns}
         api={API_ENDPOINT.COURSES}
@@ -89,6 +102,6 @@ export default function Courses() {
         tableOptions={{ manualPagination: true }}
         hasNoColumn
       />
-    </>
+    </TableProvider>
   );
 }
