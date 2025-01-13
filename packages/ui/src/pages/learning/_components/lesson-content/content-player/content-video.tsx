@@ -32,7 +32,7 @@ const ContentVideo = ({ id, title, src, ...props }: IContentVideoProps) => {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative h-full w-full">
+    <div ref={containerRef} className="relative h-full max-h-full w-auto max-w-full">
       {isLoading ? <Spinner size="sm" /> : null}
 
       {shouldLoad && (

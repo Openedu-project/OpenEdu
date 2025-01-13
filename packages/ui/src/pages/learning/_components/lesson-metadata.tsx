@@ -36,7 +36,7 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, ...props }: ILesson
       </div>
       <Link
         href={courseHref}
-        className="giant-iheading-semibold16 md:giant-iheading-semibold20 !text-foreground/85 w-fit border-none p-0 hover:no-underline md:line-clamp-1"
+        className="giant-iheading-semibold16 md:giant-iheading-semibold20 !text-foreground/85 line-clamp-1 w-fit border-none p-0 hover:no-underline"
       >
         Course: {courseName}
       </Link>

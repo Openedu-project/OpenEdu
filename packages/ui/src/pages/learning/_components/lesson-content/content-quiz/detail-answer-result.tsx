@@ -59,8 +59,8 @@ const DetailAnswerResult = ({ onFinish, answers }: AnswerResultProps) => {
 
   return (
     <div className="z-10 flex h-full w-full flex-col items-center justify-center">
-      <ScrollArea className="mb-5 flex h-full w-[80%] flex-1 flex-col justify-center gap-4 px-3 md:max-w-[400px]">
-        <div className="mt-auto space-y-4">
+      <ScrollArea className="mb-5 flex h-full max-h-[50dvh] w-[80%] flex-1 flex-col justify-center gap-4 px-3 md:max-w-[400px] [&>[data-radix-scroll-area-viewport]>div]:h-full">
+        <div className="flex h-full flex-col justify-center space-y-4">
           <ResultCard title={tQuizResult('questionNum', { questionNum: quesIndex + 1 })}>
             <p className="mcaption-semibold16 text-content-basic-dark">{title}</p>
           </ResultCard>

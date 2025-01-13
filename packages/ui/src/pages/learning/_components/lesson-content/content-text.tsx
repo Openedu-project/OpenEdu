@@ -12,7 +12,7 @@ export default function ContentText({ data }: ITextProps) {
   return (
     <>
       {content && content?.length > 0 && (
-        <div key={uid} className="flex w-full flex-1 flex-col">
+        <div key={uid} className="flex w-full flex-1 flex-col p-4">
           <div
             className="tiptap"
             // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>

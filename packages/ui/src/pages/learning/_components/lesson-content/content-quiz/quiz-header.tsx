@@ -75,10 +75,14 @@ const QuizHeader = ({
       </div>
 
       <div className="flex items-end gap-2">
-        {timeLimitEnabled && remainingTime > 0 && (
+        {timeLimitEnabled && (
           <div className="relative">
             <span className="mcaption-semibold12 absolute right-1/2 bottom-1/2 translate-x-1/2 translate-y-1/2 pt-spacing-s text-content-neutral-medium-800">
-              {convertSecondsToTimeString(remainingTime)}
+              {remainingTime > 0 ? (
+                convertSecondsToTimeString(remainingTime)
+              ) : (
+                <span className="grid items-center pt-2 text-center text-destructive">Time's up</span>
+              )}
             </span>
             <Clock color="hsl(var(--primary))" />
           </div>

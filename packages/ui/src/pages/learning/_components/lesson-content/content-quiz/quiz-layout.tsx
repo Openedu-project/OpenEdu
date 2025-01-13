@@ -10,7 +10,14 @@ const QuizLayout = ({ background, children, className, ...props }: IQuizLayoutPr
   return (
     <div className={cn('relative h-full max-w-full', className)} {...props}>
       {children}
-      <Image src={background} alt="" width={866} height={487} className="-z-10 absolute top-0 left-0" />
+      <Image
+        src={background}
+        alt=""
+        noContainer
+        fill
+        sizes="(max-width: 768px) 100vw"
+        className="-z-10 absolute top-0 left-0 rounded-[20px]"
+      />
     </div>
   );
 };

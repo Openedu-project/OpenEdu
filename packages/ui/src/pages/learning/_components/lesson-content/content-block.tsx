@@ -1,6 +1,7 @@
 import type { TLessonContent } from '@oe/api/types/course/basic';
 import { cn } from '#utils/cn';
 import type { ContentRenderer, ContentRendererProps } from './_types/types';
+import ContentPdf from './content-pdf';
 import ContentEmbedded from './content-player/content-embedded';
 import ContentVideo from './content-player/content-video';
 import ContentQuiz from './content-quiz/content-quiz';
@@ -15,7 +16,8 @@ const CONTENT_STYLES = {
     default: 'h-full',
     multi: 'min-h-[calc(100%-24px)]',
   },
-  video: 'mx-auto flex justify-center w-full max-w-full aspect-video h-auto',
+  video: 'mx-auto max-w-full h-full',
+  // video: 'mx-auto flex justify-center w-full max-w-full aspect-video h-auto',
   // text: 'flex flex-col items-end',
 } as const;
 
@@ -32,7 +34,12 @@ export const CONTENT_RENDERERS: Record<TLessonContent, ContentRenderer> = {
   },
 
   pdf: {
-    render: () => <p>pdf</p>,
+    render: props => {
+      const files = props?.data?.files;
+      const url = files && files?.length > 0 && files[0]?.url ? files[0]?.url : '';
+
+      return <ContentPdf url={url} />;
+    },
     getClassName: DEFAULT_CLASSNAME,
   },
 
