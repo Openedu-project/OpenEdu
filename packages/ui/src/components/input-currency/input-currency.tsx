@@ -81,10 +81,12 @@
 
 // InputCurrency.displayName = 'InputCurrency';
 
-import { useLocale } from 'next-intl';
-import CurrencyInput, { type CurrencyInputProps } from 'react-currency-input-field';
-import { cn } from '#utils/cn';
-import { type LanguageCode, languageWithCurrency } from './languages-map';
+import { useLocale } from "next-intl";
+import CurrencyInput, {
+  type CurrencyInputProps,
+} from "react-currency-input-field";
+import { cn } from "#utils/cn";
+import { type LanguageCode, languageWithCurrency } from "./languages-map";
 
 function InputCurrency({
   value,
@@ -92,7 +94,7 @@ function InputCurrency({
   className,
   hasCurrency = true,
   ...props
-}: CurrencyInputProps & {
+}: Omit<CurrencyInputProps, "onChange"> & {
   hasCurrency?: boolean;
   onChange: (value: string | undefined) => void;
 }) {
@@ -107,12 +109,14 @@ function InputCurrency({
       value={value}
       onValueChange={handleChange}
       className={cn(
-        'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background transition-colors file:border-0 file:bg-transparent file:font-medium file:text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
+        "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background transition-colors file:border-0 file:bg-transparent file:font-medium file:text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
         className
       )}
       intlConfig={{
         locale: locale,
-        currency: hasCurrency ? (languageWithCurrency[locale as LanguageCode]?.currencyCode ?? 'USD') : '',
+        currency: hasCurrency
+          ? languageWithCurrency[locale as LanguageCode]?.currencyCode ?? "USD"
+          : "",
       }}
       {...props}
     />
