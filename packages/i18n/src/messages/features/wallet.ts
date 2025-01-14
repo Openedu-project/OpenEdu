@@ -29,6 +29,8 @@ export const walletMessages = {
   },
   depositPage: {
     title: 'Token Deposit',
+    see: 'See ',
+    amountInWallet: ' Amount In Wallet',
     inforPopover: 'Currently, the platform only supports token deposits via crypto networks.',
     supportToken: 'Supported Tokens:',
     otherTokenNotSupport: 'Other tokens will not be supported.',
@@ -55,15 +57,19 @@ export const walletMessages = {
       token: 'Token',
       bankAccount: 'Bank Account',
       selectBankAccount: 'Select bank account',
-      error: {
+      selectNetwork: 'Select network',
+      enterWithdrawNote: 'Enter withdrawal note',
+      errors: {
         bankAccountEmpty: "You don't have any bank accounts. Please add one.",
         amountMustBe: 'Amount must be at least ',
         amountExceedsBalance: 'Amount exceeds available balance',
-        requiredNetwork: 'Network is required',
+        requiredAmount: 'Amount is required',
+        invalidAmount: 'Invalid amount',
+        positiveAmount: 'Amount must be greater than 0',
         requiredAddress: 'Address is required',
-        requiredToken: 'Token is required',
+        invalidAddress: 'Invalid address',
         requiredFiatType: 'Currency is required',
-        requiredBankAccount: 'Bank account is required',
+        invalidCurrency: 'Invalid currency',
         invalidWallet: 'Invalid wallet chosen',
         unexpectedErr: 'An unexpected error occurred',
       },
@@ -120,10 +126,10 @@ export const walletMessages = {
     bankAccounts: 'Bank Accounts',
     addNewBtn: '+ Add New Bank Account',
     form: {
-      validate: {
-        bankName: 'Bank name is required',
-        accountName: 'Account name is required',
-        accountNumber: 'Account number is required',
+      errors: {
+        bankNameRequired: 'Bank name is required and must be less than 100 characters',
+        accountNameRequired: 'Account name is required and must be less than 100 characters',
+        accountNumberRequired: 'Account number is required, must contain only numbers, and be between 5 to 20 digits',
       },
       formLabels: {
         bankName: 'Bank Name',
@@ -133,7 +139,7 @@ export const walletMessages = {
       placeholders: {
         bankName: 'Enter bank name',
         accountName: 'Enter account name',
-        accountNumber: 'Enter account number',
+        accountNumber: 'Enter account number (5-20 digits)',
       },
       alertMessage: 'Please check the correct information. We are not responsible for any errors after submission',
       submitButton: 'Submit',
