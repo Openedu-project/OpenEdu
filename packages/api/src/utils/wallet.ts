@@ -100,4 +100,10 @@ export const SWR_CONFIG = {
     dedupingInterval: 10_000,
     shouldRetryOnError: true,
   },
+  noRefresh: {
+    revalidateOnFocus: false,
+    refreshInterval: 0,
+    dedupingInterval: 0,
+    shouldRetryOnError: false,
+  },
 } as const;
