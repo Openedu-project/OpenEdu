@@ -1,24 +1,19 @@
-"use client";
+'use client';
 
-import { Button } from "@oe/ui/shadcn/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@oe/ui/shadcn/dropdown-menu";
-import { Languages } from "lucide-react";
-import { usePathname, useSearchParams } from "next/navigation";
-import { changeLanguage } from "./action";
+import { Button } from '@oe/ui/shadcn/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@oe/ui/shadcn/dropdown-menu';
+import { Languages } from 'lucide-react';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { changeLanguage } from './action';
 
 const languages = [
   {
-    code: "vi" as const,
-    name: "Tiếng Việt",
+    code: 'vi' as const,
+    name: 'Tiếng Việt',
   },
   {
-    code: "en" as const,
-    name: "English",
+    code: 'en' as const,
+    name: 'English',
   },
 ];
 
@@ -37,7 +32,7 @@ export default function LanguageSwitcher() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {languages.map((language) => (
+        {languages.map(language => (
           <DropdownMenuItem
             key={language.code}
             onClick={async () => {
