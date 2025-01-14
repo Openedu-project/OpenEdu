@@ -10,7 +10,13 @@ import type {
 } from '../academia';
 import type { AcademiaAuthLayoutLoginProps } from '../academia/auth/login';
 import type { ScholarHomepageAboutUsProps, ScholarHomepageHeroProps, ScholarHomepageServiceProps } from '../scholar';
-import type { VbiHomepageAchievementsProps, VbiHomepageHeroProps, VbiHomepagePartnersProps } from '../vbi';
+import type {
+  VbiHomepageAchievementsProps,
+  VbiHomepageCertProps,
+  VbiHomepageCoursesProps,
+  VbiHomepageFeaturesProps,
+  VbiHomepageHeroProps,
+} from '../vbi';
 import type { ThemeMetadata } from './theme-metadata';
 // Core Types
 export type ThemeName = 'academia' | 'scholar' | 'vbi';
@@ -28,8 +34,10 @@ export type HomeSection =
   | 'scholarService'
   | 'scholarAboutUs'
   | 'vbiHero'
-  | 'vbiPartners'
-  | 'vbiAchievements'; // Add new page key - HERE
+  | 'vbiAchievements'
+  | 'vbiCourses'
+  | 'vbiCert'
+  | 'vbiFeatures'; // Add new page key - HERE
 export type AboutSection = 'theme' | 'team';
 export type AuthLayout = 'theme' | 'login' | 'forgotPassword' | 'emailVerify' | 'signUp' | 'authConfirm';
 
@@ -122,8 +130,10 @@ export interface SectionPropsMap<K extends ThemePageKey> {
 
   /* VBI */
   vbiHero: DynamicProps<K, VbiHomepageHeroProps>;
-  vbiPartners: DynamicProps<K, VbiHomepagePartnersProps>;
   vbiAchievements: DynamicProps<K, VbiHomepageAchievementsProps>;
+  vbiCourses: DynamicProps<K, VbiHomepageCoursesProps>;
+  vbiCert: DynamicProps<K, VbiHomepageCertProps>;
+  vbiFeatures: DynamicProps<K, VbiHomepageFeaturesProps>;
 }
 
 // Component Types

@@ -10,21 +10,33 @@ interface InfoSectionProps {
     link?: string;
   };
   className?: string;
+  variant?: 'default' | 'outline';
 }
-const InfoSection = ({ title, titleSub, button, className }: InfoSectionProps) => {
+const InfoSection = ({ title, titleSub, button, className, variant = 'default' }: InfoSectionProps) => {
   return (
-    <div className={cn('space-y-6 text-foreground', className)}>
-      <h2 className="font-bold text-xl uppercase leading-tight lg:text-3xl">{title}</h2>
-      <p className="text-foreground/80 text-lg">{titleSub}</p>
+    <div className={cn('space-y-4 text-foreground md:space-y-6', className)}>
+      <h2
+        className={`font-bold text-xl uppercase leading-tight lg:text-3xl ${
+          variant === 'outline' && 'text-background'
+        }`}
+      >
+        {title}
+      </h2>
+      <p className={`text-foreground/80 text-lg ${variant === 'outline' && '!text-background'}`}>{titleSub}</p>
 
-      <Button>
-        <Link
-          href={button?.link ? button?.link : '#'}
-          className="bg-inherit text-primary-foreground hover:no-underline"
-        >
-          {button?.text}
-        </Link>
-      </Button>
+      {button && (
+        <Button variant={variant === 'default' ? 'default' : 'outline'}>
+          <Link
+            href={button?.link ? button?.link : '#'}
+            className={cn(
+              'bg-inherit text-primary-foreground hover:bg-transparent hover:no-underline',
+              variant === 'outline' && '!text-primary'
+            )}
+          >
+            {button?.text}
+          </Link>
+        </Button>
+      )}
     </div>
   );
 };

@@ -78,5 +78,48 @@ export const vbiHomepage = {
         },
       },
     },
+    vbiCourses: {
+      title: 'OUR COURSES',
+      titleSub:
+        "Learn blockchain fundamentals to advanced concepts, smart contract development, and essential skills through detailed tutorials and hands-on projects for all levels, based on VBI Academy's industry insights.",
+      button: {
+        text: 'Explore all courses',
+        link: '#',
+      },
+    },
+    vbiCert: {
+      title: 'EARN YOUR CERTIFICATE',
+      titleSub: 'Supercharge your career with certificates from leading international courses on Web3 and Blockchain.',
+      button: {
+        text: 'Apply now',
+        link: '#',
+      },
+    },
+    vbiFeatures: {
+      title: 'VBI FEATURES',
+      titleSub: "We've spent years building the best web3 education platform to maximize your learning.",
+      features: {
+        feature1: {
+          title: 'TRAINING FOR DEVELOPERS',
+          description:
+            "VBI's programs and courses are designed by experienced experts, focusing on practice and promoting learning at a deeper level. Equip developers with the skills needed to meet market demand.",
+        },
+        feature2: {
+          title: 'HACKATHON',
+          description:
+            "Support from ideation to mentoring, workshops, and technical. Connecting with VBI's partner network, and opportunities for essential resources to develop projects after the hackathon.",
+        },
+        feature3: {
+          title: 'TECHNOLOGY EVENT',
+          description:
+            'Connecting developers with tech founders, investors, and organizations through large-scale conferences, demo days, meet-ups, and online content — reaching tens of thousands across the APAC region.',
+        },
+        feature4: {
+          title: 'INCUBATION',
+          description:
+            'We provide a comprehensive startup incubation solution to turn ideas into viable projects. The program supports developers through mentorship, technical assistance, access to funding, and market opportunities.',
+        },
+      },
+    },
   },
 };

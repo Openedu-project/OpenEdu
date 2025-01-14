@@ -220,14 +220,9 @@ export const createThemePageConfig = (t: (key: string) => string): Record<ThemeN
             value: 46000,
           },
         },
-      },
-      order: 0,
-    }),
-    vbiPartners: createSection<'homepage', 'vbiPartners'>({
-      props: {
         partners: new Array(9).fill({ mime: 'image/png' }),
       },
-      order: 1,
+      order: 0,
     }),
     vbiAchievements: createSection<'homepage', 'vbiAchievements'>({
       props: {
@@ -387,7 +382,55 @@ export const createThemePageConfig = (t: (key: string) => string): Record<ThemeN
           },
         },
       },
+      order: 1,
+    }),
+    vbiCourses: createSection<'homepage', 'vbiCourses'>({
+      props: {
+        title: getThemeTranslation(['homepage', 'vbiCourses', 'title']),
+        titleSub: getThemeTranslation(['homepage', 'vbiCourses', 'titleSub']),
+        button: {
+          text: getThemeTranslation(['homepage', 'vbiCourses', 'button', 'text']),
+          link: getThemeTranslation(['homepage', 'vbiCourses', 'button', 'link']),
+        },
+      },
       order: 2,
+    }),
+    vbiCert: createSection<'homepage', 'vbiCert'>({
+      props: {
+        title: getThemeTranslation(['homepage', 'vbiCert', 'title']),
+        titleSub: getThemeTranslation(['homepage', 'vbiCert', 'titleSub']),
+        button: {
+          text: getThemeTranslation(['homepage', 'vbiCert', 'button', 'text']),
+          link: getThemeTranslation(['homepage', 'vbiCert', 'button', 'link']),
+        },
+        image: { mime: 'image/png' },
+      },
+      order: 3,
+    }),
+    vbiFeatures: createSection<'homepage', 'vbiFeatures'>({
+      props: {
+        title: getThemeTranslation(['homepage', 'vbiFeatures', 'title']),
+        titleSub: getThemeTranslation(['homepage', 'vbiFeatures', 'titleSub']),
+        features: {
+          feature1: {
+            title: getThemeTranslation(['homepage', 'vbiFeatures', 'features', 'feature1', 'title']),
+            description: getThemeTranslation(['homepage', 'vbiFeatures', 'features', 'feature1', 'description']),
+          },
+          feature2: {
+            title: getThemeTranslation(['homepage', 'vbiFeatures', 'features', 'feature2', 'title']),
+            description: getThemeTranslation(['homepage', 'vbiFeatures', 'features', 'feature2', 'description']),
+          },
+          feature3: {
+            title: getThemeTranslation(['homepage', 'vbiFeatures', 'features', 'feature3', 'title']),
+            description: getThemeTranslation(['homepage', 'vbiFeatures', 'features', 'feature3', 'description']),
+          },
+          feature4: {
+            title: getThemeTranslation(['homepage', 'vbiFeatures', 'features', 'feature4', 'title']),
+            description: getThemeTranslation(['homepage', 'vbiFeatures', 'features', 'feature4', 'description']),
+          },
+        },
+      },
+      order: 4,
     }),
   });
 

@@ -20,6 +20,7 @@ export interface VbiHomepageHeroProps {
     bannerContent2: StatCardProps;
     bannerContent3: StatCardProps;
   };
+  partners?: FileType[];
 }
 
 const VbiHomepageHero: SectionComponent<'homepage', 'vbiHero'> = ({ props, className }) => {
@@ -28,7 +29,7 @@ const VbiHomepageHero: SectionComponent<'homepage', 'vbiHero'> = ({ props, class
   return (
     <div className={cn('relative min-h-[80vh]', className)}>
       {/* Content container */}
-      <div className="container relative mx-auto px-4 py-20">
+      <div className="container relative mx-auto p-4">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           {/* Content */}
           <div className="space-y-6 text-foreground">
@@ -85,6 +86,19 @@ const VbiHomepageHero: SectionComponent<'homepage', 'vbiHero'> = ({ props, class
               />
             </div>
           </div>
+        </div>
+        {/* Partners */}
+        <div className="mt-6 grid grid-cols-3 gap-x-4 gap-y-2 md:grid-cols-5 md:gap-x-8 md:gap-y-4">
+          {props?.partners?.map((file, index) => (
+            <Image
+              key={index.toString()}
+              src={file.url}
+              height={file.height}
+              width={file.width}
+              alt=""
+              className="h-[40px] object-contain"
+            />
+          ))}
         </div>
       </div>
     </div>

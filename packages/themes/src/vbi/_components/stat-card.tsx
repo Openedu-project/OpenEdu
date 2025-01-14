@@ -47,7 +47,7 @@ const StatCard = ({ value, label, className }: StatCardProps) => (
     <div className="mb-2 font-bold text-md text-primary md:text-lg lg:text-3xl">
       {value ? formatCompactNumber(value) : 0}
     </div>
-    <div className="text-foreground/80 text-sm uppercase tracking-wider">{label}</div>
+    <div className="max-w-[160px] text-foreground/80 text-sm uppercase tracking-wider lg:max-w-[200px]">{label}</div>
   </div>
 );
 
