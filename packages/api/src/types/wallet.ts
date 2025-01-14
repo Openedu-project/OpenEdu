@@ -1,4 +1,4 @@
-import type { TAssetType, TChain, TCurrencySymbol } from '#utils/wallet';
+import { CHAIN, CURRENCY_SYMBOLS, type TAssetType, type TChain, type TCurrencySymbol } from '#utils/wallet';
 
 export type TAssetList = {
   wallet_id: string;
@@ -190,3 +190,23 @@ export interface IWalletItem {
 }
 
 export interface IWalletRes extends Array<IWalletItem> {}
+
+export type TTokenOption = {
+  value: TCurrencySymbol;
+  label: string;
+};
+
+export const NETWORK_OPTIONS = [
+  { value: CHAIN.NEAR, label: 'Near' },
+  { value: CHAIN.AVAIL, label: 'Avail' },
+] as const;
+
+export const TOKEN_OPTIONS: Record<TChain, TTokenOption[]> = {
+  [CHAIN.NEAR]: [
+    { value: CURRENCY_SYMBOLS.NEAR, label: 'NEAR' },
+    { value: CURRENCY_SYMBOLS.USDT, label: 'USDT' },
+    { value: CURRENCY_SYMBOLS.USDC, label: 'USDC' },
+  ],
+  [CHAIN.AVAIL]: [{ value: CURRENCY_SYMBOLS.AVAIL, label: 'AVAIL' }],
+  [CHAIN.ETHEREUM]: [],
+} as const;
