@@ -7,6 +7,7 @@ import { paymentButtonMessages } from './payment-button';
 import { richTextMessages } from './rich-text';
 import { tableMessages } from './table';
 import { uploaderMessages } from './uploader';
+import { userMenuMessages } from './user-menu';
 
 export const componentMessages = {
   ...formValidationMessages,
@@ -20,4 +21,5 @@ export const componentMessages = {
   ...dialogMessages,
   ...loginRequiredMessages,
   ...paymentButtonMessages,
+  ...userMenuMessages,
 };

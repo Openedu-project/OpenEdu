@@ -11,7 +11,7 @@ export function UserMenu({ me }: { me: IUser }) {
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="flex items-center space-x-2 focus-visible:ring-0 focus-visible:ring-offset-0"
+          className="flex items-center space-x-2 text-primary-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
         >
           <User className="h-5 w-5" />
           <span>{me.username ?? me.email}</span>

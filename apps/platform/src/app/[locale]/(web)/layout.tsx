@@ -1,7 +1,41 @@
 import { MainLayout } from '@oe/ui/common/layout';
+import { getTranslations } from 'next-intl/server';
 
 import type { ReactNode } from 'react';
 
-export default function OpeneduLayout({ children }: { children: ReactNode }) {
-  return <MainLayout>{children}</MainLayout>;
+export default async function OpeneduLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const t = await getTranslations('userMenu');
+  const sidebarItems = [
+    {
+      id: 'ai-assistant',
+      label: t('aiAssistant'),
+      href: '#',
+    },
+    {
+      id: 'courses',
+      label: t('courses'),
+      href: '#',
+    },
+    {
+      id: 'blog',
+      label: t('blog'),
+      href: '#',
+    },
+    {
+      id: 'launchpad',
+      label: t('launchpad'),
+      href: '#',
+    },
+    {
+      id: 'become-creator',
+      label: t('becomeCreator'),
+      href: '#',
+    },
+  ];
+
+  return <MainLayout sidebarItems={sidebarItems}>{children}</MainLayout>;
 }
