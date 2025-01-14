@@ -1,16 +1,16 @@
+import { useGetConversationDetails } from '@oe/api/hooks/useConversation';
 import type { IMessage, InputType } from '@oe/api/types/conversation';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
+import { Skeleton } from '#shadcn/skeleton';
 import { useConversationStore } from '#store/conversation-store';
-import { cn } from '#utils/cn';
-import useIsScrolledToBottom from '../../hooks/useScrollPosition';
 import MessageBox from './message/message-box';
 import type { ISendMessageParams } from './type';
 
 interface IChatProps {
-  className?: string;
+  id: string;
   nextCursorPage?: string;
-  animationScroll?: boolean;
   sendMessage: ({
     messageInput,
     type,
@@ -18,18 +18,21 @@ interface IChatProps {
     images,
     message_id,
     role,
-    // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
-  }: ISendMessageParams) => void | Promise<unknown>;
+  }: // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
+  ISendMessageParams) => void | Promise<unknown>;
 }
-export const ChatWithMessage = ({ className, sendMessage, animationScroll }: IChatProps) => {
-  const { messages, status, selectedModel, genMessage } = useConversationStore();
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const initialScroll = useRef<boolean>(false);
+export const ChatWithMessage = ({ id, sendMessage, nextCursorPage = '' }: IChatProps) => {
+  const { messages, status, selectedModel, genMessage, setMessages } = useConversationStore();
+  const [shouldGetData, setShouldGetData] = useState<boolean>(false);
 
-  const { isScrolledToBottom, isScrolledToTop } = useIsScrolledToBottom(containerRef, {
-    threshold: 10, // Distance in pixels to consider "at bottom"
-    debounceMs: 0, // Debounce delay for scroll checks
-    checkOnResize: true, // Whether to check on container resize
+  const firstItemIndexRef = useRef<number>(9999);
+  const virtuosoRef = useRef<VirtuosoHandle>(null);
+  const nextKeyRef = useRef<string>(nextCursorPage);
+
+  const { data, isLoading } = useGetConversationDetails({
+    shouldFetch: shouldGetData && nextKeyRef.current.length > 0,
+    id,
+    params: { cursor: nextKeyRef.current, sort: 'create_at desc' },
   });
 
   const rewrite = (msg: IMessage) => {
@@ -43,38 +46,19 @@ export const ChatWithMessage = ({ className, sendMessage, animationScroll }: ICh
     }
   };
 
-  const animationScrollEnd = useCallback(() => {
-    if (!(containerRef.current && animationScroll)) {
-      return;
-    }
-
-    const container = containerRef.current;
-    const lastChild = container.lastElementChild;
-
-    if (lastChild) {
-      lastChild.scrollIntoView({
-        behavior: 'smooth',
-        block: 'end',
-      });
-    }
-  }, [animationScroll]);
-
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (!messages || messages.length === 0 || !containerRef.current) {
+    setShouldGetData(false);
+    if (!data) {
       return;
     }
+    nextKeyRef.current = data?.pagination.next_cursor ?? '';
 
-    if (animationScroll && !initialScroll.current) {
-      initialScroll.current = true;
-      requestAnimationFrame(animationScrollEnd);
-    } else {
-      requestAnimationFrame(() => {
-        if (containerRef.current && isScrolledToBottom) {
-          containerRef.current.scrollTop = containerRef.current.scrollHeight;
-        }
-      });
+    if (data.results.messages) {
+      setMessages([...data.results.messages.reverse(), ...messages]);
+      firstItemIndexRef.current -= data.results.messages.length;
     }
-  }, [messages, animationScroll, animationScrollEnd, isScrolledToBottom]);
+  }, [data]);
 
   const messageType = useMemo(() => {
     return ['chat', 'scrap_from_url', selectedModel?.configs?.image_analysis_enabled && 'image_analysis'].filter(
@@ -82,57 +66,57 @@ export const ChatWithMessage = ({ className, sendMessage, animationScroll }: ICh
     ) as InputType[];
   }, [selectedModel]);
 
-  const handleScroll = () => {
-    if (!isScrolledToTop) {
-      return;
-    }
-    console.log('scrolll to top');
-  };
-
   return (
-    <div
-      ref={containerRef}
-      className={cn('w-full overflow-y-auto overflow-x-hidden', className)}
-      onScroll={handleScroll}
-    >
-      {messages?.map((msg, i) => {
-        const isLast = i === messages.length - 1;
-
-        return (
-          <MessageBox
-            key={msg.id}
-            id={msg.id}
-            message={msg}
-            messageIndex={i}
-            loading={GENERATING_STATUS.includes(status ?? '')}
-            isLast={isLast}
-            rewrite={
-              !msg.configs?.is_image_analysis || messageType?.includes('image_analysis')
-                ? () => rewrite(msg)
-                : undefined
-            }
-            sendMessage={sendMessage}
-            messageType={messageType}
-          />
-        );
-      })}
-      {genMessage && (
+    <Virtuoso
+      data={messages}
+      ref={virtuosoRef}
+      totalCount={messages.length}
+      firstItemIndex={firstItemIndexRef.current}
+      followOutput
+      initialTopMostItemIndex={{ align: 'end', index: messages.length - 1 }}
+      startReached={() => {
+        if (!(GENERATING_STATUS.includes(status ?? '') || isLoading) && nextKeyRef.current.length > 0) {
+          setShouldGetData(true);
+        }
+      }}
+      itemContent={(_, msg: IMessage) => (
         <MessageBox
-          key={genMessage.id}
-          id={genMessage.id}
-          message={genMessage}
-          messageIndex={messages.length}
+          key={msg.id}
+          id={msg.id}
+          message={msg}
           loading={GENERATING_STATUS.includes(status ?? '')}
-          isLast={false}
           rewrite={
-            !genMessage.configs?.is_image_analysis || messageType?.includes('image_analysis')
-              ? () => rewrite(genMessage)
-              : undefined
+            !msg.configs?.is_image_analysis || messageType?.includes('image_analysis') ? () => rewrite(msg) : undefined
           }
           sendMessage={sendMessage}
           messageType={messageType}
         />
       )}
-    </div>
+      components={{
+        Header: () =>
+          nextKeyRef.current.length > 0 ? (
+            <div className="flex flex-col items-end gap-4">
+              <Skeleton className="h-10 w-2/3 rounded-[20px]" />
+              <Skeleton className="h-20 w-full rounded-[20px]" />
+            </div>
+          ) : null,
+        Footer: () =>
+          genMessage && (
+            <MessageBox
+              key={genMessage.id}
+              id={genMessage.id}
+              message={genMessage}
+              loading={GENERATING_STATUS.includes(status ?? '')}
+              rewrite={
+                !genMessage.configs?.is_image_analysis || messageType?.includes('image_analysis')
+                  ? () => rewrite(genMessage)
+                  : undefined
+              }
+              sendMessage={sendMessage}
+              messageType={messageType}
+            />
+          ),
+      }}
+    />
   );
 };

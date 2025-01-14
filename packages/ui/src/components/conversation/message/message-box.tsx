@@ -55,7 +55,6 @@ const convertTextWithLink = (text: string) => {
 const MessageBox = ({
   id,
   message,
-  messageIndex,
   loading,
   rewrite,
   sendMessage,
@@ -63,9 +62,7 @@ const MessageBox = ({
 }: {
   id?: string;
   message: IMessage;
-  messageIndex: number;
   loading: boolean;
-  isLast: boolean;
   rewrite?: () => void;
   sendMessage: ({
     messageInput,
@@ -107,7 +104,7 @@ const MessageBox = ({
   return (
     <div className="py-2" id={id}>
       {message?.sender?.role === 'user' && (
-        <div className={cn('group flex w-full items-center justify-end gap-2', messageIndex === 0 ? 'pt-4' : 'pt-2')}>
+        <div className={cn('group flex w-full items-center justify-end gap-2 pt-2')}>
           {(!message.configs?.is_image_analysis || messageType?.includes('image_analysis')) && !loading && (
             <EditButton
               className={isEdit ? 'hidden' : 'hidden group-hover:flex'}

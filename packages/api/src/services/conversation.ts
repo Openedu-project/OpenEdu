@@ -1,5 +1,4 @@
 import type { IAIModel, IConversation, IConversationDetails, IConversationRequest } from '#types/conversation';
-import type { IPagination } from '#types/pagination';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { type FetchOptions, createAPIUrl, fetchAPI, postAPI } from '#utils/fetch';
 
@@ -12,10 +11,11 @@ export const getAIModels = async (url?: string, init?: FetchOptions) => {
 export const getConversationDetail = async (
   url: string | undefined,
   id: string,
-  queryParams: Record<string, string | number> & IPagination,
+  queryParams: { cursor?: string } & Record<string, string | number>,
   init: FetchOptions = {}
 ): Promise<IConversationDetails> => {
-  const endpointKey = url ?? createAPIUrl({ endpoint: API_ENDPOINT.COM_CHANNELS_ID, params: { id }, queryParams });
+  const endpointKey =
+    url ?? createAPIUrl({ endpoint: API_ENDPOINT.COM_CHANNELS_ID, params: { id }, queryParams: { ...queryParams } });
 
   const response = await fetchAPI<IConversationDetails>(endpointKey, init);
 

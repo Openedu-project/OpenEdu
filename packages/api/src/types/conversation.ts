@@ -95,7 +95,7 @@ export interface IMessageData {
   is_image_analysis: boolean;
 }
 
-export type IAIStatus = 'generating' | 'pending' | 'completed' | 'error' | 'stopped';
+export type IAIStatus = 'generating' | 'pending' | 'completed' | 'failed' | 'stopped';
 
 export type IContextType = 'text';
 

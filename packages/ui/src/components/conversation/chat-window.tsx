@@ -125,7 +125,7 @@ export function ChatWindow({
         router.push(generateRoute(AI_ROUTES.chatDetail, { id: data.id }));
       }
     } catch (error) {
-      setStatus('error');
+      setStatus('failed');
       setMessages(prevMessage);
       resetGenMessage();
       if ((error as HTTPError).metadata?.code.toString() === '32002') {
@@ -140,7 +140,7 @@ export function ChatWindow({
     <>
       <div className={cn('flex grow flex-col gap-2 overflow-scroll', id ? 'bg-background' : 'items-center')}>
         {id ? (
-          <ChatWithMessage sendMessage={sendMessage} nextCursorPage={nextCursorPage} animationScroll={true} />
+          <ChatWithMessage sendMessage={sendMessage} nextCursorPage={nextCursorPage} id={id} />
         ) : (
           <h2 className="mcaption-regular24 md:giant-iheading-bold40 !font-normal m-auto text-center">
             {tAI.rich('aiHelloText', {
