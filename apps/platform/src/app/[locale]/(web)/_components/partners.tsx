@@ -20,9 +20,9 @@ function PartnerLogo({ name, logo }: PartnerLogoProps) {
       <Image
         src={logo}
         alt={`${name} logo`}
-        height={40}
-        width={312}
-        className="h-[40px] object-contain"
+        width={160}
+        height={32}
+        className=" w-auto object-contain"
         sizes="(max-width: 768px) 120px, 160px"
       />
     </div>
@@ -70,12 +70,12 @@ const partners = [
 
 export default function PartnerSection() {
   return (
-    <div className="py-5 lg:py-10">
+    <section className="py-5 lg:py-10">
       <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
         {partners.map(partner => (
           <PartnerLogo key={partner.name} {...partner} />
         ))}
       </div>
-    </div>
+    </section>
   );
 }
