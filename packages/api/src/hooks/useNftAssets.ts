@@ -1,21 +1,33 @@
+import useWalletBase from '@oe/api/hooks/useWalletBase';
 import { fetchNearNFTs } from '@oe/api/services/near';
-import type { TNFTData } from '@oe/api/types/wallet';
+import { CURRENCY_SYMBOLS } from '@oe/api/utils/wallet';
+import { useMemo } from 'react';
 import useSWR from 'swr';
 
-const useNFTAssets = ({ nearAddress }: { nearAddress: string }) => {
-  const { data, error, isValidating, mutate } = useSWR<TNFTData, Error>(
-    nearAddress ? ['nftAssets', nearAddress] : null,
-    ([, address]) => fetchNearNFTs(address as string),
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    }
+const useNFTAssets = () => {
+  const { wallets, isLoading: isLoadingWallets } = useWalletBase({
+    isRefresh: false,
+  });
+
+  const nearAddress = useMemo(
+    () => wallets.find(wallet => wallet.currency === CURRENCY_SYMBOLS.NEAR)?.address || null,
+    [wallets]
   );
 
-  return {
-    nftAssets: data || null,
+  const {
+    data: nftData,
     error,
-    isLoading: !(error || data),
+    isValidating,
+    mutate,
+  } = useSWR(nearAddress ? ['nftAssets', nearAddress] : null, ([, address]) => fetchNearNFTs(address), {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  });
+
+  return {
+    nftAssets: nftData || null,
+    error,
+    isLoading: isLoadingWallets || !(error || nftData),
     isValidating,
     refetch: mutate,
   };

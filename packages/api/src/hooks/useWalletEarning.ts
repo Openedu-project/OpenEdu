@@ -3,6 +3,7 @@ import { fetchAPI } from '@oe/api/utils/fetch';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
 import { toast } from 'sonner';
+import { ASSET_TYPES } from '#utils/wallet';
 import useWalletHistory from './useWalletHistory';
 import useWalletRefresh from './useWalletRefresh';
 
@@ -11,7 +12,7 @@ const useWalletEarning = () => {
   const [isTxLoading, setIsTxLoading] = useState<boolean>(false);
   const [isOutOfGas, setIsOutOfGas] = useState<boolean>(false);
   const refreshWallet = useWalletRefresh();
-  const { refresh: refreshHistory } = useWalletHistory({ currencyType: 'crypto' });
+  const { refresh: refreshHistory } = useWalletHistory({ currencyType: ASSET_TYPES.CRYPTO });
   const t = useTranslations('earnPage');
 
   const handleClaimToken = useCallback(

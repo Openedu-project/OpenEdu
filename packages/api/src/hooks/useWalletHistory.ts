@@ -39,7 +39,9 @@ const useWalletHistory = ({
 
   const apiUrl = `${API_ENDPOINT.USERS_ME_TRANSACTIONS}?${params.toString()}`;
 
-  const { data, error, isLoading, mutate } = useSWR<TWalletHistoryResponse>(apiUrl, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<TWalletHistoryResponse>(apiUrl, fetcher, {
+    revalidateOnMount: true,
+  });
 
   return {
     data: data?.data?.results ?? [],
