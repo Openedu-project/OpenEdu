@@ -15,4 +15,5 @@ export interface IFilter {
   latest?: boolean;
   parent_id_null?: boolean;
   is_verified?: boolean;
+  is_active?: boolean;
 }

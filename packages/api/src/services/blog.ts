@@ -1,7 +1,29 @@
-import type { IBlog, IBlogRequest, IBlogURL, IBlogsResponse } from '#types/blog';
+import type { IBlog, IBlogListResponse, IBlogRequest, IBlogURL, IBlogsResponse } from '#types/blog';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { type FetchOptions, createAPIUrl, fetchAPI, postAPI, putAPI } from '#utils/fetch';
+
+export const getBlogListService = async (
+  url: string | undefined,
+  { params, init }: { params: IFilter; init?: RequestInit }
+) => {
+  let endpointKey = url;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.BLOGS,
+      queryParams: {
+        ...params,
+      },
+    });
+  }
+
+  try {
+    const response = await fetchAPI<IBlogListResponse>(endpointKey, init);
+    return response.data;
+  } catch {
+    return null;
+  }
+};
 
 export const postBlogAI = async (
   endpoint: string | null | undefined,
