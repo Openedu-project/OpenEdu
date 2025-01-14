@@ -1,4 +1,5 @@
 import { fileResponseScheme } from '#types/file';
+import { CHAIN, CURRENCY_SYMBOLS } from '#utils/wallet';
 import { z } from '#utils/zod';
 
 export const approveWithdrawSchema = z.object({
@@ -12,6 +13,45 @@ export const approveWithdrawSchema = z.object({
 });
 
 export type IApproveWithdrawType = z.infer<typeof approveWithdrawSchema>;
+
+export const cryptoWithdrawSchema = z.object({
+  network: z.nativeEnum(CHAIN), // sử dụng TChain
+  address: z
+    .string()
+    .min(1, { message: 'withdrawPage.form.errors.requiredAddress' })
+    .transform(val => val.trim())
+    .refine(val => val.length > 0, { message: 'withdrawPage.form.errors.invalidAddress' }),
+  token: z.string(),
+  amount: z
+    .string()
+    .min(1, { message: 'withdrawPage.form.errors.requiredAmount' })
+    .transform(val => val.trim())
+    .refine(val => !Number.isNaN(Number(val)), { message: 'withdrawPage.form.errors.invalidAmount' })
+    .refine(val => Number(val) > 0, { message: 'withdrawPage.form.errors.positiveAmount' }),
+  note: z
+    .string()
+    .optional()
+    .transform(val => val?.trim() || undefined),
+});
+
+export type ICryptoWithdrawType = z.infer<typeof cryptoWithdrawSchema>;
+
+export const fiatWithdrawSchema = z.object({
+  fiatType: z.nativeEnum(CURRENCY_SYMBOLS), // sử dụng TCurrencySymbol
+  bankAccount: z.string().min(1, { message: 'withdrawPage.form.errors.requiredBankAccount' }),
+  amount: z
+    .string()
+    .min(1, { message: 'withdrawPage.form.errors.requiredAmount' })
+    .transform(val => val.trim())
+    .refine(val => !Number.isNaN(Number(val)), { message: 'withdrawPage.form.errors.invalidAmount' })
+    .refine(val => Number(val) > 0, { message: 'withdrawPage.form.errors.positiveAmount' }),
+  note: z
+    .string()
+    .optional()
+    .transform(val => val?.trim() || undefined),
+});
+
+export type IFiatWithdrawType = z.infer<typeof fiatWithdrawSchema>;
 
 export const rejectWithdrawSchema = z.object({
   value: z.string(),
