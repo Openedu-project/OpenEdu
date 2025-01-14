@@ -36,19 +36,26 @@ const jsonProviders = [
 const provider = new FailoverRpcProvider(jsonProviders);
 
 // Initialize NEAR connection
-function initializeNear(): Promise<Near> {
+let nearConnection: Near | null = null;
+
+async function initializeNear(): Promise<Near> {
+  if (nearConnection) {
+    return nearConnection;
+  }
   if (!NEAR_RPC) {
     throw new Error('NEAR_RPC is undefined');
   }
 
   const keyStore = new keyStores.InMemoryKeyStore();
 
-  return connect({
+  nearConnection = await connect({
     networkId: NEAR_NETWORK_ID,
     nodeUrl: NEAR_RPC,
     provider,
     keyStore,
   });
+
+  return nearConnection;
 }
 
 // Get account details
