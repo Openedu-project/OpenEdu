@@ -22,7 +22,7 @@ function PartnerLogo({ name, logo }: PartnerLogoProps) {
         alt={`${name} logo`}
         width={160}
         height={32}
-        className=" w-auto object-contain"
+        className="h-[40px] w-auto object-contain"
         sizes="(max-width: 768px) 120px, 160px"
       />
     </div>
