@@ -1,10 +1,9 @@
 import { cn } from '@oe/ui/utils/cn';
 import { Key, Send, Sun, Zap } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import type { SectionComponent } from '../../_types/theme-page';
+import type { SectionComponent } from '../../../_types/theme-page';
 
-import { FeatureCard, type FeatureCardProps } from '../_components/feature-card';
-import { InfoSection, type InfoSectionProps } from '../_components/info-section';
+import { FeatureCard, type FeatureCardProps } from '../../_components/feature-card';
+import { InfoSection, type InfoSectionProps } from '../../_components/info-section';
 
 export interface VbiHomepageFeaturesProps extends InfoSectionProps {
   features: {
@@ -15,9 +14,10 @@ export interface VbiHomepageFeaturesProps extends InfoSectionProps {
   };
 }
 
-const VbiHomepageFeatures: SectionComponent<'homepage', 'vbiFeatures'> = ({ className }) => {
-  const t = useTranslations('themePage.vbi.homepage.vbiFeatures');
-
+const VbiHomepageFeatures: SectionComponent<'homepage', 'vbiFeatures'> = ({ className, t }) => {
+  if (!t) {
+    return null;
+  }
   const features = [
     {
       title: t('features.feature1.title'),

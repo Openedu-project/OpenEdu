@@ -12,11 +12,15 @@ import type { AcademiaAuthLayoutLoginProps } from '../academia/auth/login';
 import type { ScholarHomepageAboutUsProps, ScholarHomepageHeroProps, ScholarHomepageServiceProps } from '../scholar';
 import type {
   VbiHomepageAchievementsProps,
+  VbiHomepageBlogsProps,
   VbiHomepageCertProps,
   VbiHomepageCoursesProps,
+  VbiHomepageCreatorsProps,
+  VbiHomepageEventsProps,
   VbiHomepageFeaturesProps,
   VbiHomepageHeroProps,
-} from '../vbi';
+  VbiHomepageMapProps,
+} from '../vbi/type';
 import type { ThemeMetadata } from './theme-metadata';
 // Core Types
 export type ThemeName = 'academia' | 'scholar' | 'vbi';
@@ -38,7 +42,10 @@ export type HomeSection =
   | 'vbiCourses'
   | 'vbiCert'
   | 'vbiFeatures'
-  | 'vbiBlogs'; // Add new page key - HERE
+  | 'vbiBlogs'
+  | 'vbiEvents'
+  | 'vbiCreators'
+  | 'vbiMap'; // Add new page key - HERE
 export type AboutSection = 'theme' | 'team';
 export type AuthLayout = 'theme' | 'login' | 'forgotPassword' | 'emailVerify' | 'signUp' | 'authConfirm';
 
@@ -102,6 +109,7 @@ export interface ThemeCard {
 export interface BaseSectionProps<K extends ThemePageKey> {
   sectionConfig?: PageSectionConfig<K>;
   className?: string;
+  t?: (key: string) => string;
   [key: string]: unknown | undefined;
 }
 
@@ -135,6 +143,10 @@ export interface SectionPropsMap<K extends ThemePageKey> {
   vbiCourses: DynamicProps<K, VbiHomepageCoursesProps>;
   vbiCert: DynamicProps<K, VbiHomepageCertProps>;
   vbiFeatures: DynamicProps<K, VbiHomepageFeaturesProps>;
+  vbiBlogs: DynamicProps<K, VbiHomepageBlogsProps>;
+  vbiEvents: DynamicProps<K, VbiHomepageEventsProps>;
+  vbiCreators: DynamicProps<K, VbiHomepageCreatorsProps>;
+  vbiMap: DynamicProps<K, VbiHomepageMapProps>;
 }
 
 // Component Types

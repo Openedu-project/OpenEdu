@@ -1,0 +1,41 @@
+import { Image } from '@oe/ui/components/image';
+import type { FileType } from '@oe/ui/components/uploader';
+import { Card } from '@oe/ui/shadcn/card';
+import { Separator } from '@oe/ui/shadcn/separator';
+import { cn } from '@oe/ui/utils/cn';
+import { ContentSection, type ContentSectionProps } from './content-section';
+import { StatCard, type StatCardProps } from './stat-card';
+
+interface EventCardProps extends ContentSectionProps {
+  stats?: {
+    stat1?: StatCardProps;
+    stat2?: StatCardProps;
+    stat3?: StatCardProps;
+  };
+  image?: FileType;
+  className?: string;
+}
+
+const EventCard = ({ stats, title, description, image, className }: EventCardProps) => {
+  return (
+    <Card className={cn('rounded-lg bg-primary', className)}>
+      <Image alt="Developer at work" src={image?.url} className="h-[340px] rounded-lg object-cover" />
+      <div className={cn('space-y-4 p-4 text-background')}>
+        {/* Content Sections */}
+        <ContentSection title={title} description={description} className="text-background" />
+
+        {/* Stats Section */}
+        <div className="flex justify-between gap-4">
+          <StatCard value={stats?.stat1?.value} label={stats?.stat1?.label} variant="primary" />
+          <Separator className="h-3/4 w-[1px] bg-background" />
+          <StatCard value={stats?.stat2?.value} label={stats?.stat2?.label} variant="primary" />
+          <Separator className="h-3/4 w-[1px] bg-background" />
+          <StatCard value={stats?.stat3?.value} label={stats?.stat3?.label} variant="primary" />
+        </div>
+      </div>
+    </Card>
+  );
+};
+
+export { EventCard, type EventCardProps };
+export default EventCard;

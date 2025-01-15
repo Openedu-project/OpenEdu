@@ -27,15 +27,15 @@ const AchievementCard = ({
 }: AchievementCardProps) => {
   return (
     <Card className={cn('border-none p-0', className)}>
-      <div className="flex flex-col gap-6 md:flex-row lg:gap-12">
+      <div className="flex flex-col gap-6 md:flex-row md:items-center lg:gap-12">
         {/* Left Column - Images */}
-
-        <Image alt="Developer at work" src={image?.url} className="rounded-lg object-cover" />
-
+        <div className="basis-1/2">
+          <Image alt="Developer at work" src={image?.url} className="rounded-lg object-cover" />
+        </div>
         {/* Right Column - Content */}
         <div
           className={cn(
-            'flex flex-col justify-between space-y-6 md:space-y-8',
+            'flex basis-1/2 flex-col justify-between space-y-6 md:space-y-8',
             contentVariant === 'left' && 'md:order-first'
           )}
         >

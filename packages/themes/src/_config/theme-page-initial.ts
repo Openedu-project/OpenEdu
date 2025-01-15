@@ -432,6 +432,106 @@ export const createThemePageConfig = (t: (key: string) => string): Record<ThemeN
       },
       order: 4,
     }),
+    vbiBlogs: createSection<'homepage', 'vbiBlogs'>({
+      props: {
+        title: getThemeTranslation(['homepage', 'vbiBlogs', 'title']),
+        titleSub: getThemeTranslation(['homepage', 'vbiBlogs', 'titleSub']),
+        button: {
+          text: getThemeTranslation(['homepage', 'vbiBlogs', 'button', 'text']),
+          link: getThemeTranslation(['homepage', 'vbiBlogs', 'button', 'link']),
+        },
+      },
+      order: 5,
+    }),
+    vbiEvents: createSection<'homepage', 'vbiEvents'>({
+      props: {
+        title: getThemeTranslation(['homepage', 'vbiEvents', 'title']),
+        titleSub: getThemeTranslation(['homepage', 'vbiEvents', 'titleSub']),
+        button: {
+          text: getThemeTranslation(['homepage', 'vbiEvents', 'button', 'text']),
+          link: getThemeTranslation(['homepage', 'vbiEvents', 'button', 'link']),
+        },
+        events: {
+          event1: {
+            title: getThemeTranslation(['homepage', 'vbiEvents', 'events', 'event1', 'title']),
+            description: getThemeTranslation(['homepage', 'vbiEvents', 'events', 'event1', 'description']),
+            stats: {
+              stat1: {
+                label: getThemeTranslation(['homepage', 'vbiEvents', 'events', 'event1', 'stats', 'stat1', 'label']),
+                value: 100,
+              },
+              stat2: {
+                label: getThemeTranslation(['homepage', 'vbiEvents', 'events', 'event1', 'stats', 'stat2', 'label']),
+                value: 20,
+              },
+              stat3: {
+                label: getThemeTranslation(['homepage', 'vbiEvents', 'events', 'event1', 'stats', 'stat3', 'label']),
+                value: 120,
+              },
+            },
+            image: { mime: 'image/png' },
+          },
+          event2: {
+            title: getThemeTranslation(['homepage', 'vbiEvents', 'events', 'event2', 'title']),
+            description: getThemeTranslation(['homepage', 'vbiEvents', 'events', 'event2', 'description']),
+            stats: {
+              stat1: {
+                label: getThemeTranslation(['homepage', 'vbiEvents', 'events', 'event2', 'stats', 'stat2', 'label']),
+                value: 1000,
+              },
+              stat2: {
+                label: getThemeTranslation(['homepage', 'vbiEvents', 'events', 'event1', 'stats', 'stat2', 'label']),
+                value: 50,
+              },
+              stat3: {
+                label: getThemeTranslation(['homepage', 'vbiEvents', 'events', 'event2', 'stats', 'stat3', 'label']),
+                value: 10,
+              },
+            },
+            image: { mime: 'image/png' },
+          },
+        },
+      },
+      order: 6,
+    }),
+    vbiCreators: createSection<'homepage', 'vbiCreators'>({
+      props: {
+        title: getThemeTranslation(['homepage', 'vbiCreators', 'title']),
+        titleSub: getThemeTranslation(['homepage', 'vbiCreators', 'titleSub']),
+        creators: {
+          creator1: {
+            name: getThemeTranslation(['homepage', 'vbiCreators', 'creators', 'creator1', 'name']),
+            role: getThemeTranslation(['homepage', 'vbiCreators', 'creators', 'creator1', 'role']),
+            story: getThemeTranslation(['homepage', 'vbiCreators', 'creators', 'creator1', 'story']),
+            avatar: { mime: 'image/png' },
+          },
+          creator2: {
+            name: getThemeTranslation(['homepage', 'vbiCreators', 'creators', 'creator2', 'name']),
+            role: getThemeTranslation(['homepage', 'vbiCreators', 'creators', 'creator2', 'role']),
+            story: getThemeTranslation(['homepage', 'vbiCreators', 'creators', 'creator2', 'story']),
+            avatar: { mime: 'image/png' },
+          },
+          creator3: {
+            name: getThemeTranslation(['homepage', 'vbiCreators', 'creators', 'creator3', 'name']),
+            role: getThemeTranslation(['homepage', 'vbiCreators', 'creators', 'creator3', 'role']),
+            story: getThemeTranslation(['homepage', 'vbiCreators', 'creators', 'creator3', 'story']),
+            avatar: { mime: 'image/png' },
+          },
+        },
+      },
+      order: 7,
+    }),
+    vbiMap: createSection<'homepage', 'vbiMap'>({
+      props: {
+        title: getThemeTranslation(['homepage', 'vbiMap', 'title']),
+        titleSub: getThemeTranslation(['homepage', 'vbiMap', 'titleSub']),
+        button: {
+          text: getThemeTranslation(['homepage', 'vbiMap', 'button', 'text']),
+          link: getThemeTranslation(['homepage', 'vbiMap', 'button', 'link']),
+        },
+      },
+      order: 8,
+    }),
   });
 
   return {

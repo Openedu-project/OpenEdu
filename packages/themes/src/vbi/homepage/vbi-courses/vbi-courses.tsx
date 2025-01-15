@@ -1,14 +1,14 @@
 import { cn } from '@oe/ui/utils/cn';
-import { useTranslations } from 'next-intl';
-import type { SectionComponent } from '../../_types/theme-page';
+import type { SectionComponent } from '../../../_types/theme-page';
 
-import { InfoSection, type InfoSectionProps } from '../_components/info-section';
+import { InfoSection, type InfoSectionProps } from '../../_components/info-section';
 
 export interface VbiHomepageCoursesProps extends InfoSectionProps {}
 
-const VbiHomepageCourses: SectionComponent<'homepage', 'vbiCourses'> = ({ props, className }) => {
-  const t = useTranslations('themePage.vbi.homepage.vbiCourses');
-  console.log(props);
+const VbiHomepageCourses: SectionComponent<'homepage', 'vbiCourses'> = ({ className, t }) => {
+  if (!t) {
+    return null;
+  }
 
   return (
     <div className={cn('space-y-4', className)}>

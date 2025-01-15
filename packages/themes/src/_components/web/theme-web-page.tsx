@@ -1,5 +1,6 @@
-import { THEMES } from '@oe/themes';
+import { THEMES_SERVER, defaultThemeSystemConfig } from '@oe/themes';
 import type { SectionsByPage, ThemePageKey, ThemeSystem } from '@oe/themes/types/index';
+import { getTranslations } from 'next-intl/server';
 import { getThemeComponent } from '../../_utils/function';
 
 interface ThemePageProps {
@@ -7,14 +8,17 @@ interface ThemePageProps {
   themeSystem: ThemeSystem;
 }
 
-export default function ThemeWebPage({ pageKey, themeSystem }: ThemePageProps) {
+export default async function ThemeWebPage({ pageKey, themeSystem }: ThemePageProps) {
+  const t = await getTranslations('themePage');
   if (!themeSystem) {
     return null;
   }
-  const themeName = themeSystem.activedTheme;
-  const themeData = themeSystem?.availableThemes?.[themeName];
+
+  const themeName = 'vbi';
+  // const themeName = themeSystem.activedTheme;
+  // const themeData = themeSystem?.availableThemes?.[themeName];
   const PageComponent = getThemeComponent<ThemePageKey, SectionsByPage[typeof pageKey]>(
-    THEMES,
+    THEMES_SERVER,
     themeName,
     pageKey,
     'theme'
@@ -28,8 +32,10 @@ export default function ThemeWebPage({ pageKey, themeSystem }: ThemePageProps) {
       props={{
         themeName,
         selectedPage: pageKey,
-        pageConfig: themeData.pages?.[pageKey],
-        currentConfigSections: themeData.pages?.[pageKey].config,
+        // pageConfig: themeData.pages?.[pageKey],
+        // currentConfigSections: themeData.pages?.[pageKey].config,
+        pageConfig: defaultThemeSystemConfig(t)?.availableThemes?.vbi?.pages?.[pageKey],
+        currentConfigSections: defaultThemeSystemConfig(t)?.availableThemes?.vbi?.pages?.[pageKey].config,
       }}
     />
   );

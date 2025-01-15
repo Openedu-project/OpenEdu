@@ -1,4 +1,4 @@
-import { THEMES } from '@oe/themes';
+import { THEMES, THEMES_SERVER } from '@oe/themes';
 import type {
   PageSectionConfig,
   PageSectionConfigs,
@@ -17,18 +17,20 @@ export interface PreviewPanelProps {
   selectedPage: ThemePageKey;
   pageConfig: PagesConfig<ThemePageKey>;
   currentConfigSections?: PageSectionConfigs<ThemePageKey>;
+  renderByServer?: boolean;
 }
 export const PreviewPanel = memo(function PreviewPanel({
   themeName,
   selectedPage,
   pageConfig,
   currentConfigSections,
+  renderByServer = false,
 }: PreviewPanelProps) {
   const t = useTranslations('themePageSettings');
 
   const renderPreviewSection = (key: SectionsByPage[typeof selectedPage]) => {
     const PageComponent = getThemeComponent<ThemePageKey, SectionsByPage[typeof selectedPage]>(
-      THEMES,
+      renderByServer ? THEMES_SERVER : THEMES,
       themeName,
       selectedPage,
       key

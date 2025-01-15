@@ -4,6 +4,7 @@ interface StatCardProps {
   value?: number;
   label?: string;
   className?: string;
+  variant?: 'default' | 'primary';
 }
 
 /**
@@ -42,12 +43,24 @@ const formatCompactNumber = (value: number, decimals?: number, addPlus?: boolean
   return isNegative ? `-${formattedValue}` : formattedValue;
 };
 
-const StatCard = ({ value, label, className }: StatCardProps) => (
+const StatCard = ({ value, label, className, variant = 'default' }: StatCardProps) => (
   <div className={cn('text-center', className)}>
-    <div className="mb-2 font-bold text-md text-primary md:text-lg lg:text-3xl">
+    <div
+      className={cn(
+        'mb-2 font-bold text-md text-primary md:text-lg lg:text-3xl',
+        variant === 'primary' && 'text-background'
+      )}
+    >
       {value ? formatCompactNumber(value) : 0}
     </div>
-    <div className="max-w-[160px] text-foreground/80 text-sm uppercase tracking-wider lg:max-w-[200px]">{label}</div>
+    <div
+      className={cn(
+        'max-w-[160px] text-foreground/80 text-sm uppercase tracking-wider lg:max-w-[200px]',
+        variant === 'primary' && 'text-background'
+      )}
+    >
+      {label}
+    </div>
   </div>
 );
 

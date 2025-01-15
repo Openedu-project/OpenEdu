@@ -11,6 +11,7 @@ const Homepage: SectionComponent<'homepage', 'theme'> = ({ props }) => {
       selectedPage={props?.selectedPage}
       pageConfig={props?.pageConfig}
       currentConfigSections={props?.currentConfigSections}
+      renderByServer
     />
   );
 };

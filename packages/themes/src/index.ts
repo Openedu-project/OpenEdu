@@ -21,14 +21,17 @@ import AcademiaLogin from './academia/auth/login';
 import AcademiaAuthLayoutSignUp from './academia/auth/sign-up';
 import { fonts } from './fonts';
 import { ScholarAboutUs, ScholarHomePage } from './scholar';
-import {
-  VbiHomepage,
-  VbiHomepageAchievements,
-  VbiHomepageCert,
-  VbiHomepageCourses,
-  VbiHomepageFeatures,
-  VbiHomepageHero,
-} from './vbi/index';
+import { VbiHomepageHeroClient, VbiHomepageHeroServer } from './vbi/homepage/vbi-hero/index';
+
+import VbiHomepage from './vbi/homepage/index';
+import { VbiHomepageAchievementsClient, VbiHomepageAchievementsServer } from './vbi/homepage/vbi-achievements';
+import { VbiHomepageBlogsClient, VbiHomepageBlogsServer } from './vbi/homepage/vbi-blogs';
+import { VbiHomepageCertClient, VbiHomepageCertServer } from './vbi/homepage/vbi-cert';
+import { VbiHomepageCoursesClient, VbiHomepageCoursesServer } from './vbi/homepage/vbi-courses';
+import { VbiHomepageCreatorsClient, VbiHomepageCreatorsServer } from './vbi/homepage/vbi-creators';
+import { VbiHomepageEventsClient, VbiHomepageEventsServer } from './vbi/homepage/vbi-events';
+import { VbiHomepageFeaturesClient, VbiHomepageFeaturesServer } from './vbi/homepage/vbi-features';
+import { VbiHomepageMapClient, VbiHomepageMapServer } from './vbi/homepage/vbi-map';
 
 export const THEMES: ThemeRender = {
   academia: {
@@ -48,8 +51,6 @@ export const THEMES: ThemeRender = {
       login: AcademiaLogin,
       signUp: AcademiaAuthLayoutSignUp,
       forgotPassword: AcademiaForgotPassword,
-      // emailVerify: AcademiaEmailVerify,
-      // authConfirm: AcademiaAuthConfirm,
     },
   },
   scholar: {
@@ -71,11 +72,15 @@ export const THEMES: ThemeRender = {
   vbi: {
     homepage: {
       theme: VbiHomepage,
-      vbiHero: VbiHomepageHero,
-      vbiAchievements: VbiHomepageAchievements,
-      vbiCourses: VbiHomepageCourses,
-      vbiCert: VbiHomepageCert,
-      vbiFeatures: VbiHomepageFeatures,
+      vbiHero: VbiHomepageHeroClient,
+      vbiAchievements: VbiHomepageAchievementsClient,
+      vbiCourses: VbiHomepageCoursesClient,
+      vbiCert: VbiHomepageCertClient,
+      vbiFeatures: VbiHomepageFeaturesClient,
+      vbiBlogs: VbiHomepageBlogsClient,
+      vbiEvents: VbiHomepageEventsClient,
+      vbiCreators: VbiHomepageCreatorsClient,
+      vbiMap: VbiHomepageMapClient,
     },
     'about-us': {
       theme: ScholarAboutUs,
@@ -129,11 +134,15 @@ export const THEMES_SERVER: ThemeRender = {
   vbi: {
     homepage: {
       theme: VbiHomepage,
-      // vbiHero: VbiHomepageHero,
-      // vbiAchievements: VbiHomepageAchievements,
-      // vbiCourses: VbiHomepageCourses,
-      // vbiCert: VbiHomepageCert,
-      // vbiFeatures: VbiHomepageFeatures,
+      vbiHero: VbiHomepageHeroServer,
+      vbiAchievements: VbiHomepageAchievementsServer,
+      vbiCourses: VbiHomepageCoursesServer,
+      vbiCert: VbiHomepageCertServer,
+      vbiFeatures: VbiHomepageFeaturesServer,
+      vbiBlogs: VbiHomepageBlogsServer,
+      vbiEvents: VbiHomepageEventsServer,
+      vbiCreators: VbiHomepageCreatorsServer,
+      vbiMap: VbiHomepageMapServer,
     },
     'about-us': {
       theme: ScholarAboutUs,

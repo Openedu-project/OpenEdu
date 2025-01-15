@@ -3,6 +3,7 @@ import useSWRMutation from 'swr/mutation';
 import useSWR from 'swr';
 import {
   deleteBlog,
+  getBlogListService,
   getRewriteData,
   postBlog,
   postBlogAI,
@@ -11,6 +12,7 @@ import {
   updateBlog,
 } from '#services/blog';
 import type { IAIBlogRequest, IAIBlogResponse, IBlog, IBlogRequest, IRewriteResponse } from '#types/blog';
+import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
 import type { HTTPError } from '#utils/http-error';
@@ -92,5 +94,19 @@ export function useGetRewriteData(id: string, shouldFetch = true) {
     data,
     rewriteLoading: isLoading,
     rewriteError: error,
+  };
+}
+
+export function useGetListBlogs({ params }: { params: IFilter }) {
+  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.BLOGS, queryParams: { ...params } });
+  const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
+    getBlogListService(endpoint, { params })
+  );
+
+  return {
+    blogsData: data,
+    errorApproval: error,
+    mutateBlogsData: mutate,
+    isLoadingBlogs: isLoading,
   };
 }

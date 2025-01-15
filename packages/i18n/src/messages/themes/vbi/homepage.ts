@@ -121,5 +121,89 @@ export const vbiHomepage = {
         },
       },
     },
+    vbiBlogs: {
+      title: 'NEWS AND RESEARCH INSIGHTS',
+      titleSub: 'Explore the latest courses, hackathons, events, industry news and job trends in Web3.',
+      button: {
+        text: 'Learn more',
+        link: '#',
+      },
+    },
+    vbiEvents: {
+      title: 'HACKATHON & EVENTS',
+      titleSub:
+        'Expert-led video courses for beginners and all skill levels. Engage with interactive quizzes and coding challenges to enhance your skills.',
+      button: {
+        text: 'Explore all',
+        link: '#',
+      },
+      events: {
+        event1: {
+          title: 'MOVEMENT VIETNAM HACKATHON 2024',
+          description:
+            'Encouraging developers, specifically Aptos developers to leverage Move and creativity for breakthrough projects on Movement blockchain.',
+          stats: {
+            stat1: {
+              label: 'Developers engaged',
+            },
+            stat2: {
+              label: 'Project submissions',
+            },
+            stat3: {
+              label: 'Demo day attendees',
+            },
+          },
+        },
+        event2: {
+          title: 'WEB3 HACKFEST 2023',
+          description:
+            'The biggest APAC hackathon of 2023 for Web2 and Web3 developers, offering a chance to challenge yourself and use Blockchain technology.',
+          stats: {
+            stat1: {
+              label: 'Developers engaged',
+            },
+            stat2: {
+              label: "The world's leading investment fund",
+            },
+            stat3: {
+              label: 'Universitiese',
+            },
+          },
+        },
+      },
+    },
+    vbiCreators: {
+      title: 'SUCCESSFUL STORIES',
+      titleSub: 'Explore the latest courses, hackathons, events, industry news and job trends in Web3.',
+      creators: {
+        creator1: {
+          name: 'Hien Phan',
+          role: 'Developer',
+          story:
+            'Completing the course at VBI significantly improved my confidence in the Blockchain field, opened new opportunities, and inspired me to pursue a brighter future. Collaborating with peers highlighted the role of stepping out of my comfort zone to achieve success in the IT industry.',
+        },
+        creator2: {
+          name: 'Tung Le',
+          role: 'Developer',
+          story:
+            'The instructors at VBI have simplified the complex concepts in the course with practical examples. With a solid foundation and support from VBI, I am confident to explore Web3 and Blockchain. Currently, I teach the Rust programming language and support new developers in this ecosystem.',
+        },
+        creator3: {
+          name: 'Vo Nhat Cuong',
+          role: 'AI Developer',
+          story:
+            'At 23, my confidence as a Computer and AI Engineer distinguishes me from my peers. Known as the “Hackathon Hunter,” I have earned awards in various competitions and garnered attention from top technology companies, all thanks to the mentorship of individuals like Mr. Thanh and Mr. Vu.',
+        },
+      },
+    },
+    vbiMap: {
+      title: 'COMPREHENSIVE BLOCKCHAIN AND MARKETING SOLUTIONS FOR ENTERPRISES',
+      titleSub:
+        'Attract and onboard thousands of developers through bootcamps, gamified challenges, hackathons, bounties, and live events. Foster their long-term growth with strategic incubators.',
+      button: {
+        text: 'Explore our solutions',
+        link: '#',
+      },
+    },
   },
 };

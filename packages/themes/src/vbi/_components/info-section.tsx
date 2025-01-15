@@ -14,7 +14,7 @@ interface InfoSectionProps {
 }
 const InfoSection = ({ title, titleSub, button, className, variant = 'default' }: InfoSectionProps) => {
   return (
-    <div className={cn('space-y-4 text-foreground md:space-y-6', className)}>
+    <div className={cn('space-y-2 text-foreground md:space-y-4', className)}>
       <h2
         className={`font-bold text-xl uppercase leading-tight lg:text-3xl ${
           variant === 'outline' && 'text-background'
