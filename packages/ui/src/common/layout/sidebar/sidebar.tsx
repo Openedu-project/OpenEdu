@@ -1,9 +1,9 @@
 'use client';
-
-import { HeaderLogo } from '@oe/assets/icons/header-logo';
+import OpeneduLogo from '@oe/assets/images/logo-openedu.png';
 import { ChevronLeftCircle, ChevronRightCircle, Menu } from 'lucide-react';
 import { type FC, useState } from 'react';
 import { usePathname } from '#common/navigation';
+import { Image } from '#components/image';
 import { Button } from '#shadcn/button';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '#shadcn/sheet';
 import { cn } from '#utils/cn';
@@ -67,7 +67,7 @@ export const Sidebar: FC<ISidebarProps> = ({ items, maxDepth = 2, pathnamesNoSid
       <SheetContent side="left" className="flex h-dvh flex-col gap-0 overflow-hidden p-0">
         <SheetHeader className="sticky h-14 space-y-0 border-b">
           <SheetTitle className="mb-0 flex items-center p-4">
-            <HeaderLogo className="w-[115px] md:w-[172px]" />
+            <Image src={OpeneduLogo.src} alt="OpenEdu" width={172} height={40} className="w-[115px] md:w-[172px]" />
           </SheetTitle>
           <SheetDescription />
         </SheetHeader>

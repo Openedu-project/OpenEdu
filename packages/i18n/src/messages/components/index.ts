@@ -1,12 +1,14 @@
 import { blogFormMessages } from './blog-form';
 import { dateTimePickerMessages } from './date-time-picker';
 import { dialogMessages } from './dialog';
+import { footerMessages } from './footer';
 import { formValidationMessages } from './form-validation';
 import { loginRequiredMessages } from './login-required-modal';
 import { paymentButtonMessages } from './payment-button';
 import { richTextMessages } from './rich-text';
 import { tableMessages } from './table';
 import { uploaderMessages } from './uploader';
+import { userMenuMessages } from './user-menu';
 
 export const componentMessages = {
   ...formValidationMessages,
@@ -20,4 +22,6 @@ export const componentMessages = {
   ...dialogMessages,
   ...loginRequiredMessages,
   ...paymentButtonMessages,
+  ...userMenuMessages,
+  ...footerMessages,
 };

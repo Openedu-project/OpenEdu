@@ -1,4 +1,5 @@
 import { type ReactNode, Suspense } from 'react';
+import { LanguageSwitcher } from '#common/language-switcher';
 import { Skeleton } from '#shadcn/skeleton';
 import { cn } from '#utils/cn';
 import { AuthMenu } from '../auth-menu';
@@ -20,7 +21,7 @@ export function Header({
   return (
     <header
       className={cn(
-        'sticky top-0 left-0 z-50 flex h-14 w-full flex-shrink-0 items-center border-border/40 bg-background/95 px-3 shadow backdrop-blur supports-[backdrop-filter]:bg-background/60 md:px-6',
+        'sticky top-0 left-0 z-50 flex h-14 w-full flex-shrink-0 items-center border-border/40 bg-primary px-3 shadow md:px-6',
         className
       )}
     >
@@ -39,6 +40,7 @@ export function Header({
           <AuthMenu />
         </Suspense>
       )}
+      <LanguageSwitcher className="md:ml-2" />
     </header>
   );
 }
