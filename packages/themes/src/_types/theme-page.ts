@@ -37,7 +37,8 @@ export type HomeSection =
   | 'vbiAchievements'
   | 'vbiCourses'
   | 'vbiCert'
-  | 'vbiFeatures'; // Add new page key - HERE
+  | 'vbiFeatures'
+  | 'vbiBlogs'; // Add new page key - HERE
 export type AboutSection = 'theme' | 'team';
 export type AuthLayout = 'theme' | 'login' | 'forgotPassword' | 'emailVerify' | 'signUp' | 'authConfirm';
 

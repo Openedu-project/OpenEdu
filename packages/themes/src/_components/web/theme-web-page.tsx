@@ -1,10 +1,6 @@
-import { THEMES } from "@oe/themes";
-import type {
-  SectionsByPage,
-  ThemePageKey,
-  ThemeSystem,
-} from "@oe/themes/types/index";
-import { getThemeComponent } from "../../_utils/function";
+import { THEMES } from '@oe/themes';
+import type { SectionsByPage, ThemePageKey, ThemeSystem } from '@oe/themes/types/index';
+import { getThemeComponent } from '../../_utils/function';
 
 interface ThemePageProps {
   pageKey: ThemePageKey;
@@ -15,13 +11,14 @@ export default function ThemeWebPage({ pageKey, themeSystem }: ThemePageProps) {
   if (!themeSystem) {
     return null;
   }
-
   const themeName = themeSystem.activedTheme;
   const themeData = themeSystem?.availableThemes?.[themeName];
-  const PageComponent = getThemeComponent<
-    ThemePageKey,
-    SectionsByPage[typeof pageKey]
-  >(THEMES, themeName, pageKey, "theme");
+  const PageComponent = getThemeComponent<ThemePageKey, SectionsByPage[typeof pageKey]>(
+    THEMES,
+    themeName,
+    pageKey,
+    'theme'
+  );
   if (!PageComponent) {
     return null;
   }

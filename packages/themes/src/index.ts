@@ -88,4 +88,62 @@ export const THEMES: ThemeRender = {
   },
 } as const;
 
+export const THEMES_SERVER: ThemeRender = {
+  academia: {
+    homepage: {
+      theme: AcademiaHomePage,
+      hero: AcademiaHomepageHero,
+      features: AcademiaHomepageFeatures,
+      partners: AcademiaHomepagePartners,
+      explores: AcademiaHomepageExplores,
+      organizations: AcademiaHomepageOrganizations,
+    },
+    'about-us': {
+      theme: AcademiaAboutUs,
+    },
+    auth: {
+      theme: AcademiaAuthLayout,
+      login: AcademiaLogin,
+      signUp: AcademiaAuthLayoutSignUp,
+      forgotPassword: AcademiaForgotPassword,
+      // emailVerify: AcademiaEmailVerify,
+      // authConfirm: AcademiaAuthConfirm,
+    },
+  },
+  scholar: {
+    homepage: {
+      theme: ScholarHomePage,
+      scholarHero: ScholarHomepageHero,
+      scholarService: ScholarHomepageService,
+      scholarAboutUs: ScholarHomepageAboutUs,
+    },
+    'about-us': {
+      theme: ScholarAboutUs,
+    },
+    auth: {
+      theme: AcademiaAuthLayout,
+      login: AcademiaLogin,
+      // signUp: AcademiaAuthLayoutSignUp,
+    },
+  },
+  vbi: {
+    homepage: {
+      theme: VbiHomepage,
+      // vbiHero: VbiHomepageHero,
+      // vbiAchievements: VbiHomepageAchievements,
+      // vbiCourses: VbiHomepageCourses,
+      // vbiCert: VbiHomepageCert,
+      // vbiFeatures: VbiHomepageFeatures,
+    },
+    'about-us': {
+      theme: ScholarAboutUs,
+    },
+    auth: {
+      theme: AcademiaAuthLayout,
+      login: AcademiaLogin,
+      // signUp: AcademiaAuthLayoutSignUp,
+    },
+  },
+} as const;
+
 export { fonts, defaultThemeSystemConfig, getMetadata, initialThemeGlobal, updateGlobalTheme };
