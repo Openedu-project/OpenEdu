@@ -4,12 +4,10 @@ import { Image } from '@oe/ui/components/image';
 import { Uploader } from '@oe/ui/components/uploader';
 import { Button } from '@oe/ui/shadcn/button';
 import { Camera, User2 } from 'lucide-react';
-import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 export default function UploadDemo() {
   const [fileList, setFileList] = useState<IFileResponse[]>([]);
-  const tAuth = useTranslations('auth');
 
   return (
     <div>

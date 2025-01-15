@@ -40,7 +40,7 @@ export function Header({
           <AuthMenu />
         </Suspense>
       )}
-      <LanguageSwitcher />
+      <LanguageSwitcher className="md:ml-2" />
     </header>
   );
 }

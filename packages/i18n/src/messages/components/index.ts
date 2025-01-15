@@ -1,6 +1,7 @@
 import { blogFormMessages } from './blog-form';
 import { dateTimePickerMessages } from './date-time-picker';
 import { dialogMessages } from './dialog';
+import { footerMessages } from './footer';
 import { formValidationMessages } from './form-validation';
 import { loginRequiredMessages } from './login-required-modal';
 import { paymentButtonMessages } from './payment-button';
@@ -22,4 +23,5 @@ export const componentMessages = {
   ...loginRequiredMessages,
   ...paymentButtonMessages,
   ...userMenuMessages,
+  ...footerMessages,
 };

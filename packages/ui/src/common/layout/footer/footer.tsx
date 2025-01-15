@@ -1,98 +1,141 @@
-import Twitter from '@oe/assets/icons/social-icon/twitter';
-import { Facebook, Instagram } from 'lucide-react';
+import Discord from '@oe/assets/icons/social-icon/discord';
+import Facebook from '@oe/assets/icons/social-icon/facebook';
+import Telegram from '@oe/assets/icons/social-icon/telegram';
+import OpeneduLogo from '@oe/assets/images/logo-openedu-2.png';
+import { useTranslations } from 'next-intl';
+import { useMemo } from 'react';
 import { Link } from '#common/navigation';
+import { Image } from '#components/image';
 
 export function Footer() {
+  const t = useTranslations('footer');
+
+  const navigationLinks = useMemo(
+    () => ({
+      registration: [
+        {
+          href: '/become-creator',
+          label: t('navigation.registration.becomeCreator'),
+        },
+        {
+          href: '/become-writer',
+          label: t('navigation.registration.becomeWriter'),
+        },
+        {
+          href: '/organization',
+          label: t('navigation.registration.organization'),
+        },
+      ],
+      terms: [
+        { href: '/terms', label: t('navigation.terms.tnc') },
+        { href: '/faq', label: t('navigation.terms.faq') },
+      ],
+      social: [
+        {
+          href: 'https://discord.com/invite/hWq4TXEDxW',
+          icon: Discord,
+          label: t('navigation.social.discord'),
+        },
+        {
+          href: 'https://t.me/+z2s3BWk8jZhkNzY1',
+          icon: Telegram,
+          label: t('navigation.social.telegram'),
+        },
+        {
+          href: 'https://www.facebook.com/openedu101',
+          icon: Facebook,
+          label: t('navigation.social.facebook'),
+        },
+      ],
+    }),
+    [t]
+  );
+
+  const LogoSection = useMemo(
+    () => (
+      <div className="w-full lg:col-span-4">
+        <Link href="/" className="mb-6 flex items-center gap-2 border-none p-0">
+          <Image
+            src={OpeneduLogo.src}
+            alt="OpenEdu"
+            align="start"
+            width={172}
+            height={40}
+            className="w-[115px] min-w-[60px] md:w-[172px]"
+          />
+        </Link>
+        <p className="mcaption-regular16 max-w-xs">{t('description')}</p>
+      </div>
+    ),
+    [t]
+  );
+
+  const NavigationSection = useMemo(
+    () => (
+      <div className="grid grid-cols-1 gap-8 sm:grid-cols-3 lg:col-span-8 lg:grid-cols-8">
+        <div className="lg:col-span-3">
+          <h3 className="mbutton-semibold16 mb-4">{t('navigation.registration.title')}</h3>
+          <ul className="space-y-1">
+            {navigationLinks.registration.map(link => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="mcaption-regular16 p-0 text-[#464646] transition-colors hover:text-[#2B3674]"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="lg:col-span-3">
+          <h3 className="mbutton-semibold16 mb-4">{t('navigation.terms.title')}</h3>
+          <ul className="space-y-1">
+            {navigationLinks.terms.map(link => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="mcaption-regular16 p-0 text-[#464646] transition-colors hover:text-[#2B3674]"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="lg:col-span-2">
+          <ul className="space-y-1">
+            {navigationLinks.social.map(link => {
+              const Icon = link.icon;
+              return (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mcaption-regular16 flex items-center justify-start gap-3 p-0 text-[#464646] transition-colors hover:text-[#2B3674]"
+                  >
+                    <Icon className="h-5 w-5" />
+                    <span>{link.label}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+    ),
+    [navigationLinks, t]
+  );
+
   return (
-    <footer className="w-full px-4 py-8 lg:py-16 bg-[linear-gradient(255deg,_#B8F4F8_6.18%,_#EDE3FE_70.53%)]">
+    <footer className="w-full bg-[linear-gradient(255deg,_#B8F4F8_6.18%,_#EDE3FE_70.53%)] px-4 py-8 lg:py-16">
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {/* Logo and Description */}
-          <div className="space-y-6">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 bg-[#4318FF] rounded-full" />
-              <span className="text-[#4318FF] text-2xl font-semibold">OpenEDU</span>
-            </Link>
-            <p className="text-[#464646] text-sm leading-relaxed max-w-xs">
-              A dynamic platform for learns, instructors, organizations to engage and share knowledge. We aim to add
-              value to our learner's journey.
-            </p>
-          </div>
-
-          {/* Registration Links */}
-          <div className="space-y-4">
-            <h3 className="text-base font-semibold text-[#2B3674]">Registration</h3>
-            <ul className="space-y-3">
-              <li>
-                <Link href="/become-creator" className="text-sm text-[#464646] hover:text-[#2B3674] transition-colors">
-                  Become Creator
-                </Link>
-              </li>
-              <li>
-                <Link href="/become-writer" className="text-sm text-[#464646] hover:text-[#2B3674] transition-colors">
-                  Become Writter
-                </Link>
-              </li>
-              <li>
-                <Link href="/organization" className="text-sm text-[#464646] hover:text-[#2B3674] transition-colors">
-                  Organization Registration
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Terms & Conditions */}
-          <div className="space-y-4">
-            <h3 className="text-base font-semibold text-[#2B3674]">Terms & Conditioners</h3>
-            <ul className="space-y-3">
-              <li>
-                <Link href="/terms" className="text-sm text-[#464646] hover:text-[#2B3674] transition-colors">
-                  OpenEdu T&C
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className="text-sm text-[#464646] hover:text-[#2B3674] transition-colors">
-                  OpenEdu FAQ
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Social Media Links */}
-          <div className="space-y-4">
-            <ul className="space-y-3">
-              <li>
-                <Link
-                  href="https://facebook.com"
-                  target="_blank"
-                  className="flex items-center gap-3 text-sm text-[#464646] hover:text-[#2B3674] transition-colors"
-                >
-                  <Facebook className="w-5 h-5" />
-                  <span>Facebook</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="https://twitter.com"
-                  target="_blank"
-                  className="flex items-center gap-3 text-sm text-[#464646] hover:text-[#2B3674] transition-colors"
-                >
-                  <Twitter className="w-5 h-5" />
-                  <span>Twitter</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="https://instagram.com"
-                  target="_blank"
-                  className="flex items-center gap-3 text-sm text-[#464646] hover:text-[#2B3674] transition-colors"
-                >
-                  <Instagram className="w-5 h-5" />
-                  <span>Instagram</span>
-                </Link>
-              </li>
-            </ul>
-          </div>
+        <div className="flex flex-col gap-8 lg:grid lg:grid-cols-12">
+          {LogoSection}
+          {NavigationSection}
         </div>
       </div>
     </footer>

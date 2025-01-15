@@ -1,7 +1,8 @@
-import { HeaderLogo } from '@oe/assets/icons/header-logo';
+import OpeneduLogo from '@oe/assets/images/logo-openedu.png';
 import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import type { ReactNode } from 'react';
 import { Link } from '#common/navigation';
+import { Image } from '#components/image';
 import { cn } from '#utils/cn';
 import { Header } from '../header';
 import { type ISidebarItem, Sidebar } from '../sidebar';
@@ -24,7 +25,13 @@ export function DashboardLayout({
           variant="ghost"
           activeClassName="border-0"
         >
-          <HeaderLogo className="w-[115px] md:w-[172px]" />
+          <Image
+            src={OpeneduLogo.src}
+            alt="OpenEdu"
+            width={172}
+            height={40}
+            className="w-[115px] min-w-[60px] md:w-[172px]"
+          />
         </Link>
       </Header>
       <main className="flex flex-1 overflow-hidden bg-muted">
