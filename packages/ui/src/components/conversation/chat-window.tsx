@@ -53,6 +53,7 @@ export function ChatWindow({
       resetMessages();
       resetStatus();
       resetGenMessage();
+      setIsNewChat(false);
       return;
     }
 
@@ -62,7 +63,7 @@ export function ChatWindow({
         setStatus('generating');
       }
     }
-  }, []);
+  }, [id]);
 
   const sendMessage = async ({ messageInput = '', type, images, message_id, role, status }: ISendMessageParams) => {
     const messageID = message_id ?? `id-${Date.now()}`;
@@ -149,7 +150,7 @@ export function ChatWindow({
           </h2>
         )}
       </div>
-      <div className="pt-2">
+      <div className="bg-background pt-2">
         {modelWarning && (
           <div className="m-auto flex w-[95%] items-center gap-2 rounded-t-xl bg-primary/10 p-2">
             <CircleAlert className="h-4 w-4" />

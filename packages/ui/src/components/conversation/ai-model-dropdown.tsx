@@ -8,7 +8,7 @@ import { Image } from '#components/image';
 import { Button } from '#shadcn/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '#shadcn/dropdown-menu';
 import { cn } from '#utils/cn';
-import { useConversationStore } from '../../_stores/conversation-store';
+import { useConversationStore } from './_stores/conversation-store';
 
 interface ModelDropdownProps {
   onSelectSuccess?: () => void;

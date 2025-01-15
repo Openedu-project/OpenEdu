@@ -32,7 +32,7 @@ export const ChatWithMessage = ({ id, sendMessage, nextCursorPage = '' }: IChatP
   const { data, isLoading } = useGetConversationDetails({
     shouldFetch: shouldGetData && nextKeyRef.current.length > 0,
     id,
-    params: { cursor: nextKeyRef.current, sort: 'create_at desc' },
+    params: { cursor: nextKeyRef.current, sort: 'create_at desc', per_page: 10 },
   });
 
   const rewrite = (msg: IMessage) => {

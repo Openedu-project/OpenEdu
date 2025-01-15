@@ -37,7 +37,12 @@ const convertTextWithLink = (text: string) => {
     const fullUrl = match.startsWith('www.') ? `https://${match}` : match;
 
     parts.push(
-      <Link key={index} href={fullUrl} target="_blank" className="text-primary underline hover:text-primary/80">
+      <Link
+        key={index}
+        href={fullUrl}
+        target="_blank"
+        className="!p-0 whitespace-normal text-primary underline hover:text-primary/80"
+      >
         {match}
       </Link>
     );
