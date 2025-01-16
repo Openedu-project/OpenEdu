@@ -24,15 +24,20 @@ interface IChatProps {
 export const ChatWithMessage = ({ id, sendMessage, nextCursorPage = '' }: IChatProps) => {
   const { messages, status, selectedModel, genMessage, setMessages } = useConversationStore();
   const [shouldGetData, setShouldGetData] = useState<boolean>(false);
+  const atBottom = useRef<boolean>(true);
 
-  const firstItemIndexRef = useRef<number>(9999);
+  const firstItemIndexRef = useRef<number>(99999);
   const virtuosoRef = useRef<VirtuosoHandle>(null);
   const nextKeyRef = useRef<string>(nextCursorPage);
 
   const { data, isLoading } = useGetConversationDetails({
     shouldFetch: shouldGetData && nextKeyRef.current.length > 0,
     id,
-    params: { cursor: nextKeyRef.current, sort: 'create_at desc', per_page: 10 },
+    params: {
+      cursor: nextKeyRef.current,
+      sort: 'create_at desc',
+      per_page: 10,
+    },
   });
 
   const rewrite = (msg: IMessage) => {
@@ -66,13 +71,30 @@ export const ChatWithMessage = ({ id, sendMessage, nextCursorPage = '' }: IChatP
     ) as InputType[];
   }, [selectedModel]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (genMessage && atBottom.current) {
+      virtuosoRef.current?.scrollToIndex({
+        index: messages.length - 1,
+        align: 'end',
+        behavior: 'smooth',
+      });
+    }
+  }, [messages.length]);
+
   return (
     <Virtuoso
-      data={messages}
+      data={messages.filter(msg => msg.id !== genMessage?.id)}
       ref={virtuosoRef}
+      style={{ paddingBottom: 0 }}
+      atBottomStateChange={bottom => {
+        atBottom.current = bottom;
+      }}
+      atBottomThreshold={50}
+      alignToBottom={true}
       totalCount={messages.length}
       firstItemIndex={firstItemIndexRef.current}
-      followOutput
+      followOutput="auto"
       initialTopMostItemIndex={{ align: 'end', index: messages.length - 1 }}
       startReached={() => {
         if (!(GENERATING_STATUS.includes(status ?? '') || isLoading) && nextKeyRef.current.length > 0) {
@@ -101,7 +123,7 @@ export const ChatWithMessage = ({ id, sendMessage, nextCursorPage = '' }: IChatP
             </div>
           ) : null,
         Footer: () =>
-          genMessage && (
+          genMessage ? (
             <MessageBox
               key={genMessage.id}
               id={genMessage.id}
@@ -115,7 +137,7 @@ export const ChatWithMessage = ({ id, sendMessage, nextCursorPage = '' }: IChatP
               sendMessage={sendMessage}
               messageType={messageType}
             />
-          ),
+          ) : null,
       }}
     />
   );

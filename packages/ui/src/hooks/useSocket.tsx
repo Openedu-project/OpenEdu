@@ -13,7 +13,7 @@ import { useSocketStore } from '#store/socket';
 export const useSocket = (token: string) => {
   const isUnmounted = useRef(false);
   const { setSocketData } = useSocketStore();
-  const { setGenMessage, setStatus, status, action } = useConversationStore();
+  const { setGenMessage, setStatus, status, genMessage, resetPage } = useConversationStore();
   const referrer = getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY as string);
   const endpoint = token
     ? `${process.env.NEXT_PUBLIC_WS_ORIGIN}${createAPIUrl({
@@ -50,9 +50,7 @@ export const useSocket = (token: string) => {
           const { data } = parsedData as ISocketRes<IMessageData>;
 
           if (
-            !action ||
-            (action.key === 'new' && data.parent_message_id !== action.id) ||
-            (action.key === 'rewrite' && data.message_id !== action.id)
+            !genMessage || genMessage.id !== data.message_id
           ) {
             return;
           }
@@ -76,6 +74,9 @@ export const useSocket = (token: string) => {
           setGenMessage(newMessage, () => {
             if (!GENERATING_STATUS.includes(data.status)) {
               setStatus(data?.status);
+              if (resetPage) {
+                window.location.reload();
+              }
             }
           });
         } else {

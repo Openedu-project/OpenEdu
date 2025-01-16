@@ -22,6 +22,6 @@ export const aiAssistantMessages = {
     delDesc: 'This will delete <strong>{chat_name}</strong> .',
     modelLimitedWarning:
       "You've reached the daily token limit for this model. Please try again tomorrow or switch to another model.",
-    loadingHistory: 'Loading More History...',
+    loadingHistory: 'Loading History...',
   },
 };

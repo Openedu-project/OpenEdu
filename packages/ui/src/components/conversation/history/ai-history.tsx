@@ -15,7 +15,7 @@ import { Drawer, DrawerContent, DrawerDescription, DrawerTitle } from '#shadcn/d
 import { Input } from '#shadcn/input';
 import { useIsMobile } from '#shadcn/use-mobile';
 import { cn } from '#utils/cn';
-import { useConversationStore } from '../_stores/conversation-store';
+import { useConversationStore } from '#store/conversation-store';
 import AIHistoryItem from './history-item';
 const PER_PAGE = 50;
 

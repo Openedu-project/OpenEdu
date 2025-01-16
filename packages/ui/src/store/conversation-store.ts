@@ -1,17 +1,11 @@
 import type { IAIModel, IAIStatus, IMessage } from '@oe/api/types/conversation';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { create } from 'zustand';
-
-export interface IAIAction {
-  key: 'rewrite' | 'new';
-  id: string;
-}
 interface IConversationStore {
   messages: IMessage[];
   isNewChat: boolean;
   status?: IAIStatus;
   selectedModel?: IAIModel;
-  action?: IAIAction;
   setMessages: (value: IMessage[]) => void;
   resetMessages: () => void;
   updateMessages: (value: IMessage, index?: number, callback?: () => void, id?: string) => void;
@@ -23,6 +17,8 @@ interface IConversationStore {
   genMessage?: IMessage;
   setGenMessage: (value: IMessage, callback?: () => void, shortenedIndex?: number) => void;
   resetGenMessage: () => void;
+  resetPage: boolean;
+  setResetPage: (value: boolean) => void;
 }
 
 export const useConversationStore = create<IConversationStore>(set => {
@@ -32,6 +28,11 @@ export const useConversationStore = create<IConversationStore>(set => {
     status: undefined,
     selectedModel: undefined,
     genMessage: undefined,
+    resetPage: false,
+    setResetPage: (value: boolean) =>
+      set(() => {
+        return { resetPage: value };
+      }),
     setMessages: (messages: IMessage[]) =>
       set(() => {
         return { messages };

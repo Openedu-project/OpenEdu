@@ -7,7 +7,7 @@ import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { AI_ROUTES, generateRoute } from '@oe/core/utils/routes';
 import { CircleAlert } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from '#common/navigation';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
@@ -42,10 +42,12 @@ export function ChatWindow({
     selectedModel,
     setGenMessage,
     resetGenMessage,
+    setResetPage,
   } = useConversationStore();
 
   const [modelWarning, setModelWarning] = useState<boolean>(false);
   const router = useRouter();
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -59,8 +61,12 @@ export function ChatWindow({
 
     if (initMessages.length > 0 && !isNewChat) {
       setMessages([...initMessages].reverse());
-      if (initMessages.filter(message => GENERATING_STATUS.includes(message.status ?? ''))?.length > 0) {
+      const genMessage = initMessages.find(message => GENERATING_STATUS.includes(message.status ?? ''));
+      if (genMessage) {
         setStatus('generating');
+        setGenMessage(genMessage, () => {
+          setResetPage(true);
+        });
       }
     }
   }, [id]);
@@ -139,7 +145,10 @@ export function ChatWindow({
 
   return (
     <>
-      <div className={cn('flex grow flex-col gap-2 overflow-scroll', id ? 'bg-background' : 'items-center')}>
+      <div
+        ref={containerRef}
+        className={cn('flex grow flex-col gap-2 overflow-hidden', id ? 'bg-background' : 'items-center')}
+      >
         {id ? (
           <ChatWithMessage sendMessage={sendMessage} nextCursorPage={nextCursorPage} id={id} />
         ) : (
@@ -163,6 +172,7 @@ export function ChatWindow({
           showInputOption
           className="w-full"
           generating={GENERATING_STATUS.includes(status ?? '')}
+          resetOnSuccess
         />
       </div>
     </>

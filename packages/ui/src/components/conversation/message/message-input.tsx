@@ -47,6 +47,7 @@ export interface MessageInputProps {
   showInputOption?: boolean;
   messageType?: InputType[];
   images?: IFileResponse[];
+  resetOnSuccess?: boolean;
 }
 
 type InputFieldProps<TFormValues extends FieldValues> = {
@@ -201,7 +202,7 @@ const InputField = <TFormValues extends FieldValues>({
               </Button>
             )}
           </div>
-          <FormFieldWithLabel name={'message' as Path<TFormValues>} className="w-full">
+          <FormFieldWithLabel name={'message' as Path<TFormValues>} className="w-full" showErrorMessage={false}>
             <TextareaAutosize
               onKeyDown={handleKeyDown}
               placeholder={tAI('messageImage')}
@@ -269,6 +270,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
   type = 'chat',
   messageType,
   images,
+  resetOnSuccess = false,
 }) => {
   const tAI = useTranslations('aiAssistant');
   const pathname = usePathname();
@@ -331,7 +333,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
       void form.trigger();
       if (Object.keys(form.formState.errors)?.length === 0) {
         void form.handleSubmit(handleSubmit)();
-        form.reset();
+        resetOnSuccess && form.reset();
       }
     } else if (inputType === 'chat' && message && message.trim()?.length === 0) {
       form.setValue('message', '');
@@ -370,7 +372,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
     <div className={cn('flex flex-col gap-4 bg-background', className)}>
       <FormWrapper
         id="messange-input"
-        resetOnSuccess
+        resetOnSuccess={resetOnSuccess}
         schema={inputSchema}
         onSubmit={handleSubmit}
         useFormProps={{ defaultValues }}
@@ -422,7 +424,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
                     'group/btn h-8 w-8 rounded-full bg-primary/10',
                     generating && 'cursor-not-allowed opacity-50'
                   )}
-                  onClick={() => form.reset()}
+                  onClick={() => resetOnSuccess && form.reset()}
                   aria-label="Send message"
                 >
                   <MoveRight strokeWidth={3} className="h-4 w-4 text-primary group-hover/btn:text-primary-foreground" />

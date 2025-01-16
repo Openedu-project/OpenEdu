@@ -8,7 +8,7 @@ import type { RefObject } from 'react';
 import type { SWRInfiniteResponse } from 'swr/infinite';
 import { Link } from '#common/navigation';
 import { cn } from '#utils/cn';
-import { useConversationStore } from '../_stores/conversation-store';
+import { useConversationStore } from '#store/conversation-store';
 import MessageInput from '../message/message-input';
 import type { ISendMessageParams } from '../type';
 import ActionDropdown from './history-actions-dropdown';
@@ -113,11 +113,11 @@ export default function AIHistoryItem({ className, item, mutate, pageIndex }: IH
     );
   }
   return (
-    <div className={cn('group/history flex items-center gap-2 rounded-lg p-2 hover:bg-primary/10', className)}>
+    <div className={cn('group/history flex items-center gap-2 rounded-lg hover:bg-primary/10', className)}>
       <Link
-        className="mcaption-regular14 block h-auto w-[calc(100%-30px)] truncate p-0 text-start text-foreground hover:no-underline"
+        className="mcaption-regular14 block h-auto w-[calc(100%-30px)] truncate text-start text-foreground hover:no-underline"
         href={generateRoute(AI_ROUTES.chatDetail, { id: item.id })}
-        activeClassName="text-primary cursor-default border-l-4 pl-2 border-primary rounded-none "
+        activeClassName="text-primary cursor-default"
         onClick={() => {
           setIsNewChat(false);
           resetGenMessage();
