@@ -4,13 +4,14 @@ import type { ICourse, ICourseResponse } from '@oe/api/types/course/course';
 import MedalStar from '@oe/assets/icons/medal-star';
 import SendSquare from '@oe/assets/icons/send-square';
 import { VideoSquare } from '@oe/assets/icons/video-square';
+import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { WishlistButton } from '@oe/ui/components/wishlist-button';
 import { Button } from '@oe/ui/shadcn/button';
 import { Book } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { KeyedMutator } from 'swr';
+import { Link } from '#common/navigation';
 import { Card } from '#shadcn/card';
-import { CourseLinkWrapper } from './course-link-wrapper';
 
 interface CourseHoverContentProps {
   courseData: ICourse;
@@ -19,13 +20,15 @@ interface CourseHoverContentProps {
 
 export function CourseHoverContent({ courseData, mutate }: CourseHoverContentProps) {
   const tDetail = useTranslations('courseCard');
+  const isExternalDomain =
+    typeof window !== 'undefined' && courseData?.org?.domain && courseData?.org?.domain !== window.location.hostname;
 
   return (
     <Card className="absolute inset-0 flex cursor-pointer flex-col gap-4 overflow-y-hidden rounded-lg border-2 border-primary bg-background p-4 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
-      <CourseLinkWrapper
-        slug={courseData?.slug}
-        domain={courseData?.org?.domain}
-        className="flex flex-col items-start gap-4 whitespace-break-spaces"
+      <Link
+        href={PLATFORM_ROUTES.courseDetail.replace(':slug', courseData?.slug)}
+        external={!!isExternalDomain}
+        className="flex h-full w-full flex-col items-start gap-4 whitespace-break-spaces p-0 hover:no-underline"
       >
         <p className="giant-iheading-semibold20 line-clamp-2 whitespace-break-spaces text-primary">
           {courseData?.name}
@@ -53,7 +56,7 @@ export function CourseHoverContent({ courseData, mutate }: CourseHoverContentPro
         )}
 
         <CourseFeatures courseData={courseData} />
-      </CourseLinkWrapper>
+      </Link>
 
       <div className="flex items-center justify-between gap-2">
         {/* TODO: payment button */}

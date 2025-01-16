@@ -12,15 +12,12 @@ import { getSearchParamsData } from './search-params-handler';
 const PER_PAGE = 12;
 
 interface CourseListProps {
-  // searchParams: URLSearchParams;
   isOpenEdu: boolean;
   fallback?: ICourseResponse;
 }
 
 export default function CourseList({ isOpenEdu, fallback }: CourseListProps) {
   const searchParams = useSearchParams();
-  // const [courseList, setCourseList] = useState<IDataPagination<ICourse[]>>();
-  // const [isLoading, setIsLoading] = useState(true);
   const [params, setParams] = useState(() => {
     const searchParamsData = getSearchParamsData(searchParams);
     return {
@@ -39,16 +36,8 @@ export default function CourseList({ isOpenEdu, fallback }: CourseListProps) {
     mutateListCourses,
   } = useGetCoursesPublish(params, params.page === 1 ? fallback : undefined);
 
-  // useEffect(() => {
-  //   if (dataCoursesPublish) {
-  //     setCourseList(dataCoursesPublish);
-  //     // setIsLoading(false);
-  //   }
-  // }, [dataCoursesPublish]);
-
   const handlePageChange = (page: number) => {
     setParams(prev => ({ ...prev, page }));
-    // setIsLoading(true);
   };
 
   if (isLoadingCourses) {
@@ -56,7 +45,7 @@ export default function CourseList({ isOpenEdu, fallback }: CourseListProps) {
   }
 
   return (
-    <div>
+    <>
       <CourseGrid courses={dataCoursesPublish?.results} mutate={mutateListCourses} />
       <PaginationWrapper
         currentPage={dataCoursesPublish?.pagination?.page ?? 1}
@@ -64,6 +53,6 @@ export default function CourseList({ isOpenEdu, fallback }: CourseListProps) {
         onPageChange={handlePageChange}
         pageSize={PER_PAGE}
       />
-    </div>
+    </>
   );
 }

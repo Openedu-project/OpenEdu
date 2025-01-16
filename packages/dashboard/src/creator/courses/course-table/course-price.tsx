@@ -2,6 +2,7 @@ import type { ICourse } from '@oe/api/types/course/course';
 import { formatCurrency } from '@oe/core/utils/currency';
 import type { LanguageCode } from '@oe/i18n/languages';
 import { languageWithCurrency } from '@oe/ui/components/input-currency';
+import { useTranslations } from 'next-intl';
 
 const findLocaleForCurrency = (currencyCode: string): LanguageCode => {
   const entry = Object.entries(languageWithCurrency).find(([_, details]) => details.currencyCode === currencyCode);
@@ -15,12 +16,14 @@ export default function CoursePrice({
   priceSettings: ICourse['price_settings'];
   variant?: 'block' | 'inline';
 }) {
+  const tCourses = useTranslations('courses');
+
   if (!priceSettings) {
     return <span className="giant-iheading-semibold20 text-primary">-</span>;
   }
 
   if (!priceSettings.is_pay) {
-    return <div className="font-medium text-sm text-success">Free</div>;
+    return <div className="mcaption-bold16 lg:mcaption-bold20 text-success">{tCourses('payment.free')}</div>;
   }
 
   const fiatLocale = findLocaleForCurrency(priceSettings.fiat_currency);

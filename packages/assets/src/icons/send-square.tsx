@@ -1,10 +1,10 @@
-import type { ISvgProps } from "./types";
+import type { ISvgProps } from './types';
 
 export default function SendSquare({
   width = 16,
   height = 16,
-  className = "",
-  color = "white",
+  className = '',
+  color = 'hsl(var(--background))',
 }: ISvgProps) {
   return (
     <svg

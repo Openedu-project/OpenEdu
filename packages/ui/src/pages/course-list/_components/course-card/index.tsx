@@ -1,13 +1,13 @@
-// 'use client';
 import type { ICourse, ICourseResponse } from '@oe/api/types/course/course';
 import type { KeyedMutator } from 'swr';
 
+import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { Card, CardContent } from '@oe/ui/shadcn/card';
 import { cn } from '@oe/ui/utils/cn';
 import type React from 'react';
+import { Link } from '#common/navigation';
 import { CourseDetails } from './course-detail';
 import { CourseHoverContent } from './course-hover-content';
-import { CourseLinkWrapper } from './course-link-wrapper';
 import { CourseThumbnail } from './course-thumbnail';
 
 interface ICourseCard extends React.ComponentProps<typeof Card> {
@@ -32,8 +32,12 @@ export default function CourseCard({
   ...props
 }: ICourseCard) {
   return (
-    <div role="presentation" className={cn('group relative w-full', className)}>
-      <CourseLinkWrapper slug={courseData?.slug} domain={courseData?.org?.domain}>
+    <div className={cn('group relative w-full', className)}>
+      <Link
+        href={PLATFORM_ROUTES.courseDetail.replace(':slug', courseData?.slug)}
+        external={courseData?.org?.domain !== (process.env.NEXT_PUBLIC_APP_ROOT_DOMAIN_NAME || '')}
+        className="h-full w-full p-0 hover:no-underline"
+      >
         <Card
           id={courseData?.id}
           className={cn(
@@ -47,7 +51,7 @@ export default function CourseCard({
             <CourseDetails courseData={courseData} showPrice={showPrice} />
           </CardContent>
         </Card>
-      </CourseLinkWrapper>
+      </Link>
 
       {showHover && <CourseHoverContent courseData={courseData} mutate={mutate} />}
     </div>

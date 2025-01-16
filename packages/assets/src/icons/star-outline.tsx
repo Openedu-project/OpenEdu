@@ -1,6 +1,11 @@
 import type { ISvgProps } from './types';
 
-export default function StarOutline({ width = 12, height = 13, className = '', color = '#DBDBDB' }: ISvgProps) {
+export default function StarOutline({
+  width = 12,
+  height = 13,
+  className = '',
+  color = 'hsl(var(--warning-foreground))',
+}: ISvgProps) {
   return (
     <svg
       className={className}

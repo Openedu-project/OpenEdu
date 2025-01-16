@@ -1,8 +1,8 @@
-import type { ISvgProps } from "./types";
+import type { ISvgProps } from './types';
 
 export default function HeartOutline({
-  className = "",
-  color = "#585858",
+  className = '',
+  color = 'hsl(var(--primary))',
   width = 24,
   height = 24,
 }: ISvgProps) {

@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function Star({ width = 12, height = 13, className = '', color = '#DCA200' }: ISvgProps) {
+export default function Star({ width = 12, height = 13, className = '', color = 'hsl(var(--warning))' }: ISvgProps) {
   return (
     <svg
       className={className}
