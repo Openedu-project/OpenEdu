@@ -16,7 +16,7 @@ export default function CTASection() {
         <h1 className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold32 max-w-[80%]">
           {t('title')}
         </h1>
-        <p className="mcaption-regular16 md:mcaption-regular24 max-w-xl">{t('description')}</p>
+        <p className="mcaption-regular16 lg:mcaption-regular24 max-w-xl">{t('description')}</p>
         <div className="mt-8">
           <Button>{t('buttons.start')}</Button>
         </div>

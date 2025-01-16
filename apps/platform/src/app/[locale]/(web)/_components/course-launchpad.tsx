@@ -122,7 +122,7 @@ export default function CourseLaunchpadSection() {
             <HighlightTitle text={t('highlight')} className="mb-1 justify-center" />
           </div>
           <h2 className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold32 mb-6">{t('title')}</h2>
-          <p className="mcaption-regular16 md:mcaption-regular24 mx-auto sm:max-w-[95%] md:max-w-[90%] lg:max-w-[85%]">
+          <p className="mcaption-regular16 lg:mcaption-regular24 mx-auto sm:max-w-[95%] md:max-w-[90%] lg:max-w-[85%]">
             {t('description')}
           </p>
         </div>

@@ -61,7 +61,7 @@ export function Footer() {
             align="start"
             width={172}
             height={40}
-            className="w-[115px] min-w-[60px] md:w-[172px]"
+            className="w-[115px] min-w-[115px] md:w-[172px]"
           />
         </Link>
         <p className="mcaption-regular16 max-w-xs">{t('description')}</p>

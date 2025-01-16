@@ -27,7 +27,7 @@ export default function AIAssistantSection() {
               {t('title')}
             </h2>
 
-            <p className="mcaption-regular16 md:mcaption-regular24">{t('description')}</p>
+            <p className="mcaption-regular16 lg:mcaption-regular24">{t('description')}</p>
 
             <div className="flex flex-col gap-4 pt-4 sm:flex-row">
               <Button className="px-8 py-3">{t('buttons.explore')}</Button>

@@ -7,6 +7,7 @@ export interface ISidebarItem {
   items?: ISidebarItem[];
   icon?: ReactNode;
   isRoot?: boolean;
+  isHighlight?: boolean;
 }
 
 export interface ISidebarItemProps {

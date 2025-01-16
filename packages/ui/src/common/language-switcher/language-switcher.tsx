@@ -11,7 +11,7 @@ import { cn } from '#utils/cn';
 import { changeLanguage } from './action';
 
 const DROPDOWN_BUTTON_CLASS =
-  'h-6 w-6 rounded-full border-white bg-transparent text-white hover:bg-white/10 hover:text-white';
+  'h-5 w-5 md:h-6 md:w-6 rounded-full border-white bg-transparent text-white hover:bg-white/10 hover:text-white';
 
 type LanguageSwitcherProps = {
   className?: string;
@@ -49,7 +49,7 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon" className={cn(DROPDOWN_BUTTON_CLASS, className)}>
-          <span className="mcaption-semibold12 uppercase">{currentLang}</span>
+          <span className="mbutton-bold10 md:mcaption-semibold12 cursor-pointer uppercase">{currentLang}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

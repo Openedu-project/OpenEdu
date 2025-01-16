@@ -38,7 +38,7 @@ export default function IntroductionSection() {
 
             <h2 className="mb-4 font-bold text-xl sm:mb-5 sm:text-2xl md:mb-6 md:text-3xl">{t('title')}</h2>
 
-            <p className="mcaption-regular16 md:mcaption-regular24 mx-auto max-w-full leading-relaxed sm:max-w-[95%] md:max-w-[90%] lg:max-w-[85%] ">
+            <p className="mcaption-regular16 lg:mcaption-regular24 mx-auto max-w-full leading-relaxed sm:max-w-[95%] md:max-w-[90%] lg:max-w-[85%] ">
               {t('description')}
             </p>
           </div>

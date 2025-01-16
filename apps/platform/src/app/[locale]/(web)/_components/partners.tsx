@@ -2,11 +2,11 @@ import Algro from '@oe/assets/images/openedu-homepage/partners/algro.png';
 import Avail from '@oe/assets/images/openedu-homepage/partners/avail.png';
 import Cardano from '@oe/assets/images/openedu-homepage/partners/cardano.png';
 import Ethereum from '@oe/assets/images/openedu-homepage/partners/ethereum.png';
-import Gfi from '@oe/assets/images/openedu-homepage/partners/gfi.png';
 import Move from '@oe/assets/images/openedu-homepage/partners/move.png';
 import Near from '@oe/assets/images/openedu-homepage/partners/near.png';
 import Polkadot from '@oe/assets/images/openedu-homepage/partners/polkadot.png';
 import Sui from '@oe/assets/images/openedu-homepage/partners/sui.png';
+import Vbi from '@oe/assets/images/openedu-homepage/partners/vbi.png';
 import { Image } from '@oe/ui/components/image';
 
 interface PartnerLogoProps {
@@ -59,8 +59,8 @@ const partners = [
     logo: Avail.src,
   },
   {
-    name: 'GFI',
-    logo: Gfi.src,
+    name: 'VBI',
+    logo: Vbi.src,
   },
   {
     name: 'Near',

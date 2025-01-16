@@ -10,7 +10,7 @@ export async function AuthMenu() {
   console.info(`==========getMeServiceWithoutError took ${end - start}ms==========`);
 
   return (
-    <div className="itxems-center ml-auto flex space-x-2">
+    <div className="itxems-center ml-auto flex space-x-1">
       {me ? (
         <>
           <NotificationButton />
