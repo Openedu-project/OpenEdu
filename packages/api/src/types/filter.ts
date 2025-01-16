@@ -1,5 +1,5 @@
 export interface IFilter {
-  page: number;
+  page?: number;
   per_page?: number;
   sort?: string;
   search_term?: string;
@@ -11,6 +11,7 @@ export interface IFilter {
   preloads?: string;
   event?: string;
   role?: string;
+  currency?: string;
   is_pay?: boolean;
   latest?: boolean;
   parent_id_null?: boolean;

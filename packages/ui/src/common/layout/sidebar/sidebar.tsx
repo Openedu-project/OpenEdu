@@ -1,5 +1,5 @@
 'use client';
-import OpeneduLogo from '@oe/assets/images/logo-openedu.png';
+import OpeneduLogo from '@oe/assets/images/logo-openedu-2.png';
 import { ChevronLeftCircle, ChevronRightCircle, Menu } from 'lucide-react';
 import { type FC, useState } from 'react';
 import { usePathname } from '#common/navigation';
@@ -61,7 +61,7 @@ export const Sidebar: FC<ISidebarProps> = ({ items, maxDepth = 2, pathnamesNoSid
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon" className="mr-2 md:hidden">
-          <Menu className="h-5 w-5" />
+          <Menu className="h-5 w-5 text-primary-foreground" />
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="flex h-dvh flex-col gap-0 overflow-hidden p-0">

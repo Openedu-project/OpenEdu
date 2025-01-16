@@ -18,7 +18,7 @@ export default function HeroSection() {
           {t('title')}
         </h1>
 
-        <p className="mcaption-regular16 md:mcaption-regular24 max-w-xl">{t('description')}</p>
+        <p className="mcaption-regular16 lg:mcaption-regular24 max-w-xl">{t('description')}</p>
 
         <div className="mt-8 flex flex-wrap gap-8 md:gap-12">
           <StatsCard number={t('stats.learners.number')} label={t('stats.learners.label')} circleColor="bg-[#FD86F5]" />

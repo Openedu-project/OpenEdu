@@ -1,9 +1,12 @@
 export const userMenuMessages = {
   userMenu: {
-    aiAssistant: 'AI Assistant',
-    courses: 'Courses',
-    blog: 'Blog',
-    launchpad: 'Launchpad',
-    becomeCreator: 'Become a Creator',
+    profile: 'Profile',
+    admin: 'Admin',
+    creator: 'Creator',
+    organizationBlog: 'Organization Blog',
+    learningSpace: 'Learning Space',
+    affiliate: 'Affiliate',
+    wallet: 'Wallet',
+    myBlog: 'My Blog',
   },
 };

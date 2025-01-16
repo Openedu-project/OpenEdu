@@ -58,11 +58,11 @@ export default function TestimonialsSection() {
   );
 
   return (
-    <div className="w-full bg-white py-5 lg:py-10">
+    <div className="w-full bg-white py-6 lg:py-10">
       <div className="container mx-auto px-0 md:px-4">
         <div className="mb-3 text-center md:mb-6">
           <h2 className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold32 mb-4">{t('title')}</h2>
-          <p className="mcaption-regular16 md:mcaption-regular24">{t('description')}</p>
+          <p className="mcaption-regular16 lg:mcaption-regular24">{t('description')}</p>
         </div>
         <div className="grid auto-rows-fr grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {TESTIMONIALS.map((testimonial, index) => (
@@ -95,7 +95,7 @@ export default function TestimonialsSection() {
                       className="h-full w-full rounded-[9999px] object-cover"
                     />
                   </div>
-                  <div className="mt-4">
+                  <div className="mt-1 lg:mt-4">
                     <h4 className="giant-iheading-bold16 mb-1">{testimonial.author}</h4>
                     <p className="mcaption-regular14">{testimonial.role}</p>
                   </div>

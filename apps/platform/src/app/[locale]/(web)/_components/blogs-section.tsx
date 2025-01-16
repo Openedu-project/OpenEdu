@@ -27,11 +27,11 @@ export default async function BlogsSection() {
         {/* Header */}
         <div className="mb-16 text-center">
           <h2 className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold32 mb-4">{t('title')}</h2>
-          <p className="mcaption-regular16 md:mcaption-regular24 mx-auto max-w-[950px]">
+          <p className="mcaption-regular16 lg:mcaption-regular24 mx-auto max-w-[950px]">
             {t('description')}
             <Link
               href="/blog"
-              className="mcaption-regular16 md:mcaption-regular24 inline-flex items-center gap-1 text-primary hover:underline"
+              className="mcaption-regular16 lg:mcaption-regular24 inline-flex items-center gap-1 text-primary hover:underline"
             >
               {t('discoverLink.text')}
               <ArrowRight className="h-4 w-4" />

@@ -30,7 +30,7 @@ export function DashboardLayout({
             alt="OpenEdu"
             width={172}
             height={40}
-            className="w-[115px] min-w-[60px] md:w-[172px]"
+            className="w-[115px] min-w-[115px] md:w-[172px]"
           />
         </Link>
       </Header>

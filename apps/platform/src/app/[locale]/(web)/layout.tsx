@@ -8,12 +8,13 @@ export default async function OpeneduLayout({
 }: {
   children: ReactNode;
 }) {
-  const t = await getTranslations('userMenu');
+  const t = await getTranslations('headerMenu');
   const sidebarItems = [
     {
       id: 'ai-assistant',
       label: t('aiAssistant'),
       href: '#',
+      isHighlight: true,
     },
     {
       id: 'courses',
@@ -30,11 +31,11 @@ export default async function OpeneduLayout({
       label: t('launchpad'),
       href: '#',
     },
-    {
-      id: 'become-creator',
-      label: t('becomeCreator'),
-      href: '#',
-    },
+    // {
+    //   id: 'become-creator',
+    //   label: t('becomeCreator'),
+    //   href: '#',
+    // },
   ];
 
   return <MainLayout sidebarItems={sidebarItems}>{children}</MainLayout>;

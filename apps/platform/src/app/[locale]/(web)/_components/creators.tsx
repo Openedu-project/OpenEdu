@@ -27,7 +27,7 @@ export default function CreatorsSection() {
             <h2 className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold32 mb-4 md:mb-6">
               {t('title')}
             </h2>
-            <p className="mcaption-regular16 md:mcaption-regular24 mb-4 text-muted-foreground md:mb-6">
+            <p className="mcaption-regular16 lg:mcaption-regular24 mb-4 text-muted-foreground md:mb-6">
               {t('description')}
             </p>
             <Button size="lg" className="rounded-full px-8">

@@ -50,7 +50,7 @@ export default function FeatureSection() {
         <div className="mb-3 text-center lg:mb-6">
           <HighlightTitle text={t('highlight')} className="mb-1 justify-center" />
           <h2 className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold32 mb-6">{t('title')}</h2>
-          <p className="mcaption-regular16 md:mcaption-regular24 mx-auto max-w-4xl">{t('description')}</p>
+          <p className="mcaption-regular16 lg:mcaption-regular24 mx-auto max-w-4xl">{t('description')}</p>
         </div>
 
         <div className="relative flex flex-wrap justify-center gap-8">
