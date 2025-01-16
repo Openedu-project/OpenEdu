@@ -1,14 +1,14 @@
-'use client';
+// 'use client';
 
-import CoursesListPage from '@oe/ui/pages/course-list';
-import { useSearchParams } from 'next/navigation';
+import CoursesListPage from "@oe/ui/pages/course-list";
+// import { useSearchParams } from 'next/navigation';
 
 export default function CourseList() {
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
 
   return (
-    <div>
-      <CoursesListPage searchParams={searchParams} isOpenEdu />
-    </div>
+    <>
+      <CoursesListPage isOpenEdu />
+    </>
   );
 }

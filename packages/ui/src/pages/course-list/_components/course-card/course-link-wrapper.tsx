@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 
 import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { Link } from '@oe/ui/common/navigation';

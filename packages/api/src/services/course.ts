@@ -7,7 +7,7 @@ import { API_ENDPOINT } from '#utils/endpoints';
 import { type FetchOptions, createAPIUrl, deleteAPI, fetchAPI, postAPI } from '#utils/fetch';
 
 export async function getCoursesService(
-  url: string,
+  url: string | undefined,
   { params, init }: { params: IFilter; init?: RequestInit }
 ): Promise<ICourseResponse | undefined> {
   let endpointKey = url;
@@ -44,6 +44,29 @@ export async function getCourseByIdService(
   const response = await fetchAPI<ICourse>(endpointKey, init);
 
   return response.data;
+}
+
+export async function getCoursesPublishService(
+  url: string | undefined,
+  { params, init }: { params: IFilter; init?: RequestInit }
+): Promise<ICourseResponse | undefined> {
+  let endpointKey = url;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.COURSES_PUBLISH,
+      queryParams: {
+        ...params,
+      },
+    });
+  }
+
+  try {
+    const response = await fetchAPI<ICourseResponse>(endpointKey, init);
+
+    return response.data;
+  } catch {
+    return undefined;
+  }
 }
 
 export async function getCourseOutlineService(

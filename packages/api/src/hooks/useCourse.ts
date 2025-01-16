@@ -1,6 +1,12 @@
 import useSWR from 'swr';
-import { getCourseByIdService, getCourseOutlineService, getCoursesService, getLevelsService } from '#services/course';
-import type { ICourseOutline } from '#types/course/course';
+import {
+  getCourseByIdService,
+  getCourseOutlineService,
+  getCoursesPublishService,
+  getCoursesService,
+  getLevelsService,
+} from '#services/course';
+import type { ICourseOutline, ICourseResponse } from '#types/course/course';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
@@ -77,13 +83,17 @@ export function useGetLevels(params: Record<string, string | boolean>) {
   };
 }
 
-export function useGetCoursesPublish({ params }: { params: IFilter }) {
+export function useGetCoursesPublish(params: IFilter, fallback?: ICourseResponse) {
   const endpointKey = createAPIUrl({
     endpoint: API_ENDPOINT.COURSES_PUBLISH,
     queryParams: { ...params },
   });
-  const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
-    getCoursesService(endpoint, { params })
+  const { data, isLoading, error, mutate } = useSWR(
+    endpointKey,
+    (endpoint: string) => getCoursesPublishService(endpoint, { params }),
+    {
+      fallbackData: fallback,
+    }
   );
 
   return {

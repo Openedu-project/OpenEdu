@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 import type { ICourse, ICourseResponse } from '@oe/api/types/course/course';
 import type { KeyedMutator } from 'swr';
 

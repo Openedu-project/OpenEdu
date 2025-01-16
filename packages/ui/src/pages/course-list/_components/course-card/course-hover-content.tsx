@@ -21,7 +21,7 @@ export function CourseHoverContent({ courseData, mutate }: CourseHoverContentPro
   const tDetail = useTranslations('courseCard');
 
   return (
-    <Card className="absolute inset-0 flex cursor-pointer flex-col gap-4 overflow-y-hidden rounded-lg border-2 border-primary bg-white p-4 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
+    <Card className="absolute inset-0 flex cursor-pointer flex-col gap-4 overflow-y-hidden rounded-lg border-2 border-primary bg-background p-4 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
       <CourseLinkWrapper
         slug={courseData?.slug}
         domain={courseData?.org?.domain}
@@ -33,10 +33,10 @@ export function CourseHoverContent({ courseData, mutate }: CourseHoverContentPro
 
         {courseData?.mark_as_completed && (
           <div className="flex w-full items-center gap-2">
-            <div className="grid h-6 w-6 items-center justify-center rounded-full bg-[#2BA830]">
+            <div className="grid h-6 w-6 items-center justify-center rounded-full bg-success">
               <SendSquare className="h-4 w-4" />
             </div>
-            <span className="mcaption-semibold14 md:mcaption-semibold16 text-[#2BA830]">
+            <span className="mcaption-semibold14 md:mcaption-semibold16 text-success">
               {tDetail('contentCompleted')}
             </span>
           </div>
