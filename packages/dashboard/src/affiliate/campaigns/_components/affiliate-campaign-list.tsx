@@ -5,15 +5,9 @@ import { createAPIUrl } from '@oe/api/utils/fetch';
 import { AFFILIATE_ROUTES } from '@oe/core/utils/routes';
 import { formatNumber } from '@oe/core/utils/utils';
 import { Link } from '@oe/ui/common/navigation';
+import type { FilterOption } from '@oe/ui/components/filter-search';
 import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
 import { Button, buttonVariants } from '@oe/ui/shadcn/button';
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@oe/ui/shadcn/select";
 import { Tooltip } from '@oe/ui/shadcn/tooltip';
 import { cn } from '@oe/ui/utils/cn';
 import { useTranslations } from 'next-intl';
@@ -225,10 +219,28 @@ export default function AffiliateManagementContent() {
     [handleOpenCommissionDetailModal, t]
   );
 
+  const filterOptions: FilterOption[] = useMemo(
+    () => [
+      {
+        value: 'name',
+        label: t('campaign'),
+        type: 'search',
+        id: 'campaign',
+      },
+      {
+        value: 'course_name',
+        label: t('course'),
+        type: 'search',
+        id: 'course_name',
+      },
+    ],
+    [t]
+  );
+
   return (
     <>
       <Table
-        api={API_ENDPOINT.USERS_ME_AFFILIATE_CAMPAIGNS}
+        api={API_ENDPOINT.USERS_ME_REFERRALS}
         apiParams={{
           page: 1,
           per_page: 10,
@@ -242,6 +254,7 @@ export default function AffiliateManagementContent() {
         tableOptions={{
           manualPagination: true,
         }}
+        filterOptions={filterOptions}
       />
       {isOpenCommissionDetailModal && (
         <CampaignCommissionDetailModal

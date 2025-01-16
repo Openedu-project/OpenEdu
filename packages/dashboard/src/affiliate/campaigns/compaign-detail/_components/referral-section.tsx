@@ -43,7 +43,7 @@ const AffiliateLink = ({
         rel="noopener noreferrer"
         className="line-clamp-1 flex w-[60px] cursor-pointer items-center p-0 text-primary md:max-w-[189px]"
       >
-        <IconLink className="w-5 h-5 mr-2" />
+        <IconLink className="mr-2 h-5 w-5" />
       </Link>
     </Tooltip>
   );

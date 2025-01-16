@@ -76,6 +76,7 @@ export const dashboardMessages = {
       course: 'Course',
       price: 'Price',
       reportAffiliateCampaigns: 'Report',
+      detailReportAffiliateCampaigns: 'Report Detail',
     },
   },
 };
