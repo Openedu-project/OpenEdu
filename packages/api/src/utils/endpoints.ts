@@ -239,28 +239,14 @@ export const API_ENDPOINT = {
 
   // WS
   WEBSOCKET: '/websocket',
-<<<<<<< HEAD
   EXCHANGE_RATES: '/api/v1/exchange-rates',
   CLAIM_EARNING: '/api/v1/wallets/:id/claim-earning',
   CHAIN_ACCOUNT_INFO: '/api/v1/chains/:network/accounts/:address',
-=======
->>>>>>> 99fdb8a5 (feat: load more chat message #30)
 
   AI_MODELS: '/api/v1/ai/models',
   COM_CHANNELS: '/api/com-v1/channels',
   COM_CHANNELS_ID: '/api/com-v1/channels/:id',
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 51ab894 (feat: ai-chat#30)
-=======
   COM_CHANNELS_ID_CANCEL: '/api/com-v1/channels/:id/cancel',
->>>>>>> 697dd56 (feat: cancel chat #30)
->>>>>>> 1f66ccfa (feat: cancel chat #30)
-=======
-  COM_CHANNELS_ID_CANCEL: '/api/com-v1/channels/:id/cancel',
->>>>>>> 99fdb8a5 (feat: load more chat message #30)
 } as const;
 
 export type API_ENDPOINT_KEY = keyof typeof API_ENDPOINT;

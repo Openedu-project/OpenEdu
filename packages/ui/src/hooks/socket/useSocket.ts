@@ -5,7 +5,7 @@ import type { IMessageData } from '@oe/api/types/conversation';
 import type { EventData, ISocketRes } from '@oe/api/types/socket';
 import { useCallback } from 'react';
 import useWebSocket from 'react-use-websocket';
-import { type IAIAction, useConversationStore } from '#store/conversation-store';
+import { useConversationStore } from '#store/conversation-store';
 import { useSocketStore } from '#store/socket';
 import { useAIConversationHandler } from './useAIConversationHandler';
 import { useReconnection } from './useReconnection';
@@ -17,9 +17,9 @@ export const useSocket = (isAuthenticated: boolean) => {
   const endpoint = useWebSocketEndpoint(accessToken, referrer);
 
   const { setSocketData } = useSocketStore();
-  const { addMessage, setStatus, status, action } = useConversationStore();
+  const { genMessage, setGenMessage, setStatus, status, resetPage } = useConversationStore();
 
-  const handleAIConversation = useAIConversationHandler(status ?? '');
+  const handleAIConversation = useAIConversationHandler(status ?? '', genMessage?.id);
   const { shouldReconnect, reconnectInterval } = useReconnection(isAuthenticated, accessToken);
 
   const handleMessage = useCallback(
@@ -38,9 +38,14 @@ export const useSocket = (isAuthenticated: boolean) => {
 
         if (parsedData.event === 'ai_conversation') {
           const data = parsedData.data as IMessageData;
-          const newMessage = handleAIConversation(data, action as IAIAction);
+          const newMessage = handleAIConversation(data);
           if (newMessage) {
-            addMessage(newMessage, () => setStatus(data?.status));
+            setGenMessage(newMessage, () => {
+              setStatus(data?.status);
+            });
+          }
+          if (resetPage) {
+            window.location.reload();
           }
         } else {
           setSocketData(parsedData);
@@ -49,7 +54,7 @@ export const useSocket = (isAuthenticated: boolean) => {
         console.error('Error parsing socket data:', error);
       }
     },
-    [handleAIConversation, action, addMessage, setStatus, setSocketData]
+    [handleAIConversation, setGenMessage, setStatus, setSocketData, resetPage]
   );
 
   const { getWebSocket } = useWebSocket(endpoint, {

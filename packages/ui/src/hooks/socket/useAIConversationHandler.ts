@@ -3,22 +3,16 @@ import type { IRole } from '@oe/api/types/conversation';
 import type { IMessageData } from '@oe/api/types/conversation';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { useCallback } from 'react';
-import type { IAIAction } from '#store/conversation-store';
 
-export const useAIConversationHandler = (status: string) => {
+export const useAIConversationHandler = (status: string, genMessageId?: string) => {
   return useCallback(
-    (data: IMessageData, action: IAIAction) => {
+    (data: IMessageData) => {
       if (!GENERATING_STATUS.includes(status)) {
         return null;
       }
 
-      const isValidAction =
-        action &&
-        ((action.key === 'new' && data.parent_message_id === action.id) ||
-          (action.key === 'rewrite' && data.message_id === action.id));
-
-      if (!isValidAction) {
-        return null;
+      if (!genMessageId || genMessageId !== data.message_id) {
+        return;
       }
 
       return {
@@ -26,7 +20,11 @@ export const useAIConversationHandler = (status: string) => {
         conversation_id: data.conversation_id,
         create_at: Date.now(),
         content: data.content,
-        ai_model: { name: data.ai_model },
+        ai_model: {
+          name: data.ai_model,
+          display_name: data.ai_model_display_name,
+          thumbnail_url: data.ai_model_thumbnail_url,
+        },
         status: data.status,
         sender: { role: 'assistant' as IRole },
         configs: { is_image_analysis: data.is_image_analysis },
@@ -34,6 +32,6 @@ export const useAIConversationHandler = (status: string) => {
         is_ai: true,
       };
     },
-    [status]
+    [status, genMessageId]
   );
 };

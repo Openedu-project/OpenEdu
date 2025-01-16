@@ -89,7 +89,7 @@ export function AIModule({
             <div className="flex flex-wrap justify-between gap-2">
               <span className="mcaption-semibold14 text-foreground">{tAI(item.lableKey)}</span>
               {item.isComming && (
-                <Badge variant="default" className="mcaption-regular10 capitalize">
+                <Badge variant="outline_primary" className="mcaption-regular10 capitalize">
                   {tAI('commingSoon')}
                 </Badge>
               )}

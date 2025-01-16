@@ -1,6 +1,7 @@
 'use client';
 
 import type { IMessage, InputType } from '@oe/api/types/conversation';
+import AIBot from '@oe/assets/images/ai-bot.png';
 import Openedu from '@oe/assets/images/openedu.png';
 
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
@@ -216,9 +217,22 @@ const MessageBox = ({
                 <p className="mcaption-semibold14">{message?.ai_model?.display_name ?? 'AI Assistant'}</p>
               </div>
               {GENERATING_STATUS.includes(message.status ?? '') && message.content.length === 0 ? (
-                <div className="relative ml-3 flex h-6 w-6 items-center justify-center">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-secondary opacity-75" />
-                  <span className="relative inline-flex h-4 w-4 rounded-full bg-secondary" />
+                <div className="flex w-12 items-end">
+                  <Image
+                    src={AIBot.src}
+                    alt="ai-bot"
+                    aspectRatio="1:1"
+                    fill
+                    sizes="30px"
+                    objectFit="contain"
+                    className="h-12 w-12 rounded-full bg-background"
+                    containerHeight="auto"
+                  />
+                  <div className="flex items-center justify-center space-x-1">
+                    <div className="h-2 w-2 animate-[bounce_1s_infinite] rounded-full bg-primary" />
+                    <div className="h-2 w-2 animate-[bounce_1s_infinite_0.2s] rounded-full bg-primary" />
+                    <div className="h-2 w-2 animate-[bounce_1s_infinite_0.4s] rounded-full bg-primary" />
+                  </div>
                 </div>
               ) : (
                 <div className="relative w-full bg-background">
@@ -232,10 +246,16 @@ const MessageBox = ({
                   />
                   {GENERATING_STATUS.includes(message.status ?? '') && (
                     <div className="absolute right-2 bottom-2">
-                      <span className="relative flex h-3 w-3">
-                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-secondary opacity-75" />
-                        <span className="relative inline-flex h-3 w-3 rounded-full bg-secondary" />
-                      </span>
+                      <Image
+                        src={AIBot.src}
+                        alt="ai-bot"
+                        aspectRatio="1:1"
+                        fill
+                        sizes="16px"
+                        objectFit="contain"
+                        className="h-4 w-4 rounded-full bg-background"
+                        containerHeight={16}
+                      />
                     </div>
                   )}
                 </div>

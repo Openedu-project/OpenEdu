@@ -72,15 +72,15 @@ export const ChatWithMessage = ({ id, sendMessage, nextCursorPage = '' }: IChatP
   }, [selectedModel]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    if (genMessage && atBottom.current) {
-      virtuosoRef.current?.scrollToIndex({
-        index: messages.length - 1,
-        align: 'end',
-        behavior: 'smooth',
-      });
-    }
-  }, [messages.length]);
+  // useEffect(() => {
+  //   if (genMessage && atBottom.current) {
+  //     virtuosoRef.current?.scrollToIndex({
+  //       index: messages.length - 1,
+  //       align: 'end',
+  //       behavior: 'smooth',
+  //     });
+  //   }
+  // }, [messages.length]);
 
   return (
     <Virtuoso
