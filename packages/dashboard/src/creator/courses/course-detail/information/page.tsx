@@ -1,7 +1,9 @@
 'use client';
+import { useGetCourseById } from '@oe/api/hooks/useCourse';
 import { fileResponseScheme } from '@oe/api/types/file';
 import { z } from '@oe/api/utils/zod';
 import { FormNestedWrapper } from '@oe/ui/components/form-wrapper';
+import { useParams } from 'next/navigation';
 import Category from './category';
 import Description from './description';
 import Level from './level';
@@ -12,14 +14,12 @@ import SupportChannels from './support-channels';
 import Thumbnail from './thumbnail';
 
 const courseFormSchema = z.object({
-  name: z
-    .string()
-    .min(2, { message: 'Name must be at least 2 characters long' })
-    .max(100, { message: 'Name must not exceed 100 characters' }),
-  description: z.string().optional(),
-  thumbnail: fileResponseScheme.optional().refine(data => data !== undefined, {
-    message: 'thumbnail is required',
-  }),
+  // name: z
+  //   .string()
+  //   .min(2, { message: "Name must be at least 2 characters long" })
+  //   .max(100, { message: "Name must not exceed 100 characters" }),
+  description: z.string().min(1, { message: 'Description is required' }),
+  thumbnail: fileResponseScheme,
   // thumbnail_id: z.string().default("").optional(),
   // is_pay: z.boolean().default(false),
   // price: z
@@ -46,7 +46,7 @@ const courseFormSchema = z.object({
       })
     )
     .min(1, { message: 'Vui lòng chọn ít nhất 1 category' }),
-  channels: z.string().array().default([]),
+  channels: z.string().array().default([]).optional(),
   // has_certificate: z.boolean().default(false),
   docs: z
     .array(
@@ -84,9 +84,19 @@ const courseFormSchema = z.object({
 });
 
 export default function CourseDetailInformationPage() {
+  const params = useParams<{ courseId: string }>();
+  const { course } = useGetCourseById(params.courseId);
+
   return (
     <div className="scrollbar mx-auto h-full max-w-[900px] overflow-auto">
-      <FormNestedWrapper id="course-detail-information" schema={courseFormSchema} tabId="information">
+      <FormNestedWrapper
+        id="course-detail-information"
+        schema={courseFormSchema}
+        tabId="information"
+        useFormProps={{
+          defaultValues: course as z.infer<typeof courseFormSchema>,
+        }}
+      >
         <Description />
         <Outcomes />
         <Thumbnail />

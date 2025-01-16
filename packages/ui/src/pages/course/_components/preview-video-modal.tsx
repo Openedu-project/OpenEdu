@@ -1,7 +1,6 @@
 'use client';
-
-import type { ICourseFile } from '@oe/api/types/course/basic';
 import type { ICourseOutline } from '@oe/api/types/course/course';
+import type { IFileResponse } from '@oe/api/types/file';
 import { VideoSquare } from '@oe/assets/icons/video-square';
 import { convertSecondsToTimeString } from '@oe/core/utils/datetime';
 import { useTranslations } from 'next-intl';
@@ -15,7 +14,7 @@ import { cn } from '#utils/cn';
 //   useCourseOutlineDetailStore,
 // } from "../_store/useCourseOutlineStore";
 
-export interface PreviewVideo extends ICourseFile {
+export interface PreviewVideo extends IFileResponse {
   title: string;
 }
 

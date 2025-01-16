@@ -1,3 +1,3 @@
-export default function CourseDetailInformationPage() {
-  return <div>CourseDetailInformationPage</div>;
+export default function CourseDetailPricePage() {
+  return <div>CourseDetailPricePage</div>;
 }

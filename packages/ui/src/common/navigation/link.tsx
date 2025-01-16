@@ -23,6 +23,7 @@ export interface LinkProps
   locale?: LanguageCode;
   exact?: boolean;
   external?: boolean;
+  disabled?: boolean;
 }
 
 export const Link: FC<LinkProps> = ({
@@ -37,6 +38,7 @@ export const Link: FC<LinkProps> = ({
   locale,
   exact,
   external,
+  disabled,
   ...props
 }) => {
   const { getFinalHref, isExternal, isActive } = useHref();
@@ -46,7 +48,11 @@ export const Link: FC<LinkProps> = ({
   const linkProps = {
     href: finalHref,
     ref,
-    className: cn(buttonVariants({ variant, size, className }), isActive(href, nextZone, exact) && activeClassName),
+    className: cn(
+      buttonVariants({ variant, size, className }),
+      isActive(href, nextZone, exact) && activeClassName,
+      disabled && 'pointer-events-none opacity-50'
+    ),
     ...props,
   };
 

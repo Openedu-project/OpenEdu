@@ -1,7 +1,8 @@
 // import { JSONContent } from "novel";
 
+import type { IFileResponse } from '#types/file';
 import type { IUser } from '../user';
-import type { ICourseFile, ICourseParams, TCourseStatus, TExcludedFieldRequest, TLessonContent } from './basic';
+import type { ICourseParams, TCourseStatus, TExcludedFieldRequest, TLessonContent } from './basic';
 
 import type { ICourse } from './course';
 // import { IQuizItemResponse } from "./quiz";
@@ -83,7 +84,7 @@ export interface ILessonContent {
   free: boolean;
   type: TLessonContent;
   order: number;
-  files?: ICourseFile[];
+  files?: IFileResponse[];
   // quizzes?: IQuizItemResponse[];
   user_id?: string;
   section_id?: string;

@@ -1,7 +1,7 @@
 'use client';
 import type { ICoursePreviewVideo } from '@oe/api/types/course/basic';
-import type { ICourseFile } from '@oe/api/types/course/basic';
 import type { ICourseOutline } from '@oe/api/types/course/course';
+import type { IFileResponse } from '@oe/api/types/file';
 import { CirclePlayIcon, EyeIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
@@ -11,7 +11,7 @@ import { cn } from '#utils/cn';
 import type { PreviewVideo } from '../_store/useCourseOutlineStore';
 import CoursePreviewModal from './preview-video-modal';
 
-const mapMediaToPreviewVideo = (media: ICourseFile, previewLessons?: ICoursePreviewVideo[]): PreviewVideo => {
+const mapMediaToPreviewVideo = (media: IFileResponse, previewLessons?: ICoursePreviewVideo[]): PreviewVideo => {
   const matchingLesson = previewLessons?.find(lesson => lesson?.file_id === media.id);
 
   return matchingLesson

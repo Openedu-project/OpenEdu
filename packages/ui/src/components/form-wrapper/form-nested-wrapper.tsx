@@ -75,6 +75,7 @@ export function FormNestedWrapper<TFormSchema extends z.ZodType>({
           message: error?.message as string,
         }));
       },
+      watch: form.watch,
     };
 
     context.registerForm(metadata);
@@ -111,8 +112,8 @@ export function FormNestedWrapper<TFormSchema extends z.ZodType>({
     [resetOnSuccess, useFormProps?.resetOptions, onError, form.reset, onSubmit]
   );
 
-  const handleError = useCallback(() => {
-    console.error('Form validation error');
+  const handleError = useCallback((error: unknown) => {
+    console.error('Form validation error', error);
   }, []);
 
   return (

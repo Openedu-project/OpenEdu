@@ -60,12 +60,6 @@ export interface ICourseParams extends IPagination {
   all_versions?: boolean; // used to API get form responses
 }
 
-export interface ICourseFile extends IFileResponse {
-  bunny_library_id: string;
-  user_id: number;
-  props: Record<string, unknown>;
-}
-
 export interface ICourseProps {
   support_channel: {
     channels: string[];

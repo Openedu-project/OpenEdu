@@ -7,7 +7,9 @@ export default function Description() {
       name="description"
       label={
         <div className="flex flex-col gap-1">
-          <span className="font-medium text-lg">Description</span>
+          <span className="font-medium text-lg">
+            Description <span className="text-red-500">*</span>
+          </span>
           <span className="text-muted-foreground text-xs">The description is used to describe the course.</span>
         </div>
       }

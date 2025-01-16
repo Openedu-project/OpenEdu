@@ -5,7 +5,6 @@ import type { IFileResponse } from '#types/file';
 import type { IDataPagination } from '#types/pagination';
 import type { IAICourse, IAICourseStatus } from './ai-course';
 import type {
-  ICourseFile,
   ICourseOrganization,
   ICourseOwner,
   ICoursePreviewVideo,
@@ -36,9 +35,9 @@ export interface ICourse {
   props: ICourseProps;
   enable: boolean;
   mark_as_completed: boolean;
-  thumbnail: ICourseFile;
-  medias: ICourseFile[];
-  docs: ICourseFile[];
+  thumbnail: IFileResponse;
+  medias: IFileResponse[];
+  docs: IFileResponse[];
   has_certificate: boolean;
   levels: ILevel[];
   learner_count: number;

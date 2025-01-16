@@ -24,10 +24,8 @@ export default function Thumbnail() {
           listType="picture"
           value={field.value ? [field.value] : []}
           className="h-48"
-          fileListVisible
-          onChange={files => {
-            field.onChange(files[0]);
-          }}
+          fileListVisible={false}
+          onChange={files => field.onChange(files[0])}
         />
       )}
     />

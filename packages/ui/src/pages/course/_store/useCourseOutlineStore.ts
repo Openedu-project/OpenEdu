@@ -1,8 +1,9 @@
-import type { ICourseFile, ICoursePreviewVideo } from '@oe/api/types/course/basic';
+import type { ICoursePreviewVideo } from '@oe/api/types/course/basic';
 import type { ICourseOutline } from '@oe/api/types/course/course';
+import type { IFileResponse } from '@oe/api/types/file';
 import { create } from 'zustand';
 
-export interface PreviewVideo extends ICourseFile {
+export interface PreviewVideo extends IFileResponse {
   title: string;
 }
 
@@ -27,7 +28,7 @@ const mergeCourseOutline = (currentOutline: ICourseOutline, newOutline?: ICourse
   };
 };
 
-const mapMediaToPreviewVideo = (media: ICourseFile, previewLessons?: ICoursePreviewVideo[]): PreviewVideo => {
+const mapMediaToPreviewVideo = (media: IFileResponse, previewLessons?: ICoursePreviewVideo[]): PreviewVideo => {
   const matchingLesson = previewLessons?.find(lesson => lesson?.file_id === media.id);
 
   return matchingLesson

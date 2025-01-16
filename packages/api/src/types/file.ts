@@ -16,7 +16,7 @@ export const fileResponseScheme = z.object({
   thumbnail_url: z.string(),
   update_at: z.number(),
   url: z.string(),
-  user_id: z.number(),
+  user_id: z.string(),
   width: z.number(),
 });
 

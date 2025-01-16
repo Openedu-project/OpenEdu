@@ -1,7 +1,7 @@
 import type { z } from '@oe/api/utils/zod';
 import type { TabsTriggerProps } from '@radix-ui/react-tabs';
 import type { HTMLAttributes, MouseEvent, ReactNode, RefObject } from 'react';
-import type { SubmitHandler, UseFormProps, UseFormReturn } from 'react-hook-form';
+import type { SubmitHandler, UseFormProps, UseFormReturn, UseFormWatch } from 'react-hook-form';
 
 export type FormErrorHandler = (error: unknown) => void | Promise<void>;
 
@@ -20,6 +20,8 @@ export interface IFormMetadata<TFormSchema extends z.ZodType> {
     field: string;
     message: string;
   }[];
+  watch: UseFormWatch<z.TypeOf<TFormSchema>>;
+  unsubscribe?: () => void;
 }
 
 export type TabStatus = 'incomplete' | 'valid' | 'invalid' | 'disabled';
@@ -40,7 +42,7 @@ export interface ITabMetadata {
 }
 
 export interface IFormWrapperProps<TFormSchema extends z.ZodType>
-  extends Omit<HTMLAttributes<HTMLFormElement>, 'onSubmit' | 'children'> {
+  extends Omit<HTMLAttributes<HTMLFormElement>, 'onSubmit' | 'children' | 'onChange'> {
   id: string;
   schema?: TFormSchema;
   tabId?: string;
@@ -57,6 +59,7 @@ export interface IFormContextValue<TFormSchema extends z.ZodType> {
   isSubmitting: boolean;
   tabsMetadata: Map<string, ITabMetadata>;
   activeTab: string | undefined;
+  activeFormId: string | undefined;
   setActiveTab: (tabId: string) => void;
   registerForm: (metadata: IFormMetadata<TFormSchema>) => void;
   unregisterForm: (formId: string) => void;
@@ -64,6 +67,7 @@ export interface IFormContextValue<TFormSchema extends z.ZodType> {
   unregisterTab: (tabId: string) => void;
   submitForm: (formIds?: string[]) => Promise<void>;
   validateForm: () => Promise<boolean>;
+  validateForms: (formIds?: string[]) => Promise<boolean>;
 }
 
 export interface INestedFormsValues {
@@ -71,13 +75,14 @@ export interface INestedFormsValues {
   [key: string]: any;
 }
 
-export interface IFormNestedProviderProps {
+export interface IFormNestedProviderProps<TFormSchema extends z.ZodType> {
   children: ReactNode;
   defaultTab?: string;
   scrollOptions?: ScrollOptions;
   className?: string;
   onSubmit: (values: INestedFormsValues) => Promise<void>;
   onError?: FormErrorHandler;
+  onChange?: (values: Record<string, z.infer<TFormSchema>>) => void;
 }
 
 export interface TabInfo {
