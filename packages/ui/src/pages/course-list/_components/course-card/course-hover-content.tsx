@@ -20,13 +20,15 @@ interface CourseHoverContentProps {
 
 export function CourseHoverContent({ courseData, mutate }: CourseHoverContentProps) {
   const tDetail = useTranslations('courseCard');
-  const basePath = process.env.NEXT_PUBLIC_APP_ROOT_DOMAIN_NAM || '';
+  const basePath = process.env.NEXT_PUBLIC_APP_ROOT_DOMAIN_NAME;
+  const isExternal = courseData?.org?.domain !== basePath;
 
   return (
     <Card className="absolute inset-0 flex cursor-pointer flex-col gap-4 overflow-y-hidden rounded-lg border-2 border-primary bg-background p-4 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
       <Link
         href={PLATFORM_ROUTES.courseDetail.replace(':slug', courseData?.slug)}
-        external={courseData?.org?.domain !== basePath}
+        external={isExternal}
+        target={isExternal ? '_blank' : undefined}
         className="flex h-full w-full flex-col items-start gap-4 whitespace-break-spaces p-0 hover:no-underline"
       >
         <p className="giant-iheading-semibold20 line-clamp-2 whitespace-break-spaces text-primary">

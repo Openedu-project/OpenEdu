@@ -31,11 +31,15 @@ export default function CourseCard({
   showOwner = false,
   ...props
 }: ICourseCard) {
+  const basePath = process.env.NEXT_PUBLIC_APP_ROOT_DOMAIN_NAME;
+  const isExternal = courseData?.org?.domain !== basePath;
+
   return (
     <div className={cn('group relative w-full', className)}>
       <Link
         href={PLATFORM_ROUTES.courseDetail.replace(':slug', courseData?.slug)}
-        external={courseData?.org?.domain !== (process.env.NEXT_PUBLIC_APP_ROOT_DOMAIN_NAME || '')}
+        external={isExternal}
+        target={isExternal ? '_blank' : undefined}
         className="h-full w-full p-0 hover:no-underline"
       >
         <Card
