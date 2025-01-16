@@ -4,6 +4,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 
 import type { IUser } from '@oe/api/types/user';
 import { LogoutButton } from '#common/auth/logout-button';
+import { UserAvatar } from '#components/user-avatar';
 
 export function UserMenu({ me }: { me: IUser }) {
   return (
@@ -13,8 +14,8 @@ export function UserMenu({ me }: { me: IUser }) {
           variant="ghost"
           className="flex items-center space-x-2 text-primary-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
         >
-          <User className="h-5 w-5" />
-          <span>{me.username ?? me.email}</span>
+          <UserAvatar src={me?.avatar ?? ''} name={me?.display_name?.length > 0 ? me?.display_name : me?.username} />
+          <span>{me?.display_name?.length > 0 ? me?.display_name : me?.username}</span>
           <ChevronDown className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
