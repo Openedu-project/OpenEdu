@@ -1,11 +1,6 @@
-import type { ISvgProps } from "./types";
+import type { ISvgProps } from './types';
 
-export const Affiliate = ({
-  className,
-  color = "#000",
-  height = 24,
-  width = 24,
-}: ISvgProps) => (
+export const Affiliate = ({ className, color = '#000', height = 24, width = 24 }: ISvgProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     shapeRendering="geometricPrecision"

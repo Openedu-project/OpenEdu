@@ -80,7 +80,16 @@ export function RegistrationForm() {
   const [user, setUser] = useState<Partial<z.infer<typeof personalSchema>>>();
 
   useEffect(() => {
-    setTimeout(() => setUser({ firstName: 'Frank', lastName: 'Murphy', dob: '1980-01-01', phone: '1234567890' }), 5000);
+    setTimeout(
+      () =>
+        setUser({
+          firstName: 'Frank',
+          lastName: 'Murphy',
+          dob: '1980-01-01',
+          phone: '1234567890',
+        }),
+      5000
+    );
   }, []);
 
   return (

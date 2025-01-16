@@ -10,12 +10,12 @@ export default function Outcomes() {
   const { control } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'outcomes',
+    name: 'achievements',
   });
 
   return (
     <FormFieldWithLabel
-      name="outcomes"
+      name="achievements"
       label={
         <>
           <div className="flex flex-col gap-1">
@@ -37,7 +37,7 @@ export default function Outcomes() {
         </>
       }
       className="rounded-lg bg-background p-4 shadow-sm"
-      labelClassName="mb-4 text-lg justify-between mb-0"
+      labelClassName="mb-4 text-lg justify-between mb-0 items-start"
       render={() => (
         <div className="space-y-2">
           {fields.map((field, index) => (

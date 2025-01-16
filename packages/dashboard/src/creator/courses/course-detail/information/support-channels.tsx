@@ -9,12 +9,12 @@ export default function SupportChannels() {
   const { control } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'support_channels',
+    name: 'channels',
   });
 
   return (
     <FormFieldWithLabel
-      name="support_channels"
+      name="channels"
       label={
         <>
           <div className="flex flex-col gap-1">
@@ -35,7 +35,7 @@ export default function SupportChannels() {
         </>
       }
       className="space-y-4 rounded-lg bg-background p-4 shadow-sm"
-      labelClassName="mb-4 text-lg justify-between mb-0"
+      labelClassName="mb-4 text-lg justify-between mb-0 items-start"
       render={() => (
         <div className="space-y-2">
           {fields.map((field, index) => (

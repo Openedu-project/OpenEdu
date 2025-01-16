@@ -34,7 +34,7 @@ export function AutocompeteMultiple<T extends OptionType | string>({
   getOptionLabel = (option: T) => (typeof option === 'object' ? option.label : option),
   getOptionValue = (option: T) => (typeof option === 'object' ? option.value : option),
   filterOption = (option: T, searchValue: string) =>
-    getOptionLabel(option).toLowerCase().includes(searchValue.toLowerCase()),
+    getOptionLabel(option)?.toLowerCase().includes(searchValue.toLowerCase()),
   renderOption,
   onChange,
   value = [],
@@ -71,7 +71,7 @@ export function AutocompeteMultiple<T extends OptionType | string>({
         return;
       }
 
-      const isFixed = fixedValue?.includes(getOptionValue(currentValue));
+      const isFixed = fixedValue?.includes(getOptionValue(currentValue) ?? '');
       if (isFixed) {
         return;
       }
@@ -97,7 +97,7 @@ export function AutocompeteMultiple<T extends OptionType | string>({
 
   const handleClearOption = useCallback(
     (option: T) => {
-      if (fixedValue.includes(getOptionValue(option))) {
+      if (fixedValue.includes(getOptionValue(option) ?? '')) {
         return;
       }
 
@@ -109,7 +109,7 @@ export function AutocompeteMultiple<T extends OptionType | string>({
   );
 
   const handleClearAll = useCallback(() => {
-    const remainingOptions = value.filter(option => fixedValue.includes(getOptionValue(option)));
+    const remainingOptions = value.filter(option => fixedValue.includes(getOptionValue(option) ?? ''));
     onChange?.(remainingOptions);
     inputRef.current?.focus();
   }, [onChange, value, fixedValue, getOptionValue]);
@@ -139,7 +139,7 @@ export function AutocompeteMultiple<T extends OptionType | string>({
 
   const renderCommandItem = useCallback(
     (option: T) => {
-      const isFixed = fixedValue.includes(getOptionValue(option));
+      const isFixed = fixedValue.includes(getOptionValue(option) ?? '');
 
       return (
         <CommandItem
@@ -182,8 +182,8 @@ export function AutocompeteMultiple<T extends OptionType | string>({
           <div className="flex flex-grow flex-wrap items-center gap-1 p-2">
             {value
               .sort((a, b) => {
-                const aIsFixed = fixedValue.includes(getOptionValue(a));
-                const bIsFixed = fixedValue.includes(getOptionValue(b));
+                const aIsFixed = fixedValue.includes(getOptionValue(a) ?? '');
+                const bIsFixed = fixedValue.includes(getOptionValue(b) ?? '');
                 if (aIsFixed && !bIsFixed) {
                   return -1;
                 }
@@ -195,9 +195,9 @@ export function AutocompeteMultiple<T extends OptionType | string>({
               .map(option => (
                 <OptionBadge
                   key={getOptionValue(option)}
-                  label={getOptionLabel(option)}
+                  label={getOptionLabel(option) ?? ''}
                   disabled={disabled}
-                  isFixed={fixedValue.includes(getOptionValue(option))}
+                  isFixed={fixedValue.includes(getOptionValue(option) ?? '')}
                   onRemove={() => handleClearOption(option)}
                 />
               ))}

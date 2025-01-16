@@ -375,6 +375,9 @@ importers:
 
   packages/themes:
     dependencies:
+      '@oe/api':
+        specifier: workspace:*
+        version: link:../api
       '@oe/i18n':
         specifier: workspace:*
         version: link:../i18n

@@ -1,16 +1,13 @@
-import {
-  useGetNotification,
-  useUpdateNotification,
-} from "@oe/api/hooks/useNotification";
-import type { INotificationItem } from "@oe/api/types/notification";
-import type { HTTPErrorMetadata } from "@oe/api/utils/http-error";
-import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useState } from "react";
-import { toast } from "sonner";
+import { useGetNotification, useUpdateNotification } from '@oe/api/hooks/useNotification';
+import type { INotificationItem } from '@oe/api/types/notification';
+import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
+import { useTranslations } from 'next-intl';
+import { useCallback, useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 export function useNotifications() {
   const [page, setPage] = useState(1);
-  const tError = useTranslations("errors");
+  const tError = useTranslations('errors');
 
   const {
     dataNotification,
@@ -18,7 +15,7 @@ export function useNotifications() {
     mutateNotificationList,
   } = useGetNotification({
     page,
-    sort: "create_at desc",
+    sort: 'create_at desc',
   });
   const { triggerUpdateNotification } = useUpdateNotification();
 
@@ -27,7 +24,7 @@ export function useNotifications() {
 
   useEffect(() => {
     if (dataNotification?.results) {
-      setNotifications((prev) => [...prev, ...dataNotification.results]);
+      setNotifications(prev => [...prev, ...dataNotification.results]);
       setHasMore(page < (dataNotification.pagination?.total_pages ?? 1));
     }
   }, [dataNotification, page]);
@@ -36,7 +33,7 @@ export function useNotifications() {
     if (!hasMore || isLoadingNotifications) {
       return;
     }
-    setPage((p) => p + 1);
+    setPage(p => p + 1);
   }, [hasMore, isLoadingNotifications]);
 
   const markAsRead = useCallback(
@@ -47,14 +44,10 @@ export function useNotifications() {
           read: true,
           read_all: false,
         });
-        setNotifications((prev) =>
-          prev.map((notif) =>
-            notif.id === id ? { ...notif, read_at: Date.now() } : notif
-          )
-        );
+        setNotifications(prev => prev.map(notif => (notif.id === id ? { ...notif, read_at: Date.now() } : notif)));
         mutateNotificationList();
       } catch (error) {
-        console.error("Failed to mark notification as read:", error);
+        console.error('Failed to mark notification as read:', error);
         toast.error(tError((error as HTTPErrorMetadata).code.toString()));
       }
     },
@@ -68,12 +61,10 @@ export function useNotifications() {
         read: true,
         read_all: true,
       });
-      setNotifications((prev) =>
-        prev.map((notif) => ({ ...notif, read_at: Date.now() }))
-      );
+      setNotifications(prev => prev.map(notif => ({ ...notif, read_at: Date.now() })));
       mutateNotificationList();
     } catch (error) {
-      console.error("Failed to mark all as read:", error);
+      console.error('Failed to mark all as read:', error);
       toast.error(tError((error as HTTPErrorMetadata).code.toString()));
     }
   }, [tError, triggerUpdateNotification, mutateNotificationList]);

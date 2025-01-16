@@ -1,5 +1,5 @@
+import { RichTextEditor } from '@oe/ui/components/rich-text';
 import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Textarea } from '@oe/ui/shadcn/textarea';
 
 export default function Description() {
   return (
@@ -14,7 +14,7 @@ export default function Description() {
       className="rounded-lg bg-background p-4 shadow-sm"
       labelClassName="mb-4 text-lg"
     >
-      <Textarea placeholder="Description" />
+      <RichTextEditor placeholder="Description" />
     </FormFieldWithLabel>
   );
 }

@@ -6,7 +6,7 @@ import { UploadIcon } from 'lucide-react';
 export default function PreviewVideos() {
   return (
     <FormFieldWithLabel
-      name="preview_video"
+      name="preview_lessons"
       className="rounded-lg bg-background p-4 shadow-sm"
       render={({ field }) => (
         <Uploader
@@ -16,7 +16,7 @@ export default function PreviewVideos() {
           maxSizeBytes={10 * 1024 * 1024}
           multiple
           renderTrigger={props => (
-            <div className="flex items-center justify-between">
+            <div className="flex justify-between">
               <div>
                 <div className="font-medium text-lg">Video xem trước</div>
                 <span className="text-muted-foreground text-xs">File MP4 dung lượng không quá 10MB</span>

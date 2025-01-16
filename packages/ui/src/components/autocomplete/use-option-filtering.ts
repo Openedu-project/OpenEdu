@@ -4,9 +4,9 @@ import type { OptionValue } from './types';
 interface UseOptionFilteringProps<T> {
   options: T[];
   searchValue: string;
-  filterOption: (option: T, search: string) => boolean;
+  filterOption: (option: T, search: string) => boolean | undefined;
   fixedValue?: OptionValue[];
-  getOptionValue: (option: T) => OptionValue;
+  getOptionValue: (option: T) => OptionValue | undefined;
 }
 
 export function useOptionFiltering<T>({
@@ -18,8 +18,8 @@ export function useOptionFiltering<T>({
 }: UseOptionFilteringProps<T>) {
   const sortedOptions = useMemo(() => {
     return [...options].sort((a, b) => {
-      const aIsFixed = fixedValue.includes(getOptionValue(a));
-      const bIsFixed = fixedValue.includes(getOptionValue(b));
+      const aIsFixed = fixedValue.includes(getOptionValue(a) ?? '');
+      const bIsFixed = fixedValue.includes(getOptionValue(b) ?? '');
       if (aIsFixed && !bIsFixed) {
         return -1;
       }

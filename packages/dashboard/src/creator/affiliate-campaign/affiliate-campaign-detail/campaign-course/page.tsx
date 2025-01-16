@@ -1,4 +1,4 @@
-import AffiliateCampaignCoursesList from "./_components/campaign-course-list";
+import AffiliateCampaignCoursesList from './_components/campaign-course-list';
 
 export default function AffiliateCampaignDetailCourse() {
   return (

@@ -1,5 +1,5 @@
 import { buildUrl } from '@oe/core/utils/url';
-import type { ICategoryTree } from '#types/categories';
+import type { ICourseCategory } from '#types/course/category';
 import type { ICourse, ICourseResponse } from '#types/course/course';
 import type { ICourseOutline } from '#types/course/course';
 import type { IFilter } from '#types/filter';
@@ -27,6 +27,23 @@ export async function getCoursesService(
   } catch {
     return null;
   }
+}
+
+export async function getCourseByIdService(
+  url: string | undefined,
+  { id, init }: { id: string; init?: RequestInit }
+): Promise<ICourse | null> {
+  let endpointKey = url;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.COURSES_ID,
+      params: { id },
+    });
+  }
+
+  const response = await fetchAPI<ICourse>(endpointKey, init);
+
+  return response.data;
 }
 
 export async function getCourseOutlineService(
@@ -75,7 +92,7 @@ export const getLevelsService = async (
   init?: FetchOptions & { queryParams?: Record<string, string | boolean> }
 ) => {
   const defaultUrl = createAPIUrl({ endpoint: API_ENDPOINT.CATEGORIES_TREE, queryParams: init?.queryParams });
-  const response = await fetchAPI<ICategoryTree[]>(url ?? defaultUrl, init);
+  const response = await fetchAPI<ICourseCategory[]>(url ?? defaultUrl, init);
 
   return response.data;
 };

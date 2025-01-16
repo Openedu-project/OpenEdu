@@ -1,43 +1,38 @@
-"use client";
+'use client';
 import {
   useDeleteCoursesFromAffiliateCampaign,
   usePostCoursesToAffiliateCampaign,
-} from "@oe/api/hooks/useCampaignCourse";
-import type { IAffiliateCampaignCourse } from "@oe/api/types/campaign-course";
-import { type ColumnDef, Table, type TableRef } from "@oe/ui/components/table";
+} from '@oe/api/hooks/useCampaignCourse';
+import type { IAffiliateCampaignCourse } from '@oe/api/types/campaign-course';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
 
-import { Button } from "@oe/ui/shadcn/button";
-import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { Button } from '@oe/ui/shadcn/button';
+import { useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
-import { API_ENDPOINT } from "@oe/api/utils/endpoints";
-import { createAPIUrl } from "@oe/api/utils/fetch";
-import type { HTTPErrorMetadata } from "@oe/api/utils/http-error";
-import { formatPrice } from "@oe/core/utils/utils";
-import { RoleButton } from "@oe/ui/components/role-button";
-import { toast } from "@oe/ui/shadcn/sonner";
-import DeleteAffiliateCampaignCourseModal from "./campaign-course-detele-modal";
-import FormAffiliateCampaignCourseModal from "./campaign-course-form-modal";
+import { API_ENDPOINT } from '@oe/api/utils/endpoints';
+import { createAPIUrl } from '@oe/api/utils/fetch';
+import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
+import { formatPrice } from '@oe/core/utils/utils';
+import { RoleButton } from '@oe/ui/components/role-button';
+import { toast } from '@oe/ui/shadcn/sonner';
+import DeleteAffiliateCampaignCourseModal from './campaign-course-detele-modal';
+import FormAffiliateCampaignCourseModal from './campaign-course-form-modal';
 
 export default function AffiliateCampaignCoursesList() {
-  const t = useTranslations("affiliateCampaignDetailAddCourse");
-  const tError = useTranslations("errors");
+  const t = useTranslations('affiliateCampaignDetailAddCourse');
+  const tError = useTranslations('errors');
 
   const tableRef = useRef<TableRef<IAffiliateCampaignCourse>>(null);
-  const [selectedCourse, setSelectedCourse] =
-    useState<IAffiliateCampaignCourse | null>(null);
+  const [selectedCourse, setSelectedCourse] = useState<IAffiliateCampaignCourse | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState<boolean>(false);
 
   const { campaignId } = useParams();
 
-  const { triggerPostCourses } = usePostCoursesToAffiliateCampaign(
-    campaignId as string
-  );
-  const { triggerDeleteCourses } = useDeleteCoursesFromAffiliateCampaign(
-    campaignId as string
-  );
+  const { triggerPostCourses } = usePostCoursesToAffiliateCampaign(campaignId as string);
+  const { triggerDeleteCourses } = useDeleteCoursesFromAffiliateCampaign(campaignId as string);
 
   const handleOpenModal = useCallback(() => {
     setIsModalOpen(true);
@@ -47,13 +42,10 @@ export default function AffiliateCampaignCoursesList() {
     setIsModalOpen(false);
   }, []);
 
-  const handleOpenDeleteModal = useCallback(
-    (course: IAffiliateCampaignCourse) => {
-      setSelectedCourse(course);
-      setIsOpenDeleteModal(true);
-    },
-    []
-  );
+  const handleOpenDeleteModal = useCallback((course: IAffiliateCampaignCourse) => {
+    setSelectedCourse(course);
+    setIsOpenDeleteModal(true);
+  }, []);
 
   const handleCloseDeleteModal = useCallback(() => {
     setSelectedCourse(null);
@@ -66,7 +58,7 @@ export default function AffiliateCampaignCoursesList() {
         await triggerPostCourses(values);
         await tableRef.current?.mutate();
         handleCloseModal();
-        toast.success(t("addCourseSuccess"));
+        toast.success(t('addCourseSuccess'));
       } catch (error) {
         console.error(error);
         toast.error(tError((error as HTTPErrorMetadata).code.toString()));
@@ -84,7 +76,7 @@ export default function AffiliateCampaignCoursesList() {
       await triggerDeleteCourses([selectedCourse.id]);
       await tableRef.current?.mutate();
       handleCloseDeleteModal();
-      toast.success(t("removeCourseSuccess"));
+      toast.success(t('removeCourseSuccess'));
     } catch (error) {
       console.error(error);
       toast.error(tError((error as HTTPErrorMetadata).code.toString()));
@@ -94,8 +86,8 @@ export default function AffiliateCampaignCoursesList() {
   const columns: ColumnDef<IAffiliateCampaignCourse>[] = useMemo(
     () => [
       {
-        header: t("courseName"),
-        accessorKey: "course.name",
+        header: t('courseName'),
+        accessorKey: 'course.name',
         size: 250,
         cell: ({ row }) => {
           const item = row.original;
@@ -103,8 +95,8 @@ export default function AffiliateCampaignCoursesList() {
         },
       },
       {
-        header: t("price"),
-        accessorKey: "course.price",
+        header: t('price'),
+        accessorKey: 'course.price',
         size: 190,
         cell: ({ row }) => {
           const item = row.original;
@@ -114,7 +106,7 @@ export default function AffiliateCampaignCoursesList() {
             <p className="text-sm">
               {price_settings?.is_pay && <span>Fiat: </span>}
               {formatPrice(
-                Number.parseFloat(price_settings?.fiat_price ?? "0"),
+                Number.parseFloat(price_settings?.fiat_price ?? '0'),
                 price_settings?.fiat_currency,
                 !price_settings?.is_pay
               )}
@@ -122,16 +114,14 @@ export default function AffiliateCampaignCoursesList() {
               <span className="inline-block">
                 {price_settings?.is_pay &&
                   price_settings?.crypto_payment_enabled &&
-                  `${t("token")}: ${price_settings.crypto_price} ${
-                    price_settings.crypto_currency
-                  }`}
+                  `${t('token')}: ${price_settings.crypto_price} ${price_settings.crypto_currency}`}
               </span>
             </p>
           );
         },
       },
       {
-        header: t("action"),
+        header: t('action'),
         cell: ({ row }) => {
           const item = row.original;
           return (
@@ -142,7 +132,7 @@ export default function AffiliateCampaignCoursesList() {
               className="min-w-[100px]"
               onClick={() => handleOpenDeleteModal(item)}
             >
-              {t("delete")}
+              {t('delete')}
             </RoleButton>
           );
         },
@@ -155,7 +145,7 @@ export default function AffiliateCampaignCoursesList() {
     <>
       <div className="mb-4 flex justify-end">
         <Button onClick={handleOpenModal} className="btn btn-primary">
-          {t("addCourses")}
+          {t('addCourses')}
         </Button>
       </div>
 
@@ -167,7 +157,7 @@ export default function AffiliateCampaignCoursesList() {
         apiParams={{
           page: 1,
           per_page: 10,
-          sort: "create_at desc",
+          sort: 'create_at desc',
         }}
         columns={columns}
         ref={tableRef}
@@ -178,16 +168,11 @@ export default function AffiliateCampaignCoursesList() {
           manualPagination: true,
         }}
       />
-      {isModalOpen && (
-        <FormAffiliateCampaignCourseModal
-          onSubmit={handleAddCourses}
-          onClose={handleCloseModal}
-        />
-      )}
+      {isModalOpen && <FormAffiliateCampaignCourseModal onSubmit={handleAddCourses} onClose={handleCloseModal} />}
       {isOpenDeleteModal && selectedCourse && (
         <DeleteAffiliateCampaignCourseModal
           open={isOpenDeleteModal}
-          id={selectedCourse?.id ?? ""}
+          id={selectedCourse?.id ?? ''}
           onSubmit={handleRemoveCourse}
           onClose={handleCloseDeleteModal}
         />

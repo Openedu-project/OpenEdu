@@ -13,10 +13,13 @@ export default function Category() {
   });
   return (
     <FormFieldWithLabel
-      name="category"
+      name="categories"
+      data-field="categories"
       label={
         <div className="flex flex-col gap-1">
-          <span className="font-medium text-lg">Category</span>
+          <span className="font-medium text-lg">
+            Category <span className="text-red-500">*</span>
+          </span>
           <span className="text-muted-foreground text-xs">The category is used to categorize the course.</span>
         </div>
       }

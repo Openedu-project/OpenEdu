@@ -1,4 +1,5 @@
 import type { HTTPPagination } from './fetch';
+import type { IFileResponse } from './file';
 import type { IHashtag } from './hashtag';
 import type { IOrganization } from './organizations';
 import type { IUserProfile } from './user-profile';
@@ -15,22 +16,22 @@ interface IBlogCategory {
   type?: string;
 }
 
-interface IBanner {
-  name: string;
-  mime: string;
-  ext: string;
-  url: string;
-  thumbnail_url: string;
-  id: string;
-  create_at: number;
-  update_at: number;
-  delete_at: number;
-  width: number;
-  height: number;
-  size: number;
-  duration: number;
-  bunny_video_id?: string;
-}
+// interface IBanner {
+//   name: string;
+//   mime: string;
+//   ext: string;
+//   url: string;
+//   thumbnail_url: string;
+//   id: string;
+//   create_at: number;
+//   update_at: number;
+//   delete_at: number;
+//   width: number;
+//   height: number;
+//   size: number;
+//   duration: number;
+//   bunny_video_id?: string;
+// }
 
 interface IAIInfo {
   id: string;
@@ -71,7 +72,7 @@ export interface IBlog {
   description: string;
   hashtag: IHashtag[];
   org?: IOrganization;
-  banner: IBanner;
+  banner: IFileResponse;
   image_description?: string;
   author: IUserProfile;
   published_blog?: IBlogHistory[];

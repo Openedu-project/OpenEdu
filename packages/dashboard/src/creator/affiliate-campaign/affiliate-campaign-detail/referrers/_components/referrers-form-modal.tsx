@@ -1,40 +1,25 @@
 import {
   type AddReferrersCampaignSchemaType,
   addReferrersCampaignSchema,
-} from "@oe/api/schemas/affiliateCampaignSchema";
-import type { ICreateReferrersPayload } from "@oe/api/types/referrer";
-import { InputTags } from "@oe/ui/components/input-tags";
-import { Modal } from "@oe/ui/components/modal";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@oe/ui/shadcn/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@oe/ui/shadcn/select";
-import { useTranslations } from "next-intl";
-import { useCallback, useState } from "react";
+} from '@oe/api/schemas/affiliateCampaignSchema';
+import type { ICreateReferrersPayload } from '@oe/api/types/referrer';
+import { InputTags } from '@oe/ui/components/input-tags';
+import { Modal } from '@oe/ui/components/modal';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@oe/ui/shadcn/select';
+import { useTranslations } from 'next-intl';
+import { useCallback, useState } from 'react';
 
 interface IFormReferrerModal {
-  onSubmit: (value: ICreateReferrersPayload["referrers"]) => void;
+  onSubmit: (value: ICreateReferrersPayload['referrers']) => void;
   onClose: () => void;
 }
 
-export default function AffiliateReferrerFormModal({
-  onSubmit,
-  onClose,
-}: IFormReferrerModal) {
-  const t = useTranslations("affiliateDetailReferrerFormModal");
+export default function AffiliateReferrerFormModal({ onSubmit, onClose }: IFormReferrerModal) {
+  const t = useTranslations('affiliateDetailReferrerFormModal');
 
   const [emails, setEmails] = useState<string[]>([]);
-  const [pendingEmail, setPendingEmail] = useState<string>("");
+  const [pendingEmail, setPendingEmail] = useState<string>('');
 
   const handleFormSubmit = useCallback(
     async (values: AddReferrersCampaignSchemaType) => {
@@ -44,7 +29,7 @@ export default function AffiliateReferrerFormModal({
       });
 
       // Map the data to the format expected by the parent component
-      const mappedData = validatedData.emails.map((email) => {
+      const mappedData = validatedData.emails.map(email => {
         return {
           email,
           type: validatedData.type,
@@ -69,25 +54,25 @@ export default function AffiliateReferrerFormModal({
   return (
     <Modal
       open={true}
-      title={t("addReferrers")}
+      title={t('addReferrers')}
       onClose={onClose}
       buttons={[
         {
-          type: "button",
-          label: t("cancel"),
-          variant: "outline",
+          type: 'button',
+          label: t('cancel'),
+          variant: 'outline',
           onClick: () => onClose(),
         },
         {
-          type: "submit",
-          label: t("save"),
-          variant: "default",
+          type: 'submit',
+          label: t('save'),
+          variant: 'default',
         },
       ]}
       validationSchema={addReferrersCampaignSchema}
       onSubmit={handleFormSubmit}
     >
-      {(form) => {
+      {form => {
         return (
           <>
             <FormField
@@ -95,19 +80,16 @@ export default function AffiliateReferrerFormModal({
               name="type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("type")}</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <FormLabel>{t('type')}</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder={t("selectType")} />
+                        <SelectValue placeholder={t('selectType')} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="kol">{t("partner")}</SelectItem>
-                      <SelectItem value="agency">{t("agency")}</SelectItem>
+                      <SelectItem value="kol">{t('partner')}</SelectItem>
+                      <SelectItem value="agency">{t('agency')}</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -120,18 +102,18 @@ export default function AffiliateReferrerFormModal({
               name="emails"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("emails")}</FormLabel>
+                  <FormLabel>{t('emails')}</FormLabel>
                   <FormControl>
                     <InputTags
                       {...field}
                       value={emails}
-                      onChange={(newValue) => {
+                      onChange={newValue => {
                         handleEmailsChange(newValue);
                         field.onChange(newValue);
                       }}
                       onInputChange={handleInputChange}
                       inputValue={pendingEmail}
-                      placeholder={t("placeholderEmail")}
+                      placeholder={t('placeholderEmail')}
                     />
                   </FormControl>
                   <FormMessage />

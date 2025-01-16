@@ -85,6 +85,7 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
       return false;
     }
     const form = formsRef.current.get(activeFormId);
+    // console.log("validateForm", activeFormId, form);
     if (!form) {
       return false;
     }
@@ -102,14 +103,27 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
       return newTabsMetadata;
     });
     if (!isValid) {
-      const firstError = form.formRef.current?.querySelector('[aria-invalid="true"]');
-      if (firstError) {
-        scrollToError(firstError as HTMLElement, scrollOptions);
-        // if (firstError instanceof HTMLElement) {
-        //   firstError.focus();
-        // }
+      const errorFields = form.getValidationErrors();
+      if (errorFields.length > 0) {
+        const firstErrorField = errorFields.reverse()[0]?.field;
+        const firstError = form.formRef.current?.querySelector(`[data-field="${firstErrorField}"]`);
+
+        if (firstError) {
+          scrollToError(firstError as HTMLElement, scrollOptions);
+        }
       }
       return false;
+      // console.log("validateForm", form.getValidationErrors());
+      // const firstError = form.formRef.current?.querySelector(
+      //   '[aria-invalid="true"]'
+      // );
+      // if (firstError) {
+      //   scrollToError(firstError as HTMLElement, scrollOptions);
+      //   // if (firstError instanceof HTMLElement) {
+      //   //   firstError.focus();
+      //   // }
+      // }
+      // return false;
     }
     return true;
   }, [scrollOptions, activeFormId]);

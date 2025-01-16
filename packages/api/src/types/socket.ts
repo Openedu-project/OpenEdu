@@ -1,5 +1,5 @@
-import { IMessageData } from '@oe/api/types/conversation';
-import { IAICourseStatus } from '@oe/api/types/course/ai-course';
+import type { IMessageData } from '@oe/api/types/conversation';
+import type { IAICourseStatus } from '@oe/api/types/course/ai-course';
 
 export interface IBadgeEventData {
   badge: number;

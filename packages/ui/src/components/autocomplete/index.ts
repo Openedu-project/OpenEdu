@@ -12,6 +12,7 @@
 
 import { Autocomplete, type AutocompleteProps } from './autocomplete';
 import { AutocompeteMultiple, type AutocompleteMultipleProps } from './autocomplete-multiple';
+import type { OptionType } from './types';
 
 export { Autocomplete, AutocompeteMultiple };
-export type { AutocompleteProps, AutocompleteMultipleProps };
+export type { AutocompleteProps, AutocompleteMultipleProps, OptionType };

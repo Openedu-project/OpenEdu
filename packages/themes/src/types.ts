@@ -1,6 +1,6 @@
+import { fileResponseScheme } from '@oe/api/types/file';
+import { z } from '@oe/api/utils/zod';
 import type React from 'react';
-import { fileResponseScheme } from '../../api/src/types/file';
-import { z } from '../../api/src/utils/zod';
 
 export type Theme = {
   // description: string;

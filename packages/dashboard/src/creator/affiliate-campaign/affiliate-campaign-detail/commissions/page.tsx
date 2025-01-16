@@ -1,4 +1,4 @@
-import CommissionList from "./_components/commissions-list";
+import CommissionList from './_components/commissions-list';
 
 export default function Commissions() {
   return (

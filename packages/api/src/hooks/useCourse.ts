@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { getCourseOutlineService, getCoursesService, getLevelsService } from '#services/course';
+import { getCourseByIdService, getCourseOutlineService, getCoursesService, getLevelsService } from '#services/course';
 import type { ICourseOutline } from '#types/course/course';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
@@ -19,6 +19,20 @@ export function useGetCourses({ params }: { params: IFilter }) {
     errorCourses: error,
     mutateListCourses: mutate,
     isLoadingCourses: isLoading,
+  };
+}
+
+export function useGetCourseById(id: string) {
+  const { data, isLoading, error, mutate } = useSWR(
+    id ? createAPIUrl({ endpoint: API_ENDPOINT.COURSES_ID, params: { id } }) : null,
+    (endpoint: string) => getCourseByIdService(endpoint, { id })
+  );
+
+  return {
+    course: data,
+    courseError: error,
+    mutateCourse: mutate,
+    courseLoading: isLoading,
   };
 }
 

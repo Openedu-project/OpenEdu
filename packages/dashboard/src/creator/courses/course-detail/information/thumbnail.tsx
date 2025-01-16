@@ -5,9 +5,12 @@ export default function Thumbnail() {
   return (
     <FormFieldWithLabel
       name="thumbnail"
+      data-field="thumbnail"
       label={
         <div className="flex flex-col gap-1">
-          <span className="font-medium text-lg">Thumbnail</span>
+          <span className="font-medium text-lg">
+            Thumbnail <span className="text-red-500">*</span>
+          </span>
           <span className="text-muted-foreground text-xs">
             The thumbnail is used to represent the course in the course list.
           </span>

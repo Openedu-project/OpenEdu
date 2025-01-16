@@ -1,5 +1,5 @@
-import { Modal } from "@oe/ui/components/modal";
-import { useTranslations } from "next-intl";
+import { Modal } from '@oe/ui/components/modal';
+import { useTranslations } from 'next-intl';
 
 interface IDeleteReferrerModal {
   open: boolean;
@@ -8,15 +8,10 @@ interface IDeleteReferrerModal {
   onClose: () => void;
 }
 
-export const MODAL_DEL_ID = "referrer-delete-modal";
+export const MODAL_DEL_ID = 'referrer-delete-modal';
 
-export default function AffiliateDeleteReferrerModal({
-  id,
-  onClose,
-  onSubmit,
-  open,
-}: IDeleteReferrerModal) {
-  const t = useTranslations("affiliateDetailDeleteReferrerModal");
+export default function AffiliateDeleteReferrerModal({ id, onClose, onSubmit, open }: IDeleteReferrerModal) {
+  const t = useTranslations('affiliateDetailDeleteReferrerModal');
 
   return (
     <Modal
@@ -26,22 +21,22 @@ export default function AffiliateDeleteReferrerModal({
       hasCancelButton={false}
       buttons={[
         {
-          type: "button",
-          label: t("cancel"),
-          variant: "outline",
+          type: 'button',
+          label: t('cancel'),
+          variant: 'outline',
           onClick: () => onClose(),
         },
         {
-          type: "button",
-          label: t("delete"),
-          variant: "destructive",
+          type: 'button',
+          label: t('delete'),
+          variant: 'destructive',
           onClick: () => onSubmit(id),
         },
       ]}
     >
       <div className="block px-4 py-8">
-        <h4 className="font-semibold text-2xl">{t("title")}</h4>
-        <p>{t("desc")}</p>
+        <h4 className="font-semibold text-2xl">{t('title')}</h4>
+        <p>{t('desc')}</p>
       </div>
     </Modal>
   );

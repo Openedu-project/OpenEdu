@@ -1,12 +1,9 @@
-"use client";
-import type { IPermissionAction } from "@oe/api/types/permissions";
-import { Button } from "@oe/ui/shadcn/button";
-import type { ButtonProps } from "@oe/ui/shadcn/button";
-import type React from "react";
-import {
-  useButtonPermission,
-  useCurrentPermissionRoute,
-} from "./use-role-button";
+'use client';
+import type { IPermissionAction } from '@oe/api/types/permissions';
+import { Button } from '@oe/ui/shadcn/button';
+import type { ButtonProps } from '@oe/ui/shadcn/button';
+import type React from 'react';
+import { useButtonPermission, useCurrentPermissionRoute } from './use-role-button';
 
 /*==============HOW TO USE==================
   - Auto get route
@@ -43,12 +40,12 @@ export function RoleButton({
   action,
   children,
   onValidationFail,
-  className = "",
+  className = '',
   entity: entityOverride,
   ...buttonProps
 }: IRoleButtonProps) {
   const currentRoute = useCurrentPermissionRoute();
-  const entity = entityOverride || currentRoute?.key || "";
+  const entity = entityOverride || currentRoute?.key || '';
   const { hasPermission, isLoading } = useButtonPermission(entity, action);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {

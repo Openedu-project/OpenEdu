@@ -30,7 +30,7 @@ export function Autocomplete<T extends OptionType | string>({
   getOptionLabel = (option: T) => (typeof option === 'string' ? option : option.label),
   getOptionValue = (option: T) => (typeof option === 'string' ? option : option.value),
   filterOption = (option: T, searchValue: string) =>
-    getOptionLabel(option).toLowerCase().includes(searchValue.toLowerCase()),
+    getOptionLabel(option)?.toLowerCase().includes(searchValue.toLowerCase()),
   renderOption,
   renderTrigger,
 }: AutocompleteProps<T>) {

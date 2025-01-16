@@ -9,7 +9,7 @@ export const scrollToError = (element: HTMLElement | null, options?: ScrollOptio
   setTimeout(() => {
     element.scrollIntoView({
       behavior: 'smooth',
-      block: 'center',
+      block: 'start',
       ...options,
     });
     element.focus();

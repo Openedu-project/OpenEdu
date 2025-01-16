@@ -281,7 +281,9 @@ export function SelectTree<T, V extends { id: string }>({
         >
           <CommandInput placeholder={searchPlaceholder} value={search} onValueChange={setSearch} />
           <CommandEmpty>{tGeneral('noResults')}</CommandEmpty>
-          <CommandGroup className="max-h-[300px] overflow-auto">{data.map(node => renderNode(node))}</CommandGroup>
+          <CommandGroup className="scrollbar max-h-[300px] overflow-auto">
+            {data.map(node => renderNode(node))}
+          </CommandGroup>
         </Command>
       </PopoverContent>
     </Popover>

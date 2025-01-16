@@ -1,12 +1,12 @@
-import OpeneduLogo from '@oe/assets/images/logo-openedu.png';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import type { ReactNode } from 'react';
-import { Link } from '#common/navigation';
-import { Image } from '#components/image';
-import { LoginWarningModal } from '#components/login-required-modal';
-import { Footer } from '../footer';
-import { Header } from '../header';
-import type { ISidebarItem } from '../sidebar';
+import OpeneduLogo from "@oe/assets/images/logo-openedu.png";
+import { PLATFORM_ROUTES } from "@oe/core/utils/routes";
+import type { ReactNode } from "react";
+import { Link } from "#common/navigation";
+import { Image } from "#components/image";
+import { LoginWarningModal } from "#components/login-required-modal";
+import { Footer } from "../footer";
+import { Header } from "../header";
+import type { ISidebarItem } from "../sidebar";
 
 export function MainLayout({
   children,
@@ -34,10 +34,10 @@ export function MainLayout({
         </Link>
 
         <ul className="ml-6 hidden gap-3 text-primary-foreground md:flex">
-          {sidebarItems?.map(item => (
+          {sidebarItems?.map((item) => (
             <li key={item.id}>
               <Link
-                href={item.href ?? ''}
+                href={item.href ?? ""}
                 className="mcaption-semibold14 lg:mcaption-semibold18 p-2 hover:bg-transparent hover:p-2 hover:text-primary-foreground hover:underline"
                 variant="ghost"
                 activeClassName="border-0"

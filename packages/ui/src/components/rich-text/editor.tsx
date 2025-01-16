@@ -24,6 +24,7 @@ export interface RichTextEditorProps {
   aiParams?: Record<string, string>;
   onAIApply?: () => void;
   aiButton?: boolean;
+  placeholder?: string;
 }
 
 export interface RichTextEditorRef {
@@ -42,12 +43,13 @@ export const RichTextEditor = ({
   onAIApply,
   aiButton,
   onChange,
+  placeholder,
   ref,
 }: RichTextEditorProps) => {
   const tRichText = useTranslations('richText');
   const editor = useRichTextEditor({
     content: defaultValue || value,
-    placeholder: tRichText('placeholder'),
+    placeholder: placeholder || tRichText('placeholder'),
     onUpdate: (editor: Editor) => {
       onChange?.(editor.getHTML());
     },
