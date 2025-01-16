@@ -1,5 +1,5 @@
-import CourseList from './_components/course-list';
+import CoursesListPage from '@oe/ui/pages/course-list';
 
 export default function CoursesPage() {
-  return <CourseList />;
+  return <CoursesListPage isOpenEdu />;
 }
