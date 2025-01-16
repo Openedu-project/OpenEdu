@@ -1,5 +1,4 @@
-import type React from 'react';
-import { useEffect, useState } from 'react';
+import { type RefObject, useEffect, useState } from 'react';
 
 export const DEBUG = false;
 export const VERSION = '0.0.11';
@@ -38,20 +37,15 @@ export type Event = (typeof EVENTS)[keyof typeof EVENTS];
 export type Method = (typeof METHODS)[keyof typeof METHODS];
 
 export const origin = (url: string): string => {
-  let newUrl = '';
-
+  let fullUrl = url;
   if (url.slice(0, 2) === '//' && typeof window !== 'undefined') {
-    newUrl = window.location.protocol + url;
+    fullUrl = window.location.protocol + url;
   }
-  return newUrl.split('/').slice(0, 3).join('/');
+  return fullUrl.split('/').slice(0, 3).join('/');
 };
 
-export const addEvent = (
-  elem: Window | HTMLElement,
-  event: string,
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  fn: any
-): void => {
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export const addEvent = (elem: Window | HTMLElement, event: string, fn: any): void => {
   if (!elem) {
     return;
   }
@@ -125,51 +119,35 @@ interface Listener {
 class Keeper {
   private data: { [key: string]: Listener[] } = {};
 
-  // Helper method để truy cập an toàn vào this.data[event]
-  private getListeners(event: string): Listener[] {
-    return this.data[event] || [];
-  }
-
-  // Helper method để set listeners cho một event
-  private setListeners(event: string, listeners: Listener[]): void {
-    if (listeners.length === 0) {
-      delete this.data[event];
-    } else {
-      this.data[event] = listeners;
-    }
-  }
-
   getUUID(): string {
     return 'listener-xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replaceAll(/[xy]/g, c => {
       const r = Math.trunc(Math.random() * 16);
       const v = c === 'x' ? r : (r & 0x3) | 0x8;
+
       return v.toString(16);
     });
   }
 
   has(event: string, id?: string): boolean {
-    const listeners = this.getListeners(event);
-    if (listeners.length === 0) {
+    if (!Object.prototype.hasOwnProperty.call(this.data, event)) {
       return false;
     }
     if (isNone(id)) {
       return true;
     }
-    return listeners.some(listener => listener.id === id);
+    const listeners = this.data[event];
+    return listeners ? listeners.some(listener => listener.id === id) : false;
   }
 
-  add(
-    id: string,
-    event: string,
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    cb: (data: any) => void,
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    ctx: any,
-    one: boolean
-  ): void {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  add(id: string, event: string, cb: (data: any) => void, ctx: any, one: boolean): void {
     const listener: Listener = { id, event, cb, ctx, one };
-    const listeners = this.getListeners(event);
-    this.setListeners(event, [...listeners, listener]);
+
+    if (this.has(event) && this.data[event]) {
+      this.data[event].push(listener);
+    } else {
+      this.data[event] = [listener];
+    }
   }
 
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -177,12 +155,11 @@ class Keeper {
     if (!this.has(event, id)) {
       return false;
     }
-
-    const listeners = this.getListeners(event);
     const keep: Listener[] = [];
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     const execute: { cb: (data: any) => void; ctx: any; data: any }[] = [];
 
+    const listeners = this.data[event] || [];
     for (const listener of listeners) {
       if (isNone(id) || (!isNone(id) && listener.id === id)) {
         execute.push({
@@ -198,7 +175,11 @@ class Keeper {
       }
     }
 
-    this.setListeners(event, keep);
+    if (keep.length === 0) {
+      delete this.data[event];
+    } else {
+      this.data[event] = keep;
+    }
 
     for (const e of execute) {
       e.cb.call(e.ctx, e.data);
@@ -219,14 +200,14 @@ class Keeper {
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   off(event: string, cb?: (data: any) => void): string[] {
     const ret: string[] = [];
-    const listeners = this.getListeners(event);
 
-    if (listeners.length === 0) {
+    if (!Object.prototype.hasOwnProperty.call(this.data, event)) {
       return ret;
     }
 
     const keep: Listener[] = [];
 
+    const listeners = this.data[event] || [];
     for (const listener of listeners) {
       if (isNone(cb) || listener.cb === cb) {
         if (!isNone(listener.id)) {
@@ -237,12 +218,21 @@ class Keeper {
       }
     }
 
-    this.setListeners(event, keep);
+    if (keep.length === 0) {
+      delete this.data[event];
+    } else {
+      this.data[event] = keep;
+    }
+
     return ret;
   }
 }
 
-class Player {
+// interface PlayerOptions {
+//   // Add any additional options here
+// }
+
+export class Player {
   private elem: HTMLIFrameElement;
   private origin: string;
   private keeper: Keeper;
@@ -254,8 +244,13 @@ class Player {
   private loaded = false;
 
   constructor(elemOrId: string | HTMLIFrameElement) {
-    const iframeElement = this.getIframeElement(elemOrId);
+    const iframeElement = isString(elemOrId) ? (document.getElementById(elemOrId) as HTMLIFrameElement) : elemOrId;
 
+    assert(iframeElement, `No element found with id "${elemOrId}"`);
+    assert(
+      iframeElement.nodeName === 'IFRAME',
+      `playerjs.Player constructor requires an Iframe, got "${iframeElement.nodeName}"`
+    );
     assert(iframeElement.src, "playerjs.Player constructor requires an Iframe with a 'src' attribute.");
 
     this.elem = iframeElement;
@@ -277,21 +272,6 @@ class Player {
         this.loaded = true;
       });
     }
-  }
-
-  private getIframeElement(elemOrId: string | HTMLIFrameElement): HTMLIFrameElement {
-    if (isString(elemOrId)) {
-      const el = document.getElementById(elemOrId);
-      assert(el, `No element found with id "${elemOrId}"`);
-      assert(el?.nodeName === 'IFRAME', `playerjs.Player constructor requires an Iframe, got "${el?.nodeName}"`);
-      return el as HTMLIFrameElement;
-    }
-
-    assert(
-      elemOrId.nodeName === 'IFRAME',
-      `playerjs.Player constructor requires an Iframe, got "${elemOrId.nodeName}"`
-    );
-    return elemOrId;
   }
 
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -404,15 +384,15 @@ class Player {
     return false;
   }
 
-  supports(evtOrMethod: 'event' | 'method', nameOrNames: string | string[]): boolean {
+  supports(evtOrMethod: 'event' | 'method', names: string | string[]): boolean {
     assert(
       ['method', 'event'].includes(evtOrMethod),
       `evtOrMethod needs to be either "event" or "method" got ${evtOrMethod}`
     );
-    const names = isArray(nameOrNames) ? nameOrNames : [nameOrNames];
+    const nameList = isArray(names) ? names : [names];
     const all = evtOrMethod === 'event' ? this.events : this.methods;
 
-    return names.every(name => all.includes(name));
+    return nameList.every(name => all.includes(name));
   }
 
   // Add method shortcuts
@@ -434,7 +414,7 @@ class Player {
 export const READIED: string[] = [];
 
 // React Hook
-export const usePlayer = (iframeRef: React.RefObject<HTMLIFrameElement | null>) => {
+export const usePlayer = (iframeRef: RefObject<HTMLIFrameElement>) => {
   const [player, setPlayer] = useState<Player | null>(null);
 
   useEffect(() => {

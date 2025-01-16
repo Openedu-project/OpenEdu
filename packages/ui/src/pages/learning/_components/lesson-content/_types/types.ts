@@ -1,4 +1,5 @@
 import type { TLessonContent } from '@oe/api/types/course/basic';
+import type { ICourseOutline } from '@oe/api/types/course/course';
 import type { ILessonContent } from '@oe/api/types/course/segment';
 import type { ICurrentQuestion } from '@oe/api/types/quiz';
 import type React from 'react';
@@ -8,6 +9,7 @@ export interface ContentRendererProps {
   contents: ILessonContent[];
   data?: ILessonContent;
   isOnlyContent: boolean;
+  onCompleteContent?: (props?: Partial<ICompleteContentProps>) => void;
 }
 
 export interface ContentRenderer {
@@ -15,7 +17,7 @@ export interface ContentRenderer {
   getClassName: (isOnlyContent: boolean) => string;
 }
 
-interface ICompleteContentProps {
+export interface ICompleteContentProps {
   uid: string;
   type: TLessonContent;
   duration?: number;
@@ -25,8 +27,13 @@ interface ICompleteContentProps {
 
 export interface LessonContentBlockProps {
   contents?: ILessonContent[];
-  courseId: string;
-  onCompleteContent?: ({ uid, type, duration, pause_at, quiz_id }: ICompleteContentProps) => void;
+  // courseId: string;
+  // course_slug: string;
+  course_data: ICourseOutline;
+  lesson_uid: string;
+  section_uid: string;
+  // outline: ISectionLearningProgress[];
+  onCompleteContent?: (props?: Partial<ICompleteContentProps>) => void;
 }
 
 export type TAnswerInput = {

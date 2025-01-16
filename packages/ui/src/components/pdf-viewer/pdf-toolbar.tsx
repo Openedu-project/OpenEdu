@@ -42,7 +42,7 @@ const ToolbarButton = ({
 const PdfToolbar = ({ page, numPages, scale, onPageChange, onZoom, showPerPage }: PdfToolbarProps) => {
   return (
     <div className="w-full border-b bg-white/80 shadow-sm backdrop-blur-sm">
-      <div className="mx-auto flex w-full max-w-full items-center justify-between px-4 py-2">
+      <div className="mx-auto flex w-full max-w-full flex-row-reverse items-center justify-between px-4 py-2">
         {showPerPage && (
           <div className="flex items-center gap-2">
             <ToolbarButton

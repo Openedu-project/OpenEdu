@@ -10,17 +10,18 @@ import type { IQuizItemResponse, IQuizSettings } from '@oe/api/types/course/quiz
 import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
 import type { HTTPError } from '@oe/api/utils/http-error';
 import { useEffect, useState } from 'react';
+import { transformAnswers } from '../../../_utils/utils';
 import type { IQuizzSubmissionState, TAnswerInput } from '../_types/types';
-import { transformAnswers } from '../_utils/utils';
 import QuizContainer from './quiz-container';
 
 interface IContentQuizProps {
   quiz?: IQuizItemResponse;
   settings?: IQuizSettings;
   course_id: string;
+  onComplete?: () => void;
 }
 
-export default function ContentQuiz({ quiz, course_id, settings }: IContentQuizProps) {
+export default function ContentQuiz({ quiz, course_id, settings, onComplete }: IContentQuizProps) {
   const [quizSubmission, setQuizSubmission] = useState<IQuizzSubmissionState>({
     id: '',
     num_questions: 0,
@@ -37,9 +38,9 @@ export default function ContentQuiz({ quiz, course_id, settings }: IContentQuizP
   const getQuizSubmissionResults = async () => {
     const result = await quizSubmissionData();
 
-    // if (result.passed) {
-    //   onComplete?.();
-    // }
+    if (result.passed) {
+      onComplete?.();
+    }
 
     setQuizResultState(result);
   };

@@ -1,5 +1,6 @@
 export const courseLearningMessages = {
   learningPage: {
+    course: 'Course: {courseName}',
     navigation: {
       next: 'Next',
       prev: 'Previous',
@@ -24,6 +25,11 @@ export const courseLearningMessages = {
         yourScore: 'Your score',
         highestStreak: 'Highest streak',
         highestScore: 'Highest score',
+      },
+      videoQuiz: {
+        des: 'This lesson contains quizzes at minute',
+        and: 'and',
+        videoQuizRequire: 'You need to complete the quizzes in order to finish this lesson.',
       },
     },
   },

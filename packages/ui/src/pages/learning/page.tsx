@@ -1,6 +1,9 @@
 import { getCourseOutlineService } from '@oe/api/services/course';
-import { getLessonLearnService } from '@oe/api/services/lesson-learn';
+import { getLearningProgressesService } from '@oe/api/services/learning-progress';
+import type { ISectionLearningProgress } from '@oe/api/types/course/learning-progress';
+import { AuthCheck } from './_components/auth-check-learning';
 import CourseLearning from './_components/course-learning-container';
+import { mergeSectionWithProgress } from './_utils/utils';
 
 export default async function LearningPage({
   slug,
@@ -12,7 +15,27 @@ export default async function LearningPage({
   lesson: string;
 }) {
   const course = await getCourseOutlineService(undefined, { id: slug });
-  const lessonData = course ? await getLessonLearnService(undefined, { id: lesson, cid: course?.id }) : undefined;
 
-  return course && <CourseLearning course={course} section={section} lesson={lessonData} />;
+  const dataLearningProgress = course
+    ? await getLearningProgressesService(undefined, {
+        id: course?.slug,
+      })
+    : undefined;
+
+  const learningData =
+    course && dataLearningProgress && mergeSectionWithProgress(course?.outline, dataLearningProgress?.sections);
+
+  return (
+    course && (
+      <>
+        <AuthCheck course={course} learning_data={learningData as ISectionLearningProgress[]} />
+        <CourseLearning
+          course={course}
+          section_uid={section}
+          lesson_uid={lesson}
+          // learning_data={learningData as ISectionLearningProgress[]}
+        />
+      </>
+    )
+  );
 }

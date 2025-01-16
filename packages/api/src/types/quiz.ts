@@ -5,7 +5,7 @@ export type TQuestion = 'single_choice' | 'multiple_choice';
 export type TQuizAnswer = 'choice_item';
 export type TQuizSubmissionStatus = 'in-progress' | 'done';
 
-export interface ILessonContentQuizz extends IQuizPayload {
+export interface ILessonContentQuiz extends IQuizPayload {
   id: string;
   create_at: number;
 }
