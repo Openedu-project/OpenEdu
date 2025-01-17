@@ -61,20 +61,12 @@ export const PreviewPanel = memo(function PreviewPanel({
   };
 
   return (
-    <div className="flex-1">
-      <ScrollArea>
-        <div className="flex justify-center p-6">
-          <div className="w-full space-y-12 p-0">
-            {/* <Suspense fallback={<div>{t('loading-preview')}</div>}> */}
-            {sortedSections()?.length > 0 ? (
-              sortedSections().map(renderPreviewSection)
-            ) : (
-              <div className="flex h-full items-center justify-center text-muted-foreground">{t('noPreview')}</div>
-            )}
-            {/* </Suspense> */}
-          </div>
-        </div>
-      </ScrollArea>
-    </div>
+    <ScrollArea>
+      {sortedSections()?.length > 0 ? (
+        sortedSections().map(renderPreviewSection)
+      ) : (
+        <div className="flex h-full items-center justify-center text-muted-foreground">{t('noPreview')}</div>
+      )}
+    </ScrollArea>
   );
 });

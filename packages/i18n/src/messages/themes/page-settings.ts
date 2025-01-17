@@ -12,5 +12,7 @@ export const pageSettingMessages = {
     noPreview: 'No preview',
     previewing: 'Previewing...',
     config: 'Config',
+    updateSuccess: 'Update config successfully!',
+    updateFail: 'Failed to update config',
   },
 };

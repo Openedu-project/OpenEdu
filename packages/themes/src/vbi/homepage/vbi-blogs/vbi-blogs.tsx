@@ -11,7 +11,7 @@ const VbiHomepageBlogs: SectionComponent<'homepage', 'vbiBlogs'> = ({ className 
   const t = useTranslations('themePage.vbi.homepage.vbiBlogs');
 
   return (
-    <div className={cn('space-y-4 md:space-y-6', className)}>
+    <div className={cn('space-y-4 p-4 md:space-y-8 md:p-8 lg:p-12', className)}>
       <InfoSection
         title={t('title')}
         titleSub={t('titleSub')}

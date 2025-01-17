@@ -41,6 +41,7 @@ export default function MetadataPage() {
       const updatedSystem = updateThemeSystem(data);
       const response = await createOrUpdateThemeConfig({
         config: updatedSystem,
+        id: theme?.[0]?.id,
       });
 
       if (!response) {

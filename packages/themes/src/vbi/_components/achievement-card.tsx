@@ -45,9 +45,9 @@ const AchievementCard = ({
           {/* Stats Section */}
           <div className="flex justify-between gap-4">
             <StatCard value={stats?.stat1?.value} label={stats?.stat1?.label} className={stats?.stat1?.className} />
-            <Separator className="flex h-3/4 w-[1px] items-center" />
+            <Separator className="h-8 w-[1px] self-center" />
             <StatCard value={stats?.stat2?.value} label={stats?.stat2?.label} className={stats?.stat2?.className} />
-            <Separator className="h-3/4 w-[1px]" />
+            <Separator className="h-8 w-[1px] self-center" />
             <StatCard value={stats?.stat3?.value} label={stats?.stat3?.label} className={stats?.stat3?.className} />
           </div>
         </div>

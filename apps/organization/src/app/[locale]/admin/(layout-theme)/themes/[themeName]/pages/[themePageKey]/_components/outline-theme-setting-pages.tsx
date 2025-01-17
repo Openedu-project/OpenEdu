@@ -1,7 +1,6 @@
 'use client';
 import { useGetTheme } from '@oe/api/hooks/useTheme';
 import { createOrUpdateThemeConfig } from '@oe/api/services/theme';
-import { defaultThemeSystemConfig } from '@oe/themes';
 import { ThemeSettingPages } from '@oe/themes/_components/theme-settings/index';
 import type {
   ThemeCollection,
@@ -11,6 +10,7 @@ import type {
   ThemeSidebarPageKey,
   ThemeSystem,
 } from '@oe/themes/types/index';
+import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
@@ -23,15 +23,15 @@ const OutlineThemeSettingPages = ({ selectedSidebarPageKey }: OutlineThemeSettin
   const { themeName, themePageKey } = useParams();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { theme } = useGetTheme();
-  const tThemeConfig = useTranslations('themePage');
+  const t = useTranslations('themePageSettings');
 
-  // if (!theme?.[0]?.value?.availableThemes?.[themeName as ThemeName]) {
-  //   return;
-  // }
+  if (!theme?.[0]?.value?.availableThemes?.[themeName as ThemeName]) {
+    return;
+  }
 
-  // if (!(themeName && themePageKey)) {
-  //   return;
-  // }
+  if (!(themeName && themePageKey)) {
+    return;
+  }
 
   const handleSubmit = async (specificTheme: ThemeDefinition) => {
     const currentThemeSystem: ThemeSystem = {
@@ -46,28 +46,24 @@ const OutlineThemeSettingPages = ({ selectedSidebarPageKey }: OutlineThemeSettin
       setIsLoading(true);
       const res = await createOrUpdateThemeConfig({
         config: currentThemeSystem,
+        id: theme?.[0]?.id,
       });
-      // console.log(res);
       if (res) {
         setIsLoading(false);
+        toast.success(t('updateSuccess'));
       }
     } catch (error) {
       console.error(error);
       setIsLoading(false);
+      toast.error(t('updateFaile'));
     }
   };
-
-  console.log(
-    'defaultThemeSystemConfig(tThemeConfig)?.availableThemes?.vbi',
-    defaultThemeSystemConfig(tThemeConfig)?.availableThemes
-  );
 
   return (
     <>
       <ThemeSettingPages
         isLoading={isLoading}
-        // themeConfig={theme[0].value?.availableThemes?.[themeName as ThemeName]}
-        themeConfig={defaultThemeSystemConfig(tThemeConfig)?.availableThemes?.vbi}
+        themeConfig={theme[0].value?.availableThemes?.[themeName as ThemeName]}
         themeName={themeName as ThemeName}
         selectedPage={themePageKey as ThemePageKey}
         selectedSidebarPageKey={selectedSidebarPageKey}

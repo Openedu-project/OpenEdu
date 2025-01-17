@@ -46,6 +46,7 @@ export default function GlobalThemeSetting() {
       const updatedSystem = updateThemeSystem(themeGlobal);
       const response = await createOrUpdateThemeConfig({
         config: updatedSystem,
+        id: theme?.[0]?.id,
       });
 
       if (!response) {

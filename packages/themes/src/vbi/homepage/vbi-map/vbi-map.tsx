@@ -17,7 +17,7 @@ const VbiHomepageMap: SectionComponent<'homepage', 'vbiMap'> = ({ className, t }
 
   return (
     <div className={cn('relative h-[500px] bg-muted lg:[672px]', className)}>
-      <div className="container mx-auto flex h-full items-center justify-start px-5 py-14">
+      <div className="container mx-auto flex h-full items-center justify-start px-4 py-14 md:p-8 lg:px-12">
         <InfoSection
           title={t('title')}
           titleSub={t('titleSub')}
@@ -26,15 +26,7 @@ const VbiHomepageMap: SectionComponent<'homepage', 'vbiMap'> = ({ className, t }
         />
       </div>
       <div className="absolute top-0 left-0 h-full w-full">
-        <Image
-          src={map?.src}
-          // height={map?.height}
-          // width={map?.width}
-          alt="map"
-          className="h-full w-full object-cover"
-          fill
-          noContainer
-        />
+        <Image src={map?.src} alt="map" className="h-full w-full object-cover" fill noContainer />
       </div>
     </div>
   );

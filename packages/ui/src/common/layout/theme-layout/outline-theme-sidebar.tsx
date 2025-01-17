@@ -2,8 +2,8 @@
 
 import ThemeSidebar from '@oe/themes/_components/theme-sidebar/theme-sidebar-content';
 import type { AllSidebarKeys, ThemeConfigKey, ThemeName, ThemePageKey } from '@oe/themes/types/index';
+import { parseThemePath } from '@oe/themes/utils/function';
 import { usePathname } from 'next/navigation';
-import { parseThemePath } from './_utils/functions';
 
 const OutlineThemeSidebar = () => {
   const pathName = usePathname();

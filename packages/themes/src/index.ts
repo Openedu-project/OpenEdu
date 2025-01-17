@@ -23,6 +23,7 @@ import { fonts } from './fonts';
 import { ScholarAboutUs, ScholarHomePage } from './scholar';
 import { VbiHomepageHeroClient, VbiHomepageHeroServer } from './vbi/homepage/vbi-hero/index';
 
+import VbiHeader from './academia/auth/header';
 import VbiHomepage from './vbi/homepage/index';
 import { VbiHomepageAchievementsClient, VbiHomepageAchievementsServer } from './vbi/homepage/vbi-achievements';
 import { VbiHomepageBlogsClient, VbiHomepageBlogsServer } from './vbi/homepage/vbi-blogs';
@@ -88,6 +89,7 @@ export const THEMES: ThemeRender = {
     auth: {
       theme: AcademiaAuthLayout,
       login: AcademiaLogin,
+      header: VbiHeader,
       // signUp: AcademiaAuthLayoutSignUp,
     },
   },

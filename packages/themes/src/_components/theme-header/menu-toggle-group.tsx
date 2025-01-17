@@ -1,15 +1,16 @@
+'use client';
 import type { ThemeConfigKey } from '@oe/themes/types/index';
-import { Link } from '@oe/ui/common/navigation';
+import { Link, usePathname } from '@oe/ui/common/navigation';
 import { ToggleGroup, ToggleGroupItem } from '@oe/ui/shadcn/toggle-group';
 import { PanelTop } from 'lucide-react';
 import { ComponentIcon, PaletteIcon, Settings } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type React from 'react';
+import { parseThemePath } from '../../_utils/function';
 
 interface MenuToggleGroupProps {
   selectedThemeConfigKey?: ThemeConfigKey;
-  onMenuChange: (value: ThemeConfigKey) => void;
 }
 
 interface ToggleOption {
@@ -52,16 +53,22 @@ const createToggleOptions = (t: (key: string) => string): readonly ToggleOption[
     },
   ] as const;
 
-const MenuToggleGroup: React.FC<MenuToggleGroupProps> = ({ selectedThemeConfigKey, onMenuChange }) => {
+const MenuToggleGroup: React.FC<MenuToggleGroupProps> = ({ selectedThemeConfigKey }) => {
   const t = useTranslations('themeHeader');
   const toggleOptions = createToggleOptions(t);
+  const pathName = usePathname();
+  const currentParams = parseThemePath(pathName || '');
+
+  if (!pathName) {
+    return;
+  }
 
   return (
     <ToggleGroup
       type="single"
-      value={selectedThemeConfigKey}
+      value={selectedThemeConfigKey || currentParams?.themeConfig}
       className="flex-1 justify-start"
-      onValueChange={onMenuChange}
+      // onValueChange={onMenuChange}
     >
       {toggleOptions.map(({ value, label, icon: Icon, ariaLabel, href }) => (
         <Link href={href} className="flex gap-1 border-none p-0 text-accent-foreground hover:no-underline" key={value}>

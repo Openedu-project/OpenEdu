@@ -12,6 +12,7 @@ import type {
   ThemePageKey,
   ThemeSidebarPageKey,
 } from '@oe/themes/types/index';
+import { MainLayoutClient } from '@oe/ui/common/layout';
 import { SmartPreview } from '@oe/ui/components/smart-preview';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@oe/ui/shadcn/resizable';
 import { useTranslations } from 'next-intl';
@@ -152,14 +153,14 @@ export default function ThemeSettingPages({
         <ResizableHandle />
         <ResizablePanel defaultSize={75}>
           <SmartPreview>
-            <div>
+            <MainLayoutClient>
               <PreviewPanel
                 themeName={themeName}
                 selectedPage={selectedPage}
                 pageConfig={pageConfig as PagesConfig<ThemePageKey>}
                 currentConfigSections={currentConfigSections}
               />
-            </div>
+            </MainLayoutClient>
           </SmartPreview>
         </ResizablePanel>
       </ResizablePanelGroup>

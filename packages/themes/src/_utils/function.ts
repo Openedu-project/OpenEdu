@@ -1,5 +1,6 @@
 import type { ComponentType } from 'react';
 import type {
+  AllGroupSidebarKeys,
   AllSectionKeys,
   AllSidebarKeys,
   GroupMenuItem,
@@ -7,8 +8,10 @@ import type {
   SectionProps,
   SectionsByPage,
   ThemeCollection,
+  ThemeConfigKey,
   ThemeName,
   ThemePageKey,
+  ThemeParams,
   ThemeRender,
 } from '../_types/index';
 
@@ -121,4 +124,27 @@ export const getHSLPreview = (hslString: string) => {
 export function findUniqueItems<T>(array1: T[], array2: T[]): T[] {
   const symmetricDifference = [...array1.filter(x => !array2.includes(x)), ...array2.filter(x => !array1.includes(x))];
   return [...new Set(symmetricDifference)];
+}
+
+export function parseThemePath(pathname: string): ThemeParams {
+  // Remove leading and trailing slashes
+  const cleanPath = pathname.replace(/^\/|\/$/g, '');
+
+  // Split the path into segments
+  const segments = cleanPath.split('/');
+
+  // Find the index of 'themes' to ensure we're parsing from the correct position
+  const themesIndex = segments.findIndex(segment => segment === 'themes');
+
+  // Return empty object if we don't find 'themes' in the path
+  if (themesIndex === -1) {
+    return {};
+  }
+
+  return {
+    themeName: segments[themesIndex + 1] as ThemeName,
+    themeConfig: segments[themesIndex + 2] as ThemeConfigKey,
+    groupSettingKey: segments[themesIndex + 3] as AllGroupSidebarKeys | AllSidebarKeys,
+    itemSettingKey: segments[themesIndex + 4] as AllSidebarKeys,
+  };
 }

@@ -1,20 +1,23 @@
-'use client';
-
+import { getThemeConfigServer } from '@oe/api/services/theme';
 import { ADMIN_ROUTES } from '@oe/core/utils/routes';
 import { Link } from '@oe/ui/common/navigation';
 import { Button } from '@oe/ui/shadcn/button';
 import { CircleArrowLeft } from 'lucide-react';
-
-import { useRouter } from 'next/navigation';
 import type { ThemeConfigKey } from '../../_types';
 import { MenuToggleGroup } from './menu-toggle-group';
+import { ToggleDefaultTheme } from './toggle-default-theme';
 
-export default function ThemeHeaderContent({ configKey }: { configKey: ThemeConfigKey }) {
-  const router = useRouter();
+export default async function ThemeHeaderContent({
+  configKey,
+}: {
+  configKey?: ThemeConfigKey;
+}) {
+  const [themeSystem] = await Promise.all([getThemeConfigServer()]);
+  const themeName = themeSystem?.[0]?.value?.activedTheme ?? 'vbi';
 
-  const handleSelectedThemeConfigKey = (configKey: ThemeConfigKey) => {
-    router.push(`createAPIUrl({ endpoint: ADMIN_ROUTES.themeDetail, params: { themeName: name } })/${configKey}`);
-  };
+  if (!themeSystem?.[0]?.value) {
+    return null;
+  }
 
   return (
     <>
@@ -23,10 +26,8 @@ export default function ThemeHeaderContent({ configKey }: { configKey: ThemeConf
           <CircleArrowLeft focusable="false" size={20} />
         </Link>
       </Button>
-
-      {/* <PageSelector selectedPage={selectedPage} onPageChange={handlePageChange} /> */}
-
-      <MenuToggleGroup selectedThemeConfigKey={configKey} onMenuChange={handleSelectedThemeConfigKey} />
+      <MenuToggleGroup selectedThemeConfigKey={configKey} />
+      <ToggleDefaultTheme selectedTheme={themeName} themeSystem={themeSystem?.[0]?.value} id={themeSystem?.[0]?.id} />
     </>
   );
 }

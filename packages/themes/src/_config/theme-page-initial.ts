@@ -194,6 +194,12 @@ export const createThemePageConfig = (t: (key: string) => string): Record<ThemeN
       },
       order: 4,
     }),
+    header: createSection<'auth', 'header'>({
+      props: {
+        sidebarItems: new Array(3).fill({ id: '', label: '', href: '' }),
+      },
+      order: 5,
+    }),
   });
 
   const createVbiHomepageConfig = (getThemeTranslation: typeof vbiT) => ({

@@ -27,9 +27,9 @@ const EventCard = ({ stats, title, description, image, className }: EventCardPro
         {/* Stats Section */}
         <div className="flex justify-between gap-4">
           <StatCard value={stats?.stat1?.value} label={stats?.stat1?.label} variant="primary" />
-          <Separator className="h-3/4 w-[1px] bg-background" />
+          <Separator className="h-8 w-[1px] self-center bg-background" />
           <StatCard value={stats?.stat2?.value} label={stats?.stat2?.label} variant="primary" />
-          <Separator className="h-3/4 w-[1px] bg-background" />
+          <Separator className="h-8 w-[1px] self-center bg-background" />
           <StatCard value={stats?.stat3?.value} label={stats?.stat3?.label} variant="primary" />
         </div>
       </div>

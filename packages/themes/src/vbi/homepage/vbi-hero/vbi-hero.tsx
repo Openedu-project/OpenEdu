@@ -24,12 +24,12 @@ export interface VbiHomepageHeroProps {
 
 const VbiHomepageHero: SectionComponent<'homepage', 'vbiHero'> = ({ props, className, t }) => {
   return (
-    <div className={cn('relative min-h-[80vh]', className)}>
+    <div className={cn('relative min-h-screen', className)}>
       {/* Content container */}
-      <div className="container relative mx-auto p-4">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
+      <div className="container relative mx-auto px-4 md:px-8 md:pr-0 lg:px-12 lg:pr-0">
+        <div className="flex flex-col items-center gap-12 lg:flex-row">
           {/* Content */}
-          <div className="space-y-6 text-foreground">
+          <div className="flex-auto space-y-6 text-foreground lg:flex-1">
             <h1 className="font-bold text-5xl leading-tight">{t?.('title')}</h1>
             <p className="text-foreground/80 text-lg">{t?.('titleSub')}</p>
 
@@ -43,40 +43,40 @@ const VbiHomepageHero: SectionComponent<'homepage', 'vbiHero'> = ({ props, class
             </Button>
           </div>
           {/* Column - Stats */}
-          <div className="relative h-[60vh]">
+          <div className="relative order-first h-[80vh] w-full flex-auto lg:order-last lg:flex-1">
             {/* Stats layout */}
-            <div className="relative z-10 flex h-full flex-col items-end space-y-32">
+            <div className="relative z-10 flex h-full w-full flex-col items-end">
               {/* Top stat */}
               <StatCard
                 value={props?.banner?.bannerContent1?.value}
                 label={t?.('banner.bannerContent1.label')}
-                className="lg:-translate-x-1/2 absolute top-1 left-1/3 rounded-lg border-[1px] border-primary bg-background p-2 text-start md:p-4 lg:top-0 lg:left-0 "
+                className="lg:-translate-x-1/2 -translate-y-1/2 absolute top-[20%] left-0 w-fit flex-none translate-x-1/2 rounded-lg border-[1px] border-primary bg-background p-2 p-2 text-start md:p-4 lg:flex-1"
               />
 
               {/* Middle stat */}
               <StatCard
                 value={props?.banner?.bannerContent2?.value}
                 label={t?.('banner.bannerContent2.label')}
-                className="-translate-x-1/4 absolute left-1/2 rounded-lg border-[1px] border-primary bg-background p-2 text-start md:p-4"
+                className="absolute top-[40%] right-1/3 w-fit translate-x-1/2 rounded-lg border-[1px] border-primary bg-background p-2 text-start md:p-4"
               />
 
               {/* Bottom stat */}
               <StatCard
                 value={props?.banner?.bannerContent3?.value}
                 label={t?.('banner.bannerContent3.label')}
-                className="-translate-y-1/3 absolute bottom-0 left-1/3 rounded-lg border-[1px] border-[1px] border-primary bg-background p-2 text-start md:p-4 lg:left-0 lg:translate-x-1/2"
+                className="-translate-x-1/2 absolute bottom-[20%] left-1/2 w-fit translate-y-1/2 rounded-lg border-[1px] border-primary bg-background p-2 text-start md:p-4"
               />
             </div>
 
             <div className="-z-2 absolute inset-0 bg-transparent">
-              <div className="-translate-y-1/2 absolute top-1/2 h-3/4 w-2/3 rounded-lg border-8 border-primary">
+              <div className="-translate-y-1/2 absolute top-1/2 h-3/5 w-2/3 rounded-lg border-8 border-primary">
                 <Image alt="banner" src={props?.banner?.image?.url} noContainer className="rounded-sm object-cover" />
               </div>
 
               <div
                 className="-z-10 absolute inset-y-0 right-0 w-1/2 bg-primary"
                 style={{
-                  backgroundImage: 'radial-gradient?.(circle, rgba(255,255,255,0.1) 1px, transparent 1px)',
+                  backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px)',
                   backgroundSize: '20px 20px',
                   right: 0,
                 }}

@@ -77,7 +77,7 @@ export const ThemePageSettingArrayField: React.FC<ThemePageSettingArrayFieldProp
                     label={`${label}-${index}`}
                     value={item as ThemeFieldConfig}
                     onChange={newValue => handleItemChange(index, newValue)}
-                    path={[...path, index.toString()]}
+                    path={[...path, `${label}-${index}`]}
                   />
                 ) : (
                   <ThemePageSettingField
@@ -89,7 +89,7 @@ export const ThemePageSettingArrayField: React.FC<ThemePageSettingArrayFieldProp
                         ? itemType
                         : 'text'
                     }
-                    path={[...path, index.toString()]}
+                    path={[...path, `${label}-${index}`]}
                   />
                 )}
               </div>
