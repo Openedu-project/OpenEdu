@@ -1,4 +1,4 @@
-import { ADMIN_ROUTES, CREATOR_ROUTES } from '@oe/core/utils/routes';
+import { ADMIN_ROUTES, BLOG_ADMIN_ROUTES, CREATOR_ROUTES } from '@oe/core/utils/routes';
 import { useMemo } from 'react';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
@@ -31,6 +31,11 @@ export const usePermissionRoutes = () => {
       })),
       creator: Object.entries(CREATOR_ROUTES).map(([key, path]) => ({
         key: `creator.${key}` as IPermissionRouteKey,
+        path,
+        name: key.replace(/([A-Z])/g, ' $1').toLowerCase(),
+      })),
+      blog_admin: Object.entries(BLOG_ADMIN_ROUTES).map(([key, path]) => ({
+        key: `blog_admin.${key}` as IPermissionRouteKey,
         path,
         name: key.replace(/([A-Z])/g, ' $1').toLowerCase(),
       })),

@@ -61,6 +61,7 @@ export interface IPermissionRouteInfo {
 export interface IPermissionGroupedRoutes {
   admin: IPermissionRouteInfo[];
   creator: IPermissionRouteInfo[];
+  blog_admin: IPermissionRouteInfo[];
 }
 
 export interface IPermissionSelectedActions {

@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { ADMIN_ROUTES, CREATOR_ROUTES } from './routes';
+import { ADMIN_ROUTES, BLOG_ADMIN_ROUTES, CREATOR_ROUTES } from './routes';
 
 interface IMenuItem {
   id: string;
@@ -18,8 +18,13 @@ interface IPermission {
 
 type AdminRoutes = typeof ADMIN_ROUTES;
 type CreatorRoutes = typeof CREATOR_ROUTES;
+type BlogAdminRoutes = typeof BLOG_ADMIN_ROUTES;
 
-export function createPathEntityMap(adminRoutes: AdminRoutes, creatorRoutes: CreatorRoutes): Record<string, string> {
+export function createPathEntityMap(
+  adminRoutes: AdminRoutes,
+  creatorRoutes: CreatorRoutes,
+  blogAdminRoutes: BlogAdminRoutes
+): Record<string, string> {
   const mapping: Record<string, string> = {};
 
   for (const [key, path] of Object.entries(adminRoutes)) {
@@ -28,6 +33,10 @@ export function createPathEntityMap(adminRoutes: AdminRoutes, creatorRoutes: Cre
 
   for (const [key, path] of Object.entries(creatorRoutes)) {
     mapping[path] = `creator.${key}`;
+  }
+
+  for (const [key, path] of Object.entries(blogAdminRoutes)) {
+    mapping[path] = `blog_admin.${key}`;
   }
 
   return mapping;
@@ -70,7 +79,7 @@ export function filterMenuItems(
 }
 
 export function checkSidebarPermissions(menuItems: IMenuItem[], permissions: IPermission[]): IMenuItem[] {
-  const pathToEntityMap = createPathEntityMap(ADMIN_ROUTES, CREATOR_ROUTES);
+  const pathToEntityMap = createPathEntityMap(ADMIN_ROUTES, CREATOR_ROUTES, BLOG_ADMIN_ROUTES);
 
   const getEntityFromPath = (path: string): string => {
     return pathToEntityMap[path] || '';

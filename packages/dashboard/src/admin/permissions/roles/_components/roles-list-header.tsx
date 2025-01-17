@@ -28,7 +28,10 @@ const RoleHeader = memo(
   }) => {
     const t = useTranslations('permissionRoleList');
 
-    const allRoutes = [...groupedRoutes.admin, ...groupedRoutes.creator];
+    const allRoutes = useMemo(
+      () => [...groupedRoutes.admin, ...groupedRoutes.creator, ...groupedRoutes.blog_admin],
+      [groupedRoutes]
+    );
 
     const actionAvailability = useMemo(() => {
       return DEFAULT_ACTIONS_PERMISSION.map(action => {

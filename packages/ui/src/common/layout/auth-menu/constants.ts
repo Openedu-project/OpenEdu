@@ -1,5 +1,5 @@
 import { ROLE_LIST } from '@oe/core/utils/constants';
-import { ADMIN_ROUTES, AFFILIATE_ROUTES, CREATOR_ROUTES } from '@oe/core/utils/routes';
+import { ADMIN_ROUTES, AFFILIATE_ROUTES, BLOG_ADMIN_ROUTES, CREATOR_ROUTES } from '@oe/core/utils/routes';
 import { Settings, User } from 'lucide-react';
 
 type MenuItem = {
@@ -38,7 +38,7 @@ export const MENU_ITEMS: MenuItem[] = [
     key: 'organizationBlog',
     icon: Settings,
     requiredRoles: [ROLE_LIST.ORG_EDITOR, ROLE_LIST.ORG_WRITER],
-    href: '#',
+    href: BLOG_ADMIN_ROUTES.myBlog,
   },
   {
     key: 'learningSpace',

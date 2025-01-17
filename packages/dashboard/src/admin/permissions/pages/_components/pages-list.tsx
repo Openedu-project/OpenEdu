@@ -18,7 +18,7 @@ import { toast } from '@oe/ui/shadcn/sonner';
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@oe/ui/shadcn/table';
 import { Save, Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { DEFAULT_ACTIONS_PERMISSION } from '../../permission-constant';
 import { TableHeaderActions } from './pages-list-header';
 import { RouteRow } from './pages-list-row';
@@ -38,11 +38,13 @@ export default function PagesList() {
       per_page: 9999,
     },
   });
-
+  const allRoutes = useMemo(
+    () => [...(groupedRoutes?.admin ?? []), ...(groupedRoutes?.creator ?? []), ...(groupedRoutes?.blog_admin ?? [])],
+    [groupedRoutes]
+  );
   useEffect(() => {
     if (dataListPermissionPageConfig?.results) {
       const initialSelectedActions: IPermissionSelectedActions = {};
-      const allRoutes = [...(groupedRoutes?.admin ?? []), ...(groupedRoutes?.creator ?? [])];
 
       for (const config of dataListPermissionPageConfig.results) {
         const matchingRoute = allRoutes.find(route => route.key === config.id);
@@ -61,7 +63,7 @@ export default function PagesList() {
 
       setSelectedActions(initialSelectedActions);
     }
-  }, [dataListPermissionPageConfig, groupedRoutes]);
+  }, [dataListPermissionPageConfig, allRoutes]);
 
   const handleActionToggle = useCallback((routeKey: IPermissionRouteKey, action: IPermissionAction) => {
     setSelectedActions(prev => ({
@@ -87,7 +89,7 @@ export default function PagesList() {
 
   const handleSelectAllForAction = useCallback(
     (action: IPermissionAction) => {
-      const allRouteKeys = [...(groupedRoutes?.admin ?? []), ...(groupedRoutes?.creator ?? [])].map(route => route.key);
+      const allRouteKeys = allRoutes.map(route => route.key);
 
       setSelectedActions(prev => {
         const areAllSelected = allRouteKeys.every(routeKey => prev[routeKey]?.[action]);
@@ -106,7 +108,7 @@ export default function PagesList() {
         };
       });
     },
-    [groupedRoutes]
+    [allRoutes]
   );
 
   const handleSave = useCallback(async () => {

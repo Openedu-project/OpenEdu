@@ -72,7 +72,11 @@ export default function RolesList() {
   });
 
   const allRoutes = useMemo(
-    () => [...groupedRoutes.admin, ...groupedRoutes.creator],
+    () => [
+      ...groupedRoutes.admin,
+      ...groupedRoutes.creator,
+      ...groupedRoutes.blog_admin,
+    ],
     [groupedRoutes]
   );
 
@@ -262,6 +266,7 @@ export default function RolesList() {
     return {
       admin: filterRouteFn(groupedRoutes.admin),
       creator: filterRouteFn(groupedRoutes.creator),
+      blog_admin: filterRouteFn(groupedRoutes.blog_admin),
     };
   }, [searchTerm, groupedRoutes]);
 
