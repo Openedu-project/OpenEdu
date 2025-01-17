@@ -1,7 +1,8 @@
 import type { IUserProfile } from '@oe/api/types/user-profile';
 import avatar from '@oe/assets/images/org-avatar.png';
 import { abbreviateNumber, pickCharacters } from '@oe/core/utils/helpers';
-import { BLOG_ROUTES, PLATFORM_ROUTES, generateRoute } from '@oe/core/utils/routes';
+import { BLOG_ROUTES, PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { buildUrl } from '@oe/core/utils/url';
 import { useTranslations } from 'next-intl';
 import { Link } from '#common/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from '#shadcn/avatar';
@@ -29,7 +30,7 @@ export default function AuthorProfileCard({ profile, className, isMe = false, va
       )}
     >
       <Link
-        href={generateRoute(PLATFORM_ROUTES.userProfile, { username: profile?.username })}
+        href={buildUrl({ endpoint: PLATFORM_ROUTES.userProfile, params: { username: profile?.username } })}
         className="h-auto"
         target="_blank"
       >

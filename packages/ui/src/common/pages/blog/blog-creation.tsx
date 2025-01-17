@@ -4,8 +4,9 @@ import { getI18nConfigServer } from '@oe/api/services/i18n';
 import BannerBg from '@oe/assets/images/blog-creation-bg.png';
 import WhaleError from '@oe/assets/images/whale/whale-error.png';
 import { getCookies } from '@oe/core/utils/cookie';
-import { AUTH_ROUTES, BLOG_ROUTES, generateRoute } from '@oe/core/utils/routes';
+import { AUTH_ROUTES, BLOG_ROUTES } from '@oe/core/utils/routes';
 import { pickCharacters } from '@oe/core/utils/string';
+import { buildUrl } from '@oe/core/utils/url';
 import { BlogForm, type IFormAction } from '@oe/ui/components/blog';
 import { Image } from '@oe/ui/components/image';
 import { getTranslations } from 'next-intl/server';
@@ -64,7 +65,7 @@ export default async function BlogCreationPage({ className, aiButton, id, action
   const breakcrumbItems = [
     {
       label: tBlogNavigation('myBlog'),
-      path: generateRoute(BLOG_ROUTES.authorBlog, { username: me.username }),
+      path: buildUrl({ endpoint: BLOG_ROUTES.authorBlog, params: { username: me.username } }),
     },
     {
       label: tBlogNavigation('blogManagement'),

@@ -2,7 +2,8 @@
 
 import type { IBlog } from '@oe/api/types/blog';
 import { marked } from '@oe/core/utils/marker';
-import { BLOG_ROUTES, generateRoute } from '@oe/core/utils/routes';
+import { BLOG_ROUTES } from '@oe/core/utils/routes';
+import { buildUrl } from '@oe/core/utils/url';
 import { Link, useRouter } from '#common/navigation';
 import { Image } from '#components/image';
 import { ProfileCard } from '#components/profile-card';
@@ -29,7 +30,7 @@ export function BlogDetails({
             profileData={data.author}
             className="!shadow-none border-none hover:bg-primary/10"
             handleClick={() => {
-              router.push(generateRoute(BLOG_ROUTES.authorBlog, { username: data.author?.username }));
+              router.push(buildUrl({ endpoint: BLOG_ROUTES.authorBlog, params: { username: data.author?.username } }));
             }}
           />
         </div>
@@ -68,7 +69,10 @@ export function BlogDetails({
                   <Link
                     className="hover:no-underline"
                     key={hashtag.hash}
-                    href={generateRoute(BLOG_ROUTES.blogHashtag, { id: `${hashtag.name} ${hashtag.hash}` })}
+                    href={buildUrl({
+                      endpoint: BLOG_ROUTES.blogHashtag,
+                      params: { id: `${hashtag.name} ${hashtag.hash}` },
+                    })}
                   >
                     <Badge className="lg:!p-2 min-w-[100px] justify-center">#{hashtag.name}</Badge>
                   </Link>

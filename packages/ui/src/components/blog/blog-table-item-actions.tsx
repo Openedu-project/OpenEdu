@@ -4,6 +4,7 @@ import type { IBlog } from '@oe/api/types/blog';
 import { BookOpenCheck, ChevronDown, Eye, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { Link } from '#common/navigation';
 import { DeleteButton } from '#components/delete-button';
 import { PublishButton } from '#components/publish-button';
 import { Button } from '#shadcn/button';
@@ -11,12 +12,12 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '#shadcn/
 
 type Props = {
   blogData: IBlog;
-  handlePreview?: (blog: IBlog) => void;
-  handlePublish: (param: { note?: string | undefined }, blog: IBlog, action: 'publish' | 'unpublish') => Promise<void>;
+  previewUrl: string;
+  handlePublish: (param: { note?: string | undefined }, blog: IBlog, action: 'publish' | 'un-publish') => Promise<void>;
   handleDelete: (blog: IBlog) => Promise<void>;
 };
 
-export const BlogTableItemActions = ({ blogData, handlePublish, handlePreview, handleDelete }: Props) => {
+export const BlogTableItemActions = ({ blogData, handlePublish, previewUrl, handleDelete }: Props) => {
   const t = useTranslations('general');
   const tPublish = useTranslations('blogManagement');
   const [open, setOpen] = useState(false);
@@ -30,15 +31,10 @@ export const BlogTableItemActions = ({ blogData, handlePublish, handlePreview, h
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="flex w-30 flex-col">
-          <Button
-            variant="ghost"
-            leftSection={<Eye className="h-4 w-4" />}
-            onClick={() => {
-              handlePreview?.(blogData);
-            }}
-          >
-            {t('preview')}
-          </Button>
+          <Link href={previewUrl} target="_blank" variant="ghost">
+            <Eye className="mr-2 h-4 w-4" />
+            <span>{t('preview')}</span>
+          </Link>
 
           <PublishButton
             action="publish"

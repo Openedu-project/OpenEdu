@@ -47,7 +47,7 @@ export const blogManagementMessages = {
     delBlog: 'Delete Blog',
     delBlogDes: 'Do you want delete this blog?',
     publishBlogDes: 'Do you want publish this blog?',
-    unpublishBlogDes: 'Do you want unpublish this blog?',
+    unpublishBlogDes: 'Do you want un-publish this blog?',
     generateFrom: 'Generate From',
     no_context: 'Unable to load content from the link. Please check the link and try again.',
     exceed_token_length: 'The content from your link is too long to process. Please shorten it and try again.',
@@ -55,5 +55,6 @@ export const blogManagementMessages = {
     unknown: 'An unknown error occurred. Please try again later.',
     ownerBlog: "{name}'s Blog",
     Error: 'Error',
+    manual: 'Manual',
   },
 };

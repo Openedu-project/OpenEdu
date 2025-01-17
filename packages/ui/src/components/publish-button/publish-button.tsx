@@ -1,4 +1,5 @@
 import { z } from '@oe/api/utils/zod';
+import { BookOpenCheck, EyeOff } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Modal } from '#components/modal';
 import { Button, type ButtonProps } from '#shadcn/button';
@@ -7,7 +8,7 @@ import { Textarea } from '#shadcn/textarea';
 
 interface IConfirmPublic {
   onConfirm: (param: { note?: string }) => Promise<void>;
-  action: 'publish' | 'unpublish';
+  action: 'publish' | 'un-publish';
   onlyText?: boolean;
   title?: string;
   desc?: string;
@@ -41,7 +42,11 @@ export function PublishButton({
         };
   return (
     <Modal
-      title={title ?? (action === 'publish' ? t('confirmPublish') : t('confirmUnPublish'))}
+      title={
+        <span className="giant-iheading-semibold20">
+          {title ?? (action === 'publish' ? t('confirmPublish') : t('confirmUnPublish'))}
+        </span>
+      }
       validationSchema={confirmSchema}
       onSubmit={onConfirm}
       onClose={onClose}
@@ -61,7 +66,16 @@ export function PublishButton({
     >
       {form =>
         onlyText ? (
-          <p>{desc ?? (action === 'publish' ? t('publishLabel') : t('unpublishLabel'))}</p>
+          <div className="mb-2 flex flex-col items-center gap-2">
+            {action === 'publish' ? (
+              <BookOpenCheck className="h-12 w-12 text-success" />
+            ) : (
+              <EyeOff className="h-12 w-12 text-destructive" />
+            )}
+            <p className="mcaption-regular16">
+              {desc ?? (action === 'publish' ? t('publishLabel') : t('unpublishLabel'))}
+            </p>
+          </div>
         ) : (
           <div className="grid gap-4">
             <FormFieldWithLabel form={form} name="note" label={desc ?? t('note')}>

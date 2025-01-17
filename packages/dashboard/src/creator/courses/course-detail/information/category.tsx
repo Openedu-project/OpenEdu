@@ -26,7 +26,7 @@ export default function Category() {
       className="rounded-lg bg-background p-4 shadow-sm"
       labelClassName="mb-4 text-lg"
     >
-      <SelectTree<ICategoryTree, IBlogFormType['category_ids'][number]>
+      <SelectTree<ICategoryTree, NonNullable<IBlogFormType['category_ids']>[number]>
         data={categoriesTree ?? []}
         placeholder="Select category"
         searchPlaceholder="Search category"

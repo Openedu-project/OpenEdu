@@ -6,7 +6,8 @@ import type { IUserProfile } from '@oe/api/types/user-profile';
 import WhaleNoData from '@oe/assets/images/whale-no-data.png';
 import { PAGE_SIZE } from '@oe/core/utils/constants';
 import { abbreviateNumber } from '@oe/core/utils/helpers';
-import { BLOG_ROUTES, generateRoute } from '@oe/core/utils/routes';
+import { BLOG_ROUTES } from '@oe/core/utils/routes';
+import { buildUrl } from '@oe/core/utils/url';
 import { useRouter } from '@oe/ui/common/navigation';
 import { useTranslations } from 'next-intl';
 import { Fragment, useState } from 'react';
@@ -22,7 +23,7 @@ export const TopAuthor = ({ topAuthor }: { topAuthor: IUserProfile[] }) => {
   const t = useTranslations('authorProfileCard');
 
   const handleClickTopAuthor = (username?: string) => {
-    router.push(generateRoute(BLOG_ROUTES.authorBlog, { username }));
+    router.push(buildUrl({ endpoint: BLOG_ROUTES.authorBlog, params: { username } }));
   };
 
   return (

@@ -2,7 +2,8 @@
 
 import type { IBlog } from '@oe/api/types/blog';
 import { formatDateHourMinute } from '@oe/core/utils/datetime';
-import { BLOG_ROUTES, generateRoute } from '@oe/core/utils/routes';
+import { BLOG_ROUTES } from '@oe/core/utils/routes';
+import { buildUrl } from '@oe/core/utils/url';
 import { getLocaleFromPathname } from '@oe/i18n/utils';
 import { useRouter } from '@oe/ui/common/navigation';
 import { formatDistanceToNow } from 'date-fns';
@@ -35,9 +36,12 @@ export function BlogCard({
   const router = useRouter();
 
   const handleClick = () => {
-    const targetPath = generateRoute(blog.blog_type === 'org' ? BLOG_ROUTES.blogDetail : BLOG_ROUTES.personBlogDetail, {
-      slug: blog?.slug,
-      username: blog?.author?.username,
+    const targetPath = buildUrl({
+      endpoint: blog.blog_type === 'org' ? BLOG_ROUTES.blogDetail : BLOG_ROUTES.personBlogDetail,
+      params: {
+        slug: blog?.slug,
+        username: blog?.author?.username,
+      },
     });
 
     if (typeof window !== 'undefined') {
@@ -58,11 +62,11 @@ export function BlogCard({
           const locale = getLocaleFromPathname(window?.location?.pathname);
 
           window.open(
-            `https://${blog?.org?.domain}/${locale}${generateRoute(BLOG_ROUTES.authorBlog, { username: blog?.author?.username })}`,
+            `https://${blog?.org?.domain}/${locale}${buildUrl({ endpoint: BLOG_ROUTES.authorBlog, params: { username: blog?.author?.username } })}`,
             '_blank'
           );
         } else {
-          router.push(generateRoute(BLOG_ROUTES.authorBlog, { username: blog?.author?.username }));
+          router.push(buildUrl({ endpoint: BLOG_ROUTES.authorBlog, params: { username: blog?.author?.username } }));
         }
       }
     },

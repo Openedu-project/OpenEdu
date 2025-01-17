@@ -1,6 +1,7 @@
 import { getMeServiceWithoutError } from '@oe/api/services/auth';
 import { getCookies } from '@oe/core/utils/cookie';
-import { AUTH_ROUTES, BLOG_ROUTES, generateRoute } from '@oe/core/utils/routes';
+import { AUTH_ROUTES, BLOG_ROUTES } from '@oe/core/utils/routes';
+import { buildUrl } from '@oe/core/utils/url';
 import { getTranslations } from 'next-intl/server';
 import { redirect } from 'next/navigation';
 import { MyBlogManagement } from '#components/blog';
@@ -22,7 +23,7 @@ export default async function PersonalBlogMgtPage() {
   const navItems: IBreadcrumbItem[] = [
     {
       label: tBlogs('myBlog'),
-      path: generateRoute(BLOG_ROUTES.authorBlog, { username: me.username }),
+      path: buildUrl({ endpoint: BLOG_ROUTES.authorBlog, params: { username: me.username } }),
     },
     {
       label: tBlogs('blogManagement'),

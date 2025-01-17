@@ -215,15 +215,6 @@ export function isZoneRoute(pathname: string, zone: IZoneRoutes) {
   );
 }
 
-export function generateRoute(pathname: string, params: Record<string, unknown>) {
-  let url = pathname;
-
-  for (const [key, value] of Object.entries(params)) {
-    url = url.replace(`:${key}`, value as string);
-  }
-  return url;
-}
-
 export type IZoneRoutes = keyof typeof ZONE_ROUTES;
 export type IZoneRoutesValues = (typeof ZONE_ROUTES)[IZoneRoutes];
 

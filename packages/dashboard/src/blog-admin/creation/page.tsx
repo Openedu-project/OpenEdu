@@ -19,6 +19,7 @@ interface ICreationProps {
   action: IFormAction;
   aiButton?: boolean;
   id?: string;
+  prevUrl?: string;
 }
 
 const getHastTag = async () => {
@@ -58,7 +59,7 @@ const getBlogContent = async (id?: string) => {
   }
 };
 
-export default async function OrgBlogCreation({ className, aiButton, id, action }: ICreationProps) {
+export default async function OrgBlogCreation({ className, aiButton, id, action, prevUrl }: ICreationProps) {
   const domain = (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? '';
 
   const [tError, tBlogNavigation, tBlogForm, hashtags, categories, i18nConfigData, blogData, orgData] =
@@ -87,8 +88,8 @@ export default async function OrgBlogCreation({ className, aiButton, id, action 
 
   const breakcrumbItems = [
     {
-      label: tBlogNavigation('myBlog'),
-      path: BLOG_ADMIN_ROUTES.myBlog,
+      label: tBlogNavigation(prevUrl?.includes(BLOG_ADMIN_ROUTES.orgBlogMgt) ? 'blogManagement' : 'myBlog'),
+      path: prevUrl ?? BLOG_ADMIN_ROUTES.myBlog,
     },
     {
       label: tBlogNavigation(action === 'create' ? 'blogCreation' : 'blogEditer'),

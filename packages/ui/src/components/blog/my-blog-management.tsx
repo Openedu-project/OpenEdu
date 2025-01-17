@@ -4,68 +4,46 @@ import type { IBlog } from '@oe/api/types/blog';
 import { API_ENDPOINT } from '@oe/api/utils/endpoints';
 import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
 import { formatDateHourMinute } from '@oe/core/utils/datetime';
-import { BLOG_ADMIN_ROUTES, BLOG_ROUTES, generateRoute } from '@oe/core/utils/routes';
-import { type LanguageCode, languages } from '@oe/i18n/languages';
-import { EditIcon } from 'lucide-react';
+import { BLOG_ADMIN_ROUTES, BLOG_ROUTES } from '@oe/core/utils/routes';
+import { buildUrl } from '@oe/core/utils/url';
+import { EditIcon, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useCallback, useMemo, useRef } from 'react';
-import { Link, useRouter } from '#common/navigation';
-import { AITag, type IAITag } from '#components/ai-tag';
+import { useMemo, useRef } from 'react';
+import { useSWRConfig } from 'swr';
+import { Link, usePathname } from '#common/navigation';
 import { BlogTableItemActions, URLGenerateModal } from '#components/blog';
+import { DeleteButton } from '#components/delete-button';
 import type { FilterOption } from '#components/filter-search';
 import { PublishButton } from '#components/publish-button';
+import { StatusBadge, type TStatus } from '#components/status-badge';
 import { type ColumnDef, Table, type TableRef } from '#components/table';
-import { Badge, type BadgeProps, type BadgeVariant } from '#shadcn/badge';
-import { Button, buttonVariants } from '#shadcn/button';
+import { Badge } from '#shadcn/badge';
+import { buttonVariants } from '#shadcn/button';
 import { Separator } from '#shadcn/separator';
 import { toast } from '#shadcn/sonner';
+import TooltipLink, { Tooltip } from '#shadcn/tooltip';
 import { cn } from '#utils/cn';
-
-const generateVariantBadge = (status: keyof BadgeProps['variant']) => {
-  const obj = {
-    published: 'success',
-    reviewing: 'default',
-    unpublished: 'destructive',
-    generating: 'secondary',
-    draft: 'outline',
-    failed: 'error',
-  };
-
-  return obj?.[status];
-};
 
 export default function MyBlogManagement({
   type,
   canUnpublish = false,
   AIButton = false,
-}: { type: 'personal' | 'org'; canUnpublish?: boolean; AIButton?: boolean }) {
+}: {
+  type: 'personal' | 'org';
+  canUnpublish?: boolean;
+  AIButton?: boolean;
+}) {
   const tBlogs = useTranslations('blogManagement');
   const tGeneral = useTranslations('general');
   const tPublish = useTranslations('publishButton');
   const tError = useTranslations('errors');
   const tableRef = useRef<TableRef<IBlog>>(null);
-  const router = useRouter();
+  const { mutate: globalMutate } = useSWRConfig();
+  const pathname = usePathname();
 
   const TARGET_ROUTES = type === 'personal' ? BLOG_ROUTES : BLOG_ADMIN_ROUTES;
-  const handleEdit = (blog: IBlog) => {
-    router.push(generateRoute(TARGET_ROUTES.editBlog, { id: blog.id }));
-  };
 
-  const handleView = useCallback(
-    (blog: IBlog) => {
-      window.open(
-        `/${blog.locale}${generateRoute(type === 'personal' ? BLOG_ROUTES.personBlogDetail : BLOG_ROUTES.blogDetail, { username: blog.author?.username, slug: blog.slug })}`,
-        '_blank'
-      );
-    },
-    [type]
-  );
-
-  const handlePreview = (blog: IBlog) => {
-    window.open(`/${blog.locale}${generateRoute(TARGET_ROUTES.previewBlog, { id: blog.id })}`, '_blank');
-  };
-
-  const handlePublish = async (param: { note?: string }, item: IBlog, action: 'publish' | 'unpublish') => {
+  const handlePublish = async (param: { note?: string }, item: IBlog, action: 'publish' | 'un-publish') => {
     try {
       action === 'publish'
         ? await publishBlog(undefined, item.id, { payload: param })
@@ -89,6 +67,7 @@ export default function MyBlogManagement({
 
       if (res) {
         toast.success(tBlogs('deleteSuccessfully'));
+        globalMutate((key: string) => !!key?.includes(API_ENDPOINT.USERS_ME_BLOGS), undefined, { revalidate: false });
         await tableRef?.current?.mutate();
       }
     } catch (error) {
@@ -101,81 +80,85 @@ export default function MyBlogManagement({
     {
       header: tBlogs('title'),
       accessorKey: 'title',
-      size: 300,
+      size: 250,
       sticky: 'left',
       cell: info => {
         const item = info?.row.original;
-
+        const isPublish = item.published_blog?.some(blog => blog.version === item.version);
         return (
-          <div className="flex items-start gap-2">
-            {item.is_ai_generated && <AITag status={item.ai_generated_info?.status as IAITag['status']} />}
-            {item.status === 'draft' &&
-            (!item.published_blog || item.unpublished?.some(blog => blog.version === item.version)) ? (
-              <Button variant="link" onClick={() => handleEdit(item)} className="!p-0 h-full w-full justify-start">
-                <p className="mcaption-regular14 truncate text-wrap text-start text-primary underline">
-                  {info.getValue() as string}
-                </p>
-              </Button>
-            ) : (
-              <p className="mcaption-regular14 truncate text-wrap text-start">{info.getValue() as string}</p>
+          <TooltipLink
+            name={info.getValue() as string}
+            aria-disabled={isPublish}
+            href={
+              isPublish || item.reviewing_blog
+                ? '#'
+                : buildUrl({
+                    endpoint: TARGET_ROUTES.editBlog,
+                    params: { id: item.id },
+                    queryParams: { next: pathname },
+                  })
+            }
+            className={cn(
+              'block h-auto truncate no-underline',
+              (isPublish || item.reviewing_blog) && 'cursor-default text-foreground hover:no-underline'
             )}
-          </div>
+          />
         );
       },
     },
     {
-      header: tBlogs('generateFrom'),
-      size: 300,
+      header: tGeneral('status'),
       align: 'center',
       cell: info => {
-        const row = info.row.original;
-        return row.ai_generated_info?.link ? (
-          <p className="mcaption-regular14 break-word w-full text-start">{row.ai_generated_info?.link as string}</p>
-        ) : (
-          <Separator className="m-auto h-0.5 w-2 bg-primary" />
-        );
+        const item = info.row.original;
+        const status = (
+          item?.published_blog?.some(blog => blog.version === item.version)
+            ? 'publish'
+            : item?.reviewing_blog
+              ? 'reviewing'
+              : item?.status
+        ) as TStatus;
+
+        return <StatusBadge status={status} />;
       },
     },
     {
-      header: tBlogs('language'),
-      accessorKey: 'locale',
-      cell: locale => <p className="mcaption-regular14 break-word">{languages[locale.getValue() as LanguageCode]}</p>,
+      header: tGeneral('type'),
+      size: 100,
+      align: 'center',
+      cell: item => (
+        <>
+          {item.row.original.is_ai_generated ? (
+            <Tooltip content={item.row.original.ai_generated_info?.link}>
+              <Badge variant="outline_destructive">AI</Badge>
+            </Tooltip>
+          ) : (
+            <Badge variant="outline_primary">{tBlogs('manual')}</Badge>
+          )}
+        </>
+      ),
     },
     {
       header: tBlogs('createdDate'),
       accessorKey: 'create_at',
+      align: 'center',
       size: 200,
       cell: date => <>{formatDateHourMinute(date.getValue() as number)}</>,
     },
     {
       header: tBlogs('lastUpdate'),
       accessorKey: 'update_at',
+      align: 'center',
       size: 200,
       cell: date => <>{formatDateHourMinute(date.getValue() as number)}</>,
     },
     {
       header: tBlogs('publishDate'),
       size: 200,
+      align: 'center',
       cell: info => {
         const date = info.row.original.published_blog?.at(-1)?.pub_date;
         return <>{date ? formatDateHourMinute(date) : <Separator className="m-auto h-0.5 w-2 bg-primary" />}</>;
-      },
-    },
-    {
-      header: tGeneral('status'),
-      cell: info => {
-        const item = info.row.original;
-        const status = item?.published_blog?.some(blog => blog.version === item.version)
-          ? 'published'
-          : item?.reviewing_blog
-            ? 'reviewing'
-            : item?.status;
-
-        return (
-          <Badge variant={generateVariantBadge(status as keyof BadgeVariant)} className="capitalize">
-            {tGeneral(`statusVariants.${status}`)}
-          </Badge>
-        );
       },
     },
     {
@@ -185,49 +168,58 @@ export default function MyBlogManagement({
       size: type === 'personal' ? 220 : 150,
       cell: info => {
         const item = info.row.original;
+        const previewUrl = buildUrl({
+          endpoint: TARGET_ROUTES.previewBlog,
+          params: {
+            id: item.id,
+          },
+        });
         return (
           <div className="flex w-full flex-wrap justify-center gap-2">
             {item?.published_blog?.some(blog => blog.version === item.version) ? (
               <>
-                <Button
-                  variant="outline"
-                  className="border-primary text-primary"
-                  onClick={() => {
-                    handleView(item);
-                  }}
+                <Link
+                  href={buildUrl({
+                    endpoint: type === 'personal' ? BLOG_ROUTES.personBlogDetail : BLOG_ROUTES.blogDetail,
+                    params: {
+                      username: item.author?.username,
+                      slug: item.slug,
+                    },
+                  })}
+                  target="_blank"
+                  variant="default"
                 >
                   {tGeneral('view')}
-                </Button>
+                </Link>
 
                 {canUnpublish && (
                   <PublishButton
-                    action="unpublish"
+                    action="un-publish"
                     onlyText
                     desc={tBlogs('unpublishBlogDes')}
-                    onConfirm={(param: { note?: string }) => handlePublish(param, item, 'unpublish')}
+                    onConfirm={(param: { note?: string }) => handlePublish(param, item, 'un-publish')}
                   />
                 )}
               </>
             ) : item.status === 'failed' ? (
-              <Button variant="destructive" onClick={() => console.log('delete')}>
-                {tGeneral('delete')}
-              </Button>
-            ) : item.reviewing_blog ? (
-              <Button
-                variant="outline"
-                className="border border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-                onClick={() => {
-                  handlePreview(item);
-                }}
+              <DeleteButton
+                leftSection={<Trash2 className="h-4 w-4" />}
+                size="default"
+                onDelete={async () => await handleDeleteBlog?.(item)}
+                className="h-auto w-auto"
               >
+                {tGeneral('delete')}
+              </DeleteButton>
+            ) : item.reviewing_blog ? (
+              <Link href={previewUrl} target="_blank" variant="outline" className="border-primary text-primary">
                 {tGeneral('preview')}
-              </Button>
+              </Link>
             ) : (
               item.status === 'draft' && (
                 <BlogTableItemActions
                   blogData={item}
                   handleDelete={handleDeleteBlog}
-                  handlePreview={handlePreview}
+                  previewUrl={previewUrl}
                   handlePublish={(param: { note?: string }) => handlePublish(param, item, 'publish')}
                 />
               )
