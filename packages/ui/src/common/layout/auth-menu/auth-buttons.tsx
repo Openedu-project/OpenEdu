@@ -10,10 +10,20 @@ export function AuthButtons() {
 
   return (
     <>
-      <Link href={`${AUTH_ROUTES.login}?next=${pathname}`} variant="secondary" size="xs">
+      <Link
+        href={`${AUTH_ROUTES.login}?next=${pathname}`}
+        variant="secondary"
+        size="xs"
+        className="px-1 text-xs md:px-3 md:text-sm"
+      >
         {tAuth('signin.title')}
       </Link>
-      <Link href={`${AUTH_ROUTES.signUp}?next=${pathname}`} variant="default" size="xs">
+      <Link
+        href={`${AUTH_ROUTES.signUp}?next=${pathname}`}
+        variant="default"
+        size="xs"
+        className="px-1 text-xs md:px-3 md:text-sm"
+      >
         {tAuth('signup.title')}
       </Link>
     </>
