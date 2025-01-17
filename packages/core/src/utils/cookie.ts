@@ -47,6 +47,11 @@ export const getCookieClient = (key: string, options?: CookieOptions) => {
   return getCookieNextClient(key, cookieOptions(options));
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export const setCookieClient = (key: string, value: any, options?: CookieOptions) => {
+  return setCookieNextClient(key, value, cookieOptions(options));
+};
+
 export const getCookie = async (key: string, options?: CookieOptions): Promise<CookieValueTypes> => {
   if (typeof window === 'undefined') {
     const { cookies } = await import('next/headers');

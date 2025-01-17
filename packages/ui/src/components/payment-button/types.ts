@@ -1,4 +1,5 @@
 import type { ICourseOutline } from '@oe/api/types/course/course';
+import type { IFormTriggerResponse } from '@oe/api/types/course/course-trigger';
 import type { ButtonProps } from '#shadcn/button';
 
 export interface IPaymentButton extends ButtonProps {
@@ -10,6 +11,8 @@ export interface CourseActionProps {
   is_pay: boolean;
   is_paid: boolean;
   is_enrolled: boolean;
+  form_relations?: IFormTriggerResponse[];
+  entityId?: string;
 }
 
 export const ACTION_TYPES = {

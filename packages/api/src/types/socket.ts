@@ -57,6 +57,11 @@ export interface IAICourseStatusData {
   thumbnail_status?: IAICourseStatus;
   general_info_status?: IAICourseStatus;
 }
+export interface IPaymentSocket {
+  order_id: string;
+  payment_status: string;
+  order_status: string;
+}
 
 export type EventData =
   | ICourseEventData
@@ -65,6 +70,7 @@ export type EventData =
   | ICertificateEventData
   | IAIBlogStatusData
   | IAICourseStatusData
+  | IPaymentSocket
   | IMessageData;
 
 export interface Broadcast {

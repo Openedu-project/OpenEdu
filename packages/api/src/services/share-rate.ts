@@ -1,21 +1,17 @@
-import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl, fetchAPI, putAPI } from '#utils/fetch';
 import type { IShareRatePayload, IShareRateRes } from '../types/share-rate';
 
 export async function getShareRateByCodeService(
   url: string,
-  { params, init }: { params: IFilter & { code: string }; init?: RequestInit }
+  { code, init }: { code: string; init?: RequestInit }
 ): Promise<IShareRateRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
     endpointKey = createAPIUrl({
       endpoint: API_ENDPOINT.REFERRAL_LINKS_BY_CODE_CODE,
       params: {
-        code: params.code,
-      },
-      queryParams: {
-        ...params,
+        code: code,
       },
     });
   }

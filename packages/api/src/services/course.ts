@@ -1,6 +1,6 @@
 import { buildUrl } from '@oe/core/utils/url';
 import type { ICourseCategory } from '#types/course/category';
-import type { ICourse, ICourseResponse } from '#types/course/course';
+import type { ICourse, ICourseResponse, IEnrollCoursePayload } from '#types/course/course';
 import type { ICourseOutline } from '#types/course/course';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
@@ -116,6 +116,27 @@ export const getLevelsService = async (
 ) => {
   const defaultUrl = createAPIUrl({ endpoint: API_ENDPOINT.CATEGORIES_TREE, queryParams: init?.queryParams });
   const response = await fetchAPI<ICourseCategory[]>(url ?? defaultUrl, init);
+
+  return response.data;
+};
+
+export const postEnrollCourseService = async (
+  endpoint: string | null | undefined,
+  { payload, init }: { payload?: IEnrollCoursePayload; init?: RequestInit }
+) => {
+  const params = new URLSearchParams();
+
+  if (payload) {
+    for (const [key, value] of Object.entries(payload)) {
+      if (value) {
+        params.append(key, value as string);
+      }
+    }
+  }
+
+  const finalEndpoint = `${endpoint}${params.toString() ? `?${params.toString()}` : ''}`;
+  console.log('finalEndpoint', finalEndpoint);
+  const response = await postAPI<ICourse, null>(finalEndpoint, null, init);
 
   return response.data;
 };

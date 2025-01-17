@@ -1,24 +1,22 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { getShareRateByCodeService, putShareRateService } from '#services/share-rate';
-import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
 import type { IShareRatePayload, IShareRateRes } from '../types/share-rate';
 
-export function useGetShareRateByCode({ params }: { params: IFilter & { code: string } }) {
-  const endpointKey = params.code
+export function useGetShareRateByCode(code: string) {
+  const endpointKey = code
     ? createAPIUrl({
         endpoint: API_ENDPOINT.REFERRAL_LINKS_BY_CODE_CODE,
         params: {
-          code: params.code,
+          code: code,
         },
-        queryParams: { ...params },
       })
     : '';
-
-  const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
-    getShareRateByCodeService(endpoint, { params })
+  console.log('code', code);
+  const { data, isLoading, error, mutate } = useSWR(code ? endpointKey : null, (endpoint: string) =>
+    getShareRateByCodeService(endpoint, { code })
   );
 
   return {

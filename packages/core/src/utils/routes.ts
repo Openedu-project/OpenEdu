@@ -17,10 +17,13 @@ export const PLATFORM_ROUTES = {
   courseDetail: '/courses/:slug',
   courseLearning: '/courses/:slug/:section/:lesson',
   payment: '/courses/:slug/payment',
+  paymentSuccess: '/courses/:slug/payment/payment-success',
+  paymentFailed: '/courses/:slug/payment/payment-failed',
   notFound: '/not-found',
   terms: '/terms',
   specificTerms: '/terms/:terms',
   userProfile: '/user/:username',
+  wallet: '/wallet',
 } as const;
 
 export const BLOG_ROUTES = {

@@ -1,18 +1,45 @@
 import type { ICourseOutline } from '@oe/api/types/course/course';
+import type { FormTriggerCondition, IFormTrigger } from '@oe/api/types/course/course-trigger';
 import type { ISection } from '@oe/api/types/course/segment';
 import { ACTION_TYPES, type ActionType, type CourseActionProps } from './types';
 
 // Helper functions
-export const determineAction = ({ is_pay, is_paid, is_enrolled }: CourseActionProps): ActionType => {
+export const findFormRelationByEntityId = (formRelations: IFormTrigger[], entityId: string) =>
+  formRelations.find(relation => relation.start_when.entity_id === entityId && relation.enabled && !relation.submitted);
+
+const checkActivedTrigger = ({
+  relations,
+  entityId,
+  type,
+}: {
+  relations?: IFormTrigger[];
+  entityId?: string;
+  type?: FormTriggerCondition;
+}) => {
+  if (relations && entityId && type) {
+    const currentTrigger = findFormRelationByEntityId(relations, entityId);
+
+    return !!(currentTrigger && currentTrigger.submitted === false && currentTrigger?.start_when?.type === type);
+  }
+};
+
+export const determineAction = ({
+  is_pay,
+  is_paid,
+  is_enrolled,
+  form_relations,
+  entityId,
+}: CourseActionProps): ActionType => {
   if (is_pay && !is_paid && !is_enrolled) {
     return ACTION_TYPES.PAY_NOT_PAID;
   }
   if ((!is_pay && is_enrolled) || (is_paid && is_enrolled)) {
     return ACTION_TYPES.NOT_PAY_ENROLLED;
   }
-  if (!is_enrolled) {
+  if (!is_enrolled && checkActivedTrigger({ relations: form_relations, entityId, type: 'clicked_on' })) {
     return ACTION_TYPES.TRIGGER;
   }
+
   return ACTION_TYPES.DEFAULT;
 };
 

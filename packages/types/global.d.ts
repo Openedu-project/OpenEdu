@@ -39,6 +39,9 @@ declare global {
       NEXT_PUBLIC_USER_URL_KEY: string;
       NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY: string;
       NEXT_PUBLIC_COOKIE_API_REFERRER_KEY: string;
+      NEXT_PUBLIC_COOKIE_REF_CODE: string;
+      NEXT_PUBLIC_COOKIE_REF_BY: string;
+      NEXT_PUBLIC_COOKIE_FROM_SOURCE: string;
 
       NEXT_PUBLIC_AUTH_GOOGLE_ID: string;
       NEXT_PUBLIC_AUTH_FACEBOOK_ID: string;
