@@ -1,3 +1,4 @@
+import { AIGenerateMessages } from './ai-generate-modal';
 import { blogFormMessages } from './blog-form';
 import { dateTimePickerMessages } from './date-time-picker';
 import { dialogMessages } from './dialog';
@@ -10,7 +11,6 @@ import { confirmPublishMessages } from './publish-button';
 import { richTextMessages } from './rich-text';
 import { tableMessages } from './table';
 import { uploaderMessages } from './uploader';
-import { URLGenerateMessages } from './url-generate-modal';
 import { userMenuMessages } from './user-menu';
 
 export const componentMessages = {
@@ -28,6 +28,6 @@ export const componentMessages = {
   ...userMenuMessages,
   ...headerMenuMessages,
   ...footerMessages,
-  ...URLGenerateMessages,
+  ...AIGenerateMessages,
   ...confirmPublishMessages,
 };

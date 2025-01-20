@@ -1,3 +1,6 @@
+import { useSystemConfig } from '@oe/api/hooks/useSystemConfig';
+import type { I18nConfig } from '@oe/api/types/i18n';
+import { systemConfigKeys } from '@oe/api/utils/system-config';
 import { TONE } from '@oe/core/utils/constants';
 import { type LanguageCode, languages } from '@oe/i18n/languages';
 import { useTranslations } from 'next-intl';
@@ -19,14 +22,16 @@ interface UrlGeneratorProps {
   ref?: React.Ref<HTMLInputElement | HTMLTextAreaElement>;
   value?: IURLGenerator;
   onChange: Dispatch<SetStateAction<IURLGenerator>>;
-  locales?: LanguageCode[];
+  showNote?: boolean;
 }
 
 export const defaultURLValue = { urls: '', locale: 'en', tone: 'normal' };
 
-export const URLGenerator = ({ multiple = false, onChange, value, locales = ['en'] }: UrlGeneratorProps) => {
+export const URLGenerator = ({ multiple = false, onChange, value, showNote = false }: UrlGeneratorProps) => {
   const t = useTranslations('formValidation');
   const tGeneral = useTranslations('general');
+  const { systemConfig } = useSystemConfig<I18nConfig>({ key: systemConfigKeys.i18nConfig });
+
   const [isValid, setIsValid] = useState(true);
 
   return (
@@ -42,7 +47,7 @@ export const URLGenerator = ({ multiple = false, onChange, value, locales = ['en
         <p className="mcaption-medium14 mb-2">{tGeneral('language')}</p>
 
         <Autocomplete
-          options={locales}
+          options={systemConfig?.[0]?.value?.locales ?? ['en']}
           getOptionLabel={locale => languages[locale as LanguageCode]}
           getOptionValue={locale => locale}
           value={value?.locale}
@@ -66,7 +71,11 @@ export const URLGenerator = ({ multiple = false, onChange, value, locales = ['en
         </Select>
       </div>
 
-      <p className={cn('mt-1 text-right text-sm', !isValid && 'text-destructive')}>{t('urlNote')}</p>
+      {
+        <p className={cn('mt-1 text-right text-sm', !isValid && 'text-destructive', !showNote && isValid && 'hidden')}>
+          {t('urlNote')}
+        </p>
+      }
     </div>
   );
 };

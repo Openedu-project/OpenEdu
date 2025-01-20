@@ -8,20 +8,22 @@ import { BLOG_ADMIN_ROUTES, BLOG_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
 import { EditIcon, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSWRConfig } from 'swr';
 import { Link, usePathname } from '#common/navigation';
-import { BlogTableItemActions, URLGenerateModal } from '#components/blog';
+import { BlogTableItemActions } from '#components/blog';
 import { DeleteButton } from '#components/delete-button';
 import type { FilterOption } from '#components/filter-search';
 import { PublishButton } from '#components/publish-button';
 import { StatusBadge, type TStatus } from '#components/status-badge';
 import { type ColumnDef, Table, type TableRef } from '#components/table';
+import { URLGenerateModal } from '#components/url-generator';
 import { Badge } from '#shadcn/badge';
 import { buttonVariants } from '#shadcn/button';
 import { Separator } from '#shadcn/separator';
 import { toast } from '#shadcn/sonner';
 import TooltipLink, { Tooltip } from '#shadcn/tooltip';
+import { useSocketStore } from '#store/socket';
 import { cn } from '#utils/cn';
 
 export default function MyBlogManagement({
@@ -40,6 +42,7 @@ export default function MyBlogManagement({
   const tableRef = useRef<TableRef<IBlog>>(null);
   const { mutate: globalMutate } = useSWRConfig();
   const pathname = usePathname();
+  const { AIBlogStatusData, resetSocketData } = useSocketStore();
 
   const TARGET_ROUTES = type === 'personal' ? BLOG_ROUTES : BLOG_ADMIN_ROUTES;
 
@@ -61,20 +64,32 @@ export default function MyBlogManagement({
     }
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  const handleSuccess = useCallback(() => {
+    globalMutate((key: string) => !!key?.includes(API_ENDPOINT.USERS_ME_BLOGS), undefined, { revalidate: false });
+    void tableRef?.current?.mutate();
+  }, []);
+
   const handleDeleteBlog = async (blog: IBlog) => {
     try {
       const res = await deleteBlog(undefined, blog.cuid);
 
       if (res) {
         toast.success(tBlogs('deleteSuccessfully'));
-        globalMutate((key: string) => !!key?.includes(API_ENDPOINT.USERS_ME_BLOGS), undefined, { revalidate: false });
-        await tableRef?.current?.mutate();
+        handleSuccess();
       }
     } catch (error) {
       toast.error(tError((error as HTTPErrorMetadata).code.toString()));
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    if (AIBlogStatusData?.data) {
+      resetSocketData('ai_blog_status');
+      handleSuccess();
+    }
+  }, [AIBlogStatusData, resetSocketData, handleSuccess]);
 
   const columns: ColumnDef<IBlog>[] = [
     {
@@ -207,6 +222,7 @@ export default function MyBlogManagement({
                 size="default"
                 onDelete={async () => await handleDeleteBlog?.(item)}
                 className="h-auto w-auto"
+                variant="destructive"
               >
                 {tGeneral('delete')}
               </DeleteButton>
@@ -244,16 +260,16 @@ export default function MyBlogManagement({
 
   return (
     <div className="bg-accent">
-      <div className="mb-6 flex justify-between gap-10 rounded-b-xl bg-background p-4">
+      <div className="mb-6 flex flex-wrap justify-between gap-2 rounded-b-xl bg-background p-4">
         <h2 className="giant-iheading-semibold32 tracking-tight">{tBlogs('blogManagement')}</h2>
-        <div className="flex items-center gap-4">
-          {AIButton && <URLGenerateModal />}
+        <div className="flex items-center gap-2">
+          {AIButton && <URLGenerateModal onSuccess={handleSuccess} />}
 
           <Link
             href={TARGET_ROUTES.createBlog}
             className={cn(buttonVariants({ variant: 'default' }), 'hover:no-underline')}
           >
-            <EditIcon className="mr-2" /> {tBlogs('createNewBlog')}
+            <EditIcon /> <span className="ml-2 hidden lg:block">{tBlogs('createNewBlog')}</span>
           </Link>
         </div>
       </div>

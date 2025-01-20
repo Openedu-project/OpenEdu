@@ -143,3 +143,24 @@ export interface IAIBlogRequest {
   language?: string;
   tone?: string;
 }
+
+export interface IRewriteResponse {
+  content: string;
+  blog_id?: string;
+  blog_cuid?: string;
+  ai_blog_id: string;
+  rewrite_id: string;
+  status: string;
+  current_step: string;
+  author_id: string;
+}
+
+export interface IAIBlogResponse {
+  blog_id: string;
+  blog_cuid: string;
+  ai_blog_id: string;
+  rewrite_id: string;
+  status: string;
+  current_step: string;
+  author_id: string;
+}

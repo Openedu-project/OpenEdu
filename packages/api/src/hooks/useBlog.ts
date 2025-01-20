@@ -1,14 +1,25 @@
 import useSWRMutation from 'swr/mutation';
 
-import { deleteBlog, postBlog, postBlogAI, publishBlog, unpublishBlog, updateBlog } from '#services/blog';
-import type { IAIBlogRequest, IBlog, IBlogRequest } from '#types/blog';
+import useSWR from 'swr';
+import {
+  deleteBlog,
+  getRewriteData,
+  postBlog,
+  postBlogAI,
+  publishBlog,
+  unpublishBlog,
+  updateBlog,
+} from '#services/blog';
+import type { IAIBlogRequest, IAIBlogResponse, IBlog, IBlogRequest, IRewriteResponse } from '#types/blog';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
+import type { HTTPError } from '#utils/http-error';
 
 export const usePostAIBlog = () => {
   const { trigger, isMutating, error } = useSWRMutation(
     API_ENDPOINT.BLOGS_AI,
-    async (endpoint: string, { arg }: { arg: IAIBlogRequest }): Promise<IBlog> => postBlogAI(endpoint, { payload: arg })
+    async (endpoint: string, { arg }: { arg: IAIBlogRequest }): Promise<IAIBlogResponse> =>
+      postBlogAI(endpoint, { payload: arg })
   );
 
   return { postAIBlog: trigger, isLoading: isMutating, error };
@@ -70,3 +81,16 @@ export const useDeleteBlog = (id: string) => {
 
   return { delete: trigger, isLoading: isMutating, error };
 };
+
+export function useGetRewriteData(id: string, shouldFetch = true) {
+  const url = createAPIUrl({ endpoint: API_ENDPOINT.BLOG_AI_ID_REWRITE, params: { id } });
+  const { data, isLoading, error } = useSWR<IRewriteResponse, HTTPError>(id && shouldFetch ? url : null, () =>
+    getRewriteData(url)
+  );
+
+  return {
+    data,
+    rewriteLoading: isLoading,
+    rewriteError: error,
+  };
+}

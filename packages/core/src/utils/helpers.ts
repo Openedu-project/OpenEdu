@@ -1,4 +1,4 @@
-const CHARACTERS_REGEX = /\s+/;
+export const CHARACTERS_REGEX = /\s+/;
 
 export const pickCharacters = (input: string, length = 2): string => {
   const words = input.split(CHARACTERS_REGEX);

@@ -7,7 +7,6 @@ import { BlogTableItemActions } from './blog-table-item-actions';
 import MyBlogManagement from './my-blog-management';
 import PersonalBlogSection from './personal-blog-section';
 import TopBlogs from './top-blog-section';
-import { URLGenerateModal } from './url-generate-modal';
 
 export {
   BlogCard,
@@ -16,7 +15,6 @@ export {
   PersonalBlogSection,
   BlogForm,
   BlogTableItemActions,
-  URLGenerateModal,
   MyBlogManagement,
   BlogDetails,
   BlogCarousel,

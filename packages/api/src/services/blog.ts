@@ -1,4 +1,12 @@
-import type { IAIBlogRequest, IBlog, IBlogListResponse, IBlogRequest, IBlogsResponse } from '#types/blog';
+import type {
+  IAIBlogRequest,
+  IAIBlogResponse,
+  IBlog,
+  IBlogListResponse,
+  IBlogRequest,
+  IBlogsResponse,
+  IRewriteResponse,
+} from '#types/blog';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { type FetchOptions, createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
@@ -29,7 +37,7 @@ export const postBlogAI = async (
   endpoint: string | null | undefined,
   { payload, init }: { payload: IAIBlogRequest; init?: RequestInit }
 ) => {
-  const response = await postAPI<IBlog, IAIBlogRequest>(endpoint ?? API_ENDPOINT.BLOGS_AI, payload, init);
+  const response = await postAPI<IAIBlogResponse, IAIBlogRequest>(endpoint ?? API_ENDPOINT.BLOGS_AI, payload, init);
 
   return response.data;
 };
@@ -153,6 +161,18 @@ export const getBlogsByCategoryId = async (
       queryParams,
     });
   const response = await fetchAPI<IBlogsResponse>(endpointKey, init);
+
+  return response.data;
+};
+
+export const getRewriteData = async (
+  url: string | null | undefined,
+  params?: { id: string },
+  queryParams?: Record<string, string>,
+  init?: RequestInit
+) => {
+  const endpointKey = url ?? createAPIUrl({ endpoint: API_ENDPOINT.BLOG_AI_ID_REWRITE, params, queryParams });
+  const response = await fetchAPI<IRewriteResponse>(endpointKey, init);
 
   return response.data;
 };

@@ -223,6 +223,8 @@ export const API_ENDPOINT = {
   NOTIFICATIONS_READ: '/api/v1/notifications/read',
   COM_NOTIFICATIONS: '/api/com-v1/notifications',
   COM_NOTIFICATIONS_READ: '/api/com-v1/notifications/read',
+  BLOG_AI_ID_REWRITE: '/api/v1/blogs/ai/:id/rewrite',
+
   // WS
   WEBSOCKET: '/websocket',
   EXCHANGE_RATES: '/api/v1/exchange-rates',
