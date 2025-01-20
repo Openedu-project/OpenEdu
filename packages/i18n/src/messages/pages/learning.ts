@@ -32,5 +32,11 @@ export const courseLearningMessages = {
         videoQuizRequire: 'You need to complete the quizzes in order to finish this lesson.',
       },
     },
+    player: {
+      toast: {
+        loading: 'Go to the next lesson in {seconds} seconds',
+        success: 'Navigating to next lesson...',
+      },
+    },
   },
 };

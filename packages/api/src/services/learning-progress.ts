@@ -1,4 +1,8 @@
-import type { ILearningProgress, ILearningProgressPayload } from '#types/course/learning-progress';
+import type {
+  ILatestLessonProgressPayload,
+  ILearningProgress,
+  ILearningProgressPayload,
+} from '#types/course/learning-progress';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl, fetchAPI, postAPI } from '#utils/fetch';
 import type { HTTPErrorMetadata } from '#utils/http-error';
@@ -32,6 +36,23 @@ export const updateLearningProgressService = async (
 ) => {
   try {
     const response = await postAPI<HTTPErrorMetadata, ILearningProgressPayload>(
+      url ?? API_ENDPOINT.LEARNING_PROGRESSES,
+      payload,
+      init
+    );
+
+    return response.data;
+  } catch {
+    return null;
+  }
+};
+
+export const latestLessonProgressService = async (
+  url: string | undefined,
+  { payload, init }: { payload: ILatestLessonProgressPayload; init?: RequestInit }
+) => {
+  try {
+    const response = await postAPI<HTTPErrorMetadata, ILatestLessonProgressPayload>(
       url ?? API_ENDPOINT.LEARNING_PROGRESSES,
       payload,
       init

@@ -73,7 +73,7 @@ export default function ContentText({ data, onComplete }: ITextProps) {
   }
 
   return (
-    <div key={uid} className="flex w-full flex-1 flex-col">
+    <div key={uid} className="flex w-full flex-1 flex-col px-2 md:px-0">
       <div
         ref={contentRef}
         className="rich-text m-0"

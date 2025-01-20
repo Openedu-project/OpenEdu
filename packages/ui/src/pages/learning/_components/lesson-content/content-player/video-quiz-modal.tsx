@@ -1,4 +1,5 @@
 import type { IQuizItemResponse } from '@oe/api/types/course/quiz';
+import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
 import { Modal } from '#components/modal';
 import ContentQuiz from '../content-quiz/content-quiz';
 
@@ -8,17 +9,21 @@ interface IVideoQuizModalProps {
   quizzes: IQuizItemResponse[];
   course_id: string;
   shownQuizzes: string[];
+  triggerFunction: (quizResult: IQuizSubmissionResponse) => void;
 }
 
 const getQuizById = (quizzes: IQuizItemResponse[], quizId: string): IQuizItemResponse | undefined =>
   quizzes.find(quiz => quiz.id === quizId);
 
-const VideoQuizModal = ({ quizzes, shownQuizzes, course_id }: IVideoQuizModalProps) => {
+const VideoQuizModal = ({ quizzes, shownQuizzes, course_id, triggerFunction }: IVideoQuizModalProps) => {
   return (
     <Modal
       open
-      title=""
-      className="h-screen max-h-[calc(100vh-30%)] min-h-fit w-screen min-w-[calc(100vw-100px)] lg:min-w-0 lg:max-w-[calc(100vw-40%)]"
+      title={false}
+      className="aspect-video h-full w-screen lg:max-w-[calc(100vw-40%)]"
+      hasCancelButton={false}
+      contentClassName="h-full py-4"
+      hasCloseIcon={false}
     >
       {shownQuizzes.length > 0
         ? (() => {
@@ -30,11 +35,7 @@ const VideoQuizModal = ({ quizzes, shownQuizzes, course_id }: IVideoQuizModalPro
                 course_id={course_id}
                 settings={currentQuiz.settings}
                 quiz={currentQuiz}
-                // triggerFunction={() => {
-                //   if (quizResult) setShowQuiz(false);
-
-                //   onComplete?.(duration, seconds, quizzes[0]?.id);
-                // }}
+                triggerFunction={triggerFunction}
               />
             ) : null;
           })()

@@ -6,7 +6,12 @@ import { useState } from 'react';
 import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
 import backgroundFail from '@oe/assets/images/learning-page/bg-good-luck.png';
 import background from '@oe/assets/images/learning-page/bg-whale-done.png';
+import { useParams } from 'next/navigation';
+import { useRouter } from '#common/navigation';
 import { Button } from '#shadcn/button';
+import { createCourseUrl } from '../../../../_utils/course-url';
+import { useLessonLearningStore } from '../../../_store/learning-store';
+import { getLessonGlobalIndex, getTotalLessons, getUidByLessonIndex } from '../../../_utils/utils';
 import QuizAnsResult from './quiz-ans-result';
 import QuizResultGrid from './quiz-detail-score';
 import QuizLayout from './quiz-layout';
@@ -14,35 +19,41 @@ import QuizLayout from './quiz-layout';
 interface IQuizResultProps {
   result: IQuizSubmissionResponse;
   showCorrectAns?: boolean;
-  triggerFunction?: () => void;
+  triggerFunction?: (quizResult: IQuizSubmissionResponse) => void;
   onTryAgain?: () => void;
 }
 
 const QuizResult = ({ result, showCorrectAns = false, triggerFunction, onTryAgain }: IQuizResultProps) => {
   const tQuizResult = useTranslations('learningPage.quiz.quizResult');
 
-  // const router = useRouter();
-  // const { courseDetail } = useParams();
+  const router = useRouter();
+  const { slug, lesson } = useParams();
 
   const [isShow, setIsShow] = useState<boolean>(false);
   const { answers, passed } = result;
 
-  // const { currentLessonIndex, lessonIds, outlineItems } = useOutlineItemIdsStore();
-  // const { getLessonStatus } = useLessonLearningStore();
-
-  // const checkNextLesson = getLessonStatus(currentLessonIndex + 1);
+  const { sectionsProgressData, getLessonStatus } = useLessonLearningStore();
+  const currentLessonIndex = getLessonGlobalIndex(sectionsProgressData, lesson as string);
+  const totalItems = getTotalLessons(sectionsProgressData);
+  const checkNextLesson = getLessonStatus(currentLessonIndex + 1);
 
   const onFinishQuiz = () => {
     if (triggerFunction) {
-      triggerFunction();
-      // } else if (currentLessonIndex < lessonIds.length - 1 && result?.passed && checkNextLesson) {
-      //   const newLessonUid = lessonIds[currentLessonIndex + 1];
-      //   const newSectionUid = outlineItems[currentLessonIndex + 1].sectionUid ?? '';
+      triggerFunction(result);
+    } else if (currentLessonIndex < totalItems && result?.passed && checkNextLesson) {
+      const lessonInfo = getUidByLessonIndex(sectionsProgressData, currentLessonIndex + 1);
 
-      //   router.push(createCourseUrl('detail', {slug: courseDetail as string, section: newSectionUid, lesson: newLessonUid}));
-      // } else {
-      //   setOpenModal(COMPLETE_COURSE_MODAL, true);
+      router.push(
+        createCourseUrl('learning', {
+          slug: slug as string,
+          section: lessonInfo?.sectionUid as string,
+          lesson: lessonInfo?.lessonUid as string,
+        })
+      );
     }
+    //   else {
+    //     setOpenModal(COMPLETE_COURSE_MODAL, true);
+    // }
   };
 
   const handleFinishQuiz = () => {

@@ -45,6 +45,7 @@ export interface ModalProps<TSchema extends z.ZodType> {
   children?: ReactNode | ((form: UseFormReturn<z.infer<TSchema>>) => ReactNode);
   className?: string;
   buttonsClassName?: string;
+  contentClassName?: string;
   open?: boolean;
   hasCancelButton?: boolean;
   hasCloseIcon?: boolean;
@@ -125,6 +126,7 @@ export const Modal = <TSchema extends z.ZodType>({
   open: externalIsOpen,
   className,
   buttonsClassName,
+  contentClassName,
   hasCancelButton = true,
   buttons,
   validationSchema,
@@ -175,10 +177,7 @@ export const Modal = <TSchema extends z.ZodType>({
     </FormNestedWrapper>
   ) : (
     <div
-      className={cn(
-        "scrollbar px-4",
-        hasTitleOrDescription && hasButtons ? "overflow-y-auto" : ""
-      )}
+      className={cn('scrollbar px-4', hasTitleOrDescription && hasButtons ? 'overflow-y-auto' : '', contentClassName)}
     >
       {children as ReactNode}
     </div>

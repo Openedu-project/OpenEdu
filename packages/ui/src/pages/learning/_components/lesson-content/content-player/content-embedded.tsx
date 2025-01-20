@@ -1,36 +1,26 @@
 'use client';
-
-import { useState } from 'react';
 import ReactPlayer from 'react-player';
+import { usePlayerProgress } from './_hooks';
 
 const ContentEmbedded = ({
   url,
   onComplete,
+  onlyVideoContent,
 }: {
   url?: string;
+  onlyVideoContent?: boolean;
   onComplete?: (duration: number, currentTime: number) => void;
 }) => {
-  const [lastCompletedPercentage, setLastCompletedPercentage] = useState<number>(0);
-  const [duration, setDuration] = useState<number>(0);
+  const { checkProgress, timestamp } = usePlayerProgress(onComplete, {
+    onlyVideoContent,
+  });
 
   const handleDuration = (duration: number) => {
-    setDuration(duration);
-  };
-
-  const handleTimeUpdate = (currentTime: number) => {
-    if (onComplete) {
-      const percentage = (currentTime / duration) * 100;
-      const roundedPercentage = Math.floor(percentage / 20) * 20;
-
-      if (roundedPercentage >= 20 && roundedPercentage <= 100 && roundedPercentage > lastCompletedPercentage) {
-        onComplete?.(duration, currentTime);
-        setLastCompletedPercentage(roundedPercentage);
-      }
-    }
+    checkProgress(0, duration); // Initialize with time 0
   };
 
   return (
-    <div className="mx-auto aspect-video h-full max-h-full max-w-full">
+    <div className="mx-auto flex aspect-video h-auto flex-col md:aspect-auto md:h-full [&>div>div>iframe]:mx-auto [&>div>div>iframe]:aspect-video [&>div>div>iframe]:w-auto [&>div>div>iframe]:max-w-full [&>div>div>iframe]:rounded-2xl [&>div]:flex-1">
       <ReactPlayer
         url={url}
         width="100%"
@@ -38,7 +28,7 @@ const ContentEmbedded = ({
         controls
         onDuration={handleDuration}
         onProgress={state => {
-          handleTimeUpdate(Math.floor(state.playedSeconds));
+          checkProgress(Math.floor(state.playedSeconds), timestamp.duration);
         }}
       />
     </div>

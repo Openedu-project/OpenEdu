@@ -21,6 +21,7 @@ interface IQuizContainerProps {
   onTryAgainQuiz: () => void;
   onSubmitAnswer: (value: TAnswerInput) => Promise<void>;
   onStartQuiz: () => void;
+  triggerFunction?: (quizResult: IQuizSubmissionResponse) => void;
 }
 
 const QuizContainer = ({
@@ -29,6 +30,7 @@ const QuizContainer = ({
   onTryAgainQuiz,
   onSubmitAnswer,
   onStartQuiz,
+  triggerFunction,
   settings,
 }: IQuizContainerProps) => {
   const tContentQuiz = useTranslations('learningPage.quiz');
@@ -39,6 +41,7 @@ const QuizContainer = ({
         result={quizResultState ?? ({} as IQuizSubmissionResponse)}
         onTryAgain={onTryAgainQuiz}
         showCorrectAns={settings?.show_correct_answers_enabled}
+        triggerFunction={triggerFunction}
       />
     ),
 

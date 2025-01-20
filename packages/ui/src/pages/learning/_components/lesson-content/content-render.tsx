@@ -13,9 +13,8 @@ const CONTENT_STYLES = {
     default: 'h-full',
     multi: 'min-h-[calc(100%-24px)] py-4',
   },
-  video: 'mx-auto max-w-full h-full',
-  // video: 'mx-auto flex justify-center w-full max-w-full aspect-video h-auto',
-  // text: 'flex flex-col items-end',
+  video: 'h-full',
+  embedded: 'aspect-video [&>div>div>div>iframe]:w-full',
 } as const;
 
 const DEFAULT_CLASSNAME = (isOnlyContent: boolean) => cn(CONTENT_STYLES.common[isOnlyContent ? 'default' : 'multi']);
@@ -40,6 +39,7 @@ export const CONTENT_RENDERERS: Record<TLessonContent, ContentRenderer> = {
               quiz_id,
             })
           }
+          onlyVideoContent={props?.isOnlyContent}
         />
       );
     },
@@ -67,9 +67,10 @@ export const CONTENT_RENDERERS: Record<TLessonContent, ContentRenderer> = {
             pause_at,
           })
         }
+        onlyVideoContent={props?.isOnlyContent}
       />
     ),
-    getClassName: DEFAULT_CLASSNAME,
+    getClassName: isOnlyContent => cn(DEFAULT_CLASSNAME(isOnlyContent), !isOnlyContent && CONTENT_STYLES.embedded),
   },
 
   quiz: {

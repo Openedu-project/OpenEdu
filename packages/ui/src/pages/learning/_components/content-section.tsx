@@ -9,7 +9,6 @@ import LessonMetadata from './lesson-metadata';
 
 interface IContentSectionProps extends HTMLAttributes<HTMLDivElement> {
   courseData?: ICourseOutline;
-  // outline: ISectionLearningProgress[];
   lesson: string;
   section: string;
 }
@@ -29,7 +28,6 @@ const ContentSection = async ({ courseData, lesson, className, section, ...props
         contents={lessonData?.contents?.sort(sortByOrder) ?? []}
         section_uid={section}
         lesson_uid={lesson}
-        // outline={outline}
       />
 
       <LessonMetadata
@@ -37,7 +35,7 @@ const ContentSection = async ({ courseData, lesson, className, section, ...props
         courseName={courseData?.name ?? ''}
         slug={courseData?.slug ?? ''}
         updateAt={courseData?.update_at ?? 0}
-        className="pl-4"
+        className="px-2 md:pl-4"
         lessonUid={lesson}
       />
     </div>

@@ -10,6 +10,7 @@ import type { IQuizItemResponse, IQuizSettings } from '@oe/api/types/course/quiz
 import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
 import type { HTTPError } from '@oe/api/utils/http-error';
 import { useEffect, useState } from 'react';
+import { useQuizSubmissionStore } from '../../../_store/learning-store';
 import { transformAnswers } from '../../../_utils/utils';
 import type { IQuizzSubmissionState, TAnswerInput } from '../_types/types';
 import QuizContainer from './quiz-container';
@@ -19,16 +20,18 @@ interface IContentQuizProps {
   settings?: IQuizSettings;
   course_id: string;
   onComplete?: () => void;
+  triggerFunction?: (quizResult: IQuizSubmissionResponse) => void;
 }
 
-export default function ContentQuiz({ quiz, course_id, settings, onComplete }: IContentQuizProps) {
+export default function ContentQuiz({ quiz, course_id, settings, onComplete, triggerFunction }: IContentQuizProps) {
   const [quizSubmission, setQuizSubmission] = useState<IQuizzSubmissionState>({
     id: '',
     num_questions: 0,
     data: null,
     start_at: 0,
   });
-  const [quizResultState, setQuizResultState] = useState<IQuizSubmissionResponse>();
+  // const [quizResultState, setQuizResultState] = useState<IQuizSubmissionResponse>();
+  const { setQuizResult, quizResult } = useQuizSubmissionStore();
 
   const { triggerPostQuizSubmission } = usePostQuizSubmission();
   const { triggerCurrentQuestion } = useGetCurrentQuestion(quizSubmission?.id);
@@ -42,7 +45,8 @@ export default function ContentQuiz({ quiz, course_id, settings, onComplete }: I
       onComplete?.();
     }
 
-    setQuizResultState(result);
+    // setQuizResultState(result);
+    setQuizResult(result);
   };
 
   const getCurrentQuestion = async (isFirstQuestion?: boolean) => {
@@ -123,7 +127,7 @@ export default function ContentQuiz({ quiz, course_id, settings, onComplete }: I
       start_at: 0,
     });
 
-    setQuizResultState(undefined);
+    setQuizResult(undefined);
   };
 
   useEffect(() => {
@@ -138,12 +142,13 @@ export default function ContentQuiz({ quiz, course_id, settings, onComplete }: I
 
   return (
     <QuizContainer
-      quizResultState={quizResultState}
+      quizResultState={quizResult}
       quizSubmission={quizSubmission}
       onTryAgainQuiz={onTryAgainQuiz}
       onSubmitAnswer={onSubmitAnswer}
       onStartQuiz={onStartQuiz}
       settings={settings}
+      triggerFunction={triggerFunction}
     />
   );
 }

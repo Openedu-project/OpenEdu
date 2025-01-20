@@ -6,7 +6,7 @@ import { Link, useRouter } from '#common/navigation';
 import { LastUpdated } from '../../_components/last-updated';
 import { createCourseUrl } from '../../_utils/course-url';
 import { useLessonLearningStore } from '../_store/learning-store';
-import { getLessonGlobalIndex, getTotalLessons, getUidByLessonIndex, sortSectionsAndLessons } from '../_utils/utils';
+import { getLessonGlobalIndex, getTotalLessons, getUidByLessonIndex } from '../_utils/utils';
 import { NavigationButtons } from './navigate-button';
 
 interface ILessonMetadataProps extends HTMLAttributes<HTMLDivElement> {
@@ -26,8 +26,7 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, lessonUid, ...props
   const courseHref = createCourseUrl('detail', { slug });
 
   const { sectionsProgressData, getLessonStatus } = useLessonLearningStore();
-  const sortedSections = sortSectionsAndLessons(sectionsProgressData);
-  const currentLessonIndex = getLessonGlobalIndex(sortedSections, lessonUid);
+  const currentLessonIndex = getLessonGlobalIndex(sectionsProgressData, lessonUid);
   const totalItems = getTotalLessons(sectionsProgressData);
 
   const checkNextLesson = getLessonStatus(currentLessonIndex + 1);
@@ -42,7 +41,7 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, lessonUid, ...props
       newIndex = currentLessonIndex < totalItems ? currentLessonIndex + 1 : 0;
     }
 
-    const lessonInfo = getUidByLessonIndex(sortedSections, newIndex);
+    const lessonInfo = getUidByLessonIndex(sectionsProgressData, newIndex);
 
     const learningPageUrl =
       lessonInfo &&
@@ -58,7 +57,7 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, lessonUid, ...props
   return (
     <div {...props}>
       <div className="flex justify-between gap-2">
-        <h3 className="giant-iheading-semibold16 md:giant-iheading-semibold24 mb-0 text-primary md:line-clamp-1">
+        <h3 className="giant-iheading-semibold16 md:giant-iheading-semibold24 mb-1 text-primary md:mb-3 md:line-clamp-1">
           {title}
         </h3>
 
@@ -74,7 +73,7 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, lessonUid, ...props
       </div>
       <Link
         href={courseHref}
-        className="giant-iheading-semibold16 md:giant-iheading-semibold20 !text-foreground/85 line-clamp-1 w-fit border-none p-0 hover:no-underline"
+        className="giant-iheading-semibold16 md:giant-iheading-semibold20 !text-foreground/85 mb-1 line-clamp-1 h-fit w-fit border-none p-0 hover:no-underline md:mb-3"
       >
         {tLearningPage('course', { courseName })}
       </Link>

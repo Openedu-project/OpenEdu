@@ -41,7 +41,7 @@ const VideoQuizInfo = ({ player, quizzes }: IVieoQuizInforProp) => {
     return (
       <Button
         variant="link"
-        className="!mcaption-semibold16 ml-1 h-auto p-0 text-primary hover:text-primary"
+        className="mcaption-semibold12 md:mcaption-semibold16 ml-1 h-auto p-0 text-primary hover:text-primary"
         onClick={() => getCurrentTime({ id, timestamp })}
       >
         {convertSecondsToTimeString(timestamp ?? 0)}
@@ -50,11 +50,11 @@ const VideoQuizInfo = ({ player, quizzes }: IVieoQuizInforProp) => {
   };
 
   return (
-    <div className="mt-spacing-mml flex items-center gap-spacing-sm">
-      <div className="flex items-center justify-center rounded-[12px] border border-content-neutral-strong-900 p-[10px]">
+    <div className="mx-2 mt-4 flex items-center gap-2 md:mx-0 md:mt-6 md:gap-3">
+      <div className="flex items-center justify-center rounded-[12px] border border-foreground/20 p-2 md:p-[10px]">
         <MessageQuestion />
       </div>
-      <div className="mcaption-semibold16">
+      <div className="mcaption-semibold12 md:mcaption-semibold16">
         {tQuiz('des')}
         {triggerConditions.map((item, index) => (
           <div key={index} className="inline-block">

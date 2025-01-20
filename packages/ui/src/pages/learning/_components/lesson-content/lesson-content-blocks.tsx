@@ -6,7 +6,7 @@ import type React from 'react';
 import { toast } from 'sonner';
 import { ScrollArea } from '#shadcn/scroll-area';
 import { cn } from '#utils/cn';
-import { useLessonLearningStore } from '../../_store/learning-store';
+import { useLessonLearningStore, useQuizSubmissionStore } from '../../_store/learning-store';
 import { checkCompleteAt, isLessonContentComplete } from '../../_utils/learning-progress';
 import { mergeSectionWithProgress } from '../../_utils/utils';
 import type { LessonContentBlockProps } from './_types/types';
@@ -15,9 +15,12 @@ import { CONTENT_RENDERERS } from './content-render';
 
 const getWrapperClassName = (contents: ILessonContent[]): string => {
   return cn(
-    'flex h-full max-w-full flex-col gap-6',
-    // contents.every(item => item.type !== 'embedded') && 'flex-1',
-    contents.length === 1 && contents[0] && contents[0].type === 'video' && 'overflow-y-hidden h-auto'
+    'h-auto md:pr-2 md:pl-4 [&>[data-radix-scroll-area-viewport]>div]:h-full',
+    contents.every(item => item.type !== 'embedded') && 'h-full',
+    contents.length === 1 &&
+      contents[0] &&
+      ((contents[0].type === 'video' && contents[0].quizzes?.length === 0) || contents[0].type === 'embedded') &&
+      'h-auto aspect-video'
   );
 };
 
@@ -28,6 +31,7 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
   course_data,
 }) => {
   const { sectionsProgressData, setSectionsProgressData } = useLessonLearningStore();
+  const { quizResult } = useQuizSubmissionStore();
 
   const onCompleteContent = async (
     lesson_content_uid: string,
@@ -43,6 +47,7 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
       videoDuration,
       pauseAt,
       quizId,
+      quizResult,
     });
 
     const hasUpdated = isLessonContentComplete({
@@ -86,12 +91,7 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
   }
 
   return (
-    <ScrollArea
-      className={cn(
-        getWrapperClassName(contents),
-        'pr-2 pl-4 [&>[data-radix-scroll-area-viewport]>div]:h-full [&>[data-radix-scroll-area-viewport]]:aspect-video'
-      )}
-    >
+    <ScrollArea className={cn(getWrapperClassName(contents))}>
       {contents?.map(item => {
         const contentType = item.type;
         const renderer = CONTENT_RENDERERS[contentType];
@@ -108,19 +108,14 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
         };
 
         return (
-          <div key={item.id} className={renderer.getClassName(contents.length === 1)}>
+          <div key={item.id} className={cn(renderer.getClassName(contents.length === 1), '[&>hr]:last:hidden')}>
             <ContentElement
               onCompleteContent={props =>
-                onCompleteContent(
-                  props?.uid as string,
-                  props?.type as TLessonContent,
-                  props?.duration,
-                  props?.pause_at,
-                  props?.quiz_id
-                )
+                onCompleteContent(item?.uid ?? '', item?.type, props?.duration, props?.pause_at, props?.quiz_id)
               }
               {...elementProps}
             />
+            <hr className="mt-8" />
           </div>
         );
       })}

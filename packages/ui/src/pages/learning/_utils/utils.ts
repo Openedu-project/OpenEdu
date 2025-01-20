@@ -44,8 +44,9 @@ export const sortSectionsAndLessons = (outline: ISection[]): ISection[] =>
 
 export const getUidByLessonIndex = (sections: ISection[], lessonIndex: number) => {
   let currentIndex = -1;
+  const sortedSection = sortSectionsAndLessons(sections);
 
-  for (const section of sections) {
+  for (const section of sortedSection) {
     const lessons = section.lessons ?? [];
     if (lessons?.length === 0) {
       continue;
@@ -73,11 +74,12 @@ export const getLessonGlobalIndex = (
   sections: ISection[] | ISectionLearningProgress[],
   targetLessonUid: string
 ): number => {
+  const sortedSection = sortSectionsAndLessons(sections);
   let globalIndex = -1;
   let foundIndex = -1;
 
   // Assumes sections and lessons are already sorted by order
-  for (const section of sections) {
+  for (const section of sortedSection) {
     const lessons = section.lessons ?? [];
     if (lessons.length === 0) {
       continue;

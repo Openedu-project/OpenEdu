@@ -1,8 +1,12 @@
 'use client';
+
 import type { IQuizItemResponse } from '@oe/api/types/course/quiz';
+import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
 import { convertTimeStringToSeconds } from '@oe/core/utils/datetime';
-import { type IframeHTMLAttributes, useCallback, useEffect, useRef, useState } from 'react';
+import { type IframeHTMLAttributes, useEffect, useRef, useState } from 'react';
 import { Spinner } from '#components/spinner';
+import { useQuizSubmissionStore } from '../../../_store/learning-store';
+import { usePlayerProgress } from './_hooks';
 import { EVENTS, usePlayer } from './player';
 import VideoQuizInfo from './video-quiz-infor';
 import VideoQuizModal from './video-quiz-modal';
@@ -12,6 +16,7 @@ interface IContentVideoProps extends IframeHTMLAttributes<HTMLIFrameElement> {
   courseId: string;
   quizzes: IQuizItemResponse[];
   isPreview?: boolean;
+  onlyVideoContent?: boolean;
   onComplete?: (duration: number, time: number, quizzes?: string) => void;
 }
 
@@ -23,6 +28,7 @@ const ContentVideo = ({
   quizzes,
   isPreview = false,
   courseId,
+  onlyVideoContent,
   ...props
 }: IContentVideoProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -35,7 +41,8 @@ const ContentVideo = ({
     seconds: 0,
     duration: 0,
   });
-  const [lastCompletedPercentage, setLastCompletedPercentage] = useState<number>(0);
+
+  const { quizResult } = useQuizSubmissionStore();
 
   const triggerQuizConditions = () => {
     if (quizzes) {
@@ -54,36 +61,14 @@ const ContentVideo = ({
   };
   const triggerConditions = triggerQuizConditions();
 
-  const checkCompletion = useCallback(
-    (currentTime: number, duration: number) => {
-      if (player && onComplete) {
-        const percentage = (currentTime / duration) * 100;
-        const roundedPercentage = Math.floor(percentage / 20) * 20;
-
-        if (roundedPercentage >= 20 && roundedPercentage <= 100 && roundedPercentage > lastCompletedPercentage) {
-          if (quizzes && quizzes?.length > 0) {
-            onComplete(duration, currentTime, quizzes[0]?.id);
-
-            setVideoTimestamp({ seconds: currentTime, duration });
-          } else {
-            onComplete(duration, currentTime);
-          }
-
-          setLastCompletedPercentage(roundedPercentage);
-        }
-
-        // if (
-        //   onlyVideoContent &&
-        //   checkNextLesson &&
-        //   roundedPercentage === 100 &&
-        //   quizResult
-        // ) {
-        //   handleShowToast();
-        // }
-      }
+  const { checkProgress } = usePlayerProgress(onComplete, {
+    quizzes,
+    onlyVideoContent,
+    quizResult,
+    onTimeUpdate: (seconds, duration) => {
+      setVideoTimestamp({ seconds, duration });
     },
-    [player, onComplete, lastCompletedPercentage]
-  );
+  });
 
   useEffect(() => {
     if (player) {
@@ -106,7 +91,7 @@ const ContentVideo = ({
           }
         }
 
-        checkCompletion(data.seconds, data.duration);
+        checkProgress(data.seconds, data.duration);
       };
 
       player.on(EVENTS.TIMEUPDATE, handleTimeUpdate);
@@ -115,10 +100,10 @@ const ContentVideo = ({
         player.off(EVENTS.TIMEUPDATE, handleTimeUpdate);
       };
     }
-  }, [player, checkCompletion]);
+  }, [player, checkProgress]);
 
   return (
-    <div ref={containerRef} className="relative h-full max-h-full w-auto max-w-full">
+    <div ref={containerRef} className="flex h-full max-h-full max-w-full flex-col">
       {isLoading ? <Spinner size="sm" /> : null}
 
       <iframe
@@ -133,7 +118,7 @@ const ContentVideo = ({
           transition: 'opacity 0.3s ease-in-out',
         }}
         allow="accelerometer; gyroscope; encrypted-media; picture-in-picture; fullscreen"
-        className="mx-auto aspect-video max-w-full"
+        className="mx-auto aspect-video h-auto w-full max-w-full flex-1 md:h-full md:w-auto"
         allowFullScreen
         onLoad={() => {
           setIsLoading(false);
@@ -150,6 +135,13 @@ const ContentVideo = ({
           quizzes={quizzes}
           course_id={courseId}
           shownQuizzes={shownQuizzes}
+          triggerFunction={(quizResult: IQuizSubmissionResponse) => {
+            if (quizResult) {
+              setShowQuiz(false);
+            }
+
+            onComplete?.(videoTimestamp.duration, videoTimestamp.seconds, quizzes[0]?.id);
+          }}
         />
       )}
     </div>

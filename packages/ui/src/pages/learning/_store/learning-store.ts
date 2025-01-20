@@ -1,4 +1,5 @@
 import type { ISectionLearningProgress } from '@oe/api/types/course/learning-progress';
+import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
 import { create } from 'zustand';
 
 interface LessonLearningState {
@@ -49,6 +50,20 @@ export const useLessonLearningStore = create<LessonLearningState>((set, get) => 
       const check = section ? section.total_lesson > 0 && section.completed_lesson / section.total_lesson === 1 : false;
 
       return check;
+    },
+  };
+});
+
+type QuizSubmissionStore = {
+  quizResult?: IQuizSubmissionResponse;
+  setQuizResult: (quizResult?: IQuizSubmissionResponse) => void;
+};
+
+export const useQuizSubmissionStore = create<QuizSubmissionStore>(set => {
+  return {
+    quizResult: undefined,
+    setQuizResult(quizResult) {
+      set({ quizResult });
     },
   };
 });
