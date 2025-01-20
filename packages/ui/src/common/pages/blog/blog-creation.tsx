@@ -5,14 +5,13 @@ import BannerBg from '@oe/assets/images/blog-creation-bg.png';
 import WhaleError from '@oe/assets/images/whale/whale-error.png';
 import { getCookies } from '@oe/core/utils/cookie';
 import { AUTH_ROUTES, BLOG_ROUTES } from '@oe/core/utils/routes';
-import { pickCharacters } from '@oe/core/utils/string';
 import { buildUrl } from '@oe/core/utils/url';
 import { BlogForm, type IFormAction } from '@oe/ui/components/blog';
 import { Image } from '@oe/ui/components/image';
 import { getTranslations } from 'next-intl/server';
 import { redirect } from 'next/navigation';
 import { Breadcrumb } from '#components/breadcrumb';
-import { Avatar, AvatarFallback, AvatarImage } from '#shadcn/avatar';
+import { UserAvatar } from '#components/user-avatar';
 import { cn } from '#utils/cn';
 
 interface ICreationProps {
@@ -91,12 +90,12 @@ export default async function BlogCreationPage({ className, aiButton, id, action
           className="h-full w-full rounded-xl"
         />
         <div className="flex flex-col flex-wrap items-center gap-4 md:flex-row">
-          <Avatar className="h-[80px] w-[80px] flex-inline">
-            <AvatarImage src={me.avatar ?? ''} alt={me.username} />
-            <AvatarFallback>
-              {pickCharacters(me.display_name?.length > 0 ? me.display_name : me.username)}
-            </AvatarFallback>
-          </Avatar>
+          <UserAvatar
+            className="relative h-[80px] w-[80px] flex-inline shrink-0 rounded-full border-2"
+            src={me.avatar ?? ''}
+            name={me.display_name?.length > 0 ? me.display_name : me.username}
+          />
+
           <p className="giant-iheading-bold20 lg:giant-iheading-bold40 z-10 text-foreground">
             {tBlogForm.rich('ownerBlog', {
               name: me.display_name?.length > 0 ? me.display_name : me.username,

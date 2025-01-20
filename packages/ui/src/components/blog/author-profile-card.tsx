@@ -1,11 +1,11 @@
 import type { IUserProfile } from '@oe/api/types/user-profile';
 import avatar from '@oe/assets/images/org-avatar.png';
-import { abbreviateNumber, pickCharacters } from '@oe/core/utils/helpers';
+import { abbreviateNumber } from '@oe/core/utils/helpers';
 import { BLOG_ROUTES, PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
 import { useTranslations } from 'next-intl';
 import { Link } from '#common/navigation';
-import { Avatar, AvatarFallback, AvatarImage } from '#shadcn/avatar';
+import { UserAvatar } from '#components/user-avatar';
 import { buttonVariants } from '#shadcn/button';
 import { ScrollArea, ScrollBar } from '#shadcn/scroll-area';
 import { cn } from '#utils/cn';
@@ -34,14 +34,11 @@ export default function AuthorProfileCard({ profile, className, isMe = false, va
         className="h-auto"
         target="_blank"
       >
-        <Avatar className="h-[120px] w-[120px] cursor-pointer">
-          <AvatarImage src={profile?.avatar ?? ''} alt={profile?.username} />
-          <AvatarFallback>
-            {profile?.display_name && profile.display_name?.length > 0
-              ? pickCharacters(profile.display_name)
-              : pickCharacters(profile?.username ?? '')}
-          </AvatarFallback>
-        </Avatar>
+        <UserAvatar
+          className="relative h-[120px] w-[120px] flex-inline rounded-full border-2"
+          src={profile?.avatar ?? ''}
+          name={profile?.display_name?.length > 0 ? profile?.display_name : profile?.username}
+        />
       </Link>
       <p className="giant-iheading-semibold28 text-center">{profile.display_name ?? profile.username}</p>
       <div className="mcaption-semibold16 flex flex-wrap gap-3 text-foreground">
