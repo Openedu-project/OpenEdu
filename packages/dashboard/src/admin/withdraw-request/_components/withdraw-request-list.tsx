@@ -138,11 +138,12 @@ export default function WithdrawRequestList() {
         header: t('action'),
         align: 'center',
         sticky: 'right',
+        size: 210,
         cell({ row }) {
           const item = row.original;
           if (item.status === 'new') {
             return (
-              <div className="flex justify-center gap-2">
+              <div className="flex w-[210px] justify-center gap-2">
                 <Button
                   variant="destructive"
                   onClick={() => {
