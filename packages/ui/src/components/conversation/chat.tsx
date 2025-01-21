@@ -24,7 +24,6 @@ interface IChatProps {
 export const ChatWithMessage = ({ id, sendMessage, nextCursorPage = '' }: IChatProps) => {
   const { messages, status, selectedModel, genMessage, setMessages } = useConversationStore();
   const [shouldGetData, setShouldGetData] = useState<boolean>(false);
-  const atBottom = useRef<boolean>(true);
 
   const firstItemIndexRef = useRef<number>(99999);
   const virtuosoRef = useRef<VirtuosoHandle>(null);
@@ -71,31 +70,19 @@ export const ChatWithMessage = ({ id, sendMessage, nextCursorPage = '' }: IChatP
     ) as InputType[];
   }, [selectedModel]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  // useEffect(() => {
-  //   if (genMessage && atBottom.current) {
-  //     virtuosoRef.current?.scrollToIndex({
-  //       index: messages.length - 1,
-  //       align: 'end',
-  //       behavior: 'smooth',
-  //     });
-  //   }
-  // }, [messages.length]);
-
   return (
     <Virtuoso
       data={messages.filter(msg => msg.id !== genMessage?.id)}
       ref={virtuosoRef}
       style={{ paddingBottom: 0 }}
-      atBottomStateChange={bottom => {
-        atBottom.current = bottom;
-      }}
-      atBottomThreshold={50}
       alignToBottom={true}
       totalCount={messages.length}
       firstItemIndex={firstItemIndexRef.current}
       followOutput="auto"
-      initialTopMostItemIndex={{ align: 'end', index: messages.length - 1 }}
+      initialTopMostItemIndex={{
+        align: 'end',
+        index: messages.length - 1,
+      }}
       startReached={() => {
         if (!(GENERATING_STATUS.includes(status ?? '') || isLoading) && nextKeyRef.current.length > 0) {
           setShouldGetData(true);
@@ -137,7 +124,9 @@ export const ChatWithMessage = ({ id, sendMessage, nextCursorPage = '' }: IChatP
               sendMessage={sendMessage}
               messageType={messageType}
             />
-          ) : null,
+          ) : (
+            <div className="h-[100px]" />
+          ),
       }}
     />
   );

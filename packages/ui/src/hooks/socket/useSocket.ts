@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 
 import type { IMessageData } from '@oe/api/types/conversation';
 import type { EventData, ISocketRes } from '@oe/api/types/socket';
+import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { useCallback } from 'react';
 import useWebSocket from 'react-use-websocket';
 import { useConversationStore } from '#store/conversation-store';
@@ -41,11 +42,13 @@ export const useSocket = (isAuthenticated: boolean) => {
           const newMessage = handleAIConversation(data);
           if (newMessage) {
             setGenMessage(newMessage, () => {
-              setStatus(data?.status);
+              if (!GENERATING_STATUS.includes(data?.status)) {
+                setStatus(data?.status);
+                if (resetPage) {
+                  window.location.reload();
+                }
+              }
             });
-          }
-          if (resetPage) {
-            window.location.reload();
           }
         } else {
           setSocketData(parsedData);

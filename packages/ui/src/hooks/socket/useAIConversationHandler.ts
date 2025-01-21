@@ -19,7 +19,7 @@ export const useAIConversationHandler = (status: string, genMessageId?: string) 
         id: data.message_id,
         conversation_id: data.conversation_id,
         create_at: Date.now(),
-        content: data.content,
+        content: data.status === 'failed' ? (data.error?.msg ?? '') : data.content,
         ai_model: {
           name: data.ai_model,
           display_name: data.ai_model_display_name,

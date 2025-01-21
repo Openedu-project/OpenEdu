@@ -153,7 +153,7 @@ const InputField = <TFormValues extends FieldValues>({
                               field.onChange((field.value as IFileResponse[])?.filter(item => item.id !== image.id));
                             }}
                           >
-                            <CircleX width={16} height={16} color="hsl(var(--background)) h-4 w-4" />
+                            <CircleX width={16} height={16} color="hsl(var(--background))" />
                           </Button>
                         </div>
                       ))}

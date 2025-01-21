@@ -137,7 +137,6 @@ export function ChatWindow({
       resetGenMessage();
       if ((error as HTTPError).metadata?.code.toString() === '32002') {
         setModelWarning(true);
-        // revalidateTag('ai-models');
       }
       return error;
     }

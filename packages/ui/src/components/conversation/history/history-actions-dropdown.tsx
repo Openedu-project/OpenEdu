@@ -1,7 +1,7 @@
 import type { IChatHistory } from '@oe/api/types/conversation';
 import { CircleEllipsis, Pencil, Share, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import React, { type ReactNode } from 'react';
+import React, { useState, type ReactNode } from 'react';
 import { DeleteButton } from '#components/delete-button';
 import {
   DropdownMenu,
@@ -31,6 +31,7 @@ interface ActionDropdownProps {
 }
 
 const ActionDropdown: React.FC<ActionDropdownProps> = ({ className, actions, item, onShare, onEdit, onDelete }) => {
+  const [open, setOpen] = useState(false);
   const tAI = useTranslations('aiAssistant');
   const tGeneral = useTranslations('general');
 
@@ -73,7 +74,7 @@ const ActionDropdown: React.FC<ActionDropdownProps> = ({ className, actions, ite
   const menuItems = actions || defaultItems;
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger id={item.id} className={cn('outline-none', className)}>
         <CircleEllipsis className={cn('h-4 w-4 text-slate-600', 'transition-transform duration-200')} />
       </DropdownMenuTrigger>
