@@ -1,4 +1,4 @@
-import { type IPermissionActionConfigSchema, permissionActionConfigSchema } from '@Oe/api/schemas/permission';
+import { type IPermissionActionConfigSchema, permissionActionConfigSchema } from '@oe/api/schemas/permission';
 import type { IPermissionConfigPayload } from '@oe/api/types/permissions';
 import { Modal } from '@oe/ui/components/modal';
 import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
