@@ -119,3 +119,8 @@ export interface ICreateCourseRequest
 }
 
 export interface ICourseResponse extends IDataPagination<ICourse[]> {}
+
+export interface IEnrollCoursePayload {
+  source: string;
+  ref_by?: string;
+}

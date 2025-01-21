@@ -1,8 +1,12 @@
+import { usePostEnrollCourse } from '@oe/api/hooks/useCourse';
 import { useGetMe } from '@oe/api/hooks/useMe';
+import type { IEnrollCoursePayload } from '@oe/api/types/course/course';
 import { createAPIUrl } from '@oe/api/utils/fetch';
+import { getCookieClient, setCookieClient } from '@oe/core/utils/cookie';
 import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { useTranslations } from 'next-intl';
-import { type MouseEvent, useCallback, useMemo } from 'react';
+import { useParams, useSearchParams } from 'next/navigation';
+import { type MouseEvent, useCallback, useEffect, useMemo } from 'react';
 import { useRouter } from '#common/navigation';
 import { useLoginRequiredStore } from '#components/login-required-modal';
 import { ACTION_TYPES, type ActionType, type IPaymentButton } from './types';
@@ -19,10 +23,21 @@ interface ActionHandlerParams {
   isExternalDomain: boolean;
   domain?: string;
   router: ReturnType<typeof useRouter>;
-  createCourseUrl: (type: 'learning' | 'detail', params: Record<string, string>) => string;
   isCourseDetail: boolean;
+  refBy?: string;
+  fromSource?: string;
+  slug?: string;
+  createCourseUrl: (type: 'learning' | 'detail', params: Record<string, string>) => string;
   setLoginRequiredModal: (show: boolean) => void;
+  triggerPostEnrollCourse: (params: IEnrollCoursePayload) => void;
 }
+
+type FromSourceType = {
+  courseSlug: string;
+  fromSource: string;
+}[];
+
+export const defaultExpiredTime = 365 * 86400; // 365 days for token expired
 
 const redirectToLearningPage = ({
   courseData,
@@ -53,6 +68,49 @@ const redirectToLearningPage = ({
   isExternalDomain ? window.open(fullUrl, '_blank') : router.push(fullUrl);
 };
 
+const handleEnrollCourse = async (params: ActionHandlerParams) => {
+  let source = '';
+  let ref_by = '';
+  const fromSourceStorage = getCookieClient(String(process.env.NEXT_PUBLIC_COOKIE_FROM_SOURCE));
+  const refByStorage = getCookieClient(String(process.env.NEXT_PUBLIC_COOKIE_REF_BY));
+
+  if (fromSourceStorage) {
+    const fromSourceData: { fromSource: string; courseSlug: string }[] = fromSourceStorage
+      ? typeof fromSourceStorage === 'string'
+        ? JSON.parse(fromSourceStorage)
+        : fromSourceStorage
+      : [];
+    // Filter entries with matching courseSlug and sort by most recent (assuming they're added in order)
+    const matchingEntries = fromSourceData
+      .filter(entry => entry.courseSlug === params.slug)
+      .sort((a, b) => fromSourceData.indexOf(b) - fromSourceData.indexOf(a));
+
+    if (matchingEntries.length > 0) {
+      source = matchingEntries[0]?.fromSource ?? '';
+    }
+  }
+
+  if (refByStorage) {
+    const fromUserStorage: { fromSource: string; courseSlug: string }[] = refByStorage
+      ? typeof refByStorage === 'string'
+        ? JSON.parse(refByStorage)
+        : refByStorage
+      : [];
+    // Filter entries with matching courseSlug and sort by most recent (assuming they're added in order)
+    const matchingEntries = fromUserStorage
+      .filter(entry => entry.courseSlug === params.slug)
+      .sort((a, b) => fromUserStorage.indexOf(b) - fromUserStorage.indexOf(a));
+
+    if (matchingEntries.length > 0) {
+      ref_by = matchingEntries[0]?.fromSource ?? '';
+    }
+  }
+  await params.triggerPostEnrollCourse({
+    source,
+    ref_by,
+  });
+};
+
 const ACTION_HANDLERS: Record<ActionType, ActionHandler> = {
   [ACTION_TYPES.LOGIN_REQUIRED]: {
     handle: ({ setLoginRequiredModal }) => {
@@ -67,6 +125,7 @@ const ACTION_HANDLERS: Record<ActionType, ActionHandler> = {
         endpoint: PLATFORM_ROUTES.payment,
         params: { slug: courseData.slug ?? '' },
       });
+
       const fullUrl = isExternalDomain ? `https://${domain}${paymentUrl}` : paymentUrl;
       isExternalDomain ? window.open(fullUrl, '_blank') : router.push(fullUrl);
     },
@@ -88,7 +147,8 @@ const ACTION_HANDLERS: Record<ActionType, ActionHandler> = {
     shouldShowCart: false,
   },
   [ACTION_TYPES.DEFAULT]: {
-    handle: params => {
+    handle: async params => {
+      await handleEnrollCourse(params);
       redirectToLearningPage(params);
     },
     getText: t => t('goToCourse'),
@@ -99,14 +159,94 @@ const ACTION_HANDLERS: Record<ActionType, ActionHandler> = {
 export const usePaymentButton = ({ courseData, isCourseDetail = false }: IPaymentButton) => {
   const router = useRouter();
   const t = useTranslations('paymentButton');
+  const searchParams = useSearchParams();
+  const refCode = searchParams.get('ref_code') ?? '';
+  const fromSource = searchParams.get('name') ?? searchParams.get('utm') ?? '';
+  const fromUser = searchParams.get('ref_by') ?? '';
+  const { slug } = useParams();
+
   const { dataMe } = useGetMe();
   const { setLoginRequiredModal } = useLoginRequiredStore();
+
+  const fromSourceStorage = getCookieClient(String(process.env.NEXT_PUBLIC_APP_COOKIE_FROM_SOURCE));
+  const refByStorage = getCookieClient(String(process.env.NEXT_PUBLIC_APP_COOKIE_REF_BY));
+  const { triggerPostEnrollCourse } = usePostEnrollCourse(courseData?.cuid ?? '');
 
   const domain = courseData?.org?.domain;
   const isExternalDomain = useMemo(
     () => typeof window !== 'undefined' && domain && domain !== window.location.hostname,
     [domain]
   );
+
+  useEffect(() => {
+    if (refCode) {
+      setCookieClient(process.env.NEXT_PUBLIC_COOKIE_REF_CODE, refCode, { maxAge: defaultExpiredTime });
+    }
+  }, [refCode]);
+
+  useEffect(() => {
+    let fromSourceVal = fromSource;
+
+    if (fromUser && !fromSourceVal && courseData?.slug) {
+      fromSourceVal = 'direct';
+    }
+
+    if (!fromSourceVal) {
+      return;
+    }
+    if (!courseData?.slug) {
+      return;
+    }
+
+    const newFromSource: FromSourceType = fromSourceStorage
+      ? typeof fromSourceStorage === 'string'
+        ? JSON.parse(fromSourceStorage)
+        : fromSourceStorage
+      : [];
+
+    const existingEntry = newFromSource?.find(
+      entry => entry?.courseSlug === courseData.slug && entry?.fromSource === fromSourceVal
+    );
+
+    if (!existingEntry) {
+      newFromSource.push({
+        fromSource: fromSourceVal,
+        courseSlug: courseData.slug,
+      });
+      setCookieClient(process.env.NEXT_PUBLIC_COOKIE_FROM_SOURCE, JSON.stringify(newFromSource), {
+        maxAge: defaultExpiredTime,
+      });
+    }
+  }, [courseData, fromSource, fromSourceStorage, fromUser]);
+
+  useEffect(() => {
+    if (!fromUser) {
+      return;
+    }
+    if (!courseData?.slug) {
+      return;
+    }
+
+    const newFromUser: FromSourceType = refByStorage
+      ? typeof refByStorage === 'string'
+        ? JSON.parse(refByStorage)
+        : refByStorage
+      : [];
+
+    const existingEntry = newFromUser?.find(
+      entry => entry?.courseSlug === courseData.slug && entry?.fromSource === fromUser
+    );
+
+    if (!existingEntry) {
+      newFromUser.push({
+        fromSource: fromUser,
+        courseSlug: courseData.slug,
+      });
+      setCookieClient(process.env.NEXT_PUBLIC_COOKIE_REF_BY, JSON.stringify(newFromUser), {
+        maxAge: defaultExpiredTime,
+      });
+    }
+  }, [courseData, fromUser, refByStorage]);
 
   const createCourseUrl = useCallback((type: 'learning' | 'detail', params: Record<string, string>) => {
     const endpoint = type === 'learning' ? PLATFORM_ROUTES.courseLearning : PLATFORM_ROUTES.courseDetail;
@@ -119,6 +259,8 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false }: IPaymen
         is_pay: courseData.price_settings?.is_pay ?? false,
         is_paid: courseData.is_paid ?? false,
         is_enrolled: courseData.is_enrolled ?? false,
+        form_relations: courseData.form_relations ?? [],
+        entityId: '',
       }),
     [courseData]
   );
@@ -133,6 +275,7 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false }: IPaymen
       event.stopPropagation();
 
       const params: ActionHandlerParams = {
+        slug: slug as string,
         courseData,
         isExternalDomain: isExternalDomain as boolean,
         domain,
@@ -140,6 +283,7 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false }: IPaymen
         createCourseUrl,
         isCourseDetail,
         setLoginRequiredModal,
+        triggerPostEnrollCourse,
       };
 
       actionHandler.handle(params);
@@ -153,6 +297,8 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false }: IPaymen
       createCourseUrl,
       isCourseDetail,
       setLoginRequiredModal,
+      triggerPostEnrollCourse,
+      slug,
     ]
   );
 

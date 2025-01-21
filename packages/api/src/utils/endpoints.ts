@@ -95,6 +95,8 @@ export const API_ENDPOINT = {
   ORDERS_ID_PAYMENT: '/api/v1/orders/:id/payment',
   ORDERS_ID_COUPONS_CODE: '/api/v1/orders/:id/coupons/:code',
   ORDERS_ID_SUCCESS: '/api/v1/orders/:id/success',
+  ORDERS_ID_STATUS: '/api/v1/orders/:id/status',
+  ORDERS_ID_COUPONS: '/api/v1/orders/:id/coupons',
   ORDER_ITEMS: '/api/v1/order-items',
   PAYMENT_METHODS: '/api/v1/payment-methods',
   PAYMENT_METHODS_ID: '/api/v1/payment-methods/:id',

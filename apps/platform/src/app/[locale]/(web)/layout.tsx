@@ -1,35 +1,36 @@
-import { MainLayout } from '@oe/ui/common/layout';
-import { getTranslations } from 'next-intl/server';
+import { PLATFORM_ROUTES } from "@oe/core/utils/routes";
+import { MainLayout } from "@oe/ui/common/layout";
+import { getTranslations } from "next-intl/server";
 
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 export default async function OpeneduLayout({
   children,
 }: {
   children: ReactNode;
 }) {
-  const t = await getTranslations('headerMenu');
+  const t = await getTranslations("headerMenu");
   const sidebarItems = [
     {
-      id: 'ai-assistant',
-      label: t('aiAssistant'),
-      href: '#',
+      id: "ai-assistant",
+      label: t("aiAssistant"),
+      href: "#",
       isHighlight: true,
     },
     {
-      id: 'courses',
-      label: t('courses'),
-      href: '#',
+      id: "courses",
+      label: t("courses"),
+      href: PLATFORM_ROUTES.courses,
     },
     {
-      id: 'blog',
-      label: t('blog'),
-      href: '#',
+      id: "blog",
+      label: t("blog"),
+      href: "#",
     },
     {
-      id: 'launchpad',
-      label: t('launchpad'),
-      href: '#',
+      id: "launchpad",
+      label: t("launchpad"),
+      href: "#",
     },
     // {
     //   id: 'become-creator',
