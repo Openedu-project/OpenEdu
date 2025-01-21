@@ -15,7 +15,7 @@ import { CONTENT_RENDERERS } from './content-render';
 
 const getWrapperClassName = (contents: ILessonContent[]): string => {
   return cn(
-    'h-auto md:pr-2 md:pl-4 [&>[data-radix-scroll-area-viewport]>div]:h-full',
+    'h-auto overflow-y-auto md:pr-2 md:pl-4 [&>[data-radix-scroll-area-viewport]>div]:h-full',
     contents.every(item => item.type !== 'embedded') && 'h-full',
     contents.length === 1 &&
       contents[0] &&

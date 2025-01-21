@@ -1,5 +1,5 @@
-import type { ICourseFile } from './course/basic';
 import type { IQuizPayload } from './course/quiz';
+import type { IFileResponse } from './file';
 
 export type TQuestion = 'single_choice' | 'multiple_choice';
 export type TQuizAnswer = 'choice_item';
@@ -31,7 +31,7 @@ export interface ICreateQuizSubmissionPayload {
   course_id: string;
 }
 
-export interface IQuizFile extends ICourseFile {}
+export interface IQuizFile extends IFileResponse {}
 
 export interface IQuizAnswer {
   id: string;

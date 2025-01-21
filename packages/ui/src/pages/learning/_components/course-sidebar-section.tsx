@@ -2,7 +2,8 @@
 
 import type { ICourseOutline } from '@oe/api/types/course/course';
 import type { ISectionLearningProgress } from '@oe/api/types/course/learning-progress';
-import type { HTMLAttributes } from 'react';
+import { type HTMLAttributes, useEffect, useRef } from 'react';
+import { CircleProgressBar } from '#components/circle-progress-bar';
 import { OutlineLesson } from '#components/outline-lesson';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '#shadcn/accordion';
 import { cn } from '#utils/cn';
@@ -17,7 +18,40 @@ interface ICourseOutlineProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const CourseOutline = ({ courseData, activeSection, activeLesson, ...props }: ICourseOutlineProps) => {
+  const activeLessonRef = useRef<HTMLLIElement>(null);
+
   const { sectionsProgressData } = useLessonLearningStore();
+
+  useEffect(() => {
+    if (sectionsProgressData?.length === 0 || !activeLessonRef.current) {
+      return;
+    }
+
+    // Giảm timeout xuống thấp nhất có thể
+    const timeoutId = setTimeout(() => {
+      const scrollableParent = activeLessonRef.current?.closest('[data-radix-scroll-area-viewport]') as HTMLElement;
+      if (!(scrollableParent && activeLessonRef.current)) {
+        return;
+      }
+
+      const elementRect = activeLessonRef.current.getBoundingClientRect();
+      const containerRect = scrollableParent.getBoundingClientRect();
+
+      // Chỉ scroll nếu element nằm ngoài viewport của container
+      if (elementRect.top < containerRect.top || elementRect.bottom > containerRect.bottom) {
+        const targetPosition = elementRect.top - containerRect.top - (containerRect.height - elementRect.height) / 2;
+
+        scrollableParent.style.scrollBehavior = 'smooth';
+        scrollableParent.scrollTop += targetPosition;
+
+        setTimeout(() => {
+          scrollableParent.style.scrollBehavior = 'auto';
+        }, 300);
+      }
+    }, 0); // Set timeout to 0
+
+    return () => clearTimeout(timeoutId);
+  }, [activeLesson, sectionsProgressData?.length]);
 
   if (!sectionsProgressData || sectionsProgressData?.length === 0) {
     return null;
@@ -25,8 +59,8 @@ const CourseOutline = ({ courseData, activeSection, activeLesson, ...props }: IC
 
   const getSectionClassName = (sectionUid: string) =>
     cn(
-      'giant-iheading-semibold16 rounded-[4px] border-[0.4px] p-3 text-left text-primary hover:no-underline',
-      activeSection === sectionUid ? 'border-primary/10 bg-primary/10' : 'border-foreground/5 bg-foreground/5'
+      'gap-1 giant-iheading-semibold14 md:giant-iheading-semibold16 rounded-[4px] border-[0.4px] border-foreground/5 p-3 text-left text-foreground hover:no-underline',
+      activeSection === sectionUid ? 'bg-primary/10' : 'bg-foreground/5'
     );
 
   const renderLessons = (section: (typeof sectionsProgressData)[0]) => {
@@ -56,6 +90,7 @@ const CourseOutline = ({ courseData, activeSection, activeLesson, ...props }: IC
             isActive={activeLesson === lesson.uid}
             lesson={lesson}
             type="learning"
+            ref={activeLesson === lesson.uid ? activeLessonRef : null}
           />
         )
       );
@@ -65,16 +100,23 @@ const CourseOutline = ({ courseData, activeSection, activeLesson, ...props }: IC
   return (
     <div {...props}>
       <Accordion type="single" collapsible defaultValue={`section-${activeSection}`} className="w-full">
-        {sectionsProgressData.sort(sortByOrder).map((section, index) => (
-          <AccordionItem className="border-none" key={section.uid} value={`section-${section.uid}`}>
-            <AccordionTrigger className={getSectionClassName(section.uid)}>
-              {`Section ${index + 1}: ${section.title}`}
-            </AccordionTrigger>
-            <AccordionContent>
-              <ul className="mcaption-semibold14 space-y-2 text-foreground/60">{renderLessons(section)}</ul>
-            </AccordionContent>
-          </AccordionItem>
-        ))}
+        {sectionsProgressData.sort(sortByOrder).map((section, index) => {
+          const sectionProgress =
+            section.total_lesson > 0 ? (section?.completed_lesson / section.total_lesson) * 100 : 0;
+
+          return (
+            <AccordionItem className="border-none" key={section.uid} value={`section-${section.uid}`}>
+              <AccordionTrigger className={getSectionClassName(section.uid)}>
+                <CircleProgressBar progress={sectionProgress} size="md" />
+
+                <span className="flex-1">{`Section ${index + 1}: ${section.title}`}</span>
+              </AccordionTrigger>
+              <AccordionContent>
+                <ul className="space-y-2 text-foreground/60">{renderLessons(section)}</ul>
+              </AccordionContent>
+            </AccordionItem>
+          );
+        })}
       </Accordion>
     </div>
   );
