@@ -12,6 +12,8 @@ import type { VbiHeaderProps } from '../academia/auth/header';
 import type { AcademiaAuthLayoutLoginProps } from '../academia/auth/login';
 import type { ScholarHomepageAboutUsProps, ScholarHomepageHeroProps, ScholarHomepageServiceProps } from '../scholar';
 import type {
+  VbiAboutUsGoalProps,
+  VbiAboutUsIntroProps,
   VbiHomepageAchievementsProps,
   VbiHomepageBlogsProps,
   VbiHomepageCertProps,
@@ -47,7 +49,7 @@ export type HomeSection =
   | 'vbiEvents'
   | 'vbiCreators'
   | 'vbiMap'; // Add new page key - HERE
-export type AboutSection = 'theme' | 'team';
+export type AboutSection = 'theme' | 'team' | 'vbiIntro' | 'vbiGoal';
 export type AuthLayout = 'theme' | 'login' | 'forgotPassword' | 'emailVerify' | 'signUp' | 'authConfirm' | 'header';
 
 export type SectionsByPage = {
@@ -149,6 +151,10 @@ export interface SectionPropsMap<K extends ThemePageKey> {
   vbiEvents: DynamicProps<K, VbiHomepageEventsProps>;
   vbiCreators: DynamicProps<K, VbiHomepageCreatorsProps>;
   vbiMap: DynamicProps<K, VbiHomepageMapProps>;
+
+  /* VBI ABOUT US */
+  vbiIntro: DynamicProps<K, VbiAboutUsIntroProps>;
+  vbiGoal: DynamicProps<K, VbiAboutUsGoalProps>;
 }
 
 // Component Types

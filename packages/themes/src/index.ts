@@ -24,6 +24,9 @@ import { ScholarAboutUs, ScholarHomePage } from './scholar';
 import { VbiHomepageHeroClient, VbiHomepageHeroServer } from './vbi/homepage/vbi-hero/index';
 
 import VbiHeader from './academia/auth/header';
+import { VbiAboutUsGoal } from './vbi/about-us/goal';
+import VbiAboutUs from './vbi/about-us/index';
+import { VbiAboutUsIntro } from './vbi/about-us/intro';
 import VbiHomepage from './vbi/homepage/index';
 import { VbiHomepageAchievementsClient, VbiHomepageAchievementsServer } from './vbi/homepage/vbi-achievements';
 import { VbiHomepageBlogsClient, VbiHomepageBlogsServer } from './vbi/homepage/vbi-blogs';
@@ -84,7 +87,9 @@ export const THEMES: ThemeRender = {
       vbiMap: VbiHomepageMapClient,
     },
     'about-us': {
-      theme: ScholarAboutUs,
+      theme: VbiAboutUs,
+      vbiIntro: VbiAboutUsIntro,
+      vbiGoal: VbiAboutUsGoal,
     },
     auth: {
       theme: AcademiaAuthLayout,
@@ -147,7 +152,9 @@ export const THEMES_SERVER: ThemeRender = {
       vbiMap: VbiHomepageMapServer,
     },
     'about-us': {
-      theme: ScholarAboutUs,
+      theme: VbiAboutUs,
+      vbiIntro: VbiAboutUsIntro,
+      vbiGoal: VbiAboutUsGoal,
     },
     auth: {
       theme: AcademiaAuthLayout,

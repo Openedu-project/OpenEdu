@@ -1,3 +1,5 @@
+import type { VbiAboutUsGoalProps } from './about-us/goal';
+import type { VbiAboutUsIntroProps } from './about-us/intro';
 import type { VbiHomepageAchievementsProps } from './homepage/vbi-achievements/vbi-achievements';
 import type { VbiHomepageBlogsProps } from './homepage/vbi-blogs/vbi-blogs';
 import type { VbiHomepageCertProps } from './homepage/vbi-cert/vbi-cert';
@@ -18,4 +20,7 @@ export type {
   VbiHomepageEventsProps,
   VbiHomepageCreatorsProps,
   VbiHomepageMapProps,
+  // ABOUT US
+  VbiAboutUsIntroProps,
+  VbiAboutUsGoalProps,
 };
