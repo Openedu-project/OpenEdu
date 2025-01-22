@@ -1,6 +1,6 @@
 import { createAPIUrl } from '@oe/api/utils/fetch';
 import { ADMIN_ROUTES } from '@oe/core/utils/routes';
-import type { ThemeName } from '@oe/themes/types/theme-page';
+import type { ThemeName } from '@oe/themes/types/theme-page/index';
 import { Link } from '@oe/ui/common/navigation';
 import { Badge } from '@oe/ui/shadcn/badge';
 import { Button } from '@oe/ui/shadcn/button';

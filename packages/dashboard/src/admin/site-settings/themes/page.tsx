@@ -2,7 +2,7 @@
 import { createOrUpdateThemeConfig } from '@oe/api/services/theme';
 import { defaultThemeSystemConfig } from '@oe/themes';
 import ThemeList from '@oe/themes/_components/theme-list/theme-list';
-import type { ThemeName } from '@oe/themes/types/theme-page';
+import type { ThemeName } from '@oe/themes/types/theme-page/index';
 import type { ThemeSystem } from '@oe/themes/types/theme-system-config';
 import { Button } from '@oe/ui/shadcn/button';
 import { toast } from '@oe/ui/shadcn/sonner';

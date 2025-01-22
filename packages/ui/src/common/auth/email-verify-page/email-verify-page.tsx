@@ -2,7 +2,7 @@ import { verifyEmailService } from '@oe/api/services/auth';
 import loginBanner from '@oe/assets/images/login-banner.png';
 import { base64ToJson } from '@oe/core/utils/decoded-token';
 import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import type { ThemeName } from '@oe/themes/types/theme-page';
+import type { ThemeName } from '@oe/themes/types/theme-page/index';
 import { getTranslations } from 'next-intl/server';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';

@@ -1,4 +1,4 @@
-import type { ThemeFieldConfig, ThemeFieldValue } from '@oe/themes/types/theme-page';
+import type { ThemeFieldConfig, ThemeFieldValue } from '@oe/themes/types/theme-page/index';
 import type React from 'react';
 
 export interface ThemePageSettingFieldProps {

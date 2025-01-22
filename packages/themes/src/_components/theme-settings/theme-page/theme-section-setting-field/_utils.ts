@@ -1,4 +1,4 @@
-import type { ThemeFieldConfig, ThemeFieldValue } from '@oe/themes/types/theme-page';
+import type { ThemeFieldConfig, ThemeFieldValue } from '@oe/themes/types/theme-page/index';
 import { type FileType, isFileType } from '@oe/ui/components/uploader';
 
 const isValidUrl = (value: string): boolean => {

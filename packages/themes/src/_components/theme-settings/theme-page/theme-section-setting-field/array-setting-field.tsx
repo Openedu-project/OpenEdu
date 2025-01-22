@@ -1,5 +1,5 @@
 import { CRUDTranslationByKey } from '@oe/api/services/i18n';
-import type { ThemeFieldConfig, ThemeFieldValue } from '@oe/themes/types/theme-page';
+import type { ThemeFieldConfig, ThemeFieldValue } from '@oe/themes/types/theme-page/index';
 import { Button } from '@oe/ui/shadcn/button';
 import { Label } from '@oe/ui/shadcn/label';
 import { cn } from '@oe/ui/utils/cn';

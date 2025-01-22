@@ -1,5 +1,4 @@
-// import { defaultThemeSystemConfig } from '@oe/themes';
-import type { ThemeName } from '@oe/themes/types/theme-page';
+import type { ThemeName } from '@oe/themes/types/theme-page/index';
 import { useTranslations } from 'next-intl';
 import { ThemeCard } from './theme-card';
 
