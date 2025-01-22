@@ -13,7 +13,7 @@ const VbiAboutUsGoal: SectionComponent<'about-us', 'vbiGoal'> = ({ className }) 
   const t = useTranslations('themePage.vbi.about-us.vbiGoal');
 
   return (
-    <div className={cn('space-y-4 p-4 md:space-y-8 md:p-8 lg:p-12 bg-muted', className)}>
+    <div className={cn('space-y-4 bg-muted p-4 md:space-y-8 md:p-8 lg:p-12 ', className)}>
       <InfoSection
         title={t('title')}
         titleSub={t('titleSub')}
