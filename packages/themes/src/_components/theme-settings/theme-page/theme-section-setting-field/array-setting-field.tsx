@@ -1,3 +1,4 @@
+import { CRUDTranslationByKey } from '@oe/api/services/i18n';
 import type { ThemeFieldConfig, ThemeFieldValue } from '@oe/themes/types/theme-page';
 import { Button } from '@oe/ui/shadcn/button';
 import { Label } from '@oe/ui/shadcn/label';
@@ -18,8 +19,10 @@ export const ThemePageSettingArrayField: React.FC<ThemePageSettingArrayFieldProp
   onChange,
   path,
   renderItem,
+  onAdd,
+  onRemove,
 }) => {
-  const handleAdd = () => {
+  const handleAdd = async () => {
     const templateValue = value[0];
     const fieldType = getFieldType(templateValue);
 
@@ -29,17 +32,42 @@ export const ThemePageSettingArrayField: React.FC<ThemePageSettingArrayFieldProp
       const newObject = Object.fromEntries(
         Object.entries(template).map(([key, val]) => {
           const valType = getFieldType(val);
+
           return [key, getInitialValue(valType)];
         })
       );
+
+      Object.entries(newObject).map(async ([key, val]) => {
+        const valType = getFieldType(val);
+
+        // Create the new translate key
+        if (valType === 'text') {
+          const res = await CRUDTranslationByKey([...path, `${label}-${value.length}`, key], '');
+          console.log(res);
+        }
+      });
+
+      //TODO: fetch data instead of adding the value directly
       onChange([...value, newObject]);
+
+      //TODO: add empty item
+      onAdd([...value, newObject]);
     } else {
+      //TODO: fetch data instead of adding the value directly
       onChange([...value, getInitialValue(fieldType) as ThemeFieldValue | ThemeFieldConfig]);
+      onAdd([...value, getInitialValue(fieldType) as ThemeFieldValue | ThemeFieldConfig]);
+
+      if (getFieldType(value) === 'text') {
+        const res = await CRUDTranslationByKey([...path, `${label}-${value.length}`], '');
+        console.log(res);
+      }
     }
   };
 
   const handleRemove = (index: number) => {
+    //TODO
     onChange(value.filter((_, i) => i !== index));
+    onRemove(value.filter((_, i) => i !== index));
   };
 
   const handleItemChange = (index: number, newValue: ThemeFieldValue | ThemeFieldConfig) => {
@@ -66,12 +94,11 @@ export const ThemePageSettingArrayField: React.FC<ThemePageSettingArrayFieldProp
       <div className="space-y-2">
         {value.map((item, index) => {
           const itemType = getFieldType(item);
-
           return (
             <div key={`${label}-${index.toString()}`} className={cn('ml-1 flex items-center gap-1')}>
               <div className="flex-1">
                 {renderItem ? (
-                  renderItem(item, index, newValue => handleItemChange(index, newValue), [...path, index.toString()])
+                  renderItem(item, index, newValue => handleItemChange(index, newValue), [...path, `${label}-${index}`])
                 ) : itemType === 'object' ? (
                   <ThemePageSettingObjectField
                     label={`${label}-${index}`}
@@ -89,7 +116,7 @@ export const ThemePageSettingArrayField: React.FC<ThemePageSettingArrayFieldProp
                         ? itemType
                         : 'text'
                     }
-                    path={[...path, `${label}-${index}`]}
+                    path={[...path, `${label}-${index.toString()}`]}
                   />
                 )}
               </div>

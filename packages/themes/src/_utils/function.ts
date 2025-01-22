@@ -1,3 +1,4 @@
+import type { NestedObject } from '@oe/core/utils/object';
 import type { ComponentType } from 'react';
 import type {
   AllGroupSidebarKeys,
@@ -9,6 +10,8 @@ import type {
   SectionsByPage,
   ThemeCollection,
   ThemeConfigKey,
+  ThemeFieldConfig,
+  ThemeFieldValue,
   ThemeName,
   ThemePageKey,
   ThemeParams,
@@ -148,3 +151,94 @@ export function parseThemePath(pathname: string): ThemeParams {
     itemSettingKey: segments[themesIndex + 4] as AllSidebarKeys,
   };
 }
+
+type DeepPartial<T> = T extends NestedObject
+  ? {
+      [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+    }
+  : T;
+
+export function deepMergeByPath<T extends NestedObject>(target: T, source: NestedObject, path: string[]): T {
+  if (path.length === 0) {
+    return target;
+  }
+
+  const result = structuredClone(target);
+  let current: NestedObject = result;
+  const lastIndex = path.length - 1;
+
+  for (let i = 0; i < lastIndex; i++) {
+    const key = path[i];
+    if (key) {
+      if (!(key in current)) {
+        return result;
+      }
+      const nextLevel = current[key];
+      if (isObject(nextLevel)) {
+        current = nextLevel;
+      } else {
+        return result;
+      }
+    }
+  }
+
+  const lastKey = path[lastIndex];
+
+  if (lastKey && lastKey in current && isObject(current[lastKey]) && isObject(source)) {
+    current[lastKey] = deepMerge(current[lastKey], source);
+  }
+
+  return result;
+}
+
+function isObject(value: unknown): value is NestedObject {
+  return Boolean(value && typeof value === 'object' && !Array.isArray(value));
+}
+
+function deepMerge<T extends NestedObject>(target: T, source: DeepPartial<T>): T {
+  const result = { ...target };
+
+  for (const key in source) {
+    if (key in source) {
+      const sourceValue = source[key];
+      const targetValue = target[key];
+
+      if (isObject(sourceValue) && isObject(targetValue)) {
+        result[key] = deepMerge(targetValue, sourceValue as DeepPartial<typeof targetValue>);
+      } else if (sourceValue !== undefined) {
+        result[key] = sourceValue as T[typeof key];
+      }
+    }
+  }
+
+  return result;
+}
+
+export const convertValueAndPathToConfig = (
+  prev: ThemeFieldConfig,
+  path: string[],
+  value: ThemeFieldValue | ThemeFieldConfig
+) => {
+  const newValues = { ...prev };
+  let current = newValues;
+
+  // Filter out any undefined or empty path segments
+  const validPath = path.filter((segment): segment is string => segment !== undefined && segment !== '');
+
+  for (let i = 0; i < validPath.length - 1; i++) {
+    const key = validPath[i];
+    if (key && typeof key === 'string') {
+      if (!current[key]) {
+        current[key] = Array.isArray(value) ? [] : {};
+      }
+      current = current[key] as ThemeFieldConfig;
+    }
+  }
+
+  const lastKey = validPath[validPath.length - 1];
+  if (lastKey) {
+    current[lastKey] = value;
+  }
+
+  return newValues;
+};

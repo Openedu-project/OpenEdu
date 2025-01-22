@@ -111,7 +111,6 @@ export function setNestedValue(
 
   const lastKey = keys[keys.length - 1];
   current[lastKey as string] = value;
-
   return result;
 }
 

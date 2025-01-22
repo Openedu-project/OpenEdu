@@ -94,7 +94,7 @@ export const updateTranslation = (
   });
 };
 
-const convertMessagesToTableData = (
+export const convertMessagesToTableData = (
   translations: Record<LanguageCode, I18nMessage>,
   locales: LanguageCode[]
 ): TranslationItem[] => {
@@ -250,7 +250,7 @@ export const useLanguageStore = create<LanguageState & LanguageActions>()((set, 
       const mergedTranslations = Object.fromEntries(
         Object.entries(translations).map(([locale, msgs]) => [
           locale,
-          deepMergeWithCleanup(messages, msgs, locale === DEFAULT_LOCALE),
+          deepMergeWithCleanup(msgs, messages, locale === DEFAULT_LOCALE),
         ])
       ) as Record<LanguageCode, I18nMessage>;
       newTranslations = convertMessagesToTableData(mergedTranslations, localeList);

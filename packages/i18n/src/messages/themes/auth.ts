@@ -21,5 +21,24 @@ export const authMessages = {
       title: 'Confirm Invitation',
       slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
     },
+    header: {
+      sidebarItems: {
+        'sidebarItems-0': {
+          id: '',
+          href: '',
+          label: '',
+        },
+        'sidebarItems-1': {
+          id: '',
+          href: '',
+          label: '',
+        },
+        'sidebarItems-2': {
+          id: '',
+          href: '',
+          label: '',
+        },
+      },
+    },
   },
 };

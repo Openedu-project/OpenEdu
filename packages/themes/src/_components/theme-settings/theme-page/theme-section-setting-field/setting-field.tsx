@@ -6,9 +6,9 @@ import { Button } from '@oe/ui/shadcn/button';
 import { Input } from '@oe/ui/shadcn/input';
 import { Label } from '@oe/ui/shadcn/label';
 import { Switch } from '@oe/ui/shadcn/switch';
+import { cn } from '@oe/ui/utils/cn';
 import { Languages } from 'lucide-react';
-// biome-ignore lint/style/useImportType: <explanation>
-import React from 'react';
+import type React from 'react';
 import type { ThemePageSettingFieldProps } from '../theme-section-setting-field';
 
 export const ThemePageSettingField: React.FC<ThemePageSettingFieldProps> = ({
@@ -20,8 +20,18 @@ export const ThemePageSettingField: React.FC<ThemePageSettingFieldProps> = ({
 }) => {
   return (
     <div className="space-y-2">
-      <div className="flex items-center justify-between">
+      <div className={cn('flex', type === 'text' ? 'flex-row items-center justify-between' : 'flex-col')}>
         <Label className="capitalize">{label}</Label>
+        {type === 'link' && (
+          <Input
+            type="text"
+            value={value as string}
+            onChange={e => onChange(e.target.value)}
+            placeholder="/"
+            className="block"
+          />
+        )}
+
         {type === 'text' && (
           <Button variant="outline" size="xs">
             <Link

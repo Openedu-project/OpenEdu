@@ -1,21 +1,23 @@
-"use client";
+'use client';
 
-// import { initialThemeGlobal, updateGlobalTheme } from '@oe/themes';
-import type { ThemeDefinition } from "@oe/themes/types/index";
-import { type ReactNode, createContext, useContext } from "react";
+import { initialThemeGlobal, updateGlobalTheme } from '@oe/themes';
+import type { ThemeDefinition } from '@oe/themes/types/index';
+import { type ReactNode, createContext, useContext, useEffect } from 'react';
 
 const ThemeContext = createContext<ThemeDefinition | null>(null);
 
 export function ThemeProvider({
-  // theme,
+  theme,
   children,
 }: {
-  // theme: ThemeDefinition;
+  theme?: ThemeDefinition;
   children: ReactNode;
 }) {
-  // useEffect(() => {
-  //   updateGlobalTheme(theme?.globals ?? initialThemeGlobal);
-  // }, [theme]);
+  useEffect(() => {
+    if (theme) {
+      updateGlobalTheme(theme?.globals ?? initialThemeGlobal);
+    }
+  }, [theme]);
 
   return <ThemeContext.Provider value={{}}>{children}</ThemeContext.Provider>;
 }
@@ -23,7 +25,7 @@ export function ThemeProvider({
 export const useTheme = () => {
   const theme = useContext(ThemeContext);
   if (!theme) {
-    throw new Error("useTheme must be used within ThemeProvider");
+    throw new Error('useTheme must be used within ThemeProvider');
   }
   return theme;
 };

@@ -1,5 +1,5 @@
 import { cookieOptions, getCookies } from '@oe/core/utils/cookie';
-import { deepMerge, deleteNestedValue, getNestedValue, setNestedValue } from '@oe/core/utils/object';
+import { deepMerge, deleteNestedValue, setNestedValue } from '@oe/core/utils/object';
 import { DEFAULT_LOCALE } from '@oe/i18n/constants';
 import { DEFAULT_LOCALES } from '@oe/i18n/constants';
 import type { LanguageCode } from '@oe/i18n/languages';
@@ -74,17 +74,19 @@ export const createOrUpdateTranslations = async ({
   messages,
   id,
   locale,
+  data_type,
 }: {
   messages: I18nMessage;
   id?: string;
   locale?: LanguageCode;
+  data_type?: 'jsonb' | 'json_array';
 }) => {
   const response = await createOrUpdateSystemConfig(undefined, {
     id,
     payload: {
       key: systemConfigKeys.i18nTranslations,
       value: messages,
-      data_type: 'json_array',
+      data_type: data_type ?? 'json_array',
       is_storage_in_file: true,
       locale,
     },
@@ -207,26 +209,26 @@ export const getAllTranslations = async (locale: LanguageCode) => {
   }
 
   const mergedTranslations = deepMerge(fallbackTranslations ?? {}, translations ?? {}) as I18nMessage;
-
   return { locale: newlocale, messages: mergedTranslations };
 };
 
-export const getTranslationByKeys = async (keys: string[], locale: LanguageCode) => {
-  const { messages } = await getAllTranslations(locale);
+// export const getTranslationByKeys = async (keys: string[], locale: LanguageCode) => {
+//   const { messages } = await getAllTranslations(locale);
 
-  return keys.map(key => getNestedValue(messages, key));
-};
+//   return keys.map(key => getNestedValue(messages, key));
+// };
 
-export const CRUDTranslationByKey = async (key: string, value: string, isDelete = false) => {
+export const CRUDTranslationByKey = async (key: string | string[], value: string, isDelete = false) => {
   const { messages } = await getAllTranslations(DEFAULT_LOCALE);
   const newMessages = isDelete ? deleteNestedValue(messages, key, true) : setNestedValue(messages, key, value);
   const res = await getI18nTranslationsClient(undefined, { locales: [DEFAULT_LOCALE] });
-  if (res?.[0]?.id) {
-    await createOrUpdateTranslations({
-      messages: newMessages as I18nMessage,
-      locale: DEFAULT_LOCALE,
-      id: res?.[0]?.id,
-    });
-  }
+  // if (res?.[0]?.id) {
+  await createOrUpdateTranslations({
+    messages: newMessages as I18nMessage,
+    locale: DEFAULT_LOCALE,
+    id: res?.[0]?.id,
+    data_type: 'jsonb',
+  });
+  // }
   return newMessages;
 };

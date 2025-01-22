@@ -5,7 +5,7 @@ export interface ThemePageSettingFieldProps {
   label: string;
   value: ThemeFieldValue;
   onChange: (value: ThemeFieldValue) => void;
-  type?: 'text' | 'number' | 'boolean' | 'file' | 'object' | 'array' | 'undefined';
+  type?: 'text' | 'number' | 'boolean' | 'file' | 'object' | 'array' | 'undefined' | 'link';
   path: string[];
 }
 
@@ -20,6 +20,8 @@ export interface ThemePageSettingArrayFieldProps {
   label: string;
   value: Array<ThemeFieldValue | ThemeFieldConfig>;
   onChange: (value: Array<ThemeFieldValue | ThemeFieldConfig>) => void;
+  onAdd: (value: Array<ThemeFieldValue | ThemeFieldConfig>) => void;
+  onRemove: (value: Array<ThemeFieldValue | ThemeFieldConfig>) => void;
   path: string[];
   renderItem?: (
     value: ThemeFieldValue | ThemeFieldConfig,

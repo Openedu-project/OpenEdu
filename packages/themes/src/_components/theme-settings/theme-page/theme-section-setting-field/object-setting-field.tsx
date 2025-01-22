@@ -60,9 +60,11 @@ export const ThemePageSettingObjectField: React.FC<ThemePageSettingObjectFieldPr
                 <ThemePageSettingArrayField
                   key={key}
                   label={key}
+                  path={[...path, key]}
                   value={fieldValue as Array<ThemeFieldValue | ThemeFieldConfig>}
                   onChange={newValue => handleFieldChange(key, newValue as ThemeFieldConfig | ThemeFieldConfig[])}
-                  path={[...path, key]}
+                  onAdd={newValue => handleFieldChange(key, newValue as ThemeFieldConfig | ThemeFieldConfig[])}
+                  onRemove={newValue => handleFieldChange(key, newValue as ThemeFieldConfig | ThemeFieldConfig[])}
                 />
               );
             }
@@ -74,7 +76,11 @@ export const ThemePageSettingObjectField: React.FC<ThemePageSettingObjectFieldPr
                 value={fieldValue as ThemeFieldValue}
                 onChange={newValue => handleFieldChange(key, newValue)}
                 type={
-                  fieldType === 'text' || fieldType === 'number' || fieldType === 'boolean' || fieldType === 'file'
+                  fieldType === 'text' ||
+                  fieldType === 'number' ||
+                  fieldType === 'boolean' ||
+                  fieldType === 'file' ||
+                  fieldType === 'link'
                     ? fieldType
                     : 'text'
                 }

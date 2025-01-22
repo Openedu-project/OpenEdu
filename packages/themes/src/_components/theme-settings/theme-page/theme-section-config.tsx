@@ -55,16 +55,24 @@ export const ConfigSection = memo(function ConfigSection({
           basePath={[...currentPath, sectionKey]}
           config={config}
           onPreview={configContent =>
-            onPreview({ [sectionKey]: configContent } as unknown as PageSectionConfig<ThemePageKey>, sectionKey)
+            onPreview(
+              {
+                [sectionKey]: configContent,
+              } as unknown as PageSectionConfig<ThemePageKey>,
+              sectionKey
+            )
           }
           onReset={() => onReset(sectionKey)}
           onEnable={enable => {
             onPreview(
-              { [sectionKey]: { ...config, enable } } as unknown as PageSectionConfig<ThemePageKey>,
+              {
+                [sectionKey]: { ...config, enable },
+              } as unknown as PageSectionConfig<ThemePageKey>,
               sectionKey
             );
           }}
           isLoading={isLoading}
+          sectionKey={sectionKey}
         />
       </CollapsibleContent>
     </Collapsible>
