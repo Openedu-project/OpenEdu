@@ -38,5 +38,15 @@ export const courseLearningMessages = {
         success: 'Navigating to next lesson...',
       },
     },
+    courseNotiModal: {
+      congratulation: 'CONGRATULATION!!!',
+      completedCourse: "You've completed this course. Our certificate will be given to you soon!",
+      greatFinish: 'GREAT FINISH!',
+      bringUpcomingLessons: 'We are working hard to bring you upcoming lessons. Stay tuned!',
+      prevNotCompleted: 'PREVIOUS LESSONS REMAIN INCOMPLETE',
+      notCompletedYet: "Please complete all previous lessons before moving to the next one. You're almost there!",
+      returnToClass: 'Return to Class',
+      exploreNewCourse: 'Explore New Course',
+    },
   },
 };

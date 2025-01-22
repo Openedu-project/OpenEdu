@@ -5,7 +5,7 @@ import type { ICurrentQuestion } from '@oe/api/types/quiz';
 import type React from 'react';
 
 export interface ContentRendererProps {
-  courseId: string;
+  courseData: ICourseOutline;
   contents: ILessonContent[];
   data?: ILessonContent;
   isOnlyContent: boolean;

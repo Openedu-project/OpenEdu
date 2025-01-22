@@ -1,5 +1,6 @@
 'use client';
 
+import type { ICourseOutline } from '@oe/api/types/course/course';
 import type { IQuizItemResponse } from '@oe/api/types/course/quiz';
 import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
 import { convertTimeStringToSeconds } from '@oe/core/utils/datetime';
@@ -13,7 +14,7 @@ import VideoQuizModal from './video-quiz-modal';
 
 interface IContentVideoProps extends IframeHTMLAttributes<HTMLIFrameElement> {
   disableSeeking?: boolean;
-  courseId: string;
+  courseData: ICourseOutline;
   quizzes: IQuizItemResponse[];
   isPreview?: boolean;
   onlyVideoContent?: boolean;
@@ -27,7 +28,7 @@ const ContentVideo = ({
   onComplete,
   quizzes,
   isPreview = false,
-  courseId,
+  courseData,
   onlyVideoContent,
   ...props
 }: IContentVideoProps) => {
@@ -133,7 +134,7 @@ const ContentVideo = ({
           duration={videoTimestamp.duration}
           seconds={videoTimestamp.seconds}
           quizzes={quizzes}
-          course_id={courseId}
+          course_data={courseData}
           shownQuizzes={shownQuizzes}
           triggerFunction={(quizResult: IQuizSubmissionResponse) => {
             if (quizResult) {

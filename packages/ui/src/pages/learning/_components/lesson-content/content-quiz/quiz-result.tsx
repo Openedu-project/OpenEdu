@@ -12,6 +12,7 @@ import { Button } from '#shadcn/button';
 import { createCourseUrl } from '../../../../_utils/course-url';
 import { useLessonLearningStore } from '../../../_store/learning-store';
 import { getLessonGlobalIndex, getTotalLessons, getUidByLessonIndex } from '../../../_utils/utils';
+import CompleteCourseNotiModal from '../../course-noti-modal';
 import QuizAnsResult from './quiz-ans-result';
 import QuizResultGrid from './quiz-detail-score';
 import QuizLayout from './quiz-layout';
@@ -19,17 +20,26 @@ import QuizLayout from './quiz-layout';
 interface IQuizResultProps {
   result: IQuizSubmissionResponse;
   showCorrectAns?: boolean;
+  courseIsCompleted?: boolean;
   triggerFunction?: (quizResult: IQuizSubmissionResponse) => void;
   onTryAgain?: () => void;
 }
 
-const QuizResult = ({ result, showCorrectAns = false, triggerFunction, onTryAgain }: IQuizResultProps) => {
+const QuizResult = ({
+  result,
+  showCorrectAns = false,
+  courseIsCompleted,
+  triggerFunction,
+  onTryAgain,
+}: IQuizResultProps) => {
   const tQuizResult = useTranslations('learningPage.quiz.quizResult');
 
   const router = useRouter();
   const { slug, lesson } = useParams();
 
   const [isShow, setIsShow] = useState<boolean>(false);
+  const [openNotiModal, setOpenNotiModal] = useState<boolean>(false);
+
   const { answers, passed } = result;
 
   const { sectionsProgressData, getLessonStatus } = useLessonLearningStore();
@@ -50,10 +60,9 @@ const QuizResult = ({ result, showCorrectAns = false, triggerFunction, onTryAgai
           lesson: lessonInfo?.lessonUid as string,
         })
       );
+    } else {
+      setOpenNotiModal(true);
     }
-    //   else {
-    //     setOpenModal(COMPLETE_COURSE_MODAL, true);
-    // }
   };
 
   const handleFinishQuiz = () => {
@@ -108,7 +117,16 @@ const QuizResult = ({ result, showCorrectAns = false, triggerFunction, onTryAgai
         </QuizLayout>
       )}
 
-      {/* <CompleteCourseNotiModal /> */}
+      {openNotiModal && (
+        <CompleteCourseNotiModal
+          open={openNotiModal}
+          currentLessonIndex={currentLessonIndex}
+          totalItems={totalItems}
+          checkNextLesson={checkNextLesson ?? false}
+          courseIsCompleted={courseIsCompleted}
+          onReturnToClass={() => setOpenNotiModal(false)}
+        />
+      )}
     </>
   );
 };

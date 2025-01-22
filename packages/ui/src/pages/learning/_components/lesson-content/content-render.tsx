@@ -31,7 +31,7 @@ export const CONTENT_RENDERERS: Record<TLessonContent, ContentRenderer> = {
           src={file?.url}
           title={file?.name}
           quizzes={(quizzes && quizzes.length > 0 ? quizzes : undefined) as unknown as IQuizItemResponse[]}
-          courseId={props?.courseId}
+          courseData={props?.courseData}
           onComplete={(duration, pause_at, quiz_id) =>
             props?.onCompleteContent?.({
               uid: props?.data?.uid,
@@ -44,7 +44,8 @@ export const CONTENT_RENDERERS: Record<TLessonContent, ContentRenderer> = {
         />
       );
     },
-    getClassName: isOnlyContent => cn(DEFAULT_CLASSNAME(isOnlyContent), CONTENT_STYLES.video),
+    getClassName: isOnlyContent =>
+      cn(DEFAULT_CLASSNAME(isOnlyContent), CONTENT_STYLES.video, !isOnlyContent && 'md:[&>div>iframe]:w-full'),
   },
 
   pdf: {
@@ -83,7 +84,7 @@ export const CONTENT_RENDERERS: Record<TLessonContent, ContentRenderer> = {
       return (
         <ContentQuiz
           quiz={quiz}
-          course_id={props.courseId}
+          course_data={props?.courseData}
           settings={quiz?.settings}
           onComplete={() => props?.onCompleteContent?.({ uid: props?.data?.uid })}
         />

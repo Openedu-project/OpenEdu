@@ -1,3 +1,4 @@
+import type { ICourseOutline } from '@oe/api/types/course/course';
 import type { IQuizItemResponse } from '@oe/api/types/course/quiz';
 import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
 import { Modal } from '#components/modal';
@@ -7,7 +8,7 @@ interface IVideoQuizModalProps {
   duration: number;
   seconds: number;
   quizzes: IQuizItemResponse[];
-  course_id: string;
+  course_data: ICourseOutline;
   shownQuizzes: string[];
   triggerFunction: (quizResult: IQuizSubmissionResponse) => void;
 }
@@ -15,7 +16,7 @@ interface IVideoQuizModalProps {
 const getQuizById = (quizzes: IQuizItemResponse[], quizId: string): IQuizItemResponse | undefined =>
   quizzes.find(quiz => quiz.id === quizId);
 
-const VideoQuizModal = ({ quizzes, shownQuizzes, course_id, triggerFunction }: IVideoQuizModalProps) => {
+const VideoQuizModal = ({ quizzes, shownQuizzes, course_data, triggerFunction }: IVideoQuizModalProps) => {
   return (
     <Modal
       open
@@ -32,7 +33,7 @@ const VideoQuizModal = ({ quizzes, shownQuizzes, course_id, triggerFunction }: I
 
             return currentQuiz ? (
               <ContentQuiz
-                course_id={course_id}
+                course_data={course_data}
                 settings={currentQuiz.settings}
                 quiz={currentQuiz}
                 triggerFunction={triggerFunction}

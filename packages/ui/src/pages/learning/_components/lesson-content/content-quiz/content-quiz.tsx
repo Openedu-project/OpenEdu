@@ -6,6 +6,7 @@ import {
   usePostQuizSubmission,
   useSubmitAnswer,
 } from '@oe/api/hooks/useQuiz';
+import type { ICourseOutline } from '@oe/api/types/course/course';
 import type { IQuizItemResponse, IQuizSettings } from '@oe/api/types/course/quiz';
 import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
 import type { HTTPError } from '@oe/api/utils/http-error';
@@ -18,12 +19,12 @@ import QuizContainer from './quiz-container';
 interface IContentQuizProps {
   quiz?: IQuizItemResponse;
   settings?: IQuizSettings;
-  course_id: string;
+  course_data: ICourseOutline;
   onComplete?: () => void;
   triggerFunction?: (quizResult: IQuizSubmissionResponse) => void;
 }
 
-export default function ContentQuiz({ quiz, course_id, settings, onComplete, triggerFunction }: IContentQuizProps) {
+export default function ContentQuiz({ quiz, course_data, settings, onComplete, triggerFunction }: IContentQuizProps) {
   const [quizSubmission, setQuizSubmission] = useState<IQuizzSubmissionState>({
     id: '',
     num_questions: 0,
@@ -74,7 +75,7 @@ export default function ContentQuiz({ quiz, course_id, settings, onComplete, tri
 
   const onStartQuiz = () => {
     if (quiz) {
-      triggerPostQuizSubmission({ quiz_id: quiz?.id, course_id })
+      triggerPostQuizSubmission({ quiz_id: quiz?.id, course_id: course_data?.id })
         .then(res => {
           const { id, num_questions, start_at } = res;
 
@@ -153,6 +154,7 @@ export default function ContentQuiz({ quiz, course_id, settings, onComplete, tri
       onStartQuiz={onStartQuiz}
       settings={settings}
       triggerFunction={triggerFunction}
+      courseIsCompleted={course_data?.mark_as_completed}
     />
   );
 }

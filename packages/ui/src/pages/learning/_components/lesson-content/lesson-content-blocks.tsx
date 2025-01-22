@@ -101,7 +101,7 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
 
         const elementProps = {
           type: contentType,
-          courseId: course_data?.id,
+          courseData: course_data,
           data: item,
           isOnlyContent: contents.length === 1,
           contents,
