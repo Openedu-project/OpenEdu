@@ -51,19 +51,22 @@ const CustomTabs = ({ defaultValue, items, className }: CustomTabsProps) => {
 
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab} className={cn(className)}>
-      <TabsList className="no-scrollbar h-auto max-w-full justify-normal overflow-auto rounded-none bg-transparent p-0">
+      <TabsList className="no-scrollbar !pb-3 relative h-auto max-w-full justify-normal overflow-auto rounded-none bg-transparent p-0">
         {items.map(item => (
           <TabsTrigger
             key={item.value}
             value={item.value}
             className={cn(
-              'mbutton-semibold14 md:mbutton-semibold16 flex h-auto items-center gap-2 rounded-none bg-transparent px-4 py-2',
-              'data-[state=active]:rounded-lg data-[state=active]:border data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-primary data-[state=active]:shadow-none [&>svg>path]:data-[state=active]:fill-primary',
+              'mbutton-semibold14 md:mbutton-semibold16 !pb-3 h-auto rounded-none bg-transparent p-0',
+              'data-[state=active]:border-primary data-[state=active]:border-b data-[state=active]:bg-transparent data-[state=active]:text-primary data-[state=active]:shadow-none [&>div>svg>path]:data-[state=active]:fill-primary',
+              '[&>div]:data-[state=active]:rounded-lg [&>div]:data-[state=active]:border [&>div]:data-[state=active]:border-primary',
               item.className
             )}
           >
-            {item.icon}
-            {item.label}
+            <div className="flex h-full w-full items-center gap-2 px-4 py-2">
+              {item.icon}
+              {item.label}
+            </div>
           </TabsTrigger>
         ))}
       </TabsList>

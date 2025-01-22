@@ -71,7 +71,7 @@ const QuizResult = ({ result, showCorrectAns = false, triggerFunction, onTryAgai
   return (
     <>
       {isShow ? (
-        <QuizAnsResult answer={answers} onFinishQuiz={onFinishQuiz} />
+        <>{answers?.length > 0 ? <QuizAnsResult answer={answers} onFinishQuiz={onFinishQuiz} /> : null}</>
       ) : (
         <QuizLayout background={passed ? background.src : backgroundFail.src}>
           <div className="flex h-full w-full flex-col items-center justify-center gap-3 p-5">

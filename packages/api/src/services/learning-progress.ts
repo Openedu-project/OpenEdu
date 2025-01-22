@@ -49,17 +49,27 @@ export const updateLearningProgressService = async (
 
 export const latestLessonProgressService = async (
   url: string | undefined,
-  { payload, init }: { payload: ILatestLessonProgressPayload; init?: RequestInit }
+  {
+    payload,
+    shouldFetch = true,
+    init,
+  }: {
+    payload: ILatestLessonProgressPayload;
+    shouldFetch?: boolean;
+    init?: RequestInit;
+  }
 ) => {
-  try {
-    const response = await postAPI<HTTPErrorMetadata, ILatestLessonProgressPayload>(
-      url ?? API_ENDPOINT.LEARNING_PROGRESSES,
-      payload,
-      init
-    );
+  if (shouldFetch) {
+    try {
+      const response = await postAPI<HTTPErrorMetadata, ILatestLessonProgressPayload>(
+        url ?? API_ENDPOINT.LEARNING_PROGRESSES,
+        payload,
+        init
+      );
 
-    return response.data;
-  } catch {
-    return null;
+      return response.data;
+    } catch {
+      return null;
+    }
   }
 };

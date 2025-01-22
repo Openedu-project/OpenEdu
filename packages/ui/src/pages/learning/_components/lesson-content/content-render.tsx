@@ -14,7 +14,8 @@ const CONTENT_STYLES = {
     multi: 'min-h-[calc(100%-24px)] py-4',
   },
   video: 'h-full',
-  embedded: 'aspect-video [&>div>div>div>iframe]:w-full',
+  embedded: '[&>div>div>div>iframe]:w-full',
+  quiz: 'h-full px-2 md:px-0',
 } as const;
 
 const DEFAULT_CLASSNAME = (isOnlyContent: boolean) => cn(CONTENT_STYLES.common[isOnlyContent ? 'default' : 'multi']);
@@ -88,7 +89,7 @@ export const CONTENT_RENDERERS: Record<TLessonContent, ContentRenderer> = {
         />
       );
     },
-    getClassName: DEFAULT_CLASSNAME,
+    getClassName: () => cn(DEFAULT_CLASSNAME, CONTENT_STYLES.quiz),
   },
 
   text: {

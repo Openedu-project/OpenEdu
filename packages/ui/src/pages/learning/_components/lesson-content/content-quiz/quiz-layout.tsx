@@ -8,7 +8,7 @@ interface IQuizLayoutProps extends HTMLAttributes<HTMLDivElement> {
 
 const QuizLayout = ({ background, children, className, ...props }: IQuizLayoutProps) => {
   return (
-    <div className={cn('relative h-full max-w-full', className)} {...props}>
+    <div className={cn('relative z-0 h-full max-w-full', className)} {...props}>
       {children}
       <Image
         src={background}

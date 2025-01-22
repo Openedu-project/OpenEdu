@@ -131,6 +131,10 @@ export default function ContentQuiz({ quiz, course_id, settings, onComplete, tri
   };
 
   useEffect(() => {
+    setQuizResult(undefined);
+  }, []);
+
+  useEffect(() => {
     const isFirstQuestion = true;
 
     if (quizSubmission.id.length > 0) {

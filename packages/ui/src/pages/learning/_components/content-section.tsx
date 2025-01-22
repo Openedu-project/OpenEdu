@@ -14,15 +14,20 @@ interface IContentSectionProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const ContentSection = async ({ courseData, lesson, className, section, ...props }: IContentSectionProps) => {
-  const lessonData = courseData
+  const lessonData = courseData?.is_enrolled
     ? await getLessonLearnService(undefined, {
         id: lesson,
         cid: courseData?.id,
       })
     : undefined;
 
+  const isQuizContent = lessonData?.contents?.length === 1 && lessonData.contents[0]?.type === 'quiz';
+
   return (
-    <div className={cn('flex flex-col gap-3', className)} {...props}>
+    <div
+      className={cn('flex flex-col gap-4', className, isQuizContent && 'h-[calc(100vh-var(--header-height)-16px)]')}
+      {...props}
+    >
       <LessonContentBlocks
         course_data={courseData as ICourseOutline}
         contents={lessonData?.contents?.sort(sortByOrder) ?? []}

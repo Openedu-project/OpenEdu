@@ -64,7 +64,7 @@ const QuizAssessment = ({ numQuestion, data, settings, onTimeUp, quizStartAt, on
         </div>
       </div>
 
-      <ScrollArea className="flex h-full max-h-[50dvh] w-full flex-1 flex-col items-center justify-center p-6 md:w-1/2">
+      <ScrollArea className="[&>[data-radix-scroll-area-viewport]>div]:!flex mt-auto mb-auto flex h-full max-h-full w-full flex-1 flex-col items-center justify-center p-6 md:w-1/2 [&>[data-radix-scroll-area-viewport]>div]:h-full">
         {question?.items?.length > 0 && (
           <FormWrapper
             id={`quiz_ans_${question.id}`}

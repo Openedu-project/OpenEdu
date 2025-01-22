@@ -3,7 +3,6 @@
 import { useTranslations } from 'next-intl';
 import type { HTMLAttributes } from 'react';
 import { Link, useRouter } from '#common/navigation';
-import { LastUpdated } from '../../_components/last-updated';
 import { createCourseUrl } from '../../_utils/course-url';
 import { useLessonLearningStore } from '../_store/learning-store';
 import { getLessonGlobalIndex, getTotalLessons, getUidByLessonIndex } from '../_utils/utils';
@@ -77,7 +76,7 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, lessonUid, ...props
       >
         {tLearningPage('course', { courseName })}
       </Link>
-      <LastUpdated update_at={updateAt} />
+      {/* <LastUpdated update_at={updateAt} /> */}
     </div>
   );
 };

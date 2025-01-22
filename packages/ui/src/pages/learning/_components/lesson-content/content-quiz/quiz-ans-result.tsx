@@ -11,7 +11,7 @@ interface QuizCorrectAnswerProps {
 const QuizAnsResult = ({ answer, onFinishQuiz }: QuizCorrectAnswerProps) => {
   return (
     <QuizLayout background={background.src} className="p-6">
-      {answer?.length > 0 && <DetailAnswerResult onFinish={onFinishQuiz} answers={answer} />}
+      <DetailAnswerResult onFinish={onFinishQuiz} answers={answer} />
     </QuizLayout>
   );
 };

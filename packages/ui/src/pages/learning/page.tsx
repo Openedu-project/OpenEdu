@@ -18,11 +18,12 @@ export default async function LearningPage({
   const me = await getMeServiceWithoutError();
   const course = await getCourseOutlineService(undefined, { id: slug });
 
-  const dataLearningProgress = course
-    ? await getLearningProgressesService(undefined, {
-        id: course?.slug,
-      })
-    : undefined;
+  const dataLearningProgress =
+    me && course
+      ? await getLearningProgressesService(undefined, {
+          id: course?.slug,
+        })
+      : undefined;
 
   const latestLessonPayload = {
     course_cuid: course?.cuid ?? '',
@@ -35,6 +36,7 @@ export default async function LearningPage({
 
   await latestLessonProgressService(undefined, {
     payload: latestLessonPayload,
+    shouldFetch: !!(me && course?.is_enrolled),
   });
 
   const learningData =
@@ -43,8 +45,13 @@ export default async function LearningPage({
   return (
     course && (
       <>
-        <AuthCheck me={me} course={course} learning_data={learningData as ISectionLearningProgress[]} />
-        <CourseLearning course={course} section_uid={section} lesson_uid={lesson} />
+        <AuthCheck
+          me={me}
+          course={course}
+          learning_data={learningData as ISectionLearningProgress[]}
+          lesson_uid={lesson as string}
+        />
+        {course?.is_enrolled && <CourseLearning course={course} section_uid={section} lesson_uid={lesson} />}
       </>
     )
   );

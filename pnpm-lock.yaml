@@ -3459,6 +3459,7 @@ packages:
 
   react-phone-number-input@3.4.11:
     resolution: {integrity: sha512-ypN9hXwUModpngho9brCHLLD40xzb1DKAZFacbF0J+fFaMVLEJo+zul9sZfSRlKehSjpttT4b1pLMcOWXI228g==}
+    peerDependencies:
       react: '>=16.8'
       react-dom: '>=16.8'
 

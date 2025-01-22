@@ -27,7 +27,6 @@ const CourseOutline = ({ courseData, activeSection, activeLesson, ...props }: IC
       return;
     }
 
-    // Giảm timeout xuống thấp nhất có thể
     const timeoutId = setTimeout(() => {
       const scrollableParent = activeLessonRef.current?.closest('[data-radix-scroll-area-viewport]') as HTMLElement;
       if (!(scrollableParent && activeLessonRef.current)) {
@@ -37,7 +36,7 @@ const CourseOutline = ({ courseData, activeSection, activeLesson, ...props }: IC
       const elementRect = activeLessonRef.current.getBoundingClientRect();
       const containerRect = scrollableParent.getBoundingClientRect();
 
-      // Chỉ scroll nếu element nằm ngoài viewport của container
+      // Only scroll if the element is outside the container's viewport
       if (elementRect.top < containerRect.top || elementRect.bottom > containerRect.bottom) {
         const targetPosition = elementRect.top - containerRect.top - (containerRect.height - elementRect.height) / 2;
 
@@ -99,7 +98,7 @@ const CourseOutline = ({ courseData, activeSection, activeLesson, ...props }: IC
 
   return (
     <div {...props}>
-      <Accordion type="single" collapsible defaultValue={`section-${activeSection}`} className="w-full">
+      <Accordion type="multiple" defaultValue={[`section-${activeSection}`]} className="w-full">
         {sectionsProgressData.sort(sortByOrder).map((section, index) => {
           const sectionProgress =
             section.total_lesson > 0 ? (section?.completed_lesson / section.total_lesson) * 100 : 0;

@@ -58,7 +58,7 @@ const QuizContainer = ({
 
     [QUIZ_STATES.START]: () => (
       <QuizLayout background={background.src} className="flex flex-col">
-        <div className="z-0 m-auto flex h-2/3 flex-col items-center justify-between">
+        <div className="z-10 m-auto flex h-2/3 flex-col items-center justify-between">
           <h3 className="giant-iheading-bold18 sm:giant-iheading-bold24 lg:giant-iheading-bold44 text-primary uppercase">
             {tContentQuiz('quizTime')}
           </h3>
@@ -83,7 +83,7 @@ const QuizContainer = ({
   const Component = QUIZ_COMPONENTS[currentState];
 
   return (
-    <div className="mx-auto h-full max-h-full w-auto max-w-full rounded-2xl border border-primary">
+    <div className="mx-auto h-full max-h-full min-h-full w-auto max-w-full rounded-2xl border border-primary">
       <Component />
     </div>
   );
