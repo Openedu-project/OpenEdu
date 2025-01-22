@@ -3,7 +3,6 @@
 import { getUserBlog } from '@oe/api/actions/blog';
 import type { IBlog } from '@oe/api/types/blog';
 import type { IUserProfile } from '@oe/api/types/user-profile';
-import WhaleNoData from '@oe/assets/images/whale-no-data.png';
 import { PAGE_SIZE } from '@oe/core/utils/constants';
 import { abbreviateNumber } from '@oe/core/utils/helpers';
 import { BLOG_ROUTES } from '@oe/core/utils/routes';
@@ -15,8 +14,8 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { ProfileCard } from '#components/profile-card';
 import { ScrollArea, ScrollBar } from '#shadcn/scroll-area';
 import { Skeleton } from '#shadcn/skeleton';
-import { Image } from '../image';
 import { BlogCard } from './blog-card';
+import { NoBlogData } from './no-blog-data';
 
 export const TopAuthor = ({ topAuthor }: { topAuthor: IUserProfile[] }) => {
   const router = useRouter();
@@ -50,7 +49,7 @@ export const TopAuthor = ({ topAuthor }: { topAuthor: IUserProfile[] }) => {
   );
 };
 
-export default function PersonalBlogSection({
+export function PersonalBlogSection({
   id,
   name,
   className,
@@ -111,21 +110,7 @@ export default function PersonalBlogSection({
               {blogData.length < 5 && topAuthor.length > 0 && <TopAuthor topAuthor={topAuthor} />}
             </InfiniteScroll>
           ) : (
-            <div className="h-full w-full">
-              <Image
-                src={WhaleNoData.src}
-                alt="no-data"
-                priority
-                aspectRatio="1:1"
-                quality={100}
-                fill
-                containerHeight={300}
-                sizes="(max-width: 768px) 100vw, 70vw"
-              />
-              <p className="mcaption-regular16 lg:mcaption-regular20 w-full p-6 text-center">
-                {tPersonalBlogs('noPersonalBlog')}
-              </p>
-            </div>
+            <NoBlogData className="h-full w-full" message={tPersonalBlogs('noPersonalBlog')} />
           )}
         </div>
       }

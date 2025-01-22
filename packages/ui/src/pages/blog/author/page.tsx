@@ -2,12 +2,18 @@ import { getUserBlog } from '@oe/api/actions/blog';
 import { getUserProfile } from '@oe/api/actions/user';
 import { getMeServiceWithoutError } from '@oe/api/services/auth';
 import WhaleNoData from '@oe/assets/images/whale-no-data.png';
-import { AuthorProfileCard, PersonalBlogSection, TopBlogs } from '@oe/ui/components/blog';
 import { Image } from '@oe/ui/components/image';
 import { getTranslations } from 'next-intl/server';
 import { cn } from '#utils/cn';
+import { AuthorProfileCard } from '../_components/author-profile-card';
+import { PersonalBlogSection } from '../_components/personal-blog-section';
+import { TopBlogs } from '../_components/top-blog-section';
 
-export default async function AuthorPage({ params }: { params: { username: string } }) {
+export default async function AuthorPage({
+  params,
+}: {
+  params: { username: string };
+}) {
   const { username } = await params;
   const [t, me, { profileData, validateTag }] = await Promise.all([
     getTranslations(),

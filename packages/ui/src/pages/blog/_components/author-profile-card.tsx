@@ -5,12 +5,12 @@ import { BLOG_ROUTES, PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
 import { useTranslations } from 'next-intl';
 import { Link } from '#common/navigation';
+import { FollowButton } from '#components/follow-button';
+import { Image } from '#components/image';
 import { UserAvatar } from '#components/user-avatar';
 import { buttonVariants } from '#shadcn/button';
 import { ScrollArea, ScrollBar } from '#shadcn/scroll-area';
 import { cn } from '#utils/cn';
-import FollowButton from '../follow-button/follow-button';
-import { Image } from '../image';
 
 interface IAuthorProfile {
   profile: IUserProfile;
@@ -18,7 +18,7 @@ interface IAuthorProfile {
   isMe?: boolean;
   validateTags?: string[];
 }
-export default function AuthorProfileCard({ profile, className, isMe = false, validateTags }: IAuthorProfile) {
+export function AuthorProfileCard({ profile, className, isMe = false, validateTags }: IAuthorProfile) {
   const t = useTranslations('authorProfileCard');
   const tGeneral = useTranslations('general');
 

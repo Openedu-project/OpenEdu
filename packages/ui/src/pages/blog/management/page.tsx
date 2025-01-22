@@ -4,8 +4,8 @@ import { AUTH_ROUTES, BLOG_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
 import { getTranslations } from 'next-intl/server';
 import { redirect } from 'next/navigation';
-import { MyBlogManagement } from '#components/blog';
 import { Breadcrumb, type IBreadcrumbItem } from '#components/breadcrumb';
+import MyBlogManagement from '../../../components/blog/my-blog-management';
 
 export default async function PersonalBlogMgtPage() {
   const [tBlogs, me, cookies] = await Promise.all([

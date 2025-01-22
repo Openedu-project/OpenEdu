@@ -19,7 +19,7 @@ type Props = {
 
 export const BlogTableItemActions = ({ blogData, handlePublish, previewUrl, handleDelete }: Props) => {
   const t = useTranslations('general');
-  const tPublish = useTranslations('blogManagement');
+  const tBlogMgt = useTranslations('blogManagement');
   const [open, setOpen] = useState(false);
 
   return (
@@ -40,13 +40,15 @@ export const BlogTableItemActions = ({ blogData, handlePublish, previewUrl, hand
             action="publish"
             onlyText
             onClose={() => setOpen(false)}
-            desc={tPublish('publishBlogDes')}
+            desc={tBlogMgt('publishBlogDes')}
             triggerProps={{ leftSection: <BookOpenCheck className="h-4 w-4" />, variant: 'ghost' }}
             onConfirm={(param: { note?: string }) => handlePublish(param, blogData, 'publish')}
           />
 
           <DeleteButton
             leftSection={<Trash2 className="h-4 w-4" />}
+            title={tBlogMgt('delBlog')}
+            description={tBlogMgt('delBlogDes')}
             size="default"
             onClose={() => setOpen(false)}
             onDelete={async onClose => {

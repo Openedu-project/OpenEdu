@@ -51,7 +51,7 @@ export default function ProfileCard({
 
           <div className={cn('w-full', align && 'text-center', infoClassName)}>
             <p className={cn('mcaption-semibold12 line-clamp-2 text-foreground')}>
-              {profileData?.display_name ?? profileData?.username}
+              {profileData?.display_name?.length > 0 ? profileData?.display_name : profileData?.username}
             </p>
             {desc && <p className={cn('mcaption-regular9 mt-1 line-clamp-3 text-foreground')}>{desc}</p>}
           </div>

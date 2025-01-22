@@ -17,7 +17,7 @@ export interface IBlogCarousel {
   blogCardProps?: IBlogCardProps;
 }
 
-export default function BlogCarousel({ title, viewAllProps, className, blogs, blogCardProps }: IBlogCarousel) {
+export function BlogCarousel({ title, viewAllProps, className, blogs, blogCardProps }: IBlogCarousel) {
   const tGeneral = useTranslations('general');
   return (
     <div className={className}>

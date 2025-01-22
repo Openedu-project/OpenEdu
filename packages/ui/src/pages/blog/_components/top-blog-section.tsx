@@ -2,9 +2,9 @@ import type { IBlog } from '@oe/api/types/blog';
 
 import WhaleNoData from '@oe/assets/images/whale-no-data.png';
 import { useTranslations } from 'next-intl';
+import { Image } from '#components/image';
 import { ScrollArea, ScrollBar } from '#shadcn/scroll-area';
 import { cn } from '#utils/cn';
-import { Image } from '../image';
 import { BlogCard } from './blog-card';
 
 interface IBlogsProps {
@@ -13,7 +13,7 @@ interface IBlogsProps {
   title: string;
   contentRight?: boolean;
 }
-export default function TopBlogs({ blogs = [], className, title, contentRight = false }: IBlogsProps) {
+export function TopBlogs({ blogs = [], className, title, contentRight = false }: IBlogsProps) {
   const t = useTranslations('general');
 
   return (

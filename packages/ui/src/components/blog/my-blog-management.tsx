@@ -11,7 +11,6 @@ import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSWRConfig } from 'swr';
 import { Link, usePathname } from '#common/navigation';
-import { BlogTableItemActions } from '#components/blog';
 import { DeleteButton } from '#components/delete-button';
 import type { FilterOption } from '#components/filter-search';
 import { PublishButton } from '#components/publish-button';
@@ -25,6 +24,7 @@ import { toast } from '#shadcn/sonner';
 import TooltipLink, { Tooltip } from '#shadcn/tooltip';
 import { useSocketStore } from '#store/socket';
 import { cn } from '#utils/cn';
+import { BlogTableItemActions } from './blog-table-item-actions';
 
 export default function MyBlogManagement({
   type,
@@ -65,7 +65,7 @@ export default function MyBlogManagement({
   };
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  const handleSuccess = useCallback(() => {
+  const handleActionSuccess = useCallback(() => {
     globalMutate((key: string) => !!key?.includes(API_ENDPOINT.USERS_ME_BLOGS), undefined, { revalidate: false });
     void tableRef?.current?.mutate();
   }, []);
@@ -76,7 +76,7 @@ export default function MyBlogManagement({
 
       if (res) {
         toast.success(tBlogs('deleteSuccessfully'));
-        handleSuccess();
+        handleActionSuccess();
       }
     } catch (error) {
       toast.error(tError((error as HTTPErrorMetadata).code.toString()));
@@ -87,9 +87,9 @@ export default function MyBlogManagement({
   useEffect(() => {
     if (AIBlogStatusData?.data) {
       resetSocketData('ai_blog_status');
-      handleSuccess();
+      handleActionSuccess();
     }
-  }, [AIBlogStatusData, resetSocketData, handleSuccess]);
+  }, [AIBlogStatusData, resetSocketData, handleActionSuccess]);
 
   const columns: ColumnDef<IBlog>[] = [
     {
@@ -263,7 +263,7 @@ export default function MyBlogManagement({
       <div className="mb-6 flex flex-wrap justify-between gap-2 rounded-b-xl bg-background p-4">
         <h2 className="giant-iheading-semibold32 tracking-tight">{tBlogs('blogManagement')}</h2>
         <div className="flex items-center gap-2">
-          {AIButton && <URLGenerateModal onSuccess={handleSuccess} />}
+          {AIButton && <URLGenerateModal onSuccess={handleActionSuccess} />}
 
           <Link
             href={TARGET_ROUTES.createBlog}
