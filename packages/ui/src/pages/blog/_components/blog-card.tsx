@@ -99,7 +99,7 @@ export function BlogCard({
 
         <Image
           src={blog?.banner?.url}
-          alt={blog?.title}
+          alt={blog?.title ?? 'blog-thumbnail'}
           className="w-full flex-0 rounded"
           fill
           aspectRatio="16:9"
@@ -107,27 +107,25 @@ export function BlogCard({
           sizes="(max-width: 768px) 280px, 380px"
           quality={100}
         />
-        <div className="flex basis-full flex-col justify-between">
-          <div>
-            {!authorOnTop && (
-              <p className="mcaption-regular9 mb-2 text-foreground">
-                {Date.now() - Number(blog?.update_at) < 60 * 60 * 24 * 1000
-                  ? formatDistanceToNow(blog?.update_at)
-                  : formatDateHourMinute(blog?.update_at)}
-              </p>
-            )}
-            <p className="giant-iheading-semibold16 mb-2 line-clamp-2 h-[42px] text-foreground">{blog?.title}</p>
-            {showAuthor && !authorOnTop && (
-              <ProfileCard
-                className="!shadow-none !p-[2px] mb-2 cursor-pointer border-none hover:bg-primary/10"
-                profileData={blog?.author}
-                handleClick={handleClickProfile}
-              />
-            )}
-            {showDescription && (
-              <p className={cn('mcaption-regular12 line-clamp-4 text-foreground')}>{blog?.description}</p>
-            )}
-          </div>
+        <div>
+          {!authorOnTop && (
+            <p className="mcaption-regular9 mb-2 text-foreground">
+              {Date.now() - Number(blog?.update_at) < 60 * 60 * 24 * 1000
+                ? formatDistanceToNow(blog?.update_at)
+                : formatDateHourMinute(blog?.update_at)}
+            </p>
+          )}
+          <p className="giant-iheading-semibold16 mb-2 line-clamp-2 h-[42px] text-foreground">{blog?.title}</p>
+          {showAuthor && !authorOnTop && blog?.author && (
+            <ProfileCard
+              className="!shadow-none !p-[2px] mb-2 cursor-pointer border-none hover:bg-primary/10"
+              profileData={blog?.author}
+              handleClick={handleClickProfile}
+            />
+          )}
+          {showDescription && (
+            <p className={cn('mcaption-regular12 line-clamp-4 w-full text-foreground')}>{blog?.description}</p>
+          )}
         </div>
       </CardContent>
     </Card>
