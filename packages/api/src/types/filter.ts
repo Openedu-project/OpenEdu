@@ -18,4 +18,5 @@ export interface IFilter {
   is_verified?: boolean;
   is_active?: boolean;
   enable_root?: boolean;
+  not_org_id?: string;
 }

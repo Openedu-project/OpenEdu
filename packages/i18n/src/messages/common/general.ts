@@ -76,7 +76,6 @@ export const generalMessages = {
     follow: 'Follow',
     following: 'Following',
     write: 'Write',
-    noData: 'No data available',
     copied: 'Copied',
     type: 'Type',
     tone: 'Tone',
@@ -85,5 +84,6 @@ export const generalMessages = {
       humorous: 'Humorous',
       professional: 'Professional',
     },
+    viewAll: 'View All',
   },
 };

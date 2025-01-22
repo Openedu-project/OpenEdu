@@ -19,5 +19,28 @@ export const blogMessages = {
   },
   blogSectionTitle: {
     articlesOnOrg: 'ARTICLES ON ORGANIZATIONS',
+    numberBlogFound: '{number} blog found',
+    numberBlogsFound: '{number} blogs found',
+  },
+  blogSearch: {
+    resultFor: 'Result for: <strong>{name}</strong>',
+    numberBlogFound: '{number} blog found',
+    numberBlogsFound: '{number} blogs found',
+    noBlogAvailable: 'No Blog Available',
+  },
+  blogHeader: {
+    allCategories: 'All Categories',
+    searchPlaceholder: 'Search ...',
+  },
+  blogOutstanding: {
+    features: 'Features',
+    theNewest: 'The Newest',
+    organization: 'Organization',
+    author: 'Author',
+  },
+  blogBanner: {
+    title: 'Become Our Author To Contribute To Community.',
+    desc: 'Join now to receive personalized recommendations from the full Open Edu catalog.',
+    writeYourBlog: 'Write Your Blog',
   },
 };

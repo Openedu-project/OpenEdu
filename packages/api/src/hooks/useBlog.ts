@@ -1,17 +1,10 @@
 import useSWRMutation from 'swr/mutation';
 
 import useSWR from 'swr';
-import {
-  deleteBlog,
-  getBlogListService,
-  getRewriteData,
-  postBlog,
-  postBlogAI,
-  publishBlog,
-  unpublishBlog,
-  updateBlog,
-} from '#services/blog';
-import type { IAIBlogRequest, IAIBlogResponse, IBlog, IBlogRequest, IRewriteResponse } from '#types/blog';
+import { deleteBlog, getBlogListService, getRewriteData, publishBlog, unpublishBlog } from '#services/blog';
+import { getBlogsPublishService, postBlog, postBlogAI, updateBlog } from '#services/blog';
+import type { IAIBlogRequest, IAIBlogResponse, IRewriteResponse } from '#types/blog';
+import type { IBlog, IBlogRequest, IBlogsResponse } from '#types/blog';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
@@ -108,5 +101,26 @@ export function useGetListBlogs({ params }: { params: IFilter }) {
     errorApproval: error,
     mutateBlogsData: mutate,
     isLoadingBlogs: isLoading,
+  };
+}
+
+export function useGetBlogsPublish(params: IFilter, fallback?: IBlogsResponse) {
+  const endpointKey = createAPIUrl({
+    endpoint: API_ENDPOINT.BLOGS,
+    queryParams: { ...params },
+  });
+  const { data, isLoading, error, mutate } = useSWR(
+    endpointKey,
+    (endpoint: string) => getBlogsPublishService(endpoint, { params }),
+    {
+      fallbackData: fallback,
+    }
+  );
+
+  return {
+    dataListBlog: data,
+    errorBlog: error,
+    mutateListBlog: mutate,
+    isLoadingBlog: isLoading,
   };
 }
