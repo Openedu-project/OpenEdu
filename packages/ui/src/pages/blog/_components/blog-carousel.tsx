@@ -22,12 +22,14 @@ export function BlogCarousel({ title, viewAllProps, className, blogs, blogCardPr
   return (
     <div className={className}>
       <div className="mb-4 flex flex-wrap items-center gap-6">
-        <h2 className="giant-iheading-semibold20 border-primary border-l-[2px] pl-2 text-primary ">{title}</h2>
+        <h2 className="giant-iheading-semibold20 mb-0 border-primary border-l-[2px] pl-2 text-primary">{title}</h2>
 
         {viewAllProps && (
           <Link
             className="mbutton-semibold16 rounded-2 border-[2px] bg-white px-6 py-3 text-foreground/70 hover:opacity-80"
             href={viewAllProps.href}
+            variant="outline"
+            activeClassName=""
           >
             {viewAllProps.label ?? tGeneral('viewAll')}
           </Link>

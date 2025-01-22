@@ -1,8 +1,7 @@
 'use client';
-import { useGetListBlogs } from '@oe/api/hooks/useBlog';
+import { useGetBlogsPublish } from '@oe/api/hooks/useBlog';
 import type { IBlogsResponse } from '@oe/api/types/blog';
-import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PaginationCustom } from '#components/pagination-custom';
 import { BlogCard } from './blog-card';
 import { BlogGridSkeleton } from './blog-skeleton';
@@ -11,31 +10,38 @@ const PER_PAGE = 12;
 
 interface BlogListProps {
   fallbackData?: IBlogsResponse;
+  categoryId?: string;
+  searchText?: string;
 }
 
-export function BlogList({ fallbackData }: BlogListProps) {
-  const searchParams = useSearchParams();
+export function BlogList({ fallbackData, categoryId, searchText = '' }: BlogListProps) {
   const [params, setParams] = useState({
-    ...Object.fromEntries(searchParams),
     page: 1,
     per_page: PER_PAGE,
-    sort: 'create_at desc',
+    sort: 'update_at desc',
+    search_categories: 'title',
+    search_term: searchText,
   });
 
-  const { blogsData: dataBlogPublish, isLoadingBlogs } = useGetListBlogs(
-    {params,
-    fallback: params.page === 1 ? fallbackData : undefined}
+  useEffect(() => {
+    setParams(prev => ({ ...prev, search_term: searchText }));
+  }, [searchText]);
+
+  const { dataListBlog: dataBlogPublish, isLoadingBlog } = useGetBlogsPublish(
+    params,
+    categoryId,
+    params.page === 1 ? fallbackData : undefined
   );
 
   const handlePageChange = (page: number) => {
     setParams(prev => ({ ...prev, page }));
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
+      behavior: 'auto',
     });
   };
 
-  if (isLoadingBlogs) {
+  if (isLoadingBlog) {
     return <BlogGridSkeleton />;
   }
 

@@ -81,7 +81,7 @@ export function BlogCard({
     >
       <CardContent className={cn('!p-3 flex basis-full flex-col gap-3', contentRight && 'grid-cols-2 md:grid')}>
         {authorOnTop && (
-          <div className={cn('mb-2 flex items-center justify-between', contentRight && 'md:col-span-2')}>
+          <div className={cn('mb-2 flex items-center justify-between gap-1', contentRight && 'md:col-span-2')}>
             <ProfileCard
               className="cursor-pointer border-none p-[2px] shadow-none hover:bg-primary/10"
               profileData={blog?.author}
@@ -89,7 +89,7 @@ export function BlogCard({
               handleClick={handleClickProfile}
             />
 
-            <p className="mcaption-regular9 text-foreground">
+            <p className="mcaption-regular9 text-right text-foreground">
               {Date.now() - Number(blog?.update_at) < 60 * 60 * 24 * 1000
                 ? formatDistanceToNow(blog?.update_at)
                 : formatDateHourMinute(blog?.update_at)}
@@ -105,7 +105,6 @@ export function BlogCard({
           aspectRatio="16:9"
           containerHeight="auto"
           sizes="(max-width: 768px) 280px, 380px"
-          quality={100}
         />
         <div>
           {!authorOnTop && (

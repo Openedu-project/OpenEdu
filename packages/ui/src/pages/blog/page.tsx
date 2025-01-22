@@ -54,11 +54,13 @@ export default async function BlogDefaultPage({
     <>
       <BlogHeader categoryData={categories} />
       <div className="flex w-full flex-col gap-10 p-4 md:p-8">
-        <BlogOutstanding
-          defaultBlogs={blogsData?.results.slice(0, 4) ?? []}
-          scrollBlogs={blogsData?.results.slice(4, 14) ?? []}
-          orgBlogs={orgBlogData}
-        />
+        {(blogsData?.results.length ?? 0) > 0 && (
+          <BlogOutstanding
+            defaultBlogs={blogsData?.results.slice(0, 4) ?? []}
+            scrollBlogs={blogsData?.results.slice(4, 14) ?? []}
+            orgBlogs={orgBlogData}
+          />
+        )}
         <BlogBanner />
         {categories?.map(cate => (
           <BlogCateCarousel key={cate.id} id={cate.id} name={cate.name} />

@@ -1,0 +1,45 @@
+import { getBlogsByCategoryService } from '@oe/api/services/blog';
+import { getCategoriesTreeService } from '@oe/api/services/categories';
+import { getTranslations } from 'next-intl/server';
+import { BlogHeader } from '../_components/blog-header';
+import { BlogList } from '../_components/blog-list';
+import { NoBlogData } from '../_components/no-blog-data';
+
+export default async function CategoryBlogPage({ name, id }: { name?: string; id: string }) {
+  const [blogsData, t, categoryData] = await Promise.all([
+    getBlogsByCategoryService(undefined, {
+      params: {
+        id,
+        page: 1,
+        per_page: 12,
+        sort: 'update_at desc',
+        search_categories: 'title',
+        search_term: '',
+      },
+    }),
+    getTranslations('blogSearch'),
+    getCategoriesTreeService(undefined, {
+      queryParams: { active: true, type: 'blog' },
+    }),
+  ]);
+
+  return (
+    <>
+      <BlogHeader categoryData={categoryData} />
+      <div className="container py-6">
+        <div className="mb-4 flex items-center gap-2 border-b py-3 md:mb-8">
+          {name && (
+            <h2 className="giant-iheading-semibold16 md:giant-iheading-semibold24 mb-0 text-primary">
+              {name} ({blogsData?.pagination?.total_items ?? 0})
+            </h2>
+          )}
+        </div>
+        {(blogsData?.results.length ?? 0) > 0 ? (
+          <BlogList fallbackData={blogsData} categoryId={id} />
+        ) : (
+          <NoBlogData message={t('noBlogAvailable')} />
+        )}
+      </div>
+    </>
+  );
+}

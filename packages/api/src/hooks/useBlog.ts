@@ -2,7 +2,7 @@ import useSWRMutation from 'swr/mutation';
 
 import useSWR from 'swr';
 import { deleteBlog, getBlogListService, getRewriteData, publishBlog, unpublishBlog } from '#services/blog';
-import { getBlogsPublishService, postBlog, postBlogAI, updateBlog } from '#services/blog';
+import { getBlogsByCategoryService, getBlogsPublishService, postBlog, postBlogAI, updateBlog } from '#services/blog';
 import type { IAIBlogRequest, IAIBlogResponse, IRewriteResponse } from '#types/blog';
 import type { IBlog, IBlogRequest, IBlogsResponse } from '#types/blog';
 import type { IFilter } from '#types/filter';
@@ -104,14 +104,18 @@ export function useGetListBlogs({ params }: { params: IFilter }) {
   };
 }
 
-export function useGetBlogsPublish(params: IFilter, fallback?: IBlogsResponse) {
+export function useGetBlogsPublish(params: IFilter, categoryId?: string, fallback?: IBlogsResponse) {
   const endpointKey = createAPIUrl({
-    endpoint: API_ENDPOINT.BLOGS,
+    endpoint: categoryId ? API_ENDPOINT.BLOGS_CATEGORIES : API_ENDPOINT.BLOGS,
+    params: { id: categoryId },
     queryParams: { ...params },
   });
   const { data, isLoading, error, mutate } = useSWR(
     endpointKey,
-    (endpoint: string) => getBlogsPublishService(endpoint, { params }),
+    (endpoint: string) =>
+      categoryId
+        ? getBlogsByCategoryService(endpoint, { params: { ...params, id: categoryId ?? '' } })
+        : getBlogsPublishService(endpoint, { params }),
     {
       fallbackData: fallback,
     }

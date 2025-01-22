@@ -18,7 +18,9 @@ export async function BlogCateCarousel({ id, name }: { id: string; name: string 
     <BlogCarousel
       blogs={blogData?.results}
       title={name}
-      viewAllProps={{ href: buildUrl({ endpoint: BLOG_ROUTES.blogCategory, params: { id } }) }}
+      viewAllProps={{
+        href: buildUrl({ endpoint: BLOG_ROUTES.blogCategory, params: { id }, queryParams: { t: name } }),
+      }}
     />
   );
 }

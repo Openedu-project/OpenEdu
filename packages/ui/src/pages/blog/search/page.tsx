@@ -19,7 +19,9 @@ export default async function SearchBlogPage({ name }: { name?: string }) {
       },
     }),
     getTranslations('blogSearch'),
-    getCategoriesTreeService(undefined, { queryParams: { active: true, type: 'blog' } }),
+    getCategoriesTreeService(undefined, {
+      queryParams: { active: true, type: 'blog' },
+    }),
   ]);
 
   return (
@@ -28,16 +30,18 @@ export default async function SearchBlogPage({ name }: { name?: string }) {
       <div className="container py-6">
         <div className="mb-4 flex items-center gap-2 border-b py-3 md:mb-8">
           {name && (
-            <h3 className="giant-iheading-semibold16 mb-0">
-              {t.rich('resultFor', {
-                strong: (chunks: ReactNode) => (
-                  <strong className="giant-iheading-semibold24 text-primary">{chunks}</strong>
-                ),
-                name,
-              })}
-            </h3>
+            <>
+              <h3 className="giant-iheading-semibold16 mb-0">
+                {t.rich('resultFor', {
+                  strong: (chunks: ReactNode) => (
+                    <strong className="giant-iheading-semibold24 text-primary">{chunks}</strong>
+                  ),
+                  name,
+                })}
+              </h3>
+              <Separator className="h-0.5 w-2 bg-foreground" />
+            </>
           )}
-          <Separator className="h-0.5 w-2" />
           <span className="mbutton-semibold16 text-foreground/75">
             {t.rich((blogsData?.pagination?.total_items ?? 0) > 1 ? 'numberBlogsFound' : 'numberBlogFound', {
               number: blogsData?.pagination?.total_items ?? 0,
@@ -45,7 +49,7 @@ export default async function SearchBlogPage({ name }: { name?: string }) {
           </span>
         </div>
         {(blogsData?.results.length ?? 0) > 0 ? (
-          <BlogList fallbackData={blogsData} />
+          <BlogList fallbackData={blogsData} searchText={name ?? ''} />
         ) : (
           <NoBlogData message={t('noBlogAvailable')} />
         )}

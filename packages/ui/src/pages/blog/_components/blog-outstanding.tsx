@@ -1,5 +1,6 @@
 import type { IBlog } from '@oe/api/types/blog';
 import { useTranslations } from 'next-intl';
+import { cn } from '#utils/cn';
 import { BlogCard } from './blog-card';
 import { BlogWithTab } from './blog-with-tab';
 import { TopBlogs } from './top-blog-section';
@@ -10,6 +11,7 @@ interface IBlogOutstandingProps {
   scrollTitle?: string;
   defaultTitle?: string;
   orgBlogs?: IBlog[];
+  className?: string;
 }
 
 export function BlogOutstanding({
@@ -18,20 +20,21 @@ export function BlogOutstanding({
   defaultBlogs,
   scrollTitle,
   orgBlogs = [],
+  className,
 }: IBlogOutstandingProps) {
   const t = useTranslations('blogOutstanding');
   return (
-    <div className="flex flex-col gap-4 md:gap-8 lg:flex-row">
-      <div>
+    <div className={cn('flex flex-col gap-4 md:gap-8 lg:flex-row', className)}>
+      <div className="grow">
         <h2 className="giant-iheading-semibold20 mb-6 border-primary border-l-[2px] pl-2 text-primary">
           {defaultTitle ?? t('features')}
         </h2>
-        <div className="grid grid-cols-3 gap-6">
+        <div className="flex gap-3 overflow-auto md:grid md:grid-cols-3 md:gap-6">
           {defaultBlogs.slice(0, 4).map((blog, index) => {
             if (index === 0) {
-              return <BlogCard key={blog.id} className="col-span-3" blog={blog} contentRight />;
+              return <BlogCard key={blog.id} className="min-w-64 md:col-span-3" blog={blog} contentRight />;
             }
-            return <BlogCard className="hidden md:flex" key={blog.id} blog={blog} />;
+            return <BlogCard className="min-w-64 md:min-w-0" key={blog.id} blog={blog} />;
           })}
         </div>
       </div>
