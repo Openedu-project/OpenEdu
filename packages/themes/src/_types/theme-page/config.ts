@@ -29,5 +29,5 @@ export interface PageConfig<K extends ThemePageKey> {
 }
 
 export type PagesConfig<K extends ThemePageKey> = {
-  [T in ThemePageKey]: PageConfig<K>;
+  [T in ThemePageKey]?: PageConfig<K>;
 };

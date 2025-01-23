@@ -9,7 +9,7 @@ import type { VbiHomepageEventsProps } from './homepage/vbi-events';
 import type { VbiHomepageFeaturesProps } from './homepage/vbi-features';
 import type { VbiHomepageHeroProps } from './homepage/vbi-hero';
 import type { VbiHomepageMapProps } from './homepage/vbi-map';
-
+import type { VbiPartnersList } from './partners/partner-list';
 export type {
   VbiHomepageHeroProps,
   VbiHomepageAchievementsProps,
@@ -23,4 +23,6 @@ export type {
   // ABOUT US
   VbiAboutUsIntroProps,
   VbiAboutUsGoalProps,
+  // PARTNERS
+  VbiPartnersList,
 };

@@ -38,6 +38,7 @@ const MENU_STRUCTURE = {
     { key: 'auth' as ThemePageKey, label: 'Auth Layout' },
     { key: 'homepage' as ThemePageKey, label: 'Homepage' },
     { key: 'about-us' as ThemePageKey, label: 'About Us' },
+    { key: 'partners' as ThemePageKey, label: 'Partners' },
   ],
 } as const;
 

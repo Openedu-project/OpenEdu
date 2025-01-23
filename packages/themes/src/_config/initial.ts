@@ -1,5 +1,5 @@
 import type { ThemeSystem } from '../_types/theme-system-config';
-import { createThemePageConfig } from './theme-page-initial';
+import { createThemePageConfig } from './theme-page-initial/index';
 
 export const defaultThemeSystemConfig = (t: (key: string) => string): ThemeSystem => {
   return {

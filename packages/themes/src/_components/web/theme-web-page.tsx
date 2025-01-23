@@ -30,7 +30,7 @@ export default function ThemeWebPage({ pageKey, themeSystem }: ThemePageProps) {
         themeName,
         selectedPage: pageKey,
         pageConfig: themeData.pages?.[pageKey],
-        currentConfigSections: themeData.pages?.[pageKey].config,
+        currentConfigSections: themeData.pages?.[pageKey]?.config,
       }}
     />
   );

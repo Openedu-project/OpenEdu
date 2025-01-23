@@ -36,6 +36,8 @@ import { VbiHomepageCreatorsClient, VbiHomepageCreatorsServer } from './vbi/home
 import { VbiHomepageEventsClient, VbiHomepageEventsServer } from './vbi/homepage/vbi-events';
 import { VbiHomepageFeaturesClient, VbiHomepageFeaturesServer } from './vbi/homepage/vbi-features';
 import { VbiHomepageMapClient, VbiHomepageMapServer } from './vbi/homepage/vbi-map';
+import VbiPartners from './vbi/partners/index';
+import { VbiPartnersList } from './vbi/partners/partner-list';
 
 export const THEMES: ThemeRender = {
   academia: {
@@ -91,11 +93,14 @@ export const THEMES: ThemeRender = {
       vbiIntro: VbiAboutUsIntro,
       vbiGoal: VbiAboutUsGoal,
     },
+    partners: {
+      theme: VbiPartners,
+      vbiPartnerList: VbiPartnersList,
+    },
     auth: {
       theme: AcademiaAuthLayout,
       login: AcademiaLogin,
       header: VbiHeader,
-      // signUp: AcademiaAuthLayoutSignUp,
     },
   },
 } as const;
@@ -156,10 +161,13 @@ export const THEMES_SERVER: ThemeRender = {
       vbiIntro: VbiAboutUsIntro,
       vbiGoal: VbiAboutUsGoal,
     },
+    partners: {
+      theme: VbiPartners,
+      vbiPartnerList: VbiPartnersList,
+    },
     auth: {
       theme: AcademiaAuthLayout,
       login: AcademiaLogin,
-      // signUp: AcademiaAuthLayoutSignUp,
     },
   },
 } as const;

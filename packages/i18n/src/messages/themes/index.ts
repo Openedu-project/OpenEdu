@@ -20,6 +20,7 @@ export const themeMessages = {
       homepage: 'Homepage', //label
       aboutus: 'About Us',
       authLayout: 'Auth Layout',
+      partners: 'Partners',
     },
     ...AcademiaMessage,
     ...ScholarMessage,

@@ -2,7 +2,7 @@ import type { ComponentType } from 'react';
 import type { BaseSectionProps, SectionComponent, SectionProps, SectionsByPage, ThemeName, ThemePageKey } from '.';
 
 export type PageRender = {
-  [K in ThemePageKey]: {
+  [K in ThemePageKey]?: {
     [S in SectionsByPage[K]]?: ComponentType<SectionProps<K, S>>;
   } & {
     theme: ComponentType<BaseSectionProps<K>>;

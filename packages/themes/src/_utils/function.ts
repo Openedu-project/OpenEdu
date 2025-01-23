@@ -40,21 +40,6 @@ export function getThemeComponent<Page extends ThemePageKey, Section extends Sec
   return sectionComponent || defaultComponent;
 }
 
-export function getAvailableSections<T extends ThemePageKey>(pageKey: T): SectionsByPage[T][] {
-  const sectionMap: Record<ThemePageKey, readonly string[]> = {
-    homepage: ['hero', 'features', 'testimonials', 'cta'] as const,
-    'about-us': ['header', 'team', 'mission', 'contact'] as const,
-    auth: ['login', 'signup'] as const,
-  };
-
-  return sectionMap[pageKey] as SectionsByPage[T][];
-}
-
-// Type guard to check if a section is valid for a page
-export function isValidSection<T extends ThemePageKey>(pageKey: T, section: string): section is SectionsByPage[T] {
-  return getAvailableSections(pageKey).includes(section as SectionsByPage[T]);
-}
-
 // create a section config
 export function createSection<Page extends ThemePageKey, Section extends SectionsByPage[Page]>({
   props,
