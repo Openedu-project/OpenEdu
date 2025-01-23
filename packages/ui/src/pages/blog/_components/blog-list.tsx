@@ -1,6 +1,6 @@
 'use client';
 import { useGetBlogsPublish } from '@oe/api/hooks/useBlog';
-import type { IBlogsResponse } from '@oe/api/types/blog';
+import type { IBlogsResponse, IPublishBlogType } from '@oe/api/types/blog';
 import { useEffect, useState } from 'react';
 import { PaginationCustom } from '#components/pagination-custom';
 import { BlogCard } from './blog-card';
@@ -10,11 +10,12 @@ const PER_PAGE = 12;
 
 interface BlogListProps {
   fallbackData?: IBlogsResponse;
-  categoryId?: string;
+  id?: string;
   searchText?: string;
+  type: IPublishBlogType;
 }
 
-export function BlogList({ fallbackData, categoryId, searchText = '' }: BlogListProps) {
+export function BlogList({ type, fallbackData, id, searchText = '' }: BlogListProps) {
   const [params, setParams] = useState({
     page: 1,
     per_page: PER_PAGE,
@@ -28,8 +29,9 @@ export function BlogList({ fallbackData, categoryId, searchText = '' }: BlogList
   }, [searchText]);
 
   const { dataListBlog: dataBlogPublish, isLoadingBlog } = useGetBlogsPublish(
+    type,
     params,
-    categoryId,
+    id,
     params.page === 1 ? fallbackData : undefined
   );
 
@@ -53,7 +55,6 @@ export function BlogList({ fallbackData, categoryId, searchText = '' }: BlogList
         ))}
       </div>
       <PaginationCustom
-        className="mb-4"
         currentPage={dataBlogPublish?.pagination?.page ?? 1}
         totalCount={dataBlogPublish?.pagination?.total_items ?? 0}
         onPageChange={handlePageChange}

@@ -147,3 +147,4 @@ export interface IAIBlogResponse {
   current_step: string;
   author_id: string;
 }
+export type IPublishBlogType = 'category' | 'hashtag' | 'default';

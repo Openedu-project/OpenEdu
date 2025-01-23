@@ -1,13 +1,13 @@
-import { getBlogsByCategoryService } from '@oe/api/services/blog';
+import { getBlogsByHashtagService } from '@oe/api/services/blog';
 import { getCategoriesTreeService } from '@oe/api/services/categories';
 import { getTranslations } from 'next-intl/server';
 import { BlogHeader } from '../_components/blog-header';
 import { BlogList } from '../_components/blog-list';
 import { NoBlogData } from '../_components/no-blog-data';
 
-export default async function CategoryBlogPage({ name, id }: { name?: string; id: string }) {
+export default async function HashtagBlogPage({ name, id }: { name?: string; id: string }) {
   const [blogsData, t, categoryData] = await Promise.all([
-    getBlogsByCategoryService(undefined, {
+    getBlogsByHashtagService(undefined, {
       params: {
         id,
         page: 1,
@@ -29,13 +29,14 @@ export default async function CategoryBlogPage({ name, id }: { name?: string; id
       <div className="container py-6 xl:px-32">
         <div className="mb-4 flex items-center gap-2 border-b py-3 md:mb-8">
           {name && (
-            <h2 className="giant-iheading-semibold16 md:giant-iheading-semibold24 mb-0 text-primary">
-              {name} ({blogsData?.pagination?.total_items ?? 0})
+            <h2 className="giant-iheading-semibold16 md:giant-iheading-semibold20 mb-0 rounded-full bg-primary/10 px-4 py-2 text-primary md:px-6">
+              #{name}
             </h2>
           )}
+          <span className="giant-iheading-semibold20">({blogsData?.pagination?.total_items ?? 0})</span>
         </div>
         {(blogsData?.results.length ?? 0) > 0 ? (
-          <BlogList fallbackData={blogsData} id={id} type="category" />
+          <BlogList fallbackData={blogsData} id={id} type="hashtag" />
         ) : (
           <NoBlogData message={t('noBlogAvailable')} />
         )}

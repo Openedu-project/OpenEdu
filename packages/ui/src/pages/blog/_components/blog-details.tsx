@@ -71,7 +71,7 @@ export function BlogDetails({
                     key={hashtag.hash}
                     href={buildUrl({
                       endpoint: BLOG_ROUTES.blogHashtag,
-                      params: { id: `${hashtag.name} ${hashtag.hash}` },
+                      params: { id: `${hashtag.hash} ${hashtag.name}` },
                     })}
                   >
                     <Badge className="lg:!p-2 min-w-[100px] justify-center">#{hashtag.name}</Badge>

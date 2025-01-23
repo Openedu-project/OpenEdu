@@ -2,12 +2,10 @@ import CategoryBlogPage from '@oe/ui/pages/blog/category';
 
 export default async function CategoryBlog({
   params,
-  searchParams,
 }: {
   params: { id: string };
-  searchParams: { t?: string };
 }) {
-  const [{ id }, { t }] = await Promise.all([params, searchParams]);
+  const { id } = await params;
 
-  return <CategoryBlogPage id={id} name={t} />;
+  return <CategoryBlogPage id={id.split('%20')[0] ?? ''} name={id.split('%20').slice(1).join(' ')} />;
 }

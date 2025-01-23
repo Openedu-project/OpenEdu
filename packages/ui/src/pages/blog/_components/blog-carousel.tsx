@@ -3,14 +3,15 @@
 import type { IBlog } from '@oe/api/types/blog';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { Link, type LinkProps } from '#common/navigation';
+import { Link } from '#common/navigation';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '#shadcn/carousel';
 import { BlogCard, type IBlogCardProps } from './blog-card';
 
 export interface IBlogCarousel {
   title: string;
-  viewAllProps?: LinkProps & {
+  viewAllProps?: {
     label?: string;
+    href: string;
   };
   blogs: IBlog[];
   className?: string;
@@ -22,11 +23,13 @@ export function BlogCarousel({ title, viewAllProps, className, blogs, blogCardPr
   return (
     <div className={className}>
       <div className="mb-4 flex flex-wrap items-center gap-6">
-        <h2 className="giant-iheading-semibold20 mb-0 border-primary border-l-[2px] pl-2 text-primary">{title}</h2>
+        <h2 className="giant-iheading-semibold16 md:giant-iheading-semibold20 mb-0 border-primary border-l-[2px] pl-2 text-primary">
+          {title}
+        </h2>
 
         {viewAllProps && (
           <Link
-            className="mbutton-semibold16 rounded-2 border-[2px] bg-white px-6 py-3 text-foreground/70 hover:opacity-80"
+            className="mbutton-bold12 md:mbutton-semibold16 text-foreground/70 hover:opacity-80"
             href={viewAllProps.href}
             variant="outline"
             activeClassName=""

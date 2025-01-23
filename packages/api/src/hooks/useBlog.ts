@@ -2,9 +2,16 @@ import useSWRMutation from 'swr/mutation';
 
 import useSWR from 'swr';
 import { deleteBlog, getBlogListService, getRewriteData, publishBlog, unpublishBlog } from '#services/blog';
-import { getBlogsByCategoryService, getBlogsPublishService, postBlog, postBlogAI, updateBlog } from '#services/blog';
+import {
+  getBlogsByCategoryService,
+  getBlogsByHashtagService,
+  getBlogsPublishService,
+  postBlog,
+  postBlogAI,
+  updateBlog,
+} from '#services/blog';
 import type { IAIBlogRequest, IAIBlogResponse, IRewriteResponse } from '#types/blog';
-import type { IBlog, IBlogRequest, IBlogsResponse } from '#types/blog';
+import type { IBlog, IBlogRequest, IBlogsResponse, IPublishBlogType } from '#types/blog';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
@@ -104,18 +111,34 @@ export function useGetListBlogs({ params }: { params: IFilter }) {
   };
 }
 
-export function useGetBlogsPublish(params: IFilter, categoryId?: string, fallback?: IBlogsResponse) {
+const publishEndpoint: Record<IPublishBlogType, string> = {
+  category: API_ENDPOINT.BLOGS_CATEGORIES,
+  hashtag: API_ENDPOINT.BLOGS_HASHTAGS,
+  default: API_ENDPOINT.BLOGS,
+};
+const publishServiceFunction: Record<
+  IPublishBlogType,
+  (endpoint: string, params: IFilter, id: string) => Promise<IBlogsResponse | undefined>
+> = {
+  category: (endpoint: string, params: IFilter, id: string) =>
+    getBlogsByCategoryService(endpoint, { params: { ...params, id } }),
+  hashtag: (endpoint: string, params: IFilter, id: string) =>
+    getBlogsByHashtagService(endpoint, { params: { ...params, id } }),
+  default: (endpoint: string, params: IFilter) => getBlogsPublishService(endpoint, { params }),
+};
+
+export function useGetBlogsPublish(type: IPublishBlogType, params: IFilter, id = '', fallback?: IBlogsResponse) {
   const endpointKey = createAPIUrl({
-    endpoint: categoryId ? API_ENDPOINT.BLOGS_CATEGORIES : API_ENDPOINT.BLOGS,
-    params: { id: categoryId },
-    queryParams: { ...params },
+    endpoint: publishEndpoint[type],
+    queryParams: {
+      ...params,
+      ...(type === 'hashtag' ? { hashtag_id: id } : {}),
+      ...(type === 'category' ? { category_id: id } : {}),
+    },
   });
   const { data, isLoading, error, mutate } = useSWR(
     endpointKey,
-    (endpoint: string) =>
-      categoryId
-        ? getBlogsByCategoryService(endpoint, { params: { ...params, id: categoryId ?? '' } })
-        : getBlogsPublishService(endpoint, { params }),
+    (endpoint: string) => publishServiceFunction[type](endpoint, params, id),
     {
       fallbackData: fallback,
     }

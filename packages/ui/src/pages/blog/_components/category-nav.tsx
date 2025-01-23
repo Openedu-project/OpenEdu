@@ -32,8 +32,7 @@ export const CategoryMenu = ({ category, level = 1, activeId }: ICategoryMenu) =
         )}
         href={buildUrl({
           endpoint: BLOG_ROUTES.blogCategory,
-          params: { id: category.id },
-          queryParams: { t: category.name },
+          params: { id: `${category.id} ${category.name}` },
         })}
       >
         <Separator className="w-0.5 bg-primary" orientation="vertical" />
@@ -52,8 +51,7 @@ export const CategoryMenu = ({ category, level = 1, activeId }: ICategoryMenu) =
               )}
               href={buildUrl({
                 endpoint: BLOG_ROUTES.blogCategory,
-                params: { id: sub.id },
-                queryParams: { t: sub.name },
+                params: { id: `${category.id} ${category.name}` },
               })}
             >
               {sub.name}

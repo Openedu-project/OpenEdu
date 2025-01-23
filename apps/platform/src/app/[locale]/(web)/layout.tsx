@@ -1,4 +1,4 @@
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { BLOG_ROUTES, PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { MainLayout } from '@oe/ui/common/layout';
 import { getTranslations } from 'next-intl/server';
 
@@ -25,7 +25,7 @@ export default async function OpeneduLayout({
     {
       id: 'blog',
       label: t('blog'),
-      href: '#',
+      href: BLOG_ROUTES.blog,
     },
     {
       id: 'launchpad',

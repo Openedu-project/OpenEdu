@@ -27,7 +27,7 @@ export default async function SearchBlogPage({ name }: { name?: string }) {
   return (
     <>
       <BlogHeader categoryData={categoryData} />
-      <div className="container py-6">
+      <div className="container py-6 xl:px-32">
         <div className="mb-4 flex items-center gap-2 border-b py-3 md:mb-8">
           {name && (
             <>
@@ -49,7 +49,7 @@ export default async function SearchBlogPage({ name }: { name?: string }) {
           </span>
         </div>
         {(blogsData?.results.length ?? 0) > 0 ? (
-          <BlogList fallbackData={blogsData} searchText={name ?? ''} />
+          <BlogList fallbackData={blogsData} searchText={name ?? ''} type="default" />
         ) : (
           <NoBlogData message={t('noBlogAvailable')} />
         )}

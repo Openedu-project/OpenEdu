@@ -190,10 +190,39 @@ export async function getBlogsByCategoryService(
 ): Promise<IBlogsResponse | undefined> {
   let endpointKey = url;
   if (!endpointKey) {
+    const { id, ...filterParams } = params;
     endpointKey = createAPIUrl({
       endpoint: API_ENDPOINT.BLOGS_CATEGORIES,
       queryParams: {
-        ...params,
+        category_id: id,
+        ...filterParams,
+      },
+    });
+  }
+
+  try {
+    const response = await fetchAPI<IBlogsResponse>(endpointKey, init);
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return undefined;
+  }
+}
+
+export async function getBlogsByHashtagService(
+  url: string | undefined,
+  { params, init }: { params: { id: string } & IFilter; init?: RequestInit }
+): Promise<IBlogsResponse | undefined> {
+  let endpointKey = url;
+  if (!endpointKey) {
+    const { id, ...filterParams } = params;
+
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.BLOGS_HASHTAGS,
+      queryParams: {
+        hashtag_id: id,
+        ...filterParams,
       },
     });
   }
