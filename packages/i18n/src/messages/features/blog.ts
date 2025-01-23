@@ -40,7 +40,8 @@ export const blogMessages = {
   },
   blogBanner: {
     title: 'Become Our Author To Contribute To Community.',
-    desc: 'Join now to receive personalized recommendations from the full Open Edu catalog.',
-    writeYourBlog: 'Write Your Blog',
+    subTitle: 'Let Us Do The Thrive',
+    desc: 'Join now to receive personalized recommendations from the full our catalog.',
+    createYourBlog: 'Create Your Blog',
   },
 };

@@ -1,17 +1,9 @@
 'use client';
 
 import type { ICategoryTree } from '@oe/api/types/categories';
-import { Menu } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuTrigger,
-} from '#shadcn/navigation-menu';
-import { ScrollArea } from '#shadcn/scroll-area';
-import { cn } from '#utils/cn';
-import { CategoryMenu, CategoryNavMenu } from './category-nav';
+import { BLOG_ROUTES } from '@oe/core/utils/routes';
+import { usePathname } from '#common/navigation';
+import { CategoryAllMenu, CategoryNavMenu } from './category-nav';
 import { SearchBlog } from './search';
 
 export function BlogHeader({
@@ -19,37 +11,15 @@ export function BlogHeader({
 }: {
   categoryData: ICategoryTree[];
 }) {
-  const t = useTranslations('blogHeader');
-
+  const pathname = usePathname();
+  const activeId = pathname.includes(BLOG_ROUTES.blogCategory.split('/:')[0] ?? '')
+    ? pathname.split('/').at(-1)
+    : undefined;
   return (
-    <div className="flex flex-col flex-wrap gap-4 bg-primary/5 p-2 pb-0 sm:flex-row">
-      <NavigationMenu>
-        <NavigationMenuItem className="list-none">
-          <div className="border-transparent border-b pb-1 hover:border-primary">
-            <NavigationMenuTrigger
-              className={cn(
-                'giant-iheading-semibold14 rounded border border-transparent bg-transparent p-1 px-2 text-foreground/75',
-                'hover:border-primary hover:bg-primary/10 hover:text-primary',
-                'focus:bg-transparent data-[active]:bg-transparent'
-              )}
-            >
-              <Menu className="mr-2 h-4 w-4" />
-              {t('allCategories')}
-            </NavigationMenuTrigger>
-          </div>
-          <NavigationMenuContent>
-            <ScrollArea className="h-[400px] max-h-[100vh-100px] w-full min-w-[300px] md:w-[calc(100vw-150px)]">
-              <ul className="grid w-full grid-cols-1 gap-10 p-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {categoryData?.map(category => (
-                  <CategoryMenu key={category.id} category={category} />
-                ))}
-              </ul>
-            </ScrollArea>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-      </NavigationMenu>
-      <CategoryNavMenu className="hidden md:flex" categories={categoryData} />
-      <div className="mb-3 grow">
+    <div className="flex flex-col flex-wrap justify-between gap-4 bg-primary/5 p-2 pr-4 pb-0 sm:flex-row">
+      <CategoryAllMenu categories={categoryData} activeId={activeId} />
+      <CategoryNavMenu className="hidden md:flex" categories={categoryData} activeId={activeId} />
+      <div className="mb-3 grow lg:max-w-xl">
         <SearchBlog />
       </div>
     </div>

@@ -53,9 +53,10 @@ export default async function BlogDefaultPage({
   return (
     <>
       <BlogHeader categoryData={categories} />
-      <div className="flex w-full flex-col gap-10 p-4 md:p-8">
+      <div className="container flex w-full flex-col gap-10 p-4 md:gap-20 md:p-8 lg:px-24">
         {(blogsData?.results.length ?? 0) > 0 && (
           <BlogOutstanding
+            className="lg:-mx-20"
             defaultBlogs={blogsData?.results.slice(0, 4) ?? []}
             scrollBlogs={blogsData?.results.slice(4, 14) ?? []}
             orgBlogs={orgBlogData}

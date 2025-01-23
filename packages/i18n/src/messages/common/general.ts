@@ -84,6 +84,6 @@ export const generalMessages = {
       humorous: 'Humorous',
       professional: 'Professional',
     },
-    viewAll: 'View All',
+    viewAll: 'View all',
   },
 };
