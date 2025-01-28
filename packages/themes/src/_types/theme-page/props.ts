@@ -7,6 +7,7 @@ import type {
   AcademiaHomepageOrganizationsProps,
   AcademiaHomepagePartnersProps,
 } from '../../academia';
+import type { ThemeFooterProps } from '../../auth/footer';
 import type { ThemeHeaderProps } from '../../auth/header';
 import type { AuthLayoutLoginProps } from '../../auth/login';
 import type { ScholarHomepageAboutUsProps, ScholarHomepageHeroProps, ScholarHomepageServiceProps } from '../../scholar';
@@ -53,6 +54,7 @@ export interface SectionPropsMap<K extends ThemePageKey> {
   emailVerify: DynamicProps<K, AuthLayoutLoginProps>;
   authConfirm: DynamicProps<K, AuthLayoutLoginProps>;
   header: DynamicProps<K, ThemeHeaderProps>;
+  footer: DynamicProps<K, ThemeFooterProps>;
 
   // Scholar
   scholarHero: DynamicProps<K, ScholarHomepageHeroProps>;

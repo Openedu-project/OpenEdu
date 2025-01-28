@@ -56,4 +56,87 @@ export const createAuthLayoutConfig = (getThemeTranslation: (path: string[]) => 
     },
     order: 5,
   }),
+  footer: createSection<'auth', 'footer'>({
+    props: {
+      logo: { mime: 'image/png' },
+      description: getThemeTranslation(['auth', 'footer', 'description']),
+      navigationItems: {
+        registration: {
+          label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'registration', 'label']),
+          colSpan: 3,
+          items: [
+            {
+              href: '/become-creator',
+              label: getThemeTranslation([
+                'auth',
+                'footer',
+                'navigationItems',
+                'registration',
+                'items',
+                'items-0',
+                'label',
+              ]),
+            },
+            {
+              href: '/become-writer',
+              label: getThemeTranslation([
+                'auth',
+                'footer',
+                'navigationItems',
+                'registration',
+                'items',
+                'items-1',
+                'label',
+              ]),
+            },
+            {
+              href: '/organization',
+              label: getThemeTranslation([
+                'auth',
+                'footer',
+                'navigationItems',
+                'registration',
+                'items',
+                'items-2',
+                'label',
+              ]),
+            },
+          ],
+        },
+        terms: {
+          label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'label']),
+          colSpan: 3,
+          items: [
+            {
+              href: '/terms',
+              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'items', 'items-0', 'label']),
+            },
+            {
+              href: '/faq',
+              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'items', 'items-1', 'label']),
+            },
+          ],
+        },
+        social: {
+          label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'social', 'label']),
+          colSpan: 2,
+          items: [
+            {
+              href: 'https://discord.com/invite/hWq4TXEDxW',
+              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'social', 'items', 'items-0', 'label']),
+            },
+            {
+              href: 'https://t.me/+z2s3BWk8jZhkNzY1',
+              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'social', 'items', 'items-1', 'label']),
+            },
+            {
+              href: 'https://www.facebook.com/openedu101',
+              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'social', 'items', 'items-2', 'label']),
+            },
+          ],
+        },
+      },
+    },
+    order: 6,
+  }),
 });

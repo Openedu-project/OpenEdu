@@ -1,3 +1,3 @@
-import { Footer, type FooterProps } from './footer';
+import { Footer, type FooterProps, type NavigationItem, type NavigationLink } from './footer';
 
-export { Footer, type FooterProps };
+export { Footer, type FooterProps, type NavigationItem, type NavigationLink };

@@ -7,13 +7,13 @@ import type React from "react";
 import { Link } from "#common/navigation";
 import { Image } from "#components/image";
 import type { FileType } from "#components/uploader";
-interface NavigationLink {
+export interface NavigationLink {
   href: string;
   label: string;
   icon?: React.ComponentType<{ className?: string }>;
 }
 
-interface NavigationItem {
+export interface NavigationItem {
   label?: string;
   colSpan?: number;
   items?: NavigationLink[];
@@ -105,7 +105,7 @@ export function Footer({ logo, navigationItems, description }: FooterProps) {
                     height={40}
                     className="w-[115px] min-w-[115px] md:w-[172px]"
                   />
-                )}{" "}
+                )}
               </div>
             </Link>
 
@@ -139,7 +139,7 @@ export function Footer({ logo, navigationItems, description }: FooterProps) {
                           }
                           className="mcaption-regular16 p-0 text-[#464646] transition-colors hover:text-[#2B3674]"
                         >
-                          {link.icon && <link.icon className="h-5 w-5 mr-2" />}
+                          {link.icon && <link.icon className="mr-2 h-5 w-5" />}
                           <span>{link.label}</span>
                         </Link>
                       </li>

@@ -10,7 +10,14 @@ import {
   AcademiaHomepageOrganizations,
   AcademiaHomepagePartners,
 } from './academia';
-import { AuthLayout, AuthLayoutForgotPassword, AuthLayoutLogin, AuthLayoutSignUp, ThemeHeader } from './auth/type';
+import {
+  AuthLayout,
+  AuthLayoutForgotPassword,
+  AuthLayoutLogin,
+  AuthLayoutSignUp,
+  ThemeFooter,
+  ThemeHeader,
+} from './auth/type';
 
 import { ScholarHomepageAboutUs, ScholarHomepageHero, ScholarHomepageService } from './scholar';
 
@@ -35,6 +42,14 @@ import { VbiHomepageMapClient, VbiHomepageMapServer } from './vbi/homepage/vbi-m
 import VbiPartners from './vbi/partners/index';
 import { VbiPartnersList } from './vbi/partners/partner-list';
 
+const auth = {
+  theme: AuthLayout,
+  header: ThemeHeader,
+  footer: ThemeFooter,
+  login: AuthLayoutLogin,
+  signUp: AuthLayoutSignUp,
+  forgotPassword: AuthLayoutForgotPassword,
+};
 export const THEMES: ThemeRender = {
   academia: {
     homepage: {
@@ -48,13 +63,7 @@ export const THEMES: ThemeRender = {
     'about-us': {
       theme: AcademiaAboutUs,
     },
-    auth: {
-      theme: AuthLayout,
-      header: ThemeHeader,
-      login: AuthLayoutLogin,
-      signUp: AuthLayoutSignUp,
-      forgotPassword: AuthLayoutForgotPassword,
-    },
+    auth,
   },
   scholar: {
     homepage: {
@@ -66,13 +75,7 @@ export const THEMES: ThemeRender = {
     'about-us': {
       theme: ScholarAboutUs,
     },
-    auth: {
-      theme: AuthLayout,
-      header: ThemeHeader,
-      login: AuthLayoutLogin,
-      signUp: AuthLayoutSignUp,
-      forgotPassword: AuthLayoutForgotPassword,
-    },
+    auth,
   },
   vbi: {
     homepage: {
@@ -96,13 +99,7 @@ export const THEMES: ThemeRender = {
       theme: VbiPartners,
       vbiPartnerList: VbiPartnersList,
     },
-    auth: {
-      theme: AuthLayout,
-      header: ThemeHeader,
-      login: AuthLayoutLogin,
-      signUp: AuthLayoutSignUp,
-      forgotPassword: AuthLayoutForgotPassword,
-    },
+    auth,
   },
 } as const;
 

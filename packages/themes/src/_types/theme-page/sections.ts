@@ -21,7 +21,15 @@ export type HomeSection =
   | 'vbiMap';
 
 export type AboutSection = 'theme' | 'team' | 'vbiIntro' | 'vbiGoal';
-export type AuthLayout = 'theme' | 'login' | 'forgotPassword' | 'emailVerify' | 'signUp' | 'authConfirm' | 'header';
+export type AuthLayout =
+  | 'theme'
+  | 'login'
+  | 'forgotPassword'
+  | 'emailVerify'
+  | 'signUp'
+  | 'authConfirm'
+  | 'header'
+  | 'footer';
 export type PartnersSection = 'theme' | 'vbiPartnerList' | 'vbiShowcase';
 export type SectionsByPage = {
   homepage: HomeSection;
