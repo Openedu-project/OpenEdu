@@ -37,6 +37,7 @@ export const PLATFORM_ROUTES = {
   learner: '/learner',
   learnerMyCertificates: '/learner/my-certificates',
   learnerMyCertificateDetail: '/learner/my-certificates/:certId',
+  previewCourse: '/courses/preview/:courseId/:orgId',
 } as const;
 
 export const BLOG_ROUTES = {
@@ -98,7 +99,7 @@ export const AUTH_ROUTES = {
 
 export const ADMIN_ROUTES = {
   dashboard: '/admin',
-  courses: '/admin/course/list',
+  coursesManagement: '/admin/course/course-management',
   courseCategories: '/admin/course/categories',
   coursesReviewing: '/admin/course/reviewing',
   allUsers: '/admin/user/list',

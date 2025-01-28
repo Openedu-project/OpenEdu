@@ -136,3 +136,51 @@ export interface IEnrollCoursePayload {
   source: string;
   ref_by?: string;
 }
+
+export interface IEnableCourseRequest extends Pick<ICourse, 'cuid' | 'id'> {
+  enable?: boolean;
+  enable_root?: boolean;
+}
+
+export interface ICoursePublishedHistory {
+  date: number;
+  id: string;
+  version: number;
+}
+
+export interface ICoursePublishedProps {
+  histories: ICoursePublishedHistory[];
+}
+
+export interface ICoursePublished {
+  org_id: string;
+  org_schema: string;
+  org_domain: string;
+  user_id: string;
+  course_cuid: string;
+  course_slug: string;
+  name: string;
+  is_pay: boolean;
+  price: string;
+  description: string;
+  thumbnail_id: string;
+  version: number;
+  course_id: string;
+  pub_date: number;
+  enable: boolean;
+  pub_root_date: number;
+  enable_root: boolean;
+  is_root: boolean;
+  start_date: number;
+  end_date: number;
+  props: ICoursePublishedProps;
+  thumbnail: IFileResponse[];
+  categories?: ICategory;
+  id: string;
+  create_at: number;
+  update_at: number;
+  delete_at: number;
+}
+
+export interface ICoursePublishedRes extends IDataPagination<ICoursePublished[]> {}
+export interface ISectionRes extends IDataPagination<ISection[]> {}
