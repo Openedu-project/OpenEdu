@@ -6,7 +6,7 @@ import { Link } from '#common/navigation';
 
 export function AuthButtons() {
   const pathname = usePathname();
-  const tAuth = useTranslations('auth.btn');
+  const tAuth = useTranslations('themePage.auth');
 
   return (
     <>
@@ -16,7 +16,7 @@ export function AuthButtons() {
         size="xs"
         className="px-1 text-xs md:px-3 md:text-sm"
       >
-        {tAuth('signin.title')}
+        {tAuth('login.title')}
       </Link>
       <Link
         href={`${AUTH_ROUTES.signUp}?next=${pathname}`}

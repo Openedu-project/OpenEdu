@@ -1,5 +1,4 @@
 import { AcademiaMessage } from './academia';
-import { authMessages } from './auth';
 import { headerMessages } from './header';
 import { ThemeNotiMessages } from './noti';
 import { pageSettingMessages } from './page-settings';
@@ -19,12 +18,11 @@ export const themeMessages = {
       // Record<settingKey, string>
       homepage: 'Homepage', //label
       aboutus: 'About Us',
-      authLayout: 'Auth Layout',
+      authLayout: 'Auth / Layout',
       partners: 'Partners',
     },
     ...AcademiaMessage,
     ...ScholarMessage,
-    ...authMessages,
     ...vbiMessage,
   },
   ...ThemeUIMessage,

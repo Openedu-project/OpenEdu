@@ -43,7 +43,16 @@ export const createAuthLayoutConfig = (getThemeTranslation: (path: string[]) => 
   }),
   header: createSection<'auth', 'header'>({
     props: {
-      sidebarItems: new Array(3).fill({ id: '', label: '', href: '' }),
+      logo: { mime: 'image/png' },
+      sidebarItems: [
+        {
+          id: 'id-about',
+          label: 'About us',
+          href: '/about-us',
+          isHighlight: false,
+        },
+        { id: 'id-contact', label: 'Contact', href: '/contact-us', isHighlight: false },
+      ],
     },
     order: 5,
   }),

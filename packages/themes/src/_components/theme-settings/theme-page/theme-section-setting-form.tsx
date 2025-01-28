@@ -162,11 +162,12 @@ export function SettingsForm<K extends ThemePageKey>({
                   label={`${key}-${index}`}
                   value={itemValue as ThemeFieldValue}
                   onChange={onChange}
-                  type={
-                    itemType === 'text' || itemType === 'number' || itemType === 'boolean' || itemType === 'file'
-                      ? itemType
-                      : 'text'
-                  }
+                  // type={
+                  //   itemType === 'text' || itemType === 'number' || itemType === 'boolean' || itemType === 'file'
+                  //     ? itemType
+                  //     : 'text'
+                  // }
+                  type={itemType}
                   path={itemPath}
                 />
               );
@@ -199,11 +200,12 @@ export function SettingsForm<K extends ThemePageKey>({
           label={key}
           value={value as ThemeFieldValue}
           onChange={newValue => handleFieldChange(currentPath, newValue)}
-          type={
-            fieldType === 'text' || fieldType === 'number' || fieldType === 'boolean' || fieldType === 'file'
-              ? fieldType
-              : 'text'
-          }
+          // type={
+          //   fieldType === 'text' || fieldType === 'number' || fieldType === 'boolean' || fieldType === 'file'
+          //     ? fieldType
+          //     : 'text'
+          // }
+          type={fieldType}
           path={[...basePath, ...currentPath]}
         />
       );

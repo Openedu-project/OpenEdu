@@ -1,11 +1,13 @@
 import type { ThemeFieldConfig, ThemeFieldValue } from '@oe/themes/types/theme-page/index';
 import type React from 'react';
 
+export type SettingsFieldType = 'text' | 'number' | 'boolean' | 'file' | 'object' | 'array' | 'link' | 'id';
+
 export interface ThemePageSettingFieldProps {
   label: string;
   value: ThemeFieldValue;
   onChange: (value: ThemeFieldValue) => void;
-  type?: 'text' | 'number' | 'boolean' | 'file' | 'object' | 'array' | 'undefined' | 'link';
+  type?: SettingsFieldType;
   path: string[];
 }
 

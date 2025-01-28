@@ -7,8 +7,8 @@ import type {
   AcademiaHomepageOrganizationsProps,
   AcademiaHomepagePartnersProps,
 } from '../../academia';
-import type { VbiHeaderProps } from '../../academia/auth/header';
-import type { AcademiaAuthLayoutLoginProps } from '../../academia/auth/login';
+import type { ThemeHeaderProps } from '../../auth/header';
+import type { AuthLayoutLoginProps } from '../../auth/login';
 import type { ScholarHomepageAboutUsProps, ScholarHomepageHeroProps, ScholarHomepageServiceProps } from '../../scholar';
 import type {
   VbiAboutUsGoalProps,
@@ -47,12 +47,12 @@ export interface SectionPropsMap<K extends ThemePageKey> {
   organizations: DynamicProps<K, AcademiaHomepageOrganizationsProps>;
 
   // Auth
-  login: DynamicProps<K, AcademiaAuthLayoutLoginProps>;
-  signUp: DynamicProps<K, AcademiaAuthLayoutLoginProps>;
-  forgotPassword: DynamicProps<K, AcademiaAuthLayoutLoginProps>;
-  emailVerify: DynamicProps<K, AcademiaAuthLayoutLoginProps>;
-  authConfirm: DynamicProps<K, AcademiaAuthLayoutLoginProps>;
-  header: DynamicProps<K, VbiHeaderProps>;
+  login: DynamicProps<K, AuthLayoutLoginProps>;
+  signUp: DynamicProps<K, AuthLayoutLoginProps>;
+  forgotPassword: DynamicProps<K, AuthLayoutLoginProps>;
+  emailVerify: DynamicProps<K, AuthLayoutLoginProps>;
+  authConfirm: DynamicProps<K, AuthLayoutLoginProps>;
+  header: DynamicProps<K, ThemeHeaderProps>;
 
   // Scholar
   scholarHero: DynamicProps<K, ScholarHomepageHeroProps>;

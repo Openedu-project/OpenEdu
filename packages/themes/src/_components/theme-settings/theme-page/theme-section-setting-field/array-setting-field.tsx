@@ -111,11 +111,12 @@ export const ThemePageSettingArrayField: React.FC<ThemePageSettingArrayFieldProp
                     label={`${label}-${index}`}
                     value={item as ThemeFieldValue}
                     onChange={newValue => handleItemChange(index, newValue)}
-                    type={
-                      itemType === 'text' || itemType === 'number' || itemType === 'boolean' || itemType === 'file'
-                        ? itemType
-                        : 'text'
-                    }
+                    // type={
+                    //   itemType === 'text' || itemType === 'number' || itemType === 'boolean' || itemType === 'file'
+                    //     ? itemType
+                    //     : 'text'
+                    // }
+                    type={itemType}
                     path={[...path, `${label}-${index.toString()}`]}
                   />
                 )}

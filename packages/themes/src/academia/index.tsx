@@ -15,13 +15,6 @@ export const AcademiaHomepageOrganizations = dynamic(() => import('./homepage/or
 
 export const AcademiaAboutUs = dynamic(() => import('./about-us'));
 
-export const AcademiaAuthLayout = dynamic(() => import('./auth'));
-// export const AcademiaLogin = dynamic(() => import('./auth/login'));
-// export const AcademiaSignUp = dynamic(() => import('./auth/sign-up'));
-// export const AcademiaForgotPassword = dynamic(() => import('./auth/forgot-password'));
-// export const AcademiaEmailVerify = dynamic(() => import('./auth/email-verify'));
-// export const AcademiaAuthConfirm = dynamic(() => import('./auth/auth-confirm'));
-
 export type {
   AcademiaHomepageFeaturesProps,
   AcademiaHomepageHeroProps,

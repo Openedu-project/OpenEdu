@@ -1,3 +1,3 @@
-import { Footer } from './footer';
+import { Footer, type FooterProps } from './footer';
 
-export { Footer };
+export { Footer, type FooterProps };

@@ -23,7 +23,6 @@
   },
   "peerDependencies": {
     "@oe/i18n": "workspace:*",
-    "@oe/api": "workspace:*",
     "next": "15.1.4",
     "next-intl": "3.26.3",
     "react": "19.0.0",

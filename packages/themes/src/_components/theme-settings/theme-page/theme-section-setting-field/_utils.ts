@@ -1,5 +1,6 @@
 import type { ThemeFieldConfig, ThemeFieldValue } from '@oe/themes/types/theme-page/index';
 import { type FileType, isFileType } from '@oe/ui/components/uploader';
+import type { SettingsFieldType } from './_type';
 
 const isValidUrl = (value: string): boolean => {
   try {
@@ -10,7 +11,12 @@ const isValidUrl = (value: string): boolean => {
   }
 };
 
-export const getFieldType = (value: unknown): 'text' | 'number' | 'boolean' | 'file' | 'object' | 'array' | 'link' => {
+const generateTimestampId = () => {
+  const timestamp = Date.now();
+  return `id-${timestamp}`;
+};
+
+export const getFieldType = (value: unknown): SettingsFieldType => {
   if (Array.isArray(value)) {
     return 'array';
   }
@@ -21,6 +27,9 @@ export const getFieldType = (value: unknown): 'text' | 'number' | 'boolean' | 'f
     // Check if the string starts with '/' to identify it as a link
     if (value.startsWith('/') || isValidUrl(value)) {
       return 'link';
+    }
+    if (value.startsWith('id-')) {
+      return 'id';
     }
     return 'text';
   }
@@ -52,6 +61,8 @@ export const getInitialValue = (type: ReturnType<typeof getFieldType>): ThemeFie
       return [];
     case 'link':
       return typeof window !== 'undefined' ? window.location.pathname : '/';
+    case 'id':
+      return generateTimestampId();
     default:
       return '';
   }

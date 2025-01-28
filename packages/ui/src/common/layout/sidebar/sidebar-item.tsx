@@ -13,11 +13,13 @@ import type { FC } from 'react';
 import type { ISidebarItem, ISidebarItemProps } from './types';
 
 export const SidebarItem: FC<ISidebarItemProps> = ({ item, depth, maxDepth, pathname, isCollapsed }) => {
+  console.log('item', item);
+
   const [isOpen, setIsOpen] = useState(false);
   const hasChildren = item.items && item.items.length > 0 && depth < maxDepth;
   const contentRef = useRef<HTMLDivElement>(null);
-
   const isCurrentActive = item.isRoot ? item.href === pathname : pathname.includes(item.href as string);
+
   const isAncestorActive = useMemo(() => {
     if (!hasChildren) {
       return false;
@@ -34,12 +36,15 @@ export const SidebarItem: FC<ISidebarItemProps> = ({ item, depth, maxDepth, path
   }, [hasChildren, item.items, pathname]);
 
   useEffect(() => {
+    console.log('aaas');
     if (!isCollapsed && (isCurrentActive || isAncestorActive)) {
       setIsOpen(true);
     }
   }, [isCollapsed, isCurrentActive, isAncestorActive]);
 
   useEffect(() => {
+    console.log('mmmm');
+
     if (isCollapsed) {
       setIsOpen(false);
     }
@@ -131,7 +136,11 @@ export const SidebarItem: FC<ISidebarItemProps> = ({ item, depth, maxDepth, path
       {isCollapsed ? (
         <Tooltip
           content={renderTooltipContent()}
-          contentProps={{ side: 'right', sideOffset: 8, className: 'p-0 shadow-lg' }}
+          contentProps={{
+            side: 'right',
+            sideOffset: 8,
+            className: 'p-0 shadow-lg',
+          }}
         >
           {renderLink()}
         </Tooltip>

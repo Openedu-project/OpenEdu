@@ -1,7 +1,7 @@
-import { PreviewPanel } from '../../_components/theme-settings/theme-page/theme-preview-panel';
-import type { SectionComponent } from '../../_types';
+import { PreviewPanel } from '../_components/theme-settings/theme-page/theme-preview-panel';
+import type { SectionComponent } from '../_types';
 
-const AcademiaAuthLayout: SectionComponent<'auth', 'theme'> = ({ props }) => {
+const AuthLayout: SectionComponent<'auth', 'theme'> = ({ props }) => {
   if (!props) {
     return;
   }
@@ -16,4 +16,4 @@ const AcademiaAuthLayout: SectionComponent<'auth', 'theme'> = ({ props }) => {
     </>
   );
 };
-export default AcademiaAuthLayout;
+export default AuthLayout;

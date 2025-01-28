@@ -3,7 +3,6 @@ import { getMetadata } from './_config/theme-metadata';
 import type { ThemeRender } from './_types/theme-page';
 import {
   AcademiaAboutUs,
-  AcademiaAuthLayout,
   AcademiaHomePage,
   AcademiaHomepageExplores,
   AcademiaHomepageFeatures,
@@ -11,19 +10,16 @@ import {
   AcademiaHomepageOrganizations,
   AcademiaHomepagePartners,
 } from './academia';
+import { AuthLayout, AuthLayoutForgotPassword, AuthLayoutLogin, AuthLayoutSignUp, ThemeHeader } from './auth/type';
 
 import { ScholarHomepageAboutUs, ScholarHomepageHero, ScholarHomepageService } from './scholar';
 
 import { updateGlobalTheme } from './_components/theme-settings/theme-global/_utils';
 import { initialThemeGlobal } from './_config/theme-global-initial';
-import AcademiaForgotPassword from './academia/auth/forgot-password';
-import AcademiaLogin from './academia/auth/login';
-import AcademiaAuthLayoutSignUp from './academia/auth/sign-up';
-import { fonts } from './fonts';
 import { ScholarAboutUs, ScholarHomePage } from './scholar';
 import { VbiHomepageHeroClient, VbiHomepageHeroServer } from './vbi/homepage/vbi-hero/index';
 
-import VbiHeader from './academia/auth/header';
+import { fonts } from './fonts';
 import { VbiAboutUsGoal } from './vbi/about-us/goal';
 import VbiAboutUs from './vbi/about-us/index';
 import { VbiAboutUsIntro } from './vbi/about-us/intro';
@@ -53,10 +49,11 @@ export const THEMES: ThemeRender = {
       theme: AcademiaAboutUs,
     },
     auth: {
-      theme: AcademiaAuthLayout,
-      login: AcademiaLogin,
-      signUp: AcademiaAuthLayoutSignUp,
-      forgotPassword: AcademiaForgotPassword,
+      theme: AuthLayout,
+      header: ThemeHeader,
+      login: AuthLayoutLogin,
+      signUp: AuthLayoutSignUp,
+      forgotPassword: AuthLayoutForgotPassword,
     },
   },
   scholar: {
@@ -70,9 +67,11 @@ export const THEMES: ThemeRender = {
       theme: ScholarAboutUs,
     },
     auth: {
-      theme: AcademiaAuthLayout,
-      login: AcademiaLogin,
-      // signUp: AcademiaAuthLayoutSignUp,
+      theme: AuthLayout,
+      header: ThemeHeader,
+      login: AuthLayoutLogin,
+      signUp: AuthLayoutSignUp,
+      forgotPassword: AuthLayoutForgotPassword,
     },
   },
   vbi: {
@@ -98,9 +97,11 @@ export const THEMES: ThemeRender = {
       vbiPartnerList: VbiPartnersList,
     },
     auth: {
-      theme: AcademiaAuthLayout,
-      login: AcademiaLogin,
-      header: VbiHeader,
+      theme: AuthLayout,
+      header: ThemeHeader,
+      login: AuthLayoutLogin,
+      signUp: AuthLayoutSignUp,
+      forgotPassword: AuthLayoutForgotPassword,
     },
   },
 } as const;
@@ -119,12 +120,7 @@ export const THEMES_SERVER: ThemeRender = {
       theme: AcademiaAboutUs,
     },
     auth: {
-      theme: AcademiaAuthLayout,
-      login: AcademiaLogin,
-      signUp: AcademiaAuthLayoutSignUp,
-      forgotPassword: AcademiaForgotPassword,
-      // emailVerify: AcademiaEmailVerify,
-      // authConfirm: AcademiaAuthConfirm,
+      theme: AuthLayout,
     },
   },
   scholar: {
@@ -138,9 +134,7 @@ export const THEMES_SERVER: ThemeRender = {
       theme: ScholarAboutUs,
     },
     auth: {
-      theme: AcademiaAuthLayout,
-      login: AcademiaLogin,
-      // signUp: AcademiaAuthLayoutSignUp,
+      theme: AuthLayout,
     },
   },
   vbi: {
@@ -166,8 +160,7 @@ export const THEMES_SERVER: ThemeRender = {
       vbiPartnerList: VbiPartnersList,
     },
     auth: {
-      theme: AcademiaAuthLayout,
-      login: AcademiaLogin,
+      theme: AuthLayout,
     },
   },
 } as const;

@@ -24,19 +24,14 @@ export const authMessages = {
     header: {
       sidebarItems: {
         'sidebarItems-0': {
-          id: '',
-          href: '',
-          label: '',
+          id: 'about',
+          href: '/about-us',
+          label: 'About us',
         },
         'sidebarItems-1': {
-          id: '',
-          href: '',
-          label: '',
-        },
-        'sidebarItems-2': {
-          id: '',
-          href: '',
-          label: '',
+          id: 'contact',
+          href: '/contact-us',
+          label: 'Contact Us',
         },
       },
     },

@@ -3,8 +3,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@oe/ui/shad
 import { cn } from '@oe/ui/utils/cn';
 import { ChevronDown } from 'lucide-react';
 import { memo } from 'react';
-// biome-ignore lint/style/useImportType: <explanation>
-import React from 'react';
+import type React from 'react';
 import { SettingsForm } from './theme-section-setting-form';
 
 interface ConfigSectionProps {

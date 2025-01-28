@@ -75,15 +75,16 @@ export const ThemePageSettingObjectField: React.FC<ThemePageSettingObjectFieldPr
                 label={key}
                 value={fieldValue as ThemeFieldValue}
                 onChange={newValue => handleFieldChange(key, newValue)}
-                type={
-                  fieldType === 'text' ||
-                  fieldType === 'number' ||
-                  fieldType === 'boolean' ||
-                  fieldType === 'file' ||
-                  fieldType === 'link'
-                    ? fieldType
-                    : 'text'
-                }
+                // type={
+                //   fieldType === 'text' ||
+                //   fieldType === 'number' ||
+                //   fieldType === 'boolean' ||
+                //   fieldType === 'file' ||
+                //   fieldType === 'link'
+                //     ? fieldType
+                //     : 'text'
+                // }
+                type={fieldType}
                 path={[...path, key]}
               />
             );

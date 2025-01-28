@@ -18,16 +18,33 @@ export const ThemePageSettingField: React.FC<ThemePageSettingFieldProps> = ({
   type = 'text',
   path,
 }) => {
+  console.log(type, value);
   return (
     <div className="space-y-2">
       <div className={cn('flex', type === 'text' ? 'flex-row items-center justify-between' : 'flex-col')}>
         <Label className="capitalize">{label}</Label>
+
+        {/* TODO: add prefix "/" automatically */}
         {type === 'link' && (
           <Input
             type="text"
             value={value as string}
             onChange={e => onChange(e.target.value)}
             placeholder="/"
+            className="block"
+          />
+        )}
+
+        {type === 'id' && (
+          <Input
+            type="text"
+            value={(value as string)?.replace('id-', '')}
+            onChange={e => {
+              const inputValue = e.target.value;
+              const cleanValue = inputValue.replace('id-', '');
+              onChange(`id-${cleanValue}`);
+            }}
+            placeholder="123"
             className="block"
           />
         )}
