@@ -5,9 +5,9 @@ export const footerMessages = {
     navigation: {
       registration: {
         title: 'Registration',
-        becomeCreator: 'Become Creator',
-        becomeWriter: 'Become Writer',
-        organization: 'Organization Registration',
+        becomeEducators: 'Become Educators',
+        becomeLearners: 'Become Learners',
+        becomeOrganizations: 'Become Organizations',
       },
       terms: {
         title: 'Terms & Conditions',

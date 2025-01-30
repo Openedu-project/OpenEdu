@@ -251,6 +251,13 @@ export const fontClasses = {
     lineHeight: '140%' /* 20px */,
   },
 
+  '.mcaption-bold14': {
+    fontFamily: 'var(--font-secondary), sans-serif',
+    fontSize: '14px',
+    fontWeight: 700,
+    lineHeight: '140%' /* 20px */,
+  },
+
   '.mcaption-semibold14': {
     fontFamily: 'var(--font-secondary), sans-serif',
     fontSize: '14px',

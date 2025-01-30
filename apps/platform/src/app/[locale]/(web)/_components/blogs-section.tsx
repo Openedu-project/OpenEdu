@@ -18,6 +18,7 @@ export default async function BlogsSection() {
       },
     }),
   ]);
+
   const featuredPost = blogsData?.results?.[0] as unknown as IBlog;
   const restPost = blogsData?.results?.slice(1) as unknown as IBlog[];
 

@@ -15,15 +15,15 @@ export function Footer() {
       registration: [
         {
           href: '/become-creator',
-          label: t('navigation.registration.becomeCreator'),
+          label: t('navigation.registration.becomeEducators'),
         },
         {
           href: '/become-writer',
-          label: t('navigation.registration.becomeWriter'),
+          label: t('navigation.registration.becomeLearners'),
         },
         {
           href: '/organization',
-          label: t('navigation.registration.organization'),
+          label: t('navigation.registration.becomeOrganizations'),
         },
       ],
       terms: [

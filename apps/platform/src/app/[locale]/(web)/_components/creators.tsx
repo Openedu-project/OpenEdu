@@ -10,19 +10,6 @@ export default function CreatorsSection() {
     <div className="relative w-full overflow-hidden">
       <div className="container relative mx-auto px-4 py-5 lg:py-10">
         <div className="flex flex-col items-center">
-          <div className="mb-6">
-            <div className="relative flex w-48 md:w-64 lg:w-[660px]">
-              <Image
-                src={CreatorImage.src}
-                alt="OpenEdu Creator"
-                width={944}
-                height={800}
-                className="rounded-full object-contain"
-                priority
-              />
-            </div>
-          </div>
-
           <div className="mt-6 text-center md:mt-8 lg:mt-10">
             <h2 className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold32 mb-4 md:mb-6">
               {t('title')}
@@ -33,6 +20,18 @@ export default function CreatorsSection() {
             <Button size="lg" className="rounded-full px-8">
               {t('buttons.become')}
             </Button>
+          </div>
+          <div className="mt-6">
+            <div className="relative flex w-48 md:w-64 lg:w-[550px]">
+              <Image
+                src={CreatorImage.src}
+                alt="OpenEdu Creator"
+                width={944}
+                height={800}
+                className="rounded-full object-contain"
+                priority
+              />
+            </div>
           </div>
         </div>
       </div>

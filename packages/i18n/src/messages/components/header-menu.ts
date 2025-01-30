@@ -4,6 +4,6 @@ export const headerMenuMessages = {
     courses: 'Courses',
     blog: 'Blog',
     launchpad: 'Launchpad',
-    becomeCreator: 'Become a Creator',
+    becomeEducator: 'Become a Educator',
   },
 };

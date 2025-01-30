@@ -49,6 +49,27 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
     --auth-background: linear-gradient(254.89deg, #b8f4f8 6.18%, #ede3fe 70.53%);
+    --learning-path-background: linear-gradient(
+      110deg,
+      rgba(255, 230, 240, 1) 0%,
+      rgba(240, 220, 255, 1) 35%,
+      rgba(220, 240, 255, 1) 70%,
+      rgba(220, 255, 250, 1) 100%
+    );
+    --ai-feature-background: linear-gradient(
+      6deg,
+      rgba(255, 255, 255, 0.3) 4.37%,
+      rgba(250, 174, 227, 0.3) 37.02%,
+      rgba(160, 244, 249, 0.5) 71.84%,
+      rgba(255, 255, 255, 0.3) 99.69%
+    );
+    --launchpad-background: linear-gradient(
+      -110deg,
+      rgba(255, 255, 255, 0.3) 4.37%,
+      rgba(250, 174, 227, 0.3) 37.02%,
+      rgba(160, 244, 249, 0.5) 71.84%,
+      rgba(255, 255, 255, 0.3) 99.69%
+    );
   }
 
   .dark {
@@ -96,6 +117,27 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
     --auth-background: linear-gradient(254.89deg, #b8f4f8 6.18%, #ede3fe 70.53%);
+    --learning-path-background: linear-gradient(
+      110deg,
+      rgba(255, 230, 240, 1) 0%,
+      rgba(240, 220, 255, 1) 35%,
+      rgba(220, 240, 255, 1) 70%,
+      rgba(220, 255, 250, 1) 100%
+    );
+    --ai-feature-background: linear-gradient(
+      6deg,
+      rgba(255, 255, 255, 0.3) 4.37%,
+      rgba(250, 174, 227, 0.3) 37.02%,
+      rgba(160, 244, 249, 0.5) 71.84%,
+      rgba(255, 255, 255, 0.3) 99.69%
+    );
+    --launchpad-background: linear-gradient(
+      -110deg,
+      rgba(255, 255, 255, 0.3) 4.37%,
+      rgba(250, 174, 227, 0.3) 37.02%,
+      rgba(160, 244, 249, 0.5) 71.84%,
+      rgba(255, 255, 255, 0.3) 99.69%
+    );
   }
 }
 

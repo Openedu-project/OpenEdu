@@ -1,47 +1,71 @@
-import HeroBanner from '@oe/assets/images/openedu-homepage/hero-banner.png';
+import HeroBanner from '@oe/assets/images/openedu-homepage/hero-banner/hero-banner.png';
+import LogoOpenEdu from '@oe/assets/images/openedu-homepage/hero-banner/logo-openedu-blue.png';
+import WhaleWelcome from '@oe/assets/images/openedu-homepage/hero-banner/whale-welcome.png';
 import { Image } from '@oe/ui/components/image';
-import { useTranslations } from 'next-intl';
-import HighlightTitle from './commons/highlight-title';
-import StatsCard from './commons/stats-card';
+import { Button } from '@oe/ui/shadcn/button';
+import { getTranslations } from 'next-intl/server';
+import PartnerSection from './partners';
 
-export default function HeroSection() {
-  const t = useTranslations('homePageLayout.heroSection');
+// Mark as server component
+export default async function HeroSection() {
+  // Move this to server-side
+  const t = await getTranslations('homePageLayout.heroSection');
 
   return (
-    <div className="flex flex-col items-center gap-8 py-5 pb-10 lg:flex-row lg:py-10 lg:pb-20">
-      <div className="] relative w-full overflow-hidden rounded-[40px] border-4 border-white bg-gradient-to-l from-25% from-white via-[#F2F1FF]/30 to-[#F2F1FF]/30 p-4 backdrop-blur-[2px] md:p-12 lg:w-1/2">
-        <div className="flex items-center gap-2 text-primary">
-          <HighlightTitle text={t('highlight')} />
+    <section className="container mx-auto px-0 py-5 pt-3 pb-10 md:px-4 lg:py-10 lg:pt-5 lg:pb-20">
+      <div className="flex flex-col items-center gap-8 lg:flex-row">
+        <div className="relative w-full lg:w-1/2">
+          <div className="absolute inset-0 bg-gradient-to-tr from-[#B8F4F8] from-[6.18%] to-[#EDE3FE] to-[70.53%] opacity-50 blur-3xl" />
+
+          <div className="relative z-10">
+            <div className="mb-6">
+              <div className="flex w-[90px] items-center justify-center">
+                <Image src={WhaleWelcome.src} alt={t('whale.alt')} width={81} height={90} className="object-contain" />
+              </div>
+              <div className="mt-6 flex max-w-[210px]">
+                <Image src={LogoOpenEdu.src} alt={t('logo.alt')} width={280} height={42} className="object-contain" />
+              </div>
+            </div>
+
+            <h1 className="mb-4 flex items-center gap-2">
+              <span className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold32 text-primary">
+                {t('tagline.learning')}
+              </span>
+              <span className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold32">.</span>
+              <span className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold32 text-[#09BEC9]">
+                {t('tagline.sharing')}
+              </span>
+              <span className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold32">.</span>
+              <span className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold32 text-[#FD68F2]">
+                {t('tagline.growing')}
+              </span>
+              <span className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold32">.</span>
+            </h1>
+
+            <div className="mb-8 max-w-xl">
+              <h2 className="mcaption-regular16 lg:mcaption-regular24">{t('description')}</h2>
+            </div>
+
+            <Button className="mb-8">{t('cta.button')}</Button>
+          </div>
         </div>
 
-        <h1 className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold32 leading-tight lg:max-w-[80%] ">
-          {t('title')}
-        </h1>
-
-        <p className="mcaption-regular16 lg:mcaption-regular24 max-w-xl">{t('description')}</p>
-
-        <div className="mt-8 flex flex-wrap gap-8 md:gap-12">
-          <StatsCard number={t('stats.learners.number')} label={t('stats.learners.label')} circleColor="bg-[#FD86F5]" />
-          <StatsCard number={t('stats.courses.number')} label={t('stats.courses.label')} circleColor="bg-yellow-100" />
-          <StatsCard number={t('stats.creators.number')} label={t('stats.creators.label')} circleColor="bg-cyan-100" />
-        </div>
-      </div>
-
-      <div className="relative w-full lg:w-1/2">
-        <div className="relative mx-auto w-full max-w-[600px]">
-          <div className="relative w-full">
+        <div className="relative w-full lg:w-1/2">
+          <div className="relative mx-auto w-full max-w-[550px]">
             <Image
               src={HeroBanner.src}
-              alt="Hero banner"
+              alt={t('hero.banner.alt')}
               width={554}
               height={582}
               priority
-              className="object-contain"
+              className="relative z-10 object-contain"
               sizes="(max-width: 768px) 100vw, (max-width: 1440px) 50vw, 720px"
             />
           </div>
         </div>
       </div>
-    </div>
+
+      <PartnerSection />
+    </section>
   );
 }

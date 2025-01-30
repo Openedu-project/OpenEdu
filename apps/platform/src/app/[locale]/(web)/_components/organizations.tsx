@@ -31,8 +31,11 @@ export default function OrganizationSection() {
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {organizations.map(org => (
-            <div key={org.name} className="space-y-4">
-              <div className="relative flex overflow-hidden rounded-3xl bg-white">
+            <div
+              key={org.name}
+              className="space-y-4 bg-gradient-to-b from-25% from-white via-60% via-[#F2F1FF] to-100% to-[#F2F1FF]/30 p-4"
+            >
+              <div className="relative flex overflow-hidden rounded-3xl">
                 <Image
                   src={org.cardImage}
                   alt={`${org.name} card`}
@@ -43,7 +46,7 @@ export default function OrganizationSection() {
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="flex h-[68px] w-[68px] items-center justify-center rounded-full bg-white p-2">
+                <div className="flex h-[68px] w-[68px] items-center justify-center rounded-full p-2">
                   <Image src={org.logo} alt={org.name} width={68} height={68} className="rounded-full" />
                 </div>
                 <span className="giant-iheading-semibold20 md:giant-iheading-semibold24 font-medium">{org.name}</span>
