@@ -64,7 +64,13 @@ export function Footer() {
             className="w-[115px] min-w-[115px] md:w-[172px]"
           />
         </Link>
-        <p className="mcaption-regular16 max-w-xs">{t('description')}</p>
+
+        <div className="mcaption-regular16 max-w-sm">
+          {t.rich('description', {
+            emphasis: chunks => <span className="text-primary">{chunks}</span>,
+            break: () => <br />,
+          })}
+        </div>
       </div>
     ),
     [t]

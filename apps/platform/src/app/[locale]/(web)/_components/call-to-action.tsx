@@ -25,6 +25,7 @@ export default function CTASection() {
               alt="CTA banner"
               width={554}
               height={582}
+              priority
               className="object-contain"
               sizes="(max-width: 768px) 100vw, (max-width: 1440px) 50vw, 720px"
             />

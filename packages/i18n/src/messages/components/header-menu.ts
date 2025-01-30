@@ -5,5 +5,10 @@ export const headerMenuMessages = {
     blog: 'Blog',
     launchpad: 'Launchpad',
     becomeEducator: 'Become a Educator',
+    subSidebar: {
+      forLearners: 'For Learners',
+      forEducators: 'For Educators',
+      forOrganisations: 'For Organisations',
+    },
   },
 };

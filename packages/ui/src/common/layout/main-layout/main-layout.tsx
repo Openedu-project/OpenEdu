@@ -12,13 +12,15 @@ import type { ISidebarItem } from '../sidebar';
 export function MainLayout({
   children,
   sidebarItems,
+  subSidebarItems,
 }: {
   children: ReactNode;
   sidebarItems?: ISidebarItem[];
+  subSidebarItems?: ISidebarItem[];
 }) {
   return (
     <>
-      <Header sidebarItems={sidebarItems}>
+      <Header sidebarItems={sidebarItems} subSidebarItems={subSidebarItems}>
         <Link
           href={PLATFORM_ROUTES.homepage}
           className="p-0 hover:bg-transparent"
@@ -33,9 +35,8 @@ export function MainLayout({
             className="w-[115px] min-w-[115px] md:w-[172px]"
           />
         </Link>
-
         <ul className="ml-6 hidden gap-3 text-primary-foreground md:flex">
-          {sidebarItems?.map((item) => (
+          {sidebarItems?.map(item => (
             <li key={item.id}>
               <Link
                 href={item.href ?? ''}
