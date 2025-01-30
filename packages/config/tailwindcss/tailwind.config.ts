@@ -89,6 +89,9 @@ const config: Omit<Config, 'content'> = {
       },
       backgroundImage: {
         'auth-background': 'var(--auth-background)',
+        'learning-gradient': 'var(--learning-path-background)',
+        'ai-feature-gradient': 'var(--ai-feature-background)',
+        'launchpad-gradient': 'var(--launchpad-background)',
       },
       borderRadius: {
         default: 'var(--radius)',
@@ -119,10 +122,15 @@ const config: Omit<Config, 'content'> = {
             height: '0',
           },
         },
+        'infinite-scroll': {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-50%)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'infinite-scroll': 'infinite-scroll linear infinite',
       },
     },
   },

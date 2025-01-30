@@ -8,6 +8,7 @@ import Polkadot from '@oe/assets/images/openedu-homepage/partners/polkadot.png';
 import Sui from '@oe/assets/images/openedu-homepage/partners/sui.png';
 import Vbi from '@oe/assets/images/openedu-homepage/partners/vbi.png';
 import { Image } from '@oe/ui/components/image';
+import { Marquee } from '@oe/ui/components/marquee';
 
 interface PartnerLogoProps {
   name: string;
@@ -70,12 +71,12 @@ const partners = [
 
 export default function PartnerSection() {
   return (
-    <section className="py-5 lg:py-10">
-      <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+    <section className="py-2 lg:py-4">
+      <Marquee>
         {partners.map(partner => (
-          <PartnerLogo key={partner.name} {...partner} />
+          <PartnerLogo key={partner.name} name={partner.name} logo={partner.logo} />
         ))}
-      </div>
+      </Marquee>
     </section>
   );
 }

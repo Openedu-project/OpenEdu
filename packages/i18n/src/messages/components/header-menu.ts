@@ -4,6 +4,11 @@ export const headerMenuMessages = {
     courses: 'Courses',
     blog: 'Blog',
     launchpad: 'Launchpad',
-    becomeCreator: 'Become a Creator',
+    becomeEducator: 'Become a Educator',
+    subSidebar: {
+      forLearners: 'For Learners',
+      forEducators: 'For Educators',
+      forOrganisations: 'For Organisations',
+    },
   },
 };

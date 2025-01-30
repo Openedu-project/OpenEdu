@@ -1,30 +1,31 @@
 export const homePageMessage = {
   homePageLayout: {
     heroSection: {
-      highlight: 'Grow Your Future With Us',
-      title: 'Learn From The Best. Master Latest Skills - Anytime, Anywhere.',
+      whale: {
+        alt: 'whale welcome',
+      },
+      logo: {
+        alt: 'OpenEdu Logo',
+      },
+      tagline: {
+        learning: 'Learning',
+        sharing: 'Sharing',
+        growing: 'Growing',
+      },
       description:
-        'Get unlimited access to diverse courses on a pioneering e-learning platform integrating Blockchain technology.',
-      stats: {
-        learners: {
-          number: '10k+',
-          label: 'Learners',
-        },
-        courses: {
-          number: '1k+',
-          label: 'Courses',
-        },
-        creators: {
-          number: '100+',
-          label: 'Creators',
+        'Open Edu is an online learning platform powered by blockchain and AI technology, designed to simplify teaching and learning while fostering value sharing.',
+      cta: {
+        button: 'Start Your Learning',
+      },
+      hero: {
+        banner: {
+          alt: 'Hero banner',
         },
       },
     },
-    introductionSection: {
-      highlight: 'Learning. Sharing. Creating',
-      title: 'Introduction About OpenEdu',
-      description:
-        'OpenEdu is an innovative e-learning platform powered by generative AI and Web3 technology, designed to make creating and sharing knowledge effortless. We transform education into a rewarding experience, fostering a vibrant community of learners and creators who thrive by exchanging knowledge and earning recognition.',
+    popularCoursesSection: {
+      title: 'Popular Courses',
+      viewAll: 'View all',
     },
     aiAssistantSection: {
       title: 'Grow Your Knowledge\nWith OpenEdu AI Assistant',
@@ -44,52 +45,77 @@ export const homePageMessage = {
       },
     },
     referralProgramSection: {
-      title: 'Join Our Referral Program To Earn Reward Point',
-      description:
-        'By inviting friends to join OpenEdu and explore its diverse e-learning offerings, users accumulate points that can be redeemed for discounts, exclusive rewards!',
-      buttons: {
-        explore: 'Explore More',
-      },
+      title: 'Join Our Referral Program To Earn Rewards',
+      description: 'Come and join our affiliate program now to enjoy our rewards!',
+      exploreMore: 'Explore More',
     },
-    courseLaunchpadSection: {
-      card: {
-        defaultTitle: 'Name of new course launchpad',
-        funded: 'funded',
-        daysLeft: 'days left',
+    launchpadSection: {
+      iconAlt: 'Course launch icon',
+      title: 'Launchpad - Easy Growth',
+      subtitle: 'Easy and effective way to get fundraise for your course!',
+      whyTitle: 'Why Launchpad?',
+      features: {
+        secureFunding: {
+          title: 'Secure Funding',
+          description:
+            'Raise funds to develop curriculums, hire expert lecturers, and market your courses effectively.',
+        },
+        empowerEducation: {
+          title: 'Empower Quality Education',
+          description: 'Motivate lecturers to create high-quality, engaging, and impactful courses.',
+        },
+        communitySupport: {
+          title: 'Community Support',
+          description: 'Collaborate with a vibrant community that values and supports your educational vision.',
+        },
+        marketing: {
+          title: 'Amplify Marketing & Branding',
+          description: 'Motivate lecturers to create high-quality, engaging, and impactful courses.',
+        },
+        collaboration: {
+          title: 'Transparent Collaboration',
+          description: 'Enjoy a fully transparent process for managing partnerships and course development.',
+        },
+        valueSharing: {
+          title: 'Automatic Value Sharing',
+          description:
+            'Seamlessly share revenues and rewards with contributors through our automated value-sharing system.',
+        },
       },
-      highlight: 'Easy. Trusted. Powerful',
-      title: 'Trusted Web3 Partner To Your Course Funding',
-      description:
-        'With a token wallet and a team of trusted experts in your domain, you can raise money or make a donation for your course on OpenEdu!',
     },
     organizationSection: {
       title: 'Top Organizations',
     },
-    featureSection: {
-      highlight: 'Grow Your Edu - Creator Path With Us',
-      title: 'Explore The Feature To Spread Your Knowledge',
-      description:
-        'With advanced tools for course creation, secure credentialing, and community engagement, OpenEdu helps users share expertise, grow their audience, and earn rewards in a future-ready learning ecosystem.',
+    aiFeatureSection: {
+      title: 'AI Agent - Easy Peasy',
+      description: 'Super AI assistants for learn, for work, for personal, and more.',
+      discoverNow: 'Discover Now',
+      comingSoon: 'Coming Soon',
+      andMore: 'And More...',
       features: {
-        aiGenerator: {
-          title: 'Create & Edit Course By',
-          subtitle: 'AI Generator',
-        },
         aiChat: {
-          title: 'Build Course & Blog Content By',
-          subtitle: 'AI Chat Models',
+          title: 'Create & Edit Content By',
+          subtitle: 'Chat Bot',
         },
-        aiRewrite: {
-          title: 'Create & Edit Blog By',
-          subtitle: 'AI Rewrite',
+        textToCourse: {
+          title: 'Generate Course By',
+          subtitle: 'Text To Course',
         },
-        courseFunding: {
-          title: 'Get Course Funding By',
-          subtitle: 'Course Launchpad',
+        textToSlide: {
+          title: 'Generate Slide By',
+          subtitle: 'Text To Slide',
         },
-        courseAffiliate: {
-          title: 'Earn Points From Course By',
-          subtitle: 'Course Affiliate',
+        textToImage: {
+          title: 'Generate Image By',
+          subtitle: 'Text To Image',
+        },
+        textToVideo: {
+          title: 'Generate Video By',
+          subtitle: 'Text To Video',
+        },
+        searchEngine: {
+          title: 'Find Latest Research By',
+          subtitle: 'Search Engine',
         },
       },
     },
@@ -100,9 +126,11 @@ export const homePageMessage = {
         become: 'Become Creator',
       },
     },
-    testimonialsSection: {
-      title: "Review From OpenEdu's Members",
+    learningPathSection: {
+      title: 'Personalize your learning path',
       description: 'Come join our platform to explore the world of future technology knowledge!',
+      earnCertificate: 'Earn Your Certificate',
+      storyFromMembers: 'Story From Our Memebers',
       testimonials: {
         testimonials1: {
           quote:
@@ -126,10 +154,10 @@ export const homePageMessage = {
     },
     ctaSection: {
       highlight: 'Let Us Do The Thrive',
-      title: 'Start Your Learning Journey With OpenEdu',
+      title: 'Start Your Learning Journey With OpenEdu. Today',
       description: 'Join now to receive personalized referral and exclusive discount from learning.',
       buttons: {
-        start: 'Start To Learn',
+        start: 'Start Your Learning',
       },
     },
   },

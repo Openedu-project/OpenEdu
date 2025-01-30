@@ -15,15 +15,15 @@ export function Footer() {
       registration: [
         {
           href: '/become-creator',
-          label: t('navigation.registration.becomeCreator'),
+          label: t('navigation.registration.becomeEducators'),
         },
         {
           href: '/become-writer',
-          label: t('navigation.registration.becomeWriter'),
+          label: t('navigation.registration.becomeLearners'),
         },
         {
           href: '/organization',
-          label: t('navigation.registration.organization'),
+          label: t('navigation.registration.becomeOrganizations'),
         },
       ],
       terms: [
@@ -64,7 +64,13 @@ export function Footer() {
             className="w-[115px] min-w-[115px] md:w-[172px]"
           />
         </Link>
-        <p className="mcaption-regular16 max-w-xs">{t('description')}</p>
+
+        <div className="mcaption-regular16 max-w-sm">
+          {t.rich('description', {
+            emphasis: chunks => <span className="text-primary">{chunks}</span>,
+            break: () => <br />,
+          })}
+        </div>
       </div>
     ),
     [t]
