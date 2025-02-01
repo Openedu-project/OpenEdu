@@ -27,7 +27,7 @@ export function TableUnvirtualized<TData>({
           <TableHeaderRows headerGroups={table?.getHeaderGroups() ?? []} border={border} />
         </TableHeader>
         <TableBody className="relative">
-          <TableLoading isLoading={isLoading} table={table} />
+          <TableLoading isLoading={isLoading} table={table} rows={rows} />
           {rows.length === 0 && !isLoading ? (
             <TableException error={error} table={table} mutate={mutate} />
           ) : (

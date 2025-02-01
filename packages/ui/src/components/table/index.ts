@@ -4,7 +4,7 @@ import type { CellContext, FilterFn, Row } from '@tanstack/react-table';
 import Table from './components/table';
 import { TableEditableCell } from './components/table-editable-cell';
 import { TableProvider, useTable } from './components/table-provider';
-import type { ColumnDef, TableRef } from './types';
+import type { ColumnDef, TableProps, TableRef } from './types';
 
 export {
   type ColumnDef,
@@ -16,4 +16,5 @@ export {
   TableProvider,
   useTable,
   type CellContext,
+  type TableProps,
 };

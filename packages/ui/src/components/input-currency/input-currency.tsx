@@ -81,24 +81,24 @@
 
 // InputCurrency.displayName = 'InputCurrency';
 
-import { useLocale } from "next-intl";
-import CurrencyInput, {
-  type CurrencyInputProps,
-} from "react-currency-input-field";
-import { cn } from "#utils/cn";
-import { type LanguageCode, languageWithCurrency } from "./languages-map";
+import { languageWithCurrency } from '@oe/i18n/languages-currency';
+import { useLocale } from 'next-intl';
+import CurrencyInput, { type CurrencyInputProps } from 'react-currency-input-field';
+import { cn } from '#utils/cn';
 
 function InputCurrency({
   value,
   onChange,
   className,
   hasCurrency = true,
+  locale,
   ...props
-}: Omit<CurrencyInputProps, "onChange"> & {
+}: Omit<CurrencyInputProps, 'onChange'> & {
   hasCurrency?: boolean;
+  locale?: string;
   onChange: (value: string | undefined) => void;
 }) {
-  const locale = useLocale();
+  const internalLocale = useLocale();
 
   const handleChange = (value: string | undefined) => {
     onChange?.(value);
@@ -109,14 +109,12 @@ function InputCurrency({
       value={value}
       onValueChange={handleChange}
       className={cn(
-        "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background transition-colors file:border-0 file:bg-transparent file:font-medium file:text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+        'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background transition-colors file:border-0 file:bg-transparent file:font-medium file:text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
         className
       )}
       intlConfig={{
-        locale: locale,
-        currency: hasCurrency
-          ? languageWithCurrency[locale as LanguageCode]?.currencyCode ?? "USD"
-          : "",
+        locale: locale ?? internalLocale,
+        currency: hasCurrency ? (languageWithCurrency[locale ?? internalLocale]?.currencyCode ?? 'USD') : '',
       }}
       {...props}
     />

@@ -1,6 +1,6 @@
+import { type LanguageCode, languageWithCurrency } from '@oe/i18n/languages-currency';
 import { useLocale } from 'next-intl';
 import { formatValue } from 'react-currency-input-field';
-import { type LanguageCode, languageWithCurrency } from './languages-map';
 
 export function formatCurrency(value: string, hasCurrency = true) {
   const locale = useLocale();

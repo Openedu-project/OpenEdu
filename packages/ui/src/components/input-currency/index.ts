@@ -1,5 +1,5 @@
 import { formatCurrency } from './format-currency';
 import { InputCurrency } from './input-currency';
-import { languageWithCurrency } from './languages-map';
+// import { languageWithCurrency } from './languages-map';
 
-export { InputCurrency, formatCurrency, languageWithCurrency };
+export { InputCurrency, formatCurrency };

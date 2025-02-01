@@ -8,7 +8,9 @@
     "./icons/*": "./src/icons/*.tsx",
     "./icons/svg/*": "./src/icons/svg/*.svg",
     "./icons/social-icon/*": "./src/icons/social-icon/*.tsx",
-    "./package.json": "./package.json"
+    "./icons/currencies/*": "./src/icons/currencies/*.tsx",
+    "./package.json": "./package.json",
+    "./icons/types": "./src/icons/types.ts"
   },
   "type": "module",
   "scripts": {

@@ -87,14 +87,14 @@ export function TablePagination<TData>({
             type="number"
             min={1}
             max={pageCount}
-            defaultValue={pageIndex + 1}
+            value={pageIndex + 1}
             onChange={e => {
               const page = e.target.value ? Number(e.target.value) - 1 : 0;
               setPageIndex(page);
             }}
             className="h-8 w-14"
           />
-          <span className="whitespace-nowrap font-medium text-sm"> / {pageCount.toLocaleString()}</span>
+          <span className="whitespace-nowrap font-medium text-sm">/ {pageCount.toLocaleString()}</span>
         </div>
 
         <div className="flex items-center space-x-2">

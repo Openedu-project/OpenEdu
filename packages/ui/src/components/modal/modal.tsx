@@ -32,7 +32,7 @@ export interface ButtonConfig extends Omit<ButtonProps, 'onClick'> {
 
 // type FormSchema = z.ZodObject<Record<string, z.ZodTypeAny>>;
 
-interface ModalProps<TSchema extends z.ZodType> {
+export interface ModalProps<TSchema extends z.ZodType> {
   title: ReactNode;
   description?: ReactNode;
   trigger?: ReactNode;

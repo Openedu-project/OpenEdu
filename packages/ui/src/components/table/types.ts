@@ -17,6 +17,7 @@ export type ColumnDef<T> = ColumnDefTanstack<T> & {
   align?: 'left' | 'center' | 'right';
   sticky?: 'left' | 'right';
   className?: string;
+  headerClassName?: string;
 };
 
 export type TableProps<TData> = {
@@ -41,6 +42,7 @@ export type TableProps<TData> = {
   hasSelection?: boolean;
   hasNoColumn?: boolean;
   className?: string;
+  wrapperClassName?: string;
   filterSearchProps?: Omit<FilterSearchProps, 'filterOptions'>;
   expandColumnProps?: Partial<ColumnDef<TData>>;
   mutate?: KeyedMutator<HTTPPagination<TData>>;

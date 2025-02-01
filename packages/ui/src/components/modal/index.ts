@@ -1,3 +1,3 @@
-import { type ButtonConfig, Modal } from './modal';
+import { type ButtonConfig, Modal, type ModalProps } from './modal';
 
-export { Modal, type ButtonConfig };
+export { Modal, type ButtonConfig, type ModalProps };

@@ -15,6 +15,7 @@ export function FormWrapper<TFormSchema extends z.ZodType>({
   children,
   className,
   resetOnSuccess,
+  context,
   onSubmit,
   onError,
   ...props
@@ -31,6 +32,7 @@ export function FormWrapper<TFormSchema extends z.ZodType>({
     ...useFormProps,
     resolver: schema ? zodResolver(schema) : undefined,
     defaultValues,
+    context,
   });
   const [loading, setLoading] = useState(false);
 

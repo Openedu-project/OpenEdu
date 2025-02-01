@@ -29,41 +29,66 @@
 // // Không hiển thị ký hiệu tiền tệ
 // console.log(formatCurrency(1234.56, { showSymbol: false }));
 // // "1,234.56"
+import { DEFAULT_LOCALE } from '@oe/i18n/constants';
 import type { LanguageCode } from '@oe/i18n/languages';
+import { languageWithCurrency } from '@oe/i18n/languages-currency';
 
-type CurrencyType = 'fiat' | 'crypto';
+export const DEFAULT_CURRENCY = 'USD';
 
-interface FormatCurrencyOptions {
+export interface FormatCurrencyOptions extends Intl.NumberFormatOptions {
   locale?: LanguageCode;
   currency?: string;
-  type?: CurrencyType;
+  // type?: CurrencyType;
   decimals?: number;
   showSymbol?: boolean;
 }
 
+export const findLocaleFromCurrency = (currencyCode?: string): LanguageCode => {
+  const entry = Object.entries(languageWithCurrency).find(([_, details]) => details.currencyCode === currencyCode);
+  return (entry?.[0] || DEFAULT_LOCALE) as LanguageCode;
+};
+
+export const findCurrencyFromLocale = (locale: LanguageCode): string => {
+  return languageWithCurrency[locale as LanguageCode]?.currencyCode ?? DEFAULT_CURRENCY;
+};
+
+const isValidLocale = (locale?: LanguageCode): boolean => {
+  return !!locale && locale in languageWithCurrency;
+};
+
+const isValidFiatCurrency = (currency?: string): boolean => {
+  return !!currency && Object.values(languageWithCurrency).some(details => details.currencyCode === currency);
+};
+
 export const formatCurrency = (amount: number, options: FormatCurrencyOptions = {}): string => {
-  const { locale = 'en-US', currency = 'USD', type = 'fiat', decimals, showSymbol = true } = options;
+  const { decimals, showSymbol = true, ...rest } = options;
+
+  const locale = isValidLocale(options.locale)
+    ? (options.locale as LanguageCode)
+    : isValidFiatCurrency(options.currency)
+      ? findLocaleFromCurrency(options.currency)
+      : DEFAULT_LOCALE;
+
+  const currency = isValidFiatCurrency(options.currency)
+    ? options.currency
+    : options.currency || findCurrencyFromLocale(locale) || DEFAULT_CURRENCY;
 
   try {
-    if (type === 'crypto') {
-      const formatter = new Intl.NumberFormat(locale, {
-        minimumFractionDigits: decimals ?? 8,
-        maximumFractionDigits: decimals ?? 8,
-      });
-
-      const formattedAmount = formatter.format(amount);
-      return showSymbol ? `${formattedAmount} ${currency}` : formattedAmount;
-    }
+    const isFiatCurrency = isValidFiatCurrency(currency);
 
     const formatter = new Intl.NumberFormat(locale, {
-      style: 'currency',
-      currency: currency,
-      minimumFractionDigits: decimals ?? 2,
-      maximumFractionDigits: decimals ?? 2,
-      currencyDisplay: showSymbol ? 'symbol' : 'code',
+      ...(isFiatCurrency && {
+        style: 'currency',
+        currency,
+        currencyDisplay: showSymbol ? 'symbol' : 'code',
+      }),
+      minimumFractionDigits: decimals ?? (isFiatCurrency ? 2 : 8),
+      maximumFractionDigits: decimals ?? (isFiatCurrency ? 2 : 8),
+      ...rest,
     });
 
-    return formatter.format(amount);
+    const formattedAmount = formatter.format(amount);
+    return isFiatCurrency ? formattedAmount : showSymbol ? `${formattedAmount} ${currency}` : formattedAmount;
   } catch {
     return amount.toString();
   }

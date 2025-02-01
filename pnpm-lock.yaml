@@ -208,6 +208,9 @@ importers:
 
   packages/api:
     dependencies:
+      '@oe/assets':
+        specifier: workspace:*
+        version: link:../assets
       '@oe/core':
         specifier: workspace:*
         version: link:../core
@@ -591,6 +594,9 @@ importers:
       '@tiptap/starter-kit':
         specifier: ^2.11.0
         version: 2.11.2
+      '@web3icons/react':
+        specifier: ^3.16.0
+        version: 3.16.0(react@19.0.0)(typescript@5.7.3)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -2199,6 +2205,16 @@ packages:
 
   '@types/wicg-file-system-access@2023.10.5':
     resolution: {integrity: sha512-e9kZO9kCdLqT2h9Tw38oGv9UNzBBWaR1MzuAavxPcsV/7FJ3tWbU6RI3uB+yKIDPGLkGVbplS52ub0AcRLvrhA==}
+
+  '@web3icons/common@0.10.0':
+    resolution: {integrity: sha512-Ksh9CAkxNtj9FPiBCNoctqj8ieS7eBcixtm4+Xt0ralK/35MltSrNizMYfrwXAlF9M3ACqRBkZbrHnIEPsrdLg==}
+    peerDependencies:
+      typescript: ^5.0.0
+
+  '@web3icons/react@3.16.0':
+    resolution: {integrity: sha512-EDTKJA0Q9aR6ihiwaMZrJjwC/N0fteJd3doV2wOYm6/LiRQaWAZYbL9pUE0dVuuukSQC1MDL8lSU/qGZJ8ewJg==}
+    peerDependencies:
+      react: ^18.2.0
 
   acorn-walk@8.3.4:
     resolution: {integrity: sha512-ueEepnujpqee2o5aIYnvHU6C0A42MNdsIDeqy5BydrkuC5R1ZuUFnm27EeFJGoEHJQgn3uleRvmTXaJgfXbt4g==}
@@ -5412,6 +5428,17 @@ snapshots:
   '@types/use-sync-external-store@0.0.6': {}
 
   '@types/wicg-file-system-access@2023.10.5': {}
+
+  '@web3icons/common@0.10.0(typescript@5.7.3)':
+    dependencies:
+      typescript: 5.7.3
+
+  '@web3icons/react@3.16.0(react@19.0.0)(typescript@5.7.3)':
+    dependencies:
+      '@web3icons/common': 0.10.0(typescript@5.7.3)
+      react: 19.0.0
+    transitivePeerDependencies:
+      - typescript
 
   acorn-walk@8.3.4:
     dependencies:

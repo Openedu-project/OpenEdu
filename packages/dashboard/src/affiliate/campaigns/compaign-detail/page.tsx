@@ -32,9 +32,9 @@ export default function UserAffiliateCampaignsDetailManagement({
             <h3 className="giant-iheading-semibold16 md:giant-iheading-semibold20">
               {tDashboard('course')}: {courseName} - {tDashboard('price')}
               :&nbsp;
-              <span className="text-[#2BA830]">{formatCurrency(coursePrice ?? '')}</span>
+              <span className="text-success">{formatCurrency(coursePrice ?? '')}</span>
             </h3>
-            <div className="mbutton-regular16 flex items-start gap-1 text-[#6E6E6E]">
+            <div className="mbutton-regular16 flex items-start gap-1 text-muted">
               <Calendar />
               {formatDateTime(Number(startDate ?? '') || 0)} -&nbsp;
               {formatDateTime(Number(endDate ?? '') || 0)}

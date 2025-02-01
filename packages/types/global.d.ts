@@ -47,6 +47,14 @@ declare global {
       NEXT_PUBLIC_AUTH_FACEBOOK_ID: string;
       NEXT_PUBLIC_AUTH_TWITTER_ID: string;
       NEXT_PUBLIC_AUTH_LINKEDIN_ID: string;
+
+      NEXT_PUBLIC_NEAR_RPC: string;
+      NEXT_PUBLIC_NEAR_RPC_FAILOVER: string;
+      NEXT_PUBLIC_NEAR_CERT_CONTRACT: string;
+      NEXT_PUBLIC_NEAR_BADGES_CONTRACT: string;
+      NEXT_PUBLIC_NEAR_USDT_CONTRACT: string;
+      NEXT_PUBLIC_NEAR_USDC_CONTRACT: string;
+      NEXT_PUBLIC_AVAIL_RPC: string;
     }
   }
 }

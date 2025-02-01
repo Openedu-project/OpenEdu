@@ -131,6 +131,7 @@ export const PROTECTED_ROUTES = {
   learner: '/learner',
   blog: '/blog-admin',
   affiliate: '/affiliate',
+  wallet: '/wallet',
 } as const;
 
 export const ZONE_ROUTES = {
@@ -146,6 +147,20 @@ export const ZONE_ROUTES = {
 export const REFERRER_ROUTES = {
   admin: '/admin',
   creator: '/creator',
+} as const;
+
+export const WALLET_ROUTES = {
+  wallet: '/wallet',
+  deposit: '/wallet/deposit',
+  withdraw: '/wallet/withdraw',
+  history: '/wallet/history',
+  depositHistory: '/wallet/deposit-history',
+  withdrawHistory: '/wallet/withdraw-history',
+  bankAccounts: '/wallet/bank-accounts',
+  networks: '/wallet/networks',
+  earning: '/wallet/earning',
+  nft: '/wallet/nft',
+  points: '/wallet/points',
 } as const;
 
 export const SITEMAP_ROUTES = [

@@ -1,4 +1,27 @@
-import { CHAIN, CURRENCY_SYMBOLS, type TAssetType, type TChain, type TCurrencySymbol } from '#utils/wallet';
+import type { IBankAccountValue } from '#schemas/wallet';
+import type { TAssetType, TChain, TCurrencySymbol } from '#utils/wallet';
+
+export type TNetwork = 'NEAR' | 'AVAIL' | 'ETH';
+export type TToken = 'NEAR' | 'USDT' | 'USDC' | 'AVAIL' | 'ETH';
+
+export interface IWallet {
+  address: string;
+  available_balance: string;
+  balance: string;
+  blockchain_wallet_id: string;
+  create_at: number;
+  currency: string;
+  default: boolean;
+  delete_at: number;
+  earning_balance: string;
+  id: string;
+  network: string;
+  parent_id: string;
+  public_key: string;
+  type: string;
+  update_at: number;
+  user_id: string;
+}
 
 export type TAssetList = {
   wallet_id: string;
@@ -108,12 +131,11 @@ export type TPaginationResponse<T> = {
 
 export type TRequestWithdrawHistory = {
   create_at: number;
-  entity: {
-    currency: string;
-  };
-  request_value: number;
+  entity: IWallet;
+  request_value: string;
   status: string;
   note?: string;
+  type: string;
 };
 
 export type TTokenBalance = {
@@ -196,17 +218,56 @@ export type TTokenOption = {
   label: string;
 };
 
-export const NETWORK_OPTIONS = [
-  { value: CHAIN.NEAR, label: 'Near' },
-  { value: CHAIN.AVAIL, label: 'Avail' },
-] as const;
+// export const NETWORK_OPTIONS = [
+//   { value: CHAIN.NEAR, label: 'Near' },
+//   { value: CHAIN.AVAIL, label: 'Avail' },
+// ] as const;
 
-export const TOKEN_OPTIONS: Record<TChain, TTokenOption[]> = {
-  [CHAIN.NEAR]: [
-    { value: CURRENCY_SYMBOLS.NEAR, label: 'NEAR' },
-    { value: CURRENCY_SYMBOLS.USDT, label: 'USDT' },
-    { value: CURRENCY_SYMBOLS.USDC, label: 'USDC' },
-  ],
-  [CHAIN.AVAIL]: [{ value: CURRENCY_SYMBOLS.AVAIL, label: 'AVAIL' }],
-  [CHAIN.ETHEREUM]: [],
-} as const;
+// export const TOKEN_OPTIONS: Record<TChain, TTokenOption[]> = {
+//   [CHAIN.NEAR]: [
+//     { value: CURRENCY_SYMBOLS.NEAR, label: 'NEAR' },
+//     { value: CURRENCY_SYMBOLS.USDT, label: 'USDT' },
+//     { value: CURRENCY_SYMBOLS.USDC, label: 'USDC' },
+//   ],
+//   [CHAIN.AVAIL]: [{ value: CURRENCY_SYMBOLS.AVAIL, label: 'AVAIL' }],
+//   [CHAIN.ETHEREUM]: [],
+// } as const;
+
+export interface IBankAccount {
+  id: string;
+  create_at: number;
+  update_at: number;
+  delete_at: number;
+  enable: boolean;
+  org_id: string;
+  type: string;
+  user_id: string;
+  value: IBankAccountValue;
+}
+
+export interface ITransaction {
+  amount: string;
+  blockchain_tx_id: string;
+  create_at: number;
+  currency: string;
+  currency_type: string;
+  data: Record<string, unknown>;
+  delete_at: number;
+  entity: IWallet;
+  entity_id: string;
+  entity_type: string;
+  error_code: number;
+  files: null;
+  id: string;
+  network: string;
+  note: string;
+  org_id: string;
+  payment_id: string;
+  status: 'success' | 'pending' | 'failed' | 'new' | 'cancelled' | 'rejected' | 'approved';
+  to_address: string;
+  tx_hash: string;
+  type: string;
+  update_at: number;
+  user_id: string;
+  wallet_id: string;
+}

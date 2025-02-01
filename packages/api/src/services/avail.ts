@@ -11,7 +11,7 @@ export const getAvailBalance = async (address: string): Promise<string> => {
   const result: { data: { account_info: { data: { free: string } } } } = await fetchAPI(
     `${API_ENDPOINT.CHAIN_ACCOUNT_INFO.replace(':network', CHAIN.AVAIL).replace(':address', address)}?is_mainnet=${process.env.NODE_ENV !== 'development'}`
   );
-  const balance: string = result.data.account_info.data.free;
+  const balance: string = result?.data?.account_info?.data?.free || '0';
   const amount: string = toAvail(balance, 18);
 
   return amount;

@@ -50,6 +50,8 @@ export interface IFormWrapperProps<TFormSchema extends z.ZodType>
   useFormProps?: Omit<UseFormProps<z.infer<TFormSchema>>, 'resolver'>;
   children: ReactNode | ((props: { loading: boolean; form: UseFormReturn<z.infer<TFormSchema>> }) => ReactNode);
   resetOnSuccess?: boolean;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  context?: Record<string, any>;
   onSubmit?: SubmitHandler<z.infer<TFormSchema>>;
   onError?: FormErrorHandler;
 }

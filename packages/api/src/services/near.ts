@@ -125,7 +125,6 @@ export async function getNFTTokens(nftContract: string, address: string): Promis
       methodName: 'nft_tokens_for_owner',
       args: { account_id: address },
     });
-
     return tokens;
   } catch {
     return null;

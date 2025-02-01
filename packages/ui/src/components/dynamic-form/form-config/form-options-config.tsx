@@ -36,7 +36,7 @@ const OptionsInput = ({
       <div className="flex flex-1 gap-2">
         <Input
           placeholder={tDynamicForms('label')}
-          value={item.original.label}
+          value={item.original.label as string}
           onChange={e => handleUpdateItem('label', e)}
         />
         <Input
@@ -55,7 +55,10 @@ const OptionsInput = ({
 export default function FormOptionsConfig({
   field,
   handleConfigChange,
-}: { field: FormFieldType; handleConfigChange: (key: keyof FormFieldType, value: SelectboxOption[]) => void }) {
+}: {
+  field: FormFieldType;
+  handleConfigChange: (key: keyof FormFieldType, value: SelectboxOption[]) => void;
+}) {
   const tDynamicForms = useTranslations('dynamicForms.fieldConfig');
   const ref = useRef<IDndSortableRef<SelectboxOption, unknown>>(null);
   return (

@@ -1,5 +1,5 @@
 import { fileResponseScheme } from '#types/file';
-import { CHAIN, CURRENCY_SYMBOLS } from '#utils/wallet';
+import { CRYPTO_CURRENCIES, FIAT_CURRENCIES } from '#utils/wallet';
 import { z } from '#utils/zod';
 
 export const approveWithdrawSchema = z.object({
@@ -15,43 +15,61 @@ export const approveWithdrawSchema = z.object({
 export type IApproveWithdrawType = z.infer<typeof approveWithdrawSchema>;
 
 export const cryptoWithdrawSchema = z.object({
-  network: z.nativeEnum(CHAIN), // sử dụng TChain
-  address: z
-    .string()
-    .min(1, { message: 'withdrawPage.form.errors.requiredAddress' })
-    .transform(val => val.trim())
-    .refine(val => val.length > 0, { message: 'withdrawPage.form.errors.invalidAddress' }),
-  token: z.string(),
+  withdraw_type: z.literal('crypto').optional(),
+  network: z.enum(Object.keys(CRYPTO_CURRENCIES) as [string, ...string[]]),
+  to_address: z.string().min(1, { message: 'wallets.withdrawPage.form.errors.requiredAddress' }),
+  token: z.string().min(1, { message: 'wallets.withdrawPage.form.errors.requiredToken' }),
   amount: z
     .string()
-    .min(1, { message: 'withdrawPage.form.errors.requiredAmount' })
-    .transform(val => val.trim())
-    .refine(val => !Number.isNaN(Number(val)), { message: 'withdrawPage.form.errors.invalidAmount' })
-    .refine(val => Number(val) > 0, { message: 'withdrawPage.form.errors.positiveAmount' }),
+    .min(1, { message: 'wallets.withdrawPage.form.errors.requiredAmount' })
+    .transform(val => val.trim()),
   note: z
     .string()
     .optional()
     .transform(val => val?.trim() || undefined),
+  is_mainnet: z.boolean().optional(),
+  currency: z.enum(Object.keys(CRYPTO_CURRENCIES) as [string, ...string[]]).optional(),
 });
 
-export type ICryptoWithdrawType = z.infer<typeof cryptoWithdrawSchema>;
+export type ICryptoWithdrawPayload = z.infer<typeof cryptoWithdrawSchema>;
 
-export const fiatWithdrawSchema = z.object({
-  fiatType: z.nativeEnum(CURRENCY_SYMBOLS), // sử dụng TCurrencySymbol
-  bankAccount: z.string().min(1, { message: 'withdrawPage.form.errors.requiredBankAccount' }),
-  amount: z
-    .string()
-    .min(1, { message: 'withdrawPage.form.errors.requiredAmount' })
-    .transform(val => val.trim())
-    .refine(val => !Number.isNaN(Number(val)), { message: 'withdrawPage.form.errors.invalidAmount' })
-    .refine(val => Number(val) > 0, { message: 'withdrawPage.form.errors.positiveAmount' }),
-  note: z
-    .string()
-    .optional()
-    .transform(val => val?.trim() || undefined),
-});
+export const fiatWithdrawSchema = z
+  .object({
+    currency: z.enum(Object.keys(FIAT_CURRENCIES) as [string, ...string[]]),
+    bank_account_id: z.string().min(1, { message: 'wallets.withdrawPage.form.errors.requiredBankAccount' }),
+    amount: z
+      .string({ required_error: 'wallets.withdrawPage.form.errors.requiredAmount' })
+      .min(1, { message: 'wallets.withdrawPage.form.errors.requiredAmount' })
+      .transform(val => val.trim())
+      .refine(val => val.length > 0, { message: 'wallets.withdrawPage.form.errors.invalidAmount' }),
+    note: z
+      .string()
+      .optional()
+      .transform(val => val?.trim() || undefined),
+  })
+  .superRefine((data, ctx: z.RefinementCtx & { contextualData?: { availableBalance: number } }) => {
+    const amount = Number(data.amount);
+    const availableBalance = Number(ctx?.contextualData?.availableBalance ?? 0);
+    if (Number.isNaN(amount) || amount <= 0) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'wallets.withdrawPage.form.errors.positiveAmount',
+        path: ['amount'],
+      });
+      return;
+    }
 
-export type IFiatWithdrawType = z.infer<typeof fiatWithdrawSchema>;
+    if (amount > availableBalance) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'wallets.withdrawPage.form.errors.amountExceedsBalance',
+        path: ['amount'],
+      });
+      return;
+    }
+  });
+
+export type IFiatWithdrawPayload = z.infer<typeof fiatWithdrawSchema>;
 
 export const rejectWithdrawSchema = z.object({
   value: z.string(),

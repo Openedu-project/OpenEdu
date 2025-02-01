@@ -10,7 +10,10 @@ import { getHeaderClassName } from '../utils';
 export function TableHeaderRows<TData>({
   headerGroups,
   border,
-}: { headerGroups: HeaderGroup<TData>[]; border: TableBorder }) {
+}: {
+  headerGroups: HeaderGroup<TData>[];
+  border: TableBorder;
+}) {
   return headerGroups.map((headerGroup, index) => (
     <TableRow key={headerGroup.id} className="flex bg-muted last:border-b-2 hover:bg-muted">
       {headerGroup.headers.map(header => (
@@ -26,7 +29,7 @@ export function TableHeaderRows<TData>({
             index,
             border,
             headerGroupsLength: headerGroups.length,
-            className: (header.column.columnDef as ColumnDef<TData>).className,
+            className: (header.column.columnDef as ColumnDef<TData>).headerClassName,
           })}
         >
           {header.id === 'expander' ? (
