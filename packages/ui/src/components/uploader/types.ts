@@ -35,6 +35,8 @@ export interface UploaderProps extends Omit<InputHTMLAttributes<HTMLInputElement
   fileItemProps?: Partial<UploadFileItemProps>;
   triggerProps?: Partial<UploadTriggerProps>;
   value?: IFileResponse[];
+  contentClassName?: string;
+  isShowInformation?: boolean;
   allowRename?: boolean; // Flag cho phép đổi tên file
   onChange?: (files: IFileResponse[]) => void;
   renderTrigger?: (triggerProps: UploadTriggerProps) => ReactNode; // Cho phép custom render trigger
@@ -55,6 +57,7 @@ export interface UploadTriggerProps extends Omit<InputHTMLAttributes<HTMLInputEl
   file?: FileType;
   fileItemProps?: Partial<UploadFileItemProps>;
   onChange?: (files: FileList) => void;
+  contentClassName?: string;
 }
 
 export interface UploadFileItemProps {

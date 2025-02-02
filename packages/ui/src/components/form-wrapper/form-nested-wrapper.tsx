@@ -35,6 +35,7 @@ export function FormNestedWrapper<TFormSchema extends z.ZodType>({
   });
   const [loading, setLoading] = useState(false);
   const context = useFormContext();
+  const { control, watch, setValue } = form;
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const isFormNoSubmitButton = useMemo(() => {
@@ -124,7 +125,7 @@ export function FormNestedWrapper<TFormSchema extends z.ZodType>({
         onSubmit={form.handleSubmit(handleSubmit, handleError)}
         {...props}
       >
-        {typeof children === 'function' ? children({ loading, form }) : children}
+        {typeof children === 'function' ? children({ loading, form, control, watch, setValue }) : children}
         {isFormNoSubmitButton && <button type="submit" className="hidden" />}
       </form>
     </RHFFormProvider>

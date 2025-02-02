@@ -15,6 +15,13 @@ export interface IMeSettingContent<T> {
   results: T[];
 }
 
+export interface IUserRole {
+  role_id: string;
+  org_id: string;
+  org_name: string;
+  org_domain: string;
+}
+
 export interface IUserProfile extends IUser {
   about: string;
   phone: string;

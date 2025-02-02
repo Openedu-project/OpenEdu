@@ -73,7 +73,7 @@ export default function CourseHeader() {
           courseData={courseData}
           // className={cn(
           //   "flex h-6 w-6 items-center p-1 md:h-8 md:w-8",
-          //   props?.is_affiliate && "!mr-spacing-mml"
+          //   props?.is_affiliate && "!mr-6"
           // )}
           // config={shareConfig}
           // isAffiliate={props?.is_affiliate}

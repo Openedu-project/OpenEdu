@@ -258,23 +258,23 @@ const PaymentConfirm = ({
                 <Card
                   id={courseData?.id}
                   className={cn(
-                    '!shadow-none !p-0 mx-auto flex h-full w-full flex-col gap-spacing-sm rounded-radius-m border-none'
+                    '!shadow-none !p-0 mx-auto flex h-full w-full flex-col gap-3 rounded-radius-m border-none'
                   )}
                 >
-                  <div className="relative w-full shrink-0 rounded-radius-sm bg-bg-primary-50">
+                  <div className="relative w-full shrink-0 rounded-2 bg-[#ebecfb]">
                     <Image
                       src={courseData?.thumbnail?.url}
                       alt={courseData?.name ?? ''}
-                      className="rounded-radius-sm"
+                      className="rounded-2"
                       height={222}
                       width={390}
                       sizes="(max-width: 768px) 280px, 380px"
                     />
                   </div>
-                  <div className="mcaption-bold24 flex items-center gap-spacing-xs text-primary">
+                  <div className="mcaption-bold24 flex items-center gap-1 text-primary">
                     <span>{courseData?.name}</span>
                   </div>
-                  <CardContent className="flex basis-full flex-col gap-spacing-sm p-0 text-foreground">
+                  <CardContent className="flex basis-full flex-col gap-3 p-0 text-foreground">
                     <div className="mb-3 flex items-center gap-2">
                       <div className="mcaption-semibold16 line-clamp-1 flex items-center gap-1">
                         <span className="text-foreground/70">{tCoursePayment('creator')}:</span>
@@ -290,16 +290,16 @@ const PaymentConfirm = ({
                         name={courseData?.owner?.display_name ?? courseData?.owner?.username ?? ''}
                       />
                     </div>
-                    <div className="mcaption-regular16 mb-2 flex items-center gap-spacing-xs">
+                    <div className="mcaption-regular16 mb-2 flex items-center gap-1">
                       <CalendarClock className="h-[17px] w-[16px] text-[#2C2C2C]" />
                       <span>
                         {tCoursePayment('lastUpdated')}&nbsp;
                         {formatDate(courseData?.pub_date ?? 0)}
                       </span>
                     </div>
-                    <div className="mcaption-semibold16 flex justify-between gap-spacing-s text-foreground">
+                    <div className="mcaption-semibold16 flex justify-between gap-2 text-foreground">
                       <div className="flex flex-wrap gap-5">
-                        <div className="flex items-center gap-spacing-xs">
+                        <div className="flex items-center gap-1">
                           <Person2User />
                           <span>
                             {courseData?.learner_count ?? 0}&nbsp;
@@ -309,7 +309,7 @@ const PaymentConfirm = ({
                           </span>
                         </div>
                         {courseData?.levels?.[0] && (
-                          <div className="flex items-center gap-spacing-xs">
+                          <div className="flex items-center gap-1">
                             <Layer />
                             &nbsp;
                             <span>{courseData?.levels?.[0]?.name}</span>

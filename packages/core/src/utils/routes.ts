@@ -22,8 +22,21 @@ export const PLATFORM_ROUTES = {
   notFound: '/not-found',
   terms: '/terms',
   specificTerms: '/terms/:terms',
-  userProfile: '/user/:username',
   wallet: '/wallet',
+  userProfile: '/user/:username',
+  editUserName: '/user/:username/edit',
+  editProfileInformation: '/user/:username/edit/profile',
+  editProfileCertificates: '/user/:username/edit/profile/certificates',
+  editProfileCourses: '/user/:username/edit/profile/courses',
+  editProfileBlogs: '/user/:username/edit/profile/blogs',
+  editProfileAccount: '/user/:username/edit/account',
+  editProfilePassword: '/user/:username/edit/password',
+  editProfileNotifications: '/user/:username/edit/notifications',
+  editProfilePrivacy: '/user/:username/edit/privacy',
+  profileCertificateDetail: '/user/:username/certificate/:certId',
+  learner: '/learner',
+  learnerMyCertificates: '/learner/my-certificates',
+  learnerMyCertificateDetail: '/learner/my-certificates/:certId',
 } as const;
 
 export const BLOG_ROUTES = {

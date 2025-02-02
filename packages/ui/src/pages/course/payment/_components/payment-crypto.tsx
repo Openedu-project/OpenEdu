@@ -217,7 +217,7 @@ const PaymentCrypto = ({
                 <span className="giant-iheading-semibold12">{cryptoCurrency}</span>
               </p>
             </div>
-            <div className="flex items-center justify-between rounded-radius-s rounded-xl bg-[#F2F1FF] px-3 py-2">
+            <div className="flex items-center justify-between rounded-2 rounded-xl bg-[#F2F1FF] px-3 py-2">
               <span className="giant-iheading-semibold16 md:giant-iheading-semibold20">{t('finalPrice')}&nbsp;</span>
               <span className="giant-iheading-semibold20 md:giant-iheading-semibold28 text-primary">
                 <span>{formatNumber(amountDue ?? 0)}</span>&nbsp;
@@ -239,7 +239,7 @@ const PaymentCrypto = ({
         </div>
         <div className="mcaption-semibold14 mx-4 flex flex-col gap-4 md:mx-10 md:gap-6">
           <div
-            className={`flex flex-col justify-between gap-4 rounded-radius-s bg-[#E1F7E2] px-3 py-2 ${
+            className={`flex flex-col justify-between gap-4 rounded-2 bg-[#E1F7E2] px-3 py-2 ${
               hasEnoughInsufficient ? 'bg-[#E1F7E2]' : 'bg-[#FFDADD]'
             }`}
           >
@@ -263,7 +263,7 @@ const PaymentCrypto = ({
               </span>
             </p>
             {!hasEnoughInsufficient && (
-              <div className="md: flex flex-col justify-between rounded-radius-sm bg-white p-3 md:flex-row">
+              <div className="md: flex flex-col justify-between rounded-2 bg-white p-3 md:flex-row">
                 <span className="text-[#FA0013]">
                   {t?.rich('step3CryptoInsufficientAmount', {
                     number: amountDue - Number.parseFloat(amountWalletByCurrency ?? '0'),

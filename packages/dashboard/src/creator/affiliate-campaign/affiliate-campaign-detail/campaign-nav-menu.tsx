@@ -95,7 +95,7 @@ export const AffiliateCampaignNavMenu = ({ id }: { id: string }) => {
   return (
     <NavigationMenu>
       <ScrollArea className="w-full whitespace-nowrap rounded-b-radius-m bg-white">
-        <NavigationMenuList className="flex w-full gap-spacing-sm rounded-nonejustify-start bg-transparent bg-white pb-spacing-sm">
+        <NavigationMenuList className="flex w-full gap-3 rounded-nonejustify-start bg-transparent bg-white pb-3">
           {navLabel.map(nav => (
             <ClientNavMenuItem key={nav.value} nav={nav} />
           ))}

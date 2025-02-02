@@ -43,7 +43,7 @@ export const SocialInput: FC<SocialInputProps> = ({
   };
 
   return (
-    <div className="grid grid-cols-[32px_1fr] items-center gap-spacing-m ">
+    <div className="grid grid-cols-[32px_1fr] items-center gap-4 ">
       {renderIcon()}
       <Input
         type="text"

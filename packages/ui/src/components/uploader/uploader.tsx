@@ -32,6 +32,8 @@ export const Uploader = (props: UploaderProps) => {
     accept,
     value,
     allowRename,
+    contentClassName = '',
+    isShowInformation = true,
     renderTrigger,
     renderFileList,
     onFileNameChange,
@@ -257,7 +259,9 @@ export const Uploader = (props: UploaderProps) => {
         {renderTrigger ? (
           renderTrigger(defaultTriggerProps)
         ) : (
-          <UploadTrigger {...defaultTriggerProps}>{children}</UploadTrigger>
+          <UploadTrigger {...defaultTriggerProps} contentClassName={contentClassName}>
+            {children}
+          </UploadTrigger>
         )}
         {fileListVisible &&
           files.map(file => (
@@ -293,7 +297,7 @@ export const Uploader = (props: UploaderProps) => {
           />
         )}
       </div>
-      {maxSizeBytes && children && (
+      {isShowInformation && maxSizeBytes && children && (
         <>
           <span className="text-xs italic">
             {accept ? t('acceptedFormats', { formats: accept }) : t('allFileTypesAccepted')}

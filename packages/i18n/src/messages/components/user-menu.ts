@@ -1,6 +1,6 @@
 export const userMenuMessages = {
   userMenu: {
-    profile: 'Profile',
+    myProfile: 'My Profile',
     admin: 'Admin',
     creator: 'Creator',
     organizationBlog: 'Organization Blog',

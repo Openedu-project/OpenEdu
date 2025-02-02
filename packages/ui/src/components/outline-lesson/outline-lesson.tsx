@@ -59,7 +59,7 @@ const LessonCountDisplay = ({
 
 const getButtonStyles = (isActive: boolean, isAvailable: boolean) =>
   cn(
-    'h-fit w-full items-center gap-1 whitespace-normal rounded-radius-s border-[0.4px] p-2 shadow-shadow-6',
+    'h-fit w-full items-center gap-1 whitespace-normal rounded-2 border-[0.4px] p-2 shadow-shadow-6',
     'hover:border-primary focus:border',
     isActive ? 'border-primary' : 'border-foreground/10',
     !isAvailable && 'pointer-events-none'

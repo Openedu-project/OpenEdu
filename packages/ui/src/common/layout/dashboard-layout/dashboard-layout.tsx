@@ -25,13 +25,9 @@ export function DashboardLayout({
           variant="ghost"
           activeClassName="border-0"
         >
-          <Image
-            src={OpeneduLogo.src}
-            alt="OpenEdu"
-            width={172}
-            height={40}
-            className="w-[115px] min-w-[115px] md:w-[172px]"
-          />
+          <div className="w-[115px] min-w-[115px] md:w-[172px]">
+            <Image src={OpeneduLogo.src} alt="OpenEdu" width={172} height={40} />
+          </div>
         </Link>
       </Header>
       <main className="flex flex-1 overflow-hidden bg-muted">

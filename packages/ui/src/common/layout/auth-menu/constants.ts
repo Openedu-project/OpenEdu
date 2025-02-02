@@ -1,24 +1,54 @@
 import { ROLE_LIST } from '@oe/core/utils/constants';
 import { ADMIN_ROUTES, AFFILIATE_ROUTES, BLOG_ADMIN_ROUTES, CREATOR_ROUTES } from '@oe/core/utils/routes';
-import { Settings, User } from 'lucide-react';
+import {
+  BadgePercent,
+  Bolt,
+  FileText,
+  GraduationCap,
+  NotebookPen,
+  ScrollText,
+  type Settings,
+  type User,
+  Wallet,
+} from 'lucide-react';
 
 type MenuItem = {
   key: string;
   icon: typeof Settings | typeof User;
   requiredRoles: string[];
   href: string;
+  hasSepratePage?: boolean;
 };
 
 export const MENU_ITEMS: MenuItem[] = [
   {
-    key: 'profile',
-    icon: User,
-    requiredRoles: Object.values(ROLE_LIST),
-    href: '',
+    key: 'affiliate',
+    icon: BadgePercent,
+    requiredRoles: [ROLE_LIST.LEARNER],
+    href: AFFILIATE_ROUTES.campaigns,
+  },
+  {
+    key: 'learningSpace',
+    icon: NotebookPen,
+    requiredRoles: [ROLE_LIST.LEARNER],
+    href: '#',
+  },
+  {
+    key: 'wallet',
+    icon: Wallet,
+    requiredRoles: [ROLE_LIST.LEARNER],
+    href: '#',
+  },
+  {
+    key: 'myBlog',
+    icon: FileText,
+    requiredRoles: [ROLE_LIST.LEARNER],
+    href: '#',
+    hasSepratePage: true,
   },
   {
     key: 'admin',
-    icon: Settings,
+    icon: Bolt,
     requiredRoles: [
       ROLE_LIST.SYSTEM_ADMIN,
       ROLE_LIST.ADMIN,
@@ -27,41 +57,19 @@ export const MENU_ITEMS: MenuItem[] = [
       ROLE_LIST.ORG_MODERATOR,
     ],
     href: ADMIN_ROUTES.dashboard,
+    hasSepratePage: true,
   },
   {
     key: 'creator',
-    icon: Settings,
+    icon: GraduationCap,
     requiredRoles: [ROLE_LIST.PARTNER],
     href: CREATOR_ROUTES.dashboard,
+    hasSepratePage: true,
   },
   {
     key: 'organizationBlog',
-    icon: Settings,
+    icon: ScrollText,
     requiredRoles: [ROLE_LIST.ORG_EDITOR, ROLE_LIST.ORG_WRITER],
     href: BLOG_ADMIN_ROUTES.myBlog,
-  },
-  {
-    key: 'learningSpace',
-    icon: Settings,
-    requiredRoles: [ROLE_LIST.LEARNER],
-    href: '#',
-  },
-  {
-    key: 'affiliate',
-    icon: Settings,
-    requiredRoles: [ROLE_LIST.LEARNER],
-    href: AFFILIATE_ROUTES.campaigns,
-  },
-  {
-    key: 'wallet',
-    icon: Settings,
-    requiredRoles: [ROLE_LIST.LEARNER],
-    href: '#',
-  },
-  {
-    key: 'myBlog',
-    icon: Settings,
-    requiredRoles: [ROLE_LIST.LEARNER],
-    href: '#',
   },
 ] as const;

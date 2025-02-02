@@ -67,7 +67,9 @@ export const Sidebar: FC<ISidebarProps> = ({ items, maxDepth = 2, pathnamesNoSid
       <SheetContent side="left" className="flex h-dvh flex-col gap-0 overflow-hidden p-0">
         <SheetHeader className="sticky h-14 space-y-0 border-b">
           <SheetTitle className="mb-0 flex items-center p-4">
-            <Image src={OpeneduLogo.src} alt="OpenEdu" width={172} height={40} className="w-[115px] md:w-[172px]" />
+            <div className="mr-auto w-[115px] md:w-[172px]">
+              <Image src={OpeneduLogo.src} alt="OpenEdu" width={172} height={40} />
+            </div>
           </SheetTitle>
           <SheetDescription />
         </SheetHeader>

@@ -35,6 +35,7 @@ export function FormWrapper<TFormSchema extends z.ZodType>({
     context,
   });
   const [loading, setLoading] = useState(false);
+  const { control, watch, setValue } = form;
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const isFormNoSubmitButton = useMemo(() => {
@@ -81,7 +82,7 @@ export function FormWrapper<TFormSchema extends z.ZodType>({
         }}
         noValidate
       >
-        {typeof children === 'function' ? children({ loading, form }) : children}
+        {typeof children === 'function' ? children({ loading, form, control, watch, setValue }) : children}
         {isFormNoSubmitButton && <button type="submit" className="hidden" />}
       </form>
     </RHFFormProvider>

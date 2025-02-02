@@ -55,14 +55,9 @@ export function Footer() {
     () => (
       <div className="w-full lg:col-span-4">
         <Link href="/" className="mb-6 flex items-center gap-2 border-none p-0">
-          <Image
-            src={OpeneduLogo.src}
-            alt="OpenEdu"
-            align="start"
-            width={172}
-            height={40}
-            className="w-[115px] min-w-[115px] md:w-[172px]"
-          />
+          <div className="mr-auto w-[115px] md:w-[172px]">
+            <Image src={OpeneduLogo.src} alt="OpenEdu" align="start" width={172} height={40} />
+          </div>
         </Link>
 
         <div className="mcaption-regular16 max-w-sm">

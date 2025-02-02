@@ -20,7 +20,17 @@ import type { ICourseOrganizationRequest } from './org-request';
 import type { ISection } from './segment';
 
 export interface IThumbnail extends Omit<IFileResponse, 'bunny_video_id'> {}
-
+export interface IPartner {
+  id: string;
+  username?: string;
+  email?: string;
+  avatar?: string;
+  active?: boolean;
+  blocked?: boolean;
+  roles?: TCourseRoles[];
+  enable?: boolean;
+  display_name?: string; //new field
+}
 export interface ICourse {
   cuid: string;
   id: string;
@@ -79,7 +89,8 @@ export interface ICourse {
   quiz_count: number;
 
   accesses: TCourseRoles | null;
-  partners: null;
+  partners: IPartner[] | null;
+
   categories?: ICategory[];
   reviewing: ICourseVersion | null;
   form_relations: null;
