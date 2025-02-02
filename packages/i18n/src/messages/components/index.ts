@@ -1,11 +1,14 @@
 import { AIGenerateMessages } from './ai-generate-modal';
 import { blogFormMessages } from './blog-form';
+import { certificateMessages } from './certificate';
+import { courseComingSoonMessages } from './course-coming-soon';
 import { dateTimePickerMessages } from './date-time-picker';
 import { dialogMessages } from './dialog';
 import { footerMessages } from './footer';
 import { formValidationMessages } from './form-validation';
 import { headerMenuMessages } from './header-menu';
 import { loginRequiredMessages } from './login-required-modal';
+import { noDataAvailableMessages } from './no-data-available';
 import { paymentButtonMessages } from './payment-button';
 import { confirmPublishMessages } from './publish-button';
 import { richTextMessages } from './rich-text';
@@ -30,4 +33,7 @@ export const componentMessages = {
   ...footerMessages,
   ...AIGenerateMessages,
   ...confirmPublishMessages,
+  ...noDataAvailableMessages,
+  ...courseComingSoonMessages,
+  ...certificateMessages,
 };

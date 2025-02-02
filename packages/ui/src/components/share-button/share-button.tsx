@@ -62,7 +62,7 @@ export default function ShareButton({
           variant="outline"
           className={cn(
             'relative flex h-6 w-6 items-center border-foreground/20 focus:border focus-visible:ring-0 md:h-8 md:w-8 md:p-2',
-            courseData?.props?.is_affiliate && '!mr-spacing-mml',
+            courseData?.props?.is_affiliate && '!mr-6',
             className
           )}
           {...props}

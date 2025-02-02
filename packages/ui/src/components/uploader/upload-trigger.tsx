@@ -22,6 +22,7 @@ export const UploadTrigger = (props: UploadTriggerProps) => {
     file,
     onChange,
     ref,
+    contentClassName = '',
     ...rest
   } = props;
   const t = useTranslations('uploader');
@@ -128,7 +129,8 @@ export const UploadTrigger = (props: UploadTriggerProps) => {
           disabled ? 'cursor-not-allowed opacity-50' : '',
           React.isValidElement(children)
             ? (children.props as React.ButtonHTMLAttributes<HTMLButtonElement>).className
-            : undefined
+            : undefined,
+          contentClassName
         ),
       } as React.ButtonHTMLAttributes<HTMLButtonElement>);
     }

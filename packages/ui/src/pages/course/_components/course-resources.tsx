@@ -61,7 +61,7 @@ export default function CourseResources({ docs }: { docs: IFileResponse[] }) {
         </CollapsibleTrigger>
         <CollapsibleContent>
           <div className="mt-3 grid grid-cols-1 gap-3 rounded-lg border border-foreground/20 bg-background p-2 shadow">
-            <div className="flex items-center justify-between space-x-spacing-mml">
+            <div className="flex items-center justify-between space-x-6">
               <span className="mcaption-semibold16 text-foreground/90">{t('resources')}</span>
               {docs?.length > 1 && (
                 <Button

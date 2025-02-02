@@ -1,7 +1,14 @@
 import type { z } from '@oe/api/utils/zod';
 import type { TabsTriggerProps } from '@radix-ui/react-tabs';
 import type { HTMLAttributes, MouseEvent, ReactNode, RefObject } from 'react';
-import type { SubmitHandler, UseFormProps, UseFormReturn, UseFormWatch } from 'react-hook-form';
+import type {
+  Control,
+  SubmitHandler,
+  UseFormProps,
+  UseFormReturn,
+  UseFormSetValue,
+  UseFormWatch,
+} from 'react-hook-form';
 
 export type FormErrorHandler = (error: unknown) => void | Promise<void>;
 
@@ -48,7 +55,15 @@ export interface IFormWrapperProps<TFormSchema extends z.ZodType>
   tabId?: string;
   dependencies?: string[];
   useFormProps?: Omit<UseFormProps<z.infer<TFormSchema>>, 'resolver'>;
-  children: ReactNode | ((props: { loading: boolean; form: UseFormReturn<z.infer<TFormSchema>> }) => ReactNode);
+  children:
+    | ReactNode
+    | ((props: {
+        loading: boolean;
+        form: UseFormReturn<z.infer<TFormSchema>>;
+        watch: UseFormWatch<z.infer<TFormSchema>>;
+        control: Control<z.infer<TFormSchema>>;
+        setValue: UseFormSetValue<z.infer<TFormSchema>>;
+      }) => ReactNode);
   resetOnSuccess?: boolean;
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   context?: Record<string, any>;

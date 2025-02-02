@@ -132,6 +132,14 @@ const config: Omit<Config, 'content'> = {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'infinite-scroll': 'infinite-scroll linear infinite',
       },
+      dropShadow: {
+        'shadow-1': '0px 1px 8px 0px rgba(0, 0, 0, 0.12)',
+        'shadow-2': '0px 4px 16px 0px rgba(0, 0, 0, 0.16)',
+        'shadow-3': '0px 8px 24px 0px rgba(0, 0, 0, 0.12)',
+        'shadow-4': '0px 8px 32px 0px rgba(0, 0, 0, 0.2)',
+        'shadow-5': '0px 20px 68px 0px rgba(128, 144, 155, 0.25)',
+        'shadow-6': '0px 0px 6px 0px rgba(0, 0, 0, 0.05)',
+      },
     },
   },
   plugins: [

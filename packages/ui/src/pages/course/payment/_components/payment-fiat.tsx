@@ -228,7 +228,7 @@ const PaymentFiat = ({
                 <span> {formatNumber(shareRateAmount ?? 0)}</span>
               </p>
             </div>
-            <div className="flex items-center justify-between rounded-radius-s rounded-xl bg-[#F2F1FF] px-3 py-2">
+            <div className="flex items-center justify-between rounded-2 rounded-xl bg-[#F2F1FF] px-3 py-2">
               <span className="giant-iheading-semibold16 md:giant-iheading-semibold20">{t('finalPrice')}&nbsp;</span>
               <span className="giant-iheading-semibold20 md:giant-iheading-semibold28 text-primary">
                 <span className="giant-iheading-semibold12">{fiatCurrency}</span>

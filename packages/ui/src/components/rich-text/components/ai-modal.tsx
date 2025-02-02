@@ -59,7 +59,7 @@ export const AIModal: React.FC<IAIModal> = ({ open = false, status, onConfirm, o
     }
     if (AIStatus === 'completed') {
       return (
-        <div className="!overflow-visible h-[50vh] whitespace-nowrap rounded-radius-m border bg-background p-spacing-s">
+        <div className="!overflow-visible h-[50vh] whitespace-nowrap rounded-radius-m border bg-background p-2">
           <div
             className="rich-text text-wrap text-foreground"
             // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>

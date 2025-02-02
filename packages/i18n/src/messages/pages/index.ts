@@ -15,6 +15,7 @@ import { organizationsMessage } from './organizations';
 import { permissionMessage } from './permissions';
 import { setPasswordMessage } from './set-password';
 import { userAffiliateCampaignMessage } from './user-affiliate-campaign';
+import { userProfileMessages } from './user-profile';
 import { verifyEmailMessage } from './verify-email';
 import { withdrawRequestMessage } from './withdraw-request';
 
@@ -38,4 +39,5 @@ export const pageMessages = {
   ...userAffiliateCampaignMessage,
   ...courseListMessages,
   ...coursePaymentMessages,
+  ...userProfileMessages,
 };
