@@ -12,7 +12,10 @@
     "./types": "./src/types.ts",
     "./package.json": "./package.json",
     "./store/*": "./src/_store/*.ts",
-    "./config/*": "./src/_config/*.ts"
+    "./config/*": "./src/_config/*.ts",
+    "./components/*": "./src/_components/*.tsx",
+    "./types/*": "./src/_types/*.ts",
+    "./utils/*": "./src/_utils/*.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
@@ -20,19 +23,19 @@
   },
   "peerDependencies": {
     "@oe/i18n": "workspace:*",
-    "@oe/api": "workspace:*",
     "next": "15.1.4",
     "next-intl": "3.26.3",
     "react": "19.0.0",
-    "zustand": "^5.0.3"
-  },
-  "dependencies": {
-    "cookies-next": "^5.0.2"
-  },
-  "devDependencies": {
+    "zustand": "^5.0.2",
+    "cookies-next": "^5.0.2",
+    "@oe/ui": "workspace:*",
+    "@oe/core": "workspace:*",
     "@oe/config": "workspace:*",
     "@oe/types": "workspace:*",
-    "@types/node": "^22.10.5",
+    "@oe/api": "workspace:*",
+    "@oe/assets": "workspace:*",
+    "@types/node": "^22.10.2",
     "@types/wicg-file-system-access": "^2023.10.5"
-  }
+  },
+  "devDependencies": {}
 }

@@ -21,18 +21,27 @@ export const useI18nTranslations = () => {
   const { data: translations } = useSWR(
     Object.keys(urls).length > 0 ? urls : null,
     async (urlMap: Record<LanguageCode, string>) => {
-      const results = {} as Record<LanguageCode, I18nMessage>;
-
-      await Promise.all(
-        Object.entries(urlMap).map(async ([locale, url]) => {
+      const promises = Object.entries(urlMap).map(async ([locale, url]) => {
+        try {
           const data = await fetchTranslationFile(url);
-          if (data) {
-            results[locale as LanguageCode] = data;
-          }
-        })
-      );
+          return { locale, data } as { locale: LanguageCode; data: I18nMessage | null };
+        } catch (error) {
+          console.error(`Failed to fetch translation for ${locale}:`, error);
+          return { locale, data: null };
+        }
+      });
 
-      return results;
+      const results = await Promise.allSettled(promises);
+
+      return results.reduce(
+        (acc, result) => {
+          if (result.status === 'fulfilled' && result.value.data) {
+            acc[result.value.locale] = result.value.data;
+          }
+          return acc;
+        },
+        {} as Record<LanguageCode, I18nMessage>
+      );
     }
   );
 
@@ -46,5 +55,6 @@ export const useI18nTranslations = () => {
   return {
     isLoading: systemConfigIsLoading,
     systemConfig,
+    translationMessages: translations,
   };
 };

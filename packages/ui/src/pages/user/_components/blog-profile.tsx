@@ -8,10 +8,10 @@ import { useRouter } from 'next/navigation';
 import type React from 'react';
 import { type HTMLAttributes, useCallback, useState } from 'react';
 
-import { createAPIUrl } from '@oe/api/utils/fetch';
 import BlogImage from '@oe/assets/images/blog.png';
 import { formatDateHourMinute } from '@oe/core/utils/datetime';
-import { BLOG_ROUTES, generateRoute } from '@oe/core/utils/routes';
+import { BLOG_ROUTES } from '@oe/core/utils/routes';
+import { buildUrl } from '@oe/core/utils/url';
 import { getLocaleFromPathname } from '@oe/i18n/utils';
 import { formatDistanceToNow } from 'date-fns';
 import { Image } from '#components/image';
@@ -41,7 +41,6 @@ export default function BlogCardProfile({
   ...props
 }: IBlogCardProps) {
   const router = useRouter();
-
   const [isShow, setIsShow] = useState<boolean>(blog?.is_show);
 
   const { addItem, removeItem, showItemList } = useShowProfileItemsStore();
@@ -50,24 +49,19 @@ export default function BlogCardProfile({
     if (typeof window !== 'undefined') {
       if (blog?.org?.domain && blog?.org?.domain !== window.location.hostname) {
         const locale = getLocaleFromPathname(window?.location?.pathname);
-        window.open(
-          createAPIUrl({
-            endpoint: `https://${blog?.org?.domain}/${locale}${generateRoute(BLOG_ROUTES.blogDetail, {
-              slug: blog?.slug,
-            })}`,
-            queryParams: { type: blog?.blog_type },
-          }),
-          '_blank'
-        );
+        const url = buildUrl({
+          endpoint: `https://${blog?.org?.domain}/${locale}/${BLOG_ROUTES.blogDetail}`,
+          params: { slug: blog?.slug },
+          queryParams: { type: blog?.blog_type },
+        });
+        window.open(url, '_blank');
       } else {
-        router.push(
-          createAPIUrl({
-            endpoint: generateRoute(BLOG_ROUTES.blogDetail, {
-              slug: blog?.slug,
-            }),
-            queryParams: { type: blog?.blog_type },
-          })
-        );
+        const url = buildUrl({
+          endpoint: BLOG_ROUTES.blogDetail,
+          params: { slug: blog?.slug },
+          queryParams: { type: blog?.blog_type },
+        });
+        router.push(url);
       }
     }
   };
@@ -77,16 +71,20 @@ export default function BlogCardProfile({
       e.preventDefault();
       if (typeof window !== 'undefined') {
         if (blog?.org?.domain && blog?.org?.domain !== window.location.hostname) {
-          const url = `https://${blog?.org?.domain}${generateRoute(BLOG_ROUTES.authorBlog, {
-            username: blog?.author?.username,
-          })}`;
+          // const url = `https://${blog?.org?.domain}${generateRoute(BLOG_ROUTES.authorBlog, {
+          //   username: blog?.author?.username,
+          // })}`;
+          const url = buildUrl({
+            endpoint: `https://${blog?.org?.domain}/${BLOG_ROUTES.authorBlog}`,
+            params: { username: blog?.author?.username },
+          });
           window.open(url, '_blank');
         } else {
-          router.push(
-            generateRoute(BLOG_ROUTES.authorBlog, {
-              username: blog?.author?.username,
-            })
-          );
+          const url = buildUrl({
+            endpoint: BLOG_ROUTES.authorBlog,
+            params: { username: blog?.author?.username },
+          });
+          router.push(url);
         }
       }
     },

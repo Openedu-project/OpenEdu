@@ -20,42 +20,46 @@ export const Sidebar: FC<ISidebarProps> = ({ items, maxDepth = 2, pathnamesNoSid
     return null;
   }
 
-  const renderSidebar = () => (
-    <aside
-      className={cn(
-        'scrollbar relative flex flex-col justify-around overflow-auto border-r bg-background transition-all duration-300 ease-in-out',
-        isCollapsed ? 'w-16 min-w-16' : 'w-64 min-w-64',
-        className
-      )}
-    >
-      <nav className="flex-1 p-2">
-        <ul className="space-y-2">
-          {items.map(item => (
-            <SidebarItem
-              key={item.id}
-              item={item}
-              depth={0}
-              maxDepth={maxDepth}
-              pathname={pathname}
-              isCollapsed={isCollapsed}
-            />
-          ))}
-        </ul>
-      </nav>
+  const renderSidebar = () => {
+    return (
+      <aside
+        className={cn(
+          'scrollbar relative flex flex-col justify-around overflow-auto border-r bg-background transition-all duration-300 ease-in-out',
+          isCollapsed ? 'w-16 min-w-16' : 'w-64 min-w-64',
+          className
+        )}
+      >
+        <nav className="flex-1 p-2">
+          <ul className="space-y-2">
+            {items.map(item => {
+              return (
+                <SidebarItem
+                  key={item.id}
+                  item={item}
+                  depth={0}
+                  maxDepth={maxDepth}
+                  pathname={pathname}
+                  isCollapsed={isCollapsed}
+                />
+              );
+            })}
+          </ul>
+        </nav>
 
-      {/* Collapse button at bottom */}
-      <div className="sticky bottom-0 border-t bg-background p-2">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="flex h-8 w-full items-center justify-center hover:bg-accent"
-          onClick={() => setIsCollapsed(!isCollapsed)}
-        >
-          {isCollapsed ? <ChevronRightCircle className="h-5 w-5" /> : <ChevronLeftCircle className="h-5 w-5" />}
-        </Button>
-      </div>
-    </aside>
-  );
+        {/* Collapse button at bottom */}
+        <div className="sticky bottom-0 border-t bg-background p-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="flex h-8 w-full items-center justify-center hover:bg-accent"
+            onClick={() => setIsCollapsed(!isCollapsed)}
+          >
+            {isCollapsed ? <ChevronRightCircle className="h-5 w-5" /> : <ChevronLeftCircle className="h-5 w-5" />}
+          </Button>
+        </div>
+      </aside>
+    );
+  };
 
   return isDrawer ? (
     <Sheet>

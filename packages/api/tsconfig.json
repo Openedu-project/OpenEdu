@@ -2,7 +2,7 @@
   "extends": "@oe/config/tsconfig/react.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "types": ["@oe/types/global.d.ts"]
+    "types": ["@oe/types/global.d.ts", "next/image-types/global"]
   },
   "include": ["src/**/*.ts", "../../apps/platform/src/app/[locale]/(web)/wallet/_hooks/useBankAccount.ts"]
 }

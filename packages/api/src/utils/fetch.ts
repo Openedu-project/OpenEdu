@@ -11,6 +11,7 @@ interface ICreateAPIUrl {
   endpoint: string;
   params?: Record<string, unknown>;
   queryParams?: Record<string, unknown>;
+  checkEmptyParams?: boolean;
 }
 
 export type FetchOptions = RequestInit & {
@@ -46,12 +47,13 @@ export const createQueryParams = <T extends Record<string, unknown>>(obj: T): st
     })
     .join('&');
 
-export const createAPIUrl = ({ endpoint, params, queryParams }: ICreateAPIUrl) => {
+export const createAPIUrl = ({ endpoint, params, queryParams, checkEmptyParams = false }: ICreateAPIUrl) => {
   let url = endpoint;
 
   if (params) {
     for (const [key, value] of Object.entries(params)) {
-      url = url.replace(`:${key}`, value as string);
+      // Check empty params turn-of and params was undefined
+      url = checkEmptyParams && !value ? url.replace(`/:${key}`, '') : url.replace(`:${key}`, value as string);
     }
   }
 

@@ -8,13 +8,18 @@ import { useLanguageStore } from '../_store/useLanguageStore';
 
 export function InitLanguageState() {
   const { init, updateTranslations } = useLanguageStore();
-  const { systemConfig, systemConfigIsLoading } = useSystemConfig<I18nConfig>({ key: systemConfigKeys.i18nConfig });
+  const { systemConfig, systemConfigIsLoading } = useSystemConfig<I18nConfig>({
+    key: systemConfigKeys.i18nConfig,
+  });
 
   useEffect(() => {
     if (!systemConfigIsLoading) {
       const { value, id } = systemConfig?.[0] ?? {};
       init({
-        locales: value?.locales?.map(code => ({ value: code, label: languages[code] })),
+        locales: value?.locales?.map(code => ({
+          value: code,
+          label: languages[code],
+        })),
         locale: value?.locale,
         id,
         languageStats: value?.stats,

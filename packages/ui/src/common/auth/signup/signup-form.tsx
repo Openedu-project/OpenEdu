@@ -20,7 +20,12 @@ import { Alert, AlertDescription } from '#shadcn/alert';
 import { signUpAction } from '../_action/signup-action';
 import { ResendButton } from '../resend-button';
 
-export default function SignUpForm() {
+interface SignUpFormProps {
+  tLoginTitle: string;
+  tSignupTitle: string;
+}
+
+export default function SignUpForm({ tLoginTitle, tSignupTitle }: SignUpFormProps) {
   const tAuth = useTranslations('auth');
   const tErrors = useTranslations('errors');
   const tGeneral = useTranslations('general');
@@ -78,7 +83,7 @@ export default function SignUpForm() {
               </Alert>
             )}
             <Button type="submit" className="w-full" loading={loading}>
-              {tAuth('signup.title')}
+              {tSignupTitle}
             </Button>
             <div className="text-center text-muted-foreground text-sm">
               {tAuth('signup.terms')}
@@ -89,7 +94,7 @@ export default function SignUpForm() {
             <div className="flex items-center justify-center">
               <p className="text-sm">{tAuth('signup.noAccount')}</p>
               <Link href={`${AUTH_ROUTES.login}?next=${nextPath}`} className="ml-1 h-auto p-0 font-medium">
-                {tAuth('signin.title')}
+                {tLoginTitle}
               </Link>
             </div>
           </>

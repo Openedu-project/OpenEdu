@@ -44,19 +44,19 @@ export default async function Layout({ children }: { children: ReactNode }) {
         href: CREATOR_ROUTES.courses,
       },
       {
-        id: 'forms',
-        label: tDashboard('forms.title'),
+        id: 'formValidation',
+        label: tDashboard('formValidation.title'),
         icon: <FileText className="h-5 w-5" />,
         items: [
           {
             id: 'form-templates',
-            label: tDashboard('forms.formTemplates'),
+            label: tDashboard('formValidation.formTemplates'),
             icon: <LayoutTemplate className="h-5 w-5" />,
             href: CREATOR_ROUTES.formTemplates,
           },
           {
             id: 'form-list',
-            label: tDashboard('forms.formList'),
+            label: tDashboard('formValidation.formList'),
             icon: <ReceiptText className="h-5 w-5" />,
             href: CREATOR_ROUTES.formList,
           },

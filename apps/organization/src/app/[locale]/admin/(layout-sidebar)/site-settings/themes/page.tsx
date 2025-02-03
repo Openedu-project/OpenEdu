@@ -1,11 +1,16 @@
-import SelectTheme from './_components/select-theme';
+import { getThemeConfigServer } from '@oe/api/services/theme';
+import ThemeListPage from '@oe/dashboard/admin/site-settings/themes/page';
 
-export default function ThemePage() {
+export default async function ThemePage() {
+  const [themeSystem] = await Promise.all([getThemeConfigServer()]);
+
+  if (!themeSystem?.[0]?.value) {
+    return null;
+  }
+
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="mb-8 font-bold text-3xl">Select a Theme</h1>
-
-      <SelectTheme />
-    </div>
+    <>
+      <ThemeListPage themeSystem={themeSystem?.[0]?.value} />
+    </>
   );
 }

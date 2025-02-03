@@ -49,14 +49,21 @@ export const parseI18nFileName = (fileName: string) => {
   return {
     type: parts[0] as 'current' | 'backup',
     orgId: parts[1],
-    locale: parts?.[parts.length - 1]?.replace('.json', '') as LanguageCode,
+    // locale: parts?.[parts.length - 1]?.replace('.json', '') as LanguageCode,
   };
 };
 
-export const getCurrentI18nFile = (files: IFileResponse[], locale: LanguageCode) => {
+// export const getCurrentI18nFile = (files: IFileResponse[], locale: LanguageCode) => {
+//   return files.find(file => {
+//      const { type,locale: fileLocale } = parseI18nFileName(file.name);
+//      return type === 'current' && locale === fileLocale;
+//   });
+// };
+
+export const getCurrentI18nFile = (files: IFileResponse[]) => {
   return files.find(file => {
-    const { type, locale: fileLocale } = parseI18nFileName(file.name);
-    return type === 'current' && locale === fileLocale;
+    const { type } = parseI18nFileName(file.name);
+    return type === 'current';
   });
 };
 
@@ -115,8 +122,7 @@ export const getUrls = ({
       if (!config) {
         return acc;
       }
-
-      const currentFile = getCurrentI18nFile(config.files, locale);
+      const currentFile = getCurrentI18nFile(config.files);
       if (currentFile) {
         acc[locale] = currentFile.name;
       }

@@ -19,7 +19,13 @@ import { Alert, AlertDescription } from '#shadcn/alert';
 import { Button } from '#shadcn/button';
 import { loginAction } from '../_action/login-action';
 
-export function LoginForm() {
+interface LoginFormProps {
+  tLoginTitle: string;
+  tSignupTitle: string;
+  tForgotpasswordTitle: string;
+}
+
+export function LoginForm({ tLoginTitle, tSignupTitle, tForgotpasswordTitle }: LoginFormProps) {
   const tAuth = useTranslations('auth');
   const tErrors = useTranslations('errors');
   const router = useRouter();
@@ -37,7 +43,7 @@ export function LoginForm() {
       await loginAction({ ...values, next_path: nextPath });
 
       await mutate(API_ENDPOINT.USERS_ME);
-      toast.success(tAuth('signin.success'));
+      toast.success(tAuth('login.success'));
       router.replace(nextPath);
     },
     [tAuth, router.replace, nextPath]
@@ -59,7 +65,7 @@ export function LoginForm() {
             <InputPassword placeholder={tAuth('passwordPlaceholder')} />
           </FormFieldWithLabel>
           <Link href={`${AUTH_ROUTES.forgotPassword}?next=${nextPath}`} className="m-0 h-auto w-full justify-end p-0">
-            {tAuth('forgotPassword.title')}
+            {tForgotpasswordTitle}
           </Link>
           {error || loginError ? (
             <Alert variant="destructive">
@@ -67,18 +73,18 @@ export function LoginForm() {
             </Alert>
           ) : null}
           <Button type="submit" className="w-full" loading={loading}>
-            {tAuth('signin.title')}
+            {tLoginTitle}
           </Button>
           <div className="text-center text-muted-foreground text-sm">
-            {tAuth('signin.terms')}
+            {tAuth('login.terms')}
             <Link href={PLATFORM_ROUTES.terms} className="ml-1 h-auto p-0 font-medium">
               {tAuth('termsAndConditions')}
             </Link>
           </div>
           <div className="flex items-center justify-center">
-            <p className="text-sm">{tAuth('signin.noAccount')}</p>
+            <p className="text-sm">{tAuth('login.noAccount')}</p>
             <Link href={`${AUTH_ROUTES.signUp}?next=${nextPath}`} className="ml-1 h-auto p-0 font-medium">
-              {tAuth('signup.title')}
+              {tSignupTitle}
             </Link>
           </div>
         </>

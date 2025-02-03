@@ -16,6 +16,7 @@ export const footerMessages = {
         faq: 'OpenEdu FAQ',
       },
       social: {
+        title: 'Social',
         discord: 'Discord',
         telegram: 'Telegram',
         facebook: 'Facebook',
