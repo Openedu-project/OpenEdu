@@ -1,11 +1,7 @@
-import { useGetConversationDetails } from '@oe/api/hooks/useConversation';
 import type { IMessage, InputType } from '@oe/api/types/conversation';
-import { GENERATING_STATUS } from '@oe/core/utils/constants';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
-import { Skeleton } from '#shadcn/skeleton';
+import { useMemo } from 'react';
 import { useConversationStore } from '#store/conversation-store';
-import MessageBox from './message/message-box';
+import { MessageContainer } from './message/message-container';
 import type { ISendMessageParams } from './type';
 
 interface IChatProps {
@@ -22,22 +18,7 @@ interface IChatProps {
   ISendMessageParams) => void | Promise<unknown>;
 }
 export const ChatWithMessage = ({ id, sendMessage, nextCursorPage = '' }: IChatProps) => {
-  const { messages, status, selectedModel, genMessage, setMessages } = useConversationStore();
-  const [shouldGetData, setShouldGetData] = useState<boolean>(false);
-
-  const firstItemIndexRef = useRef<number>(99999);
-  const virtuosoRef = useRef<VirtuosoHandle>(null);
-  const nextKeyRef = useRef<string>(nextCursorPage);
-
-  const { data, isLoading } = useGetConversationDetails({
-    shouldFetch: shouldGetData && nextKeyRef.current.length > 0,
-    id,
-    params: {
-      cursor: nextKeyRef.current,
-      sort: 'create_at desc',
-      per_page: 10,
-    },
-  });
+  const { selectedModel } = useConversationStore();
 
   const rewrite = (msg: IMessage) => {
     if (selectedModel?.configs.image_analysis_enabled || !msg.configs.is_image_analysis) {
@@ -50,20 +31,6 @@ export const ChatWithMessage = ({ id, sendMessage, nextCursorPage = '' }: IChatP
     }
   };
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    setShouldGetData(false);
-    if (!data) {
-      return;
-    }
-    nextKeyRef.current = data?.pagination.next_cursor ?? '';
-
-    if (data.results.messages) {
-      setMessages([...data.results.messages.reverse(), ...messages]);
-      firstItemIndexRef.current -= data.results.messages.length;
-    }
-  }, [data]);
-
   const messageType = useMemo(() => {
     return ['chat', 'scrap_from_url', selectedModel?.configs?.image_analysis_enabled && 'image_analysis'].filter(
       Boolean
@@ -71,63 +38,14 @@ export const ChatWithMessage = ({ id, sendMessage, nextCursorPage = '' }: IChatP
   }, [selectedModel]);
 
   return (
-    <Virtuoso
-      data={messages.filter(msg => msg.id !== genMessage?.id)}
-      ref={virtuosoRef}
-      style={{ paddingBottom: 0 }}
-      alignToBottom={true}
-      totalCount={messages.length}
-      firstItemIndex={firstItemIndexRef.current}
-      followOutput="auto"
-      initialTopMostItemIndex={{
-        align: 'end',
-        index: messages.length - 1,
-      }}
-      startReached={() => {
-        if (!(GENERATING_STATUS.includes(status ?? '') || isLoading) && nextKeyRef.current.length > 0) {
-          setShouldGetData(true);
-        }
-      }}
-      itemContent={(_, msg: IMessage) => (
-        <MessageBox
-          key={msg.id}
-          id={msg.id}
-          message={msg}
-          loading={GENERATING_STATUS.includes(status ?? '')}
-          rewrite={
-            !msg.configs?.is_image_analysis || messageType?.includes('image_analysis') ? () => rewrite(msg) : undefined
-          }
-          sendMessage={sendMessage}
-          messageType={messageType}
-        />
-      )}
-      components={{
-        Header: () =>
-          nextKeyRef.current.length > 0 ? (
-            <div className="flex flex-col items-end gap-4">
-              <Skeleton className="h-10 w-2/3 rounded-[20px]" />
-              <Skeleton className="h-20 w-full rounded-[20px]" />
-            </div>
-          ) : null,
-        Footer: () =>
-          genMessage ? (
-            <MessageBox
-              key={genMessage.id}
-              id={genMessage.id}
-              message={genMessage}
-              loading={GENERATING_STATUS.includes(status ?? '')}
-              rewrite={
-                !genMessage.configs?.is_image_analysis || messageType?.includes('image_analysis')
-                  ? () => rewrite(genMessage)
-                  : undefined
-              }
-              sendMessage={sendMessage}
-              messageType={messageType}
-            />
-          ) : (
-            <div className="h-[100px]" />
-          ),
-      }}
-    />
+    <div className="flex h-full flex-col gap-4 overflow-auto">
+      <MessageContainer
+        rewrite={rewrite}
+        messageType={messageType}
+        nextCursorPage={nextCursorPage}
+        id={id}
+        sendMessage={sendMessage}
+      />
+    </div>
   );
 };

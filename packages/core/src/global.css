@@ -273,6 +273,7 @@
     line-height: 1.1;
     text-wrap: pretty;
     font-weight: 600;
+    margin: 1rem 0rem;
   }
   .rich-text h1,
   .rich-text h2 {

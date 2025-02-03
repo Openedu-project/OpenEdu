@@ -61,7 +61,7 @@ export function ChatWindow({
     }
 
     if (initMessages.length > 0 && !isNewChat) {
-      setMessages([...initMessages].reverse());
+      setMessages([...initMessages].filter(msg => !GENERATING_STATUS.includes(msg.status ?? '')).reverse());
       const genMessage = initMessages.find(message => GENERATING_STATUS.includes(message.status ?? ''));
       if (genMessage) {
         setStatus('generating');
