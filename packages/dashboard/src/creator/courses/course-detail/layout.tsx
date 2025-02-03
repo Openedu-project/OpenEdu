@@ -8,6 +8,7 @@ import { CREATOR_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
 import { DashboardHeaderCard } from '@oe/ui/common/layout';
 import { Link, useRouter } from '@oe/ui/common/navigation';
+import { NavigationDialog } from '@oe/ui/components/dialog';
 import {
   FormNestedProvider,
   FormNestedWrapper,
@@ -117,7 +118,7 @@ export function CourseDetailLayout({ children }: { children: ReactNode }) {
           setValidSteps(prev => [...new Set([...prev, stepId])]);
         }}
       />
-      <div className="flex-1 overflow-hidden rounded p-2 md:p-4">{children}</div>
+      <div className="flex-1 overflow-hidden rounded">{children}</div>
     </FormNestedProvider>
   );
 }
@@ -137,7 +138,7 @@ function CourseDetailHeader({
 }) {
   const params = useParams<{ courseId: string }>();
   const { course } = useGetCourseById(params.courseId);
-  const { validateForms, activeFormId } = useFormContext();
+  const { validateForms, activeFormId, hasUnsavedChanges } = useFormContext();
   const router = useRouter();
 
   // Tìm current tab và next tab
@@ -149,6 +150,7 @@ function CourseDetailHeader({
   const isLastRequiredTab = currentTab?.required && !courseTabs.slice(currentTabIndex + 1).some(tab => tab.required);
 
   const handleNext = async () => {
+    console.log(activeFormId);
     const isValid = await validateForms(['course-name', activeFormId].filter(Boolean) as string[]);
 
     if (isValid) {
@@ -245,6 +247,7 @@ function CourseDetailHeader({
           })}
         </div>
       </div>
+      <NavigationDialog isEnabled={hasUnsavedChanges} hasUnsavedChanges={hasUnsavedChanges} />
     </DashboardHeaderCard>
   );
 }

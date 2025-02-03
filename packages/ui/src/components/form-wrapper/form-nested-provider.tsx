@@ -30,6 +30,7 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState<string | undefined>(defaultTab);
   const [activeFormId, setActiveFormId] = useState<string | undefined>(undefined);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
   const getForms = useCallback((specificFormIds?: string[]) => {
     const ids = specificFormIds ? specificFormIds : Array.from(formsRef.current.values()).map(form => form.id);
@@ -49,18 +50,19 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
   const registerForm = useCallback(
     (metadata: IFormMetadata<TFormSchema>) => {
       formsRef.current.set(metadata.id, metadata);
-      if (onChange) {
-        const unsubscribe = metadata.watch((_, { type }) => {
-          if (type === 'change') {
-            const allValues = getAllFormValues();
-            onChange(allValues);
-          }
-        });
-        const currentForm = formsRef.current.get(metadata.id);
-        if (currentForm) {
-          currentForm.unsubscribe = unsubscribe as unknown as () => void;
+      // if (onChange) {
+      const { unsubscribe } = metadata.watch((_, { type }) => {
+        if (type === 'change') {
+          setHasUnsavedChanges(true);
+          const allValues = getAllFormValues();
+          onChange?.(allValues);
         }
+      });
+      const currentForm = formsRef.current.get(metadata.id);
+      if (currentForm) {
+        currentForm.unsubscribe = unsubscribe as unknown as () => void;
       }
+      // }
     },
     [getAllFormValues, onChange]
   );
@@ -188,18 +190,12 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
 
   const submitForm = useCallback(
     async (formIds?: string[]) => {
-      console.log('submitForm');
       if (isSubmitting) {
         return;
       }
       setIsSubmitting(true);
       try {
-        // const currentForm = formsRef.current.get(activeFormId);
-        // if (!currentForm) {
-        //   return;
-        // }
         const isValid = await validateForms(formIds);
-        console.log(isValid);
         if (!isValid) {
           return;
         }
@@ -210,6 +206,7 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
         }, {});
 
         await onSubmit(values);
+        setHasUnsavedChanges(false);
       } catch (error) {
         onError?.(error);
       } finally {
@@ -227,6 +224,7 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
         tabsMetadata,
         activeTab,
         activeFormId,
+        hasUnsavedChanges,
         setActiveTab,
         registerForm,
         unregisterForm,

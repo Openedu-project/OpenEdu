@@ -15,6 +15,7 @@ import { useRichTextEditor } from './useRichTextEditor';
 export interface RichTextEditorProps {
   defaultValue?: string;
   className?: string;
+  menuBarClassName?: string;
   value?: string;
   onChange?: (value: string) => void;
   ref?: Ref<RichTextEditorRef>;
@@ -25,6 +26,7 @@ export interface RichTextEditorProps {
   onAIApply?: () => void;
   aiButton?: boolean;
   placeholder?: string;
+  maxHeight?: string;
 }
 
 export interface RichTextEditorRef {
@@ -35,6 +37,7 @@ export interface RichTextEditorRef {
 export const RichTextEditor = ({
   defaultValue,
   className,
+  menuBarClassName,
   value,
   menuBarItems,
   bubbleMenuItems,
@@ -45,6 +48,7 @@ export const RichTextEditor = ({
   onChange,
   placeholder,
   ref,
+  maxHeight,
 }: RichTextEditorProps) => {
   const tRichText = useTranslations('richText');
   const editor = useRichTextEditor({
@@ -53,6 +57,7 @@ export const RichTextEditor = ({
     onUpdate: (editor: Editor) => {
       onChange?.(editor.getHTML());
     },
+    maxHeight,
   });
 
   useImperativeHandle(ref, () => ({
@@ -70,7 +75,14 @@ export const RichTextEditor = ({
 
   return (
     <div className={cn('flex flex-col overflow-hidden rounded-lg border', className)}>
-      <MenuBar editor={editor} menuItems={menuBarItems} aiParams={aiParams} onAIApply={onAIApply} aiButton={aiButton} />
+      <MenuBar
+        editor={editor}
+        menuItems={menuBarItems}
+        aiParams={aiParams}
+        onAIApply={onAIApply}
+        aiButton={aiButton}
+        className={menuBarClassName}
+      />
       <div className="relative z-10 grow overflow-hidden">
         <EditorContent editor={editor} className="scrollbar flex h-full min-h-40 overflow-auto [&>div]:grow" />
         <BubbleMenu

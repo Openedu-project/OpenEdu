@@ -17,8 +17,10 @@ export const validateMultipleUrls = (input: string): boolean => {
 
 interface IBuildUrl {
   endpoint: string;
-  params?: Record<string, unknown>;
-  queryParams?: Record<string, unknown>;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  params?: Record<string, any>;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  queryParams?: Record<string, any>;
 }
 
 export const buildQueryParams = <T extends Record<string, unknown>>(obj: T): string =>

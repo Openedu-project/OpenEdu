@@ -1,7 +1,10 @@
 import { buildUrl } from '@oe/core/utils/url';
+import type { ISection } from '#schemas/courseSchema';
 import type { ICourseCategory } from '#types/course/category';
 import type { ICourse, ICourseResponse, IEnrollCoursePayload } from '#types/course/course';
 import type { ICourseOutline } from '#types/course/course';
+import type { ISegmentParams } from '#types/course/segment';
+import type { HTTPPagination } from '#types/fetch';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { type FetchOptions, createAPIUrl, deleteAPI, fetchAPI, postAPI } from '#utils/fetch';
@@ -135,8 +138,14 @@ export const postEnrollCourseService = async (
   }
 
   const finalEndpoint = `${endpoint}${params.toString() ? `?${params.toString()}` : ''}`;
-  console.log('finalEndpoint', finalEndpoint);
   const response = await postAPI<ICourse, null>(finalEndpoint, null, init);
+
+  return response.data;
+};
+
+export const getSegmentsService = async (url: string | undefined, queryParams: ISegmentParams, init?: FetchOptions) => {
+  const endpoint = buildUrl({ endpoint: API_ENDPOINT.SEGMENTS, queryParams });
+  const response = await fetchAPI<HTTPPagination<ISection>>(url ?? endpoint, init);
 
   return response.data;
 };

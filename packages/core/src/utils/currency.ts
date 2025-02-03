@@ -61,25 +61,25 @@ const isValidFiatCurrency = (currency?: string): boolean => {
 };
 
 export const formatCurrency = (amount: number, options: FormatCurrencyOptions = {}): string => {
-  const { decimals, showSymbol = true, ...rest } = options;
+  const { decimals, showSymbol = true, currency, ...rest } = options;
 
   const locale = isValidLocale(options.locale)
     ? (options.locale as LanguageCode)
-    : isValidFiatCurrency(options.currency)
-      ? findLocaleFromCurrency(options.currency)
+    : isValidFiatCurrency(currency)
+      ? findLocaleFromCurrency(currency)
       : DEFAULT_LOCALE;
 
-  const currency = isValidFiatCurrency(options.currency)
-    ? options.currency
-    : options.currency || findCurrencyFromLocale(locale) || DEFAULT_CURRENCY;
+  const currentCurrency = isValidFiatCurrency(currency)
+    ? currency
+    : currency || findCurrencyFromLocale(locale) || DEFAULT_CURRENCY;
 
   try {
-    const isFiatCurrency = isValidFiatCurrency(currency);
+    const isFiatCurrency = isValidFiatCurrency(currentCurrency);
 
     const formatter = new Intl.NumberFormat(locale, {
       ...(isFiatCurrency && {
         style: 'currency',
-        currency,
+        currency: currentCurrency,
         currencyDisplay: showSymbol ? 'symbol' : 'code',
       }),
       minimumFractionDigits: decimals ?? (isFiatCurrency ? 2 : 8),
@@ -88,7 +88,7 @@ export const formatCurrency = (amount: number, options: FormatCurrencyOptions = 
     });
 
     const formattedAmount = formatter.format(amount);
-    return isFiatCurrency ? formattedAmount : showSymbol ? `${formattedAmount} ${currency}` : formattedAmount;
+    return isFiatCurrency ? formattedAmount : showSymbol ? `${formattedAmount} ${currentCurrency}` : formattedAmount;
   } catch {
     return amount.toString();
   }

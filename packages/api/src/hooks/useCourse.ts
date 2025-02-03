@@ -1,3 +1,4 @@
+import { buildUrl } from '@oe/core/utils/url';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import {
@@ -6,9 +7,11 @@ import {
   getCoursesPublishService,
   getCoursesService,
   getLevelsService,
+  getSegmentsService,
   postEnrollCourseService,
 } from '#services/course';
 import type { ICourse, ICourseOutline, ICourseResponse, IEnrollCoursePayload } from '#types/course/course';
+import type { ISegmentParams } from '#types/course/segment';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
@@ -112,7 +115,6 @@ export const usePostEnrollCourse = (id: string) => {
   const { trigger, error, isMutating } = useSWRMutation(
     id ? endpoint : null,
     async (endpoint: string, { arg }: { arg?: IEnrollCoursePayload }): Promise<ICourse> => {
-      console.log('√', arg);
       const response = await postEnrollCourseService(endpoint, { payload: arg });
       return response;
     }
@@ -122,5 +124,30 @@ export const usePostEnrollCourse = (id: string) => {
     triggerPostEnrollCourse: trigger,
     postEnrollCourseError: error,
     isLoadingPostEnrollCourse: isMutating,
+  };
+};
+
+export const useGetSegments = ({ course_id, page, per_page, preloads, ...rest }: ISegmentParams) => {
+  const queryParams = {
+    ...rest,
+    course_id,
+    page: page ?? 1,
+    per_page: per_page ?? 9999,
+    preloads: preloads ?? 'lessons',
+    // sort: sort ?? 'order desc',
+  };
+  const endpoint = buildUrl({
+    endpoint: API_ENDPOINT.SEGMENTS,
+    queryParams,
+  });
+  const { data, isLoading, error, mutate } = useSWR(queryParams.course_id ? endpoint : null, (endpoint: string) =>
+    getSegmentsService(endpoint, queryParams)
+  );
+
+  return {
+    segments: data?.results,
+    segmentsError: error,
+    mutateSegments: mutate,
+    isLoadingSegments: isLoading,
   };
 };

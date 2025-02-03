@@ -23,9 +23,16 @@ interface UseRichTextEditorProps {
   placeholder?: string;
   editable?: boolean;
   onUpdate?: (editor: Editor) => void;
+  maxHeight?: string;
 }
 
-export const useRichTextEditor = ({ content, placeholder, editable = true, onUpdate }: UseRichTextEditorProps) => {
+export const useRichTextEditor = ({
+  content,
+  placeholder,
+  editable = true,
+  onUpdate,
+  maxHeight = '50dvh',
+}: UseRichTextEditorProps) => {
   return useEditor({
     extensions: [
       StarterKit,
@@ -60,7 +67,7 @@ export const useRichTextEditor = ({ content, placeholder, editable = true, onUpd
     },
     editorProps: {
       attributes: {
-        class: `rich-text ${editable ? 'max-h-[50dvh]' : ''}`,
+        class: `rich-text ${editable ? `max-h-[${maxHeight}]` : ''}`,
       },
     },
     immediatelyRender: false,

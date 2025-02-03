@@ -77,6 +77,7 @@ export interface IFormContextValue<TFormSchema extends z.ZodType> {
   tabsMetadata: Map<string, ITabMetadata>;
   activeTab: string | undefined;
   activeFormId: string | undefined;
+  hasUnsavedChanges: boolean;
   setActiveTab: (tabId: string) => void;
   registerForm: (metadata: IFormMetadata<TFormSchema>) => void;
   unregisterForm: (formId: string) => void;

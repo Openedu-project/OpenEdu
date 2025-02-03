@@ -1,5 +1,4 @@
 import { useRouter } from 'next/navigation';
-// useNavigationGuard.ts
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 function on<T extends Window | Document | HTMLElement | EventTarget>(
@@ -22,8 +21,9 @@ function off<T extends Window | Document | HTMLElement | EventTarget>(
   }
 }
 
-interface NavigationOptions {
+export interface NavigationOptions {
   isEnabled?: boolean;
+  hasUnsavedChanges?: boolean;
   title?: string;
   description?: string;
   confirmText?: string;
@@ -32,6 +32,7 @@ interface NavigationOptions {
 
 export const useNavigationGuard = ({
   isEnabled = true,
+  hasUnsavedChanges = false,
   title,
   description,
   confirmText,
@@ -58,13 +59,11 @@ export const useNavigationGuard = ({
       return;
     }
 
-    const hasUnsavedChanges = false;
-
     if (hasUnsavedChanges) {
       on(window, 'beforeunload', handleBeforeUnload);
       return () => off(window, 'beforeunload', handleBeforeUnload);
     }
-  }, [isEnabled, handleBeforeUnload]);
+  }, [isEnabled, handleBeforeUnload, hasUnsavedChanges]);
 
   const handleNavigation = useCallback(
     (navigate: () => void) => {

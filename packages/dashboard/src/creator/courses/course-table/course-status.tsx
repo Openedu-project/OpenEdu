@@ -24,5 +24,5 @@ export default function CourseStatus({ data }: { data: ICourse }) {
   const tStatus = useTranslations('courses.status');
 
   const status = data.is_ai_generated ? data.ai_generate_status : data.status;
-  return <Badge variant={statusColorMap[status]}>{tStatus(status)}</Badge>;
+  return <Badge variant={statusColorMap[status]}>{tStatus(status.toLowerCase())}</Badge>;
 }

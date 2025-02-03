@@ -88,7 +88,7 @@ export default function CourseDetailInformationPage() {
   const { course } = useGetCourseById(params.courseId);
 
   return (
-    <div className="scrollbar mx-auto h-full max-w-[900px] overflow-auto">
+    <div className="scrollbar mx-auto h-full max-w-[900px] overflow-auto px-1 py-4">
       <FormNestedWrapper
         id="course-detail-information"
         schema={courseFormSchema}
