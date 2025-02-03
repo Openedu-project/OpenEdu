@@ -2,22 +2,32 @@ import type { HTTPResponse } from '@oe/api/types/fetch';
 import useSWR from 'swr';
 import useSWRInfinite from 'swr/infinite';
 import { getConversationDetail } from '#services/conversation';
-import type { IChatHistoryResponse } from '#types/conversation';
+import type { IChatHistoryResponse, IConversationDetails } from '#types/conversation';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl, fetchAPI } from '#utils/fetch';
 
 export function useGetConversationDetails({
-  shouldFetch,
+  shouldFetch = true,
   id,
   params,
-}: { shouldFetch?: boolean; id: string; params: { cursor: string } & Record<string, string | number> }) {
+  fallback,
+}: {
+  shouldFetch?: boolean;
+  id?: string;
+  params: { cursor?: string } & Record<string, string | number>;
+  fallback?: IConversationDetails;
+}) {
   const endpointKey = createAPIUrl({
     endpoint: API_ENDPOINT.COM_CHANNELS_ID,
     params: { id },
     queryParams: { ...params },
   });
-  const { data, isLoading, error, mutate } = useSWR(shouldFetch && id ? endpointKey : null, (endpoint: string) =>
-    getConversationDetail(endpoint, id, params)
+  const { data, isLoading, error, mutate } = useSWR(
+    shouldFetch && id ? endpointKey : null,
+    (endpoint: string) => getConversationDetail(endpoint, id ?? '', params),
+    {
+      fallbackData: fallback,
+    }
   );
 
   return {

@@ -24,7 +24,7 @@ export declare class Document<Metadata extends Record<string, unknown> = Record<
 
 export type IRole = 'user' | 'assistant';
 
-export type InputType = 'image_analysis' | 'scrap_from_url' | 'chat';
+export type InputType = TAgentType | 'image_analysis' | 'scrap_from_url' | 'chat';
 
 export type IProvider =
   | 'anthropic.claude-3-5-sonnet-20241022-v2:0'
@@ -44,9 +44,13 @@ export interface IAIModel {
   org_schema: string;
   is_available: boolean;
 }
-
-interface Configs {
+export interface IAgenConfigs {
   image_analysis_enabled: boolean;
+  image_generator_enabled: boolean;
+  present_creator_enabled: boolean;
+  code_executor_enabled: boolean;
+}
+export interface Configs extends IAgenConfigs {
   stream_response_enabled: boolean;
 }
 
@@ -61,7 +65,10 @@ export interface IChatHistory {
   update_at: number;
 }
 
+export type TAgentType = 'ai_chat' | 'ai_search' | 'ai_slide' | 'ai_image' | 'ai_chat' | 'ai_code';
 export interface IConversationRequest {
+  ai_agent_type: TAgentType;
+  message_ai_agent_type?: TAgentType;
   ai_model: IProvider;
   content: string;
   content_type: IContextType;

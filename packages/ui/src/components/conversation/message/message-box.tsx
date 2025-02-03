@@ -6,9 +6,8 @@ import Openedu from '@oe/assets/images/openedu.png';
 
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { marked } from '@oe/core/utils/marker';
-import { BookCopy } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { type ReactNode, useEffect, useMemo, useState } from 'react';
+import { type ReactNode, useMemo, useState } from 'react';
 import { Link } from '#common/navigation';
 import { Image } from '#components/image';
 import { Button } from '#shadcn/button';
@@ -81,31 +80,11 @@ const MessageBox = ({
   }: ISendMessageParams) => void | Promise<unknown>;
   messageType?: InputType[];
 }) => {
-  const [parsedMessage, setParsedMessage] = useState<string>(message.content);
   const [isEdit, setIsEdit] = useState(false);
 
   const tAction = useTranslations('general');
 
-  useEffect(() => {
-    const regex = /\[(\d+)]/g;
-
-    if (message.sender?.role === 'assistant' && message?.sources && message.sources.length > 0) {
-      return setParsedMessage(
-        message.content.replaceAll(
-          regex,
-          (_, number) =>
-            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-            `<a href="${
-              message.sources?.[number - 1]?.metadata?.url
-            }" target="_blank" className="bg-light-secondary dark:bg-dark-secondary px-1 rounded ml-1 no-underline text-xs text-black/70 dark:text-white/70 relative">${number}</a>`
-        )
-      );
-    }
-
-    setParsedMessage(message.content);
-  }, [message]);
-
-  const html = useMemo(() => marked.parse(parsedMessage), [parsedMessage]);
+  const html = useMemo(() => marked.parse(message.content), [message.content]);
 
   return (
     <div className="py-2" id={id}>
@@ -190,15 +169,6 @@ const MessageBox = ({
       {message.sender?.role === 'assistant' && (
         <div className="flex flex-col space-y-9 lg:flex-row lg:justify-between lg:space-x-9 lg:space-y-0">
           <div className={cn('flex flex-col space-y-6', !message.content && 'basis-full')}>
-            {message.sources && message.sources.length > 0 && (
-              <div className="flex flex-col space-y-2">
-                <div className="flex flex-row items-center space-x-2">
-                  <BookCopy className="text-black dark:text-white" size={20} />
-                  <h3 className="font-medium text-black text-xl dark:text-white">Sources</h3>
-                </div>
-                {/* <MessageSources sources={message.sources} /> */}
-              </div>
-            )}
             <div className="flex flex-col space-y-2">
               <div className="flex flex-row items-center space-x-2">
                 <div>

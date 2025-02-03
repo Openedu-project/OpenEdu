@@ -6,240 +6,22 @@ import { usePathname } from 'next/navigation';
 import { cancelConversation } from '@oe/api/services/conversation';
 import { isLogin } from '@oe/api/utils/auth';
 import { z } from '@oe/api/utils/zod';
-import { Image } from '@oe/ui/components/image';
-import { CircleX, FileUp, Image as ImageIcon, MoveRight, Square, Unlink2 } from 'lucide-react';
+import { MoveRight, Square } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type React from 'react';
-import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
-import type { FieldValues, Path, UseFormReturn } from 'react-hook-form';
-import TextareaAutosize from 'react-textarea-autosize';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import type { UseFormReturn } from 'react-hook-form';
 import { FormWrapper } from '#components/form-wrapper';
 import { useLoginRequiredStore } from '#components/login-required-modal';
-import { Uploader } from '#components/uploader';
 import { Button } from '#shadcn/button';
 import { Card } from '#shadcn/card';
-import { FormFieldWithLabel } from '#shadcn/form';
 import { cn } from '#utils/cn';
-import type { ISendMessageParams } from '../type';
-
-interface FormValues {
-  message: string;
-  images?: IFileResponse[];
-}
-
-export interface MessageInputProps {
-  generating?: boolean;
-  sendMessage: ({
-    messageInput,
-    type,
-    url,
-    images,
-    message_id,
-    role,
-    // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
-  }: ISendMessageParams) => void | Promise<unknown>;
-  className?: string;
-  placeholder?: string;
-  initialMessage?: string;
-  messageId?: string;
-  hiddenBtn?: boolean;
-  type?: InputType;
-  showInputOption?: boolean;
-  messageType?: InputType[];
-  images?: IFileResponse[];
-  resetOnSuccess?: boolean;
-}
-
-type InputFieldProps<TFormValues extends FieldValues> = {
-  form: UseFormReturn<TFormValues>;
-  type: InputType;
-  handleKeyDown?: React.KeyboardEventHandler<HTMLTextAreaElement | HTMLInputElement>;
-  setInputType: (value: InputType) => void;
-  inputRef: React.RefObject<null | HTMLTextAreaElement>;
-  canChangeType?: boolean;
-};
-interface IInputButton {
-  type: InputType;
-  textKey: string;
-  icon: ReactNode;
-}
-
-const INPUT_BUTTON: IInputButton[] = [
-  {
-    type: 'image_analysis',
-    textKey: 'imageAnalysis',
-    icon: <ImageIcon size={16} className="text-[#FD77F3]" />,
-  },
-  {
-    type: 'scrap_from_url',
-    textKey: 'scrapURLLink',
-    icon: <Unlink2 size={16} className="text-[#FFBD04]" />,
-  },
-];
-
-const InputField = <TFormValues extends FieldValues>({
-  form,
-  type,
-  handleKeyDown,
-  setInputType,
-  inputRef,
-  canChangeType,
-}: InputFieldProps<TFormValues>) => {
-  const tAI = useTranslations('aiAssistant');
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    form.reset();
-  }, [type]);
-
-  switch (type) {
-    case 'image_analysis': {
-      const buttonData = INPUT_BUTTON.find(button => button.type === 'image_analysis');
-
-      return (
-        <div className="relative flex w-full items-center justify-center gap-2">
-          <div className="flex shrink-0 items-center gap-1 border-r px-1">
-            {buttonData?.icon}
-            <p className="mcaption-semibold12 hidden lg:block">{tAI(buttonData?.textKey)}</p>
-
-            {canChangeType && (
-              <Button
-                variant="ghost"
-                type="button"
-                size="icon"
-                className="!p-2 h-8 w-8"
-                onClick={() => setInputType('chat')}
-              >
-                <CircleX className="h-4 w-4" />
-              </Button>
-            )}
-          </div>
-
-          <FormFieldWithLabel name={'message' as Path<TFormValues>} className="w-full">
-            <TextareaAutosize
-              onKeyDown={handleKeyDown}
-              placeholder={tAI('messageImage')}
-              className={cn(
-                'mcaption-regular12 lg:mcaption-regular14 block h-[20px] w-full resize-none bg-transparent focus-within:outline-none'
-              )}
-              maxRows={4}
-              ref={inputRef}
-            />
-          </FormFieldWithLabel>
-
-          <FormFieldWithLabel
-            name={'images' as Path<TFormValues>}
-            render={({ field }) => (
-              <>
-                {field.value?.length > 0 && (
-                  <div className="horizontal-scrollbar absolute bottom-[40px] left-0 flex w-full overflow-x-auto">
-                    <div className="flex items-center gap-2 rounded-lg bg-foreground/30 p-2">
-                      {(field.value as IFileResponse[]).map(image => (
-                        <div key={image.id} className="relative h-[90px] w-[160px] shrink-0">
-                          <Image
-                            className="absolute rounded-lg object-cover"
-                            alt="screen-shot"
-                            fill
-                            sizes="160px"
-                            noContainer
-                            src={image?.url}
-                          />
-                          <Button
-                            variant="ghost"
-                            type="button"
-                            size="icon"
-                            className="!p-0 absolute top-0 right-0 h-[16px] w-[16px] rounded-full bg-foreground/40 hover:bg-foreground/50"
-                            onClick={() => {
-                              field.onChange((field.value as IFileResponse[])?.filter(item => item.id !== image.id));
-                            }}
-                          >
-                            <CircleX width={16} height={16} color="hsl(var(--background))" />
-                          </Button>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <div className="relative h-full grow">
-                  <div className="h-[16px] w-[16px] overflow-hidden">
-                    <FileUp className="absolute h-4 w-4" />
-                    <Uploader
-                      multiple
-                      listType="picture"
-                      value={field.value}
-                      onChange={field.onChange}
-                      fileListVisible={false}
-                      accept="image/*"
-                      className="overflow-hidden opacity-0"
-                    />
-                  </div>
-                </div>
-              </>
-            )}
-          />
-        </div>
-      );
-    }
-    case 'scrap_from_url': {
-      const buttonData = INPUT_BUTTON.find(button => button.type === 'scrap_from_url');
-
-      return (
-        <>
-          <div className="flex shrink-0 items-center gap-1 border-r">
-            {buttonData?.icon}
-            <p className="mcaption-semibold12 hidden lg:block">{tAI(buttonData?.textKey)}</p>
-
-            {canChangeType && (
-              <Button
-                variant="ghost"
-                type="button"
-                size="icon"
-                className="!p-2 h-8 w-8"
-                onClick={() => setInputType('chat')}
-              >
-                <CircleX className="h-4 w-4" />
-              </Button>
-            )}
-          </div>
-          <FormFieldWithLabel name={'message' as Path<TFormValues>} className="w-full" showErrorMessage={false}>
-            <TextareaAutosize
-              onKeyDown={handleKeyDown}
-              placeholder={tAI('messageImage')}
-              className={cn(
-                'mcaption-regular12 lg:mcaption-regular14 block h-[20px] w-full resize-none bg-transparent focus-within:outline-none'
-              )}
-              maxRows={4}
-              ref={inputRef}
-            />
-          </FormFieldWithLabel>
-        </>
-      );
-    }
-    default: {
-      return (
-        <FormFieldWithLabel name={'message' as Path<TFormValues>} className="w-full">
-          <TextareaAutosize
-            onKeyDown={handleKeyDown}
-            className={cn(
-              'mcaption-regular12 lg:mcaption-regular14 block h-[20px] w-full resize-none bg-transparent focus-within:outline-none'
-            )}
-            maxRows={4}
-            ref={inputRef}
-          />
-        </FormFieldWithLabel>
-      );
-    }
-  }
-};
+import type { MessageFormValues, MessageInputProps } from '../type';
+import { InputField } from './message-input-field';
+import { InputOption } from './message-input-option';
 
 const createFormSchema = (inputType: InputType) => {
   switch (inputType) {
-    // case 'scrap_from_url': {
-    //   return z.object({
-    //     link: z.string().min(1, 'errors.isRequired'),
-    //   });
-    // }
     case 'image_analysis': {
       return z.object({
         message: z.string().optional(),
@@ -274,7 +56,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
   const tAI = useTranslations('aiAssistant');
   const pathname = usePathname();
 
-  const [inputType, setInputType] = useState(type);
+  const [inputType, setInputType] = useState<InputType>(type);
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const { setLoginRequiredModal } = useLoginRequiredStore();
   const [isMobile, setIsMobile] = useState(false);
@@ -314,7 +96,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>,
-    form: UseFormReturn<FormValues>
+    form: UseFormReturn<MessageFormValues>
   ) => {
     const message = form.getValues('message');
 
@@ -393,7 +175,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
               type={inputType}
               form={form}
               handleKeyDown={e => {
-                handleKeyDown(e, form as UseFormReturn<FormValues>);
+                handleKeyDown(e, form as UseFormReturn<MessageFormValues>);
               }}
               setInputType={setInputType}
               inputRef={inputRef}
@@ -436,24 +218,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
         )}
       </FormWrapper>
 
-      {showInputOption && (
-        <div className="flex gap-2">
-          {INPUT_BUTTON.filter(button => messageType?.includes(button.type)).map(button => (
-            <Button
-              key={button.type}
-              variant="ghost"
-              type="button"
-              className="!rounded-full before:!rounded-full relative flex items-center gap-1 border border-primary bg-primary/5 before:absolute before:z-[-1] before:h-full before:w-full before:bg-white before:content-['']"
-              onClick={() => {
-                setInputType(button.type);
-              }}
-            >
-              {button.icon}
-              <span className="mcaption-semibold12 hidden md:block">{tAI(button.textKey)}</span>
-            </Button>
-          ))}
-        </div>
-      )}
+      {showInputOption && <InputOption messageType={messageType} handleSelect={opt => setInputType(opt)} />}
     </div>
   );
 };

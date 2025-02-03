@@ -1,7 +1,15 @@
 'use client';
+import { useGetConversationDetails } from '@oe/api/hooks/useConversation';
 import { useGetMe } from '@oe/api/hooks/useMe';
-import { postConversation } from '@oe/api/services/conversation';
-import type { IAIModel, IAIStatus, IMessage } from '@oe/api/types/conversation';
+import { cancelConversation, postConversation } from '@oe/api/services/conversation';
+import type {
+  IAIModel,
+  IAIStatus,
+  IAgenConfigs,
+  IConversationDetails,
+  IMessage,
+  TAgentType,
+} from '@oe/api/types/conversation';
 import { createAPIUrl } from '@oe/api/utils/fetch';
 import type { HTTPError } from '@oe/api/utils/http-error';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
@@ -13,18 +21,19 @@ import { useRouter } from '#common/navigation';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { ChatWithMessage } from './chat';
+import { AGENT_OPTIONS, CHAT_OPTIONS } from './constant';
 import MessageInput from './message/message-input';
 import type { ISendMessageParams } from './type';
 
 export function ChatWindow({
   id,
-  initMessages = [],
-  nextCursorPage,
+  initData,
+  agent = 'ai_chat',
 }: {
   id?: string;
   aiModels?: IAIModel[];
-  initMessages?: IMessage[];
-  nextCursorPage?: string;
+  initData?: IConversationDetails;
+  agent?: TAgentType;
 }) {
   const tAI = useTranslations('aiAssistant');
   const { dataMe } = useGetMe();
@@ -43,12 +52,31 @@ export function ChatWindow({
     selectedModel,
     setGenMessage,
     resetGenMessage,
-    setResetPage,
   } = useConversationStore();
 
   const [modelWarning, setModelWarning] = useState<boolean>(false);
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const { data: messageData, mutate } = useGetConversationDetails({
+    id,
+    params: {
+      per_page: 10,
+      sort: 'create_at desc',
+    },
+    fallback: initData,
+  });
+
+  const handleInitData = async () => {
+    if (!isNewChat && id) {
+      try {
+        await cancelConversation(undefined, id);
+        await mutate();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -59,18 +87,14 @@ export function ChatWindow({
       setIsNewChat(false);
       return;
     }
-
-    if (initMessages.length > 0 && !isNewChat) {
-      setMessages([...initMessages].filter(msg => !GENERATING_STATUS.includes(msg.status ?? '')).reverse());
-      const genMessage = initMessages.find(message => GENERATING_STATUS.includes(message.status ?? ''));
-      if (genMessage) {
-        setStatus('generating');
-        setGenMessage(genMessage, () => {
-          setResetPage(true);
-        });
-      }
-    }
+    handleInitData();
   }, [id]);
+
+  useEffect(() => {
+    if (messageData?.results) {
+      setMessages([...messageData.results.messages].reverse());
+    }
+  }, [messageData, setMessages]);
 
   const sendMessage = async ({ messageInput = '', type, images, message_id, role, status }: ISendMessageParams) => {
     const messageID = message_id ?? `id-${Date.now()}`;
@@ -113,6 +137,8 @@ export function ChatWindow({
 
     try {
       const data = await postConversation(undefined, {
+        ai_agent_type: agent,
+        message_ai_agent_type: CHAT_OPTIONS.includes(type) ? undefined : (type as TAgentType),
         ai_model: selectedModel?.name ?? 'gpt-4o-mini',
         content: messageInput,
         content_type: 'text',
@@ -150,7 +176,7 @@ export function ChatWindow({
         className={cn('flex grow flex-col gap-2 overflow-hidden', id ? 'bg-background' : 'items-center')}
       >
         {id ? (
-          <ChatWithMessage sendMessage={sendMessage} nextCursorPage={nextCursorPage} id={id} />
+          <ChatWithMessage sendMessage={sendMessage} nextCursorPage={messageData?.pagination?.next_cursor} id={id} />
         ) : (
           <h2 className="mcaption-regular24 md:giant-iheading-bold40 !font-normal m-auto text-center">
             {tAI.rich('aiHelloText', {
@@ -167,7 +193,12 @@ export function ChatWindow({
           </div>
         )}
         <MessageInput
-          messageType={['image_analysis', 'scrap_from_url', 'chat']}
+          messageType={[
+            'scrap_from_url',
+            ...Object.entries(AGENT_OPTIONS)
+              .filter(([key]) => selectedModel?.configs[key as keyof IAgenConfigs])
+              .map(([_, value]) => value),
+          ]}
           sendMessage={sendMessage}
           showInputOption
           className="w-full"

@@ -17,8 +17,6 @@ interface IConversationStore {
   genMessage?: IMessage;
   setGenMessage: (value: IMessage, callback?: () => void, shortenedIndex?: number) => void;
   resetGenMessage: () => void;
-  resetPage: boolean;
-  setResetPage: (value: boolean) => void;
 }
 
 export const useConversationStore = create<IConversationStore>(set => {
@@ -28,11 +26,6 @@ export const useConversationStore = create<IConversationStore>(set => {
     status: undefined,
     selectedModel: undefined,
     genMessage: undefined,
-    resetPage: false,
-    setResetPage: (value: boolean) =>
-      set(() => {
-        return { resetPage: value };
-      }),
     setMessages: (messages: IMessage[]) =>
       set(() => {
         return { messages };
