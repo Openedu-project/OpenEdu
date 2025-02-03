@@ -2,9 +2,10 @@
 import { useGetMe } from '@oe/api/hooks/useMe';
 import { postConversation } from '@oe/api/services/conversation';
 import type { IAIModel, IAIStatus, IMessage } from '@oe/api/types/conversation';
+import { createAPIUrl } from '@oe/api/utils/fetch';
 import type { HTTPError } from '@oe/api/utils/http-error';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
-import { AI_ROUTES, generateRoute } from '@oe/core/utils/routes';
+import { AI_ROUTES } from '@oe/core/utils/routes';
 import { CircleAlert } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
@@ -129,7 +130,7 @@ export function ChatWindow({
 
       if (!id) {
         setIsNewChat(true);
-        router.push(generateRoute(AI_ROUTES.chatDetail, { id: data.id }));
+        router.push(createAPIUrl({ endpoint: AI_ROUTES.chatDetail, params: { id: data.id } }));
       }
     } catch (error) {
       setStatus('failed');

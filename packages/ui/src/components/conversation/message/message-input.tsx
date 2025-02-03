@@ -221,7 +221,6 @@ const InputField = <TFormValues extends FieldValues>({
         <FormFieldWithLabel name={'message' as Path<TFormValues>} className="w-full">
           <TextareaAutosize
             onKeyDown={handleKeyDown}
-            placeholder={tAI('messageImage')}
             className={cn(
               'mcaption-regular12 lg:mcaption-regular14 block h-[20px] w-full resize-none bg-transparent focus-within:outline-none'
             )}
@@ -348,7 +347,9 @@ const MessageInput: React.FC<MessageInputProps> = ({
     if (generating) {
       return;
     }
-    if (!isLogin) {
+    const login = await isLogin();
+
+    if (!login) {
       setLoginRequiredModal(true);
       return;
     }

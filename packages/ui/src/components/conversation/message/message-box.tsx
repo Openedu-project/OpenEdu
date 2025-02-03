@@ -5,7 +5,7 @@ import AIBot from '@oe/assets/images/ai-bot.png';
 import Openedu from '@oe/assets/images/openedu.png';
 
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
-import { marked } from '@oe/core/utils/marked';
+import { marked } from '@oe/core/utils/marker';
 import { BookCopy } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { type ReactNode, useEffect, useMemo, useState } from 'react';

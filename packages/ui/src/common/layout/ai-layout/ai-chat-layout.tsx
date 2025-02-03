@@ -13,13 +13,19 @@ import { cn } from '#utils/cn';
 
 type Props = {
   children: ReactNode;
+  className?: string;
 };
 
-export default async function AIChatLayout({ children }: Props) {
+export default async function AIChatLayout({ children, className }: Props) {
   const [AIChatModels, tAI, login] = await Promise.all([getAIModels(), getTranslations('aiAssistant'), isLogin()]);
 
   return (
-    <div className={cn('flex h-[calc(100vh-var(--header-height))]')}>
+    <div
+      className={cn(
+        'flex h-[calc(100vh-var(--header-small-height))] md:h-[calc(100vh-var(--header-height))]',
+        className
+      )}
+    >
       <div className="flex grow flex-col gap-4 p-4">
         <div className="flex flex-wrap justify-between gap-2">
           {AIChatModels?.length > 0 && <AIModelDropdown AIModels={AIChatModels} />}

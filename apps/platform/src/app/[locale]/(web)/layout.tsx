@@ -1,4 +1,4 @@
-import { BLOG_ROUTES, PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { AI_ROUTES, BLOG_ROUTES, PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { MainLayout } from '@oe/ui/common/layout';
 import { getTranslations } from 'next-intl/server';
 
@@ -14,7 +14,7 @@ export default async function OpeneduLayout({
     {
       id: 'ai-assistant',
       label: t('aiAssistant'),
-      href: '#',
+      href: AI_ROUTES.assistant,
       isHighlight: true,
     },
     {

@@ -1,7 +1,7 @@
 'use client';
 import { useEffect } from 'react';
 
-import type { IMessageData } from '@oe/api/types/conversation';
+import type { IMessage, IMessageData, IRole } from '@oe/api/types/conversation';
 import type { EventData, ISocketRes } from '@oe/api/types/socket';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { useCallback } from 'react';
@@ -38,18 +38,40 @@ export const useSocket = (isAuthenticated: boolean) => {
         const parsedData: ISocketRes<EventData> = JSON.parse(event.data);
 
         if (parsedData.event === 'ai_conversation') {
-          const data = parsedData.data as IMessageData;
-          const newMessage = handleAIConversation(data);
-          if (newMessage) {
-            setGenMessage(newMessage, () => {
-              if (!GENERATING_STATUS.includes(data?.status)) {
-                setStatus(data?.status);
-                if (resetPage) {
-                  window.location.reload();
-                }
-              }
-            });
+          if (!GENERATING_STATUS.includes(status as unknown as string)) {
+            return;
           }
+
+          const { data } = parsedData as ISocketRes<IMessageData>;
+
+          if (!genMessage || genMessage.id !== data.message_id) {
+            return;
+          }
+          const newMessage: IMessage = {
+            id: data.message_id,
+            conversation_id: data.conversation_id,
+            create_at: Date.now(),
+            content: data.content,
+            ai_model: {
+              name: data.ai_model,
+              display_name: data.ai_model_display_name,
+              thumbnail_url: data.ai_model_thumbnail_url,
+            },
+            status: data.status,
+            sender: { role: 'assistant' as IRole },
+            configs: { is_image_analysis: data.is_image_analysis },
+            content_type: 'text',
+            is_ai: true,
+          };
+
+          setGenMessage(newMessage, () => {
+            if (!GENERATING_STATUS.includes(data.status)) {
+              setStatus(data?.status);
+              if (resetPage) {
+                window.location.reload();
+              }
+            }
+          });
         } else {
           setSocketData(parsedData);
         }

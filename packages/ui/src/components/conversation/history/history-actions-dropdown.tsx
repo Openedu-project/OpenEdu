@@ -24,7 +24,7 @@ interface ActionItem {
 interface ActionDropdownProps {
   className?: string;
   actions?: ActionItem[];
-  onShare: () => void;
+  onShare?: () => void;
   onEdit: () => void;
   onDelete: (onClose?: () => void) => Promise<void>;
   item: IChatHistory;
