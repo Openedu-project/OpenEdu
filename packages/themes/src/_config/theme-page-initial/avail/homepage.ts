@@ -38,7 +38,7 @@ export const createAvailHomepageConfig = (getThemeTranslation: (path: string[]) 
       title: getThemeTranslation(['homepage', 'availCourses', 'title']),
       button: {
         text: getThemeTranslation(['homepage', 'availCourses', 'button', 'text']),
-        href: '/',
+        link: '/',
       },
     },
     order: 2,

@@ -10,7 +10,7 @@ export default function ThemeLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex h-screen flex-col bg-mute">
       <Header
-        className="fixed top-0 z-50 h-[var(--header-height)] supports-[backdrop-filter]:bg-background"
+        className="fixed top-0 z-50 h-[var(--header-height)] w-full supports-[backdrop-filter]:bg-background"
         isHideAuthMenu
       >
         <ThemeHeaderContent configKey={undefined} />
