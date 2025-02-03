@@ -10,18 +10,18 @@ interface ProgressBarProps {
 
 const sizeConfig = {
   sm: {
-    container: 'w-6 h-6',
-    checkIcon: 15,
+    container: 'w-4 h-4',
+    checkIcon: 'w-[10px] h-[10px]',
     border: 'border',
   },
   md: {
-    container: 'w-8 h-8',
-    checkIcon: 20,
+    container: 'w-6 h-6',
+    checkIcon: 'w-4 h-4 stroke-[3px]',
     border: 'border-[2px]',
   },
   lg: {
-    container: 'w-10 h-10',
-    checkIcon: 24,
+    container: 'w-8 h-8',
+    checkIcon: 'w-6 h-6 stroke-2',
     border: 'border-[3px]',
   },
 } as const;
@@ -35,7 +35,7 @@ export const CircleProgressBar = ({ progress = 0, size = 'md' }: ProgressBarProp
       <div
         className={cn('grid items-center justify-items-center rounded-full border-primary bg-white', container, border)}
       >
-        <Check color="hsl(var(--primary))" size={checkIcon} />
+        <Check color="hsl(var(--primary))" className={cn(checkIcon)} />
       </div>
     );
   }
@@ -53,7 +53,7 @@ export const CircleProgressBar = ({ progress = 0, size = 'md' }: ProgressBarProp
       style={{
         background: `conic-gradient(
           hsl(var(--primary)) 0% ${progressPercent}%,
-          hsl(var(--muted)) ${progressPercent}% 100%
+          #DBDBDB ${progressPercent}% 100%
         )`,
       }}
     >

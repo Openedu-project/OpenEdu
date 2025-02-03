@@ -5,6 +5,7 @@ import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import type { TFunction } from '@oe/i18n/types';
 import { Lock } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import type { Ref } from 'react';
 import { useRouter } from '#common/navigation';
 import { CircleProgressBar } from '#components/circle-progress-bar';
 import { Button } from '#shadcn/button';
@@ -18,6 +19,7 @@ interface IOutlineLessonProps {
   isAvailable: boolean;
   isActive: boolean;
   lesson: ILesson;
+  ref?: Ref<HTMLLIElement> | undefined;
   type?: 'learning' | 'detail';
 }
 
@@ -46,7 +48,7 @@ const LessonCountDisplay = ({
   }
 
   return (
-    <div className="mcaption-regular12 text-primary">
+    <div className="mcaption-regular10 md:mcaption-regular12 text-primary">
       {displayCounts.map((item, index) => (
         <span key={item.label}>
           {index > 0 && <span className="mx-1">&#x2022;</span>}
@@ -73,6 +75,7 @@ export const OutlineLesson = ({
   index,
   courseSlug,
   sectionUid,
+  ref,
   type = 'detail',
 }: IOutlineLessonProps) => {
   const tCourse = useTranslations('courseOutline');
@@ -91,13 +94,15 @@ export const OutlineLesson = ({
   };
 
   return (
-    <li>
+    <li ref={ref}>
       <Button variant="ghost" className={getButtonStyles(isActive, isAvailable)} onClick={handleLessonClick}>
         {isAvailable ? <CircleProgressBar progress={completedPercentage} size="sm" /> : <Lock size={16} />}
 
         <div className="flex flex-1 flex-col items-start gap-[2px]">
-          <span className="mcaption-semibold12 text-foreground/60">{tCourse('lesson', { index })}</span>
-          <span className="mbutton-semibold14 flex-1 text-left text-foreground/90">{title}</span>
+          <span className="mcaption-regular10 md:mcaption-semibold12 text-foreground/60">
+            {tCourse('lesson', { index })}
+          </span>
+          <span className="mbutton-semibold12 md:mbutton-semibold14 flex-1 text-left text-foreground/90">{title}</span>
 
           <LessonCountDisplay lesson={lesson} tCourse={tCourse} />
         </div>

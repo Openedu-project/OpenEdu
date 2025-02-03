@@ -1,0 +1,52 @@
+export const courseLearningMessages = {
+  learningPage: {
+    course: 'Course: {courseName}',
+    navigation: {
+      next: 'Next',
+      prev: 'Previous',
+    },
+    quiz: {
+      start: 'Start quiz',
+      quizTime: "It's quiz time",
+      question: 'Question',
+      questionNo: 'Question {index}',
+      finish: 'Finish',
+      next: 'Next',
+      questionNum: 'Question {questionNum}',
+
+      quizResult: {
+        tryAgain: 'Try again',
+        viewAnswer: 'View answer',
+        finishQuiz: 'Finish quiz',
+        questionNum: 'Question {questionNum}',
+        answer: 'Answer',
+        correctAnswer: 'Correct answer',
+        explanation: 'Explanation',
+        yourScore: 'Your score',
+        highestStreak: 'Highest streak',
+        highestScore: 'Highest score',
+      },
+      videoQuiz: {
+        des: 'This lesson contains quizzes at minute',
+        and: 'and',
+        videoQuizRequire: 'You need to complete the quizzes in order to finish this lesson.',
+      },
+    },
+    player: {
+      toast: {
+        loading: 'Go to the next lesson in {seconds} seconds',
+        success: 'Navigating to next lesson...',
+      },
+    },
+    courseNotiModal: {
+      congratulation: 'CONGRATULATION!!!',
+      completedCourse: "You've completed this course. Our certificate will be given to you soon!",
+      greatFinish: 'GREAT FINISH!',
+      bringUpcomingLessons: 'We are working hard to bring you upcoming lessons. Stay tuned!',
+      prevNotCompleted: 'PREVIOUS LESSONS REMAIN INCOMPLETE',
+      notCompletedYet: "Please complete all previous lessons before moving to the next one. You're almost there!",
+      returnToClass: 'Return to Class',
+      exploreNewCourse: 'Explore New Course',
+    },
+  },
+};

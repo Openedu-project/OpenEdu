@@ -5,6 +5,7 @@ import type { IUser } from '../user';
 import type { ICourseParams, TCourseStatus, TExcludedFieldRequest, TLessonContent } from './basic';
 
 import type { ICourse } from './course';
+import type { IQuizItemResponse } from './quiz';
 // import { IQuizItemResponse } from "./quiz";
 
 export interface ISegmentParams extends Partial<ICourseParams> {
@@ -85,7 +86,7 @@ export interface ILessonContent {
   type: TLessonContent;
   order: number;
   files?: IFileResponse[];
-  // quizzes?: IQuizItemResponse[];
+  quizzes?: IQuizItemResponse[];
   user_id?: string;
   section_id?: string;
   lesson_id?: string;
