@@ -1,4 +1,4 @@
-import { getBlogContent, getBlogsByCategoryId } from '@oe/api/services/blog';
+import { getBlogContent, getBlogsByCategoryService } from '@oe/api/services/blog';
 import { BlogCarousel } from '../_components/blog-carousel';
 import { BlogDetails } from '../_components/blog-details';
 
@@ -7,8 +7,8 @@ const getRelativeBlog = async (id?: string) => {
     return [];
   }
   try {
-    const res = await getBlogsByCategoryId(undefined, { id });
-    return res.results;
+    const res = await getBlogsByCategoryService(undefined,{ params: { id }});
+    return res?.results ?? [];
   } catch (error) {
     console.error(error);
     return [];

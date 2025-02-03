@@ -149,22 +149,6 @@ export const getBlogContent = async (
   return response.data;
 };
 
-export const getBlogsByCategoryId = async (
-  url: string | undefined,
-  queryParams: { id: string } & Record<string, string>,
-  init?: RequestInit
-) => {
-  const endpointKey =
-    url ??
-    createAPIUrl({
-      endpoint: API_ENDPOINT.BLOGS_CATEGORIES,
-      queryParams,
-    });
-  const response = await fetchAPI<IBlogsResponse>(endpointKey, init);
-
-  return response.data;
-};
-
 export const getRewriteData = async (
   url: string | null | undefined,
   params?: { id: string },
@@ -176,3 +160,79 @@ export const getRewriteData = async (
 
   return response.data;
 };
+export async function getBlogsPublishService(
+  url: string | undefined,
+  { params, init }: { params: IFilter; init?: RequestInit }
+): Promise<IBlogsResponse | undefined> {
+  let endpointKey = url;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.BLOGS,
+      queryParams: {
+        ...params,
+      },
+    });
+  }
+
+  try {
+    const response = await fetchAPI<IBlogsResponse>(endpointKey, init);
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return undefined;
+  }
+}
+
+export async function getBlogsByCategoryService(
+  url: string | undefined,
+  { params, init }: { params: { id: string } & IFilter; init?: RequestInit }
+): Promise<IBlogsResponse | undefined> {
+  let endpointKey = url;
+  if (!endpointKey) {
+    const { id, ...filterParams } = params;
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.BLOGS_CATEGORIES,
+      queryParams: {
+        category_id: id,
+        ...filterParams,
+      },
+    });
+  }
+
+  try {
+    const response = await fetchAPI<IBlogsResponse>(endpointKey, init);
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return undefined;
+  }
+}
+
+export async function getBlogsByHashtagService(
+  url: string | undefined,
+  { params, init }: { params: { id: string } & IFilter; init?: RequestInit }
+): Promise<IBlogsResponse | undefined> {
+  let endpointKey = url;
+  if (!endpointKey) {
+    const { id, ...filterParams } = params;
+
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.BLOGS_HASHTAGS,
+      queryParams: {
+        hashtag_id: id,
+        ...filterParams,
+      },
+    });
+  }
+
+  try {
+    const response = await fetchAPI<IBlogsResponse>(endpointKey, init);
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return undefined;
+  }
+}

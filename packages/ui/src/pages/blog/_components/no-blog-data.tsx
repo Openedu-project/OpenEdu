@@ -20,7 +20,7 @@ export function NoBlogData({
         containerHeight={300}
         sizes="(max-width: 768px) 100vw, 70vw"
       />
-      {message && <p className="mcaption-regular16 lg:mcaption-regular20 w-full p-6 text-center">{message}</p>}
+      {message && <p className="mcaption-regular14 lg:mcaption-regular20 w-full p-6 text-center">{message}</p>}
     </div>
   );
 }
