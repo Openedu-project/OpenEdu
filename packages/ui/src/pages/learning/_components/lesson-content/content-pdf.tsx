@@ -32,6 +32,7 @@ const ContentPdf = ({
       className="aspect-video pb-4"
       files={url}
       showPerPage
+      hasToolbar
       onPageChange={handlePageChange}
       onLoadSuccess={handleDocumentLoadSuccess}
     />

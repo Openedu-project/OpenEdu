@@ -32,6 +32,7 @@ export interface IPdfViewerProps {
   uploadFile?: boolean;
   className?: string;
   showPerPage?: boolean;
+  hasToolbar?: boolean;
   onPageChange?: (page: number) => void;
   onDocumentHeightChange?: (height: number) => void;
   onLoadSuccess?: (pdf: PDFDocumentProxy) => void;
@@ -42,6 +43,7 @@ export default function PdfViewer({
   uploadFile,
   className,
   showPerPage = false,
+  hasToolbar = false,
   onPageChange,
   onDocumentHeightChange,
   onLoadSuccess,
@@ -109,16 +111,18 @@ export default function PdfViewer({
 
   return (
     <div className={cn('flex max-w-full flex-col items-center gap-4', className)}>
-      <div className="sticky top-0 left-0 z-10 w-full">
-        <PdfToolbar
-          page={page}
-          numPages={numPages}
-          scale={scale}
-          onPageChange={setPage}
-          onZoom={handleZoom}
-          showPerPage={showPerPage}
-        />
-      </div>
+      {hasToolbar && (
+        <div className="sticky top-0 left-0 z-10 w-full">
+          <PdfToolbar
+            page={page}
+            numPages={numPages}
+            scale={scale}
+            onPageChange={setPage}
+            onZoom={handleZoom}
+            showPerPage={showPerPage}
+          />
+        </div>
+      )}
 
       <div className="w-full max-w-full px-4">
         {uploadFile && (
