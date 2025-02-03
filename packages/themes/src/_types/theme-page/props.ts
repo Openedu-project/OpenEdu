@@ -24,6 +24,8 @@ import type {
   VbiHomepageHeroProps,
   VbiHomepageMapProps,
 } from '../../vbi/type';
+
+import type { AvailHomepageCoursesProps, AvailHomepageFeatureProps, AvailHomepageHeroProps } from '../../avail/type';
 import type { PageSectionConfig } from './config';
 export interface BaseSectionProps<K extends ThemePageKey> {
   sectionConfig?: PageSectionConfig<K>;
@@ -73,4 +75,9 @@ export interface SectionPropsMap<K extends ThemePageKey> {
   vbiMap: DynamicProps<K, VbiHomepageMapProps>;
   vbiIntro: DynamicProps<K, VbiAboutUsIntroProps>;
   vbiGoal: DynamicProps<K, VbiAboutUsGoalProps>;
+
+  // Avail
+  availHero: DynamicProps<K, AvailHomepageHeroProps>;
+  availFeature: DynamicProps<K, AvailHomepageFeatureProps>;
+  availCourses: DynamicProps<K, AvailHomepageCoursesProps>;
 }

@@ -7,6 +7,7 @@ export default async function ThemePage() {
   if (!themeSystem?.[0]?.value) {
     return null;
   }
+
   return (
     <>
       <ThemeListPage themeSystem={themeSystem?.[0]?.value} />

@@ -18,7 +18,10 @@ export type HomeSection =
   | 'vbiBlogs'
   | 'vbiEvents'
   | 'vbiCreators'
-  | 'vbiMap';
+  | 'vbiMap'
+  | 'availHero'
+  | 'availFeature'
+  | 'availCourses';
 
 export type AboutSection = 'theme' | 'team' | 'vbiIntro' | 'vbiGoal';
 export type AuthLayout =

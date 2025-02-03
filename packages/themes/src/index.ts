@@ -19,14 +19,15 @@ import {
   ThemeHeader,
 } from './auth/type';
 
-import { ScholarHomepageAboutUs, ScholarHomepageHero, ScholarHomepageService } from './scholar';
-
 import { updateGlobalTheme } from './_components/theme-settings/theme-global/_utils';
 import { initialThemeGlobal } from './_config/theme-global-initial';
-import { ScholarAboutUs, ScholarHomePage } from './scholar';
-import { VbiHomepageHeroClient, VbiHomepageHeroServer } from './vbi/homepage/vbi-hero/index';
-
+import { AvailHomepageCourses } from './avail/homepage/avail-courses';
+import { AvailHomepageFeature } from './avail/homepage/avail-feature';
+import { AvailHomepageHero } from './avail/homepage/avail-hero';
+import AvailHomepage from './avail/homepage/index';
 import { fonts } from './fonts';
+import { ScholarHomepageAboutUs, ScholarHomepageHero, ScholarHomepageService } from './scholar';
+import { ScholarAboutUs, ScholarHomePage } from './scholar';
 import { VbiAboutUsGoal } from './vbi/about-us/goal';
 import VbiAboutUs from './vbi/about-us/index';
 import { VbiAboutUsIntro } from './vbi/about-us/intro';
@@ -38,10 +39,10 @@ import { VbiHomepageCoursesClient, VbiHomepageCoursesServer } from './vbi/homepa
 import { VbiHomepageCreatorsClient, VbiHomepageCreatorsServer } from './vbi/homepage/vbi-creators';
 import { VbiHomepageEventsClient, VbiHomepageEventsServer } from './vbi/homepage/vbi-events';
 import { VbiHomepageFeaturesClient, VbiHomepageFeaturesServer } from './vbi/homepage/vbi-features';
+import { VbiHomepageHeroClient, VbiHomepageHeroServer } from './vbi/homepage/vbi-hero/index';
 import { VbiHomepageMapClient, VbiHomepageMapServer } from './vbi/homepage/vbi-map';
 import VbiPartners from './vbi/partners/index';
 import { VbiPartnersList } from './vbi/partners/partner-list';
-
 const auth = {
   theme: AuthLayout,
   header: ThemeHeader,
@@ -98,6 +99,15 @@ export const THEMES: ThemeRender = {
     partners: {
       theme: VbiPartners,
       vbiPartnerList: VbiPartnersList,
+    },
+    auth,
+  },
+  avail: {
+    homepage: {
+      theme: AvailHomepage,
+      availHero: AvailHomepageHero,
+      availFeature: AvailHomepageFeature,
+      availCourses: AvailHomepageCourses,
     },
     auth,
   },
@@ -159,6 +169,14 @@ export const THEMES_SERVER: ThemeRender = {
     auth: {
       theme: AuthLayout,
     },
+  },
+  avail: {
+    homepage: {
+      theme: AvailHomepage,
+      availHero: AvailHomepageHero,
+      availFeature: AvailHomepageFeature,
+    },
+    auth,
   },
 } as const;
 

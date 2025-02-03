@@ -37,10 +37,6 @@ export default function GlobalThemeSetting() {
   });
 
   const handleSubmitThemeGlobal = async (themeGlobal: ThemeGlobal) => {
-    if (!themeDefinition) {
-      return;
-    }
-
     setIsSubmitting(true);
     try {
       const updatedSystem = updateThemeSystem(themeGlobal);
@@ -62,15 +58,11 @@ export default function GlobalThemeSetting() {
     }
   };
 
-  if (!themeDefinition) {
-    return null;
-  }
-
   return (
     <ThemeSettingGlobal
       isLoading={isSubmitting}
       settingKey={settingKey as ThemeSidebarGlobalKey}
-      themeGlobalData={themeDefinition.globals || initialThemeGlobal}
+      themeGlobalData={themeDefinition?.globals || initialThemeGlobal}
       onSubmit={handleSubmitThemeGlobal}
     />
   );
