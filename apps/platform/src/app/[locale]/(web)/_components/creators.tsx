@@ -22,7 +22,7 @@ export default function CreatorsSection() {
             </Button>
           </div>
           <div className="mt-6">
-            <div className="relative flex w-48 md:w-64 lg:w-[550px]">
+            <div className="relative flex w-48 md:w-64 lg:w-[850px]">
               <Image
                 src={CreatorImage.src}
                 alt="OpenEdu Creator"

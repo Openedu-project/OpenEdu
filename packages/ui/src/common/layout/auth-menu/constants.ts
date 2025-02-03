@@ -1,5 +1,11 @@
 import { ROLE_LIST } from '@oe/core/utils/constants';
-import { ADMIN_ROUTES, AFFILIATE_ROUTES, BLOG_ADMIN_ROUTES, CREATOR_ROUTES } from '@oe/core/utils/routes';
+import {
+  ADMIN_ROUTES,
+  AFFILIATE_ROUTES,
+  BLOG_ADMIN_ROUTES,
+  CREATOR_ROUTES,
+  PROTECTED_ROUTES,
+} from '@oe/core/utils/routes';
 import {
   BadgePercent,
   Bolt,
@@ -37,10 +43,10 @@ export const MENU_ITEMS: MenuItem[] = [
     key: 'wallet',
     icon: Wallet,
     requiredRoles: [ROLE_LIST.LEARNER],
-    href: '#',
+    href: PROTECTED_ROUTES.wallet,
   },
   {
-    key: 'myBlog',
+    key: 'myPost',
     icon: FileText,
     requiredRoles: [ROLE_LIST.LEARNER],
     href: '#',
@@ -71,5 +77,6 @@ export const MENU_ITEMS: MenuItem[] = [
     icon: ScrollText,
     requiredRoles: [ROLE_LIST.ORG_EDITOR, ROLE_LIST.ORG_WRITER],
     href: BLOG_ADMIN_ROUTES.myBlog,
+    hasSepratePage: true,
   },
 ] as const;

@@ -1,8 +1,8 @@
 export const headerMenuMessages = {
   headerMenu: {
-    aiAssistant: 'AI Assistant',
+    aiAssistant: 'AI Agent',
     courses: 'Courses',
-    blog: 'Blog',
+    newsFeed: 'News Feed',
     launchpad: 'Launchpad',
     becomeEducator: 'Become a Educator',
     subSidebar: {

@@ -240,11 +240,11 @@ export default function AffiliateManagementContent() {
   return (
     <>
       <Table
-        api={API_ENDPOINT.USERS_ME_REFERRALS}
+        api={API_ENDPOINT.USERS_ME_AFFILIATE_CAMPAIGNS}
         apiParams={{
           page: 1,
           per_page: 10,
-          sort: 'create_at desc',
+          sort: 'ac.create_at desc',
         }}
         columns={columns}
         ref={tableRef}

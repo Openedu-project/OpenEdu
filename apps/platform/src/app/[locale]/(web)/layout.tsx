@@ -23,8 +23,8 @@ export default async function OpeneduLayout({
       href: PLATFORM_ROUTES.courses,
     },
     {
-      id: 'blog',
-      label: t('blog'),
+      id: 'newsFeed',
+      label: t('newsFeed'),
       href: BLOG_ROUTES.blog,
     },
     {

@@ -26,7 +26,7 @@ export function Header({
       <div className="hidden gap-2 bg-[#1A1A1A] lg:flex">
         {subSidebarItems?.length > 0 &&
           subSidebarItems?.map(item => (
-            <Link href={item.href ?? '#'} key={item.id} className="mcaption-semibold20 mx-4 my-1 p-0 text-white">
+            <Link href={item.href ?? '#'} key={item.id} className="mcaption-regular16 mx-4 my-1 p-0 text-white">
               {item.label}
             </Link>
           ))}

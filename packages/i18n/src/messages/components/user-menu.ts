@@ -7,6 +7,6 @@ export const userMenuMessages = {
     learningSpace: 'Learning Space',
     affiliate: 'Affiliate',
     wallet: 'Wallet',
-    myBlog: 'My Blog',
+    myPost: 'My Post',
   },
 };

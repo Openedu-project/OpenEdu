@@ -1,4 +1,4 @@
-import ReferralImage from '@oe/assets/images/openedu-homepage/banner-referral.png';
+import ReferralImage from '@oe/assets/images/openedu-homepage/banner-referral.svg';
 import { Link } from '@oe/ui/common/navigation';
 import { Image } from '@oe/ui/components/image';
 import { MoveRight } from 'lucide-react';
