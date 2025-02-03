@@ -129,8 +129,8 @@ export const homePageMessage = {
     learningPathSection: {
       title: 'Personalize your learning path',
       description: 'Come join our platform to explore the world of future technology knowledge!',
-      earnCertificate: 'Earn Your Certificate',
-      storyFromMembers: 'Story From Our Memebers',
+      earnCertificate: 'Earn Your <span>Certificate</span>',
+      storyFromMembers: 'Story From <span>Our Members</span>',
       testimonials: {
         testimonials1: {
           quote:

@@ -17,7 +17,7 @@ export default function CreatorsSection() {
             <p className="mcaption-regular16 lg:mcaption-regular24 mb-4 text-muted-foreground md:mb-6">
               {t('description')}
             </p>
-            <Button size="lg" className="rounded-full px-8">
+            <Button size="lg" className="px-8">
               {t('buttons.become')}
             </Button>
           </div>

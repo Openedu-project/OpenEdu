@@ -34,8 +34,14 @@ export default async function LearningPathSection() {
         <div className="grid gap-8 lg:grid-cols-2 lg:items-stretch">
           {/* Certificate Section with responsive height */}
           <div className="flex flex-col">
-            <h3 className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold28 mb-6 md:mb-8">
-              {t('earnCertificate')}
+            <h3 className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold28 mb-6 text-center md:mb-8">
+              {t.rich('earnCertificate', {
+                span: chunks => (
+                  <span className="bg-gradient-to-br from-[#2CDEE9] via-[#7B5AFF] to-[#7B5AFF] bg-clip-text text-transparent">
+                    {chunks}
+                  </span>
+                ),
+              })}
             </h3>
             <div className="flex h-[300px] flex-1 items-center justify-center rounded-lg md:h-[500px] lg:h-full ">
               <Image
@@ -50,8 +56,14 @@ export default async function LearningPathSection() {
 
           {/* Testimonials Section */}
           <div className="flex flex-col lg:h-full">
-            <h3 className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold28 mb-6 md:mb-8">
-              {t('storyFromMembers')}
+            <h3 className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold28 mb-6 text-center md:mb-8">
+              {t.rich('storyFromMembers', {
+                span: chunks => (
+                  <span className="bg-gradient-to-br from-[#2CDEE9] via-[#7B5AFF] to-[#7B5AFF] bg-clip-text text-transparent">
+                    {chunks}
+                  </span>
+                ),
+              })}
             </h3>
             <div className="grid flex-1 grid-cols-1 gap-16 md:grid-cols-2 md:gap-16 lg:gap-4">
               {TESTIMONIALS?.map(testimonial => (
