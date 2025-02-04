@@ -1,3 +1,6 @@
+'use client';
+import { useGetPopularCoursesAtWebsite } from '@oe/api/hooks/useFeaturedContent';
+import { CourseCard } from '@oe/ui/components/course-card';
 import { cn } from '@oe/ui/utils/cn';
 import { useTranslations } from 'next-intl';
 import type { SectionComponent } from '../../../_types/theme-page';
@@ -6,6 +9,9 @@ export interface AvailHomepageCoursesProps extends InfoSectionProps {}
 
 const AvailHomepageCourses: SectionComponent<'homepage', 'availCourses'> = ({ className, props }) => {
   const t = useTranslations('themePage.avail.homepage.availCourses');
+  const { dataPopularCourses } = useGetPopularCoursesAtWebsite({
+    params: { org_id: 'apI3DY5K8EphHA2Z' },
+  });
 
   return (
     <div className={cn('space-y-4 bg-accent p-4 md:space-y-8 md:p-8 lg:min-h-[80vh] lg:p-12', className)}>
@@ -15,6 +21,11 @@ const AvailHomepageCourses: SectionComponent<'homepage', 'availCourses'> = ({ cl
         button={{ text: t?.('button.text'), link: props?.button?.link }}
         className="flex flex-col items-center text-center"
       />
+      <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 md:p-8 lg:grid-cols-4">
+        {dataPopularCourses?.map(course => (
+          <CourseCard key={course?.entity?.id} courseData={course?.entity} />
+        ))}
+      </div>
     </div>
   );
 };

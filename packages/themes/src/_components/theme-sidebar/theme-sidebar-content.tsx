@@ -1,5 +1,6 @@
 import {
   getComponentsMenu,
+  getFeaturesMenu,
   getGlobalThemeMenu,
   getMetadataMenu,
   getPagesMenu,
@@ -31,6 +32,7 @@ export default function ThemeSidebar({ themeName, configKey, activedSidbarKey, p
       components: getComponentsMenu(themeName),
       metadata: getMetadataMenu(themeName),
       globals: getGlobalThemeMenu(themeName),
+      features: getFeaturesMenu(themeName),
     };
 
     return menuItems[configKey]?.map(

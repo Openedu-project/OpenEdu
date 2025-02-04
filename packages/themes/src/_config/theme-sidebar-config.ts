@@ -40,6 +40,7 @@ const MENU_STRUCTURE = {
     { key: 'about-us' as ThemePageKey, label: 'About Us' },
     { key: 'partners' as ThemePageKey, label: 'Partners' },
   ],
+  FEATURES_POPULAR: [{ key: 'course', label: 'Course' }],
 } as const;
 
 // Utility function to generate paths
@@ -119,6 +120,20 @@ export const getComponentsMenu = (themeName: ThemeName): TThemeMenuDefinition<Al
         key as AllSidebarKeys,
         label,
         generatePath(themeName, 'components', undefined, key as AllSidebarKeys)
+      )
+    )
+  ),
+];
+
+export const getFeaturesMenu = (themeName: ThemeName): TThemeMenuDefinition<AllGroupSidebarKeys, AllSidebarKeys> => [
+  createGroupMenuItem(
+    'features-popular',
+    'Popular',
+    MENU_STRUCTURE.FEATURES_POPULAR.map(({ key, label }) =>
+      createMenuItem(
+        key as AllSidebarKeys,
+        label,
+        generatePath(themeName, 'features', 'popular', key as AllSidebarKeys)
       )
     )
   ),

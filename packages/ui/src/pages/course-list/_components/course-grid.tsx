@@ -2,7 +2,7 @@
 
 import type { ICourse, ICourseResponse } from '@oe/api/types/course/course';
 import type { KeyedMutator } from 'swr';
-import CourseCard from './course-card';
+import { CourseCard } from '../../../components/course-card';
 
 interface CourseGridProps {
   courses?: ICourse[];
