@@ -6,7 +6,7 @@ import type { FieldValues, Path } from 'react-hook-form';
 import { Uploader } from '#components/uploader';
 import { Button } from '#shadcn/button';
 import { FormFieldWithLabel } from '#shadcn/form';
-import { INPUT_BUTTON } from '../constant';
+import { INPUT_BUTTON } from '../constants';
 import type { InputFieldProps } from '../type';
 import { InputDefault } from './input-default';
 
@@ -16,7 +16,7 @@ export const InputImageAnalysis = <TFormValues extends FieldValues>({
   inputRef,
   canChangeType,
 }: InputFieldProps<TFormValues>) => {
-  const buttonData = INPUT_BUTTON.find(button => button.type === 'image_analysis');
+  const buttonData = INPUT_BUTTON.find(button => button.type === 'ai_image_analysis');
   const tAI = useTranslations('aiAssistant');
 
   return (
@@ -31,7 +31,7 @@ export const InputImageAnalysis = <TFormValues extends FieldValues>({
             type="button"
             size="icon"
             className="!p-2 h-8 w-8"
-            onClick={() => setInputType?.('chat')}
+            onClick={() => setInputType?.('ai_chat')}
           >
             <CircleX className="h-4 w-4" />
           </Button>

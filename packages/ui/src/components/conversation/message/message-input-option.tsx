@@ -2,7 +2,7 @@ import type { InputType } from '@oe/api/types/conversation';
 import { useTranslations } from 'next-intl';
 import { Button } from '#shadcn/button';
 import { cn } from '#utils/cn';
-import { INPUT_BUTTON } from '../constant';
+import { INPUT_BUTTON } from '../constants';
 
 interface IInputOptionProps {
   messageType?: InputType[];

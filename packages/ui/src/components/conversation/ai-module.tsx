@@ -1,62 +1,9 @@
 'use client';
-
-import { AI_ROUTES } from '@oe/core/utils/routes';
-import { ImageIcon, MessageCircle, Search, SquarePlay } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import type { ReactNode } from 'react';
 import { Link, usePathname } from '#common/navigation';
 import { Badge } from '#shadcn/badge';
 import { cn } from '#utils/cn';
-
-export interface AISidebarItem {
-  lableKey: string;
-  descKey: string;
-  value: string;
-  icon: ReactNode;
-  href: string;
-  isComming?: boolean;
-}
-
-export const aiSidebarItem: AISidebarItem[] = [
-  {
-    lableKey: 'aiChat',
-    descKey: 'aiChatDesc',
-    value: 'ai-chat',
-    href: AI_ROUTES.chat,
-    icon: <MessageCircle className="h-4 w-4 text-white" />,
-  },
-  {
-    lableKey: 'aiImage',
-    descKey: 'aiImageDesc',
-    value: 'ai-image',
-    href: AI_ROUTES.imageGenerator,
-    icon: <ImageIcon className="h-4 w-4 text-white" />,
-    isComming: true,
-  },
-  {
-    lableKey: 'aiSearch',
-    descKey: 'aiSearchDesc',
-    value: 'ai-search',
-    href: AI_ROUTES.search,
-    icon: <Search className="h-4 w-4 text-white" />,
-    isComming: true,
-  },
-  {
-    lableKey: 'aiVideo',
-    descKey: 'aiVideoDesc',
-    value: 'ai-video',
-    href: AI_ROUTES.video,
-    icon: <SquarePlay className="h-4 w-4 text-white" />,
-    isComming: true,
-  },
-];
-
-export const BG_COLOR = [
-  'linear-gradient(#8FF9A4 0%, #11C541 100%)',
-  'linear-gradient(#FFB9FA 0%, #FD77F3 100%)',
-  'linear-gradient(#FFD591 0%, #EF9E42 100%)',
-  'linear-gradient(#86C5FF 0%, #0A8AFF 100%)',
-];
+import { AI_SIDEBAR, BG_COLOR } from './constants';
 
 export function AIModule({
   className,
@@ -68,7 +15,7 @@ export function AIModule({
 
   return (
     <>
-      {aiSidebarItem.map((item, index) => (
+      {AI_SIDEBAR.map((item, index) => (
         <Link
           key={item.lableKey}
           href={item.href}

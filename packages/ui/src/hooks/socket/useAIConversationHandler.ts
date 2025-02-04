@@ -27,8 +27,8 @@ export const useAIConversationHandler = (status: string, genMessageId?: string) 
         },
         status: data.status,
         sender: { role: 'assistant' as IRole },
-        configs: { is_image_analysis: data.is_image_analysis },
         content_type: 'text' as const,
+        ai_agent_type: data.ai_agent_type,
         is_ai: true,
       };
     },

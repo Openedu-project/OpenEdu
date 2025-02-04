@@ -4,7 +4,6 @@ import type { InputFieldProps } from '../type';
 import { InputDefault } from './input-default';
 import { InputImageAnalysis } from './input-image-analysis';
 import { InputPresentation } from './input-presentation';
-import { InputScrapURL } from './input-scrap-url';
 
 export const InputField = <TFormValues extends FieldValues>({
   form,
@@ -20,19 +19,9 @@ export const InputField = <TFormValues extends FieldValues>({
   }, [type]);
 
   switch (type) {
-    case 'image_analysis': {
+    case 'ai_image_analysis': {
       return (
         <InputImageAnalysis
-          handleKeyDown={handleKeyDown}
-          setInputType={setInputType}
-          inputRef={inputRef}
-          canChangeType={canChangeType}
-        />
-      );
-    }
-    case 'scrap_from_url': {
-      return (
-        <InputScrapURL
           handleKeyDown={handleKeyDown}
           setInputType={setInputType}
           inputRef={inputRef}

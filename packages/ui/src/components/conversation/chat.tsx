@@ -1,12 +1,11 @@
 import type { IMessage, InputType } from '@oe/api/types/conversation';
-import { useMemo } from 'react';
-import { useConversationStore } from '#store/conversation-store';
 import { MessageContainer } from './message/message-container';
 import type { ISendMessageParams } from './type';
 
 interface IChatProps {
   id: string;
   nextCursorPage?: string;
+  messageType: InputType[];
   sendMessage: ({
     messageInput,
     type,
@@ -17,30 +16,23 @@ interface IChatProps {
   }: // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   ISendMessageParams) => void | Promise<unknown>;
 }
-export const ChatWithMessage = ({ id, sendMessage, nextCursorPage = '' }: IChatProps) => {
-  const { selectedModel } = useConversationStore();
-
+export const ChatWithMessage = ({ id, sendMessage, messageType, nextCursorPage = '' }: IChatProps) => {
   const rewrite = (msg: IMessage) => {
-    if (selectedModel?.configs.image_analysis_enabled || !msg.configs.is_image_analysis) {
+    if (!msg.ai_agent_type || messageType.includes(msg.ai_agent_type)) {
       void sendMessage({
         message_id: msg.id,
-        type: msg.configs.is_image_analysis ? 'image_analysis' : 'chat',
+        type: msg.ai_agent_type,
         status: 'pending',
         role: msg.sender.role,
       });
     }
   };
 
-  const messageType = useMemo(() => {
-    return ['chat', 'scrap_from_url', selectedModel?.configs?.image_analysis_enabled && 'image_analysis'].filter(
-      Boolean
-    ) as InputType[];
-  }, [selectedModel]);
-
   return (
-    <div className="flex h-full flex-col gap-4 overflow-auto">
+    <div className="flex h-full flex-col gap-4">
       <MessageContainer
         rewrite={rewrite}
+        className="overflow-x-hidden"
         messageType={messageType}
         nextCursorPage={nextCursorPage}
         id={id}

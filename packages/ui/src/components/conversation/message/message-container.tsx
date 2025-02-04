@@ -87,9 +87,7 @@ export const MessageContainer = ({
           id={msg.id}
           message={msg}
           loading={GENERATING_STATUS.includes(status ?? '')}
-          rewrite={
-            !msg.configs?.is_image_analysis || messageType?.includes('image_analysis') ? () => rewrite(msg) : undefined
-          }
+          rewrite={!msg.ai_agent_type || messageType.includes(msg.ai_agent_type) ? () => rewrite(msg) : undefined}
           sendMessage={sendMessage}
           messageType={messageType}
         />
@@ -102,7 +100,7 @@ export const MessageContainer = ({
               <Skeleton className="h-20 w-full rounded-[20px]" />
             </div>
           ) : null,
-        Footer: () => <GenMessage sendMessage={sendMessage} messageType={messageType} rewrite={rewrite} />,
+        Footer: () => <GenMessage sendMessage={sendMessage} messageType={messageType} />,
       }}
     />
   );

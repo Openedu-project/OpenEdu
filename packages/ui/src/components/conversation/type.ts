@@ -1,7 +1,16 @@
-import type { IRole, InputType } from '@oe/api/types/conversation';
+import type { IMessage, IRole, InputType } from '@oe/api/types/conversation';
 import type { IFileResponse } from '@oe/api/types/file';
 import type { KeyboardEventHandler, ReactNode, RefObject } from 'react';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
+
+export interface AISidebarItem {
+  lableKey: string;
+  descKey: string;
+  value: string;
+  icon: ReactNode;
+  href: string;
+  isComming?: boolean;
+}
 
 export interface ISendMessageParams {
   messageInput?: string;
@@ -55,4 +64,23 @@ export type InputFieldProps<TFormValues extends FieldValues> = {
 export interface MessageFormValues {
   message: string;
   images?: IFileResponse[];
+}
+
+export interface IMessageBoxProps extends IAIMessageProps {
+  id?: string;
+  sendMessage: ({
+    messageInput,
+    type,
+    url,
+    images,
+    message_id,
+    role,
+    // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
+  }: ISendMessageParams) => void | Promise<unknown>;
+  messageType?: InputType[];
+}
+export interface IAIMessageProps {
+  message: IMessage;
+  loading: boolean;
+  rewrite?: () => void;
 }

@@ -22,9 +22,9 @@ import { InputOption } from './message-input-option';
 
 const createFormSchema = (inputType: InputType) => {
   switch (inputType) {
-    case 'image_analysis': {
+    case 'ai_image_analysis': {
       return z.object({
-        message: z.string().optional(),
+        message: z.string().min(1, 'formValidation.required'),
         images: z.array(
           fileResponseScheme.optional().refine(data => data !== undefined, {
             message: 'formValidation.required',
@@ -48,7 +48,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
   messageId,
   hiddenBtn = false,
   showInputOption = false,
-  type = 'chat',
+  type = 'ai_chat',
   messageType,
   images,
   resetOnSuccess = false,
@@ -70,7 +70,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    setInputType('chat');
+    setInputType('ai_chat');
   }, [messageType]);
 
   useEffect(() => {
@@ -104,19 +104,14 @@ const MessageInput: React.FC<MessageInputProps> = ({
       return;
     }
 
-    if (
-      e.key === 'Enter' &&
-      !e.shiftKey &&
-      !generating &&
-      (inputType !== 'chat' || (message && message.trim()?.length > 0))
-    ) {
+    if (e.key === 'Enter' && !e.shiftKey && !generating) {
       e.preventDefault();
       void form.trigger();
       if (Object.keys(form.formState.errors)?.length === 0) {
         void form.handleSubmit(handleSubmit)();
         resetOnSuccess && form.reset();
       }
-    } else if (inputType === 'chat' && message && message.trim()?.length === 0) {
+    } else if (message && message.trim()?.length === 0) {
       form.setValue('message', '');
     }
   };
@@ -200,9 +195,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
                 <Button
                   type="submit"
                   size="icon"
-                  disabled={
-                    (!form.watch('message')?.trim() && inputType === 'chat') || !form.formState.isValid || generating
-                  }
+                  disabled={!form.formState.isValid || generating}
                   className={cn(
                     'group/btn h-8 w-8 rounded-full bg-primary/10',
                     generating && 'cursor-not-allowed opacity-50'

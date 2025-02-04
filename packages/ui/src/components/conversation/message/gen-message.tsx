@@ -1,11 +1,10 @@
-import type { IMessage, InputType } from '@oe/api/types/conversation';
+import type { InputType } from '@oe/api/types/conversation';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { useConversationStore } from '#store/conversation-store';
 import type { ISendMessageParams } from '../type';
 import MessageBox from './message-box';
 
 interface IGenMessageProps {
-  rewrite: (msg: IMessage) => void;
   messageType: InputType[];
   sendMessage: ({
     messageInput,
@@ -17,7 +16,7 @@ interface IGenMessageProps {
   }: // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   ISendMessageParams) => void | Promise<unknown>;
 }
-export const GenMessage = ({ sendMessage, rewrite, messageType }: IGenMessageProps) => {
+export const GenMessage = ({ sendMessage, messageType }: IGenMessageProps) => {
   const { status, genMessage } = useConversationStore();
 
   return genMessage ? (
@@ -26,11 +25,6 @@ export const GenMessage = ({ sendMessage, rewrite, messageType }: IGenMessagePro
       id={genMessage.id}
       message={genMessage}
       loading={GENERATING_STATUS.includes(status ?? '')}
-      rewrite={
-        !genMessage.configs?.is_image_analysis || messageType?.includes('image_analysis')
-          ? () => rewrite(genMessage)
-          : undefined
-      }
       sendMessage={sendMessage}
       messageType={messageType}
     />

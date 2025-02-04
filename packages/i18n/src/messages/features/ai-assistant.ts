@@ -9,7 +9,6 @@ export const aiAssistantMessages = {
     startNewChat: 'Start New Chat',
     noHistory: 'No History Here',
     imageAnalysis: 'Image Analysis',
-    scrapURLLink: 'Scrap URL Link',
     placeholderMessage: 'Type your message',
     messageURL: 'Review content from this link:',
     messageImage: 'Generate text from this screenshot',
@@ -19,7 +18,7 @@ export const aiAssistantMessages = {
     aiVideoDesc: 'Promt to generate a video',
     aiHelloText: 'Hello {name}! What can I help you?',
     delTitle: 'Delete chat?',
-    delDesc: 'This will delete <strong>{chat_name}</strong> .',
+    delDesc: '<span>This will delete <strong>{chat_name}</strong> .</span>',
     modelLimitedWarning:
       "You've reached the daily token limit for this model. Please try again tomorrow or switch to another model.",
     loadingHistory: 'Loading History...',

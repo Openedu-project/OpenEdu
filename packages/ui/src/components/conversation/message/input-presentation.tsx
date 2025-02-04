@@ -2,7 +2,7 @@ import { CircleX } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { FieldValues } from 'react-hook-form';
 import { Button } from '#shadcn/button';
-import { INPUT_BUTTON } from '../constant';
+import { INPUT_BUTTON } from '../constants';
 import type { InputFieldProps } from '../type';
 import { InputDefault } from './input-default';
 
@@ -27,7 +27,7 @@ export const InputPresentation = <TFormValues extends FieldValues>({
             type="button"
             size="icon"
             className="!p-2 h-8 w-8"
-            onClick={() => setInputType?.('chat')}
+            onClick={() => setInputType?.('ai_chat')}
           >
             <CircleX className="h-4 w-4" />
           </Button>

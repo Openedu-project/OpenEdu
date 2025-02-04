@@ -19,12 +19,7 @@ importers:
         version: 16.4.7
       lefthook:
         specifier: ^1.10.1
-<<<<<<< HEAD
         version: 1.10.10
-        version: 1.10.4
-=======
-        version: 1.10.9
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
       sherif:
         specifier: ^1.1.1
         version: 1.2.0
@@ -97,11 +92,7 @@ importers:
         version: link:../../packages/types
       '@types/node':
         specifier: ^22.10.5
-<<<<<<< HEAD
-        version: 22.13.0
-=======
-        version: 22.10.7
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
+        version: 22.13.1
       '@types/react':
         specifier: 19.0.2
         version: 19.0.2
@@ -113,12 +104,7 @@ importers:
         version: 19.0.0-beta-63e3235-20250105
       postcss:
         specifier: ^8.4.49
-<<<<<<< HEAD
-
-        version: 8.5.0
-=======
         version: 8.5.1
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
       tailwindcss:
         specifier: ^3.4.17
         version: 3.4.17
@@ -200,11 +186,7 @@ importers:
         version: link:../../packages/types
       '@types/node':
         specifier: ^22.10.5
-<<<<<<< HEAD
-        version: 22.13.0
-=======
-        version: 22.10.7
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
+        version: 22.13.1
       '@types/react':
         specifier: 19.0.3
         version: 19.0.3
@@ -268,12 +250,8 @@ importers:
         version: link:../types
       '@types/node':
         specifier: ^22.10.5
-<<<<<<< HEAD
-        version: 22.13.0
-=======
-        version: 22.10.7
+        version: 22.13.1
 
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
   packages/config:
     dependencies:
       '@oe/i18n':
@@ -291,11 +269,7 @@ importers:
         version: link:../types
       '@types/node':
         specifier: ^22.10.5
-<<<<<<< HEAD
-        version: 22.13.0
-=======
-        version: 22.10.7
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
+        version: 22.13.1
       tailwindcss:
         specifier: ^3.4.17
         version: 3.4.17
@@ -319,7 +293,7 @@ importers:
         version: link:../types
       '@types/node':
         specifier: ^22.10.2
-        version: 22.13.0
+        version: 22.13.1
       '@types/wicg-file-system-access':
         specifier: ^2023.10.5
         version: 2023.10.5
@@ -338,23 +312,7 @@ importers:
       zustand:
         specifier: ^5.0.2
         version: 5.0.3(@types/react@19.0.3)(react@19.0.0)(use-sync-external-store@1.4.0(react@19.0.0))
-    devDependencies:
-      '@oe/config':
-        specifier: workspace:*
-        version: link:../config
-      '@oe/types':
-        specifier: workspace:*
-        version: link:../types
-      '@types/node':
-        specifier: ^22.10.5
-<<<<<<< HEAD
-        version: 22.10.6
-=======
-        version: 22.10.7
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
-      '@types/wicg-file-system-access':
-        specifier: ^2023.10.5
-        version: 2023.10.5
+
   packages/dashboard:
     dependencies:
       '@oe/api':
@@ -405,11 +363,7 @@ importers:
         version: link:../types
       '@types/node':
         specifier: ^22.10.5
-<<<<<<< HEAD
-        version: 22.13.0
-=======
-        version: 22.10.7
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
+        version: 22.13.1
       '@types/wicg-file-system-access':
         specifier: ^2023.10.5
         version: 2023.10.5
@@ -461,7 +415,7 @@ importers:
         version: link:../ui
       '@types/node':
         specifier: ^22.10.2
-        version: 22.13.0
+        version: 22.13.1
       '@types/wicg-file-system-access':
         specifier: ^2023.10.5
         version: 2023.10.5
@@ -480,23 +434,7 @@ importers:
       zustand:
         specifier: ^5.0.2
         version: 5.0.3(@types/react@19.0.3)(react@19.0.0)(use-sync-external-store@1.4.0(react@19.0.0))
-    devDependencies:
-      '@oe/config':
-        specifier: workspace:*
-        version: link:../config
-      '@oe/types':
-        specifier: workspace:*
-        version: link:../types
-      '@types/node':
-        specifier: ^22.10.5
-<<<<<<< HEAD
-        version: 22.10.6
-=======
-        version: 22.10.7
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
-      '@types/wicg-file-system-access':
-        specifier: ^2023.10.5
-        version: 2023.10.5
+
   packages/types: {}
 
   packages/ui:
@@ -747,9 +685,12 @@ importers:
       react-social-icons:
         specifier: ^6.18.0
         version: 6.22.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      react-textarea-autosize:
+        specifier: ^8.5.6
+        version: 8.5.7(@types/react@19.0.3)(react@19.0.0)
       react-use-websocket:
         specifier: ^4.11.1
-        version: 4.12.0
+        version: 4.13.0
       react-virtuoso:
         specifier: 4.12.3
         version: 4.12.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -789,11 +730,7 @@ importers:
         version: link:../types
       '@types/node':
         specifier: ^22.10.5
-<<<<<<< HEAD
-        version: 22.13.0
-=======
-        version: 22.10.7
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
+        version: 22.13.1
       '@types/react':
         specifier: 19.0.3
         version: 19.0.3
@@ -1120,13 +1057,8 @@ packages:
   '@near-js/wallet-account@1.3.1':
     resolution: {integrity: sha512-POOKarJnYsTK0zEXygm43ecGlraPl5qagQHl+By5bk0zQFgeKaoFIJK/n04xUoGBhZTBIVp1/q7q3O1pB57hqg==}
 
-<<<<<<< HEAD
   '@next/bundle-analyzer@15.1.6':
     resolution: {integrity: sha512-hGzQyDqJzFHcHNCyTqM3o05BpVq5tGnRODccZBVJDBf5Miv/26UJPMB0wh9L9j3ylgHC+0/v8BaBnBBek1rC6Q==}
-=======
-  '@next/bundle-analyzer@15.1.5':
-    resolution: {integrity: sha512-pCYMPgGRwf+FjEwUXFo3QF14VzBSPPsBHSFuXUpq5ifKcY8LbcmoF2xMVVMa2HoYgA1XuqPSAIfLJr4YXNa9xQ==}
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
 
   '@next/env@15.1.4':
     resolution: {integrity: sha512-2fZ5YZjedi5AGaeoaC0B20zGntEHRhi2SdWcu61i48BllODcAmmtj8n7YarSPt4DaTsJaBFdxQAVEVzgmx2Zpw==}
@@ -2314,13 +2246,8 @@ packages:
   '@types/mdurl@2.0.0':
     resolution: {integrity: sha512-RGdgjQUZba5p6QEFAVx2OGb8rQDL/cPRG7GiedRzMcJ1tYnUANBncjbSB1NRGwbvjcPeikRABz2nshyPk1bhWg==}
 
-<<<<<<< HEAD
-  '@types/node@22.13.0':
-    resolution: {integrity: sha512-ClIbNe36lawluuvq3+YYhnIN2CELi+6q8NpnM7PYp4hBn/TatfboPgVSm2rwKRfnV2M+Ty9GWDFI64KEe+kysA==}
-=======
-  '@types/node@22.10.7':
-    resolution: {integrity: sha512-V09KvXxFiutGp6B7XkpaDXlNadZxrzajcY50EuoLIpQ6WWYCSvf19lVIazzfIzQvhUN2HjX12spLojTnhuKlGg==}
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
+  '@types/node@22.13.1':
+    resolution: {integrity: sha512-jK8uzQlrvXqEU91UxiK5J7pKHyzgnI1Qnl0QDHIgVGuolJhRb9EEl28Cj9b3rGR8B2lhFCtvIm5os8lFnO/1Ew==}
 
   '@types/react-dom@19.0.2':
     resolution: {integrity: sha512-c1s+7TKFaDRRxr1TxccIX2u7sfCnc3RxkVyBIUA2lCpyqCF+QoAwQ/CBg7bsMdVwP120HEH143VQezKtef5nCg==}
@@ -2847,11 +2774,7 @@ packages:
   hasown@2.0.2:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
   highlight.js@11.11.1:
     resolution: {integrity: sha512-Xwwo44whKBVCYoliBQwaPvtd/2tYFkRQtXDWj1nackaV2JPXx3L0+Jvd8/qCJ2p+ML0/XVkJ2q+Mr+UVdpJK5w==}
     engines: {node: '>=12.0.0'}
@@ -2904,9 +2827,6 @@ packages:
 
   intl-messageformat@10.7.14:
     resolution: {integrity: sha512-mMGnE4E1otdEutV5vLUdCxRJygHB5ozUBxsPB5qhitewssrS/qGruq9bmvIRkkGsNeK5ZWLfYRld18UHGTIifQ==}
-
-  invariant@2.2.4:
-    resolution: {integrity: sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==}
 
   is-arrayish@0.3.2:
     resolution: {integrity: sha512-eVRqCvVlZbuw3GrM63ovNSNAeA1K16kaR/LRY/92w0zxQ5/1YzwblUX652i4Xs9RwAGjW9d9y6X88t8OaAJfWQ==}
@@ -2987,7 +2907,6 @@ packages:
     resolution: {integrity: sha512-p/nXbhSEcu3pZRdkW1OfJhpsVtW1gd4Wa1fnQc9YLiTfAjn0312eMKimbdIQzuZl9aa9xUGaRlP9T/CJE/ditQ==}
     engines: {node: '>=0.10.0'}
 
-<<<<<<< HEAD
   lefthook-darwin-arm64@1.10.10:
     resolution: {integrity: sha512-hEypKdwWpmNSl4Q8eJxgmlGb2ybJj1+W5/v13Mxc+ApEmjbpNiJzPcdjC9zyaMEpPK4EybiHy8g5ZC0dLOwkpA==}
     cpu: [arm64]
@@ -3044,64 +2963,6 @@ packages:
 
   libphonenumber-js@1.11.19:
     resolution: {integrity: sha512-bW/Yp/9dod6fmyR+XqSUL1N5JE7QRxQ3KrBIbYS1FTv32e5i3SEtQVX+71CYNv8maWNSOgnlCoNp9X78f/cKiA==}
-=======
-  lefthook-darwin-arm64@1.10.9:
-    resolution: {integrity: sha512-2ceuIUkwTcTncaYH/Y2bw2m3kuNkd+vqaJXQuSh0DAa0TRS9HmEQEV0CtLUlTp5tLg6PPHdTHnu2AhKAjfHhyw==}
-    cpu: [arm64]
-    os: [darwin]
-
-  lefthook-darwin-x64@1.10.9:
-    resolution: {integrity: sha512-eAUbFtEj5TtYsm533uvQQSJTc8SLhgGRyRCUa+hmFtKQROaiw2buqc5ZOTBuegC8iAl7cHT1ydN2oakE+FLfVg==}
-    cpu: [x64]
-    os: [darwin]
-
-  lefthook-freebsd-arm64@1.10.9:
-    resolution: {integrity: sha512-A6ZFPg/9eXgs75SojFeZfMMfMgqB0fgVdtOl0mxrQXXqxTxFWD5wCGPPJIc/Pbzaaz66ZOYZt/36+MyMdgjWJQ==}
-    cpu: [arm64]
-    os: [freebsd]
-
-  lefthook-freebsd-x64@1.10.9:
-    resolution: {integrity: sha512-PF3Jjm9JHFnY41yM9wljK0y8xE/sx/sRNtNZWJzlOqC5YFUrNNBejPz5kU40mpBWd8yOclXxqBOeeZqDH64+dQ==}
-    cpu: [x64]
-    os: [freebsd]
-
-  lefthook-linux-arm64@1.10.9:
-    resolution: {integrity: sha512-Es4y3cxUtSBAF9nPkDXWC7+/tScPeRu3GVeeupv3+iMZkVACfM1DCIrK4iG9Syh7y2TLWAj6ThFArqeiRjFeog==}
-    cpu: [arm64]
-    os: [linux]
-
-  lefthook-linux-x64@1.10.9:
-    resolution: {integrity: sha512-OSlcltu2MRrLY1bWwqm4MvNOvTskUonmzTR8Bu7dy8O+80YPjPSnowLeYzfxXd8RI1w2nkwL3XKVuoDiJ3nVUw==}
-    cpu: [x64]
-    os: [linux]
-
-  lefthook-openbsd-arm64@1.10.9:
-    resolution: {integrity: sha512-wmdWGRmTK8ii4KAvAj5AhTK0EWh65vdcBt1ndsd7qXG08cStevCpsZ/cOLDVWBjjaqYkVpVsYkJNf5dwuXp21w==}
-    cpu: [arm64]
-    os: [openbsd]
-
-  lefthook-openbsd-x64@1.10.9:
-    resolution: {integrity: sha512-LLkPdy2+TIdCOGReqsODo46SmQpBjPB00gRftA1doA6ZaPzqk87moGrOmlsaLx1SkYKxctBYZc9j9MxCo2GVCg==}
-    cpu: [x64]
-    os: [openbsd]
-
-  lefthook-windows-arm64@1.10.9:
-    resolution: {integrity: sha512-Q9e3pbDjQyguXW810M1lerpcpKkeDYOTuISn86IIiKxPAawDY7JqUGWcyFsmoED/S3RJBrUp53VM3xg/dkrMzw==}
-    cpu: [arm64]
-    os: [win32]
-
-  lefthook-windows-x64@1.10.9:
-    resolution: {integrity: sha512-OywJknU5sZiD45ZWoqWbl9GkKoOd2jrdyjuH+jSf5KQn9HnN2Cp4KuVuDOc7MdI0MIN2BYb+Mf8MgmxMWCWt5w==}
-    cpu: [x64]
-    os: [win32]
-
-  lefthook@1.10.9:
-    resolution: {integrity: sha512-UNgvdOMxINultvtDQ0XgqMomMIeI2dyJM5hgOaqpC47SJvVPOy1Mk5i7QnFtfDK/bdB2pKaA61KxrIx6rCmL/w==}
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
-    hasBin: true
-
-  libphonenumber-js@1.11.18:
-    resolution: {integrity: sha512-okMm/MCoFrm1vByeVFLBdkFIXLSHy/AIK2AEGgY3eoicfWZeOZqv3GfhtQgICkzs/tqorAMm3a4GBg5qNCrqzg==}
 
   lilconfig@3.1.3:
     resolution: {integrity: sha512-/vlFKAoH5Cgt3Ie+JLhRbwOsCQePABiU3tJ1egGvyQ+33R/vcwM2Zl2QR/LzjsBeItPt3oSVXapn+m4nQDvpzw==}
@@ -3640,8 +3501,8 @@ packages:
   react-social-icons@6.22.0:
     resolution: {integrity: sha512-+KN3yL61+oPR9BqHvMRin7gwfYnzLPFsiyHTTJ6g+AwO5v8rfJ/qWUv3TZqeqInfGmKWobpnLOp4pm48HHaK+A==}
     peerDependencies:
-      react: 15.x.x || 16.x.x || 17.x.x || 18.x.x || 19.x.x
-      react-dom: 15.x.x || 16.x.x || 17.x.x || 18.x.x || 19.x.x
+      react: 15.x.x || 16.x.x || 17.x.x || 18.x.x
+      react-dom: 15.x.x || 16.x.x || 17.x.x || 18.x.x
 
   react-style-singleton@2.2.3:
     resolution: {integrity: sha512-b6jSvxvVnyptAiLjbkWLE/lOnR4lfTtDAl+eUC7RZy+QQWc6wRzIV2CE6xBuMmDxc2qIihtDCZD5NPOFl7fRBQ==}
@@ -3665,8 +3526,8 @@ packages:
       react: '>=16.6.0'
       react-dom: '>=16.6.0'
 
-  react-use-websocket@4.12.0:
-    resolution: {integrity: sha512-aPsZiIkGdULzG+CNqh2wFQpIdWiaKStRBofBUc0j/TURV3CrOw5YuJMHHre+CyB1LUoJeQbUnz7Bj05J68+xng==}
+  react-use-websocket@4.13.0:
+    resolution: {integrity: sha512-anMuVoV//g2N76Wxqvqjjo1X48r9Np3y1/gMl7arX84tAPXdy5R7sB5lO5hvCzQRYjqXwV8XMAiEBOUbyrZFrw==}
 
   react-virtuoso@4.12.3:
     resolution: {integrity: sha512-6X1p/sU7hecmjDZMAwN+r3go9EVjofKhwkUbVlL8lXhBZecPv9XVCkZ/kBPYOr0Mv0Vl5+Ziwgexg9Kh7+NNXQ==}
@@ -3754,8 +3615,8 @@ packages:
     resolution: {integrity: sha512-TKWX8xvoGHrxVdqbYeZM9w+izTF4b9z3NhSaDkdn81btvuh+ivbIMGT/zQvDtTFWhRlThpoz6LEYTr7n8A5GcA==}
     engines: {node: '>=14.0.0'}
 
-  semver@7.7.0:
-    resolution: {integrity: sha512-DrfFnPzblFmNrIZzg5RzHegbiRWg7KMR7btwi2yjHwx06zsUbO5g613sVwEV7FTwmzJu+Io0lJe2GJ3LxqpvBQ==}
+  semver@7.7.1:
+    resolution: {integrity: sha512-hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -3827,12 +3688,9 @@ packages:
 
   smoldot@2.0.22:
     resolution: {integrity: sha512-B50vRgTY6v3baYH6uCgL15tfaag5tcS2o/P5q1OiXcKGv1axZDfz2dzzMuIkVpyMR2ug11F6EAtQlmYBQd292g==}
-<<<<<<< HEAD
-=======
 
-  sonner@1.7.2:
-    resolution: {integrity: sha512-zMbseqjrOzQD1a93lxahm+qMGxWovdMxBlkTbbnZdNqVLt4j+amF9PQxUCL32WfztOFt9t9ADYkejAL3jF9iNA==}
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
+  sonner@1.7.4:
+    resolution: {integrity: sha512-DIS8z4PfJRbIyfVFDVnK9rO3eYDtse4Omcm6bt0oEr5/jtLgysmjuBl1frJ9E/EQZrFmKx2A8m/s5s9CRXIzhw==}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
       react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
@@ -4553,11 +4411,8 @@ snapshots:
       borsh: 1.0.0
     transitivePeerDependencies:
       - encoding
-<<<<<<< HEAD
-=======
 
-  '@next/bundle-analyzer@15.1.5':
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
+  '@next/bundle-analyzer@15.1.6':
     dependencies:
       webpack-bundle-analyzer: 4.10.1
     transitivePeerDependencies:
@@ -5950,19 +5805,11 @@ snapshots:
 
   '@types/bn.js@5.1.6':
     dependencies:
-<<<<<<< HEAD
-      '@types/node': 22.13.0
+      '@types/node': 22.13.1
 
   '@types/conventional-commits-parser@5.0.1':
     dependencies:
-      '@types/node': 22.13.0
-=======
-      '@types/node': 22.10.7
-
-  '@types/conventional-commits-parser@5.0.1':
-    dependencies:
-      '@types/node': 22.10.7
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
+      '@types/node': 22.13.1
 
   '@types/d3-array@3.2.1': {}
 
@@ -5999,11 +5846,7 @@ snapshots:
 
   '@types/mdurl@2.0.0': {}
 
-<<<<<<< HEAD
-  '@types/node@22.13.0':
-=======
-  '@types/node@22.10.7':
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
+  '@types/node@22.13.1':
     dependencies:
       undici-types: 6.20.0
 
@@ -6556,14 +6399,6 @@ snapshots:
       tslib: 2.8.1
 
   is-arrayish@0.3.2: {}
-<<<<<<< HEAD
-  invariant@2.2.4:
-    dependencies:
-      loose-envify: 1.4.0
-
-  is-arrayish@0.3.2:
-    optional: true
-=======
 
   is-binary-path@2.1.0:
     dependencies:
@@ -6571,7 +6406,6 @@ snapshots:
 
   is-core-module@2.16.1:
     dependencies:
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
       hasown: 2.0.2
 
   is-extglob@2.1.1: {}
@@ -6637,7 +6471,6 @@ snapshots:
 
   jsonpointer@5.0.1: {}
 
-<<<<<<< HEAD
   lefthook-darwin-arm64@1.10.10:
     optional: true
 
@@ -6682,52 +6515,6 @@ snapshots:
       lefthook-windows-x64: 1.10.10
 
   libphonenumber-js@1.11.19: {}
-=======
-  lefthook-darwin-arm64@1.10.9:
-    optional: true
-
-  lefthook-darwin-x64@1.10.9:
-    optional: true
-
-  lefthook-freebsd-arm64@1.10.9:
-    optional: true
-
-  lefthook-freebsd-x64@1.10.9:
-    optional: true
-
-  lefthook-linux-arm64@1.10.9:
-    optional: true
-
-  lefthook-linux-x64@1.10.9:
-    optional: true
-
-  lefthook-openbsd-arm64@1.10.9:
-    optional: true
-
-  lefthook-openbsd-x64@1.10.9:
-    optional: true
-
-  lefthook-windows-arm64@1.10.9:
-    optional: true
-
-  lefthook-windows-x64@1.10.9:
-    optional: true
-
-  lefthook@1.10.9:
-    optionalDependencies:
-      lefthook-darwin-arm64: 1.10.9
-      lefthook-darwin-x64: 1.10.9
-      lefthook-freebsd-arm64: 1.10.9
-      lefthook-freebsd-x64: 1.10.9
-      lefthook-linux-arm64: 1.10.9
-      lefthook-linux-x64: 1.10.9
-      lefthook-openbsd-arm64: 1.10.9
-      lefthook-openbsd-x64: 1.10.9
-      lefthook-windows-arm64: 1.10.9
-      lefthook-windows-x64: 1.10.9
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
-
-  libphonenumber-js@1.11.18: {}
 
   lilconfig@3.1.3: {}
 
@@ -6910,11 +6697,7 @@ snapshots:
 
   node-abi@3.74.0:
     dependencies:
-<<<<<<< HEAD
-      semver: 7.7.0
-=======
-      semver: 7.6.3
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
+      semver: 7.7.1
     optional: true
 
   node-addon-api@5.1.0: {}
@@ -7014,10 +6797,7 @@ snapshots:
   postcss-nested@6.2.0(postcss@8.5.1):
     dependencies:
       postcss: 8.5.1
-<<<<<<< HEAD
-=======
       postcss-selector-parser: 6.1.2
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
 
   postcss-selector-parser@6.1.2:
     dependencies:
@@ -7320,7 +7100,7 @@ snapshots:
 
   react-textarea-autosize@8.5.7(@types/react@19.0.3)(react@19.0.0):
     dependencies:
-      '@babel/runtime': 7.26.0
+      '@babel/runtime': 7.26.7
       react: 19.0.0
       use-composed-ref: 1.4.0(@types/react@19.0.3)(react@19.0.0)
       use-latest: 1.3.0(@types/react@19.0.3)(react@19.0.0)
@@ -7336,7 +7116,7 @@ snapshots:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
-  react-use-websocket@4.12.0: {}
+  react-use-websocket@4.13.0: {}
 
   react-virtuoso@4.12.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
@@ -7426,7 +7206,7 @@ snapshots:
       node-addon-api: 5.1.0
       node-gyp-build: 4.8.4
 
-  semver@7.7.0:
+  semver@7.7.1:
     optional: true
 
   setprototypeof@1.1.1: {}
@@ -7435,7 +7215,7 @@ snapshots:
     dependencies:
       color: 4.2.3
       detect-libc: 2.0.3
-      semver: 7.7.0
+      semver: 7.7.1
     optionalDependencies:
       '@img/sharp-darwin-arm64': 0.33.5
       '@img/sharp-darwin-x64': 0.33.5
@@ -7521,11 +7301,7 @@ snapshots:
       - utf-8-validate
     optional: true
 
-<<<<<<< HEAD
   sonner@1.7.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
-=======
-  sonner@1.7.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
     dependencies:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
@@ -7614,14 +7390,6 @@ snapshots:
       normalize-path: 3.0.0
       object-hash: 3.0.0
       picocolors: 1.1.1
-<<<<<<< HEAD
-      postcss: 8.5.0
-      postcss-import: 15.1.0(postcss@8.5.0)
-      postcss-js: 4.0.1(postcss@8.5.0)
-      postcss-load-config: 4.0.2(postcss@8.5.0)
-      postcss-nested: 6.2.0(postcss@8.5.0)
-=======
->>>>>>> febc8ca4 (fix: layout ai assistant #30)
       postcss: 8.5.1
       postcss-import: 15.1.0(postcss@8.5.1)
       postcss-js: 4.0.1(postcss@8.5.1)

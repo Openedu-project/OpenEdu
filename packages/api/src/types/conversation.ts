@@ -24,7 +24,7 @@ export declare class Document<Metadata extends Record<string, unknown> = Record<
 
 export type IRole = 'user' | 'assistant';
 
-export type InputType = TAgentType | 'image_analysis' | 'scrap_from_url' | 'chat';
+export type InputType = TAgentType | 'ai_image_analysis' | 'ai_chat';
 
 export type IProvider =
   | 'anthropic.claude-3-5-sonnet-20241022-v2:0'
@@ -65,14 +65,13 @@ export interface IChatHistory {
   update_at: number;
 }
 
-export type TAgentType = 'ai_chat' | 'ai_search' | 'ai_slide' | 'ai_image' | 'ai_chat' | 'ai_code';
+export type TAgentType = 'ai_chat' | 'ai_search' | 'ai_slide' | 'ai_image_generate' | 'ai_image_analysis' | 'ai_code';
 export interface IConversationRequest {
   ai_agent_type: TAgentType;
   message_ai_agent_type?: TAgentType;
   ai_model: IProvider;
   content: string;
   content_type: IContextType;
-  is_image_analysis: boolean;
   attachment_ids?: string[];
   ai_conversation_id?: string;
   message_id?: string;
@@ -100,6 +99,7 @@ export interface IMessageData {
   error?: null | { code: number; msg: string };
   parent_message_id: string;
   is_image_analysis: boolean;
+  ai_agent_type: TAgentType;
 }
 
 export type IAIStatus = 'generating' | 'pending' | 'completed' | 'failed' | 'stopped';
@@ -153,17 +153,13 @@ export interface IMessage {
   content_type: IContextType;
   is_edited?: boolean;
   is_ai: boolean;
-  configs: IMessageConfigs;
   ai_model: IMessageAIModel;
   sender: IMessageSender;
+  ai_agent_type: TAgentType;
 
   // adjust later
   suggestions?: string[];
   sources?: Document[];
-}
-
-interface IMessageConfigs {
-  is_image_analysis: boolean;
 }
 
 interface IMessageAIModel {
