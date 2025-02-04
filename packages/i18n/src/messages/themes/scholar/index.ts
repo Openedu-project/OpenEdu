@@ -1,7 +1,7 @@
 import { authMessages } from '../auth';
 import { scholarHomepage } from './homepage';
 
-export const ScholarMessage = {
+export const scholarMessage = {
   scholar: {
     ...scholarHomepage,
     ...authMessages,

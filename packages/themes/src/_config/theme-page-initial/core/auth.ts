@@ -4,6 +4,7 @@ export const createAuthLayoutConfig = (getThemeTranslation: (path: string[]) => 
   login: createSection<'auth', 'login'>({
     props: {
       title: getThemeTranslation(['auth', 'login', 'title']),
+      seperate: getThemeTranslation(['auth', 'login', 'seperate']),
       banner: { mime: 'image/png' },
       slogan: getThemeTranslation(['auth', 'login', 'slogan']),
     },

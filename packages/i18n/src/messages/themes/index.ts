@@ -1,12 +1,12 @@
-import { AcademiaMessage } from './academia';
+import { academiaMessage } from './academia';
 import { availMessage } from './avail';
 import { headerMessages } from './header';
-import { ThemeNotiMessages } from './noti';
+import { themeNotiMessages } from './noti';
 import { pageSettingMessages } from './page-settings';
-import { ScholarMessage } from './scholar';
+import { scholarMessage } from './scholar';
 import { sidbarMessages } from './sidebar';
 import { themeListMessages } from './theme-list';
-import { ThemeUIMessage } from './theme-ui';
+import { themeUIMessage } from './theme-ui';
 import { vbiMessage } from './vbi';
 
 export const themeMessages = {
@@ -22,11 +22,11 @@ export const themeMessages = {
       authLayout: 'Auth / Layout',
       partners: 'Partners',
     },
-    ...AcademiaMessage,
-    ...ScholarMessage,
+    ...academiaMessage,
+    ...scholarMessage,
     ...vbiMessage,
     ...availMessage,
   },
-  ...ThemeUIMessage,
-  ...ThemeNotiMessages,
+  ...themeUIMessage,
+  ...themeNotiMessages,
 };

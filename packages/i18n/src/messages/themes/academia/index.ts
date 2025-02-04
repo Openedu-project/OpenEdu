@@ -1,7 +1,7 @@
 import { authMessages } from '../auth';
 import { academiaHomepage } from './homepage';
 
-export const AcademiaMessage = {
+export const academiaMessage = {
   academia: {
     ...academiaHomepage,
     ...authMessages,

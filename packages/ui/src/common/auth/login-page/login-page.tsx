@@ -16,7 +16,7 @@ export function LoginPage({ themeName = 'academia', banner }: LoginPageProps) {
   return (
     <AuthLayout
       title={tAuth('login.title')}
-      // seperateText={tAuth('login.seperate')}
+      seperateText={tAuth('login.seperate')}
       banner={{ src: banner?.url || loginBanner.src, alt: 'Login background' }}
       slogan={tAuth('login.slogan')}
     >

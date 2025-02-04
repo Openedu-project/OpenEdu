@@ -1,4 +1,4 @@
-export const ThemeNotiMessages = {
+export const themeNotiMessages = {
   themeNoti: {
     global: {
       success: 'Theme global settings updated successfully',
