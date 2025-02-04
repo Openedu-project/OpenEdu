@@ -60,7 +60,7 @@ export default function CourseRender({
 
     return (
       <div className="flex items-center gap-3">
-        <CircleProgressBar progress={progressPercent} />
+        <CircleProgressBar progress={progressPercent} size="lg" />
         <div className="flex flex-1 flex-col justify-center">
           <span className="mcaption-regular9">{t('currentLesson')}</span>
           <p className="mcaption-semibold12 line-clamp-1 text-primary">{current_lesson?.title}</p>
@@ -72,10 +72,10 @@ export default function CourseRender({
   function CompletedCourse() {
     return (
       <div className="flex items-center gap-3">
-        <div className="grid h-8 w-8 items-center justify-items-center rounded-full bg-primary">
+        <div className="grid h-8 w-8 items-center justify-items-center rounded-full bg-green-600">
           <Check color="white" size={20} />
         </div>
-        <p className="giant-iheading-semibold16 text-primary">{t('finish')}</p>
+        <p className="giant-iheading-semibold14 text-green-600">{t('finish')}</p>
       </div>
     );
   }
@@ -84,7 +84,7 @@ export default function CourseRender({
     return (
       <div className="flex items-center gap-3">
         <NotStarted />
-        <p className="giant-iheading-semibold16 text-border-neutral-500">{t('notStarted')}</p>
+        <p className="giant-iheading-semibold14 text-foreground/60">{t('notStarted')}</p>
       </div>
     );
   }

@@ -36,6 +36,7 @@ export default async function LearnerLayout({
           label: tDashboard('learner.allCourse'),
           icon: <Note2 className="h-5 w-5" />,
           href: LEARNER_ROUTES.myCourses,
+          isRoot: true,
         },
         {
           id: 'in-progress',

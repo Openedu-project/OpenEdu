@@ -43,7 +43,7 @@ export default function CourseCard({
         <Card
           id={courseData?.id}
           className={cn(
-            'mx-auto flex h-full min-h-[280px] w-full flex-col gap-3 rounded-m border-[3px] border-white p-4 shadow-md hover:border-primary',
+            'mx-auto flex h-full min-h-[280px] w-full flex-col gap-3 rounded-m border-[3px] border-white p-2 shadow-md hover:border-primary',
             contentClassName
           )}
           {...props}
