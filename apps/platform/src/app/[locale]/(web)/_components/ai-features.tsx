@@ -79,13 +79,14 @@ export default async function AIFeatureSection() {
               className="group relative flex w-full cursor-pointer flex-col items-start gap-4 rounded-[40px] border-[4px] border-white bg-gradient-to-b from-25% from-white to-100% to-[rgba(242,241,255,0.30)] p-6 backdrop-blur md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.334rem)]"
             >
               <div className="h-10 w-10 flex-shrink-0 rounded-full bg-white p-1 md:h-16 md:w-16">
-                <div className=" rounded-full bg-ai-feature-gradient p-2">
+                <div className="h-[40px] w-[40px] rounded-full bg-ai-feature-gradient p-2">
                   <Image
                     src={feature.icon}
                     alt={feature.title}
                     width={40}
                     height={40}
-                    className="h-[40px] w-[40px] rounded-full object-cover"
+                    priority
+                    className="rounded-full object-cover"
                   />
                 </div>
               </div>

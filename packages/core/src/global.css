@@ -70,6 +70,7 @@
       rgba(160, 244, 249, 0.5) 71.84%,
       rgba(255, 255, 255, 0.3) 99.69%
     );
+    --footer: linear-gradient(255deg, #b8f4f8 6.18%, #ede3fe 70.53%);
   }
 
   .dark {
@@ -138,6 +139,7 @@
       rgba(160, 244, 249, 0.5) 71.84%,
       rgba(255, 255, 255, 0.3) 99.69%
     );
+    --footer: linear-gradient(255deg, #b8f4f8 6.18%, #ede3fe 70.53%);
   }
 }
 
@@ -329,7 +331,6 @@
 }
 
 @layer utilities {
-
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;

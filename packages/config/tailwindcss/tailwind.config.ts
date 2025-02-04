@@ -92,6 +92,7 @@ const config: Omit<Config, 'content'> = {
         'learning-gradient': 'var(--learning-path-background)',
         'ai-feature-gradient': 'var(--ai-feature-background)',
         'launchpad-gradient': 'var(--launchpad-background)',
+        'footer-gradient': 'var(--footer)',
       },
       borderRadius: {
         default: 'var(--radius)',

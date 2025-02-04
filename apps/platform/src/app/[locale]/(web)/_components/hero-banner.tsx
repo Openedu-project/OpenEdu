@@ -4,6 +4,7 @@ import WhaleWelcome from '@oe/assets/images/openedu-homepage/hero-banner/whale-w
 import { Image } from '@oe/ui/components/image';
 import { Button } from '@oe/ui/shadcn/button';
 import { getTranslations } from 'next-intl/server';
+import { Suspense } from 'react';
 import PartnerSection from './partners';
 
 // Mark as server component
@@ -65,7 +66,9 @@ export default async function HeroSection() {
         </div>
       </div>
 
-      <PartnerSection />
+      <Suspense>
+        <PartnerSection />
+      </Suspense>
     </section>
   );
 }

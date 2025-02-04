@@ -26,7 +26,7 @@ export function DashboardLayout({
           activeClassName="border-0"
         >
           <div className="w-[115px] min-w-[115px] md:w-[172px]">
-            <Image src={OpeneduLogo.src} alt="OpenEdu" width={172} height={40} />
+            <Image src={OpeneduLogo.src} alt="OpenEdu" width={172} height={40} priority />
           </div>
         </Link>
       </Header>

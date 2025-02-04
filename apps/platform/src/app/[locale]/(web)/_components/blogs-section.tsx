@@ -99,13 +99,14 @@ export default async function BlogsSection() {
                   href={`/blog/${post?.id}`}
                   className="flex h-auto flex-col items-start gap-6 whitespace-break-spaces text-black no-underline hover:no-underline md:flex-row md:items-center"
                 >
-                  <div className="w-full overflow-hidden rounded-2xl md:w-[260px]">
+                  <div className="h-[152px] w-full overflow-hidden rounded-2xl md:w-[260px]">
                     <Image
                       src={post?.banner?.url}
                       alt={post?.title}
                       width={260}
                       height={152}
-                      className="h-[152px] object-cover"
+                      priority
+                      className=" object-cover"
                     />
                   </div>
 
