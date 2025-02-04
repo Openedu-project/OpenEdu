@@ -116,14 +116,14 @@ export function useReceiveCertificate() {
   };
 }
 
-export function useGetCertByUserId(userId: string) {
+export function useGetCertByUserId(user_id: string) {
   const endpointKey = createAPIUrl({
     endpoint: API_ENDPOINT.CERTIFICATES,
-    queryParams: { userId },
+    queryParams: { user_id },
   });
 
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (url: string) =>
-    getCertByUserIdService(url, { params: { userId } })
+    getCertByUserIdService(url, { params: { user_id } })
   );
 
   return {

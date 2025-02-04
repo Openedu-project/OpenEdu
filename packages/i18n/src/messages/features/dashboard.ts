@@ -83,5 +83,14 @@ export const dashboardMessages = {
       approved: 'Approved',
       requests: 'Requests',
     },
+    learner: {
+      myCourse: 'My Courses',
+      allCourse: 'All Courses',
+      inProgress: 'In Progress',
+      notStarted: 'Not Started',
+      completed: 'Completed',
+      wishlist: 'Wishlist',
+      myCertificates: 'My Certificates',
+    },
   },
 };

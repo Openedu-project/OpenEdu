@@ -47,6 +47,7 @@ export interface ICertificate {
 
 export interface ICertificateUser {
   id: string;
+  completed_at?: number;
   create_at: number;
   update_at: number;
   delete_at: number;
