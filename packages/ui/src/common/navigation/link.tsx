@@ -64,5 +64,9 @@ export const Link: FC<LinkProps> = ({
     );
   }
 
-  return <NextLink {...linkProps}>{children}</NextLink>;
+  return (
+    <NextLink prefetch={true} {...linkProps}>
+      {children}
+    </NextLink>
+  );
 };
