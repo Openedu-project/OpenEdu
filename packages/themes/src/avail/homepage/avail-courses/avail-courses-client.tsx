@@ -1,5 +1,7 @@
 'use client';
 import { useGetPopularCoursesAtWebsite } from '@oe/api/hooks/useFeaturedContent';
+import type { ICourse } from '@oe/api/types/course/course';
+import type { IFeaturedContent } from '@oe/api/types/featured-contents';
 import { CourseCard } from '@oe/ui/components/course-card';
 import { cn } from '@oe/ui/utils/cn';
 import { useTranslations } from 'next-intl';
@@ -7,7 +9,7 @@ import type { SectionComponent } from '../../../_types/theme-page';
 import { InfoSection, type InfoSectionProps } from '../../../vbi/_components/info-section';
 export interface AvailHomepageCoursesProps extends InfoSectionProps {}
 
-const AvailHomepageCourses: SectionComponent<'homepage', 'availCourses'> = ({ className, props }) => {
+const AvailHomepageCoursesClient: SectionComponent<'homepage', 'availCourses'> = ({ className, props }) => {
   const t = useTranslations('themePage.avail.homepage.availCourses');
   const { dataPopularCourses } = useGetPopularCoursesAtWebsite({
     params: { org_id: 'apI3DY5K8EphHA2Z' },
@@ -22,12 +24,13 @@ const AvailHomepageCourses: SectionComponent<'homepage', 'availCourses'> = ({ cl
         className="flex flex-col items-center text-center"
       />
       <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 md:p-8 lg:grid-cols-4">
-        {dataPopularCourses?.map(course => (
-          <CourseCard key={course?.entity?.id} courseData={course?.entity} />
-        ))}
+        {dataPopularCourses?.map(
+          (course: IFeaturedContent<ICourse>) =>
+            course?.entity && <CourseCard key={course?.entity?.id} courseData={course?.entity} />
+        )}
       </div>
     </div>
   );
 };
 
-export default AvailHomepageCourses;
+export default AvailHomepageCoursesClient;

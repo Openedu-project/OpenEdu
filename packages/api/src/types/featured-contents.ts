@@ -6,7 +6,7 @@ export interface FeaturedContentParams {
   entity_type: string;
 }
 
-export interface IFeaturedContent {
+export interface IFeaturedContent<T> {
   id: string;
   org_id: string;
   entity_id: string;
@@ -14,14 +14,14 @@ export interface IFeaturedContent {
   enabled: boolean;
   order: number;
   type: string;
-  entity: null;
+  entity?: T;
 }
-export interface IFeaturedContentResponse extends IDataPagination<IFeaturedContent[]> {}
+export interface IFeaturedContentResponse<T> extends IDataPagination<IFeaturedContent<T>[]> {}
 
 export interface IFeaturedContentEntityItem {
   entity_id: string;
   order: number;
 }
-export interface IFeaturedContentRequest extends Pick<IFeaturedContent, 'org_id' | 'type' | 'entity_type'> {
+export interface IFeaturedContentRequest extends Pick<IFeaturedContent<undefined>, 'org_id' | 'type' | 'entity_type'> {
   entities: IFeaturedContentEntityItem[];
 }

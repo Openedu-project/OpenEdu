@@ -21,7 +21,7 @@ const ListPopularCourses = () => {
 
   const { triggerUpdateFeaturedContent } = useUpdateFeaturedContent();
   const [items, setItems] = useState<ICourse[]>([]);
-  const [selectedDisplay, setSelectedDisplay] = useState<IFeaturedContent[]>([]);
+  const [selectedDisplay, setSelectedDisplay] = useState<IFeaturedContent<undefined>[]>([]);
   const [maxDisplay, setMaxDisplay] = useState<number>(4);
 
   const isOpenEdu = false;
@@ -92,7 +92,7 @@ const ListPopularCourses = () => {
         toast.error(`Maximum ${maxDisplay} items allowed`);
         return;
       }
-      const newFeaturedContent: IFeaturedContent = {
+      const newFeaturedContent: IFeaturedContent<undefined> = {
         id: '', // Will be assigned by backend
         org_id: '', // Will be assigned by backend
         entity_id: course.cuid,
@@ -100,7 +100,7 @@ const ListPopularCourses = () => {
         enabled: true,
         order: selectedDisplay.length,
         type: 'COURSE',
-        entity: null,
+        entity: undefined,
       };
       setSelectedDisplay(prev => [...prev, newFeaturedContent]);
     } else {

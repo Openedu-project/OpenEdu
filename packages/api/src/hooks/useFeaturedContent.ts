@@ -1,6 +1,10 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
-import { getPopularCoursesServices, updateFeaturedContent } from '#services/featured-contents';
+import {
+  getPopularCoursesServices,
+  getPopularCoursesServicesAtWebsite,
+  updateFeaturedContent,
+} from '#services/featured-contents';
 import type { FeaturedContentParams, IFeaturedContentRequest } from '#types/featured-contents';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
@@ -48,7 +52,7 @@ export function useGetPopularCoursesAtWebsite({ params }: { params: Pick<Feature
   });
 
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
-    getPopularCoursesServices(endpoint, { params })
+    getPopularCoursesServicesAtWebsite(endpoint, { params })
   );
 
   return {

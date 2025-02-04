@@ -1,5 +1,7 @@
+import type { ICourse } from '#types/course/course';
 import type {
   FeaturedContentParams,
+  IFeaturedContent,
   IFeaturedContentRequest,
   IFeaturedContentResponse,
 } from '#types/featured-contents';
@@ -9,7 +11,7 @@ import { createAPIUrl, fetchAPI, postAPI } from '#utils/fetch';
 export async function getPopularCoursesServices(
   url: string | undefined,
   { params, init }: { params: Pick<FeaturedContentParams, 'org_id'>; init?: RequestInit }
-): Promise<IFeaturedContentResponse | undefined> {
+): Promise<IFeaturedContentResponse<undefined> | undefined> {
   const endpointKey = createAPIUrl({
     endpoint: url || API_ENDPOINT.FEATURED_CONTENT,
     queryParams: {
@@ -20,7 +22,29 @@ export async function getPopularCoursesServices(
   });
 
   try {
-    const response = await fetchAPI<IFeaturedContentResponse>(endpointKey, init);
+    const response = await fetchAPI<IFeaturedContentResponse<undefined>>(endpointKey, init);
+
+    return response.data;
+  } catch {
+    return undefined;
+  }
+}
+
+export async function getPopularCoursesServicesAtWebsite(
+  url: string | undefined,
+  { params, init }: { params: Pick<FeaturedContentParams, 'org_id'>; init?: RequestInit }
+): Promise<IFeaturedContent<ICourse>[] | undefined> {
+  const endpointKey = createAPIUrl({
+    endpoint: url || API_ENDPOINT.FEATURED_CONTENT_BY_TYPES,
+    queryParams: {
+      org_id: params.org_id,
+      type: 'popular',
+      entity_type: 'course',
+    },
+  });
+
+  try {
+    const response = await fetchAPI<IFeaturedContent<ICourse>[]>(endpointKey, init);
 
     return response.data;
   } catch {

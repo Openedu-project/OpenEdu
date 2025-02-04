@@ -8,6 +8,7 @@ import type {
   SimpleMenuItem,
   TThemeMenuDefinition,
   ThemeConfigKey,
+  ThemeFeaturedContentKey,
   ThemeName,
   ThemePageKey,
   ThemeSidebarGlobalKey,
@@ -47,7 +48,7 @@ const MENU_STRUCTURE = {
 const generatePath = (
   themeName: ThemeName,
   configKey: ThemeConfigKey,
-  pageKey?: ThemePageKey,
+  pageKey?: ThemePageKey | ThemeFeaturedContentKey,
   settingKey?: AllSidebarKeys
 ): string => {
   const baseUrl = createAPIUrl({ endpoint: ADMIN_ROUTES.themeDetail, params: { themeName } });
