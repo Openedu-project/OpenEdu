@@ -1,18 +1,18 @@
 'use client';
 import { useGetCoursesPublish } from '@oe/api/hooks/useCourse';
-import { PaginationCustom } from '@oe/ui/components/pagination-custom';
-
-const PER_PAGE = 4;
 import { useGetPopularCourses, useUpdateFeaturedContent } from '@oe/api/hooks/useFeaturedContent';
 import type { ICourse } from '@oe/api/types/course/course';
 import type { IFeaturedContent } from '@oe/api/types/featured-contents';
 import { CourseCard } from '@oe/ui/components/course-card';
 import { DndSortable, DndSortableDragButton } from '@oe/ui/components/dnd-sortable';
+import { PaginationCustom } from '@oe/ui/components/pagination-custom';
 import { Button } from '@oe/ui/shadcn/button';
 import { Checkbox } from '@oe/ui/shadcn/checkbox';
 import { Input } from '@oe/ui/shadcn/input';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { useEffect, useState } from 'react';
+
+const PER_PAGE = 4;
 
 const ListPopularCourses = () => {
   const { dataPopularCourses } = useGetPopularCourses({
