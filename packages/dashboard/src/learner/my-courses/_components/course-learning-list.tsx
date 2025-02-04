@@ -2,6 +2,7 @@
 
 import { useGetMyCoursesLearning } from '@oe/api/hooks/useMyLearningSpace';
 import type { TMyCourseStatus } from '@oe/api/types/my-learning-space';
+import { NoDataAvailable } from '@oe/ui/components/no-data-available';
 import { PaginationCustom } from '@oe/ui/components/pagination-custom';
 import { Spinner } from '@oe/ui/components/spinner';
 import { useState } from 'react';
@@ -38,7 +39,7 @@ export default function CourseLearningList({ title, group, preload }: ICourseLea
               ))}
             </div>
           ) : (
-            <div>No data </div>
+            <NoDataAvailable />
           )}
 
           <PaginationCustom

@@ -28,5 +28,10 @@ export const myLearningSpaceMessage = {
       currentLesson: 'Current lesson',
       noData: 'No data here.',
     },
+
+    myCertificates: {
+      title: 'My Certificates',
+      back: 'Back to My Certificate',
+    },
   },
 } as const;
