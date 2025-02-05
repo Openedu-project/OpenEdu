@@ -16,11 +16,18 @@ interface ICourseLearningListProps {
 export default function CourseLearningList({ title, group, preload }: ICourseLearningListProps) {
   const [page, setPage] = useState<number>(1);
 
-  const { coursesLearningData, coursesLearningLoading } = useGetMyCoursesLearning({
+  const params = {
     group,
     preloads: [...(Array.isArray(preload) ? preload : preload ? [preload] : []), 'Categories', 'Levels', 'Medias'],
     page,
-  });
+    per_page: 12,
+  };
+  const revalidateOnMount = true;
+
+  const { coursesLearningData, coursesLearningLoading, coursesLearningMutate } = useGetMyCoursesLearning(
+    params,
+    revalidateOnMount
+  );
 
   return (
     <>
@@ -33,9 +40,9 @@ export default function CourseLearningList({ title, group, preload }: ICourseLea
           </h3>
 
           {coursesLearningData && coursesLearningData.results?.length > 0 ? (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {coursesLearningData.results?.map(course => (
-                <CourseCard key={course.id} courseData={course} courseStatus={group} />
+                <CourseCard key={course.id} courseData={course} courseStatus={group} mutate={coursesLearningMutate} />
               ))}
             </div>
           ) : (

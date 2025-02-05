@@ -23,7 +23,9 @@ export function CourseDetails({ courseData }: CourseDetailsProps) {
 
 function CourseName({ name }: { name: string }) {
   return (
-    <p className="giant-iheading-bold18 line-clamp-2 flex h-[45px] whitespace-break-spaces text-foreground">{name}</p>
+    <p className="giant-iheading-bold18 line-clamp-2 flex h-fit max-h-[45px] whitespace-break-spaces text-foreground">
+      {name}
+    </p>
   );
 }
 

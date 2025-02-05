@@ -9,6 +9,7 @@ import { useParams, useSearchParams } from 'next/navigation';
 import { type MouseEvent, useCallback, useEffect, useMemo } from 'react';
 import { useRouter } from '#common/navigation';
 import { useLoginRequiredStore } from '#components/login-required-modal';
+import { createCourseUrl } from '#utils/course-url';
 import { ACTION_TYPES, type ActionType, type IPaymentButton } from './types';
 import { determineAction, getFirstLessonInfo, hasValidOutlineItems } from './utils';
 
@@ -27,7 +28,7 @@ interface ActionHandlerParams {
   refBy?: string;
   fromSource?: string;
   slug?: string;
-  createCourseUrl: (type: 'learning' | 'detail', params: Record<string, string>) => string;
+  // createCourseUrl: (type: 'learning' | 'detail', params: Record<string, string>) => string;
   setLoginRequiredModal: (show: boolean) => void;
   triggerPostEnrollCourse: (params: IEnrollCoursePayload) => void;
 }
@@ -44,7 +45,7 @@ const redirectToLearningPage = ({
   isExternalDomain,
   domain,
   router,
-  createCourseUrl,
+  // createCourseUrl,
   isCourseDetail,
 }: ActionHandlerParams) => {
   const hasOutlines = hasValidOutlineItems(courseData);
@@ -248,10 +249,10 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false }: IPaymen
     }
   }, [courseData, fromUser, refByStorage]);
 
-  const createCourseUrl = useCallback((type: 'learning' | 'detail', params: Record<string, string>) => {
-    const endpoint = type === 'learning' ? PLATFORM_ROUTES.courseLearning : PLATFORM_ROUTES.courseDetail;
-    return createAPIUrl({ endpoint, params });
-  }, []);
+  // const createCourseUrl = useCallback((type: 'learning' | 'detail', params: Record<string, string>) => {
+  //   const endpoint = type === 'learning' ? PLATFORM_ROUTES.courseLearning : PLATFORM_ROUTES.courseDetail;
+  //   return createAPIUrl({ endpoint, params });
+  // }, []);
 
   const baseAction = useMemo(
     () =>
@@ -280,7 +281,7 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false }: IPaymen
         isExternalDomain: isExternalDomain as boolean,
         domain,
         router,
-        createCourseUrl,
+        // createCourseUrl,
         isCourseDetail,
         setLoginRequiredModal,
         triggerPostEnrollCourse,
@@ -294,7 +295,7 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false }: IPaymen
       domain,
       isExternalDomain,
       router,
-      createCourseUrl,
+      // createCourseUrl,
       isCourseDetail,
       setLoginRequiredModal,
       triggerPostEnrollCourse,

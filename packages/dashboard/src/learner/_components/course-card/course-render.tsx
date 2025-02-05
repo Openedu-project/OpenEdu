@@ -1,57 +1,46 @@
 'use client';
 
 import type { ICourseOutline } from '@oe/api/types/course/course';
-import type { TMyCourseStatus } from '@oe/api/types/my-learning-space';
+import type { IMyCourseResponse, TMyCourseStatus } from '@oe/api/types/my-learning-space';
 import NotStarted from '@oe/assets/icons/not-started';
 import { CircleProgressBar } from '@oe/ui/components/circle-progress-bar';
-import { PaymentButton } from '@oe/ui/components/payment-button';
-import { RatingStars } from '@oe/ui/components/rating-stars';
 import { WishlistButton } from '@oe/ui/components/wishlist-button';
 import { Check } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import type { KeyedMutator } from 'swr';
+import CoursePrice from '../../../creator/courses/course-table/course-price';
 
 export default function CourseRender({
   courseData,
   courseStatus,
+  mutate,
 }: {
   courseData: ICourseOutline;
   courseStatus: TMyCourseStatus;
+  mutate?: KeyedMutator<IMyCourseResponse | null>;
 }) {
   const t = useTranslations('myLearningSpace.myCourses');
 
-  const { levels, learner_count, rating, learning_progress_overview } = courseData;
+  const { learning_progress_overview } = courseData;
   const completed_lessons = learning_progress_overview?.completed_lessons ?? 0;
   const total_lessons = learning_progress_overview?.total_lessons ?? 0;
-  // const current_section = learning_progress_overview?.current_section;
   const current_lesson = learning_progress_overview?.current_lesson;
 
   function WishlistCourseContent() {
     return (
-      <>
-        <div className="mcaption-regular12 flex justify-between gap-2 text-content-neutral-color-content-neutral-light400">
-          <span>
-            {levels?.[0]?.name} &#x2022;
-            {learner_count}
-            {learner_count && learner_count > 1 ? 'learners' : 'learner'}
-          </span>
-          <div>
-            <RatingStars rating={rating ?? 0} />
-          </div>
-        </div>
-        <div className="flex items-center justify-between gap-2">
-          <PaymentButton className="mbutton-regular16 h-fit flex-grow" courseData={courseData as ICourseOutline} />
+      <div className="flex items-center justify-between gap-2">
+        <CoursePrice priceSettings={courseData?.price_settings} variant="inline" />
 
-          <WishlistButton
-            entityId={courseData?.cuid}
-            bookmarkId={courseData?.bookmark?.id ?? ''}
-            isWishlist={courseData?.is_wishlist}
-            entityType="course"
-            onSuccess={async () => {
-              // await mutate?.();
-            }}
-          />
-        </div>
-      </>
+        <WishlistButton
+          entityId={courseData?.cuid}
+          bookmarkId={courseData?.bookmark?.id ?? ''}
+          isWishlist={courseData?.is_wishlist}
+          entityType="course"
+          onSuccess={async () => {
+            await mutate?.();
+          }}
+        />
+      </div>
     );
   }
 

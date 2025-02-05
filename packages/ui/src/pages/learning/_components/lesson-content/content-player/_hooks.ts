@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from '#common/navigation';
 import { toast } from '#shadcn/sonner';
-import { createCourseUrl } from '../../../../_utils/course-url';
+import { createCourseUrl } from '#utils/course-url';
 import { useLessonLearningStore } from '../../../_store/learning-store';
 import { getLessonGlobalIndex, getTotalLessons, getUidByLessonIndex } from '../../../_utils/utils';
 

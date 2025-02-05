@@ -4,14 +4,16 @@ import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
 
-export function useGetMyCoursesLearning(params: IFilter) {
+export function useGetMyCoursesLearning(params: IFilter, revalidateOnMount?: boolean) {
   const endpointKey = createAPIUrl({
     endpoint: API_ENDPOINT.USERS_ME_COURSES,
     queryParams: { ...params },
   });
 
-  const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
-    getMyCourseLearningService(endpoint, { params })
+  const { data, isLoading, error, mutate } = useSWR(
+    endpointKey,
+    (endpoint: string) => getMyCourseLearningService(endpoint, { params }),
+    { revalidateOnMount }
   );
 
   return {

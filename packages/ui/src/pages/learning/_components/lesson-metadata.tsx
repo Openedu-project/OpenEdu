@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import type { HTMLAttributes } from 'react';
 import { Link, useRouter } from '#common/navigation';
-import { createCourseUrl } from '../../_utils/course-url';
+import { createCourseUrl } from '#utils/course-url';
 import { useLessonLearningStore } from '../_store/learning-store';
 import { getLessonGlobalIndex, getTotalLessons, getUidByLessonIndex } from '../_utils/utils';
 import { NavigationButtons } from './navigate-button';
