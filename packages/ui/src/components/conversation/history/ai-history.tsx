@@ -5,6 +5,7 @@ import type { HTTPResponse } from '@oe/api/types/fetch';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { FileClock, Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { KeyboardEvent } from 'react';
 import { Virtuoso } from 'react-virtuoso';
@@ -14,8 +15,8 @@ import { Button } from '#shadcn/button';
 import { Drawer, DrawerContent, DrawerDescription, DrawerTitle } from '#shadcn/drawer';
 import { Input } from '#shadcn/input';
 import { useIsMobile } from '#shadcn/use-mobile';
-import { cn } from '#utils/cn';
 import { useConversationStore } from '#store/conversation-store';
+import { cn } from '#utils/cn';
 import AIHistoryItem from './history-item';
 const PER_PAGE = 50;
 
@@ -32,6 +33,7 @@ interface SearchHistoryProps {
 const SearchHistory = ({ className, mutate, handleSearch, chatHistory = [], isLoading }: SearchHistoryProps) => {
   const tGeneral = useTranslations('general');
   const tAI = useTranslations('aiAssistant');
+  const { id } = useParams();
 
   const searchRef = useRef<HTMLInputElement | null>(null);
 
@@ -104,10 +106,18 @@ const SearchHistory = ({ className, mutate, handleSearch, chatHistory = [], isLo
           itemContent={(_, date: number) => (
             <div key={date} className="mt-2 space-y-2">
               <h5 className="mcaption-semibold14">{formatDate(date)}</h5>
-              <div>
+              <div className="pl-2">
                 {getItemsByDate(date)?.map(item => {
                   const { page, ...baseData } = item;
-                  return <AIHistoryItem key={item.id} item={baseData} pageIndex={page} mutate={mutate} />;
+                  return (
+                    <AIHistoryItem
+                      key={item.id}
+                      item={baseData}
+                      pageIndex={page}
+                      mutate={mutate}
+                      activeId={id as string}
+                    />
+                  );
                 })}
               </div>
             </div>

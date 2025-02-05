@@ -1,5 +1,5 @@
 import { useGetConversationDetails } from '@oe/api/hooks/useConversation';
-import type { IMessage, InputType } from '@oe/api/types/conversation';
+import type { IMessage, TAgentType } from '@oe/api/types/conversation';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { useEffect, useRef, useState } from 'react';
 import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
@@ -13,7 +13,7 @@ interface IContainerProps {
   id: string;
   nextCursorPage?: string;
   rewrite: (msg: IMessage) => void;
-  messageType: InputType[];
+  messageType: TAgentType[];
   className?: string;
   sendMessage: ({
     messageInput,

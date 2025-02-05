@@ -8,7 +8,6 @@ import type {
   IAgenConfigs,
   IConversationDetails,
   IMessage,
-  InputType,
   TAgentType,
 } from '@oe/api/types/conversation';
 import { createAPIUrl } from '@oe/api/utils/fetch';
@@ -37,6 +36,8 @@ export function ChatWindow({
   agent?: TAgentType;
 }) {
   const tAI = useTranslations('aiAssistant');
+  const tError = useTranslations('errors');
+
   const { dataMe } = useGetMe();
 
   const {
@@ -57,7 +58,7 @@ export function ChatWindow({
 
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const tError = useTranslations('errors');
+  const prevId = useRef<string>('');
 
   const { data: messageData, mutate } = useGetConversationDetails({
     id,
@@ -82,6 +83,10 @@ export function ChatWindow({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
+    if (id && prevId.current === id) {
+      return;
+    }
+
     if (!id) {
       resetMessages();
       resetStatus();
@@ -90,6 +95,10 @@ export function ChatWindow({
       return;
     }
     handleInitData();
+
+    return () => {
+      prevId.current = id;
+    };
   }, [id]);
 
   useEffect(() => {
@@ -105,12 +114,12 @@ export function ChatWindow({
         ...Object.entries(AGENT_OPTIONS)
           .filter(([key]) => selectedModel?.configs[key as keyof IAgenConfigs])
           .map(([_, value]) => value),
-      ] as InputType[],
+      ] as TAgentType[],
     [selectedModel]
   );
 
   const sendMessage = async ({ messageInput = '', type, images, message_id, role, status }: ISendMessageParams) => {
-    const messageID = message_id ?? `id-${Date.now()}`;
+    const messageID = message_id ?? `id_${Date.now()}`;
 
     const prevMessage = messages;
 
@@ -162,7 +171,7 @@ export function ChatWindow({
 
       setGenMessage(data.messages?.at(-1) as IMessage);
 
-      if (messageID.includes('id')) {
+      if (messageID.includes('id_')) {
         updateMessages(data.messages?.at(0) as IMessage, undefined, undefined, messageID);
       }
 

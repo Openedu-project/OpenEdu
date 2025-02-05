@@ -4,7 +4,7 @@ import Openedu from '@oe/assets/images/openedu.png';
 
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { marked } from '@oe/core/utils/marker';
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import { Image } from '#components/image';
 import { cn } from '#utils/cn';
 import DisLikeButton from '../message-actions/dislike';
@@ -16,6 +16,7 @@ import LikeButton from '../message-actions/like';
 
 export const AIMessage = ({ message, loading, rewrite }: IAIMessageProps) => {
   const html = useMemo(() => marked.parse(message.content), [message.content]);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className="flex flex-col space-y-9 lg:flex-row lg:justify-between lg:space-x-9 lg:space-y-0">
@@ -58,6 +59,7 @@ export const AIMessage = ({ message, loading, rewrite }: IAIMessageProps) => {
           ) : (
             <div className="relative w-full bg-background">
               <div
+                ref={contentRef}
                 className={cn(
                   'mcaption-regular14 rich-text !m-0 rounded-[20px] border p-3 text-foreground',
                   'transition-all duration-100 ease-in-out'
@@ -84,7 +86,7 @@ export const AIMessage = ({ message, loading, rewrite }: IAIMessageProps) => {
 
           {!GENERATING_STATUS.includes(message.status ?? '') && (
             <div className="flex w-fit items-center rounded-[20px] border-2 px-2">
-              <Copy disabled={loading} message={message} initialMessage={message.content} />
+              <Copy disabled={loading} initialMessage={message.content} contentRef={contentRef} />
               <LikeButton
                 handleLike={id => {
                   console.log(id);

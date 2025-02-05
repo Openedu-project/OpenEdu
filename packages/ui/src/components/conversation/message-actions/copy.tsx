@@ -1,38 +1,52 @@
-import type { IMessage } from '@oe/api/types/conversation';
 import { Check, Copy } from 'lucide-react';
-import { useState } from 'react';
+import { type RefObject, useState } from 'react';
 import { Button } from '#shadcn/button';
 
 const CopyButton = ({
   disabled,
-  message,
   initialMessage,
+  contentRef,
 }: {
   disabled?: boolean;
-  message: IMessage;
   initialMessage: string;
+  contentRef: RefObject<HTMLDivElement | null>;
 }) => {
   const [copied, setCopied] = useState(false);
 
-  return (
-    <Button
-      variant="ghost"
-      size="icon"
-      disabled={disabled}
-      className="h-6 w-6 p-1"
-      onClick={() => {
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        const contentToCopy = `${initialMessage}${
-          message.sources && message.sources.length > 0
-            ? `\n\nCitations:\n${message.sources?.map((source, i) => `[${i + 1}] ${source.metadata.url}`).join('\n')}`
-            : ''
-        }`;
+  const copyRenderedContent = async () => {
+    if (!contentRef.current) {
+      return;
+    }
 
-        void navigator.clipboard.writeText(contentToCopy);
+    try {
+      const htmlContent = contentRef.current.innerHTML;
+      const plainText = contentRef.current.textContent ?? '';
+
+      const clipboardItem = new ClipboardItem({
+        'text/plain': new Blob([plainText], { type: 'text/plain' }),
+        'text/html': new Blob([htmlContent], { type: 'text/html' }),
+      });
+
+      await navigator.clipboard.write([clipboardItem]);
+
+      // Show success state
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+      // Fallback to basic text copying if rich copy fails
+      try {
+        await navigator.clipboard.writeText(initialMessage);
         setCopied(true);
-        setTimeout(() => setCopied(false), 1000);
-      }}
-    >
+        setTimeout(() => setCopied(false), 2000);
+      } catch (fallbackErr) {
+        console.error('Fallback copy failed:', fallbackErr);
+      }
+    }
+  };
+
+  return (
+    <Button variant="ghost" size="icon" disabled={disabled} className="h-6 w-6 p-1" onClick={copyRenderedContent}>
       {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
     </Button>
   );

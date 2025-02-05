@@ -1,4 +1,4 @@
-import type { IMessage, IRole, InputType } from '@oe/api/types/conversation';
+import type { IMessage, IRole, TAgentType } from '@oe/api/types/conversation';
 import type { IFileResponse } from '@oe/api/types/file';
 import type { KeyboardEventHandler, ReactNode, RefObject } from 'react';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
@@ -14,7 +14,7 @@ export interface AISidebarItem {
 
 export interface ISendMessageParams {
   messageInput?: string;
-  type: InputType;
+  type: TAgentType;
   url?: string;
   images?: IFileResponse[];
   message_id?: string;
@@ -23,7 +23,7 @@ export interface ISendMessageParams {
 }
 
 export interface IInputButton {
-  type: InputType;
+  type: TAgentType;
   textKey: string;
   icon: ReactNode;
 }
@@ -44,18 +44,18 @@ export interface MessageInputProps {
   initialMessage?: string;
   messageId?: string;
   hiddenBtn?: boolean;
-  type?: InputType;
+  type?: TAgentType;
   showInputOption?: boolean;
-  messageType?: InputType[];
+  messageType?: TAgentType[];
   images?: IFileResponse[];
   resetOnSuccess?: boolean;
 }
 
 export type InputFieldProps<TFormValues extends FieldValues> = {
   form?: UseFormReturn<TFormValues>;
-  type?: InputType;
+  type?: TAgentType;
   handleKeyDown?: KeyboardEventHandler<HTMLTextAreaElement | HTMLInputElement>;
-  setInputType?: (value: InputType) => void;
+  setInputType?: (value: TAgentType) => void;
   inputRef: RefObject<null | HTMLTextAreaElement>;
   canChangeType?: boolean;
   className?: string;
@@ -77,7 +77,7 @@ export interface IMessageBoxProps extends IAIMessageProps {
     role,
     // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   }: ISendMessageParams) => void | Promise<unknown>;
-  messageType?: InputType[];
+  messageType?: TAgentType[];
 }
 export interface IAIMessageProps {
   message: IMessage;

@@ -39,7 +39,6 @@ export const useSocket = (isAuthenticated: boolean) => {
 
         if (parsedData.event === 'ai_conversation') {
           const { data } = parsedData as ISocketRes<IMessageData>;
-
           const newMessage = handleAIConversation(data);
 
           if (newMessage) {

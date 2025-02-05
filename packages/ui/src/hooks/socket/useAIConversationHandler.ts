@@ -28,7 +28,7 @@ export const useAIConversationHandler = (status: string, genMessageId?: string) 
         status: data.status,
         sender: { role: 'assistant' as IRole },
         content_type: 'text' as const,
-        ai_agent_type: data.ai_agent_type,
+        ai_agent_type: data.message_ai_agent_type,
         is_ai: true,
       };
     },

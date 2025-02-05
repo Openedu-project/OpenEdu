@@ -59,7 +59,7 @@ const ActionDropdown: React.FC<ActionDropdownProps> = ({ className, actions, ite
             tAI.rich('delDesc', {
               chat_name: item?.context?.title ?? '',
               strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
-              span: (chunks: ReactNode) => <span>{chunks}</span>,
+              span: (chunks: ReactNode) => <span className="text-center">{chunks}</span>,
             }) as string
           }
           variant="ghost"

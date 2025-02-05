@@ -1,11 +1,11 @@
-import type { IMessage, InputType } from '@oe/api/types/conversation';
+import type { IMessage, TAgentType } from '@oe/api/types/conversation';
 import { MessageContainer } from './message/message-container';
 import type { ISendMessageParams } from './type';
 
 interface IChatProps {
   id: string;
   nextCursorPage?: string;
-  messageType: InputType[];
+  messageType: TAgentType[];
   sendMessage: ({
     messageInput,
     type,

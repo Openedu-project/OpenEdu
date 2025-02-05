@@ -1,4 +1,4 @@
-import type { IAIModel, IAIStatus, IMessage } from '@oe/api/types/conversation';
+import type { IAIModel, IAIStatus, IMessage, TAgentType } from '@oe/api/types/conversation';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { create } from 'zustand';
 interface IConversationStore {
@@ -17,6 +17,8 @@ interface IConversationStore {
   genMessage?: IMessage;
   setGenMessage: (value: IMessage, callback?: () => void, shortenedIndex?: number) => void;
   resetGenMessage: () => void;
+  selectedAgent: TAgentType;
+  setSelectedAgent: (agent: TAgentType) => void;
 }
 
 export const useConversationStore = create<IConversationStore>(set => {
@@ -83,7 +85,7 @@ export const useConversationStore = create<IConversationStore>(set => {
 
     setSelectedModel: (selectedModel: IAIModel) =>
       set(() => {
-        return { selectedModel };
+        return { selectedModel, selectedAgent: 'ai_chat' };
       }),
 
     resetStatus: () => set({ status: undefined }),
@@ -106,5 +108,10 @@ export const useConversationStore = create<IConversationStore>(set => {
       });
     },
     resetGenMessage: () => set({ genMessage: undefined }),
+    selectedAgent: 'ai_chat',
+    setSelectedAgent: (selectedAgent: TAgentType) =>
+      set(() => {
+        return { selectedAgent };
+      }),
   };
 });

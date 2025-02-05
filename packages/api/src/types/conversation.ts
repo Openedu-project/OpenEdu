@@ -24,8 +24,6 @@ export declare class Document<Metadata extends Record<string, unknown> = Record<
 
 export type IRole = 'user' | 'assistant';
 
-export type InputType = TAgentType | 'ai_image_analysis' | 'ai_chat';
-
 export type IProvider =
   | 'anthropic.claude-3-5-sonnet-20241022-v2:0'
   | 'us.meta.llama3-2-90b-instruct-v1:0'
@@ -100,6 +98,7 @@ export interface IMessageData {
   parent_message_id: string;
   is_image_analysis: boolean;
   ai_agent_type: TAgentType;
+  message_ai_agent_type: TAgentType;
 }
 
 export type IAIStatus = 'generating' | 'pending' | 'completed' | 'failed' | 'stopped';

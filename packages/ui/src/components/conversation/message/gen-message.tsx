@@ -1,11 +1,11 @@
-import type { InputType } from '@oe/api/types/conversation';
+import type { TAgentType } from '@oe/api/types/conversation';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { useConversationStore } from '#store/conversation-store';
 import type { ISendMessageParams } from '../type';
 import MessageBox from './message-box';
 
 interface IGenMessageProps {
-  messageType: InputType[];
+  messageType: TAgentType[];
   sendMessage: ({
     messageInput,
     type,

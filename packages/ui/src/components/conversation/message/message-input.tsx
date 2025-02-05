@@ -1,9 +1,9 @@
 'use client';
-import type { InputType } from '@oe/api/types/conversation';
 import { type IFileResponse, fileResponseScheme } from '@oe/api/types/file';
 import { usePathname } from 'next/navigation';
 
 import { cancelConversation } from '@oe/api/services/conversation';
+import type { TAgentType } from '@oe/api/types/conversation';
 import { isLogin } from '@oe/api/utils/auth';
 import { z } from '@oe/api/utils/zod';
 import { MoveRight, Square } from 'lucide-react';
@@ -15,12 +15,13 @@ import { FormWrapper } from '#components/form-wrapper';
 import { useLoginRequiredStore } from '#components/login-required-modal';
 import { Button } from '#shadcn/button';
 import { Card } from '#shadcn/card';
+import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import type { MessageFormValues, MessageInputProps } from '../type';
 import { InputField } from './message-input-field';
 import { InputOption } from './message-input-option';
 
-const createFormSchema = (inputType: InputType) => {
+const createFormSchema = (inputType: TAgentType) => {
   switch (inputType) {
     case 'ai_image_analysis': {
       return z.object({
@@ -48,15 +49,14 @@ const MessageInput: React.FC<MessageInputProps> = ({
   messageId,
   hiddenBtn = false,
   showInputOption = false,
-  type = 'ai_chat',
   messageType,
   images,
   resetOnSuccess = false,
 }) => {
   const tAI = useTranslations('aiAssistant');
   const pathname = usePathname();
+  const { selectedAgent, setSelectedAgent } = useConversationStore();
 
-  const [inputType, setInputType] = useState<InputType>(type);
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const { setLoginRequiredModal } = useLoginRequiredStore();
   const [isMobile, setIsMobile] = useState(false);
@@ -68,11 +68,6 @@ const MessageInput: React.FC<MessageInputProps> = ({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    setInputType('ai_chat');
-  }, [messageType]);
-
   useEffect(() => {
     if (inputRef.current && document.activeElement !== inputRef.current && !isMobile) {
       inputRef.current.focus();
@@ -80,12 +75,6 @@ const MessageInput: React.FC<MessageInputProps> = ({
       inputRef.current.selectionEnd = inputRef.current.value.length;
     }
   });
-
-  useEffect(() => {
-    if (type) {
-      setInputType(type);
-    }
-  }, [type]);
 
   const handleCancel = async () => {
     const id = pathname.split('/').pop();
@@ -116,7 +105,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
     }
   };
 
-  const inputSchema = useMemo(() => createFormSchema(inputType), [inputType]);
+  const inputSchema = useMemo(() => createFormSchema(selectedAgent), [selectedAgent]);
 
   const defaultValues = useMemo(() => ({ message: initialMessage ?? '', images }), [initialMessage, images]);
 
@@ -136,7 +125,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
     try {
       await sendMessage({
         messageInput: message,
-        type: inputType,
+        type: selectedAgent,
         images: (values as unknown as { images: IFileResponse[] }).images,
         message_id: messageId,
       });
@@ -167,12 +156,12 @@ const MessageInput: React.FC<MessageInputProps> = ({
             }}
           >
             <InputField
-              type={inputType}
+              type={selectedAgent}
               form={form}
               handleKeyDown={e => {
                 handleKeyDown(e, form as UseFormReturn<MessageFormValues>);
               }}
-              setInputType={setInputType}
+              setInputType={setSelectedAgent}
               inputRef={inputRef}
               canChangeType={messageType && messageType.length > 1}
             />
@@ -211,7 +200,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
         )}
       </FormWrapper>
 
-      {showInputOption && <InputOption messageType={messageType} handleSelect={opt => setInputType(opt)} />}
+      {showInputOption && <InputOption messageType={messageType} handleSelect={opt => setSelectedAgent(opt)} />}
     </div>
   );
 };
