@@ -2,12 +2,12 @@
 
 import type { ICourse } from '@oe/api/types/course/course';
 import { Link } from '@oe/ui/common/navigation';
+import { CourseCard } from '@oe/ui/components/course-card';
 import { buttonVariants } from '@oe/ui/shadcn/button';
 import { CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@oe/ui/shadcn/carousel';
 import { cn } from '@oe/ui/utils/cn';
 import useEmblaCarousel from 'embla-carousel-react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import CourseCard from 'node_modules/@oe/ui/src/pages/course-list/_components/course-card';
 
 interface CarouselWrapperProps {
   slides: ICourse[][];

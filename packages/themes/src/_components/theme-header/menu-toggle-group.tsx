@@ -3,7 +3,7 @@ import type { ThemeConfigKey, ThemeName } from '@oe/themes/types/index';
 import { Link, usePathname } from '@oe/ui/common/navigation';
 import { ToggleGroup, ToggleGroupItem } from '@oe/ui/shadcn/toggle-group';
 import { PanelTop } from 'lucide-react';
-import { ComponentIcon, PaletteIcon, Settings } from 'lucide-react';
+import { ComponentIcon, PaletteIcon, Settings, Sparkles } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
@@ -51,6 +51,13 @@ const createToggleOptions = (t: (key: string) => string, themeName?: ThemeName):
       icon: Settings,
       href: `/admin/themes/${themeName}/metadata/metadata`,
       ariaLabel: t('selectSiteSettings'),
+    },
+    {
+      value: 'features',
+      label: t('features'),
+      icon: Sparkles,
+      href: `/admin/themes/${themeName}/features/popular`,
+      ariaLabel: t('selectFeatures'),
     },
   ] as const;
 

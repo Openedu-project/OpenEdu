@@ -21,7 +21,7 @@ import {
 
 import { updateGlobalTheme } from './_components/theme-settings/theme-global/_utils';
 import { initialThemeGlobal } from './_config/theme-global-initial';
-import { AvailHomepageCourses } from './avail/homepage/avail-courses';
+import { AvailHomepageCoursesClient, AvailHomepageCoursesServer } from './avail/homepage/avail-courses';
 import { AvailHomepageFeature } from './avail/homepage/avail-feature';
 import { AvailHomepageHero } from './avail/homepage/avail-hero';
 import AvailHomepage from './avail/homepage/index';
@@ -107,7 +107,7 @@ export const THEMES: ThemeRender = {
       theme: AvailHomepage,
       availHero: AvailHomepageHero,
       availFeature: AvailHomepageFeature,
-      availCourses: AvailHomepageCourses,
+      availCourses: AvailHomepageCoursesClient,
     },
     auth,
   },
@@ -175,6 +175,7 @@ export const THEMES_SERVER: ThemeRender = {
       theme: AvailHomepage,
       availHero: AvailHomepageHero,
       availFeature: AvailHomepageFeature,
+      availCourses: AvailHomepageCoursesServer,
     },
     auth,
   },

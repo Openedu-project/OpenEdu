@@ -5,16 +5,22 @@ export type ThemeSidebarPageKey = 'theme' | 'metadata'; // sidebar - item key of
 export type ThemeSidebarGlobalKey = 'fonts' | 'colors' | 'radius';
 export type ThemeSidebarComponentKey = 'header' | 'footer' | 'card' | 'button' | 'navigation' | 'form' | 'table';
 export type ThemeSibarMetadataKey = 'metadata' | 'analytics';
+export type ThemeSidebarPopularKey = 'course';
 export type AllSidebarKeys =
   | ThemeSidebarPageKey
   | ThemeSidebarGlobalKey
   | ThemeSidebarComponentKey
-  | ThemeSibarMetadataKey;
-export type AllGroupSidebarKeys = ThemeGroupSidebarComponentKey | ThemeGroupSidebarPageKey;
+  | ThemeSibarMetadataKey
+  | ThemeSidebarPopularKey;
+export type AllGroupSidebarKeys =
+  | ThemeGroupSidebarComponentKey
+  | ThemeGroupSidebarPageKey
+  | ThemeGroupSidebarFeaturesKey;
 
 // export type ThemeGroupSidebarGlobalKey // No group
 export type ThemeGroupSidebarPageKey = ThemePageKey;
 export type ThemeGroupSidebarComponentKey = 'layout-components' | 'common-components';
+export type ThemeGroupSidebarFeaturesKey = 'features-popular';
 // export type ThemeGroupSidebarMetadataKey // No group
 
 /** SIDEBAR - PAGE SECTION */

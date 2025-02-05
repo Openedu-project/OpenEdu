@@ -226,6 +226,8 @@ export const API_ENDPOINT = {
   COM_NOTIFICATIONS: '/api/com-v1/notifications',
   COM_NOTIFICATIONS_READ: '/api/com-v1/notifications/read',
   BLOG_AI_ID_REWRITE: '/api/v1/blogs/ai/:id/rewrite',
+  FEATURED_CONTENT: '/api/v1/featured-contents',
+  FEATURED_CONTENT_BY_TYPES: '/api/v1/featured-contents/by-types',
 
   // WS
   WEBSOCKET: '/websocket',
