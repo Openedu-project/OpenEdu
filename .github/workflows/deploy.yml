@@ -102,5 +102,5 @@ jobs:
         # working-directory: ${{ env.PROJECT_DIR }}
         run: |
           pnpm dlx vercel pull --yes --environment=production --token=$VERCEL_TOKEN
-          pnpm dlx vercel build --yes --token=$VERCEL_TOKEN
+          pnpm dlx vercel build --yes --prod --token=$VERCEL_TOKEN
           pnpm dlx vercel deploy --yes --prebuilt --prod --token=$VERCEL_TOKEN
