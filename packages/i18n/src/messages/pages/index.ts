@@ -1,5 +1,6 @@
 import { acceptCreatorInviteMessage } from './accept-creator-invitation';
 import { acceptUserInviteMessage } from './accept-user-invitation';
+import { adminLaunchpadMessages } from './admin-launchpad';
 import { affiliateCampaignMessage } from './affiliate-campaign';
 import { bankAccountMessage } from './bank-account';
 import { builderMessages } from './builder';
@@ -42,4 +43,5 @@ export const pageMessages = {
   ...coursePaymentMessages,
   ...userProfileMessages,
   ...courseLearningMessages,
+  ...adminLaunchpadMessages,
 };

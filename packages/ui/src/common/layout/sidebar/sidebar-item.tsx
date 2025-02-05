@@ -13,8 +13,6 @@ import type { FC } from 'react';
 import type { ISidebarItem, ISidebarItemProps } from './types';
 
 export const SidebarItem: FC<ISidebarItemProps> = ({ item, depth, maxDepth, pathname, isCollapsed }) => {
-  console.log('item', item);
-
   const [isOpen, setIsOpen] = useState(false);
   const hasChildren = item.items && item.items.length > 0 && depth < maxDepth;
   const contentRef = useRef<HTMLDivElement>(null);
@@ -36,15 +34,12 @@ export const SidebarItem: FC<ISidebarItemProps> = ({ item, depth, maxDepth, path
   }, [hasChildren, item.items, pathname]);
 
   useEffect(() => {
-    console.log('aaas');
     if (!isCollapsed && (isCurrentActive || isAncestorActive)) {
       setIsOpen(true);
     }
   }, [isCollapsed, isCurrentActive, isAncestorActive]);
 
   useEffect(() => {
-    console.log('mmmm');
-
     if (isCollapsed) {
       setIsOpen(false);
     }

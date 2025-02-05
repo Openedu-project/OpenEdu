@@ -2,6 +2,7 @@ import { AIGenerateMessages } from './ai-generate-modal';
 import { blogFormMessages } from './blog-form';
 import { certificateMessages } from './certificate';
 import { courseComingSoonMessages } from './course-coming-soon';
+import { courseTimelineMessages } from './course-timeline';
 import { dateTimePickerMessages } from './date-time-picker';
 import { dialogMessages } from './dialog';
 import { footerMessages } from './footer';
@@ -36,4 +37,5 @@ export const componentMessages = {
   ...noDataAvailableMessages,
   ...courseComingSoonMessages,
   ...certificateMessages,
+  ...courseTimelineMessages,
 };

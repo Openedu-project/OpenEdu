@@ -281,7 +281,7 @@ const PaymentFiat = ({
           {dataOrder && (
             <div className="flex flex-col gap-4 sm:flex-row">
               <div className="w-full sm:w-1/4">
-                <div className="mx-auto flex max-h-[130px] max-w-[130px] items-center justify-center rounded-radius-m border border-[#DBDBDB] p-2 sm:mx-0">
+                <div className="mx-auto flex max-h-[130px] max-w-[130px] items-center justify-center rounded-radius-m border border-neutral-100 p-2 sm:mx-0">
                   {dataOrder?.payment_url ? (
                     <Image src={dataOrder.payment_url} alt="qr-code" height={120} width={120} />
                   ) : (

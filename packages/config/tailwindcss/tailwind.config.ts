@@ -34,6 +34,30 @@ const config: Omit<Config, 'content'> = {
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
+          50: 'var(--primary-50)',
+          100: 'var(--primary-100)',
+        },
+
+        neutral: {
+          50: 'hsl(var(--neutral-50))',
+          100: 'hsl(var(--neutral-100))',
+          600: 'hsl(var(--neutral-600))',
+        },
+        negative: {
+          50: 'hsl(var(--negative-50))',
+          500: 'hsl(var(--negative-500))',
+        },
+        tertiary: {
+          50: 'hsl(var(--tertiary-50))',
+          '800': 'hsl(var(--tertiary-800))',
+        },
+        positive: {
+          50: 'var(--positive-50)',
+          600: 'var(--positive-600)',
+        },
+        orange: {
+          50: 'hsl(var(--orange-50))',
+          500: 'hsl(var(--orange-500))',
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
@@ -67,6 +91,8 @@ const config: Omit<Config, 'content'> = {
         warning: {
           DEFAULT: 'hsl(var(--warning))',
           foreground: 'hsl(var(--warning-foreground))',
+          50: 'hsl(var(--warning-50))',
+          600: 'hsl(var(--warning-600))',
         },
         success: {
           DEFAULT: 'hsl(var(--success))',
@@ -75,6 +101,8 @@ const config: Omit<Config, 'content'> = {
         info: {
           DEFAULT: 'hsl(var(--info))',
           foreground: 'hsl(var(--info-foreground))',
+          50: 'hsl(var(--info-50))',
+          600: 'hsl(var(--info-600))',
         },
         sidebar: {
           DEFAULT: 'hsl(var(--sidebar-background))',

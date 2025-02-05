@@ -154,7 +154,6 @@ export const usePostValidateRefCode = (code: string) => {
       code,
     },
   });
-  console.log('url', code);
   const { trigger, isMutating, error } = useSWRMutation(
     code ? url : null,
     async (_endpoint: string, { arg }: { arg: IValidateRefCodePayload }): Promise<{ message: string }> =>

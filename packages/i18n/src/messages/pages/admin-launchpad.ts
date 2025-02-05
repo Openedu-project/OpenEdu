@@ -1,0 +1,98 @@
+export const adminLaunchpadMessages = {
+  adminLaunchpadRequest: {
+    title: 'Launchpad Requests',
+    description: 'When Admin approve, the launchpad will be displayed in OpenEdu. Admin',
+    launchpadName: 'Launchpad Name',
+    courseName: 'Course Name',
+    owner: 'Owner',
+    requestedDate: 'Requested Date',
+    sections: 'Sections',
+    target: 'Target',
+    ownerTelegramLink: 'Owner Telegram Link',
+    verificationEmail: 'Verification Email',
+    action: 'Action',
+    approve: 'Approve',
+    reject: 'Reject',
+
+    approveSuccess: 'Approve success',
+    rejectSuccess: 'Reject success',
+    info: {
+      createdBy: 'Created by',
+      createdAt: 'Created at',
+      fundingRange: '{target} {currency} - {min} {currency}',
+    },
+    funding: {
+      amount: '{amount} {currency}',
+      target: 'target',
+      visualization: 'Funding visualization',
+    },
+    contact: {
+      copyToClipboard: 'Copy to clipboard',
+    },
+    page: {
+      ownerTelegramLink: 'Owner Telegram Link*',
+      verificationEmail: 'Verification Email *',
+    },
+
+    approveModal: {
+      title: 'Approve This Launchpad',
+      description: 'When you approve this launchpad, it will be published in OpenEdu. Please be certain before action!',
+      approve: 'Approve',
+      cancel: 'Cancel',
+    },
+    rejectModal: {
+      title: 'Reject This Launchpad',
+      description:
+        'When you reject this launchpad, it can not be published in OpenEdu. Please be certain before action!',
+      reason: 'Your reason for rejection',
+      placeholderReason: 'Write your reason',
+      reject: 'Reject',
+      cancel: 'Cancel',
+      errors: {
+        isRequired: 'This field is required',
+      },
+    },
+  },
+  adminLaunchpadApproved: {
+    title: 'Launchpad Approved',
+    description: 'When Admin approve, the launchpad will be displayed in OpenEdu. Admin',
+    launchpadName: 'Launchpad Name',
+    courseName: 'Course Name',
+    owner: 'Owner',
+    requestedDate: 'Requested Date',
+    sections: 'Sections',
+    target: 'Target',
+    ownerTelegramLink: 'Owner Telegram Link',
+    verificationEmail: 'Verification Email',
+    draft: 'Draft',
+    reviewing: 'Reviewing',
+    rejected: 'Rejected',
+    approved: 'Approved',
+    publish: 'Publish',
+    cancelled: 'Cancelled',
+    success: 'Success',
+    voting: 'Voting',
+    failed: 'Failed',
+    funding: 'Funding',
+    waiting: 'Waiting',
+    refunded: 'Refunded',
+    status: 'Status',
+    info: {
+      createdBy: 'Created by',
+      createdAt: 'Created at',
+      fundingRange: '{target} {currency} - {min} {currency}',
+    },
+    fundingCard: {
+      amount: '{amount} {currency}',
+      target: 'target',
+      visualization: 'Funding visualization',
+    },
+    contact: {
+      copyToClipboard: 'Copy to clipboard',
+    },
+    page: {
+      ownerTelegramLink: 'Owner Telegram Link*',
+      verificationEmail: 'Verification Email *',
+    },
+  },
+};

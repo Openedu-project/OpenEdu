@@ -171,7 +171,7 @@ const PaymentConfirm = ({
                               <div className="flex items-center justify-between">
                                 <div className="flex items-center space-x-3">
                                   <div
-                                    className={`flex h-5 w-5 items-center justify-center rounded border bg-[#DBDBDB] ${
+                                    className={`flex h-5 w-5 items-center justify-center rounded border bg-neutral-100 ${
                                       paymentOptionSelected === method?.id
                                         ? '!bg-primary border-primary'
                                         : 'border-gray-300'

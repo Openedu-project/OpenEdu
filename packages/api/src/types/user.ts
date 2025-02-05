@@ -40,6 +40,7 @@ export interface IUser {
   last_login_session?: ILastLoginSession;
   roles: IUserRoleInOrg[];
   username: string;
+  props?: IUserSettingsOption;
 }
 
 export interface IUserRoleInOrg {
