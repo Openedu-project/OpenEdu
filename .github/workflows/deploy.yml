@@ -1,4 +1,4 @@
-name: Deploy Openedu
+name: Deploy
 
 on:
   workflow_dispatch:
@@ -38,10 +38,18 @@ jobs:
         with:
           fetch-depth: 0
       
+      - name: Set project directory
+        run: |
+          if [[ "${{ github.event.inputs.project }}" == ORG_* ]]; then
+            echo "PROJECT_DIR=apps/organization" >> $GITHUB_ENV
+          else
+            echo "PROJECT_DIR=apps/platform" >> $GITHUB_ENV
+          fi
+
       - name: Check deployment conditions
         run: |
-          if [ "${{ github.event.inputs.project }}" = "openedu.net" ] && [ "${{ github.ref_name }}" != "main" ]; then
-            echo "Error: openedu.net can only be deployed from the main branch."
+          if [ "${{ github.event.inputs.project }}" = "OPENEDU" ] && [ "${{ github.ref_name }}" != "main" ]; then
+            echo "Error: OPENEDU can only be deployed from the main branch."
             exit 1
           fi
 
@@ -81,16 +89,17 @@ jobs:
 
       - name: Set up environment file
         run: |
-          if [ -f ".env.${{ github.event.inputs.environment }}" ]; then
-            cp .env.${{ github.event.inputs.environment }} .env
+          if [ -f "${{ env.PROJECT_DIR }}/.env.${{ github.event.inputs.environment }}" ]; then
+            cp ${{ env.PROJECT_DIR }}/.env.${{ github.event.inputs.environment }} ${{ env.PROJECT_DIR }}/.env
           else
-            echo "No environment file found for ${{ github.event.inputs.environment }}"
+            echo "No environment file found for ${{ github.event.inputs.environment }} in ${{ env.PROJECT_DIR }}"
             exit 1
           fi
 
       - name: Deploy to Vercel
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        working-directory: ${{ env.PROJECT_DIR }}
         run: |
           pnpm dlx vercel pull --yes --environment=${{ github.event.inputs.environment }} --token=$VERCEL_TOKEN
           pnpm dlx vercel build --yes --token=$VERCEL_TOKEN
