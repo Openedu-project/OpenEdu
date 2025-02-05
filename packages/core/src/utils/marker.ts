@@ -16,7 +16,8 @@ export const marked = new Marked({
         language: language || 'plaintext',
       }).value;
 
-      return `<pre><div class="flex justify-between border-b pb-2 opacity-50">
+      return `
+<pre><div class="flex justify-between border-b pb-2 opacity-50">
   <p class="uppercase">${lang}</p>
   <button 
         onclick="(function(button){
@@ -42,6 +43,51 @@ export const marked = new Marked({
   </button>
 </div>
 <code class="hljs overflow-x-auto language-${lang}">${highlightedCode}</code></pre>`;
+    },
+    image(this: Renderer, { href, title, text }: Tokens.Image) {
+      if (!href) {
+        return '';
+      }
+
+      return `
+        <div class="relative inline-block">
+          <img 
+            src="${href}" 
+            alt="${text}" 
+            ${title ? `title="${title}"` : ''} 
+            class="md:max-w-[400px] rounded-lg"
+          />
+          <button
+            onclick="(function(button) {
+              const imgUrl = button.getAttribute('data-image-url');
+              const fileName = button.getAttribute('data-file-name');
+              
+              fetch(imgUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                  const url = window.URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = fileName || 'image';
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                  window.URL.revokeObjectURL(url);
+                })
+                .catch(error => console.error('Error downloading image:', error));
+            })(this)"
+            data-image-url="${href}"
+            data-file-name="${text || 'image'}"
+            class="p-2 flex gap-1 border rounded bg-background absolute bottom-2 right-2"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </button>
+        </div>
+      `;
     },
   },
 });

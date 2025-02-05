@@ -3,7 +3,7 @@ import Openedu from '@oe/assets/images/openedu.png';
 import { Check, ChevronDown } from 'lucide-react';
 
 import type { IAIModel } from '@oe/api/types/conversation';
-import { useMemo } from 'react';
+import { useEffect } from 'react';
 import { Image } from '#components/image';
 import { Button } from '#shadcn/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '#shadcn/dropdown-menu';
@@ -23,15 +23,16 @@ export function AIModelDropdown({ onSelectSuccess, AIModels }: ModelDropdownProp
     onSelectSuccess?.();
   };
 
-  const AIModel = useMemo(() => {
+  useEffect(() => {
     if (selectedModel) {
-      return selectedModel;
+      return;
     }
     if (AIModels.length > 0) {
       const defaultModal = AIModels.find(model => model.is_available) ?? (AIModels[0] as IAIModel);
       setSelectedModel(defaultModal);
     }
   }, [selectedModel, AIModels, setSelectedModel]);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -41,7 +42,7 @@ export function AIModelDropdown({ onSelectSuccess, AIModels }: ModelDropdownProp
         >
           <div>
             <Image
-              src={AIModel?.thumbnail_url ?? Openedu.src}
+              src={selectedModel?.thumbnail_url ?? Openedu.src}
               alt="selected-ai-model"
               aspectRatio="1:1"
               fill
@@ -51,7 +52,7 @@ export function AIModelDropdown({ onSelectSuccess, AIModels }: ModelDropdownProp
               containerHeight="auto"
             />
           </div>
-          <p className="mr-4 w-[150px] truncate text-start">{AIModel?.display_name ?? 'AI Assistant'}</p>
+          <p className="mr-4 w-[150px] truncate text-start">{selectedModel?.display_name ?? 'AI Assistant'}</p>
           <ChevronDown className="absolute right-2" />
         </Button>
       </DropdownMenuTrigger>
@@ -61,7 +62,7 @@ export function AIModelDropdown({ onSelectSuccess, AIModels }: ModelDropdownProp
             key={model.id}
             className={cn(
               'gap-2 rounded-full border',
-              AIModel?.id === model.id && 'border-primary',
+              selectedModel?.id === model.id && 'border-primary',
               !model.is_available && 'cursor-not-allowed'
             )}
             disabled={!model.is_available}
@@ -80,7 +81,7 @@ export function AIModelDropdown({ onSelectSuccess, AIModels }: ModelDropdownProp
               />
             </div>
             <span className="flex-1">{model.display_name}</span>
-            {AIModel?.id === model.id && <Check className="h-4 w-4 text-blue-600" />}
+            {selectedModel?.id === model.id && <Check className="h-4 w-4 text-blue-600" />}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
