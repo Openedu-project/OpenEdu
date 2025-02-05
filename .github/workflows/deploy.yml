@@ -90,7 +90,7 @@ jobs:
       - name: Set up environment file
         run: |
           if [ -f "${{ env.PROJECT_DIR }}/.env.${{ github.event.inputs.environment }}" ]; then
-            cp ${{ env.PROJECT_DIR }}/.env.${{ github.event.inputs.environment }} ${{ env.PROJECT_DIR }}/.env
+            cp ${{ env.PROJECT_DIR }}/.env.${{ github.event.inputs.environment }} ${{ env.PROJECT_DIR }}/.env.production.local
           else
             echo "No environment file found for ${{ github.event.inputs.environment }} in ${{ env.PROJECT_DIR }}"
             exit 1
