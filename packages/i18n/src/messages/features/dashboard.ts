@@ -78,5 +78,10 @@ export const dashboardMessages = {
       reportAffiliateCampaigns: 'Report',
       detailReportAffiliateCampaigns: 'Report Detail',
     },
+    launchpad: {
+      title: 'Launchpad',
+      approved: 'Approved',
+      requests: 'Requests',
+    },
   },
 };

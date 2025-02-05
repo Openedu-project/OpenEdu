@@ -350,7 +350,7 @@ export default function KanbanDemo() {
             itemDirection: 'vertical',
           }}
           renderConfig={{
-            className: 'bg-gray-100 p-4 rounded-lg min-w-[300px] min-h-[400px]',
+            className: 'bg-neutral-100 p-4 rounded-lg min-w-[300px] min-h-[400px]',
             renderItem: ({ item, onAddChild, onRemoveItem }) => (
               <div className="mb-4 flex items-center justify-between">
                 <h2 className="font-semibold">{item?.original.title}</h2>

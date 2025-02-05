@@ -112,6 +112,10 @@ export const ADMIN_ROUTES = {
   formDetail: `/admin${DYNAMIC_FORMS_ROUTES.formDetail}`,
   formTemplates: `/admin${DYNAMIC_FORMS_ROUTES.formTemplates}`,
   withdrawRequest: '/admin/withdraw-request',
+  launchpadApproved: '/admin/launchpad/approved',
+  launchpadApprovedDetail: '/admin/launchpad/approved/:id',
+  launchpadRequests: '/admin/launchpad/requests',
+  launchpadRequestsDetail: '/admin/launchpad/requests/:id',
 } as const;
 
 export const CREATOR_ROUTES = {

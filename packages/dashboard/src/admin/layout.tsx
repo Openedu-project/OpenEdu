@@ -10,6 +10,8 @@ import {
   CircleDollarSign,
   File,
   FileLock,
+  FileText,
+  FileUp,
   GitPullRequest,
   GitPullRequestCreateArrow,
   Globe,
@@ -18,6 +20,7 @@ import {
   Network,
   Palette,
   PencilLine,
+  Receipt,
   Settings,
   Settings2,
   StickyNote,
@@ -45,6 +48,25 @@ export default async function Layout({ children }: { children: ReactNode }) {
         icon: <House className="h-5 w-5" />,
         href: ADMIN_ROUTES.dashboard,
         isRoot: true,
+      },
+      {
+        id: 'launchpad',
+        label: tDashboard('launchpad.title'),
+        icon: <Receipt className="h-5 w-5" />,
+        items: [
+          {
+            id: 'all-users',
+            label: tDashboard('launchpad.approved'),
+            icon: <FileText className="h-5 w-5" />,
+            href: ADMIN_ROUTES.launchpadApproved,
+          },
+          {
+            id: 'users',
+            label: tDashboard('launchpad.requests'),
+            icon: <FileUp className="h-5 w-5" />,
+            href: ADMIN_ROUTES.launchpadRequests,
+          },
+        ],
       },
       {
         id: 'course-management',

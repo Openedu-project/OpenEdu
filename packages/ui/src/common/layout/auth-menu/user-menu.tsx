@@ -55,7 +55,7 @@ export async function UserMenu({ me }: { me: IUser }) {
             <span>{t('myProfile')}</span>
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuSeparator className="mb-1 h-[1px] bg-[#DBDBDB]" />
+        <DropdownMenuSeparator className="mb-1 h-[1px] bg-neutral-100" />
         {visibleMenuItems.map(({ href, key, icon: Icon, hasSepratePage }) => (
           <>
             <DropdownMenuItem key={key}>
@@ -64,7 +64,7 @@ export async function UserMenu({ me }: { me: IUser }) {
                 <span>{t(key)}</span>
               </Link>
             </DropdownMenuItem>
-            {hasSepratePage && <DropdownMenuSeparator className="mb-1 h-[1px] bg-[#DBDBDB]" />}
+            {hasSepratePage && <DropdownMenuSeparator className="mb-1 h-[1px] bg-neutral-100" />}
           </>
         ))}
 
