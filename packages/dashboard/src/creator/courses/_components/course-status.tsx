@@ -8,16 +8,16 @@ const statusColorMap: Record<TCourseStatus | IAICourseStatus, BadgeProps['varian
   draft: 'muted',
   publish: 'success',
   publish_root: 'success',
-  reviewing: 'default',
+  reviewing: 'outline_primary',
   cancelled: 'muted',
   reject: 'destructive',
   'un-publish': 'outline_destructive',
   failed: 'destructive',
   manual: 'default',
   completed: 'success',
-  generating: 'default',
-  pending: 'default',
-  waiting: 'default',
+  generating: 'outline_primary',
+  pending: 'outline_muted',
+  waiting: 'outline_warning',
 };
 
 export default function CourseStatus({ data }: { data: ICourse }) {

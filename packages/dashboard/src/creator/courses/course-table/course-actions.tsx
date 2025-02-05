@@ -36,7 +36,7 @@ export default function CourseActions({ data }: { data: ICourse }) {
 
   return (
     <div className="flex gap-2">
-      <Button size="sm" variant="outline" onClick={handleDuplicate}>
+      <Button size="xs" variant="outline" onClick={handleDuplicate}>
         <CopyIcon className="mr-2 h-4 w-4" />
         {tCourses('actions.duplicate')}
       </Button>
@@ -44,7 +44,7 @@ export default function CourseActions({ data }: { data: ICourse }) {
         onDelete={handleDelete}
         title={tCourses('actions.deleteTitle')}
         description={tCourses('actions.deleteDescription')}
-        size="sm"
+        size="xs"
         variant="destructive"
         className="h-auto w-auto"
       >

@@ -1,0 +1,97 @@
+name: Deploy Openedu
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: 'Select the environment'
+        required: true
+        options:
+          - staging
+          - production
+          - development
+      project:
+        type: choice
+        description: 'Select the project to deploy'
+        required: true
+        options:
+          - AI_OPENEDUDEV
+          - BLOCKCHAIN_OPENEDU101DEV
+          - OPENEDUTEST
+          - ORG_OPENEDUTEST
+          - OPENEDU
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets[format('VERCEL_PROJECT_ID_{0}', github.event.inputs.project)] }}
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Check deployment conditions
+        run: |
+          if [ "${{ github.event.inputs.project }}" = "openedu.net" ] && [ "${{ github.ref_name }}" != "main" ]; then
+            echo "Error: openedu.net can only be deployed from the main branch."
+            exit 1
+          fi
+
+      - name: Cache turbo build setup
+        uses: actions/cache@v4
+        with: 
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Set up environment file
+        run: |
+          if [ -f ".env.${{ github.event.inputs.environment }}" ]; then
+            cp .env.${{ github.event.inputs.environment }} .env
+          else
+            echo "No environment file found for ${{ github.event.inputs.environment }}"
+            exit 1
+          fi
+
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          pnpm dlx vercel pull --yes --environment=${{ github.event.inputs.environment }} --token=$VERCEL_TOKEN
+          pnpm dlx vercel build --yes --token=$VERCEL_TOKEN
+          pnpm dlx vercel deploy --yes --prebuilt --token=$VERCEL_TOKEN

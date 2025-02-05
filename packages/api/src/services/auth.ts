@@ -3,7 +3,7 @@ import { API_ENDPOINT } from '#utils/endpoints';
 import { type FetchOptions, createAPIUrl, fetchAPI, postAPI } from '#utils/fetch';
 
 import type { IAccessTokenResponse, ISignUpResponse, ISocialLoginPayload, IToken } from '@oe/api/types/auth';
-import { cookieOptions, getCookies, setCookie } from '@oe/core/utils/cookie';
+import { cookieOptions, getCookies } from '@oe/core/utils/cookie';
 import type { NextRequest } from 'next/server';
 import type { NextResponse } from 'next/server';
 import type { LoginSchemaType, SignUpSchemaType } from '#schemas/authSchema';
@@ -225,13 +225,24 @@ export async function refreshTokenService(): Promise<IToken | null> {
 
   try {
     const data = await postRefreshToken(referrer, origin, refreshToken);
-
-    setCookie(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, data.access_token);
-    setCookie(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, data.refresh_token);
+    await fetch(`${process.env.NEXT_PUBLIC_APP_ORIGIN}${API_ENDPOINT.SET_COOKIE}`, {
+      method: 'POST',
+      body: JSON.stringify({ key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, value: data.access_token }),
+    });
+    // setCookie(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, data.access_token);
+    // setCookie(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, data.refresh_token);
     return data;
   } catch (error) {
-    setCookie(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, '', { maxAge: 0 });
-    setCookie(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, '', { maxAge: 0 });
+    await fetch(`${process.env.NEXT_PUBLIC_APP_ORIGIN}${API_ENDPOINT.SET_COOKIE}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY,
+        value: '',
+        options: { maxAge: 0 },
+      }),
+    });
+    // setCookie(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, '', { maxAge: 0 });
+    // setCookie(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, '', { maxAge: 0 });
     console.error('==========refreshToken error=============', error);
     return null;
   }

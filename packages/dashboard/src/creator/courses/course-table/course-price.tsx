@@ -23,7 +23,7 @@ export default function CoursePrice({
   }
 
   if (!priceSettings.is_pay) {
-    return <div className="mcaption-bold16 lg:mcaption-bold20 text-success">{tCourses('payment.free')}</div>;
+    return <div className="mcaption-bold14 text-success">{tCourses('payment.free')}</div>;
   }
 
   // const fiatLocale = findLocaleForCurrency(priceSettings.fiat_currency);
@@ -35,7 +35,7 @@ export default function CoursePrice({
       <div className={`flex gap-0.5 ${variant === 'block' ? 'flex-col' : 'flex-row flex-wrap items-center gap-2'} `}>
         {hasFiatDiscount ? (
           <>
-            <span className="mcaption-bold16 lg:mcaption-bold20">
+            <span className="mcaption-bold14">
               {formatCurrency(Number(priceSettings.fiat_discount_price), {
                 currency: priceSettings.fiat_currency,
                 // locale: fiatLocale,
@@ -49,7 +49,7 @@ export default function CoursePrice({
             </span>
           </>
         ) : (
-          <span className="mcaption-bold16 lg:mcaption-bold20">
+          <span className="mcaption-bold14">
             {formatCurrency(Number(priceSettings.fiat_price), {
               currency: priceSettings.fiat_currency,
               // locale: fiatLocale,
@@ -61,7 +61,7 @@ export default function CoursePrice({
       <div className={`flex gap-0.5 ${variant === 'block' ? 'flex-col' : 'flex-row flex-wrap items-center gap-2'} `}>
         {hasCryptoDiscount ? (
           <>
-            <span className="mcaption-bold16 lg:mcaption-bold20">
+            <span className="mcaption-bold14">
               {formatCurrency(Number(priceSettings.crypto_discount_price), {
                 currency: priceSettings.crypto_currency,
                 decimals: 2,
@@ -75,7 +75,7 @@ export default function CoursePrice({
             </span>
           </>
         ) : (
-          <span className="mcaption-bold16 lg:mcaption-bold20">
+          <span className="mcaption-bold14">
             {formatCurrency(Number(priceSettings.crypto_price), {
               currency: priceSettings.crypto_currency,
               decimals: 2,

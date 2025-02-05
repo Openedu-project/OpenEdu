@@ -2,15 +2,15 @@
 import type { ICourse } from '@oe/api/types/course/course';
 import { API_ENDPOINT } from '@oe/api/utils/endpoints';
 import { formatDateTime } from '@oe/core/utils/datetime';
-import { type ColumnDef, Table, TableProvider } from '@oe/ui/components/table';
+import { type ColumnDef, Table } from '@oe/ui/components/table';
 import { Badge } from '@oe/ui/shadcn/badge';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
+import CourseStatus from '../_components/course-status';
 import CourseActions from './course-actions';
 import { CourseBadgeVersion } from './course-badge-version';
 import CourseName from './course-name';
 import CoursePrice from './course-price';
-import CourseStatus from './course-status';
 
 export default function Courses() {
   const tCourses = useTranslations('courses');
@@ -91,7 +91,7 @@ export default function Courses() {
   }, [tCourses]);
 
   return (
-    <TableProvider>
+    <>
       <Table
         columns={columns}
         api={API_ENDPOINT.COURSES}
@@ -102,6 +102,6 @@ export default function Courses() {
         tableOptions={{ manualPagination: true }}
         hasNoColumn
       />
-    </TableProvider>
+    </>
   );
 }

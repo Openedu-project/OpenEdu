@@ -16,7 +16,7 @@ export const coursesMessages = {
     },
     create: {
       title: 'Create New Course',
-      youtube: 'Course From YouTube',
+      youtube: 'AI Generate Course From YouTube',
       ai: 'AI Generate Course',
     },
     share: {
@@ -59,6 +59,39 @@ export const coursesMessages = {
       deleteSuccess: 'Course deleted successfully',
       deleteError: 'Error deleting course',
       duplicateError: 'Error duplicating course',
+    },
+    tone: {
+      normal: 'Normal',
+      humorous: 'Humorous',
+      professional: 'Professional',
+    },
+    quiz: {
+      singleChoice: 'Single choice',
+      multipleChoice: 'Multiple choice',
+    },
+    form: {
+      includeSummary: 'Include summary',
+      includeQuiz: 'Include quiz',
+      tone: 'Voice tone',
+      playlistLink: 'Playlist link',
+      language: 'Language',
+      numberOfQuestion: 'Number of question for each quiz',
+      name: 'Course name',
+      description: 'Course description',
+      create: 'Create',
+      cancel: 'Cancel',
+      quizType: 'Quiz type',
+    },
+    formValidation: {
+      playlistLink: 'Playlist link is required',
+      invalidPlaylistLink: 'Invalid playlist link',
+      language: 'Language is required',
+      nameMin: 'Name must be at least {minimum} characters',
+      nameMax: 'Name must be at most {maximum} characters',
+      descriptionMin: 'Description must be at least {minimum} characters',
+      descriptionMax: 'Description must be at most {maximum} characters',
+      createCourseError: 'Create course failed, please try again',
+      createCourseSuccess: 'Course created successfully',
     },
   },
 };

@@ -1,4 +1,5 @@
 export const API_ENDPOINT = {
+  SET_COOKIE: '/api/set-cookie',
   ADMIN_ORGANIZATIONS: '/api/v1/admin/organizations',
   ADMIN_ORGANIZATIONS_ID: '/api/v1/admin/organizations/:id',
   ORGANIZATIONS_VALIDATE: '/api/v1/organizations/validate',
@@ -46,6 +47,7 @@ export const API_ENDPOINT = {
   UPLOADS_VIDEOS_ID_STATUS: '/api/v1/uploads/videos/:id/status',
   CONFIGS: '/api/v1/configs',
   COURSES: '/api/v1/courses',
+  COURSES_AI: '/api/v1/courses/ai',
   COURSES_PUBLISH: '/api/v1/courses/publish',
   COURSES_ID: '/api/v1/courses/:id',
   COURSES_ID_DUPLICATE: '/api/v1/courses/:id/duplicate',

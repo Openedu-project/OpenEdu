@@ -4,6 +4,7 @@ import { Link } from '#common/navigation';
 import { Button } from '#shadcn/button';
 import { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '#shadcn/dropdown-menu';
 import { DropdownMenu } from '#shadcn/dropdown-menu';
+import { cn } from '#utils/cn';
 
 interface ButtonDropdownProps {
   type?: 'default' | 'outline';
@@ -11,12 +12,27 @@ interface ButtonDropdownProps {
   icon?: ReactNode;
   href?: string;
   onClick?: () => void;
-  options: { label: string; value: string; href?: string; icon?: ReactNode; onClick?: () => void }[];
+  className?: string;
+  options: {
+    label: string;
+    value: string;
+    href?: string;
+    icon?: ReactNode;
+    onClick?: () => void;
+  }[];
 }
 
-export default function ButtonDropdown({ type = 'default', label, icon, href, onClick, options }: ButtonDropdownProps) {
+export default function ButtonDropdown({
+  type = 'default',
+  label,
+  icon,
+  href,
+  onClick,
+  options,
+  className,
+}: ButtonDropdownProps) {
   return (
-    <div className="inline-flex items-center rounded-r-none">
+    <div className={cn('inline-flex items-center rounded-r-none', className)}>
       {href ? (
         <Link href={href} variant={type} className="rounded-r-none" activeClassName="">
           {icon}

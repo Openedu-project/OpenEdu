@@ -1,5 +1,6 @@
 import { buildUrl } from '@oe/core/utils/url';
 import type { ISection } from '#schemas/courseSchema';
+import type { ICreateBaseCourse, ICreateYoutubeCourse } from '#schemas/courses/createCourseSchema';
 import type { ICourseCategory } from '#types/course/category';
 import type { ICourse, ICourseResponse, IEnrollCoursePayload } from '#types/course/course';
 import type { ICourseOutline } from '#types/course/course';
@@ -146,6 +147,22 @@ export const postEnrollCourseService = async (
 export const getSegmentsService = async (url: string | undefined, queryParams: ISegmentParams, init?: FetchOptions) => {
   const endpoint = buildUrl({ endpoint: API_ENDPOINT.SEGMENTS, queryParams });
   const response = await fetchAPI<HTTPPagination<ISection>>(url ?? endpoint, init);
+
+  return response.data;
+};
+
+export const createCourseService = async (url: string | undefined, payload: ICreateBaseCourse, init?: RequestInit) => {
+  const response = await postAPI<ICourse, ICreateBaseCourse>(url ?? API_ENDPOINT.COURSES, payload, init);
+
+  return response.data;
+};
+
+export const createAICourseService = async (
+  url: string | undefined,
+  payload: ICreateYoutubeCourse,
+  init?: RequestInit
+) => {
+  const response = await postAPI<ICourse, ICreateYoutubeCourse>(url ?? API_ENDPOINT.COURSES_AI, payload, init);
 
   return response.data;
 };

@@ -173,6 +173,7 @@
   .rich-text {
     /* @apply prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none; */
     margin: 1rem;
+    font-size: 14px;
   }
   .rich-text:focus-visible {
     /* List styles */

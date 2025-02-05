@@ -9,20 +9,15 @@ import { buildUrl } from '@oe/core/utils/url';
 import { DashboardHeaderCard } from '@oe/ui/common/layout';
 import { Link, useRouter } from '@oe/ui/common/navigation';
 import { NavigationDialog } from '@oe/ui/components/dialog';
-import {
-  FormNestedProvider,
-  FormNestedWrapper,
-  type INestedFormsValues,
-  useFormContext,
-} from '@oe/ui/components/form-wrapper';
+import { FormNestedWrapper, useFormContext } from '@oe/ui/components/form-wrapper';
 import { Badge } from '@oe/ui/shadcn/badge';
 import { Button } from '@oe/ui/shadcn/button';
 import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
 import { Input } from '@oe/ui/shadcn/input';
 import { cn } from '@oe/ui/utils/cn';
 import { BookOpen, DollarSign, History, Settings, SquareUserRound } from 'lucide-react';
-import { useParams, usePathname } from 'next/navigation';
-import { type ReactNode, useMemo, useState } from 'react';
+import { useParams } from 'next/navigation';
+import { type ReactNode, useMemo } from 'react';
 
 type CourseTab = {
   id: string;
@@ -33,16 +28,26 @@ type CourseTab = {
   disabled?: boolean;
 };
 
-export function CourseDetailLayout({ children }: { children: ReactNode }) {
-  const [validSteps, setValidSteps] = useState<string[]>([]);
-  const pathname = usePathname();
+const courseNameSchema = z.object({
+  name: z.string().min(1, { message: 'Name is required' }),
+});
 
-  // biome-ignore lint/suspicious/useAwait: <explanation>
-  const handleSubmit = async (values: INestedFormsValues) => {
-    console.log(values);
-  };
+export function CourseDetailHeader({
+  currentPath,
+  onValidStep,
+}: {
+  currentPath: string;
+  onValidStep: (stepId: string) => void;
+}) {
+  const { courseId } = useParams<{ courseId: string }>();
+  const { course } = useGetCourseById(courseId);
+  // const { segments } = useGetSegments({
+  //   course_id: courseId,
+  // });
+  const { validateForms, activeFormId, hasUnsavedChanges } = useFormContext();
+  const router = useRouter();
 
-  const courseTabs = useMemo(() => {
+  const courseTabs: CourseTab[] = useMemo(() => {
     return [
       {
         id: 'information',
@@ -57,7 +62,7 @@ export function CourseDetailLayout({ children }: { children: ReactNode }) {
         icon: <BookOpen width={16} height={16} />,
         href: CREATOR_ROUTES.courseOutline,
         required: true,
-        disabled: !validSteps.includes('information'),
+        // disabled: !validSteps.includes("information"),
       },
       {
         id: 'price',
@@ -65,7 +70,7 @@ export function CourseDetailLayout({ children }: { children: ReactNode }) {
         icon: <DollarSign width={16} height={16} />,
         href: CREATOR_ROUTES.coursePrice,
         required: true,
-        disabled: !validSteps.includes('outline'),
+        // disabled: !validSteps.includes("outline"),
       },
       {
         id: 'certificate',
@@ -103,46 +108,10 @@ export function CourseDetailLayout({ children }: { children: ReactNode }) {
         required: false,
       },
     ];
-  }, [validSteps]);
-
-  return (
-    <FormNestedProvider
-      onSubmit={handleSubmit}
-      // onChange={handleChange}
-      className="flex h-full flex-col"
-    >
-      <CourseDetailHeader
-        courseTabs={courseTabs}
-        currentPath={pathname}
-        onValidStep={stepId => {
-          setValidSteps(prev => [...new Set([...prev, stepId])]);
-        }}
-      />
-      <div className="flex-1 overflow-hidden rounded">{children}</div>
-    </FormNestedProvider>
-  );
-}
-
-const courseNameSchema = z.object({
-  name: z.string().min(1, { message: 'Name is required' }),
-});
-
-function CourseDetailHeader({
-  courseTabs,
-  currentPath,
-  onValidStep,
-}: {
-  courseTabs: CourseTab[];
-  currentPath: string;
-  onValidStep: (stepId: string) => void;
-}) {
-  const params = useParams<{ courseId: string }>();
-  const { course } = useGetCourseById(params.courseId);
-  const { validateForms, activeFormId, hasUnsavedChanges } = useFormContext();
-  const router = useRouter();
+  }, []);
 
   // Tìm current tab và next tab
-  const currentTab = courseTabs.find(tab => currentPath.includes(tab.href.replace(':courseId', params.courseId)));
+  const currentTab = courseTabs.find(tab => currentPath.includes(tab.href.replace(':courseId', courseId)));
   const currentTabIndex = currentTab ? courseTabs.indexOf(currentTab) : -1;
   const nextTab = courseTabs[currentTabIndex + 1];
 
@@ -164,7 +133,7 @@ function CourseDetailHeader({
       } else if (nextTab) {
         const nextUrl = buildUrl({
           endpoint: nextTab.href,
-          params: { courseId: params.courseId },
+          params: { courseId: courseId },
         });
         router.push(nextUrl);
       }
@@ -221,7 +190,7 @@ function CourseDetailHeader({
           {courseTabs.map(tab => {
             const tabUrl = buildUrl({
               endpoint: tab.href,
-              params: { courseId: params.courseId },
+              params: { courseId },
             });
             const isActive = currentPath === tabUrl;
 
