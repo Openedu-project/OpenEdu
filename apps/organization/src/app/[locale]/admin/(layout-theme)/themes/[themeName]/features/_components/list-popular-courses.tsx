@@ -10,6 +10,7 @@ import { Button } from '@oe/ui/shadcn/button';
 import { Checkbox } from '@oe/ui/shadcn/checkbox';
 import { Input } from '@oe/ui/shadcn/input';
 import { toast } from '@oe/ui/shadcn/sonner';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 const PER_PAGE = 4;
@@ -18,6 +19,7 @@ const ListPopularCourses = () => {
   const { dataPopularCourses } = useGetPopularCourses({
     params: { org_id: '' },
   });
+  const t = useTranslations('themeFeaturedContent');
 
   const { triggerUpdateFeaturedContent } = useUpdateFeaturedContent();
   const [items, setItems] = useState<ICourse[]>([]);
@@ -113,11 +115,11 @@ const ListPopularCourses = () => {
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
           <div className="space-y-2">
-            <p className="text-foreground/80 text-sm">Select and arrange featured content items</p>
+            <p className="text-foreground/80 text-sm">{t('select')}</p>
           </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
-              <span className="whitespace-nowrap text-sm">Max items:</span>
+              <span className="whitespace-nowrap text-sm">{t('maxItems')}</span>
               <Input
                 type="number"
                 value={maxDisplay}
@@ -126,9 +128,9 @@ const ListPopularCourses = () => {
               />
             </div>
             <p className="text-sm">
-              Showing {selectedDisplay.length}/{maxDisplay}
+              {t('showing')} {selectedDisplay.length}/{maxDisplay}
             </p>
-            <Button onClick={handleSave}>Save Changes</Button>
+            <Button onClick={handleSave}>{t('saveChanges')}</Button>
           </div>
         </div>
       </div>
