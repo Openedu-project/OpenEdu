@@ -8,23 +8,25 @@ on:
         description: 'Select the environment'
         required: true
         options:
-          - staging
+          - openedu101dev
+          - openedudev
+          - openedutest
+          - org_openedutest
           - production
-          - development
-      project:
-        type: choice
-        description: 'Select the project to deploy'
-        required: true
-        options:
-          - AI_OPENEDUDEV
-          - BLOCKCHAIN_OPENEDU101DEV
-          - OPENEDUTEST
-          - ORG_OPENEDUTEST
-          - OPENEDU
+      # project:
+      #   type: choice
+      #   description: 'Select the project to deploy'
+      #   required: true
+      #   options:
+      #     - AI_OPENEDUDEV
+      #     - BLOCKCHAIN_OPENEDU101DEV
+      #     - OPENEDUTEST
+      #     - ORG_OPENEDUTEST
+      #     - OPENEDU
 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets[format('VERCEL_PROJECT_ID_{0}', github.event.inputs.project)] }}
+  VERCEL_PROJECT_ID: ${{ secrets[format('VERCEL_PROJECT_ID_{0}', toUpper(github.event.inputs.environment)) ] }}
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
 
@@ -40,7 +42,7 @@ jobs:
       
       - name: Set project directory
         run: |
-          if [[ "${{ github.event.inputs.project }}" == ORG_* ]]; then
+          if [[ "${{ github.event.inputs.environment }}" == org_* ]]; then
             echo "PROJECT_DIR=apps/organization" >> $GITHUB_ENV
           else
             echo "PROJECT_DIR=apps/platform" >> $GITHUB_ENV
@@ -48,8 +50,8 @@ jobs:
 
       - name: Check deployment conditions
         run: |
-          if [ "${{ github.event.inputs.project }}" = "OPENEDU" ] && [ "${{ github.ref_name }}" != "main" ]; then
-            echo "Error: OPENEDU can only be deployed from the main branch."
+          if [ "${{ github.event.inputs.environment }}" = "production" ] && [ "${{ github.ref_name }}" != "main" ]; then
+            echo "Error: Production can only be deployed from the main branch."
             exit 1
           fi
 
@@ -89,10 +91,15 @@ jobs:
 
       - name: Set up environment file
         run: |
-          if [ -f "${{ env.PROJECT_DIR }}/.env.${{ github.event.inputs.environment }}" ]; then
-            cp ${{ env.PROJECT_DIR }}/.env.${{ github.event.inputs.environment }} ${{ env.PROJECT_DIR }}/.env.production.local
+          ENV_NAME="${{ github.event.inputs.environment }}"
+          if [[ "$ENV_NAME" == org_* ]]; then
+            ENV_NAME="${ENV_NAME#org_}"
+          fi
+          
+          if [ -f "${{ env.PROJECT_DIR }}/.env.$ENV_NAME" ]; then
+            cp ${{ env.PROJECT_DIR }}/.env.$ENV_NAME ${{ env.PROJECT_DIR }}/.env.production.local
           else
-            echo "No environment file found for ${{ github.event.inputs.environment }} in ${{ env.PROJECT_DIR }}"
+            echo "No environment file found for $ENV_NAME in ${{ env.PROJECT_DIR }}"
             exit 1
           fi
 
