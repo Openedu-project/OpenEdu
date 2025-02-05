@@ -3,7 +3,7 @@ import type { FieldValues } from 'react-hook-form';
 import type { InputFieldProps } from '../type';
 import { InputDefault } from './input-default';
 import { InputImageAnalysis } from './input-image-analysis';
-import { InputPresentation } from './input-presentation';
+import { InputWithAgent } from './input-with-agent';
 
 export const InputField = <TFormValues extends FieldValues>({
   form,
@@ -29,18 +29,19 @@ export const InputField = <TFormValues extends FieldValues>({
         />
       );
     }
-    case 'ai_slide': {
+    case 'ai_chat': {
+      return <InputDefault inputRef={inputRef} handleKeyDown={handleKeyDown} />;
+    }
+    default: {
       return (
-        <InputPresentation
+        <InputWithAgent
           handleKeyDown={handleKeyDown}
           setInputType={setInputType}
           inputRef={inputRef}
           canChangeType={canChangeType}
+          type={type}
         />
       );
-    }
-    default: {
-      return <InputDefault inputRef={inputRef} handleKeyDown={handleKeyDown} />;
     }
   }
 };

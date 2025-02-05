@@ -73,7 +73,7 @@
     );
     --footer: linear-gradient(255deg, #b8f4f8 6.18%, #ede3fe 70.53%);
 
-    --ai-agent-green-background: linear-gradient(var(--positive-100) 0%, var(--positive-500) 100%);
+    --ai-agent-green-background: linear-gradient(var(--positive-100) 0%, var(--positive-400) 100%);
     --ai-agent-pink-background: linear-gradient(var(--pink-50) 0%, var(--pink-500) 100%);
     --ai-agent-orange-background: linear-gradient(var(--orange-100) 0%, var(--orange-400) 100%);
     --ai-agent-blue-background: linear-gradient(var(--info-100) 0%, var(--info-500) 100%);

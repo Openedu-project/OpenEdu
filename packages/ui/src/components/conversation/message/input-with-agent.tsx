@@ -6,13 +6,14 @@ import { INPUT_BUTTON } from '../constants';
 import type { InputFieldProps } from '../type';
 import { InputDefault } from './input-default';
 
-export const InputPresentation = <TFormValues extends FieldValues>({
+export const InputWithAgent = <TFormValues extends FieldValues>({
   handleKeyDown,
   setInputType,
   inputRef,
   canChangeType,
+  type,
 }: InputFieldProps<TFormValues>) => {
-  const buttonData = INPUT_BUTTON.find(button => button.type === 'ai_slide');
+  const buttonData = INPUT_BUTTON.find(button => button.type === type);
   const tAI = useTranslations('aiAssistant');
 
   return (
