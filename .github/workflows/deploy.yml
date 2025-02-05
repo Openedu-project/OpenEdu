@@ -99,7 +99,7 @@ jobs:
       - name: Deploy to Vercel
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        working-directory: ${{ env.PROJECT_DIR }}
+        # working-directory: ${{ env.PROJECT_DIR }}
         run: |
           pnpm dlx vercel pull --yes --environment=production --token=$VERCEL_TOKEN
           pnpm dlx vercel build --yes --token=$VERCEL_TOKEN
