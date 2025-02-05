@@ -8,24 +8,42 @@ interface IInputOptionProps {
   messageType?: TAgentType[];
   className?: string;
   handleSelect: (option: TAgentType) => void;
+  buttonClassName?: string;
+  hiddenDisableAgent?: boolean;
+  align?: 'vertical' | 'horizontal';
+  selectedIndex?: number;
 }
 
-export const InputOption = ({ messageType, className, handleSelect }: IInputOptionProps) => {
+export const InputOption = ({
+  messageType,
+  className,
+  handleSelect,
+  buttonClassName,
+  hiddenDisableAgent,
+  align = 'horizontal',
+  selectedIndex,
+}: IInputOptionProps) => {
   const tAI = useTranslations('aiAssistant');
 
   return (
-    <div className={cn('flex gap-2', className)}>
-      {INPUT_BUTTON.map(button => (
+    <div className={cn('flex gap-2', align === 'vertical' && 'flex-col', className)}>
+      {INPUT_BUTTON.filter(btn => messageType?.includes(btn.type) || !hiddenDisableAgent).map((button, index) => (
         <Button
           key={button.type}
           variant="ghost"
           type="button"
-          className="!rounded-full before:!rounded-full relative flex items-center gap-1 border border-primary bg-primary/5 before:absolute before:z-[-1] before:h-full before:w-full before:bg-white before:content-['']"
+          className={cn(
+            "!rounded-full before:!rounded-full relative flex items-center gap-1 border border-primary bg-primary/5 before:absolute before:z-[-1] before:h-full before:w-full before:bg-white before:content-['']",
+            buttonClassName,
+            selectedIndex === index && 'bg-primary/10'
+          )}
           onClick={() => handleSelect(button.type)}
           disabled={!messageType?.includes(button.type)}
         >
           {button.icon}
-          <span className="mcaption-semibold12 hidden md:block">{tAI(button.textKey)}</span>
+          <span className={cn('mcaption-semibold12', align === 'horizontal' && 'hidden md:block')}>
+            {tAI(button.textKey)}
+          </span>
         </Button>
       ))}
     </div>

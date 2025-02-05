@@ -12,6 +12,7 @@ export const InputWithAgent = <TFormValues extends FieldValues>({
   inputRef,
   canChangeType,
   type,
+  handleInputChange,
 }: InputFieldProps<TFormValues>) => {
   const buttonData = INPUT_BUTTON.find(button => button.type === type);
   const tAI = useTranslations('aiAssistant');
@@ -34,7 +35,7 @@ export const InputWithAgent = <TFormValues extends FieldValues>({
           </Button>
         )}
       </div>
-      <InputDefault inputRef={inputRef} handleKeyDown={handleKeyDown} />
+      <InputDefault inputRef={inputRef} handleKeyDown={handleKeyDown} handleInputChange={handleInputChange} />
     </>
   );
 };

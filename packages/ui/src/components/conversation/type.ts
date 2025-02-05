@@ -1,6 +1,6 @@
 import type { IMessage, IRole, TAgentType } from '@oe/api/types/conversation';
 import type { IFileResponse } from '@oe/api/types/file';
-import type { KeyboardEventHandler, ReactNode, RefObject } from 'react';
+import type { ChangeEvent, KeyboardEventHandler, ReactNode, RefObject } from 'react';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
 
 export interface AISidebarItem {
@@ -54,11 +54,12 @@ export interface MessageInputProps {
 export type InputFieldProps<TFormValues extends FieldValues> = {
   form?: UseFormReturn<TFormValues>;
   type?: TAgentType;
-  handleKeyDown?: KeyboardEventHandler<HTMLTextAreaElement | HTMLInputElement>;
+  handleKeyDown?: KeyboardEventHandler<HTMLTextAreaElement>;
   setInputType?: (value: TAgentType) => void;
   inputRef: RefObject<null | HTMLTextAreaElement>;
   canChangeType?: boolean;
   className?: string;
+  handleInputChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 };
 
 export interface MessageFormValues {

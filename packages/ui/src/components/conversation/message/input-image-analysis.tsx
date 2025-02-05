@@ -15,6 +15,7 @@ export const InputImageAnalysis = <TFormValues extends FieldValues>({
   setInputType,
   inputRef,
   canChangeType,
+  handleInputChange,
 }: InputFieldProps<TFormValues>) => {
   const buttonData = INPUT_BUTTON.find(button => button.type === 'ai_image_analysis');
   const tAI = useTranslations('aiAssistant');
@@ -38,7 +39,7 @@ export const InputImageAnalysis = <TFormValues extends FieldValues>({
         )}
       </div>
 
-      <InputDefault inputRef={inputRef} handleKeyDown={handleKeyDown} />
+      <InputDefault inputRef={inputRef} handleKeyDown={handleKeyDown} handleInputChange={handleInputChange} />
 
       <FormFieldWithLabel
         name={'images' as Path<TFormValues>}

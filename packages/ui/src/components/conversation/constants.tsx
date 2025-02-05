@@ -1,4 +1,4 @@
-import type { IAgenConfigs, InputType } from "@oe/api/types/conversation";
+import type { IAgenConfigs, TAgentType } from "@oe/api/types/conversation";
 import { AI_ROUTES } from "@oe/core/utils/routes";
 import {
   FileCode,
@@ -74,11 +74,13 @@ export const INPUT_BUTTON: IInputButton[] = [
   },
 ];
 
-export const AGENT_OPTIONS: Record<keyof IAgenConfigs, InputType> = {
+export const AGENT_OPTIONS: Record<keyof IAgenConfigs, TAgentType> = {
   image_analysis_enabled: "ai_image_analysis",
   present_creator_enabled: "ai_slide",
   code_executor_enabled: "ai_code",
   image_generator_enabled: "ai_image_generate",
 };
 
-export const CHAT_OPTIONS: InputType[] = ["ai_image_analysis", "ai_chat"];
+export const CHAT_OPTIONS: TAgentType[] = ['ai_image_analysis', 'ai_chat'];
+
+export const DESKTOP_BREAKPOINT = 1024;

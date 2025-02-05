@@ -14,9 +14,9 @@ import type { SWRInfiniteResponse } from 'swr/infinite';
 import { Button } from '#shadcn/button';
 import { Drawer, DrawerContent, DrawerDescription, DrawerTitle } from '#shadcn/drawer';
 import { Input } from '#shadcn/input';
-import { useIsMobile } from '#shadcn/use-mobile';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
+import { useIsDesktop } from '../utils';
 import AIHistoryItem from './history-item';
 const PER_PAGE = 50;
 
@@ -134,7 +134,7 @@ const SearchHistory = ({ className, mutate, handleSearch, chatHistory = [], isLo
 
 export default function AIHistory({ className, isLogin = false, pauseAddMessage }: SearchHistoryProps) {
   const [isShow, setIsShow] = useState<boolean>(false);
-  const isMobile = useIsMobile();
+  const isDesktop = useIsDesktop();
   const { mutate: globalMutate } = useSWRConfig();
   const { isNewChat } = useConversationStore();
 
@@ -188,7 +188,16 @@ export default function AIHistory({ className, isLogin = false, pauseAddMessage 
   };
   return (
     <>
-      {isMobile ? (
+      {isDesktop ? (
+        <SearchHistory
+          className={cn('hidden lg:flex lg:w-1/4', className)}
+          chatHistory={historyData}
+          handleSearch={searchChatHistory}
+          pauseAddMessage={pauseAddMessage}
+          mutate={mutate}
+          isLoading={isLoading}
+        />
+      ) : (
         <>
           {!isShow && (
             <Button
@@ -202,7 +211,7 @@ export default function AIHistory({ className, isLogin = false, pauseAddMessage 
             </Button>
           )}
           <Drawer open={isShow} onOpenChange={setIsShow} direction="right">
-            <DrawerContent className="!duration-300 top-0 h-[calc(100vh-100px] md:w-1/2 first:[&>div]:hidden">
+            <DrawerContent className="!duration-300 top-0 h-[calc(100vh-100px] lg:w-1/2 first:[&>div]:hidden">
               <DrawerTitle>
                 <VisuallyHidden asChild>Title</VisuallyHidden>
               </DrawerTitle>
@@ -221,15 +230,6 @@ export default function AIHistory({ className, isLogin = false, pauseAddMessage 
             </DrawerContent>
           </Drawer>
         </>
-      ) : (
-        <SearchHistory
-          className={cn('hidden lg:flex lg:w-1/4', className)}
-          chatHistory={historyData}
-          handleSearch={searchChatHistory}
-          pauseAddMessage={pauseAddMessage}
-          mutate={mutate}
-          isLoading={isLoading}
-        />
       )}
     </>
   );

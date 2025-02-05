@@ -77,7 +77,11 @@ export const MessageContainer = ({
         index: messages.length - 1,
       }}
       startReached={() => {
-        if (!(GENERATING_STATUS.includes(status ?? '') || isLoading) && nextKeyRef.current.length > 0) {
+        if (nextKeyRef.current.length === 0) {
+          return;
+        }
+        firstItemIndexRef.current -= 1;
+        if (!(GENERATING_STATUS.includes(status ?? '') || isLoading)) {
           setShouldGetData(true);
         }
       }}

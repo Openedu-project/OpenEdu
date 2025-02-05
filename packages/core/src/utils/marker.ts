@@ -18,7 +18,7 @@ export const marked = new Marked({
 
       return `
 <pre><div class="flex justify-between border-b pb-2 opacity-50">
-  <p class="uppercase">${lang}</p>
+  <p class="uppercase">${language}</p>
   <button 
         onclick="(function(button){
       const code = decodeURIComponent(button.getAttribute('data-code'));
@@ -55,7 +55,7 @@ export const marked = new Marked({
             src="${href}" 
             alt="${text}" 
             ${title ? `title="${title}"` : ''} 
-            class="md:max-w-[400px] rounded-lg"
+            class="md:max-w-[400px] rounded-xl"
           />
           <button
             onclick="(function(button) {

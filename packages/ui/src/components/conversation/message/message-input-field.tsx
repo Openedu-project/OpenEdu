@@ -10,6 +10,7 @@ export const InputField = <TFormValues extends FieldValues>({
   type,
   handleKeyDown,
   setInputType,
+  handleInputChange,
   inputRef,
   canChangeType,
 }: InputFieldProps<TFormValues>) => {
@@ -26,11 +27,12 @@ export const InputField = <TFormValues extends FieldValues>({
           setInputType={setInputType}
           inputRef={inputRef}
           canChangeType={canChangeType}
+          handleInputChange={handleInputChange}
         />
       );
     }
     case 'ai_chat': {
-      return <InputDefault inputRef={inputRef} handleKeyDown={handleKeyDown} />;
+      return <InputDefault inputRef={inputRef} handleKeyDown={handleKeyDown} handleInputChange={handleInputChange} />;
     }
     default: {
       return (
@@ -40,6 +42,7 @@ export const InputField = <TFormValues extends FieldValues>({
           inputRef={inputRef}
           canChangeType={canChangeType}
           type={type}
+          handleInputChange={handleInputChange}
         />
       );
     }

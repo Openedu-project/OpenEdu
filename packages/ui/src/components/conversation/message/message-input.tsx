@@ -9,7 +9,7 @@ import { z } from '@oe/api/utils/zod';
 import { MoveRight, Square } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type React from 'react';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { type ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
 import { FormWrapper } from '#components/form-wrapper';
 import { useLoginRequiredStore } from '#components/login-required-modal';
@@ -17,6 +17,7 @@ import { Button } from '#shadcn/button';
 import { Card } from '#shadcn/card';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
+import { DESKTOP_BREAKPOINT, INPUT_BUTTON } from '../constants';
 import type { MessageFormValues, MessageInputProps } from '../type';
 import { InputField } from './message-input-field';
 import { InputOption } from './message-input-option';
@@ -55,26 +56,54 @@ const MessageInput: React.FC<MessageInputProps> = ({
 }) => {
   const tAI = useTranslations('aiAssistant');
   const pathname = usePathname();
-  const { selectedAgent, setSelectedAgent } = useConversationStore();
+  const { selectedModel, selectedAgent, setSelectedAgent } = useConversationStore();
+  const [filteredAgents, setFilteredAgents] = useState<TAgentType[]>([]);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const { setLoginRequiredModal } = useLoginRequiredStore();
-  const [isMobile, setIsMobile] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window?.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    const checkDesktop = () => setIsDesktop(window?.innerWidth >= DESKTOP_BREAKPOINT);
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
+    return () => window.removeEventListener('resize', checkDesktop);
   }, []);
 
   useEffect(() => {
-    if (inputRef.current && document.activeElement !== inputRef.current && !isMobile) {
-      inputRef.current.focus();
-      inputRef.current.selectionStart = inputRef.current.value.length;
-      inputRef.current.selectionEnd = inputRef.current.value.length;
+    if (!(inputRef.current && isDesktop) || document.activeElement === inputRef.current) {
+      return;
     }
+    inputRef.current.focus();
+    inputRef.current.selectionStart = inputRef.current.value.length;
+    inputRef.current.selectionEnd = inputRef.current.value.length;
   });
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (!inputRef.current) {
+      return;
+    }
+    if (filteredAgents.length > 0) {
+      if ((inputRef.current?.value ?? '').startsWith('@')) {
+        handleOpenAgentList(inputRef.current?.value ?? '');
+      } else {
+        setFilteredAgents([]);
+      }
+    }
+  }, [selectedModel]);
+
+  const handleOpenAgentList = (value: string) => {
+    const searchText = value.split('@')?.pop()?.toLowerCase();
+    const filtered = INPUT_BUTTON?.filter(
+      agent =>
+        tAI(agent.textKey)
+          .toLowerCase()
+          .includes(searchText ?? '') && messageType?.includes(agent.type)
+    ).map(agent => agent.type);
+    setFilteredAgents(filtered ?? []);
+  };
 
   const handleCancel = async () => {
     const id = pathname.split('/').pop();
@@ -83,13 +112,35 @@ const MessageInput: React.FC<MessageInputProps> = ({
     }
   };
 
-  const handleKeyDown = (
-    e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>,
-    form: UseFormReturn<MessageFormValues>
-  ) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>, form: UseFormReturn<MessageFormValues>) => {
     const message = form.getValues('message');
 
     if (e.nativeEvent.isComposing) {
+      return;
+    }
+    if (message.startsWith('@')) {
+      switch (e.key) {
+        case 'ArrowDown':
+          e.preventDefault();
+          setSelectedIndex(prev => (prev < filteredAgents.length - 1 ? prev + 1 : 0));
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          setSelectedIndex(prev => (prev > 0 ? prev - 1 : filteredAgents.length - 1));
+          break;
+        case 'Enter':
+          e.preventDefault();
+          if (filteredAgents[selectedIndex]) {
+            setSelectedAgent(filteredAgents[selectedIndex]);
+            setFilteredAgents([]);
+          }
+          break;
+        case 'Escape':
+          setFilteredAgents([]);
+          break;
+        default:
+          break;
+      }
       return;
     }
 
@@ -105,11 +156,26 @@ const MessageInput: React.FC<MessageInputProps> = ({
     }
   };
 
-  const inputSchema = useMemo(() => createFormSchema(selectedAgent), [selectedAgent]);
+  const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    if (!value.startsWith('@')) {
+      if (filteredAgents.length > 0) {
+        setFilteredAgents([]);
+      }
+      return;
+    }
+    handleOpenAgentList(value);
+  };
+
+  const inputSchema = useMemo(() => {
+    setFilteredAgents([]);
+    return createFormSchema(selectedAgent);
+  }, [selectedAgent]);
 
   const defaultValues = useMemo(() => ({ message: initialMessage ?? '', images }), [initialMessage, images]);
 
   const handleSubmit = async (values: z.infer<typeof inputSchema>) => {
+    setFilteredAgents([]);
     if (generating) {
       return;
     }
@@ -136,7 +202,23 @@ const MessageInput: React.FC<MessageInputProps> = ({
   };
 
   return (
-    <div className={cn('flex flex-col gap-4 bg-background', className)}>
+    <div className={cn('relative bg-background', className)}>
+      {filteredAgents.length > 0 && (
+        <div className="absolute right-0 bottom-full left-0 flex justify-center">
+          <InputOption
+            className="w-[95%] gap-0 rounded-t-lg border border-primary border-b-0 bg-background p-2"
+            align="vertical"
+            hiddenDisableAgent
+            messageType={filteredAgents}
+            handleSelect={opt => {
+              setSelectedAgent(opt);
+              setFilteredAgents([]);
+            }}
+            buttonClassName="border-0 justify-start gap-3 bg-transparent"
+            selectedIndex={selectedIndex}
+          />
+        </div>
+      )}
       <FormWrapper
         id="messange-input"
         resetOnSuccess={resetOnSuccess}
@@ -161,6 +243,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
               handleKeyDown={e => {
                 handleKeyDown(e, form as UseFormReturn<MessageFormValues>);
               }}
+              handleInputChange={handleInputChange}
               setInputType={setSelectedAgent}
               inputRef={inputRef}
               canChangeType={messageType && messageType.length > 1}
@@ -189,7 +272,6 @@ const MessageInput: React.FC<MessageInputProps> = ({
                     'group/btn h-8 w-8 rounded-full bg-primary/10',
                     generating && 'cursor-not-allowed opacity-50'
                   )}
-                  onClick={() => resetOnSuccess && form.reset()}
                   aria-label="Send message"
                 >
                   <MoveRight strokeWidth={3} className="h-4 w-4 text-primary group-hover/btn:text-primary-foreground" />
@@ -200,7 +282,9 @@ const MessageInput: React.FC<MessageInputProps> = ({
         )}
       </FormWrapper>
 
-      {showInputOption && <InputOption messageType={messageType} handleSelect={opt => setSelectedAgent(opt)} />}
+      {showInputOption && (
+        <InputOption className="mt-4" messageType={messageType} handleSelect={opt => setSelectedAgent(opt)} />
+      )}
     </div>
   );
 };
