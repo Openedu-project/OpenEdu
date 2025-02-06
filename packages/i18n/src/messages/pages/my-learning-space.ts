@@ -32,6 +32,8 @@ export const myLearningSpaceMessage = {
     myCertificates: {
       title: 'My Certificates',
       back: 'Back to My Certificate',
+      mintCertificate: 'Mint Certificate',
+      viewInWallet: 'View in Wallet',
     },
   },
 } as const;

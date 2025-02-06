@@ -2,7 +2,7 @@ import type { Root } from '@radix-ui/react-avatar';
 import type { ComponentPropsWithoutRef } from 'react';
 
 // Types and Interfaces
-type AvatarSize = 'sm' | 'md' | 'lg' | 'xl';
+type AvatarSize = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 
 export interface ColorPair {
   background: string;
@@ -28,6 +28,7 @@ export const PREDEFINED_COLORS: ColorPair[] = [
 export const AVATAR_SIZES: Record<AvatarSize, { dimensions: string; fontClass: string }> = {
   sm: { dimensions: 'h-6 w-6', fontClass: 'mcaption-semibold12' },
   md: { dimensions: 'h-8 w-8', fontClass: 'mcaption-semibold14' },
-  lg: { dimensions: 'h-[140px] w-[140px]', fontClass: 'giant-iDisplay-bold48' },
-  xl: { dimensions: 'h-[200px] w-[200px]', fontClass: 'giant-iDisplay-bold64' },
+  lg: { dimensions: 'h-[72px] w-[72px]', fontClass: 'giant-iheading-bold32' },
+  xl: { dimensions: 'h-[140px] w-[140px]', fontClass: 'giant-iDisplay-bold48' },
+  xxl: { dimensions: 'h-[200px] w-[200px]', fontClass: 'giant-iDisplay-bold64' },
 };

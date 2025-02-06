@@ -54,6 +54,7 @@ export default function CourseLearningList({ title, group, preload }: ICourseLea
             totalCount={coursesLearningData?.pagination?.total_items ?? 0}
             onPageChange={page => setPage(page)}
             className="p-8"
+            pageSize={12}
           />
         </div>
       )}

@@ -196,6 +196,8 @@ export const API_ENDPOINT = {
   BOOKMARKS_ID: '/api/v1/bookmarks/:id',
   CERTIFICATES: '/api/v1/certificates',
   CERTIFICATES_ID: '/api/v1/certificates/:id',
+  CERTIFICATES_ID_NFT: '/api/v1/certificates/:id/nft',
+  CERTIFICATES_ID_NFT_FEES: '/api/v1/certificates/:id/nft/fees',
   HTML_TEMPLATES: '/api/v1/html-templates',
   HTML_TEMPLATES_ID: '/api/v1/html-templates/:id',
   AFFILIATE_CAMPAIGNS: '/api/v1/affiliate-campaigns',

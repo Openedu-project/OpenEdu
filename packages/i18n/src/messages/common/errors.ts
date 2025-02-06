@@ -536,6 +536,7 @@ export const errorMessages = {
     '10504': 'You have not finish this course',
     '10505': 'Certificate not found',
     '10506': 'Error certificate find many failed',
+    '10514': 'Not enough balance to mint NFT',
     '10600': 'Bookmark create failed',
     '10601': 'Bookmark not found',
     '10602': 'Find save by id fail',

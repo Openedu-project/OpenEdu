@@ -34,6 +34,7 @@ export default function CertificateCard({
   isSetting = false,
   type = 'profile',
   hasCompletedOn = true,
+  children,
   ...props
 }: ICertCardProps) {
   const t = useTranslations('certificate');
@@ -108,6 +109,7 @@ export default function CertificateCard({
             {t('completedOn')} {formatDate(certificate?.completed_at ?? certificate.create_at)}
           </span>
         )}
+        {children}
       </CardContent>
     </Card>
   );

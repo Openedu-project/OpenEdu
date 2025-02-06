@@ -38,9 +38,9 @@ export default function CourseSection({
       }}
     >
       <div className="shadow-shadow-5">
-        <div className="mb-4 flex flex-col justify-between md:flex-row">
-          <div className="flex items-center gap-6">
-            <h3 className="mcaption-semibold24 mb-0">{title}</h3>
+        <div className="mb-4 flex flex-col justify-between gap-4 sm:flex-row">
+          <div className="flex flex-wrap items-center gap-3 md:gap-6">
+            <h3 className="mcaption-semibold18 md:mcaption-semibold24 mb-0">{title}</h3>
 
             <Link
               href={href ?? ''}
@@ -80,10 +80,15 @@ export default function CourseSection({
             <Spinner />
           </div>
         ) : (
-          <CarouselContent className="ml-0 flex w-full gap-6">
+          <CarouselContent className="ml-0 flex gap-6">
             {courseList && courseList?.length > 0 ? (
               courseList?.map(course => (
-                <CourseCard key={course.id} className="min-w-[234px]" courseData={course} courseStatus={courseStatus} />
+                <CourseCard
+                  key={course.id}
+                  className="min-w-[234px] max-w-[234px]"
+                  courseData={course}
+                  courseStatus={courseStatus}
+                />
               ))
             ) : (
               <p className="giant-iheading-semibold16 w-full text-center text-bg-neutral-500">{tCourses('noData')}</p>

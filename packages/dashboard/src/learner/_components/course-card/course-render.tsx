@@ -50,9 +50,11 @@ export default function CourseRender({
     return (
       <div className="flex items-center gap-3">
         <CircleProgressBar progress={progressPercent} size="lg" />
-        <div className="flex flex-1 flex-col justify-center">
+        <div className="flex w-full flex-1 flex-col justify-center">
           <span className="mcaption-regular9">{t('currentLesson')}</span>
-          <p className="mcaption-semibold12 line-clamp-1 text-primary">{current_lesson?.title}</p>
+          <p className="mcaption-semibold12 line-clamp-1 w-full whitespace-normal text-primary">
+            {current_lesson?.title}
+          </p>
         </div>
       </div>
     );

@@ -42,9 +42,11 @@ export default function DashboardContent({ coursesCountingData, userData }: IDas
     },
   ];
 
+  const username = userData && userData?.display_name?.length > 0 ? userData?.display_name : (userData?.username ?? '');
+
   return (
     <div className="space-y-4 py-6">
-      <WelcomeBanner username={userData?.display_name ?? userData?.username ?? ''} />
+      <WelcomeBanner username={username} avatar={userData?.avatar ?? ''} />
 
       <div className="mb-6 flex w-full flex-col flex-wrap justify-between gap-4 sm:flex-row">
         {courseStatus.map((card, index) => (

@@ -4,6 +4,7 @@ import { coursesMessages } from './courses';
 import { dashboardMessages } from './dashboard';
 import { dynamicFormsMessages } from './dynamic-forms';
 import { languagesMessages } from './languages';
+import { mintCertificateMessages } from './mint-certificate';
 import { walletMessages } from './wallet';
 
 export const featuresMessages = {
@@ -14,4 +15,5 @@ export const featuresMessages = {
   ...blogMessages,
   ...walletMessages,
   ...blogManagementMessages,
+  ...mintCertificateMessages,
 };

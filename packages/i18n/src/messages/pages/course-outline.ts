@@ -41,6 +41,9 @@ export const courseOutlineMessages = {
       title: 'Certificate',
       subTitle: 'OpenEdu Completion Certificate',
       desc: 'Upon completing this course, you will receive a certificate of completion. This certificate can be showcased on your own LinkedIn profile, added to your resume, or displayed in your portfolio to highlight your new skills and achievements.',
+      learner: 'learner',
+      learners: 'learners',
+      creator: 'Creator',
     },
 
     courseStats: {
