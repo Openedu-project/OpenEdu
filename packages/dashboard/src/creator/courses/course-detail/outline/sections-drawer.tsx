@@ -1,10 +1,10 @@
-import type { ISection } from '@oe/api/schemas/courseSchema';
+import type { ISegment } from '@oe/api/types/course/segment';
 import { DndSortable, DndSortableDragButton } from '@oe/ui/components/dnd-sortable';
-import { Badge } from '@oe/ui/shadcn/badge';
 import { Button } from '@oe/ui/shadcn/button';
 import { cn } from '@oe/ui/utils/cn';
 import { XCircle } from 'lucide-react';
 import { PlusIcon } from 'lucide-react';
+import StatusBadge from '../../_components/status-badge';
 import { useOutlineStore } from '../_store/useOutlineStore';
 
 // interface SectionsDrawerProps {
@@ -13,7 +13,7 @@ import { useOutlineStore } from '../_store/useOutlineStore';
 // }
 
 export const SectionsDrawer = () => {
-  const { sections, openSectionDrawer, activeSection, setOpenSectionDrawer, setSections } = useOutlineStore();
+  const { openSectionDrawer, activeSegment, segments, setOpenSectionDrawer, setSegments } = useOutlineStore();
   return (
     <div
       className={cn(
@@ -37,8 +37,8 @@ export const SectionsDrawer = () => {
         <XCircle className="h-4 w-4" />
       </Button>
       {/* Section Input Rows */}
-      <DndSortable<ISection, unknown>
-        data={sections || []}
+      <DndSortable<ISegment, unknown>
+        data={segments || []}
         dataConfig={{
           idProp: 'id',
           type: 'array',
@@ -50,16 +50,16 @@ export const SectionsDrawer = () => {
             <div
               className={cn(
                 'flex items-center justify-between gap-2 p-2',
-                item?.original.id === activeSection?.id && 'rounded-md border border-primary'
+                item?.original.id === activeSegment?.id && 'rounded-md border border-primary'
               )}
             >
               <DndSortableDragButton />
               <p className="truncate font-medium text-sm">{item?.original.title}</p>
-              <Badge variant="outline_success">{item?.original.status}</Badge>
+              <StatusBadge status={item?.original.status} />
             </div>
           ),
         }}
-        onChange={setSections}
+        onChange={setSegments}
       />
     </div>
   );

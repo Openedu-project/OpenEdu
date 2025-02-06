@@ -8,14 +8,14 @@ export const useSegments = () => {
   const { segments } = useGetSegments({
     course_id: courseId as string,
   });
-  const { setActiveSection, setSections, setActiveLessons, setActiveLesson } = useOutlineStore();
+  const { setActiveSegment, setSegments, setActiveLessons, setActiveLesson } = useOutlineStore();
 
   useEffect(() => {
     if (segments && segments.length > 0 && segments[0]) {
-      setActiveSection(segments[0]);
-      setSections(segments);
+      setActiveSegment(segments[0]);
+      setSegments(segments);
       setActiveLessons(segments[0].lessons || []);
       setActiveLesson(segments[0].lessons?.[0]);
     }
-  }, [segments, setActiveSection, setSections, setActiveLessons, setActiveLesson]);
+  }, [segments, setActiveSegment, setSegments, setActiveLessons, setActiveLesson]);
 };

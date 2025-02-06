@@ -1,15 +1,16 @@
 // import type { ISegment } from '@oe/api/types/course/segment';
-import type { ILesson, ISection } from '@oe/api/schemas/courseSchema';
+// import type { ILesson, ISection } from '@oe/api/schemas/courseSchema';
 import type { TLessonContent } from '@oe/api/types/course/basic';
+import type { ILesson, ISegment } from '@oe/api/types/course/segment';
 import { createStore } from '@oe/core/store';
 
 interface OutlineState {
   openSectionDrawer: boolean;
   setOpenSectionDrawer: (open: boolean) => void;
-  sections: ISection[];
-  setSections: (sections: ISection[]) => void;
-  activeSection?: ISection;
-  setActiveSection: (section: ISection) => void;
+  segments: ISegment[];
+  setSegments: (segments: ISegment[]) => void;
+  activeSegment?: ISegment;
+  setActiveSegment: (segment: ISegment) => void;
   activeLessons: ILesson[];
   setActiveLessons: (lessons: ILesson[]) => void;
   activeLesson?: ILesson;
@@ -34,10 +35,10 @@ interface OutlineState {
 export const useOutlineStore = createStore<OutlineState>(set => ({
   openSectionDrawer: false,
   setOpenSectionDrawer: open => set({ openSectionDrawer: open }),
-  sections: [],
-  setSections: sections => set({ sections }),
-  activeSection: undefined,
-  setActiveSection: section => set({ activeSection: section }),
+  segments: [],
+  setSegments: segments => set({ segments }),
+  activeSegment: undefined,
+  setActiveSegment: segment => set({ activeSegment: segment }),
   activeLessons: [],
   setActiveLessons: lessons => set({ activeLessons: lessons }),
   activeLesson: undefined,

@@ -1,5 +1,7 @@
 'use client';
-import { useGetCourseById } from '@oe/api/hooks/useCourse';
+import { useGetCourseById, useGetSegments } from '@oe/api/hooks/useCourse';
+import type { ICourse } from '@oe/api/types/course/course';
+import type { ISegment } from '@oe/api/types/course/segment';
 import { z } from '@oe/api/utils/zod';
 import Collaborators from '@oe/assets/icons/collaborators';
 import MedalStar from '@oe/assets/icons/medal-star';
@@ -7,17 +9,17 @@ import Trigger from '@oe/assets/icons/trigger';
 import { CREATOR_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
 import { DashboardHeaderCard } from '@oe/ui/common/layout';
-import { Link, useRouter } from '@oe/ui/common/navigation';
+import { Link, usePathname } from '@oe/ui/common/navigation';
 import { NavigationDialog } from '@oe/ui/components/dialog';
-import { FormNestedWrapper, useFormContext } from '@oe/ui/components/form-wrapper';
+import { FormNestedWrapper, SubmitFormsButton, useFormContext } from '@oe/ui/components/form-wrapper';
 import { Badge } from '@oe/ui/shadcn/badge';
-import { Button } from '@oe/ui/shadcn/button';
 import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
 import { Input } from '@oe/ui/shadcn/input';
 import { cn } from '@oe/ui/utils/cn';
 import { BookOpen, DollarSign, History, Settings, SquareUserRound } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { type ReactNode, useMemo } from 'react';
+import { isCourseInformationTabValid, isCourseOutlineTabValid } from '../_utils/validation';
 
 type CourseTab = {
   id: string;
@@ -32,20 +34,15 @@ const courseNameSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
 });
 
-export function CourseDetailHeader({
-  currentPath,
-  onValidStep,
-}: {
-  currentPath: string;
-  onValidStep: (stepId: string) => void;
-}) {
+export function CourseDetailHeader() {
+  const pathname = usePathname();
   const { courseId } = useParams<{ courseId: string }>();
   const { course } = useGetCourseById(courseId);
-  // const { segments } = useGetSegments({
-  //   course_id: courseId,
-  // });
-  const { validateForms, activeFormId, hasUnsavedChanges } = useFormContext();
-  const router = useRouter();
+  const { segments } = useGetSegments({
+    course_id: courseId,
+  });
+  const { hasUnsavedChanges } = useFormContext();
+  // const router = useRouter();
 
   const courseTabs: CourseTab[] = useMemo(() => {
     return [
@@ -62,7 +59,7 @@ export function CourseDetailHeader({
         icon: <BookOpen width={16} height={16} />,
         href: CREATOR_ROUTES.courseOutline,
         required: true,
-        // disabled: !validSteps.includes("information"),
+        disabled: !isCourseInformationTabValid(course as ICourse),
       },
       {
         id: 'price',
@@ -70,7 +67,7 @@ export function CourseDetailHeader({
         icon: <DollarSign width={16} height={16} />,
         href: CREATOR_ROUTES.coursePrice,
         required: true,
-        // disabled: !validSteps.includes("outline"),
+        disabled: !isCourseOutlineTabValid(segments as ISegment[]),
       },
       {
         id: 'certificate',
@@ -108,37 +105,39 @@ export function CourseDetailHeader({
         required: false,
       },
     ];
-  }, []);
+  }, [course, segments]);
 
   // Tìm current tab và next tab
-  const currentTab = courseTabs.find(tab => currentPath.includes(tab.href.replace(':courseId', courseId)));
+  const currentTab = courseTabs.find(tab => pathname.includes(tab.href.replace(':courseId', courseId)));
   const currentTabIndex = currentTab ? courseTabs.indexOf(currentTab) : -1;
-  const nextTab = courseTabs[currentTabIndex + 1];
+  // const nextTab = courseTabs[currentTabIndex + 1];
 
   // Kiểm tra xem có phải là tab required cuối cùng không
   const isLastRequiredTab = currentTab?.required && !courseTabs.slice(currentTabIndex + 1).some(tab => tab.required);
 
-  const handleNext = async () => {
-    console.log(activeFormId);
-    const isValid = await validateForms(['course-name', activeFormId].filter(Boolean) as string[]);
+  // const handleNext = async () => {
+  //   const isValid = await validateForms(
+  //     ["course-name", activeFormId].filter(Boolean) as string[]
+  //   );
 
-    if (isValid) {
-      if (currentTab) {
-        onValidStep(currentTab.id);
-      }
+  //   console.log("activeFormId", activeFormId, isValid, currentTab);
+  //   if (isValid) {
+  //     // if (currentTab) {
+  //     //   // onValidStep(currentTab.id);
+  //     // }
 
-      if (isLastRequiredTab) {
-        // TODO: Thêm logic publish course
-        console.log('Publish course');
-      } else if (nextTab) {
-        const nextUrl = buildUrl({
-          endpoint: nextTab.href,
-          params: { courseId: courseId },
-        });
-        router.push(nextUrl);
-      }
-    }
-  };
+  //     // if (isLastRequiredTab) {
+  //     //   // TODO: Thêm logic publish course
+  //     //   console.log("Publish course");
+  //     // } else if (nextTab) {
+  //     //   const nextUrl = buildUrl({
+  //     //     endpoint: nextTab.href,
+  //     //     params: { courseId: courseId },
+  //     //   });
+  //     //   router.push(nextUrl);
+  //     // }
+  //   }
+  // };
 
   return (
     <DashboardHeaderCard
@@ -179,9 +178,7 @@ export function CourseDetailHeader({
         {/* <h1 className="text-2xl">{course?.name}</h1> */}
         <div className="flex items-center gap-2">
           <Badge variant="outline_primary">v{course?.version}.0</Badge>
-          <Button size="xs" onClick={handleNext}>
-            {isLastRequiredTab ? 'Publish' : 'Save & Next'}
-          </Button>
+          <SubmitFormsButton size="xs">{isLastRequiredTab ? 'Publish' : 'Save & Next'}</SubmitFormsButton>
         </div>
       </div>
 
@@ -192,7 +189,7 @@ export function CourseDetailHeader({
               endpoint: tab.href,
               params: { courseId },
             });
-            const isActive = currentPath === tabUrl;
+            const isActive = pathname === tabUrl;
 
             return (
               <Link

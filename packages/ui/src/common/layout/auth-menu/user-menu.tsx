@@ -43,7 +43,7 @@ export async function UserMenu({ me }: { me: IUser }) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem>
+        <DropdownMenuItem key="myProfile">
           <Link
             href={createAPIUrl({
               endpoint: PLATFORM_ROUTES.userProfile,
@@ -68,7 +68,7 @@ export async function UserMenu({ me }: { me: IUser }) {
           </>
         ))}
 
-        <DropdownMenuItem asChild>
+        <DropdownMenuItem asChild key="logout">
           <LogoutButton />
         </DropdownMenuItem>
       </DropdownMenuContent>

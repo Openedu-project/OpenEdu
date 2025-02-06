@@ -50,14 +50,14 @@ export function SortableTabs({ defaultTabs = [], options, onTabsChange, classNam
 
   const handleOptionSelect = useCallback(
     (tabId: string, option: TabOption) => {
-      const newTabs = tabs.map(tab =>
+      const newTabs = tabs.map((tab, index) =>
         tab.id === tabId
           ? {
               ...tab,
               value: option.value,
               label: option.label as string,
               icon: option.icon,
-              content: typeof option.content === 'function' ? option.content(option) : option.content,
+              content: typeof option.content === 'function' ? option.content(option, index) : option.content,
             }
           : tab
       );

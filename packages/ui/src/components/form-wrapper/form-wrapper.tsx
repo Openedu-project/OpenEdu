@@ -50,6 +50,7 @@ export function FormWrapper<TFormSchema extends z.ZodType>({
 
   const handleSubmit = useCallback(
     async (values: z.infer<TFormSchema>) => {
+      console.log('handleSubmit', values);
       setLoading(true);
       try {
         await onSubmit?.(values);

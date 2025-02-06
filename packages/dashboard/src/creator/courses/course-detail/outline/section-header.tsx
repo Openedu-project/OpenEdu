@@ -1,13 +1,13 @@
-import { Badge } from '@oe/ui/shadcn/badge';
 import { Button } from '@oe/ui/shadcn/button';
 import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
 import { Input } from '@oe/ui/shadcn/input';
 import { CopyIcon, Trash2 } from 'lucide-react';
 import { MenuIcon } from 'lucide-react';
+import StatusBadge from '../../_components/status-badge';
 import { useOutlineStore } from '../_store/useOutlineStore';
 
 export default function SectionHeader() {
-  const { openSectionDrawer, activeSection, setOpenSectionDrawer } = useOutlineStore();
+  const { openSectionDrawer, activeSegment, setOpenSectionDrawer } = useOutlineStore();
 
   return (
     <div className="flex items-center gap-4 rounded-md border bg-background p-2">
@@ -20,7 +20,7 @@ export default function SectionHeader() {
         </FormFieldWithLabel>
       </div>
       <div className="flex items-center gap-2">
-        <Badge variant="outline_success">{activeSection?.status}</Badge>
+        <StatusBadge status={activeSegment?.status as string} />
         <Button variant="outline" size="xs">
           <CopyIcon className="h-4 w-4" />
         </Button>

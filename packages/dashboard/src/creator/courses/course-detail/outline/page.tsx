@@ -1,32 +1,31 @@
 'use client';
-import { sectionSchema } from '@oe/api/schemas/courseSchema';
+
+import { segmentSchema } from '@oe/api/schemas/courses/segmentSchema';
 import { FormNestedWrapper } from '@oe/ui/components/form-wrapper';
 import { useSegments } from '../_hooks/useSegments';
 import { useOutlineStore } from '../_store/useOutlineStore';
-import { LessonContent } from './lesson-content';
+import { LessonDetail } from './lesson-detail';
 import SectionHeader from './section-header';
 import { SectionsDrawer } from './sections-drawer';
 
 export default function CourseDetailOutlinePage() {
   useSegments();
-  const { activeSection } = useOutlineStore();
+  const { activeSegment } = useOutlineStore();
   return (
-    <>
+    <div className="relative flex h-full flex-col gap-4 p-4">
       <FormNestedWrapper
         id="course-detail-outline"
         tabId="outline"
-        schema={sectionSchema}
+        schema={segmentSchema}
         useFormProps={{
-          defaultValues: activeSection,
+          defaultValues: activeSegment,
         }}
-        className="relative h-full space-y-0"
+        className="space-y-0"
       >
-        <div className="flex h-full flex-col gap-4 p-4">
-          <SectionHeader />
-          <LessonContent />
-        </div>
+        <SectionHeader />
         <SectionsDrawer />
       </FormNestedWrapper>
-    </>
+      <LessonDetail />
+    </div>
   );
 }

@@ -1,9 +1,9 @@
-import type { ILesson } from '@oe/api/schemas/courseSchema';
+import type { ILesson } from '@oe/api/types/course/segment';
 import { DndSortable, DndSortableDragButton } from '@oe/ui/components/dnd-sortable';
-import { Badge } from '@oe/ui/shadcn/badge';
 import { Button } from '@oe/ui/shadcn/button';
 import { cn } from '@oe/ui/utils/cn';
 import { PlusIcon } from 'lucide-react';
+import StatusBadge from '../../_components/status-badge';
 import { useOutlineStore } from '../_store/useOutlineStore';
 
 export default function LessonsPanel() {
@@ -36,7 +36,7 @@ export default function LessonsPanel() {
             >
               <DndSortableDragButton />
               <p className="truncate font-medium text-sm">{item?.original.title}</p>
-              <Badge variant="outline_success">{item?.original.status}</Badge>
+              <StatusBadge status={item?.original.status} />
             </div>
           ),
         }}

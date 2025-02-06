@@ -3,7 +3,7 @@ import type { SelectboxOption } from '../selectbox';
 
 export interface TabOption extends SelectboxOption {
   icon?: ReactNode;
-  content: ReactNode | ((option: TabOption) => ReactNode);
+  content: ReactNode | ((option: TabOption, index: number) => ReactNode);
 }
 
 export interface TabItem {
