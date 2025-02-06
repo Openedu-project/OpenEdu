@@ -1,4 +1,4 @@
-import type { IDataPagination } from './pagination';
+import type { HTTPPagination } from './fetch';
 
 export type RefType = 'kol' | 'user' | 'agency' | 'purchased_user' | 'specific_referrer' | 'downline' | null;
 
@@ -60,4 +60,4 @@ export interface ICommissionItem extends ICommissionPayload {
   bonuses: ICommissionBonusRes[];
 }
 
-export interface ICommissionListRes extends IDataPagination<ICommissionItem[]> {}
+export interface ICommissionListRes extends HTTPPagination<ICommissionItem> {}

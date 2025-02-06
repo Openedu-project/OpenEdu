@@ -1,7 +1,7 @@
-import { createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
-
+import type { HTTPPagination } from '#types/fetch';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
+import { createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 import type {
   ICertificate,
   ICertificateDetail,
@@ -11,12 +11,11 @@ import type {
   IReceiveCertificateRequest,
   IRequestSelectTemplate,
 } from '../types/certificate';
-import type { IDataPagination } from '../types/pagination';
 
 export async function getCertLayersService(
   url: string,
   { params, init }: { params: { courseId: string } & IFilter; init?: RequestInit }
-): Promise<IDataPagination<ICertificate[]> | null> {
+): Promise<HTTPPagination<ICertificate> | null> {
   let endpointKey = url;
 
   if (!endpointKey) {
@@ -28,8 +27,7 @@ export async function getCertLayersService(
   }
 
   try {
-    const response = await fetchAPI<IDataPagination<ICertificate[]>>(endpointKey, init);
-
+    const response = await fetchAPI<HTTPPagination<ICertificate>>(endpointKey, init);
     return response.data;
   } catch {
     return null;
@@ -39,7 +37,7 @@ export async function getCertLayersService(
 export async function getTemplatesService(
   url: string,
   { params, init }: { params?: IFilter; init?: RequestInit }
-): Promise<IDataPagination<ICertificate[]> | null> {
+): Promise<HTTPPagination<ICertificate> | null> {
   let endpointKey = url;
 
   if (!endpointKey) {
@@ -50,7 +48,7 @@ export async function getTemplatesService(
   }
 
   try {
-    const response = await fetchAPI<IDataPagination<ICertificate[]>>(endpointKey, init);
+    const response = await fetchAPI<HTTPPagination<ICertificate>>(endpointKey, init);
 
     return response.data;
   } catch {
@@ -123,7 +121,7 @@ export async function receiveCertService(
 export async function getCertByUserIdService(
   url: string,
   { params, init }: { params: { userId: string }; init?: RequestInit }
-): Promise<IDataPagination<ICertificateUser[]> | null> {
+): Promise<HTTPPagination<ICertificateUser> | null> {
   let endpointKey = url;
 
   if (!endpointKey) {
@@ -134,7 +132,7 @@ export async function getCertByUserIdService(
   }
 
   try {
-    const response = await fetchAPI<IDataPagination<ICertificateUser[]>>(endpointKey, init);
+    const response = await fetchAPI<HTTPPagination<ICertificateUser>>(endpointKey, init);
 
     return response.data;
   } catch {

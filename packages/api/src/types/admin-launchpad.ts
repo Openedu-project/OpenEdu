@@ -1,5 +1,6 @@
 import type { ICourseOwner } from './course/basic';
 import type { ICourse } from './course/course';
+import type { HTTPPagination } from './fetch';
 import type { IFileResponse } from './file';
 import type { IUser } from './user';
 
@@ -74,3 +75,21 @@ interface IVotingmilestone {
   };
   voting_process: null;
 }
+
+export interface IAdminLaunchpadInvestmentItem {
+  id: string;
+  create_at: number;
+  update_at: number;
+  delete_at: number;
+  user_id: string;
+  user: IUser;
+  clp_launchpad_id: string;
+  clp_launchpad: null;
+  amount: string;
+  revenue_amount: string;
+  refunded_amount: string;
+  currency: string;
+  status: string;
+}
+
+export interface IAdminLaunchpadInvestmentRes extends HTTPPagination<IAdminLaunchpadInvestmentItem> {}

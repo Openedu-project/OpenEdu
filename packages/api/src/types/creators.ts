@@ -1,4 +1,4 @@
-import type { IPagination } from './pagination';
+import type { IPagination } from './fetch';
 
 export interface IInviteCreatorPayload {
   creator_emails: string[];

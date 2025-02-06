@@ -1,5 +1,3 @@
-// import { IDataPagination } from './pagination';
-
 import type { HTTPPagination } from './fetch';
 
 export interface IHashtag {

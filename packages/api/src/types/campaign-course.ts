@@ -1,5 +1,5 @@
 import type { ICourse, IThumbnail } from './course/course';
-import type { IDataPagination } from './pagination';
+import type { HTTPPagination } from './fetch';
 
 export interface IAffiliateCampaignCourse {
   id: string;
@@ -46,8 +46,8 @@ export interface IAffiliateCampaignCourse {
 
 export interface IAffiliateCampaignPublishCourse extends IAffiliateCampaignCourse {}
 
-export interface IAffiliateCampaignCourseListRes extends IDataPagination<IAffiliateCampaignCourse[]> {}
-export interface IAffiliateCampaignPublishCourseListRes extends IDataPagination<IAffiliateCampaignPublishCourse[]> {}
+export interface IAffiliateCampaignCourseListRes extends HTTPPagination<IAffiliateCampaignCourse> {}
+export interface IAffiliateCampaignPublishCourseListRes extends HTTPPagination<IAffiliateCampaignPublishCourse> {}
 
 export interface IAddCoursesPayload {
   course_cuids: string[];

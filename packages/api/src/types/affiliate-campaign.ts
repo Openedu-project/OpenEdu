@@ -1,6 +1,6 @@
 import type { ICommissionItem } from './commission';
+import type { HTTPPagination } from './fetch';
 import type { IOrganization } from './organizations';
-import type { IDataPagination } from './pagination';
 import type { IShareRateRes } from './share-rate';
 
 export interface ICampaginReferralLink {
@@ -63,7 +63,7 @@ export interface IAffiliateCampaignItem extends IAffiliateCampaignPayload {
   commissions?: ICanApplicableComm[];
 }
 
-export interface IAffiliateCampaignListRes extends IDataPagination<IAffiliateCampaignItem[]> {}
+export interface IAffiliateCampaignListRes extends HTTPPagination<IAffiliateCampaignItem> {}
 export interface IUserAffiliateCampaignItem {
   id: string;
   name: string;
@@ -89,7 +89,7 @@ export interface IUserAffiliateCampaignItem {
   premium_rate_max: number;
   premium_share_rate_max: number;
 }
-export interface IUserAffiliateCampaignListRes extends IDataPagination<IUserAffiliateCampaignItem[]> {}
+export interface IUserAffiliateCampaignListRes extends HTTPPagination<IUserAffiliateCampaignItem> {}
 
 export interface IAffiliateCampaignLinkRes {
   referral_link: ICampaginReferralLink;

@@ -1,8 +1,8 @@
 import type { KeyedMutator } from 'swr';
 import type { IBookmark } from '#types/bookmark';
 import type { ICategory, ILevel } from '#types/categories';
+import type { HTTPPagination } from '#types/fetch';
 import type { IFileResponse } from '#types/file';
-import type { IDataPagination } from '#types/pagination';
 import type { IAICourse, IAICourseStatus } from './ai-course';
 import type {
   ICourseOrganization,
@@ -111,7 +111,7 @@ export interface ICourseOutline extends ICourse {
   learning_progress_overview: ILearningProgressOverview | null;
 }
 
-export type IMutateCourse<T> = KeyedMutator<IDataPagination<T[]>>;
+export type IMutateCourse<T> = KeyedMutator<HTTPPagination<T>>;
 
 export interface ICourseCategoryRequest extends Pick<ICategory, 'id'> {}
 
@@ -129,7 +129,7 @@ export interface ICreateCourseRequest
   medias?: { id?: string }[] | null;
 }
 
-export interface ICourseResponse extends IDataPagination<ICourse[]> {}
+export interface ICourseResponse extends HTTPPagination<ICourse> {}
 
 export interface IEnrollCoursePayload {
   source: string;

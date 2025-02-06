@@ -1,8 +1,8 @@
+import type { HTTPPagination } from '#types/fetch';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 import { createAPIUrl } from '#utils/fetch';
-import type { IDataPagination } from '../types/pagination';
 import type {
   IAddUserToBlockPayload,
   IChangeMyPswPayload,
@@ -93,7 +93,7 @@ export async function changeMyPasswordService(
 export async function getListUserActionService<T>(
   url: string,
   { params, init }: { params: IFilter; init?: RequestInit }
-): Promise<IDataPagination<T[]> | null> {
+): Promise<HTTPPagination<T> | null> {
   let endpointKey = url;
   if (!endpointKey) {
     endpointKey = createAPIUrl({
@@ -103,7 +103,7 @@ export async function getListUserActionService<T>(
   }
 
   try {
-    const response = await fetchAPI<IDataPagination<T[]>>(endpointKey, init);
+    const response = await fetchAPI<HTTPPagination<T>>(endpointKey, init);
     return response.data;
   } catch {
     return null;

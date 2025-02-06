@@ -1,5 +1,5 @@
 import type { ICreatorAcceptResponse } from './creators';
-import type { IDataPagination } from './pagination';
+import type { HTTPPagination } from './fetch';
 
 export interface IUserSettingsOption {
   facebook?: string;
@@ -62,7 +62,7 @@ interface ILastLoginSession {
   expire_at: number;
 }
 
-export interface IUsersRes extends IDataPagination<IUser[]> {}
+export interface IUsersRes extends HTTPPagination<IUser> {}
 
 export interface IUserInvite {
   user_emails: string[];
@@ -106,7 +106,7 @@ export interface IUserInvitationItem {
   redirect_url: string;
 }
 
-export interface IUserInvitationRes extends IDataPagination<IUserInvitationItem[]> {}
+export interface IUserInvitationRes extends HTTPPagination<IUserInvitationItem> {}
 
 export interface IUserInvitationPayload {
   user_token_ids: string[];

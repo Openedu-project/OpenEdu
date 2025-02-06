@@ -1,4 +1,4 @@
-import type { IDataPagination } from './pagination';
+import type { HTTPPagination } from './fetch';
 
 export interface FeaturedContentParams {
   org_id: string;
@@ -16,7 +16,7 @@ export interface IFeaturedContent<T> {
   type: string;
   entity?: T;
 }
-export interface IFeaturedContentResponse<T> extends IDataPagination<IFeaturedContent<T>[]> {}
+export interface IFeaturedContentResponse<T> extends HTTPPagination<IFeaturedContent<T>> {}
 
 export interface IFeaturedContentEntityItem {
   entity_id: string;

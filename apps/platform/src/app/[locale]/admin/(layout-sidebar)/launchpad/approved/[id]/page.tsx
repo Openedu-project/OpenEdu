@@ -1,4 +1,5 @@
 import { getAdminLaunchpadDetailService } from '@oe/api/services/admin-launchpad';
+import { getAdminLaunchpadInvestmentService } from '@oe/api/services/admin-launchpad';
 import LaunchpadApprovedDetailMgm from '@oe/dashboard/admin/launchpad/approved/detail/page';
 
 interface LayoutProps {
@@ -14,5 +15,10 @@ export default async function LaunchpadRequestsDetailPage({ params }: LayoutProp
     queryParams: { preloads: ['VotingMilestones', 'Owner', 'User'] },
   });
 
-  return <LaunchpadApprovedDetailMgm data={data} />;
+  const backerData = await getAdminLaunchpadInvestmentService(null, {
+    params: { id },
+    queryParams: { preloads: ['User'] },
+  });
+  console.log('backerData', backerData);
+  return <LaunchpadApprovedDetailMgm backerData={backerData} data={data} />;
 }

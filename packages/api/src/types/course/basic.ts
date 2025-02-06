@@ -1,6 +1,6 @@
+import type { IPagination } from '#types/fetch';
 import type { IFileResponse } from '#types/file';
 import type { IOrganization } from '#types/organizations';
-import type { IPagination } from '#types/pagination';
 
 export type TSort = 'create_at desc' | 'create_at asc' | 'order asc' | 'order desc';
 

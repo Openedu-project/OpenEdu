@@ -1,5 +1,5 @@
 import type { FORM_EVENT, FORM_STATUS, FORM_TYPE, QUESTION_TYPE } from '@oe/core/utils/constants';
-import type { IPagination } from './pagination';
+import type { IPagination } from './fetch';
 export type TSort = 'create_at desc' | 'create_at asc' | '"order" asc';
 
 type Timestamp = number;

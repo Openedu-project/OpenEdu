@@ -1,4 +1,4 @@
-import type { IDataPagination } from './pagination';
+import type { HTTPPagination } from './fetch';
 
 export interface INotificationItem {
   id: string;
@@ -33,7 +33,7 @@ export interface INotificationItem {
   update_at: number;
 }
 
-export interface INotificationRes extends IDataPagination<INotificationItem[]> {
+export interface INotificationRes extends HTTPPagination<INotificationItem> {
   badge_count: number;
 }
 

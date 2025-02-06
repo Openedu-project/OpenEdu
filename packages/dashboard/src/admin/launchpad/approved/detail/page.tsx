@@ -1,13 +1,14 @@
-import type { IAdminLaunchpadDetailRes } from '@oe/api/types/admin-launchpad';
+import type { IAdminLaunchpadDetailRes, IAdminLaunchpadInvestmentRes } from '@oe/api/types/admin-launchpad';
 import { DashboardMainPageLayout } from '@oe/ui/common/layout';
 import { useTranslations } from 'next-intl';
 import LaunchpadApprovedDetail from './_components/launchpad-approved-detail';
 
 interface LayoutProps {
   data: IAdminLaunchpadDetailRes | null;
+  backerData: IAdminLaunchpadInvestmentRes | null;
 }
 
-export default function LaunchpadApprovedDetailMgm({ data }: LayoutProps) {
+export default function LaunchpadApprovedDetailMgm({ data, backerData }: LayoutProps) {
   const tDashboard = useTranslations('dashboard.launchpad');
 
   return (
@@ -24,7 +25,7 @@ export default function LaunchpadApprovedDetailMgm({ data }: LayoutProps) {
         </div>
       }
     >
-      <LaunchpadApprovedDetail data={data} />
+      <LaunchpadApprovedDetail data={data} backerData={backerData} />
     </DashboardMainPageLayout>
   );
 }

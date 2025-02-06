@@ -1,4 +1,4 @@
-import type { IAdminLaunchpadDetailRes } from '@oe/api/types/admin-launchpad';
+import type { IAdminLaunchpadDetailRes, IAdminLaunchpadInvestmentRes } from '@oe/api/types/admin-launchpad';
 import Telegram from '@oe/assets/icons/social-icon/telegram';
 import { formatDateHourMinute } from '@oe/core/utils/datetime';
 import { formatNumber } from '@oe/core/utils/utils';
@@ -108,8 +108,10 @@ function ContactField({ icon, value }: ContactFieldProps) {
 
 export default async function LaunchpadApprovedDetail({
   data,
+  backerData,
 }: {
   data: IAdminLaunchpadDetailRes | null;
+  backerData: IAdminLaunchpadInvestmentRes | null;
 }) {
   const t = await getTranslations('adminLaunchpadApproved.page');
 
@@ -143,6 +145,33 @@ export default async function LaunchpadApprovedDetail({
             <h3 className="mbutton-semibold16">{t('verificationEmail')}</h3>
             <ContactField icon={<Mail />} value={data?.owner?.email ?? ''} />
           </div>
+          {backerData && backerData.results.length > 0 && (
+            <div className="mt-6">
+              <h3 className="mbutton-semibold16 mb-4">{t('backers')}</h3>
+              <Card>
+                <CardContent className="p-4">
+                  <div className="space-y-4">
+                    {backerData.results.map(backer => (
+                      <div key={backer.id} className="flex items-center gap-3">
+                        <div className="relative h-8 w-8">
+                          <Image
+                            src={backer.user?.avatar || '/placeholder-avatar.png'}
+                            alt={backer.user?.display_name || ''}
+                            fill
+                            className="rounded-full object-cover"
+                          />
+                        </div>
+                        <span className="flex-1 font-medium">{backer.user?.display_name || backer.user_id}</span>
+                        <span className="text-gray-600 text-sm">
+                          {backer.amount} {backer.currency}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
         </div>
 
         {/* Right section - 1/3 */}
