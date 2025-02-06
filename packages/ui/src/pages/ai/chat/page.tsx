@@ -1,11 +1,18 @@
 import { getConversationDetail } from '@oe/api/services/conversation';
-import { AI_ROUTES } from '@oe/core/utils/routes';
+import { isLogin } from '@oe/api/utils/auth';
+import { AI_ROUTES, AUTH_ROUTES } from '@oe/core/utils/routes';
 import { redirect } from 'next/navigation';
 import { ChatWindow } from '#components/conversation';
 
 const getChatMessages = async (id?: string) => {
   if (!id) {
     return undefined;
+  }
+
+  const login = await isLogin();
+
+  if (!login) {
+    redirect(AUTH_ROUTES.login);
   }
 
   try {

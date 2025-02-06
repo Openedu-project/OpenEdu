@@ -101,6 +101,7 @@ const SearchHistory = ({ className, mutate, handleSearch, chatHistory = [], isLo
           firstItemIndex={0}
           initialTopMostItemIndex={0}
           increaseViewportBy={200}
+          className="scrollbar"
           endReached={() => {
             handleSearch?.(undefined, true);
           }}

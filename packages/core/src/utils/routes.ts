@@ -77,12 +77,13 @@ export const AFFILIATE_ROUTES = {
 } as const;
 
 export const AI_ROUTES = {
-  assistant: '/ai-assistant',
-  chat: '/ai-assistant/chat',
-  chatDetail: '/ai-assistant/chat/:id',
-  search: '/ai-assistant/search',
-  imageGenerator: '/ai-assistant/image-generator',
-  video: '/ai-assistant/video',
+  assistant: '/ai-agent',
+  chat: '/ai-agent/chat',
+  chatDetail: '/ai-agent/chat/:id',
+  search: '/ai-agent/search',
+  imageGenerator: '/ai-agent/image-generator',
+  video: '/ai-agent/video',
+  slide: '/ai-agent/slide',
 };
 
 export const AUTH_ROUTES = {

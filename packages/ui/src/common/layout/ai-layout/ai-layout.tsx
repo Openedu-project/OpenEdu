@@ -16,7 +16,7 @@ export default function AILayout({ children, className }: Props) {
       )}
     >
       <AISidebar className="bg-primary/5" />
-      <div className="horizontal-scrollbar flex-1 overflow-y-auto lg:max-w-[80%]">{children}</div>
+      <div className="flex-1 overflow-hidden lg:max-w-[80%]">{children}</div>
     </main>
   );
 }

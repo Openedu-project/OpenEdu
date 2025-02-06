@@ -7,12 +7,12 @@ import { marked } from '@oe/core/utils/marker';
 import { useMemo, useRef } from 'react';
 import { Image } from '#components/image';
 import { cn } from '#utils/cn';
+import Copy from '../message-actions/copy';
 import DisLikeButton from '../message-actions/dislike';
+import LikeButton from '../message-actions/like';
 import Rewrite from '../message-actions/rewrite';
 import type { IAIMessageProps } from '../type';
 import '../highlight.css';
-import Copy from '../message-actions/copy';
-import LikeButton from '../message-actions/like';
 
 export const AIMessage = ({ message, loading, rewrite }: IAIMessageProps) => {
   const html = useMemo(() => marked.parse(message.content), [message.content]);
@@ -87,20 +87,8 @@ export const AIMessage = ({ message, loading, rewrite }: IAIMessageProps) => {
           {!GENERATING_STATUS.includes(message.status ?? '') && (
             <div className="flex w-fit items-center rounded-[20px] border-2 px-2">
               <Copy disabled={loading} initialMessage={message.content} contentRef={contentRef} />
-              <LikeButton
-                handleLike={id => {
-                  console.log(id);
-                }}
-                messageId={message.id}
-                disabled
-              />
-              <DisLikeButton
-                handleDisLike={id => {
-                  console.log(id);
-                }}
-                messageId={message.id}
-                disabled
-              />
+              <LikeButton messageId={message.id} disabled />
+              <DisLikeButton messageId={message.id} disabled />
               <Rewrite disabled={!rewrite || loading} rewrite={rewrite} messageId={message.id} />
             </div>
           )}

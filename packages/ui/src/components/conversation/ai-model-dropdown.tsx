@@ -3,6 +3,7 @@ import Openedu from '@oe/assets/images/openedu.png';
 import { Check, ChevronDown } from 'lucide-react';
 
 import type { IAIModel } from '@oe/api/types/conversation';
+import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 import { Image } from '#components/image';
 import { Button } from '#shadcn/button';
@@ -17,6 +18,7 @@ interface ModelDropdownProps {
 
 export function AIModelDropdown({ onSelectSuccess, AIModels }: ModelDropdownProps) {
   const { selectedModel, setSelectedModel } = useConversationStore();
+  const tAI = useTranslations('aiAssistant');
 
   const handleSelect = (value: IAIModel) => {
     setSelectedModel(value);
@@ -38,7 +40,7 @@ export function AIModelDropdown({ onSelectSuccess, AIModels }: ModelDropdownProp
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="!rounded-full relative w-[200px] justify-start gap-2 truncate border-2 bg-white"
+          className="!rounded-full relative w-[200px] justify-start gap-2 truncate border border-primary bg-white outline outline-4 outline-primary/5"
         >
           <div>
             <Image
@@ -52,11 +54,11 @@ export function AIModelDropdown({ onSelectSuccess, AIModels }: ModelDropdownProp
               containerHeight="auto"
             />
           </div>
-          <p className="mr-4 w-[150px] truncate text-start">{selectedModel?.display_name ?? 'AI Assistant'}</p>
+          <p className="mr-4 w-[150px] truncate text-start">{selectedModel?.display_name ?? tAI('aiModel')}</p>
           <ChevronDown className="absolute right-2" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="flex w-[200px] flex-col gap-2">
+      <DropdownMenuContent className="flex w-[200px] flex-col gap-2 rounded-3xl p-2">
         {AIModels.map(model => (
           <DropdownMenuItem
             key={model.id}

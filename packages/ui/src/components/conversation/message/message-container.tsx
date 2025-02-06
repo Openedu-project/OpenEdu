@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
 import { Skeleton } from '#shadcn/skeleton';
 import { useConversationStore } from '#store/conversation-store';
+import { cn } from '#utils/cn';
 import type { ISendMessageParams } from '../type';
 import { GenMessage } from './gen-message';
 import MessageBox from './message-box';
@@ -64,17 +65,17 @@ export const MessageContainer = ({
     }
   }, [data]);
 
-  useEffect(() => {
-    virtuosoRef.current?.scrollToIndex({
-      index: messages.length - 1,
-      align: 'end',
-      behavior: 'auto',
-    });
-  }, [messages]);
+  // useEffect(() => {
+  //   virtuosoRef.current?.scrollToIndex({
+  //     index: messages.length - 1,
+  //     align: 'end',
+  //     behavior: 'auto',
+  //   });
+  // }, [messages]);
 
   return (
     <Virtuoso
-      className={className}
+      className={cn('no-scrollbar', className)}
       data={messages}
       ref={virtuosoRef}
       totalCount={messages.length}

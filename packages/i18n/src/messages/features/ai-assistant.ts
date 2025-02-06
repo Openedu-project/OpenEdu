@@ -1,10 +1,11 @@
 export const aiAssistantMessages = {
   aiAssistant: {
-    title: 'AI Assistant',
-    aiImage: 'AI Image Generator',
+    title: 'AI Agent',
+    aiImage: 'AI Image',
     aiChat: 'AI Chat',
     aiSearch: 'AI Search',
     aiVideo: 'AI Video',
+    aiSlide: 'AI Slide',
     commingSoon: 'comming soon',
     startNewChat: 'Start New Chat',
     noHistory: 'No History Here',
@@ -14,6 +15,7 @@ export const aiAssistantMessages = {
     messageImage: 'Generate text from this screenshot',
     aiChatDesc: 'Create content by AI chat',
     aiSearchDesc: 'Search for anything by AI engine',
+    aiSlideDesc: 'Promt to generate a slide',
     aiImageDesc: 'Promt to generate an image',
     aiVideoDesc: 'Promt to generate a video',
     aiHelloText: 'Hello {name}! What can I help you?',
@@ -26,5 +28,7 @@ export const aiAssistantMessages = {
     code: 'Code',
     imageGenerator: 'Image Generator',
     agentMessage: 'Please select another model to use this tool.',
+    inputPlaceholder: 'Write something...',
+    aiModel: 'AI Model',
   },
 };

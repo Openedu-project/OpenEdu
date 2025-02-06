@@ -2472,8 +2472,8 @@ packages:
       next: '>=15.0.0'
       react: '>= 16.8.0'
 
-  country-flag-icons@1.5.14:
-    resolution: {integrity: sha512-GAFsVzHDu3bdAhbQ1LwBRqk/Ad8+ZzS5zU49P+lRla0KGy/V1V8ywNa1SxBOAmI/lyEOT9dfH3Q++q1lqJlvBA==}
+  country-flag-icons@1.5.15:
+    resolution: {integrity: sha512-zLYm68RR4k1HnLHfaJLW3hhM6gfJTZTILGZiM/SEFZSSHS6rnd6j2aWoz8tnamBUc0YD2w/ytzdJ0wFPXx4qQg==}
 
   crc-32@1.2.2:
     resolution: {integrity: sha512-ROmzCKrTnOwybPcJApAA6WBWij23HVfGVNKqqrZpuyZOHqK2CwHSvpGuyt/UNNvaIjEd8X5IFGp4Mh+Ie1IHJQ==}
@@ -6075,7 +6075,7 @@ snapshots:
       next: 15.1.4(babel-plugin-react-compiler@19.0.0-beta-63e3235-20250105)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react: 19.0.0
 
-  country-flag-icons@1.5.14: {}
+  country-flag-icons@1.5.15: {}
 
   crc-32@1.2.2: {}
 
@@ -7028,7 +7028,7 @@ snapshots:
   react-phone-number-input@3.4.11(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       classnames: 2.5.1
-      country-flag-icons: 1.5.14
+      country-flag-icons: 1.5.15
       input-format: 0.3.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       libphonenumber-js: 1.11.19
       prop-types: 15.8.1

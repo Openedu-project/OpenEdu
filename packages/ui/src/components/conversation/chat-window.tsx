@@ -54,6 +54,7 @@ export function ChatWindow({
     selectedModel,
     setGenMessage,
     resetGenMessage,
+    setSelectedAgent,
   } = useConversationStore();
 
   const router = useRouter();
@@ -95,6 +96,7 @@ export function ChatWindow({
       return;
     }
     handleInitData();
+    setSelectedAgent('ai_chat');
 
     return () => {
       prevId.current = id;

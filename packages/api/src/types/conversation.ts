@@ -1,5 +1,6 @@
 import type { HTTPPagination } from './fetch';
 import type { IFileResponse } from './file';
+import type { IDataPagination } from './pagination';
 
 export interface DocumentInput<Metadata extends Record<string, unknown> = Record<string, unknown>> {
   pageContent: string;

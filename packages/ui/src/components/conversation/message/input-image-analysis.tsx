@@ -46,7 +46,7 @@ export const InputImageAnalysis = <TFormValues extends FieldValues>({
         render={({ field }) => (
           <>
             {field.value?.length > 0 && (
-              <div className="horizontal-scrollbar absolute bottom-[40px] left-0 flex w-full overflow-x-auto">
+              <div className="scrollbar absolute bottom-[40px] left-0 flex w-full overflow-x-auto">
                 <div className="flex items-center gap-2 rounded-lg bg-foreground/30 p-2">
                   {(field.value as IFileResponse[]).map(image => (
                     <div key={image.id} className="relative h-[90px] w-[160px] shrink-0">
