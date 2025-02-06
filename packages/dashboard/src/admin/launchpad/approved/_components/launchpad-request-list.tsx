@@ -15,20 +15,19 @@ export default function LaunchpadApprovedList() {
   const t = useTranslations('adminLaunchpadApproved');
 
   const tableRef = useRef<TableRef<IApproval<IAdminLaunchpadDetailRes, ICourseOrganizationRequestProps>>>(null);
-
   const getBadgeContent = useCallback(
     (status: string) => {
       switch (status) {
         case 'draft':
           return (
-            <span className="giant-iheading-semibold16 flex min-w-[120px] items-center justify-center rounded-[40px] bg-gray-50 px-6 py-2 text-center text-gray-600 ring-1 ring-gray-200/20 ring-inset">
+            <span className="giant-iheading-semibold16 flex min-w-[120px] items-center justify-center rounded-[40px] bg-neutral-50 px-6 py-2 text-neutral-600">
               {t(status)}
             </span>
           );
         case 'waiting':
         case 'reviewing':
           return (
-            <span className="giant-iheading-semibold16 flex min-w-[120px] items-center justify-center rounded-[40px] bg-blue-50 px-6 py-2 text-center text-blue-700 ring-1 ring-blue-700/10 ring-inset">
+            <span className="giant-iheading-semibold16 flex min-w-[120px] items-center justify-center rounded-[40px] bg-info-50 px-6 py-2 text-info-600">
               {t(status)}
             </span>
           );
@@ -36,47 +35,43 @@ export default function LaunchpadApprovedList() {
         case 'rejected':
         case 'cancelled':
           return (
-            <span className="giant-iheading-semibold16 flex min-w-[120px] items-center justify-center rounded-[40px] bg-red-50 px-6 py-2 text-center text-red-700 ring-1 ring-red-600/10 ring-inset">
+            <span className="giant-iheading-semibold16 flex min-w-[120px] items-center justify-center rounded-[40px] bg-negative-50 px-6 py-2 text-negative-500">
               {t(status)}
             </span>
           );
         case 'success':
         case 'approved':
           return (
-            <span className="giant-iheading-semibold16 flex min-w-[120px] items-center justify-center rounded-[40px] bg-green-50 px-6 py-2 text-center text-green-700 ring-1 ring-green-600/20 ring-inset">
+            <span className="giant-iheading-semibold16 flex min-w-[120px] items-center justify-center rounded-[40px] bg-positive-50 px-6 py-2 text-positive-600">
               {t(status)}
             </span>
           );
         case 'publish':
           return (
-            <span className="giant-iheading-semibold16 flex min-w-[120px] items-center justify-center rounded-[40px] bg-yellow-50 px-6 py-2 text-center text-yellow-700 ring-1 ring-yellow-600/20 ring-inset">
+            <span className="giant-iheading-semibold16 flex min-w-[120px] items-center justify-center rounded-[40px] bg-warning-50 px-6 py-2 text-warning-600">
               {t(status)}
             </span>
           );
         case 'voting':
           return (
-            <span className="giant-iheading-semibold16 flex min-w-[120px] items-center justify-center rounded-[40px] bg-purple-50 px-6 py-2 text-center text-purple-700 ring-1 ring-purple-700/10 ring-inset">
+            <span className="giant-iheading-semibold16 flex min-w-[120px] items-center justify-center rounded-[40px] bg-tertiary-50 px-6 py-2 text-tertiary-800">
               {t(status)}
             </span>
           );
         case 'funding':
           return (
-            <span className="giant-iheading-semibold16 flex min-w-[120px] items-center justify-center rounded-[40px] bg-indigo-50 px-6 py-2 text-center text-indigo-700 ring-1 ring-indigo-700/10 ring-inset">
+            <span className="giant-iheading-semibold16 flex min-w-[120px] items-center justify-center rounded-[40px] bg-primary-100 px-6 py-2 text-primary">
               {t(status)}
             </span>
           );
         case 'refunded':
           return (
-            <span className="giant-iheading-semibold16 flex min-w-[120px] items-center justify-center rounded-[40px] bg-orange-50 px-6 py-2 text-center text-orange-700 ring-1 ring-orange-700/10 ring-inset">
+            <span className="giant-iheading-semibold16 flex min-w-[120px] items-center justify-center rounded-[40px] bg-orange-50 px-6 py-2 text-orange-500">
               {t(status)}
             </span>
           );
         default:
-          return (
-            <span className="giant-iheading-semibold16 flex min-w-[120px] items-center justify-center rounded-[40px] bg-gray-50 px-6 py-2 text-center text-gray-600 ring-1 ring-gray-200/20 ring-inset">
-              {t(status)}
-            </span>
-          );
+          return <></>;
       }
     },
     [t]

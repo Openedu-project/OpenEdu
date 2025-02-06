@@ -1,4 +1,4 @@
-import type { IAdminLaunchpadDetailRes } from '@oe/api/types/admin-launchpad';
+import type { IAdminLaunchpadDetailRes, IAdminLaunchpadInvestmentRes } from '@oe/api/types/admin-launchpad';
 import Telegram from '@oe/assets/icons/social-icon/telegram';
 import { formatDateHourMinute } from '@oe/core/utils/datetime';
 import { formatNumber } from '@oe/core/utils/utils';
@@ -108,8 +108,10 @@ function ContactField({ icon, value }: ContactFieldProps) {
 
 export default async function LaunchpadApprovedDetail({
   data,
+  backerData,
 }: {
   data: IAdminLaunchpadDetailRes | null;
+  backerData: IAdminLaunchpadInvestmentRes | null;
 }) {
   const t = await getTranslations('adminLaunchpadApproved.page');
 
@@ -143,6 +145,33 @@ export default async function LaunchpadApprovedDetail({
             <h3 className="mbutton-semibold16">{t('verificationEmail')}</h3>
             <ContactField icon={<Mail />} value={data?.owner?.email ?? ''} />
           </div>
+          {backerData && backerData.results.length > 0 && (
+            <div className="mt-6">
+              <Card>
+                <CardContent className="p-4">
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    {backerData.results.map(backer => (
+                      <div key={backer.id} className="flex items-center gap-3">
+                        <div className="relative h-8 w-8">
+                          <Image
+                            src={backer.user?.avatar}
+                            alt={backer.user?.display_name || ''}
+                            fill
+                            containerHeight={32}
+                            className="min-w-8 rounded-full bg-gray-200 object-cover"
+                          />
+                        </div>
+                        <span className="mbutton-semibold16 flex-1">
+                          {backer.user?.display_name || backer.user_id} -&nbsp;
+                          {backer.amount} {backer.currency}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
         </div>
 
         {/* Right section - 1/3 */}

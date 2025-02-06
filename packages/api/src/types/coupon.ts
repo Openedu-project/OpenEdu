@@ -1,4 +1,4 @@
-import type { IDataPagination } from './pagination';
+import type { HTTPPagination } from './fetch';
 
 export interface ICouponPayload {
   id: string;
@@ -36,7 +36,7 @@ export interface ICouponItem extends ICouponPayload {}
 
 export type ICouponItemRes = ICouponItem;
 
-export interface ICouponListRes extends IDataPagination<ICouponItem[]> {}
+export interface ICouponListRes extends HTTPPagination<ICouponItem> {}
 
 export interface IUseCouponPayload extends Pick<ICouponPayload, 'coupon_code'> {
   course_id: string;

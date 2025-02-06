@@ -13,6 +13,8 @@ export interface ISegmentParams extends Partial<ICourseParams> {
   parent_id_null?: boolean;
   parent_id_not_null?: boolean;
   preloads?: 'lessons';
+  page?: number;
+  per_page?: number;
 }
 
 // count lesson content type

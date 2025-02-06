@@ -1,6 +1,6 @@
+import type { HTTPPagination } from './fetch';
 import type { IFileResponse } from './file';
 import type { IOrganization } from './organizations';
-import type { IDataPagination } from './pagination';
 import type { IUserProfile } from './user-profile';
 
 export interface IApproval<T, R> {
@@ -29,7 +29,7 @@ export interface IApproval<T, R> {
   note: string;
 }
 
-export interface IListApproval<T, R> extends IDataPagination<IApproval<T, R>[]> {}
+export interface IListApproval<T, R> extends HTTPPagination<IApproval<T, R>> {}
 
 export interface IApprovalPayload {
   note: string;

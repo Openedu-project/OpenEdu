@@ -1,4 +1,4 @@
-import type { IDataPagination } from './pagination';
+import type { HTTPPagination } from './fetch';
 
 export interface IUserSetting<T> {
   user_id: string;
@@ -14,7 +14,7 @@ export interface IUserSetting<T> {
 
 export interface IUserSettingRes<T> extends Array<IUserSetting<T>> {}
 
-export interface IUserSettingListRes<T> extends IDataPagination<IUserSettingRes<T>> {}
+export interface IUserSettingListRes<T> extends HTTPPagination<IUserSettingRes<T>> {}
 
 export interface IUserSettingPayload<T> {
   settings: {

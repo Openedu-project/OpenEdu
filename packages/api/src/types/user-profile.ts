@@ -1,8 +1,8 @@
 import type { IBlog } from './blog';
 import type { ICertificateUser } from './certificate';
 import type { ICourse } from './course/course';
+import type { HTTPPagination, IPagination } from './fetch';
 import type { IFileResponse } from './file';
-import type { IDataPagination, IPagination } from './pagination';
 import type { IUser, IUserRoleInOrg, IUserSettingsOption } from './user';
 
 export type TSettingsType = 'courses' | 'blogs' | 'certificates';
@@ -150,4 +150,4 @@ export interface IUserResponse {
   message: string;
 }
 
-export interface IListUserProfileRes extends IDataPagination<IUserProfile[]> {}
+export interface IListUserProfileRes extends HTTPPagination<IUserProfile> {}

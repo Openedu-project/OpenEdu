@@ -1,5 +1,5 @@
+import type { HTTPPagination } from './fetch';
 import type { IFileResponse } from './file';
-import type { IDataPagination } from './pagination';
 
 export interface DocumentInput<Metadata extends Record<string, unknown> = Record<string, unknown>> {
   pageContent: string;
@@ -105,7 +105,7 @@ export type IAIStatus = 'generating' | 'pending' | 'completed' | 'error' | 'stop
 
 export type IContextType = 'text';
 
-export type IChatHistoryResponse = IDataPagination<IChatHistory[]>;
+export type IChatHistoryResponse = HTTPPagination<IChatHistory>;
 
 export interface IConversation {
   id: string;

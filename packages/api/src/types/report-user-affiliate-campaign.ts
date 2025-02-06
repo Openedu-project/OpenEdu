@@ -1,4 +1,4 @@
-import type { IDataPagination } from './pagination';
+import type { HTTPPagination } from './fetch';
 
 export interface IUserAffiliateReportItem {
   campaign_id: string;
@@ -25,7 +25,7 @@ export interface IUserAffiliateSummariesReportRes {
   user_id: string;
 }
 
-export interface IUserAffiliateReportRes extends IDataPagination<IUserAffiliateReportItem[]> {}
+export interface IUserAffiliateReportRes extends HTTPPagination<IUserAffiliateReportItem> {}
 
 interface IHistory {
   date: number;
@@ -151,4 +151,4 @@ export interface IUserAffiliateReportDetailItem {
   ref3_link: null;
 }
 
-export interface IUserAffiliateReportDetailRes extends IDataPagination<IUserAffiliateReportDetailItem[]> {}
+export interface IUserAffiliateReportDetailRes extends HTTPPagination<IUserAffiliateReportDetailItem> {}

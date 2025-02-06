@@ -1,4 +1,4 @@
-import type { IDataPagination } from '#types/pagination';
+import type { HTTPPagination } from './fetch';
 
 export interface ICategoryTree {
   id: string;
@@ -40,4 +40,4 @@ export interface ILevel extends ITaxonomyItem {
   type: 'level';
 }
 
-export interface ICategoriesResponse extends IDataPagination<ICategory[]> {}
+export interface ICategoriesResponse extends HTTPPagination<ICategory> {}

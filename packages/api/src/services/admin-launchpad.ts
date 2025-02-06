@@ -1,4 +1,4 @@
-import type { IAdminLaunchpadDetailRes } from '#types/admin-launchpad';
+import type { IAdminLaunchpadDetailRes, IAdminLaunchpadInvestmentRes } from '#types/admin-launchpad';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl, fetchAPI } from '#utils/fetch';
@@ -28,7 +28,7 @@ export async function getAdminLaunchpadDetailService(
 export async function getAdminLaunchpadInvestmentService(
   url: string | null,
   { params, queryParams = {}, init }: { params: { id: string }; queryParams?: IFilter; init?: RequestInit }
-): Promise<IAdminLaunchpadDetailRes | null> {
+): Promise<IAdminLaunchpadInvestmentRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
     endpointKey = createAPIUrl({
@@ -41,7 +41,7 @@ export async function getAdminLaunchpadInvestmentService(
   }
 
   try {
-    const response = await fetchAPI<IAdminLaunchpadDetailRes>(endpointKey, init);
+    const response = await fetchAPI<IAdminLaunchpadInvestmentRes>(endpointKey, init);
     return response.data;
   } catch {
     return null;

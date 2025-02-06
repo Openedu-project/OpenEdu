@@ -1,5 +1,5 @@
 import type { ADMIN_ROUTES, CREATOR_ROUTES } from '@oe/core/utils/routes';
-import type { IDataPagination } from './pagination';
+import type { HTTPPagination } from './fetch';
 
 // Permission Page Config
 export interface IPermissionConfigEntityItem {
@@ -16,7 +16,7 @@ export interface IPermissionConfigPayload {
   configs: IPermissionConfigEntityItem[] | IPermissionConfigActionItem[];
 }
 
-export interface IPermissionConfigRes extends IDataPagination<IPermissionConfigEntityItem[]> {}
+export interface IPermissionConfigRes extends HTTPPagination<IPermissionConfigEntityItem> {}
 
 // Permission Page Access
 export interface IPermissionAccessItem {
@@ -36,7 +36,7 @@ export interface IPermissionAccessPayload {
   page_access: IPermissionAccessItemPayload[];
 }
 
-export interface IPermissionAccessRes extends IDataPagination<IPermissionAccessItem[]> {}
+export interface IPermissionAccessRes extends HTTPPagination<IPermissionAccessItem> {}
 
 export interface IPermissionMyAccessItem extends Omit<IPermissionAccessItem, 'id' | 'role'> {}
 
