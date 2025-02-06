@@ -10,15 +10,16 @@ interface LayoutProps {
 export default async function LaunchpadRequestsDetailPage({ params }: LayoutProps) {
   const [{ id }] = await Promise.all([params]);
 
-  const data = await getAdminLaunchpadDetailService(null, {
-    params: { id },
-    queryParams: { preloads: ['VotingMilestones', 'Owner', 'User'] },
-  });
+  const [data, backerData] = await Promise.all([
+    getAdminLaunchpadDetailService(null, {
+      params: { id },
+      queryParams: { preloads: ['VotingMilestones', 'Owner', 'User'] },
+    }),
+    getAdminLaunchpadInvestmentService(null, {
+      params: { id },
+      queryParams: { preloads: ['User'], per_page: 9999 },
+    }),
+  ]);
 
-  const backerData = await getAdminLaunchpadInvestmentService(null, {
-    params: { id },
-    queryParams: { preloads: ['User'] },
-  });
-  console.log('backerData', backerData);
   return <LaunchpadApprovedDetailMgm backerData={backerData} data={data} />;
 }

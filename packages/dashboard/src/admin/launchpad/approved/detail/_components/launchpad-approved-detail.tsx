@@ -147,22 +147,22 @@ export default async function LaunchpadApprovedDetail({
           </div>
           {backerData && backerData.results.length > 0 && (
             <div className="mt-6">
-              <h3 className="mbutton-semibold16 mb-4">{t('backers')}</h3>
               <Card>
                 <CardContent className="p-4">
-                  <div className="space-y-4">
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     {backerData.results.map(backer => (
                       <div key={backer.id} className="flex items-center gap-3">
                         <div className="relative h-8 w-8">
                           <Image
-                            src={backer.user?.avatar || '/placeholder-avatar.png'}
+                            src={backer.user?.avatar}
                             alt={backer.user?.display_name || ''}
                             fill
-                            className="rounded-full object-cover"
+                            containerHeight={32}
+                            className="min-w-8 rounded-full bg-gray-200 object-cover"
                           />
                         </div>
-                        <span className="flex-1 font-medium">{backer.user?.display_name || backer.user_id}</span>
-                        <span className="text-gray-600 text-sm">
+                        <span className="mbutton-semibold16 flex-1">
+                          {backer.user?.display_name || backer.user_id} -&nbsp;
                           {backer.amount} {backer.currency}
                         </span>
                       </div>
