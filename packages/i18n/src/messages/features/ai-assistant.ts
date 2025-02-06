@@ -25,5 +25,6 @@ export const aiAssistantMessages = {
     presentation: 'Presentation',
     code: 'Code',
     imageGenerator: 'Image Generator',
+    agentMessage: 'Please select another model to use this tool.',
   },
 };
