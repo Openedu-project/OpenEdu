@@ -131,8 +131,6 @@ export async function getCertByUserIdService(
     });
   }
 
-  console.log(endpointKey, 'endpoint');
-
   try {
     const response = await fetchAPI<HTTPPagination<ICertificateUser>>(endpointKey, init);
 

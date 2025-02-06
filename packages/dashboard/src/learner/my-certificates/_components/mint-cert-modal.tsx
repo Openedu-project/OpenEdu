@@ -41,7 +41,7 @@ export default function MintCertModal({ certificate, onClose, mutate }: IMintCer
       title={
         <div className="flex items-center justify-between">
           <span>{tMintCert('mintNFT')}</span>
-          {dataCertNftFees?.actual_gas_fee_payer !== 'learner' && (
+          {dataCertNftFees && dataCertNftFees?.actual_gas_fee_payer !== 'learner' && (
             <Badge className="mr-5 border-none bg-success-foreground px-[18px] py-2 text-success">
               {tMintCert('sponsored')}
             </Badge>
@@ -50,8 +50,9 @@ export default function MintCertModal({ certificate, onClose, mutate }: IMintCer
       }
       hasCancelButton={false}
       hasCloseIcon
+      contentClassName="overflow-y-auto h-full"
     >
-      <div className="mb-2 space-y-4 overflow-y-auto">
+      <div className="mb-2 h-full space-y-4">
         <PdfViewer
           className="[&>div>div>div>div>div>canvas]:rounded-[12px] [&>div>div>div>div>div>canvas]:border [&>div>div>div>div>div>canvas]:border-primary [&>div]:px-0"
           files={certificate?.files[0]?.url ?? ''}

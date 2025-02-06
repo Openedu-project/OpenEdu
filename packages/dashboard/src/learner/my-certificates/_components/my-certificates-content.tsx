@@ -54,18 +54,14 @@ export default function MyCertificatesContent({
               </h3>
 
               {dataCertByUser && dataCertByUser?.results?.length > 0 ? (
-                <div className="flex flex-wrap gap-6">
-                  {dataCertByUser.results?.map(certificate => (
-                    <CertificateCard
-                      key={certificate.id}
-                      certificate={certificate}
-                      username=""
-                      type="learning_space"
-                      className="flex-1"
-                    >
-                      <MintCertButton certificate={certificate} onClickMintCert={() => setCertificate(certificate)} />
-                    </CertificateCard>
-                  ))}
+                <div className="w-full">
+                  <div className="grid auto-rows-fr grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6">
+                    {dataCertByUser.results?.map(certificate => (
+                      <CertificateCard key={certificate.id} certificate={certificate} username="" type="learning_space">
+                        <MintCertButton certificate={certificate} onClickMintCert={() => setCertificate(certificate)} />
+                      </CertificateCard>
+                    ))}
+                  </div>
                 </div>
               ) : (
                 <NoDataAvailable />
