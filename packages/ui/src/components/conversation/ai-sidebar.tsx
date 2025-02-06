@@ -18,7 +18,7 @@ export function AISidebar({ className }: { className?: string }) {
           href={AI_ROUTES.assistant}
           className="!p-1 flex h-[40px] w-[40px] items-center justify-center rounded-full border-2 border-white"
           style={{
-            background: 'linear-gradient(144deg, #2CDEE9 18.7%, #7B5AFF 82.64%)',
+            background: 'var(--ai-assistant-background)',
           }}
         >
           <Image alt="ai-assistant" src={Openedu.src} width={22} height={16} className="object-contain" />

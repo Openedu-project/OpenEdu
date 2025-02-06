@@ -64,6 +64,14 @@ export const MessageContainer = ({
     }
   }, [data]);
 
+  useEffect(() => {
+    virtuosoRef.current?.scrollToIndex({
+      index: messages.length - 1,
+      align: 'end',
+      behavior: 'auto',
+    });
+  }, [messages]);
+
   return (
     <Virtuoso
       className={className}

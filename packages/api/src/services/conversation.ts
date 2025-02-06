@@ -1,10 +1,12 @@
 import type {
   IAIModel,
+  IChatHistoryResponse,
   IConversation,
   IConversationDetails,
   IConversationRequest,
   IUpdateConversationPayload,
 } from '#types/conversation';
+import { isLogin } from '#utils/auth';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { type FetchOptions, createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 
@@ -50,10 +52,20 @@ export const deleteConversation = async (url: string | undefined, id: string, in
 };
 
 export const getListConversation = async (url?: string, params?: Record<string, unknown>, init?: FetchOptions) => {
-  const endpointKey = url ?? createAPIUrl({ endpoint: API_ENDPOINT.COM_CHANNELS, queryParams: params });
-  const response = await fetchAPI<IConversation[]>(endpointKey, init);
+  const login = await isLogin();
 
-  return response.data;
+  if (!login) {
+    return null;
+  }
+  const endpointKey = url ?? createAPIUrl({ endpoint: API_ENDPOINT.COM_CHANNELS, queryParams: params });
+  try {
+    const response = await fetchAPI<IChatHistoryResponse>(endpointKey, init);
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 };
 
 export const updateConversationTitle = async (

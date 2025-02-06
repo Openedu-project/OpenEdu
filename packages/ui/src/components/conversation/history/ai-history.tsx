@@ -16,9 +16,9 @@ import { Drawer, DrawerContent, DrawerDescription, DrawerTitle } from '#shadcn/d
 import { Input } from '#shadcn/input';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
+import { HISTORY_DEFAULT_PARAMS } from '../constants';
 import { useIsDesktop } from '../utils';
 import AIHistoryItem from './history-item';
-const PER_PAGE = 50;
 
 interface SearchHistoryProps {
   className?: string;
@@ -28,6 +28,7 @@ interface SearchHistoryProps {
   handleSearch?: (text?: string, nextPage?: boolean) => void;
   pauseAddMessage?: () => void;
   isLogin?: boolean;
+  initData?: IChatHistoryResponse;
 }
 
 const SearchHistory = ({ className, mutate, handleSearch, chatHistory = [], isLoading }: SearchHistoryProps) => {
@@ -132,18 +133,13 @@ const SearchHistory = ({ className, mutate, handleSearch, chatHistory = [], isLo
   );
 };
 
-export default function AIHistory({ className, isLogin = false, pauseAddMessage }: SearchHistoryProps) {
+export default function AIHistory({ className, isLogin = false, pauseAddMessage, initData }: SearchHistoryProps) {
   const [isShow, setIsShow] = useState<boolean>(false);
   const isDesktop = useIsDesktop();
   const { mutate: globalMutate } = useSWRConfig();
   const { isNewChat } = useConversationStore();
 
-  const [searchParams, setSearchParams] = useState({
-    page: 1,
-    per_page: PER_PAGE,
-    sort: 'create_at desc',
-    search_term: '',
-  });
+  const [searchParams, setSearchParams] = useState(HISTORY_DEFAULT_PARAMS);
 
   const { data, mutate, size, setSize, isLoading, getKey } = useGetListConversation(searchParams, isLogin);
   const historyData = useMemo(
@@ -157,6 +153,33 @@ export default function AIHistory({ className, isLogin = false, pauseAddMessage 
       mutate();
     }
   }, [isNewChat]);
+
+  const updateFirstPageOnly = async () => {
+    if (!initData) {
+      return;
+    }
+    await mutate(currentData => {
+      if (!currentData?.[0]) {
+        return currentData;
+      }
+
+      // Keep and update only first page
+      return [
+        {
+          ...currentData[0],
+          data: initData,
+        },
+      ];
+    }, false);
+
+    // Reset to page 1
+    setSize(1);
+  };
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    updateFirstPageOnly();
+  }, [initData]);
 
   const searchChatHistory = async (title?: string, isNextPage?: boolean) => {
     const pagination = data?.at(-1)?.pagination;

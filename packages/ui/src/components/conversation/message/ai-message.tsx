@@ -36,7 +36,7 @@ export const AIMessage = ({ message, loading, rewrite }: IAIMessageProps) => {
               />
             </div>
 
-            <p className="mcaption-semibold14">{message?.ai_model?.display_name ?? 'AI Assistant'}</p>
+            <p className="mcaption-semibold14 text-test">{message?.ai_model?.display_name ?? 'AI Assistant'}</p>
           </div>
           {GENERATING_STATUS.includes(message.status ?? '') && message.content.length === 0 ? (
             <div className="flex w-12 items-end">
