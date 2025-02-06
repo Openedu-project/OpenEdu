@@ -228,10 +228,8 @@ export const API_ENDPOINT = {
   BLOG_AI_ID_REWRITE: '/api/v1/blogs/ai/:id/rewrite',
   FEATURED_CONTENT: '/api/v1/featured-contents',
   FEATURED_CONTENT_BY_TYPES: '/api/v1/featured-contents/by-types',
-=======
   LAUNCHPADS_ID: '/api/v1/launchpads/:id',
   LAUNCHPADS_ID_INVESTMENTS: '/api/v1/launchpads/:id/investments',
->>>>>>> 14a30e9a (feat: admin launchpad)
 
   // WS
   WEBSOCKET: '/websocket',
