@@ -83,8 +83,8 @@ const handleEnrollCourse = async (params: ActionHandlerParams) => {
       : [];
     // Filter entries with matching courseSlug and sort by most recent (assuming they're added in order)
     const matchingEntries = fromSourceData
-      .filter(entry => entry.courseSlug === params.slug)
-      .sort((a, b) => fromSourceData.indexOf(b) - fromSourceData.indexOf(a));
+      ?.filter(entry => entry.courseSlug === params.slug)
+      ?.sort((a, b) => fromSourceData.indexOf(b) - fromSourceData.indexOf(a));
 
     if (matchingEntries.length > 0) {
       source = matchingEntries[0]?.fromSource ?? '';
