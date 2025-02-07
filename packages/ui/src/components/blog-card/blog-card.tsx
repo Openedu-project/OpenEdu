@@ -45,7 +45,7 @@ export function BlogCardServer({
   const locale = blog?.locale ?? "";
   const isExternalDomain = blog?.org?.domain !== currentHostname;
   const blogUrl =
-    isExternalDomain && blog?.org?.domain
+    isExternalDomain
       ? `https://${blog?.org?.domain}/${locale}${targetPath}`
       : targetPath;
 
