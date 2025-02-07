@@ -35,29 +35,33 @@ const config: Omit<Config, 'content'> = {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
           50: 'var(--primary-50)',
-          100: 'var(--primary-100)',
+          100: 'hsl(var(--primary-100))',
         },
 
         neutral: {
-          'neutral-50': 'var(--neutral-50)',
-          'neutral-100': 'var(--neutral-100)',
-          600: 'var(--neutral-600)',
+          50: 'hsl(var(--neutral-50))',
+          100: 'hsl(var(--neutral-100))',
+          600: 'hsl(var(--neutral-600))',
         },
         negative: {
-          50: 'var(--negative-50)',
-          500: 'var(--negative-500)',
+          50: 'hsl(var(--negative-50))',
+          500: 'hsl(var(--negative-500))',
         },
         tertiary: {
-          50: 'var(--tertiary-50)',
-          800: 'var(--tertiary-800)',
+          50: 'hsl(var(--tertiary-50))',
+          800: 'hsl(var(--tertiary-800))',
         },
         positive: {
-          50: 'var(--positive-50)',
-          600: 'var(--positive-600)',
+          50: 'hsl(var(--positive-50))',
+          500: 'hsl(var(--positive-500))',
+          600: 'hsl(var(--positive-600))',
         },
         orange: {
-          50: 'var(--orange-50)',
-          500: 'var(--orange-500)',
+          50: 'hsl(var(--orange-50))',
+          500: 'hsl(var(--orange-500))',
+        },
+        pink: {
+          500: 'hsl(var(--pink-500))',
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
@@ -91,8 +95,8 @@ const config: Omit<Config, 'content'> = {
         warning: {
           DEFAULT: 'hsl(var(--warning))',
           foreground: 'hsl(var(--warning-foreground))',
-          50: 'var(--warning-50)',
-          600: 'var(--warning-600)',
+          50: 'hsl(var(--warning-50))',
+          600: 'hsl(var(--warning-600))',
         },
         success: {
           DEFAULT: 'hsl(var(--success))',
@@ -101,8 +105,9 @@ const config: Omit<Config, 'content'> = {
         info: {
           DEFAULT: 'hsl(var(--info))',
           foreground: 'hsl(var(--info-foreground))',
-          50: 'var(--info-50)',
-          600: 'var(--info-600)',
+          50: 'hsl(var(--info-50))',
+          500: 'hsl(var(--info-500))',
+          600: 'hsl(var(--info-600))',
         },
         sidebar: {
           DEFAULT: 'hsl(var(--sidebar-background))',

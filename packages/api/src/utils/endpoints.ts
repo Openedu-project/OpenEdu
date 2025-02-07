@@ -244,6 +244,11 @@ export const API_ENDPOINT = {
   EXCHANGE_RATES: '/api/v1/exchange-rates',
   CLAIM_EARNING: '/api/v1/wallets/:id/claim-earning',
   CHAIN_ACCOUNT_INFO: '/api/v1/chains/:network/accounts/:address',
+
+  AI_MODELS: '/api/v1/ai/models',
+  COM_CHANNELS: '/api/com-v1/channels',
+  COM_CHANNELS_ID: '/api/com-v1/channels/:id',
+  COM_CHANNELS_ID_CANCEL: '/api/com-v1/channels/:id/cancel',
 } as const;
 
 export type API_ENDPOINT_KEY = keyof typeof API_ENDPOINT;

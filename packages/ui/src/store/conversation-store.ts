@@ -1,16 +1,11 @@
-import type { IAIModel, IAIStatus, IMessage } from '@oe/api/types/conversation';
+import type { IAIModel, IAIStatus, IMessage, TAgentType } from '@oe/api/types/conversation';
+import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { create } from 'zustand';
-
-export interface IAIAction {
-  key: 'rewrite' | 'new';
-  id: string;
-}
 interface IConversationStore {
   messages: IMessage[];
   isNewChat: boolean;
   status?: IAIStatus;
   selectedModel?: IAIModel;
-  action?: IAIAction;
   setMessages: (value: IMessage[]) => void;
   resetMessages: () => void;
   updateMessages: (value: IMessage, index?: number, callback?: () => void, id?: string) => void;
@@ -19,8 +14,11 @@ interface IConversationStore {
   setStatus: (value: IAIStatus) => void;
   setSelectedModel: (value: IAIModel) => void;
   resetStatus: () => void;
-  setAction: (action: IAIAction) => void;
-  resetAction: () => void;
+  genMessage?: IMessage;
+  setGenMessage: (value: IMessage, callback?: () => void, shortenedIndex?: number) => void;
+  resetGenMessage: () => void;
+  selectedAgent: TAgentType;
+  setSelectedAgent: (agent: TAgentType) => void;
 }
 
 export const useConversationStore = create<IConversationStore>(set => {
@@ -28,8 +26,8 @@ export const useConversationStore = create<IConversationStore>(set => {
     messages: [],
     isNewChat: false,
     status: undefined,
-    action: undefined,
     selectedModel: undefined,
+    genMessage: undefined,
     setMessages: (messages: IMessage[]) =>
       set(() => {
         return { messages };
@@ -68,25 +66,7 @@ export const useConversationStore = create<IConversationStore>(set => {
         });
 
         if (!add) {
-          newMessages =
-            messageData.sender.role === 'user'
-              ? [
-                  ...state.messages,
-                  messageData,
-                  {
-                    id: 'tempid',
-                    content: '',
-                    status: 'pending',
-                    conversation_id: messageData.conversation_id,
-                    sender: { role: 'assistant' },
-                    ai_model: messageData.ai_model,
-                    content_type: 'text',
-                    configs: messageData.configs,
-                    create_at: messageData.create_at,
-                    is_ai: true,
-                  },
-                ]
-              : [...state.messages.filter(msg => msg.id !== 'tempid'), messageData];
+          newMessages = [...state.messages, messageData];
         }
         callback?.();
         return {
@@ -105,13 +85,33 @@ export const useConversationStore = create<IConversationStore>(set => {
 
     setSelectedModel: (selectedModel: IAIModel) =>
       set(() => {
-        return { selectedModel };
+        return { selectedModel, selectedAgent: 'ai_chat' };
       }),
-    setAction: (action: IAIAction) =>
-      set(() => {
-        return { action };
-      }),
+
     resetStatus: () => set({ status: undefined }),
-    resetAction: () => set({ action: undefined }),
+
+    setGenMessage: (data: IMessage, callback?: () => void, shortenedIndex?: number) => {
+      set(state => {
+        const newMessages = { ...data, content: (state.genMessage?.content ?? '') + data?.content };
+        callback?.();
+
+        if (!GENERATING_STATUS.includes(data?.status ?? '')) {
+          return {
+            messages: [...state.messages.slice(0, shortenedIndex ?? state.messages.length), newMessages],
+            genMessage: undefined,
+          };
+        }
+        return {
+          genMessage: newMessages,
+          messages: state.messages.slice(0, shortenedIndex ?? state.messages.length),
+        };
+      });
+    },
+    resetGenMessage: () => set({ genMessage: undefined }),
+    selectedAgent: 'ai_chat',
+    setSelectedAgent: (selectedAgent: TAgentType) =>
+      set(() => {
+        return { selectedAgent };
+      }),
   };
 });

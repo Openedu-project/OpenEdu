@@ -114,7 +114,7 @@ export default function BlogForm({
       locale: data.locale,
       title: data.title,
       description: data.description,
-      content: data.is_ai_generated ? marked.parse(data?.content, { async: false }) : data?.content,
+      content: data?.is_ai_generated ? marked.parse(data?.content, { async: false }) : (data?.content ?? ''),
       image_description: data.image_description,
       thumbnail: data.banner,
       category_ids: data.categories?.map(cate => ({ id: cate.id, name: cate.name })),

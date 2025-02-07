@@ -71,9 +71,6 @@ export default function BlogCardProfile({
       e.preventDefault();
       if (typeof window !== 'undefined') {
         if (blog?.org?.domain && blog?.org?.domain !== window.location.hostname) {
-          // const url = `https://${blog?.org?.domain}${generateRoute(BLOG_ROUTES.authorBlog, {
-          //   username: blog?.author?.username,
-          // })}`;
           const url = buildUrl({
             endpoint: `https://${blog?.org?.domain}/${BLOG_ROUTES.authorBlog}`,
             params: { username: blog?.author?.username },

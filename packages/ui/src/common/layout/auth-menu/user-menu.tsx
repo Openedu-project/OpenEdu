@@ -7,6 +7,7 @@ import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { DropdownMenuSeparator } from '@radix-ui/react-dropdown-menu';
 import { ChevronDown } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
+import { Fragment } from 'react';
 import { LogoutButton } from '#common/auth/logout-button';
 import { Link } from '#common/navigation';
 import { UserAvatar } from '#components/user-avatar';
@@ -57,15 +58,15 @@ export async function UserMenu({ me }: { me: IUser }) {
         </DropdownMenuItem>
         <DropdownMenuSeparator className="mb-1 h-[1px] bg-neutral-100" />
         {visibleMenuItems.map(({ href, key, icon: Icon, hasSepratePage }) => (
-          <>
-            <DropdownMenuItem key={key}>
+          <Fragment key={key}>
+            <DropdownMenuItem>
               <Link href={href} className="flex h-auto w-full items-center justify-start p-0 text-foreground">
                 <Icon className="mr-2 h-4 w-4" />
                 <span>{t(key)}</span>
               </Link>
             </DropdownMenuItem>
             {hasSepratePage && <DropdownMenuSeparator className="mb-1 h-[1px] bg-neutral-100" />}
-          </>
+          </Fragment>
         ))}
 
         <DropdownMenuItem asChild key="logout">

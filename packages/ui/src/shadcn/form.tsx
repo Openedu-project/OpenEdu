@@ -194,6 +194,7 @@ export type FormFieldWithLabelProps = ComponentPropsWithoutRef<typeof Slot> &
     fieldType?: string;
     labelClassName?: string;
     formMessageClassName?: string;
+    showErrorMessage?: boolean;
     render?: (props: {
       field: ControllerRenderProps<FieldValues, string>;
     }) => ReactNode;
@@ -213,6 +214,7 @@ const FormFieldWithLabel = forwardRef<ComponentRef<typeof Slot>, FormFieldWithLa
       fieldType,
       render,
       formMessageClassName,
+      showErrorMessage,
       ...props
     },
     ref
@@ -242,7 +244,7 @@ const FormFieldWithLabel = forwardRef<ComponentRef<typeof Slot>, FormFieldWithLa
                   )}
                   {description && <FormDescription>{description}</FormDescription>}
                 </div>
-                <FormMessage className={formMessageClassName} />
+                {showErrorMessage && <FormMessage className={formMessageClassName} />}
               </>
             ) : (
               <>
@@ -258,7 +260,7 @@ const FormFieldWithLabel = forwardRef<ComponentRef<typeof Slot>, FormFieldWithLa
                   <FormControlSlot field={field} ref={ref} {...props} />
                 )}
                 {description && <FormDescription>{description}</FormDescription>}
-                <FormMessage className={formMessageClassName} />
+                {showErrorMessage && <FormMessage className={formMessageClassName} />}
               </>
             )}
           </FormItem>

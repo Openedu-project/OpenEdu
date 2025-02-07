@@ -3,9 +3,10 @@ import { useEffect } from 'react';
 
 import type { IMessageData } from '@oe/api/types/conversation';
 import type { EventData, ISocketRes } from '@oe/api/types/socket';
+import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { useCallback } from 'react';
 import useWebSocket from 'react-use-websocket';
-import { type IAIAction, useConversationStore } from '#store/conversation-store';
+import { useConversationStore } from '#store/conversation-store';
 import { useSocketStore } from '#store/socket';
 import { useAIConversationHandler } from './useAIConversationHandler';
 import { useReconnection } from './useReconnection';
@@ -17,9 +18,9 @@ export const useSocket = (isAuthenticated: boolean) => {
   const endpoint = useWebSocketEndpoint(accessToken, referrer);
 
   const { setSocketData } = useSocketStore();
-  const { addMessage, setStatus, status, action } = useConversationStore();
+  const { genMessage, setGenMessage, setStatus, status } = useConversationStore();
 
-  const handleAIConversation = useAIConversationHandler(status ?? '');
+  const handleAIConversation = useAIConversationHandler(status ?? '', genMessage?.id);
   const { shouldReconnect, reconnectInterval } = useReconnection(isAuthenticated, accessToken);
 
   const handleMessage = useCallback(
@@ -37,10 +38,15 @@ export const useSocket = (isAuthenticated: boolean) => {
         const parsedData: ISocketRes<EventData> = JSON.parse(event.data);
 
         if (parsedData.event === 'ai_conversation') {
-          const data = parsedData.data as IMessageData;
-          const newMessage = handleAIConversation(data, action as IAIAction);
+          const { data } = parsedData as ISocketRes<IMessageData>;
+          const newMessage = handleAIConversation(data);
+
           if (newMessage) {
-            addMessage(newMessage, () => setStatus(data?.status));
+            setGenMessage(newMessage, () => {
+              if (!GENERATING_STATUS.includes(data.status)) {
+                setStatus(data?.status);
+              }
+            });
           }
         } else {
           setSocketData(parsedData);
@@ -49,7 +55,7 @@ export const useSocket = (isAuthenticated: boolean) => {
         console.error('Error parsing socket data:', error);
       }
     },
-    [handleAIConversation, action, addMessage, setStatus, setSocketData]
+    [handleAIConversation, setGenMessage, setStatus, setSocketData]
   );
 
   const { getWebSocket } = useWebSocket(endpoint, {

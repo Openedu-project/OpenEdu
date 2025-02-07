@@ -1,5 +1,6 @@
 import type { HTTPPagination } from './fetch';
 import type { IFileResponse } from './file';
+import type { IDataPagination } from './pagination';
 
 export interface DocumentInput<Metadata extends Record<string, unknown> = Record<string, unknown>> {
   pageContent: string;
@@ -24,22 +25,12 @@ export declare class Document<Metadata extends Record<string, unknown> = Record<
 
 export type IRole = 'user' | 'assistant';
 
-export type InputType = 'image_analysis' | 'scrap_from_url' | 'chat';
-
 export type IProvider =
   | 'anthropic.claude-3-5-sonnet-20241022-v2:0'
   | 'us.meta.llama3-2-90b-instruct-v1:0'
   | 'gpt-4o-mini'
   | 'gpt-4o'
   | 'o1-mini';
-
-// export interface IAIModel {
-//   id: IProvider;
-//   name: string;
-//   type: 'chatgpt' | 'claude' | 'gemini' | 'o1' | 'qwen' | 'llama';
-//   imageAnalysis: boolean;
-//   disable: boolean;
-// }
 
 export interface IAIModel {
   id: string;
@@ -52,9 +43,13 @@ export interface IAIModel {
   org_schema: string;
   is_available: boolean;
 }
-
-interface Configs {
+export interface IAgenConfigs {
   image_analysis_enabled: boolean;
+  image_generator_enabled: boolean;
+  present_creator_enabled: boolean;
+  code_executor_enabled: boolean;
+}
+export interface Configs extends IAgenConfigs {
   stream_response_enabled: boolean;
 }
 
@@ -69,11 +64,13 @@ export interface IChatHistory {
   update_at: number;
 }
 
+export type TAgentType = 'ai_chat' | 'ai_search' | 'ai_slide' | 'ai_image_generate' | 'ai_image_analysis' | 'ai_code';
 export interface IConversationRequest {
+  ai_agent_type: TAgentType;
+  message_ai_agent_type?: TAgentType;
   ai_model: IProvider;
   content: string;
   content_type: IContextType;
-  is_image_analysis: boolean;
   attachment_ids?: string[];
   ai_conversation_id?: string;
   message_id?: string;
@@ -95,17 +92,23 @@ export interface IMessageData {
   conversation_id: string;
   message_id: string;
   ai_model: IProvider;
+  ai_model_display_name: string;
+  ai_model_thumbnail_url: string;
   status: IAIStatus;
   error?: null | { code: number; msg: string };
   parent_message_id: string;
   is_image_analysis: boolean;
+  ai_agent_type: TAgentType;
+  message_ai_agent_type: TAgentType;
 }
 
-export type IAIStatus = 'generating' | 'pending' | 'completed' | 'error' | 'stopped';
+export type IAIStatus = 'generating' | 'pending' | 'completed' | 'failed' | 'stopped';
 
 export type IContextType = 'text';
 
 export type IChatHistoryResponse = HTTPPagination<IChatHistory>;
+
+export type IConversationDetails = IDataPagination<IConversation>;
 
 export interface IConversation {
   id: string;
@@ -150,17 +153,13 @@ export interface IMessage {
   content_type: IContextType;
   is_edited?: boolean;
   is_ai: boolean;
-  configs: IMessageConfigs;
   ai_model: IMessageAIModel;
   sender: IMessageSender;
+  ai_agent_type: TAgentType;
 
   // adjust later
   suggestions?: string[];
   sources?: Document[];
-}
-
-interface IMessageConfigs {
-  is_image_analysis: boolean;
 }
 
 interface IMessageAIModel {
@@ -174,6 +173,8 @@ interface IMessageAIModel {
   configs?: IModelConfigs;
   org_id?: string;
   org_schema?: string;
+  thumbnail_url?: string;
+  display_name?: string;
 }
 
 interface IModelConfigs {

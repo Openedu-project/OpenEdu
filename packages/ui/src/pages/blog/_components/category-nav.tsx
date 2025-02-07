@@ -51,7 +51,7 @@ export const CategoryMenu = ({ category, level = 1, activeId }: ICategoryMenu) =
               )}
               href={buildUrl({
                 endpoint: BLOG_ROUTES.blogCategory,
-                params: { id: `${category.id} ${category.name}` },
+                params: { id: `${sub.id} ${sub.name}` },
               })}
             >
               {sub.name}
