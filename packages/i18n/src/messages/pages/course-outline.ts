@@ -52,6 +52,16 @@ export const courseOutlineMessages = {
       contentCompleted: 'Content Completed',
     },
 
+    playToEarn: {
+      button: 'Play game to earn',
+      goToCourse: 'Go to course',
+      modalTitle: 'Complete Your Learning Journey First!',
+      complete: 'Complete',
+      section: 'section',
+      lesson: 'lesson',
+      desc: 'to unlock this gaming challenge. Your journey awaits!',
+    },
+
     lastUpdated: 'Last updated {updateAt}',
     markAsComplete: 'Mark as complete',
     course: 'Course: {title}',

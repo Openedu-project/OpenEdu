@@ -3,8 +3,18 @@ import { Button } from '#shadcn/button';
 import { usePaymentButton } from './_hooks';
 import type { IPaymentButton } from './types';
 
-export default function PaymentButton({ rightSection, courseData, isCourseDetail = false, ...props }: IPaymentButton) {
-  const { buttonText, showCart, handleClick, currentAction } = usePaymentButton({ courseData, isCourseDetail });
+export default function PaymentButton({
+  rightSection,
+  courseData,
+  isCourseDetail = false,
+  onClick,
+  ...props
+}: IPaymentButton) {
+  const { buttonText, showCart, handleClick, currentAction } = usePaymentButton({
+    courseData,
+    isCourseDetail,
+    onClick,
+  });
 
   return (
     <Button
