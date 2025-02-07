@@ -1,10 +1,13 @@
-import { isLogin } from '@oe/api/utils/auth';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '#common/navigation';
-import { DescText, H2Text, LaunchpadDialog } from '../components';
+import { DescText, H2Text } from '../components';
 
 export async function HeroSection() {
-  const [t, isLoggedIn] = await Promise.all([getTranslations('launchpadHomepage'), isLogin()]);
+  const [t] = await Promise.all([getTranslations('launchpadHomepage')]);
+  // const [t, isLoggedIn] = await Promise.all([
+  //   getTranslations("launchpadHomepage"),
+  //   isLogin(),
+  // ]);
 
   return (
     <section className="-mt-10 mx-auto flex min-h-screen max-w-[840px] items-center">
@@ -23,7 +26,7 @@ export async function HeroSection() {
           </div>
 
           <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
-            {isLoggedIn && <LaunchpadDialog />}
+            {/* {isLoggedIn && <LaunchpadDialog />} */}
             {/* <Button
               variant="outline"
               className="h-fit w-full rounded-[12px] border-primary font-semibold text-primary text-sm hover:bg-primary/10 sm:w-auto sm:px-4 sm:py-3 sm:text-base md:px-8"

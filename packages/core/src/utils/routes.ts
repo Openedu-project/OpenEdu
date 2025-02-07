@@ -166,6 +166,10 @@ export const LEARNER_ROUTES = {
   wishlist: '/learner/wishlist',
 } as const;
 
+export const LAUNCHPAD_ROUTES = {
+  launchpad: '/launchpad',
+} as const;
+
 export const PROTECTED_ROUTES = {
   admin: '/admin',
   creator: '/creator',

@@ -1,4 +1,4 @@
-import { AI_ROUTES, BLOG_ROUTES, PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { AI_ROUTES, BLOG_ROUTES, LAUNCHPAD_ROUTES, PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { MainLayout } from '@oe/ui/common/layout';
 import { getTranslations } from 'next-intl/server';
 
@@ -13,7 +13,7 @@ export default async function OpeneduLayout({
   const sidebarItems = [
     {
       id: 'ai-assistant',
-      label: t('aiAssistant'),
+      label: t('aiAgent'),
       href: AI_ROUTES.assistant,
       isHighlight: true,
     },
@@ -30,7 +30,7 @@ export default async function OpeneduLayout({
     {
       id: 'launchpad',
       label: t('launchpad'),
-      href: '#',
+      href: LAUNCHPAD_ROUTES.launchpad,
     },
     // {
     //   id: 'become-creator',
