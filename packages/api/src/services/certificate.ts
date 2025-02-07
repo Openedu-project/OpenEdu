@@ -119,8 +119,8 @@ export async function receiveCertService(
 }
 
 export async function getCertByUserIdService(
-  url: string,
-  { params, init }: { params: { userId: string }; init?: RequestInit }
+  url: string | null | undefined,
+  { params, init }: { params: { user_id: string }; init?: RequestInit }
 ): Promise<HTTPPagination<ICertificateUser> | null> {
   let endpointKey = url;
 

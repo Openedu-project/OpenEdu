@@ -146,6 +146,16 @@ export const CREATOR_ROUTES = {
   creatorLaunchpadDetail: '/creator/launchpad/:id',
 } as const;
 
+export const LEARNER_ROUTES = {
+  dashboard: '/learner',
+  myCourses: '/learner/my-courses',
+  coursesInProgress: '/learner/my-courses/in-progress',
+  coursesNotStarted: '/learner/my-courses/not-started',
+  coursesCompleted: '/learner/my-courses/completed',
+  myCertificates: '/learner/my-certificates',
+  wishlist: '/learner/wishlist',
+} as const;
+
 export const PROTECTED_ROUTES = {
   admin: '/admin',
   creator: '/creator',

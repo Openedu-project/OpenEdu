@@ -1,3 +1,5 @@
+import type { TMyCourseStatus } from './my-learning-space';
+
 export interface IFilter {
   page?: number;
   per_page?: number;
@@ -22,4 +24,5 @@ export interface IFilter {
   category_id?: string;
   hashtag_id?: string;
   status?: string;
+  group?: TMyCourseStatus;
 }

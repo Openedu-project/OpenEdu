@@ -9,7 +9,7 @@ import background from '@oe/assets/images/learning-page/bg-whale-done.png';
 import { useParams } from 'next/navigation';
 import { useRouter } from '#common/navigation';
 import { Button } from '#shadcn/button';
-import { createCourseUrl } from '../../../../_utils/course-url';
+import { createCourseUrl } from '#utils/course-url';
 import { useLessonLearningStore } from '../../../_store/learning-store';
 import { getLessonGlobalIndex, getTotalLessons, getUidByLessonIndex } from '../../../_utils/utils';
 import CompleteCourseNotiModal from '../../course-noti-modal';

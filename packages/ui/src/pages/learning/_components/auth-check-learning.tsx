@@ -5,7 +5,7 @@ import type { IUser } from '@oe/api/types/user';
 import { AUTH_ROUTES } from '@oe/core/utils/routes';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { createCourseUrl } from '../../_utils/course-url';
+import { createCourseUrl } from '#utils/course-url';
 import { useLessonLearningStore } from '../_store/learning-store';
 import { getLessonGlobalIndex, getUidByLessonIndex } from '../_utils/utils';
 

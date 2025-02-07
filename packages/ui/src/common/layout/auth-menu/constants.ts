@@ -4,6 +4,7 @@ import {
   AFFILIATE_ROUTES,
   BLOG_ADMIN_ROUTES,
   CREATOR_ROUTES,
+  LEARNER_ROUTES,
   PROTECTED_ROUTES,
 } from '@oe/core/utils/routes';
 import {
@@ -37,7 +38,7 @@ export const MENU_ITEMS: MenuItem[] = [
     key: 'learningSpace',
     icon: NotebookPen,
     requiredRoles: [ROLE_LIST.LEARNER],
-    href: '#',
+    href: LEARNER_ROUTES.dashboard,
   },
   {
     key: 'wallet',

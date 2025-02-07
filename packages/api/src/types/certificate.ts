@@ -47,6 +47,7 @@ export interface ICertificate {
 
 export interface ICertificateUser {
   id: string;
+  completed_at?: number;
   create_at: number;
   update_at: number;
   delete_at: number;
@@ -56,6 +57,11 @@ export interface ICertificateUser {
   org_schema: string;
   files: IFileResponse[];
   course_name: string;
+
+  nft_network: string;
+  nft_token_id: string;
+  nft_tx_hash: string;
+  mint_nft_enabled: boolean;
 }
 
 export interface IRequestSelectTemplate {
@@ -105,4 +111,9 @@ export interface ICertificateDetail {
   user: ICertUser;
   course: ICourse;
   files: IFileResponse[];
+
+  nft_network: string;
+  nft_token_id: string;
+  nft_tx_hash: string;
+  mint_nft_enabled: boolean;
 }

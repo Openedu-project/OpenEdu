@@ -24,6 +24,7 @@ interface ICertCardProps extends HTMLAttributes<HTMLDivElement> {
   username: string;
   isSetting?: boolean;
   type?: 'profile' | 'learning_space';
+  hasCompletedOn?: boolean;
 }
 
 export default function CertificateCard({
@@ -32,6 +33,8 @@ export default function CertificateCard({
   username,
   isSetting = false,
   type = 'profile',
+  hasCompletedOn = true,
+  children,
   ...props
 }: ICertCardProps) {
   const t = useTranslations('certificate');
@@ -80,17 +83,15 @@ export default function CertificateCard({
       onClick={isSetting ? handleShowCert : handleClick}
       {...props}
     >
-      <CardHeader className="flex-row items-start justify-between gap-2 p-0">
-        <h2 className="giant-iheading-semibold16 line-clamp-2 h-10 text-primary">{certificate.course_name}</h2>
-        {isSetting && <Checkbox className="!mt-0" checked={isShow} />}
-      </CardHeader>
+      {isSetting && (
+        <CardHeader className="flex-row items-start justify-between gap-2 p-0">
+          <Checkbox className="!mt-0" checked={isShow} />
+        </CardHeader>
+      )}
       <CardContent className={cn('flex basis-full flex-col gap-3 p-0')}>
-        <span className="mcaption-regular12 text-foreground/90">
-          {t('completedOn')} {formatDate(certificate.create_at)}
-        </span>
         {certificate?.files ? (
           <PdfViewer
-            className="max-h-[244px] w-auto [&>div>div>div>div>div>canvas]:rounded-[12px] [&>div>div>div>div>div>canvas]:border [&>div>div>div>div>div>canvas]:border-primary"
+            className="max-h-[244px] w-auto [&>div>div>div>div>div>canvas]:min-h-[194px] [&>div>div>div>div>div>canvas]:rounded-[12px] [&>div>div>div>div>div>canvas]:border [&>div>div>div>div>div>canvas]:border-primary [&>div]:px-0"
             files={certificate?.files[0]?.url ?? ''}
           />
         ) : (
@@ -102,6 +103,13 @@ export default function CertificateCard({
             className="rounded-[12px] border border-primary"
           />
         )}
+        <h2 className="giant-iheading-semibold16 mb-0 line-clamp-2 max-h-10 text-primary">{certificate.course_name}</h2>
+        {hasCompletedOn && (
+          <span className="mcaption-regular12 text-foreground/90">
+            {t('completedOn')} {formatDate(certificate?.completed_at ?? certificate.create_at)}
+          </span>
+        )}
+        {children}
       </CardContent>
     </Card>
   );

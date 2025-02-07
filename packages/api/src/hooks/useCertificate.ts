@@ -116,14 +116,15 @@ export function useReceiveCertificate() {
   };
 }
 
-export function useGetCertByUserId(userId: string) {
+export function useGetCertByUserId(user_id: string, params?: IFilter) {
   const endpointKey = createAPIUrl({
     endpoint: API_ENDPOINT.CERTIFICATES,
-    queryParams: { userId },
+    queryParams: { ...params, user_id },
   });
+  console.log(endpointKey, 'endpoint');
 
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (url: string) =>
-    getCertByUserIdService(url, { params: { userId } })
+    getCertByUserIdService(url, { params: { user_id } })
   );
 
   return {
@@ -166,10 +167,12 @@ export function useGetCertLayerByCourseId(courseId: string) {
 }
 
 export function useGetCertById(id: string) {
-  const endpointKey = createAPIUrl({
-    endpoint: API_ENDPOINT.CERTIFICATES_ID,
-    params: { id },
-  });
+  const endpointKey = id
+    ? createAPIUrl({
+        endpoint: API_ENDPOINT.CERTIFICATES_ID,
+        params: { id },
+      })
+    : undefined;
 
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (url: string) =>
     getCertByIdService(url, { params: { id } })
