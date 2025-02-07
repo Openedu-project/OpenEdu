@@ -1,22 +1,17 @@
 'use client';
+import { usePostAdminPublishLaunchpads } from '@oe/api/hooks/useAdminLaunchpad';
+import type { CreatorLaunchpadStatusType } from '@oe/api/types/admin-launchpad';
+import { API_ENDPOINT } from '@oe/api/utils/endpoints';
+import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
 import { Button } from '@oe/ui/shadcn/button';
+import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo } from 'react';
+import { useSWRConfig } from 'swr';
+import { revalidateAdminLaunchpadDetail } from '../_action';
 
 // Badge Component with integrated translation
-export type CreatorLaunchpadStatusType =
-  | 'draft'
-  | 'waiting'
-  | 'reviewing'
-  | 'failed'
-  | 'rejected'
-  | 'cancelled'
-  | 'success'
-  | 'approved'
-  | 'publish'
-  | 'voting'
-  | 'funding'
-  | 'refunded';
+
 const Badge = ({
   status,
   t,
@@ -91,27 +86,55 @@ const Badge = ({
 
 export default function CreatorLaunchpadDetailStatus({
   status,
+  id,
 }: {
   status: CreatorLaunchpadStatusType;
+  id: string;
 }) {
   const t = useTranslations('creatorLaunchpad');
+  const tStatus = useTranslations('creatorLaunchpad.status');
+  const tError = useTranslations('errors');
+  const { mutate: globalMutate } = useSWRConfig();
+
+  const { triggerPostAdminPublishLaunchpads } = usePostAdminPublishLaunchpads(id);
+
+  const handleActionSuccess = useCallback(
+    (endpoint: string) => {
+      globalMutate((key: string) => !!key?.includes(endpoint), undefined, {
+        revalidate: false,
+      });
+    },
+    [globalMutate]
+  );
 
   const getBadgeContent = useCallback(
     (status: string) => {
       if (!status) {
         return null;
       }
-      return <Badge status={status as CreatorLaunchpadStatusType} t={t} />;
+      return <Badge status={status as CreatorLaunchpadStatusType} t={tStatus} />;
     },
-    [t]
+    [tStatus]
   );
+
+  const handlePublishLaunchpad = useCallback(async () => {
+    try {
+      await triggerPostAdminPublishLaunchpads({ status: 'publish' });
+      handleActionSuccess(API_ENDPOINT.LAUNCHPADS);
+      await revalidateAdminLaunchpadDetail();
+      toast.success(t('publishLaunchpadSuccess'));
+    } catch (error) {
+      console.error('Error Publish Launchpad', error);
+      toast.error(tError((error as HTTPErrorMetadata).code.toString()));
+    }
+  }, [handleActionSuccess, t, tError, triggerPostAdminPublishLaunchpads]);
 
   return (
     <>
       {status === 'draft' ? (
         <div className="flex gap-2">
-          <Button variant="secondary">123123</Button>
-          <Button>123123</Button>
+          <Button variant="secondary">{t('editLaunchpad')}</Button>
+          <Button onClick={handlePublishLaunchpad}>{t('publishLaunchpad')}</Button>
         </div>
       ) : (
         getBadgeContent(status)

@@ -5,11 +5,18 @@ import {
   getAdminLaunchpadInvestmentService,
   getAdminLaunchpadsService,
   postAdminCancelLaunchpadsService,
+  postAdminDecideVotingLaunchpadsService,
   postAdminPublishLaunchpadsService,
   postAdminStartVotingLaunchpadsService,
   putAdminCancelPublishLaunchpadsService,
+  putAdminStartFundingTimeLaunchpadsService,
 } from '#services/admin-launchpad';
-import type { IAdminLaunchpadItem, IAdminPublishLaunchpad } from '#types/admin-launchpad';
+import type {
+  IAdminLaunchpadItem,
+  IAdminPublishLaunchpadPayload,
+  IDecideVotingLaunchpadPayload,
+  IStartFundingTimeLaunchpadPayload,
+} from '#types/admin-launchpad';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
@@ -76,7 +83,7 @@ export const usePostAdminPublishLaunchpads = (id: string) => {
 
   const { trigger, isMutating, error } = useSWRMutation(
     endpointKey,
-    async (_endpoint: string, { arg }: { arg: IAdminPublishLaunchpad }): Promise<IAdminLaunchpadItem> =>
+    async (_endpoint: string, { arg }: { arg: IAdminPublishLaunchpadPayload }): Promise<IAdminLaunchpadItem> =>
       postAdminPublishLaunchpadsService(endpointKey, { payload: { ...arg, id } })
   );
 
@@ -109,7 +116,7 @@ export const usePostAdminCancelLaunchpads = (id: string) => {
 export const usePostAdminStartVotingLaunchpads = (id: string, milestoneId: string) => {
   const endpointKey = createAPIUrl({
     endpoint: API_ENDPOINT.LAUNCHPADS_START_VOTING_ID,
-    params: { id },
+    params: { id, milestone_id: milestoneId },
   });
 
   const { trigger, isMutating, error } = useSWRMutation(
@@ -127,7 +134,7 @@ export const usePostAdminStartVotingLaunchpads = (id: string, milestoneId: strin
 
 export const usePutAdminCancelPublishLaunchpads = (id: string) => {
   const url = createAPIUrl({
-    endpoint: API_ENDPOINT.AFFILIATE_CAMPAIGNS_ID,
+    endpoint: API_ENDPOINT.LAUNCHPADS_PUBLISH_LAUNCHPAD_ID,
     params: {
       id,
     },
@@ -143,5 +150,47 @@ export const usePutAdminCancelPublishLaunchpads = (id: string) => {
     triggerPutAdminCancelPublishLaunchpads: trigger,
     isLoadingPutAdminCancelPublishLaunchpads: isMutating,
     errorPutAdminCancelPublishLaunchpads: error,
+  };
+};
+
+export const usePutAdminStartFundingTimeLaunchpad = (id: string) => {
+  const url = createAPIUrl({
+    endpoint: API_ENDPOINT.LAUNCHPADS_FUNDING_TIME_ID,
+    params: {
+      id,
+    },
+  });
+
+  const { trigger, isMutating, error } = useSWRMutation(
+    url,
+    async (endpoint: string, { arg }: { arg: IStartFundingTimeLaunchpadPayload }): Promise<IAdminLaunchpadItem> =>
+      putAdminStartFundingTimeLaunchpadsService(endpoint, { payload: { ...arg, id } })
+  );
+
+  return {
+    triggerPutAdminStartFundingTimeLaunchpad: trigger,
+    isLoadingPutAdminStartFundingTimeLaunchpad: isMutating,
+    errorPutAdminStartFundingTimeLaunchpad: error,
+  };
+};
+
+export const usePutAdminDecideVotingLaunchpad = (id: string) => {
+  const url = createAPIUrl({
+    endpoint: API_ENDPOINT.LAUNCHPADS_DECIDE_VOTING_ID,
+    params: {
+      id,
+    },
+  });
+
+  const { trigger, isMutating, error } = useSWRMutation(
+    url,
+    async (endpoint: string, { arg }: { arg: IDecideVotingLaunchpadPayload }): Promise<IAdminLaunchpadItem> =>
+      postAdminDecideVotingLaunchpadsService(endpoint, { payload: { ...arg, id } })
+  );
+
+  return {
+    triggerPostAdminDecideVotingLaunchpad: trigger,
+    isLoadingPostAdminDecideVotingLaunchpad: isMutating,
+    errorPostAdminDecideVotingLaunchpad: error,
   };
 };
