@@ -2,6 +2,7 @@ import AvailLogo from '@oe/assets/images/openedu-homepage/organizations/logo-ava
 import VBILogo from '@oe/assets/images/openedu-homepage/organizations/logo-vbi.png';
 import OrgAvail from '@oe/assets/images/openedu-homepage/organizations/org-avail.png';
 import OrgVbi from '@oe/assets/images/openedu-homepage/organizations/org-vbi.png';
+import { Link } from '@oe/ui/common/navigation';
 import { Image } from '@oe/ui/components/image';
 import { useTranslations } from 'next-intl';
 
@@ -10,11 +11,13 @@ const createOrganizations = () => [
     name: 'vbi',
     cardImage: OrgVbi.src,
     logo: VBILogo.src,
+    href: 'https://vbi.openedu.net/',
   },
   {
     name: 'avail',
     cardImage: OrgAvail.src,
     logo: AvailLogo.src,
+    href: 'https://avail.openedu.net/',
   },
 ];
 
@@ -31,9 +34,11 @@ export default function OrganizationSection() {
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {organizations.map(org => (
-            <div
+            <Link
+              href={org.href}
               key={org.name}
-              className="space-y-4 bg-gradient-to-b from-25% from-white via-60% via-[#F2F1FF] to-100% to-[#F2F1FF]/30 p-4"
+              target="_blank"
+              className="block h-auto space-y-4 bg-gradient-to-b from-25% from-white via-60% via-[#F2F1FF] to-100% to-[#F2F1FF]/30 p-4 text-black hover:no-underline"
             >
               <div className="relative flex overflow-hidden rounded-3xl">
                 <Image
@@ -51,7 +56,7 @@ export default function OrganizationSection() {
                 </div>
                 <span className="giant-iheading-semibold20 md:giant-iheading-semibold24 font-medium">{org.name}</span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

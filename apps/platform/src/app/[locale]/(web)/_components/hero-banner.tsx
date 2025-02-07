@@ -1,6 +1,8 @@
 import HeroBanner from '@oe/assets/images/openedu-homepage/hero-banner/hero-banner.png';
 import LogoOpenEdu from '@oe/assets/images/openedu-homepage/hero-banner/logo-openedu-blue.png';
 import WhaleWelcome from '@oe/assets/images/openedu-homepage/hero-banner/whale-welcome.png';
+import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { Link } from '@oe/ui/common/navigation';
 import { Image } from '@oe/ui/components/image';
 import { Button } from '@oe/ui/shadcn/button';
 import { getTranslations } from 'next-intl/server';
@@ -46,8 +48,9 @@ export default async function HeroSection() {
             <div className="mb-8 max-w-xl">
               <h2 className="mcaption-regular16 lg:mcaption-regular24">{t('description')}</h2>
             </div>
-
-            <Button className="mb-8">{t('cta.button')}</Button>
+            <Link href={PLATFORM_ROUTES.courses} className="mb-8 p-0">
+              <Button>{t('cta.button')}</Button>
+            </Link>
           </div>
         </div>
 

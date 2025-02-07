@@ -1,6 +1,7 @@
 'use client';
 
 import type { ICourse } from '@oe/api/types/course/course';
+import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { Link } from '@oe/ui/common/navigation';
 import { CourseCard } from '@oe/ui/components/course-card';
 import { buttonVariants } from '@oe/ui/shadcn/button';
@@ -51,7 +52,7 @@ export function CarouselWrapper({ slides, hasMultipleSlides, viewAllText, title 
               </CarouselNext>
             </div>
           )}
-          <Link href="/courses" className={buttonVariants({ variant: 'secondary' })}>
+          <Link href={PLATFORM_ROUTES.courses} className={buttonVariants({ variant: 'secondary' })}>
             {viewAllText}
           </Link>
         </div>

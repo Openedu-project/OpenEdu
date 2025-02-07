@@ -1,4 +1,6 @@
 import BannerJouney from '@oe/assets/images/openedu-homepage/banner-journey.png';
+import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { Link } from '@oe/ui/common/navigation';
 import { Image } from '@oe/ui/components/image';
 import { Button } from '@oe/ui/shadcn/button';
 import { useTranslations } from 'next-intl';
@@ -13,9 +15,10 @@ export default function CTASection() {
           {t('title')}
         </h2>
         <p className="mcaption-regular16 lg:mcaption-regular24 max-w-xl">{t('description')}</p>
-        <div className="mt-8">
+
+        <Link href={PLATFORM_ROUTES.courses} className="mt-8 p-0">
           <Button>{t('buttons.start')}</Button>
-        </div>
+        </Link>
       </div>
       <div className="relative w-full lg:w-1/2">
         <div className="relative mx-auto w-full max-w-[600px]">
