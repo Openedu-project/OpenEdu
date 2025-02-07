@@ -58,7 +58,7 @@ export default function AffiliateManagementContent() {
           const item = row.original;
           return (
             <Tooltip content={item?.name} className="ml-1">
-              <p className="line-clamp-1 cursor-pointer">{item?.name}</p>
+              <p className="line-clamp-1 cursor-pointer">{item?.course_name}</p>
             </Tooltip>
           );
         },
