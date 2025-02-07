@@ -1,36 +1,33 @@
 import type { IFilter } from '#types/filter';
+import type { IListUserProfileRes, IUserProfile } from '#types/user-profile';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI, postAPI, putAPI } from '#utils/fetch';
+import { type FetchOptions, createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 import type {
   IAcceptUserInvitePayload,
   IAcceptUserInviteRes,
-  IListUserProfileRes,
   IUserInvitationItem,
   IUserInvitationPayload,
   IUserInvitationRes,
   IUserInvitePayload,
-  IUserProfile,
   IUserRoleAction,
   IUsersRes,
 } from '../types/user';
 
 export async function getUserProfileService(
-  url: string,
-  { id, init }: { id: string; init?: RequestInit }
+  url?: string,
+  { id, init }: { id?: string; init?: FetchOptions } = {}
 ): Promise<IUserProfile | null> {
   let endpointKey = url;
   if (!endpointKey) {
     endpointKey = createAPIUrl({
       endpoint: API_ENDPOINT.USERS_ID,
-      queryParams: {
+      params: {
         id,
       },
     });
   }
-
   try {
     const response = await fetchAPI<IUserProfile>(endpointKey, init);
-
     return response.data;
   } catch {
     return null;
@@ -100,8 +97,8 @@ export const postUserRolesService = async (
 };
 
 export async function getTopAuthorService(
-  url: string,
-  { params, init }: { params: IFilter; init?: RequestInit }
+  url?: string,
+  { params, init }: { params?: IFilter; init?: FetchOptions } = {}
 ): Promise<IListUserProfileRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
@@ -166,6 +163,18 @@ export const postUserEmailService = async (
     payload,
     init
   );
+
+  return response.data;
+};
+
+export const followUserService = async (
+  type: 'follow' | 'unfollow',
+  endpoint?: string | undefined,
+  id?: string,
+  { payload, init }: { payload?: Record<string, unknown>; init?: RequestInit } = {}
+) => {
+  const endpointKey = endpoint ?? createAPIUrl({ endpoint: API_ENDPOINT.USERS_ID_FOLLOW, params: { id } });
+  const response = type === 'follow' ? await postAPI(endpointKey, payload, init) : await deleteAPI(endpointKey, init);
 
   return response.data;
 };

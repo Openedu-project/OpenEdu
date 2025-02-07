@@ -30,7 +30,6 @@ const defaultMenuItems: MenuItem[] = [
   'fontSize',
   'undo',
   'redo',
-  'aiGenerate',
 ];
 
 export const MenuBar: React.FC<{
@@ -38,16 +37,18 @@ export const MenuBar: React.FC<{
   menuItems?: MenuItem[];
   className?: string;
   aiParams?: Record<string, string>;
+  aiButton?: boolean;
   onAIApply?: () => void;
-}> = ({ editor, className, aiParams, onAIApply, menuItems = [] }) => {
-  const { renderMenuItems } = useSharedMenu({ editor, menuItems, defaultMenuItems });
+}> = ({ editor, className, aiParams, onAIApply, menuItems = [], aiButton }) => {
+  const defaultItems = aiButton ? ([...defaultMenuItems, 'aiGenerate'] as MenuItem[]) : defaultMenuItems;
+  const { renderMenuItems } = useSharedMenu({ editor, menuItems, defaultMenuItems: defaultItems });
 
   if (!(editor && renderMenuItems)) {
     return null;
   }
 
   return (
-    <div className={cn('flex flex-wrap gap-2 border-b bg-background p-2', className)}>
+    <div className={cn('flex flex-wrap gap-1 border-b bg-muted p-2', className)}>
       {renderMenuItems(aiParams, onAIApply)}
     </div>
   );

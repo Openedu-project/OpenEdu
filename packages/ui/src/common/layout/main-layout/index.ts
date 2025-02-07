@@ -1,3 +1,3 @@
 import { MainLayout } from './main-layout';
-
-export { MainLayout };
+import { MainLayoutClient } from './main-layout-client';
+export { MainLayout, MainLayoutClient };

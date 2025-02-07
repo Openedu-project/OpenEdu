@@ -1,6 +1,7 @@
 import { getCookies } from '@oe/core/utils/cookie';
 
 import { DEFAULT_LOCALE } from '@oe/i18n/constants';
+import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 import { refreshTokenService } from '#services/auth';
 import type { IToken } from '#types/auth';
 import type { HTTPResponse } from '#types/fetch';
@@ -10,15 +11,25 @@ interface ICreateAPIUrl {
   endpoint: string;
   params?: Record<string, unknown>;
   queryParams?: Record<string, unknown>;
+  checkEmptyParams?: boolean;
 }
 
-type FetchOptions = RequestInit & {
+export type FetchOptions = RequestInit & {
   next?: {
     revalidate?: number | false;
     tags?: string[];
   };
   shouldRefreshToken?: boolean;
+  referrer?: string;
+  origin?: string;
 };
+
+export interface RequestInitAPI extends RequestInit {
+  host?: string;
+  token?: string;
+  cookies?: () => ReadonlyRequestCookies;
+  [key: string]: unknown;
+}
 
 let isRefreshing = false;
 let refreshPromise: Promise<IToken | null> | null = null;
@@ -36,12 +47,13 @@ export const createQueryParams = <T extends Record<string, unknown>>(obj: T): st
     })
     .join('&');
 
-export const createAPIUrl = ({ endpoint, params, queryParams }: ICreateAPIUrl) => {
+export const createAPIUrl = ({ endpoint, params, queryParams, checkEmptyParams = false }: ICreateAPIUrl) => {
   let url = endpoint;
 
   if (params) {
     for (const [key, value] of Object.entries(params)) {
-      url = url.replace(`:${key}`, value as string);
+      // Check empty params turn-of and params was undefined
+      url = checkEmptyParams && !value ? url.replace(`/:${key}`, '') : url.replace(`:${key}`, value as string);
     }
   }
 
@@ -62,13 +74,13 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
   const shouldRefreshToken = options.shouldRefreshToken ?? true;
 
   const cookies = await getCookies();
-  const origin = cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY];
-  const referrer = cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY];
+  const origin = options.origin ?? cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY];
+  const referrer = options.referrer ?? cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY];
   const accessToken = cookies?.[process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY];
   const locale = cookies?.[process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY];
 
   const urlAPIWithLocale = new URL(urlAPI);
-  urlAPIWithLocale.searchParams.set('locale', locale ?? DEFAULT_LOCALE);
+  urlAPIWithLocale.searchParams.set('locale', urlAPIWithLocale.searchParams.get('locale') ?? locale ?? DEFAULT_LOCALE);
   const queryParams = urlAPIWithLocale.searchParams.toString();
   const tag = `${urlAPIWithLocale.pathname}${queryParams ? `?${queryParams}` : ''}`;
 
@@ -80,7 +92,7 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
     ...(origin ? { Origin: decodeURIComponent(origin) } : {}),
   };
   const mergedOptions: FetchOptions = {
-    cache: 'force-cache',
+    // cache: 'force-cache',
     next: {
       ...options.next,
       tags: [...(options.next?.tags || []), tag],
@@ -88,6 +100,7 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
     ...defaultOptions,
     ...options,
     headers,
+    referrer: origin,
   };
 
   let retryCount = 0;
@@ -95,7 +108,6 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
 
   async function attemptFetch(): Promise<Response> {
     const response = await fetch(urlAPIWithLocale, mergedOptions);
-
     if (response.status === 401 && shouldRefreshToken && retryCount < MAX_RETRIES) {
       retryCount++;
       if (!isRefreshing) {
@@ -120,10 +132,10 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
 
   try {
     const response = await attemptFetch();
-
     const res = await handleResponse(response);
     return res as HTTPResponse<T>;
   } catch (error) {
+    console.error('--------------Fetch Error--------------------', (error as Error).message);
     throw handleError(error);
   }
 }
@@ -152,9 +164,10 @@ export const putAPI = async <Data, Payload>(endpoint: string, payload: Payload, 
     ...(payload && { body: JSON.stringify(payload) }),
   });
 
-export const deleteAPI = async <Data>(endpoint: string, init: FetchOptions = {}) =>
+export const deleteAPI = async <Data, Payload>(endpoint: string, payload?: Payload, init: FetchOptions = {}) =>
   await fetchAPI<Data>(endpoint, {
     cache: 'no-store',
     ...init,
     method: 'DELETE',
+    ...(payload && { body: JSON.stringify(payload) }),
   });

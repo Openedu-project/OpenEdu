@@ -22,6 +22,8 @@ export interface LinkProps
   activeClassName?: string;
   locale?: LanguageCode;
   exact?: boolean;
+  external?: boolean;
+  disabled?: boolean;
 }
 
 export const Link: FC<LinkProps> = ({
@@ -35,16 +37,22 @@ export const Link: FC<LinkProps> = ({
   activeClassName = 'border border-primary text-primary',
   locale,
   exact,
+  external,
+  disabled,
   ...props
 }) => {
   const { getFinalHref, isExternal, isActive } = useHref();
 
   const finalHref = getFinalHref(href, { locale, nextZone });
-  const isExternalLink = isExternal(href, nextZone);
+  const isExternalLink = external ?? isExternal(href, nextZone);
   const linkProps = {
     href: finalHref,
     ref,
-    className: cn(buttonVariants({ variant, size, className }), isActive(href, nextZone, exact) && activeClassName),
+    className: cn(
+      buttonVariants({ variant, size, className }),
+      isActive(href, nextZone, exact) && activeClassName,
+      disabled && 'pointer-events-none opacity-50'
+    ),
     ...props,
   };
 
@@ -56,5 +64,9 @@ export const Link: FC<LinkProps> = ({
     );
   }
 
-  return <NextLink {...linkProps}>{children}</NextLink>;
+  return (
+    <NextLink prefetch={true} {...linkProps}>
+      {children}
+    </NextLink>
+  );
 };

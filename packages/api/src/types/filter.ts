@@ -1,8 +1,28 @@
+import type { TMyCourseStatus } from './my-learning-space';
+
 export interface IFilter {
-  page: number;
-  per_page: number;
-  sort: string;
-  search_term: string;
-  search_categories: string;
-  [key: string]: number | string | boolean;
+  page?: number;
+  per_page?: number;
+  sort?: string;
+  search_term?: string;
+  search_categories?: string;
+  campaign_id?: string;
+  org_id?: string;
+  type?: string;
+  user_id?: string;
+  preloads?: string | string[];
+  event?: string;
+  role?: string;
+  currency?: string;
+  is_pay?: boolean;
+  latest?: boolean;
+  parent_id_null?: boolean;
+  is_verified?: boolean;
+  is_active?: boolean;
+  enable_root?: boolean;
+  not_org_id?: string;
+  category_id?: string;
+  hashtag_id?: string;
+  status?: string;
+  group?: TMyCourseStatus;
 }

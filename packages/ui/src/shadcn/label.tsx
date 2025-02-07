@@ -6,6 +6,7 @@ import { type VariantProps, cva } from 'class-variance-authority';
 import { Info } from 'lucide-react';
 import { type ComponentPropsWithoutRef, type ComponentRef, type ReactNode, type Ref, forwardRef } from 'react';
 import { cn } from '#utils/cn';
+import { FormLabel } from './form';
 import { Tooltip } from './tooltip';
 
 const labelVariants = cva('text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70');
@@ -20,6 +21,7 @@ const LabelWithInfo = ({
   children,
   infoText,
   ref,
+  className,
   ...rest
 }: {
   children: ReactNode;
@@ -27,16 +29,14 @@ const LabelWithInfo = ({
   ref?: Ref<HTMLLabelElement>;
 } & ComponentPropsWithoutRef<typeof Root> &
   VariantProps<typeof labelVariants>) => (
-  <div className="flex items-center space-x-2">
-    <Label ref={ref} {...rest}>
-      {children}
-    </Label>
+  <FormLabel ref={ref} {...rest} className={cn('flex items-center space-x-2', className)}>
+    {children}
     {infoText ? (
-      <Tooltip content={infoText}>
+      <Tooltip content={infoText} className="ml-1">
         <Info className="h-4 w-4 cursor-help text-muted-foreground" />
       </Tooltip>
     ) : null}
-  </div>
+  </FormLabel>
 );
 
 export { Label, LabelWithInfo };

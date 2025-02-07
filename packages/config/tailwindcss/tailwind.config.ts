@@ -34,6 +34,34 @@ const config: Omit<Config, 'content'> = {
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
+          50: 'var(--primary-50)',
+          100: 'hsl(var(--primary-100))',
+        },
+
+        neutral: {
+          50: 'hsl(var(--neutral-50))',
+          100: 'hsl(var(--neutral-100))',
+          600: 'hsl(var(--neutral-600))',
+        },
+        negative: {
+          50: 'hsl(var(--negative-50))',
+          500: 'hsl(var(--negative-500))',
+        },
+        tertiary: {
+          50: 'hsl(var(--tertiary-50))',
+          800: 'hsl(var(--tertiary-800))',
+        },
+        positive: {
+          50: 'hsl(var(--positive-50))',
+          500: 'hsl(var(--positive-500))',
+          600: 'hsl(var(--positive-600))',
+        },
+        orange: {
+          50: 'hsl(var(--orange-50))',
+          500: 'hsl(var(--orange-500))',
+        },
+        pink: {
+          500: 'hsl(var(--pink-500))',
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
@@ -67,6 +95,8 @@ const config: Omit<Config, 'content'> = {
         warning: {
           DEFAULT: 'hsl(var(--warning))',
           foreground: 'hsl(var(--warning-foreground))',
+          50: 'hsl(var(--warning-50))',
+          600: 'hsl(var(--warning-600))',
         },
         success: {
           DEFAULT: 'hsl(var(--success))',
@@ -75,7 +105,27 @@ const config: Omit<Config, 'content'> = {
         info: {
           DEFAULT: 'hsl(var(--info))',
           foreground: 'hsl(var(--info-foreground))',
+          50: 'hsl(var(--info-50))',
+          500: 'hsl(var(--info-500))',
+          600: 'hsl(var(--info-600))',
         },
+        sidebar: {
+          DEFAULT: 'hsl(var(--sidebar-background))',
+          foreground: 'hsl(var(--sidebar-foreground))',
+          primary: 'hsl(var(--sidebar-primary))',
+          'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+          accent: 'hsl(var(--sidebar-accent))',
+          'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+          border: 'hsl(var(--sidebar-border))',
+          ring: 'hsl(var(--sidebar-ring))',
+        },
+      },
+      backgroundImage: {
+        'auth-background': 'var(--auth-background)',
+        'learning-gradient': 'var(--learning-path-background)',
+        'ai-feature-gradient': 'var(--ai-feature-background)',
+        'launchpad-gradient': 'var(--launchpad-background)',
+        'footer-gradient': 'var(--footer)',
       },
       borderRadius: {
         default: 'var(--radius)',
@@ -106,10 +156,23 @@ const config: Omit<Config, 'content'> = {
             height: '0',
           },
         },
+        'infinite-scroll': {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-50%)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'infinite-scroll': 'infinite-scroll linear infinite',
+      },
+      dropShadow: {
+        'shadow-1': '0px 1px 8px 0px rgba(0, 0, 0, 0.12)',
+        'shadow-2': '0px 4px 16px 0px rgba(0, 0, 0, 0.16)',
+        'shadow-3': '0px 8px 24px 0px rgba(0, 0, 0, 0.12)',
+        'shadow-4': '0px 8px 32px 0px rgba(0, 0, 0, 0.2)',
+        'shadow-5': '0px 20px 68px 0px rgba(128, 144, 155, 0.25)',
+        'shadow-6': '0px 0px 6px 0px rgba(0, 0, 0, 0.05)',
       },
     },
   },

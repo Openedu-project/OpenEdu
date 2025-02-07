@@ -8,11 +8,19 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default: 'border-transparent bg-primary text-primary-foreground hover:bg-primary/80',
-        secondary: 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
-        success: 'border-transparent bg-success text-success-foreground hover:bg-success/80',
-        destructive: 'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
+        default: 'bg-primary text-primary-foreground hover:opacity-80',
+        secondary: 'bg-secondary text-secondary-foreground hover:opacity-80',
+        success: 'bg-success text-success-foreground hover:opacity-80',
+        warning: 'bg-warning text-warning-foreground hover:opacity-80',
+        destructive: 'bg-destructive text-destructive-foreground hover:opacity-80',
+        muted: 'bg-muted text-muted-foreground hover:opacity-80',
         outline: 'text-foreground',
+        outline_primary: 'text-primary border-primary hover:opacity-80',
+        outline_secondary: 'text-secondary border-secondary hover:opacity-80',
+        outline_success: 'text-success border-success hover:opacity-80',
+        outline_warning: 'text-warning border-warning hover:opacity-80',
+        outline_destructive: 'text-destructive border-destructive hover:opacity-80',
+        outline_muted: 'text-muted border-muted hover:opacity-80',
       },
     },
     defaultVariants: {
@@ -20,6 +28,8 @@ const badgeVariants = cva(
     },
   }
 );
+
+export type BadgeVariant = VariantProps<typeof badgeVariants>['variant'];
 
 export interface BadgeProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {}
 

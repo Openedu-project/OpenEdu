@@ -2,26 +2,27 @@
 import NextImage from 'next/image';
 import { cn } from '#utils/cn';
 
+import defaultImage from '@oe/assets/images/defaultimage.png';
 // biome-ignore lint/nursery/noRestrictedImports: <explanation>
 import type { ImageProps } from 'next/image';
 
-interface ExtendedImageProps extends Omit<ImageProps, 'src'> {
-  src: string;
-  aspectRatio?: '1:1' | '4:3' | '16:9' | '21:9';
+export interface ExtendedImageProps extends Omit<ImageProps, 'src'> {
+  src?: string;
+  externalSrc?: string;
+  aspectRatio?: '1:1' | '4:3' | '16:9' | '21:9' | 'none';
   objectFit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
   rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
   backgroundImage?: boolean;
-  useCdn?: boolean;
-  containerHeight?: string;
+  containerHeight?: number | string;
+  align?: 'start' | 'center' | 'end';
+  noContainer?: boolean;
 }
 
 const DEFAULT_SIZES = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw';
 
-const getImageUrl = (src: string, useCdn: boolean): string => {
-  if (useCdn && src.startsWith('https://')) {
-    const cdnDomain = process.env.NEXT_PUBLIC_MEDIA_CDN_HOST;
-
-    return src.replace(new URL(src).origin, cdnDomain);
+const getImageUrl = (src?: string) => {
+  if (src?.startsWith(`https://${process.env.NEXT_PUBLIC_MEDIA_S3_HOST}`)) {
+    return src.replace(process.env.NEXT_PUBLIC_MEDIA_S3_HOST, process.env.NEXT_PUBLIC_MEDIA_CDN_HOST);
   }
   return src;
 };
@@ -55,7 +56,6 @@ export function Image({
   objectFit = 'cover',
   rounded = 'none',
   backgroundImage = false,
-  useCdn = true,
   priority = false,
   quality = 85,
   placeholder,
@@ -63,10 +63,13 @@ export function Image({
   fill = false,
   sizes = DEFAULT_SIZES,
   className,
-  containerHeight = '200px',
+  containerHeight = 200,
+  externalSrc,
+  align = 'center',
+  noContainer = false,
   ...props
 }: ExtendedImageProps) {
-  const imageUrl = getImageUrl(src, useCdn);
+  const imageUrl = getImageUrl(src) || defaultImage;
 
   const imageClasses = cn(
     'w-full h-full transition-opacity duration-300',
@@ -76,15 +79,16 @@ export function Image({
   );
 
   const containerClasses = cn(
-    'relative overflow-hidden',
+    'relative',
     fill && !containerHeight && 'h-64', // Default height when fill is true and no containerHeight provided
-    aspectRatio && aspectRatioClasses[aspectRatio],
+    aspectRatio && aspectRatio !== 'none' && aspectRatioClasses[aspectRatio],
     roundedClasses[rounded],
+    !src && 'w-full',
     className
   );
 
   const containerStyles = {
-    height: containerHeight,
+    ...(containerHeight !== undefined && { height: containerHeight }),
   };
 
   const commonProps = {
@@ -97,13 +101,28 @@ export function Image({
     ...(blurDataURL && { blurDataURL }),
   };
 
-  if (fill || backgroundImage || aspectRatio) {
-    return (
-      <div className={containerClasses} style={containerStyles}>
-        <NextImage {...commonProps} fill className={imageClasses} {...props} />
-      </div>
-    );
-  }
-
-  return <NextImage className={imageClasses} {...commonProps} {...props} />;
+  return noContainer ? (
+    <NextImage {...commonProps} fill className={imageClasses} {...props} />
+  ) : (
+    <div
+      className={cn(
+        'flex w-full border-2 border-transparent',
+        align === 'center' && 'justify-center',
+        align === 'end' && 'justify-end',
+        align === 'start' && 'justify-start'
+      )}
+    >
+      {fill || backgroundImage || (aspectRatio && aspectRatio !== 'none') || externalSrc ? (
+        <div className={containerClasses} style={containerStyles}>
+          {externalSrc ? (
+            <img {...props} src={externalSrc} alt={props.alt || 'image'} className={imageClasses} />
+          ) : (
+            <NextImage {...commonProps} fill className={imageClasses} {...props} />
+          )}
+        </div>
+      ) : (
+        <NextImage className={imageClasses} {...commonProps} {...props} />
+      )}
+    </div>
+  );
 }

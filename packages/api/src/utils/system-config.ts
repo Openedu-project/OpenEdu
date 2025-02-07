@@ -3,4 +3,5 @@ export const systemConfigKeys = {
   buiderTranslations: 'builder_translations',
   i18nConfig: 'i18n_config',
   i18nTranslations: 'i18n_translations',
+  themeSystem: 'theme_system',
 } as const;

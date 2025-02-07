@@ -12,13 +12,13 @@ const bundleAnalyzer = withBundleAnalyzer({
 export function getNextConfig(config: NextConfig = {}): NextConfig {
   const nextConfig: NextConfig = {
     reactStrictMode: true,
-    output: 'standalone',
+    // output: 'standalone',
     transpilePackages: ['@oe/core', '@oe/ui', '@oe/i18n', '@oe/api', '@oe/assets'],
     // experimental: {
     //   optimizePackageImports: ['icon-library'],
     // },
     experimental: {
-      ppr: 'incremental',
+      // ppr: 'incremental',
       reactCompiler: true,
       optimizeServerReact: true,
     },
@@ -30,6 +30,11 @@ export function getNextConfig(config: NextConfig = {}): NextConfig {
           protocol: 'https',
           hostname: process.env.NEXT_PUBLIC_MEDIA_CDN_HOST ?? '',
           pathname: process.env.NODE_ENV === 'development' ? '/images/**' : '/**',
+        },
+        {
+          protocol: 'https',
+          hostname: 's3.ap-southeast-1.amazonaws.com',
+          pathname: '/**',
         },
         {
           protocol: 'https',

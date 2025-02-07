@@ -1,0 +1,116 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: 'Select the environment'
+        required: true
+        options:
+          - openedu101dev
+          - openedudev
+          - openedutest
+          - org_openedutest
+          - production
+          - org_production
+      # project:
+      #   type: choice
+      #   description: 'Select the project to deploy'
+      #   required: true
+      #   options:
+      #     - AI_OPENEDUDEV
+      #     - BLOCKCHAIN_OPENEDU101DEV
+      #     - OPENEDUTEST
+      #     - ORG_OPENEDUTEST
+      #     - OPENEDU
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets[format('VERCEL_PROJECT_ID_{0}', github.event.inputs.environment) ] }}
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Set project directory
+        run: |
+          if [[ "${{ github.event.inputs.environment }}" == org_* ]]; then
+            echo "PROJECT_DIR=apps/organization" >> $GITHUB_ENV
+          else
+            echo "PROJECT_DIR=apps/platform" >> $GITHUB_ENV
+          fi
+
+      - name: Check deployment conditions
+        run: |
+          if [ "${{ github.event.inputs.environment }}" = "production" ] || [ "${{ github.event.inputs.environment }}" = "org_production" ]; then
+            if [ "${{ github.ref_name }}" != "main" ]; then
+              echo "Error: Production can only be deployed from the main branch."
+              exit 1
+            fi
+          fi
+
+      - name: Cache turbo build setup
+        uses: actions/cache@v4
+        with: 
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Set up environment file
+        run: |
+          ENV_NAME="${{ github.event.inputs.environment }}"
+          if [[ "$ENV_NAME" == org_* ]]; then
+            ENV_NAME="${ENV_NAME#org_}"
+          fi
+          
+          if [ -f "${{ env.PROJECT_DIR }}/.env.$ENV_NAME" ]; then
+            cp ${{ env.PROJECT_DIR }}/.env.$ENV_NAME ${{ env.PROJECT_DIR }}/.env.production.local
+          else
+            echo "No environment file found for $ENV_NAME in ${{ env.PROJECT_DIR }}"
+            exit 1
+          fi
+
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        # working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          pnpm dlx vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+          pnpm dlx vercel build --yes --prod --token=$VERCEL_TOKEN
+          pnpm dlx vercel deploy --yes --prebuilt --prod --token=$VERCEL_TOKEN

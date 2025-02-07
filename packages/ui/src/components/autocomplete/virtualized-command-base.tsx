@@ -1,9 +1,9 @@
-import { CommandInput } from 'cmdk';
+// import { CommandInput } from 'cmdk';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import { Spinner } from '#components/spinner';
-import { Command, CommandEmpty, CommandGroup, CommandList } from '#shadcn/command';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandList } from '#shadcn/command';
 import { ITEM_HEIGHT } from './constants';
 
 export interface VirtualizedCommandBaseProps<T> {
@@ -40,7 +40,7 @@ export function VirtualizedCommandBase<T>({
           placeholder={placeholder ?? `${t('search')}...`}
         />
       ) : (
-        <CommandInput name="search" className="hidden" />
+        <CommandInput name="search" className="hidden" wrapperClassName="hidden" />
       )}
       <CommandList>
         <CommandEmpty>{loading ? <Spinner backdrop={false} /> : t('noItemFound')}</CommandEmpty>

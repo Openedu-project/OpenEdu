@@ -1,5 +1,3 @@
-// import { IDataPagination } from './pagination';
-
 import type { HTTPPagination } from './fetch';
 
 export interface IHashtag {
@@ -10,4 +8,4 @@ export interface IHashtag {
   formatted_hashtag: string;
 }
 
-export interface IHashtagResponse extends HTTPPagination<IHashtag[]> {}
+export interface IHashtagResponse extends HTTPPagination<IHashtag> {}

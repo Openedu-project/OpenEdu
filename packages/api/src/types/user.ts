@@ -1,6 +1,5 @@
 import type { ICreatorAcceptResponse } from './creators';
-import type { IFileResponse } from './file';
-import type { IDataPagination } from './pagination';
+import type { HTTPPagination } from './fetch';
 
 export interface IUserSettingsOption {
   facebook?: string;
@@ -26,19 +25,6 @@ export interface IUserRole {
   update_at?: number;
 }
 
-export interface IUserRoleOrg {
-  create_at?: number;
-  delete_at?: number;
-  id?: string;
-  org_domain?: string;
-  org_id?: string;
-  role?: IUserRole;
-  role_id?: string;
-  update_at?: number;
-  user?: IUser;
-  user_id?: string;
-}
-
 export interface IUser {
   about?: string;
   active?: boolean;
@@ -47,46 +33,36 @@ export interface IUser {
   cover_photo?: string;
   create_at?: number;
   delete_at?: number;
-  display_name?: string;
+  display_name: string;
   email: string;
-  followers?: number;
-  following?: number;
-  headline?: string;
-  id?: string;
-  password?: string;
-  phone?: string;
-  position?: string;
-  props?: IUserSettingsOption;
-  require_set_password?: boolean;
-  roles?: IUserRoleOrg[];
-  skills?: string[];
-  update_at?: number;
+  headline: string;
+  id: string;
+  last_login_session?: ILastLoginSession;
+  roles: IUserRoleInOrg[];
   username: string;
+  props?: IUserSettingsOption;
 }
-export interface IUsersRes extends IDataPagination<IUser[]> {}
 
-interface IWriterInOrg {
+export interface IUserRoleInOrg {
+  org_domain: string;
+  org_id: string;
+  org_name: string;
+  role_id: string;
+}
+
+interface ILastLoginSession {
   id: string;
   create_at: number;
   update_at: number;
   delete_at: number;
-  user: null;
-  thumbnail: IFileResponse | null;
-  schema: string;
-  name: string;
-  domain: string;
-  alt_domain: string;
-  active: boolean;
-  create_by: null;
+  org_id: string;
+  url: string;
+  user_id: string;
+  user_agent: string;
+  expire_at: number;
 }
 
-export interface IUserProfile extends IUser {
-  total_blogs: number;
-  writer_in_orgs?: IWriterInOrg[];
-  is_following?: boolean;
-}
-
-export interface IListUserProfileRes extends IDataPagination<IUserProfile[]> {}
+export interface IUsersRes extends HTTPPagination<IUser> {}
 
 export interface IUserInvite {
   user_emails: string[];
@@ -130,7 +106,7 @@ export interface IUserInvitationItem {
   redirect_url: string;
 }
 
-export interface IUserInvitationRes extends IDataPagination<IUserInvitationItem[]> {}
+export interface IUserInvitationRes extends HTTPPagination<IUserInvitationItem> {}
 
 export interface IUserInvitationPayload {
   user_token_ids: string[];

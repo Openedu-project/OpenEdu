@@ -1,3 +1,21 @@
-export default function AboutUsPage() {
-  return <div>AboutUsPage</div>;
+import { getThemeConfigServer } from '@oe/api/services/theme';
+import { getMetadata } from '@oe/themes';
+import ThemeWebPage from '@oe/themes/components/web/theme-web-page';
+
+import type { Metadata } from 'next';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const [themeSystem] = await Promise.all([getThemeConfigServer()]);
+
+  return getMetadata(themeSystem?.[0]?.value);
+}
+
+export default async function AboutUs() {
+  const [themeSystem] = await Promise.all([getThemeConfigServer()]);
+
+  if (!themeSystem?.[0]?.value) {
+    return null;
+  }
+
+  return <ThemeWebPage pageKey="about-us" themeSystem={themeSystem?.[0]?.value} />;
 }

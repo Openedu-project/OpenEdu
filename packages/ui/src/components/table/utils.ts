@@ -10,18 +10,18 @@ export function getCellClassName<TData>(
 ) {
   const isSticky = (cell.column.columnDef as ColumnDef<TData>).sticky;
   const alignClass =
-    (cell.column.columnDef as ColumnDef<TData>).align && `text-${(cell.column.columnDef as ColumnDef<TData>).align}`;
+    (cell.column.columnDef as ColumnDef<TData>).align &&
+    `text-${(cell.column.columnDef as ColumnDef<TData>).align} justify-${(cell.column.columnDef as ColumnDef<TData>).align}`;
 
   const stickyClasses = isSticky
     ? [
-        'sticky isolate z-20',
-        isSticky === 'right' ? 'right-0 after:left-0' : 'left-0 after:right-0',
+        'md:sticky md:isolate md:z-20',
         border === 'bordered'
-          ? 'after:absolute after:inset-y-0 after:z-[-1] after:w-[10px] first:border-l'
-          : '[&:has([role=checkbox])]:pr-0 after:absolute after:inset-y-0 after:z-[-1] after:w-[10px]',
+          ? 'md:after:absolute md:after:inset-y-0 md:after:z-[-1] md:after:w-[10px] md:first:border-l'
+          : 'md:[&:has([role=checkbox])]:pr-0 md:after:absolute md:after:inset-y-0 md:after:z-[-1] md:after:w-[10px]',
         isSticky === 'right'
-          ? 'after:shadow-[inset_-10px_0_8px_-8px_rgba(5,5,5,0.06)]'
-          : 'after:shadow-[inset_10px_0_8px_-8px_rgba(5,5,5,0.06)]',
+          ? 'md:right-0 md:after:left-0 md:after:shadow-[inset_-10px_0_8px_-8px_rgba(5,5,5,0.06)]'
+          : 'md:left-0 md:after:right-0 md:after:shadow-[inset_10px_0_8px_-8px_rgba(5,5,5,0.06)]',
       ]
     : border === 'bordered'
       ? 'border-r first:border-l'
@@ -50,16 +50,18 @@ export function getHeaderClassName<TData>({
   className?: string;
 }) {
   const isSticky = (header.column.columnDef as ColumnDef<TData>).sticky;
+  const alignClass =
+    (header.column.columnDef as ColumnDef<TData>).align &&
+    `text-${(header.column.columnDef as ColumnDef<TData>).align} justify-${(header.column.columnDef as ColumnDef<TData>).align}`;
   const stickyClasses = isSticky
     ? [
-        'sticky isolate z-20',
-        isSticky === 'right' ? 'right-0 after:left-0' : 'left-0 after:right-0',
+        'md:sticky md:isolate md:z-20',
         border === 'bordered'
-          ? 'border-t after:absolute after:inset-y-0 after:z-[-1] after:w-[10px] first:border-l'
-          : '[&:has([role=checkbox])]:pr-0 after:absolute after:inset-y-0 after:z-[-1] after:w-[10px]',
+          ? 'md:border-t md:after:absolute md:after:inset-y-0 md:after:z-[-1] md:after:w-[10px] md:first:border-l'
+          : 'md:[&:has([role=checkbox])]:pr-0 md:after:absolute md:after:inset-y-0 md:after:z-[-1] md:after:w-[10px]',
         isSticky === 'right'
-          ? 'after:shadow-[inset_-10px_0_8px_-8px_rgba(5,5,5,0.06)]'
-          : 'after:shadow-[inset_10px_0_8px_-8px_rgba(5,5,5,0.06)]',
+          ? 'md:right-0 md:after:left-0 md:after:shadow-[inset_-10px_0_8px_-8px_rgba(5,5,5,0.06)]'
+          : 'md:left-0 md:after:right-0 md:after:shadow-[inset_10px_0_8px_-8px_rgba(5,5,5,0.06)]',
       ]
     : index === headerGroupsLength - 1
       ? border === 'bordered'
@@ -69,5 +71,5 @@ export function getHeaderClassName<TData>({
         ? 'border-t border-r first:border-l'
         : '[&:has([role=checkbox])]:pr-0 border-b';
 
-  return cn('flex items-center bg-muted', stickyClasses, header.id === 'expander' ? 'p-0' : '', className);
+  return cn('flex items-center bg-muted', alignClass, stickyClasses, header.id === 'expander' ? 'p-0' : '', className);
 }

@@ -1,7 +1,7 @@
 import type { IFileResponse } from './file';
-import type { IUser } from './user';
+import type { IUserProfile } from './user-profile';
 
-export interface IOrganizationUser extends IUser {
+export interface IOrganizationUser extends IUserProfile {
   blocking_reason: string;
 }
 

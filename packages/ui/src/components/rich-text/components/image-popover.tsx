@@ -1,4 +1,5 @@
 'use client';
+import type { IFileResponse } from '@oe/api/types/file';
 import type { Editor } from '@tiptap/core';
 import { ImageIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -12,7 +13,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '#shadcn/popover';
 export const ImagePopover: React.FC<{ editor: Editor }> = ({ editor }) => {
   const t = useTranslations('richText.popover');
   const [url, setUrl] = useState('');
-
+  const [files, setFiles] = useState<IFileResponse[]>([]);
   const addImage = (src: string) => {
     if (src) {
       editor.chain().focus().setImage({ src }).run();
@@ -37,8 +38,11 @@ export const ImagePopover: React.FC<{ editor: Editor }> = ({ editor }) => {
           <Uploader
             accept="image/*"
             listType="picture"
-            onSuccess={file => {
-              addImage(file.url as string);
+            value={files}
+            onChange={files => {
+              setFiles(files);
+              setUrl(files[0]?.url as string);
+              addImage(files[0]?.url as string);
             }}
           />
         </div>

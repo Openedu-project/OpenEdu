@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import type React from 'react';
 import { useState } from 'react';
 import { Button } from '#shadcn/button';
-import { AIModal } from './ai-modal';
+import { AIModal, type IAIStatus } from './ai-modal';
 
 export const AIRewriteModal: React.FC<{
   editor: Editor;
@@ -12,15 +12,19 @@ export const AIRewriteModal: React.FC<{
   handleAIApply?: () => void;
 }> = ({ editor, aiParams, handleAIApply }) => {
   const t = useTranslations('richText.ai');
-  const { postAIBlog, isLoading } = usePostAIBlog();
-  const [result, setResult] = useState('');
+  const { postAIBlog } = usePostAIBlog();
+  const [rewriteId, setRewriteId] = useState<string>('');
+  const [status, setStatus] = useState<IAIStatus>();
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const onOpenAIResult = async () => {
+    setModalOpen(true);
     await handleAIRewrite();
   };
 
   const handleAIRewrite = async () => {
-    setResult('');
+    setRewriteId('');
+    setStatus(undefined);
     let selectionContainsText = '';
 
     editor
@@ -38,11 +42,11 @@ export const AIRewriteModal: React.FC<{
     try {
       const res = await postAIBlog({
         ...aiParams,
-        ai_blog_request_type: 'rewrite_blog',
+        ai_blog_request_type: 'rewrite_paragraph',
         text: selectionContainsText,
       });
-
-      setResult(res?.content);
+      setRewriteId(res.rewrite_id);
+      setStatus((res.status ?? 'generating') as IAIStatus);
     } catch (error) {
       return error;
     }
@@ -60,10 +64,14 @@ export const AIRewriteModal: React.FC<{
       },
     });
 
-    editor.commands.setTextSelection({ from, to: from + result.length + 2 });
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = htmlText;
+    const contentLength = tempDiv.textContent?.length || 0;
+    editor.commands.setTextSelection({ from, to: from + contentLength + htmlText.split('\n').length - 1 });
     editor.chain().focus();
 
     handleAIApply?.();
+    setModalOpen(false);
   };
 
   return (
@@ -71,8 +79,14 @@ export const AIRewriteModal: React.FC<{
       <Button type="button" variant="secondary" onClick={onOpenAIResult}>
         {t('rewriteButton')}
       </Button>
-
-      <AIModal loading={isLoading} open={false} onConfirm={handleApply} onRewrite={handleAIRewrite} text={result} />
+      <AIModal
+        open={isModalOpen}
+        status={status}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleApply}
+        onRewrite={handleAIRewrite}
+        rewriteId={rewriteId}
+      />
     </>
   );
 };

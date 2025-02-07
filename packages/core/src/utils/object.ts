@@ -76,6 +76,109 @@ export function getNestedValue<T extends NestedObject, P extends Path, D = undef
   return result as any;
 }
 
+const ARRAY_REGEX = /^\d+$/;
+export function setNestedValue(
+  obj: NestedObject,
+  path: string | (string | number)[],
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  value: any,
+  createPath = true
+): NestedObject {
+  const keys = Array.isArray(path) ? path : path.replace(/\[(\w+)\]/g, '.$1').split('.');
+
+  const result = JSON.parse(JSON.stringify(obj));
+
+  let current = result;
+
+  for (let i = 0; i < keys.length - 1; i++) {
+    const key = keys[i];
+
+    if (key && current[key] === undefined) {
+      if (!createPath) {
+        return obj;
+      }
+
+      const nextKey = keys[i + 1] as string;
+      current[key] = ARRAY_REGEX.test(nextKey) ? [] : {};
+    }
+
+    current = current[key as string];
+
+    if (current == null) {
+      return obj;
+    }
+  }
+
+  const lastKey = keys[keys.length - 1];
+  current[lastKey as string] = value;
+  return result;
+}
+
+export function deleteNestedValue(
+  obj: NestedObject,
+  path: string | (string | number)[],
+  cleanupEmpty = false
+): NestedObject {
+  // Convert string path to array
+  const keys = Array.isArray(path) ? path : path.replace(/\[(\w+)\]/g, '.$1').split('.');
+
+  // Create a deep copy of the original object
+  const result = JSON.parse(JSON.stringify(obj));
+
+  let current = result;
+  const stack: { obj: NestedObject; key: string | number | undefined }[] = [];
+
+  // Traverse to the second-to-last key
+  for (let i = 0; i < keys.length - 1; i++) {
+    const key = keys[i];
+
+    if (current[key as string] == null) {
+      return result; // Path doesn't exist, return copy of original
+    }
+
+    stack.push({ obj: current, key });
+    current = current[key as string];
+  }
+
+  const lastKey = keys[keys.length - 1];
+
+  // If the path doesn't exist, return the original object copy
+  if (current[lastKey as string] === undefined) {
+    return result;
+  }
+
+  // Handle array deletion
+  if (Array.isArray(current)) {
+    const index = Number.parseInt(lastKey as string, 10);
+    if (!Number.isNaN(index)) {
+      current.splice(index, 1);
+    }
+  } else {
+    // Delete the property
+    delete current[lastKey as string];
+  }
+
+  // Clean up empty objects/arrays if requested
+  if (cleanupEmpty && stack.length > 0) {
+    for (let i = stack.length - 1; i >= 0; i--) {
+      const { obj, key } = stack[i] as { obj: NestedObject; key: string | number | undefined };
+      const value = obj[key as string];
+
+      if (Array.isArray(value)) {
+        if (value.length === 0) {
+          delete obj[key as string];
+        }
+      } else if (typeof value === 'object' && value !== null) {
+        if (Object.keys(value).length === 0) {
+          delete obj[key as string];
+        }
+      }
+    }
+  }
+
+  return result;
+}
+
 export const createQueryParams = <T extends Record<string, unknown>>(obj: T): string =>
   Object.entries(obj)
     .flatMap(([key, value]) => {

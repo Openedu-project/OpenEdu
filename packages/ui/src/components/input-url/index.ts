@@ -1,3 +1,3 @@
-import { InputURL } from './input-url';
+import { InputURL, type UrlInputProps } from './input-url';
 
-export { InputURL };
+export { InputURL, type UrlInputProps };

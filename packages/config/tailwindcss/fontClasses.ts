@@ -75,6 +75,13 @@ export const fontClasses = {
     lineHeight: '140%' /* 50px */,
   },
 
+  '.giant-iheading-bold32': {
+    fontFamily: 'var(--font-primary), sans-serif',
+    fontSize: '32px',
+    fontWeight: 700,
+    lineHeight: '140%' /* 50px */,
+  },
+
   '.giant-iheading-bold24': {
     fontFamily: 'var(--font-primary), sans-serif',
     fontSize: '24px',
@@ -155,6 +162,13 @@ export const fontClasses = {
     fontFamily: 'var(--font-primary), sans-serif',
     fontSize: '12px',
     fontWeight: 600,
+    lineHeight: '140%' /* 16px */,
+  },
+
+  '.giant-iheading-regular16': {
+    fontFamily: 'var(--font-primary), sans-serif',
+    fontSize: '16px',
+    fontWeight: 400,
     lineHeight: '140%' /* 16px */,
   },
 
@@ -241,6 +255,13 @@ export const fontClasses = {
     fontFamily: 'var(--font-secondary), sans-serif',
     fontSize: '16px',
     fontWeight: 600,
+    lineHeight: '140%' /* 20px */,
+  },
+
+  '.mcaption-bold14': {
+    fontFamily: 'var(--font-secondary), sans-serif',
+    fontSize: '14px',
+    fontWeight: 700,
     lineHeight: '140%' /* 20px */,
   },
 
@@ -343,7 +364,7 @@ export const fontClasses = {
 
   '.mbutton-semibold14': {
     fontFamily: 'var(--font-secondary), sans-serif',
-    fontSize: '16px',
+    fontSize: '14px',
     fontWeight: 600,
     lineHeight: '140%' /* 20px */,
   },

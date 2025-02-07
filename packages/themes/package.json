@@ -6,10 +6,16 @@
     "#types": "./src/types.ts"
   },
   "exports": {
+    "./*": "./src/*.tsx",
     ".": "./src/index.ts",
     "./homepage": "./src/scholar/homepage.tsx",
     "./types": "./src/types.ts",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./store/*": "./src/_store/*.ts",
+    "./config/*": "./src/_config/*.ts",
+    "./components/*": "./src/_components/*.tsx",
+    "./types/*": "./src/_types/*.ts",
+    "./utils/*": "./src/_utils/*.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
@@ -17,18 +23,19 @@
   },
   "peerDependencies": {
     "@oe/i18n": "workspace:*",
-    "next": "15.0.4-canary.20",
-    "next-intl": "3.25.1",
-    "react": "19.0.0-rc-6f0dc294-20241119",
-    "zustand": "^5.0.1"
-  },
-  "dependencies": {
-    "cookies-next": "^5.0.2"
-  },
-  "devDependencies": {
+    "next": "15.1.4",
+    "next-intl": "3.26.3",
+    "react": "19.0.0",
+    "zustand": "^5.0.2",
+    "cookies-next": "^5.0.2",
+    "@oe/ui": "workspace:*",
+    "@oe/core": "workspace:*",
     "@oe/config": "workspace:*",
     "@oe/types": "workspace:*",
-    "@types/node": "^22.9.1",
+    "@oe/api": "workspace:*",
+    "@oe/assets": "workspace:*",
+    "@types/node": "^22.10.2",
     "@types/wicg-file-system-access": "^2023.10.5"
-  }
+  },
+  "devDependencies": {}
 }

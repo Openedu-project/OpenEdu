@@ -1,138 +1,142 @@
-import { zodResolver } from '@hookform/resolvers/zod';
+import type { TypeOf, z } from '@oe/api/utils/zod';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { Button } from '#shadcn/button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '#shadcn/dialog';
-import { Form } from '#shadcn/form';
-
-import type { z } from '@oe/api/utils/zod';
-import type { DialogProps } from '@radix-ui/react-dialog';
 import type { ReactNode } from 'react';
 import type { DefaultValues, UseFormReturn } from 'react-hook-form';
+import {
+  type FormErrorHandler,
+  FormNestedProvider,
+  FormNestedWrapper,
+  type INestedFormsValues,
+  SubmitFormsButton,
+} from '#components/form-wrapper';
+import { Button, type ButtonProps } from '#shadcn/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '#shadcn/dialog';
+import { cn } from '#utils/cn';
 
 type ButtonVariant = 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
 
-export interface ButtonConfig {
+export interface ButtonConfig extends Omit<ButtonProps, 'onClick'> {
   label: string;
-  onClick?: (onClose?: () => void) => void;
+  onClick?: (handleClose?: () => void) => void;
   variant?: ButtonVariant;
   type?: 'button' | 'submit' | 'reset';
 }
 
-type FormSchema = z.ZodObject<Record<string, z.ZodTypeAny>>;
+// type FormSchema = z.ZodObject<Record<string, z.ZodTypeAny>>;
 
-interface BaseModalProps extends Omit<DialogProps, 'children'> {
-  title: string;
-  description?: string;
+export interface ModalProps<TSchema extends z.ZodType> {
+  title: ReactNode;
+  description?: ReactNode;
   trigger?: ReactNode;
-  buttons?: ButtonConfig[];
-  isOpen?: boolean;
+  children?: ReactNode | ((form: UseFormReturn<z.infer<TSchema>>) => ReactNode);
   className?: string;
+  buttonsClassName?: string;
+  contentClassName?: string;
+  open?: boolean;
+  hasCancelButton?: boolean;
+  hasCloseIcon?: boolean;
   onClose?: () => void;
+  buttons?: ButtonConfig[];
+  defaultValues?: DefaultValues<TypeOf<TSchema>> | undefined;
+  showSubmit?: boolean;
+  validationSchema?: TSchema;
+  onSubmit?: (data: z.infer<TSchema>) => Promise<void>;
+  onError?: FormErrorHandler;
 }
 
-interface FormModalProps<TSchema extends FormSchema> extends BaseModalProps {
-  children: (form: UseFormReturn<z.infer<TSchema>>) => ReactNode;
-  onSubmit: (data: z.infer<TSchema>) => Promise<void>;
-  validationSchema: TSchema;
-  defaultValues?: DefaultValues<z.infer<TSchema>>;
-}
-
-interface NonFormModalProps extends BaseModalProps {
-  children?: ReactNode;
-}
-
-type ModalProps<TSchema extends FormSchema> = FormModalProps<TSchema> | NonFormModalProps;
-
-const isFormModal = <TSchema extends FormSchema>(props: ModalProps<TSchema>): props is FormModalProps<TSchema> =>
-  'onSubmit' in props && 'validationSchema' in props;
-
-const FormModalContent = <TSchema extends FormSchema>({
-  children,
-  onSubmit,
-  validationSchema,
-  defaultValues,
+const ModalButtons = ({
   buttons,
-  onClose,
-}: FormModalProps<TSchema>) => {
-  const form = useForm<z.infer<TSchema>>({
-    resolver: zodResolver(validationSchema),
-    defaultValues: defaultValues || (validationSchema.partial().parse({}) as DefaultValues<z.infer<TSchema>>),
-  });
+  isSubmitting,
+  showSubmit,
+  hasCancelButton = true,
+  handleClose,
+}: {
+  buttons?: ButtonConfig[];
+  isSubmitting?: boolean;
+  showSubmit?: boolean;
+  hasCancelButton?: boolean;
+  handleClose?: () => void;
+}) => {
+  const t = useTranslations('general');
 
-  const handleSubmit = async (data: z.infer<TSchema>) => {
-    try {
-      await onSubmit(data);
-      onClose?.();
-    } catch (error) {
-      console.error('Form submission error:', error);
-    }
-  };
-
-  return (
-    <Form {...form}>
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          e.stopPropagation();
-          form.handleSubmit(handleSubmit)(e);
-        }}
-      >
-        {children(form)}
-        <div className="mt-4 flex justify-end space-x-2">
-          {renderButtons(buttons, form.formState.isSubmitting, true, onClose)}
-        </div>
-      </form>
-    </Form>
-  );
-};
-
-const NonFormModalContent = ({ children, buttons, onClose }: NonFormModalProps) => (
-  <>
-    {children}
-    <div className="mt-4 flex justify-end space-x-2">{renderButtons(buttons, false, false, onClose)}</div>
-  </>
-);
-
-const renderButtons = (
-  buttons: ButtonConfig[] | undefined,
-  isSubmitting: boolean,
-  isFormModal: boolean,
-  onClose?: () => void
-) => {
   if (buttons && buttons.length > 0) {
-    return buttons.map(button => (
-      <Button
-        key={button.label}
-        type={button.type ?? 'button'}
-        variant={button.variant ?? 'default'}
-        onClick={button.onClick ? () => button.onClick?.(onClose) : button.type === 'button' ? onClose : undefined}
-        disabled={isSubmitting && button.type === 'submit'}
-      >
-        {button.label}
-      </Button>
-    ));
+    return (
+      <>
+        {buttons.map(button =>
+          button.type === 'submit' ? (
+            <SubmitFormsButton key={button.label} variant={button.variant} disabled={isSubmitting}>
+              {button.label}
+            </SubmitFormsButton>
+          ) : (
+            <Button
+              {...button}
+              key={button.label}
+              type={button.type ?? 'button'}
+              variant={button.variant ?? 'default'}
+              onClick={
+                button.onClick
+                  ? () => button.onClick?.(handleClose)
+                  : button.type === 'button'
+                    ? handleClose
+                    : undefined
+              }
+            >
+              {button.label}
+            </Button>
+          )
+        )}
+      </>
+    );
   }
 
   return (
     <>
-      {onClose && (
-        <Button type="button" variant="outline" onClick={onClose}>
-          Close
+      {hasCancelButton && handleClose && (
+        <Button type="button" variant="outline" onClick={handleClose}>
+          {t('close')}
         </Button>
       )}
-      {isFormModal && (
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Submitting...' : 'Submit'}
-        </Button>
+      {showSubmit && (
+        <SubmitFormsButton key="submit" variant="default">
+          {isSubmitting ? t('submitting') : t('submit')}
+        </SubmitFormsButton>
       )}
     </>
   );
 };
 
-export const Modal = <TSchema extends FormSchema = never>(props: ModalProps<TSchema>) => {
-  const { title, description, trigger, isOpen: externalIsOpen, className, onClose, ...rest } = props;
+export const Modal = <TSchema extends z.ZodType>({
+  title,
+  description,
+  trigger,
+  children,
+  open: externalIsOpen,
+  className,
+  buttonsClassName,
+  contentClassName,
+  hasCancelButton = true,
+  buttons,
+  validationSchema,
+  showSubmit,
+  defaultValues,
+  hasCloseIcon,
+  onClose,
+  onSubmit,
+  onError,
+  ...rest
+}: ModalProps<TSchema>) => {
   const [internalIsOpen, setInternalIsOpen] = useState(false);
+  const isForm = !!validationSchema && !!onSubmit;
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (externalIsOpen !== undefined) {
@@ -147,32 +151,70 @@ export const Modal = <TSchema extends FormSchema = never>(props: ModalProps<TSch
     }
   };
 
+  const handleSubmit = async (data: INestedFormsValues) => {
+    setIsSubmitting(true);
+    await onSubmit?.(data['modal-form']);
+    handleOpenChange(false);
+    setIsSubmitting(false);
+  };
+
+  const handleError = (error: unknown) => {
+    onError?.(error);
+    setIsSubmitting(false);
+  };
+
+  const hasTitleOrDescription = !!title || !!description;
+  const hasButtons = !!buttons || !!hasCancelButton || !!showSubmit;
+
+  const content = isForm ? (
+    <FormNestedWrapper
+      id="modal-form"
+      schema={validationSchema}
+      className={cn('scrollbar px-4', hasTitleOrDescription && hasButtons ? 'overflow-y-auto' : '')}
+      useFormProps={{ defaultValues }}
+    >
+      {({ form }) => (typeof children === 'function' ? children(form) : children)}
+    </FormNestedWrapper>
+  ) : (
+    <div
+      className={cn('scrollbar px-4', hasTitleOrDescription && hasButtons ? 'overflow-y-auto' : '', contentClassName)}
+    >
+      {children as ReactNode}
+    </div>
+  );
+
   const modalContent = (
-    <DialogContent onPointerDownOutside={e => e.preventDefault()} className={className}>
-      <DialogHeader>
+    <DialogContent
+      onPointerDownOutside={e => e.preventDefault()}
+      className={`flex max-w-[90vw] flex-col overflow-hidden p-0 md:max-w-lg ${
+        !hasCloseIcon && '[&>button]:hidden'
+      } ${className}`}
+    >
+      <DialogHeader className={cn('p-4 pb-0', hasTitleOrDescription ? '' : 'hidden')}>
         <DialogTitle>{title}</DialogTitle>
         <DialogDescription>{description}</DialogDescription>
       </DialogHeader>
-      {isFormModal(props) ? (
-        <FormModalContent {...props} onClose={() => handleOpenChange(false)} />
-      ) : (
-        <NonFormModalContent {...props} onClose={() => handleOpenChange(false)} />
+      {content}
+      {hasButtons && (
+        <DialogFooter className={cn('p-4 pt-0', buttonsClassName)}>
+          <ModalButtons
+            buttons={buttons}
+            hasCancelButton={hasCancelButton}
+            showSubmit={showSubmit}
+            handleClose={() => handleOpenChange(false)}
+            isSubmitting={isSubmitting}
+          />
+        </DialogFooter>
       )}
     </DialogContent>
   );
 
-  if (trigger) {
-    return (
-      <Dialog open={internalIsOpen} onOpenChange={handleOpenChange} {...rest}>
-        <DialogTrigger asChild>{trigger}</DialogTrigger>
-        {modalContent}
-      </Dialog>
-    );
-  }
-
   return (
     <Dialog open={internalIsOpen} onOpenChange={handleOpenChange} {...rest}>
-      {modalContent}
+      {trigger ? <DialogTrigger asChild>{trigger}</DialogTrigger> : null}
+      <FormNestedProvider onSubmit={handleSubmit} onError={handleError}>
+        {modalContent}
+      </FormNestedProvider>
     </Dialog>
   );
 };

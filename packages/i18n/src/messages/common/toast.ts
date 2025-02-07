@@ -4,5 +4,6 @@ export const toastMessages = {
     logoutSuccess: 'Logout success.',
     saveSuccess: 'Save success.',
     saveError: 'Save error.',
+    copyToClipboard: 'Copy to Clipboard Success.',
   },
 };

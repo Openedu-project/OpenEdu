@@ -4,7 +4,7 @@ import type React from 'react';
 import { Input } from '#shadcn/input';
 import { Textarea } from '#shadcn/textarea';
 
-interface UrlInputProps extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
+export interface UrlInputProps extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   multiple?: boolean;
   error?: string;
   onValidate?: (isValid: boolean) => void;
@@ -12,7 +12,7 @@ interface UrlInputProps extends React.InputHTMLAttributes<HTMLInputElement | HTM
 }
 
 export const InputURL = ({ multiple = false, error, onValidate, onChange, ref, ...props }: UrlInputProps) => {
-  const t = useTranslations('forms');
+  const t = useTranslations('formValidation');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (onChange) {

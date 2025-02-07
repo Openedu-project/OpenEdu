@@ -6,7 +6,7 @@ import { InitLanguageState } from './_components/init-language-state';
 
 export default async function LanguagesLayout({ children }: { children: ReactNode }) {
   const [tSiteSettings, tLanguages] = await Promise.all([
-    getTranslations('dashboardSidebar.siteSettings'),
+    getTranslations('dashboard.siteSettings'),
     getTranslations('languages'),
   ]);
 
@@ -14,6 +14,7 @@ export default async function LanguagesLayout({ children }: { children: ReactNod
     <>
       <InitLanguageState />
       <DashboardHeaderCard
+        dashboard="admin"
         breadcrumbs={[
           { label: tSiteSettings('siteSettings'), disabled: true },
           { label: tSiteSettings('languages') },

@@ -4,6 +4,9 @@ export const forgotPasswordMessage = {
     email: 'Email',
     sendYourEmail: 'Send Your Email',
     slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
+    errors: {
+      invalidEmail: 'Please enter a valid email address.',
+    },
   },
   forgotPasswordSuccess: {
     title: 'Forgot Password Success',

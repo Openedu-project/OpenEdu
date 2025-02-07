@@ -38,11 +38,18 @@ export const cookieOptions = (options?: CookieOptions): CookieOptions => {
     sameSite: 'lax',
     path: '/',
     maxAge: defaultExpiredTime,
-    ...(process.env.NODE_ENV === 'development'
-      ? { domain: 'localhost' }
-      : { domain: process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN }),
+    ...(process.env.NODE_ENV === 'development' ? {} : { domain: process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN }),
     ...options,
   };
+};
+
+export const getCookieClient = (key: string, options?: CookieOptions) => {
+  return getCookieNextClient(key, cookieOptions(options));
+};
+
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export const setCookieClient = (key: string, value: any, options?: CookieOptions) => {
+  return setCookieNextClient(key, value, cookieOptions(options));
 };
 
 export const getCookie = async (key: string, options?: CookieOptions): Promise<CookieValueTypes> => {

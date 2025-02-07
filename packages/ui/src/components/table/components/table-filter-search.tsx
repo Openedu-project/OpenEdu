@@ -44,7 +44,7 @@ export function TableFilterSearch({
     [resetColumnFilters, setGlobalFilter, setColumnFilters]
   );
 
-  if (!(filterOptions && children)) {
+  if (!filterOptions) {
     return null;
   }
 
@@ -53,7 +53,7 @@ export function TableFilterSearch({
       {filterOptions && (
         <FilterSearch filterOptions={filterOptions} onSearch={handleFilter} className="max-w-sm" {...props} />
       )}
-      {children && <div className="flex flex-1 justify-start gap-2 md:justify-end">{children}</div>}
+      {children && <div className="flex flex-1 flex-wrap justify-start gap-2 md:justify-end">{children}</div>}
     </div>
   );
 }

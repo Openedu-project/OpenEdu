@@ -1,10 +1,13 @@
 import type { ReactNode } from 'react';
+import type { ButtonProps } from '#shadcn/button';
 
 export type OptionValue = string | number;
 
 export interface OptionType {
-  value: OptionValue;
-  label: string;
+  value?: OptionValue;
+  label?: string;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  [key: string]: any;
 }
 
 export interface BaseAutocompleteProps<T> {
@@ -13,8 +16,11 @@ export interface BaseAutocompleteProps<T> {
   width?: string;
   height?: string;
   disabled?: boolean;
-  getOptionLabel?: (option: T) => string;
-  getOptionValue?: (option: T) => OptionValue;
-  filterOption?: (option: T, searchValue: string) => boolean;
+  className?: string;
+  triggerProps?: ButtonProps;
+  getOptionLabel?: (option: T) => string | undefined;
+  getOptionValue?: (option: T) => OptionValue | undefined;
+  filterOption?: (option: T, searchValue: string) => boolean | undefined;
   renderOption?: (option: T) => ReactNode;
+  renderTrigger?: (value: T | null) => ReactNode;
 }

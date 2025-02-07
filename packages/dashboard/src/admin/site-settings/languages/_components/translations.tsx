@@ -19,6 +19,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useI18nTranslations } from '../_hooks';
 import { type TranslationItem, type TranslationSubItem, useLanguageStore } from '../_store/useLanguageStore';
 import { convertTranslation, getUrls, handleSaveI18nConfig } from '../_utils';
+
 type TranslationFilterValue = {
   locale: string;
   [key: string]: string | boolean;
@@ -28,6 +29,10 @@ type FilterValue = {
   id: string;
   value: TranslationFilterValue;
 };
+
+interface TranslationsProps {
+  className?: string;
+}
 
 const filterTranslations: FilterFn<TranslationItem> = (row, columnId, filterValue) => {
   let itemRank: RankingInfo | undefined;
@@ -78,11 +83,12 @@ const customFilter = (columnId: string, { filter, value, prev }: CustomFilterPay
   return [...(prev ?? []), newFilter];
 };
 
-export default function Translations() {
+export default function Translations({ className }: TranslationsProps) {
   const t = useTranslations('languages');
   const tGeneral = useTranslations('general');
   const { translations, locales, locale, languageStats, updateTranslations, updateTableData, id, setId } =
     useLanguageStore();
+
   const tableRef = useRef<TableRef<TranslationItem>>(null);
 
   const { isLoading, systemConfig } = useI18nTranslations();
@@ -174,6 +180,7 @@ export default function Translations() {
     {
       id: 'id',
       size: 50,
+      className: 'bg-background border-r',
     },
     {
       id: 'language',
@@ -211,7 +218,6 @@ export default function Translations() {
   const handleSave = async () => {
     setIsSaving(true);
     const messagesMap = convertTranslation(translations ?? []);
-    console.info('save', id, messagesMap);
 
     try {
       if (!locales || locales.length === 0) {
@@ -227,7 +233,14 @@ export default function Translations() {
         ),
       ]);
       const files = getUrls({ locales, systemConfig: res });
-      await handleSaveI18nConfig({ locales, locale, languageStats, id, files, setId });
+      await handleSaveI18nConfig({
+        locales,
+        locale,
+        languageStats,
+        id,
+        files,
+        setId,
+      });
       toast.success(t('saveTranslationsSuccess'));
     } catch (error) {
       console.error(error);
@@ -248,6 +261,8 @@ export default function Translations() {
         ref={tableRef}
         isLoading={isLoading}
         filterSearchProps={{ useQueryParams: true }}
+        expandColumnProps={{ className: 'border-r' }}
+        className={className}
         renderSubComponent={({ row }) => {
           return (
             <Table

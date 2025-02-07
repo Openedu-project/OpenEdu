@@ -1,5 +1,6 @@
 export const richTextMessages = {
   richText: {
+    placeholder: 'Write something …',
     menuItems: {
       bold: 'Bold',
       italic: 'Italic',

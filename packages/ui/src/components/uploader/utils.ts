@@ -1,5 +1,10 @@
-import type React from 'react';
-import type { ActionType, FileType } from './types';
+import type { IFileResponse } from '@oe/api/types/file';
+import { uniqueID } from '@oe/core/utils/unique';
+import type { FileType } from './types';
+
+export const MAX_PREVIEW_FILE_SIZE = 1024 * 1024 * 5; // 5MB
+export const MIN_SIZE_BYTES = 0;
+export const MAX_SIZE_BYTES = 5 * 1024 * 1024;
 
 // https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types
 const MIME = ['image/apng', 'image/avif', 'image/gif', 'image/jpeg', 'image/png', 'image/svg+xml', 'image/webp'];
@@ -31,48 +36,34 @@ export const formatSize = (size = 0): string => {
   return `${Number.parseFloat((size / k ** i).toFixed(2))} ${sizes[i]}`;
 };
 
-export const getFiles = (event: React.ChangeEvent<HTMLInputElement> | React.DragEvent<HTMLInputElement>) => {
-  if ('dataTransfer' in event) {
-    return event.dataTransfer?.files;
-  }
-  if (event.target) {
-    return (event.target as HTMLInputElement).files;
-  }
-  return [];
-};
-
-export const createFile = (file: FileType) => {
-  const { id } = file;
+export const createFile = (file: IFileResponse | FileType): FileType => {
   return {
     ...file,
-    id: id || `_${Math.random().toString(36).substring(2, 12)}`,
-    progress: 0,
+    fileId: (file as FileType).fileId ?? (file as IFileResponse).id ?? uniqueID(),
+    status: 'finished',
   };
 };
 
-export function fileListReducer(files: FileType[], action: ActionType) {
-  switch (action.type) {
-    case 'push':
-      return [...files, ...action.files];
+export const isDuplicateFile = (newFile: File, existingFiles: File[]) => {
+  return existingFiles.some(
+    existingFile =>
+      existingFile.name === newFile.name &&
+      existingFile.size === newFile.size &&
+      existingFile.lastModified === newFile.lastModified
+  );
+};
 
-    case 'remove':
-      return files.filter(f => f.id !== action.id);
-
-    case 'replace':
-      return action.files;
-
-    case 'updateFile':
-      return files.map(file => {
-        return file.id === action.file.id ? action.file : file;
-      });
-
-    case 'init':
-      return (
-        action.files?.map(file => {
-          return { ...(files?.find(f => f.id === file.id) || createFile(file)), ...file };
-        }) || []
-      );
-    default:
-      throw new Error('Unknown action type');
-  }
+export function isFileType(value: FileType) {
+  // return (
+  //   typeof value === 'object' &&
+  //   value !== null &&
+  //   'url' in value &&
+  //   'mime' in value &&
+  //   'name' in value &&
+  //   'ext' in value
+  // );
+  // return (
+  //   typeof value === 'object' &&value !== null&& 'url' in value
+  // );
+  return MIME.includes(value?.mime || '');
 }

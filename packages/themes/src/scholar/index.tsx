@@ -1,10 +1,14 @@
 'use client';
 import dynamic from 'next/dynamic';
 
-// export const scholar: Theme = {
-//   // description: 'Phong cách trang nhã, chuyên nghiệp',
-//   HomePage: dynamic(() => import('./homepage')),
-// };
-
+import type { ScholarHomepageAboutUsProps } from './homepage/scholar-about-us';
+import type { ScholarHomepageHeroProps } from './homepage/scholar-hero';
+import type { ScholarHomepageServiceProps } from './homepage/scholar-service';
 export const ScholarHomePage = dynamic(() => import('./homepage'));
+export const ScholarHomepageHero = dynamic(() => import('./homepage/scholar-hero'));
+export const ScholarHomepageService = dynamic(() => import('./homepage/scholar-service'));
+export const ScholarHomepageAboutUs = dynamic(() => import('./homepage/scholar-about-us'));
+
 export const ScholarAboutUs = dynamic(() => import('./about-us'));
+
+export type { ScholarHomepageHeroProps, ScholarHomepageServiceProps, ScholarHomepageAboutUsProps };

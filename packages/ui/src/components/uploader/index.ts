@@ -1,4 +1,6 @@
-import Uploader from './uploader';
-export type { UploaderProps, FileStatusType, FileType } from './types';
+import { UploadTrigger } from './upload-trigger';
+import { Uploader } from './uploader';
+export type * from './types';
+import { isFileType } from './utils';
 
-export { Uploader };
+export { Uploader, isFileType, UploadTrigger };

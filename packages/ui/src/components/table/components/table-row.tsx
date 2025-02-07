@@ -38,7 +38,7 @@ export const TableRowComponent = <TData,>({
         <TableCell
           key={cell.id}
           className={getCellClassName(cell, border, (cell.column.columnDef as ColumnDef<TData>).className)}
-          style={{ width: cell.column.getSize() }}
+          style={{ minWidth: cell.column.getSize(), width: cell.column.getSize() }}
         >
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
         </TableCell>

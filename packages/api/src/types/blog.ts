@@ -1,7 +1,9 @@
+import type { LanguageCode } from '@oe/i18n/languages';
 import type { HTTPPagination } from './fetch';
+import type { IFileResponse } from './file';
 import type { IHashtag } from './hashtag';
 import type { IOrganization } from './organizations';
-import type { IUserProfile } from './user';
+import type { IUserProfile } from './user-profile';
 
 interface IBlogCategory {
   id: string;
@@ -13,23 +15,6 @@ interface IBlogCategory {
   parent_id?: null | string;
   order?: number;
   type?: string;
-}
-
-interface IBanner {
-  name: string;
-  mime: string;
-  ext: string;
-  url: string;
-  thumbnail_url: string;
-  id: string;
-  create_at: number;
-  update_at: number;
-  delete_at: number;
-  width: number;
-  height: number;
-  size: number;
-  duration: number;
-  bunny_video_id?: string;
 }
 
 interface IAIInfo {
@@ -59,7 +44,7 @@ export interface IBlog {
   time_read: number;
   status: string;
   schedule_at: number;
-  blog_type: string;
+  blog_type: 'org' | 'personal';
   cuid: string;
   version: number;
   latest: boolean;
@@ -71,7 +56,7 @@ export interface IBlog {
   description: string;
   hashtag: IHashtag[];
   org?: IOrganization;
-  banner: IBanner;
+  banner: IFileResponse;
   image_description?: string;
   author: IUserProfile;
   published_blog?: IBlogHistory[];
@@ -79,7 +64,7 @@ export interface IBlog {
   unpublished?: IBlogHistory[];
   is_ai_generated: boolean;
   ai_generated_info?: IAIInfo;
-  locale: string;
+  locale: LanguageCode;
   // TODO: adjust later
   cmt_count?: number;
   like_count?: number;
@@ -88,7 +73,8 @@ interface Props {
   reject_org_reason?: string;
 }
 
-export interface IBlogsResponse extends HTTPPagination<IBlog[]> {}
+export interface IBlogsResponse extends HTTPPagination<IBlog> {}
+export interface IBlogListResponse extends HTTPPagination<IBlog> {}
 
 export interface IBlogRequest {
   banner_id: string;
@@ -99,6 +85,11 @@ export interface IBlogRequest {
   blog_type: string;
   is_publish: boolean;
   is_ai_generated: boolean;
+  description?: string;
+  image_description?: string;
+}
+
+export interface IEditBlogRequest extends IBlogRequest {
   id: string;
 }
 
@@ -125,3 +116,35 @@ export interface IBlogURL {
   link: string;
   blog_type: string;
 }
+
+export interface IAIBlogRequest {
+  ai_blog_request_type: 'generate_blog' | 'rewrite_paragraph' | 'rewrite_from_link';
+  blog_cuid?: string;
+  link?: string;
+  text?: string;
+  blogs?: IBlogURL[];
+  language?: string;
+  tone?: string;
+}
+
+export interface IRewriteResponse {
+  content: string;
+  blog_id?: string;
+  blog_cuid?: string;
+  ai_blog_id: string;
+  rewrite_id: string;
+  status: string;
+  current_step: string;
+  author_id: string;
+}
+
+export interface IAIBlogResponse {
+  blog_id: string;
+  blog_cuid: string;
+  ai_blog_id: string;
+  rewrite_id: string;
+  status: string;
+  current_step: string;
+  author_id: string;
+}
+export type IPublishBlogType = 'category' | 'hashtag' | 'default';

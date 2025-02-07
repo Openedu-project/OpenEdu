@@ -29,7 +29,7 @@ export function TableVirtualized<TData>({
         TableHead: props => <TableHeader {...props} />,
         TableBody: ({ children, ...props }) => (
           <TableBody {...props}>
-            <TableLoading isLoading={isLoading} table={table} />
+            <TableLoading isLoading={isLoading} table={table} rows={rows} />
             {rows.length === 0 && !isLoading ? (
               <TableException error={error} table={table} mutate={mutate} />
             ) : (

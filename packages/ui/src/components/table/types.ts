@@ -1,5 +1,7 @@
+import type { HTTPPagination } from '@oe/api/types/fetch';
 import type { ColumnDef as ColumnDefTanstack, Row, Table, TableOptions } from '@tanstack/react-table';
 import type { ReactNode, Ref } from 'react';
+import type { KeyedMutator } from 'swr';
 import type { FilterOption, FilterSearchProps } from '../filter-search';
 
 export type TableBorder = 'bordered' | 'bordered-rows';
@@ -7,12 +9,15 @@ export type TableBorder = 'bordered' | 'bordered-rows';
 export interface TableRef<T> {
   getData: () => T[];
   table: Table<T>;
+  mutate: KeyedMutator<HTTPPagination<T>>;
+  mutateAndClearCache: () => void;
 }
 
 export type ColumnDef<T> = ColumnDefTanstack<T> & {
   align?: 'left' | 'center' | 'right';
   sticky?: 'left' | 'right';
   className?: string;
+  headerClassName?: string;
 };
 
 export type TableProps<TData> = {
@@ -37,7 +42,9 @@ export type TableProps<TData> = {
   hasSelection?: boolean;
   hasNoColumn?: boolean;
   className?: string;
+  wrapperClassName?: string;
   filterSearchProps?: Omit<FilterSearchProps, 'filterOptions'>;
-  mutate?: () => void;
+  expandColumnProps?: Partial<ColumnDef<TData>>;
+  mutate?: KeyedMutator<HTTPPagination<TData>>;
   renderSubComponent?: (props: { row: Row<TData> }) => ReactNode;
 };

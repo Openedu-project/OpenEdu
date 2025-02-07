@@ -2,6 +2,8 @@
 
 import { Content, Provider, Root, Trigger } from '@radix-ui/react-tooltip';
 
+import { Link } from '#common/navigation';
+
 import { type ComponentPropsWithoutRef, type ComponentRef, type ReactNode, forwardRef } from 'react';
 import { cn } from '#utils/cn';
 
@@ -29,14 +31,40 @@ TooltipContent.displayName = Content.displayName;
 const Tooltip = ({
   content,
   children,
+  contentProps,
+  className,
   ...props
-}: { content: ReactNode; children: ReactNode } & ComponentPropsWithoutRef<typeof RadixTooltip>) => (
-  <TooltipProvider>
+}: {
+  content: ReactNode;
+  children: ReactNode;
+  contentProps?: ComponentPropsWithoutRef<typeof TooltipContent>;
+  className?: string;
+} & ComponentPropsWithoutRef<typeof RadixTooltip>) => (
+  <TooltipProvider delayDuration={100}>
     <RadixTooltip {...props}>
-      <TooltipTrigger asChild>{children}</TooltipTrigger>
-      <TooltipContent sideOffset={0}>{content}</TooltipContent>
+      <TooltipTrigger asChild className={className}>
+        {children}
+      </TooltipTrigger>
+      <TooltipContent sideOffset={0} {...contentProps}>
+        {content}
+      </TooltipContent>
     </RadixTooltip>
   </TooltipProvider>
 );
 
-export { Tooltip, RadixTooltip, TooltipTrigger, TooltipContent, TooltipProvider };
+interface IProps extends Omit<ComponentPropsWithoutRef<typeof Link>, 'children'> {
+  name: string;
+  href: string;
+}
+
+export default function TooltipLink({ name, href, ...props }: IProps) {
+  return (
+    <Tooltip content={name}>
+      <Link {...props} className={cn('w-full justify-start truncate p-0 underline', props.className)} href={href}>
+        {name}
+      </Link>
+    </Tooltip>
+  );
+}
+
+export { Tooltip, TooltipLink, RadixTooltip, TooltipTrigger, TooltipContent, TooltipProvider };

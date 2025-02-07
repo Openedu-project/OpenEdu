@@ -1,4 +1,5 @@
-import { DashboardHeaderCard, DashboardLayout } from './dashboard-layout';
-import { MainLayout } from './main-layout';
+import { DashboardHeaderCard, DashboardLayout, DashboardMainPageLayout } from './dashboard-layout';
+import { MainLayout, MainLayoutClient } from './main-layout';
+import { ThemeLayout } from './theme-layout';
 
-export { MainLayout, DashboardLayout, DashboardHeaderCard };
+export { MainLayout, MainLayoutClient, DashboardLayout, DashboardHeaderCard, DashboardMainPageLayout, ThemeLayout };

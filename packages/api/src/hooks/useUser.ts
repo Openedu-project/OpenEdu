@@ -2,6 +2,7 @@ import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
 import {
+  followUserService,
   getListUserService,
   getTopAuthorService,
   getUserInvitationsListService,
@@ -25,7 +26,7 @@ import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
 
 export function useGetUserProfile(id: string, shouldFetch = true) {
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.USERS_ID, queryParams: { id } });
+  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.USERS_ID, params: { id } });
   const { data, isLoading, error, mutate } = useSWR(shouldFetch ? endpointKey : null, (endpoint: string) =>
     getUserProfileService(endpoint, { id })
   );
@@ -112,7 +113,7 @@ export const useGetTopAuthor = (params: IFilter) => {
     error,
   };
 };
-export const useGetUserInvitationsList = (params: IFilter) => {
+export const useGetUserInvitationsList = ({ params }: { params: IFilter }) => {
   const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.USER_INVITATIONS, queryParams: { ...params } });
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
     getUserInvitationsListService(endpoint, { params })
@@ -148,6 +149,16 @@ export function usePostUserEmail() {
   return {
     loading: isMutating,
     triggerEmail: trigger,
+    error,
+  };
+}
+
+export function useTriggerFollowUser(type: 'follow' | 'unfollow', id: string) {
+  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.USERS_ID_FOLLOW, params: { id } });
+  const { trigger, isMutating, error } = useSWRMutation(endpointKey, (url: string) => followUserService(type, url));
+  return {
+    loading: isMutating,
+    triggerFollowUser: trigger,
     error,
   };
 }

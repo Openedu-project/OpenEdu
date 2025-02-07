@@ -85,7 +85,7 @@ export async function deleteCreatorService(
   }
 
   try {
-    const response = await deleteAPI<ICreatorResponse>(endpointKey, init);
+    const response = await deleteAPI<ICreatorResponse, null>(endpointKey, null, init);
 
     return response.data;
   } catch {

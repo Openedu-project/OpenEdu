@@ -1,16 +1,14 @@
-// import Image from '@oe/ui/components/common/image';
+import { getThemeConfigServer } from '@oe/api/services/theme';
+import { LoginPage } from '@oe/ui/common/auth/login-page';
+import { getBannerByPageKey } from '../_utils/functions';
 
-import { useTranslations } from 'next-intl';
-import LoginForm from './login-form';
+export default async function Login() {
+  const [themeSystem] = await Promise.all([getThemeConfigServer()]);
+  const themeName = themeSystem?.[0]?.value?.activedTheme;
 
-const Login = () => {
-  const tAuth = useTranslations('auth');
-  return (
-    <>
-      <h1 className="text-center text-2xl text-primary">{tAuth('login')}</h1>
-      <LoginForm />
-    </>
-  );
-};
+  if (!themeSystem?.[0]?.value) {
+    return <LoginPage />;
+  }
 
-export default Login;
+  return <LoginPage themeName={themeName} banner={getBannerByPageKey('login', themeSystem?.[0]?.value)} />;
+}

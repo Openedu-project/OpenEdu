@@ -3,8 +3,8 @@
   "compilerOptions": {
     "rootDir": ".",
     "baseUrl": ".",
-    "types": ["@oe/types/global.d.ts"]
+    "types": ["@oe/types/global.d.ts", "next/image-types/global"]
   },
-  "include": ["src"],
+  "include": ["src", "src/common/providers/intl-provider.tsx"],
   "exclude": ["node_modules"]
 }

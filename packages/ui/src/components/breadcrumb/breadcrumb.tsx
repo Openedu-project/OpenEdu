@@ -1,5 +1,6 @@
 'use client';
 
+import type { IProtectedRoutes } from '@oe/core/utils/routes';
 import { HomeIcon } from 'lucide-react';
 import { Fragment, useEffect, useState } from 'react';
 import { Link, usePathname } from '#common/navigation';
@@ -18,13 +19,16 @@ import { cn } from '#utils/cn';
 export interface IBreadcrumbItem {
   label: string;
   disabled?: boolean;
+  path?: string;
 }
 
 interface BreadcrumbProps {
   items?: IBreadcrumbItem[];
+  dashboard?: IProtectedRoutes;
+  className?: string;
 }
 
-export function Breadcrumb({ items = [] }: BreadcrumbProps) {
+export function Breadcrumb({ items = [], dashboard, className }: BreadcrumbProps) {
   const pathname = usePathname();
   const pathSegments = pathname.split('/').filter(Boolean);
   const [isMobile, setIsMobile] = useState(false);
@@ -39,24 +43,28 @@ export function Breadcrumb({ items = [] }: BreadcrumbProps) {
   const renderBreadcrumbItems = () => {
     const maxVisibleItems = isMobile ? 3 : 4;
 
-    if (pathSegments.length <= maxVisibleItems) {
+    if (items.length <= maxVisibleItems) {
       return (
         <>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link className="p-0 font-medium text-foreground/50" activeClassName="border-0" href="/">
+              <Link
+                className="p-0 font-medium text-foreground/50"
+                activeClassName="border-0"
+                href={dashboard ? `/${dashboard}` : '/'}
+              >
                 <HomeIcon className="h-4 w-4" />
               </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
-          {pathSegments.length > 0 && <BreadcrumbSeparator />}
-          {pathSegments.slice(1).map((segment, index) => (
+          {items.length > 0 && <BreadcrumbSeparator />}
+          {items.map((item, index) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
             <Fragment key={index}>
               <BreadcrumbItem className={cn('shrink-0 overflow-hidden', index === pathSegments.length - 2 && 'shrink')}>
-                {index === pathSegments.length - 2 ? (
+                {index === items.length - 1 ? (
                   <BreadcrumbPage className="truncate font-medium text-primary">
-                    {items[index]?.label || segment}
+                    {item?.label || pathSegments[index + 1]}
                   </BreadcrumbPage>
                 ) : (
                   <BreadcrumbLink asChild>
@@ -66,14 +74,14 @@ export function Breadcrumb({ items = [] }: BreadcrumbProps) {
                         items[index]?.disabled && 'pointer-events-none'
                       )}
                       activeClassName="border-0"
-                      href={`/${pathSegments.slice(0, index + 2).join('/')}`}
+                      href={item.path ?? `/${pathSegments.slice(0, index + 2).join('/')}`}
                     >
-                      {items[index]?.label || segment}
+                      {item?.label || pathSegments[index + 1]}
                     </Link>
                   </BreadcrumbLink>
                 )}
               </BreadcrumbItem>
-              {index !== pathSegments.length - 2 && <BreadcrumbSeparator />}
+              {index !== items.length - 1 && <BreadcrumbSeparator />}
             </Fragment>
           ))}
         </>
@@ -83,18 +91,18 @@ export function Breadcrumb({ items = [] }: BreadcrumbProps) {
     const visibleItems = isMobile
       ? [
           { index: -1, label: <HomeIcon className="h-4 w-4" />, href: '/' },
-          ...pathSegments.slice(-2).map((segment, index) => ({
-            index: pathSegments.length - 2 + index - 1,
-            label: items[pathSegments.length - 2 + index - 1]?.label || segment,
-            href: `/${pathSegments.slice(0, pathSegments.length - 2 + index + 1).join('/')}`,
+          ...items.slice(-2).map((item, index) => ({
+            index: index,
+            label: item.label,
+            href: item.path ?? `/${pathSegments.slice(0, pathSegments.length - 2 + index + 1).join('/')}`,
           })),
         ]
       : [
           { index: -1, label: <HomeIcon className="h-4 w-4" />, href: '/' },
-          ...pathSegments.slice(-3).map((segment, index) => ({
-            index: pathSegments.length - 3 + index - 1,
-            label: items[pathSegments.length - 3 + index - 1]?.label || segment,
-            href: `/${pathSegments.slice(0, pathSegments.length - 3 + index + 1).join('/')}`,
+          ...items.slice(-3).map((item, index) => ({
+            index: index,
+            label: item.label,
+            href: item.path ?? `/${pathSegments.slice(0, pathSegments.length - 3 + index + 1).join('/')}`,
           })),
         ];
 
@@ -119,7 +127,7 @@ export function Breadcrumb({ items = [] }: BreadcrumbProps) {
             {index !== visibleItems.length - 1 && (
               <>
                 <BreadcrumbSeparator />
-                {index === 0 && pathSegments.length > maxVisibleItems && (
+                {index === 0 && items.length > maxVisibleItems && (
                   <BreadcrumbItem>
                     <DropdownMenu>
                       <DropdownMenuTrigger className="flex items-center gap-1">
@@ -127,19 +135,16 @@ export function Breadcrumb({ items = [] }: BreadcrumbProps) {
                         <span className="sr-only">Mở menu</span>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="start">
-                        {pathSegments.slice(1, -maxVisibleItems + 1).map((segment, dropdownIndex) => (
+                        {items.slice(0, -maxVisibleItems + 1).map((item, dropdownIndex) => (
                           // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                           <DropdownMenuItem key={dropdownIndex}>
-                            <BreadcrumbLink
-                              asChild
-                              className={items[dropdownIndex]?.disabled ? 'pointer-events-none' : ''}
-                            >
+                            <BreadcrumbLink asChild className={item?.disabled ? 'pointer-events-none' : ''}>
                               <Link
                                 className="p-0 font-medium text-foreground/50"
                                 activeClassName="border-0"
                                 href={`/${pathSegments.slice(0, dropdownIndex + 2).join('/')}`}
                               >
-                                {items[dropdownIndex]?.label || segment}
+                                {item.label}
                               </Link>
                             </BreadcrumbLink>
                           </DropdownMenuItem>
@@ -158,7 +163,7 @@ export function Breadcrumb({ items = [] }: BreadcrumbProps) {
 
   return (
     <UIBreadcrumb>
-      <BreadcrumbList className="flex-nowrap">{renderBreadcrumbItems()}</BreadcrumbList>
+      <BreadcrumbList className={cn('flex-nowrap', className)}>{renderBreadcrumbItems()}</BreadcrumbList>
     </UIBreadcrumb>
   );
 }

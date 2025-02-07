@@ -1,23 +1,24 @@
-import { isLogin } from '#utils/auth';
+import { type AuthEventName, authEvents, isLogin } from '#utils/auth';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { fetchAPI, postAPI } from '#utils/fetch';
+import { type FetchOptions, createAPIUrl, fetchAPI, postAPI } from '#utils/fetch';
 
-import type { ILoginPayload, ISignUpPayload, ISignUpResponse, IToken } from '@oe/api/types/auth';
-import { cookieOptions, getCookies, setCookie } from '@oe/core/utils/cookie';
+import type { IAccessTokenResponse, ISignUpResponse, ISocialLoginPayload, IToken } from '@oe/api/types/auth';
+import { cookieOptions, getCookies } from '@oe/core/utils/cookie';
 import type { NextRequest } from 'next/server';
 import type { NextResponse } from 'next/server';
+import type { LoginSchemaType, SignUpSchemaType } from '#schemas/authSchema';
+import type { IForgotPasswordPayload, IForgotPasswordResponse } from '#types/auth';
+import type { IResendEmailPayload, IResendEmailResponse, ISetPasswordPayload, ISetPasswordResponse } from '#types/auth';
 import type { HTTPResponse } from '#types/fetch';
-import type { IResetPasswordPayload, IResetPasswordResponse } from '#types/reset-password';
-import type { ISetPasswordPayload, ISetPasswordResponse } from '#types/set-password';
 import type { IUser } from '#types/user';
 import { HTTPError } from '#utils/http-error';
 import { HTTPErrorCodeMessages } from '#utils/http-error';
 
-export const postSignUpService = async (
+export const signUpService = async (
   endpoint: string | null | undefined,
-  { payload, init }: { payload: ISignUpPayload; init?: RequestInit }
+  { payload, init }: { payload: SignUpSchemaType; init?: FetchOptions }
 ) => {
-  const response = await postAPI<ISignUpResponse, ISignUpPayload>(
+  const response = await postAPI<ISignUpResponse, SignUpSchemaType>(
     endpoint ?? API_ENDPOINT.AUTH_REGISTER,
     payload,
     init
@@ -28,32 +29,55 @@ export const postSignUpService = async (
 
 export const loginService = async (
   endpoint: string | null | undefined,
-  { payload, init }: { payload: ILoginPayload; init?: RequestInit }
+  { payload, init }: { payload: LoginSchemaType; init?: FetchOptions }
 ) => {
-  const response = await postAPI<IToken, ILoginPayload>(endpoint ?? API_ENDPOINT.AUTH_LOGIN, payload, init);
+  const response = await postAPI<IToken, LoginSchemaType>(endpoint ?? API_ENDPOINT.AUTH_LOGIN, payload, {
+    ...init,
+    shouldRefreshToken: false,
+  });
 
   return response.data;
 };
 
-export const postSetPasswordService = async (
+export const forgotPasswordService = async (
   endpoint: string | null | undefined,
-  { payload, init }: { payload: ISetPasswordPayload; init?: RequestInit }
+  { payload, init }: { payload: IForgotPasswordPayload; init?: FetchOptions }
 ) => {
+  const response = await postAPI<IForgotPasswordResponse, IForgotPasswordPayload>(
+    endpoint ?? API_ENDPOINT.AUTH_FORGOT_PASSWORD,
+    payload,
+    init
+  );
+
+  return response.data;
+};
+
+export const socialLoginService = async (payload: ISocialLoginPayload, init?: FetchOptions) => {
+  const response = await postAPI<IAccessTokenResponse, ISocialLoginPayload>(API_ENDPOINT.AUTH, payload, init);
+
+  return response;
+};
+
+export const setPasswordService = async (
+  endpoint: string | null | undefined,
+  { payload, init }: { payload: ISetPasswordPayload & { event: AuthEventName }; init?: FetchOptions }
+) => {
+  const { event, ...rest } = payload;
   const response = await postAPI<ISetPasswordResponse, ISetPasswordPayload>(
-    endpoint ?? API_ENDPOINT.AUTH_SET_PASSWORD,
-    payload,
+    (endpoint ?? event === authEvents.setPassword) ? API_ENDPOINT.AUTH_SET_PASSWORD : API_ENDPOINT.AUTH_RESET_PASSWORD,
+    rest,
     init
   );
 
   return response.data;
 };
 
-export const postResetPasswordService = async (
+export const resendEmailService = async (
   endpoint: string | null | undefined,
-  { payload, init }: { payload: IResetPasswordPayload; init?: RequestInit }
+  { payload, init }: { payload: IResendEmailPayload; init?: FetchOptions }
 ) => {
-  const response = await postAPI<IResetPasswordResponse, IResetPasswordPayload>(
-    endpoint ?? API_ENDPOINT.AUTH_RESET_PASSWORD,
+  const response = await postAPI<IResendEmailResponse, IResendEmailPayload>(
+    endpoint ?? API_ENDPOINT.AUTH_RESEND_MAIL,
     payload,
     init
   );
@@ -61,17 +85,35 @@ export const postResetPasswordService = async (
   return response.data;
 };
 
-export async function getMeService(url?: string, init?: RequestInit): Promise<IUser | null> {
+export async function verifyEmailService(
+  url: string | undefined,
+  { token, init }: { token: string; init?: RequestInit }
+): Promise<IResendEmailResponse> {
+  let endpointKey = url;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.AUTH_VERIFY,
+      queryParams: {
+        token,
+      },
+    });
+  }
+
+  const response = await fetchAPI<IResendEmailResponse>(endpointKey, init);
+  return response?.data;
+}
+
+export async function getMeService(url?: string, init?: FetchOptions): Promise<IUser | null> {
   const isLoggedIn = await isLogin();
   if (isLoggedIn) {
-    const res = await fetchAPI<IUser>(url ?? API_ENDPOINT.USERS_ME, init);
+    const res = await fetchAPI<IUser>(url ?? API_ENDPOINT.USERS_ME, { ...init, shouldRefreshToken: false });
 
     return res?.data as IUser;
   }
   return null;
 }
 
-export function getMeServiceWithoutError(url?: string, init?: RequestInit) {
+export function getMeServiceWithoutError(url?: string, init?: FetchOptions) {
   try {
     return getMeService(url, init);
   } catch {
@@ -157,11 +199,16 @@ async function postRefreshToken(referrer?: string, origin?: string, refreshToken
 
   if (!refreshTokenResponse.ok) {
     const error = await refreshTokenResponse.json();
+    console.info('================ refresh token - before error response ================', refreshToken);
+    console.info('================ refresh token error response ================', error);
     throw new HTTPError({ message: error?.message ?? HTTPErrorCodeMessages.AUTHENTICATION_ERROR });
   }
 
   const refreshTokenData = (await refreshTokenResponse.json()) as HTTPResponse<IToken>;
   const data = refreshTokenData?.data;
+
+  console.info('================ refresh token - before success response ================', refreshToken);
+  console.info('================ refresh token success response ================', data);
 
   if (!data) {
     throw new Error(HTTPErrorCodeMessages.NOT_FOUND);
@@ -178,13 +225,24 @@ export async function refreshTokenService(): Promise<IToken | null> {
 
   try {
     const data = await postRefreshToken(referrer, origin, refreshToken);
-
-    setCookie(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, data.access_token);
-    setCookie(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, data.refresh_token);
+    await fetch(`${process.env.NEXT_PUBLIC_APP_ORIGIN}${API_ENDPOINT.SET_COOKIE}`, {
+      method: 'POST',
+      body: JSON.stringify({ key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, value: data.access_token }),
+    });
+    // setCookie(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, data.access_token);
+    // setCookie(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, data.refresh_token);
     return data;
   } catch (error) {
-    setCookie(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, '', { maxAge: 0 });
-    setCookie(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, '', { maxAge: 0 });
+    await fetch(`${process.env.NEXT_PUBLIC_APP_ORIGIN}${API_ENDPOINT.SET_COOKIE}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY,
+        value: '',
+        options: { maxAge: 0 },
+      }),
+    });
+    // setCookie(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, '', { maxAge: 0 });
+    // setCookie(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, '', { maxAge: 0 });
     console.error('==========refreshToken error=============', error);
     return null;
   }
@@ -204,8 +262,8 @@ export const refreshTokenMiddlewareService = async ({
     res.cookies.set(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, data.refresh_token, { ...cookieOptions() });
     return { ...data, response: res };
   } catch (error) {
-    res.cookies.set(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, '', { maxAge: 0, ...cookieOptions() });
-    res.cookies.set(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, '', { maxAge: 0, ...cookieOptions() });
+    res.cookies.set(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, '', { ...cookieOptions(), maxAge: 0 });
+    res.cookies.set(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, '', { ...cookieOptions(), maxAge: 0 });
     console.error('==========refreshToken error=============', error);
 
     return { response: res };

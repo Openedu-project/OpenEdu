@@ -6,20 +6,9 @@ import type { Crop, ReactCropProps } from 'react-image-crop';
 
 import 'react-image-crop/dist/ReactCrop.css';
 
-// import { useModalStore } from '@oe/ui/store/modal-store';
-
-// import type { ButtonConfig } from '../common/modal';
-
 import { useTranslations } from 'next-intl';
 import { Modal } from '../modal';
-
-interface CropModalProps {
-  file: File;
-  aspectRatio?: number;
-  cropProps?: boolean | Partial<ReactCropProps>;
-  onComplete: (croppedFile: File) => void;
-  onCancel: () => void;
-}
+import type { CropModalProps, FileType } from './types';
 
 function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
   return centerCrop(
@@ -39,7 +28,7 @@ function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: numbe
 
 export const MODAL_DROP_IMAGE = 'crop-uploader-image';
 
-export const CropModal: React.FC<CropModalProps> = ({ file, aspectRatio, cropProps, onComplete, onCancel }) => {
+export const CropModal: React.FC<CropModalProps> = ({ file, aspectRatio = 4 / 3, cropProps, onComplete, onCancel }) => {
   const tUploader = useTranslations('uploader');
   const tGeneral = useTranslations('general');
   const [crop, setCrop] = useState<Crop | undefined>({
@@ -58,7 +47,9 @@ export const CropModal: React.FC<CropModalProps> = ({ file, aspectRatio, cropPro
     const reader = new FileReader();
 
     reader.addEventListener('load', () => setImgSrc(reader.result?.toString() || ''));
-    reader.readAsDataURL(file);
+    if (file?.originFile) {
+      reader.readAsDataURL(file.originFile);
+    }
   }, [file]);
 
   const onImageLoad = useCallback(
@@ -71,53 +62,60 @@ export const CropModal: React.FC<CropModalProps> = ({ file, aspectRatio, cropPro
     [aspectRatio]
   );
 
-  const cropImage = useCallback(() => {
-    if (!(completedCrop && imgRef.current)) {
-      return;
-    }
-
-    const image = imgRef.current;
-    const canvas = document.createElement('canvas');
-    const crop = completedCrop;
-    const scaleX = image.naturalWidth / image.width;
-    const scaleY = image.naturalHeight / image.height;
-    const ctx = canvas.getContext('2d');
-
-    if (!ctx) {
-      throw new Error('No 2d context');
-    }
-
-    canvas.width = crop.width;
-    canvas.height = crop.height;
-
-    ctx.drawImage(
-      image,
-      crop.x * scaleX,
-      crop.y * scaleY,
-      crop.width * scaleX,
-      crop.height * scaleY,
-      0,
-      0,
-      crop.width,
-      crop.height
-    );
-
-    canvas.toBlob(blob => {
-      if (!blob) {
-        console.error('Canvas is empty');
+  const cropImage = useCallback(
+    (handleClose?: () => void) => {
+      if (!(completedCrop && imgRef.current)) {
         return;
       }
-      const croppedFile = new File([blob], file.name, { type: 'image/png' });
 
-      onComplete(croppedFile);
-    }, 'image/png');
-  }, [completedCrop, file.name, onComplete]);
+      const image = imgRef.current;
+      const canvas = document.createElement('canvas');
+      const crop = completedCrop;
+      const scaleX = image.naturalWidth / image.width;
+      const scaleY = image.naturalHeight / image.height;
+      const ctx = canvas.getContext('2d');
+
+      if (!ctx) {
+        throw new Error('No 2d context');
+      }
+
+      canvas.width = crop.width;
+      canvas.height = crop.height;
+
+      ctx.drawImage(
+        image,
+        crop.x * scaleX,
+        crop.y * scaleY,
+        crop.width * scaleX,
+        crop.height * scaleY,
+        0,
+        0,
+        crop.width,
+        crop.height
+      );
+
+      canvas.toBlob(blob => {
+        if (!(blob && file?.originFile)) {
+          return;
+        }
+        const croppedFile = new File([blob], file.originFile.name, { type: file.originFile.type });
+        const updatedFile = {
+          ...file,
+          originFile: croppedFile,
+        } as FileType;
+
+        onComplete(updatedFile);
+        handleClose?.();
+      }, 'image/png');
+    },
+    [completedCrop, file, onComplete]
+  );
 
   return (
     <>
       <Modal
         title="Crop Image"
-        isOpen={!!file}
+        open={!!file}
         buttons={[
           {
             label: tGeneral('cancel'),
@@ -131,13 +129,14 @@ export const CropModal: React.FC<CropModalProps> = ({ file, aspectRatio, cropPro
           },
         ]}
         onClose={onCancel}
+        className="text-center"
       >
         <ReactCrop
+          {...(cropProps as ReactCropProps)}
           crop={crop}
           onComplete={c => setCompletedCrop(c)}
           aspect={aspectRatio}
           locked
-          {...(cropProps as ReactCropProps)}
           onChange={(_, percentCrop) => setCrop(percentCrop)}
         >
           {imgSrc && (

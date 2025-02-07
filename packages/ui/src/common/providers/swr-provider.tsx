@@ -14,7 +14,7 @@ interface Props extends SWRConfiguration {
 
 export default function SWRProvider({ children, ...rest }: Props) {
   const t = useTranslations('errors');
-  const tForms = useTranslations('forms');
+  const tForms = useTranslations('formValidation');
 
   useEffect(() => {
     registerCustomZodErrorMap(tForms);
