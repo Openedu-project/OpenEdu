@@ -34,7 +34,7 @@ const config: Omit<Config, 'content'> = {
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
-          50: 'hsl(var(--primary-50))',
+          50: 'var(--primary-50)',
           100: 'hsl(var(--primary-100))',
         },
 

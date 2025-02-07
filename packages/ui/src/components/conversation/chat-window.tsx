@@ -1,4 +1,5 @@
 'use client';
+import { revalidateData } from '@oe/api/actions/revalidate';
 import { useGetConversationDetails } from '@oe/api/hooks/useConversation';
 import { useGetMe } from '@oe/api/hooks/useMe';
 import { cancelConversation, postConversation } from '@oe/api/services/conversation';
@@ -84,6 +85,8 @@ export function ChatWindow({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
+    setSelectedAgent('ai_chat');
+
     if (id && prevId.current === id) {
       return;
     }
@@ -96,7 +99,6 @@ export function ChatWindow({
       return;
     }
     handleInitData();
-    setSelectedAgent('ai_chat');
 
     return () => {
       prevId.current = id;
@@ -187,6 +189,9 @@ export function ChatWindow({
       resetGenMessage();
       console.error(error);
       toast.error(tError((error as HTTPError).message));
+      if ((error as HTTPError).message.toString() === '32002') {
+        revalidateData('tag', 'get_ai_models');
+      }
     }
   };
 

@@ -14,9 +14,10 @@ import { cn } from '#utils/cn';
 interface ModelDropdownProps {
   onSelectSuccess?: () => void;
   AIModels: IAIModel[];
+  isLogin?: boolean;
 }
 
-export function AIModelDropdown({ onSelectSuccess, AIModels }: ModelDropdownProps) {
+export function AIModelDropdown({ onSelectSuccess, AIModels, isLogin }: ModelDropdownProps) {
   const { selectedModel, setSelectedModel } = useConversationStore();
   const tAI = useTranslations('aiAssistant');
 
@@ -25,6 +26,7 @@ export function AIModelDropdown({ onSelectSuccess, AIModels }: ModelDropdownProp
     onSelectSuccess?.();
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (selectedModel) {
       return;
@@ -33,7 +35,15 @@ export function AIModelDropdown({ onSelectSuccess, AIModels }: ModelDropdownProp
       const defaultModal = AIModels.find(model => model.is_available) ?? (AIModels[0] as IAIModel);
       setSelectedModel(defaultModal);
     }
-  }, [selectedModel, AIModels, setSelectedModel]);
+  }, [AIModels]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (AIModels.length > 0) {
+      const defaultModal = AIModels.find(model => model.is_available) ?? (AIModels[0] as IAIModel);
+      setSelectedModel(defaultModal);
+    }
+  }, [isLogin]);
 
   return (
     <DropdownMenu>

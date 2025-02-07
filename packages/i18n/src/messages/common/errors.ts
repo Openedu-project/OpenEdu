@@ -578,5 +578,7 @@ export const errorMessages = {
     '23000': 'Tracking find many failed',
     '23001': 'Tracking create Failed',
     '27003': 'Message not found',
+    '32002':
+      "You've reached the daily token limit for this model. Please try again tomorrow or switch to another model.",
   },
 };

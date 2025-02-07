@@ -188,7 +188,7 @@
     --footer: linear-gradient(255deg, #b8f4f8 6.18%, #ede3fe 70.53%);
 
     /* primary */
-    --primary-50: 238 47% 86%; /* #C4C6F2 */
+    --primary-50: #C4C6F2;
     --primary-100: 252 100% 94%; /* #E4E1FF */
 
     /* neutral */
