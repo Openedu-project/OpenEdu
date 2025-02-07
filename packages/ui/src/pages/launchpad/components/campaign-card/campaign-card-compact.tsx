@@ -1,0 +1,76 @@
+'use client';
+
+import type { ILaunchpad } from '@oe/api/types/launchpad';
+import DefaultImg from '@oe/assets/images/defaultimage.png';
+import { useTranslations } from 'next-intl';
+import { useRouter } from '#common/navigation';
+import { Image } from '#components/image';
+import { Progress } from '#shadcn/progress';
+import { formatCurrency } from '#utils/format-currency';
+import { calculateProgress, getTimeStatus } from '#utils/launchpad-utils';
+
+const CampaignCardCompact = ({ campaign }: { campaign: ILaunchpad }) => {
+  const router = useRouter();
+  const t = useTranslations('launchpadHomepage');
+  const timeLeft = getTimeStatus(campaign.funding_end_date);
+  const timeText =
+    timeLeft <= 0
+      ? t('common.ended')
+      : `${timeLeft} ${timeLeft === 1 ? t('common.day') : t('common.days')} ${t('common.left')}`;
+  const progress = calculateProgress(Number(campaign.total_amount), Number(campaign.funding_goal.target_funding));
+
+  return (
+    <div className="space-y-4 rounded-2xl bg-white p-4 leading-[125%] shadow-[0px_4px_30px_0px_#F4F5F6] transition-all hover:scale-[102%]">
+      <button
+        type="button"
+        className="relative min-h-[124px] w-full cursor-pointer overflow-hidden rounded-2xl"
+        onClick={() => router.push(`/launchpad/${campaign.id}`)}
+        onKeyDown={e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            router.push(`/launchpad/${campaign.id}`);
+          }
+        }}
+      >
+        <Image
+          src={campaign.thumbnail?.url || DefaultImg.src}
+          alt="campaign card compact"
+          fill
+          className="h-full w-full"
+          containerHeight={124}
+        />
+      </button>
+      <div className="space-y-2">
+        <div className="flex items-start justify-between">
+          <button
+            type="button"
+            className="cursor-pointer text-left font-semibold text-[20px] leading-[125%] hover:text-primary"
+            onClick={() => router.push(`/launchpad/${campaign.id}`)}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                router.push(`/launchpad/${campaign.id}`);
+              }
+            }}
+          >
+            {campaign.name}
+          </button>
+          {/* <HeartIcon className="cursor-pointer" /> */}
+        </div>
+        <Progress value={progress.percentage} className="h-1" />
+
+        <div className="flex items-start justify-between gap-2">
+          <p className="text-base">
+            <span className="font-semibold">{formatCurrency(Number(campaign.total_amount))} USDT</span> funded
+          </p>
+
+          <span className="font-semibold text-base text-primary">{progress.displayText}</span>
+        </div>
+
+        <p className="text-base">
+          <span className="font-semibold">{timeText}</span>
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default CampaignCardCompact;
