@@ -29,7 +29,7 @@ export async function UserMenu({ me }: { me: IUser }) {
 
   const hasAccess = (requiredRoles: string[]) => requiredRoles.some(role => userRolesForOrg.includes(role));
 
-  const visibleMenuItems = MENU_ITEMS.filter(item => hasAccess(item.requiredRoles));
+  const visibleMenuItems = MENU_ITEMS(me).filter(item => hasAccess(item.requiredRoles));
 
   return (
     <DropdownMenu>
