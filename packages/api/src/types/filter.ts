@@ -25,4 +25,7 @@ export interface IFilter {
   hashtag_id?: string;
   status?: string;
   group?: TMyCourseStatus;
+  has_launchpad?: boolean;
+  section_count_gte?: number;
+  version?: number;
 }

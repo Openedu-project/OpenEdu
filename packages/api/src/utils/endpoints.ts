@@ -238,6 +238,9 @@ export const API_ENDPOINT = {
   LAUNCHPADS_START_VOTING_ID: '/api/v1/launchpads/:id/milestones/:milestone_id/start',
   LAUNCHPADS_FUNDING_TIME_ID: '/api/v1/launchpads/:id/funding-time',
   LAUNCHPADS_DECIDE_VOTING_ID: '/api/v1/launchpads/:id/decide-voting',
+  LAUNCHPADS_MY_LAUNCHPAD: '/api/v1/launchpads/investments/me',
+  LAUNCHPADS_CREATE: '/api/v1/launchpads/create',
+  LAUNCHPADS_INVESTMENTS: '/api/v1/investments',
 
   // WS
   WEBSOCKET: '/websocket',
