@@ -21,10 +21,14 @@ import {
 
 import { updateGlobalTheme } from './_components/theme-settings/theme-global/_utils';
 import { initialThemeGlobal } from './_config/theme-global-initial';
+import { AvailHomepageBlogsClient, AvailHomepageBlogsServer } from './avail/homepage/avail-blogs';
 import { AvailHomepageCoursesClient, AvailHomepageCoursesServer } from './avail/homepage/avail-courses';
+import { AvailHomepageEco } from './avail/homepage/avail-eco';
 import { AvailHomepageFeature } from './avail/homepage/avail-feature';
 import { AvailHomepageHero } from './avail/homepage/avail-hero';
+import { AvailHomepageSolution } from './avail/homepage/avail-solution';
 import AvailHomepage from './avail/homepage/index';
+
 import { fonts } from './fonts';
 import { ScholarHomepageAboutUs, ScholarHomepageHero, ScholarHomepageService } from './scholar';
 import { ScholarAboutUs, ScholarHomePage } from './scholar';
@@ -108,6 +112,9 @@ export const THEMES: ThemeRender = {
       availHero: AvailHomepageHero,
       availFeature: AvailHomepageFeature,
       availCourses: AvailHomepageCoursesClient,
+      availSolution: AvailHomepageSolution,
+      availEco: AvailHomepageEco,
+      availBlogs: AvailHomepageBlogsClient,
     },
     auth,
   },
@@ -176,6 +183,9 @@ export const THEMES_SERVER: ThemeRender = {
       availHero: AvailHomepageHero,
       availFeature: AvailHomepageFeature,
       availCourses: AvailHomepageCoursesServer,
+      availSolution: AvailHomepageSolution,
+      availEco: AvailHomepageEco,
+      availBlogs: AvailHomepageBlogsServer,
     },
     auth,
   },

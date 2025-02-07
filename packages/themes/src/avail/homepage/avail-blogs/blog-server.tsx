@@ -1,16 +1,16 @@
-import type { ICourse } from '@oe/api/types/course/course';
+import type { IBlog } from '@oe/api/types/blog';
 import type { IFeaturedContent } from '@oe/api/types/featured-contents';
-import { CourseCard } from '@oe/ui/components/course-card';
+import { BlogCardServer } from '@oe/ui/components/blog-card';
 import { cn } from '@oe/ui/utils/cn';
 import { getTranslations } from 'next-intl/server';
 import type { SectionComponent } from '../../../_types/theme-page';
 import { InfoSection } from '../../../vbi/_components/info-section';
-import { getPopularCourses } from '../_actions/popular-course';
+import { getPopularBlogs } from '../_actions/blog';
 
-const AvailHomepageCoursesServer: SectionComponent<'homepage', 'availCourses'> = async ({ className, props }) => {
-  const [t, dataPopularCourses] = await Promise.all([
-    getTranslations('themePage.avail.homepage.availCourses'),
-    getPopularCourses(),
+const AvailHomepageBlogsServer: SectionComponent<'homepage', 'availBlogs'> = async ({ className, props }) => {
+  const [t, dataPopularBlogs] = await Promise.all([
+    getTranslations('themePage.avail.homepage.availBlogs'),
+    getPopularBlogs(),
   ]);
 
   return (
@@ -22,13 +22,13 @@ const AvailHomepageCoursesServer: SectionComponent<'homepage', 'availCourses'> =
         className="flex flex-col items-center text-center"
       />
       <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 md:p-8 lg:grid-cols-4">
-        {dataPopularCourses?.map(
-          (course: IFeaturedContent<ICourse>) =>
-            course?.entity && <CourseCard key={course?.entity?.id} courseData={course?.entity} />
+        {dataPopularBlogs?.map(
+          (course: IFeaturedContent<IBlog>) =>
+            course?.entity && <BlogCardServer key={course?.entity?.id} blog={course?.entity as IBlog} />
         )}
       </div>
     </div>
   );
 };
 
-export default AvailHomepageCoursesServer;
+export default AvailHomepageBlogsServer;

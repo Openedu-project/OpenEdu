@@ -1,32 +1,32 @@
 'use client';
 import { useGetCoursesPublish } from '@oe/api/hooks/useCourse';
 import { useGetPopularCourses, useUpdateFeaturedContent } from '@oe/api/hooks/useFeaturedContent';
+import { useGetOrganizationByDomain } from '@oe/api/hooks/useOrganization';
 import type { ICourse } from '@oe/api/types/course/course';
 import type { IFeaturedContent } from '@oe/api/types/featured-contents';
-import { CourseCard } from '@oe/ui/components/course-card';
-import { DndSortable, DndSortableDragButton } from '@oe/ui/components/dnd-sortable';
+import { DndSortable } from '@oe/ui/components/dnd-sortable';
 import { PaginationCustom } from '@oe/ui/components/pagination-custom';
 import { Button } from '@oe/ui/shadcn/button';
-import { Checkbox } from '@oe/ui/shadcn/checkbox';
 import { Input } from '@oe/ui/shadcn/input';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import type React from 'react';
+import { CourseItem } from './course-item';
 
 const PER_PAGE = 4;
 
 const ListPopularCourses = () => {
-  const { dataPopularCourses } = useGetPopularCourses({
-    params: { org_id: '' },
-  });
   const t = useTranslations('themeFeaturedContent');
-
   const { triggerUpdateFeaturedContent } = useUpdateFeaturedContent();
+  const { organizationByDomain } = useGetOrganizationByDomain();
+
   const [items, setItems] = useState<ICourse[]>([]);
-  const [selectedDisplay, setSelectedDisplay] = useState<IFeaturedContent<undefined>[]>([]);
+  const [selectedDisplay, setSelectedDisplay] = useState<IFeaturedContent<undefined>[] | undefined>(undefined);
   const [maxDisplay, setMaxDisplay] = useState<number>(4);
 
   const isOpenEdu = false;
+
   const [params, setParams] = useState(() => {
     return {
       page: 1,
@@ -37,78 +37,112 @@ const ListPopularCourses = () => {
     };
   });
 
+  const { dataPopularCourses } = useGetPopularCourses({
+    params: { org_id: organizationByDomain?.id ?? '' },
+  });
+
   const { dataListCourses: dataCoursesPublish, isLoadingCourses } = useGetCoursesPublish(params);
 
-  const handlePageChange = (page: number) => {
-    setParams(prev => ({ ...prev, page }));
-  };
-
-  useEffect(() => {
-    if (dataCoursesPublish?.results && dataPopularCourses?.results) {
-      setItems(dataCoursesPublish?.results);
-      setSelectedDisplay(dataPopularCourses?.results);
+  const processedData = useMemo(() => {
+    if (!(dataCoursesPublish?.results && dataPopularCourses?.results)) {
+      return null;
     }
+
+    return {
+      courses: dataCoursesPublish.results,
+      popularCourses: dataPopularCourses.results,
+    };
   }, [dataCoursesPublish, dataPopularCourses]);
 
-  if (isLoadingCourses) {
-    return <p>...loading</p>;
-  }
-
-  const handleSort = (newItems: ICourse[]) => {
+  const handleSort = useCallback((newItems: ICourse[]) => {
     setItems(newItems);
     setSelectedDisplay(prev =>
-      prev.map((item, index) => ({
+      prev?.map((item, index) => ({
         ...item,
         order: index,
       }))
     );
-  };
+  }, []);
 
-  const handleSave = async () => {
-    const featuredContents = selectedDisplay.map((content, index) => ({
+  const handleSave = useCallback(async () => {
+    const featuredContents = selectedDisplay?.map((content, index) => ({
       entity_id: content.entity_id,
       order: index,
     }));
 
     try {
       const res = await triggerUpdateFeaturedContent({
-        org_id: 'apI3DY5K8EphHA2Z',
+        org_id: organizationByDomain?.id ?? '',
         type: 'popular',
         entity_type: 'course',
-        entities: featuredContents,
+        entities: featuredContents || [],
       });
 
       if (!res) {
-        throw new Error('Fail');
+        throw new Error('Update failed');
       }
+
       toast.success('Featured contents updated successfully');
     } catch (error) {
-      console.error(error);
-      toast.error('Failed to updated featured contents');
+      console.error('Failed to update featured contents:', error);
+      toast.error('Failed to update featured contents');
     }
-  };
+  }, [selectedDisplay, triggerUpdateFeaturedContent, organizationByDomain]);
 
-  const handleCheckboxChange = (checked: boolean, course: ICourse) => {
-    if (checked) {
-      if (selectedDisplay.length >= maxDisplay) {
-        toast.error(`Maximum ${maxDisplay} items allowed`);
-        return;
+  const handleCheckboxChange = useCallback(
+    (checked: boolean, course: ICourse) => {
+      if (checked) {
+        if (!selectedDisplay || selectedDisplay?.length >= maxDisplay) {
+          toast.error(`Maximum ${maxDisplay} items allowed`);
+          return;
+        }
+
+        const newFeaturedContent: IFeaturedContent<undefined> = {
+          id: '',
+          org_id: '',
+          entity_id: course.cuid,
+          entity_type: 'COURSE',
+          enabled: true,
+          order: selectedDisplay.length,
+          type: 'COURSE',
+          entity: undefined,
+        };
+
+        setSelectedDisplay(prev => (prev ? [...prev, newFeaturedContent] : []));
+      } else {
+        setSelectedDisplay(prev => prev?.filter(item => item.entity_id !== course.cuid));
       }
-      const newFeaturedContent: IFeaturedContent<undefined> = {
-        id: '', // Will be assigned by backend
-        org_id: '', // Will be assigned by backend
-        entity_id: course.cuid,
-        entity_type: 'COURSE',
-        enabled: true,
-        order: selectedDisplay.length,
-        type: 'COURSE',
-        entity: undefined,
-      };
-      setSelectedDisplay(prev => [...prev, newFeaturedContent]);
-    } else {
-      setSelectedDisplay(prev => prev.filter(item => item.entity_id !== course.cuid));
+    },
+    [maxDisplay, selectedDisplay?.length]
+  );
+
+  const handlePageChange = useCallback((page: number) => {
+    setParams(prev => ({ ...prev, page }));
+  }, []);
+
+  const handleMaxDisplayChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setMaxDisplay(Number(e.currentTarget.value));
+  }, []);
+
+  useEffect(() => {
+    if (dataCoursesPublish?.results) {
+      setItems(dataCoursesPublish?.results);
     }
-  };
+  }, [dataCoursesPublish]);
+
+  useEffect(() => {
+    if (!selectedDisplay && dataPopularCourses?.results) {
+      setSelectedDisplay(dataPopularCourses?.results);
+    }
+  }, [selectedDisplay, dataPopularCourses]);
+
+  if (isLoadingCourses) {
+    return <div className="p-4">Loading...</div>;
+  }
+
+  if (!processedData) {
+    return <div className="p-4">No data available</div>;
+  }
 
   return (
     <div className="mx-auto w-full space-y-6 p-4">
@@ -120,21 +154,17 @@ const ListPopularCourses = () => {
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <span className="whitespace-nowrap text-sm">{t('maxItems')}</span>
-              <Input
-                type="number"
-                value={maxDisplay}
-                onChange={e => setMaxDisplay(Number(e.currentTarget.value))}
-                className="w-20"
-              />
+              <Input type="number" value={maxDisplay} onChange={handleMaxDisplayChange} className="w-20" />
             </div>
             <p className="text-sm">
-              {t('showing')} {selectedDisplay.length}/{maxDisplay}
+              {t('showing')} {selectedDisplay?.length ?? 0}/{maxDisplay}
             </p>
             <Button onClick={handleSave}>{t('saveChanges')}</Button>
           </div>
         </div>
       </div>
-      {items && items.length > 0 && (
+
+      {items.length > 0 && (
         <DndSortable<ICourse, unknown>
           data={items}
           dataConfig={{
@@ -145,20 +175,18 @@ const ListPopularCourses = () => {
           className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4"
           renderConfig={{
             renderItem: ({ item }) => (
-              <div className="group relative">
-                <Checkbox
-                  checked={!!selectedDisplay?.find(c => c.entity_id === item.original.cuid)}
-                  onCheckedChange={checked => handleCheckboxChange(!!checked, item.original)}
-                  className="absolute top-4 left-4 z-10 bg-background"
-                />
-                <DndSortableDragButton className="absolute top-4 right-4 z-10 rounded-md bg-background p-1 opacity-0 transition-opacity group-hover:opacity-100" />
-                <CourseCard courseData={item.original} showHover={false} contentClassName="bg-foreground/10" />
-              </div>
+              <CourseItem
+                key={item.original.cuid}
+                course={item.original}
+                isSelected={!!selectedDisplay?.find(c => c.entity_id === item.original.cuid)}
+                onCheckboxChange={handleCheckboxChange}
+              />
             ),
           }}
           onChange={handleSort}
         />
       )}
+
       <PaginationCustom
         currentPage={dataCoursesPublish?.pagination?.page ?? 1}
         totalCount={dataCoursesPublish?.pagination?.total_items ?? 0}

@@ -43,4 +43,67 @@ export const createAvailHomepageConfig = (getThemeTranslation: (path: string[]) 
     },
     order: 2,
   }),
+  availSolution: createSection<'homepage', 'availSolution'>({
+    props: {
+      banner: { mime: 'image/png' },
+      solutions: {
+        'solutions-0': {
+          name: getThemeTranslation(['homepage', 'availSolution', 'solutions', 'solutions-0', 'name']),
+          description: getThemeTranslation(['homepage', 'availSolution', 'solutions', 'solutions-0', 'description']),
+          icon: { mime: 'image/png' },
+        },
+        'solutions-1': {
+          name: getThemeTranslation(['homepage', 'availSolution', 'solutions', 'solutions-1', 'name']),
+          description: getThemeTranslation(['homepage', 'availSolution', 'solutions', 'solutions-1', 'description']),
+          icon: { mime: 'image/png' },
+        },
+        'solutions-2': {
+          name: getThemeTranslation(['homepage', 'availSolution', 'solutions', 'solutions-2', 'name']),
+          description: getThemeTranslation(['homepage', 'availSolution', 'solutions', 'solutions-2', 'description']),
+          icon: { mime: 'image/png' },
+        },
+        'solutions-3': {
+          name: getThemeTranslation(['homepage', 'availSolution', 'solutions', 'solutions-3', 'name']),
+          description: getThemeTranslation(['homepage', 'availSolution', 'solutions', 'solutions-3', 'description']),
+          icon: { mime: 'image/png' },
+        },
+        'solutions-4': {
+          name: getThemeTranslation(['homepage', 'availSolution', 'solutions', 'solutions-4', 'name']),
+          description: getThemeTranslation(['homepage', 'availSolution', 'solutions', 'solutions-4', 'description']),
+          icon: { mime: 'image/png' },
+        },
+      },
+      carouselTitle: getThemeTranslation(['homepage', 'availSolution', 'carouselTitle']),
+      button: {
+        text: getThemeTranslation(['homepage', 'availSolution', 'button', 'text']),
+        link: '/',
+      },
+      carousels: new Array(5).fill({ mime: 'image/png' }),
+    },
+    order: 3,
+  }),
+  availEco: createSection<'homepage', 'availEco'>({
+    props: {
+      title: getThemeTranslation(['homepage', 'availEco', 'title']),
+      section1: {
+        title: getThemeTranslation(['homepage', 'availEco', 'section1', 'title']),
+        partners: new Array(5).fill({ mime: 'image/png' }),
+      },
+      section2: {
+        title: getThemeTranslation(['homepage', 'availEco', 'section2', 'title']),
+        partners: new Array(7).fill({ mime: 'image/png' }),
+      },
+    },
+    order: 4,
+  }),
+  availBlogs: createSection<'homepage', 'availBlogs'>({
+    props: {
+      title: getThemeTranslation(['homepage', 'availBlogs', 'title']),
+      button: {
+        text: getThemeTranslation(['homepage', 'availBlogs', 'button', 'text']),
+        link: '/',
+      },
+    },
+    order: 5,
+  }),
 });

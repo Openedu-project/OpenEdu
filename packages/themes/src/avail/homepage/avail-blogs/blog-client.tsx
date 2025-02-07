@@ -1,21 +1,21 @@
 'use client';
-import { useGetPopularCoursesAtWebsite } from '@oe/api/hooks/useFeaturedContent';
+import { useGetPopularBlogsAtWebsite } from '@oe/api/hooks/useFeaturedContent';
 import { useGetOrganizationByDomain } from '@oe/api/hooks/useOrganization';
-import type { ICourse } from '@oe/api/types/course/course';
+import type { IBlog } from '@oe/api/types/blog';
 import type { IFeaturedContent } from '@oe/api/types/featured-contents';
-import { CourseCard } from '@oe/ui/components/course-card';
+import { BlogCardServer } from '@oe/ui/components/blog-card';
 import { cn } from '@oe/ui/utils/cn';
 import { useTranslations } from 'next-intl';
 import type { SectionComponent } from '../../../_types/theme-page';
 import { InfoSection, type InfoSectionProps } from '../../../vbi/_components/info-section';
 
-export interface AvailHomepageCoursesProps extends InfoSectionProps {}
+export interface AvailHomepageBlogsProps extends InfoSectionProps {}
 
-const AvailHomepageCoursesClient: SectionComponent<'homepage', 'availCourses'> = ({ className, props }) => {
-  const t = useTranslations('themePage.avail.homepage.availCourses');
+const AvailHomepageBlogsClient: SectionComponent<'homepage', 'availBlogs'> = ({ className, props }) => {
+  const t = useTranslations('themePage.avail.homepage.availBlogs');
   const { organizationByDomain } = useGetOrganizationByDomain();
 
-  const { dataPopularCourses } = useGetPopularCoursesAtWebsite({
+  const { dataPopularBlogs } = useGetPopularBlogsAtWebsite({
     params: { org_id: organizationByDomain?.id ?? '' },
   });
 
@@ -28,13 +28,13 @@ const AvailHomepageCoursesClient: SectionComponent<'homepage', 'availCourses'> =
         className="flex flex-col items-center text-center"
       />
       <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 md:p-8 lg:grid-cols-4">
-        {dataPopularCourses?.map(
-          (course: IFeaturedContent<ICourse>) =>
-            course?.entity && <CourseCard key={course?.entity?.id} courseData={course?.entity} />
+        {dataPopularBlogs?.map(
+          (blog: IFeaturedContent<IBlog>) =>
+            blog?.entity && <BlogCardServer key={blog?.entity?.id} blog={blog?.entity} />
         )}
       </div>
     </div>
   );
 };
 
-export default AvailHomepageCoursesClient;
+export default AvailHomepageBlogsClient;
