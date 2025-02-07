@@ -44,18 +44,19 @@ export function BlogCardServer({
   // const locale = currentPathname ? getLocaleFromPathname(currentPathname) : '';
   const locale = blog?.locale ?? "";
   const isExternalDomain = blog?.org?.domain !== currentHostname;
-  const blogUrl = isExternalDomain
-    ? `https://${blog?.org?.domain}/${locale}${targetPath}`
-    : targetPath;
+  const blogUrl =
+    isExternalDomain && blog?.org?.domain
+      ? `https://${blog?.org?.domain}/${locale}${targetPath}`
+      : targetPath;
 
-  const authorUrl = buildUrl({
-    endpoint: BLOG_ROUTES.authorBlog,
-    params: { username: blog?.author?.username },
-  });
+  // const authorUrl = buildUrl({
+  //   endpoint: BLOG_ROUTES.authorBlog,
+  //   params: { username: blog?.author?.username },
+  // });
 
-  const authorFullUrl = isExternalDomain
-    ? `https://${blog?.org?.domain}/${locale}${authorUrl}`
-    : authorUrl;
+  // const authorFullUrl = (isExternalDomain && blog?.org?.domain)
+  //   ? `https://${blog?.org?.domain}/${locale}${authorUrl}`
+  //   : authorUrl;
 
   return (
     <Link
@@ -84,7 +85,7 @@ export function BlogCardServer({
                 contentRight && "md:col-span-2"
               )}
             >
-              <Link
+              {/* <Link
                 href={authorFullUrl}
                 target={isExternalDomain ? "_blank" : undefined}
               >
@@ -93,7 +94,12 @@ export function BlogCardServer({
                   profileData={blog?.author}
                   desc={authorDesc}
                 />
-              </Link>
+              </Link> */}
+              <ProfileCard
+                className="cursor-pointer border-none p-[2px] shadow-none hover:bg-primary/10"
+                profileData={blog?.author}
+                desc={authorDesc}
+              />
 
               <p className="mcaption-regular9 text-right text-foreground">
                 {Date.now() - Number(blog?.update_at) < 60 * 60 * 24 * 1000
@@ -123,7 +129,7 @@ export function BlogCardServer({
             <p className="giant-iheading-semibold16 mb-2 line-clamp-2 h-[42px] text-foreground">
               {blog?.title}
             </p>
-            {showAuthor && !authorOnTop && blog?.author && (
+            {/* {showAuthor && !authorOnTop && blog?.author && (
               <Link
                 href={authorFullUrl}
                 target={isExternalDomain ? "_blank" : undefined}
@@ -133,6 +139,12 @@ export function BlogCardServer({
                   profileData={blog?.author}
                 />
               </Link>
+            )} */}
+            {showAuthor && !authorOnTop && blog?.author && (
+              <ProfileCard
+                className="!shadow-none !p-[2px] mb-2 cursor-pointer border-none hover:bg-primary/10"
+                profileData={blog?.author}
+              />
             )}
             {showDescription && (
               <p
