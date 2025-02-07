@@ -181,7 +181,7 @@ export const ZONE_ROUTES = {
   // creator: '/creator',
   // learner: '/learner',
   // affiliate: '/affiliate',
-  blog: '/blog',
+  // blog: '/blog',
   // landing: '/landing',
 } as const;
 
