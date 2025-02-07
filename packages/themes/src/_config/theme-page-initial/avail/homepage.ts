@@ -87,11 +87,11 @@ export const createAvailHomepageConfig = (getThemeTranslation: (path: string[]) 
       title: getThemeTranslation(['homepage', 'availEco', 'title']),
       section1: {
         title: getThemeTranslation(['homepage', 'availEco', 'section1', 'title']),
-        partners: new Array(5).fill({ mime: 'image/png' }),
+        partners: new Array(48).fill({ mime: 'image/png' }),
       },
       section2: {
         title: getThemeTranslation(['homepage', 'availEco', 'section2', 'title']),
-        partners: new Array(7).fill({ mime: 'image/png' }),
+        partners: new Array(13).fill({ mime: 'image/png' }),
       },
     },
     order: 4,

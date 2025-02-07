@@ -20,12 +20,12 @@ const AvailHomepageCoursesClient: SectionComponent<'homepage', 'availCourses'> =
   });
 
   return (
-    <div className={cn('space-y-4 bg-accent p-4 md:space-y-8 md:p-8 lg:min-h-[80vh] lg:p-12', className)}>
+    <div className={cn('space-y-4 bg-accent-foreground p-4 md:space-y-8 md:p-8 lg:min-h-[80vh] lg:p-12', className)}>
       <InfoSection
         title={t('title')}
         titleSub={undefined}
         button={{ text: t?.('button.text'), link: props?.button?.link }}
-        className="flex flex-col items-center text-center"
+        className="flex flex-col items-center text-center text-background"
       />
       <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 md:p-8 lg:grid-cols-4">
         {dataPopularCourses?.map(

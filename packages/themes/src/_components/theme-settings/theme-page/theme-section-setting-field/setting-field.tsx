@@ -18,7 +18,6 @@ export const ThemePageSettingField: React.FC<ThemePageSettingFieldProps> = ({
   type = 'text',
   path,
 }) => {
-  console.log(type, value);
   return (
     <div className="space-y-2">
       <div className={cn('flex', type === 'text' ? 'flex-row items-center justify-between' : 'flex-col')}>
