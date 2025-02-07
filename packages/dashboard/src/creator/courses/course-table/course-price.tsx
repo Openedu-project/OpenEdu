@@ -36,13 +36,13 @@ export default function CoursePrice({
         {hasFiatDiscount ? (
           <>
             <span className="mcaption-bold14">
-              {formatCurrency(Number(priceSettings.fiat_discount_price), {
+              {formatCurrency(Number(priceSettings.fiat_price), {
                 currency: priceSettings.fiat_currency,
                 // locale: fiatLocale,
               })}
             </span>
             <span className="mcaption-regular12 lg:mcaption-regular16 text-muted-foreground line-through">
-              {formatCurrency(Number(priceSettings.fiat_price), {
+              {formatCurrency(Number(priceSettings.fiat_discount_price + priceSettings.fiat_price), {
                 currency: priceSettings.fiat_currency,
                 // locale: fiatLocale,
               })}
@@ -68,7 +68,7 @@ export default function CoursePrice({
               })}
             </span>
             <span className="mcaption-regular12 lg:mcaption-regular16 text-muted-foreground line-through">
-              {formatCurrency(Number(priceSettings.crypto_price), {
+              {formatCurrency(Number(priceSettings.crypto_price + priceSettings.crypto_discount_price), {
                 currency: priceSettings.crypto_currency,
                 decimals: 2,
               })}
