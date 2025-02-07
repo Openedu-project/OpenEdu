@@ -41,7 +41,10 @@ const MENU_STRUCTURE = {
     { key: 'about-us' as ThemePageKey, label: 'About Us' },
     { key: 'partners' as ThemePageKey, label: 'Partners' },
   ],
-  FEATURES_POPULAR: [{ key: 'course', label: 'Course' }],
+  FEATURES_POPULAR: [
+    { key: 'course', label: 'Course' },
+    { key: 'blog', label: 'Blog' },
+  ],
 } as const;
 
 // Utility function to generate paths
