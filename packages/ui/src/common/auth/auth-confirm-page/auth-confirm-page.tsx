@@ -37,12 +37,12 @@ export async function AuthConfirmPage({ banner, themeName = 'academia' }: AuthCo
 
   if (event !== authEvents.setPassword) {
     try {
-      const response = {
-        require_set_password: false,
-        email: 'test@openedu.net',
-      };
+      // const response = {
+      //   require_set_password: false,
+      //   email: 'test@openedu.net',
+      // };
 
-      if (response.require_set_password) {
+      if (decodedToken.require_set_password) {
         return (
           <AuthLayout
             title={tThemeAuth('authConfirm.title')}
@@ -65,7 +65,7 @@ export async function AuthConfirmPage({ banner, themeName = 'academia' }: AuthCo
         );
       }
       const me = await getMeServiceWithoutError();
-      if (me?.email === response.email) {
+      if (me?.email === decodedToken.email) {
         needRedirect = true;
       } else {
         return (
