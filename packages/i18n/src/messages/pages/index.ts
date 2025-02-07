@@ -12,6 +12,8 @@ import { creatorLaunchpadMessages } from './creator-launchpad';
 import { creatorManagementMessage } from './creator-management';
 import { forgotPasswordMessage } from './forgot-password';
 import { homePageMessage } from './home-page';
+import { launchpadDetailPageMessages } from './launchpad-detailpage';
+import { launchpadHomepageMessage } from './launchpad-homepage';
 import { courseLearningMessages } from './learning';
 import { myLearningSpaceMessage } from './my-learning-space';
 import { notificationMessage } from './notification';
@@ -48,4 +50,6 @@ export const pageMessages = {
   ...adminLaunchpadMessages,
   ...creatorLaunchpadMessages,
   ...myLearningSpaceMessage,
+  ...launchpadDetailPageMessages,
+  ...launchpadHomepageMessage,
 };

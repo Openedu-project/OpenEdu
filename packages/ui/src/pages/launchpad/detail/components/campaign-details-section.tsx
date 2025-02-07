@@ -1,0 +1,110 @@
+import type { ILaunchpad } from '@oe/api/types/launchpad';
+import { isLogin } from '@oe/api/utils/auth';
+import { LAUNCHPAD_STATUS } from '@oe/api/utils/launchpad';
+import DefaultImg from '@oe/assets/images/defaultimage.png';
+import { formatDate } from '@oe/core/utils/datetime';
+import { Calendar } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
+import { CircularProgress } from '#components/circular-progress';
+import { Image } from '#components/image';
+import { Button } from '#shadcn/button';
+import { formatCurrency } from '#utils/format-currency';
+import { calculateProgress, getTimeStatus } from '#utils/launchpad-utils';
+import { CollapsibleCourseContent } from '../../components/collapsible-course-content';
+import { CourseCardHorizontal } from '../../components/course-card';
+import { CreatorCard } from '../../components/creator-card';
+import { DescriptionCard } from '../../components/description-card';
+
+const CampaignDetailsSection = async ({
+  campaign,
+}: {
+  campaign: ILaunchpad | null;
+}) => {
+  const [isLoggedIn, t] = await Promise.all([isLogin(), getTranslations('launchpadDetailPage')]);
+
+  const timeLeft = getTimeStatus(campaign?.funding_end_date || 0);
+  const timeText =
+    timeLeft <= 0
+      ? t('common.ended')
+      : `${timeLeft} ${timeLeft === 1 ? t('common.day') : t('common.days')} ${t('common.left')}`;
+
+  const progress = calculateProgress(Number(campaign?.total_amount), Number(campaign?.funding_goal.target_funding));
+
+  const renderBtn = () => {
+    if (isLoggedIn && campaign?.status === LAUNCHPAD_STATUS.FUNDING) {
+      return (
+        <Button className="mt-6 h-fit w-full rounded-xl px-6 py-4 font-semibold text-base md:hidden">
+          {t('buttons.pledge')}
+        </Button>
+      );
+    }
+  };
+
+  return (
+    <div className="w-full px-4 md:w-[60%] md:px-0">
+      <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <h2 className="font-bold text-2xl text-primary md:text-3xl">{campaign?.name}</h2>
+        {/* Keeping the commented buttons as is */}
+      </div>
+
+      <div className="relative mb-6 block h-full min-h-[224px] w-full cursor-pointer overflow-hidden rounded-2xl md:hidden">
+        <Image
+          className="h-full w-full object-cover"
+          alt="campaign full card image"
+          src={campaign?.thumbnail?.url || DefaultImg.src}
+          fill
+          containerHeight={224}
+        />
+      </div>
+
+      <div className="mb-6 flex items-center gap-1">
+        <Calendar className="h-5 w-5" />
+        <p className="text-sm md:text-base">
+          {t('common.createAt')}
+          <span className="font-semibold">{campaign?.create_at ? formatDate(campaign.create_at) : ''}</span>
+        </p>
+      </div>
+
+      <div className="flex items-center justify-between gap-6 md:hidden">
+        <div className="space-y-2">
+          <p className="text-base">
+            <span className="font-semibold text-xl md:text-2xl">{formatCurrency(Number(campaign?.total_amount))}</span>
+            {campaign?.funding_goal.currency} {t('common.funded')}
+          </p>
+          <p className="font-normal text-base">
+            <span className="font-semibold text-xl md:text-2xl">{campaign?.total_backers || 0}</span>
+            {t('common.backers')}
+          </p>
+          <p className="text-base">
+            <span className="font-semibold">{timeText}</span>
+          </p>
+        </div>
+        <CircularProgress value={progress.percentage} />
+      </div>
+
+      {isLoggedIn ? (
+        renderBtn()
+      ) : (
+        <p className="mt-6 block text-center font-semibold text-base md:hidden">{t('buttons.loginToEnroll')}</p>
+      )}
+
+      <h3 className="mt-7 mb-4 font-semibold text-xl md:text-2xl">Course</h3>
+      <CourseCardHorizontal campaign={campaign || undefined} />
+
+      <h3 className="mt-7 mb-4 font-semibold text-xl md:text-2xl">{t('title.creator')}</h3>
+      <CreatorCard educator={campaign?.owner || undefined} />
+
+      <h3 className="mt-7 mb-4 font-semibold text-xl md:text-2xl">{t('title.description')}</h3>
+      <DescriptionCard text={campaign?.description || ''} />
+
+      {campaign?.outlines && (
+        <>
+          <h3 className="mt-7 mb-4 font-semibold text-xl md:text-2xl">{t('title.courseContent')}</h3>
+          <CollapsibleCourseContent outline={campaign?.outlines} />
+        </>
+      )}
+    </div>
+  );
+};
+
+export default CampaignDetailsSection;
