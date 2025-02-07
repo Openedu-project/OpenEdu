@@ -13,6 +13,7 @@ on:
           - openedutest
           - org_openedutest
           - production
+          - org_production
       # project:
       #   type: choice
       #   description: 'Select the project to deploy'
@@ -50,9 +51,11 @@ jobs:
 
       - name: Check deployment conditions
         run: |
-          if [ "${{ github.event.inputs.environment }}" = "production" ] && [ "${{ github.ref_name }}" != "main" ]; then
-            echo "Error: Production can only be deployed from the main branch."
-            exit 1
+          if [ "${{ github.event.inputs.environment }}" = "production" ] || [ "${{ github.event.inputs.environment }}" = "org_production" ]; then
+            if [ "${{ github.ref_name }}" != "main" ]; then
+              echo "Error: Production can only be deployed from the main branch."
+              exit 1
+            fi
           fi
 
       - name: Cache turbo build setup
