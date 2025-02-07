@@ -1,4 +1,4 @@
-import type { IAdminLaunchpadDetailRes } from '@oe/api/types/admin-launchpad';
+import type { IAdminLaunchpadDetailRes, IAdminLaunchpadInvestmentRes } from '@oe/api/types/admin-launchpad';
 import Telegram from '@oe/assets/icons/social-icon/telegram';
 import { formatDateHourMinute } from '@oe/core/utils/datetime';
 import { formatNumber } from '@oe/core/utils/utils';
@@ -8,14 +8,14 @@ import { Card, CardContent } from '@oe/ui/shadcn/card';
 import { Mail } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import type React from 'react';
-import { ContactCopyButton } from './contact-copy-field';
+import { ContactCopyButton } from './creator-contact-copy-field';
 
 interface LaunchpadInfoProps {
   data: IAdminLaunchpadDetailRes;
 }
 
 async function LaunchpadInfo({ data }: LaunchpadInfoProps) {
-  const t = await getTranslations('adminLaunchpadRequest.info');
+  const t = await getTranslations('creatorLaunchpad.info');
 
   return (
     <Card className="w-full">
@@ -57,7 +57,7 @@ async function LaunchpadInfo({ data }: LaunchpadInfoProps) {
 }
 
 async function FundingCard({ data }: LaunchpadInfoProps) {
-  const t = await getTranslations('adminLaunchpadRequest.funding');
+  const t = await getTranslations('creatorLaunchpad.fundingCard');
 
   return (
     <Card className="w-full bg-gray-50">
@@ -106,12 +106,14 @@ function ContactField({ icon, value }: ContactFieldProps) {
   );
 }
 
-export default async function LaunchpadRequestsDetail({
+export default async function CreatorLaunchpadDetail({
   data,
+  backerData,
 }: {
   data: IAdminLaunchpadDetailRes | null;
+  backerData: IAdminLaunchpadInvestmentRes | null;
 }) {
-  const t = await getTranslations('adminLaunchpadRequest.page');
+  const t = await getTranslations('creatorLaunchpad.page');
 
   if (!data) {
     return null;
@@ -127,7 +129,6 @@ export default async function LaunchpadRequestsDetail({
   return (
     <div className="mx-auto ">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        {/* Left section - 2/3 */}
         <div className="space-y-6 lg:col-span-2">
           <LaunchpadInfo data={data} />
           <CourseTimeline items={timelineItems} />
@@ -143,9 +144,35 @@ export default async function LaunchpadRequestsDetail({
             <h3 className="mbutton-semibold16">{t('verificationEmail')}</h3>
             <ContactField icon={<Mail />} value={data?.owner?.email ?? ''} />
           </div>
+          {backerData && backerData.results.length > 0 && (
+            <div className="mt-6">
+              <Card>
+                <CardContent className="p-4">
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    {backerData.results.map(backer => (
+                      <div key={backer.id} className="flex items-center gap-3">
+                        <div className="relative h-8 w-8">
+                          <Image
+                            src={backer.user?.avatar}
+                            alt={backer.user?.display_name || ''}
+                            fill
+                            containerHeight={32}
+                            className="min-w-8 rounded-full bg-gray-200 object-cover"
+                          />
+                        </div>
+                        <span className="mbutton-semibold16 flex-1">
+                          {backer.user?.display_name || backer.user_id} -&nbsp;
+                          {backer.amount} {backer.currency}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
         </div>
 
-        {/* Right section - 1/3 */}
         <div className="lg:col-span-1">
           <FundingCard data={data} />
         </div>

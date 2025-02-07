@@ -8,6 +8,7 @@ import { getLocale, getMessages } from 'next-intl/server';
 import type { ReactNode } from 'react';
 
 import { getThemeConfigServer } from '@oe/api/services/theme';
+import { WebViewHandler } from '@oe/ui/components/webview-handler';
 
 // const geistSans = localFont({
 //   src: './fonts/GeistVF.woff',
@@ -50,6 +51,7 @@ export default async function RootLayout({
           locale={locale}
           theme={themeSystem?.[0]?.value?.availableThemes?.[themeName]}
         >
+          <WebViewHandler />
           {children}
           <Toaster />
         </Provider>

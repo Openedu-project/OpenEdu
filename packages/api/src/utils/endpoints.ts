@@ -228,8 +228,12 @@ export const API_ENDPOINT = {
   BLOG_AI_ID_REWRITE: '/api/v1/blogs/ai/:id/rewrite',
   FEATURED_CONTENT: '/api/v1/featured-contents',
   FEATURED_CONTENT_BY_TYPES: '/api/v1/featured-contents/by-types',
+  LAUNCHPADS: '/api/v1/launchpads',
   LAUNCHPADS_ID: '/api/v1/launchpads/:id',
   LAUNCHPADS_ID_INVESTMENTS: '/api/v1/launchpads/:id/investments',
+  LAUNCHPADS_CANCEL_LAUNCHPAD_ID: '/api/v1/launchpads/:id/cancel',
+  LAUNCHPADS_PUBLISH_LAUNCHPAD_ID: '/api/v1/launchpads/:id/publish',
+  LAUNCHPADS_START_VOTING_ID: '/api/v1/launchpads/:id/milestones/:milestone_id/start',
 
   // WS
   WEBSOCKET: '/websocket',

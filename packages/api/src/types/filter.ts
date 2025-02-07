@@ -21,4 +21,5 @@ export interface IFilter {
   not_org_id?: string;
   category_id?: string;
   hashtag_id?: string;
+  status?: string;
 }

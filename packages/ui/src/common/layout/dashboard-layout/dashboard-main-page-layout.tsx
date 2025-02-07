@@ -11,6 +11,7 @@ export function DashboardMainPageLayout({
   dashboard,
   className,
   mainClassName,
+  contentClassName,
 }: {
   children: ReactNode;
   breadcrumbs?: { label: string; disabled?: boolean }[];
@@ -19,13 +20,14 @@ export function DashboardMainPageLayout({
   dashboard?: IProtectedRoutes;
   className?: string;
   mainClassName?: string;
+  contentClassName?: string;
 }) {
   return (
     <>
       <DashboardHeaderCard breadcrumbs={breadcrumbs} dashboard={dashboard} className={className}>
         {header ? header : <h1 className="mb-4 text-2xl">{title}</h1>}
       </DashboardHeaderCard>
-      <div className="flex-1 overflow-hidden rounded bg-background p-4">
+      <div className={cn('flex-1 overflow-hidden rounded bg-background p-4', contentClassName)}>
         <div className={cn('scrollbar h-full overflow-auto', mainClassName)}>{children}</div>
       </div>
     </>
