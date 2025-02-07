@@ -157,7 +157,7 @@ const ACTION_HANDLERS: Record<ActionType, ActionHandler> = {
   },
 };
 
-export const usePaymentButton = ({ courseData, isCourseDetail = false }: IPaymentButton) => {
+export const usePaymentButton = ({ courseData, isCourseDetail = false, onClick }: IPaymentButton) => {
   const router = useRouter();
   const t = useTranslations('paymentButton');
   const searchParams = useSearchParams();
@@ -287,7 +287,9 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false }: IPaymen
         triggerPostEnrollCourse,
       };
 
-      actionHandler.handle(params);
+      void actionHandler.handle(params);
+
+      onClick?.(event);
     },
     [
       actionHandler,

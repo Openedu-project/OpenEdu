@@ -15,6 +15,7 @@ import type {
   TCourseRoles,
   TCourseStatus,
 } from './basic';
+import type { IFormTrigger } from './course-trigger';
 import type { ILearningProgressOverview } from './learning-progress';
 import type { ICourseOrganizationRequest } from './org-request';
 import type { ISection } from './segment';
@@ -93,7 +94,7 @@ export interface ICourse {
 
   categories?: ICategory[];
   reviewing: ICourseVersion | null;
-  form_relations: null;
+  form_relations: IFormTrigger[];
 
   root_request: null;
   org_request: ICourseOrganizationRequest | null;
