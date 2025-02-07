@@ -72,14 +72,14 @@ async function FundingCard({ data }: LaunchpadInfoProps) {
               className="w-full rounded-md object-cover"
             />
           </div>
-          <div className="mt-5 flex w-full items-end gap-1">
+          <div className="mt-5 flex w-full justify-start">
             <p className="giant-iheading-semibold28">
               {t('amount', {
                 amount: formatNumber(data.funding_goal.target_funding),
                 currency: data.funding_goal.currency,
               })}
+              <span className="giant-iheading-regular16 mb-1 ml-1">{t('target')}</span>
             </p>
-            <p className="giant-iheading-regular16 mb-1">{t('target')}</p>
           </div>
         </div>
       </CardContent>

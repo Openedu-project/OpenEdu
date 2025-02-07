@@ -59,7 +59,7 @@ export interface IAdminLaunchpadItem {
 export type IAdminLaunchpadDetailRes = IAdminLaunchpadItem;
 export interface IAdminLaunchpadsListRes extends HTTPPagination<IAdminLaunchpadItem> {}
 
-interface IVotingmilestone {
+export interface IVotingmilestone {
   id: string;
   create_at: number;
   update_at: number;
@@ -72,7 +72,7 @@ interface IVotingmilestone {
   end_vote_date: number;
   order: number;
   target_section: number;
-  status: string;
+  status: 'pending' | 'running' | 'completed' | 'failed';
   props: {
     course_ids: string[] | null;
   };
@@ -97,6 +97,27 @@ export interface IAdminLaunchpadInvestmentItem {
 
 export interface IAdminLaunchpadInvestmentRes extends HTTPPagination<IAdminLaunchpadInvestmentItem> {}
 
-export interface IAdminPublishLaunchpad {
+export interface IAdminPublishLaunchpadPayload {
   status: string;
 }
+export interface IStartFundingTimeLaunchpadPayload {
+  funding_start_date: number;
+}
+
+export interface IDecideVotingLaunchpadPayload {
+  is_continued: boolean;
+}
+
+export type CreatorLaunchpadStatusType =
+  | 'draft'
+  | 'waiting'
+  | 'reviewing'
+  | 'failed'
+  | 'rejected'
+  | 'cancelled'
+  | 'success'
+  | 'approved'
+  | 'publish'
+  | 'voting'
+  | 'funding'
+  | 'refunded';

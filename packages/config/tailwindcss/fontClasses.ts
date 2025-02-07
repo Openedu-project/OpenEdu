@@ -165,6 +165,13 @@ export const fontClasses = {
     lineHeight: '140%' /* 16px */,
   },
 
+  '.giant-iheading-regular16': {
+    fontFamily: 'var(--font-primary), sans-serif',
+    fontSize: '16px',
+    fontWeight: 400,
+    lineHeight: '140%' /* 16px */,
+  },
+
   /**
    * CAPTION
    */

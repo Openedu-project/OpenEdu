@@ -3,7 +3,9 @@ import type {
   IAdminLaunchpadInvestmentRes,
   IAdminLaunchpadItem,
   IAdminLaunchpadsListRes,
-  IAdminPublishLaunchpad,
+  IAdminPublishLaunchpadPayload,
+  IDecideVotingLaunchpadPayload,
+  IStartFundingTimeLaunchpadPayload,
 } from '#types/admin-launchpad';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
@@ -75,7 +77,7 @@ export async function getAdminLaunchpadInvestmentService(
 
 export const postAdminPublishLaunchpadsService = async (
   endpoint: string | null | undefined,
-  { payload, init }: { payload: IAdminPublishLaunchpad & { id: string }; init?: RequestInit }
+  { payload, init }: { payload: IAdminPublishLaunchpadPayload & { id: string }; init?: RequestInit }
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
@@ -87,7 +89,7 @@ export const postAdminPublishLaunchpadsService = async (
     });
   }
 
-  const response = await postAPI<IAdminLaunchpadItem, IAdminPublishLaunchpad>(
+  const response = await postAPI<IAdminLaunchpadItem, IAdminPublishLaunchpadPayload>(
     endpointKey ?? API_ENDPOINT.LAUNCHPADS_PUBLISH_LAUNCHPAD_ID,
     payload,
     init
@@ -155,5 +157,45 @@ export const putAdminCancelPublishLaunchpadsService = async (
   }
 
   const response = await putAPI<IAdminLaunchpadItem, null>(endpointKey, null, init);
+  return response.data;
+};
+
+export const putAdminStartFundingTimeLaunchpadsService = async (
+  endpoint: string | null | undefined,
+  { payload, init }: { payload: IStartFundingTimeLaunchpadPayload & { id: string }; init?: RequestInit }
+) => {
+  let endpointKey = endpoint;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.LAUNCHPADS_FUNDING_TIME_ID,
+      params: {
+        id: payload.id,
+      },
+    });
+  }
+
+  const response = await putAPI<IAdminLaunchpadItem, IStartFundingTimeLaunchpadPayload>(endpointKey, payload, init);
+  return response.data;
+};
+
+export const postAdminDecideVotingLaunchpadsService = async (
+  endpoint: string | null | undefined,
+  { payload, init }: { payload: IDecideVotingLaunchpadPayload & { id: string }; init?: RequestInit }
+) => {
+  let endpointKey = endpoint;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.LAUNCHPADS_DECIDE_VOTING_ID,
+      params: {
+        id: payload.id,
+      },
+    });
+  }
+
+  const response = await postAPI<IAdminLaunchpadItem, IDecideVotingLaunchpadPayload>(
+    endpointKey ?? API_ENDPOINT.LAUNCHPADS_DECIDE_VOTING_ID,
+    payload,
+    init
+  );
   return response.data;
 };

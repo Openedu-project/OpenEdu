@@ -153,7 +153,7 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
         const res = await triggerCreateOrder({
           course_id: courseData?.id ?? '',
           course_cuid: courseData?.cuid ?? '',
-          referral_code: hasRefCode ? String(refCodeStorage) : '',
+          referral_code: hasRefCode ? ((refCodeStorage as string) ?? '') : '',
           source,
         });
 

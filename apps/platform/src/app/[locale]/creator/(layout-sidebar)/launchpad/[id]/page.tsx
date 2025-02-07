@@ -13,7 +13,12 @@ export default async function CreatorLaunchpadDetailPage({ params }: LayoutProps
   const [data, backerData] = await Promise.all([
     getAdminLaunchpadDetailService(null, {
       params: { id },
-      queryParams: { preloads: ['VotingMilestones', 'Owner', 'User'] },
+      queryParams: {
+        preloads: ['VotingMilestones', 'Owner', 'User', 'Investment'],
+      },
+      init: {
+        next: { tags: ['getAdminLaunchpadDetailService'] },
+      },
     }),
     getAdminLaunchpadInvestmentService(null, {
       params: { id },
@@ -21,5 +26,5 @@ export default async function CreatorLaunchpadDetailPage({ params }: LayoutProps
     }),
   ]);
 
-  return <CreatorLaunchpadDetailMgm backerData={backerData} data={data} />;
+  return <CreatorLaunchpadDetailMgm id={id} backerData={backerData} data={data} />;
 }
