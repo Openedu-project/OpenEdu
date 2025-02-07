@@ -5,7 +5,7 @@ export type ThemeSidebarPageKey = 'theme' | 'metadata'; // sidebar - item key of
 export type ThemeSidebarGlobalKey = 'fonts' | 'colors' | 'radius';
 export type ThemeSidebarComponentKey = 'header' | 'footer' | 'card' | 'button' | 'navigation' | 'form' | 'table';
 export type ThemeSibarMetadataKey = 'metadata' | 'analytics';
-export type ThemeSidebarPopularKey = 'course';
+export type ThemeSidebarPopularKey = 'course' | 'blog';
 export type AllSidebarKeys =
   | ThemeSidebarPageKey
   | ThemeSidebarGlobalKey

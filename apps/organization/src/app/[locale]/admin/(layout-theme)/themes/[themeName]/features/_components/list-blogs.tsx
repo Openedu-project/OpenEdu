@@ -1,11 +1,11 @@
 "use client";
-import { useGetCoursesPublish } from "@oe/api/hooks/useCourse";
+import { useGetListBlogs } from "@oe/api/hooks/useBlog";
 import {
-  useGetPopularCourses,
+  useGetPopularBlogs,
   useUpdateFeaturedContent,
 } from "@oe/api/hooks/useFeaturedContent";
 import { useGetOrganizationByDomain } from "@oe/api/hooks/useOrganization";
-import type { ICourse } from "@oe/api/types/course/course";
+import type { IBlog } from "@oe/api/types/blog";
 import type { IFeaturedContent } from "@oe/api/types/featured-contents";
 import { DndSortable } from "@oe/ui/components/dnd-sortable";
 import { PaginationCustom } from "@oe/ui/components/pagination-custom";
@@ -15,52 +15,49 @@ import { toast } from "@oe/ui/shadcn/sonner";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type React from "react";
-import { CourseItem } from "./course-item";
+import { BlogItem } from "./blog-item";
 
 const PER_PAGE = 4;
 
-const ListPopularCourses = () => {
+const ListBlogs = () => {
   const t = useTranslations("themeFeaturedContent");
   const { triggerUpdateFeaturedContent } = useUpdateFeaturedContent();
   const { organizationByDomain } = useGetOrganizationByDomain();
 
-  const [items, setItems] = useState<ICourse[]>([]);
+  const [items, setItems] = useState<IBlog[]>([]);
   const [selectedDisplay, setSelectedDisplay] = useState<
     IFeaturedContent<undefined>[] | undefined
   >(undefined);
   const [maxDisplay, setMaxDisplay] = useState<number>(4);
 
-  const isOpenEdu = false;
-
   const [params, setParams] = useState(() => {
     return {
+      per_page: 4,
       page: 1,
-      per_page: PER_PAGE,
-      enable_root: isOpenEdu,
-      sort: "create_at desc",
-      preloads: ["Categories", "Owner", "Levels"],
+      //   enable_root: isOpenEdu,
+      //   sort: "create_at desc",
+      //   preloads: ["Categories", "Owner", "Levels"],
     };
   });
 
-  const { dataPopularCourses } = useGetPopularCourses({
+  const { dataPopularBlogs } = useGetPopularBlogs({
     params: { org_id: organizationByDomain?.id ?? "" },
   });
 
-  const { dataListCourses: dataCoursesPublish, isLoadingCourses } =
-    useGetCoursesPublish(params);
+  const { blogsData, isLoadingBlogs } = useGetListBlogs({ params });
 
   const processedData = useMemo(() => {
-    if (!(dataCoursesPublish?.results && dataPopularCourses?.results)) {
+    if (!(blogsData?.results && dataPopularBlogs?.results)) {
       return null;
     }
 
     return {
-      courses: dataCoursesPublish.results,
-      popularCourses: dataPopularCourses.results,
+      courses: blogsData.results,
+      popularCourses: dataPopularBlogs.results,
     };
-  }, [dataCoursesPublish, dataPopularCourses]);
+  }, [blogsData, dataPopularBlogs]);
 
-  const handleSort = useCallback((newItems: ICourse[]) => {
+  const handleSort = useCallback((newItems: IBlog[]) => {
     setItems(newItems);
     setSelectedDisplay((prev) =>
       prev?.map((item, index) => ({
@@ -80,7 +77,7 @@ const ListPopularCourses = () => {
       const res = await triggerUpdateFeaturedContent({
         org_id: organizationByDomain?.id ?? "",
         type: "popular",
-        entity_type: "course",
+        entity_type: "blog",
         entities: featuredContents || [],
       });
 
@@ -96,7 +93,7 @@ const ListPopularCourses = () => {
   }, [selectedDisplay, triggerUpdateFeaturedContent, organizationByDomain]);
 
   const handleCheckboxChange = useCallback(
-    (checked: boolean, course: ICourse) => {
+    (checked: boolean, course: IBlog) => {
       if (checked) {
         if (!selectedDisplay || selectedDisplay?.length >= maxDisplay) {
           toast.error(`Maximum ${maxDisplay} items allowed`);
@@ -107,10 +104,10 @@ const ListPopularCourses = () => {
           id: "",
           org_id: "",
           entity_id: course.cuid,
-          entity_type: "COURSE",
+          entity_type: "blog",
           enabled: true,
           order: selectedDisplay.length,
-          type: "COURSE",
+          type: "blog",
           entity: undefined,
         };
 
@@ -138,18 +135,18 @@ const ListPopularCourses = () => {
   );
 
   useEffect(() => {
-    if (dataCoursesPublish?.results) {
-      setItems(dataCoursesPublish?.results);
+    if (blogsData?.results) {
+      setItems(blogsData?.results);
     }
-  }, [dataCoursesPublish]);
+  }, [blogsData]);
 
   useEffect(() => {
-    if (!selectedDisplay && dataPopularCourses?.results) {
-      setSelectedDisplay(dataPopularCourses?.results);
+    if (!selectedDisplay && dataPopularBlogs?.results) {
+      setSelectedDisplay(dataPopularBlogs?.results);
     }
-  }, [selectedDisplay, dataPopularCourses]);
+  }, [selectedDisplay, dataPopularBlogs]);
 
-  if (isLoadingCourses) {
+  if (isLoadingBlogs) {
     return <div className="p-4">Loading...</div>;
   }
 
@@ -183,7 +180,7 @@ const ListPopularCourses = () => {
       </div>
 
       {items.length > 0 && (
-        <DndSortable<ICourse, unknown>
+        <DndSortable<IBlog, unknown>
           data={items}
           dataConfig={{
             idProp: "cuid",
@@ -193,9 +190,9 @@ const ListPopularCourses = () => {
           className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4"
           renderConfig={{
             renderItem: ({ item }) => (
-              <CourseItem
+              <BlogItem
                 key={item.original.cuid}
-                course={item.original}
+                blog={item.original}
                 isSelected={
                   !!selectedDisplay?.find(
                     (c) => c.entity_id === item.original.cuid
@@ -210,8 +207,8 @@ const ListPopularCourses = () => {
       )}
 
       <PaginationCustom
-        currentPage={dataCoursesPublish?.pagination?.page ?? 1}
-        totalCount={dataCoursesPublish?.pagination?.total_items ?? 0}
+        currentPage={blogsData?.pagination?.page ?? 1}
+        totalCount={blogsData?.pagination?.total_items ?? 0}
         onPageChange={handlePageChange}
         pageSize={PER_PAGE}
         className="p-8"
@@ -220,4 +217,4 @@ const ListPopularCourses = () => {
   );
 };
 
-export { ListPopularCourses };
+export { ListBlogs };
