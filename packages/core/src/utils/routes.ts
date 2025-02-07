@@ -142,6 +142,8 @@ export const CREATOR_ROUTES = {
   campaignDetailCommissions: '/creator/affiliate-campaigns/:id/commissions',
   campaignDetailReferrers: '/creator/affiliate-campaigns/:id/referrers',
   campaignReport: '/creator/affiliate-campaigns/report',
+  creatorLaunchpadList: '/creator/launchpad',
+  creatorLaunchpadDetail: '/creator/launchpad/:id',
 } as const;
 
 export const PROTECTED_ROUTES = {

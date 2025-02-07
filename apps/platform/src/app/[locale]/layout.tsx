@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 // import localFont from 'next/font/local';
 
 import { Provider } from '@oe/ui/common/providers';
+import { WebViewHandler } from '@oe/ui/components/webview-handler';
 import { Toaster } from '@oe/ui/shadcn/sonner';
 import { getLocale, getMessages } from 'next-intl/server';
 import type { ReactNode } from 'react';
@@ -40,6 +41,7 @@ export default async function RootLayout({
     <html lang={locale ?? 'en'} suppressHydrationWarning className={fontVariables}>
       <body className="scrollbar font-primary antialiased">
         <Provider messages={messages ?? {}} locale={locale}>
+          <WebViewHandler />
           {children}
           <Toaster />
         </Provider>

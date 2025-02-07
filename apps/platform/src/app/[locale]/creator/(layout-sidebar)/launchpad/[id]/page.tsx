@@ -1,13 +1,13 @@
 import { getAdminLaunchpadDetailService } from '@oe/api/services/admin-launchpad';
 import { getAdminLaunchpadInvestmentService } from '@oe/api/services/admin-launchpad';
-import LaunchpadApprovedDetailMgm from '@oe/dashboard/admin/launchpad/approved/detail/page';
+import CreatorLaunchpadDetailMgm from '@oe/dashboard/creator/launchpad/detail/page';
 
 interface LayoutProps {
   params: {
     id: string;
   };
 }
-export default async function LaunchpadApprovedDetailPage({ params }: LayoutProps) {
+export default async function CreatorLaunchpadDetailPage({ params }: LayoutProps) {
   const [{ id }] = await Promise.all([params]);
 
   const [data, backerData] = await Promise.all([
@@ -20,5 +20,6 @@ export default async function LaunchpadApprovedDetailPage({ params }: LayoutProp
       queryParams: { preloads: ['User'], per_page: 9999 },
     }),
   ]);
-  return <LaunchpadApprovedDetailMgm backerData={backerData} data={data} />;
+
+  return <CreatorLaunchpadDetailMgm backerData={backerData} data={data} />;
 }

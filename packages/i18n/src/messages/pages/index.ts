@@ -8,6 +8,7 @@ import { couponMessage } from './coupon';
 import { courseOutlineMessages } from './course-outline';
 import { coursePaymentMessages } from './course-payment';
 import { courseListMessages } from './courses-list';
+import { creatorLaunchpadMessages } from './creator-launchpad';
 import { creatorManagementMessage } from './creator-management';
 import { forgotPasswordMessage } from './forgot-password';
 import { homePageMessage } from './home-page';
@@ -44,4 +45,5 @@ export const pageMessages = {
   ...userProfileMessages,
   ...courseLearningMessages,
   ...adminLaunchpadMessages,
+  ...creatorLaunchpadMessages,
 };

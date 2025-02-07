@@ -127,7 +127,7 @@ export default async function LaunchpadApprovedDetail({
     })) || [];
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="mx-auto ">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Left section - 2/3 */}
         <div className="space-y-6 lg:col-span-2">

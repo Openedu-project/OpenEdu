@@ -13,7 +13,7 @@ export const homePageMessage = {
         growing: 'Growing',
       },
       description:
-        'Open Edu is an online learning platform powered by blockchain and AI technology, designed to simplify teaching and learning while fostering value sharing.',
+        'Open Edu is an online learning platform powered by Blockchain and AI technology, designed to simplify teaching and learning while fostering value sharing.',
       cta: {
         button: 'Start Your Learning',
       },

@@ -32,6 +32,12 @@ export default async function Layout({ children }: { children: ReactNode }) {
         isRoot: true,
       },
       {
+        id: 'launchpad',
+        label: tDashboard('launchpad.title'),
+        icon: <Receipt className="h-5 w-5" />,
+        href: CREATOR_ROUTES.creatorLaunchpadList,
+      },
+      {
         id: 'coupon',
         label: tDashboard('coupon'),
         icon: <CirclePercent className="h-5 w-5" />,

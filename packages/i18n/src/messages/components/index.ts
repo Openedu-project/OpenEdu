@@ -16,6 +16,7 @@ import { richTextMessages } from './rich-text';
 import { tableMessages } from './table';
 import { uploaderMessages } from './uploader';
 import { userMenuMessages } from './user-menu';
+import { webviewHandlerMessages } from './webview-handler';
 
 export const componentMessages = {
   ...formValidationMessages,
@@ -38,4 +39,5 @@ export const componentMessages = {
   ...courseComingSoonMessages,
   ...certificateMessages,
   ...courseTimelineMessages,
+  ...webviewHandlerMessages,
 };

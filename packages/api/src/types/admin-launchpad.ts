@@ -11,7 +11,7 @@ interface IFundinggoal {
   profit_percentage: number;
 }
 
-export interface IAdminLaunchpadDetailRes {
+export interface IAdminLaunchpadItem {
   id: string;
   create_at: number;
   update_at: number;
@@ -56,6 +56,9 @@ export interface IAdminLaunchpadDetailRes {
   investment: null;
 }
 
+export type IAdminLaunchpadDetailRes = IAdminLaunchpadItem;
+export interface IAdminLaunchpadsListRes extends HTTPPagination<IAdminLaunchpadItem> {}
+
 interface IVotingmilestone {
   id: string;
   create_at: number;
@@ -93,3 +96,7 @@ export interface IAdminLaunchpadInvestmentItem {
 }
 
 export interface IAdminLaunchpadInvestmentRes extends HTTPPagination<IAdminLaunchpadInvestmentItem> {}
+
+export interface IAdminPublishLaunchpad {
+  status: string;
+}
