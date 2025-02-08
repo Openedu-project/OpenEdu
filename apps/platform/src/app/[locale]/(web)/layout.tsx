@@ -50,8 +50,8 @@ export default async function OpeneduLayout({
       href: '#',
     },
     {
-      id: 'organisations',
-      label: t('subSidebar.forOrganisations'),
+      id: 'forOrganizations',
+      label: t('subSidebar.forOrganizations'),
       href: '#',
     },
   ];

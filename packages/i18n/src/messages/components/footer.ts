@@ -1,6 +1,6 @@
 export const footerMessages = {
   footer: {
-    description:
+    slogan:
       'We believe in the power of <break></break><emphasis>innovation</emphasis> to transform education,<break></break><emphasis>accessibility</emphasis> to empower learners and educators,<break></break><emphasis>trustworthy</emphasis> systems to ensure transparency,<break></break><emphasis>collaborative</emphasis> networks to share knowledge,<break></break><emphasis>sustainable</emphasis> practices to protect our future.',
 
     navigation: {

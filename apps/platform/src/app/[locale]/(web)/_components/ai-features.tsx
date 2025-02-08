@@ -5,6 +5,7 @@ import IconTextToCourse from '@oe/assets/images/openedu-homepage/ai-features/ico
 import IconTextToImage from '@oe/assets/images/openedu-homepage/ai-features/icon-text-to-image.png';
 import IconTextToSlide from '@oe/assets/images/openedu-homepage/ai-features/icon-text-to-slide.png';
 import IconTextToVideo from '@oe/assets/images/openedu-homepage/ai-features/icon-text-to-video.png';
+import { AI_ROUTES } from '@oe/core/utils/routes';
 import { Link } from '@oe/ui/common/navigation';
 import { Image } from '@oe/ui/components/image';
 import { MoveRight } from 'lucide-react';
@@ -59,7 +60,7 @@ export default async function AIFeatureSection() {
             <p className="mx-auto">
               {t('description')}
               <Link
-                href="#"
+                href={AI_ROUTES.assistant}
                 className="mcaption-regular16 lg:mcaption-regular24 mb-6 ml-1 inline-flex gap-1 p-0 lg:mb-10"
               >
                 {t('discoverNow')}

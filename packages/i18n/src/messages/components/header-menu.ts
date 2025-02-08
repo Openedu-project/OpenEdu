@@ -8,7 +8,7 @@ export const headerMenuMessages = {
     subSidebar: {
       forLearners: 'For Learners',
       forEducators: 'For Educators',
-      forOrganisations: 'For Organisations',
+      forOrganizations: 'For Organizations',
     },
   },
 };

@@ -12,7 +12,7 @@ import PartnerSection from './partners';
 // Mark as server component
 export default async function HeroSection() {
   // Move this to server-side
-  const t = await getTranslations('homePageLayout.heroSection');
+  const t = await getTranslations('homePageLayout.heroBannerSection');
 
   return (
     <section className="container mx-auto px-0 py-5 pt-3 pb-10 md:px-4 lg:py-10 lg:pt-5 lg:pb-20">

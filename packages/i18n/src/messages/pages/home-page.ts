@@ -1,6 +1,6 @@
 export const homePageMessage = {
   homePageLayout: {
-    heroSection: {
+    heroBannerSection: {
       whale: {
         alt: 'whale welcome',
       },
@@ -44,7 +44,7 @@ export const homePageMessage = {
         text: 'Discover OpenEdu Blog',
       },
     },
-    referralProgramSection: {
+    referralSection: {
       title: 'Join Our Referral Program To Earn Rewards',
       description: 'Come and join our affiliate program now to enjoy our rewards!',
       exploreMore: 'Explore More',

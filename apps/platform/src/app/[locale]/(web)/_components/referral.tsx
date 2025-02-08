@@ -5,7 +5,7 @@ import { MoveRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 export default function ReferralProgramSection() {
-  const t = useTranslations('homePageLayout.referralProgramSection');
+  const t = useTranslations('homePageLayout.referralSection');
 
   return (
     <section className="container relative mx-auto px-0 py-5 md:px-4 md:py-10">
