@@ -1,3 +1,4 @@
+"use client";
 import type { IFileResponse } from "@oe/api/types/file";
 import { Uploader } from "@oe/ui/components/uploader";
 import { Button } from "@oe/ui/shadcn/button";
@@ -25,35 +26,52 @@ const ThemeConfigMetadata = ({
   isSubmitting,
   onSubmit,
 }: ThemeConfigMetaDataProps) => {
-  const [seoData, setSeoData] = useState<ThemeMetadata | undefined>();
+  const [seoData, setSeoData] = useState<ThemeMetadata | undefined>(defaultMetadata);
 
-  useEffect(() => {
-    if (!seoData && data) {
-      setSeoData(data ?? defaultMetadata);
+  useEffect(()=>{
+    if(data){
+      setSeoData(data);
     }
-  }, [data, seoData]);
+  },[data])
 
   const handleInputChange = (
-    key: keyof ThemeMetadata,
-    value: string | boolean
+    key: keyof Pick<ThemeMetadata, "title" | "description" | "keywords">,
+    value: string
   ) => {
     if (!seoData) {
       return;
     }
 
-    setSeoData((prev) =>
-      prev
-        ? {
-            ...prev,
-            [key]: value,
-          }
-        : undefined
-    );
+    setSeoData((prev) => (prev ? { ...prev, [key]: value } : undefined));
+  };
+
+  const handleNestedInputChange = (
+    parentKey: keyof Pick<ThemeMetadata, "openGraph" | "robots" | "alternates">,
+    childKey: string,
+    value: string | boolean | string[]
+  ) => {
+    if (!seoData) {
+      return;
+    }
+
+    setSeoData((prev) => {
+      if (!prev) {
+        return undefined;
+      }
+
+      return {
+        ...prev,
+        [parentKey]: {
+          ...prev[parentKey],
+          [childKey]: value,
+        },
+      };
+    });
   };
 
   const handleIconChange = (
     key: keyof ThemeMetadataIcons,
-    value: IFileResponse
+    value?: IFileResponse
   ) => {
     if (!(seoData && isRoot)) {
       return;
@@ -158,8 +176,14 @@ const ThemeConfigMetadata = ({
               <div className="space-y-2">
                 <Label>OG Title</Label>
                 <Input
-                  value={seoData.ogTitle}
-                  onChange={(e) => handleInputChange("ogTitle", e.target.value)}
+                  value={seoData.openGraph?.title}
+                  onChange={(e) =>
+                    handleNestedInputChange(
+                      "openGraph",
+                      "title",
+                      e.target.value
+                    )
+                  }
                   placeholder="Enter Open Graph title"
                 />
               </div>
@@ -167,9 +191,13 @@ const ThemeConfigMetadata = ({
               <div className="space-y-2">
                 <Label>OG Description</Label>
                 <Textarea
-                  value={seoData.ogDescription}
+                  value={seoData.openGraph?.description}
                   onChange={(e) =>
-                    handleInputChange("ogDescription", e.target.value)
+                    handleNestedInputChange(
+                      "openGraph",
+                      "description",
+                      e.target.value
+                    )
                   }
                   placeholder="Enter Open Graph description"
                   className="h-20"
@@ -177,11 +205,17 @@ const ThemeConfigMetadata = ({
               </div>
 
               <div className="space-y-2">
-                <Label>OG Image URL</Label>
+                <Label>OG Images</Label>
                 <Input
-                  value={seoData.ogImage}
-                  onChange={(e) => handleInputChange("ogImage", e.target.value)}
-                  placeholder="Enter Open Graph image URL"
+                  value={seoData.openGraph?.images?.join(", ")}
+                  onChange={(e) =>
+                    handleNestedInputChange(
+                      "openGraph",
+                      "images",
+                      e.target.value.split(",").map((s) => s.trim())
+                    )
+                  }
+                  placeholder="Enter Open Graph image URLs, separated by commas"
                 />
               </div>
             </TabsContent>
@@ -190,9 +224,13 @@ const ThemeConfigMetadata = ({
               <div className="space-y-2">
                 <Label>Canonical URL</Label>
                 <Input
-                  value={seoData.canonical}
+                  value={seoData.alternates?.canonical}
                   onChange={(e) =>
-                    handleInputChange("canonical", e.target.value)
+                    handleNestedInputChange(
+                      "alternates",
+                      "canonical",
+                      e.target.value
+                    )
                   }
                   placeholder="Enter canonical URL"
                 />
@@ -209,9 +247,9 @@ const ThemeConfigMetadata = ({
                       </p>
                     </div>
                     <Switch
-                      checked={seoData.robotsIndex}
+                      checked={seoData.robots?.index}
                       onCheckedChange={(checked) =>
-                        handleInputChange("robotsIndex", checked)
+                        handleNestedInputChange("robots", "index", checked)
                       }
                     />
                   </div>
@@ -224,9 +262,9 @@ const ThemeConfigMetadata = ({
                       </p>
                     </div>
                     <Switch
-                      checked={seoData.robotsFollow}
+                      checked={seoData.robots?.follow}
                       onCheckedChange={(checked) =>
-                        handleInputChange("robotsFollow", checked)
+                        handleNestedInputChange("robots", "follow", checked)
                       }
                     />
                   </div>
@@ -252,7 +290,7 @@ const ThemeConfigMetadata = ({
                     }}
                     value={seoData?.icons?.icon ? [seoData?.icons?.icon] : []}
                     onChange={(files) => {
-                      files?.[0] && handleIconChange("icon", files?.[0]);
+                      handleIconChange("icon", files?.[0]);
                     }}
                   />
                 </div>
@@ -304,9 +342,6 @@ const ThemeConfigMetadata = ({
               <h2 className="cursor-pointer text-blue-600 text-xl hover:underline">
                 {seoData.title || "Page Title"}
               </h2>
-              <p className="text-green-700 text-sm">
-                {window?.location?.href || "https://yourwebsite.com/page"}
-              </p>
               <p className="mt-1 text-gray-600 text-sm">
                 {seoData.description || "Meta description will appear here..."}
               </p>

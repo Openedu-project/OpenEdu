@@ -4,7 +4,6 @@ import {
   useGetPopularCourses,
   useUpdateFeaturedContent,
 } from "@oe/api/hooks/useFeaturedContent";
-import { useGetOrganizationByDomain } from "@oe/api/hooks/useOrganization";
 import type { ICourse } from "@oe/api/types/course/course";
 import type { IFeaturedContent } from "@oe/api/types/featured-contents";
 import { DndSortable } from "@oe/ui/components/dnd-sortable";
@@ -19,10 +18,9 @@ import { CourseItem } from "./course-item";
 
 const PER_PAGE = 4;
 
-const ListPopularCourses = () => {
+const ListPopularCourses = ({ orgId }: { orgId?: string }) => {
   const t = useTranslations("themeFeaturedContent");
   const { triggerUpdateFeaturedContent } = useUpdateFeaturedContent();
-  const { organizationByDomain } = useGetOrganizationByDomain();
 
   const [items, setItems] = useState<ICourse[]>([]);
   const [selectedDisplay, setSelectedDisplay] = useState<
@@ -30,20 +28,19 @@ const ListPopularCourses = () => {
   >(undefined);
   const [maxDisplay, setMaxDisplay] = useState<number>(4);
 
-  const isOpenEdu = false;
-
   const [params, setParams] = useState(() => {
     return {
       page: 1,
       per_page: PER_PAGE,
-      enable_root: isOpenEdu,
+      enable_root: false,
+      org_id: orgId,
       sort: "create_at desc",
       preloads: ["Categories", "Owner", "Levels"],
     };
   });
 
   const { dataPopularCourses } = useGetPopularCourses({
-    params: { org_id: organizationByDomain?.id ?? "" },
+    params: { org_id: orgId ?? "" },
   });
 
   const { dataListCourses: dataCoursesPublish, isLoadingCourses } =
@@ -78,7 +75,7 @@ const ListPopularCourses = () => {
 
     try {
       const res = await triggerUpdateFeaturedContent({
-        org_id: organizationByDomain?.id ?? "",
+        org_id: orgId ?? "",
         type: "popular",
         entity_type: "course",
         entities: featuredContents || [],
@@ -93,7 +90,7 @@ const ListPopularCourses = () => {
       console.error("Failed to update featured contents:", error);
       toast.error("Failed to update featured contents");
     }
-  }, [selectedDisplay, triggerUpdateFeaturedContent, organizationByDomain]);
+  }, [selectedDisplay, triggerUpdateFeaturedContent, orgId]);
 
   const handleCheckboxChange = useCallback(
     (checked: boolean, course: ICourse) => {

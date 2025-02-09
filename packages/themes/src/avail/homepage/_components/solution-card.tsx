@@ -17,7 +17,7 @@ const SolutionCard = ({ name, icon, description }: SolutionCardProps) => {
           alt="icon"
           height={64}
           width={64}
-          className='aspect-square h-[64px] w-[64px] rounded-full'
+          className="aspect-square h-[64px] w-[64px] rounded-full"
         />
 
         <div className="space-y-1">

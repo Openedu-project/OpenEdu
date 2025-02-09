@@ -1,4 +1,5 @@
 import type { ThemeSystem } from '../_types/theme-system-config';
+import { getMetadata } from './theme-metadata';
 import { createThemePageConfig } from './theme-page-initial/index';
 
 export const defaultThemeSystemConfig = (t: (key: string) => string): ThemeSystem => {
@@ -7,25 +8,25 @@ export const defaultThemeSystemConfig = (t: (key: string) => string): ThemeSyste
     availableThemes: {
       academia: {
         pages: createThemePageConfig(t).academia,
-        metadata: undefined,
+        metadata: getMetadata(),
         globals: undefined,
         components: undefined,
       },
       scholar: {
         pages: createThemePageConfig(t).scholar,
-        metadata: undefined,
+        metadata: getMetadata(),
         components: undefined,
         globals: undefined,
       },
       vbi: {
         pages: createThemePageConfig(t).vbi,
-        metadata: undefined,
+        metadata: getMetadata(),
         globals: undefined,
         components: undefined,
       },
       avail: {
         pages: createThemePageConfig(t).avail,
-        metadata: undefined,
+        metadata: getMetadata(),
         globals: undefined,
         components: undefined,
       },

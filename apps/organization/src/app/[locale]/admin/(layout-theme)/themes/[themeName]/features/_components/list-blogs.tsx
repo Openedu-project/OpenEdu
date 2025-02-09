@@ -1,10 +1,9 @@
 "use client";
-import { useGetListBlogs } from "@oe/api/hooks/useBlog";
+import { useGetBlogsPublish } from "@oe/api/hooks/useBlog";
 import {
   useGetPopularBlogs,
   useUpdateFeaturedContent,
 } from "@oe/api/hooks/useFeaturedContent";
-import { useGetOrganizationByDomain } from "@oe/api/hooks/useOrganization";
 import type { IBlog } from "@oe/api/types/blog";
 import type { IFeaturedContent } from "@oe/api/types/featured-contents";
 import { DndSortable } from "@oe/ui/components/dnd-sortable";
@@ -19,10 +18,9 @@ import { BlogItem } from "./blog-item";
 
 const PER_PAGE = 4;
 
-const ListBlogs = () => {
+const ListBlogs = ({ orgId }: { orgId?: string }) => {
   const t = useTranslations("themeFeaturedContent");
   const { triggerUpdateFeaturedContent } = useUpdateFeaturedContent();
-  const { organizationByDomain } = useGetOrganizationByDomain();
 
   const [items, setItems] = useState<IBlog[]>([]);
   const [selectedDisplay, setSelectedDisplay] = useState<
@@ -34,17 +32,20 @@ const ListBlogs = () => {
     return {
       per_page: 4,
       page: 1,
-      //   enable_root: isOpenEdu,
-      //   sort: "create_at desc",
-      //   preloads: ["Categories", "Owner", "Levels"],
+      sort: "update_at desc",
+      not_org_id: orgId,
     };
   });
 
   const { dataPopularBlogs } = useGetPopularBlogs({
-    params: { org_id: organizationByDomain?.id ?? "" },
+    params: { org_id: orgId ?? "" },
   });
 
-  const { blogsData, isLoadingBlogs } = useGetListBlogs({ params });
+  const { dataListBlog: blogsData, isLoadingBlog } = useGetBlogsPublish(
+    "default",
+    params,
+    undefined
+  );
 
   const processedData = useMemo(() => {
     if (!(blogsData?.results && dataPopularBlogs?.results)) {
@@ -75,7 +76,7 @@ const ListBlogs = () => {
 
     try {
       const res = await triggerUpdateFeaturedContent({
-        org_id: organizationByDomain?.id ?? "",
+        org_id: orgId ?? "",
         type: "popular",
         entity_type: "blog",
         entities: featuredContents || [],
@@ -90,7 +91,7 @@ const ListBlogs = () => {
       console.error("Failed to update featured contents:", error);
       toast.error("Failed to update featured contents");
     }
-  }, [selectedDisplay, triggerUpdateFeaturedContent, organizationByDomain]);
+  }, [selectedDisplay, triggerUpdateFeaturedContent, orgId]);
 
   const handleCheckboxChange = useCallback(
     (checked: boolean, course: IBlog) => {
@@ -146,7 +147,7 @@ const ListBlogs = () => {
     }
   }, [selectedDisplay, dataPopularBlogs]);
 
-  if (isLoadingBlogs) {
+  if (isLoadingBlog) {
     return <div className="p-4">Loading...</div>;
   }
 

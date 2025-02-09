@@ -1,10 +1,18 @@
-import type { PageSectionConfig, SectionsByPage, ThemePageKey } from '@oe/themes/types/index';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@oe/ui/shadcn/collapsible';
-import { cn } from '@oe/ui/utils/cn';
-import { ChevronDown } from 'lucide-react';
-import { memo } from 'react';
-import type React from 'react';
-import { SettingsForm } from './theme-section-setting-form';
+import type {
+  PageSectionConfig,
+  SectionsByPage,
+  ThemePageKey,
+} from "@oe/themes/types/index";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@oe/ui/shadcn/collapsible";
+import { cn } from "@oe/ui/utils/cn";
+import { ChevronDown } from "lucide-react";
+import { memo } from "react";
+import type React from "react";
+import { SettingsForm } from "./theme-section-setting-form";
 
 interface ConfigSectionProps {
   sectionKey: SectionsByPage[ThemePageKey];
@@ -14,7 +22,10 @@ interface ConfigSectionProps {
   currentPath: string[];
   dragButton?: React.JSX.Element;
   onSelect: (key: SectionsByPage[ThemePageKey] | undefined) => void;
-  onPreview: (val: PageSectionConfig<ThemePageKey>, sectionKey: SectionsByPage[ThemePageKey]) => void;
+  onPreview: (
+    val: PageSectionConfig<ThemePageKey>,
+    sectionKey: SectionsByPage[ThemePageKey]
+  ) => void;
   onReset: (sectionKey: SectionsByPage[ThemePageKey]) => void;
 }
 
@@ -32,15 +43,15 @@ export const ConfigSection = memo(function ConfigSection({
   return (
     <Collapsible
       open={isSelected}
-      onOpenChange={open => onSelect(open ? sectionKey : undefined)}
+      onOpenChange={(open) => onSelect(open ? sectionKey : undefined)}
       className={`group/collapsible w-full space-y-1 rounded-md border-[0.4px] shadow ${
-        isSelected ? '!border-primary' : 'border-border'
+        isSelected ? "!border-primary" : "border-border"
       }`}
     >
       <div
         className={cn(
-          'flex w-full items-center gap-2 px-4 py-2 hover:bg-accent/50 ',
-          isSelected ? 'bg-accent/50' : 'bg-accent'
+          "flex w-full items-center gap-2 px-4 py-2 hover:bg-accent/50 ",
+          isSelected ? "bg-accent/50" : "bg-accent"
         )}
       >
         {dragButton}
@@ -53,7 +64,7 @@ export const ConfigSection = memo(function ConfigSection({
         <SettingsForm
           basePath={[...currentPath, sectionKey]}
           config={config}
-          onPreview={configContent =>
+          onPreview={(configContent) =>
             onPreview(
               {
                 [sectionKey]: configContent,
@@ -62,7 +73,7 @@ export const ConfigSection = memo(function ConfigSection({
             )
           }
           onReset={() => onReset(sectionKey)}
-          onEnable={enable => {
+          onEnable={(enable) => {
             onPreview(
               {
                 [sectionKey]: { ...config, enable },

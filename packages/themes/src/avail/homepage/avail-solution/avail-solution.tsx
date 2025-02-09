@@ -47,7 +47,9 @@ const AvailHomepageSolution: SectionComponent<"homepage", "availSolution"> = ({
         <Image
           alt="banner"
           src={props?.banner?.url}
-          className="rounded-lg object-cover"
+          className="rounded-lg object-contain"
+          height={864}
+          width={708}
         />
         <div className="space-y-2 lg:space-y-0">
           {props?.solutions &&
@@ -89,8 +91,8 @@ const AvailHomepageSolution: SectionComponent<"homepage", "availSolution"> = ({
                     <Image
                       src={c?.url}
                       alt="image"
-                      className="h-full object-contain"
-                      height={100}
+                      className="h-[116px] w-full object-contain"
+                      height={116}
                       width={200}
                     />
                   </div>
