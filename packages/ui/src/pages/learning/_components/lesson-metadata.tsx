@@ -24,7 +24,7 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, lessonUid, ...props
 
   const courseHref = createCourseUrl('detail', { slug });
 
-  const { sectionsProgressData, getLessonStatus } = useLessonLearningStore();
+  const { sectionsProgressData, getLessonStatus, isNavigating } = useLessonLearningStore();
   const currentLessonIndex = getLessonGlobalIndex(sectionsProgressData, lessonUid);
   const totalItems = getTotalLessons(sectionsProgressData);
 
@@ -65,8 +65,8 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, lessonUid, ...props
           currentIndex={currentLessonIndex}
           totalItems={totalItems}
           onNavigate={handleNavigateLesson}
-          disableNext={!checkNextLesson || currentLessonIndex === totalItems}
-          disablePrev={currentLessonIndex === 0 || !checkPreviousLesson}
+          disableNext={!checkNextLesson || currentLessonIndex === totalItems || isNavigating}
+          disablePrev={currentLessonIndex === 0 || !checkPreviousLesson || isNavigating}
           t={tLessonNavigate}
         />
       </div>
