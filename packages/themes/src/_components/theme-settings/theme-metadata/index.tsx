@@ -1,16 +1,17 @@
-import type { IFileResponse } from "@oe/api/types/file";
-import { Uploader } from "@oe/ui/components/uploader";
-import { Button } from "@oe/ui/shadcn/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@oe/ui/shadcn/card";
-import { Input } from "@oe/ui/shadcn/input";
-import { Label } from "@oe/ui/shadcn/label";
-import { Switch } from "@oe/ui/shadcn/switch";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@oe/ui/shadcn/tabs";
-import { Textarea } from "@oe/ui/shadcn/textarea";
-import { Save } from "lucide-react";
-import { useEffect, useState } from "react";
-import { defaultMetadata } from "../../../_config/theme-metadata";
-import type { ThemeMetadata, ThemeMetadataIcons } from "../../../_types";
+'use client';
+import type { IFileResponse } from '@oe/api/types/file';
+import { Uploader } from '@oe/ui/components/uploader';
+import { Button } from '@oe/ui/shadcn/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@oe/ui/shadcn/card';
+import { Input } from '@oe/ui/shadcn/input';
+import { Label } from '@oe/ui/shadcn/label';
+import { Switch } from '@oe/ui/shadcn/switch';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@oe/ui/shadcn/tabs';
+import { Textarea } from '@oe/ui/shadcn/textarea';
+import { Save } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { defaultMetadata } from '../../../_config/theme-metadata';
+import type { ThemeMetadata, ThemeMetadataIcons } from '../../../_types';
 
 interface ThemeConfigMetaDataProps {
   isSubmitting?: boolean;
@@ -19,47 +20,53 @@ interface ThemeConfigMetaDataProps {
   onSubmit: (data: ThemeMetadata) => void;
 }
 
-const ThemeConfigMetadata = ({
-  data,
-  isRoot = false,
-  isSubmitting,
-  onSubmit,
-}: ThemeConfigMetaDataProps) => {
-  const [seoData, setSeoData] = useState<ThemeMetadata | undefined>();
+const ThemeConfigMetadata = ({ data, isRoot = false, isSubmitting, onSubmit }: ThemeConfigMetaDataProps) => {
+  const [seoData, setSeoData] = useState<ThemeMetadata | undefined>(defaultMetadata);
 
   useEffect(() => {
-    if (!seoData && data) {
-      setSeoData(data ?? defaultMetadata);
+    if (data) {
+      setSeoData(data);
     }
-  }, [data, seoData]);
+  }, [data]);
 
-  const handleInputChange = (
-    key: keyof ThemeMetadata,
-    value: string | boolean
+  const handleInputChange = (key: keyof Pick<ThemeMetadata, 'title' | 'description' | 'keywords'>, value: string) => {
+    if (!seoData) {
+      return;
+    }
+
+    setSeoData(prev => (prev ? { ...prev, [key]: value } : undefined));
+  };
+
+  const handleNestedInputChange = (
+    parentKey: keyof Pick<ThemeMetadata, 'openGraph' | 'robots' | 'alternates'>,
+    childKey: string,
+    value: string | boolean | string[]
   ) => {
     if (!seoData) {
       return;
     }
 
-    setSeoData((prev) =>
-      prev
-        ? {
-            ...prev,
-            [key]: value,
-          }
-        : undefined
-    );
+    setSeoData(prev => {
+      if (!prev) {
+        return undefined;
+      }
+
+      return {
+        ...prev,
+        [parentKey]: {
+          ...prev[parentKey],
+          [childKey]: value,
+        },
+      };
+    });
   };
 
-  const handleIconChange = (
-    key: keyof ThemeMetadataIcons,
-    value: IFileResponse
-  ) => {
+  const handleIconChange = (key: keyof ThemeMetadataIcons, value?: IFileResponse) => {
     if (!(seoData && isRoot)) {
       return;
     }
 
-    setSeoData((prev) =>
+    setSeoData(prev =>
       prev
         ? {
             ...prev,
@@ -90,9 +97,7 @@ const ThemeConfigMetadata = ({
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
             <CardTitle>SEO Configuration</CardTitle>
-            <p className="mt-1 text-muted-foreground text-sm">
-              Optimize your page for search engines
-            </p>
+            <p className="mt-1 text-muted-foreground text-sm">Optimize your page for search engines</p>
           </div>
           <Button onClick={handleSave} disabled={!!isSubmitting}>
             <Save className="mr-2 h-4 w-4" />
@@ -112,13 +117,11 @@ const ThemeConfigMetadata = ({
               <div className="space-y-2">
                 <Label>
                   Page Title
-                  <span className="text-muted-foreground text-xs">
-                    ({calculateLength(seoData.title, 60)})
-                  </span>
+                  <span className="text-muted-foreground text-xs">({calculateLength(seoData.title, 60)})</span>
                 </Label>
                 <Input
                   value={seoData.title}
-                  onChange={(e) => handleInputChange("title", e.target.value)}
+                  onChange={e => handleInputChange('title', e.target.value)}
                   maxLength={60}
                   placeholder="Enter page title"
                 />
@@ -127,15 +130,11 @@ const ThemeConfigMetadata = ({
               <div className="space-y-2">
                 <Label>
                   Meta Description
-                  <span className="text-muted-foreground text-xs">
-                    ({calculateLength(seoData.description, 160)})
-                  </span>
+                  <span className="text-muted-foreground text-xs">({calculateLength(seoData.description, 160)})</span>
                 </Label>
                 <Textarea
                   value={seoData.description}
-                  onChange={(e) =>
-                    handleInputChange("description", e.target.value)
-                  }
+                  onChange={e => handleInputChange('description', e.target.value)}
                   maxLength={160}
                   placeholder="Enter meta description"
                   className="h-20"
@@ -146,9 +145,7 @@ const ThemeConfigMetadata = ({
                 <Label>Keywords</Label>
                 <Input
                   value={seoData.keywords}
-                  onChange={(e) =>
-                    handleInputChange("keywords", e.target.value)
-                  }
+                  onChange={e => handleInputChange('keywords', e.target.value)}
                   placeholder="Enter keywords, separated by commas"
                 />
               </div>
@@ -158,8 +155,8 @@ const ThemeConfigMetadata = ({
               <div className="space-y-2">
                 <Label>OG Title</Label>
                 <Input
-                  value={seoData.ogTitle}
-                  onChange={(e) => handleInputChange("ogTitle", e.target.value)}
+                  value={seoData.openGraph?.title}
+                  onChange={e => handleNestedInputChange('openGraph', 'title', e.target.value)}
                   placeholder="Enter Open Graph title"
                 />
               </div>
@@ -167,21 +164,25 @@ const ThemeConfigMetadata = ({
               <div className="space-y-2">
                 <Label>OG Description</Label>
                 <Textarea
-                  value={seoData.ogDescription}
-                  onChange={(e) =>
-                    handleInputChange("ogDescription", e.target.value)
-                  }
+                  value={seoData.openGraph?.description}
+                  onChange={e => handleNestedInputChange('openGraph', 'description', e.target.value)}
                   placeholder="Enter Open Graph description"
                   className="h-20"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label>OG Image URL</Label>
+                <Label>OG Images</Label>
                 <Input
-                  value={seoData.ogImage}
-                  onChange={(e) => handleInputChange("ogImage", e.target.value)}
-                  placeholder="Enter Open Graph image URL"
+                  value={seoData.openGraph?.images?.join(', ')}
+                  onChange={e =>
+                    handleNestedInputChange(
+                      'openGraph',
+                      'images',
+                      e.target.value.split(',').map(s => s.trim())
+                    )
+                  }
+                  placeholder="Enter Open Graph image URLs, separated by commas"
                 />
               </div>
             </TabsContent>
@@ -190,10 +191,8 @@ const ThemeConfigMetadata = ({
               <div className="space-y-2">
                 <Label>Canonical URL</Label>
                 <Input
-                  value={seoData.canonical}
-                  onChange={(e) =>
-                    handleInputChange("canonical", e.target.value)
-                  }
+                  value={seoData.alternates?.canonical}
+                  onChange={e => handleNestedInputChange('alternates', 'canonical', e.target.value)}
                   placeholder="Enter canonical URL"
                 />
               </div>
@@ -204,30 +203,22 @@ const ThemeConfigMetadata = ({
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
                       <Label>Allow Indexing</Label>
-                      <p className="text-muted-foreground text-sm">
-                        Allow search engines to index this page
-                      </p>
+                      <p className="text-muted-foreground text-sm">Allow search engines to index this page</p>
                     </div>
                     <Switch
-                      checked={seoData.robotsIndex}
-                      onCheckedChange={(checked) =>
-                        handleInputChange("robotsIndex", checked)
-                      }
+                      checked={seoData.robots?.index}
+                      onCheckedChange={checked => handleNestedInputChange('robots', 'index', checked)}
                     />
                   </div>
 
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
                       <Label>Allow Following</Label>
-                      <p className="text-muted-foreground text-sm">
-                        Allow search engines to follow links on this page
-                      </p>
+                      <p className="text-muted-foreground text-sm">Allow search engines to follow links on this page</p>
                     </div>
                     <Switch
-                      checked={seoData.robotsFollow}
-                      onCheckedChange={(checked) =>
-                        handleInputChange("robotsFollow", checked)
-                      }
+                      checked={seoData.robots?.follow}
+                      onCheckedChange={checked => handleNestedInputChange('robots', 'follow', checked)}
                     />
                   </div>
                 </div>
@@ -235,10 +226,7 @@ const ThemeConfigMetadata = ({
             </TabsContent>
 
             {isRoot && (
-              <TabsContent
-                value="icons"
-                className="overflow-scroll-y h-[66vh] space-y-4"
-              >
+              <TabsContent value="icons" className="overflow-scroll-y h-[66vh] space-y-4">
                 <div className="space-y-2">
                   <Label>Main Icon URL</Label>
                   <Uploader
@@ -248,11 +236,11 @@ const ThemeConfigMetadata = ({
                     aspectRatio={1}
                     crop={true}
                     cropProps={{
-                      crop: { unit: "px", x: 0, y: 0, width: 12, height: 12 },
+                      crop: { unit: 'px', x: 0, y: 0, width: 12, height: 12 },
                     }}
                     value={seoData?.icons?.icon ? [seoData?.icons?.icon] : []}
-                    onChange={(files) => {
-                      files?.[0] && handleIconChange("icon", files?.[0]);
+                    onChange={files => {
+                      handleIconChange('icon', files?.[0]);
                     }}
                   />
                 </div>
@@ -266,13 +254,11 @@ const ThemeConfigMetadata = ({
                     aspectRatio={1}
                     crop={true}
                     cropProps={{
-                      crop: { unit: "px", x: 0, y: 0, width: 12, height: 12 },
+                      crop: { unit: 'px', x: 0, y: 0, width: 12, height: 12 },
                     }}
-                    value={
-                      seoData?.icons?.shortcut ? [seoData?.icons?.shortcut] : []
-                    }
-                    onChange={(files) => {
-                      files?.[0] && handleIconChange("shortcut", files?.[0]);
+                    value={seoData?.icons?.shortcut ? [seoData?.icons?.shortcut] : []}
+                    onChange={files => {
+                      files?.[0] && handleIconChange('shortcut', files?.[0]);
                     }}
                   />
                 </div>
@@ -286,11 +272,11 @@ const ThemeConfigMetadata = ({
                     aspectRatio={1}
                     crop={true}
                     cropProps={{
-                      crop: { unit: "px", x: 0, y: 0, width: 12, height: 12 },
+                      crop: { unit: 'px', x: 0, y: 0, width: 12, height: 12 },
                     }}
                     value={seoData?.icons?.apple ? [seoData?.icons?.apple] : []}
-                    onChange={(files) => {
-                      files?.[0] && handleIconChange("apple", files?.[0]);
+                    onChange={files => {
+                      files?.[0] && handleIconChange('apple', files?.[0]);
                     }}
                   />
                 </div>
@@ -301,14 +287,9 @@ const ThemeConfigMetadata = ({
           <div className="w-full space-y-4">
             <Label>Preview</Label>
             <Card className="p-4">
-              <h2 className="cursor-pointer text-blue-600 text-xl hover:underline">
-                {seoData.title || "Page Title"}
-              </h2>
-              <p className="text-green-700 text-sm">
-                {window?.location?.href || "https://yourwebsite.com/page"}
-              </p>
+              <h2 className="cursor-pointer text-blue-600 text-xl hover:underline">{seoData.title || 'Page Title'}</h2>
               <p className="mt-1 text-gray-600 text-sm">
-                {seoData.description || "Meta description will appear here..."}
+                {seoData.description || 'Meta description will appear here...'}
               </p>
             </Card>
           </div>

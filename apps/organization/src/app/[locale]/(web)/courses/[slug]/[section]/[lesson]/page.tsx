@@ -1,4 +1,4 @@
-import LearningPage from "@oe/ui/pages/learning";
+import LearningPage from '@oe/ui/pages/learning';
 
 export default async function CourseLearningPage({
   params,

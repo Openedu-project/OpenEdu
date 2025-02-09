@@ -38,7 +38,7 @@ const VbiHomepageCreators: SectionComponent<'homepage', 'vbiCreators'> = ({ prop
   ];
 
   return (
-    <div className={cn('space-y-4 p-4 md:space-y-8 md:p-8 lg:p-12', className)}>
+    <div className={cn('space-y-4 bg-background p-4 md:space-y-8 md:p-8 lg:p-12', className)}>
       <InfoSection title={t?.('title')} titleSub={t?.('titleSub')} className="flex flex-col items-center" />
       <div className="flex flex-col gap-4 md:flex-row">
         {creators?.map(item => (

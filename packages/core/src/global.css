@@ -77,8 +77,8 @@
     --ai-agent-pink-background: linear-gradient(#ffb9fa 0%, #fd77f3 100%);
     --ai-agent-orange-background: linear-gradient(#ffd591 0%, #ef9e42 100%);
     --ai-agent-blue-background: linear-gradient(#86c5ff 0%, #0a8aff 100%);
-    --ai-agent-aqua-background: linear-gradient(180deg, #AAFAFF 0%, #22C5CE 100%);
-    --ai-assistant-background: linear-gradient(144deg, #2CDEE9 18.7%, #7B5AFF 82.64%);
+    --ai-agent-aqua-background: linear-gradient(180deg, #aafaff 0%, #22c5ce 100%);
+    --ai-assistant-background: linear-gradient(144deg, #2cdee9 18.7%, #7b5aff 82.64%);
 
     --primary-50: 238 47% 86%; /* #C4C6F2 */
     --primary-100: 252 100% 94%; /* #E4E1FF */
@@ -188,7 +188,7 @@
     --footer: linear-gradient(255deg, #b8f4f8 6.18%, #ede3fe 70.53%);
 
     /* primary */
-    --primary-50: #C4C6F2;
+    --primary-50: #c4c6f2;
     --primary-100: 252 100% 94%; /* #E4E1FF */
 
     /* neutral */

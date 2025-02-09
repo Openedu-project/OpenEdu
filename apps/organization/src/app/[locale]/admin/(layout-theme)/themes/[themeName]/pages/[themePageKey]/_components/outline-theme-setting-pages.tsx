@@ -23,7 +23,7 @@ interface OutlineThemeSettingPagesProps {
 const OutlineThemeSettingPages = ({ selectedSidebarPageKey }: OutlineThemeSettingPagesProps) => {
   const { themeName, themePageKey } = useParams();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { theme } = useGetTheme();
+  const { theme, mutateTheme } = useGetTheme();
   const t = useTranslations('themePageSettings');
   const tThemeConfig = useTranslations('themePage');
 
@@ -32,11 +32,11 @@ const OutlineThemeSettingPages = ({ selectedSidebarPageKey }: OutlineThemeSettin
     defaultThemeSystemConfig(tThemeConfig)?.availableThemes?.[themeName as ThemeName];
 
   if (!themeConfig) {
-    return;
+    return <div className="flex h-full items-center justify-center text-muted-foreground">No data</div>;
   }
 
   if (!(themeName && themePageKey)) {
-    return;
+    return <div className="flex h-full items-center justify-center text-muted-foreground">No data</div>;
   }
 
   const handleSubmit = async (specificTheme: ThemeDefinition) => {
@@ -44,7 +44,10 @@ const OutlineThemeSettingPages = ({ selectedSidebarPageKey }: OutlineThemeSettin
       activedTheme: themeName as ThemeName,
       availableThemes: {
         ...theme[0]?.value?.availableThemes,
-        [themeName as ThemeName]: specificTheme,
+        [themeName as ThemeName]: {
+          ...theme[0]?.value?.availableThemes?.[themeName as ThemeName],
+          ...specificTheme,
+        },
       } as ThemeCollection,
     };
 
@@ -56,6 +59,7 @@ const OutlineThemeSettingPages = ({ selectedSidebarPageKey }: OutlineThemeSettin
       });
       if (res) {
         setIsLoading(false);
+        mutateTheme();
         toast.success(t('updateSuccess'));
       }
     } catch (error) {

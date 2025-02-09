@@ -1,6 +1,6 @@
-import { Image } from "@oe/ui/components/image";
-import type { FileType } from "@oe/ui/components/uploader";
-import { Card, CardContent } from "@oe/ui/shadcn/card";
+import { Image } from '@oe/ui/components/image';
+import type { FileType } from '@oe/ui/components/uploader';
+import { Card, CardContent } from '@oe/ui/shadcn/card';
 
 interface SolutionCardProps {
   name?: string;
@@ -17,7 +17,7 @@ const SolutionCard = ({ name, icon, description }: SolutionCardProps) => {
           alt="icon"
           height={64}
           width={64}
-          className='aspect-square h-[64px] w-[64px] rounded-full'
+          className="aspect-square h-[64px] w-[64px] rounded-full"
         />
 
         <div className="space-y-1">

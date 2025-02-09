@@ -126,19 +126,21 @@ export const SettingsPanel = memo(function SettingsPanel({
             }}
             className="flex flex-col gap-4"
             renderConfig={{
-              renderItem: ({ item }) => (
-                <ConfigSection
-                  sectionKey={item.original.key}
-                  config={item.original.content}
-                  isSelected={item.original.key === selectedSectionKey}
-                  isLoading={!!loadingStates?.[item.original.key]}
-                  currentPath={currentPath}
-                  dragButton={<DndSortableDragButton />}
-                  onSelect={onSectionSelect}
-                  onPreview={onPreview}
-                  onReset={onReset}
-                />
-              ),
+              renderItem: ({ item }) => {
+                return (
+                  <ConfigSection
+                    sectionKey={item.original.key}
+                    config={item.original.content}
+                    isSelected={item.original.key === selectedSectionKey}
+                    isLoading={!!loadingStates?.[item.original.key]}
+                    currentPath={currentPath}
+                    dragButton={<DndSortableDragButton />}
+                    onSelect={onSectionSelect}
+                    onPreview={onPreview}
+                    onReset={onReset}
+                  />
+                );
+              },
             }}
             onChange={configs => {
               const newConfigs = sortedConfig(configs as PageSectionConfigs<ThemePageKey>);

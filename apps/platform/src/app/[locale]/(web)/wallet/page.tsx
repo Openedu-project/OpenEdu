@@ -1,4 +1,4 @@
-import { WalletPage } from "@oe/ui/pages/wallet";
+import { WalletPage } from '@oe/ui/pages/wallet';
 
 const Wallet = () => {
   return <WalletPage />;

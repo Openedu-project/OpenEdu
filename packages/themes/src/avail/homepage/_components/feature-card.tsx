@@ -16,9 +16,11 @@ const FeatureCard = ({ image, textImg, description, className }: FeatureCardProp
       <Image
         alt="Image"
         src={image?.url}
+        height={288}
+        width={312}
         className="aspect-square max-h-[300px] w-3/4 rounded-radius-m object-contain"
       />
-      <Image alt="Text" src={textImg?.url} className="h-8 w-auto object-contain" />
+      <Image alt="Text" src={textImg?.url} height={32} width={165} className="h-8 w-auto object-contain" />
       <p className="mcaption-regular18 whitespace-pre-wrap text-center">{description}</p>
     </Card>
   );

@@ -7,7 +7,7 @@ const getRelativeBlog = async (id?: string) => {
     return [];
   }
   try {
-    const res = await getBlogsByCategoryService(undefined,{ params: { id }});
+    const res = await getBlogsByCategoryService(undefined, { params: { id } });
     return res?.results ?? [];
   } catch (error) {
     console.error(error);

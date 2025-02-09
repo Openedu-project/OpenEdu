@@ -30,7 +30,6 @@ export function DeleteButton({
         </Button>
       }
       onClose={onClose}
-
       title={
         <span className="flex flex-col items-center gap-4 text-destructive">
           <CircleX className="h-8 w-8" />

@@ -32,7 +32,7 @@ const AvailHomepageFeature: SectionComponent<'homepage', 'availFeature'> = ({ cl
               <FeatureCard
                 key={key}
                 image={value?.image}
-                textImg={value?.image}
+                textImg={value?.textImg}
                 description={t(`features.${key}.description`)}
               />
             );

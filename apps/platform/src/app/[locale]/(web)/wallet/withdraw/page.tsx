@@ -1,4 +1,4 @@
-import Withdraw from "@oe/ui/pages/wallet/withdraw";
+import Withdraw from '@oe/ui/pages/wallet/withdraw';
 
 const WalletWithdrawPage = () => <Withdraw />;
 

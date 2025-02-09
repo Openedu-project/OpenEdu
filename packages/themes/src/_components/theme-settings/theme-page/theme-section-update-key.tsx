@@ -1,8 +1,8 @@
-"use client";
-import { AutocompeteMultiple } from "@oe/ui/components/autocomplete";
-import type { AllSectionKeys } from "../../../_types";
+'use client';
+import { AutocompeteMultiple } from '@oe/ui/components/autocomplete';
+import type { AllSectionKeys } from '../../../_types';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 interface ThemeAddSectionConfigProps {
   defaultConfigSectionKeys: AllSectionKeys[];
@@ -28,7 +28,7 @@ const ThemeSectionUpdateKeys = ({
       options={defaultConfigSectionKeys}
       value={currentKeys}
       displayItems={2}
-      onChange={(selected) => {
+      onChange={selected => {
         setCurrentKeys(selected);
         onUpdateSectionKeys(selected);
       }}
