@@ -1,6 +1,6 @@
-import { Image } from "@oe/ui/components/image";
-import type { FileType } from "@oe/ui/components/uploader";
-import { Card, CardContent } from "@oe/ui/shadcn/card";
+import { Image } from '@oe/ui/components/image';
+import type { FileType } from '@oe/ui/components/uploader';
+import { Card, CardContent } from '@oe/ui/shadcn/card';
 
 interface SolutionCardProps {
   name?: string;

@@ -1,4 +1,4 @@
-import { NFTPage } from "@oe/ui/pages/wallet/nft";
+import { NFTPage } from '@oe/ui/pages/wallet/nft';
 const WalletNFTPage = () => <NFTPage />;
 
 export default WalletNFTPage;

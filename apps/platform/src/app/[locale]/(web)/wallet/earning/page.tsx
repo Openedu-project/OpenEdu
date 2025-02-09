@@ -1,4 +1,4 @@
-import { EarningPage } from "@oe/ui/pages/wallet/earnning";
+import { EarningPage } from '@oe/ui/pages/wallet/earnning';
 
 const WalletEarningPage = () => <EarningPage />;
 

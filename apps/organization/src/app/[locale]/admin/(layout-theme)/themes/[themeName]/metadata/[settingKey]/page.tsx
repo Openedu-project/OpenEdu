@@ -34,7 +34,6 @@ export default function MetadataPage() {
     } as ThemeCollection,
   });
 
-  console.log("themeDefinition", themeDefinition);
   const handleSubmitMetadata = async (data: ThemeMetadata) => {
     if (!themeDefinition) {
       return;

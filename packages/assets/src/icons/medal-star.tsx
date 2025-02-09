@@ -1,10 +1,10 @@
-import type { ISvgProps } from "./types";
+import type { ISvgProps } from './types';
 
 export default function MedalStar({
   width = 48,
   height = 48,
-  className = "",
-  color = "hsl(var(--muted-foreground))",
+  className = '',
+  color = 'hsl(var(--muted-foreground))',
 }: ISvgProps) {
   return (
     <svg

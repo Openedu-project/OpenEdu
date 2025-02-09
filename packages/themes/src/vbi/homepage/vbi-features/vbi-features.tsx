@@ -1,15 +1,9 @@
-import { cn } from "@oe/ui/utils/cn";
-import { Key, Send, Sun, Zap } from "lucide-react";
-import type { SectionComponent } from "../../../_types/theme-page";
+import { cn } from '@oe/ui/utils/cn';
+import { Key, Send, Sun, Zap } from 'lucide-react';
+import type { SectionComponent } from '../../../_types/theme-page';
 
-import {
-  FeatureCard,
-  type FeatureCardProps,
-} from "../../_components/feature-card";
-import {
-  InfoSection,
-  type InfoSectionProps,
-} from "../../_components/info-section";
+import { FeatureCard, type FeatureCardProps } from '../../_components/feature-card';
+import { InfoSection, type InfoSectionProps } from '../../_components/info-section';
 
 export interface VbiHomepageFeaturesProps extends InfoSectionProps {
   features: {
@@ -20,46 +14,38 @@ export interface VbiHomepageFeaturesProps extends InfoSectionProps {
   };
 }
 
-const VbiHomepageFeatures: SectionComponent<"homepage", "vbiFeatures"> = ({
-  className,
-  t,
-}) => {
+const VbiHomepageFeatures: SectionComponent<'homepage', 'vbiFeatures'> = ({ className, t }) => {
   if (!t) {
     return null;
   }
   const features = [
     {
-      title: t("features.feature1.title"),
-      description: t("features.feature1.description"),
-      variant: "primary",
+      title: t('features.feature1.title'),
+      description: t('features.feature1.description'),
+      variant: 'primary',
     },
     {
-      title: t("features.feature2.title"),
-      description: t("features.feature2.description"),
-      variant: "default",
+      title: t('features.feature2.title'),
+      description: t('features.feature2.description'),
+      variant: 'default',
     },
     {
-      title: t("features.feature3.title"),
-      description: t("features.feature3.description"),
-      variant: "default",
+      title: t('features.feature3.title'),
+      description: t('features.feature3.description'),
+      variant: 'default',
     },
     {
-      title: t("features.feature4.title"),
-      description: t("features.feature4.description"),
-      variant: "primary",
+      title: t('features.feature4.title'),
+      description: t('features.feature4.description'),
+      variant: 'primary',
     },
   ];
 
   return (
-    <div
-      className={cn(
-        "space-y-4 bg-background p-4 md:space-y-8 md:p-8 lg:p-12",
-        className
-      )}
-    >
+    <div className={cn('space-y-4 bg-background p-4 md:space-y-8 md:p-8 lg:p-12', className)}>
       <InfoSection
-        title={t("title")}
-        titleSub={t("titleSub")}
+        title={t('title')}
+        titleSub={t('titleSub')}
         className="flex flex-col items-center justify-center text-center"
       />
       {/* Features Grid */}
@@ -71,7 +57,7 @@ const VbiHomepageFeatures: SectionComponent<"homepage", "vbiFeatures"> = ({
               key={index.toString()}
               title={feature.title}
               description={feature.description}
-              variant={feature.variant as "default" | "primary"}
+              variant={feature.variant as 'default' | 'primary'}
             />
           ))}
         </div>

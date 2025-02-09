@@ -11,15 +11,8 @@ export const createAcademiaConfig = (
     label: t('labels.homepage'),
     config: createAcademiaHomepageConfig(academiaT),
     metadata: {
+      ...defaultMetadataAtPage,
       title: 'Homepage',
-      description: '',
-      keywords: '',
-      ogTitle: '',
-      ogDescription: '',
-      ogImage: '',
-      canonical: '',
-      robotsIndex: true,
-      robotsFollow: true,
     },
   },
   'about-us': {
