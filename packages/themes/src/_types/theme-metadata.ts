@@ -10,11 +10,17 @@ export type ThemeMetadata = {
   title: string;
   description: string;
   keywords: string;
-  ogTitle: string;
-  ogDescription: string;
-  ogImage: string;
-  canonical: string;
-  robotsIndex: boolean;
-  robotsFollow: boolean;
+  openGraph?: {
+    title?: string;
+    description?: string;
+    images?: string[];
+  };
+  robots?: {
+    index?: boolean;
+    follow?: boolean;
+  };
+  alternates?: {
+    canonical?: string;
+  };
   icons?: ThemeMetadataIcons;
 };

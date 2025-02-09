@@ -36,7 +36,7 @@ export const usePlayerProgress = (
   const [count, setCount] = useState<number>(5);
   const [showCountdown, setShowCountdown] = useState<boolean>(false);
 
-  const { sectionsProgressData, getLessonStatus } = useLessonLearningStore();
+  const { sectionsProgressData, getLessonStatus, setIsNavigatingLesson } = useLessonLearningStore();
   const currentLessonIndex = getLessonGlobalIndex(sectionsProgressData, lesson as string);
   const totalItems = getTotalLessons(sectionsProgressData);
 
@@ -94,6 +94,10 @@ export const usePlayerProgress = (
   };
 
   useEffect(() => {
+    setIsNavigatingLesson(false);
+  }, []);
+
+  useEffect(() => {
     if (showCountdown && count > 0) {
       const timer = setTimeout(() => {
         setCount(count - 1);
@@ -132,6 +136,7 @@ export const usePlayerProgress = (
           roundedPercentage === VIDEO_CONSTANTS.MAX_PERCENTAGE &&
           Boolean(options?.quizzes) === Boolean(options?.quizResult)
         ) {
+          setIsNavigatingLesson(true);
           handleShowToast();
         }
 

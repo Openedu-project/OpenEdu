@@ -1,14 +1,14 @@
-import type { IBlog } from "@oe/api/types/blog";
-import { formatDateHourMinute } from "@oe/core/utils/datetime";
-import { BLOG_ROUTES } from "@oe/core/utils/routes";
-import { buildUrl } from "@oe/core/utils/url";
-import { formatDistanceToNow } from "date-fns";
-import type { HTMLAttributes } from "react";
-import { Link } from "#common/navigation";
-import { Image } from "#components/image";
-import { ProfileCard } from "#components/profile-card";
-import { Card, CardContent } from "#shadcn/card";
-import { cn } from "#utils/cn";
+import type { IBlog } from '@oe/api/types/blog';
+import { formatDateHourMinute } from '@oe/core/utils/datetime';
+import { BLOG_ROUTES } from '@oe/core/utils/routes';
+import { buildUrl } from '@oe/core/utils/url';
+import { formatDistanceToNow } from 'date-fns';
+import type { HTMLAttributes } from 'react';
+import { Link } from '#common/navigation';
+import { Image } from '#components/image';
+import { ProfileCard } from '#components/profile-card';
+import { Card, CardContent } from '#shadcn/card';
+import { cn } from '#utils/cn';
 
 export interface IBlogCardProps extends HTMLAttributes<HTMLDivElement> {
   blog: IBlog;
@@ -31,10 +31,7 @@ export function BlogCardServer({
 }: IBlogCardProps) {
   const currentHostname = process.env.NEXT_PUBLIC_APP_ROOT_DOMAIN_NAME;
   const targetPath = buildUrl({
-    endpoint:
-      blog.blog_type === "org"
-        ? BLOG_ROUTES.blogDetail
-        : BLOG_ROUTES.personBlogDetail,
+    endpoint: blog.blog_type === 'org' ? BLOG_ROUTES.blogDetail : BLOG_ROUTES.personBlogDetail,
     params: {
       slug: blog?.slug,
       username: blog?.author?.username,
@@ -42,12 +39,9 @@ export function BlogCardServer({
   });
 
   // const locale = currentPathname ? getLocaleFromPathname(currentPathname) : '';
-  const locale = blog?.locale ?? "";
+  const locale = blog?.locale ?? '';
   const isExternalDomain = blog?.org?.domain !== currentHostname;
-  const blogUrl =
-    isExternalDomain && blog?.org?.domain
-      ? `https://${blog?.org?.domain}/${locale}${targetPath}`
-      : targetPath;
+  const blogUrl = isExternalDomain ? `https://${blog?.org?.domain}/${locale}${targetPath}` : targetPath;
 
   // const authorUrl = buildUrl({
   //   endpoint: BLOG_ROUTES.authorBlog,
@@ -62,29 +56,16 @@ export function BlogCardServer({
     <Link
       href={blogUrl}
       external={isExternalDomain}
-      target={isExternalDomain ? "_blank" : undefined}
+      target={isExternalDomain ? '_blank' : undefined}
       className="h-full w-full p-0 hover:no-underline"
     >
       <Card
-        className={cn(
-          "w-full cursor-pointer bg-background hover:border hover:border-primary",
-          className
-        )}
+        className={cn('w-full cursor-pointer bg-background hover:border hover:border-primary', className)}
         {...props}
       >
-        <CardContent
-          className={cn(
-            "!p-3 flex basis-full flex-col gap-3",
-            contentRight && "grid-cols-2 md:grid"
-          )}
-        >
+        <CardContent className={cn('!p-3 flex basis-full flex-col gap-3', contentRight && 'grid-cols-2 md:grid')}>
           {authorOnTop && (
-            <div
-              className={cn(
-                "mb-2 flex items-center justify-between gap-1",
-                contentRight && "md:col-span-2"
-              )}
-            >
+            <div className={cn('mb-2 flex items-center justify-between gap-1', contentRight && 'md:col-span-2')}>
               {/* <Link
                 href={authorFullUrl}
                 target={isExternalDomain ? "_blank" : undefined}
@@ -111,7 +92,7 @@ export function BlogCardServer({
 
           <Image
             src={blog?.banner?.url}
-            alt={blog?.title ?? "blog-thumbnail"}
+            alt={blog?.title ?? 'blog-thumbnail'}
             className="w-full flex-0 rounded"
             fill
             aspectRatio="16:9"
@@ -126,9 +107,7 @@ export function BlogCardServer({
                   : formatDateHourMinute(blog?.update_at)}
               </p>
             )}
-            <p className="giant-iheading-semibold16 mb-2 line-clamp-2 h-[42px] text-foreground">
-              {blog?.title}
-            </p>
+            <p className="giant-iheading-semibold16 mb-2 line-clamp-2 h-[42px] text-foreground">{blog?.title}</p>
             {/* {showAuthor && !authorOnTop && blog?.author && (
               <Link
                 href={authorFullUrl}
@@ -147,13 +126,7 @@ export function BlogCardServer({
               />
             )}
             {showDescription && (
-              <p
-                className={cn(
-                  "mcaption-regular12 line-clamp-4 w-full text-foreground"
-                )}
-              >
-                {blog?.description}
-              </p>
+              <p className={cn('mcaption-regular12 line-clamp-4 w-full text-foreground')}>{blog?.description}</p>
             )}
           </div>
         </CardContent>

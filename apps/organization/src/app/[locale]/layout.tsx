@@ -35,10 +35,6 @@ export default async function RootLayout({
   const [locale, messages, themeSystem] = await Promise.all([getLocale(), getMessages(), getThemeConfigServer()]);
   const themeName = themeSystem?.[0]?.value?.activedTheme ?? 'academia';
 
-  if (!themeSystem?.[0]?.value) {
-    return null;
-  }
-
   const fontVariables = Object.values(fonts)
     .map(font => font.variable)
     .join(' ');

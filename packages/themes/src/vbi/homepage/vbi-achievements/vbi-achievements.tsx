@@ -76,7 +76,7 @@ const VbiHomepageAchievements: SectionComponent<'homepage', 'vbiAchievements'> =
   ];
 
   return (
-    <div className={cn('space-y-4 p-4 md:space-y-8 md:p-8 lg:p-12', className)}>
+    <div className={cn('space-y-4 bg-background p-4 md:space-y-8 md:p-8 lg:p-12', className)}>
       <InfoSection
         title={t?.('title')}
         titleSub={t?.('titleSub')}

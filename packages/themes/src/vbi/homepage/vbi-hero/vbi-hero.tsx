@@ -26,7 +26,7 @@ const VbiHomepageHero: SectionComponent<'homepage', 'vbiHero'> = ({ props, class
   return (
     <div className={cn('relative min-h-screen', className)}>
       {/* Content container */}
-      <div className="container relative mx-auto px-4 md:px-8 md:pr-0 lg:px-12 lg:pr-0">
+      <div className="-z-20 container relative mx-auto bg-background px-4 md:px-8 md:pr-0 lg:px-12 lg:pr-0">
         <div className="flex flex-col items-center gap-12 lg:flex-row">
           {/* Content */}
           <div className="flex-auto space-y-6 text-foreground lg:flex-1">
@@ -85,16 +85,17 @@ const VbiHomepageHero: SectionComponent<'homepage', 'vbiHero'> = ({ props, class
           </div>
         </div>
         {/* Partners */}
-        <div className="mt-6 grid grid-cols-3 gap-x-4 gap-y-2 md:grid-cols-5 md:gap-x-8 md:gap-y-4">
+        <div className="mt-4 flex flex-wrap justify-center gap-y-4 md:mt-8 md:gap-x-[2%] md:gap-y-6">
           {props?.partners?.map((file, index) => (
-            <Image
-              key={index.toString()}
-              src={file.url}
-              height={file.height}
-              width={file.width}
-              alt=""
-              className="h-[40px] object-contain"
-            />
+            <div className="mx-0 h-[44px] w-[50%] sm:w-[33%] md:mx-0 md:w-[18%]" key={index.toString()}>
+              <Image
+                src={file.url}
+                height={file.height}
+                width={file.width}
+                alt="partners"
+                className="h-[40px] object-contain"
+              />
+            </div>
           ))}
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { BankAccountPage } from "@oe/ui/pages/wallet/bank-account";
+import { BankAccountPage } from '@oe/ui/pages/wallet/bank-account';
 
 const WalletBankAccounts = () => <BankAccountPage />;
 

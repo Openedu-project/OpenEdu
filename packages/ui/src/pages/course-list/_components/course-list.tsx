@@ -13,10 +13,11 @@ const PER_PAGE = 12;
 
 interface CourseListProps {
   isOpenEdu: boolean;
+  orgId?: string;
   fallback?: ICourseResponse;
 }
 
-export default function CourseList({ isOpenEdu, fallback }: CourseListProps) {
+export default function CourseList({ isOpenEdu, orgId, fallback }: CourseListProps) {
   const searchParams = useSearchParams();
   const [params, setParams] = useState(() => {
     const searchParamsData = getSearchParamsData(searchParams);
@@ -25,6 +26,7 @@ export default function CourseList({ isOpenEdu, fallback }: CourseListProps) {
       page: 1,
       per_page: PER_PAGE,
       enable_root: isOpenEdu,
+      org_id: orgId,
       sort: 'create_at desc',
       preloads: ['Categories', 'Owner', 'Levels'],
     };

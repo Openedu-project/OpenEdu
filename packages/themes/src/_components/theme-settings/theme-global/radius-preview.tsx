@@ -1,6 +1,6 @@
-import { useTranslations } from "next-intl";
-import { useMemo } from "react";
-import type { ThemeGlobalRadiusKey } from "../../../_types";
+import { useTranslations } from 'next-intl';
+import { useMemo } from 'react';
+import type { ThemeGlobalRadiusKey } from '../../../_types';
 
 interface RadiusPreviewProps {
   size: ThemeGlobalRadiusKey;
@@ -16,10 +16,10 @@ const SIZE_MAP: Record<ThemeGlobalRadiusKey, number> = {
   xl: 80,
 };
 const RadiusPreview = ({ size, radius, baseRadius }: RadiusPreviewProps) => {
-  const t = useTranslations("themeUI.radius");
+  const t = useTranslations('themeUI.radius');
 
   const calculatedRadius = useMemo(() => {
-    if (size === "default") {
+    if (size === 'default') {
       return `${radius}rem`;
     }
     return `${baseRadius * 16 + radius}px`; // Convert rem to px and add offset
@@ -35,12 +35,10 @@ const RadiusPreview = ({ size, radius, baseRadius }: RadiusPreviewProps) => {
           height: `${SIZE_MAP[size]}px`,
         }}
       />
-      <p className="text-center text-muted-foreground text-xs">
-        {t(`preview.${size}`)}
-      </p>
+      <p className="text-center text-muted-foreground text-xs">{t(`preview.${size}`)}</p>
     </div>
   );
 };
 
-RadiusPreview.displayName = "RadiusPreview";
+RadiusPreview.displayName = 'RadiusPreview';
 export { RadiusPreview, SIZE_MAP };

@@ -16,6 +16,7 @@ export interface PreviewPanelProps {
   themeName: ThemeName;
   selectedPage: ThemePageKey;
   pageConfig: PagesConfig<ThemePageKey>;
+  stateConfigSections?: PageSectionConfigs<ThemePageKey>;
   currentConfigSections?: PageSectionConfigs<ThemePageKey>;
   renderByServer?: boolean;
 }
@@ -24,6 +25,7 @@ export const PreviewPanel = memo(function PreviewPanel({
   selectedPage,
   pageConfig,
   currentConfigSections,
+  stateConfigSections,
   renderByServer = false,
 }: PreviewPanelProps) {
   const t = useTranslations('themePageSettings');
@@ -36,7 +38,8 @@ export const PreviewPanel = memo(function PreviewPanel({
       key
     );
 
-    const sectionConfig = currentConfigSections?.[key] || pageConfig?.[selectedPage]?.config?.[key];
+    const sectionConfig =
+      (stateConfigSections || currentConfigSections)?.[key] || pageConfig?.[selectedPage]?.config?.[key];
 
     if (!sectionConfig?.enable) {
       return undefined;
@@ -52,8 +55,9 @@ export const PreviewPanel = memo(function PreviewPanel({
   };
 
   const sortedSections = () => {
-    if (currentConfigSections && Object.keys(currentConfigSections).length > 0) {
-      return Object.entries(currentConfigSections)
+    const configs = stateConfigSections || currentConfigSections;
+    if (configs && Object.keys(configs).length > 0) {
+      return Object.entries(configs)
         .sort(([, a], [, b]) => a.order - b.order)
         .map(([key, _value]) => key as SectionsByPage[typeof selectedPage]);
     }

@@ -17,7 +17,7 @@ export default async function OpeneduLayout({
   const themeName = themeSystem?.[0]?.value?.activedTheme || 'vbi';
 
   if (!themeSystem?.[0]?.value) {
-    return null;
+    return <MainLayout>{children}</MainLayout>;
   }
 
   const headerProps = themeSystem?.[0]?.value?.availableThemes?.[themeName]?.pages?.auth?.config?.header?.props;

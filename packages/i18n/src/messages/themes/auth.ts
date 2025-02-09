@@ -5,14 +5,14 @@ export const authMessages = {
     header: {
       sidebarItems: {
         'sidebarItems-0': {
-          id: 'about',
-          href: '/about-us',
-          label: 'About us',
+          id: 'blog',
+          href: '/blog',
+          label: 'Blog',
         },
         'sidebarItems-1': {
-          id: 'contact',
-          href: '/contact-us',
-          label: 'Contact Us',
+          id: 'courses',
+          href: '/courses',
+          label: 'Courses',
         },
       },
     },
