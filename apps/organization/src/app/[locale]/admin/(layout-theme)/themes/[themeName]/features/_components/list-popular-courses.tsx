@@ -73,6 +73,11 @@ const ListPopularCourses = ({ orgId }: { orgId?: string }) => {
       order: index,
     }));
 
+    if (!orgId) {
+      toast.error("Missing orgId");
+      return;
+    }
+
     try {
       const res = await triggerUpdateFeaturedContent({
         org_id: orgId ?? "",

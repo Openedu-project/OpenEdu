@@ -7,7 +7,7 @@ import { Loader, RotateCcw } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 
-export type TStatus = TCourseStatus & IAICourseStatus & 'setting';
+export type TStatus = TCourseStatus | IAICourseStatus;
 
 const statusColorMap: Record<TStatus, BadgeProps['variant']> = {
   draft: 'muted',
@@ -21,9 +21,9 @@ const statusColorMap: Record<TStatus, BadgeProps['variant']> = {
   manual: 'default',
   completed: 'success',
   generating: 'default',
-  pending: 'default',
-  waiting: 'default',
-  setting: 'default',
+  pending: 'outline_warning',
+  waiting: 'outline_warning',
+  setting: 'warning',
 };
 
 const statusIcon: Record<TStatus, ReactNode | null> = {
@@ -43,18 +43,26 @@ const statusIcon: Record<TStatus, ReactNode | null> = {
   setting: <RotateCcw className="mr-1 h-4 w-4" />,
 };
 
-export function StatusBadge({ status, errorMessage }: { status: TStatus; errorMessage?: string }) {
+export function StatusBadge({
+  status,
+  errorMessage,
+  className,
+}: { status: TStatus; errorMessage?: string; className?: string }) {
   const tStatus = useTranslations('general.statusVariants');
   return status === 'failed' ? (
     <TooltipProvider>
       <Tooltip
-        content={<p className="break-word max-w-[150px] text-start md:max-w-[200px]">{errorMessage ?? 'Error'}</p>}
+        content={
+          <p className="break-word max-w-[150px] text-start md:max-w-[200px]">{errorMessage ?? 'Unknown Error'}</p>
+        }
       >
-        <Badge variant={statusColorMap[status]}>{tStatus(status)}</Badge>
+        <Badge variant={statusColorMap[status]} className={className}>
+          {tStatus(status)}
+        </Badge>
       </Tooltip>
     </TooltipProvider>
   ) : (
-    <Badge variant={statusColorMap[status]}>
+    <Badge variant={statusColorMap[status]} className={className}>
       {statusIcon[status]} {tStatus(status)}
     </Badge>
   );

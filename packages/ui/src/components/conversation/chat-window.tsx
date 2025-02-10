@@ -85,7 +85,9 @@ export function ChatWindow({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    setSelectedAgent('ai_chat');
+    if (!isNewChat) {
+      setSelectedAgent('ai_chat');
+    }
 
     if (id && prevId.current === id) {
       return;

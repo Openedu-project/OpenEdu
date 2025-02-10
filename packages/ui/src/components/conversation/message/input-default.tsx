@@ -13,7 +13,11 @@ export const InputDefault = <TFormValues extends FieldValues>({
 }: InputFieldProps<TFormValues>) => {
   const tAI = useTranslations('aiAssistant');
   return (
-    <FormFieldWithLabel name={'message' as Path<TFormValues>} className={cn('w-full', className)}>
+    <FormFieldWithLabel
+      name={'message' as Path<TFormValues>}
+      className={cn('w-full', className)}
+      showErrorMessage={false}
+    >
       <TextareaAutosize
         onKeyDown={handleKeyDown}
         onChange={handleInputChange}

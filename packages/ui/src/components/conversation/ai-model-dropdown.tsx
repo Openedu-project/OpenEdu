@@ -50,7 +50,7 @@ export function AIModelDropdown({ onSelectSuccess, AIModels, isLogin }: ModelDro
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="!rounded-full relative w-[200px] justify-start gap-2 truncate border border-primary bg-white outline outline-4 outline-primary/5"
+          className="!rounded-full relative w-[200px] justify-start gap-2 truncate border border-primary bg-background outline outline-4 outline-primary/5"
         >
           <div>
             <Image

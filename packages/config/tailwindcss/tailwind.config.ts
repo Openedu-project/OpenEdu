@@ -46,6 +46,7 @@ const config: Omit<Config, 'content'> = {
         negative: {
           50: 'hsl(var(--negative-50))',
           500: 'hsl(var(--negative-500))',
+          600: 'hsl(var(--negative-600))',
         },
         tertiary: {
           50: 'hsl(var(--tertiary-50))',
