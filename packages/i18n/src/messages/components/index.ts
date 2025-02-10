@@ -1,4 +1,5 @@
 import { AIGenerateMessages } from './ai-generate-modal';
+import { AIStatusMessages } from './ai-status-modal';
 import { blogFormMessages } from './blog-form';
 import { certificateMessages } from './certificate';
 import { courseComingSoonMessages } from './course-coming-soon';
@@ -40,4 +41,5 @@ export const componentMessages = {
   ...certificateMessages,
   ...courseTimelineMessages,
   ...webviewHandlerMessages,
+  ...AIStatusMessages,
 };

@@ -13,6 +13,7 @@ import { buildUrl } from '@oe/core/utils/url';
 import { useRouter } from '@oe/ui/common/navigation';
 import { DeleteButton } from '@oe/ui/components/delete-button';
 import { FormWrapper } from '@oe/ui/components/form-wrapper';
+import { StatusBadge } from '@oe/ui/components/status-badge';
 import { Button } from '@oe/ui/shadcn/button';
 import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
 import { Input } from '@oe/ui/shadcn/input';
@@ -21,7 +22,6 @@ import { Check, CopyIcon, PencilLine, Trash2 } from 'lucide-react';
 import { MenuIcon } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
-import StatusBadge from '../../../_components/status-badge';
 import { useOutlineStore } from '../../_store/useOutlineStore';
 import { COURSE_DETAIL_FORM_IDS } from '../../_utils/constants';
 
@@ -191,7 +191,7 @@ export default function SectionHeader() {
         )}
       </div>
       <div className="flex items-center gap-2">
-        <StatusBadge status={activeSection?.status} />
+        {activeSection?.status && <StatusBadge status={activeSection?.status} />}
         <Button
           variant="outline"
           className="h-8 w-8 p-0"

@@ -10,19 +10,20 @@ export default function CourseName({ data }: { data: ICourse }) {
   const aiCourse = data.ai_course;
   const aiCompleted = data?.ai_generate_status === 'completed';
   const aiName = aiCourse?.course_title || aiCourse?.playlist_link;
-  const name = isAiGenerated ? aiName : data.name;
-  const isAiYoutubeLink = isAiGenerated && !aiCompleted;
-  const href = isAiGenerated
-    ? aiCourse?.general_info_status === 'completed'
+  const name = aiName ?? data.name;
+  const isAiYoutubeLink = !aiCompleted && aiCourse?.offer_type === 'youtube_playlist';
+  const href =
+    aiCompleted || !isAiGenerated
       ? buildUrl({
-          endpoint: CREATOR_ROUTES.aiGeneralInfo,
-          queryParams: { courseId: data.id },
+          endpoint: CREATOR_ROUTES.courseSettingUp,
+          params: { courseId: data.id },
         })
-      : aiCourse?.playlist_link
-    : buildUrl({
-        endpoint: CREATOR_ROUTES.courseSettingUp,
-        params: { courseId: data.id },
-      });
+      : aiCourse?.general_info_status === 'completed'
+        ? buildUrl({
+            endpoint: CREATOR_ROUTES.aiGeneralInfo,
+            queryParams: { courseId: data.id },
+          })
+        : aiCourse?.playlist_link;
 
   if (href && name) {
     return (
