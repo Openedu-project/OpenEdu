@@ -6,6 +6,7 @@ import type {
   IFeaturedContentRequest,
   IFeaturedContentResponse,
 } from '#types/featured-contents';
+import type { IOrganization } from '#types/organizations';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl, fetchAPI, postAPI } from '#utils/fetch';
 
@@ -90,6 +91,28 @@ export async function getPopularBlogsServicesAtWebsite(
 
   try {
     const response = await fetchAPI<IFeaturedContent<IBlog>[]>(endpointKey, init);
+
+    return response.data;
+  } catch {
+    return undefined;
+  }
+}
+
+export async function getFeaturedOrgServicesAtWebsite(
+  url: string | undefined,
+  { params, init }: { params: Pick<FeaturedContentParams, 'org_id'>; init?: RequestInit }
+): Promise<IFeaturedContent<IOrganization>[] | undefined> {
+  const endpointKey = createAPIUrl({
+    endpoint: url || API_ENDPOINT.FEATURED_CONTENT_BY_TYPES,
+    queryParams: {
+      org_id: params.org_id,
+      type: 'featured',
+      entity_type: 'organization',
+    },
+  });
+
+  try {
+    const response = await fetchAPI<IFeaturedContent<IOrganization>[]>(endpointKey, init);
 
     return response.data;
   } catch {
