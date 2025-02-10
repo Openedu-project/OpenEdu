@@ -1,7 +1,10 @@
 import { Uploader } from '@oe/ui/components/uploader';
 import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
+import { useTranslations } from 'next-intl';
 
 export default function Thumbnail() {
+  const tCourses = useTranslations('courses');
+
   return (
     <FormFieldWithLabel
       name="thumbnail"
@@ -9,11 +12,10 @@ export default function Thumbnail() {
       label={
         <div className="flex flex-col gap-1">
           <span className="font-medium text-lg">
-            Thumbnail <span className="text-red-500">*</span>
+            {tCourses('information.thumbnailTitle')}
+            <span className="text-red-500">*</span>
           </span>
-          <span className="text-muted-foreground text-xs">
-            The thumbnail is used to represent the course in the course list.
-          </span>
+          <span className="text-muted-foreground text-xs">{tCourses('information.thumbnailDescription')}</span>
         </div>
       }
       className="rounded-lg bg-background p-4 shadow-sm"

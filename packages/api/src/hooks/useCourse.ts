@@ -7,6 +7,7 @@ import {
   getCoursesPublishService,
   getCoursesService,
   getLevelsService,
+  getSegmentByIdService,
   getSegmentsService,
   postEnrollCourseService,
 } from '#services/course';
@@ -35,7 +36,9 @@ export function useGetCourses({ params }: { params: IFilter }) {
 
 export function useGetCourseById(id: string) {
   const { data, isLoading, error, mutate } = useSWR(
-    id ? createAPIUrl({ endpoint: API_ENDPOINT.COURSES_ID, params: { id } }) : null,
+    id
+      ? createAPIUrl({ endpoint: API_ENDPOINT.COURSES_ID, params: { id }, queryParams: { preloads: ['segments'] } })
+      : null,
     (endpoint: string) => getCourseByIdService(endpoint, { id })
   );
 
@@ -143,11 +146,25 @@ export const useGetSegments = ({ course_id, page, per_page, preloads, ...rest }:
   const { data, isLoading, error, mutate } = useSWR(queryParams.course_id ? endpoint : null, (endpoint: string) =>
     getSegmentsService(endpoint, queryParams)
   );
-
+  const sortedSegments = data?.results?.sort((a, b) => a.order - b.order);
   return {
-    segments: data?.results,
+    segments: sortedSegments,
     segmentsError: error,
     mutateSegments: mutate,
     isLoadingSegments: isLoading,
+  };
+};
+
+export const useGetSegmentById = (id: string) => {
+  const endpoint = buildUrl({ endpoint: API_ENDPOINT.SEGMENTS_ID, params: { id } });
+  const { data, isLoading, error, mutate } = useSWR(id ? endpoint : null, (endpoint: string) =>
+    getSegmentByIdService(endpoint, id)
+  );
+
+  return {
+    segment: data,
+    segmentError: error,
+    mutateSegment: mutate,
+    isLoadingSegment: isLoading,
   };
 };

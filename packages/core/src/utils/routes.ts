@@ -138,7 +138,7 @@ export const CREATOR_ROUTES = {
   formTemplates: `/creator${DYNAMIC_FORMS_ROUTES.formTemplates}`,
   aiGeneralInfo: '/creator/courses/ai-creation/general-info',
   courseSettingUp: '/creator/courses/:courseId/settings',
-  courseOutline: '/creator/courses/:courseId/outline',
+  courseOutline: '/creator/courses/:courseId/:sectionId/:lessonId',
   coursePrice: '/creator/courses/:courseId/price',
   courseCertificate: '/creator/courses/:courseId/certificate',
   courseTriggerForm: '/creator/courses/:courseId/trigger-form',

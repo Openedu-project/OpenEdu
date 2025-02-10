@@ -113,9 +113,14 @@ export function FormNestedWrapper<TFormSchema extends z.ZodType>({
     [resetOnSuccess, useFormProps?.resetOptions, onError, form.reset, onSubmit]
   );
 
-  const handleError = useCallback((error: unknown) => {
-    console.error('Form validation error', error);
-  }, []);
+  const handleError = useCallback(
+    (error: unknown) => {
+      console.error('Form validation error', error);
+      onError?.(error);
+      // return undefined;
+    },
+    [onError]
+  );
 
   return (
     <RHFFormProvider {...form}>

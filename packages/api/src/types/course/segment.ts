@@ -125,5 +125,5 @@ export interface ICreateNewLessonRequest {
 /* SECTIONS AND LESSONS*/
 export interface IBulkSegments {
   course_id: string;
-  sections: Partial<ISegment>[] | ICreateSectionRequest[];
+  sections: Partial<ISegment>[];
 }

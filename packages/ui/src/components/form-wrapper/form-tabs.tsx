@@ -54,7 +54,7 @@ export const FormTabsTrigger: FC<IFormTabsTriggerProps> = ({
 
 export const FormTabsContent: FC<IFormTabsContentProps> = ({ value, children, className, showProgress = true }) => {
   return (
-    <TabsContent value={value} className={cn('space-y-4 data-[state=inactive]:hidden', className)}>
+    <TabsContent value={value} className={cn('space-y-4 data-[state=inactive]:hidden', className)} forceMount>
       {showProgress && <TabProgress tabId={value} />}
       {children}
     </TabsContent>

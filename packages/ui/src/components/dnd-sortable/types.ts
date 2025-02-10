@@ -84,6 +84,7 @@ export interface IDndSortableProps<ItemType, ChildItemType> {
   dndContextProps?: DndContextProps;
   dragOverlayProps?: DragOverlayProps;
   ref?: Ref<IDndSortableRef<ItemType, ChildItemType>>;
+  loading?: boolean;
   onChange?: (items: ItemType[]) => void;
 }
 

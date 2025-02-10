@@ -1,4 +1,7 @@
 import { getMeServiceWithoutError } from '@oe/api/services/auth';
+import { postCreatorAcceptInvitationService } from '@oe/api/services/creator';
+import { postAcceptUserInvitationService } from '@oe/api/services/user';
+import type { ICreatorAcceptResponse } from '@oe/api/types/creators';
 import { type AuthEventName, authEvents } from '@oe/api/utils/auth';
 import loginBanner from '@oe/assets/images/login-banner.png';
 import { base64ToJson } from '@oe/core/utils/decoded-token';
@@ -11,7 +14,6 @@ import { Link } from '#common/navigation';
 import type { FileType } from '#components/uploader';
 import { AuthLayout } from '../auth-layout';
 import { AuthConfirmForm } from './auth-confirm-form';
-
 interface AuthConfirmProps {
   themeName?: ThemeName;
   banner?: FileType;
@@ -35,14 +37,23 @@ export async function AuthConfirmPage({ banner, themeName = 'academia' }: AuthCo
   let needRedirect = false;
   const decodedToken = base64ToJson(token);
 
-  if (event !== authEvents.setPassword) {
+  if (event !== authEvents.setPassword && event !== authEvents.resetPassword) {
     try {
-      // const response = {
-      //   require_set_password: false,
-      //   email: 'test@openedu.net',
-      // };
+      let response: ICreatorAcceptResponse | null = null;
 
-      if (decodedToken.require_set_password) {
+      if (event === authEvents.inviteCreatorBeforeAccept) {
+        response = await postCreatorAcceptInvitationService(null, {
+          payload: { token: decodedToken.token },
+        });
+      }
+
+      if (event === authEvents.inviteUserBeforeAccept) {
+        response = await postAcceptUserInvitationService(null, {
+          payload: { token: decodedToken.token },
+        });
+      }
+
+      if (response?.require_set_password) {
         return (
           <AuthLayout
             title={tThemeAuth('authConfirm.title')}

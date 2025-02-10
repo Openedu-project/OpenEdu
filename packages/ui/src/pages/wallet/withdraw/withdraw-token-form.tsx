@@ -37,7 +37,7 @@ export const WithdrawTokenForm = () => {
         },
       });
       await mutateWallets();
-      toast.success(t('wallets.withdrawPage.form.success'));
+      toast.success(t('wallets.withdrawPage.form.tokenSuccess'));
       form.reset();
     } catch (error) {
       toast.error(tError((error as HTTPError).message));

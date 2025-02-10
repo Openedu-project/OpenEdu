@@ -83,6 +83,8 @@ export const walletMessages = {
         selectBankAccount: 'Select bank account',
         selectNetwork: 'Select network',
         enterWithdrawNote: 'Enter withdrawal note',
+        requestSuccess: 'Withdrawal request sent successfully',
+        tokenSuccess: 'Token withdrawal sent successfully',
         errors: {
           bankAccountEmpty: "You don't have any bank accounts. Please add one.",
           amountMustBe: 'Amount must be at least ',

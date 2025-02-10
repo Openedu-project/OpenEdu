@@ -3,7 +3,7 @@ import type { ICreateBaseCourse, ICreateYoutubeCourse } from '#schemas/courses/c
 import type { ICourseCategory } from '#types/course/category';
 import type { ICourse, ICourseResponse, IEnrollCoursePayload } from '#types/course/course';
 import type { ICourseOutline } from '#types/course/course';
-import type { ISegment, ISegmentParams } from '#types/course/segment';
+import type { IBulkSegments, ILessonContent, ISegment, ISegmentParams } from '#types/course/segment';
 import type { HTTPPagination } from '#types/fetch';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
@@ -167,7 +167,91 @@ export const createAICourseService = async (
 };
 
 export const updateCourseService = async (url: string | undefined, payload: ICourse, init?: RequestInit) => {
-  const response = await putAPI<ICourse, ICourse>(url ?? API_ENDPOINT.COURSES_ID, payload, init);
+  const response = await putAPI<ICourse, ICourse>(
+    url ?? buildUrl({ endpoint: API_ENDPOINT.COURSES_ID, params: { id: payload.id } }),
+    payload,
+    init
+  );
+
+  return response.data;
+};
+
+export interface ICreateSegmentPayload {
+  course_id: string;
+  title: string;
+  note: string;
+  order: number;
+  free: boolean;
+  status: string;
+  id?: string;
+  lessons?: ICreateLessonPayload[];
+}
+
+export interface ICreateSectionPayload extends ICreateSegmentPayload {}
+export interface ICreateLessonPayload extends ICreateSegmentPayload {
+  parent_id: string;
+  contents: ILessonContent[];
+}
+
+export const getSegmentByIdService = async (url: string | undefined, id: string, init?: RequestInit) => {
+  const response = await fetchAPI<ISegment>(
+    url ?? buildUrl({ endpoint: API_ENDPOINT.SEGMENTS_ID, params: { id } }),
+    init
+  );
+
+  return response.data;
+};
+
+export const createSegmentService = async (
+  url: string | undefined,
+  payload: ICreateSectionPayload | ICreateLessonPayload,
+  init?: RequestInit
+) => {
+  const response = await postAPI<ISegment, ICreateSectionPayload | ICreateLessonPayload>(
+    url ?? API_ENDPOINT.SEGMENTS,
+    payload,
+    init
+  );
+
+  return response.data;
+};
+
+export const updateSegmentService = async (url: string | undefined, payload: ISegment, init?: RequestInit) => {
+  const response = await putAPI<ISegment, ISegment>(
+    url ?? buildUrl({ endpoint: API_ENDPOINT.SEGMENTS_ID, params: { id: payload.id } }),
+    payload,
+    init
+  );
+
+  return response.data;
+};
+
+export const updateBulkSegmentsService = async (
+  url: string | undefined,
+  payload: IBulkSegments,
+  init?: RequestInit
+) => {
+  const response = await putAPI<ISegment[], IBulkSegments>(url ?? API_ENDPOINT.SEGMENTS_BULK, payload, init);
+
+  return response.data;
+};
+
+export const deleteSegmentService = async (url: string | undefined, id: string, init?: RequestInit) => {
+  const response = await deleteAPI(
+    url ?? buildUrl({ endpoint: API_ENDPOINT.SEGMENTS_ID, params: { id } }),
+    undefined,
+    init
+  );
+
+  return response.data;
+};
+
+export const deleteLessonContentService = async (url: string | undefined, id: string, init?: RequestInit) => {
+  const response = await deleteAPI(
+    url ?? buildUrl({ endpoint: API_ENDPOINT.LESSONS_ID, params: { id } }),
+    undefined,
+    init
+  );
 
   return response.data;
 };

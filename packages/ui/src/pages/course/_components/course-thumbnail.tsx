@@ -29,7 +29,7 @@ const getPreviewLessonVideo = (courseData: ICourseOutline) => {
     return undefined;
   }
 
-  return medias.map(media => mapMediaToPreviewVideo(media, props?.preview_lessons ?? undefined));
+  return medias.map(media => mapMediaToPreviewVideo(media as IFileResponse, props?.preview_lessons ?? undefined));
 };
 
 interface CourseThumbnailProps {

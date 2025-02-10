@@ -17,6 +17,7 @@ import {
 import { SortableContext, horizontalListSortingStrategy, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { Spinner } from '#components/spinner';
 import { cn } from '#utils/cn';
 import { createDataAdapter } from './data-adapter';
 import { DndSortableChildItem } from './dnd-sortable-child-item';
@@ -49,6 +50,7 @@ export function DndSortable<ItemType, ChildItemType>({
   className,
   renderConfig,
   ref,
+  loading,
   onChange,
 }: IDndSortableProps<ItemType, ChildItemType>) {
   const [items, setItems] = useState<IDndSortableItem<ItemType, ChildItemType>[]>([]);
@@ -204,7 +206,10 @@ export function DndSortable<ItemType, ChildItemType>({
       }
       return (
         <DndSortableChildItem<ChildItemType> item={item} dragOverlay>
-          {renderConfig?.renderChildItem?.({ item, onRemoveItem: () => removeItem(item) })}
+          {renderConfig?.renderChildItem?.({
+            item,
+            onRemoveItem: () => removeItem(item),
+          })}
         </DndSortableChildItem>
       );
     },
@@ -232,7 +237,10 @@ export function DndSortable<ItemType, ChildItemType>({
             ?.find(item => item.id === containerId)
             ?.items?.map(item => (
               <DndSortableChildItem<ChildItemType> key={item.id} item={item} dragOverlay>
-                {renderChildItem?.({ item, onRemoveItem: () => removeItem(item) })}
+                {renderChildItem?.({
+                  item,
+                  onRemoveItem: () => removeItem(item),
+                })}
               </DndSortableChildItem>
             ))}
         </DndSortableItem>
@@ -265,7 +273,11 @@ export function DndSortable<ItemType, ChildItemType>({
       >
         {containerItems?.map(item => (
           <DndSortableChildItem<ChildItemType> key={item.id} item={item}>
-            {renderChildItem?.({ item, onRemoveItem: () => removeItem(item), onUpdateItem: updateItem })}
+            {renderChildItem?.({
+              item,
+              onRemoveItem: () => removeItem(item),
+              onUpdateItem: updateItem,
+            })}
           </DndSortableChildItem>
         ))}
       </SortableContext>
@@ -285,7 +297,7 @@ export function DndSortable<ItemType, ChildItemType>({
 
   return (
     <DndContext {...dndContextCommonProps} {...dndContextProps}>
-      <div className={cn('flex gap-4', className)}>
+      <div className={cn('relative flex gap-4', className)}>
         <SortableContext
           items={items.map(item => item.id)}
           strategy={dataConfig?.direction === 'vertical' ? verticalListSortingStrategy : horizontalListSortingStrategy}
@@ -328,6 +340,7 @@ export function DndSortable<ItemType, ChildItemType>({
             );
           })}
         </SortableContext>
+        {loading && <Spinner className="z-50 bg-transparent" hasIcon={false} />}
       </div>
       {typeof window !== 'undefined' &&
         createPortal(

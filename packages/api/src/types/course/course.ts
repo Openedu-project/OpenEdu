@@ -47,7 +47,7 @@ export interface ICourse {
   enable: boolean;
   mark_as_completed: boolean;
   thumbnail: IFileResponse;
-  medias: IFileResponse[];
+  medias: Partial<IFileResponse>[];
   docs: IFileResponse[];
   has_certificate: boolean;
   levels: ILevel[];
