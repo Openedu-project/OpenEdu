@@ -29,28 +29,41 @@ export const getFormInfo = (startWhen: IStartWhen, outline: ISection[]) => {
 
   const findLesson = (sections: ISection[], lessonId: string) => {
     const section = findSectionContainingLesson(sections, lessonId);
-
     if (!section) {
-      return null;
+      return { section: null, lesson: null };
     }
-    return section?.lessons?.find(lesson => lesson.uid === lessonId);
+    const lesson = section.lessons?.find(lesson => lesson.uid === lessonId);
+    return { section, lesson };
   };
 
   if (type === 'completed_lesson') {
-    const lesson = findLesson(outline, entity_id);
+    const { section, lesson } = findLesson(outline, entity_id);
+    const sectionIndex = outline.findIndex(s => s.uid === section?.uid);
+    const lessonIndex = section?.lessons?.findIndex(l => l.uid === lesson?.uid) ?? -1;
 
     return {
       type: 'lesson',
-      title: lesson?.title || 'Unknown Lesson',
+      lesson: {
+        title: lesson?.title || 'Unknown Lesson',
+        index: lessonIndex >= 0 ? lessonIndex + 1 : undefined,
+      },
+      section: {
+        title: section?.title || 'Unknown Section',
+        index: sectionIndex >= 0 ? sectionIndex + 1 : undefined,
+      },
     };
   }
 
   if (type === 'completed_section') {
     const section = outline.find(section => section.uid === entity_id);
+    const sectionIndex = outline.findIndex(s => s.uid === entity_id);
 
     return {
       type: 'section',
-      title: section?.title || 'Unknown Section',
+      section: {
+        title: section?.title || 'Unknown Section',
+        index: sectionIndex >= 0 ? sectionIndex + 1 : undefined,
+      },
     };
   }
 
