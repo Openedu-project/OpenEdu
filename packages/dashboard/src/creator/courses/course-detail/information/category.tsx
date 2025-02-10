@@ -5,8 +5,10 @@ import type { IBlogFormType } from '@oe/api/schemas/blogSchema';
 import type { ICategoryTree } from '@oe/api/types/categories';
 import { SelectTree } from '@oe/ui/components/select-tree';
 import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
+import { useTranslations } from 'next-intl';
 
 export default function Category() {
+  const tCourses = useTranslations('courses');
   const { organizationByDomain } = useGetOrganizationByDomain();
   const { categoriesTree } = useCategoriesTree({
     org_id: organizationByDomain?.id ?? '',
@@ -18,9 +20,10 @@ export default function Category() {
       label={
         <div className="flex flex-col gap-1">
           <span className="font-medium text-lg">
-            Category <span className="text-red-500">*</span>
+            {tCourses('information.categoryTitle')}
+            <span className="text-red-500">*</span>
           </span>
-          <span className="text-muted-foreground text-xs">The category is used to categorize the course.</span>
+          <span className="text-muted-foreground text-xs">{tCourses('information.categoryDescription')}</span>
         </div>
       }
       className="rounded-lg bg-background p-4 shadow-sm"
@@ -28,8 +31,8 @@ export default function Category() {
     >
       <SelectTree<ICategoryTree, NonNullable<IBlogFormType['category_ids']>[number]>
         data={categoriesTree ?? []}
-        placeholder="Select category"
-        searchPlaceholder="Search category"
+        placeholder={tCourses('information.categoryPlaceholder')}
+        searchPlaceholder={tCourses('information.categorySearchPlaceholder')}
         getLabel={node => node.name}
         getValue={node => ({ id: node.id, name: node.name })}
         checkable

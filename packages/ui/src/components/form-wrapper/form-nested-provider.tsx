@@ -20,7 +20,6 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
   children,
   defaultTab,
   scrollOptions,
-  className,
   onSubmit,
   onError,
   onChange,
@@ -235,7 +234,7 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
         validateForms,
       }}
     >
-      <div className={className}>{children}</div>
+      {children}
     </FormContext.Provider>
   );
 }

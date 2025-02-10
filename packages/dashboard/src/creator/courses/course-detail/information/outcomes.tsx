@@ -4,35 +4,36 @@ import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
 import { Input } from '@oe/ui/shadcn/input';
 import { PlusIcon } from 'lucide-react';
 import { TrashIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 export default function Outcomes() {
+  const tCourses = useTranslations('courses');
+
   const { control } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'achievements',
+    name: 'props.achievements',
   });
 
   return (
     <FormFieldWithLabel
-      name="achievements"
+      name="props.achievements"
       label={
         <>
           <div className="flex flex-col gap-1">
-            <span className="font-medium text-lg">Learner Outcome</span>
-            <span className="text-muted-foreground text-xs">
-              Kết quả học tập của người học, bạn có thể thêm nhiều kết quả học tập khác nhau
-            </span>
+            <span className="font-medium text-lg">{tCourses('information.outcomesTitle')}</span>
+            <span className="text-muted-foreground text-xs">{tCourses('information.outcomesDescription')}</span>
           </div>
           <Button
             type="button"
             variant="outline"
             size="sm"
-            onClick={() => append({ description: '' })}
+            onClick={() => append('')}
             className="flex items-center gap-2 border-primary text-primary hover:text-primary/90"
           >
             <PlusIcon className="h-4 w-4" />
-            Add Outcome
+            {tCourses('information.outcomesAdd')}
           </Button>
         </>
       }
@@ -42,8 +43,8 @@ export default function Outcomes() {
         <div className="space-y-2">
           {fields.map((field, index) => (
             <div key={field.id} className="flex gap-2">
-              <FormFieldWithLabel name={`outcomes.${index}.description`} className="flex-1">
-                <Input placeholder="Outcome" />
+              <FormFieldWithLabel name={`props.achievements.${index}`} className="flex-1">
+                <Input placeholder={tCourses('information.outcomesPlaceholder')} />
               </FormFieldWithLabel>
               <Button type="button" variant="ghost" size="icon" onClick={() => remove(index)}>
                 <TrashIcon className="h-4 w-4" />

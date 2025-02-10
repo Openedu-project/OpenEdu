@@ -19,11 +19,17 @@ const statusColorMap: Record<TCourseStatus | IAICourseStatus, BadgeProps['varian
   waiting: 'outline_warning',
 };
 
-export default function StatusBadge({ status }: { status?: string }) {
+export default function StatusBadge({
+  status,
+  className,
+}: {
+  status?: string;
+  className?: string;
+}) {
   const tStatus = useTranslations('courses.status');
 
   return status ? (
-    <Badge variant={statusColorMap[status as TCourseStatus | IAICourseStatus] || 'default'}>
+    <Badge variant={statusColorMap[status as TCourseStatus | IAICourseStatus] || 'default'} className={className}>
       {tStatus(status.toLowerCase())}
     </Badge>
   ) : null;

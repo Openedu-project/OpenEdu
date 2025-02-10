@@ -1,5 +1,6 @@
 'use client';
 import { useEstimatedTotalValue } from '@oe/api/hooks/useWallet';
+import { WITHDRAW_TYPE } from '@oe/api/utils/wallet';
 import { EstimatedAssetsIcon } from '@oe/assets/icons/wallets/estimated-assets';
 import { WALLET_ROUTES } from '@oe/core/utils/routes';
 import { ArrowUp, Clock4, CreditCard, MoreHorizontal } from 'lucide-react';
@@ -31,7 +32,11 @@ export const EstimatedTotalValue = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
               <DropdownMenuItem className="flex gap-2" asChild>
-                <Link href={WALLET_ROUTES.withdraw} variant="ghost" className="flex h-8 justify-start gap-2">
+                <Link
+                  href={`${WALLET_ROUTES.withdraw}?type=${WITHDRAW_TYPE.FIAT}`}
+                  variant="ghost"
+                  className="flex h-8 justify-start gap-2"
+                >
                   <ArrowUp className="h-4 w-4" />
                   <span>{t('withdraw')}</span>
                 </Link>

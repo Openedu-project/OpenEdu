@@ -36,7 +36,6 @@ export const Uploader = (props: UploaderProps) => {
     isShowInformation = true,
     renderTrigger,
     renderFileList,
-    onFileNameChange,
     onChange,
     ...restProps
   } = props;
@@ -48,6 +47,7 @@ export const Uploader = (props: UploaderProps) => {
   const trigger = useRef<UploadTriggerInstance>(null);
 
   useEffect(() => {
+    console.log('value', value);
     if (value) {
       setFiles(value.map(createFile));
     }
@@ -74,9 +74,9 @@ export const Uploader = (props: UploaderProps) => {
     (file: FileType, newName: string) => {
       const updated = files.map(f => (f.fileId === file.fileId ? { ...f, name: newName } : f));
       setFiles(updated);
-      onFileNameChange?.(file, newName);
+      onChange?.(updated as IFileResponse[]);
     },
-    [files, onFileNameChange]
+    [files, onChange]
   );
 
   const handlePreview = useCallback(

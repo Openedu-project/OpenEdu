@@ -13,6 +13,7 @@ import type { ISidebarProps } from './types';
 export const Sidebar: FC<ISidebarProps> = ({ items, maxDepth = 2, pathnamesNoSidebar = [], className, isDrawer }) => {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const noSidebar = pathnamesNoSidebar?.some(path => pathname.includes(path));
 
@@ -40,6 +41,7 @@ export const Sidebar: FC<ISidebarProps> = ({ items, maxDepth = 2, pathnamesNoSid
                   maxDepth={maxDepth}
                   pathname={pathname}
                   isCollapsed={isCollapsed}
+                  onNavigate={isDrawer ? () => setOpen(false) : undefined}
                 />
               );
             })}
@@ -62,9 +64,9 @@ export const Sidebar: FC<ISidebarProps> = ({ items, maxDepth = 2, pathnamesNoSid
   };
 
   return isDrawer ? (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="mr-2 md:hidden">
+        <Button variant="ghost" size="icon" className="mr-2 hover:bg-transparent hover:opacity-80 md:hidden">
           <Menu className="h-5 w-5 text-primary-foreground" />
         </Button>
       </SheetTrigger>

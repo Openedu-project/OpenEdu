@@ -1,143 +1,20 @@
 'use client';
-import { useGetCourseById, useGetSegments } from '@oe/api/hooks/useCourse';
-import type { ICourse } from '@oe/api/types/course/course';
-import type { ISegment } from '@oe/api/types/course/segment';
-import { z } from '@oe/api/utils/zod';
-import Collaborators from '@oe/assets/icons/collaborators';
-import MedalStar from '@oe/assets/icons/medal-star';
-import Trigger from '@oe/assets/icons/trigger';
 import { CREATOR_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
 import { DashboardHeaderCard } from '@oe/ui/common/layout';
-import { Link, usePathname } from '@oe/ui/common/navigation';
-import { NavigationDialog } from '@oe/ui/components/dialog';
-import { FormNestedWrapper, SubmitFormsButton, useFormContext } from '@oe/ui/components/form-wrapper';
+// import { NavigationDialog } from "@oe/ui/components/dialog";
+// import { useFormContext } from "@oe/ui/components/form-wrapper";
 import { Badge } from '@oe/ui/shadcn/badge';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
-import { cn } from '@oe/ui/utils/cn';
-import { BookOpen, DollarSign, History, Settings, SquareUserRound } from 'lucide-react';
-import { useParams } from 'next/navigation';
-import { type ReactNode, useMemo } from 'react';
-import { isCourseInformationTabValid, isCourseOutlineTabValid } from '../_utils/validation';
-
-type CourseTab = {
-  id: string;
-  label: string;
-  icon: ReactNode;
-  href: string;
-  required: boolean;
-  disabled?: boolean;
-};
-
-const courseNameSchema = z.object({
-  name: z.string().min(1, { message: 'Name is required' }),
-});
+import { useCourse } from '../_hooks/useCourse';
+import { useSegments } from '../_hooks/useSegments';
+import CourseNameForm from './course-name-form';
+import CourseTabs from './course-tabs';
 
 export function CourseDetailHeader() {
-  const pathname = usePathname();
-  const { courseId } = useParams<{ courseId: string }>();
-  const { course } = useGetCourseById(courseId);
-  const { segments } = useGetSegments({
-    course_id: courseId,
-  });
-  const { hasUnsavedChanges } = useFormContext();
-  // const router = useRouter();
-
-  const courseTabs: CourseTab[] = useMemo(() => {
-    return [
-      {
-        id: 'information',
-        label: 'General Info',
-        icon: <Settings width={16} height={16} />,
-        href: CREATOR_ROUTES.courseSettingUp,
-        required: true,
-      },
-      {
-        id: 'outline',
-        label: 'Course Outline',
-        icon: <BookOpen width={16} height={16} />,
-        href: CREATOR_ROUTES.courseOutline,
-        required: true,
-        disabled: !isCourseInformationTabValid(course as ICourse),
-      },
-      {
-        id: 'price',
-        label: 'Price Configuration',
-        icon: <DollarSign width={16} height={16} />,
-        href: CREATOR_ROUTES.coursePrice,
-        required: true,
-        disabled: !isCourseOutlineTabValid(segments as ISegment[]),
-      },
-      {
-        id: 'certificate',
-        label: 'Certificate',
-        icon: <MedalStar width={16} height={16} />,
-        href: CREATOR_ROUTES.courseCertificate,
-        required: false,
-      },
-      {
-        id: 'trigger',
-        label: 'Trigger',
-        icon: <Trigger width={16} height={16} />,
-        href: CREATOR_ROUTES.courseTriggerForm,
-        required: false,
-      },
-      {
-        id: 'collaborators',
-        label: 'Collaborators',
-        icon: <Collaborators width={16} height={16} />,
-        href: CREATOR_ROUTES.courseCollaborators,
-        required: false,
-      },
-      {
-        id: 'learners',
-        label: 'Learners',
-        icon: <SquareUserRound width={16} height={16} />,
-        href: CREATOR_ROUTES.courseLearners,
-        required: false,
-      },
-      {
-        id: 'history',
-        label: 'History',
-        icon: <History width={16} height={16} />,
-        href: CREATOR_ROUTES.courseHistory,
-        required: false,
-      },
-    ];
-  }, [course, segments]);
-
-  // Tìm current tab và next tab
-  const currentTab = courseTabs.find(tab => pathname.includes(tab.href.replace(':courseId', courseId)));
-  const currentTabIndex = currentTab ? courseTabs.indexOf(currentTab) : -1;
-  // const nextTab = courseTabs[currentTabIndex + 1];
-
-  // Kiểm tra xem có phải là tab required cuối cùng không
-  const isLastRequiredTab = currentTab?.required && !courseTabs.slice(currentTabIndex + 1).some(tab => tab.required);
-
-  // const handleNext = async () => {
-  //   const isValid = await validateForms(
-  //     ["course-name", activeFormId].filter(Boolean) as string[]
-  //   );
-
-  //   console.log("activeFormId", activeFormId, isValid, currentTab);
-  //   if (isValid) {
-  //     // if (currentTab) {
-  //     //   // onValidStep(currentTab.id);
-  //     // }
-
-  //     // if (isLastRequiredTab) {
-  //     //   // TODO: Thêm logic publish course
-  //     //   console.log("Publish course");
-  //     // } else if (nextTab) {
-  //     //   const nextUrl = buildUrl({
-  //     //     endpoint: nextTab.href,
-  //     //     params: { courseId: courseId },
-  //     //   });
-  //     //   router.push(nextUrl);
-  //     // }
-  //   }
-  // };
+  // const { courseId } = useParams<{ courseId: string }>();
+  const { course } = useCourse();
+  const { segments } = useSegments();
+  // const { course } = useGetCourseOutline(courseId);
+  // const { hasUnsavedChanges } = useFormContext();
 
   return (
     <DashboardHeaderCard
@@ -145,75 +22,19 @@ export function CourseDetailHeader() {
       className="mb-0 flex flex-col gap-2 pb-0"
     >
       <div className="flex items-center justify-between gap-4">
-        <FormNestedWrapper
-          id="course-name"
-          schema={courseNameSchema}
-          useFormProps={{
-            defaultValues: course?.name
-              ? {
-                  name: course?.name,
-                }
-              : undefined,
-          }}
-          className="flex-1"
-        >
-          {({ loading, form }) => {
-            const courseName = form.watch('name') || 'Course Detail';
-
-            return (
-              <>
-                <DashboardHeaderCard.UpdateBreadcrumb index={1} label={courseName} />
-
-                <FormFieldWithLabel name="name">
-                  <Input
-                    disabled={loading}
-                    autoFocus
-                    className="mb-2 h-8 rounded-none border-0 border-b-2 px-0 pt-0 text-2xl focus:border-primary focus:border-b-2 focus-visible:ring-0"
-                  />
-                </FormFieldWithLabel>
-              </>
-            );
-          }}
-        </FormNestedWrapper>
-        {/* <h1 className="text-2xl">{course?.name}</h1> */}
+        <CourseNameForm />
         <div className="flex items-center gap-2">
           <Badge variant="outline_primary">v{course?.version}.0</Badge>
-          <SubmitFormsButton size="xs">{isLastRequiredTab ? 'Publish' : 'Save & Next'}</SubmitFormsButton>
+          {/* <Button size="xs">Next</Button> */}
+          {/* <SubmitFormsButton size="xs">Save & Next</SubmitFormsButton> */}
         </div>
       </div>
 
-      <div className="scrollbar overflow-x-auto">
-        <div className="flex min-w-max items-center gap-2 pb-2">
-          {courseTabs.map(tab => {
-            const tabUrl = buildUrl({
-              endpoint: tab.href,
-              params: { courseId },
-            });
-            const isActive = pathname === tabUrl;
-
-            return (
-              <Link
-                key={tab.id}
-                href={tabUrl}
-                variant="ghost"
-                size="xs"
-                className={cn(
-                  'relative gap-2',
-                  isActive &&
-                    "after:-bottom-2 border border-primary text-primary after:absolute after:h-0.5 after:w-full after:bg-primary/80 after:content-[''] hover:bg-primary/20 hover:text-primary",
-                  tab.disabled && 'pointer-events-none opacity-50'
-                )}
-                disabled={tab.disabled}
-              >
-                {tab.icon}
-                {tab.label}
-                {tab.required && <span className="text-red-500">*</span>}
-              </Link>
-            );
-          })}
-        </div>
-      </div>
-      <NavigationDialog isEnabled={hasUnsavedChanges} hasUnsavedChanges={hasUnsavedChanges} />
+      <CourseTabs segments={segments} />
+      {/* <NavigationDialog
+        isEnabled={hasUnsavedChanges}
+        hasUnsavedChanges={hasUnsavedChanges}
+      /> */}
     </DashboardHeaderCard>
   );
 }

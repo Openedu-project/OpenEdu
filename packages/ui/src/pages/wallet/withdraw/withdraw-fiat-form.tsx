@@ -43,7 +43,7 @@ export const WithdrawFiatForm = () => {
         payload: data,
       });
       await mutateWallets();
-      toast.success(t('wallets.withdrawPage.form.success'));
+      toast.success(t('wallets.withdrawPage.form.requestSuccess'));
       form.reset();
     } catch (error) {
       toast.error(tError((error as HTTPError).message));
@@ -57,6 +57,9 @@ export const WithdrawFiatForm = () => {
         const currency = watch('currency');
         const locale = findLocaleFromCurrency(currency);
         const availableBalance = Number(wallets?.find(wallet => wallet.currency === currency)?.balance || '0');
+
+        form.setValue('availableBalance', availableBalance);
+
         return (
           <>
             <FormFieldWithLabel
@@ -66,7 +69,11 @@ export const WithdrawFiatForm = () => {
               render={({ field }) => (
                 <Selectbox
                   value={field.value}
-                  onChange={field.onChange}
+                  onChange={value => {
+                    field.onChange(value);
+                    form.setValue('amount', '');
+                    // form.setValue("availableBalance", availableBalance);
+                  }}
                   options={Object.values(FIAT_CURRENCIES).map(currency => ({
                     label: currency.value,
                     value: currency.value,
@@ -81,7 +88,12 @@ export const WithdrawFiatForm = () => {
                 label={t('withdrawPage.form.bankAccount')}
                 render={({ field }) => (
                   <Selectbox
-                    {...field}
+                    value={field.value}
+                    onChange={value => {
+                      field.onChange(value);
+                      form.setValue('amount', '');
+                      // form.setValue("availableBalance", availableBalance);
+                    }}
                     placeholder={t('withdrawPage.form.selectBankAccount')}
                     options={
                       bankAccounts?.results?.map(bankAccount => ({
@@ -90,6 +102,10 @@ export const WithdrawFiatForm = () => {
                         id: bankAccount.id,
                       })) ?? []
                     }
+                    displayValue={value => {
+                      const bankAccount = bankAccounts?.results?.find(bankAccount => bankAccount.id === value);
+                      return `${bankAccount?.value.bank_name} - ${bankAccount?.value.account_number}`;
+                    }}
                   />
                 )}
               />
@@ -121,6 +137,21 @@ export const WithdrawFiatForm = () => {
                       {t('withdrawPage.button.max')}
                     </Button>
                   </div>
+                )}
+              />
+              <FormFieldWithLabel
+                name="availableBalance"
+                className="hidden"
+                render={({ field }) => (
+                  <InputCurrency
+                    id={field.name}
+                    value={field.value}
+                    onChange={field.onChange}
+                    className="w-full border-none focus-visible:ring-0"
+                    decimalsLimit={0}
+                    allowNegativeValue={false}
+                    locale={locale}
+                  />
                 )}
               />
               <p className="text-muted-foreground text-sm">

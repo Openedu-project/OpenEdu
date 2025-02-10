@@ -11,6 +11,7 @@ interface SpinnerProps {
   speed?: 'normal' | 'fast' | 'slow' | 'paused';
   size?: 'lg' | 'md' | 'sm' | 'xs';
   className?: string;
+  hasIcon?: boolean;
 }
 
 export function Spinner({
@@ -22,6 +23,7 @@ export function Spinner({
   speed = 'normal',
   size = 'sm',
   className,
+  hasIcon = true,
 }: SpinnerProps) {
   const containerClasses = cn(
     'flex items-center justify-center',
@@ -47,7 +49,7 @@ export function Spinner({
 
   return (
     <div className={containerClasses}>
-      <Loader2 className={loaderClasses} />
+      {hasIcon ? <Loader2 className={loaderClasses} /> : null}
       {content && <div className={vertical ? 'mt-2' : 'ml-2'}>{content}</div>}
     </div>
   );
