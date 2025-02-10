@@ -6,8 +6,9 @@ import type { AuthEventName } from '@oe/api/utils/auth';
 import type { HTTPError } from '@oe/api/utils/http-error';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useCallback } from 'react';
+import { toast } from 'sonner';
 import { mutate } from 'swr';
 import { SuccessDialog } from '#components/dialog';
 import { FormWrapper } from '#components/form-wrapper';
@@ -32,7 +33,6 @@ export function AuthConfirmForm({
   const tErrors = useTranslations('errors');
   const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
-  const [seconds, setSeconds] = useState(3);
   const router = useRouter();
 
   const handleSubmit = useCallback(
@@ -43,37 +43,14 @@ export function AuthConfirmForm({
       await loginAction({ email, password, next_path: nextPath });
       mutate(() => true, undefined, { revalidate: true });
       setOpen(true);
+      toast.success(tAuth('authConfirm.setPasswordSuccess'));
+      router.replace(nextPath);
     },
-    [event, token, email, nextPath]
+    [event, token, email, nextPath, router, tAuth]
   );
   const handleError = useCallback((error: unknown) => {
     setError((error as HTTPError).message);
   }, []);
-
-  useEffect(() => {
-    if (!open) {
-      return;
-    }
-    const interval = setInterval(() => {
-      setSeconds(prev => {
-        if (prev <= 0) {
-          clearInterval(interval);
-          setOpen(false);
-          router.replace(nextPath);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [open, router, nextPath]);
-
-  useEffect(() => {
-    if (open) {
-      setSeconds(3);
-    }
-  }, [open]);
 
   return (
     <>
@@ -99,7 +76,7 @@ export function AuthConfirmForm({
       </FormWrapper>
       <SuccessDialog
         title={tAuth('authConfirm.setPasswordSuccess')}
-        description={tAuth('authConfirm.setPasswordDescription', { seconds })}
+        description={tAuth('authConfirm.setPasswordDescription')}
         open={open}
         setOpen={setOpen}
       />

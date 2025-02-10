@@ -35,7 +35,12 @@ export async function AuthConfirmPage({ banner, themeName = 'academia' }: AuthCo
   }
 
   let needRedirect = false;
-  const decodedToken = base64ToJson(token);
+  let decodedToken: Record<string, string> | null = null;
+  try {
+    decodedToken = base64ToJson(token);
+  } catch {
+    decodedToken = null;
+  }
 
   if (event !== authEvents.setPassword && event !== authEvents.resetPassword) {
     try {
@@ -43,13 +48,13 @@ export async function AuthConfirmPage({ banner, themeName = 'academia' }: AuthCo
 
       if (event === authEvents.inviteCreatorBeforeAccept) {
         response = await postCreatorAcceptInvitationService(null, {
-          payload: { token: decodedToken.token },
+          payload: { token: decodedToken?.token ?? '' },
         });
       }
 
       if (event === authEvents.inviteUserBeforeAccept) {
         response = await postAcceptUserInvitationService(null, {
-          payload: { token: decodedToken.token },
+          payload: { token: decodedToken?.token ?? '' },
         });
       }
 
@@ -67,8 +72,8 @@ export async function AuthConfirmPage({ banner, themeName = 'academia' }: AuthCo
               <p className="text-muted-foreground text-sm">{tAuth('authConfirm.setPasswordDescription')}</p>
               <AuthConfirmForm
                 event={event}
-                token={decodedToken.token}
-                email={decodedToken.email}
+                token={decodedToken?.token ?? ''}
+                email={decodedToken?.email ?? ''}
                 nextPath={nextPath}
               />
             </>
@@ -76,7 +81,7 @@ export async function AuthConfirmPage({ banner, themeName = 'academia' }: AuthCo
         );
       }
       const me = await getMeServiceWithoutError();
-      if (me?.email === decodedToken.email) {
+      if (me?.email === decodedToken?.email) {
         needRedirect = true;
       } else {
         return (
@@ -127,7 +132,6 @@ export async function AuthConfirmPage({ banner, themeName = 'academia' }: AuthCo
   if (needRedirect) {
     redirect(nextPath);
   }
-
   return (
     <AuthLayout
       title={tAuth('authConfirm.setPasswordTitle')}
@@ -137,7 +141,12 @@ export async function AuthConfirmPage({ banner, themeName = 'academia' }: AuthCo
       }}
       slogan={tThemeAuth('authConfirm.slogan')}
     >
-      <AuthConfirmForm event={event} token={decodedToken.token} email={decodedToken.email} nextPath={nextPath} />
+      <AuthConfirmForm
+        event={event}
+        token={decodedToken?.token ?? ''}
+        email={decodedToken?.email ?? ''}
+        nextPath={nextPath}
+      />
     </AuthLayout>
   );
 }
