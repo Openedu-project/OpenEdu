@@ -1,18 +1,13 @@
-import type { IOrganization } from "@oe/api/types/organizations";
-// import AvailLogo from "@oe/assets/images/openedu-homepage/organizations/logo-avail.png";
-// import VBILogo from "@oe/assets/images/openedu-homepage/organizations/logo-vbi.png";
-// import OrgAvail from "@oe/assets/images/openedu-homepage/organizations/org-avail.png";
-// import OrgVbi from "@oe/assets/images/openedu-homepage/organizations/org-vbi.png";
+import { getFeaturedOrgs } from "@oe/api/services/featured-contents";
 import { Link } from "@oe/ui/common/navigation";
 import { Image } from "@oe/ui/components/image";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-export default function OrganizationSection({
-  organizations,
-}: {
-  organizations?: IOrganization[];
-}) {
-  const t = useTranslations("homePageLayout.organizationSection");
+export default async function OrganizationSection() {
+  const [t, organizations] = await Promise.all([
+    getTranslations("homePageLayout.organizationSection"),
+    getFeaturedOrgs(),
+  ]);
 
   return (
     <section className="py-5 lg:py-10">

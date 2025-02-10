@@ -1,3 +1,5 @@
+import { getOrgByDomainService } from '@oe/api/services/organizations';
+import { getCookie } from '@oe/core/utils/cookie';
 import type { IBlog } from '#types/blog';
 import type { ICourse } from '#types/course/course';
 import type {
@@ -134,4 +136,32 @@ export const updateFeaturedContent = async (
   const response = await postAPI<null, IFeaturedContentRequest>(endpointKey, payload, init);
 
   return !!(response.code === 200);
+};
+
+export const getFeaturedOrgs = async () => {
+  const domain = (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? '';
+  try {
+    const orgData = await getOrgByDomainService(undefined, { domain });
+
+    if (!orgData?.id) {
+      console.warn('No organization found for domain:', domain);
+      return [];
+    }
+
+    const featuredOrgs = await getFeaturedOrgServicesAtWebsite(undefined, {
+      params: { org_id: orgData?.id ?? '' },
+    });
+
+    const organizations = featuredOrgs?.reduce<IOrganization[]>((acc, item) => {
+      if (item?.entity) {
+        acc.push(item.entity);
+      }
+      return acc;
+    }, []);
+
+    return organizations ?? undefined;
+  } catch (error) {
+    console.error(error);
+    return undefined;
+  }
 };
