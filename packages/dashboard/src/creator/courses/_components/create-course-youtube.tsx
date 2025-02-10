@@ -20,6 +20,7 @@ export default function CreateCourseYoutubeModal({
   onSubmit: (data: ICreateYoutubeCourse) => Promise<void>;
 }) {
   const tCourses = useTranslations('courses');
+  const locale = getCookieClient(process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY);
   const localesCookie = getCookieClient(process.env.NEXT_PUBLIC_COOKIE_LOCALES_KEY);
   const locales = localesCookie ? JSON.parse(localesCookie) : [];
   const languageOptions: SelectboxOption[] = locales.map((key: LanguageCode) => ({
@@ -64,6 +65,7 @@ export default function CreateCourseYoutubeModal({
       onSubmit={onSubmit}
       onError={handleError}
       showSubmit
+      defaultValues={{ language: locale, type: 'youtube_playlist' }}
       buttons={[
         {
           label: tCourses('form.cancel'),
@@ -80,8 +82,13 @@ export default function CreateCourseYoutubeModal({
             <FormFieldWithLabel name="playlist_link" label={tCourses('form.playlistLink')} required>
               <Input />
             </FormFieldWithLabel>
-            <FormFieldWithLabel name="language" label={tCourses('form.language')} required>
-              <Selectbox options={languageOptions ?? []} />
+            <FormFieldWithLabel name="language" label={tCourses('form.language')}>
+              <Selectbox
+                options={languageOptions ?? []}
+                displayValue={value => languages[value as LanguageCode]}
+                value={locale}
+                disabled
+              />
             </FormFieldWithLabel>
             <FormFieldWithLabel
               name="summary_included"

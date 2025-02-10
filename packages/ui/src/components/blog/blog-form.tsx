@@ -6,6 +6,7 @@ import type { ICategoryTree } from '@oe/api/types/categories';
 import type { IHashtag } from '@oe/api/types/hashtag';
 import { API_ENDPOINT } from '@oe/api/utils/endpoints';
 import type { HTTPError } from '@oe/api/utils/http-error';
+import { getCookieClient } from '@oe/core/utils/cookie';
 import { marked } from '@oe/core/utils/marker';
 import { BLOG_ADMIN_ROUTES, BLOG_ROUTES } from '@oe/core/utils/routes';
 import { type LanguageCode, languages } from '@oe/i18n/languages';
@@ -105,9 +106,11 @@ export default function BlogForm({
 
   const hashtagsName = useMemo(() => hashtags.map(hashtag => hashtag.name), [hashtags]);
 
-  const defaultValues: IBlogFormType | undefined = useMemo(() => {
+  const defaultValues: IBlogFormType | { locale: string; is_ai_generated: boolean; content: '' } = useMemo(() => {
     if (!data) {
-      return undefined;
+      const locale = getCookieClient(process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY) ?? 'en';
+
+      return { locale, is_ai_generated: false, content: '' };
     }
 
     return {
@@ -183,17 +186,14 @@ export default function BlogForm({
       className={cn('grid grid-cols-1 gap-4 space-y-0 bg-background py-6 md:grid-cols-3 lg:grid-cols-4', className)}
       resetOnSuccess
       useFormProps={{
-        defaultValues: defaultValues ?? {
-          locale: 'en',
-          is_ai_generated: false,
-        },
+        defaultValues,
         mode: 'all',
       }}
     >
       {({ loading, form }) => (
         <>
           <div className={cn('col-span-full flex w-full flex-wrap justify-between gap-4 py-2')}>
-            <FormFieldWithLabel name="title" className="flex-1">
+            <FormFieldWithLabel name="title" className="flex-1" required>
               <Input
                 className="giant-iheading-semibold16 rounded-none border-0 border-b-2 p-2 focus:border-b-2 focus-visible:ring-0"
                 placeholder={`${tBlogs('nameOfArticle')}...`}
@@ -269,12 +269,14 @@ export default function BlogForm({
                 options={locales}
                 getOptionLabel={locale => languages[locale]}
                 getOptionValue={locale => locale}
+                triggerProps={{ disabled: true }}
               />
             </FormFieldWithLabel>
 
             <div className="flex flex-col gap-4">
               <p className="giant-iheading-semibold16 text-foreground">{tBlogs('thumbnail')}</p>
               <FormFieldWithLabel
+                required
                 label={tBlogs('image')}
                 name="thumbnail"
                 render={({ field }) => (
@@ -305,6 +307,7 @@ export default function BlogForm({
             </FormFieldWithLabel>
 
             <FormFieldWithLabel
+              required
               label={tBlogs('write')}
               name="content"
               className="rounded"
