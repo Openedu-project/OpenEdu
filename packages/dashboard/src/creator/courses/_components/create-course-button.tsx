@@ -1,6 +1,7 @@
 'use client';
 import type { ICreateBaseCourse, ICreateYoutubeCourse } from '@oe/api/schemas/courses/createCourseSchema';
 import { createAICourseService, createCourseService } from '@oe/api/services/course';
+import { API_ENDPOINT } from '@oe/api/utils/endpoints';
 import YoutubeIcon from '@oe/assets/icons/social-icon/youtube';
 import { CREATOR_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
@@ -12,6 +13,7 @@ import { useSocketStore } from '@oe/ui/store/socket';
 import { PlusIcon, SparklesIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import { useSWRConfig } from 'swr';
 import AIStatusModal, { type IAIStatus } from './ai-status-modal';
 import CreateCourseModal from './create-course-modal';
 import CreateCourseYoutubeModal from './create-course-youtube';
@@ -21,6 +23,7 @@ export default function CreateCourseButton() {
   const tAIStatus = useTranslations('aiStatusModal');
   const router = useRouter();
   const { mutate } = useTable();
+  const { mutate: globalMutate } = useSWRConfig();
 
   const [showBasicModal, setShowBasicModal] = useState(false);
   const [showYoutubeModal, setShowYoutubeModal] = useState(false);
@@ -58,6 +61,7 @@ export default function CreateCourseButton() {
       ...data,
       number_of_question: Number(data.number_of_question),
     });
+    globalMutate((key: string) => !!key?.includes(API_ENDPOINT.COURSES), undefined, { revalidate: false });
     await mutate?.();
     setAIStatus({ id: course.id, status: 'generating' });
     setOpenAIStatusModal(true);
@@ -73,6 +77,7 @@ export default function CreateCourseButton() {
         }
         setAIStatus({ ...AIStatus, status: AICourseStatusData?.data?.status as unknown as IAIStatus });
       }
+      globalMutate((key: string) => !!key?.includes(API_ENDPOINT.COURSES), undefined, { revalidate: false });
       void mutate?.();
       resetSocketData('ai_course_status');
     }

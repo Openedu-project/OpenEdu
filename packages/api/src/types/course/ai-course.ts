@@ -1,6 +1,6 @@
 import type { IFileResponse } from '@oe/api/types/file';
 
-export type IAICourseStatus = 'failed' | 'manual' | 'completed' | 'generating' | 'pending' | 'waiting';
+export type IAICourseStatus = 'failed' | 'manual' | 'completed' | 'generating' | 'pending' | 'waiting' | 'setting';
 
 type IThumbnailStype =
   | 'general'
