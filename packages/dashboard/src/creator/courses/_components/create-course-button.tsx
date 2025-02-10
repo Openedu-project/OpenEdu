@@ -8,19 +8,25 @@ import { useRouter } from '@oe/ui/common/navigation';
 import { ButtonDropdown } from '@oe/ui/components/button-dropdown';
 import { useTable } from '@oe/ui/components/table';
 import { toast } from '@oe/ui/shadcn/sonner';
+import { useSocketStore } from '@oe/ui/store/socket';
 import { PlusIcon, SparklesIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import AIStatusModal, { type IAIStatus } from './ai-status-modal';
 import CreateCourseModal from './create-course-modal';
 import CreateCourseYoutubeModal from './create-course-youtube';
 
 export default function CreateCourseButton() {
   const tCourses = useTranslations('courses');
+  const tAIStatus = useTranslations('aiStatusModal');
   const router = useRouter();
   const { mutate } = useTable();
 
   const [showBasicModal, setShowBasicModal] = useState(false);
   const [showYoutubeModal, setShowYoutubeModal] = useState(false);
+  const [AIStatus, setAIStatus] = useState<{ id: string; status: IAIStatus } | null>(null);
+  const [openAIStatusModal, setOpenAIStatusModal] = useState<boolean>(false);
+  const { AICourseStatusData, resetSocketData } = useSocketStore();
 
   const handleOptionSelect = (value: string) => {
     switch (value) {
@@ -50,17 +56,27 @@ export default function CreateCourseButton() {
   const handleYoutubeCourseSubmit = async (data: ICreateYoutubeCourse) => {
     const course = await createAICourseService(undefined, {
       ...data,
-      type: 'youtube_playlist',
+      number_of_question: Number(data.number_of_question),
     });
     await mutate?.();
+    setAIStatus({ id: course.id, status: 'generating' });
+    setOpenAIStatusModal(true);
     toast.success(tCourses('formValidation.createCourseSuccess'));
-    router.push(
-      buildUrl({
-        endpoint: CREATOR_ROUTES.courseSettingUp,
-        params: { courseId: course.id },
-      })
-    );
   };
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (AICourseStatusData?.data) {
+      if (AIStatus && AICourseStatusData?.data?.course_id === AIStatus.id) {
+        if (AICourseStatusData?.data?.status.toLowerCase() === 'completed') {
+          setOpenAIStatusModal(false);
+        }
+        setAIStatus({ ...AIStatus, status: AICourseStatusData?.data?.status as unknown as IAIStatus });
+      }
+      void mutate?.();
+      resetSocketData('ai_course_status');
+    }
+  }, [AICourseStatusData, AIStatus]);
 
   return (
     <>
@@ -100,6 +116,7 @@ export default function CreateCourseButton() {
         onClose={() => setShowYoutubeModal(false)}
         onSubmit={handleYoutubeCourseSubmit}
       />
+      <AIStatusModal open={openAIStatusModal} status={AIStatus?.status} title={tAIStatus('genYoutubeTitle')} />
     </>
   );
 }

@@ -204,7 +204,9 @@
     /* negative */
     --negative-50: 356 100% 93%; /* #FFDADD */
     --negative-500: 355 100% 49%; /* #FA0013 */
+    --negative-600: 357, 100%, 42%; /* #D50010 */
 
+    
     /* warning */
     --warning-50: 47 100% 93%; /* #FFF6DC */
     --warning-600: 43 100% 43%; /* #DCA200 */

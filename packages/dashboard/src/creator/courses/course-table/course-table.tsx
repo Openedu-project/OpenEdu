@@ -14,6 +14,7 @@ import CoursePrice from './course-price';
 
 export default function Courses() {
   const tCourses = useTranslations('courses');
+
   const columns: ColumnDef<ICourse>[] = useMemo(() => {
     return [
       {
