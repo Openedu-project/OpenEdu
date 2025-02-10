@@ -5,6 +5,7 @@ import { CREATOR_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
 import { useRouter } from '@oe/ui/common/navigation';
 import { DndSortable, DndSortableDragButton } from '@oe/ui/components/dnd-sortable';
+import { StatusBadge } from '@oe/ui/components/status-badge';
 import { Button } from '@oe/ui/shadcn/button';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { cn } from '@oe/ui/utils/cn';
@@ -13,7 +14,6 @@ import { PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
-import StatusBadge from '../../../_components/status-badge';
 import { useOutlineStore } from '../../_store/useOutlineStore';
 
 export const SectionsDrawer = () => {
