@@ -73,7 +73,7 @@ const AvailHomepageSolution: SectionComponent<"homepage", "availSolution"> = ({
         className="h-full w-full object-cover"
         height="55"
         width={line?.width ?? 1000}
-        border="border-none"
+        wrapClassNames="border-none"
       />
 
       <div className="bg-accent/80 py-12 md:pb-16 lg:py-20">

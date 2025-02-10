@@ -16,7 +16,7 @@ export interface ExtendedImageProps extends Omit<ImageProps, "src"> {
   containerHeight?: number | string;
   align?: "start" | "center" | "end";
   noContainer?: boolean;
-  border?: string;
+  wrapClassNames?: string;
 }
 
 const DEFAULT_SIZES =
@@ -72,7 +72,7 @@ export function Image({
   externalSrc,
   align = "center",
   noContainer = false,
-  border = "",
+  wrapClassNames = "",
   ...props
 }: ExtendedImageProps) {
   const imageUrl = getImageUrl(src) || defaultImage;
@@ -116,7 +116,7 @@ export function Image({
         align === "center" && "justify-center",
         align === "end" && "justify-end",
         align === "start" && "justify-start",
-        border
+        wrapClassNames
       )}
     >
       {fill ||
