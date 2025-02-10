@@ -26,6 +26,35 @@ const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
   const { dataMe } = useGetMe();
   const { dataLearningProgress } = useGetLearningProgress({ id: dataMe && courseOutline ? courseOutline?.slug : '' });
 
+  // const formResults = useMemo(() => {
+  //   if (!courseOutline?.form_relations) {
+  //     return [];
+  //   }
+
+  //   console.log(courseOutline?.form_relations, 'form_relations');
+
+  //   return courseOutline.form_relations
+  //     .filter(
+  //       relation =>
+  //         relation.enabled && relation.type === 'notification' && relation?.confirmation_settings?.display_on_detail
+  //     )
+  //     .map(relation => {
+  //       const formInfo = getFormInfo(relation.start_when, courseOutline.outline);
+
+  //       console.log(formInfo, 'formInfo')
+
+  //       return {
+  //         start_when: relation.start_when,
+  //         button_link:
+  //           cleanUrl(
+  //             relation.confirmation_settings?.buttons?.find(button => button?.type?.includes('http'))?.type ?? ''
+  //           ) || null,
+  //         segment_type: formInfo.type,
+  //         segment_name: formInfo.title,
+  //       };
+  //     });
+  // }, [courseOutline?.form_relations, courseOutline?.outline]);
+
   const formResults = useMemo(() => {
     if (!courseOutline?.form_relations) {
       return [];
@@ -46,7 +75,12 @@ const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
               relation.confirmation_settings?.buttons?.find(button => button?.type?.includes('http'))?.type ?? ''
             ) || null,
           segment_type: formInfo.type,
-          segment_name: formInfo.title,
+          segment_name:
+            formInfo.type === 'lesson'
+              ? `${formInfo?.lesson?.title} of section ${formInfo?.section?.index}`
+              : formInfo.type === 'section'
+                ? `section ${formInfo?.section?.index}`
+                : 'Unknown',
         };
       });
   }, [courseOutline?.form_relations, courseOutline?.outline]);
