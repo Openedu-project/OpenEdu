@@ -1,18 +1,12 @@
 import { getBlogDraftContent } from '@oe/api/services/blog';
-import { getCategoriesTreeService } from '@oe/api/services/categories';
-import { getHashtagService } from '@oe/api/services/hashtag';
-import { getI18nConfigServer } from '@oe/api/services/i18n';
-import { getOrgByDomainService } from '@oe/api/services/organizations';
-import BannerBg from '@oe/assets/images/blog-creation-bg.png';
-import OpenEdu from '@oe/assets/images/openedu.png';
 import WhaleError from '@oe/assets/images/whale/whale-error.png';
-import { getCookie } from '@oe/core/utils/cookie';
 import { BLOG_ADMIN_ROUTES } from '@oe/core/utils/routes';
 import { BlogForm, type IFormAction } from '@oe/ui/components/blog';
 import { Breadcrumb } from '@oe/ui/components/breadcrumb';
 import { Image } from '@oe/ui/components/image';
 import { cn } from '@oe/ui/utils/cn';
 import { getTranslations } from 'next-intl/server';
+import { OrgAvatar } from '../_components/org-avatar';
 
 interface ICreationProps {
   className?: string;
@@ -21,29 +15,6 @@ interface ICreationProps {
   id?: string;
   prevUrl?: string;
 }
-
-const getHastTag = async () => {
-  try {
-    const res = await getHashtagService();
-    return res.results;
-  } catch (error) {
-    console.error(error);
-
-    return [];
-  }
-};
-
-const getCategories = async () => {
-  try {
-    return await getCategoriesTreeService(undefined, {
-      queryParams: { active: true, type: 'blog' },
-    });
-  } catch (error) {
-    console.error(error);
-
-    return [];
-  }
-};
 
 const getBlogContent = async (id?: string) => {
   try {
@@ -60,21 +31,11 @@ const getBlogContent = async (id?: string) => {
 };
 
 export default async function OrgBlogCreation({ className, aiButton, id, action, prevUrl }: ICreationProps) {
-  const domain = (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? '';
-
-  const [tError, tBlogNavigation, tBlogForm, hashtags, categories, i18nConfigData, blogData, orgData] =
-    await Promise.all([
-      getTranslations('errors'),
-      getTranslations('blogNavigation'),
-      getTranslations('blogForm'),
-      getHastTag(),
-      getCategories(),
-      getI18nConfigServer(),
-      getBlogContent(id),
-      getOrgByDomainService(undefined, {
-        domain,
-      }),
-    ]);
+  const [tError, tBlogNavigation, blogData] = await Promise.all([
+    getTranslations('errors'),
+    getTranslations('blogNavigation'),
+    getBlogContent(id),
+  ]);
 
   if (blogData instanceof Error) {
     return (
@@ -98,52 +59,11 @@ export default async function OrgBlogCreation({ className, aiButton, id, action,
 
   return (
     <div className="bg-background p-4">
-      <div className={cn('relative mb-6 min-h-[120px] w-full p-6', className)}>
-        <Image
-          src={BannerBg.src}
-          alt="creation-banner"
-          noContainer
-          fill
-          priority
-          sizes="100vw"
-          style={{ objectFit: 'cover' }}
-          className="h-full w-full rounded-xl"
-        />
-        <div className="flex flex-col flex-wrap items-center gap-4 md:flex-row">
-          <div>
-            <Image
-              src={orgData?.thumbnail?.url ?? OpenEdu.src}
-              alt="creation-banner"
-              aspectRatio="1:1"
-              fill
-              sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"
-              style={{ objectFit: 'contain' }}
-              className="h-[80px] w-[80px] rounded-full border bg-background"
-              containerHeight="auto"
-            />
-          </div>
-          <p className="giant-iheading-bold20 lg:giant-iheading-bold40 z-10 text-foreground">
-            {tBlogForm.rich('ownerBlog', {
-              name: orgData?.name ?? 'Organization',
-            })}
-          </p>
-        </div>
-      </div>
+      <OrgAvatar />
 
       <Breadcrumb items={breakcrumbItems} />
 
-      <BlogForm
-        className={cn('p-4', className)}
-        blogType="org"
-        aiButton={aiButton}
-        hashtags={hashtags}
-        categories={categories}
-        locales={i18nConfigData?.[0]?.value?.locales}
-        data={blogData}
-        action={action}
-      />
+      <BlogForm className={cn('p-4', className)} blogType="org" aiButton={aiButton} data={blogData} action={action} />
     </div>
   );
 }
