@@ -51,19 +51,29 @@ export function AuthConfirmForm({
   }, []);
 
   useEffect(() => {
+    if (!open) {
+      return;
+    }
     const interval = setInterval(() => {
-      if (seconds >= 0) {
-        setSeconds(seconds - 1);
-
-        if (seconds === 0) {
+      setSeconds(prev => {
+        if (prev <= 0) {
           clearInterval(interval);
           setOpen(false);
           router.replace(nextPath);
+          return 0;
         }
-      }
+        return prev - 1;
+      });
     }, 1000);
+
     return () => clearInterval(interval);
-  }, [seconds, router, nextPath]);
+  }, [open, router, nextPath]);
+
+  useEffect(() => {
+    if (open) {
+      setSeconds(3);
+    }
+  }, [open]);
 
   return (
     <>
