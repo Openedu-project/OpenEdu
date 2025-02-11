@@ -106,7 +106,7 @@ export const Uploader = (props: UploaderProps) => {
   );
 
   const handleChange = useCallback(
-    (inputFiles: FileList | File[]) => {
+    async (inputFiles: FileList | File[]) => {
       let newFiles: FileType[] = Array.from(inputFiles)
         .filter(file => !isDuplicateFile(file, files.map(f => f.originFile).filter(Boolean) as File[]))
         .map(file => ({
@@ -133,7 +133,7 @@ export const Uploader = (props: UploaderProps) => {
 
       for (const file of nextFileList) {
         if (file.status === 'inited') {
-          uploadFile(file, nextFileList);
+          await uploadFile(file, nextFileList);
         }
       }
     },
