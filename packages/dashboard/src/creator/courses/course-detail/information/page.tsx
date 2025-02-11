@@ -1,7 +1,7 @@
 'use client';
 import { fileResponseScheme } from '@oe/api/types/file';
 import { z } from '@oe/api/utils/zod';
-import { FormNestedWrapper } from '@oe/ui/components/form-wrapper';
+import { FormWrapper } from '@oe/ui/components/form-wrapper';
 import { useCourse } from '../_hooks/useCourse';
 import { COURSE_DETAIL_FORM_IDS } from '../_utils/constants';
 import Category from './category';
@@ -78,10 +78,9 @@ export default function CourseDetailInformationPage() {
 
   return (
     <div className="scrollbar mx-auto h-full max-w-[900px] overflow-auto px-1 py-4">
-      <FormNestedWrapper
+      <FormWrapper
         id={COURSE_DETAIL_FORM_IDS.information}
         schema={courseFormSchema}
-        tabId="information"
         useFormProps={{
           defaultValues: course as z.infer<typeof courseFormSchema>,
         }}
@@ -94,7 +93,7 @@ export default function CourseDetailInformationPage() {
         <Category />
         <Level />
         <SupportChannels />
-      </FormNestedWrapper>
+      </FormWrapper>
     </div>
   );
 }
