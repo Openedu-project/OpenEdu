@@ -47,7 +47,6 @@ export const Uploader = (props: UploaderProps) => {
   const trigger = useRef<UploadTriggerInstance>(null);
 
   useEffect(() => {
-    console.log('value', value);
     if (value) {
       setFiles(value.map(createFile));
     }
