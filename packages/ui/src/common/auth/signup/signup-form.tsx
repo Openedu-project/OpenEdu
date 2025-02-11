@@ -40,7 +40,6 @@ export default function SignUpForm({ tLoginTitle, tSignupTitle }: SignUpFormProp
   const nextPath = decodeURIComponent(fullSearchString.slice(fullSearchString.indexOf('next=') + 5) || '/');
 
   const handleError = useCallback((error: unknown) => {
-    console.error('------------------------------222222222222', error, (error as HTTPError)?.message);
     setError((error as HTTPError).message);
   }, []);
 

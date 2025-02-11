@@ -25,13 +25,13 @@ export const emailSchema = z
 export const passwordSchema = z
   .string()
   .min(8, {
-    message: 'formValidation.too_small.string.inclusive--type:password--minimum:8',
+    message: 'themePage.auth.errors.passwordInvalid--minimum:8--maximum:20',
   })
   .max(20, {
-    message: 'formValidation.too_big.string.inclusive--type:password--maximum:20',
+    message: 'themePage.auth.errors.passwordInvalid--minimum:8--maximum:20',
   })
   .refine(val => PASSWORD_REGEX.test(val), {
-    message: 'themePage.auth.errors.passwordInvalid--minimum:8',
+    message: 'themePage.auth.errors.passwordInvalid--minimum:8--maximum:20',
   });
 
 export const passwordConfirmSchema = z.object({
