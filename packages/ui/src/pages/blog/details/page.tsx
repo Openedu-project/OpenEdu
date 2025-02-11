@@ -1,6 +1,6 @@
 import { getBlogContent, getBlogsByCategoryService } from '@oe/api/services/blog';
+import { BlogDetails } from '#components/blog';
 import { BlogCarousel } from '../_components/blog-carousel';
-import { BlogDetails } from '../_components/blog-details';
 
 const getRelativeBlog = async (id?: string) => {
   if (!id) {

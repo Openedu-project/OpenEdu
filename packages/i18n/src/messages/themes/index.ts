@@ -1,4 +1,5 @@
 import { academiaMessage } from './academia';
+import { authMessages } from './auth';
 import { availMessage } from './avail';
 import { headerMessages } from './header';
 import { themeNotiMessages } from './noti';
@@ -26,6 +27,7 @@ export const themeMessages = {
     ...scholarMessage,
     ...vbiMessage,
     ...availMessage,
+    ...authMessages,
   },
   ...themeUIMessage,
   ...themeNotiMessages,

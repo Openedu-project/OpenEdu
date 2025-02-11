@@ -1,13 +1,13 @@
-import { Tooltip, TooltipProvider } from '#shadcn/tooltip';
-
+import type { TApprovalStatus } from '@oe/api/types/approvals';
 import type { IAICourseStatus } from '@oe/api/types/course/ai-course';
 import type { TCourseStatus } from '@oe/api/types/course/basic';
 import { Badge, type BadgeProps } from '@oe/ui/shadcn/badge';
 import { Loader, RotateCcw } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
+import { Tooltip, TooltipProvider } from '#shadcn/tooltip';
 
-export type TStatus = TCourseStatus | IAICourseStatus;
+export type TStatus = TCourseStatus | IAICourseStatus | TApprovalStatus;
 
 const statusColorMap: Record<TStatus, BadgeProps['variant']> = {
   draft: 'muted',
@@ -24,6 +24,9 @@ const statusColorMap: Record<TStatus, BadgeProps['variant']> = {
   pending: 'outline_warning',
   waiting: 'outline_warning',
   setting: 'warning',
+  new: 'muted',
+  approved: 'success',
+  rejected: 'destructive',
 };
 
 const statusIcon: Record<TStatus, ReactNode | null> = {
@@ -37,6 +40,9 @@ const statusIcon: Record<TStatus, ReactNode | null> = {
   failed: null,
   manual: null,
   completed: null,
+  new: null,
+  approved: null,
+  rejected: null,
   generating: <Loader className="mr-1 h-4 w-4 animate-spin" />,
   pending: <Loader className="mr-1 h-4 w-4 animate-spin" />,
   waiting: <Loader className="mr-1 h-4 w-4 animate-spin" />,

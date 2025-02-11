@@ -1,8 +1,8 @@
 "use client";
 import { useGetPopularCoursesAtWebsite } from "@oe/api/hooks/useFeaturedContent";
-import { useGetOrganizationByDomain } from "@oe/api/hooks/useOrganization";
 import type { ICourse } from "@oe/api/types/course/course";
 import type { IFeaturedContent } from "@oe/api/types/featured-contents";
+import { getAPIReferrerAndOriginClient } from "@oe/api/utils/referrer-origin";
 import { CourseCard } from "@oe/ui/components/course-card";
 import { cn } from "@oe/ui/utils/cn";
 import { useTranslations } from "next-intl";
@@ -19,14 +19,16 @@ const AvailHomepageCoursesClient: SectionComponent<
   "availCourses"
 > = ({ className, props }) => {
   const t = useTranslations("themePage.avail.homepage.availCourses");
-  const { organizationByDomain } = useGetOrganizationByDomain();
+  const { host } = getAPIReferrerAndOriginClient();
 
   const { dataPopularCourses } = useGetPopularCoursesAtWebsite({
-    params: { org_id: organizationByDomain?.id ?? "" },
+    params: { org_id: host ?? "" },
   });
 
   return (
-    <div className={cn("bg-accent-foreground px-4 py-8 md:p-8 lg:p-12", className)}>
+    <div
+      className={cn("bg-accent-foreground px-4 py-8 md:p-8 lg:p-12", className)}
+    >
       <div className="container space-y-4 md:space-y-8">
         <InfoSection
           title={t("title")}

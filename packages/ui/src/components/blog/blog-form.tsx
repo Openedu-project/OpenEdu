@@ -9,17 +9,14 @@ import type { HTTPError } from '@oe/api/utils/http-error';
 import { getCookieClient } from '@oe/core/utils/cookie';
 import { marked } from '@oe/core/utils/marker';
 import { BLOG_ADMIN_ROUTES, BLOG_ROUTES } from '@oe/core/utils/routes';
-import { type LanguageCode, languages } from '@oe/i18n/languages';
-import { Settings } from 'lucide-react';
+import type { LanguageCode } from '@oe/i18n/languages';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
-import type { KeyboardEvent } from 'react';
 import { mutate } from 'swr';
 import { useRouter } from '#common/navigation';
-import { AutocompeteMultiple, Autocomplete } from '#components/autocomplete';
 import { FormWrapper } from '#components/form-wrapper';
 import { RichTextEditor } from '#components/rich-text';
-import { SelectTree } from '#components/select-tree';
+import { SelectLanguage } from '#components/select-language';
 import { Uploader } from '#components/uploader';
 import { Button } from '#shadcn/button';
 import { FormFieldWithLabel } from '#shadcn/form';
@@ -27,6 +24,8 @@ import { Input } from '#shadcn/input';
 import { toast } from '#shadcn/sonner';
 import { Textarea } from '#shadcn/textarea';
 import { cn } from '#utils/cn';
+import { CategoryField } from './category-field';
+import { HashtagField } from './hashtag-field';
 
 export type BlogType = 'org' | 'personal';
 export type IFormAction = 'update' | 'create';
@@ -95,16 +94,11 @@ export default function BlogForm({
   onSuccess,
   onError,
   className,
-  locales = ['en'],
-  hashtags = [],
-  categories = [],
 }: IBlogCreationFormProps) {
   const tBlogs = useTranslations('blogForm');
   const tGeneral = useTranslations('general');
   const tErrors = useTranslations('errors');
   const router = useRouter();
-
-  const hashtagsName = useMemo(() => hashtags.map(hashtag => hashtag.name), [hashtags]);
 
   const defaultValues: IBlogFormType | { locale: string; is_ai_generated: boolean; content: '' } = useMemo(() => {
     if (!data) {
@@ -125,24 +119,6 @@ export default function BlogForm({
       is_ai_generated: data.is_ai_generated,
     };
   }, [data]);
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, handleSelectOptions?: (value: string) => void) => {
-    if (
-      e.key === ' ' ||
-      e.code === 'Space' ||
-      (e.key === 'Enter' && (e.currentTarget.value.length === 0 || hashtagsName.includes(e.currentTarget.value)))
-    ) {
-      e.preventDefault();
-      return;
-    }
-
-    if (e.nativeEvent.isComposing || e.key !== 'Enter') {
-      return;
-    }
-
-    e.preventDefault();
-    handleSelectOptions?.(e.currentTarget.value);
-  };
 
   const handleSubmitDraft = async (blogData: IBlogFormType) => {
     const res = await blogFormAction({
@@ -218,46 +194,8 @@ export default function BlogForm({
           </div>
           <div className="h-fit rounded-lg md:order-1">
             <div className={cn('mb-4 flex flex-col gap-4', blogType === 'personal' && 'hidden')}>
-              <FormFieldWithLabel
-                name="category_ids"
-                labelClassName="justify-between mb-4"
-                label={
-                  <>
-                    <p className="giant-iheading-semibold16 text-foreground">{tBlogs('category')}</p>
-                    <Button variant="ghost" className="h-8 w-8 cursor-default p-0 hover:bg-transparent">
-                      <Settings className="h-4 w-4" />
-                    </Button>
-                  </>
-                }
-              >
-                <SelectTree<ICategoryTree, NonNullable<IBlogFormType['category_ids']>[number]>
-                  data={categories}
-                  placeholder={tBlogs('selectCategories')}
-                  searchPlaceholder={tBlogs('searchCategories')}
-                  getLabel={node => node.name}
-                  getValue={node => ({ id: node.id, name: node.name })}
-                  checkable
-                />
-              </FormFieldWithLabel>
-
-              <FormFieldWithLabel
-                name="hashtag_names"
-                labelClassName="justify-between mb-4"
-                label={
-                  <>
-                    <p className="giant-iheading-semibold16 text-foreground">{tBlogs('hashtag')}</p>
-                    <Button variant="ghost" className="h-8 w-8 cursor-default p-0 hover:bg-transparent">
-                      <Settings className="h-4 w-4" />
-                    </Button>
-                  </>
-                }
-              >
-                <AutocompeteMultiple
-                  options={hashtagsName}
-                  placeholder={tBlogs('inputHashtag')}
-                  onKeyDown={handleKeyDown}
-                />
-              </FormFieldWithLabel>
+              <CategoryField />
+              <HashtagField />
             </div>
             <FormFieldWithLabel
               name="locale"
@@ -265,12 +203,7 @@ export default function BlogForm({
               labelClassName="giant-iheading-semibold16"
               className="mb-4 space-y-4"
             >
-              <Autocomplete
-                options={locales}
-                getOptionLabel={locale => languages[locale]}
-                getOptionValue={locale => locale}
-                triggerProps={{ disabled: true }}
-              />
+              <SelectLanguage />
             </FormFieldWithLabel>
 
             <div className="flex flex-col gap-4">

@@ -1,8 +1,8 @@
 "use client";
 import { useGetPopularBlogsAtWebsite } from "@oe/api/hooks/useFeaturedContent";
-import { useGetOrganizationByDomain } from "@oe/api/hooks/useOrganization";
 import type { IBlog } from "@oe/api/types/blog";
 import type { IFeaturedContent } from "@oe/api/types/featured-contents";
+import { getAPIReferrerAndOriginClient } from "@oe/api/utils/referrer-origin";
 import { BlogCardServer } from "@oe/ui/components/blog-card";
 import { cn } from "@oe/ui/utils/cn";
 import { useTranslations } from "next-intl";
@@ -19,10 +19,10 @@ const AvailHomepageBlogsClient: SectionComponent<"homepage", "availBlogs"> = ({
   props,
 }) => {
   const t = useTranslations("themePage.avail.homepage.availBlogs");
-  const { organizationByDomain } = useGetOrganizationByDomain();
+  const { host } = getAPIReferrerAndOriginClient();
 
   const { dataPopularBlogs } = useGetPopularBlogsAtWebsite({
-    params: { org_id: organizationByDomain?.id ?? "" },
+    params: { org_id: host ?? "" },
   });
 
   return (

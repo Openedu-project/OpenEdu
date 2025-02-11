@@ -86,6 +86,7 @@ export const COURSE_DETAIL_FORM_IDS = {
   preview: 'preview',
   sections: 'sections',
   lessons: 'lessons',
+  lesson: 'lesson',
   sectionHeader: 'sectionHeader',
   lessonTitle: 'lessonTitle',
 };

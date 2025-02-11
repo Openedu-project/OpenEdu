@@ -64,7 +64,7 @@ export const lessonSchema = z.object({
   order: z.number().optional(),
   free: z.boolean().optional(),
   status: z.string().optional().default('draft'),
-  contents: z.any(),
+  contents: z.array(lessonContentSchema),
   course_id: z.string().optional(),
   user_id: z.string().optional(),
 });

@@ -2,16 +2,15 @@
 import { useGetSegmentById } from '@oe/api/hooks/useCourse';
 import { updateSegmentService } from '@oe/api/services/course';
 import type { ILessonContent, ISegment } from '@oe/api/types/course/segment';
-import type { z } from '@oe/api/utils/zod';
 import { DndSortable, DndSortableDragButton } from '@oe/ui/components/dnd-sortable';
-import { FormNestedWrapper } from '@oe/ui/components/form-wrapper';
 import { Button } from '@oe/ui/shadcn/button';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@oe/ui/shadcn/tabs';
 import { cn } from '@oe/ui/utils/cn';
 import { PlusIcon } from 'lucide-react';
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { type FieldErrors, useFormContext } from 'react-hook-form';
 import { tabOptions } from './lesson-content-options';
 import { LessonContentTabHeader } from './lesson-content-tab-header';
 
@@ -32,7 +31,25 @@ export function LessonContents() {
 
   const [isSorting, setIsSorting] = useState(false);
 
-  const [errors] = useState<Record<string, z.ZodError>>({});
+  // const [errors] = useState<Record<string, z.ZodError>>({});
+  const { formState } = useFormContext();
+
+  const contentErrors = (formState.errors as unknown as Record<string, FieldErrors<ILessonContent>[]>).contents;
+
+  useEffect(() => {
+    if (contentErrors) {
+      let errorTabOrder: number | null = null;
+      for (let i = 0; i < (contentErrors ?? []).length; i++) {
+        if (contentErrors?.[i]) {
+          errorTabOrder = i;
+          break;
+        }
+      }
+      if (errorTabOrder !== null) {
+        setActiveLessonContent(activeLessonContents.find(content => content.order === errorTabOrder));
+      }
+    }
+  }, [contentErrors, activeLessonContents]);
 
   const handleAddLessonContent = async () => {
     try {
@@ -110,7 +127,7 @@ export function LessonContents() {
                         className={cn(
                           'relative h-8 cursor-pointer rounded-b-none border-t border-r border-l bg-background',
                           'data-[state=active]:rounded-b-none data-[state=active]:border data-[state=active]:border-primary data-[state=active]:border-b-0 data-[state=active]:bg-muted data-[state=active]:font-semibold data-[state=active]:text-primary',
-                          errors[item.original.id ?? ''] &&
+                          contentErrors?.[item.original.order] &&
                             'data-[state]:border-destructive data-[state]:text-destructive'
                         )}
                       >
@@ -147,7 +164,7 @@ export function LessonContents() {
               className="mt-0 flex flex-1 flex-col overflow-hidden data-[state=inactive]:hidden"
               forceMount
             >
-              <FormNestedWrapper
+              {/* <FormNestedWrapper
                 id={content.id ?? ''}
                 tabId={content.id ?? ''}
                 schema={tabOption?.schema}
@@ -184,7 +201,23 @@ export function LessonContents() {
                     </div>
                   </>
                 )}
-              </FormNestedWrapper>
+              </FormNestedWrapper> */}
+              <div className="space-y-0">
+                <LessonContentTabHeader
+                  value={content.type}
+                  activeLessonContent={activeLessonContent ?? activeLessonContents[0]}
+                  activeLesson={activeLesson}
+                  hasErrors={!!contentErrors?.[content.order]}
+                />
+                <div
+                  className={cn(
+                    'overflow-hidden border border-primary border-t-0',
+                    contentErrors?.[content.order] && 'border-destructive'
+                  )}
+                >
+                  {tabOption?.content(content, content.order)}
+                </div>
+              </div>
             </TabsContent>
           );
         })}
