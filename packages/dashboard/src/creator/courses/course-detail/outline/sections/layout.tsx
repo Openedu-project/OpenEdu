@@ -30,18 +30,6 @@ export default function SectionsLayout({ children }: { children: ReactNode }) {
     <div className="relative flex h-full flex-col gap-2 p-4">
       <SectionHeader />
       <SectionsDrawer />
-      {/* <FormNestedWrapper
-        id={COURSE_DETAIL_FORM_IDS.sections}
-        tabId="sections"
-        schema={sectionSchema}
-        useFormProps={{
-          defaultValues: segment as ISectionSchema,
-        }}
-        className="space-y-0"
-      >
-        <SectionHeader />
-        <SectionsDrawer />
-      </FormNestedWrapper> */}
       {children}
     </div>
   );

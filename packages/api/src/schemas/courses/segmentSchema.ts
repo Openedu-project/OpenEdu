@@ -14,8 +14,7 @@ const baseContentSchema = z.object({
 
 export const textContentSchema = baseContentSchema.extend({
   type: z.literal('text'),
-  content: z.string().min(10, { message: 'Nội dung văn bản là bắt buộc' }),
-  // files: z.array(fileResponseScheme).optional(),
+  content: z.string().min(1, { message: 'courses.formValidation.contentRequired' }),
 });
 
 export const videoContentSchema = baseContentSchema.extend({
@@ -23,13 +22,12 @@ export const videoContentSchema = baseContentSchema.extend({
   file_id: z.string().optional(),
   files: z
     .array(fileResponseScheme)
-    .nullable() // Cho phép giá trị null
-    .default([]) // Giá trị mặc định là mảng rỗng
-    .transform(files => files || []) // Transform null thành mảng rỗng
+    .nullable()
+    .default([])
+    .transform(files => files || [])
     .refine(files => files.length > 0, {
-      message: 'Bài học phải có ít nhất một video',
+      message: 'courses.formValidation.videoRequired',
     }),
-  // content: z.string().optional(),
 });
 
 export const pdfContentSchema = baseContentSchema.extend({
@@ -37,17 +35,17 @@ export const pdfContentSchema = baseContentSchema.extend({
   file_id: z.string().optional(),
   files: z
     .array(fileResponseScheme)
-    .nullable() // Cho phép giá trị null
-    .default([]) // Giá trị mặc định là mảng rỗng
-    .transform(files => files || []) // Transform null thành mảng rỗng
+    .nullable()
+    .default([])
+    .transform(files => files || [])
     .refine(files => files.length > 0, {
-      message: 'Bài học phải có ít nhất một video',
-    }), // content: z.string().optional(),
+      message: 'courses.formValidation.pdfRequired',
+    }),
 });
 
 export const embeddedContentSchema = baseContentSchema.extend({
   type: z.literal('embedded'),
-  content: z.string().min(1, { message: 'Nội dung nhúng là bắt buộc' }),
+  content: z.string().min(1, { message: 'courses.formValidation.embeddedRequired' }),
 });
 
 export const lessonContentSchema = z.discriminatedUnion('type', [
@@ -59,7 +57,7 @@ export const lessonContentSchema = z.discriminatedUnion('type', [
 
 export const lessonSchema = z.object({
   id: z.string(),
-  title: z.string().min(1, { message: 'Tiêu đề bài học là bắt buộc' }),
+  title: z.string().min(1, { message: 'courses.formValidation.lessonTitleRequired' }),
   note: z.string().optional(),
   order: z.number().optional(),
   free: z.boolean().optional(),
@@ -71,7 +69,7 @@ export const lessonSchema = z.object({
 
 export const segmentSchema = z.object({
   id: z.string(),
-  title: z.string().min(1, { message: 'Tiêu đề chương là bắt buộc' }),
+  title: z.string().min(1, { message: 'courses.formValidation.sectionTitleRequired' }),
   note: z.string().optional(),
   order: z.number().optional(),
   free: z.boolean().optional(),
@@ -81,8 +79,6 @@ export const segmentSchema = z.object({
   lessons: z.array(lessonSchema).nullable().optional(),
 });
 
-export const segmentsSchema = z.array(segmentSchema).min(1, { message: 'Khóa học phải có ít nhất một chương' });
-
 export const sectionSchema = segmentSchema.extend({
   lessons: z.array(lessonSchema).nullable().optional(),
 });
@@ -91,5 +87,4 @@ export const sectionSchema = segmentSchema.extend({
 export type ILessonContentSchema = z.infer<typeof lessonContentSchema>;
 export interface ILessonSchema extends z.infer<typeof lessonSchema> {}
 export interface ISegmentSchema extends z.infer<typeof segmentSchema> {}
-export interface ISegmentsSchema extends z.infer<typeof segmentsSchema> {}
 export interface ISectionSchema extends z.infer<typeof sectionSchema> {}
