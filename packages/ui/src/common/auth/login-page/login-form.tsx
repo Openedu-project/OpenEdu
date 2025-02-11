@@ -30,9 +30,12 @@ export function LoginForm({ tLoginTitle, tSignupTitle, tForgotpasswordTitle }: L
   const tErrors = useTranslations('errors');
   const router = useRouter();
   const searchParams = useSearchParams();
-  const nextPath = searchParams.get('next') ?? '/';
+  // const nextPath = searchParams.get('next') ?? '/';
   const loginError = searchParams.get('error');
   const [error, setError] = useState<string | null>(null);
+
+  const fullSearchString = searchParams.toString();
+  const nextPath = decodeURIComponent(fullSearchString.slice(fullSearchString.indexOf('next=') + 5) || '/');
 
   const handleError = useCallback((error: unknown) => {
     setError((error as HTTPError).message);
