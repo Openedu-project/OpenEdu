@@ -2,11 +2,10 @@
 
 import { AlertTriangle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
-import type React from 'react';
+import { useSearchParams } from 'next/navigation';
 
 import { AUTH_ROUTES } from '@oe/core/utils/routes';
-import { Link } from '#common/navigation';
+import { Link, usePathname } from '#common/navigation';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,19 +21,20 @@ import { useLoginRequiredStore } from './_store';
 export const LoginWarningModal = () => {
   const t = useTranslations('loginRequiredModal');
 
-  const currentRouter = typeof window !== 'undefined' ? window.location : '/';
-  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const nextPath = searchParams.size > 0 ? `${pathname}?${searchParams.toString()}` : pathname;
 
   const { isOpen, hasCancel, setLoginRequiredModal } = useLoginRequiredStore();
 
   const handleRedirectLogin = () => {
-    router.push(`${AUTH_ROUTES.login}?next=${currentRouter}`);
+    // router.push(`${AUTH_ROUTES.login}?next=${nextPath}`);
     setLoginRequiredModal(false);
   };
 
-  const handleRedirectSignUp = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    router.push(`${AUTH_ROUTES.signUp}?next=${currentRouter}`);
+  const handleRedirectSignUp = () => {
+    // e.preventDefault();
+    // router.push(`${AUTH_ROUTES.signUp}?next=${nextPath}`);
 
     setLoginRequiredModal(false);
   };
@@ -52,7 +52,7 @@ export const LoginWarningModal = () => {
           <AlertDialogDescription>
             {t('desc')}
             <Link
-              href={`${AUTH_ROUTES.signUp}?next=${currentRouter}`}
+              href={`${AUTH_ROUTES.signUp}?next=${nextPath}`}
               onClick={handleRedirectSignUp}
               className="ml-1 p-0 text-primary hover:underline"
             >
@@ -65,7 +65,16 @@ export const LoginWarningModal = () => {
           {hasCancel && (
             <AlertDialogCancel onClick={() => setLoginRequiredModal(false)}>{t('cancel')}</AlertDialogCancel>
           )}
-          <AlertDialogAction onClick={handleRedirectLogin}>{t('button')}</AlertDialogAction>
+          <AlertDialogAction asChild>
+            <Link
+              href={`${AUTH_ROUTES.login}?next=${nextPath}`}
+              onClick={handleRedirectLogin}
+              variant="default"
+              className="hover:no-underline"
+            >
+              {t('button')}
+            </Link>
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
