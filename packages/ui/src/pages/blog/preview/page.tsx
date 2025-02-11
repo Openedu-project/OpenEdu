@@ -1,5 +1,5 @@
 import { getBlogDraftContent } from '@oe/api/services/blog';
-import { BlogDetails } from '../_components/blog-details';
+import { BlogDetails } from '#components/blog';
 
 export default async function BlogPreviewPage({ id }: { id: string }) {
   const blogData = await getBlogDraftContent(undefined, { id });

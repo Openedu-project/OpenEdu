@@ -158,7 +158,7 @@ export default function BlogTable({
         const action = item.published_blog?.some(blog => blog.version === item.version) ? 'un-publish' : 'publish';
 
         return (
-          <div className="flex gap-2">
+          <div className="flex">
             <Link
               href={buildUrl({
                 endpoint:
@@ -175,7 +175,7 @@ export default function BlogTable({
               })}
               target="_blank"
               variant="outline"
-              className={cn(action === 'un-publish' && 'border-primary text-primary')}
+              className={cn('mr-2', action === 'un-publish' && 'border-primary text-primary')}
             >
               {tGeneral(action === 'un-publish' ? 'view' : 'preview')}
             </Link>

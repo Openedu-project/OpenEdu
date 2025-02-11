@@ -32,7 +32,7 @@ export const blogManagementMessages = {
     invitation: 'Invitation',
     selectBlogs: 'Select Blogs',
     selectCategory: 'Select Category',
-    blogRequests: 'Blog Requests',
+    blogPublishRequest: 'Blog Publish Request',
     deleteSuccessfully: 'Delete Successfully',
     delUser: 'Delete User',
     delUserDes: 'Do you want delete this user?',
@@ -56,5 +56,6 @@ export const blogManagementMessages = {
     ownerBlog: "{name}'s Blog",
     Error: 'Error',
     manual: 'Manual',
+    confirmDate: 'Confirm Date',
   },
 };

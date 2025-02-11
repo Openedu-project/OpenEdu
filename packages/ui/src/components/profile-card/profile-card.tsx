@@ -46,7 +46,7 @@ export default function ProfileCard({
             className="relative flex-inline shrink-0 rounded-full border"
             style={{ height: avatarSize ?? 36, width: avatarSize ?? 36 }}
             src={profileData?.avatar ?? ''}
-            name={profileData?.display_name?.length > 0 ? profileData?.display_name : profileData?.username}
+            name={profileData?.display_name?.length > 0 ? profileData?.display_name : (profileData?.username ?? '  ')}
           />
 
           <div className={cn('w-full', align && 'text-center', infoClassName)}>
