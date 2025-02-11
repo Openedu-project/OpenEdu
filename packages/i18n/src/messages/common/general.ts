@@ -71,6 +71,9 @@ export const generalMessages = {
       generating: 'Generating',
       pending: 'Pending',
       waiting: 'Waiting',
+      new: 'New',
+      approved: 'Approved',
+      rejected: 'Rejected',
     },
     language: 'Language',
     follow: 'Follow',
@@ -85,5 +88,7 @@ export const generalMessages = {
       professional: 'Professional',
     },
     viewAll: 'View all',
+    approve: 'Approve',
+    reject: 'Reject',
   },
 };

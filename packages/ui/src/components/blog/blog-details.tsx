@@ -1,5 +1,3 @@
-'use client';
-
 import type { IBlog } from '@oe/api/types/blog';
 import { marked } from '@oe/core/utils/marker';
 import { BLOG_ROUTES } from '@oe/core/utils/routes';
