@@ -120,7 +120,7 @@ export const errorMessages = {
     '2013': 'An internal error occurred when generating token',
     '2014': 'User not exits',
     '2015': 'Password is wrong',
-    '2016': 'Username or email is already used',
+    '2016': 'Email is already used',
     '2017': 'An internal error occurred when verifying username and email available',
     '2018': 'An internal error occurred when getting default role for register',
     '2019': 'An internal error occurred when check user belong or create new user',

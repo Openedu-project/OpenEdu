@@ -21,7 +21,7 @@ export interface LessonContentOption extends SelectboxOption {
   label: string;
   icon?: ReactNode;
   schema: z.ZodSchema;
-  content: (content: ILessonContent) => ReactNode;
+  content: (content: ILessonContent, order: number) => ReactNode;
 }
 
 export const tabOptions: Record<TLessonContent, LessonContentOption> = {
@@ -31,8 +31,8 @@ export const tabOptions: Record<TLessonContent, LessonContentOption> = {
     label: 'Text',
     icon: <TextIcon className="h-4 w-4" />,
     schema: textContentSchema,
-    content: (content: ILessonContent) => (
-      <FormFieldWithLabel name="content" showErrorMessage>
+    content: (content: ILessonContent, order: number) => (
+      <FormFieldWithLabel name={`contents.${order}.content`} showErrorMessage>
         <RichTextEditor
           key={content.id}
           className="h-full rounded-none border-none"
@@ -48,8 +48,8 @@ export const tabOptions: Record<TLessonContent, LessonContentOption> = {
     label: 'Video',
     icon: <FileVideoIcon className="h-4 w-4" />,
     schema: videoContentSchema,
-    content: (content: ILessonContent) => (
-      <FormFieldWithLabel name="files" showErrorMessage>
+    content: (content: ILessonContent, order: number) => (
+      <FormFieldWithLabel name={`contents.${order}.files`} showErrorMessage>
         <Uploader key={content.id} accept="video/*" listType="picture" fileListVisible={false} />
       </FormFieldWithLabel>
     ),
@@ -60,8 +60,8 @@ export const tabOptions: Record<TLessonContent, LessonContentOption> = {
     label: 'PDF',
     icon: <FileIcon className="h-4 w-4" />,
     schema: pdfContentSchema,
-    content: (content: ILessonContent) => (
-      <FormFieldWithLabel name="files" showErrorMessage>
+    content: (content: ILessonContent, order: number) => (
+      <FormFieldWithLabel name={`contents.${order}.files`} showErrorMessage>
         <Uploader key={content.id} accept=".pdf" listType="picture" fileListVisible={false} />
       </FormFieldWithLabel>
     ),
@@ -72,8 +72,8 @@ export const tabOptions: Record<TLessonContent, LessonContentOption> = {
     label: 'Embedded',
     icon: <Code2Icon className="h-4 w-4" />,
     schema: embeddedContentSchema,
-    content: (content: ILessonContent) => (
-      <FormFieldWithLabel name="content" showErrorMessage>
+    content: (content: ILessonContent, order: number) => (
+      <FormFieldWithLabel name={`contents.${order}.content`} showErrorMessage>
         <Input key={content.id} type="text" placeholder="Enter embed URL" />
       </FormFieldWithLabel>
     ),
@@ -84,8 +84,8 @@ export const tabOptions: Record<TLessonContent, LessonContentOption> = {
     label: 'Quiz',
     icon: <MessageCircleQuestion className="h-4 w-4" />,
     schema: z.object({}),
-    content: (content: ILessonContent) => (
-      <FormFieldWithLabel name="quizzes" showErrorMessage>
+    content: (content: ILessonContent, order: number) => (
+      <FormFieldWithLabel name={`contents.${order}.quizzes`} showErrorMessage>
         {/* <QuizEditor /> */}
         {content.quizzes?.map(quiz => (
           <div key={quiz.id}>

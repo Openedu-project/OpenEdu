@@ -1,18 +1,15 @@
 'use client';
 import { useGetSegmentById } from '@oe/api/hooks/useCourse';
-import type { ILessonSchema } from '@oe/api/schemas/courses/segmentSchema';
-import { lessonSchema } from '@oe/api/schemas/courses/segmentSchema';
 import { deleteSegmentService } from '@oe/api/services/course';
 import { CREATOR_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
 import { DeleteButton } from '@oe/ui/components/delete-button';
-import { FormNestedWrapper, SubmitFormsButton } from '@oe/ui/components/form-wrapper';
+import { Button } from '@oe/ui/shadcn/button';
 import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
 import { Input } from '@oe/ui/shadcn/input';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { SaveIcon, Trash2 } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
-import { COURSE_DETAIL_FORM_IDS } from '../../_utils/constants';
 
 export function LessonHeader() {
   const { courseId, sectionId, lessonId } = useParams<{
@@ -95,7 +92,7 @@ export function LessonHeader() {
 
   return (
     <div className="flex items-center justify-between gap-2">
-      <FormNestedWrapper
+      {/* <FormNestedWrapper
         id={COURSE_DETAIL_FORM_IDS.lessonTitle}
         schema={lessonSchema}
         useFormProps={{
@@ -107,7 +104,20 @@ export function LessonHeader() {
         <FormFieldWithLabel name="title" formMessageClassName="hidden" className="w-full">
           <Input type="text" className="h-8" />
         </FormFieldWithLabel>
-      </FormNestedWrapper>
+      </FormNestedWrapper> */}
+      <div
+        // onSubmit={handleSaveLesson}
+        className="flex w-full gap-2 space-y-0"
+      >
+        <FormFieldWithLabel
+          name="title"
+          // formMessageClassName="hidden"
+          className="w-full"
+          showErrorMessage={false}
+        >
+          <Input type="text" className="h-8" />
+        </FormFieldWithLabel>
+      </div>
       <div className="flex items-center gap-2">
         {/* <Button
           variant="outline"
@@ -128,14 +138,15 @@ export function LessonHeader() {
             <Trash2 className="h-4 w-4" />
           </DeleteButton>
         )}
-        <SubmitFormsButton
+        <Button
           variant="outline"
           className="gap-2 border-primary text-primary hover:bg-primary/90 hover:text-primary-foreground"
           size="xs"
+          type="submit"
         >
           <SaveIcon className="h-4 w-4" />
           Save
-        </SubmitFormsButton>
+        </Button>
       </div>
     </div>
   );

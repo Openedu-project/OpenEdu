@@ -37,6 +37,7 @@ export default function SignUpForm({ tLoginTitle, tSignupTitle }: SignUpFormProp
   const [resendEmailError, setResendEmailError] = useState<string | null>(null);
 
   const handleError = useCallback((error: unknown) => {
+    console.error('------------------------------', error, (error as HTTPError).message);
     setError((error as HTTPError).message);
   }, []);
 
