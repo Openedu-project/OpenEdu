@@ -1,7 +1,7 @@
 'use client';
 
 import { type SetPasswordSchemaType, setPasswordSchema } from '@oe/api/schemas/authSchema';
-import { setPasswordService } from '@oe/api/services/auth';
+import { loginService, setPasswordService } from '@oe/api/services/auth';
 import type { AuthEventName } from '@oe/api/utils/auth';
 import type { HTTPError } from '@oe/api/utils/http-error';
 import { useTranslations } from 'next-intl';
@@ -16,7 +16,6 @@ import { InputPassword } from '#components/input-password';
 import { Alert, AlertDescription } from '#shadcn/alert';
 import { Button } from '#shadcn/button';
 import { FormFieldWithLabel } from '#shadcn/form';
-import { loginAction } from '../_action/login-action';
 
 export function AuthConfirmForm({
   event,
@@ -40,11 +39,14 @@ export function AuthConfirmForm({
       await setPasswordService(null, {
         payload: { event, token, email, password },
       });
-      await loginAction({ email, password, next_path: nextPath });
+      await loginService(undefined, {
+        payload: { email, password, next_path: nextPath },
+      });
       mutate(() => true, undefined, { revalidate: true });
       setOpen(true);
       toast.success(tAuth('authConfirm.setPasswordSuccess'));
       router.replace(nextPath);
+      router.refresh();
     },
     [event, token, email, nextPath, router, tAuth]
   );

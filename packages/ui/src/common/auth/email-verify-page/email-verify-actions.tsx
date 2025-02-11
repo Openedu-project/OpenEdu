@@ -1,24 +1,38 @@
 'use client';
 
+import { setCookiesService } from '@oe/api/services/cookies';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { Button } from '#shadcn/button';
-import { saveCookieTokenAction } from '../_action/save-cookie-token-action';
 
 export function EmailVerifyActions({
   isError,
   nextPath,
   accessToken,
   refreshToken,
-}: { isError: boolean; nextPath: string; accessToken: string; refreshToken: string }) {
+}: {
+  isError: boolean;
+  nextPath: string;
+  accessToken: string;
+  refreshToken: string;
+}) {
   const tGeneral = useTranslations('general');
   const router = useRouter();
 
   const handleNavigate = async (path: string) => {
     if (!isError && accessToken && refreshToken) {
-      await saveCookieTokenAction(accessToken, refreshToken);
+      await setCookiesService([
+        {
+          key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY,
+          value: accessToken,
+        },
+        {
+          key: process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY,
+          value: refreshToken,
+        },
+      ]);
+      router.replace(path);
     }
-    router.replace(path);
   };
 
   return (
