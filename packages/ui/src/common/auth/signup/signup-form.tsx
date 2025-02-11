@@ -30,11 +30,14 @@ export default function SignUpForm({ tLoginTitle, tSignupTitle }: SignUpFormProp
   const tErrors = useTranslations('errors');
   const tGeneral = useTranslations('general');
   const searchParams = useSearchParams();
-  const nextPath = searchParams.get('next') ?? '/';
+  // const nextPath = searchParams.get('next') ?? '/';
   const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [resendEmailError, setResendEmailError] = useState<string | null>(null);
+
+  const fullSearchString = searchParams.toString();
+  const nextPath = decodeURIComponent(fullSearchString.slice(fullSearchString.indexOf('next=') + 5) || '/');
 
   const handleError = useCallback((error: unknown) => {
     setError((error as HTTPError).message);
