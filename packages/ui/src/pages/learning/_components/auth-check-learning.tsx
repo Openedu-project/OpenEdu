@@ -3,8 +3,9 @@ import type { ICourseOutline } from '@oe/api/types/course/course';
 import type { ISectionLearningProgress } from '@oe/api/types/course/learning-progress';
 import type { IUser } from '@oe/api/types/user';
 import { AUTH_ROUTES } from '@oe/core/utils/routes';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
+import { usePathname } from '#common/navigation';
 import { createCourseUrl } from '#utils/course-url';
 import { useLessonLearningStore } from '../_store/learning-store';
 import { getLessonGlobalIndex, getUidByLessonIndex } from '../_utils/utils';
@@ -18,13 +19,15 @@ interface AuthCheckProps {
 
 export function AuthCheck({ course, learning_data, me, lesson_uid }: AuthCheckProps) {
   const router = useRouter();
-  const currentRouter = typeof window !== 'undefined' ? window.location : '/';
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const nextPath = searchParams.size > 0 ? `${pathname}?${searchParams.toString()}` : pathname;
 
   const { sectionsProgressData, setSectionsProgressData, getLessonStatus } = useLessonLearningStore();
 
   useEffect(() => {
     if (!me) {
-      router.push(`${AUTH_ROUTES.login}?next=${currentRouter}`);
+      router.push(`${AUTH_ROUTES.login}?next=${nextPath}`);
     } else if (!course?.is_enrolled) {
       router.push(createCourseUrl('detail', { slug: course?.slug }));
     }
