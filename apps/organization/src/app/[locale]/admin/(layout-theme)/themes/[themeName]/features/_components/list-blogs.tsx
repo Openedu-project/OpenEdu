@@ -18,7 +18,7 @@ import { BlogItem } from "./blog-item";
 
 const PER_PAGE = 4;
 
-const ListBlogs = ({ orgId }: { orgId?: string }) => {
+const ListBlogs = ({ domain }: { domain?: string }) => {
   const t = useTranslations("themeFeaturedContent");
   const { triggerUpdateFeaturedContent } = useUpdateFeaturedContent();
 
@@ -33,12 +33,12 @@ const ListBlogs = ({ orgId }: { orgId?: string }) => {
       per_page: 4,
       page: 1,
       sort: "update_at desc",
-      not_org_id: orgId,
+      // not_org_id: orgId,
     };
   });
 
   const { dataPopularBlogs } = useGetPopularBlogs({
-    params: { org_id: orgId ?? "" },
+    params: { org_id: domain ?? "" },
   });
 
   const { dataListBlog: blogsData, isLoadingBlog } = useGetBlogsPublish(
@@ -74,14 +74,14 @@ const ListBlogs = ({ orgId }: { orgId?: string }) => {
       order: index,
     }));
 
-    if (!orgId) {
-      toast.error("Missing orgId");
+    if (!domain) {
+      toast.error("Missing domain");
       return;
     }
 
     try {
       const res = await triggerUpdateFeaturedContent({
-        org_id: orgId ?? "",
+        org_id: domain ?? "",
         type: "popular",
         entity_type: "blog",
         entities: featuredContents || [],
@@ -96,7 +96,7 @@ const ListBlogs = ({ orgId }: { orgId?: string }) => {
       console.error("Failed to update featured contents:", error);
       toast.error("Failed to update featured contents");
     }
-  }, [selectedDisplay, triggerUpdateFeaturedContent, orgId]);
+  }, [selectedDisplay, triggerUpdateFeaturedContent, domain]);
 
   const handleCheckboxChange = useCallback(
     (checked: boolean, course: IBlog) => {

@@ -18,7 +18,13 @@ import { CourseItem } from "./course-item";
 
 const PER_PAGE = 4;
 
-const ListPopularCourses = ({ orgId }: { orgId?: string }) => {
+const ListPopularCourses = ({
+  orgId,
+  domain,
+}: {
+  orgId?: string;
+  domain?: string;
+}) => {
   const t = useTranslations("themeFeaturedContent");
   const { triggerUpdateFeaturedContent } = useUpdateFeaturedContent();
 
@@ -40,7 +46,7 @@ const ListPopularCourses = ({ orgId }: { orgId?: string }) => {
   });
 
   const { dataPopularCourses } = useGetPopularCourses({
-    params: { org_id: orgId ?? "" },
+    params: { org_id: domain ?? "" },
   });
 
   const { dataListCourses: dataCoursesPublish, isLoadingCourses } =
@@ -73,14 +79,14 @@ const ListPopularCourses = ({ orgId }: { orgId?: string }) => {
       order: index,
     }));
 
-    if (!orgId) {
-      toast.error("Missing orgId");
+    if (!domain) {
+      toast.error("Missing domain");
       return;
     }
 
     try {
       const res = await triggerUpdateFeaturedContent({
-        org_id: orgId ?? "",
+        org_id: domain ?? "",
         type: "popular",
         entity_type: "course",
         entities: featuredContents || [],
@@ -95,7 +101,7 @@ const ListPopularCourses = ({ orgId }: { orgId?: string }) => {
       console.error("Failed to update featured contents:", error);
       toast.error("Failed to update featured contents");
     }
-  }, [selectedDisplay, triggerUpdateFeaturedContent, orgId]);
+  }, [selectedDisplay, triggerUpdateFeaturedContent, domain]);
 
   const handleCheckboxChange = useCallback(
     (checked: boolean, course: ICourse) => {
