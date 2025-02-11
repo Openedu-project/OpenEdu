@@ -1,4 +1,4 @@
-import { THEMES, THEMES_SERVER } from '@oe/themes';
+import { THEMES, THEMES_SERVER } from "@oe/themes";
 import type {
   PageSectionConfig,
   PageSectionConfigs,
@@ -6,11 +6,11 @@ import type {
   SectionsByPage,
   ThemeName,
   ThemePageKey,
-} from '@oe/themes/types/index';
-import { getThemeComponent } from '@oe/themes/utils/function';
-import { ScrollArea } from '@oe/ui/shadcn/scroll-area';
-import { useTranslations } from 'next-intl';
-import { memo } from 'react';
+} from "@oe/themes/types/index";
+import { getThemeComponent } from "@oe/themes/utils/function";
+import { ScrollArea } from "@oe/ui/shadcn/scroll-area";
+import { useTranslations } from "next-intl";
+import { memo } from "react";
 
 export interface PreviewPanelProps {
   themeName: ThemeName;
@@ -28,20 +28,23 @@ export const PreviewPanel = memo(function PreviewPanel({
   stateConfigSections,
   renderByServer = false,
 }: PreviewPanelProps) {
-  const t = useTranslations('themePageSettings');
+  const t = useTranslations("themePageSettings");
 
   const renderPreviewSection = (key: SectionsByPage[typeof selectedPage]) => {
-    const PageComponent = getThemeComponent<ThemePageKey, SectionsByPage[typeof selectedPage]>(
-      renderByServer ? THEMES_SERVER : THEMES,
-      themeName,
-      selectedPage,
-      key
-    );
+    const PageComponent = getThemeComponent<
+      ThemePageKey,
+      SectionsByPage[typeof selectedPage]
+    >(renderByServer ? THEMES_SERVER : THEMES, themeName, selectedPage, key);
 
     const sectionConfig =
-      (stateConfigSections || currentConfigSections)?.[key] || pageConfig?.[selectedPage]?.config?.[key];
+      (stateConfigSections || currentConfigSections)?.[key] ||
+      pageConfig?.[selectedPage]?.config?.[key];
 
     if (!sectionConfig?.enable) {
+      return undefined;
+    }
+
+    if (!PageComponent) {
       return undefined;
     }
 
@@ -69,7 +72,9 @@ export const PreviewPanel = memo(function PreviewPanel({
       {sortedSections()?.length > 0 ? (
         sortedSections().map(renderPreviewSection)
       ) : (
-        <div className="flex h-full items-center justify-center text-muted-foreground">{t('noPreview')}</div>
+        <div className="flex h-full items-center justify-center text-muted-foreground">
+          {t("noPreview")}
+        </div>
       )}
     </ScrollArea>
   );

@@ -18,13 +18,7 @@ import { CourseItem } from "./course-item";
 
 const PER_PAGE = 4;
 
-const ListPopularCourses = ({
-  orgId,
-  domain,
-}: {
-  orgId?: string;
-  domain?: string;
-}) => {
+const ListPopularCourses = ({ domain }: { domain?: string }) => {
   const t = useTranslations("themeFeaturedContent");
   const { triggerUpdateFeaturedContent } = useUpdateFeaturedContent();
 
@@ -38,8 +32,6 @@ const ListPopularCourses = ({
     return {
       page: 1,
       per_page: PER_PAGE,
-      enable_root: false,
-      org_id: orgId,
       sort: "create_at desc",
       preloads: ["Categories", "Owner", "Levels"],
     };
