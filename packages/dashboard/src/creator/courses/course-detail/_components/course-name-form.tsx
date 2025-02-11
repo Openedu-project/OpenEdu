@@ -1,7 +1,8 @@
 import { useGetCourseById } from '@oe/api/hooks/useCourse';
+import { courseNameSchema } from '@oe/api/schemas/courses/createCourseSchema';
+import type { ICourseNameSchema } from '@oe/api/schemas/courses/createCourseSchema';
 import { updateCourseService } from '@oe/api/services/course';
 import type { ICourse } from '@oe/api/types/course/course';
-import { z } from '@oe/api/utils/zod';
 import { DashboardHeaderCard } from '@oe/ui/common/layout';
 import { FormWrapper } from '@oe/ui/components/form-wrapper';
 import { Button } from '@oe/ui/shadcn/button';
@@ -12,16 +13,12 @@ import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import { COURSE_DETAIL_FORM_IDS } from '../_utils/constants';
 
-const courseNameSchema = z.object({
-  name: z.string().min(1, { message: 'Name is required' }),
-});
-
 export default function CourseNameForm() {
   const { courseId } = useParams<{ courseId: string }>();
   const { course, mutateCourse } = useGetCourseById(courseId);
   const [edit, setEdit] = useState(false);
 
-  const handleSubmit = async (data: z.infer<typeof courseNameSchema>) => {
+  const handleSubmit = async (data: ICourseNameSchema) => {
     if (!course) {
       return;
     }
