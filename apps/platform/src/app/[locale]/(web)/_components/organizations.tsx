@@ -19,7 +19,7 @@ export default async function OrganizationSection() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {organizations?.map((org) => (
             <Link
-              href={org?.domain}
+              href={`https://${org?.domain}`}
               key={org.name}
               target="_blank"
               className="block h-auto space-y-4 bg-gradient-to-b from-25% from-white via-60% via-[#F2F1FF] to-100% to-[#F2F1FF]/30 p-4 text-black hover:no-underline"

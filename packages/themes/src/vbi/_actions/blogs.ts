@@ -16,7 +16,7 @@ export const getPopularBlogs = async () => {
 
     return {
       featuredPost: dataPopularBlogs?.[0]?.entity as IBlog,
-      restPost: dataPopularBlogs?.slice(1, 3)?.map(v => v?.entity) as IBlog[],
+      restPost: dataPopularBlogs?.slice(1, 4)?.map(v => v?.entity) as IBlog[],
     };
   } catch (error) {
     console.error(error);
