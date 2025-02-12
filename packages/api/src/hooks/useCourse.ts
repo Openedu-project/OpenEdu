@@ -44,12 +44,15 @@ export function useGetCourses({ params }: { params: IFilter }) {
   };
 }
 
-export function useGetCourseById(id: string) {
+export function useGetCourseById(id: string, fallback: ICourse | undefined = undefined) {
   const { data, isLoading, error, mutate } = useSWR(
     id
       ? createAPIUrl({ endpoint: API_ENDPOINT.COURSES_ID, params: { id }, queryParams: { preloads: ['segments'] } })
       : null,
-    (endpoint: string) => getCourseByIdService(endpoint, { id })
+    (endpoint: string) => getCourseByIdService(endpoint, { id }),
+    {
+      fallbackData: fallback,
+    }
   );
 
   return {

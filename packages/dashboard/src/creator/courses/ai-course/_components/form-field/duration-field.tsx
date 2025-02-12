@@ -16,7 +16,7 @@ export function DurationField({ form }: { form: UseFormReturn<ICreateAICourseOut
         {tAICourseForm('courseDuration')} <span className="ml-1 text-destructive">*</span>
       </p>
       <div className="flex rounded border">
-        <FormFieldWithLabel name="duration_type">
+        <FormFieldWithLabel name="duration_type" className="min-w-24">
           <Autocomplete
             options={['day', 'week']}
             getOptionLabel={val => tAICourseForm(val)}

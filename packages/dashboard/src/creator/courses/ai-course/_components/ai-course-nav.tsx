@@ -9,8 +9,11 @@ import { ScrollArea, ScrollBar } from '@oe/ui/shadcn/scroll-area';
 import { cn } from '@oe/ui/utils/cn';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
+import { useEffect, useMemo } from 'react';
 
-type TCourseNavMenu = 'course-outline' | 'general-info';
+const GENERAL_INFO_VALUE = CREATOR_ROUTES.aiGeneralInfo.split('/').at(-1);
+
+type TCourseNavMenu = 'course-outline' | typeof GENERAL_INFO_VALUE;
 
 interface TCourseNavMenuItem {
   value: TCourseNavMenu;
@@ -30,16 +33,25 @@ const AICourseNavMenu = ({ className }: { className?: string }) => {
       href: buildUrl({ endpoint: CREATOR_ROUTES.aiCourseDetail, params: { id: id } }),
     },
     {
-      value: 'general-info',
+      value: GENERAL_INFO_VALUE,
       labelKey: 'generalInfo',
 
       href: buildUrl({ endpoint: CREATOR_ROUTES.aiGeneralInfo, params: { id: id } }),
     },
   ];
 
-  const activePath = pathname.includes(navLabel[1]?.value ?? '') ? navLabel[1] : navLabel[0];
+  const activePath = useMemo(
+    () => (pathname.includes(GENERAL_INFO_VALUE ?? '') ? GENERAL_INFO_VALUE : 'course-outline'),
+    [pathname]
+  );
 
-  const { course } = useGetCourseById((id as string) ?? '');
+  const { course, mutateCourse } = useGetCourseById((id as string) ?? '');
+
+  useEffect(() => {
+    if (id) {
+      mutateCourse();
+    }
+  }, [id, mutateCourse]);
 
   return (
     <NavigationMenu className={cn('!flex-none max-w-screen', className)}>
@@ -47,15 +59,18 @@ const AICourseNavMenu = ({ className }: { className?: string }) => {
         <NavigationMenuList
           className={cn(
             'flex w-full justify-center gap-2 rounded-none bg-transparent pb-2',
-            !course?.ai_course && 'pointer-events-none'
+            course?.ai_course?.general_info_status !== 'completed' && 'pointer-events-none'
           )}
         >
           {navLabel.map(nav => (
             <Link
               className={cn(
                 'rounded-xl bg-background',
-                activePath?.value === nav.value ? 'border border-primary text-primary' : 'text-foreground'
+                nav.value === activePath
+                  ? 'pointer-events-none border border-primary text-primary'
+                  : 'bg-background text-foreground hover:bg-primary/5 hover:no-underline'
               )}
+              activeClassName=""
               href={nav.href}
               key={nav.value}
             >

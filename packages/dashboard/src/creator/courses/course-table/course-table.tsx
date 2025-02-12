@@ -27,7 +27,7 @@ export default function Courses() {
         header: 'Status',
         accessorKey: 'active',
         cell: item => <CourseStatus data={item.row.original} />,
-        size: 110,
+        size: 130,
       },
       {
         header: 'Type',

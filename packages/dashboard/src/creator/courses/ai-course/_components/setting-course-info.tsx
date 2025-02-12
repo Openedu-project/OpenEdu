@@ -1,0 +1,90 @@
+'use client';
+
+import type { IAICourseStatus } from '@oe/api/types/course/ai-course';
+import type { ICourse } from '@oe/api/types/course/course';
+import { API_ENDPOINT } from '@oe/api/utils/endpoints';
+import { GENERATING_STATUS } from '@oe/core/utils/constants';
+import { CREATOR_ROUTES } from '@oe/core/utils/routes';
+import { buildUrl } from '@oe/core/utils/url';
+import { Link, useRouter } from '@oe/ui/common/navigation';
+import { useSocketStore } from '@oe/ui/store/socket';
+import { ChevronLeft } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
+import { useSWRConfig } from 'swr';
+import AIStatusModal from '../../_components/ai-status-modal';
+import { CourseInfoForm } from './course-info-form';
+
+export function SettingCourseInfomation({
+  course,
+}: {
+  course?: ICourse | null;
+}) {
+  const tAICourse = useTranslations('courses.aiCourse');
+  const [status, setStatus] = useState<IAICourseStatus>();
+  const [openStatusModal, setOpenStatusModal] = useState<boolean>(false);
+  const { AICourseStatusData, resetSocketData } = useSocketStore();
+  const router = useRouter();
+  const { mutate: globalMutate } = useSWRConfig();
+
+  useEffect(() => {
+    if (!course) {
+      return;
+    }
+    const { ai_course } = course;
+
+    if (
+      GENERATING_STATUS.includes(ai_course?.status as IAICourseStatus) &&
+      !GENERATING_STATUS.includes(course?.ai_course?.thumbnail_status ?? '')
+    ) {
+      handleOpenStatusModal(ai_course?.status ?? 'pending');
+    }
+  }, [course]);
+
+  useEffect(() => {
+    if (AICourseStatusData && AICourseStatusData.data?.course_id === course?.id) {
+      setStatus(AICourseStatusData.data?.status as IAICourseStatus);
+
+      if (AICourseStatusData.data?.status === 'completed') {
+        globalMutate((key: string) => !!key?.includes(API_ENDPOINT.COURSES), undefined, { revalidate: false });
+
+        router.push(
+          buildUrl({
+            endpoint: CREATOR_ROUTES.courseSettingUp,
+            params: { courseId: course.id },
+          })
+        );
+      }
+      setStatus(AICourseStatusData.data?.status as IAICourseStatus);
+      resetSocketData('ai_course_status');
+    }
+  }, [AICourseStatusData, router, resetSocketData, course?.id, globalMutate]);
+
+  const handleOpenStatusModal = (status: IAICourseStatus) => {
+    setOpenStatusModal(true);
+    setStatus(status);
+  };
+
+  return (
+    <div>
+      <div className="flex gap-2">
+        <Link
+          href={buildUrl({ endpoint: CREATOR_ROUTES.aiCourseDetail, params: { id: course?.id } })}
+          variant="ghost"
+          className="!px-1"
+          activeClassName=""
+        >
+          <ChevronLeft className="h-6 w-6" />
+        </Link>
+        <h2 className="giant-iheading-semibold16 md:giant-iheading-semibold24 mb-2">{tAICourse('setupCourseInfo')}</h2>
+      </div>
+      <p className="mcaption-regular14 md:mcaption-regular16">{tAICourse('setupCourseInfoDesc')}</p>
+      {course && (
+        <>
+          <CourseInfoForm className="py-4" course={course} handleSubmit={handleOpenStatusModal} />
+          <AIStatusModal status={status} open={openStatusModal} title={tAICourse('aiGenerateLoading')} />
+        </>
+      )}
+    </div>
+  );
+}

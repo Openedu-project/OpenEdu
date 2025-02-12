@@ -31,7 +31,12 @@ export function CourseOutlineForm({
   const tGeneral = useTranslations('general');
 
   const router = useRouter();
-  const generating = useMemo(() => GENERATING_STATUS.includes(course?.ai_generate_status ?? ''), [course]);
+
+  const generating = useMemo(() => GENERATING_STATUS.includes(course?.ai_course?.general_info_status ?? ''), [course]);
+  const disabledButton = useMemo(
+    () => ['completed', 'waiting', 'failed'].includes(course?.ai_generate_status ?? ''),
+    [course]
+  );
 
   const defaultValues = useMemo(() => {
     const locale = getCookieClient(process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY) ?? 'en';
@@ -88,11 +93,11 @@ export function CourseOutlineForm({
       {({ form }) => (
         <>
           <CourseFormField name="learner_info" label={tAICourseForm('learnerInfo')} required>
-            <Textarea rows={8} />
+            <Textarea rows={8} className="scrollbar" />
           </CourseFormField>
 
           <CourseFormField name="content_info" label={tAICourseForm('courseContent')} required>
-            <Textarea rows={8} />
+            <Textarea rows={8} className="scrollbar" />
           </CourseFormField>
 
           <CourseFormField
@@ -120,11 +125,7 @@ export function CourseOutlineForm({
             <Button
               type="button"
               variant="outline"
-              disabled={
-                GENERATING_STATUS.includes(course?.ai_generate_status ?? '') ||
-                course?.ai_generate_status === 'completed' ||
-                generating
-              }
+              disabled={disabledButton || generating}
               onClick={() => {
                 form.reset();
               }}
@@ -133,7 +134,7 @@ export function CourseOutlineForm({
             </Button>
             <Button
               type="submit"
-              disabled={course?.ai_generate_status === 'completed' || generating}
+              disabled={disabledButton || generating}
               loading={form.formState.isSubmitting || generating}
             >
               {form.formState.isSubmitting || generating ? tGeneral('generating') : tGeneral('generate')}

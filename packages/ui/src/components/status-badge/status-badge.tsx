@@ -23,7 +23,6 @@ const statusColorMap: Record<TStatus, BadgeProps['variant']> = {
   generating: 'default',
   pending: 'outline_warning',
   waiting: 'outline_warning',
-  setting: 'warning',
   new: 'muted',
   approved: 'success',
   rejected: 'destructive',
@@ -43,10 +42,9 @@ const statusIcon: Record<TStatus, ReactNode | null> = {
   new: null,
   approved: null,
   rejected: null,
-  generating: <Loader className="mr-1 h-4 w-4 animate-spin" />,
-  pending: <Loader className="mr-1 h-4 w-4 animate-spin" />,
-  waiting: <Loader className="mr-1 h-4 w-4 animate-spin" />,
-  setting: <RotateCcw className="mr-1 h-4 w-4" />,
+  generating: <Loader className="mr-1 h-3 w-3 animate-spin" />,
+  pending: <Loader className="mr-1 h-3 w-3 animate-spin" />,
+  waiting: <RotateCcw className="mr-1 h-3 w-3" />,
 };
 
 export function StatusBadge({

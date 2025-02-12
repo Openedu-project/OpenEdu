@@ -15,6 +15,7 @@ interface IAIStatusModal {
   description?: string;
   status?: IAIStatus;
   content?: IAIContent;
+  hasCloseIcon?: boolean;
 }
 
 export type IAIStatus = IAICourseStatus;
@@ -25,13 +26,14 @@ export default function AIStatusModal({
   title,
   description,
   content,
+  hasCloseIcon = true,
 }: IAIStatusModal) {
   const t = useTranslations('aiStatusModal');
   const renderContent = () => {
     if (['success', 'generated', 'completed'].includes(status)) {
       return (
         <>
-          <CircleCheckBig className="h-[80px] w-[80px]" color="hls(var(--positive-500))" />
+          <CircleCheckBig className="h-[80px] w-[80px]" color="hsl(var(--positive-500))" />
           {content?.success ?? <p className="mcaption-regular16 text-foreground">{t('success')}</p>}
         </>
       );
@@ -39,7 +41,7 @@ export default function AIStatusModal({
     if (status === 'failed') {
       return (
         <>
-          <TriangleAlert size={80} color="hls(var(--negative-600))" />
+          <TriangleAlert size={80} color="hsl(var(--negative-600))" />
           {content?.failed ?? <p className="mcaption-regular16 text-foreground">{t('failLoading')}</p>}
         </>
       );
@@ -54,7 +56,13 @@ export default function AIStatusModal({
   };
 
   return (
-    <Modal open={open} title={title ?? '  '} description={description ?? ' '} hasCancelButton={false} hasCloseIcon>
+    <Modal
+      open={open}
+      title={title ?? '  '}
+      description={description ?? ' '}
+      hasCancelButton={false}
+      hasCloseIcon={hasCloseIcon}
+    >
       <div className="flex flex-col items-center gap-6 p-4">{renderContent()}</div>
     </Modal>
   );
