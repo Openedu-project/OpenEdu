@@ -1,19 +1,22 @@
 'use client';
+import type { ICourseOutline } from '@oe/api/types/course/course';
 import type { ILesson } from '@oe/api/types/course/segment';
 import { createAPIUrl } from '@oe/api/utils/fetch';
+import ArrowRight2 from '@oe/assets/icons/arrow-right-2';
 import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import type { TFunction } from '@oe/i18n/types';
 import { Lock } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import type { Ref } from 'react';
+import { type Ref, useState } from 'react';
 import { useRouter } from '#common/navigation';
 import { CircleProgressBar } from '#components/circle-progress-bar';
 import { Button } from '#shadcn/button';
 import { cn } from '#utils/cn';
+import PreviewLessonModal from './preview-lesson-modal';
 
 interface IOutlineLessonProps {
   index: number;
-  completedPercentage: number;
+  completedPercentage?: number;
   courseSlug: string;
   sectionUid: string;
   isAvailable: boolean;
@@ -21,6 +24,7 @@ interface IOutlineLessonProps {
   lesson: ILesson;
   ref?: Ref<HTMLLIElement> | undefined;
   type?: 'learning' | 'detail';
+  courseData?: ICourseOutline;
 }
 
 const LESSON_COUNT_TYPES = [
@@ -77,10 +81,13 @@ export const OutlineLesson = ({
   sectionUid,
   ref,
   type = 'detail',
+  courseData,
 }: IOutlineLessonProps) => {
   const tCourse = useTranslations('courseOutline');
   const router = useRouter();
   const { title, uid } = lesson;
+
+  const [openPreviewModal, setOpenPreviewModal] = useState<boolean>(false);
 
   const handleLessonClick = () => {
     const learningPageUrl = createAPIUrl({
@@ -90,23 +97,47 @@ export const OutlineLesson = ({
 
     if (type === 'learning') {
       router.push(learningPageUrl);
+    } else if (type === 'detail') {
+      setOpenPreviewModal(true);
     }
   };
 
   return (
-    <li ref={ref}>
-      <Button variant="ghost" className={getButtonStyles(isActive, isAvailable)} onClick={handleLessonClick}>
-        {isAvailable ? <CircleProgressBar progress={completedPercentage} size="sm" /> : <Lock size={16} />}
+    <>
+      <li ref={ref}>
+        <Button variant="ghost" className={getButtonStyles(isActive, isAvailable)} onClick={handleLessonClick}>
+          {isAvailable ? (
+            completedPercentage ? (
+              <CircleProgressBar progress={completedPercentage} size="sm" />
+            ) : (
+              <ArrowRight2 width={16} height={16} color="hsl(var(--foreground))" />
+            )
+          ) : (
+            <Lock size={16} />
+          )}
 
-        <div className="flex flex-1 flex-col items-start gap-[2px]">
-          <span className="mcaption-regular10 md:mcaption-semibold12 text-foreground/60">
-            {tCourse('lesson', { index })}
-          </span>
-          <span className="mbutton-semibold12 md:mbutton-semibold14 flex-1 text-left text-foreground/90">{title}</span>
+          <div className="flex flex-1 flex-col items-start gap-[2px]">
+            <span className="mcaption-regular10 md:mcaption-semibold12 text-foreground/60">
+              {tCourse('lesson', { index })}
+            </span>
+            <span className="mbutton-semibold12 md:mbutton-semibold14 flex-1 text-left text-foreground/90">
+              {title}
+            </span>
 
-          <LessonCountDisplay lesson={lesson} tCourse={tCourse} />
-        </div>
-      </Button>
-    </li>
+            <LessonCountDisplay lesson={lesson} tCourse={tCourse} />
+          </div>
+        </Button>
+      </li>
+
+      {courseData && openPreviewModal && (
+        <PreviewLessonModal
+          isOpen={openPreviewModal}
+          lessonUid={uid}
+          sectionUid=""
+          courseData={courseData}
+          onClose={() => setOpenPreviewModal(false)}
+        />
+      )}
+    </>
   );
 };

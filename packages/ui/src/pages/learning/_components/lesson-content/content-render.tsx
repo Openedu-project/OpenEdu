@@ -41,6 +41,7 @@ export const CONTENT_RENDERERS: Record<TLessonContent, ContentRenderer> = {
             })
           }
           onlyVideoContent={props?.isOnlyContent}
+          isPreview={props?.isPreview}
         />
       );
     },
