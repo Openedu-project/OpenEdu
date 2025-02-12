@@ -1,7 +1,7 @@
-import { useTranslations } from 'next-intl';
-import type { ReactNode } from 'react';
-import { Link } from '#common/navigation';
-import { cn } from '#utils/cn';
+import { useTranslations } from "next-intl";
+import type { ReactNode } from "react";
+import { Link } from "#common/navigation";
+import { cn } from "#utils/cn";
 
 export default function Section({
   isShow = true,
@@ -18,7 +18,7 @@ export default function Section({
   viewAll?: boolean;
   url?: string;
 }) {
-  const t = useTranslations('userProfile.profile');
+  const t = useTranslations("userProfile.profile");
 
   return (
     <>
@@ -30,14 +30,18 @@ export default function Section({
             </h3>
             {viewAll && (
               <Link
-                href={url ?? ''}
-                className="mbutton-semibold16 rounded-2 border border-[#6e6e6e] px-7 py-3 shadow-shadow-2"
+                href={url ?? ""}
+                className="mbutton-semibold16 rounded-2 border border-neutral-600 px-7 py-3 shadow-shadow-2"
               >
-                {t('viewAll')}
+                {t("viewAll")}
               </Link>
             )}
           </div>
-          {content && <div className="no-scrollbar flex w-full flex-row gap-6 overflow-y-auto py-6">{content}</div>}
+          {content && (
+            <div className="no-scrollbar flex w-full flex-row gap-6 overflow-y-auto py-6">
+              {content}
+            </div>
+          )}
         </div>
       )}
     </>

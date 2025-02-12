@@ -39,7 +39,7 @@ export const formatSize = (size = 0): string => {
 export const createFile = (file: IFileResponse | FileType): FileType => {
   return {
     ...file,
-    fileId: (file as FileType).fileId ?? (file as IFileResponse).id ?? uniqueID(),
+    fileId: (file as FileType)?.fileId ?? (file as IFileResponse)?.id ?? uniqueID(),
     status: 'finished',
   };
 };

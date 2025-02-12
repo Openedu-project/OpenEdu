@@ -241,6 +241,7 @@ export const API_ENDPOINT = {
   LAUNCHPADS_MY_LAUNCHPAD: '/api/v1/launchpads/investments/me',
   LAUNCHPADS_CREATE: '/api/v1/launchpads/create',
   LAUNCHPADS_INVESTMENTS: '/api/v1/investments',
+  LAUNCHPADS_POOLS_ID: '/api/v1/launchpads/:id/pools',
 
   // WS
   WEBSOCKET: '/websocket',

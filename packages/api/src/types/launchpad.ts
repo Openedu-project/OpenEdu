@@ -284,3 +284,10 @@ export type LaunchpadStatus =
   | 'waiting'
   | 'got_revenue'
   | 'got_refunded';
+
+export type ILaunchpadTabsType =
+  | 'general-information'
+  | 'funding-goal'
+  | 'voting-plan'
+  | 'owner-and-collaborators'
+  | 'payment-method';

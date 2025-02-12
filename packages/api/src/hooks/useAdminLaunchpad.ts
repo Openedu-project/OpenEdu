@@ -4,6 +4,7 @@ import {
   getAdminLaunchpadDetailService,
   getAdminLaunchpadInvestmentService,
   getAdminLaunchpadsService,
+  patchLaunchpadDetailService,
   postAdminCancelLaunchpadsService,
   postAdminDecideVotingLaunchpadsService,
   postAdminPublishLaunchpadsService,
@@ -18,6 +19,7 @@ import type {
   IStartFundingTimeLaunchpadPayload,
 } from '#types/admin-launchpad';
 import type { IFilter } from '#types/filter';
+import type { ICreateLaunchpadRequest } from '#types/launchpad';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
 
@@ -150,6 +152,27 @@ export const usePutAdminCancelPublishLaunchpads = (id: string) => {
     triggerPutAdminCancelPublishLaunchpads: trigger,
     isLoadingPutAdminCancelPublishLaunchpads: isMutating,
     errorPutAdminCancelPublishLaunchpads: error,
+  };
+};
+
+export const usePatchLaunchpadDetail = (id: string) => {
+  const url = createAPIUrl({
+    endpoint: API_ENDPOINT.LAUNCHPADS_ID,
+    params: {
+      id,
+    },
+  });
+
+  const { trigger, isMutating, error } = useSWRMutation(
+    url,
+    async (endpoint: string, { arg }: { arg: ICreateLaunchpadRequest }) =>
+      patchLaunchpadDetailService(endpoint, { params: { ...arg, id } })
+  );
+
+  return {
+    triggerPatchLaunchpadDetail: trigger,
+    isLoadingPatchLaunchpadDetail: isMutating,
+    errorPatchLaunchpadDetail: error,
   };
 };
 

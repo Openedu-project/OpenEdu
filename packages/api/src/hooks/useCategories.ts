@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { getCategoriesTreeService } from '#services/categories';
+import { getCategoriesService, getCategoriesTreeService } from '#services/categories';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
 
@@ -12,5 +12,18 @@ export const useCategoriesTree = (queryParams?: Record<string, string | boolean>
     categoriesTreeError: error,
     categoriesTreeIsLoading: isLoading,
     categoriesTreeMutate: mutate,
+  };
+};
+export const useCategories = (queryParams?: Record<string, string | boolean>) => {
+  const { data, error, isLoading, mutate } = useSWR(
+    createAPIUrl({ endpoint: API_ENDPOINT.CATEGORIES, queryParams }),
+    getCategoriesService
+  );
+
+  return {
+    categories: data,
+    categoriesError: error,
+    categoriesIsLoading: isLoading,
+    categoriesMutate: mutate,
   };
 };
