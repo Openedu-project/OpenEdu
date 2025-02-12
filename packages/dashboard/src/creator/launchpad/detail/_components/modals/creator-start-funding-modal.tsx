@@ -10,9 +10,14 @@ import { useCallback } from 'react';
 interface ICreatorStartFundingLaunchpadModal {
   onSubmit: (value: IStartFundingTimeLaunchpadPayload) => void;
   onClose: () => void;
+  isLoading: boolean;
 }
 
-export default function CreatorStartFundingLaunchpadModal({ onSubmit, onClose }: ICreatorStartFundingLaunchpadModal) {
+export default function CreatorStartFundingLaunchpadModal({
+  onSubmit,
+  onClose,
+  isLoading,
+}: ICreatorStartFundingLaunchpadModal) {
   const t = useTranslations('creatorLaunchpad.startFundingModal');
 
   const handleSubmit = useCallback(
@@ -39,6 +44,7 @@ export default function CreatorStartFundingLaunchpadModal({ onSubmit, onClose }:
           type: 'submit',
           label: t('confirm'),
           variant: 'default',
+          loading: isLoading,
         },
       ]}
       validationSchema={startFundingSchema}

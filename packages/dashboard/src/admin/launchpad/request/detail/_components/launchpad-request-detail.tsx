@@ -63,13 +63,14 @@ async function FundingCard({ data }: LaunchpadInfoProps) {
     <Card className="w-full bg-gray-50">
       <CardContent className="p-6">
         <div className="flex flex-col items-center justify-between">
-          <div className="relative h-[122px] w-[200px]">
-            <Image
-              src={data.thumbnail?.url}
-              alt={t('visualization')}
-              fill
-              containerHeight={122}
-              className="w-full rounded-md object-cover"
+          <div className="relative h-[180px] w-full">
+            <iframe
+              src={data?.preview_video?.url}
+              title={data?.preview_video?.name}
+              loading="lazy"
+              className="aspect-video h-full w-full rounded-lg border-none pt-2"
+              allow="fullscreen"
+              allowFullScreen
             />
           </div>
           <div className="mt-5 flex w-full justify-start">

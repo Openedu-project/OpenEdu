@@ -5,9 +5,10 @@ import { useCallback } from 'react';
 interface ICreatorDeleteLaunchpadModal {
   onSubmit: () => void;
   onClose: () => void;
+  isLoading: boolean;
 }
 
-export default function CreatorDeleteLaunchpadModal({ onSubmit, onClose }: ICreatorDeleteLaunchpadModal) {
+export default function CreatorDeleteLaunchpadModal({ onSubmit, onClose, isLoading }: ICreatorDeleteLaunchpadModal) {
   const t = useTranslations('creatorLaunchpad.deleteLaunchpadModal');
 
   const handleSubmit = useCallback(() => {
@@ -30,6 +31,7 @@ export default function CreatorDeleteLaunchpadModal({ onSubmit, onClose }: ICrea
           type: 'button',
           label: t('delete'),
           variant: 'destructive',
+          loading: isLoading,
           onClick: () => handleSubmit(),
         },
       ]}

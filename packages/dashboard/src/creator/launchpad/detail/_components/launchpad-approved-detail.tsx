@@ -18,6 +18,7 @@ import { CreatorRemoveRequestLaunchpadButton } from './actions/creator-remove-re
 import { CreatorStartFundingLaunchpadButton } from './actions/creator-start-funding-button';
 import { CreatorStartVotingLaunchpadButton } from './actions/creator-start-voting-button';
 import { ContactCopyButton } from './creator-contact-copy-field';
+import FundingStats from './creator-funding-chart';
 
 interface LaunchpadInfoProps {
   data: IAdminLaunchpadDetailRes;
@@ -94,30 +95,23 @@ async function LaunchpadInfo({ data }: LaunchpadInfoProps) {
   );
 }
 
-async function FundingCard({ data }: LaunchpadInfoProps) {
-  const t = await getTranslations('creatorLaunchpad.fundingCard');
-
+function FundingCard({ data }: LaunchpadInfoProps) {
   return (
     <Card className="w-full bg-gray-50">
-      <CardContent className="p-6">
+      <CardContent className="p-4">
         <div className="flex flex-col items-center justify-between">
-          <div className="relative h-[122px] w-[200px]">
-            <Image
-              src={data.thumbnail?.url}
-              alt={t('visualization')}
-              fill
-              containerHeight={122}
-              className="w-full rounded-md object-cover"
+          <div className="relative h-[180px] w-full">
+            <iframe
+              src={data?.preview_video?.url}
+              title={data?.preview_video?.name}
+              loading="lazy"
+              className="aspect-video h-full w-full rounded-lg border-none pt-2"
+              allow="fullscreen"
+              allowFullScreen
             />
           </div>
           <div className="mt-5 flex w-full justify-start">
-            <p className="giant-iheading-semibold28">
-              {t('amount', {
-                amount: formatNumber(data.funding_goal.target_funding),
-                currency: data.funding_goal.currency,
-              })}
-              <span className="giant-iheading-regular16 mb-1 ml-1">{t('target')}</span>
-            </p>
+            <FundingStats data={data} />
           </div>
         </div>
       </CardContent>

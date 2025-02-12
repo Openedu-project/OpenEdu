@@ -3,6 +3,9 @@ import { usePostAdminPublishLaunchpads } from '@oe/api/hooks/useAdminLaunchpad';
 import type { CreatorLaunchpadStatusType } from '@oe/api/types/admin-launchpad';
 import { API_ENDPOINT } from '@oe/api/utils/endpoints';
 import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
+import { CREATOR_ROUTES } from '@oe/core/utils/routes';
+import { buildUrl } from '@oe/core/utils/url';
+import { Link } from '@oe/ui/common/navigation';
 import { Button } from '@oe/ui/shadcn/button';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
@@ -77,7 +80,7 @@ const Badge = ({
 
   return (
     <span
-      className={`giant-iheading-semibold16 flex min-w-[120px] items-center justify-center rounded-[40px] px-6 py-2 ${styles.bg} ${styles.text}`}
+      className={`giant-iheading-semibold16 flex h-10 min-w-[120px] items-center justify-center rounded-[40px] px-6 py-2 ${styles.bg} ${styles.text}`}
     >
       {t(status)}
     </span>
@@ -133,7 +136,14 @@ export default function CreatorLaunchpadDetailStatus({
     <>
       {status === 'draft' ? (
         <div className="flex gap-2">
-          <Button variant="secondary">{t('editLaunchpad')}</Button>
+          <Link
+            href={buildUrl({
+              endpoint: CREATOR_ROUTES.creatorCreateLaunchpadDetail,
+              params: { id },
+            })}
+          >
+            <Button variant="secondary">{t('editLaunchpad')}</Button>
+          </Link>
           <Button onClick={handlePublishLaunchpad}>{t('publishLaunchpad')}</Button>
         </div>
       ) : (

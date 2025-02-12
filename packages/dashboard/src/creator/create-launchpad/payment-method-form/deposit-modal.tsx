@@ -45,9 +45,9 @@ const DepositModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button type="button" className="text-primary underline">
+        <button type="button" className="text-primary underline">
           {tLaunchpad('paymentMethod.deposit')}
-        </Button>
+        </button>
       </DialogTrigger>
       <DialogContent className="h-fit">
         <DialogHeader>

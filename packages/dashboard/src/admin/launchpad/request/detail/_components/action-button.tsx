@@ -24,7 +24,7 @@ export function LaunchpadDetailActionButton({ orderId }: LaunchpadDetailActionBu
   const [isOpenApproveModal, setIsOpenApproveModal] = useState<boolean>(false);
   const [isOpenRejectModal, setIsOpenRejectModal] = useState<boolean>(false);
 
-  const { triggerApprove } = useApprove(orderId ?? '');
+  const { triggerApprove, isLoadingApprove } = useApprove(orderId ?? '');
   const { triggerReject } = useReject(orderId ?? '');
 
   const handleOpenApproveModal = useCallback(() => {
@@ -86,7 +86,13 @@ export function LaunchpadDetailActionButton({ orderId }: LaunchpadDetailActionBu
       <Button variant="default" onClick={handleOpenApproveModal}>
         {t('approve')}
       </Button>
-      {isOpenApproveModal && <ApproveLaunchpadModal onSubmit={handleApprove} onClose={handleCloseApproveModal} />}
+      {isOpenApproveModal && (
+        <ApproveLaunchpadModal
+          isLoading={isLoadingApprove}
+          onSubmit={handleApprove}
+          onClose={handleCloseApproveModal}
+        />
+      )}
 
       {isOpenRejectModal && <RejectLaunchpadModal onSubmit={handleReject} onClose={handleCloseRejectModal} />}
     </div>

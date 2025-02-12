@@ -1,47 +1,40 @@
-"use client";
+'use client';
 
-import type { ILaunchpad } from "@oe/api/types/launchpad";
-import { createAPIUrl } from "@oe/api/utils/fetch";
-import type { HTTPErrorMetadata } from "@oe/api/utils/http-error";
-import {
-  CREATE_LAUNCHPAD_TABS,
-  LAUNCHPAD_STATUS,
-} from "@oe/api/utils/launchpad";
-import { CREATOR_ROUTES } from "@oe/core/utils/routes";
-import { useRouter } from "@oe/ui/common/navigation";
-import { Breadcrumb } from "@oe/ui/components/breadcrumb";
-import type { INestedFormsValues } from "@oe/ui/components/form-wrapper";
-import { Spinner } from "@oe/ui/components/spinner";
-import { ScrollArea, ScrollBar } from "@oe/ui/shadcn/scroll-area";
-import { toast } from "@oe/ui/shadcn/sonner";
-import { Tabs, TabsContent } from "@oe/ui/shadcn/tabs";
-import { useTranslations } from "next-intl";
-import { useParams, usePathname } from "next/navigation";
-import { useCallback, useEffect, useMemo } from "react";
-import { useChangeLaunchpadTab } from "./_hooks/useChangeLaunchpadTab";
-import useLaunchpadDetail from "./_hooks/useLaunchpadDetail";
-import BasicInfoBlock from "./basic-info-block/basic-info-block";
-import FundingGoalBlock from "./funding-goal-form/funding-goal-form";
-import GeneralInfoBlock from "./general-info-form/general-info-form";
-import { LaunchpadNavMenu } from "./nav-menu/nav-menu";
-import OwnerAndCollaboratorsBlock from "./owner-and-collabs-form/owner-and-collabs-form";
-import PaymentMethodBlock from "./payment-method-form/payment-method-form";
-import VotingPlanBlock from "./voting-plan-form/voting-plan-block";
+import type { ILaunchpad } from '@oe/api/types/launchpad';
+import { createAPIUrl } from '@oe/api/utils/fetch';
+import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
+import { CREATE_LAUNCHPAD_TABS, LAUNCHPAD_STATUS } from '@oe/api/utils/launchpad';
+import { CREATOR_ROUTES, LAUNCHPAD_ROUTES } from '@oe/core/utils/routes';
+import { useRouter } from '@oe/ui/common/navigation';
+import { Breadcrumb } from '@oe/ui/components/breadcrumb';
+import type { INestedFormsValues } from '@oe/ui/components/form-wrapper';
+import { Spinner } from '@oe/ui/components/spinner';
+import { ScrollArea, ScrollBar } from '@oe/ui/shadcn/scroll-area';
+import { toast } from '@oe/ui/shadcn/sonner';
+import { Tabs, TabsContent } from '@oe/ui/shadcn/tabs';
+import { useTranslations } from 'next-intl';
+import { useParams, usePathname } from 'next/navigation';
+import { useCallback, useEffect, useMemo } from 'react';
+import { useChangeLaunchpadTab } from './_hooks/useChangeLaunchpadTab';
+import useLaunchpadDetail from './_hooks/useLaunchpadDetail';
+import BasicInfoBlock from './basic-info-block/basic-info-block';
+import FundingGoalBlock from './funding-goal-form/funding-goal-form';
+import GeneralInfoBlock from './general-info-form/general-info-form';
+import { LaunchpadNavMenu } from './nav-menu/nav-menu';
+import OwnerAndCollaboratorsBlock from './owner-and-collabs-form/owner-and-collabs-form';
+import PaymentMethodBlock from './payment-method-form/payment-method-form';
+import VotingPlanBlock from './voting-plan-form/voting-plan-block';
 
 export default function CreateLaunchpadLayout() {
   const { launchpadId: id } = useParams();
-  const t = useTranslations("creatorSettingLaunchpad");
-  const tBreadcrumb = useTranslations("creatorSettingLaunchpad.breadcrumb");
-  const tError = useTranslations("errors");
+  const t = useTranslations('creatorSettingLaunchpad');
+  const tBreadcrumb = useTranslations('creatorSettingLaunchpad.breadcrumb');
+  const tError = useTranslations('errors');
 
   const router = useRouter();
   const pathName = usePathname();
-  const {
-    launchpad,
-    isLoadingAdminLaunchpadDetail,
-    triggerPatchLaunchpadDetail,
-    mutateAdminLaunchpadDetail,
-  } = useLaunchpadDetail();
+  const { launchpad, isLoadingAdminLaunchpadDetail, triggerPatchLaunchpadDetail, mutateAdminLaunchpadDetail } =
+    useLaunchpadDetail();
 
   const { currentTab, handleTabChange } = useChangeLaunchpadTab();
 
@@ -52,18 +45,18 @@ export default function CreateLaunchpadLayout() {
     const isLaunchpadDraft = launchpad.status === LAUNCHPAD_STATUS.DRAFT;
 
     if (!isLaunchpadDraft) {
-      router.push("/");
+      router.push('/');
     }
   }, [launchpad, router]);
 
   const menuBreadcrumbs = useMemo(() => {
     const breadcrumbs = [
       {
-        href: "#",
-        label: tBreadcrumb("launchpads"),
+        href: LAUNCHPAD_ROUTES.launchpad as string,
+        label: tBreadcrumb('launchpads'),
       },
     ];
-    const pathParts = pathName.split("/");
+    const pathParts = pathName.split('/');
     const finalItem = pathParts.at(-1);
 
     if (id) {
@@ -73,7 +66,7 @@ export default function CreateLaunchpadLayout() {
             endpoint: `${CREATOR_ROUTES.creatorCreateLaunchpadDetail}/${finalItem}`,
             params: { id },
           }),
-          label: tBreadcrumb("detail"),
+          label: tBreadcrumb('detail'),
         });
       }
     }
@@ -96,34 +89,23 @@ export default function CreateLaunchpadLayout() {
         const response = await triggerPatchLaunchpadDetail(updateData);
 
         if (response) {
-          toast.success(t("saved"));
+          toast.success(t('saved'));
           await mutateAdminLaunchpadDetail();
         }
         if (nextTab) {
           handleTabChange(nextTab);
         }
       } catch (error) {
-        console.error("Update Launchpad Block error", error);
+        console.error('Update Launchpad Block error', error);
         toast.error(tError((error as HTTPErrorMetadata).code.toString()));
       }
     },
-    [
-      triggerPatchLaunchpadDetail,
-      t,
-      tError,
-      handleTabChange,
-      mutateAdminLaunchpadDetail,
-    ]
+    [triggerPatchLaunchpadDetail, t, tError, handleTabChange, mutateAdminLaunchpadDetail]
   );
 
   return (
     <div className="block w-full">
-      <Tabs
-        defaultValue="general-information"
-        value={currentTab}
-        onValueChange={handleTabChange}
-        className="w-full"
-      >
+      <Tabs defaultValue="general-information" value={currentTab} onValueChange={handleTabChange} className="w-full">
         <div className="flex h-[calc(100vh-var(--header-small-height))] flex-col md:h-[calc(100vh-var(--header-height))]">
           <div className="mb-3 flex flex-none flex-col gap-1 rounded-b-4 rounded-b-radius-m bg-white px-6 pb-0 shadow-shadow-5">
             <div className="flex justify-between">

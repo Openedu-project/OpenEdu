@@ -52,8 +52,9 @@ const PaymentMethodBlock = () => {
               title={tLaunchpad('fee')}
               content={
                 <div className="text-center">
-                  {tLaunchpad.rich('depositModal', {
-                    modal: () => <DepositModal />, // Wrap in function to satisfy type
+                  {tLaunchpad('depositModal.promptBefore')} <DepositModal />
+                  &nbsp;
+                  {tLaunchpad.rich('depositModal.promptAfter', {
                     amount: 1,
                   })}
                 </div>

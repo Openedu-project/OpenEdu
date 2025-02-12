@@ -64,6 +64,7 @@ export interface ILaunchpad {
   total_funded?: number;
   total_pledged?: number;
   total_backers?: number;
+  total_refunded: null;
   voting_stats?: {
     approved: number;
     declined: number;

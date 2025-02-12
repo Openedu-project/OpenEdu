@@ -128,7 +128,7 @@ export default function AffiliateManagementContent() {
           const item = row.original;
 
           return (
-            <span className="text-[#2BA830]">
+            <span className="text-positive-600">
               {formatNumber(
                 Number.parseFloat(item?.ref1_amount ?? 0) +
                   Number.parseFloat(item?.ref2_amount ?? 0) +

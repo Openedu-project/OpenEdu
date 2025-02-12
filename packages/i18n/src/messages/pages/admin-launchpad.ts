@@ -238,7 +238,8 @@ export const adminLaunchpadMessages = {
       amount: 'Available Amount',
       depositSuccess: 'Deposit 1 NEAR is done! You are free to publish!',
       depositModal: {
-        prompt: 'Please {modal} {amount} NEAR to proceed the launchpad publishing!',
+        promptBefore: 'Please',
+        promptAfter: '{amount} NEAR to proceed the launchpad publishing!',
       },
       depositModalDialog: {
         title: 'Deposit',
