@@ -1,20 +1,22 @@
 'use client';
+import { useGetCourseById, useGetSegments } from '@oe/api/hooks/useCourse';
 import { CREATOR_ROUTES } from '@oe/core/utils/routes';
 import { DashboardHeaderCard } from '@oe/ui/common/layout';
 // import { NavigationDialog } from "@oe/ui/components/dialog";
 // import { useFormContext } from "@oe/ui/components/form-wrapper";
 import { Badge } from '@oe/ui/shadcn/badge';
-import { useCourse } from '../_hooks/useCourse';
-import { useSegments } from '../_hooks/useSegments';
+import { useParams } from 'next/navigation';
+// import { useCourse } from '../_hooks/useCourse';
+// import { useSegments } from '../_hooks/useSegments';
 import CourseNameForm from './course-name-form';
 import CourseTabs from './course-tabs';
 
 export function CourseDetailHeader() {
-  // const { courseId } = useParams<{ courseId: string }>();
-  const { course } = useCourse();
-  const { segments } = useSegments();
-  // const { course } = useGetCourseOutline(courseId);
-  // const { hasUnsavedChanges } = useFormContext();
+  const { courseId } = useParams<{ courseId: string }>();
+  const { course } = useGetCourseById(courseId);
+  const { segments } = useGetSegments({
+    course_id: courseId as string,
+  });
 
   return (
     <DashboardHeaderCard
@@ -25,16 +27,10 @@ export function CourseDetailHeader() {
         <CourseNameForm />
         <div className="flex items-center gap-2">
           <Badge variant="outline_primary">v{course?.version}.0</Badge>
-          {/* <Button size="xs">Next</Button> */}
-          {/* <SubmitFormsButton size="xs">Save & Next</SubmitFormsButton> */}
         </div>
       </div>
 
       <CourseTabs segments={segments} />
-      {/* <NavigationDialog
-        isEnabled={hasUnsavedChanges}
-        hasUnsavedChanges={hasUnsavedChanges}
-      /> */}
     </DashboardHeaderCard>
   );
 }

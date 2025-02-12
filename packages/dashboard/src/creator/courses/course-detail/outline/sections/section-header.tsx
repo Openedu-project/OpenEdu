@@ -22,15 +22,14 @@ import { Check, CopyIcon, PencilLine, Trash2 } from 'lucide-react';
 import { MenuIcon } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
-import { useOutlineStore } from '../../_store/useOutlineStore';
 import { COURSE_DETAIL_FORM_IDS } from '../../_utils/constants';
+import { SectionsDrawer } from './sections-drawer';
 
 export default function SectionHeader() {
   const { courseId, sectionId } = useParams<{
     courseId: string;
     sectionId: string;
   }>();
-  const { openSectionDrawer, setOpenSectionDrawer } = useOutlineStore();
   const router = useRouter();
   const { segments: sections, mutateSegments } = useGetSegments({
     course_id: courseId as string,
@@ -152,14 +151,18 @@ export default function SectionHeader() {
   return (
     <div className="flex items-center gap-4 rounded-md border bg-background p-2">
       <div className="flex flex-1 items-center gap-2">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setOpenSectionDrawer(!openSectionDrawer)}
-          title="Open Section Drawer"
-        >
-          <MenuIcon className="h-4 w-4" />
-        </Button>
+        <SectionsDrawer
+          trigger={
+            <Button
+              variant="ghost"
+              size="icon"
+              // onClick={() => setOpenSectionDrawer(!openSectionDrawer)}
+              title="Open Section Drawer"
+            >
+              <MenuIcon className="h-4 w-4" />
+            </Button>
+          }
+        />
         {edit ? (
           <FormWrapper
             id={COURSE_DETAIL_FORM_IDS.sectionHeader}

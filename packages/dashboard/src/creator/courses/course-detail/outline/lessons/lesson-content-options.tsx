@@ -10,9 +10,10 @@ import { z } from '@oe/api/utils/zod';
 import { RichTextEditor } from '@oe/ui/components/rich-text';
 import type { SelectboxOption } from '@oe/ui/components/selectbox';
 import { Uploader } from '@oe/ui/components/uploader';
+import { Button } from '@oe/ui/shadcn/button';
 import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
 import { Input } from '@oe/ui/shadcn/input';
-import { Code2Icon, FileIcon, FileVideoIcon, MessageCircleQuestion, TextIcon } from 'lucide-react';
+import { Code2Icon, FileIcon, FileVideoIcon, MessageCircleQuestion, ScrollText, Video } from 'lucide-react';
 import type { ReactNode } from 'react';
 
 export interface LessonContentOption extends SelectboxOption {
@@ -29,10 +30,10 @@ export const tabOptions: Record<TLessonContent, LessonContentOption> = {
     id: 'text',
     value: 'text',
     label: 'Text',
-    icon: <TextIcon className="h-4 w-4" />,
+    icon: <ScrollText className="h-4 w-4" />,
     schema: textContentSchema,
     content: (content: ILessonContent, order: number) => (
-      <FormFieldWithLabel name={`contents.${order}.content`} showErrorMessage>
+      <FormFieldWithLabel key={content.id} name={`contents.${order}.content`} showErrorMessage>
         <RichTextEditor
           key={content.id}
           className="h-full rounded-none border-none"
@@ -49,8 +50,12 @@ export const tabOptions: Record<TLessonContent, LessonContentOption> = {
     icon: <FileVideoIcon className="h-4 w-4" />,
     schema: videoContentSchema,
     content: (content: ILessonContent, order: number) => (
-      <FormFieldWithLabel name={`contents.${order}.files`} showErrorMessage>
-        <Uploader key={content.id} accept="video/*" listType="picture" fileListVisible={false} />
+      <FormFieldWithLabel key={content.id} name={`contents.${order}.files`} showErrorMessage>
+        <Uploader key={content.id} accept="video/*" listType="text" maxSizeBytes={1024 * 1024 * 5120}>
+          <Button variant="outline" className="h-full w-full">
+            <Video />
+          </Button>
+        </Uploader>
       </FormFieldWithLabel>
     ),
   },
@@ -61,8 +66,14 @@ export const tabOptions: Record<TLessonContent, LessonContentOption> = {
     icon: <FileIcon className="h-4 w-4" />,
     schema: pdfContentSchema,
     content: (content: ILessonContent, order: number) => (
-      <FormFieldWithLabel name={`contents.${order}.files`} showErrorMessage>
-        <Uploader key={content.id} accept=".pdf" listType="picture" fileListVisible={false} />
+      <FormFieldWithLabel key={content.id} name={`contents.${order}.files`} showErrorMessage>
+        <Uploader
+          key={content.id}
+          accept=".pdf"
+          listType="text"
+          maxSizeBytes={1024 * 1024 * 5120} // 5GB
+          className="min-h-auto"
+        />
       </FormFieldWithLabel>
     ),
   },
@@ -73,7 +84,7 @@ export const tabOptions: Record<TLessonContent, LessonContentOption> = {
     icon: <Code2Icon className="h-4 w-4" />,
     schema: embeddedContentSchema,
     content: (content: ILessonContent, order: number) => (
-      <FormFieldWithLabel name={`contents.${order}.content`} showErrorMessage>
+      <FormFieldWithLabel key={content.id} name={`contents.${order}.content`} showErrorMessage>
         <Input key={content.id} type="text" placeholder="Enter embed URL" />
       </FormFieldWithLabel>
     ),
@@ -85,7 +96,7 @@ export const tabOptions: Record<TLessonContent, LessonContentOption> = {
     icon: <MessageCircleQuestion className="h-4 w-4" />,
     schema: z.object({}),
     content: (content: ILessonContent, order: number) => (
-      <FormFieldWithLabel name={`contents.${order}.quizzes`} showErrorMessage>
+      <FormFieldWithLabel key={content.id} name={`contents.${order}.quizzes`} showErrorMessage>
         {/* <QuizEditor /> */}
         {content.quizzes?.map(quiz => (
           <div key={quiz.id}>

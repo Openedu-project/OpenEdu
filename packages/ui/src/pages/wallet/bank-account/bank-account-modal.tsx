@@ -3,7 +3,6 @@ import type { IBankAccountValue } from '@oe/api/schemas/wallet';
 import type { z } from '@oe/api/utils/zod';
 import { useTranslations } from 'next-intl';
 import { Input } from '#components/dynamic-form/form-components/input';
-import { InputNumber } from '#components/input-number';
 import { Modal, type ModalProps } from '#components/modal';
 import { FormFieldWithLabel } from '#shadcn/form';
 // import { Switch } from "#shadcn/switch";
@@ -40,7 +39,7 @@ export const BankAccountModal = ({ trigger, ...props }: Partial<ModalProps<z.Zod
           name="account_number"
           label={t('form.formLabels.accountNumber')}
           required
-          render={({ field }) => <InputNumber {...field} placeholder={t('form.placeholders.accountNumber')} />}
+          render={({ field }) => <Input {...field} placeholder={t('form.placeholders.accountNumber')} />}
         />
 
         <FormFieldWithLabel

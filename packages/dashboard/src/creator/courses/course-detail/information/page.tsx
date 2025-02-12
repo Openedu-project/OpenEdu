@@ -1,7 +1,8 @@
 'use client';
+import { useGetCourseById } from '@oe/api/hooks/useCourse';
 import { type ICreateCourse, courseFormSchema } from '@oe/api/schemas/courses/createCourseSchema';
 import { FormWrapper } from '@oe/ui/components/form-wrapper';
-import { useCourse } from '../_hooks/useCourse';
+import { useParams } from 'next/navigation';
 import { COURSE_DETAIL_FORM_IDS } from '../_utils/constants';
 import Category from './category';
 import Description from './description';
@@ -13,7 +14,8 @@ import SupportChannels from './support-channels';
 import Thumbnail from './thumbnail';
 
 export default function CourseDetailInformationPage() {
-  const { course } = useCourse();
+  const { courseId } = useParams<{ courseId: string }>();
+  const { course } = useGetCourseById(courseId);
 
   return (
     <div className="scrollbar mx-auto h-full max-w-[900px] overflow-auto px-1 py-4">

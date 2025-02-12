@@ -14,8 +14,15 @@ import { PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
+import type { ReactNode } from 'react';
 
-export function LessonsPanel() {
+export function LessonsPanel({
+  className,
+  closeButton,
+}: {
+  className?: string;
+  closeButton?: ReactNode;
+}) {
   const tOutline = useTranslations('courses.outline');
   // const {
   //   activeLesson,
@@ -24,6 +31,7 @@ export function LessonsPanel() {
   //   // setActiveLessons,
   //   // setActiveLesson,
   // } = useOutlineStore();
+  // const { openLessonDrawer } = useOutlineStore();
   const router = useRouter();
   const { courseId, sectionId, lessonId } = useParams<{
     courseId: string;
@@ -116,19 +124,27 @@ export function LessonsPanel() {
   };
 
   return (
-    <div className="scrollbar flex w-[280px] shrink-0 cursor-pointer flex-col gap-2 overflow-y-auto px-1">
-      <Button
-        variant="outline"
-        className="flex w-full items-center justify-center gap-2 text-blue-600 hover:bg-background/80 hover:text-primary/80"
-        // size="sm"
-        onClick={handleAddLesson}
-        loading={loading}
-        disabled={loading}
-        title="Add Lesson"
-      >
-        <PlusIcon className="h-4 w-4" />
-        {tOutline('addLesson')}
-      </Button>
+    <div
+      className={cn(
+        'flex h-full w-[300px] shrink-0 cursor-pointer flex-col gap-2 overflow-y-auto bg-background p-0',
+        className
+      )}
+    >
+      <div className="p-4 pb-0">
+        <Button
+          variant="outline"
+          className="flex w-full items-center justify-center gap-2 text-blue-600 hover:bg-background/80 hover:text-primary/80"
+          // size="sm"
+          onClick={handleAddLesson}
+          loading={loading}
+          disabled={loading}
+          title="Add Lesson"
+        >
+          <PlusIcon className="h-4 w-4" />
+          {tOutline('addLesson')}
+        </Button>
+        {closeButton}
+      </div>
       <DndSortable<ILesson, unknown>
         data={activeSection?.lessons?.sort((a, b) => a.order - b.order) || []}
         dataConfig={{
@@ -136,13 +152,13 @@ export function LessonsPanel() {
           type: 'array',
           direction: 'vertical',
         }}
-        className="flex flex-col gap-2"
+        className="scrollbar flex flex-col gap-2 overflow-y-auto p-4 pt-0"
         loading={sorting}
         renderConfig={{
           renderItem: ({ item }) => (
             <div
               className={cn(
-                'flex items-center gap-2 rounded-md border border-transparent bg-background p-2 ',
+                'flex items-center gap-2 rounded-md border bg-background p-2 ',
                 item?.original.id === lessonId && 'border-primary',
                 !item?.original.title && 'border-destructive'
               )}
