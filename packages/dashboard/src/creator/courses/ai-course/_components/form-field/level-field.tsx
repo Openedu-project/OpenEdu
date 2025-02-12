@@ -19,7 +19,12 @@ export function LevelField() {
 
   return (
     <CourseFormField name="level_id" label={tAICourse('courseLevel')}>
-      <Autocomplete options={levels ?? []} getOptionLabel={level => level.name} getOptionValue={level => level.id} />
+      <Autocomplete
+        options={levels ?? []}
+        getOptionLabel={val => (typeof val === 'string' ? levels?.find(level => level.id === val)?.name : val.name)}
+        getOptionValue={level => level?.id ?? level}
+        isGetCustomValue
+      />
     </CourseFormField>
   );
 }

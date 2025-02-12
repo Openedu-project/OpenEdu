@@ -1,5 +1,6 @@
 import { buildUrl } from '@oe/core/utils/url';
 import type { ICreateBaseCourse, ICreateYoutubeCourse } from '#schemas/courses/createCourseSchema';
+import type { IAICourseRequest } from '#types/course/ai-course';
 import type { ICourseCategory } from '#types/course/category';
 import type {
   ICourse,
@@ -165,10 +166,10 @@ export const createCourseService = async (url: string | undefined, payload: ICre
 
 export const createAICourseService = async (
   url: string | undefined,
-  payload: ICreateYoutubeCourse,
+  payload: ICreateYoutubeCourse | IAICourseRequest,
   init?: RequestInit
 ) => {
-  const response = await postAPI<ICourse, ICreateYoutubeCourse>(url ?? API_ENDPOINT.COURSES_AI, payload, init);
+  const response = await postAPI<ICourse, ICreateYoutubeCourse | IAICourseRequest>(url ?? API_ENDPOINT.COURSES_AI, payload, init);
   return response.data;
 };
 

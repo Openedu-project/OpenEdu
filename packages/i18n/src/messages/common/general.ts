@@ -90,5 +90,7 @@ export const generalMessages = {
     viewAll: 'View all',
     approve: 'Approve',
     reject: 'Reject',
+    generate: 'Generate',
+    generating: 'Generating',
   },
 };

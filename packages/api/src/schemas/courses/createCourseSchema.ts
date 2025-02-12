@@ -90,3 +90,20 @@ export const courseFormSchema = z.object({
 });
 
 export interface ICreateCourse extends z.infer<typeof courseFormSchema> {}
+
+export const courseOutlineSchema = z.object({
+  learner_info: z.string().min(1, { message: 'courses.formValidation.leanerInfo' }),
+  content_info: z.string().min(1, { message: 'courses.formValidation.contentInfo' }),
+  material_file: fileResponseScheme.optional(),
+  level_id: z.string().optional(),
+  language: z.string(),
+  duration_type: z.enum(['day', 'week']),
+  duration: z.preprocess(Number, z.number().min(1, 'courses.formValidation.duration')),
+
+  study_load: z.preprocess(
+    Number,
+    z.number().min(1, 'courses.formValidation.studyLoad').max(24, 'courses.formValidation.studyLoad')
+  ),
+});
+
+export type ICreateAICourseOutline = z.infer<typeof courseOutlineSchema>;

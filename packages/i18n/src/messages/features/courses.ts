@@ -100,6 +100,8 @@ export const coursesMessages = {
       sectionTitleRequired: 'Section title is required',
       duration: 'Duration must be greater than 0',
       studyLoad: 'Study load must be between 1 to 24 hours',
+      leanerInfo: 'Learner Infomation is required',
+      contentInfo: 'Content Infomation is required',
     },
     information: {
       descriptionTitle: 'Description',
@@ -157,8 +159,9 @@ export const coursesMessages = {
       genThumbnail: 'Generate Thumbnail',
       fieldRequired: 'Please fill in all required fields before generating the course.',
       aiGenerateLoading: 'AI Generate Loading',
-      selectLevel: 'Select level',
-      noData: 'No data available',
+      aiCreateError: 'Error create AI course',
+      loadingMessage: "Stay Still. We're about to bring you something amazing.",
+      openNewTab: 'Open New Tab To Work',
     },
   },
 };

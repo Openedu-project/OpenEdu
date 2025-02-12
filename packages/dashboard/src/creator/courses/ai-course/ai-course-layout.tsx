@@ -16,10 +16,8 @@ export default function AICourseLayout({ children }: { children: ReactNode }) {
           <AICourseNavMenu />
         </div>
       </div>
-      <div className="flex flex-col p-4">
-        <div className={cn('flex-1 overflow-hidden rounded bg-background p-4')}>
-          <div className={cn('scrollbar h-full overflow-auto')}>{children}</div>
-        </div>
+      <div className="overflow-hidden rounded p-4">
+        <div className={cn('scrollbar h-full overflow-auto')}>{children}</div>
       </div>
     </>
   );
