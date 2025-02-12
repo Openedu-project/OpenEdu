@@ -65,6 +65,7 @@ export const walletMessages = {
       withdraw_sponsor_gas: 'Withdraw Sponsor Gas',
       wallet_fiat_withdrawal: 'Fiat Withdrawal',
       launchpad_profit_earn: "Share of Launchpad's Profit",
+      launchpad_revenue: 'Revenue',
     },
     withdrawPage: {
       title: 'Withdraw',
