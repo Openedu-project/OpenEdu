@@ -1,6 +1,7 @@
 'use client';
 import { useGetSegmentById } from '@oe/api/hooks/useCourse';
-import { deleteSegmentService } from '@oe/api/services/course';
+import { deleteSegmentService, updateSegmentService } from '@oe/api/services/course';
+import type { ISegment } from '@oe/api/types/course/segment';
 import { CREATOR_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
 import { DeleteButton } from '@oe/ui/components/delete-button';
@@ -8,8 +9,9 @@ import { Button } from '@oe/ui/shadcn/button';
 import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
 import { Input } from '@oe/ui/shadcn/input';
 import { toast } from '@oe/ui/shadcn/sonner';
-import { SaveIcon, Trash2 } from 'lucide-react';
+import { Menu, SaveIcon, Trash2 } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
+import { LessonDrawer } from './lesson-drawer';
 
 export function LessonHeader() {
   const { courseId, sectionId, lessonId } = useParams<{
@@ -37,6 +39,7 @@ export function LessonHeader() {
 
   //   return () => subscription.unsubscribe();
   // }, [activeLesson, activeSegment, updateLesson, watch]);
+  // const { openLessonDrawer, setOpenLessonDrawer } = useOutlineStore();
   const router = useRouter();
   // const [edit, setEdit] = useState(false);
 
@@ -56,6 +59,15 @@ export function LessonHeader() {
 
     try {
       await deleteSegmentService(undefined, activeLesson?.id);
+      await updateSegmentService(undefined, {
+        ...activeSection,
+        lessons: activeLessons
+          .filter(lesson => lesson.id !== activeLesson.id)
+          .map((lesson, index) => ({
+            ...lesson,
+            order: index,
+          })),
+      } as ISegment);
       await mutateSegment();
       router.push(
         buildUrl({
@@ -69,65 +81,26 @@ export function LessonHeader() {
     }
   };
 
-  // const handleSaveLesson = async (data: ILessonSchema) => {
-  //   if (!(activeSection && activeLesson?.id)) {
-  //     return;
-  //   }
-  //   if (activeLesson.title === data.title) {
-  //     setEdit(false);
-  //     return;
-  //   }
-  //   try {
-  //     await updateSegmentService(undefined, {
-  //       ...activeLesson,
-  //       title: data.title,
-  //     } as ISegment);
-  //     await mutateSegment();
-  //     toast.success("Lesson saved successfully");
-  //   } catch {
-  //     toast.error("Failed to save lesson");
-  //   }
-  //   setEdit(false);
-  // };
-
   return (
     <div className="flex items-center justify-between gap-2">
-      {/* <FormNestedWrapper
-        id={COURSE_DETAIL_FORM_IDS.lessonTitle}
-        schema={lessonSchema}
-        useFormProps={{
-          defaultValues: activeLesson as ILessonSchema,
-        }}
-        // onSubmit={handleSaveLesson}
-        className="flex w-full gap-2 space-y-0"
-      >
-        <FormFieldWithLabel name="title" formMessageClassName="hidden" className="w-full">
-          <Input type="text" className="h-8" />
-        </FormFieldWithLabel>
-      </FormNestedWrapper> */}
-      <div
-        // onSubmit={handleSaveLesson}
-        className="flex w-full gap-2 space-y-0"
-      >
-        <FormFieldWithLabel
-          name="title"
-          // formMessageClassName="hidden"
-          className="w-full"
-          showErrorMessage={false}
-        >
+      <div className="flex w-full gap-2 space-y-0">
+        <LessonDrawer
+          trigger={
+            <Button
+              variant="ghost"
+              size="xs"
+              className="flex h-8 w-8 p-0 md:hidden"
+              // onClick={() => setOpenLessonDrawer(!openLessonDrawer)}
+            >
+              <Menu className="h-4 w-4" />
+            </Button>
+          }
+        />
+        <FormFieldWithLabel name="title" className="w-full" showErrorMessage={false}>
           <Input type="text" className="h-8" />
         </FormFieldWithLabel>
       </div>
       <div className="flex items-center gap-2">
-        {/* <Button
-          variant="outline"
-          type="submit"
-          className="gap-2 border-primary text-primary hover:bg-primary/90 hover:text-primary-foreground"
-          size="xs"
-        >
-          <SaveIcon className="h-4 w-4" />
-          Save
-        </Button> */}
         {activeLessons.length > 1 && (
           <DeleteButton
             title="Delete Lesson"

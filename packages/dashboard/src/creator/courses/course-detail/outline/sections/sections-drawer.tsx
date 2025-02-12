@@ -7,23 +7,31 @@ import { useRouter } from '@oe/ui/common/navigation';
 import { DndSortable, DndSortableDragButton } from '@oe/ui/components/dnd-sortable';
 import { StatusBadge } from '@oe/ui/components/status-badge';
 import { Button } from '@oe/ui/shadcn/button';
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@oe/ui/shadcn/sheet';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { cn } from '@oe/ui/utils/cn';
 import { XCircle } from 'lucide-react';
 import { PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
-import { useOutlineStore } from '../../_store/useOutlineStore';
+import { type ReactNode, useState } from 'react';
 
-export const SectionsDrawer = () => {
+export const SectionsDrawer = ({ trigger }: { trigger?: ReactNode }) => {
   const { courseId, sectionId } = useParams<{
     courseId: string;
     sectionId: string;
   }>();
   const tOutline = useTranslations('courses.outline');
   const router = useRouter();
-  const { openSectionDrawer, setOpenSectionDrawer } = useOutlineStore();
+  // const { openSectionDrawer, setOpenSectionDrawer } = useOutlineStore();
 
   const { segments: sections, mutateSegments } = useGetSegments({
     course_id: courseId as string,
@@ -122,74 +130,77 @@ export const SectionsDrawer = () => {
 
   return (
     <>
-      <div
-        className={cn(
-          'absolute top-0 left-0 z-50 h-full space-y-2 border-r bg-background shadow-lg transition-all duration-300 ease-in-out',
-          openSectionDrawer ? 'z-50 w-[300px] p-4 opacity-100' : '-z-10 w-0 p-0 opacity-0'
-        )}
-      >
-        <Button
-          variant="outline"
-          className="flex w-full items-center justify-center gap-2 text-blue-600 hover:bg-background/80 hover:text-primary/80"
-          size="sm"
-          onClick={handleCreateSection}
-          loading={loading}
-          disabled={loading}
-          title="Create Section"
+      <Sheet>
+        <SheetTrigger asChild>{trigger}</SheetTrigger>
+        <SheetContent
+          side="left"
+          className="absolute top-0 left-0 w-[300px] p-0"
+          container={
+            typeof window !== 'undefined' ? (document.getElementById('outline-container') ?? document.body) : undefined
+          }
+          overlayClassName="bg-transparent"
+          hasCloseButton={false}
         >
-          <PlusIcon className="h-4 w-4" />
-          {tOutline('addSection')}
-        </Button>
-        <Button
-          variant="ghost"
-          className="-right-4 absolute top-0 h-8 w-8 rounded-full bg-background p-0 hover:bg-background/80 hover:text-primary"
-          onClick={() => setOpenSectionDrawer(false)}
-          title="Close Section Drawer"
-        >
-          <XCircle className="h-4 w-4" />
-        </Button>
-        {/* Section Input Rows */}
-        <DndSortable<ISection, unknown>
-          data={sections || []}
-          dataConfig={{
-            idProp: 'id',
-            type: 'array',
-            direction: 'vertical',
-          }}
-          className="flex flex-col gap-2"
-          loading={updateSectionsLoading}
-          renderConfig={{
-            renderItem: ({ item }) => (
-              <div
-                className={cn(
-                  'flex cursor-pointer items-center gap-2 rounded-md border bg-background p-2',
-                  item?.original.id === activeSection?.id && 'border-primary',
-                  !item?.original.title && 'border-destructive'
-                )}
-                title={item?.original.title}
-                onClick={() => handleSelectSection(item?.original)}
-                onKeyDown={() => {
-                  void 0;
-                }}
-              >
-                <DndSortableDragButton />
-                <p className="truncate font-medium text-sm">{item?.original.title}</p>
-                <StatusBadge status={item?.original.status} className="ml-auto" />
-              </div>
-            ),
-          }}
-          onChange={handleSortSections}
-        />
-      </div>
-      {openSectionDrawer && (
-        <div
-          className="absolute top-0 right-0 bottom-0 left-0 z-40 cursor-pointer"
-          onClick={() => setOpenSectionDrawer(false)}
-          onKeyDown={() => {
-            void 0;
-          }}
-        />
-      )}
+          <SheetHeader>
+            <SheetTitle hidden />
+            <SheetDescription hidden />
+          </SheetHeader>
+          <div className="p-4">
+            <Button
+              variant="outline"
+              className="flex w-full items-center justify-center gap-2 text-blue-600 hover:bg-background/80 hover:text-primary/80"
+              size="sm"
+              onClick={handleCreateSection}
+              loading={loading}
+              disabled={loading}
+              title="Create Section"
+            >
+              <PlusIcon className="h-4 w-4" />
+              {tOutline('addSection')}
+            </Button>
+            <SheetClose
+              // variant="ghost"
+              className="-right-4 absolute top-1 flex h-8 w-8 items-center justify-center rounded-full bg-background p-0 hover:bg-background/80 hover:text-primary"
+              // onClick={() => setOpenSectionDrawer(false)}
+              title="Close Section Drawer"
+            >
+              <XCircle className="h-4 w-4" />
+            </SheetClose>
+          </div>
+          {/* Section Input Rows */}
+          <DndSortable<ISection, unknown>
+            data={sections || []}
+            dataConfig={{
+              idProp: 'id',
+              type: 'array',
+              direction: 'vertical',
+            }}
+            className="scrollbar flex flex-col gap-2 overflow-y-auto p-4 pt-0"
+            loading={updateSectionsLoading}
+            renderConfig={{
+              renderItem: ({ item }) => (
+                <div
+                  className={cn(
+                    'flex cursor-pointer items-center gap-2 rounded-md border bg-background p-2',
+                    item?.original.id === activeSection?.id && 'border-primary',
+                    !item?.original.title && 'border-destructive'
+                  )}
+                  title={item?.original.title}
+                  onClick={() => handleSelectSection(item?.original)}
+                  onKeyDown={() => {
+                    void 0;
+                  }}
+                >
+                  <DndSortableDragButton />
+                  <p className="truncate font-medium text-sm">{item?.original.title}</p>
+                  <StatusBadge status={item?.original.status} className="ml-auto" />
+                </div>
+              ),
+            }}
+            onChange={handleSortSections}
+          />
+        </SheetContent>
+      </Sheet>
     </>
   );
 };

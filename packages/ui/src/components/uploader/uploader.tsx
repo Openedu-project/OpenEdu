@@ -264,7 +264,7 @@ export const Uploader = (props: UploaderProps) => {
           'relative flex w-full gap-2 rounded',
           listType === 'picture' ? 'flex-wrap' : 'flex-col',
           !children && 'flex h-48 flex-col items-center justify-center p-0',
-          !children && fileListVisible && !renderTrigger && 'h-full min-h-48',
+          !children && fileListVisible && !renderTrigger && 'h-full min-h-32',
           className
         )}
       >
