@@ -26,11 +26,12 @@ export function getThemeComponent<Page extends ThemePageKey, Section extends Sec
   themeName: ThemeName,
   pageKey: Page,
   sectionKey: Section
-): ComponentType<SectionProps<Page, Section>> {
+): ComponentType<SectionProps<Page, Section>> | undefined {
   const pageConfig = themeRenderData[themeName][pageKey];
 
   if (!pageConfig) {
-    throw new Error(`No configuration found for theme ${themeName} and page ${pageKey}`);
+    // throw new Error(`No configuration found for theme ${themeName} and page ${pageKey}`);
+    return undefined;
   }
 
   // Type assertion to handle the indexing

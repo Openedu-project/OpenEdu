@@ -12,7 +12,7 @@ const BlogGridClient = () => {
   });
 
   const featuredPost = dataPopularContents?.[0]?.entity;
-  const restPost = dataPopularContents?.slice(1, 3)?.map((v) => v?.entity);
+  const restPost = dataPopularContents?.slice(1, 4)?.map((v) => v?.entity);
 
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-8">

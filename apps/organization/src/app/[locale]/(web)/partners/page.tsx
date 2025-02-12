@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return getMetadata(themeSystem?.[0]?.value);
 }
 
-export default async function AboutUs() {
+export default async function Partners() {
   const [themeSystem] = await Promise.all([getThemeConfigServer()]);
 
   if (!themeSystem?.[0]?.value) {
@@ -19,6 +19,6 @@ export default async function AboutUs() {
   }
 
   return (
-    <ThemeWebPage pageKey="about-us" themeSystem={themeSystem?.[0]?.value} />
+    <ThemeWebPage pageKey="partners" themeSystem={themeSystem?.[0]?.value} />
   );
 }
