@@ -47,4 +47,4 @@ export interface IFeedbackPayload {
   content: string;
 }
 
-export type TApprovalStatus = 'new' | 'approved' | 'rejected';
+export type TApprovalStatus = 'new' | 'approved' | 'rejected' | 'cancelled' | 'pending';

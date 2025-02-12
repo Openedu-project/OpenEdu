@@ -1,7 +1,14 @@
 import { buildUrl } from '@oe/core/utils/url';
 import type { ICreateBaseCourse, ICreateYoutubeCourse } from '#schemas/courses/createCourseSchema';
 import type { ICourseCategory } from '#types/course/category';
-import type { ICourse, ICourseResponse, IEnrollCoursePayload } from '#types/course/course';
+import type {
+  ICourse,
+  ICoursePublishedRes,
+  ICourseResponse,
+  IEnableCourseRequest,
+  IEnrollCoursePayload,
+  ISectionRes,
+} from '#types/course/course';
 import type { ICourseOutline } from '#types/course/course';
 import type { IBulkSegments, ILessonContent, ISegment, ISegmentParams } from '#types/course/segment';
 import type { HTTPPagination } from '#types/fetch';
@@ -162,6 +169,24 @@ export const createAICourseService = async (
   init?: RequestInit
 ) => {
   const response = await postAPI<ICourse, ICreateYoutubeCourse>(url ?? API_ENDPOINT.COURSES_AI, payload, init);
+  return response.data;
+};
+
+export const putEnableCourseService = async (
+  endpoint: string | null | undefined,
+  { payload, init }: { payload: IEnableCourseRequest; init?: RequestInit }
+) => {
+  let endpointKey = endpoint;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.COURSES_ID_STAGE,
+      params: {
+        id: payload?.id,
+      },
+    });
+  }
+
+  const response = await putAPI<ICourse, IEnableCourseRequest>(endpointKey, payload, init);
 
   return response.data;
 };
@@ -212,6 +237,34 @@ export const createSegmentService = async (
     payload,
     init
   );
+  return response.data;
+};
+
+export const getPublishedCourseByAdminService = async (
+  endpoint: string,
+  {
+    payload,
+    init,
+  }: {
+    payload: {
+      org_id?: string;
+      params?: IFilter;
+      org_id_not?: string;
+    };
+    init?: RequestInit;
+  }
+) => {
+  let endpointKey = endpoint;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.COURSES_PUBLISH,
+      queryParams: {
+        ...payload,
+      },
+    });
+  }
+
+  const response = await fetchAPI<ICoursePublishedRes>(endpointKey, init);
 
   return response.data;
 };
@@ -232,6 +285,36 @@ export const updateBulkSegmentsService = async (
   init?: RequestInit
 ) => {
   const response = await putAPI<ISegment[], IBulkSegments>(url ?? API_ENDPOINT.SEGMENTS_BULK, payload, init);
+  return response.data;
+};
+
+export const getPreviewCourseByIdService = async (
+  endpoint: string | null | undefined,
+  {
+    payload,
+    init,
+  }: {
+    payload: {
+      courseId?: string;
+      orgId?: string;
+    };
+    init?: RequestInit;
+  }
+) => {
+  let endpointKey = endpoint;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.COURSES_ID_PREVIEW_ORG_ID,
+      params: {
+        id: payload?.courseId,
+        org_id: payload?.orgId,
+      },
+      queryParams: {
+        preloads: ['Categories', 'Levels', 'Owner'],
+      },
+    });
+  }
+  const response = await fetchAPI<ICourse>(endpointKey, init);
 
   return response.data;
 };
@@ -252,6 +335,34 @@ export const deleteLessonContentService = async (url: string | undefined, id: st
     undefined,
     init
   );
+  return response.data;
+};
+
+export const getSectionsHaveLessonsByCourseIdService = async (
+  endpoint: string | null | undefined,
+  {
+    params,
+    init,
+  }: {
+    params?: ISegmentParams;
+    init?: RequestInit;
+  }
+) => {
+  let endpointKey = endpoint;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.SEGMENTS,
+      queryParams: {
+        ...params,
+        course_id: params?.course_id,
+        page: 1,
+        per_page: 999,
+        preloads: 'lessons',
+      },
+    });
+  }
+
+  const response = await fetchAPI<ISectionRes>(endpointKey, init);
 
   return response.data;
 };
