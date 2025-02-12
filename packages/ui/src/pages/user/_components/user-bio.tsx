@@ -1,23 +1,23 @@
-'use client';
+"use client";
 
-import type { IUserProfile } from '@oe/api/types/user-profile';
+import type { IUserProfile } from "@oe/api/types/user-profile";
 // import Newletter from '@oe/icons/newletter';
 // import ShareSocial from '@oe/icons/share-social';
-import { Avatar, AvatarFallback, AvatarImage } from '@oe/ui/shadcn/avatar';
-import { Button } from '@oe/ui/shadcn/button';
+import { Avatar, AvatarFallback, AvatarImage } from "@oe/ui/shadcn/avatar";
+import { Button } from "@oe/ui/shadcn/button";
 // import { Flag } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { useMemo, useState } from 'react';
-import { Link } from '#common/navigation';
-import { cn } from '#utils/cn';
+import { useTranslations } from "next-intl";
+import { useMemo, useState } from "react";
+import { Link } from "#common/navigation";
+import { cn } from "#utils/cn";
 
-import { createAPIUrl } from '@oe/api/utils/fetch';
+import { createAPIUrl } from "@oe/api/utils/fetch";
 // import orgAvatarDark from '@/assets/images/org-ava-dark.png';
-import background from '@oe/assets/images/user-background.png';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import { pickCharacters } from '@oe/core/utils/string';
-import { Image } from '#components/image';
-import { useUserRoleStore } from '../_store/userProfileStore';
+import background from "@oe/assets/images/user-background.png";
+import { PLATFORM_ROUTES } from "@oe/core/utils/routes";
+import { pickCharacters } from "@oe/core/utils/string";
+import { Image } from "#components/image";
+import { useUserRoleStore } from "../_store/userProfileStore";
 
 interface IUserBioProps {
   data: IUserProfile;
@@ -30,8 +30,12 @@ interface RoleMapping {
   displayName: string;
 }
 
-export default function UserBio({ data, isMe, handleFollowUser }: IUserBioProps) {
-  const tProfile = useTranslations('userProfile.profile');
+export default function UserBio({
+  data,
+  isMe,
+  handleFollowUser,
+}: IUserBioProps) {
+  const tProfile = useTranslations("userProfile.profile");
 
   const [showAll, setShowAll] = useState<boolean>(false);
 
@@ -42,31 +46,43 @@ export default function UserBio({ data, isMe, handleFollowUser }: IUserBioProps)
   const { display_name, username, avatar, cover_photo, status } = data;
 
   const roleMappings: RoleMapping[] = [
-    { roleId: ['partner'], displayName: 'Creator' },
-    { roleId: ['org_writer'], displayName: 'Writer' },
-    { roleId: ['org_editor'], displayName: 'Editor' },
-    { roleId: ['org_moderator', 'org_admin'], displayName: 'Admin' },
+    { roleId: ["partner"], displayName: "Creator" },
+    { roleId: ["org_writer"], displayName: "Writer" },
+    { roleId: ["org_editor"], displayName: "Editor" },
+    { roleId: ["org_moderator", "org_admin"], displayName: "Admin" },
   ];
 
   const getRoleDisplayNames = (): string[] =>
     roleMappings
-      .filter(mapping => filteredOrgs?.some(org => mapping?.roleId?.includes(org?.role_id)))
-      .map(mapping => mapping.displayName);
+      .filter((mapping) =>
+        filteredOrgs?.some((org) => mapping?.roleId?.includes(org?.role_id))
+      )
+      .map((mapping) => mapping.displayName);
 
   const roleDisplayNames = getRoleDisplayNames();
 
   const validOrgs = useMemo(
     () =>
       // Always include the first org, then filter the rest based on org_name
-      [filteredOrgs[0], ...filteredOrgs.slice(1).filter(org => org?.org_name?.length > 0)],
+      [
+        filteredOrgs[0],
+        ...filteredOrgs.slice(1).filter((org) => org?.org_name?.length > 0),
+      ],
     [filteredOrgs]
   );
 
   const visibleOrgs = showAll ? validOrgs : filteredOrgs?.slice(0, 2);
-  const hasMore = filteredOrgs?.slice(2)?.some(org => org?.org_name?.length > 0);
+  const hasMore = filteredOrgs
+    ?.slice(2)
+    ?.some((org) => org?.org_name?.length > 0);
 
   return (
-    <div className={cn('relative mb-12', roleDisplayNames?.length === 0 && 'sm:mb-28')}>
+    <div
+      className={cn(
+        "relative mb-12",
+        roleDisplayNames?.length === 0 && "sm:mb-28"
+      )}
+    >
       <div className="relative">
         <Image
           src={cover_photo?.length > 0 ? cover_photo : background.src}
@@ -83,7 +99,9 @@ export default function UserBio({ data, isMe, handleFollowUser }: IUserBioProps)
             <Avatar className="h-[140px] w-[140px] border-[6px] border-white sm:h-[160px] sm:w-[160px] md:h-[200px] md:w-[200px]">
               <AvatarImage src={avatar} alt="avatar" />
               <AvatarFallback className="giant-iDisplay-bold48 sm:giant-iDisplay-bold64">
-                {display_name?.length > 0 ? pickCharacters(display_name) : pickCharacters(username)}
+                {display_name?.length > 0
+                  ? pickCharacters(display_name)
+                  : pickCharacters(username)}
               </AvatarFallback>
             </Avatar>
           </div>
@@ -107,7 +125,9 @@ export default function UserBio({ data, isMe, handleFollowUser }: IUserBioProps)
             {filteredOrgs?.length > 0 && (
               <div className="flex items-center">
                 {/* <span className="text-secondary">{tProfile('organization')}:</span> */}
-                <span className="mcaption-regular16 mr-4 text-[#2c2c2c]">{tProfile('for')}</span>
+                <span className="mcaption-regular16 mr-4 text-neutral-900">
+                  {tProfile("for")}
+                </span>
                 <div className="flex flex-wrap items-start gap-2">
                   {visibleOrgs.map((item, index) => (
                     <div key={item?.org_id} className="flex flex-wrap">
@@ -120,11 +140,17 @@ export default function UserBio({ data, isMe, handleFollowUser }: IUserBioProps)
                         <Image src={orgAvatar.src} alt="" width={24} height={24} className="w-full h-full" />
                       </div> */}
 
-                        <span className="mcaption-semibold16 line-clamp-1 flex-1 text-center">{item?.org_name}</span>
+                        <span className="mcaption-semibold16 line-clamp-1 flex-1 text-center">
+                          {item?.org_name}
+                        </span>
                       </Link>
-                      {validOrgs?.length > 0 && index < validOrgs.length - 1 && validOrgs?.length > 1 && (
-                        <span className="mcaption-semibold16 !leading-[40px] h-10 text-center">,</span>
-                      )}
+                      {validOrgs?.length > 0 &&
+                        index < validOrgs.length - 1 &&
+                        validOrgs?.length > 1 && (
+                          <span className="mcaption-semibold16 !leading-[40px] h-10 text-center">
+                            ,
+                          </span>
+                        )}
                     </div>
                   ))}
 
@@ -143,7 +169,7 @@ export default function UserBio({ data, isMe, handleFollowUser }: IUserBioProps)
                       className="!rounded-none mbutton-bold12 h-10 border-primary border-b p-0 text-primary no-underline hover:bg-transparent hover:text-primary sm:ml-2"
                       onClick={() => setShowAll(!showAll)}
                     >
-                      {showAll ? tProfile('seeLess') : tProfile('more')}
+                      {showAll ? tProfile("seeLess") : tProfile("more")}
                     </Button>
                   )}
                 </div>
@@ -161,13 +187,13 @@ export default function UserBio({ data, isMe, handleFollowUser }: IUserBioProps)
               })}
               className="mbutton-bold12 sm:mbutton-regular16 rounded-2 bg-primary px-5 py-[6px] text-center text-primary-foreground"
             >
-              {tProfile('editProfile')}
+              {tProfile("editProfile")}
             </Link>
             <Link
               href={PLATFORM_ROUTES.learner}
               className="mbutton-bold12 sm:mbutton-regular16 rounded-2 bg-primary px-5 py-[6px] text-center text-primary-foreground"
             >
-              {tProfile('myLearningSpace')}
+              {tProfile("myLearningSpace")}
             </Link>
           </div>
         ) : (
@@ -177,7 +203,7 @@ export default function UserBio({ data, isMe, handleFollowUser }: IUserBioProps)
             onClick={handleFollowUser}
             className="absolute top-3 right-3 md:top-6"
           >
-            {status === 'followed' ? 'Following' : tProfile('follow')}
+            {status === "followed" ? "Following" : tProfile("follow")}
           </Button>
         )}
 

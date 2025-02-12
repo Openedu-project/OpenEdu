@@ -20,7 +20,8 @@ export function CreatorDecideVotingLaunchpadButton({ id }: CreatorDecideVotingLa
 
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const { mutate: globalMutate } = useSWRConfig();
-  const { triggerPostAdminDecideVotingLaunchpad } = usePutAdminDecideVotingLaunchpad(id);
+  const { triggerPostAdminDecideVotingLaunchpad, isLoadingPostAdminDecideVotingLaunchpad } =
+    usePutAdminDecideVotingLaunchpad(id);
 
   const handleOpenModal = useCallback(() => {
     setIsOpenModal(true);
@@ -65,7 +66,11 @@ export function CreatorDecideVotingLaunchpadButton({ id }: CreatorDecideVotingLa
         {t('deleteLaunchpad')}
       </Button>
       {isOpenModal && (
-        <CreatorDecideVotingLaunchpadModal onClose={handleCloseModal} onSubmit={() => handleDecideVotingTime(true)} />
+        <CreatorDecideVotingLaunchpadModal
+          isLoading={isLoadingPostAdminDecideVotingLaunchpad}
+          onClose={handleCloseModal}
+          onSubmit={() => handleDecideVotingTime(true)}
+        />
       )}
     </div>
   );

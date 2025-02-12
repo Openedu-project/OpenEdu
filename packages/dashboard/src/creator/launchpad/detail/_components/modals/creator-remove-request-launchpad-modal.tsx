@@ -5,9 +5,14 @@ import { useCallback } from 'react';
 interface ICreatorRemoveRequestLaunchpadModal {
   onSubmit: () => void;
   onClose: () => void;
+  isLoading: boolean;
 }
 
-export default function CreatorRemoveRequestLaunchpadModal({ onSubmit, onClose }: ICreatorRemoveRequestLaunchpadModal) {
+export default function CreatorRemoveRequestLaunchpadModal({
+  onSubmit,
+  onClose,
+  isLoading,
+}: ICreatorRemoveRequestLaunchpadModal) {
   const t = useTranslations('creatorLaunchpad.removeRequestApprovalLaunchpadModal');
 
   const handleSubmit = useCallback(() => {
@@ -30,6 +35,7 @@ export default function CreatorRemoveRequestLaunchpadModal({ onSubmit, onClose }
           type: 'button',
           label: t('remove'),
           variant: 'destructive',
+          loading: isLoading,
           onClick: () => handleSubmit(),
         },
       ]}

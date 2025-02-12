@@ -8,7 +8,7 @@ import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
 import { useSWRConfig } from 'swr';
 import { revalidateAdminLaunchpadDetail } from '../../_action';
-import CreatorDecideVotingLaunchpadModal from '../modals/creator-decide-voting-modal';
+import CreatorStartVotingLaunchpadModal from '../modals/creator-start-voting-modal';
 
 interface CreatorStartVotingLaunchpadButtonProps {
   id: string;
@@ -22,7 +22,8 @@ export function CreatorStartVotingLaunchpadButton({ id, milestoneId, phase }: Cr
 
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const { mutate: globalMutate } = useSWRConfig();
-  const { triggerPostAdminStartVotingLaunchpads } = usePostAdminStartVotingLaunchpads(id, milestoneId);
+  const { triggerPostAdminStartVotingLaunchpads, isLoadingPostAdminStartVotingLaunchpads } =
+    usePostAdminStartVotingLaunchpads(id, milestoneId);
 
   const handleOpenModal = useCallback(() => {
     setIsOpenModal(true);
@@ -61,7 +62,13 @@ export function CreatorStartVotingLaunchpadButton({ id, milestoneId, phase }: Cr
         })}
       </Button>
 
-      {isOpenModal && <CreatorDecideVotingLaunchpadModal onClose={handleCloseModal} onSubmit={handleStartVotingTime} />}
+      {isOpenModal && (
+        <CreatorStartVotingLaunchpadModal
+          isLoading={isLoadingPostAdminStartVotingLaunchpads}
+          onClose={handleCloseModal}
+          onSubmit={handleStartVotingTime}
+        />
+      )}
     </div>
   );
 }

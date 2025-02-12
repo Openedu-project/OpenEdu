@@ -22,7 +22,8 @@ export function CreatorStartFundingLaunchpadButton({ id }: CreatorStartFundingLa
 
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const { mutate: globalMutate } = useSWRConfig();
-  const { triggerPutAdminStartFundingTimeLaunchpad } = usePutAdminStartFundingTimeLaunchpad(id);
+  const { triggerPutAdminStartFundingTimeLaunchpad, isLoadingPutAdminStartFundingTimeLaunchpad } =
+    usePutAdminStartFundingTimeLaunchpad(id);
 
   const handleOpenModal = useCallback(() => {
     setIsOpenModal(true);
@@ -62,7 +63,11 @@ export function CreatorStartFundingLaunchpadButton({ id }: CreatorStartFundingLa
         {t('startFunding')}
       </Button>
       {isOpenModal && (
-        <CreatorStartFundingLaunchpadModal onClose={handleCloseModal} onSubmit={handleStartFundingTime} />
+        <CreatorStartFundingLaunchpadModal
+          isLoading={isLoadingPutAdminStartFundingTimeLaunchpad}
+          onClose={handleCloseModal}
+          onSubmit={handleStartFundingTime}
+        />
       )}
     </>
   );

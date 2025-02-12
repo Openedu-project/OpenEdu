@@ -6,9 +6,10 @@ import { useCallback } from 'react';
 interface IApproveLaunchpadModal {
   onSubmit: (value: IApprovalPayload) => void;
   onClose: () => void;
+  isLoading: boolean;
 }
 
-export default function ApproveLaunchpadModal({ onSubmit, onClose }: IApproveLaunchpadModal) {
+export default function ApproveLaunchpadModal({ onSubmit, onClose, isLoading }: IApproveLaunchpadModal) {
   const t = useTranslations('adminLaunchpadRequest.approveModal');
 
   const handleSubmit = useCallback(() => {
@@ -31,6 +32,7 @@ export default function ApproveLaunchpadModal({ onSubmit, onClose }: IApproveLau
           type: 'button',
           label: t('approve'),
           variant: 'default',
+          loading: isLoading,
           onClick: () => handleSubmit(),
         },
       ]}

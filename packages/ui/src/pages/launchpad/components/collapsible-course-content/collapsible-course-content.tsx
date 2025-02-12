@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import type { ILesson, ISection } from '@oe/api/types/course/segment';
-import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
-import { useState } from 'react';
+import type { ILesson, ISection } from "@oe/api/types/course/segment";
+import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
+import { useState } from "react";
 
 const CollapsibleCourseContent = ({ outline }: { outline: ISection[] }) => {
   return (
     <div className="space-y-3">
-      {outline.map(section => (
+      {outline.map((section) => (
         <CollapsibleCourseSection key={section.order} outline={section} />
       ))}
     </div>
@@ -18,25 +18,34 @@ const CollapsibleCourseSection = ({ outline }: { outline: ISection }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   return (
     <div className="space-y-3">
-      <div className="rounded-2xl border-[#F2F1FF] border-[0.4px] bg-[#f6f6f6] p-3">
+      <div className="rounded-2xl border-primary-20 border-[0.4px] bg-neutral-20 p-3">
         <div className="flex items-center justify-between gap-2">
           <h4 className="m-0 font-semibold text-base">
             Section {outline.order}: {outline.title}
           </h4>
           <button type="button" onClick={() => setIsExpanded(!isExpanded)}>
-            {isExpanded ? <ChevronUpIcon className="h-6 w-6" /> : <ChevronDownIcon className="h-6 w-6" />}
+            {isExpanded ? (
+              <ChevronUpIcon className="h-6 w-6" />
+            ) : (
+              <ChevronDownIcon className="h-6 w-6" />
+            )}
           </button>
         </div>
       </div>
       {isExpanded &&
-        outline.lessons?.map(lession => <CollapsibleCourseLession key={lession.lesson_count} lession={lession} />)}
+        outline.lessons?.map((lession) => (
+          <CollapsibleCourseLession
+            key={lession.lesson_count}
+            lession={lession}
+          />
+        ))}
     </div>
   );
 };
 
 const CollapsibleCourseLession = ({ lession }: { lession: ILesson }) => {
   return (
-    <div className="space-y-1 rounded-2xl border-[#DBDBDB] border-[1px] bg-[#F6F6F6] p-3">
+    <div className="space-y-1 rounded-2xl border-neutral-100 border-[1px] bg-neutral-20 p-3">
       <p className="font-semibold text-xs">Lession {lession.lesson_count}</p>
       <h5 className="font-semibold text-base">{lession.title}</h5>
     </div>

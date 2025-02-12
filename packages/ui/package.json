@@ -113,7 +113,7 @@
     "react-use-websocket": "^4.11.1",
     "react-virtuoso": "4.12.3",
     "react-zoom-pan-pinch": "^3.6.1",
-    "recharts": "^2.15.0",
+    "recharts": "^2.15.1",
     "tailwind-merge": "^2.6.0",
     "use-debounce": "^10.0.4",
     "vaul": "^1.1.2",
@@ -135,5 +135,8 @@
     "react-dom": "19.0.0",
     "sonner": "^1.7.1",
     "swr": "^2.3.0"
+  },
+  "overrides": {
+    "react-is": "^19.0.0-rc-69d4b800-20241021"
   }
 }

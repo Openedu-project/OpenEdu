@@ -133,14 +133,14 @@ const PaymentFiat = ({
   };
 
   return (
-    <ul className="mcaption-regular14 text-[#2C2C2C]">
+    <ul className="mcaption-regular14 text-neutral-900">
       {/* Step 2 */}
       <li className="mb-4 md:mb-6">
         <div className="mb-3 flex items-center gap-3">
           <NumberedCircle number={2} />
           <p className="mcaption-semibold14">
             {t('step1Title')}
-            <span className="ml-1 text-[#D50010]">*</span>
+            <span className="ml-1 text-negative-600">*</span>
           </p>
         </div>
         <div className="mx-4 flex flex-col gap-4 md:mx-10 md:gap-6">
@@ -209,7 +209,7 @@ const PaymentFiat = ({
 
             <div className="mb-4 flex justify-between">
               <span className="giant-iheading-semibold16 md:giant-iheading-semibold20">{t('couponDiscount')}</span>
-              <p className="giant-iheading-semibold20 text-[#2BA830]">
+              <p className="giant-iheading-semibold20 text-positive-600">
                 <span className="giant-iheading-semibold12">
                   {discountAmount >= 0 ? `- ${fiatCurrency}` : fiatCurrency}
                 </span>
@@ -221,14 +221,14 @@ const PaymentFiat = ({
                 {t('shareRate')}&nbsp;
                 <span className="font-bold text-primary">{shareRate ? `${shareRate}%` : ''}</span>
               </span>
-              <p className="giant-iheading-semibold20 text-[#2BA830]">
+              <p className="giant-iheading-semibold20 text-positive-600">
                 <span className="giant-iheading-semibold12">
                   {shareRateAmount >= 0 ? `- ${fiatCurrency}` : fiatCurrency}
                 </span>
                 <span> {formatNumber(shareRateAmount ?? 0)}</span>
               </p>
             </div>
-            <div className="flex items-center justify-between rounded-2 rounded-xl bg-[#F2F1FF] px-3 py-2">
+            <div className="flex items-center justify-between rounded-2 rounded-xl bg-primary-20 px-3 py-2">
               <span className="giant-iheading-semibold16 md:giant-iheading-semibold20">{t('finalPrice')}&nbsp;</span>
               <span className="giant-iheading-semibold20 md:giant-iheading-semibold28 text-primary">
                 <span className="giant-iheading-semibold12">{fiatCurrency}</span>
@@ -245,7 +245,7 @@ const PaymentFiat = ({
           <NumberedCircle number={4} />
           <p className="mcaption-semibold14">
             {t('step3Title')}
-            <span className="ml-1 text-[#D50010]">*</span>
+            <span className="ml-1 text-negative-600">*</span>
           </p>
         </div>
         <div className="mcaption-semibold14 mx-4 flex flex-col gap-4 md:mx-10 md:gap-6">
@@ -290,7 +290,7 @@ const PaymentFiat = ({
                 </div>
               </div>
               <div className="w-full sm:w-3/4">
-                <h3 className="giant-iheading-semibold24 mb-2 text-[#2C2C2C]">
+                <h3 className="giant-iheading-semibold24 mb-2 text-neutral-900">
                   {dataOrder?.payment_method?.account_name}
                 </h3>
                 <p className="giant-iheading-semibold16 mb-2 flex items-end gap-1">
@@ -335,7 +335,7 @@ const PaymentFiat = ({
               {t.rich('step4Title', {
                 span: (chunks: ReactNode) => <span className="text-primary">{chunks}</span>,
               })}
-              <span className="text-[#D50010] ">*</span>
+              <span className="text-negative-600 ">*</span>
             </p>
             <p>{t('step4Note')}</p>
           </div>

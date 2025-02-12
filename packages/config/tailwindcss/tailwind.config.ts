@@ -34,14 +34,20 @@ const config: Omit<Config, 'content'> = {
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
+          20: 'var(--primary-20)',
           50: 'var(--primary-50)',
           100: 'hsl(var(--primary-100))',
+          600: 'hsl(var(--primary-600))',
         },
 
         neutral: {
+          20: 'hsl(var(--neutral-20))',
           50: 'hsl(var(--neutral-50))',
           100: 'hsl(var(--neutral-100))',
+          300: 'hsl(var(--neutral-300))',
           600: 'hsl(var(--neutral-600))',
+          800: 'hsl(var(--neutral-800))',
+          900: 'hsl(var(--neutral-900))',
         },
         negative: {
           50: 'hsl(var(--negative-50))',
@@ -97,6 +103,7 @@ const config: Omit<Config, 'content'> = {
           DEFAULT: 'hsl(var(--warning))',
           foreground: 'hsl(var(--warning-foreground))',
           50: 'hsl(var(--warning-50))',
+          500: 'hsl(var(--warning-500))',
           600: 'hsl(var(--warning-600))',
         },
         success: {

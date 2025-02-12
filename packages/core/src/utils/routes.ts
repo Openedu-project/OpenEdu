@@ -154,6 +154,7 @@ export const CREATOR_ROUTES = {
   campaignReport: '/creator/affiliate-campaigns/report',
   creatorLaunchpadList: '/creator/launchpad',
   creatorLaunchpadDetail: '/creator/launchpad/:id',
+  creatorCreateLaunchpadDetail: '/creator/create-launchpads/:id',
 } as const;
 
 export const LEARNER_ROUTES = {
