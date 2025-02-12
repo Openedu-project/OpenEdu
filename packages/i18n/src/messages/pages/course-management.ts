@@ -16,6 +16,8 @@ export const courseManagementMessages = {
     toastSuccess: 'Update course succesfully!',
     toastFail: 'Update course succesfully!',
     version: 'Published Version',
+    requestedVersion: 'Requested Version',
+    requestedDate: 'Requested Date',
 
     //courses-request.tsx
     courseName: 'Course Name',
@@ -32,7 +34,9 @@ export const courseManagementMessages = {
     placeholderReason: 'Please enter the reason',
     new: 'New',
     approveRequest: 'Approve Course Request',
+    approveRequestMessage: 'Approve course request successfully!',
     rejectRequest: 'Reject Course Request',
+    rejectRequestMessage: 'Reject course request successfully!',
     feedback: 'Feedback',
     approveTitle: 'Approve Course Request',
     rejectTitle: 'Reject Course Request',
@@ -44,6 +48,6 @@ export const courseManagementMessages = {
     yourFeedback: 'Your feedback',
     writeResponse: 'Write your response',
     updatedCourseVersion: 'The creator replied with updated course version.',
-    send: 'Send', 
+    send: 'Send',
   },
 };

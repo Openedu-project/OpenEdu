@@ -1,80 +1,63 @@
-"use client";
-import { useApprove, useReject } from "@oe/api/hooks/useApprovals";
-import type {
-  IApproval,
-  IApprovalPayload,
-  IRejectPayload,
-} from "@oe/api/types/approvals";
-import { type ColumnDef, Table, type TableRef } from "@oe/ui/components/table";
-import { Badge } from "@oe/ui/shadcn/badge";
+'use client';
+import { useApprove, useReject } from '@oe/api/hooks/useApprovals';
+import type { IApproval, IApprovalPayload, IRejectPayload } from '@oe/api/types/approvals';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
+import { Badge } from '@oe/ui/shadcn/badge';
 
-import type { ICourse } from "@oe/api/types/course/course";
-import type { ICourseOrganizationRequestProps } from "@oe/api/types/course/org-request";
-import { API_ENDPOINT } from "@oe/api/utils/endpoints";
-import { createAPIUrl } from "@oe/api/utils/fetch";
-import type { HTTPErrorMetadata } from "@oe/api/utils/http-error";
-import { formatDate } from "@oe/core/utils/datetime";
-import { PLATFORM_ROUTES } from "@oe/core/utils/routes";
-import { Link } from "@oe/ui/common/navigation";
-import { BadgeCourseVerion } from "@oe/ui/components/badge-course-version";
-import { toast } from "@oe/ui/shadcn/sonner";
-import { useTranslations } from "next-intl";
-import { useCallback, useMemo, useRef, useState } from "react";
-import { AdminFeedbackCourseModal } from "./admin-feedback-modal";
-import ApproveCourseReviewingModal from "./approve-course-reviewing-modal";
-import RejectCourseReviewingModal from "./reject-course-reviewing-modal";
-import { CourseRequestItemActions } from "./request-table-item-actions";
+import type { ICourse } from '@oe/api/types/course/course';
+import type { ICourseOrganizationRequestProps } from '@oe/api/types/course/org-request';
+import { API_ENDPOINT } from '@oe/api/utils/endpoints';
+import { createAPIUrl } from '@oe/api/utils/fetch';
+import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
+import { formatDate } from '@oe/core/utils/datetime';
+import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { Link } from '@oe/ui/common/navigation';
+import { BadgeCourseVerion } from '@oe/ui/components/badge-course-version';
+import { toast } from '@oe/ui/shadcn/sonner';
+import { useTranslations } from 'next-intl';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import { AdminFeedbackCourseModal } from './admin-feedback-modal';
+import ApproveCourseReviewingModal from './approve-course-reviewing-modal';
+import RejectCourseReviewingModal from './reject-course-reviewing-modal';
+import { CourseRequestItemActions } from './request-table-item-actions';
 
-type BadgeVariant =
-  | "success"
-  | "destructive"
-  | "secondary"
-  | "default"
-  | "outline"
-  | null
-  | undefined;
-type StatusType = "approved" | "rejected" | "new" | "cancelled";
+type BadgeVariant = 'success' | 'destructive' | 'secondary' | 'default' | 'outline' | null | undefined;
+type StatusType = 'approved' | 'rejected' | 'new' | 'cancelled';
 
 const generateVariantBadge = (status: string): BadgeVariant => {
   const obj: Record<StatusType, BadgeVariant> = {
-    approved: "success",
-    rejected: "destructive",
-    new: "secondary",
-    cancelled: "default",
+    approved: 'success',
+    rejected: 'destructive',
+    new: 'secondary',
+    cancelled: 'default',
   };
 
   return obj[status as StatusType];
 };
 
-type IApprovalCourseRequest = IApproval<
-  ICourse,
-  ICourseOrganizationRequestProps
->;
+type IApprovalCourseRequest = IApproval<ICourse, ICourseOrganizationRequestProps>;
 interface ISelectItem extends IApprovalCourseRequest {
-  action: "reject" | "approve";
+  action: 'reject' | 'approve';
 }
 
 export default function CourseRequests() {
-  const t = useTranslations("coursesManagement");
-  const tError = useTranslations("errors");
+  const t = useTranslations('coursesManagement');
+  const tError = useTranslations('errors');
 
   const tableRef = useRef<TableRef<IApprovalCourseRequest>>(null);
   const [isOpenDecisionModal, setOpenDecisionModal] = useState(false);
   const [isOpenFeedbackModal, setOpenFeedbackModal] = useState(false);
   const [selectItem, setSelectItems] = useState<ISelectItem | null>(null);
 
-  const { triggerApprove } = useApprove(selectItem?.id ?? "");
-  const { triggerReject } = useReject(selectItem?.id ?? "");
+  const { triggerApprove } = useApprove(selectItem?.id ?? '');
+  const { triggerReject } = useReject(selectItem?.id ?? '');
 
   const [readOnly, setReadOnly] = useState(false);
 
-  const handleOpenDecisionModal = useCallback(
-    (item: IApprovalCourseRequest, action: "approve" | "reject") => {
-      setSelectItems({ ...item, action });
-      setOpenDecisionModal(true);
-    },
-    []
-  );
+  const handleOpenDecisionModal = useCallback((item: IApprovalCourseRequest, action: 'approve' | 'reject') => {
+    setSelectItems({ ...item, action });
+    setOpenDecisionModal(true);
+  }, []);
 
   const handleCloseDecisionModal = useCallback(() => {
     setOpenDecisionModal(false);
@@ -91,40 +74,36 @@ export default function CourseRequests() {
   const handleTriggerDecision = useCallback(
     async (value: IApprovalPayload | IRejectPayload) => {
       try {
-        if (selectItem?.action === "approve") {
+        if (selectItem?.action === 'approve') {
           await triggerApprove(value);
+          toast.success(t('approveRequestMessage'));
         } else {
           await triggerReject(value);
+          toast.success(t('rejectRequestMessage'));
         }
         tableRef.current?.mutateAndClearCache();
         handleCloseDecisionModal();
       } catch (error) {
-        console.error("Error", error);
+        console.error('Error', error);
         toast.error(tError((error as HTTPErrorMetadata).code.toString()));
       }
     },
-    [
-      triggerApprove,
-      triggerReject,
-      selectItem,
-      handleCloseDecisionModal,
-      tError,
-    ]
+    [triggerApprove, triggerReject, t, tError, handleCloseDecisionModal, selectItem]
   );
 
   const columns: ColumnDef<IApprovalCourseRequest>[] = useMemo(
     () => [
       {
-        header: "ID",
-        accessor: "id",
+        header: 'ID',
+        accessor: 'id',
         cell: ({ row }) => {
           const item = row.original;
           return <p className="truncate">{item?.id}</p>;
         },
       },
       {
-        header: t("courseName"),
-        accessor: "entity",
+        header: t('courseName'),
+        accessor: 'entity',
         size: 250,
         cell: ({ row }) => {
           const item = row.original;
@@ -141,23 +120,23 @@ export default function CourseRequests() {
               className="w-[250px] justify-start truncate px-0 underline"
               key={item?.entity_id}
             >
-              {item?.entity?.name ?? "-"}
+              {item?.entity?.name ?? '-'}
             </Link>
           );
         },
       },
       {
-        header: t("requester"),
-        align: "center",
-        accessor: "requester",
+        header: t('requester'),
+        align: 'center',
+        accessor: 'requester',
         cell: ({ row }) => {
           const item = row.original;
           return <p>{item.requester.username}</p>;
         },
       },
       {
-        header: "Published Version",
-        align: "center",
+        header: t('version'),
+        align: 'center',
         cell: ({ row }) => {
           const item = row.original;
           return (
@@ -179,8 +158,8 @@ export default function CourseRequests() {
         },
       },
       {
-        header: "Requested Version",
-        align: "center",
+        header: t('requestedVersion'),
+        align: 'center',
         cell: ({ row }) => {
           const item = row.original;
           return (
@@ -198,34 +177,31 @@ export default function CourseRequests() {
         },
       },
       {
-        header: t("status"),
-        accessor: "status",
-        align: "center",
+        header: t('status'),
+        accessor: 'status',
+        align: 'center',
         cell: ({ row }) => {
           const item = row.original;
           return (
-            <Badge
-              variant={generateVariantBadge(item?.status as keyof BadgeVariant)}
-              className="capitalize"
-            >
+            <Badge variant={generateVariantBadge(item?.status as keyof BadgeVariant)} className="capitalize">
               {item?.status}
             </Badge>
           );
         },
       },
       {
-        header: "Requested Date",
-        accessor: "request_date",
-        align: "center",
+        header: t('requestedDate'),
+        accessor: 'request_date',
+        align: 'center',
         cell: ({ row }) => {
           const item = row.original;
           return <>{formatDate(item?.request_date)}</>;
         },
       },
       {
-        header: t("action"),
-        align: "center",
-        sticky: "right",
+        header: t('action'),
+        align: 'center',
+        sticky: 'right',
         cell({ row }) {
           const item = row.original;
           return (
@@ -233,12 +209,13 @@ export default function CourseRequests() {
               item={item}
               setReadOnly={() => setReadOnly(false)}
               handleAction={handleOpenDecisionModal}
+              handleFeedbackModal={() => handleOpenFeedbackModal()}
             />
           );
         },
       },
     ],
-    [t, handleOpenDecisionModal]
+    [t, handleOpenDecisionModal, handleOpenFeedbackModal]
   );
 
   return (
@@ -251,8 +228,8 @@ export default function CourseRequests() {
           apiParams={{
             page: 1,
             per_page: 10,
-            entity_type: "course",
-            sort: "request_date desc",
+            entity_type: 'course',
+            sort: 'request_date desc',
           }}
           height="100%"
           ref={tableRef}
@@ -261,23 +238,20 @@ export default function CourseRequests() {
             manualPagination: true,
           }}
         />
-        {isOpenDecisionModal && selectItem?.action === "approve" && (
-          <ApproveCourseReviewingModal
-            onClose={handleCloseDecisionModal}
-            onSubmit={handleTriggerDecision}
+        {isOpenDecisionModal && selectItem?.action === 'approve' && (
+          <ApproveCourseReviewingModal onClose={handleCloseDecisionModal} onSubmit={handleTriggerDecision} />
+        )}
+        {isOpenDecisionModal && selectItem?.action === 'reject' && (
+          <RejectCourseReviewingModal onClose={handleCloseDecisionModal} onSubmit={handleTriggerDecision} />
+        )}
+        {isOpenFeedbackModal && (
+          <AdminFeedbackCourseModal
+            open={true}
+            mutate={tableRef.current?.mutate}
+            onClose={handleCloseFeedbackModal}
+            readOnly={readOnly}
           />
         )}
-        {isOpenDecisionModal && selectItem?.action === "reject" && (
-          <RejectCourseReviewingModal
-            onClose={handleCloseDecisionModal}
-            onSubmit={handleTriggerDecision}
-          />
-        )}
-        <AdminFeedbackCourseModal
-          open={}
-          mutate={tableRef.current?.mutate}
-          readOnly={readOnly}
-        />
       </div>
     </>
   );

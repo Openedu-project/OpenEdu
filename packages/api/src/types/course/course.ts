@@ -182,5 +182,5 @@ export interface ICoursePublished {
   delete_at: number;
 }
 
-export interface ICoursePublishedRes extends IDataPagination<ICoursePublished[]> {}
-export interface ISectionRes extends IDataPagination<ISection[]> {}
+export interface ICoursePublishedRes extends HTTPPagination<ICoursePublished> {}
+export interface ISectionRes extends HTTPPagination<ISection> {}
