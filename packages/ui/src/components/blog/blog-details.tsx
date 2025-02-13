@@ -1,12 +1,12 @@
-import type { IBlog } from "@oe/api/types/blog";
-import { marked } from "@oe/core/utils/marker";
-import { BLOG_ROUTES } from "@oe/core/utils/routes";
-import { buildUrl } from "@oe/core/utils/url";
-import { Link } from "#common/navigation";
-import { Image } from "#components/image";
-import { Badge } from "#shadcn/badge";
-import { cn } from "#utils/cn";
-import { ProfileCardWrapper } from "./profile-card-wrapper";
+import type { IBlog } from '@oe/api/types/blog';
+import { marked } from '@oe/core/utils/marker';
+import { BLOG_ROUTES } from '@oe/core/utils/routes';
+import { buildUrl } from '@oe/core/utils/url';
+import { Link } from '#common/navigation';
+import { Image } from '#components/image';
+import { Badge } from '#shadcn/badge';
+import { cn } from '#utils/cn';
+import { BlogDetailHeader } from './blog-detail-header';
 
 export function BlogDetails({
   data,
@@ -23,9 +23,7 @@ export function BlogDetails({
         <h2 className="giant-iheading-semibold24 md:giant-iheading-semibold32 text-center">
           {data.title}
         </h2>
-        <div className="flex items-center justify-between">
-          <ProfileCardWrapper data={data} />
-        </div>
+        <BlogDetailHeader author={data.author} />
       </div>
 
       <div className="m-auto w-full lg:w-3/4">
@@ -59,6 +57,7 @@ export function BlogDetails({
               ? data.hashtag?.map((hashtag) => (
                   <Badge
                     key={hashtag.hash}
+                    variant='outline_primary'
                     className="lg:!p-2 min-w-[100px] justify-center"
                   >
                     #{hashtag.name}
@@ -73,7 +72,10 @@ export function BlogDetails({
                       params: { id: `${hashtag.hash} ${hashtag.name}` },
                     })}
                   >
-                    <Badge className="lg:!p-2 min-w-[100px] justify-center">
+                    <Badge 
+                      className="lg:!p-2 min-w-[100px] justify-center" 
+                      variant='outline_primary'
+                    >
                       #{hashtag.name}
                     </Badge>
                   </Link>
