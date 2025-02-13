@@ -127,7 +127,7 @@ const ContentVideo = ({
         {...props}
       />
 
-      {quizzes?.length > 0 && player && <VideoQuizInfo quizzes={quizzes} player={player} />}
+      {quizzes?.length > 0 && player && !isPreview && <VideoQuizInfo quizzes={quizzes} player={player} />}
 
       {!isPreview && showQuiz && quizzes?.length > 0 && (
         <VideoQuizModal

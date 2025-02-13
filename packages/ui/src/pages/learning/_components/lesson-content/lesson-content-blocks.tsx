@@ -29,6 +29,7 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
   section_uid,
   lesson_uid,
   course_data,
+  isPreview = false,
 }) => {
   const { sectionsProgressData, setSectionsProgressData } = useLessonLearningStore();
   const { quizResult } = useQuizSubmissionStore();
@@ -105,6 +106,7 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
           data: item,
           isOnlyContent: contents.length === 1,
           contents,
+          isPreview,
         };
 
         return (
