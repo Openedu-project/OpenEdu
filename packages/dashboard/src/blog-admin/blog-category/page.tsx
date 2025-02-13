@@ -1,18 +1,18 @@
 import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import { SetupCategoryTree } from '@oe/ui/components/setup-category-tree';
 import { useTranslations } from 'next-intl';
-import BlogTable from '../_components/blog-table';
 
-export default function UserBlogManagement() {
+export default function SetupBlogCategoryPage() {
   const tBlogs = useTranslations('blogManagement');
   const tDashboard = useTranslations('dashboard.blog');
   return (
     <DashboardMainPageLayout
       dashboard="blog"
-      breadcrumbs={[{ label: tDashboard('userBlog') }]}
-      title={tBlogs('userBlogManagement')}
+      breadcrumbs={[{ label: tDashboard('category') }]}
+      title={tBlogs('setupCategoryTitle')}
       mainClassName="overflow-hidden"
     >
-      <BlogTable type="personal" />
+      <SetupCategoryTree type="blog" />
     </DashboardMainPageLayout>
   );
 }

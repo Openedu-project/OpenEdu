@@ -1,5 +1,4 @@
 import { getBlogsPublishService } from '@oe/api/services/blog';
-import { getCategoriesTreeService } from '@oe/api/services/categories';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
 import { Separator } from '#shadcn/separator';
@@ -8,7 +7,7 @@ import { BlogList } from '../_components/blog-list';
 import { NoBlogData } from '../_components/no-blog-data';
 
 export default async function SearchBlogPage({ name }: { name?: string }) {
-  const [blogsData, t, categoryData] = await Promise.all([
+  const [blogsData, t] = await Promise.all([
     getBlogsPublishService(undefined, {
       params: {
         page: 1,
@@ -19,14 +18,11 @@ export default async function SearchBlogPage({ name }: { name?: string }) {
       },
     }),
     getTranslations('blogSearch'),
-    getCategoriesTreeService(undefined, {
-      queryParams: { active: true, type: 'blog' },
-    }),
   ]);
 
   return (
     <>
-      <BlogHeader categoryData={categoryData} />
+      <BlogHeader />
       <div className="container py-6 xl:px-32">
         <div className="mb-4 flex items-center gap-2 border-b py-3 md:mb-8">
           {name && (

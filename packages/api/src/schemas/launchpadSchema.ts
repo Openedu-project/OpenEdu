@@ -82,7 +82,7 @@ export const ownerCollabsLaunchpadSchema = z.object({
     .string()
     .min(1, 'creatorSettingLaunchpad.ownerAndCollabs.errors.telegramRequired')
     .regex(
-      /^(https?:\/\/)?(t\.me|telegram\.me)\/[a-zA-Z0-9_]{5,}$/,
+      /^(https?:\/\/)?(t\.me|telegram\.me)\/\+?[a-zA-Z0-9_]{5,}$/,
       'creatorSettingLaunchpad.ownerAndCollabs.errors.invalidTelegramFormat'
     ),
 });
