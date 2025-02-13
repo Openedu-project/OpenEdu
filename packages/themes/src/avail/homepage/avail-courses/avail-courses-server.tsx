@@ -1,33 +1,26 @@
-import type { ICourse } from "@oe/api/types/course/course";
-import type { IFeaturedContent } from "@oe/api/types/featured-contents";
-import { CourseCard } from "@oe/ui/components/course-card";
-import { cn } from "@oe/ui/utils/cn";
-import { getTranslations } from "next-intl/server";
-import type { SectionComponent } from "../../../_types/theme-page";
-import { InfoSection } from "../../../vbi/_components/info-section";
-import { getPopularCourses } from "../_actions/popular-course";
+import { cn } from '@oe/ui/utils/cn';
+import { getTranslations } from 'next-intl/server';
+import PopularCourseList from '../../../_components/web/popular-course-list';
+import type { SectionComponent } from '../../../_types/theme-page';
+import { InfoSection } from '../../../vbi/_components/info-section';
+import { getPopularCourses } from '../_actions/popular-course';
 
-const AvailHomepageCoursesServer: SectionComponent<
-  "homepage",
-  "availCourses"
-> = async ({ className, props }) => {
+const AvailHomepageCoursesServer: SectionComponent<'homepage', 'availCourses'> = async ({ className, props }) => {
   const [t, dataPopularCourses] = await Promise.all([
-    getTranslations("themePage.avail.homepage.availCourses"),
+    getTranslations('themePage.avail.homepage.availCourses'),
     getPopularCourses(),
   ]);
 
   return (
-    <div
-      className={cn("bg-accent-foreground px-4 py-8 md:p-8 lg:p-12", className)}
-    >
+    <div className={cn('bg-accent-foreground px-4 py-8 md:p-8 lg:p-12', className)}>
       <div className="container space-y-4 md:space-y-8">
         <InfoSection
-          title={t("title")}
+          title={t('title')}
           titleSub={undefined}
-          button={{ text: t?.("button.text"), link: props?.button?.link }}
+          button={{ text: t?.('button.text'), link: props?.button?.link }}
           className="flex flex-col items-center text-center text-background"
         />
-        <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 md:p-8 lg:grid-cols-4">
+        {/* <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 md:p-8 lg:grid-cols-4">
           {dataPopularCourses?.map(
             (course: IFeaturedContent<ICourse>) =>
               course?.entity && (
@@ -37,7 +30,8 @@ const AvailHomepageCoursesServer: SectionComponent<
                 />
               )
           )}
-        </div>
+        </div> */}
+        <PopularCourseList fallback={dataPopularCourses} />
       </div>
     </div>
   );
