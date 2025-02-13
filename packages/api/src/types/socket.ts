@@ -45,10 +45,31 @@ export interface INotificationSocketData {
     entity_type?: string;
   };
   props: {
+    course_roles?: string;
+    collaborator?: string;
+    user_id?: string;
+    username?: string;
+    course_id?: string;
+    course_cuid?: string;
     course_name?: string;
-    org_name?: string;
+    course_slug?: string;
+    org_id?: string;
+    org_domain?: string;
+    approval_id?: string;
     amount?: string;
     currency?: string;
+    display_name?: string;
+    org_name?: string;
+    blog_cuid?: string;
+    blog_title?: string;
+    blog_slug?: string;
+    provider?: string;
+    launchpad_id?: string;
+    launchpad_name?: string;
+    token?: string;
+    email?: string;
+    fullname?: string;
+    user?: IUser;
   };
   update_at: number;
 }
