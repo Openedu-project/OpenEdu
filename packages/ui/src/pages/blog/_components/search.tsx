@@ -1,3 +1,5 @@
+'use client';
+
 import { BLOG_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
 import { Search } from 'lucide-react';

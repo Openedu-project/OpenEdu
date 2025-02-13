@@ -1,19 +1,6 @@
-import { getBlogContent, getBlogsByCategoryService } from '@oe/api/services/blog';
+import { getBlogContent } from '@oe/api/services/blog';
 import { BlogDetails } from '#components/blog';
-import { BlogCarousel } from '../_components/blog-carousel';
-
-const getRelativeBlog = async (id?: string) => {
-  if (!id) {
-    return [];
-  }
-  try {
-    const res = await getBlogsByCategoryService(undefined, { params: { id } });
-    return res?.results ?? [];
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-};
+import { BlogCateCarousel } from '../_components/blog-cate-carousel';
 
 export default async function BlogDetailsPage({
   slug,
@@ -23,15 +10,13 @@ export default async function BlogDetailsPage({
   type: 'org' | 'personal';
 }) {
   const blogData = await getBlogContent(undefined, { slug, type });
-  const relativeBlogs = await getRelativeBlog(blogData.categories?.[0]?.id);
+  const categoryId = blogData.categories?.[0]?.id;
 
   return (
     <div>
       <BlogDetails data={blogData} />
-      {relativeBlogs?.length > 0 && (
-        <div className="p-4 lg:p-6">
-          <BlogCarousel className="border-t pt-6" blogs={relativeBlogs} title={blogData.categories?.[0]?.name ?? ''} />
-        </div>
+      {categoryId && (
+        <BlogCateCarousel className="p-4 md:p-8" id={categoryId} name={blogData.categories?.[0]?.name ?? ''} />
       )}
     </div>
   );

@@ -15,6 +15,7 @@ import { noDataAvailableMessages } from './no-data-available';
 import { paymentButtonMessages } from './payment-button';
 import { confirmPublishMessages } from './publish-button';
 import { richTextMessages } from './rich-text';
+import { setupCategoryTreeMessages } from './setup-category-tree';
 import { tableMessages } from './table';
 import { uploaderMessages } from './uploader';
 import { userMenuMessages } from './user-menu';
@@ -44,4 +45,5 @@ export const componentMessages = {
   ...webviewHandlerMessages,
   ...AIStatusMessages,
   ...confirmApproveMessages,
+  ...setupCategoryTreeMessages,
 };

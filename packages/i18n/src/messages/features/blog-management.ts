@@ -57,5 +57,6 @@ export const blogManagementMessages = {
     Error: 'Error',
     manual: 'Manual',
     confirmDate: 'Confirm Date',
+    setupCategoryTitle: 'Setup Blog Category',
   },
 };

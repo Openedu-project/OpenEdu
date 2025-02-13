@@ -1,11 +1,18 @@
 import useSWR from 'swr';
 import { getCategoriesService, getCategoriesTreeService } from '#services/categories';
+import type { ICategoryTree } from '#types/categories';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
 
-export const useCategoriesTree = (queryParams?: Record<string, string | boolean>, shouldFetch = true) => {
+export const useCategoriesTree = (
+  queryParams?: Record<string, string | boolean>,
+  fallback?: ICategoryTree[],
+  shouldFetch = true
+) => {
   const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.CATEGORIES_TREE, queryParams });
-  const { data, error, isLoading, mutate } = useSWR(shouldFetch ? endpointKey : null, getCategoriesTreeService);
+  const { data, error, isLoading, mutate } = useSWR(shouldFetch ? endpointKey : null, getCategoriesTreeService, {
+    fallbackData: fallback,
+  });
 
   return {
     categoriesTree: data,
