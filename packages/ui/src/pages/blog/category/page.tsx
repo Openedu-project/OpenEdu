@@ -1,12 +1,11 @@
 import { getBlogsByCategoryService } from '@oe/api/services/blog';
-import { getCategoriesTreeService } from '@oe/api/services/categories';
 import { getTranslations } from 'next-intl/server';
 import { BlogHeader } from '../_components/blog-header';
 import { BlogList } from '../_components/blog-list';
 import { NoBlogData } from '../_components/no-blog-data';
 
 export default async function CategoryBlogPage({ name, id }: { name?: string; id: string }) {
-  const [blogsData, t, categoryData] = await Promise.all([
+  const [blogsData, t] = await Promise.all([
     getBlogsByCategoryService(undefined, {
       params: {
         id,
@@ -18,14 +17,11 @@ export default async function CategoryBlogPage({ name, id }: { name?: string; id
       },
     }),
     getTranslations('blogSearch'),
-    getCategoriesTreeService(undefined, {
-      queryParams: { active: true, type: 'blog' },
-    }),
   ]);
 
   return (
     <>
-      <BlogHeader categoryData={categoryData} />
+      <BlogHeader activeId={id} />
       <div className="container py-6 xl:px-32">
         <div className="mb-4 flex items-center gap-2 border-b py-3 md:mb-8">
           {name && (

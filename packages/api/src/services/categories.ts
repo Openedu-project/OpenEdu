@@ -9,7 +9,6 @@ export const getCategoriesTreeService = async (
 ) => {
   const defaultUrl = createAPIUrl({ endpoint: API_ENDPOINT.CATEGORIES_TREE, queryParams: init?.queryParams });
   const response = await fetchAPI<ICategoryTree[]>(url ?? defaultUrl, init);
-
   return response.data;
 };
 
