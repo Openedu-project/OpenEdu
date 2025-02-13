@@ -21,58 +21,6 @@ export const isSectionCompleted = (sections: ISectionProgress[], entityId: strin
   return section ? section.completed_lesson === section.total_lesson : false;
 };
 
-// export const getFormInfo = (startWhen: IStartWhen, outline: ISection[]) => {
-//   const { type, entity_id } = startWhen;
-
-//   const findSectionContainingLesson = (sections: ISection[], lessonId: string) =>
-//     sections.find(section => section.lessons?.some(lesson => lesson.uid === lessonId));
-
-//   const findLesson = (sections: ISection[], lessonId: string) => {
-//     const section = findSectionContainingLesson(sections, lessonId);
-//     if (!section) {
-//       return { section: null, lesson: null };
-//     }
-//     const lesson = section.lessons?.find(lesson => lesson.uid === lessonId);
-//     return { section, lesson };
-//   };
-
-//   if (type === 'completed_lesson') {
-//     const { section, lesson } = findLesson(outline, entity_id);
-//     const sectionIndex = outline.findIndex(s => s.uid === section?.uid);
-//     const lessonIndex = section?.lessons?.findIndex(l => l.uid === lesson?.uid) ?? -1;
-
-//     return {
-//       type: 'lesson',
-//       lesson: {
-//         title: lesson?.title || 'Unknown Lesson',
-//         index: lessonIndex >= 0 ? lessonIndex + 1 : undefined,
-//       },
-//       section: {
-//         title: section?.title || 'Unknown Section',
-//         index: sectionIndex >= 0 ? sectionIndex + 1 : undefined,
-//       },
-//     };
-//   }
-
-//   if (type === 'completed_section') {
-//     const section = outline.find(section => section.uid === entity_id);
-//     const sectionIndex = outline.findIndex(s => s.uid === entity_id);
-
-//     return {
-//       type: 'section',
-//       section: {
-//         title: section?.title || 'Unknown Section',
-//         index: sectionIndex >= 0 ? sectionIndex + 1 : undefined,
-//       },
-//     };
-//   }
-
-//   return {
-//     type: 'unknown',
-//     title: 'Unknown',
-//   };
-// };
-
 export const getFormInfo = (startWhen: IStartWhen, outline: ISection[]) => {
   const { type, entity_id } = startWhen;
 
