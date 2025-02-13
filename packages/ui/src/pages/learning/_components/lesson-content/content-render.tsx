@@ -88,6 +88,7 @@ export const CONTENT_RENDERERS: Record<TLessonContent, ContentRenderer> = {
           course_data={props?.courseData}
           settings={quiz?.settings}
           onComplete={() => props?.onCompleteContent?.({ uid: props?.data?.uid })}
+          is_preview={props?.isPreview}
         />
       );
     },

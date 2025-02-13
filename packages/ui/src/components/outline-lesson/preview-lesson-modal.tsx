@@ -25,7 +25,9 @@ const PreviewLessonModal = ({ lessonUid, sectionUid, courseData, isOpen, onClose
       title="Preview lesson"
       open={isOpen}
       onClose={onClose}
-      contentClassName="w-full h-screen max-h-[calc(100vh-50%)]"
+      hasCloseIcon
+      className="min-w-[50vw]"
+      contentClassName="w-full h-screen max-h-[calc(100dvh-50%)]"
     >
       {isLoadingLessonLearn ? (
         <Spinner />
