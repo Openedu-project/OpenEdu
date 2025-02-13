@@ -5,9 +5,14 @@ import { useCallback } from 'react';
 interface ICreatorStartVotingLaunchpadModal {
   onSubmit: () => void;
   onClose: () => void;
+  isLoading: boolean;
 }
 
-export default function CreatorStartVotingLaunchpadModal({ onSubmit, onClose }: ICreatorStartVotingLaunchpadModal) {
+export default function CreatorStartVotingLaunchpadModal({
+  onSubmit,
+  onClose,
+  isLoading,
+}: ICreatorStartVotingLaunchpadModal) {
   const t = useTranslations('creatorLaunchpad.startVotingModal');
 
   const handleSubmit = useCallback(() => {
@@ -30,6 +35,7 @@ export default function CreatorStartVotingLaunchpadModal({ onSubmit, onClose }: 
           type: 'button',
           label: t('confirm'),
           variant: 'default',
+          loading: isLoading,
           onClick: () => handleSubmit(),
         },
       ]}

@@ -53,7 +53,7 @@ const MODAL_CONFIGS: Record<NotiType, ModalConfig> = {
   },
 } as const;
 
-export default function CourseNotiModal({
+export default function CompleteCourseNotiModal({
   open,
   currentLessonIndex,
   totalItems,
@@ -103,13 +103,15 @@ export default function CourseNotiModal({
   return (
     <Modal
       open={open}
+      onClose={onReturnToClass}
       title={false}
+      hasCloseIcon
       hasCancelButton={false}
       contentClassName="py-4 px-0 h-full"
       className="h-[640px] max-h-[80%] w-[720px] max-w-full"
     >
       <div className="relative h-full">
-        <h2 className="-translate-x-1/2 giant-iheading-bold20 md:giant-iheading-bold24 absolute top-0 left-1/2 z-10 w-full text-center text-primary capitalize">
+        <h2 className="-translate-x-1/2 giant-iheading-bold20 md:giant-iheading-bold24 absolute top-0 left-1/2 z-10 w-[80%] text-center text-primary capitalize">
           {t(modalConfig.title)}
         </h2>
         <Image

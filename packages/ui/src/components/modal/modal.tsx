@@ -1,16 +1,16 @@
-import type { TypeOf, z } from '@oe/api/utils/zod';
-import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
-import type { ReactNode } from 'react';
-import type { DefaultValues, UseFormReturn } from 'react-hook-form';
+import type { TypeOf, z } from "@oe/api/utils/zod";
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
+import type { DefaultValues, UseFormReturn } from "react-hook-form";
 import {
   type FormErrorHandler,
   FormNestedProvider,
   FormNestedWrapper,
   type INestedFormsValues,
   SubmitFormsButton,
-} from '#components/form-wrapper';
-import { Button, type ButtonProps } from '#shadcn/button';
+} from "#components/form-wrapper";
+import { Button, type ButtonProps } from "#shadcn/button";
 import {
   Dialog,
   DialogContent,
@@ -19,16 +19,22 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '#shadcn/dialog';
-import { cn } from '#utils/cn';
+} from "#shadcn/dialog";
+import { cn } from "#utils/cn";
 
-type ButtonVariant = 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
+type ButtonVariant =
+  | "default"
+  | "destructive"
+  | "outline"
+  | "secondary"
+  | "ghost"
+  | "link";
 
-export interface ButtonConfig extends Omit<ButtonProps, 'onClick'> {
+export interface ButtonConfig extends Omit<ButtonProps, "onClick"> {
   label: string;
   onClick?: (handleClose?: () => void) => void;
   variant?: ButtonVariant;
-  type?: 'button' | 'submit' | 'reset';
+  type?: "button" | "submit" | "reset";
 }
 
 // type FormSchema = z.ZodObject<Record<string, z.ZodTypeAny>>;
@@ -66,28 +72,32 @@ const ModalButtons = ({
   hasCancelButton?: boolean;
   handleClose?: () => void;
 }) => {
-  const t = useTranslations('general');
+  const t = useTranslations("general");
 
   if (buttons && buttons.length > 0) {
     return (
       <>
-        {buttons.map(button =>
-          button.type === 'submit' ? (
-            <SubmitFormsButton key={button.label} variant={button.variant} disabled={isSubmitting}>
+        {buttons.map((button) =>
+          button.type === "submit" ? (
+            <SubmitFormsButton
+              key={button.label}
+              variant={button.variant}
+              disabled={isSubmitting}
+            >
               {button.label}
             </SubmitFormsButton>
           ) : (
             <Button
               {...button}
               key={button.label}
-              type={button.type ?? 'button'}
-              variant={button.variant ?? 'default'}
+              type={button.type ?? "button"}
+              variant={button.variant ?? "default"}
               onClick={
                 button.onClick
                   ? () => button.onClick?.(handleClose)
-                  : button.type === 'button'
-                    ? handleClose
-                    : undefined
+                  : button.type === "button"
+                  ? handleClose
+                  : undefined
               }
             >
               {button.label}
@@ -102,12 +112,12 @@ const ModalButtons = ({
     <>
       {hasCancelButton && handleClose && (
         <Button type="button" variant="outline" onClick={handleClose}>
-          {t('close')}
+          {t("close")}
         </Button>
       )}
       {showSubmit && (
         <SubmitFormsButton key="submit" variant="default">
-          {isSubmitting ? t('submitting') : t('submit')}
+          {isSubmitting ? t("submitting") : t("submit")}
         </SubmitFormsButton>
       )}
     </>
@@ -153,7 +163,7 @@ export const Modal = <TSchema extends z.ZodType>({
 
   const handleSubmit = async (data: INestedFormsValues) => {
     setIsSubmitting(true);
-    await onSubmit?.(data['modal-form']);
+    await onSubmit?.(data["modal-form"]);
     handleOpenChange(false);
     setIsSubmitting(false);
   };
@@ -170,14 +180,23 @@ export const Modal = <TSchema extends z.ZodType>({
     <FormNestedWrapper
       id="modal-form"
       schema={validationSchema}
-      className={cn('scrollbar px-4', hasTitleOrDescription && hasButtons ? 'overflow-y-auto' : '')}
+      className={cn(
+        "scrollbar px-4",
+        hasTitleOrDescription && hasButtons ? "overflow-y-auto" : ""
+      )}
       useFormProps={{ defaultValues }}
     >
-      {({ form }) => (typeof children === 'function' ? children(form) : children)}
+      {({ form }) =>
+        typeof children === "function" ? children(form) : children
+      }
     </FormNestedWrapper>
   ) : (
     <div
-      className={cn('scrollbar px-4', hasTitleOrDescription && hasButtons ? 'overflow-y-auto' : '', contentClassName)}
+      className={cn(
+        "scrollbar px-4",
+        hasTitleOrDescription && hasButtons ? "overflow-y-auto" : "",
+        contentClassName
+      )}
     >
       {children as ReactNode}
     </div>
@@ -185,18 +204,20 @@ export const Modal = <TSchema extends z.ZodType>({
 
   const modalContent = (
     <DialogContent
-      onPointerDownOutside={e => e.preventDefault()}
+      onPointerDownOutside={(e) => e.preventDefault()}
       className={`flex max-w-[90vw] flex-col overflow-hidden p-0 md:max-w-lg ${
-        !hasCloseIcon && '[&>button]:hidden'
+        !hasCloseIcon && "[&>button]:hidden"
       } ${className}`}
     >
-      <DialogHeader className={cn('p-4 pb-0', hasTitleOrDescription ? '' : 'hidden')}>
+      <DialogHeader
+        className={cn("p-4 pb-0", hasTitleOrDescription ? "" : "hidden")}
+      >
         <DialogTitle>{title}</DialogTitle>
         <DialogDescription>{description}</DialogDescription>
       </DialogHeader>
       {content}
       {hasButtons && (
-        <DialogFooter className={cn('p-4 pt-0', buttonsClassName)}>
+        <DialogFooter className={cn("p-4 pt-0", buttonsClassName)}>
           <ModalButtons
             buttons={buttons}
             hasCancelButton={hasCancelButton}

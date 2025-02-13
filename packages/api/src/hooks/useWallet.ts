@@ -175,7 +175,7 @@ export const useNFTTotalAssets = () => {
     () => wallets?.find(w => w.type === ASSET_TYPES.CRYPTO && w.network === CHAIN.NEAR),
     [wallets]
   );
-
+  
   const availWallet = useMemo(
     () => wallets?.find(w => w.type === ASSET_TYPES.CRYPTO && w.network === CHAIN.AVAIL),
     [wallets]
@@ -210,6 +210,7 @@ export const useNFTTotalAssets = () => {
 
   return {
     nftData,
+    tokenBalances: tokenBalances,
     isLoading: walletsLoading || isNearLoading || isAvailLoading,
   };
 };

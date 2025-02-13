@@ -21,7 +21,7 @@ export function CreatorDeleteLaunchpadButton({ id }: CreatorDeleteLaunchpadButto
 
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const { mutate: globalMutate } = useSWRConfig();
-  const { triggerPostAdminCancelLaunchpads } = usePostAdminCancelLaunchpads(id);
+  const { triggerPostAdminCancelLaunchpads, isLoadingPostAdminCancelLaunchpads } = usePostAdminCancelLaunchpads(id);
 
   const handleOpenModal = useCallback(() => {
     setIsOpenModal(true);
@@ -57,7 +57,13 @@ export function CreatorDeleteLaunchpadButton({ id }: CreatorDeleteLaunchpadButto
       <Button variant="destructive" className="w-full" onClick={handleOpenModal}>
         {t('deleteLaunchpad')}
       </Button>
-      {isOpenModal && <CreatorDeleteLaunchpadModal onClose={handleCloseModal} onSubmit={handleCancelLaunchpads} />}
+      {isOpenModal && (
+        <CreatorDeleteLaunchpadModal
+          isLoading={isLoadingPostAdminCancelLaunchpads}
+          onClose={handleCloseModal}
+          onSubmit={handleCancelLaunchpads}
+        />
+      )}
     </>
   );
 }

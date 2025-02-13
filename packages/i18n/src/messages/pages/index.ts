@@ -5,6 +5,7 @@ import { affiliateCampaignMessage } from './affiliate-campaign';
 import { bankAccountMessage } from './bank-account';
 import { builderMessages } from './builder';
 import { couponMessage } from './coupon';
+import { courseManagementMessages } from './course-management';
 import { courseOutlineMessages } from './course-outline';
 import { coursePaymentMessages } from './course-payment';
 import { courseListMessages } from './courses-list';
@@ -52,4 +53,5 @@ export const pageMessages = {
   ...myLearningSpaceMessage,
   ...launchpadDetailPageMessages,
   ...launchpadHomepageMessage,
+  ...courseManagementMessages,
 };

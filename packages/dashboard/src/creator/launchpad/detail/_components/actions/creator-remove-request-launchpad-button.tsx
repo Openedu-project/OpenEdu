@@ -21,7 +21,8 @@ export function CreatorRemoveRequestLaunchpadButton({ id }: CreatorRemoveRequest
 
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const { mutate: globalMutate } = useSWRConfig();
-  const { triggerPutAdminCancelPublishLaunchpads } = usePutAdminCancelPublishLaunchpads(id);
+  const { triggerPutAdminCancelPublishLaunchpads, isLoadingPutAdminCancelPublishLaunchpads } =
+    usePutAdminCancelPublishLaunchpads(id);
 
   const handleOpenModal = useCallback(() => {
     setIsOpenModal(true);
@@ -58,7 +59,11 @@ export function CreatorRemoveRequestLaunchpadButton({ id }: CreatorRemoveRequest
         {t('removeRequestForApproval')}
       </Button>
       {isOpenModal && (
-        <CreatorRemoveRequestLaunchpadModal onClose={handleCloseModal} onSubmit={handleCancelPublishLaunchpads} />
+        <CreatorRemoveRequestLaunchpadModal
+          isLoading={isLoadingPutAdminCancelPublishLaunchpads}
+          onClose={handleCloseModal}
+          onSubmit={handleCancelPublishLaunchpads}
+        />
       )}
     </>
   );

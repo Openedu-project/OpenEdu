@@ -41,7 +41,7 @@ function CourseOrganization({
     <div className="mcaption-regular14 flex items-center gap-4 text-primary">
       {orgName && <p>{orgName}</p>}
       {isCompleted && (
-        <div className="-mr-3 ml-auto w-12 rounded-l-full bg-[#2BA830]">
+        <div className="-mr-3 ml-auto w-12 rounded-l-full bg-positive-600">
           <div className="grid h-6 w-6 items-center justify-center">
             <SendSquare />
           </div>

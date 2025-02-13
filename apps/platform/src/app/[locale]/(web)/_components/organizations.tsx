@@ -22,7 +22,7 @@ export default async function OrganizationSection() {
               href={`https://${org?.domain}`}
               key={org.name}
               target="_blank"
-              className="block h-auto space-y-4 bg-gradient-to-b from-25% from-white via-60% via-[#F2F1FF] to-100% to-[#F2F1FF]/30 p-4 text-black hover:no-underline"
+              className="block h-auto space-y-4 bg-gradient-to-b from-25% from-white via-60% via-primary-20 to-100% to-primary-20/30 p-4 text-black hover:no-underline"
             >
               <div className="relative flex overflow-hidden rounded-3xl">
                 <Image

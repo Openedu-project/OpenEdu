@@ -80,13 +80,19 @@
     --ai-agent-aqua-background: linear-gradient(180deg, #aafaff 0%, #22c5ce 100%);
     --ai-assistant-background: linear-gradient(144deg, #2cdee9 18.7%, #7b5aff 82.64%);
 
+    --primary-20: 243 100% 98%; /* #F2F1FF */
     --primary-50: 238 47% 86%; /* #C4C6F2 */
     --primary-100: 252 100% 94%; /* #E4E1FF */
+    --primary-600: 238 61% 58%; /* #5055D7 */
 
     /* neutral */
+    --neutral-20: 0 0% 96%; /* #EBEBEB */
     --neutral-50: 0 0% 92%; /* #EBEBEB */
     --neutral-100: 0 0% 86%; /* #DBDBDB */
+    --neutral-300: 0 0% 69%; /* #AFAFAF */
     --neutral-600: 0 0% 43%; /* #6E6E6E */
+    --neutral-800: 0 0% 26%; /* #424242 */
+    --neutral-900: 0 0% 17%; /* #2C2C2C */
 
     /* info */
     --info-50: 213 100% 93%; /* #DDEFFF */
@@ -96,9 +102,11 @@
     /* negative */
     --negative-50: 356 100% 93%; /* #FFDADD */
     --negative-500: 355 100% 49%; /* #FA0013 */
+    --negative-600: 355 100% 42%; /* #D50010 */
 
     /* warning */
     --warning-50: 47 100% 93%; /* #FFF6DC */
+    --warning-500: 44 100% 51%; /* #FFBD04 */
     --warning-600: 43 100% 43%; /* #DCA200 */
 
     /* tertiary */
@@ -187,14 +195,19 @@
     );
     --footer: linear-gradient(255deg, #b8f4f8 6.18%, #ede3fe 70.53%);
 
-    /* primary */
-    --primary-50: #c4c6f2;
+    --primary-20: 243 100% 98%; /* #F2F1FF */
+    --primary-50: 238 47% 86%; /* #C4C6F2 */
     --primary-100: 252 100% 94%; /* #E4E1FF */
+    --primary-600: 238 61% 58%; /* #5055D7 */
 
     /* neutral */
+    --neutral-20: 0 0% 96%; /* #EBEBEB */
     --neutral-50: 0 0% 92%; /* #EBEBEB */
     --neutral-100: 0 0% 86%; /* #DBDBDB */
+    --neutral-300: 0 0% 69%; /* #AFAFAF */
     --neutral-600: 0 0% 43%; /* #6E6E6E */
+    --neutral-800: 0 0% 26%; /* #424242 */
+    --neutral-900: 0 0% 17%; /* #2C2C2C */
 
     /* info */
     --info-50: 213 100% 93%; /* #DDEFFF */
@@ -204,11 +217,11 @@
     /* negative */
     --negative-50: 356 100% 93%; /* #FFDADD */
     --negative-500: 355 100% 49%; /* #FA0013 */
-    --negative-600: 357, 100%, 42%; /* #D50010 */
+    --negative-600: 355 100% 42%; /* #D50010 */
 
-    
     /* warning */
     --warning-50: 47 100% 93%; /* #FFF6DC */
+    --warning-500: 44 100% 51%; /* #FFBD04 */
     --warning-600: 43 100% 43%; /* #DCA200 */
 
     /* tertiary */

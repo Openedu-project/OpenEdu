@@ -64,6 +64,7 @@ export interface ILaunchpad {
   total_funded?: number;
   total_pledged?: number;
   total_backers?: number;
+  total_refunded: null;
   voting_stats?: {
     approved: number;
     declined: number;
@@ -284,3 +285,10 @@ export type LaunchpadStatus =
   | 'waiting'
   | 'got_revenue'
   | 'got_refunded';
+
+export type ILaunchpadTabsType =
+  | 'general-information'
+  | 'funding-goal'
+  | 'voting-plan'
+  | 'owner-and-collaborators'
+  | 'payment-method';
