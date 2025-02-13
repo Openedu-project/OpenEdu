@@ -1,6 +1,5 @@
 'use client';
-
-import type { ICourse } from '@oe/api/types/course/course';
+import type { ICourse, ICourseResponse } from '@oe/api/types/course/course';
 import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { Link } from '@oe/ui/common/navigation';
 import { CourseCard } from '@oe/ui/components/course-card';
@@ -9,15 +8,17 @@ import { CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@
 import { cn } from '@oe/ui/utils/cn';
 import useEmblaCarousel from 'embla-carousel-react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import type { KeyedMutator } from 'swr';
 
 interface CarouselWrapperProps {
   slides: ICourse[][];
   hasMultipleSlides: boolean;
   viewAllText: string;
   title: string;
+  mutate?: KeyedMutator<ICourseResponse | undefined>;
 }
 
-export function CarouselWrapper({ slides, hasMultipleSlides, viewAllText, title }: CarouselWrapperProps) {
+export function CarouselWrapper({ slides, hasMultipleSlides, viewAllText, title, mutate }: CarouselWrapperProps) {
   const [emblaRef] = useEmblaCarousel({
     align: 'start',
     loop: false,
@@ -72,6 +73,7 @@ export function CarouselWrapper({ slides, hasMultipleSlides, viewAllText, title 
                     showPrice={true}
                     showThubnail={true}
                     showOwner={false}
+                    mutate={mutate}
                   />
                 ))}
               </div>
