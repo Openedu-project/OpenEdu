@@ -1,33 +1,24 @@
-import { getThemeConfigServer } from "@oe/api/services/theme";
-import { MainLayout } from "@oe/ui/common/layout";
+import { MainLayoutClient } from "@oe/ui/common/layout";
 import type { NavigationLink } from "@oe/ui/common/layout/footer";
 import type { ISidebarItem } from "@oe/ui/common/layout/sidebar";
 import type { FileType } from "@oe/ui/components/uploader";
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
+import type { ThemeDefinition, ThemeName } from "src/_types";
 
-export default async function OpeneduLayout({
-  children,
-}: {
+interface ThemeLayoutProps {
+  themeDefinition?: ThemeDefinition;
+  themeName: ThemeName;
   children: ReactNode;
-}) {
-  const [tTheme, themeSystem] = await Promise.all([
-    getTranslations("themePage"),
-    getThemeConfigServer(),
-  ]);
-
-  const themeName = themeSystem?.[0]?.value?.activedTheme || "vbi";
-
-  if (!themeSystem?.[0]?.value) {
-    return <MainLayout>{children}</MainLayout>;
-  }
-
-  const headerProps =
-    themeSystem?.[0]?.value?.availableThemes?.[themeName]?.pages?.auth?.config
-      ?.header?.props;
-  const footerProps =
-    themeSystem?.[0]?.value?.availableThemes?.[themeName]?.pages?.auth?.config
-      ?.footer?.props;
+}
+const ThemeLayout = ({
+  themeDefinition,
+  themeName,
+  children,
+}: ThemeLayoutProps) => {
+  const tTheme = useTranslations("themePage");
+  const headerProps = themeDefinition?.pages?.auth?.config?.header?.props;
+  const footerProps = themeDefinition?.pages?.auth?.config?.footer?.props;
 
   const sidebarItems = (headerProps?.sidebarItems as ISidebarItem[])?.map(
     (item, index) => ({
@@ -67,12 +58,14 @@ export default async function OpeneduLayout({
   };
 
   return (
-    <MainLayout
+    <MainLayoutClient
       sidebarItems={sidebarItems}
       logo={headerProps?.logo as FileType}
       footerProps={footerConfig}
     >
       {children}
-    </MainLayout>
+    </MainLayoutClient>
   );
-}
+};
+
+export default ThemeLayout;
