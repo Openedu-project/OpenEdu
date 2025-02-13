@@ -34,13 +34,13 @@ import type {
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
 
-export function useGetAdminLaunchpads(queryParams: IFilter) {
+export function useGetAdminLaunchpads(id: string, queryParams: IFilter) {
   const endpointKey = createAPIUrl({
     endpoint: API_ENDPOINT.LAUNCHPADS,
     queryParams: { ...queryParams },
   });
 
-  const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
+  const { data, isLoading, error, mutate } = useSWR(id ? endpointKey : null, (endpoint: string) =>
     getAdminLaunchpadsService(endpoint, { params: { ...queryParams } })
   );
 

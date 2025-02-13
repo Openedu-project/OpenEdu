@@ -4,10 +4,14 @@ import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import { useSocketStore } from '#store/socket';
 
 export function useNotifications() {
   const [page, setPage] = useState(1);
   const tError = useTranslations('errors');
+
+  const [notifications, setNotifications] = useState<INotificationItem[]>([]);
+  const [hasMore, setHasMore] = useState(true);
 
   const {
     dataNotification,
@@ -18,16 +22,34 @@ export function useNotifications() {
     sort: 'create_at desc',
   });
   const { triggerUpdateNotification } = useUpdateNotification();
-
-  const [notifications, setNotifications] = useState<INotificationItem[]>([]);
-  const [hasMore, setHasMore] = useState(true);
+  const { notificationData } = useSocketStore();
 
   useEffect(() => {
     if (dataNotification?.results) {
-      setNotifications(prev => [...prev, ...dataNotification.results]);
+      if (page === 1) {
+        // Reset list for first page
+        setNotifications(dataNotification.results);
+      } else {
+        setNotifications(prev => [...prev, ...dataNotification.results]);
+      }
       setHasMore(page < (dataNotification.pagination?.total_pages ?? 1));
     }
-  }, [dataNotification, page]);
+  }, [dataNotification?.results, dataNotification?.pagination?.total_pages, page]);
+
+  useEffect(() => {
+    // if (courseData) {
+    //   setNotifications(prevNotifications => [
+    //     { ...(courseData.data as unknown as INotificationItem) },
+    //     ...prevNotifications,
+    //   ]);
+    // }
+    if (notificationData) {
+      setNotifications(prevNotifications => [
+        { ...(notificationData.data as unknown as INotificationItem) },
+        ...prevNotifications,
+      ]);
+    }
+  }, [notificationData]);
 
   const fetchNextPage = useCallback(() => {
     if (!hasMore || isLoadingNotifications) {
@@ -44,8 +66,24 @@ export function useNotifications() {
           read: true,
           read_all: false,
         });
+
+        // Update local state without refetching
         setNotifications(prev => prev.map(notif => (notif.id === id ? { ...notif, read_at: Date.now() } : notif)));
-        mutateNotificationList();
+
+        // Mutate the SWR cache without triggering a refetch
+        await mutateNotificationList(
+          cache => {
+            if (!cache) {
+              return cache;
+            }
+            return {
+              ...cache,
+              badge_count: cache.badge_count - 1,
+              results: cache.results.map(notif => (notif.id === id ? { ...notif, read_at: Date.now() } : notif)),
+            };
+          },
+          { revalidate: false }
+        );
       } catch (error) {
         console.error('Failed to mark notification as read:', error);
         toast.error(tError((error as HTTPErrorMetadata).code.toString()));
@@ -61,8 +99,27 @@ export function useNotifications() {
         read: true,
         read_all: true,
       });
+
+      // Update local state without refetching
       setNotifications(prev => prev.map(notif => ({ ...notif, read_at: Date.now() })));
-      mutateNotificationList();
+
+      // Mutate the SWR cache without triggering a refetch
+      await mutateNotificationList(
+        cache => {
+          if (!cache) {
+            return cache;
+          }
+          return {
+            ...cache,
+            badge_count: 0,
+            results: cache.results.map(notif => ({
+              ...notif,
+              read_at: Date.now(),
+            })),
+          };
+        },
+        { revalidate: false }
+      );
     } catch (error) {
       console.error('Failed to mark all as read:', error);
       toast.error(tError((error as HTTPErrorMetadata).code.toString()));

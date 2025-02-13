@@ -1,5 +1,6 @@
 'use client';
 import { useGetAdminLaunchpads } from '@oe/api/hooks/useAdminLaunchpad';
+import { useGetMe } from '@oe/api/hooks/useMe';
 import { formatDate } from '@oe/core/utils/datetime';
 import { PaginationCustom } from '@oe/ui/components/pagination-custom';
 import { Spinner } from '@oe/ui/components/spinner';
@@ -8,11 +9,13 @@ import { CreatorLaunchpadCard } from './creator-launchpad-card';
 
 export default function CreatorLaunchpadList({ status }: { status: string }) {
   const [page, setPage] = useState<number>(1);
-  const { dataAdminLaunchpads, isLoadingAdminLaunchpads } = useGetAdminLaunchpads({
+  const { dataMe: me } = useGetMe();
+  const { dataAdminLaunchpads, isLoadingAdminLaunchpads } = useGetAdminLaunchpads(me?.id ?? '', {
     page,
     per_page: 12,
     status: status,
     preloads: ['Owner', 'Investment'],
+    user_id: me?.id,
   });
 
   const handlePageChange = useCallback((page: number) => {

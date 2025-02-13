@@ -19,7 +19,10 @@ const DepositModal = () => {
   const { tokenBalances: data } = useNFTTotalAssets();
 
   const nearWallet = useMemo(
-    () => wallets?.find(w => w.type === ASSET_TYPES.CRYPTO && w.network === CHAIN.NEAR),
+    () =>
+      wallets?.find(
+        w => w.type === ASSET_TYPES.CRYPTO && w.network === CHAIN.NEAR && w.currency.toLowerCase() === CHAIN.NEAR
+      ),
     [wallets]
   );
 
