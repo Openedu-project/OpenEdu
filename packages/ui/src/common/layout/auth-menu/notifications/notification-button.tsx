@@ -2,33 +2,42 @@
 
 import { useGetNotification } from '@oe/api/hooks/useNotification';
 import { Bell } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '#shadcn/button';
 import { Popover, PopoverContent, PopoverTrigger } from '#shadcn/popover';
+import { useSocketStore } from '#store/socket';
 import { NotificationList } from './notification-list';
 
 export function NotificationButton() {
   const [isOpen, setIsOpen] = useState(false);
+  const [badges, setBadges] = useState<number>(0);
 
   const { dataNotification } = useGetNotification({
     page: 1,
     sort: 'create_at desc',
   });
-  const unreadCount = useMemo(() => {
-    if (!dataNotification) {
-      return;
+  const { badgeData } = useSocketStore();
+
+  useEffect(() => {
+    if (dataNotification) {
+      setBadges(dataNotification.badge_count);
     }
-    return dataNotification.badge_count;
   }, [dataNotification]);
+
+  useEffect(() => {
+    if (badgeData) {
+      setBadges(badgeData.data.badge);
+    }
+  }, [badgeData]);
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button variant="ghost" size="icon" className="group relative">
           <Bell className="h-5 w-5 text-primary-foreground transition-colors group-hover:text-accent-foreground" />
-          {typeof unreadCount === 'number' && unreadCount > 0 && (
+          {typeof badges === 'number' && badges > 0 && (
             <span className="-top-1 -right-1 absolute flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-[11px] text-destructive-foreground">
-              {unreadCount > 99 ? '99+' : unreadCount}
+              {badges > 99 ? '99+' : badges}
             </span>
           )}
         </Button>

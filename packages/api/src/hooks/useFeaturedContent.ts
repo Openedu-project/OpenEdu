@@ -8,7 +8,8 @@ import {
   updateFeaturedContent,
 } from '#services/featured-contents';
 import type { IBlog } from '#types/blog';
-import type { FeaturedContentParams, IFeaturedContentRequest } from '#types/featured-contents';
+import type { ICourse } from '#types/course/course';
+import type { FeaturedContentParams, IFeaturedContent, IFeaturedContentRequest } from '#types/featured-contents';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
 
@@ -48,8 +49,10 @@ export const useUpdateFeaturedContent = () => {
 
 export function useGetPopularCoursesAtWebsite({
   params,
+  fallback,
 }: {
   params: Pick<FeaturedContentParams, 'org_id'>;
+  fallback?: IFeaturedContent<ICourse>[];
 }) {
   const endpointKey = createAPIUrl({
     endpoint: API_ENDPOINT.FEATURED_CONTENT_BY_TYPES,
@@ -59,8 +62,12 @@ export function useGetPopularCoursesAtWebsite({
   const shouldFetch = params.org_id !== '' && params.org_id !== undefined;
   const fetchKey = shouldFetch ? endpointKey : null;
 
-  const { data, isLoading, error, mutate } = useSWR(fetchKey, (endpoint: string) =>
-    getPopularCoursesServicesAtWebsite(endpoint, { params })
+  const { data, isLoading, error, mutate } = useSWR(
+    fetchKey,
+    (endpoint: string) => getPopularCoursesServicesAtWebsite(endpoint, { params }),
+    {
+      fallbackData: fallback,
+    }
   );
 
   return {

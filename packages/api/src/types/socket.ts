@@ -1,5 +1,6 @@
 import type { IMessageData } from '@oe/api/types/conversation';
 import type { IAICourseStatus } from '@oe/api/types/course/ai-course';
+import type { IUser } from './user';
 
 export interface IBadgeEventData {
   badge: number;
@@ -30,6 +31,26 @@ export interface IPaymentEventData {
   data_id: string;
   data_type: string;
   time_stamp: string;
+}
+
+export interface INotificationSocketData {
+  User?: IUser;
+  code: number;
+  content: string;
+  create_at: number;
+  delete_at: number;
+  id: string;
+  jump_entity?: {
+    entity_id?: string;
+    entity_type?: string;
+  };
+  props: {
+    course_name?: string;
+    org_name?: string;
+    amount?: string;
+    currency?: string;
+  };
+  update_at: number;
 }
 
 export interface ICertificateEventData {
