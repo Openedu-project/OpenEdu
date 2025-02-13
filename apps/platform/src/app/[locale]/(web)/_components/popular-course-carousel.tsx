@@ -1,5 +1,7 @@
 'use client';
+import { useGetCoursesPublish } from '@oe/api/hooks/useCourse';
 import type { ICourse, ICourseResponse } from '@oe/api/types/course/course';
+import type { IFilter } from '@oe/api/types/filter';
 import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { Link } from '@oe/ui/common/navigation';
 import { CourseCard } from '@oe/ui/components/course-card';
@@ -8,21 +10,36 @@ import { CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@
 import { cn } from '@oe/ui/utils/cn';
 import useEmblaCarousel from 'embla-carousel-react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import type { KeyedMutator } from 'swr';
 
 interface CarouselWrapperProps {
-  slides: ICourse[][];
-  hasMultipleSlides: boolean;
+  coursesData?: ICourseResponse;
+  // hasMultipleSlides: boolean;
   viewAllText: string;
   title: string;
-  mutate?: KeyedMutator<ICourseResponse | undefined>;
+  params: IFilter;
 }
 
-export function CarouselWrapper({ slides, hasMultipleSlides, viewAllText, title, mutate }: CarouselWrapperProps) {
+export function CarouselWrapper({
+  coursesData,
+  // hasMultipleSlides,
+  viewAllText,
+  title,
+  params,
+}: CarouselWrapperProps) {
   const [emblaRef] = useEmblaCarousel({
     align: 'start',
     loop: false,
   });
+
+  const { dataListCourses, mutateListCourses } = useGetCoursesPublish(params, coursesData);
+
+  const courses = dataListCourses?.results || [];
+  const hasMultipleSlides = courses?.length > 8;
+
+  const slides: ICourse[][] = [];
+  for (let i = 0; i < courses.length; i += 8) {
+    slides.push(courses.slice(i, i + 8));
+  }
 
   return (
     <>
@@ -61,10 +78,10 @@ export function CarouselWrapper({ slides, hasMultipleSlides, viewAllText, title,
 
       <div ref={emblaRef} className="overflow-hidden">
         <CarouselContent>
-          {slides.map(slideItems => (
+          {slides?.map(slideItems => (
             <CarouselItem key={slideItems[0]?.id}>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-                {slideItems.map(course => (
+                {slideItems?.map(course => (
                   <CourseCard
                     key={course.id}
                     courseData={course}
@@ -73,7 +90,7 @@ export function CarouselWrapper({ slides, hasMultipleSlides, viewAllText, title,
                     showPrice={true}
                     showThubnail={true}
                     showOwner={false}
-                    mutate={mutate}
+                    mutate={mutateListCourses}
                   />
                 ))}
               </div>
