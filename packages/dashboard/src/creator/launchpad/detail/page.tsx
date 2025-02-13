@@ -16,7 +16,7 @@ interface LayoutProps {
 
 export default function CreatorLaunchpadDetailMgm({ id, data, backerData }: LayoutProps) {
   const t = useTranslations('creatorLaunchpad');
-  console.log('data', data);
+
   return (
     <DashboardMainPageLayout
       breadcrumbs={[{ label: t('title') }, { label: data?.name ?? '', disabled: true }]}
