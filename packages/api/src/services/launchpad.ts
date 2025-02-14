@@ -168,13 +168,9 @@ export async function getMyLaunchpadService({
 }
 
 export const postPledgeLaunchpadService = async (payload?: IPledgeLaunchpadPayload) => {
-  try {
-    const response = await postAPI(API_ENDPOINT.LAUNCHPADS_INVESTMENTS, payload);
+  const response = await postAPI(API_ENDPOINT.LAUNCHPADS_INVESTMENTS, payload);
 
-    return response;
-  } catch {
-    return null;
-  }
+  return response.data;
 };
 
 export const postCreateLaunchpadService = async (

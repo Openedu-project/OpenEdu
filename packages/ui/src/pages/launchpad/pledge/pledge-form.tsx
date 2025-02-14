@@ -4,7 +4,6 @@ import { pledgeLaunchpadSchema } from '@oe/api/schemas/launchpadSchema';
 import type { IWallet } from '@oe/api/types/wallet';
 import { CircleAlert } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import type { FieldError, FieldErrorsImpl, FieldValues, Merge } from 'react-hook-form';
 import { useRouter } from '#common/navigation';
 import { FormWrapper } from '#components/form-wrapper';
 import { InputCurrency } from '#components/input-currency';
@@ -17,20 +16,6 @@ import ConfirmPledgeDialog from './confirm-pledge-dialog';
 import DepositModal from './deposit-modal';
 import SuccessDialog from './success-pledge-dialog';
 import usePledgeForm from './usePledgeForm';
-
-const FormError = ({
-  message,
-}: {
-  message: string | null | FieldError | Merge<FieldError, FieldErrorsImpl<FieldValues>>;
-}) => {
-  const t = useTranslations();
-  if (message === null) {
-    return null;
-  }
-  // Convert the message to string and then translate
-  const errorMessage = typeof message === 'string' ? message : message.message;
-  return <p className="mt-1 gap-2 text-sm text-red-500">{t(errorMessage)}</p>;
-};
 
 const PledgeForm = ({
   launchpadId,
@@ -50,7 +35,6 @@ const PledgeForm = ({
     isTermsAccept,
     setIsTermsAccept,
     isSuccess,
-    amountError,
     setIsSuccess,
     handleSubmit,
     handleConfirmSubmit,
@@ -60,7 +44,6 @@ const PledgeForm = ({
     <div className="relative w-full space-y-3 rounded-2xl bg-white p-6 shadow-[0px_4px_30px_0px_#F4F5F6] lg:w-[60%]">
       <FormWrapper id="pledge" schema={pledgeLaunchpadSchema}>
         {({ loading, form }) => {
-          const { errors } = form.formState;
           return (
             <>
               {isLoading && <Spinner />}
@@ -69,7 +52,7 @@ const PledgeForm = ({
                 label={t('amount')}
                 render={({ field }) => (
                   <div>
-                    <div className="border border-input rounded-md">
+                    <div className="rounded-md border border-input">
                       <InputCurrency
                         id={field.name}
                         {...field}
@@ -79,22 +62,19 @@ const PledgeForm = ({
                         allowNegativeValue={false}
                       />
                     </div>
-                    {(errors.amount?.message || amountError) && (
-                      <FormError message={errors.amount?.message || amountError} />
-                    )}
                   </div>
                 )}
               />
 
               <div>
                 <span className="font-medium text-sm">{t('paymentMethod')}</span>
-                <div className="flex items-center gap-1 mt-1 mb-2 text-sm">
+                <div className="mt-1 mb-2 flex items-center gap-1 text-sm">
                   <CircleAlert className="h-4 w-4" />
                   <span>{t('paymentMethodDesc')}</span>
                 </div>
                 <div
                   className={cn(
-                    'flex items-center justify-between w-full gap-1 px-3 py-4 text-sm rounded-md border',
+                    'flex w-full items-center justify-between gap-1 rounded-md border px-3 py-4 text-sm',
                     tokenInvestBalance === 0 ? 'border-red-500 bg-red-500/10' : 'border-primary bg-primary/10'
                   )}
                 >

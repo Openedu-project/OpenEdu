@@ -233,7 +233,11 @@ const FormFieldWithLabel = forwardRef<ComponentRef<typeof Slot>, FormFieldWithLa
           >
             {fieldType === 'checkbox' ? (
               <>
-                <FormControlSlot field={field} ref={ref} {...props} />
+                {typeof render === 'function' ? (
+                  render({ field })
+                ) : (
+                  <FormControlSlot field={field} ref={ref} {...props} />
+                )}
                 <div className="space-y-1 leading-none">
                   {label && (
                     <FormLabelInfo infoText={infoText} className={labelClassName} data-field={name}>

@@ -29,10 +29,10 @@ const CourseContent = ({
                     <ul className="mcaption-semibold14 space-y-2 text-foreground/60">
                       {section.lessons
                         ?.sort((a, b) => a.order - b.order)
-                        ?.map(lesson => (
+                        ?.map((lesson, index) => (
                           <OutlineLesson
                             key={lesson?.id}
-                            index={lesson.order + 1}
+                            index={index + 1}
                             // completedPercentage={0}
                             courseSlug=""
                             sectionUid={section.uid}

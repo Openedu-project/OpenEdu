@@ -107,7 +107,7 @@ export default function CreateCourseButton() {
             label: tCourses('create.ai'),
             value: 'ai',
             icon: <SparklesIcon className="mr-2 h-4 w-4" />,
-            href: '/creator/ai',
+            href: buildUrl({ endpoint: CREATOR_ROUTES.aiCourse, params: { id: '' } }),
           },
         ]}
       />

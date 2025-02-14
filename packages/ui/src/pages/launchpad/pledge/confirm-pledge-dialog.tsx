@@ -26,7 +26,7 @@ const ConfirmPledgeDialog = ({
   const t = useTranslations('launchpadDetailPage.pledgePage.confirmDialog');
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="!rounded-3xl gap-0 p-6">
+      <DialogContent className="!rounded-3xl gap-0 p-6" aria-describedby={undefined}>
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>
         </DialogHeader>

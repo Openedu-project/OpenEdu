@@ -7,11 +7,11 @@ import {
   getCoursesPublishService,
   getCoursesService,
   getLevelsService,
-  getSegmentByIdService,
-  getSegmentsService,
   getPreviewCourseByIdService,
   getPublishedCourseByAdminService,
   getSectionsHaveLessonsByCourseIdService,
+  getSegmentByIdService,
+  getSegmentsService,
   postEnrollCourseService,
   putEnableCourseService,
 } from '#services/course';
@@ -44,12 +44,15 @@ export function useGetCourses({ params }: { params: IFilter }) {
   };
 }
 
-export function useGetCourseById(id: string) {
+export function useGetCourseById(id: string, fallback: ICourse | undefined = undefined) {
   const { data, isLoading, error, mutate } = useSWR(
     id
       ? createAPIUrl({ endpoint: API_ENDPOINT.COURSES_ID, params: { id }, queryParams: { preloads: ['segments'] } })
       : null,
-    (endpoint: string) => getCourseByIdService(endpoint, { id })
+    (endpoint: string) => getCourseByIdService(endpoint, { id }),
+    {
+      fallbackData: fallback,
+    }
   );
 
   return {
@@ -175,7 +178,7 @@ export const useGetSegmentById = (id: string) => {
     mutateSegment: mutate,
     isLoadingSegment: isLoading,
   };
-}
+};
 export const usePutEnableCourse = () => {
   const { trigger, error, isMutating } = useSWRMutation(
     API_ENDPOINT.COURSES_ID_STAGE,

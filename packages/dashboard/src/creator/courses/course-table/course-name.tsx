@@ -21,7 +21,7 @@ export default function CourseName({ data }: { data: ICourse }) {
       : aiCourse?.general_info_status === 'completed'
         ? buildUrl({
             endpoint: CREATOR_ROUTES.aiGeneralInfo,
-            queryParams: { courseId: data.id },
+            params: { id: data.id },
           })
         : aiCourse?.playlist_link;
 
