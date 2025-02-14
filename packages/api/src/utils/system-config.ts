@@ -4,4 +4,5 @@ export const systemConfigKeys = {
   i18nConfig: 'i18n_config',
   i18nTranslations: 'i18n_translations',
   themeSystem: 'theme_system',
+  termPage: 'term_page',
 } as const;
