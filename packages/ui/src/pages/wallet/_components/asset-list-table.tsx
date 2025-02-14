@@ -1,9 +1,16 @@
 'use client';
 import { useExchangeRates } from '@oe/api/hooks/useExchangeRates';
-import { useWallet } from '@oe/api/hooks/useWallet';
+import { useNFTTotalAssets, useWallet } from '@oe/api/hooks/useWallet';
 import type { IExchangeRates } from '@oe/api/types/exchange-rates';
 import type { IWallet } from '@oe/api/types/wallet';
-import { ASSET_TYPES, SUPPORTED_EXCHANGE_RATES, WITHDRAW_TYPE, currencyConverter } from '@oe/api/utils/wallet';
+import {
+  ASSET_TYPES,
+  CHAIN,
+  FIAT_CURRENCIES,
+  SUPPORTED_EXCHANGE_RATES,
+  WITHDRAW_TYPE,
+  currencyConverter,
+} from '@oe/api/utils/wallet';
 import type { ISvgProps } from '@oe/assets/icons/types';
 import { DEFAULT_CURRENCY, formatCurrency } from '@oe/core/utils/currency';
 import { WALLET_ROUTES } from '@oe/core/utils/routes';
@@ -55,6 +62,7 @@ export const AssetListTable = () => {
   const { wallets, walletsLoading } = useWallet();
   const { exchangeRates, exchangeRatesLoading } = useExchangeRates();
   const { isHiddenZeroAmount, setIsHiddenZeroAmount, selectedCurrency } = useWalletStore();
+  const { tokenBalances } = useNFTTotalAssets();
 
   const columns: ColumnDef<AssetData>[] = useMemo(
     () => [
@@ -179,7 +187,17 @@ export const AssetListTable = () => {
         if (!currencyInfo) {
           return null;
         }
-
+        const { tokens, near } = tokenBalances ?? {
+          near: { balance: 0 },
+          tokens: {} as { [key: string]: { balance: number } },
+        };
+        if (wallet.currency.toLocaleLowerCase() === CHAIN.NEAR) {
+          wallet.balance = String(near.balance);
+        } else if (!Object.keys(FIAT_CURRENCIES).includes(wallet.currency)) {
+          // Only set balance for non-fiat currencies
+          const tokenBalance = tokens[wallet.currency as keyof typeof tokens];
+          wallet.balance = String(tokenBalance?.balance ?? 0);
+        }
         const valueUSD =
           wallet.currency === DEFAULT_CURRENCY
             ? Number(wallet.balance)
@@ -206,7 +224,7 @@ export const AssetListTable = () => {
       }
       return 0;
     });
-  }, [wallets, exchangeRates, isHiddenZeroAmount]);
+  }, [wallets, exchangeRates, isHiddenZeroAmount, tokenBalances]);
 
   return (
     <>
