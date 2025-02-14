@@ -104,7 +104,7 @@ export default function UserAffiliateReportDetailList() {
           return (
             <span className="text-left">
               {isCurrentUser(item.ref1_user_id) ? (
-                <span className="text-[#2ba830]">{formatNumber(Number.parseFloat(item?.ref1_amount ?? 0))}</span>
+                <span className="text-positive-600">{formatNumber(Number.parseFloat(item?.ref1_amount ?? 0))}</span>
               ) : (
                 '-'
               )}
@@ -121,7 +121,7 @@ export default function UserAffiliateReportDetailList() {
           return (
             <span className="text-left">
               {isCurrentUser(item.ref2_user_id) ? (
-                <span className="text-[#2ba830]">{formatNumber(Number.parseFloat(item?.ref2_amount ?? 0))}</span>
+                <span className="text-positive-600">{formatNumber(Number.parseFloat(item?.ref2_amount ?? 0))}</span>
               ) : (
                 '-'
               )}
@@ -139,7 +139,7 @@ export default function UserAffiliateReportDetailList() {
           return (
             <span className="text-left">
               {isCurrentUser(item.ref3_user_id) ? (
-                <span className="text-[#2ba830]">{formatNumber(Number.parseFloat(item?.ref3_amount ?? 0))}</span>
+                <span className="text-positive-600">{formatNumber(Number.parseFloat(item?.ref3_amount ?? 0))}</span>
               ) : (
                 '-'
               )}

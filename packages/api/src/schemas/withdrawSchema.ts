@@ -46,10 +46,12 @@ export const fiatWithdrawSchema = z
       .string()
       .optional()
       .transform(val => val?.trim() || undefined),
+    availableBalance: z.number().optional(),
   })
   .superRefine((data, ctx: z.RefinementCtx & { contextualData?: { availableBalance: number } }) => {
     const amount = Number(data.amount);
-    const availableBalance = Number(ctx?.contextualData?.availableBalance ?? 0);
+    const availableBalance = Number(data.availableBalance);
+    // const availableBalance = Number(ctx?.contextualData?.availableBalance ?? 0);
     if (Number.isNaN(amount) || amount <= 0) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,

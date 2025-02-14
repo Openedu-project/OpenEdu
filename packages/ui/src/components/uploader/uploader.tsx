@@ -36,7 +36,6 @@ export const Uploader = (props: UploaderProps) => {
     isShowInformation = true,
     renderTrigger,
     renderFileList,
-    onFileNameChange,
     onChange,
     ...restProps
   } = props;
@@ -46,6 +45,7 @@ export const Uploader = (props: UploaderProps) => {
 
   const xhrRef = useRef<XMLHttpRequest>(null);
   const trigger = useRef<UploadTriggerInstance>(null);
+  const filesRef = useRef<FileType[]>([]);
 
   useEffect(() => {
     if (value) {
@@ -57,7 +57,7 @@ export const Uploader = (props: UploaderProps) => {
     upload: () => {
       const pendingFiles = files.filter(f => f.status === 'inited');
       for (const file of pendingFiles) {
-        uploadFile(file, files);
+        uploadFile(file);
       }
     },
     abort: () => {
@@ -74,9 +74,9 @@ export const Uploader = (props: UploaderProps) => {
     (file: FileType, newName: string) => {
       const updated = files.map(f => (f.fileId === file.fileId ? { ...f, name: newName } : f));
       setFiles(updated);
-      onFileNameChange?.(file, newName);
+      onChange?.(updated as IFileResponse[]);
     },
-    [files, onFileNameChange]
+    [files, onChange]
   );
 
   const handlePreview = useCallback(
@@ -107,7 +107,7 @@ export const Uploader = (props: UploaderProps) => {
   );
 
   const handleChange = useCallback(
-    (inputFiles: FileList | File[]) => {
+    async (inputFiles: FileList | File[]) => {
       let newFiles: FileType[] = Array.from(inputFiles)
         .filter(file => !isDuplicateFile(file, files.map(f => f.originFile).filter(Boolean) as File[]))
         .map(file => ({
@@ -130,24 +130,25 @@ export const Uploader = (props: UploaderProps) => {
         nextFileList = validatedFileList;
       }
 
+      filesRef.current = nextFileList;
       setFiles(nextFileList);
 
       for (const file of nextFileList) {
         if (file.status === 'inited') {
-          uploadFile(file, nextFileList);
+          await uploadFile(file);
         }
       }
     },
     [multiple, validateFile, files]
   );
 
-  const handleAjaxUploadProgress = useCallback((file: FileType, files: FileType[], percent: number) => {
-    const updated = files.map(f => (f.fileId === file.fileId ? { ...f, percent } : f));
+  const handleAjaxUploadProgress = useCallback((file: FileType, percent: number) => {
+    const updated = filesRef.current.map(f => (f.fileId === file.fileId ? { ...f, percent } : f));
     setFiles(updated);
   }, []);
 
   const handleAjaxUploadSuccess = useCallback(
-    (file: FileType, files: FileType[], response: IFileResponse) => {
+    (file: FileType, response: IFileResponse) => {
       const successFile = {
         ...file,
         ...response,
@@ -155,21 +156,31 @@ export const Uploader = (props: UploaderProps) => {
         status: 'finished' as FileStatusType,
       };
 
-      const updated = files.map(f => (f.fileId === file.fileId ? successFile : f)) as IFileResponse[];
-      onChange?.(updated);
+      // Cập nhật filesRef với trạng thái mới nhất
+      filesRef.current = filesRef.current.map(f => (f.fileId === file.fileId ? successFile : f));
+
+      // Cập nhật state UI
+      setFiles(filesRef.current);
+
+      // Kiểm tra nếu tất cả files đã upload xong
+      const allFinished = filesRef.current.every(f => f.status === 'finished' || f.status === 'error');
+
+      if (allFinished) {
+        onChange?.(filesRef.current as IFileResponse[]);
+      }
     },
     [onChange]
   );
 
-  const handleAjaxUploadError = useCallback((file: FileType, files: FileType[], status: ErrorStatus) => {
-    const updated = files.map(f =>
+  const handleAjaxUploadError = useCallback((file: FileType, status: ErrorStatus) => {
+    const updated = filesRef.current.map(f =>
       f.fileId === file.fileId ? ({ ...f, status: 'error', error: status.errorCode } as FileType) : f
     );
     setFiles(updated);
   }, []);
 
   const uploadFile = useCallback(
-    async (file: FileType, files: FileType[]) => {
+    async (file: FileType) => {
       if (!file.originFile) {
         return;
       }
@@ -179,14 +190,14 @@ export const Uploader = (props: UploaderProps) => {
         status: 'uploading' as FileStatusType,
         percent: 0,
       };
-      const updated = files.map(f => (f.fileId === file.fileId ? updatedFile : f));
-
+      filesRef.current = filesRef.current.map(f => (f.fileId === file.fileId ? updatedFile : f));
+      setFiles(filesRef.current);
       const { xhr } = await ajaxUpload({
         name: 'files',
         file: file.originFile,
-        onProgress: handleAjaxUploadProgress.bind(null, file, updated),
-        onSuccess: handleAjaxUploadSuccess.bind(null, file, updated),
-        onError: handleAjaxUploadError.bind(null, file, updated),
+        onProgress: handleAjaxUploadProgress.bind(null, file),
+        onSuccess: handleAjaxUploadSuccess.bind(null, file),
+        onError: handleAjaxUploadError.bind(null, file),
       });
       xhrRef.current = xhr;
       trigger.current?.clearInput();
@@ -212,7 +223,7 @@ export const Uploader = (props: UploaderProps) => {
       );
 
       setFiles(updated);
-      uploadFile(croppedFile, updated);
+      uploadFile(croppedFile);
       trigger.current?.clearInput();
     },
     [files, uploadFile]
@@ -238,7 +249,7 @@ export const Uploader = (props: UploaderProps) => {
       minSizeBytes,
       maxSizeBytes,
       onRemove: handleRemove,
-      onReupload: (file: FileType) => uploadFile(file, files),
+      onReupload: (file: FileType) => uploadFile(file),
       onPreview: handlePreview,
       allowRename,
       onFileNameChange: handleFileNameChange,
@@ -253,7 +264,7 @@ export const Uploader = (props: UploaderProps) => {
           'relative flex w-full gap-2 rounded',
           listType === 'picture' ? 'flex-wrap' : 'flex-col',
           !children && 'flex h-48 flex-col items-center justify-center p-0',
-          !children && fileListVisible && !renderTrigger && 'h-full min-h-48',
+          !children && fileListVisible && !renderTrigger && 'h-full min-h-32',
           className
         )}
       >
@@ -274,7 +285,7 @@ export const Uploader = (props: UploaderProps) => {
               minSizeBytes={minSizeBytes}
               maxSizeBytes={maxSizeBytes}
               onRemove={handleRemove}
-              onReupload={(file: FileType) => uploadFile(file, files)}
+              onReupload={(file: FileType) => uploadFile(file)}
               onPreview={handlePreview}
               allowRename={allowRename}
               onFileNameChange={handleFileNameChange}

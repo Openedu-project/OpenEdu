@@ -3,6 +3,7 @@ import type { ISegment } from '@oe/api/types/course/segment';
 import Collaborators from '@oe/assets/icons/collaborators';
 import MedalStar from '@oe/assets/icons/medal-star';
 import Trigger from '@oe/assets/icons/trigger';
+import type { ISvgProps } from '@oe/assets/icons/types';
 import { CREATOR_ROUTES } from '@oe/core/utils/routes';
 import { BookOpen, DollarSign, History, Settings, SquareUserRound } from 'lucide-react';
 import type { ComponentType } from 'react';
@@ -11,7 +12,7 @@ import { isCourseInformationTabValid, isCourseOutlineTabValid } from './validati
 type CourseTab = {
   id: string;
   label: string;
-  icon: ComponentType<{ className?: string }>;
+  Icon: ComponentType<ISvgProps>;
   href: string;
   required: boolean;
   disabled?: boolean | ((course: ICourse) => boolean) | ((segments: ISegment[]) => boolean);
@@ -21,14 +22,14 @@ export const COURSE_DETAIL_TABS: CourseTab[] = [
   {
     id: 'information',
     label: 'courseInformation',
-    icon: Settings,
+    Icon: Settings,
     href: CREATOR_ROUTES.courseSettingUp,
     required: true,
   },
   {
     id: 'outline',
     label: 'courseOutline',
-    icon: BookOpen,
+    Icon: BookOpen,
     href: CREATOR_ROUTES.courseOutline,
     required: true,
     disabled: (course: ICourse) => !isCourseInformationTabValid(course),
@@ -36,7 +37,7 @@ export const COURSE_DETAIL_TABS: CourseTab[] = [
   {
     id: 'price',
     label: 'coursePrice',
-    icon: DollarSign,
+    Icon: DollarSign,
     href: CREATOR_ROUTES.coursePrice,
     required: true,
     disabled: (segments: ISegment[]) => !isCourseOutlineTabValid(segments),
@@ -44,43 +45,48 @@ export const COURSE_DETAIL_TABS: CourseTab[] = [
   {
     id: 'certificate',
     label: 'courseCertificate',
-    icon: MedalStar,
+    Icon: MedalStar,
     href: CREATOR_ROUTES.courseCertificate,
     required: false,
   },
   {
     id: 'trigger',
     label: 'courseTrigger',
-    icon: Trigger,
+    Icon: Trigger,
     href: CREATOR_ROUTES.courseTriggerForm,
     required: false,
   },
   {
     id: 'collaborators',
     label: 'courseCollaborators',
-    icon: Collaborators,
+    Icon: Collaborators,
     href: CREATOR_ROUTES.courseCollaborators,
     required: false,
   },
   {
     id: 'learners',
     label: 'courseLearners',
-    icon: SquareUserRound,
+    Icon: SquareUserRound,
     href: CREATOR_ROUTES.courseLearners,
     required: false,
   },
   {
     id: 'history',
     label: 'courseHistory',
-    icon: History,
+    Icon: History,
     href: CREATOR_ROUTES.courseHistory,
     required: false,
   },
 ];
 
-// export const COURSE_DETAIL_FORM_IDS = {
-//   courseName: 'courseName',
-//   information: 'information',
-//   outline: 'outline',
-//   preview: 'preview',
-// };
+export const COURSE_DETAIL_FORM_IDS = {
+  courseName: 'courseName',
+  information: 'information',
+  outline: 'outline',
+  preview: 'preview',
+  sections: 'sections',
+  lessons: 'lessons',
+  lesson: 'lesson',
+  sectionHeader: 'sectionHeader',
+  lessonTitle: 'lessonTitle',
+};

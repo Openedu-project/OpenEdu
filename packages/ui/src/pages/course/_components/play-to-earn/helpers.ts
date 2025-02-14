@@ -1,6 +1,6 @@
 import type { IStartWhen } from '@oe/api/types/course/course-trigger';
 import type { ISectionProgress } from '@oe/api/types/course/learning-progress';
-import type { ISection } from '@oe/api/types/course/segment';
+import type { ILesson, ISection } from '@oe/api/types/course/segment';
 
 export const cleanUrl = (url: string): string => url?.replaceAll(/^["\\]+|["\\]+$/g, '');
 
@@ -24,33 +24,55 @@ export const isSectionCompleted = (sections: ISectionProgress[], entityId: strin
 export const getFormInfo = (startWhen: IStartWhen, outline: ISection[]) => {
   const { type, entity_id } = startWhen;
 
-  const findSectionContainingLesson = (sections: ISection[], lessonId: string) =>
-    sections.find(section => section.lessons?.some(lesson => lesson.uid === lessonId));
+  const sortedOutline = [...outline].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
-  const findLesson = (sections: ISection[], lessonId: string) => {
-    const section = findSectionContainingLesson(sections, lessonId);
+  // Get section info
+  const getSectionInfo = (section: ISection | undefined, index: number) => ({
+    title: section?.title || 'Unknown Section',
+    index: index >= 0 ? index + 1 : undefined,
+  });
 
-    if (!section) {
-      return null;
-    }
-    return section?.lessons?.find(lesson => lesson.uid === lessonId);
-  };
+  // Get lesson info
+  const getLessonInfo = (lesson: ILesson | undefined, index: number) => ({
+    title: lesson?.title || 'Unknown Lesson',
+    index: index >= 0 ? index + 1 : undefined,
+  });
 
   if (type === 'completed_lesson') {
-    const lesson = findLesson(outline, entity_id);
+    const defaultInfo = {
+      lessonInfo: getLessonInfo(undefined, -1),
+      sectionInfo: getSectionInfo(undefined, -1),
+    };
+
+    for (let sectionIndex = 0; sectionIndex < sortedOutline.length; sectionIndex++) {
+      const section = sortedOutline[sectionIndex];
+      if (!section?.lessons) {
+        continue;
+      }
+
+      const sortedLessons = [...section.lessons].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+      const lessonIndex = sortedLessons.findIndex(l => l.uid === entity_id);
+
+      if (lessonIndex !== -1) {
+        return {
+          type: 'lesson',
+          lesson: getLessonInfo(sortedLessons[lessonIndex], lessonIndex),
+          section: getSectionInfo(section, sectionIndex),
+        };
+      }
+    }
 
     return {
       type: 'lesson',
-      title: lesson?.title || 'Unknown Lesson',
+      ...defaultInfo,
     };
   }
 
   if (type === 'completed_section') {
-    const section = outline.find(section => section.uid === entity_id);
-
+    const sectionIndex = sortedOutline.findIndex(s => s.uid === entity_id);
     return {
       type: 'section',
-      title: section?.title || 'Unknown Section',
+      section: getSectionInfo(sortedOutline[sectionIndex], sectionIndex),
     };
   }
 

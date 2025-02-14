@@ -1,15 +1,15 @@
-import ArrowLeft2 from '@oe/assets/icons/arrow-left-2';
-import ArrowRight2 from '@oe/assets/icons/arrow-right-2';
-import type { TFunction } from '@oe/i18n/types';
-import type { ReactNode } from 'react';
-import { Button } from '#shadcn/button';
-import { cn } from '#utils/cn';
+import ArrowLeft2 from "@oe/assets/icons/arrow-left-2";
+import ArrowRight2 from "@oe/assets/icons/arrow-right-2";
+import type { TFunction } from "@oe/i18n/types";
+import type { ReactNode } from "react";
+import { Button } from "#shadcn/button";
+import { cn } from "#utils/cn";
 
 interface NavigationButtonsProps {
-  mode: 'quiz' | 'lesson';
+  mode: "quiz" | "lesson";
   currentIndex?: number;
   totalItems?: number;
-  onNavigate?: (direction: 'prev' | 'next') => void;
+  onNavigate?: (direction: "prev" | "next") => void;
   disablePrev?: boolean;
   disableNext?: boolean;
   className?: string;
@@ -17,25 +17,30 @@ interface NavigationButtonsProps {
 }
 
 const baseStyles = {
-  quiz: '!rounded-full h-10 w-10 px-0 shadow-shadow-5 hover:bg-primary hover:opacity-75 disabled:border disabled:border-[#2C2C2C] disabled:bg-white disabled:opacity-100 [&>svg>path]:fill-primary-foreground [&>svg>path]:disabled:fill-[#2C2C2C]',
-  lesson: 'mbutton-bold12 !text-sm border border-primary bg-transparent text-primary hover:bg-inherit',
+  quiz: "!rounded-full h-10 w-10 px-0 shadow-shadow-5 hover:bg-primary hover:opacity-75 disabled:border disabled:border-neutral-900 disabled:bg-white disabled:opacity-100 [&>svg>path]:fill-primary-foreground [&>svg>path]:disabled:fill-neutral-900",
+  lesson:
+    "mbutton-bold12 !text-sm border border-primary bg-transparent text-primary hover:bg-inherit",
 };
 
 const ButtonWrapper = ({
   mode,
   children,
 }: {
-  mode: 'quiz' | 'lesson';
+  mode: "quiz" | "lesson";
   children: ReactNode;
 }) => {
-  if (mode === 'quiz') {
+  if (mode === "quiz") {
     return (
       <div className="-translate-y-1/2 absolute top-1/2 left-0 mx-auto flex w-full justify-center">
-        <div className="flex w-full max-w-[480px] justify-between">{children}</div>
+        <div className="flex w-full max-w-[480px] justify-between">
+          {children}
+        </div>
       </div>
     );
   }
-  return <div className="hidden sm:flex sm:justify-end sm:gap-2">{children}</div>;
+  return (
+    <div className="hidden sm:flex sm:justify-end sm:gap-2">{children}</div>
+  );
 };
 
 export const NavigationButtons = ({
@@ -48,14 +53,20 @@ export const NavigationButtons = ({
   className,
   t,
 }: NavigationButtonsProps) => {
-  const renderButton = (direction: 'prev' | 'next') => {
-    const isPrev = direction === 'prev';
+  const renderButton = (direction: "prev" | "next") => {
+    const isPrev = direction === "prev";
     const Icon = isPrev ? ArrowLeft2 : ArrowRight2;
-    const disabled = isPrev ? (disablePrev ?? currentIndex <= 0) : (disableNext ?? currentIndex >= totalItems - 1);
+    const disabled = isPrev
+      ? disablePrev ?? currentIndex <= 0
+      : disableNext ?? currentIndex >= totalItems - 1;
 
-    if (mode === 'quiz') {
+    if (mode === "quiz") {
       return (
-        <Button disabled={disabled} className={cn(baseStyles.quiz, className)} onClick={() => onNavigate?.(direction)}>
+        <Button
+          disabled={disabled}
+          className={cn(baseStyles.quiz, className)}
+          onClick={() => onNavigate?.(direction)}
+        >
           <Icon width={24} height={24} />
         </Button>
       );
@@ -77,8 +88,8 @@ export const NavigationButtons = ({
 
   return (
     <ButtonWrapper mode={mode}>
-      {renderButton('prev')}
-      {renderButton('next')}
+      {renderButton("prev")}
+      {renderButton("next")}
     </ButtonWrapper>
   );
 };

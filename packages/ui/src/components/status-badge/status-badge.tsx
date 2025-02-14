@@ -1,13 +1,13 @@
-import { Tooltip, TooltipProvider } from '#shadcn/tooltip';
-
+import type { TApprovalStatus } from '@oe/api/types/approvals';
 import type { IAICourseStatus } from '@oe/api/types/course/ai-course';
 import type { TCourseStatus } from '@oe/api/types/course/basic';
 import { Badge, type BadgeProps } from '@oe/ui/shadcn/badge';
 import { Loader, RotateCcw } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
+import { Tooltip, TooltipProvider } from '#shadcn/tooltip';
 
-export type TStatus = TCourseStatus & IAICourseStatus & 'setting';
+export type TStatus = TCourseStatus | IAICourseStatus | TApprovalStatus;
 
 const statusColorMap: Record<TStatus, BadgeProps['variant']> = {
   draft: 'muted',
@@ -21,9 +21,12 @@ const statusColorMap: Record<TStatus, BadgeProps['variant']> = {
   manual: 'default',
   completed: 'success',
   generating: 'default',
-  pending: 'default',
-  waiting: 'default',
-  setting: 'default',
+  pending: 'outline_warning',
+  waiting: 'outline_warning',
+  setting: 'warning',
+  new: 'muted',
+  approved: 'success',
+  rejected: 'destructive',
 };
 
 const statusIcon: Record<TStatus, ReactNode | null> = {
@@ -37,24 +40,35 @@ const statusIcon: Record<TStatus, ReactNode | null> = {
   failed: null,
   manual: null,
   completed: null,
+  new: null,
+  approved: null,
+  rejected: null,
   generating: <Loader className="mr-1 h-4 w-4 animate-spin" />,
   pending: <Loader className="mr-1 h-4 w-4 animate-spin" />,
   waiting: <Loader className="mr-1 h-4 w-4 animate-spin" />,
   setting: <RotateCcw className="mr-1 h-4 w-4" />,
 };
 
-export function StatusBadge({ status, errorMessage }: { status: TStatus; errorMessage?: string }) {
+export function StatusBadge({
+  status,
+  errorMessage,
+  className,
+}: { status: TStatus; errorMessage?: string; className?: string }) {
   const tStatus = useTranslations('general.statusVariants');
   return status === 'failed' ? (
     <TooltipProvider>
       <Tooltip
-        content={<p className="break-word max-w-[150px] text-start md:max-w-[200px]">{errorMessage ?? 'Error'}</p>}
+        content={
+          <p className="break-word max-w-[150px] text-start md:max-w-[200px]">{errorMessage ?? 'Unknown Error'}</p>
+        }
       >
-        <Badge variant={statusColorMap[status]}>{tStatus(status)}</Badge>
+        <Badge variant={statusColorMap[status]} className={className}>
+          {tStatus(status)}
+        </Badge>
       </Tooltip>
     </TooltipProvider>
   ) : (
-    <Badge variant={statusColorMap[status]}>
+    <Badge variant={statusColorMap[status]} className={className}>
       {statusIcon[status]} {tStatus(status)}
     </Badge>
   );

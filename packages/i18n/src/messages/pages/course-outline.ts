@@ -71,5 +71,6 @@ export const courseOutlineMessages = {
     videoCount: '{count} video',
     embedCount: '{count} embedded',
     lesson: 'Lesson {index}',
+    joinCourseToAccess: "You're in preview mode. To take the quiz, enroll in the course or start learning now!",
   },
 };

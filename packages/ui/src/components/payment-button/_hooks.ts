@@ -83,10 +83,10 @@ const handleEnrollCourse = async (params: ActionHandlerParams) => {
       : [];
     // Filter entries with matching courseSlug and sort by most recent (assuming they're added in order)
     const matchingEntries = fromSourceData
-      ?.filter(entry => entry.courseSlug === params.slug)
-      ?.sort((a, b) => fromSourceData.indexOf(b) - fromSourceData.indexOf(a));
+      ?.filter(entry => entry?.courseSlug === params.slug)
+      ?.sort((a, b) => fromSourceData?.indexOf(b) - fromSourceData?.indexOf(a));
 
-    if (matchingEntries.length > 0) {
+    if (matchingEntries?.length > 0) {
       source = matchingEntries[0]?.fromSource ?? '';
     }
   }
@@ -99,10 +99,10 @@ const handleEnrollCourse = async (params: ActionHandlerParams) => {
       : [];
     // Filter entries with matching courseSlug and sort by most recent (assuming they're added in order)
     const matchingEntries = fromUserStorage
-      ?.filter(entry => entry.courseSlug === params.slug)
-      ?.sort((a, b) => fromUserStorage.indexOf(b) - fromUserStorage.indexOf(a));
+      ?.filter(entry => entry?.courseSlug === params.slug)
+      ?.sort((a, b) => fromUserStorage?.indexOf(b) - fromUserStorage?.indexOf(a));
 
-    if (matchingEntries.length > 0) {
+    if (matchingEntries?.length > 0) {
       ref_by = matchingEntries[0]?.fromSource ?? '';
     }
   }

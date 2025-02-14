@@ -1,6 +1,7 @@
 'use client';
 
 import { type SignUpSchemaType, signUpSchema } from '@oe/api/schemas/authSchema';
+import { signUpService } from '@oe/api/services/auth';
 import { authEvents } from '@oe/api/utils/auth';
 import type { HTTPError } from '@oe/api/utils/http-error';
 import { AUTH_ROUTES, PLATFORM_ROUTES } from '@oe/core/utils/routes';
@@ -17,7 +18,6 @@ import { useState } from 'react';
 import { SuccessDialog } from '#components/dialog';
 import { FormWrapper } from '#components/form-wrapper';
 import { Alert, AlertDescription } from '#shadcn/alert';
-import { signUpAction } from '../_action/signup-action';
 import { ResendButton } from '../resend-button';
 
 interface SignUpFormProps {
@@ -30,11 +30,14 @@ export default function SignUpForm({ tLoginTitle, tSignupTitle }: SignUpFormProp
   const tErrors = useTranslations('errors');
   const tGeneral = useTranslations('general');
   const searchParams = useSearchParams();
-  const nextPath = searchParams.get('next') ?? '/';
+  // const nextPath = searchParams.get('next') ?? '/';
   const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [resendEmailError, setResendEmailError] = useState<string | null>(null);
+
+  const fullSearchString = searchParams.toString();
+  const nextPath = decodeURIComponent(fullSearchString.slice(fullSearchString.indexOf('next=') + 5) || '/');
 
   const handleError = useCallback((error: unknown) => {
     setError((error as HTTPError).message);
@@ -42,7 +45,9 @@ export default function SignUpForm({ tLoginTitle, tSignupTitle }: SignUpFormProp
 
   const onSubmit = useCallback(
     async (values: SignUpSchemaType) => {
-      await signUpAction({ ...values, next_path: nextPath });
+      await signUpService(undefined, {
+        payload: { ...values, next_path: nextPath, isAgree: true },
+      });
       setOpen(true);
       setEmail(values.email);
     },

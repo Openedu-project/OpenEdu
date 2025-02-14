@@ -1,4 +1,6 @@
 import { AIGenerateMessages } from './ai-generate-modal';
+import { AIStatusMessages } from './ai-status-modal';
+import { confirmApproveMessages } from './approve-button';
 import { blogFormMessages } from './blog-form';
 import { certificateMessages } from './certificate';
 import { courseComingSoonMessages } from './course-coming-soon';
@@ -13,6 +15,7 @@ import { noDataAvailableMessages } from './no-data-available';
 import { paymentButtonMessages } from './payment-button';
 import { confirmPublishMessages } from './publish-button';
 import { richTextMessages } from './rich-text';
+import { setupCategoryTreeMessages } from './setup-category-tree';
 import { tableMessages } from './table';
 import { uploaderMessages } from './uploader';
 import { userMenuMessages } from './user-menu';
@@ -40,4 +43,7 @@ export const componentMessages = {
   ...certificateMessages,
   ...courseTimelineMessages,
   ...webviewHandlerMessages,
+  ...AIStatusMessages,
+  ...confirmApproveMessages,
+  ...setupCategoryTreeMessages,
 };

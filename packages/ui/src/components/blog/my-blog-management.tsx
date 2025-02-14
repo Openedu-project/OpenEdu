@@ -6,6 +6,7 @@ import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
 import { formatDateHourMinute } from '@oe/core/utils/datetime';
 import { BLOG_ADMIN_ROUTES, BLOG_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
+import { DashboardMainPageLayout } from '@oe/ui/common/layout';
 import { EditIcon, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
@@ -26,15 +27,17 @@ import { useSocketStore } from '#store/socket';
 import { cn } from '#utils/cn';
 import { BlogTableItemActions } from './blog-table-item-actions';
 
-export default function MyBlogManagement({
-  type,
-  canUnpublish = false,
-  AIButton = false,
-}: {
+export interface IMyBlogProps {
   type: 'personal' | 'org';
   canUnpublish?: boolean;
   AIButton?: boolean;
-}) {
+  breadcrumbs?: {
+    label: string;
+    disabled?: boolean;
+  }[];
+}
+
+export default function MyBlogManagement({ type, canUnpublish = false, AIButton = false, breadcrumbs }: IMyBlogProps) {
   const tBlogs = useTranslations('blogManagement');
   const tGeneral = useTranslations('general');
   const tPublish = useTranslations('publishButton');
@@ -96,7 +99,6 @@ export default function MyBlogManagement({
       header: tBlogs('title'),
       accessorKey: 'title',
       size: 250,
-      sticky: 'left',
       cell: info => {
         const item = info?.row.original;
         const isPublish = item.published_blog?.some(blog => blog.version === item.version);
@@ -259,33 +261,38 @@ export default function MyBlogManagement({
   ) as FilterOption[];
 
   return (
-    <div className="bg-accent">
-      <div className="mb-6 flex flex-wrap justify-between gap-2 rounded-b-xl bg-background p-4">
-        <h2 className="giant-iheading-semibold32 tracking-tight">{tBlogs('blogManagement')}</h2>
-        <div className="flex items-center gap-2">
-          {AIButton && <URLGenerateModal onSuccess={handleActionSuccess} />}
+    <DashboardMainPageLayout
+      dashboard="blog"
+      breadcrumbs={breadcrumbs}
+      title={
+        <div className="flex flex-wrap justify-between gap-2 rounded-b-xl bg-background">
+          <h2 className="giant-iheading-semibold32 tracking-tight">{tBlogs('blogManagement')}</h2>
+          <div className="flex items-center gap-2">
+            {AIButton && <URLGenerateModal onSuccess={handleActionSuccess} />}
 
-          <Link
-            href={TARGET_ROUTES.createBlog}
-            className={cn(buttonVariants({ variant: 'default' }), 'hover:no-underline')}
-          >
-            <EditIcon /> <span className="ml-2 hidden lg:block">{tBlogs('createNewBlog')}</span>
-          </Link>
+            <Link
+              href={TARGET_ROUTES.createBlog}
+              className={cn(buttonVariants({ variant: 'default' }), 'hover:no-underline')}
+            >
+              <EditIcon />
+              <span className="ml-2 hidden lg:block">{tBlogs('createNewBlog')}</span>
+            </Link>
+          </div>
         </div>
-      </div>
-      <div className="bg-background p-4">
-        <Table
-          api={API_ENDPOINT.USERS_ME_BLOGS}
-          apiParams={{ blog_type: type, sort: 'update_at desc' }}
-          hasNoColumn
-          columns={columns}
-          filterOptions={filterOptions}
-          ref={tableRef}
-          tableOptions={{
-            manualPagination: true,
-          }}
-        />
-      </div>
-    </div>
+      }
+      mainClassName="overflow-hidden"
+    >
+      <Table
+        api={API_ENDPOINT.USERS_ME_BLOGS}
+        apiParams={{ blog_type: type, sort: 'update_at desc' }}
+        hasNoColumn
+        columns={columns}
+        filterOptions={filterOptions}
+        ref={tableRef}
+        tableOptions={{
+          manualPagination: true,
+        }}
+      />
+    </DashboardMainPageLayout>
   );
 }

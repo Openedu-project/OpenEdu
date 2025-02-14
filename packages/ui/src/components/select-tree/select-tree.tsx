@@ -176,10 +176,10 @@ export function SelectTree<T, V extends { id: string }>({
   const nodeStatus = (node: TreeNode<T>): IStatus => {
     const children = getAllChildren(node.id);
     const nodeValue = getValue(node);
-    if (value.some(v => v.id === nodeValue.id)) {
+    if (value?.some(v => v.id === nodeValue.id)) {
       return 'checked';
     }
-    const selectedId = new Set(value.map(item => item.id));
+    const selectedId = new Set(value?.map(item => item.id) ?? []);
 
     if (children.some(v => selectedId.has(v))) {
       return 'indeterminate';
@@ -219,7 +219,7 @@ export function SelectTree<T, V extends { id: string }>({
           <div className={cn('flex flex-1 cursor-pointer items-center gap-2', !checkable && 'justify-between')}>
             {checkable && (
               <div className="relative mr-2 flex items-center justify-center">
-                <Checkbox id={`checkbox-${node.id}`} checked={value.some(v => v.id === node.id)} />
+                <Checkbox id={`checkbox-${node.id}`} checked={value?.some(v => v.id === node.id)} />
                 {nodeStatus(node) === 'indeterminate' && (
                   <div className="pointer-events-none absolute inset-0 flex h-full w-full items-center justify-center">
                     <div className="h-2 w-2 bg-primary" />
@@ -246,14 +246,14 @@ export function SelectTree<T, V extends { id: string }>({
           aria-expanded={open}
           className={cn(
             '!m-0 w-full justify-between',
-            value.length === 0 ? 'text-muted-foreground' : 'h-auto',
+            value?.length === 0 ? 'text-muted-foreground' : 'h-auto',
             className
           )}
         >
           <div className="flex flex-wrap gap-1 overflow-x-hidden">
-            {value.length === 0
+            {value?.length === 0
               ? placeholder
-              : value.map(v => (
+              : value?.map(v => (
                   <Badge key={v.id} variant="default">
                     {getLabel(v)}
                     {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}

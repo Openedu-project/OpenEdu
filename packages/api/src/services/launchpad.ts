@@ -6,6 +6,7 @@ import type {
   ILaunchpad,
   ILaunchpadResponse,
   IPledgeLaunchpadPayload,
+  ICreateLaunchpadRequest,
   LaunchpadStatus,
 } from '../types/launchpad';
 
@@ -166,6 +167,7 @@ export async function getMyLaunchpadService({
   }
 }
 
+
 export const postPledgeLaunchpadService = async (payload?: IPledgeLaunchpadPayload) => {
   try {
     const response = await postAPI(API_ENDPOINT.LAUNCHPADS_INVESTMENTS, payload);
@@ -174,4 +176,39 @@ export const postPledgeLaunchpadService = async (payload?: IPledgeLaunchpadPaylo
   } catch {
     return null;
   }
+
+export const postCreateLaunchpadService = async (
+  endpoint: string | null | undefined,
+  { payload, init }: { payload: ICreateLaunchpadRequest; init?: RequestInit }
+) => {
+  const response = await postAPI<ILaunchpad, ICreateLaunchpadRequest>(
+    endpoint ?? API_ENDPOINT.LAUNCHPADS,
+    payload,
+    init
+  );
+
+  return response.data;
+};
+
+export const postInitPoolLaunchpadService = async (
+  endpoint: string | null | undefined,
+  { payload, init }: { payload: { id: string; wallet_id: string }; init?: RequestInit }
+) => {
+  let endpointKey = endpoint;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.LAUNCHPADS_POOLS_ID,
+      params: {
+        id: payload.id,
+      },
+    });
+  }
+
+  const response = await postAPI<ILaunchpad, { wallet_id: string }>(
+    endpoint ?? API_ENDPOINT.LAUNCHPADS_POOLS_ID,
+    payload,
+    init
+  );
+
+  return response.data;
 };

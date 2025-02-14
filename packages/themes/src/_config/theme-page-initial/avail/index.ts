@@ -1,5 +1,5 @@
 import type { PagesConfig, ThemePageKey } from '../../../_types';
-import { createAuthLayoutConfig } from '../core/auth';
+import { createAvailAuthLayoutConfig } from '../core/auth';
 import { defaultMetadataAtPage } from '../core/metadata';
 import { createAvailHomepageConfig } from './homepage';
 
@@ -14,7 +14,7 @@ export const createAvailConfig = (
   },
   auth: {
     label: t('labels.authLayout'),
-    config: createAuthLayoutConfig(availT),
+    config: createAvailAuthLayoutConfig(availT),
     metadata: undefined,
   },
 });

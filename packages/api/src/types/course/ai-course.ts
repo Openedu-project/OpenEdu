@@ -1,6 +1,6 @@
 import type { IFileResponse } from '@oe/api/types/file';
 
-export type IAICourseStatus = 'failed' | 'manual' | 'completed' | 'generating' | 'pending' | 'waiting';
+export type IAICourseStatus = 'failed' | 'manual' | 'completed' | 'generating' | 'pending' | 'waiting' | 'setting';
 
 type IThumbnailStype =
   | 'general'
@@ -42,6 +42,8 @@ export interface IAICourseBase {
 }
 
 // Extended interface for full AI Course
+
+export type TAIOffterType = 'youtube_playlist' | 'learner_description';
 export interface IAICourse extends IAICourseBase {
   id: string;
   create_at: number;
@@ -56,7 +58,7 @@ export interface IAICourse extends IAICourseBase {
   org_id: string;
   user_id: string;
   retry_count: number;
-  offer_type: string;
+  offer_type: TAIOffterType;
   course_title: string;
   course_description: string;
   slug: string;

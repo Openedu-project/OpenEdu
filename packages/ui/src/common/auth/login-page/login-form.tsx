@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
 
 import { type LoginSchemaType, loginSchema } from '@oe/api/schemas/authSchema';
+import { loginService } from '@oe/api/services/auth';
 import { API_ENDPOINT } from '@oe/api/utils/endpoints';
 import type { HTTPError } from '@oe/api/utils/http-error';
 import { AUTH_ROUTES, PLATFORM_ROUTES } from '@oe/core/utils/routes';
@@ -17,7 +18,6 @@ import { Link } from '#common/navigation';
 import { FormWrapper } from '#components/form-wrapper';
 import { Alert, AlertDescription } from '#shadcn/alert';
 import { Button } from '#shadcn/button';
-import { loginAction } from '../_action/login-action';
 
 interface LoginFormProps {
   tLoginTitle: string;
@@ -30,9 +30,12 @@ export function LoginForm({ tLoginTitle, tSignupTitle, tForgotpasswordTitle }: L
   const tErrors = useTranslations('errors');
   const router = useRouter();
   const searchParams = useSearchParams();
-  const nextPath = searchParams.get('next') ?? '/';
+  // const nextPath = searchParams.get('next') ?? '/';
   const loginError = searchParams.get('error');
   const [error, setError] = useState<string | null>(null);
+
+  const fullSearchString = searchParams.toString();
+  const nextPath = decodeURIComponent(fullSearchString.slice(fullSearchString.indexOf('next=') + 5) || '/');
 
   const handleError = useCallback((error: unknown) => {
     setError((error as HTTPError).message);
@@ -40,13 +43,16 @@ export function LoginForm({ tLoginTitle, tSignupTitle, tForgotpasswordTitle }: L
 
   const handleSubmit = useCallback(
     async (values: LoginSchemaType) => {
-      await loginAction({ ...values, next_path: nextPath });
+      await loginService(undefined, {
+        payload: { ...values, next_path: nextPath },
+      });
 
       await mutate(API_ENDPOINT.USERS_ME);
       toast.success(tAuth('login.success'));
       router.replace(nextPath);
+      router.refresh();
     },
-    [tAuth, router.replace, nextPath]
+    [tAuth, router, nextPath]
   );
 
   return (

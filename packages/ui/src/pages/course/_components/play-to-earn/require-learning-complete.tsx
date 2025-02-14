@@ -17,7 +17,7 @@ import {
 
 interface IPlayToEarnModalProps {
   segment_name: string;
-  segment_type: string;
+  segment_type?: string;
   courseOutline: ICourseOutline;
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
@@ -25,7 +25,7 @@ interface IPlayToEarnModalProps {
 
 export const PlayToEarnWarningModal = ({
   segment_name,
-  segment_type,
+  // segment_type,
   courseOutline,
   isOpen,
   setIsOpen,
@@ -60,8 +60,7 @@ export const PlayToEarnWarningModal = ({
             {t('modalTitle')}
           </AlertDialogTitle>
           <AlertDialogDescription className="mbutton-regular16 mt-4 text-center">
-            {t('complete')} {t(segment_type === 'lesson' ? 'lesson' : 'section')}
-            <span className="mbutton-semibold16 text-foreground">{segment_name}</span> {t('desc')}
+            {t('complete')} <span className="mbutton-semibold16 text-foreground">{segment_name}</span> {t('desc')}
           </AlertDialogDescription>
         </AlertDialogHeader>
 

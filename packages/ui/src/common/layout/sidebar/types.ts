@@ -16,6 +16,7 @@ export interface ISidebarItemProps {
   maxDepth: number;
   pathname: string;
   isCollapsed: boolean;
+  onNavigate?: () => void;
 }
 
 export interface ISidebarProps {

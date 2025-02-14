@@ -2,7 +2,7 @@ import type { IHashtagResponse } from '#types/hashtag';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl, fetchAPI } from '#utils/fetch';
 
-export const getHashtagService = async (
+export const getHashtagsService = async (
   url?: string,
   init?: RequestInit & { queryParams?: Record<string, string> }
 ) => {

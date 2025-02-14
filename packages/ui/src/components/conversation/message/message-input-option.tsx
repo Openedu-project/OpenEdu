@@ -43,7 +43,7 @@ export const AgentButton = ({
         "!rounded-full before:!rounded-full relative flex items-center gap-1 border border-primary bg-primary/5 before:absolute before:z-[-1] before:h-full before:w-full before:bg-white before:content-['']",
         className,
         active && 'bg-primary/10',
-        disabled && 'cursor-not-allowed opacity-50'
+        disabled && 'cursor-not-allowed text-black opacity-50'
       )}
       onClick={() => handleSelect?.(agent.type)}
       {...props}

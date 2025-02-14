@@ -37,6 +37,7 @@ export const PLATFORM_ROUTES = {
   learner: '/learner',
   learnerMyCertificates: '/learner/my-certificates',
   learnerMyCertificateDetail: '/learner/my-certificates/:certId',
+  previewCourse: '/courses/preview/:courseId/:orgId',
 } as const;
 
 export const BLOG_ROUTES = {
@@ -98,7 +99,7 @@ export const AUTH_ROUTES = {
 
 export const ADMIN_ROUTES = {
   dashboard: '/admin',
-  courses: '/admin/course/list',
+  coursesManagement: '/admin/course/course-management',
   courseCategories: '/admin/course/categories',
   coursesReviewing: '/admin/course/reviewing',
   allUsers: '/admin/user/list',
@@ -138,7 +139,7 @@ export const CREATOR_ROUTES = {
   formTemplates: `/creator${DYNAMIC_FORMS_ROUTES.formTemplates}`,
   aiGeneralInfo: '/creator/courses/ai-creation/general-info',
   courseSettingUp: '/creator/courses/:courseId/settings',
-  courseOutline: '/creator/courses/:courseId/outline',
+  courseOutline: '/creator/courses/:courseId/:sectionId/:lessonId',
   coursePrice: '/creator/courses/:courseId/price',
   courseCertificate: '/creator/courses/:courseId/certificate',
   courseTriggerForm: '/creator/courses/:courseId/trigger-form',
@@ -154,6 +155,7 @@ export const CREATOR_ROUTES = {
   campaignReport: '/creator/affiliate-campaigns/report',
   creatorLaunchpadList: '/creator/launchpad',
   creatorLaunchpadDetail: '/creator/launchpad/:id',
+  creatorCreateLaunchpadDetail: '/creator/create-launchpads/:id',
 } as const;
 
 export const LEARNER_ROUTES = {

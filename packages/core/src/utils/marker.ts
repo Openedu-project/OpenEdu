@@ -4,7 +4,7 @@ import { Marked, type Renderer, type Tokens } from 'marked';
 export const marked = new Marked({
   renderer: {
     link(this: Renderer, { href, title, text }: Tokens.Link) {
-      return `<a href="${href}" class="text-primary underline" ${title ? `title="${title}"` : ''}>${text}</a>`;
+      return `<a href="${href}" target="_blank" class="text-primary underline" ${title ? `title="${title}"` : ''}>${text}</a>`;
     },
     code(this: Renderer, { text, lang }: Tokens.Code) {
       // Store the original unformatted code

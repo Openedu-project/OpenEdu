@@ -77,7 +77,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
             id: 'courses',
             label: tDashboard('courses.title'),
             icon: <BookOpen className="h-5 w-5" />,
-            href: ADMIN_ROUTES.courses,
+            href: ADMIN_ROUTES.coursesManagement,
           },
           {
             id: 'course-categories',

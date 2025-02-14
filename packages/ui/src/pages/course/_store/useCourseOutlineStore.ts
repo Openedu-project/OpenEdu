@@ -57,6 +57,6 @@ export const useCourseOutlineDetailStore = create<CourseOutlineDetailState>()((s
       return undefined;
     }
 
-    return medias.map(media => mapMediaToPreviewVideo(media, props?.preview_lessons ?? undefined));
+    return medias.map(media => mapMediaToPreviewVideo(media as IFileResponse, props?.preview_lessons ?? undefined));
   },
 }));

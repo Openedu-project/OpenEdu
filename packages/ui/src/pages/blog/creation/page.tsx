@@ -1,7 +1,5 @@
 import { getMeServiceWithoutError } from '@oe/api/services/auth';
 import { getBlogDraftContent } from '@oe/api/services/blog';
-import { getI18nConfigServer } from '@oe/api/services/i18n';
-import BannerBg from '@oe/assets/images/blog-creation-bg.png';
 import WhaleError from '@oe/assets/images/whale/whale-error.png';
 import { getCookies } from '@oe/core/utils/cookie';
 import { AUTH_ROUTES, BLOG_ROUTES } from '@oe/core/utils/routes';
@@ -11,8 +9,8 @@ import { getTranslations } from 'next-intl/server';
 import { redirect } from 'next/navigation';
 import { BlogForm, type IFormAction } from '#components/blog';
 import { Breadcrumb } from '#components/breadcrumb';
-import { UserAvatar } from '#components/user-avatar';
 import { cn } from '#utils/cn';
+import { AuthorAvatar } from '../_components/author-avatar';
 
 interface ICreationProps {
   className?: string;
@@ -36,11 +34,9 @@ const getBlogContent = async (id?: string) => {
 };
 
 export default async function BlogCreationPage({ className, aiButton, id, action }: ICreationProps) {
-  const [tError, tBlogNavigation, tBlogForm, i18nConfigData, blogData, me, cookies] = await Promise.all([
+  const [tError, tBlogNavigation, blogData, me, cookies] = await Promise.all([
     getTranslations('errors'),
     getTranslations('blogNavigation'),
-    getTranslations('blogForm'),
-    getI18nConfigServer(),
     getBlogContent(id),
     getMeServiceWithoutError(),
     getCookies(),
@@ -77,38 +73,12 @@ export default async function BlogCreationPage({ className, aiButton, id, action
 
   return (
     <div className="bg-background p-4">
-      <div className={cn('relative mb-6 min-h-[120px] w-full p-6', className)}>
-        <Image
-          src={BannerBg.src}
-          alt="creation-banner"
-          noContainer
-          fill
-          sizes="(max-width: 768px) 100vw,
-          (max-width: 1200px) 50vw,
-          33vw"
-          style={{ objectFit: 'cover' }}
-          className="h-full w-full rounded-xl"
-        />
-        <div className="flex flex-col flex-wrap items-center gap-4 md:flex-row">
-          <UserAvatar
-            className="relative h-[80px] w-[80px] flex-inline shrink-0 rounded-full border-2"
-            src={me.avatar ?? ''}
-            name={me.display_name?.length > 0 ? me.display_name : me.username}
-          />
-
-          <p className="giant-iheading-bold20 lg:giant-iheading-bold40 z-10 text-foreground">
-            {tBlogForm.rich('ownerBlog', {
-              name: me.display_name?.length > 0 ? me.display_name : me.username,
-            })}
-          </p>
-        </div>
-      </div>
+      <AuthorAvatar name={me.display_name?.length > 0 ? me.display_name : me.username} avatar={me.avatar ?? ''} />
       <Breadcrumb items={breakcrumbItems} />
       <BlogForm
         className={cn('p-4', className)}
         blogType="personal"
         aiButton={aiButton}
-        locales={i18nConfigData?.[0]?.value?.locales}
         data={blogData}
         action={action}
       />

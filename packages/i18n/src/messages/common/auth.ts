@@ -87,7 +87,7 @@ export const authMessages = {
     },
     errors: {
       passwordInvalid:
-        'Password must contain at least one uppercase letter, one lowercase letter, and be at least {minimum, plural, =1 {1 character} other {# characters}} long.',
+        'Password must contain at least one uppercase letter, one lowercase letter, be at least {minimum, plural, =1 {1 character} other {# characters}} long, and not be too {maximum, plural, =1 {1 character} other {# characters}} long.',
       passwordMissMatch: "Passwords don't match",
     },
     btn: {

@@ -163,6 +163,17 @@ export const putAPI = async <Data, Payload>(endpoint: string, payload: Payload, 
     },
     ...(payload && { body: JSON.stringify(payload) }),
   });
+export const patchAPI = async <Data, Payload>(endpoint: string, payload: Payload, init: FetchOptions = {}) =>
+  await fetchAPI<Data>(endpoint, {
+    cache: 'no-store',
+    ...init,
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      ...init.headers,
+    },
+    ...(payload && { body: JSON.stringify(payload) }),
+  });
 
 export const deleteAPI = async <Data, Payload>(endpoint: string, payload?: Payload, init: FetchOptions = {}) =>
   await fetchAPI<Data>(endpoint, {

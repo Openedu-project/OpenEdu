@@ -52,6 +52,7 @@ export interface IAdminLaunchpadItem {
   outlines: null;
   total_amount: null;
   total_backers: null;
+  total_refunded: null;
   user?: IUser;
   investment: null;
 }
@@ -76,7 +77,14 @@ export interface IVotingmilestone {
   props: {
     course_ids: string[] | null;
   };
-  voting_process: null;
+  voting_process: IVotingProcessLaunchpad | null;
+}
+
+export interface IVotingProcessLaunchpad {
+  approve_percentage: number;
+  is_voted: boolean;
+  reject_percentage: number;
+  total_vote: number;
 }
 
 export interface IAdminLaunchpadInvestmentItem {

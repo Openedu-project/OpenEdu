@@ -10,7 +10,9 @@ import type { ICourseOutline } from '@oe/api/types/course/course';
 import type { IQuizItemResponse, IQuizSettings } from '@oe/api/types/course/quiz';
 import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
 import type { HTTPError } from '@oe/api/utils/http-error';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import { useQuizSubmissionStore } from '../../../_store/learning-store';
 import { transformAnswers } from '../../../_utils/utils';
 import type { IQuizzSubmissionState, TAnswerInput } from '../_types/types';
@@ -20,11 +22,21 @@ interface IContentQuizProps {
   quiz?: IQuizItemResponse;
   settings?: IQuizSettings;
   course_data: ICourseOutline;
+  is_preview?: boolean;
   onComplete?: () => void;
   triggerFunction?: (quizResult: IQuizSubmissionResponse) => void;
 }
 
-export default function ContentQuiz({ quiz, course_data, settings, onComplete, triggerFunction }: IContentQuizProps) {
+export default function ContentQuiz({
+  quiz,
+  course_data,
+  settings,
+  is_preview,
+  onComplete,
+  triggerFunction,
+}: IContentQuizProps) {
+  const tCourseOutline = useTranslations('courseOutline');
+
   const [quizSubmission, setQuizSubmission] = useState<IQuizzSubmissionState>({
     id: '',
     num_questions: 0,
@@ -74,8 +86,13 @@ export default function ContentQuiz({ quiz, course_data, settings, onComplete, t
   };
 
   const onStartQuiz = () => {
-    if (quiz) {
-      triggerPostQuizSubmission({ quiz_id: quiz?.id, course_id: course_data?.id })
+    if (is_preview) {
+      toast.info(tCourseOutline('joinCourseToAccess'));
+    } else if (quiz) {
+      triggerPostQuizSubmission({
+        quiz_id: quiz?.id,
+        course_id: course_data?.id,
+      })
         .then(res => {
           const { id, num_questions, start_at } = res;
 

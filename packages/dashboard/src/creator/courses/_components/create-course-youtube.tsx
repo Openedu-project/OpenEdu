@@ -1,8 +1,8 @@
 import { type ICreateYoutubeCourse, createYoutubeCourseSchema } from '@oe/api/schemas/courses/createCourseSchema';
 import { getCookieClient } from '@oe/core/utils/cookie';
-import { type LanguageCode, languages } from '@oe/i18n/languages';
 import { InputNumber } from '@oe/ui/components/input-number';
 import { Modal } from '@oe/ui/components/modal';
+import { SelectLanguage } from '@oe/ui/components/select-language';
 import { Selectbox, type SelectboxOption } from '@oe/ui/components/selectbox';
 import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
 import { Input } from '@oe/ui/shadcn/input';
@@ -20,13 +20,7 @@ export default function CreateCourseYoutubeModal({
   onSubmit: (data: ICreateYoutubeCourse) => Promise<void>;
 }) {
   const tCourses = useTranslations('courses');
-  const localesCookie = getCookieClient(process.env.NEXT_PUBLIC_COOKIE_LOCALES_KEY);
-  const locales = localesCookie ? JSON.parse(localesCookie) : [];
-  const languageOptions: SelectboxOption[] = locales.map((key: LanguageCode) => ({
-    label: languages[key],
-    value: key,
-    id: key,
-  }));
+  const locale = getCookieClient(process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY);
 
   const toneOptions: SelectboxOption[] = [
     { label: tCourses('tone.normal'), value: 'normal', id: 'normal' },
@@ -64,6 +58,7 @@ export default function CreateCourseYoutubeModal({
       onSubmit={onSubmit}
       onError={handleError}
       showSubmit
+      defaultValues={{ language: locale, type: 'youtube_playlist' }}
       buttons={[
         {
           label: tCourses('form.cancel'),
@@ -80,8 +75,8 @@ export default function CreateCourseYoutubeModal({
             <FormFieldWithLabel name="playlist_link" label={tCourses('form.playlistLink')} required>
               <Input />
             </FormFieldWithLabel>
-            <FormFieldWithLabel name="language" label={tCourses('form.language')} required>
-              <Selectbox options={languageOptions ?? []} />
+            <FormFieldWithLabel name="language" label={tCourses('form.language')}>
+              <SelectLanguage />
             </FormFieldWithLabel>
             <FormFieldWithLabel
               name="summary_included"

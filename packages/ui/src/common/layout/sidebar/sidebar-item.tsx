@@ -12,7 +12,7 @@ import { useState } from 'react';
 import type { FC } from 'react';
 import type { ISidebarItem, ISidebarItemProps } from './types';
 
-export const SidebarItem: FC<ISidebarItemProps> = ({ item, depth, maxDepth, pathname, isCollapsed }) => {
+export const SidebarItem: FC<ISidebarItemProps> = ({ item, depth, maxDepth, pathname, isCollapsed, onNavigate }) => {
   const [isOpen, setIsOpen] = useState(false);
   const hasChildren = item.items && item.items.length > 0 && depth < maxDepth;
   const contentRef = useRef<HTMLDivElement>(null);
@@ -92,7 +92,7 @@ export const SidebarItem: FC<ISidebarItemProps> = ({ item, depth, maxDepth, path
     }
 
     return (
-      <Link href={item.href} variant="ghost" exact={item.isRoot} {...commonProps}>
+      <Link href={item.href} variant="ghost" exact={item.isRoot} onClick={onNavigate} {...commonProps}>
         {content}
       </Link>
     );
@@ -158,6 +158,7 @@ export const SidebarItem: FC<ISidebarItemProps> = ({ item, depth, maxDepth, path
                 maxDepth={maxDepth}
                 pathname={pathname}
                 isCollapsed={isCollapsed}
+                onNavigate={onNavigate}
               />
             ))}
           </ul>

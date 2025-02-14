@@ -209,6 +209,7 @@ export const getAllTranslations = async (locale: LanguageCode) => {
   }
 
   const mergedTranslations = deepMerge(fallbackTranslations ?? {}, translations ?? {}) as I18nMessage;
+  // console.error('---------------------------------', mergedTranslations.errors);
   return { locale: newlocale, messages: mergedTranslations };
 };
 

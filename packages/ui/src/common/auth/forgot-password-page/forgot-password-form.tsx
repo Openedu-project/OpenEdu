@@ -5,13 +5,13 @@ import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
 
 import { type ForgotPasswordSchemaType, forgotPasswordSchema } from '@oe/api/schemas/authSchema';
+import { forgotPasswordService } from '@oe/api/services/auth';
 import type { HTTPError } from '@oe/api/utils/http-error';
 import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { Mail } from 'lucide-react';
 import { Link } from '#common/navigation';
 import { FormWrapper } from '#components/form-wrapper';
 import { Alert, AlertDescription } from '#shadcn/alert';
-import { forgotPasswordAction } from '../_action/forgot-password-action';
 import { ForgotPasswordButton } from './forgot-password-button';
 
 export function ForgotPasswordForm() {
@@ -26,7 +26,9 @@ export function ForgotPasswordForm() {
   }, []);
 
   const handleSubmit = useCallback(async (values: ForgotPasswordSchemaType) => {
-    await forgotPasswordAction(values);
+    await forgotPasswordService(undefined, {
+      payload: { email: values.email },
+    });
     setSentEmail(values.email);
   }, []);
 

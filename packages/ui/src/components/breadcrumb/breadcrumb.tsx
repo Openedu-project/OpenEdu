@@ -132,7 +132,7 @@ export function Breadcrumb({ items = [], dashboard, className }: BreadcrumbProps
                     <DropdownMenu>
                       <DropdownMenuTrigger className="flex items-center gap-1">
                         <BreadcrumbEllipsis className="h-4 w-4" />
-                        <span className="sr-only">Mở menu</span>
+                        <span className="sr-only">Open menu</span>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="start">
                         {items.slice(0, -maxVisibleItems + 1).map((item, dropdownIndex) => (

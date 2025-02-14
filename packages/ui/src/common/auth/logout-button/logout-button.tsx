@@ -2,22 +2,48 @@
 
 import { LogOut } from 'lucide-react';
 import { mutate } from 'swr';
-import { logoutAction } from '../_action/logout-action';
 
+import { setCookiesService } from '@oe/api/services/cookies';
 import { resetAllStores } from '@oe/core/store';
 import { useTranslations } from 'next-intl';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '#shadcn/button';
 import { toast } from '#shadcn/sonner';
 
 export function LogoutButton() {
   const tToast = useTranslations('toast');
   const tAuth = useTranslations('auth');
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const nextPath = searchParams.get('next') ?? '/';
 
   const handleLogout = async () => {
-    resetAllStores();
-    toast.success(tToast('logoutSuccess'));
-    await mutate(() => true, undefined, { revalidate: false });
-    await logoutAction();
+    try {
+      resetAllStores();
+      toast.success(tToast('logoutSuccess'));
+      await mutate(() => true, undefined, { revalidate: false });
+      await setCookiesService([
+        {
+          key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY,
+          value: '',
+          options: {
+            maxAge: 0,
+          },
+        },
+        {
+          key: process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY,
+          value: '',
+          options: {
+            maxAge: 0,
+          },
+        },
+      ]);
+      router.replace(nextPath);
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+      toast.error(tToast('logoutError'));
+    }
   };
 
   return (

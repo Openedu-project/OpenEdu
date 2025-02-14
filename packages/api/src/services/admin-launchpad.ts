@@ -8,8 +8,9 @@ import type {
   IStartFundingTimeLaunchpadPayload,
 } from '#types/admin-launchpad';
 import type { IFilter } from '#types/filter';
+import type { ICreateLaunchpadRequest } from '#types/launchpad';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI, postAPI, putAPI } from '#utils/fetch';
+import { createAPIUrl, fetchAPI, patchAPI, postAPI, putAPI } from '#utils/fetch';
 
 export async function getAdminLaunchpadsService(
   url: string | null,
@@ -159,6 +160,29 @@ export const putAdminCancelPublishLaunchpadsService = async (
   const response = await putAPI<IAdminLaunchpadItem, null>(endpointKey, null, init);
   return response.data;
 };
+
+export async function patchLaunchpadDetailService(
+  url: string | null,
+  { params, init }: { params: ICreateLaunchpadRequest; init?: RequestInit }
+): Promise<IAdminLaunchpadDetailRes | null> {
+  let endpointKey = url;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.LAUNCHPADS_ID,
+      params: {
+        id: params.id,
+      },
+    });
+  }
+
+  try {
+    const response = await patchAPI<IAdminLaunchpadItem, ICreateLaunchpadRequest>(endpointKey, params, init);
+
+    return response.data;
+  } catch {
+    return null;
+  }
+}
 
 export const putAdminStartFundingTimeLaunchpadsService = async (
   endpoint: string | null | undefined,

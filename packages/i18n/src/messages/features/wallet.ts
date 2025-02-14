@@ -66,6 +66,8 @@ export const walletMessages = {
       deposit_sponsor_gas: 'Deposit Sponsor Gas',
       withdraw_sponsor_gas: 'Withdraw Sponsor Gas',
       wallet_fiat_withdrawal: 'Fiat Withdrawal',
+      launchpad_profit_earn: "Share of Launchpad's Profit",
+      launchpad_revenue: 'Revenue',
     },
     withdrawPage: {
       title: 'Withdraw',
@@ -85,6 +87,8 @@ export const walletMessages = {
         selectBankAccount: 'Select bank account',
         selectNetwork: 'Select network',
         enterWithdrawNote: 'Enter withdrawal note',
+        requestSuccess: 'Withdrawal request sent successfully',
+        tokenSuccess: 'Token withdrawal sent successfully',
         errors: {
           bankAccountEmpty: "You don't have any bank accounts. Please add one.",
           amountMustBe: 'Amount must be at least ',

@@ -78,6 +78,12 @@ export const creatorLaunchpadMessages = {
       amount: '{amount} {currency}',
       target: 'target',
       visualization: 'Funding visualization',
+      pledged: 'pledged',
+      backers: 'backers',
+      revenue: 'Revenue',
+      refunded: 'Refunded',
+      approved: 'Approved',
+      declined: 'Declined',
     },
     contact: {
       copyToClipboard: 'Copy to clipboard',

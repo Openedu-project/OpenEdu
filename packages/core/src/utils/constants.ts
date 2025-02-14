@@ -40,7 +40,7 @@ export const USER_ROLE_EVENT: Record<string, string> = {
   creator: 'INVITE_CREATOR',
 };
 
-export const GENERATING_STATUS = ['pending', 'generating'];
+export const GENERATING_STATUS = ['pending', 'generating', 'setting'];
 export const QUESTION_OBJECT_TYPE = {
   checkbox: 'Checkbox',
   multiple_choice: 'Multiple Choice',
@@ -84,3 +84,20 @@ export const FORM_EVENT = {
 export const EMAIL_REGEX =
   /^(([^\s"(),.:;<>@[\]]+(\.[^\s"(),.:;<>@[\]]+)*)|(".+"))@(([^\s"(),.:;<>@[\]]+\.)+[^\s"(),.:;<>@[\]]{2,})$/i;
 export const TONE = ['normal', 'professional', 'humorous'];
+
+export const CREATE_LAUNCHPAD_FORM_ID: Record<string, string> = {
+  generalInfo: 'general-information',
+  fundingGoal: 'funding-goal',
+  votingPlan: 'voting-plan',
+  ownerAndCollaborators: 'owner-and-collaborators',
+  paymentMethod: 'payment-method',
+} as const;
+
+export const CREATE_LAUNCHPAD_MODAL_ID: Record<string, string> = {
+  previewVideo: 'preview_video',
+  publishLaunchpadSuccess: 'publish_launchpad_success',
+  publishLaunchpad: 'publish_launchpad',
+  createLaunchpad: 'create_launchpad',
+  noCourse: 'no_course',
+  notCreator: 'not_creator',
+} as const;

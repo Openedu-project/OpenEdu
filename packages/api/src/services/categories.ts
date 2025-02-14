@@ -1,4 +1,4 @@
-import type { ICategoryBulkUpsert, ICategoryTree } from '#types/categories';
+import type { ICategoriesResponse, ICategoryBulkUpsert, ICategoryTree } from '#types/categories';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { fetchAPI, postAPI } from '#utils/fetch';
 import { createAPIUrl } from '#utils/fetch';
@@ -9,7 +9,6 @@ export const getCategoriesTreeService = async (
 ) => {
   const defaultUrl = createAPIUrl({ endpoint: API_ENDPOINT.CATEGORIES_TREE, queryParams: init?.queryParams });
   const response = await fetchAPI<ICategoryTree[]>(url ?? defaultUrl, init);
-
   return response.data;
 };
 
@@ -29,6 +28,20 @@ export const bulkDeleteCategoryService = async (ids: string[], init?: RequestIni
     { ids },
     init
   );
+
+  return response.data;
+};
+
+export const getCategoriesService = async (
+  url?: string,
+  init?: RequestInit & { queryParams?: Record<string, string> }
+) => {
+  const defaultUrl = createAPIUrl({
+    endpoint: API_ENDPOINT.CATEGORIES,
+    queryParams: init?.queryParams,
+  });
+
+  const response = await fetchAPI<ICategoriesResponse>(url ?? defaultUrl, init);
 
   return response.data;
 };

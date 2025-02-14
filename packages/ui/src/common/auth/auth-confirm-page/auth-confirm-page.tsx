@@ -1,4 +1,7 @@
 import { getMeServiceWithoutError } from '@oe/api/services/auth';
+import { postCreatorAcceptInvitationService } from '@oe/api/services/creator';
+import { postAcceptUserInvitationService } from '@oe/api/services/user';
+import type { ICreatorAcceptResponse } from '@oe/api/types/creators';
 import { type AuthEventName, authEvents } from '@oe/api/utils/auth';
 import loginBanner from '@oe/assets/images/login-banner.png';
 import { base64ToJson } from '@oe/core/utils/decoded-token';
@@ -11,7 +14,6 @@ import { Link } from '#common/navigation';
 import type { FileType } from '#components/uploader';
 import { AuthLayout } from '../auth-layout';
 import { AuthConfirmForm } from './auth-confirm-form';
-
 interface AuthConfirmProps {
   themeName?: ThemeName;
   banner?: FileType;
@@ -33,16 +35,30 @@ export async function AuthConfirmPage({ banner, themeName = 'academia' }: AuthCo
   }
 
   let needRedirect = false;
-  const decodedToken = base64ToJson(token);
+  let decodedToken: Record<string, string> | null = null;
+  try {
+    decodedToken = base64ToJson(token);
+  } catch {
+    decodedToken = null;
+  }
 
-  if (event !== authEvents.setPassword) {
+  if (event !== authEvents.setPassword && event !== authEvents.resetPassword) {
     try {
-      // const response = {
-      //   require_set_password: false,
-      //   email: 'test@openedu.net',
-      // };
+      let response: ICreatorAcceptResponse | null = null;
 
-      if (decodedToken.require_set_password) {
+      if (event === authEvents.inviteCreatorBeforeAccept) {
+        response = await postCreatorAcceptInvitationService(null, {
+          payload: { token: decodedToken?.token ?? '' },
+        });
+      }
+
+      if (event === authEvents.inviteUserBeforeAccept) {
+        response = await postAcceptUserInvitationService(null, {
+          payload: { token: decodedToken?.token ?? '' },
+        });
+      }
+
+      if (response?.require_set_password) {
         return (
           <AuthLayout
             title={tThemeAuth('authConfirm.title')}
@@ -56,8 +72,8 @@ export async function AuthConfirmPage({ banner, themeName = 'academia' }: AuthCo
               <p className="text-muted-foreground text-sm">{tAuth('authConfirm.setPasswordDescription')}</p>
               <AuthConfirmForm
                 event={event}
-                token={decodedToken.token}
-                email={decodedToken.email}
+                token={decodedToken?.token ?? ''}
+                email={decodedToken?.email ?? ''}
                 nextPath={nextPath}
               />
             </>
@@ -65,7 +81,7 @@ export async function AuthConfirmPage({ banner, themeName = 'academia' }: AuthCo
         );
       }
       const me = await getMeServiceWithoutError();
-      if (me?.email === decodedToken.email) {
+      if (me?.email === decodedToken?.email) {
         needRedirect = true;
       } else {
         return (
@@ -116,7 +132,6 @@ export async function AuthConfirmPage({ banner, themeName = 'academia' }: AuthCo
   if (needRedirect) {
     redirect(nextPath);
   }
-
   return (
     <AuthLayout
       title={tAuth('authConfirm.setPasswordTitle')}
@@ -126,7 +141,12 @@ export async function AuthConfirmPage({ banner, themeName = 'academia' }: AuthCo
       }}
       slogan={tThemeAuth('authConfirm.slogan')}
     >
-      <AuthConfirmForm event={event} token={decodedToken.token} email={decodedToken.email} nextPath={nextPath} />
+      <AuthConfirmForm
+        event={event}
+        token={decodedToken?.token ?? ''}
+        email={decodedToken?.email ?? ''}
+        nextPath={nextPath}
+      />
     </AuthLayout>
   );
 }

@@ -9,10 +9,10 @@ import {
   FolderKanban,
   Newspaper,
   Shapes,
-  UserCheck,
-  UserCog,
-  UserPen,
-  UserRoundPlusIcon,
+  // UserCheck,
+  // UserCog,
+  // UserPen,
+  // UserRoundPlusIcon,
 } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
@@ -25,31 +25,31 @@ export default async function Layout({ children }: { children: ReactNode }) {
 
   const filteredMenu = checkSidebarPermissions(
     [
-      {
-        id: 'user-management',
-        label: tDashboard('userManagement'),
-        icon: <UserCog className="h-5 w-5" />,
-        items: [
-          {
-            id: 'writer',
-            label: tDashboard('blog.writerMgt'),
-            icon: <UserPen className="h-5 w-5" />,
-            href: BLOG_ADMIN_ROUTES.writerMgt,
-          },
-          {
-            id: 'editor',
-            label: tDashboard('blog.editorMgt'),
-            icon: <UserCheck className="h-5 w-5" />,
-            href: BLOG_ADMIN_ROUTES.editorMgt,
-          },
-          {
-            id: 'invitation',
-            label: tDashboard('blog.inviteMgt'),
-            icon: <UserRoundPlusIcon className="h-5 w-5" />,
-            href: BLOG_ADMIN_ROUTES.inviteMgt,
-          },
-        ],
-      },
+      // {
+      //   id: 'user-management',
+      //   label: tDashboard('userManagement'),
+      //   icon: <UserCog className="h-5 w-5" />,
+      //   items: [
+      //     {
+      //       id: 'writer',
+      //       label: tDashboard('blog.writerMgt'),
+      //       icon: <UserPen className="h-5 w-5" />,
+      //       href: BLOG_ADMIN_ROUTES.writerMgt,
+      //     },
+      //     {
+      //       id: 'editor',
+      //       label: tDashboard('blog.editorMgt'),
+      //       icon: <UserCheck className="h-5 w-5" />,
+      //       href: BLOG_ADMIN_ROUTES.editorMgt,
+      //     },
+      //     {
+      //       id: 'invitation',
+      //       label: tDashboard('blog.inviteMgt'),
+      //       icon: <UserRoundPlusIcon className="h-5 w-5" />,
+      //       href: BLOG_ADMIN_ROUTES.inviteMgt,
+      //     },
+      //   ],
+      // },
       {
         id: 'category',
         label: tDashboard('blog.category'),

@@ -1,4 +1,6 @@
 import type { ICourse, ICourseResponse } from '@oe/api/types/course/course';
+import type { IFeaturedContent } from '@oe/api/types/featured-contents';
+import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { Card, CardContent } from '@oe/ui/shadcn/card';
 import { cn } from '@oe/ui/utils/cn';
 import type React from 'react';
@@ -10,7 +12,7 @@ import { CourseThumbnail } from './course-thumbnail';
 
 interface ICourseCard extends React.ComponentProps<typeof Card> {
   courseData: ICourse;
-  mutate?: KeyedMutator<ICourseResponse | undefined>;
+  mutate?: KeyedMutator<ICourseResponse | undefined> | KeyedMutator<IFeaturedContent<ICourse>[]>;
   showHover?: boolean;
   showPrice?: boolean;
   showThubnail?: boolean;
@@ -33,12 +35,14 @@ export default function CourseCard({
 
   const basePath = process.env.NEXT_PUBLIC_APP_ROOT_DOMAIN_NAME;
   const isExternal = courseData?.org?.domain !== basePath;
-  const externalDomain = org?.domain ? `https://${org.domain}` : '';
+  const href = org?.domain
+    ? `https://${org.domain}${PLATFORM_ROUTES.courseDetail.replace(':slug', courseData?.slug)}`
+    : PLATFORM_ROUTES.courseDetail.replace(':slug', courseData?.slug);
 
   return (
     <div className={cn('group relative w-full', className)}>
       <Link
-        href={`${externalDomain}PLATFORM_ROUTES.courseDetail.replace(':slug', courseData?.slug)`}
+        href={href}
         external={isExternal}
         target={isExternal ? '_blank' : undefined}
         className="h-full w-full p-0 hover:no-underline"
@@ -58,7 +62,7 @@ export default function CourseCard({
         </Card>
       </Link>
 
-      {showHover && <CourseHoverContent courseData={courseData} mutate={mutate} />}
+      {showHover && <CourseHoverContent courseData={courseData} mutate={mutate} href={href} isExternal={isExternal} />}
     </div>
   );
 }

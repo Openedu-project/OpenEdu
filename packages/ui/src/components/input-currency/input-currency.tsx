@@ -116,6 +116,7 @@ function InputCurrency({
         locale: locale ?? internalLocale,
         currency: hasCurrency ? (languageWithCurrency[locale ?? internalLocale]?.currencyCode ?? 'USD') : '',
       }}
+      autoComplete="off"
       {...props}
     />
   );

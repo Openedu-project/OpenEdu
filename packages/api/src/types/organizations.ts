@@ -20,6 +20,7 @@ export interface IOrganization {
   user_id: string;
   settings: null;
   sub_domains: null;
+  banner?: IFileResponse;
 }
 
 export interface IOrganizationPayload {

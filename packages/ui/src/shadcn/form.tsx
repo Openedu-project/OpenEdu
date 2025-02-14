@@ -134,7 +134,6 @@ FormDescription.displayName = 'FormDescription';
 const FormMessage = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagraphElement>>(
   ({ className, children, ...props }, ref) => {
     const { error, formMessageId } = useFormField();
-
     const t = useTranslations();
     const message = error?.message ? parseFormMessage(error.message) : undefined;
     const body = message ? t(message.key, message) : children;
@@ -214,7 +213,7 @@ const FormFieldWithLabel = forwardRef<ComponentRef<typeof Slot>, FormFieldWithLa
       fieldType,
       render,
       formMessageClassName,
-      showErrorMessage,
+      showErrorMessage = true,
       ...props
     },
     ref

@@ -30,7 +30,7 @@ export default function LaunchpadRequestsList() {
   const [isOpenApproveModal, setIsOpenApproveModal] = useState<boolean>(false);
   const [isOpenRejectModal, setIsOpenRejectModal] = useState<boolean>(false);
 
-  const { triggerApprove } = useApprove(selectedItem?.id ?? '');
+  const { triggerApprove, isLoadingApprove } = useApprove(selectedItem?.id ?? '');
   const { triggerReject } = useReject(selectedItem?.id ?? '');
 
   const handleOpenApproveModal = useCallback(
@@ -193,7 +193,13 @@ export default function LaunchpadRequestsList() {
           manualPagination: true,
         }}
       />
-      {isOpenApproveModal && <ApproveLaunchpadModal onSubmit={handleApprove} onClose={handleCloseApproveModal} />}
+      {isOpenApproveModal && (
+        <ApproveLaunchpadModal
+          isLoading={isLoadingApprove}
+          onSubmit={handleApprove}
+          onClose={handleCloseApproveModal}
+        />
+      )}
 
       {isOpenRejectModal && <RejectLaunchpadModal onSubmit={handleReject} onClose={handleCloseRejectModal} />}
     </>

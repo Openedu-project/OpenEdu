@@ -1,10 +1,10 @@
 'use client';
 
 import type { ICourse, ICourseOutline, ICourseResponse } from '@oe/api/types/course/course';
+import type { IFeaturedContent } from '@oe/api/types/featured-contents';
 import MedalStar from '@oe/assets/icons/medal-star';
 import SendSquare from '@oe/assets/icons/send-square';
 import { VideoSquare } from '@oe/assets/icons/video-square';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { WishlistButton } from '@oe/ui/components/wishlist-button';
 import { Book, UsersRound } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -15,18 +15,18 @@ import { Card } from '#shadcn/card';
 
 interface CourseHoverContentProps {
   courseData: ICourse;
-  mutate?: KeyedMutator<ICourseResponse | undefined>;
+  mutate?: KeyedMutator<ICourseResponse | undefined> | KeyedMutator<IFeaturedContent<ICourse>[]>;
+  href?: string;
+  isExternal?: boolean;
 }
 
-export function CourseHoverContent({ courseData, mutate }: CourseHoverContentProps) {
+export function CourseHoverContent({ courseData, mutate, isExternal, href }: CourseHoverContentProps) {
   const tDetail = useTranslations('courseCard');
-  const basePath = process.env.NEXT_PUBLIC_APP_ROOT_DOMAIN_NAME;
-  const isExternal = courseData?.org?.domain !== basePath;
 
   return (
     <Card className="absolute inset-0 flex cursor-pointer flex-col gap-4 overflow-y-hidden rounded-lg border-2 border-primary bg-background p-4 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
       <Link
-        href={PLATFORM_ROUTES.courseDetail.replace(':slug', courseData?.slug)}
+        href={href ?? ''}
         external={isExternal}
         target={isExternal ? '_blank' : undefined}
         className="flex h-full w-full flex-col items-start gap-4 whitespace-break-spaces p-0 hover:no-underline"

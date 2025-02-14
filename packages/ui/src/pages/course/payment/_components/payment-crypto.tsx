@@ -155,7 +155,7 @@ const PaymentCrypto = ({
   };
 
   return (
-    <ul className="mcaption-regular14 text-[#2C2C2C]">
+    <ul className="mcaption-regular14 text-neutral-900">
       {/* Step 2 */}
       <li className="mb-4 md:mb-6">
         <div className="mb-3 flex items-center gap-3">
@@ -202,7 +202,7 @@ const PaymentCrypto = ({
 
             <div className="mb-4 flex justify-between">
               <span className="giant-iheading-semibold16 md:giant-iheading-semibold20">{t('couponDiscount')}</span>
-              <p className="giant-iheading-semibold20 text-[#2BA830]">
+              <p className="giant-iheading-semibold20 text-positive-600">
                 <span>{formatNumber(discountAmount ?? 0)}</span>&nbsp;
                 <span className="giant-iheading-semibold12">{cryptoCurrency}</span>
               </p>
@@ -212,12 +212,12 @@ const PaymentCrypto = ({
                 {t('shareRate')}&nbsp;
                 <span className="font-bold text-primary">{shareRate ? `${shareRate}%` : ''}</span>
               </span>
-              <p className="giant-iheading-semibold20 text-[#2BA830]">
+              <p className="giant-iheading-semibold20 text-positive-600">
                 <span>{formatNumber(shareRateAmount ?? 0)}</span>&nbsp;
                 <span className="giant-iheading-semibold12">{cryptoCurrency}</span>
               </p>
             </div>
-            <div className="flex items-center justify-between rounded-2 rounded-xl bg-[#F2F1FF] px-3 py-2">
+            <div className="flex items-center justify-between rounded-2 rounded-xl bg-primary-20 px-3 py-2">
               <span className="giant-iheading-semibold16 md:giant-iheading-semibold20">{t('finalPrice')}&nbsp;</span>
               <span className="giant-iheading-semibold20 md:giant-iheading-semibold28 text-primary">
                 <span>{formatNumber(amountDue ?? 0)}</span>&nbsp;
@@ -234,13 +234,13 @@ const PaymentCrypto = ({
           <NumberedCircle number={3} />
           <p className="mcaption-semibold14">
             {t('step3CryptoTitle')}
-            <span className="ml-1 text-[#D50010]">*</span>
+            <span className="ml-1 text-negative-600">*</span>
           </p>
         </div>
         <div className="mcaption-semibold14 mx-4 flex flex-col gap-4 md:mx-10 md:gap-6">
           <div
-            className={`flex flex-col justify-between gap-4 rounded-2 bg-[#E1F7E2] px-3 py-2 ${
-              hasEnoughInsufficient ? 'bg-[#E1F7E2]' : 'bg-[#FFDADD]'
+            className={`flex flex-col justify-between gap-4 rounded-2 bg-positive-50 px-3 py-2 ${
+              hasEnoughInsufficient ? 'bg-positive-50' : 'bg-[#FFDADD]'
             }`}
           >
             <p className="flex items-center justify-between">
@@ -264,7 +264,7 @@ const PaymentCrypto = ({
             </p>
             {!hasEnoughInsufficient && (
               <div className="md: flex flex-col justify-between rounded-2 bg-white p-3 md:flex-row">
-                <span className="text-[#FA0013]">
+                <span className="text-negative-500">
                   {t?.rich('step3CryptoInsufficientAmount', {
                     number: amountDue - Number.parseFloat(amountWalletByCurrency ?? '0'),
                     currency: cryptoCurrency ?? 'USDT',
@@ -286,7 +286,7 @@ const PaymentCrypto = ({
           <div className="block">
             <p className="mcaption-semibold14">
               {t('step4CryptoTitle')}
-              <span className="ml-1 text-[#D50010]">*</span>
+              <span className="ml-1 text-negative-600">*</span>
             </p>
             <p>{t('step4CryptoNote1')}</p>
             <p>{t('step4CryptoNote2')}</p>

@@ -13,6 +13,7 @@ import type { HTTPResponse } from '#types/fetch';
 import type { IUser } from '#types/user';
 import { HTTPError } from '#utils/http-error';
 import { HTTPErrorCodeMessages } from '#utils/http-error';
+import { setCookiesService } from './cookies';
 
 export const signUpService = async (
   endpoint: string | null | undefined,
@@ -35,8 +36,21 @@ export const loginService = async (
     ...init,
     shouldRefreshToken: false,
   });
+  const data = response.data;
+  if (data.access_token && data.refresh_token) {
+    await setCookiesService([
+      {
+        key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY,
+        value: data.access_token,
+      },
+      {
+        key: process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY,
+        value: data.refresh_token,
+      },
+    ]);
+  }
 
-  return response.data;
+  return data;
 };
 
 export const forgotPasswordService = async (
@@ -225,24 +239,18 @@ export async function refreshTokenService(): Promise<IToken | null> {
 
   try {
     const data = await postRefreshToken(referrer, origin, refreshToken);
-    await fetch(`${process.env.NEXT_PUBLIC_APP_ORIGIN}${API_ENDPOINT.SET_COOKIE}`, {
-      method: 'POST',
-      body: JSON.stringify({ key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, value: data.access_token }),
-    });
-    // setCookie(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, data.access_token);
-    // setCookie(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, data.refresh_token);
+    if (data.access_token && data.refresh_token) {
+      await setCookiesService([
+        { key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, value: data.access_token },
+        { key: process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, value: data.refresh_token },
+      ]);
+    }
     return data;
   } catch (error) {
-    await fetch(`${process.env.NEXT_PUBLIC_APP_ORIGIN}${API_ENDPOINT.SET_COOKIE}`, {
-      method: 'POST',
-      body: JSON.stringify({
-        key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY,
-        value: '',
-        options: { maxAge: 0 },
-      }),
-    });
-    // setCookie(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, '', { maxAge: 0 });
-    // setCookie(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, '', { maxAge: 0 });
+    await setCookiesService([
+      { key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, value: '', options: { maxAge: 0 } },
+      { key: process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, value: '', options: { maxAge: 0 } },
+    ]);
     console.error('==========refreshToken error=============', error);
     return null;
   }

@@ -210,6 +210,7 @@ export const useNFTTotalAssets = () => {
 
   return {
     nftData,
+    tokenBalances: tokenBalances,
     isLoading: walletsLoading || isNearLoading || isAvailLoading,
   };
 };

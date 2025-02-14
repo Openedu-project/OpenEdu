@@ -7,10 +7,21 @@ import {
   getCoursesPublishService,
   getCoursesService,
   getLevelsService,
+  getSegmentByIdService,
   getSegmentsService,
+  getPreviewCourseByIdService,
+  getPublishedCourseByAdminService,
+  getSectionsHaveLessonsByCourseIdService,
   postEnrollCourseService,
+  putEnableCourseService,
 } from '#services/course';
-import type { ICourse, ICourseOutline, ICourseResponse, IEnrollCoursePayload } from '#types/course/course';
+import type {
+  ICourse,
+  ICourseOutline,
+  ICourseResponse,
+  IEnableCourseRequest,
+  IEnrollCoursePayload,
+} from '#types/course/course';
 import type { ISegmentParams } from '#types/course/segment';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
@@ -35,7 +46,9 @@ export function useGetCourses({ params }: { params: IFilter }) {
 
 export function useGetCourseById(id: string) {
   const { data, isLoading, error, mutate } = useSWR(
-    id ? createAPIUrl({ endpoint: API_ENDPOINT.COURSES_ID, params: { id } }) : null,
+    id
+      ? createAPIUrl({ endpoint: API_ENDPOINT.COURSES_ID, params: { id }, queryParams: { preloads: ['segments'] } })
+      : null,
     (endpoint: string) => getCourseByIdService(endpoint, { id })
   );
 
@@ -114,10 +127,8 @@ export const usePostEnrollCourse = (id: string) => {
 
   const { trigger, error, isMutating } = useSWRMutation(
     id ? endpoint : null,
-    async (endpoint: string, { arg }: { arg?: IEnrollCoursePayload }): Promise<ICourse> => {
-      const response = await postEnrollCourseService(endpoint, { payload: arg });
-      return response;
-    }
+    async (endpoint: string, { arg }: { arg?: IEnrollCoursePayload }): Promise<ICourse> =>
+      postEnrollCourseService(endpoint, { payload: arg })
   );
 
   return {
@@ -143,11 +154,121 @@ export const useGetSegments = ({ course_id, page, per_page, preloads, ...rest }:
   const { data, isLoading, error, mutate } = useSWR(queryParams.course_id ? endpoint : null, (endpoint: string) =>
     getSegmentsService(endpoint, queryParams)
   );
-
+  const sortedSegments = data?.results?.sort((a, b) => a.order - b.order);
   return {
-    segments: data?.results,
+    segments: sortedSegments,
     segmentsError: error,
     mutateSegments: mutate,
     isLoadingSegments: isLoading,
+  };
+};
+
+export const useGetSegmentById = (id: string) => {
+  const endpoint = buildUrl({ endpoint: API_ENDPOINT.SEGMENTS_ID, params: { id } });
+  const { data, isLoading, error, mutate } = useSWR(id ? endpoint : null, (endpoint: string) =>
+    getSegmentByIdService(endpoint, id)
+  );
+
+  return {
+    segment: data,
+    segmentError: error,
+    mutateSegment: mutate,
+    isLoadingSegment: isLoading,
+  };
+}
+export const usePutEnableCourse = () => {
+  const { trigger, error, isMutating } = useSWRMutation(
+    API_ENDPOINT.COURSES_ID_STAGE,
+    async (_endpoint: string, { arg }: { arg: IEnableCourseRequest }): Promise<ICourse> =>
+      putEnableCourseService(
+        createAPIUrl({
+          endpoint: API_ENDPOINT.COURSES_ID_STAGE,
+          params: {
+            id: arg?.id,
+          },
+        }),
+        { payload: arg }
+      )
+  );
+
+  return {
+    triggerPutEnableCourse: trigger,
+    putEnableCourseError: error,
+    isLoadingPutEnableCourse: isMutating,
+  };
+};
+
+export const useGetPublishedCourseByAdmin = ({
+  org_id,
+  params,
+  org_id_not,
+}: {
+  org_id?: string;
+  params?: IFilter;
+  org_id_not?: string;
+}) => {
+  const endpointKey = createAPIUrl({
+    endpoint: API_ENDPOINT.COURSES_PUBLISH,
+    queryParams: {
+      ...params,
+      org_id,
+      org_id_not,
+    },
+  });
+  const { data, isLoading, mutate } = useSWR(org_id || org_id_not ? endpointKey : '', (_endpoint: string) =>
+    getPublishedCourseByAdminService(endpointKey, { payload: { ...params, org_id, org_id_not } })
+  );
+
+  return {
+    publishedCourseByAdmin: data,
+    isLoadingPublishedCourseByAdmin: isLoading,
+    muatePublishedCourseByAdmin: mutate,
+  };
+};
+
+export const useGetPreviewCourseById = ({ courseId, orgId }: { courseId?: string; orgId?: string }) => {
+  const endpointKey = createAPIUrl({
+    endpoint: API_ENDPOINT.COURSES_ID_PREVIEW_ORG_ID,
+    params: {
+      id: courseId,
+      org_id: orgId,
+    },
+    queryParams: {
+      preloads: ['Categories', 'Levels', 'Owner'],
+    },
+  });
+  const { data, isLoading, mutate } = useSWR(courseId && orgId ? endpointKey : null, (_endpoint: string) =>
+    getPreviewCourseByIdService(endpointKey, { payload: { courseId, orgId } })
+  );
+
+  return {
+    courseData: data,
+    isCourseLoading: isLoading,
+    muateCourse: mutate,
+  };
+};
+
+export const useGetSectionsHaveLessonsByCourseId = (params?: ISegmentParams) => {
+  const endpointKey = createAPIUrl({
+    endpoint: API_ENDPOINT.SEGMENTS,
+    queryParams: {
+      ...params,
+      course_id: params?.course_id,
+      page: 1,
+      per_page: 999,
+      preloads: 'lessons',
+    },
+  });
+
+  const { data, isLoading, isValidating, mutate } = useSWR(
+    params?.course_id ? endpointKey : null,
+    (_endpoint: string) => getSectionsHaveLessonsByCourseIdService(endpointKey, { params })
+  );
+
+  return {
+    sectionsData: data?.results?.sort((a, b) => a.order - b.order),
+    loadingSections: isLoading,
+    validSections: isValidating,
+    mutateSectionsData: mutate,
   };
 };

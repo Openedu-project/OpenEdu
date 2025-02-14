@@ -24,7 +24,7 @@ export interface IApproval<T, R> {
   confirm_id_by?: string;
   confirm_by?: IUserProfile;
   confirm_date?: number;
-  status: string;
+  status: TApprovalStatus;
   type: string;
   note: string;
 }
@@ -46,3 +46,5 @@ export type IRejectRes = IApprovalRes;
 export interface IFeedbackPayload {
   content: string;
 }
+
+export type TApprovalStatus = 'new' | 'approved' | 'rejected' | 'cancelled' | 'pending';

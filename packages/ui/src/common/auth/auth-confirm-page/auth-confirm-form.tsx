@@ -1,13 +1,14 @@
 'use client';
 
 import { type SetPasswordSchemaType, setPasswordSchema } from '@oe/api/schemas/authSchema';
-import { setPasswordService } from '@oe/api/services/auth';
+import { loginService, setPasswordService } from '@oe/api/services/auth';
 import type { AuthEventName } from '@oe/api/utils/auth';
 import type { HTTPError } from '@oe/api/utils/http-error';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useCallback } from 'react';
+import { toast } from 'sonner';
 import { mutate } from 'swr';
 import { SuccessDialog } from '#components/dialog';
 import { FormWrapper } from '#components/form-wrapper';
@@ -15,7 +16,6 @@ import { InputPassword } from '#components/input-password';
 import { Alert, AlertDescription } from '#shadcn/alert';
 import { Button } from '#shadcn/button';
 import { FormFieldWithLabel } from '#shadcn/form';
-import { loginAction } from '../_action/login-action';
 
 export function AuthConfirmForm({
   event,
@@ -32,7 +32,6 @@ export function AuthConfirmForm({
   const tErrors = useTranslations('errors');
   const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
-  const [seconds, setSeconds] = useState(3);
   const router = useRouter();
 
   const handleSubmit = useCallback(
@@ -40,30 +39,20 @@ export function AuthConfirmForm({
       await setPasswordService(null, {
         payload: { event, token, email, password },
       });
-      await loginAction({ email, password, next_path: nextPath });
+      await loginService(undefined, {
+        payload: { email, password, next_path: nextPath },
+      });
       mutate(() => true, undefined, { revalidate: true });
       setOpen(true);
+      toast.success(tAuth('authConfirm.setPasswordSuccess'));
+      router.replace(nextPath);
+      router.refresh();
     },
-    [event, token, email, nextPath]
+    [event, token, email, nextPath, router, tAuth]
   );
   const handleError = useCallback((error: unknown) => {
     setError((error as HTTPError).message);
   }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (seconds >= 0) {
-        setSeconds(seconds - 1);
-
-        if (seconds === 0) {
-          clearInterval(interval);
-          setOpen(false);
-          router.replace(nextPath);
-        }
-      }
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [seconds, router, nextPath]);
 
   return (
     <>
@@ -89,7 +78,7 @@ export function AuthConfirmForm({
       </FormWrapper>
       <SuccessDialog
         title={tAuth('authConfirm.setPasswordSuccess')}
-        description={tAuth('authConfirm.setPasswordDescription', { seconds })}
+        description={tAuth('authConfirm.setPasswordDescription')}
         open={open}
         setOpen={setOpen}
       />

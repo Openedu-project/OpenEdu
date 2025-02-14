@@ -1,6 +1,6 @@
 import type { LaunchpadStatus } from '#types/launchpad';
 
-export const TABS = {
+export const CREATE_LAUNCHPAD_TABS = {
   generalInfo: 'general-information',
   fundingGoal: 'funding-goal',
   votingPlan: 'voting-plan',
@@ -8,26 +8,26 @@ export const TABS = {
   paymentMethod: 'payment-method',
 } as const;
 
-export const TABS_ORDER = [
+export const CREATE_LAUNCHPAD_TABS_ORDER = [
   {
     order: 1,
-    value: TABS.generalInfo,
+    value: CREATE_LAUNCHPAD_TABS.generalInfo,
   },
   {
     order: 2,
-    value: TABS.fundingGoal,
+    value: CREATE_LAUNCHPAD_TABS.fundingGoal,
   },
   {
     order: 3,
-    value: TABS.votingPlan,
+    value: CREATE_LAUNCHPAD_TABS.votingPlan,
   },
   {
     order: 4,
-    value: TABS.ownerAndCollaborators,
+    value: CREATE_LAUNCHPAD_TABS.ownerAndCollaborators,
   },
   {
     order: 5,
-    value: TABS.paymentMethod,
+    value: CREATE_LAUNCHPAD_TABS.paymentMethod,
   },
 ];
 

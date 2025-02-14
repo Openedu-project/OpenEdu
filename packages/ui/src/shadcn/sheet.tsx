@@ -5,6 +5,7 @@ import { type VariantProps, cva } from 'class-variance-authority';
 import { X } from 'lucide-react';
 import { type ComponentPropsWithoutRef, type ComponentRef, type HTMLAttributes, forwardRef } from 'react';
 
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { cn } from '#utils/cn';
 
 const Sheet = Root;
@@ -48,21 +49,29 @@ const sheetVariants = cva(
   }
 );
 
-interface SheetContentProps extends ComponentPropsWithoutRef<typeof Content>, VariantProps<typeof sheetVariants> {}
+interface SheetContentProps extends ComponentPropsWithoutRef<typeof Content>, VariantProps<typeof sheetVariants> {
+  container?: HTMLElement | null;
+  overlayClassName?: string;
+  hasCloseButton?: boolean;
+}
 
 const SheetContent = forwardRef<ComponentRef<typeof Content>, SheetContentProps>(
-  ({ side = 'right', className, children, ...props }, ref) => (
-    <SheetPortal>
-      <SheetOverlay />
-      <Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
-        {children}
-        <Close className="absolute top-5 right-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
-          <X className="h-4 w-4" />
-          <span className="sr-only">Close</span>
-        </Close>
-      </Content>
-    </SheetPortal>
-  )
+  ({ side = 'right', className, children, container, overlayClassName, hasCloseButton = true, ...props }, ref) => {
+    return (
+      <SheetPortal container={container ?? (typeof window !== 'undefined' ? document.body : undefined)}>
+        <SheetOverlay className={overlayClassName} />
+        <Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
+          {children}
+          {hasCloseButton && (
+            <Close className="absolute top-5 right-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
+              <X className="h-4 w-4" />
+              <span className="sr-only">Close</span>
+            </Close>
+          )}
+        </Content>
+      </SheetPortal>
+    );
+  }
 );
 SheetContent.displayName = Content.displayName;
 
@@ -77,16 +86,26 @@ const SheetFooter = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) =>
 SheetFooter.displayName = 'SheetFooter';
 
 const SheetTitle = forwardRef<ComponentRef<typeof Title>, ComponentPropsWithoutRef<typeof Title>>(
-  ({ className, ...props }, ref) => (
-    <Title ref={ref} className={cn('font-semibold text-foreground text-lg', className)} {...props} />
-  )
+  ({ className, hidden, ...props }, ref) =>
+    hidden ? (
+      <VisuallyHidden>
+        <Title ref={ref} className={cn('font-semibold text-foreground text-lg', className)} {...props} />
+      </VisuallyHidden>
+    ) : (
+      <Title ref={ref} className={cn('font-semibold text-foreground text-lg', className)} {...props} />
+    )
 );
 SheetTitle.displayName = Title.displayName;
 
 const SheetDescription = forwardRef<ComponentRef<typeof Description>, ComponentPropsWithoutRef<typeof Description>>(
-  ({ className, ...props }, ref) => (
-    <Description ref={ref} className={cn('text-muted-foreground text-sm', className)} {...props} />
-  )
+  ({ className, hidden, ...props }, ref) =>
+    hidden ? (
+      <VisuallyHidden>
+        <Description ref={ref} className={cn('text-muted-foreground text-sm', className)} {...props} />
+      </VisuallyHidden>
+    ) : (
+      <Description ref={ref} className={cn('text-muted-foreground text-sm', className)} {...props} />
+    )
 );
 SheetDescription.displayName = Description.displayName;
 
