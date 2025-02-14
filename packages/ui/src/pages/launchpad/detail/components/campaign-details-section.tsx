@@ -5,6 +5,7 @@ import DefaultImg from '@oe/assets/images/defaultimage.png';
 import { formatDate } from '@oe/core/utils/datetime';
 import { Calendar } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
+import { Link } from '#common/navigation';
 import { CircularProgress } from '#components/circular-progress';
 import { Image } from '#components/image';
 import { Button } from '#shadcn/button';
@@ -33,9 +34,9 @@ const CampaignDetailsSection = async ({
   const renderBtn = () => {
     if (isLoggedIn && campaign?.status === LAUNCHPAD_STATUS.FUNDING) {
       return (
-        <Button className="mt-6 h-fit w-full rounded-xl px-6 py-4 font-semibold text-base md:hidden">
-          {t('buttons.pledge')}
-        </Button>
+        <Link href={`/launchpad/${campaign?.id}/pledge`} className="mt-6 w-full p-0 md:hidden">
+          <Button className="h-fit w-full rounded-xl px-6 py-4 font-semibold text-base">{t('buttons.pledge')}</Button>
+        </Link>
       );
     }
   };
