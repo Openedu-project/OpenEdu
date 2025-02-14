@@ -16,7 +16,7 @@ const SuccessDialog = ({
   const t = useTranslations('launchpadDetailPage.pledgePage.successDialog');
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="!rounded-3xl gap-0 p-6">
+      <DialogContent className="!rounded-3xl gap-0 p-6" aria-describedby={undefined}>
         <DialogHeader>
           <VisuallyHiddenRoot>
             <DialogTitle />

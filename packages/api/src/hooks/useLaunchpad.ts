@@ -15,6 +15,7 @@ import {
   getLaunchpadConfigService,
   postCreateLaunchpadService,
   postInitPoolLaunchpadService,
+  postPledgeLaunchpadService,
 } from '#services/launchpad';
 import type {
   IAdminLaunchpadItem,
@@ -30,6 +31,7 @@ import type {
   ILaunchpadMinPledgeOptionsResponse,
   ILaunchpadMinSections,
   ILaunchpadVotingPhaseRuleResponse,
+  IPledgeLaunchpadPayload,
 } from '#types/launchpad';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
@@ -318,5 +320,18 @@ export const usePostInitPool = (id: string, wallet_id: string) => {
     triggerPostInitPool: trigger,
     isLoadingPostInitPool: isMutating,
     errorPostInitPool: error,
+  };
+};
+
+export const usePostPledgeLaunchpad = () => {
+  const { trigger, isMutating, error } = useSWRMutation(
+    API_ENDPOINT.LAUNCHPADS_INVESTMENTS,
+    async (_endpoint: string, { arg }: { arg: IPledgeLaunchpadPayload }) => postPledgeLaunchpadService(arg)
+  );
+
+  return {
+    triggerPostPledgeLaunchpad: trigger,
+    isLoadingPostPledgeLaunchpad: isMutating,
+    errorPostPledgeLaunchpad: error,
   };
 };

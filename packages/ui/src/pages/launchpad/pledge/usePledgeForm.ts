@@ -1,9 +1,12 @@
+import { usePostPledgeLaunchpad } from '@oe/api/hooks/useLaunchpad';
 import { type IPledgeLaunchpadSchema, pledgeLaunchpadSchema } from '@oe/api/schemas/launchpadSchema';
-import { postPledgeLaunchpadService } from '@oe/api/services/launchpad';
 import type { IWallet } from '@oe/api/types/wallet';
+import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
 import { z } from '@oe/api/utils/zod';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
+import { toast } from 'sonner';
 
 const usePledgeForm = (launchpadId: string, walletInvest?: IWallet, tokenInvestBalance?: number) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,6 +18,8 @@ const usePledgeForm = (launchpadId: string, walletInvest?: IWallet, tokenInvestB
   const [isTermsAccept, setIsTermsAccept] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [amountError, setAmountError] = useState<string | null>(null);
+  const tError = useTranslations('errors');
+  const { triggerPostPledgeLaunchpad } = usePostPledgeLaunchpad();
 
   const handleSubmit = async (form: UseFormReturn<IPledgeLaunchpadSchema>) => {
     try {
@@ -54,7 +59,7 @@ const usePledgeForm = (launchpadId: string, walletInvest?: IWallet, tokenInvestB
 
     setIsLoading(true);
     try {
-      await postPledgeLaunchpadService({
+      await triggerPostPledgeLaunchpad({
         launchpad_id: launchpadId,
         wallet_id: walletInvest.id,
         amount: Number(formData.amount),
@@ -63,6 +68,7 @@ const usePledgeForm = (launchpadId: string, walletInvest?: IWallet, tokenInvestB
       setIsModalOpen(false);
     } catch (error) {
       console.error('Error submitting pledge:', error);
+      toast.error(tError((error as HTTPErrorMetadata).code.toString()));
     } finally {
       setIsLoading(false);
     }
