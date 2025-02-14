@@ -284,3 +284,9 @@ export type LaunchpadStatus =
   | 'waiting'
   | 'got_revenue'
   | 'got_refunded';
+
+export type IPledgeLaunchpadPayload = {
+  launchpad_id: string;
+  wallet_id: string;
+  amount: number;
+};

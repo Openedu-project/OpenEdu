@@ -1,7 +1,13 @@
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI } from '#utils/fetch';
-import type { IBackerData, ILaunchpad, ILaunchpadResponse, LaunchpadStatus } from '../types/launchpad';
+import { createAPIUrl, fetchAPI, postAPI } from '#utils/fetch';
+import type {
+  IBackerData,
+  ILaunchpad,
+  ILaunchpadResponse,
+  IPledgeLaunchpadPayload,
+  LaunchpadStatus,
+} from '../types/launchpad';
 
 export const getLaunchpadsService = async (
   url: string | undefined,
@@ -159,3 +165,13 @@ export async function getMyLaunchpadService({
     return null;
   }
 }
+
+export const postPledgeLaunchpadService = async (payload?: IPledgeLaunchpadPayload) => {
+  try {
+    const response = await postAPI(API_ENDPOINT.LAUNCHPADS_INVESTMENTS, payload);
+
+    return response;
+  } catch {
+    return null;
+  }
+};
