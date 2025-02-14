@@ -3,10 +3,10 @@ import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl, fetchAPI, postAPI } from '#utils/fetch';
 import type {
   IBackerData,
+  ICreateLaunchpadRequest,
   ILaunchpad,
   ILaunchpadResponse,
   IPledgeLaunchpadPayload,
-  ICreateLaunchpadRequest,
   LaunchpadStatus,
 } from '../types/launchpad';
 
@@ -167,7 +167,6 @@ export async function getMyLaunchpadService({
   }
 }
 
-
 export const postPledgeLaunchpadService = async (payload?: IPledgeLaunchpadPayload) => {
   try {
     const response = await postAPI(API_ENDPOINT.LAUNCHPADS_INVESTMENTS, payload);
@@ -176,6 +175,7 @@ export const postPledgeLaunchpadService = async (payload?: IPledgeLaunchpadPaylo
   } catch {
     return null;
   }
+};
 
 export const postCreateLaunchpadService = async (
   endpoint: string | null | undefined,
