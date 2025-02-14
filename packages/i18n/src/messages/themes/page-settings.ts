@@ -14,5 +14,9 @@ export const pageSettingMessages = {
     config: 'Config',
     updateSuccess: 'Update config successfully!',
     updateFail: 'Failed to update config',
+    confirmModal: 'Confirm submit',
+    close: 'Close',
+    confirmContent:
+      ' The content is saved based on the preview screen instead of the current config. Please check the preview screen after submitting.',
   },
 };

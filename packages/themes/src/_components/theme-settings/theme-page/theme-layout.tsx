@@ -4,7 +4,7 @@ import type { ISidebarItem } from "@oe/ui/common/layout/sidebar";
 import type { FileType } from "@oe/ui/components/uploader";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
-import type { ThemeDefinition, ThemeName } from "src/_types";
+import type { ThemeDefinition, ThemeName } from "../../../_types";
 
 interface ThemeLayoutProps {
   themeDefinition?: ThemeDefinition;
