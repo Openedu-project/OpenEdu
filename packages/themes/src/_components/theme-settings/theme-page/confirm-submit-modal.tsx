@@ -7,7 +7,7 @@ interface IConfirmSubmitModal {
 }
 
 const ConfirmSubmitModal = ({ onClose, onSubmit }: IConfirmSubmitModal) => {
-  const t = useTranslations("themePage.themePageSettings");
+  const t = useTranslations("themePageSettings");
 
   return (
     <Modal

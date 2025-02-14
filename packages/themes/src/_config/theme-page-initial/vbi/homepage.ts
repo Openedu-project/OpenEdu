@@ -7,7 +7,7 @@ export const createVbiHomepageConfig = (getThemeTranslation: (path: string[]) =>
       titleSub: getThemeTranslation(['homepage', 'vbiHero', 'titleSub']),
       button: {
         text: getThemeTranslation(['homepage', 'vbiHero', 'button', 'text']),
-        link: getThemeTranslation(['homepage', 'vbiHero', 'button', 'link']),
+        link: '/',
       },
       banner: {
         image: { mime: 'image/png' },
@@ -34,7 +34,7 @@ export const createVbiHomepageConfig = (getThemeTranslation: (path: string[]) =>
       titleSub: getThemeTranslation(['homepage', 'vbiAchievements', 'titleSub']),
       button: {
         text: getThemeTranslation(['homepage', 'vbiAchievements', 'button', 'text']),
-        link: getThemeTranslation(['homepage', 'vbiAchievements', 'button', 'link']),
+        link: '/',
       },
       achievements: {
         achievement1: {
@@ -194,7 +194,7 @@ export const createVbiHomepageConfig = (getThemeTranslation: (path: string[]) =>
       titleSub: getThemeTranslation(['homepage', 'vbiCourses', 'titleSub']),
       button: {
         text: getThemeTranslation(['homepage', 'vbiCourses', 'button', 'text']),
-        link: getThemeTranslation(['homepage', 'vbiCourses', 'button', 'link']),
+        link: '/',
       },
     },
     order: 2,
@@ -205,7 +205,7 @@ export const createVbiHomepageConfig = (getThemeTranslation: (path: string[]) =>
       titleSub: getThemeTranslation(['homepage', 'vbiCert', 'titleSub']),
       button: {
         text: getThemeTranslation(['homepage', 'vbiCert', 'button', 'text']),
-        link: getThemeTranslation(['homepage', 'vbiCert', 'button', 'link']),
+        link: '/',
       },
       image: { mime: 'image/png' },
     },
@@ -242,7 +242,7 @@ export const createVbiHomepageConfig = (getThemeTranslation: (path: string[]) =>
       titleSub: getThemeTranslation(['homepage', 'vbiBlogs', 'titleSub']),
       button: {
         text: getThemeTranslation(['homepage', 'vbiBlogs', 'button', 'text']),
-        link: getThemeTranslation(['homepage', 'vbiBlogs', 'button', 'link']),
+        link: '/',
       },
     },
     order: 5,
@@ -253,7 +253,7 @@ export const createVbiHomepageConfig = (getThemeTranslation: (path: string[]) =>
       titleSub: getThemeTranslation(['homepage', 'vbiEvents', 'titleSub']),
       button: {
         text: getThemeTranslation(['homepage', 'vbiEvents', 'button', 'text']),
-        link: getThemeTranslation(['homepage', 'vbiEvents', 'button', 'link']),
+        link: '/',
       },
       events: {
         event1: {
@@ -331,7 +331,7 @@ export const createVbiHomepageConfig = (getThemeTranslation: (path: string[]) =>
       titleSub: getThemeTranslation(['homepage', 'vbiMap', 'titleSub']),
       button: {
         text: getThemeTranslation(['homepage', 'vbiMap', 'button', 'text']),
-        link: getThemeTranslation(['homepage', 'vbiMap', 'button', 'link']),
+        link: '/',
       },
     },
     order: 8,
