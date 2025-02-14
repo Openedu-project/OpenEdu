@@ -15,6 +15,7 @@ export type AutocompleteProps<T extends OptionType | string> = BaseAutocompleteP
   showSearch?: boolean;
   value?: T | null;
   onChange?: (option: T | null) => void;
+  isGetCustomValue?: boolean;
 };
 
 export function Autocomplete<T extends OptionType | string>({
@@ -33,6 +34,7 @@ export function Autocomplete<T extends OptionType | string>({
     getOptionLabel(option)?.toLowerCase().includes(searchValue.toLowerCase()),
   renderOption,
   renderTrigger,
+  isGetCustomValue = false,
 }: AutocompleteProps<T>) {
   const t = useTranslations('general');
   const [open, setOpen] = useState(false);
@@ -57,9 +59,9 @@ export function Autocomplete<T extends OptionType | string>({
       setSelectedOption(option);
       setSearchValue('');
       setOpen(false);
-      onChange?.(option);
+      onChange?.(isGetCustomValue ? (getOptionValue(option) as T) : option);
     },
-    [onChange]
+    [onChange, isGetCustomValue, getOptionValue]
   );
 
   const renderCommandItem = useCallback(

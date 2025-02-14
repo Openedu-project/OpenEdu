@@ -90,3 +90,41 @@ export const courseFormSchema = z.object({
 });
 
 export interface ICreateCourse extends z.infer<typeof courseFormSchema> {}
+
+export const courseOutlineSchema = z.object({
+  learner_info: z.string().min(1, { message: 'courses.formValidation.leanerInfo' }),
+  content_info: z.string().min(1, { message: 'courses.formValidation.contentInfo' }),
+  material_file: fileResponseScheme.optional(),
+  level_id: z.string().optional(),
+  language: z.string(),
+  duration_type: z.enum(['day', 'week']),
+  duration: z.preprocess(Number, z.number().min(1, 'courses.formValidation.duration')),
+
+  study_load: z.preprocess(
+    Number,
+    z.number().min(1, 'courses.formValidation.studyLoad').max(24, 'courses.formValidation.studyLoad')
+  ),
+});
+
+export type ICreateAICourseOutline = z.infer<typeof courseOutlineSchema>;
+
+export const courseInfomationSchema = z
+  .object({
+    title: z.string().min(1, 'courses.formValidation.title'),
+    description: z.string().min(20, {
+      message: 'courses.formValidation.courseDescription--minimum:20--maximum:100',
+    }),
+    thumbnail_included: z.boolean().default(false),
+    thumbnail_id: z.string().optional().default(''),
+  })
+  .superRefine(({ thumbnail_included, thumbnail_id }, ctx) => {
+    if (thumbnail_included && thumbnail_id?.length === 0) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['thumbnail_id'],
+        message: 'courses.formValidation.genThumbnail',
+      });
+    }
+  });
+
+export type ICreateAICourseInfo = z.infer<typeof courseInfomationSchema>;
