@@ -33,15 +33,15 @@ export function Footer({ logo, navigationItems, description }: FooterProps) {
       colSpan: 3,
       items: [
         {
-          href: '/become-creator',
+          href: '#',
           label: t('navigation.registration.becomeEducators'),
         },
         {
-          href: '/become-writer',
+          href: '#',
           label: t('navigation.registration.becomeLearners'),
         },
         {
-          href: '/organization',
+          href: '#',
           label: t('navigation.registration.becomeOrganizations'),
         },
       ],
@@ -51,7 +51,7 @@ export function Footer({ logo, navigationItems, description }: FooterProps) {
       colSpan: 3,
       items: [
         { href: '/terms', label: t('navigation.terms.tnc') },
-        { href: '/faq', label: t('navigation.terms.faq') },
+        { href: '#', label: t('navigation.terms.faq') },
       ],
     },
     social: {
