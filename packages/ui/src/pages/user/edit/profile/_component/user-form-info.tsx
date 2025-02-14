@@ -18,46 +18,10 @@ interface IUserFormInfo {
   data: IUserProfile;
 }
 
-// type PlatformIcons = {
-//   [key: string]: JSX.Element;
-// };
-
-// export const platformIcons: PlatformIcons = {
-//   facebook: <Facebook width={20} height={20} color="#2C2C2C" />,
-//   github: <Github color="#2C2C2C" />,
-//   linkedin: <Linkedin width={20} height={20} />,
-//   telegram: <Telegram />,
-//   twitter: <Twitter />,
-//   gmail: <Mail color="#2C2C2C" />,
-//   website: <LinkIcon />,
-// };
-
-// const detectSocialPlatformDetails = (url: string): { platform: TProfilePlatform } => {
-//   const platform = url.includes('facebook.com')
-//     ? 'facebook'
-//     : url.includes('github.com')
-//       ? 'github'
-//       : url.includes('linkedin.com')
-//         ? 'linkedin'
-//         : url.includes('telegram.me') || url.includes('t.me')
-//           ? 'telegram'
-//           : url.includes('twitter.com') || url.includes('x.com')
-//             ? 'x'
-//             : url.includes('gmail.com')
-//               ? 'gmail'
-//               : 'website'; // fallback
-
-//   return {
-//     platform,
-//     // icon: platformIcons[platform] || <LinkIcon />,
-//   };
-// };
-
 const convertData = (urls: string[]): Record<TProfilePlatform, string | undefined> =>
   urls?.reduce(
     (acc: Record<SocialType, string | undefined>, url) => {
       if (url) {
-        // const { platform } = detectSocialPlatformDetails(url);
         const platform = getSocialType(url);
         acc[platform] = url;
       }
@@ -115,25 +79,17 @@ export default function UserFormInfo({ onSubmit, data }: IUserFormInfo) {
               <h4 className="mbutton-semibold16 mb-3">{t('socialNetworks')}</h4>
               {Array.from({ length: 4 }).map((_, index) => {
                 const currentLink = links?.[index] || '';
-                // const currentIcon =
-                //   currentLink.trim() !== '' ? detectSocialPlatformDetails(currentLink).icon : <LinkIcon />;
 
                 return (
                   <FormFieldWithLabel
-                    key={Math.random()}
+                    key={`social-link-${index}`}
                     name={`props.${index}`}
-                    label=""
+                    label={
+                      <SocialIcon iconClassName="h-5 w-5" url={currentLink} iconColor="#2C2C2C" showText={false} />
+                    }
                     className="mb-3 flex w-[95%] items-center gap-3"
                   >
-                    {/* <div className="flex w-full items-center gap-3">
-                      <span className="h-5 w-5">{currentIcon}</span> */}
-                    <Input
-                      placeholder={t('socialLinkPlaceholder')}
-                      prefixIcon={
-                        <SocialIcon iconClassName="h-5 w-5" url={currentLink} iconColor="#2C2C2C" showText={false} />
-                      }
-                    />
-                    {/* </div> */}
+                    <Input placeholder={t('socialLinkPlaceholder')} />
                   </FormFieldWithLabel>
                 );
               })}

@@ -7,7 +7,6 @@ import Mail from '@oe/assets/icons/mail';
 import { abbreviateNumber } from '@oe/core/utils/helpers';
 import { Link } from '#common/navigation';
 import { SocialIcon } from '#components/social-icon';
-// import { platformIcons } from '../edit/profile/_component/user-form-info';
 
 export default function AboutMe({ data }: { data: IUserProfile }) {
   const tProfile = useTranslations('userProfile.profile');
