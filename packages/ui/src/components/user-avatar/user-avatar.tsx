@@ -38,12 +38,12 @@ const getColorPairFromName = (name: string): ColorPair => {
   return PREDEFINED_COLORS[index] ?? DEFAULT_COLOR_PAIR;
 };
 
-export const UserAvatar = ({ src, name, size = 'sm', customColors, ...props }: IUserAvatar) => {
+export const UserAvatar = ({ src, name, size = 'sm', customColors, className, ...props }: IUserAvatar) => {
   const colors = useMemo(() => customColors || getColorPairFromName(name), [customColors, name]);
   const { dimensions, fontClass } = AVATAR_SIZES[size];
 
   return (
-    <div className={cn('relative', dimensions)} {...props}>
+    <div className={cn('relative', dimensions, className)} {...props}>
       {src ? (
         <Image src={src} alt={name ?? 'avatar'} fill className="!h-full absolute top-0 left-0 w-full rounded-full" />
       ) : (

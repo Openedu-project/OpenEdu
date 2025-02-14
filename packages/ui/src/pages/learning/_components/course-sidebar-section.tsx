@@ -63,7 +63,7 @@ const CourseOutline = ({ courseData, activeSection, activeLesson, ...props }: IC
     );
 
   const renderLessons = (section: (typeof sectionsProgressData)[0]) => {
-    return section.lessons?.sort(sortByOrder)?.map(lesson => {
+    return section.lessons?.sort(sortByOrder)?.map((lesson, index) => {
       const completedLesson = lesson?.completed_lesson_content ?? 0;
       const totalLesson = lesson?.total_lesson_content ?? 0;
 
@@ -81,7 +81,7 @@ const CourseOutline = ({ courseData, activeSection, activeLesson, ...props }: IC
         courseData && (
           <OutlineLesson
             key={lesson.id}
-            index={lesson.order + 1}
+            index={index + 1}
             completedPercentage={completedPercentage}
             courseSlug={courseData?.slug}
             sectionUid={section.uid}
