@@ -4,14 +4,12 @@ import { z } from '#utils/zod';
 export const rejectLaunchpadSchema = z.object({
   note: z.string().min(1, 'adminLaunchpadRequest.rejectModal.errors.isRequired'),
 });
-export type IRejectLaunchpadSchemaType = z.infer<typeof rejectLaunchpadSchema>;
 
 export const startFundingSchema = z.object({
   funding_start_date: z.date({
     invalid_type_error: 'adminLaunchpadRequest.startFundingModal.errors.isValidDate',
   }),
 });
-export type IStartFundingSchemaType = z.infer<typeof startFundingSchema>;
 
 export const generalInfoLaunchpadSchema = z.object({
   description: z.string().optional(),
