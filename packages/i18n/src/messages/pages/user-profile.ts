@@ -7,7 +7,7 @@ export const userProfileMessages = {
       more: 'More',
       seeLess: 'See less',
       organization: 'Organization',
-      creator: 'Creator',
+      educator: 'Educator',
       admin: 'Admin',
       writer: 'Writer',
       editor: 'Editor',
