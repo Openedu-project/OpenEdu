@@ -7,7 +7,7 @@ import type { IUser, IUserRoleInOrg, IUserSettingsOption } from './user';
 
 export type TSettingsType = 'courses' | 'blogs' | 'certificates';
 
-export type TProfilePlatform = 'facebook' | 'github' | 'linkedin' | 'telegram' | 'twitter' | 'gmail' | 'website';
+export type TProfilePlatform = 'facebook' | 'github' | 'linkedin' | 'telegram' | 'x' | 'gmail' | 'website';
 
 export interface IMeSettingContent<T> {
   is_show: boolean;

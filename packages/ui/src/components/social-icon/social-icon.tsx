@@ -1,3 +1,4 @@
+import LinkIcon from '@oe/assets/icons/link';
 import Mail from '@oe/assets/icons/mail';
 import Discord from '@oe/assets/icons/social-icon/discord';
 import Facebook from '@oe/assets/icons/social-icon/facebook';
@@ -7,7 +8,6 @@ import Telegram from '@oe/assets/icons/social-icon/telegram';
 import Twitter from '@oe/assets/icons/social-icon/twitter';
 import Zalo from '@oe/assets/icons/social-icon/zalo';
 import { EMAIL_REGEX } from '@oe/core/utils/constants';
-import { Link as LinkIcon } from 'lucide-react';
 import type React from 'react';
 import { Link } from '#common/navigation';
 import { cn } from '#utils/cn';
@@ -19,13 +19,15 @@ const HTTP_PREFIX = 'https://';
 
 const ICON_MAP: Record<SocialType, React.ComponentType<IconProps>> = {
   email: Mail,
+  gmail: Mail,
   facebook: Facebook,
   telegram: Telegram,
-  twitter: Twitter,
+  x: Twitter,
   zalo: Zalo,
   discord: Discord,
   linkedin: Linkedin,
   github: Github,
+  website: LinkIcon,
   other: LinkIcon,
 };
 
@@ -42,7 +44,7 @@ export const getSocialType = (url: string): SocialType => {
     }
   }
 
-  return 'other';
+  return 'website';
 };
 
 type UrlFormat = {
@@ -71,15 +73,17 @@ export const formatUrl = (url: string, type: SocialType, shortenedLink: boolean)
 
 export const getSocialIcon = (type: SocialType, props: IconProps) => {
   const Icon = ICON_MAP[type] || ICON_MAP.other;
-  return <Icon {...props} className="h-4 w-4" />;
+  return <Icon {...props} className={cn('h-4 w-4', props?.className)} />;
 };
 
 export const SocialIcon: React.FC<SocialIconLinkProps> = ({
   url,
   children,
   className,
+  showText = true,
   iconSize = 24,
   iconColor,
+  iconClassName,
   linkClassName = 'text-foreground/90 ml-3 line-clamp-1',
   shortenedLink = false,
 }) => {
@@ -91,16 +95,19 @@ export const SocialIcon: React.FC<SocialIconLinkProps> = ({
     width: iconSize,
     height: iconSize,
     color: iconColor,
+    className: iconClassName,
   };
 
   return (
     <div className={cn('flex items-center', className)}>
       {getSocialIcon(socialType, iconProps)}
-      {children ?? (
-        <Link href={linkUrl} target="_blank" rel="noopener noreferrer" className={cn(linkClassName, 'h-fit')}>
-          {displayUrl}
-        </Link>
-      )}
+      {showText
+        ? (children ?? (
+            <Link href={linkUrl} target="_blank" rel="noopener noreferrer" className={cn(linkClassName, 'h-fit')}>
+              {displayUrl}
+            </Link>
+          ))
+        : null}
     </div>
   );
 };

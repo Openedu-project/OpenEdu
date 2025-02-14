@@ -1,3 +1,5 @@
-import { SocialIcon } from './social-icon';
+import { SocialIcon, getSocialType } from './social-icon';
 
-export { SocialIcon };
+import type { SocialType } from './types';
+
+export { SocialIcon, getSocialType, type SocialType };
