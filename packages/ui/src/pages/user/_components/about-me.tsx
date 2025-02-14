@@ -6,7 +6,7 @@ import Global from '@oe/assets/icons/global';
 import Mail from '@oe/assets/icons/mail';
 import { abbreviateNumber } from '@oe/core/utils/helpers';
 import { Link } from '#common/navigation';
-import { platformIcons } from '../edit/profile/_component/user-form-info';
+import { SocialIcon } from '#components/social-icon';
 
 export default function AboutMe({ data }: { data: IUserProfile }) {
   const tProfile = useTranslations('userProfile.profile');
@@ -35,7 +35,7 @@ export default function AboutMe({ data }: { data: IUserProfile }) {
         </Link>
 
         {Object.entries(props).map(([key, value]) => {
-          if (value && platformIcons[key] && key !== 'website') {
+          if (value && key !== 'website') {
             return (
               <Link
                 href={value}
@@ -43,7 +43,7 @@ export default function AboutMe({ data }: { data: IUserProfile }) {
                 className="flex items-center text-sm transition duration-100"
                 key={key}
               >
-                {platformIcons[key]}
+                <SocialIcon url={value} iconClassName="h-5 w-5" showText={false} iconColor="#2C2C2C" />
               </Link>
             );
           }
