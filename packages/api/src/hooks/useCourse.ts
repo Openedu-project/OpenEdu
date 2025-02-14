@@ -7,11 +7,11 @@ import {
   getCoursesPublishService,
   getCoursesService,
   getLevelsService,
-  getSegmentByIdService,
-  getSegmentsService,
   getPreviewCourseByIdService,
   getPublishedCourseByAdminService,
   getSectionsHaveLessonsByCourseIdService,
+  getSegmentByIdService,
+  getSegmentsService,
   postEnrollCourseService,
   putEnableCourseService,
 } from '#services/course';
@@ -178,7 +178,7 @@ export const useGetSegmentById = (id: string) => {
     mutateSegment: mutate,
     isLoadingSegment: isLoading,
   };
-}
+};
 export const usePutEnableCourse = () => {
   const { trigger, error, isMutating } = useSWRMutation(
     API_ENDPOINT.COURSES_ID_STAGE,

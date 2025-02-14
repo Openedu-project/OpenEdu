@@ -1,8 +1,8 @@
 'use client';
 
+import type { IAICourseStatus } from '@oe/api/types/course/ai-course';
 import type { ICourse } from '@oe/api/types/course/course';
 import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { CREATOR_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
 import { Link, useRouter } from '@oe/ui/common/navigation';
@@ -15,7 +15,7 @@ import { CourseOutlineForm } from './course-outline-form';
 
 export function SettingCourseOutline({ course }: { course: ICourse | null }) {
   const tAICourse = useTranslations('courses.aiCourse');
-  const [status, setStatus] = useState<IAIStatus>();
+  const [status, setStatus] = useState<IAICourseStatus>();
   const [openStatusModal, setOpenStatusModal] = useState<boolean>(false);
   const { AICourseStatusData, resetSocketData } = useSocketStore();
   const router = useRouter();
@@ -27,9 +27,9 @@ export function SettingCourseOutline({ course }: { course: ICourse | null }) {
     }
     const { ai_course } = course;
 
-    if (GENERATING_STATUS.includes(ai_course?.general_info_status as IAIStatus)) {
+    if (ai_course?.general_info_status !== 'completed') {
       setOpenStatusModal(true);
-      setStatus(ai_course?.status);
+      setStatus(ai_course?.general_info_status);
     }
   }, [course]);
 
@@ -67,6 +67,14 @@ export function SettingCourseOutline({ course }: { course: ICourse | null }) {
                 <p className="mcaption-regular14">{tAICourse('loadingMessage')}</p>
                 <Link variant="outline" target="_blank" href={CREATOR_ROUTES.courses}>
                   {tAICourse('openNewTab')}
+                </Link>
+              </>
+            ),
+            failed: (
+              <>
+                <p className="mcaption-regular14">{tAICourse('failedMessage')}</p>
+                <Link variant="outline" href={CREATOR_ROUTES.courses}>
+                  {tAICourse('back')}
                 </Link>
               </>
             ),

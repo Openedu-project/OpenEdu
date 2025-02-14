@@ -137,6 +137,7 @@ export const coursesMessages = {
       addLesson: 'Add new lesson',
     },
     aiCourse: {
+      aiCreation: 'AI Creation',
       courseOutline: 'Course Outline',
       generalInfo: 'General Information',
       setupCourseOutline: 'Set Up Course Outline',
@@ -166,6 +167,8 @@ export const coursesMessages = {
       aiCreateError: 'Error create AI course',
       loadingMessage: "Stay Still. We're about to bring you something amazing.",
       openNewTab: 'Open New Tab To Work',
+      failedMessage: 'Fail Loading',
+      back: 'Back',
     },
   },
 };

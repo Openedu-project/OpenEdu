@@ -34,8 +34,9 @@ export function SettingCourseInfomation({
     const { ai_course } = course;
 
     if (
-      GENERATING_STATUS.includes(ai_course?.status as IAICourseStatus) &&
-      !GENERATING_STATUS.includes(course?.ai_course?.thumbnail_status ?? '')
+      (GENERATING_STATUS.includes(ai_course?.status as IAICourseStatus) &&
+        !GENERATING_STATUS.includes(course?.ai_course?.thumbnail_status ?? '')) ||
+      ai_course?.status !== 'waiting'
     ) {
       handleOpenStatusModal(ai_course?.status ?? 'pending');
     }
@@ -45,9 +46,13 @@ export function SettingCourseInfomation({
     if (AICourseStatusData && AICourseStatusData.data?.course_id === course?.id) {
       setStatus(AICourseStatusData.data?.status as IAICourseStatus);
 
-      if (AICourseStatusData.data?.status === 'completed') {
-        globalMutate((key: string) => !!key?.includes(API_ENDPOINT.COURSES), undefined, { revalidate: false });
+      globalMutate(
+        (key: string) => !!key?.includes(API_ENDPOINT.COURSES) && !key?.includes(`${API_ENDPOINT.COURSES}/`),
+        undefined,
+        { revalidate: false }
+      );
 
+      if (AICourseStatusData.data?.status === 'completed') {
         router.push(
           buildUrl({
             endpoint: CREATOR_ROUTES.courseSettingUp,
@@ -82,7 +87,21 @@ export function SettingCourseInfomation({
       {course && (
         <>
           <CourseInfoForm className="py-4" course={course} handleSubmit={handleOpenStatusModal} />
-          <AIStatusModal status={status} open={openStatusModal} title={tAICourse('aiGenerateLoading')} />
+          <AIStatusModal
+            status={status}
+            open={openStatusModal}
+            title={tAICourse('aiGenerateLoading')}
+            content={{
+              failed: (
+                <>
+                  <p className="mcaption-regular14">{tAICourse('failedMessage')}</p>
+                  <Link variant="outline" href={CREATOR_ROUTES.courses}>
+                    {tAICourse('back')}
+                  </Link>
+                </>
+              ),
+            }}
+          />
         </>
       )}
     </div>

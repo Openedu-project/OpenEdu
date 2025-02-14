@@ -33,10 +33,6 @@ export function CourseOutlineForm({
   const router = useRouter();
 
   const generating = useMemo(() => GENERATING_STATUS.includes(course?.ai_course?.general_info_status ?? ''), [course]);
-  const disabledButton = useMemo(
-    () => ['completed', 'waiting', 'failed'].includes(course?.ai_generate_status ?? ''),
-    [course]
-  );
 
   const defaultValues = useMemo(() => {
     const locale = getCookieClient(process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY) ?? 'en';
@@ -125,7 +121,7 @@ export function CourseOutlineForm({
             <Button
               type="button"
               variant="outline"
-              disabled={disabledButton || generating}
+              disabled={!!course?.id || generating}
               onClick={() => {
                 form.reset();
               }}
@@ -134,7 +130,7 @@ export function CourseOutlineForm({
             </Button>
             <Button
               type="submit"
-              disabled={disabledButton || generating}
+              disabled={!!course?.id || generating}
               loading={form.formState.isSubmitting || generating}
             >
               {form.formState.isSubmitting || generating ? tGeneral('generating') : tGeneral('generate')}
