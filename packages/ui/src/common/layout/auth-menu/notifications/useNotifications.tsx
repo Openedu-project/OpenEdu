@@ -1,7 +1,7 @@
 import { useGetNotification, useUpdateNotification } from '@oe/api/hooks/useNotification';
 import type { INotificationItem } from '@oe/api/types/notification';
 import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { CREATOR_ROUTES } from '@oe/core/utils/routes';
+import { ADMIN_ROUTES, BLOG_ROUTES, CREATOR_ROUTES, PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useState } from 'react';
@@ -134,12 +134,13 @@ export function useNotifications() {
   const redirectLink = useCallback(
     (notification: INotificationItem) => {
       switch (notification.code) {
+        // Course (0-99)
         case 1:
         case 3:
           routes.push(
             buildUrl({
               endpoint: CREATOR_ROUTES.courseHistory,
-              params: { id: notification.props?.course_id },
+              params: { courseId: notification.props?.course_id },
             })
           );
           break;
@@ -147,9 +148,44 @@ export function useNotifications() {
           routes.push('#');
           break;
         case 5:
-          routes.push('#');
+        case 6:
+        case 14:
+        case 15:
+          routes.push(CREATOR_ROUTES.courses);
           break;
+        case 7:
+          routes.push(ADMIN_ROUTES.coursesReviewing);
+          break;
+        case 11:
+        case 13:
+          routes.push(
+            buildUrl({
+              endpoint: CREATOR_ROUTES.courseSettingUp,
+              params: { courseId: notification.props?.course_id },
+            })
+          );
+          break;
+        case 12:
+          routes.push(
+            buildUrl({
+              endpoint: PLATFORM_ROUTES.courseDetail,
+              params: { slug: notification.props?.course_slug },
+            })
+          );
+          break;
+
+        // Blog (100-199)
+        case 100:
+          routes.push(
+            buildUrl({
+              endpoint: BLOG_ROUTES.blogDetail,
+              params: { slug: notification.props?.blog_slug },
+            })
+          );
+          break;
+
         default:
+          routes.push('#');
           break;
       }
     },
