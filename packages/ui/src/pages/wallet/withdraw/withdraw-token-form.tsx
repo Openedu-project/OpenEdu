@@ -6,7 +6,7 @@ import { NETWORK_OPTIONS, TOKEN_OPTIONS } from '@oe/api/utils/wallet';
 import { formatCurrency } from '@oe/core/utils/currency';
 import { FormWrapper } from '@oe/ui/components/form-wrapper';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
 import { toast } from 'sonner';
 import { InputNumber } from '#components/input-number';
@@ -21,29 +21,40 @@ export const WithdrawTokenForm = () => {
   const t = useTranslations('wallets');
   const tError = useTranslations('errors');
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handlePostWithdrawToken = async (form: UseFormReturn<ICryptoWithdrawPayload>) => {
-    try {
-      const data = form.getValues();
-      const walletId = wallets?.find(wallet => wallet.network === data.network)?.id;
-      if (!walletId) {
-        toast.error(t('form.error.invalidWallet'));
-        return;
+  const handlePostWithdrawToken = useCallback(
+    async (form: UseFormReturn<ICryptoWithdrawPayload>) => {
+      setIsLoading(true);
+      try {
+        const data = form.getValues();
+        const allWallets = [...(wallets ?? [])];
+
+        const walletId = allWallets?.find(wallet => wallet.network.toLowerCase() === data.network.toLowerCase())?.id;
+        if (!walletId) {
+          toast.error(t('form.error.invalidWallet'));
+          return;
+        }
+        await tokenSubmitWithdrawService(null, walletId, {
+          payload: {
+            ...data,
+            network: data.network.toLowerCase(),
+            currency: data.token,
+            is_mainnet: process.env.NODE_ENV !== 'development',
+          },
+        });
+        await mutateWallets();
+        toast.success(t('withdrawPage.form.tokenSuccess'));
+        form.reset();
+        setIsLoading(false);
+      } catch (error) {
+        toast.error(tError((error as HTTPError).message));
+        setIsLoading(false);
       }
-      await tokenSubmitWithdrawService(null, walletId, {
-        payload: {
-          ...data,
-          is_mainnet: process.env.NODE_ENV !== 'development',
-        },
-      });
-      await mutateWallets();
-      toast.success(t('wallets.withdrawPage.form.tokenSuccess'));
-      form.reset();
-    } catch (error) {
-      toast.error(tError((error as HTTPError).message));
-    }
-    setIsOpen(false);
-  };
+      setIsOpen(false);
+    },
+    [t, tError, wallets, mutateWallets]
+  );
 
   return (
     <FormWrapper id="withdraw-token" schema={cryptoWithdrawSchema} onSubmit={() => setIsOpen(true)}>
@@ -138,6 +149,7 @@ export const WithdrawTokenForm = () => {
                 {
                   label: t('withdrawPage.button.confirm'),
                   type: 'button',
+                  loading: isLoading,
                   onClick: () => handlePostWithdrawToken(form),
                 },
               ]}
