@@ -17,7 +17,7 @@ export const notificationMessage = {
       'You have been added as a <strong>{collaborator}</strong> to the course <strong>{course_name}</strong> by <strong>{user_name}</strong>.',
     code6: 'You have been removed as a <strong>{collaborator}</strong> from the course <strong>{course_name}</strong>.',
     code7:
-      'A new request to publish the course <strong>{course_name}</strong> has been submitted by creator <strong>{user_name}</strong>.',
+      'A new request to publish the course <strong>{course_name}</strong> has been submitted by educator <strong>{user_name}</strong>.',
     code8: '',
     code9: '',
     code10: '',
@@ -59,7 +59,7 @@ export const notificationMessage = {
 
     // Launchpad (700-799)
     code700:
-      'New review required: Creator <strong>{user_name}</strong> submitted <strong>{launchpad_name}</strong> launchpad.',
+      'New review required: Educator <strong>{user_name}</strong> submitted <strong>{launchpad_name}</strong> launchpad.',
     code701: '<strong>{launchpad_name}</strong> launchpad approved! Ready for funding setup 🚀.',
     code702: '<strong>{launchpad_name}</strong> launchpad request rejected. Updates needed before publishing.',
   },

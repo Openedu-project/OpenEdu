@@ -2,7 +2,7 @@ import { useWallet } from '@oe/api/hooks/useWallet';
 import { type ICryptoWithdrawPayload, cryptoWithdrawSchema } from '@oe/api/schemas/withdrawSchema';
 import { tokenSubmitWithdrawService } from '@oe/api/services/wallet';
 import type { HTTPError } from '@oe/api/utils/http-error';
-import { NETWORK_OPTIONS, TOKEN_OPTIONS } from '@oe/api/utils/wallet';
+import { CURRENCY_SYMBOLS, NETWORK_OPTIONS, TOKEN_OPTIONS } from '@oe/api/utils/wallet';
 import { formatCurrency } from '@oe/core/utils/currency';
 import { FormWrapper } from '@oe/ui/components/form-wrapper';
 import { useTranslations } from 'next-intl';
@@ -15,6 +15,18 @@ import { Selectbox } from '#components/selectbox';
 import { Button } from '#shadcn/button';
 import { FormFieldWithLabel } from '#shadcn/form';
 import { Input } from '#shadcn/input';
+
+export const calculateAvailableBalance = (token: string, balance: string): string => {
+  let availableBalance = Number.parseFloat(balance);
+
+  if (token.toLowerCase() === CURRENCY_SYMBOLS.NEAR.toLowerCase()) {
+    availableBalance = Math.max(0, availableBalance - 0.05);
+  } else if (token.toLowerCase() === CURRENCY_SYMBOLS.AVAIL.toLowerCase()) {
+    availableBalance = Math.max(0, availableBalance - 0.13);
+  }
+
+  return availableBalance.toFixed(5);
+};
 
 export const WithdrawTokenForm = () => {
   const { wallets, mutateWallets } = useWallet();
@@ -62,7 +74,10 @@ export const WithdrawTokenForm = () => {
         const { watch } = form;
         const network = watch('network');
         const tokenOptions = TOKEN_OPTIONS[network] ?? [];
-        const availableBalance = Number(wallets?.find(wallet => wallet.network === network)?.balance || '0');
+        const currentWallet = wallets?.find(wallet => wallet.network.toLowerCase() === network.toLowerCase());
+
+        const availableBalance = calculateAvailableBalance(currentWallet?.network ?? '', currentWallet?.balance ?? '0');
+
         return (
           <>
             <FormFieldWithLabel
@@ -123,7 +138,7 @@ export const WithdrawTokenForm = () => {
               />
               <p className="text-muted-foreground text-sm">
                 {t('withdrawPage.form.available')}
-                {formatCurrency(availableBalance, { showSymbol: false })}
+                {availableBalance}
               </p>
             </div>
             <Button type="submit" className="w-full">
