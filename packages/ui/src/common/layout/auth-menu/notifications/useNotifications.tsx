@@ -1,14 +1,18 @@
 import { useGetNotification, useUpdateNotification } from '@oe/api/hooks/useNotification';
 import type { INotificationItem } from '@oe/api/types/notification';
 import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
+import { CREATOR_ROUTES } from '@oe/core/utils/routes';
+import { buildUrl } from '@oe/core/utils/url';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import { useRouter } from '#common/navigation';
 import { useSocketStore } from '#store/socket';
 
 export function useNotifications() {
   const [page, setPage] = useState(1);
   const tError = useTranslations('errors');
+  const routes = useRouter();
 
   const [notifications, setNotifications] = useState<INotificationItem[]>([]);
   const [hasMore, setHasMore] = useState(true);
@@ -59,7 +63,7 @@ export function useNotifications() {
   }, [hasMore, isLoadingNotifications]);
 
   const markAsRead = useCallback(
-    async (id: string) => {
+    async (id: string, notification: INotificationItem) => {
       try {
         await triggerUpdateNotification({
           ids: [id],
@@ -84,6 +88,7 @@ export function useNotifications() {
           },
           { revalidate: false }
         );
+        redirectLink(notification);
       } catch (error) {
         console.error('Failed to mark notification as read:', error);
         toast.error(tError((error as HTTPErrorMetadata).code.toString()));
@@ -125,6 +130,31 @@ export function useNotifications() {
       toast.error(tError((error as HTTPErrorMetadata).code.toString()));
     }
   }, [tError, triggerUpdateNotification, mutateNotificationList]);
+
+  const redirectLink = useCallback(
+    (notification: INotificationItem) => {
+      switch (notification.code) {
+        case 1:
+        case 3:
+          routes.push(
+            buildUrl({
+              endpoint: CREATOR_ROUTES.courseHistory,
+              params: { id: notification.props?.course_id },
+            })
+          );
+          break;
+        case 4:
+          routes.push('#');
+          break;
+        case 5:
+          routes.push('#');
+          break;
+        default:
+          break;
+      }
+    },
+    [routes]
+  );
 
   return {
     notifications,

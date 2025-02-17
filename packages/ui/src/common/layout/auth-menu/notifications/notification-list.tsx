@@ -68,7 +68,7 @@ export function NotificationList() {
 
 interface NotificationRowProps {
   notification: INotificationItem;
-  onMarkAsRead: (id: string) => void;
+  onMarkAsRead: (id: string, notification: INotificationItem) => void;
 }
 
 function NotificationRow({ notification, onMarkAsRead }: NotificationRowProps) {
@@ -76,10 +76,10 @@ function NotificationRow({ notification, onMarkAsRead }: NotificationRowProps) {
 
   return (
     <div
-      onClick={() => onMarkAsRead(notification.id)}
+      onClick={() => onMarkAsRead(notification.id, notification)}
       onKeyUp={e => {
         if (e.key === 'Enter' || e.key === ' ') {
-          onMarkAsRead(notification.id);
+          onMarkAsRead(notification.id, notification);
         }
       }}
       className={cn(
@@ -97,6 +97,7 @@ function NotificationRow({ notification, onMarkAsRead }: NotificationRowProps) {
           user_name: notification?.props?.username ?? '',
           blog_name: notification?.props?.blog_title ?? '',
           display_name: notification?.props?.display_name ?? '',
+          launchpad_name: notification?.props?.launchpad_name ?? '',
           amount: formatCurrency(String(Number.parseFloat(notification?.props?.amount ?? '') ?? 0)) ?? '',
           currency: notification?.props?.currency ?? '',
           collaborator: notification?.props?.course_roles?.join(', ') ?? '',

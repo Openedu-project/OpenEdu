@@ -1,4 +1,5 @@
 import type { HTTPPagination } from './fetch';
+import type { IUser } from './user';
 
 export interface INotificationItem {
   id: string;
@@ -25,9 +26,19 @@ export interface INotificationItem {
     course_roles?: string[];
     user_id?: string;
     username?: string;
+    user_name?: string;
     amount?: string;
     currency?: string;
     provider?: 'youtube_playlist' | 'learner_description';
+    collaborator?: string;
+    email?: string;
+    fullname?: string;
+    user?: IUser;
+    approval_id?: string;
+    launchpad_id?: string;
+    launchpad_name?: string;
+    launchpad_slug?: string;
+    token?: string;
   };
   create_at: number;
   update_at: number;

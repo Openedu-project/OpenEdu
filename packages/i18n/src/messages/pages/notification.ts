@@ -56,5 +56,11 @@ export const notificationMessage = {
 
     // Avail Retroactive (400-499)
     code400: '',
+
+    // Launchpad (700-799)
+    code700:
+      'New review required: Creator <strong>{user_name}</strong> submitted <strong>{launchpad_name}</strong> launchpad.',
+    code701: '<strong>{launchpad_name}</strong> launchpad approved! Ready for funding setup 🚀.',
+    code702: '<strong>{launchpad_name}</strong> launchpad request rejected. Updates needed before publishing.',
   },
 } as const;
