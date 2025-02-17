@@ -80,7 +80,7 @@ const MenuToggleGroup: React.FC<MenuToggleGroupProps> = ({ selectedThemeConfigKe
       // onValueChange={onMenuChange}
     >
       {toggleOptions.map(({ value, label, icon: Icon, ariaLabel, href }) => (
-        <Link href={href} className="flex gap-1 border-none p-0 text-accent-foreground hover:no-underline" key={value}>
+        <Link href={href} className="flex gap-1 border-none p-0 text-accent hover:no-underline" key={value}>
           <ToggleGroupItem
             key={value}
             value={value}

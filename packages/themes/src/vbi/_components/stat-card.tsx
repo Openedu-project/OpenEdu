@@ -48,15 +48,15 @@ const StatCard = ({ value, label, className, variant = 'default' }: StatCardProp
     <div
       className={cn(
         'mb-2 font-bold text-md text-primary md:text-lg lg:text-3xl',
-        variant === 'primary' && 'text-background'
+        variant === 'primary' && 'text-accent'
       )}
     >
       {value ? formatCompactNumber(value) : 0}
     </div>
     <div
       className={cn(
-        'max-w-[160px] text-foreground/80 text-sm uppercase tracking-wider lg:max-w-[200px]',
-        variant === 'primary' && 'text-background'
+        'max-w-[160px] text-primary text-sm uppercase tracking-wider lg:max-w-[200px]',
+        variant === 'primary' && 'text-accent'
       )}
     >
       {label}

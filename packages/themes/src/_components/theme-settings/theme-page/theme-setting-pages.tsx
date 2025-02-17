@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import type {
   AllSectionKeys,
@@ -11,16 +11,21 @@ import type {
   ThemeName,
   ThemePageKey,
   ThemeSidebarPageKey,
-} from '@oe/themes/types/index';
-import { MainLayoutClient } from '@oe/ui/common/layout';
-import { SmartPreview } from '@oe/ui/components/smart-preview';
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@oe/ui/shadcn/resizable';
-import { useTranslations } from 'next-intl';
-import { useCallback, useState } from 'react';
-import { defaultThemeSystemConfig } from '../../../_config/initial';
-import ThemeConfigMetadata from '../theme-metadata';
-import { PreviewPanel } from './theme-preview-panel';
-import { SettingsPanel } from './theme-setting-panel';
+} from "@oe/themes/types/index";
+import { SmartPreview } from "@oe/ui/components/smart-preview";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@oe/ui/shadcn/resizable";
+import { useTranslations } from "next-intl";
+import { useCallback, useState } from "react";
+import { defaultThemeSystemConfig } from "../../../_config/initial";
+import { initialThemeGlobal } from "../../../_config/theme-global-initial";
+import ThemeConfigMetadata from "../theme-metadata";
+import ThemeLayout from "./theme-layout";
+import { PreviewPanel } from "./theme-preview-panel";
+import { SettingsPanel } from "./theme-setting-panel";
 
 export interface ThemeContentProps {
   isLoading: boolean;
@@ -42,26 +47,38 @@ export default function ThemeSettingPages({
   themeConfig,
   onSubmit,
 }: ThemeContentProps) {
-  const tThemeConfig = useTranslations('themePage');
-  const currentPath = ['themePage', themeName, selectedPage];
-  const pageConfig = themeConfig?.pages || defaultThemeSystemConfig(tThemeConfig)?.availableThemes?.[themeName]?.pages;
+  const tThemeConfig = useTranslations("themePage");
+  const currentPath = ["themePage", themeName, selectedPage];
+  const pageConfig =
+    themeConfig?.pages ||
+    defaultThemeSystemConfig(tThemeConfig)?.availableThemes?.[themeName]?.pages;
   const defaultConfigSections =
-    defaultThemeSystemConfig(tThemeConfig)?.availableThemes?.[themeName]?.pages?.[selectedPage]?.config;
+    defaultThemeSystemConfig(tThemeConfig)?.availableThemes?.[themeName]
+      ?.pages?.[selectedPage]?.config;
   const currentPages = themeConfig?.pages?.[selectedPage];
 
-  const [stateConfigSections, setStateConfigSections] = useState<PageSectionConfigs<typeof selectedPage>>();
-  const [loadingStates, setLoadingStates] = useState<Partial<Record<SectionsByPage[typeof selectedPage], boolean>>>({});
+  const [stateConfigSections, setStateConfigSections] =
+    useState<PageSectionConfigs<typeof selectedPage>>();
+  const [loadingStates, setLoadingStates] = useState<
+    Partial<Record<SectionsByPage[typeof selectedPage], boolean>>
+  >({});
 
-  const [selectedSectionKey, setSelectedSectionKey] = useState<AllSectionKeys>();
+  const [selectedSectionKey, setSelectedSectionKey] =
+    useState<AllSectionKeys>();
 
   const handleApplyPreview = useCallback(
-    async (val: PageSectionConfig<typeof selectedPage>, sectionKey: SectionsByPage[typeof selectedPage]) => {
-      setLoadingStates(prev => ({ ...prev, [sectionKey]: true }));
+    async (
+      val: PageSectionConfig<typeof selectedPage>,
+      sectionKey: SectionsByPage[typeof selectedPage]
+    ) => {
+      setLoadingStates((prev) => ({ ...prev, [sectionKey]: true }));
       try {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setStateConfigSections(prev => (prev ? { ...prev, ...val } : { ...currentPages?.config, ...val }));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        setStateConfigSections((prev) =>
+          prev ? { ...prev, ...val } : { ...currentPages?.config, ...val }
+        );
       } finally {
-        setLoadingStates(prev => ({ ...prev, [sectionKey]: false }));
+        setLoadingStates((prev) => ({ ...prev, [sectionKey]: false }));
       }
     },
     [currentPages]
@@ -70,9 +87,11 @@ export default function ThemeSettingPages({
   const handleReset = useCallback(
     (sectionKey: SectionsByPage[typeof selectedPage]) => {
       // Get the original default configuration for the section
-      const defaultSectionConfig = deepClone(currentPages?.config?.[sectionKey]);
+      const defaultSectionConfig = deepClone(
+        currentPages?.config?.[sectionKey]
+      );
 
-      setStateConfigSections(prev => {
+      setStateConfigSections((prev) => {
         if (!prev) {
           return prev;
         }
@@ -87,6 +106,9 @@ export default function ThemeSettingPages({
 
   const handleSubmitConfig = useCallback(
     (configSections: PageSectionConfigs<ThemePageKey>) => {
+      console.log("configSections", configSections);
+      console.log("stateConfigSections", stateConfigSections);
+
       onSubmit({
         ...themeConfig,
         pages: {
@@ -117,13 +139,21 @@ export default function ThemeSettingPages({
     [themeConfig, selectedPage, pageConfig, onSubmit]
   );
 
-  if (selectedSidebarPageKey !== 'theme') {
-    return <ThemeConfigMetadata data={pageConfig?.[selectedPage]?.metadata} onSubmit={handleSubmitMetadata} />;
+  if (selectedSidebarPageKey !== "theme") {
+    return (
+      <ThemeConfigMetadata
+        data={pageConfig?.[selectedPage]?.metadata}
+        onSubmit={handleSubmitMetadata}
+      />
+    );
   }
 
   return (
     <>
-      <ResizablePanelGroup direction="horizontal" className="flex h-full w-full">
+      <ResizablePanelGroup
+        direction="horizontal"
+        className="flex h-full w-full"
+      >
         <ResizablePanel defaultSize={25}>
           <SettingsPanel
             currentPath={currentPath}
@@ -143,8 +173,10 @@ export default function ThemeSettingPages({
         </ResizablePanel>
         <ResizableHandle />
         <ResizablePanel defaultSize={75}>
-          <SmartPreview>
-            <MainLayoutClient>
+          <SmartPreview
+            themeGlobal={themeConfig?.globals ?? initialThemeGlobal}
+          >
+            <ThemeLayout themeDefinition={themeConfig} themeName={themeName}>
               <PreviewPanel
                 themeName={themeName}
                 selectedPage={selectedPage}
@@ -153,7 +185,7 @@ export default function ThemeSettingPages({
                 stateConfigSections={stateConfigSections}
                 currentConfigSections={currentPages?.config}
               />
-            </MainLayoutClient>
+            </ThemeLayout>
           </SmartPreview>
         </ResizablePanel>
       </ResizablePanelGroup>

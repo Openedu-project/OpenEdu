@@ -1,10 +1,10 @@
-import { Header } from '@oe/ui/common/layout/header';
+import { Header } from "@oe/ui/common/layout/header";
 
-import { SidebarProvider, SidebarTrigger } from '@oe/ui/shadcn/sidebar';
+import { SidebarProvider, SidebarTrigger } from "@oe/ui/shadcn/sidebar";
 
-import ThemeHeaderContent from '@oe/themes/_components/theme-header/theme-header-content';
-import type { ReactNode } from 'react';
-import OutlineThemeSidebar from './outline-theme-sidebar';
+import ThemeHeaderContent from "@oe/themes/_components/theme-header/theme-header-content";
+import type { ReactNode } from "react";
+import OutlineThemeSidebar from "./outline-theme-sidebar";
 
 export default function ThemeLayout({ children }: { children: ReactNode }) {
   return (
@@ -18,7 +18,6 @@ export default function ThemeLayout({ children }: { children: ReactNode }) {
 
       <SidebarProvider className="p-0">
         <OutlineThemeSidebar />
-
         <main className="mt-[var(--header-height)] w-full overflow-hidden rounded-lg bg-background p-4 ">
           <SidebarTrigger />
           {children}

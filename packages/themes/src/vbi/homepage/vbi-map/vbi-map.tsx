@@ -16,7 +16,7 @@ const VbiHomepageMap: SectionComponent<'homepage', 'vbiMap'> = ({ className, t }
   }
 
   return (
-    <div className={cn('relative h-[500px] bg-muted lg:[672px]', className)}>
+    <div className={cn('relative h-[500px] bg-foreground lg:[672px]', className)}>
       <div className="container mx-auto flex h-full items-center justify-start px-4 py-14 md:p-8 lg:px-12">
         <InfoSection
           title={t('title')}
