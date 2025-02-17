@@ -133,8 +133,8 @@ export function parseThemePath(pathname: string): ThemeParams {
   return {
     themeName: segments[themesIndex + 1] as ThemeName,
     themeConfig: segments[themesIndex + 2] as ThemeConfigKey,
-    groupSettingKey: segments[themesIndex + 3] as AllGroupSidebarKeys | AllSidebarKeys,
-    itemSettingKey: segments[themesIndex + 4] as AllSidebarKeys,
+    groupSettingKey: segments[themesIndex + 4] ? (segments[themesIndex + 3] as AllGroupSidebarKeys) : undefined,
+    itemSettingKey: (segments[themesIndex + 4] as AllSidebarKeys) || (segments[themesIndex + 3] as AllSidebarKeys),
   };
 }
 

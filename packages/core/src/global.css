@@ -161,7 +161,7 @@
     --info: 208 100% 93%;
     --info-foreground: 209 100% 44%;
     --font-primary: var(--font-inter);
-    --font-secondary: var(--font-montserrat);
+    --font-secondary: var(--font-inter);
     --font-sub: var(--font-roboto-mono);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
