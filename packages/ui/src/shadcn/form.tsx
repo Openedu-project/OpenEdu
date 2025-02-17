@@ -29,7 +29,7 @@ import { useTranslations } from 'next-intl';
 import { useFormStatus } from 'react-dom';
 import { Label, LabelWithInfo } from '#shadcn/label';
 import { cn } from '#utils/cn';
-import { parseFormMessage } from '#utils/form-message';
+import { getFormErrorMessage, parseFormMessage } from '#utils/form-message';
 import { Button, type ButtonProps } from './button';
 
 const Form = FormProvider;
@@ -135,8 +135,13 @@ const FormMessage = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagrap
   ({ className, children, ...props }, ref) => {
     const { error, formMessageId } = useFormField();
     const t = useTranslations();
-    const message = error?.message ? parseFormMessage(error.message) : undefined;
-    const body = message ? t(message.key, message) : children;
+    const messageObject = getFormErrorMessage(error);
+    const message = messageObject?.message ? parseFormMessage(messageObject.message) : undefined;
+    const body = message
+      ? messageObject?.count
+        ? `${t(message.key, message)} (${messageObject?.count})`
+        : t(message.key, message)
+      : children;
 
     if (!body) {
       return null;
