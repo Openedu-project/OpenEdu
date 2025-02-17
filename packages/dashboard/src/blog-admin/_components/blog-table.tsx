@@ -58,7 +58,6 @@ export default function BlogTable({
       header: tBlogs('title'),
       accessorKey: 'title',
       size: 300,
-      sticky: 'left',
       cell: info => {
         const item = info?.row.original;
         const isPublish = item.published_blog?.some(blog => blog.version === item.version);

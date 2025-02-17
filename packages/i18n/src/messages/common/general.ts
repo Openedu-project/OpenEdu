@@ -92,5 +92,6 @@ export const generalMessages = {
     reject: 'Reject',
     generate: 'Generate',
     generating: 'Generating',
+    remove: 'Remove',
   },
 };

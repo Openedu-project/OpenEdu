@@ -58,5 +58,8 @@ export const blogManagementMessages = {
     manual: 'Manual',
     confirmDate: 'Confirm Date',
     setupCategoryTitle: 'Setup Blog Category',
+    delEditorDesc: "Remove writer permissions from <strong>{name}</strong>'s account.",
+    delWriterDesc: "Remove editor permissions from <strong>{name}</strong>'s account.",
+    delRoleTitle: 'Remove Permissions',
   },
 };
