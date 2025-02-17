@@ -81,6 +81,8 @@ export const blogManagementMessages = {
       resend: 'Resend',
       action: 'Action',
       invitationDate: 'Invitation Date',
+      writer: 'Writer Invitation',
+      editor: 'Editor Invitation',
     },
   },
 };

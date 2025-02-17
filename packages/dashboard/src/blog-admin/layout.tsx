@@ -12,7 +12,7 @@ import {
   UserCheck,
   UserCog,
   UserPen,
-  // UserRoundPlusIcon,
+  UserRoundPlusIcon,
 } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
@@ -42,12 +42,12 @@ export default async function Layout({ children }: { children: ReactNode }) {
             icon: <UserCheck className="h-5 w-5" />,
             href: BLOG_ADMIN_ROUTES.editorMgt,
           },
-          // {
-          //   id: 'invitation',
-          //   label: tDashboard('blog.inviteMgt'),
-          //   icon: <UserRoundPlusIcon className="h-5 w-5" />,
-          //   href: BLOG_ADMIN_ROUTES.inviteMgt,
-          // },
+          {
+            id: 'invitation',
+            label: tDashboard('blog.inviteMgt'),
+            icon: <UserRoundPlusIcon className="h-5 w-5" />,
+            href: BLOG_ADMIN_ROUTES.inviteMgt,
+          },
         ],
       },
       {

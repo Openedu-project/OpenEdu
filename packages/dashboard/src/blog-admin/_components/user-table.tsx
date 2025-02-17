@@ -44,7 +44,7 @@ export function UserTable({
       header: tBlogs('username'),
       accessorKey: 'username',
       align: 'center',
-      size: 200,
+      size: 250,
       cell: info => {
         const item = info?.row.original;
 

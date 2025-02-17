@@ -21,10 +21,8 @@ import { useMemo, useRef } from 'react';
 
 export default function BlogTable({
   type,
-  className,
 }: {
   type: 'personal' | 'org';
-  className?: string;
 }) {
   const tBlogs = useTranslations('blogManagement');
   const tGeneral = useTranslations('general');
@@ -204,17 +202,15 @@ export default function BlogTable({
   ) as FilterOption[];
 
   return (
-    <div className={cn('p-4', className)}>
-      <Table
-        api={API_ENDPOINT.ADMIN_BLOGS}
-        apiParams={{ blog_type: type, sort: 'update_at desc' }}
-        columns={columns}
-        filterOptions={filterOptions}
-        ref={tableRef}
-        tableOptions={{
-          manualPagination: true,
-        }}
-      />
-    </div>
+    <Table
+      api={API_ENDPOINT.ADMIN_BLOGS}
+      apiParams={{ blog_type: type, sort: 'update_at desc' }}
+      columns={columns}
+      filterOptions={filterOptions}
+      ref={tableRef}
+      tableOptions={{
+        manualPagination: true,
+      }}
+    />
   );
 }

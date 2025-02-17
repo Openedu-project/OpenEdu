@@ -12,8 +12,9 @@ import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useRef } from 'react';
+import type { IBlogUserRole } from './user-table';
 
-export function InviteRequestMngmList() {
+export function InviteRequestTable({ userRole }: { userRole: IBlogUserRole }) {
   const t = useTranslations('blogManagement.inviteRequest');
   const tError = useTranslations('errors');
 
@@ -77,26 +78,24 @@ export function InviteRequestMngmList() {
   );
 
   return (
-    <>
-      <Table
-        columns={columns}
-        api={API_ENDPOINT.USER_INVITATIONS}
-        hasNoColumn
-        apiParams={{
-          page: 1,
-          per_page: 10,
-          is_verified: false,
-          event: USER_ROLE_EVENT.creator,
-          sort: 'update_at desc',
-        }}
-        height="100%"
-        filterOptions={filterOptions}
-        ref={tableRef}
-        filterSearchProps={{ useQueryParams: true }}
-        tableOptions={{
-          manualPagination: true,
-        }}
-      />
-    </>
+    <Table
+      columns={columns}
+      api={API_ENDPOINT.USER_INVITATIONS}
+      hasNoColumn
+      apiParams={{
+        page: 1,
+        per_page: 10,
+        is_verified: false,
+        event: USER_ROLE_EVENT[userRole],
+        sort: 'update_at desc',
+      }}
+      height="100%"
+      filterOptions={filterOptions}
+      ref={tableRef}
+      filterSearchProps={{ useQueryParams: true }}
+      tableOptions={{
+        manualPagination: true,
+      }}
+    />
   );
 }

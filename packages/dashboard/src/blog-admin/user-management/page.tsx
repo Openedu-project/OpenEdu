@@ -18,7 +18,7 @@ export default function UserManagementPage({ userRole }: { userRole: IBlogUserRo
       ]}
       title={
         <div className="flex items-center justify-between">
-          <h2>{label}</h2>
+          <h2 className="text-2xl">{label}</h2>
           <InviteUserModal title={t(userRole)} role_event={USER_ROLE_EVENT[userRole] ?? ''} />
         </div>
       }
