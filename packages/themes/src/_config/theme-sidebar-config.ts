@@ -88,7 +88,7 @@ const createPageSections = (
     pageKey === 'auth'
       ? [createMenuItem('theme', 'Theme', generatePath(themeName, 'pages', pageKey))]
       : [
-          createMenuItem('theme', 'Theme', generatePath(themeName, 'pages', pageKey)),
+          createMenuItem('theme', 'Theme', generatePath(themeName, 'pages', pageKey, 'theme')),
           createMenuItem('metadata', 'Metadata', generatePath(themeName, 'pages', pageKey, 'metadata')),
         ]
   ),
@@ -131,7 +131,7 @@ export const getComponentsMenu = (themeName: ThemeName): TThemeMenuDefinition<Al
 
 export const getFeaturesMenu = (themeName: ThemeName): TThemeMenuDefinition<AllGroupSidebarKeys, AllSidebarKeys> => [
   createGroupMenuItem(
-    'features-popular',
+    'popular',
     'Popular',
     MENU_STRUCTURE.FEATURES_POPULAR.map(({ key, label }) =>
       createMenuItem(
