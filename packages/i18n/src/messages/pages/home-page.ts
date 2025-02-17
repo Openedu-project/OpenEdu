@@ -13,7 +13,7 @@ export const homePageMessage = {
         growing: 'Growing',
       },
       description:
-        'Open Edu is an online learning platform powered by Blockchain and AI technology, designed to simplify teaching and learning while fostering value sharing.',
+        'Openedu is an online learning platform powered by Blockchain and AI technology, designed to simplify teaching and learning while fostering value sharing.',
       cta: {
         button: 'Start Your Learning',
       },
@@ -154,7 +154,7 @@ export const homePageMessage = {
     },
     ctaSection: {
       highlight: 'Let Us Do The Thrive',
-      title: 'Start Your Learning Journey With OpenEdu. Today',
+      title: 'Start Your Learning Journey With OpenEdu.',
       description: 'Join now to receive personalized referral and exclusive discount from learning.',
       buttons: {
         start: 'Start Your Learning',
