@@ -30,7 +30,7 @@ const CampaignDetailsSection = async ({
       : `${timeLeft} ${timeLeft === 1 ? t('common.day') : t('common.days')} ${t('common.left')}`;
 
   const progress = calculateProgress(Number(campaign?.total_amount), Number(campaign?.funding_goal.target_funding));
-  console.log('campaign', campaign);
+
   const renderBtn = () => {
     if (isLoggedIn && campaign?.status === LAUNCHPAD_STATUS.FUNDING) {
       return (
