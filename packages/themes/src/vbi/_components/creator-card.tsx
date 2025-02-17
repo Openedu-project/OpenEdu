@@ -10,7 +10,7 @@ interface CreatorCardProps {
 
 const CreatorCard = ({ name, role, avatar, story, className = '' }: CreatorCardProps) => {
   return (
-    <div className={`rounded-2xl bg-white p-8 shadow-sm transition-all duration-300 hover:shadow-md ${className}`}>
+    <div className={`rounded-2xl bg-background p-8 shadow-sm transition-all duration-300 hover:shadow-md ${className}`}>
       {/* Header with Avatar and Info */}
       <div className="mb-6 flex items-center gap-4">
         <div className="relative h-16 w-16 overflow-hidden rounded-full object-contain">

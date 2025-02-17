@@ -28,7 +28,7 @@ const VbiHomepageCoursesClient: SectionComponent<"homepage", "vbiCourses"> = ({
   return (
     <div
       className={cn(
-        "space-y-4 bg-background p-4 md:space-y-8 md:p-8 lg:min-h-[80vh] lg:p-12",
+        "container space-y-4 bg-background p-4 md:space-y-8 md:p-8 lg:p-12",
         className
       )}
     >
