@@ -36,7 +36,7 @@ export type AuthLayout =
   | 'authConfirm'
   | 'header'
   | 'footer';
-export type PartnersSection = 'theme' | 'vbiPartnerList' | 'vbiShowcase';
+export type PartnersSection = 'theme' | 'vbiPartnerList' | 'vbiShowcase' | 'vbiTesti' | 'vbiPartnerFeatures' | 'vbiCta';
 export type SectionsByPage = {
   homepage: HomeSection;
   'about-us': AboutSection;

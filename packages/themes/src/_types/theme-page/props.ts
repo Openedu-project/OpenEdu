@@ -24,6 +24,9 @@ import type {
   VbiHomepageFeaturesProps,
   VbiHomepageHeroProps,
   VbiHomepageMapProps,
+  VbiPartnersCtaProps,
+  VbiPartnersShowcaseProps,
+  VbiPartnersTestiProps,
 } from '../../vbi/type';
 
 import type {
@@ -84,6 +87,9 @@ export interface SectionPropsMap<K extends ThemePageKey> {
   vbiIntro: DynamicProps<K, VbiAboutUsIntroProps>;
   vbiGoal: DynamicProps<K, VbiAboutUsGoalProps>;
   vbiCore: DynamicProps<K, VbiAboutUsCoreProps>;
+  vbiTesti: DynamicProps<K, VbiPartnersTestiProps>;
+  vbiCta: DynamicProps<K, VbiPartnersCtaProps>;
+  vbiShowcase: DynamicProps<K, VbiPartnersShowcaseProps>;
 
   // Avail
   availHero: DynamicProps<K, AvailHomepageHeroProps>;

@@ -10,7 +10,11 @@ import type { VbiHomepageEventsProps } from './homepage/vbi-events';
 import type { VbiHomepageFeaturesProps } from './homepage/vbi-features';
 import type { VbiHomepageHeroProps } from './homepage/vbi-hero';
 import type { VbiHomepageMapProps } from './homepage/vbi-map';
+import type { VbiPartnersCtaProps } from './partners/cta';
+import type { VbiPartnersFeaturesProps } from './partners/features/vbi-features';
 import type { VbiPartnersList } from './partners/partner-list';
+import type { VbiPartnersShowcaseProps } from './partners/showcase';
+import type { VbiPartnersTestiProps } from './partners/testimonials';
 export type {
   VbiHomepageHeroProps,
   VbiHomepageAchievementsProps,
@@ -27,4 +31,8 @@ export type {
   VbiAboutUsCoreProps,
   // PARTNERS
   VbiPartnersList,
+  VbiPartnersTestiProps,
+  VbiPartnersFeaturesProps,
+  VbiPartnersCtaProps,
+  VbiPartnersShowcaseProps,
 };
