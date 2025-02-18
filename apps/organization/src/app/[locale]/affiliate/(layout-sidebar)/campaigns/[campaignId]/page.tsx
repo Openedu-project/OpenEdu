@@ -9,6 +9,7 @@ export default async function UserAffiliateCampaignsDetailPage({
     campaign_name: campaignName,
     course_name: courseName,
     course_price: coursePrice,
+    currency,
     start_date: startDate,
     end_date: endDate,
   } = await searchParams;
@@ -20,6 +21,7 @@ export default async function UserAffiliateCampaignsDetailPage({
       coursePrice={coursePrice}
       startDate={startDate}
       endDate={endDate}
+      currency={currency}
     />
   );
 }

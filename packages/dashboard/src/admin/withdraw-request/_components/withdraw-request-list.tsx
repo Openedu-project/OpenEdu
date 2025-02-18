@@ -11,9 +11,9 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { API_ENDPOINT } from '@oe/api/utils/endpoints';
 import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
+import { formatCurrency } from '@oe/core/utils/currency';
 import { formatDate } from '@oe/core/utils/datetime';
 import { ImageGallery, type ImageType } from '@oe/ui/components/image-gallery';
-import { formatCurrency } from '@oe/ui/components/input-currency';
 import { Badge } from '@oe/ui/shadcn/badge';
 import { toast } from '@oe/ui/shadcn/sonner';
 import ApprovalWithdrawModal from './approval-withdraw-request-modal';
@@ -80,7 +80,26 @@ export default function WithdrawRequestList() {
         header: t('amount'),
         accessorKey: 'request_value',
         size: 180,
-        cell: info => <>{formatCurrency(String(info.getValue()))}</>,
+        cell: ({ row }) => {
+          const item = row.original;
+          return (
+            <>
+              {formatCurrency(Number(item.request_value), {
+                currency: item?.entity?.currency,
+              })}
+            </>
+          );
+        },
+      },
+      {
+        header: t('currency'),
+        accessorKey: 'entity',
+        enableSorting: false,
+        size: 180,
+        cell: ({ row }) => {
+          const item = row.original;
+          return <>{item?.entity?.currency}</>;
+        },
       },
       {
         header: t('status'),
@@ -99,19 +118,19 @@ export default function WithdrawRequestList() {
         header: t('bankName'),
         accessorKey: 'props.setting_value.bank_name',
         size: 180,
-        cell: ({ row }) => <>{row.original.props.setting_value.bank_name}</>,
+        cell: ({ row }) => <>{row?.original?.props?.setting_value?.bank_name}</>,
       },
       {
         header: t('accountName'),
         accessorKey: 'props.setting_value.account_name',
         size: 280,
-        cell: ({ row }) => <>{row.original.props.setting_value.account_name}</>,
+        cell: ({ row }) => <>{row?.original?.props?.setting_value?.account_name}</>,
       },
       {
         header: t('accountNumber'),
         accessorKey: 'props.setting_value.account_number',
         size: 180,
-        cell: ({ row }) => <>{row.original.props.setting_value.account_number}</>,
+        cell: ({ row }) => <>{row?.original?.props?.setting_value?.account_number}</>,
       },
       {
         header: t('files'),

@@ -1,6 +1,7 @@
 import { formatDateTime } from '@oe/core/utils/datetime';
 import { DashboardMainPageLayout } from '@oe/ui/common/layout';
-import { formatCurrency } from '@oe/ui/components/input-currency';
+
+import { formatNumber } from '@oe/core/utils/utils';
 import { Calendar } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import CampaignDetail from './_components/campaign-detail';
@@ -11,12 +12,14 @@ export default function UserAffiliateCampaignsDetailManagement({
   coursePrice,
   startDate,
   endDate,
+  currency,
 }: {
   campaignName: string | undefined;
   courseName: string | undefined;
   coursePrice: string | undefined;
   startDate: string | undefined;
   endDate: string | undefined;
+  currency: string | undefined;
 }) {
   const tDashboard = useTranslations('dashboard.userAffiliateDashboard');
 
@@ -32,7 +35,9 @@ export default function UserAffiliateCampaignsDetailManagement({
             <h3 className="giant-iheading-semibold16 md:giant-iheading-semibold20">
               {tDashboard('course')}: {courseName} - {tDashboard('price')}
               :&nbsp;
-              <span className="text-success">{formatCurrency(coursePrice ?? '')}</span>
+              <span className="text-success">
+                {formatNumber(Number(coursePrice))} {currency}
+              </span>
             </h3>
             <div className="mbutton-regular16 flex items-start gap-1 text-muted">
               <Calendar />
