@@ -28,8 +28,8 @@ export function BlogBanner({ className }: { className?: string }) {
           <p className="giant-iheading-semibold24 text-primary">{t('subTitle')}</p>
         </div>
         <h3 className="giant-iheading-bold24 lg:giant-iheading-bold32 mb-0">{t('title')}</h3>
-        <p className="mcaption-regular14">{t('desc')}</p>
-        <Link href={BLOG_ROUTES.createBlog} variant="default">
+        <p className="mcaption-regular14 lg:mcaption-regular20">{t('desc')}</p>
+        <Link href={BLOG_ROUTES.createBlog} variant="default" className="mbutton-bold16">
           {t('createYourBlog')}
         </Link>
       </div>

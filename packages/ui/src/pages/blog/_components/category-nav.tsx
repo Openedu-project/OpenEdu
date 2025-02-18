@@ -27,7 +27,7 @@ export const CategoryMenu = ({ category, level = 1, activeId }: ICategoryMenu) =
     <div className="flex flex-col gap-2 " style={{ paddingLeft: 30 * (level - 1) }}>
       <Link
         className={cn(
-          'giant-iheading-semibold14 flex justify-start gap-2 whitespace-normal p-2 text-primary hover:no-underline',
+          'giant-iheading-semibold14 md:giant-iheading-semibold16 flex justify-start gap-2 whitespace-normal p-2 text-primary hover:no-underline',
           activeId === category.id ? 'cursor-default bg-primary text-primary-foreground' : 'hover:bg-primary/10'
         )}
         href={buildUrl({
@@ -46,7 +46,7 @@ export const CategoryMenu = ({ category, level = 1, activeId }: ICategoryMenu) =
             <Link
               key={sub.id}
               className={cn(
-                'giant-iheading-semibold14 justify-start whitespace-normal rounded p-2 text-foreground hover:no-underline',
+                'giant-iheading-semibold14 md:giant-iheading-semibold16 justify-start whitespace-normal rounded p-2 text-foreground hover:no-underline',
                 activeId === sub.id ? 'cursor-default bg-primary text-primary-foreground' : 'hover:bg-primary/10'
               )}
               href={buildUrl({
@@ -78,7 +78,7 @@ export function CategoryNavMenu({ categories, className, activeId }: ICategoryMe
               <div className={cn('pb-1 hover:border-primary hover:border-b', index === 4 && 'hidden lg:block')}>
                 <NavigationMenuTrigger
                   className={cn(
-                    'giant-iheading-semibold14 rounded-radius-sm bg-transparent p-1 px-4 text-foreground/75 ',
+                    'giant-iheading-semibold14 md:giant-iheading-semibold16 rounded-radius-sm bg-transparent p-1 px-4 text-foreground/75 ',
                     'hover:border hover:border-primary hover:bg-primary/10 hover:text-primary',
                     'focus:bg-transparent data-[active]:bg-transparent',
                     activeId === category.id && '!bg-primary !text-primary-foreground'
@@ -109,7 +109,7 @@ export function CategoryAllMenu({ categories, className, activeId }: ICategoryMe
         <div className="border-transparent border-b pb-1 hover:border-primary">
           <NavigationMenuTrigger
             className={cn(
-              'giant-iheading-semibold14 rounded border border-transparent bg-transparent p-1 px-2 text-foreground/75',
+              'giant-iheading-semibold14 md:giant-iheading-semibold16 rounded border border-transparent bg-transparent p-1 px-2 text-foreground/75',
               'hover:border-primary hover:bg-primary/10 hover:text-primary',
               'focus:bg-transparent data-[active]:bg-transparent'
             )}
@@ -119,13 +119,19 @@ export function CategoryAllMenu({ categories, className, activeId }: ICategoryMe
           </NavigationMenuTrigger>
         </div>
         <NavigationMenuContent>
-          <ScrollArea className="h-[400px] max-h-[100vh-100px] w-full min-w-[300px] md:w-[calc(100vw-150px)]">
-            <ul className="grid w-full grid-cols-1 gap-10 p-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {categories?.map(category => (
-                <CategoryMenu key={category.id} category={category} activeId={activeId} />
-              ))}
-            </ul>
-          </ScrollArea>
+          {categories?.length === 0 ? (
+            <div className="flex h-[150px] w-[300px] items-center justify-center">
+              <p className="my-12 text-center">{t('noCategoryAvailable')}</p>
+            </div>
+          ) : (
+            <ScrollArea className="h-[400px] max-h-[100vh-100px] w-full min-w-[300px] md:w-[calc(100vw-150px)]">
+              <ul className="grid w-full grid-cols-1 gap-10 p-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {categories?.map(category => (
+                  <CategoryMenu key={category.id} category={category} activeId={activeId} />
+                ))}
+              </ul>
+            </ScrollArea>
+          )}
         </NavigationMenuContent>
       </NavigationMenuItem>
     </NavigationMenu>
