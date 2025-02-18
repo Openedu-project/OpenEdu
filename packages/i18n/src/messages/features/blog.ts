@@ -31,6 +31,7 @@ export const blogMessages = {
   blogHeader: {
     allCategories: 'All Categories',
     searchPlaceholder: 'Search ...',
+    noCategoryAvailable: 'No Category Available',
   },
   blogOutstanding: {
     features: 'Features',

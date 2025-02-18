@@ -65,13 +65,16 @@ export const MessageContainer = ({
     }
   }, [data]);
 
-  // useEffect(() => {
-  //   virtuosoRef.current?.scrollToIndex({
-  //     index: messages.length - 1,
-  //     align: 'end',
-  //     behavior: 'auto',
-  //   });
-  // }, [messages]);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (status && GENERATING_STATUS.includes(status)) {
+      virtuosoRef.current?.scrollToIndex({
+        index: messages.length - 1,
+        align: 'end',
+        behavior: 'auto',
+      });
+    }
+  }, [messages.length]);
 
   return (
     <Virtuoso
