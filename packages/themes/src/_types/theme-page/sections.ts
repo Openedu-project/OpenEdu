@@ -26,7 +26,7 @@ export type HomeSection =
   | 'availEco'
   | 'availBlogs';
 
-export type AboutSection = 'theme' | 'team' | 'vbiIntro' | 'vbiGoal';
+export type AboutSection = 'theme' | 'team' | 'vbiIntro' | 'vbiGoal' | 'vbiCore';
 export type AuthLayout =
   | 'theme'
   | 'login'
@@ -36,7 +36,7 @@ export type AuthLayout =
   | 'authConfirm'
   | 'header'
   | 'footer';
-export type PartnersSection = 'theme' | 'vbiPartnerList' | 'vbiShowcase';
+export type PartnersSection = 'theme' | 'vbiPartnerList' | 'vbiShowcase' | 'vbiTesti' | 'vbiPartnerFeatures' | 'vbiCta';
 export type SectionsByPage = {
   homepage: HomeSection;
   'about-us': AboutSection;

@@ -16,7 +16,7 @@ const VbiPartnersList: SectionComponent<"partners", "vbiPartnerList"> = ({
   return (
     <div
       className={cn(
-        "min-h-screen space-y-4 bg-muted p-4 md:space-y-8 md:p-8 lg:p-12",
+        "space-y-4 bg-muted p-4 md:space-y-8 md:p-8 lg:p-12",
         className
       )}
     >

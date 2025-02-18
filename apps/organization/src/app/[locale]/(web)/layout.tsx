@@ -64,6 +64,7 @@ export default async function OpeneduLayout({
           ])
         )
       : {},
+    className: footerProps?.className,
   };
 
   return (

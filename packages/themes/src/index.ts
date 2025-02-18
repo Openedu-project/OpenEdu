@@ -32,6 +32,7 @@ import AvailHomepage from './avail/homepage/index';
 import { fonts } from './fonts';
 import { ScholarHomepageAboutUs, ScholarHomepageHero, ScholarHomepageService } from './scholar';
 import { ScholarAboutUs, ScholarHomePage } from './scholar';
+import { VbiAboutUsCore } from './vbi/about-us/core';
 import { VbiAboutUsGoal } from './vbi/about-us/goal';
 import VbiAboutUs from './vbi/about-us/index';
 import { VbiAboutUsIntro } from './vbi/about-us/intro';
@@ -45,8 +46,12 @@ import { VbiHomepageEventsClient, VbiHomepageEventsServer } from './vbi/homepage
 import { VbiHomepageFeaturesClient, VbiHomepageFeaturesServer } from './vbi/homepage/vbi-features';
 import { VbiHomepageHeroClient, VbiHomepageHeroServer } from './vbi/homepage/vbi-hero/index';
 import { VbiHomepageMapClient, VbiHomepageMapServer } from './vbi/homepage/vbi-map';
+import { VbiPartnersCta } from './vbi/partners/cta';
+import { VbiPartnerFeaturesClient, VbiPartnerFeaturesServer } from './vbi/partners/features';
 import VbiPartners from './vbi/partners/index';
 import { VbiPartnersList } from './vbi/partners/partner-list';
+import { VbiPartnersShowcase } from './vbi/partners/showcase';
+import { VbiPartnersTesti } from './vbi/partners/testimonials';
 const auth = {
   theme: AuthLayout,
   header: ThemeHeader,
@@ -99,10 +104,15 @@ export const THEMES: ThemeRender = {
       theme: VbiAboutUs,
       vbiIntro: VbiAboutUsIntro,
       vbiGoal: VbiAboutUsGoal,
+      vbiCore: VbiAboutUsCore,
     },
     partners: {
       theme: VbiPartners,
       vbiPartnerList: VbiPartnersList,
+      vbiShowcase: VbiPartnersShowcase,
+      vbiTesti: VbiPartnersTesti,
+      vbiPartnerFeatures: VbiPartnerFeaturesClient,
+      vbiCta: VbiPartnersCta,
     },
     auth,
   },
@@ -168,10 +178,15 @@ export const THEMES_SERVER: ThemeRender = {
       theme: VbiAboutUs,
       vbiIntro: VbiAboutUsIntro,
       vbiGoal: VbiAboutUsGoal,
+      vbiCore: VbiAboutUsCore,
     },
     partners: {
       theme: VbiPartners,
       vbiPartnerList: VbiPartnersList,
+      vbiShowcase: VbiPartnersShowcase,
+      vbiTesti: VbiPartnersTesti,
+      vbiPartnerFeatures: VbiPartnerFeaturesServer,
+      vbiCta: VbiPartnersCta,
     },
     auth: {
       theme: AuthLayout,
