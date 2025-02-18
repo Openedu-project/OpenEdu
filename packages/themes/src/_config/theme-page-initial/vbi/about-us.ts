@@ -24,4 +24,11 @@ export const createVbiAboutUsConfig = (getThemeTranslation: (path: string[]) => 
     },
     order: 1,
   }),
+  vbiCore: createSection<'about-us', 'vbiCore'>({
+    props: {
+      title: getThemeTranslation(['about-us', 'vbiCore', 'title']),
+      titleSub: getThemeTranslation(['about-us', 'vbiCore', 'titleSub']),
+    },
+    order: 2,
+  }),
 });

@@ -49,7 +49,7 @@ const AchievementCard = ({
           <ContentSection title={title} description={description} />
 
           {/* Stats Section */}
-          <div className="flex justify-between gap-4">
+          <div className="flex justify-between gap-2 md:gap-4">
             <StatCard
               value={stats?.stat1?.value}
               label={stats?.stat1?.label}
