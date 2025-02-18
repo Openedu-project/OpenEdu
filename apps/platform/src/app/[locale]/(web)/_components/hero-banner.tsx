@@ -46,7 +46,11 @@ export default async function HeroSection() {
             </h1>
 
             <div className="mb-8 max-w-xl">
-              <h2 className="mcaption-regular16 lg:mcaption-regular24">{t('description')}</h2>
+              <h2 className="mcaption-regular16 lg:mcaption-regular24">
+                {t.rich('headline', {
+                  highlight: chunks => <span className="text-primary">{chunks}</span>,
+                })}
+              </h2>
             </div>
             <Link href={PLATFORM_ROUTES.courses} className="mb-8 p-0">
               <Button>{t('cta.button')}</Button>

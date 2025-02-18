@@ -17,7 +17,7 @@ const SharePercentage = <TFormValues extends FieldValues>({ form }: SharePercent
       name={'profit_percentage' as Path<TFormValues>}
       render={({ field }) => (
         <FormItem>
-          <FormLabel className="font-semibold text-base">{tLaunchpad('sharePercentage')} *</FormLabel>
+          <FormLabel className="font-semibold text-base">{tLaunchpad('sharePercentageAllBackers')} *</FormLabel>
           <FormControl>
             <InputNumber
               {...field}

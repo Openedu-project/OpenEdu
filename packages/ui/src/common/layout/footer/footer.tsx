@@ -108,7 +108,7 @@ export function Footer({ logo, navigationItems, description }: FooterProps) {
 
             <div className="mcaption-regular16 max-w-sm">
               {description ||
-                t.rich('slogan', {
+                t.rich('headline', {
                   emphasis: chunks => <span className="text-primary">{chunks}</span>,
                   break: () => <br />,
                 })}

@@ -12,8 +12,8 @@ export const homePageMessage = {
         sharing: 'Sharing',
         growing: 'Growing',
       },
-      description:
-        'Openedu is an online learning platform powered by Blockchain and AI technology, designed to simplify teaching and learning while fostering value sharing.',
+      headline:
+        'OpenEdu is an <highlight>EdTech platform</highlight> that <highlight>integrates blockchain, trustless collaboration, gamification, and AI automation</highlight> into the education industry, empowering educational organizations, educators, and learners to accelerate the <highlight>EduFi market</highlight>.',
       cta: {
         button: 'Start Your Learning',
       },
@@ -101,17 +101,17 @@ export const homePageMessage = {
           title: 'Generate Course By',
           subtitle: 'Text To Course',
         },
-        textToSlide: {
+        presentation: {
           title: 'Generate Slide By',
-          subtitle: 'Text To Slide',
+          subtitle: 'Presentation',
         },
-        textToImage: {
+        imageGenerator: {
           title: 'Generate Image By',
-          subtitle: 'Text To Image',
+          subtitle: 'Image Generator',
         },
-        textToVideo: {
+        slideToVideo: {
           title: 'Generate Video By',
-          subtitle: 'Text To Video',
+          subtitle: 'Slide To Video',
         },
         searchEngine: {
           title: 'Find Latest Research By',
