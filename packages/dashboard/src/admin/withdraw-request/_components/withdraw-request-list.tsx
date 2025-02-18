@@ -92,6 +92,16 @@ export default function WithdrawRequestList() {
         },
       },
       {
+        header: t('currency'),
+        accessorKey: 'entity',
+        enableSorting: false,
+        size: 180,
+        cell: ({ row }) => {
+          const item = row.original;
+          return <>{item?.entity?.currency}</>;
+        },
+      },
+      {
         header: t('status'),
         align: 'center',
         accessorKey: 'status',
@@ -108,19 +118,19 @@ export default function WithdrawRequestList() {
         header: t('bankName'),
         accessorKey: 'props.setting_value.bank_name',
         size: 180,
-        cell: ({ row }) => <>{row.original.props.setting_value.bank_name}</>,
+        cell: ({ row }) => <>{row?.original?.props?.setting_value?.bank_name}</>,
       },
       {
         header: t('accountName'),
         accessorKey: 'props.setting_value.account_name',
         size: 280,
-        cell: ({ row }) => <>{row.original.props.setting_value.account_name}</>,
+        cell: ({ row }) => <>{row?.original?.props?.setting_value?.account_name}</>,
       },
       {
         header: t('accountNumber'),
         accessorKey: 'props.setting_value.account_number',
         size: 180,
-        cell: ({ row }) => <>{row.original.props.setting_value.account_number}</>,
+        cell: ({ row }) => <>{row?.original?.props?.setting_value?.account_number}</>,
       },
       {
         header: t('files'),

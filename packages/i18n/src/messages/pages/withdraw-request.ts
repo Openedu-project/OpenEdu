@@ -9,6 +9,7 @@ export const withdrawRequestMessage = {
     accountName: 'Account Name',
     accountNumber: 'Account Number',
     files: 'Files',
+    currency: 'Currency',
     clickToViewImages: 'Click to view images',
     requestDate: 'Request Date',
     action: 'Action',
