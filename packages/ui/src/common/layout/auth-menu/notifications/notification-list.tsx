@@ -5,6 +5,7 @@ import { formatDate } from '@oe/core/utils/datetime';
 import { useTranslations } from 'next-intl';
 import React, { type ReactNode } from 'react';
 import { Virtuoso } from 'react-virtuoso';
+import { Link } from '#common/navigation';
 import { formatCurrency } from '#components/input-currency';
 import { Button } from '#shadcn/button';
 import { cn } from '#utils/cn';
@@ -73,6 +74,7 @@ interface NotificationRowProps {
 
 function NotificationRow({ notification, onMarkAsRead }: NotificationRowProps) {
   const t = useTranslations('notification');
+  const { redirectLink } = useNotifications();
 
   return (
     <div
@@ -88,7 +90,13 @@ function NotificationRow({ notification, onMarkAsRead }: NotificationRowProps) {
         !notification.read_at && 'bg-muted'
       )}
     >
-      <p className={cn('mb-1 text-sm', !notification.read_at && 'font-medium')}>
+      <Link
+        href={redirectLink(notification)}
+        className={cn(
+          'mb-1 block h-auto whitespace-pre-wrap p-0 text-foreground text-sm hover:no-underline',
+          !notification.read_at && 'font-medium'
+        )}
+      >
         {t?.rich(`code${notification.code}`, {
           strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
           course_name: notification?.props?.course_name ?? '',
@@ -103,7 +111,7 @@ function NotificationRow({ notification, onMarkAsRead }: NotificationRowProps) {
           collaborator: notification?.props?.course_roles?.join(', ') ?? '',
           course_ai_tool: t?.(notification?.props?.provider ?? 'ai_tool'),
         })}
-      </p>
+      </Link>
       <time className="text-muted-foreground text-xs">{formatDate(notification.create_at)}</time>
     </div>
   );

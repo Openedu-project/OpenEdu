@@ -38,6 +38,7 @@ export const PLATFORM_ROUTES = {
   learnerMyCertificates: '/learner/my-certificates',
   learnerMyCertificateDetail: '/learner/my-certificates/:certId',
   previewCourse: '/courses/preview/:courseId/:orgId',
+  launchpadDetail: '/launchpad/:id',
 } as const;
 
 export const BLOG_ROUTES = {
