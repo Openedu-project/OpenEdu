@@ -16,20 +16,23 @@ import { useSocketStore } from '#store/socket';
 
 interface IProps {
   certificate: ICertificate;
+  lessonUid?: string;
 }
 
 const ReceiveCertificateModal = ({ certificate }: IProps) => {
   const tReceiveCertModal = useTranslations('receiveCertificateModal');
+
+  const { certificateData } = useSocketStore();
 
   const [learnerName, setLearnerName] = useState<string | undefined>();
   const [certificateState, setCertificateState] = useState<ICertificate>(certificate);
   const [step, setStep] = useState<number>(1);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const { certificateData } = useSocketStore();
-
   const { dataMe } = useGetMe();
-  const { uploadPDF, uploadPNG, isUploading } = useUploadCertificate({ certificate: certificateState });
+  const { uploadPDF, uploadPNG, isUploading } = useUploadCertificate({
+    certificate: certificateState,
+  });
   const { triggerReceiveCert } = useReceiveCertificate();
 
   const handleNextStep = () => {
@@ -109,12 +112,16 @@ const ReceiveCertificateModal = ({ certificate }: IProps) => {
   );
 
   useEffect(() => {
+    if (certificateData) {
+      console.log(certificateData?.data, 'áohgaihgiah');
+    }
     if (certificateData?.data?.can_receive && !certificateData.data.is_received) {
       setIsOpen(true);
-    } else {
-      setIsOpen(false);
     }
-  }, [certificateData]);
+    //  else {
+    //   setIsOpen(false);
+    // }
+  }, [certificateData?.data]);
 
   useEffect(() => {
     if (dataMe) {
@@ -127,48 +134,44 @@ const ReceiveCertificateModal = ({ certificate }: IProps) => {
   }, [dataMe]);
 
   return (
-    <>
-      {isOpen && (
-        <Modal
-          title={step === 1 ? tReceiveCertModal('congratulations') : tReceiveCertModal('yourCert')}
-          open={isOpen}
-          hasCloseIcon
-          onClose={() => setIsOpen(false)}
-          description={
-            step === 1 ? (
-              <>
-                <span className="block">{tReceiveCertModal('successfullyCompleted')}</span>
-                <span>{tReceiveCertModal('certIsNowAvailable')}</span>
-              </>
-            ) : null
-          }
-          hasCancelButton={false}
-          className="h-[500px]"
-          contentClassName="h-full flex flex-col pb-4 gap-4"
-        >
-          {step === 1 ? renderStep1() : renderStep2()}
-          {step === 1 ? (
-            <Button type="button" disabled={learnerName?.trim() === ''} onClick={handleNextStep} className="ml-auto">
-              {tReceiveCertModal('next')}
-            </Button>
-          ) : (
-            <div className="ml-auto w-fit space-x-2">
-              <Button variant="outline" type="button" onClick={handlePreviousStep}>
-                {tReceiveCertModal('editName')}
-              </Button>
-              <Button
-                disabled={isUploading}
-                onClick={async () => {
-                  await handleReceiveCert();
-                }}
-              >
-                {tReceiveCertModal('receiveCertificate')}
-              </Button>
-            </div>
-          )}
-        </Modal>
+    <Modal
+      title={step === 1 ? tReceiveCertModal('congratulations') : tReceiveCertModal('yourCert')}
+      open={isOpen}
+      hasCloseIcon
+      onClose={() => setIsOpen(false)}
+      description={
+        step === 1 ? (
+          <>
+            <span className="block">{tReceiveCertModal('successfullyCompleted')}</span>
+            <span>{tReceiveCertModal('certIsNowAvailable')}</span>
+          </>
+        ) : null
+      }
+      hasCancelButton={false}
+      className="h-[500px]"
+      contentClassName="h-full flex flex-col pb-4 gap-4"
+    >
+      {step === 1 ? renderStep1() : renderStep2()}
+      {step === 1 ? (
+        <Button type="button" disabled={learnerName?.trim() === ''} onClick={handleNextStep} className="ml-auto">
+          {tReceiveCertModal('next')}
+        </Button>
+      ) : (
+        <div className="ml-auto w-fit space-x-2">
+          <Button variant="outline" type="button" onClick={handlePreviousStep}>
+            {tReceiveCertModal('editName')}
+          </Button>
+          <Button
+            disabled={isUploading}
+            onClick={async () => {
+              await handleReceiveCert();
+            }}
+          >
+            {tReceiveCertModal('receiveCertificate')}
+          </Button>
+        </div>
       )}
-    </>
+    </Modal>
   );
 };
 

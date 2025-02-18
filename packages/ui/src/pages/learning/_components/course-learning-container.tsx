@@ -14,8 +14,6 @@ interface ICourseLearning {
 }
 
 export default function CourseLearning({ course, section_uid, lesson_uid, certificate }: ICourseLearning) {
-  console.log(certificate, 'cert layer data');
-
   return (
     <>
       <div className="flex h-full flex-col gap-1 bg-muted/50 py-4 lg:flex-row">
@@ -33,7 +31,7 @@ export default function CourseLearning({ course, section_uid, lesson_uid, certif
           <CourseOutline courseData={course} activeSection={section_uid} activeLesson={lesson_uid} />
         </ScrollArea>
       </div>
-      {certificate && <ReceiveCertificateModal certificate={certificate} />}
+      {certificate && <ReceiveCertificateModal certificate={certificate} lessonUid={lesson_uid} />}
     </>
   );
 }
