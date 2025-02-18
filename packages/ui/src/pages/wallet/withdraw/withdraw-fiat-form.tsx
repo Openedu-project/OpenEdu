@@ -43,7 +43,7 @@ export const WithdrawFiatForm = () => {
         payload: data,
       });
       await mutateWallets();
-      toast.success(t('wallets.withdrawPage.form.requestSuccess'));
+      toast.success(t('withdrawPage.form.requestSuccess'));
       form.reset();
     } catch (error) {
       toast.error(tError((error as HTTPError).message));
@@ -56,7 +56,9 @@ export const WithdrawFiatForm = () => {
         const { watch } = form;
         const currency = watch('currency');
         const locale = findLocaleFromCurrency(currency);
-        const availableBalance = Number(wallets?.find(wallet => wallet.currency === currency)?.balance || '0');
+        const availableBalance = Number(
+          wallets?.find(wallet => wallet.currency === currency)?.available_balance || '0'
+        );
 
         form.setValue('availableBalance', availableBalance);
 
