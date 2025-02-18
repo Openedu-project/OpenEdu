@@ -12,7 +12,7 @@ export default function OrgBlogManagement() {
       title={tBlogs('orgBlogManagement')}
       mainClassName="overflow-hidden"
     >
-      <BlogTable type="org" className="bg-background" />
+      <BlogTable type="org" />
     </DashboardMainPageLayout>
   );
 }
