@@ -1,12 +1,12 @@
-'use client';
-import { Footer, type FooterProps } from '@oe/ui/common/layout/footer';
-import { useTranslations } from 'next-intl';
-import { useParams } from 'next/navigation';
-import type { SectionComponent } from '../_types/theme-page';
+"use client";
+import { Footer, type FooterProps } from "@oe/ui/common/layout/footer";
+import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
+import type { SectionComponent } from "../_types/theme-page";
 
 export interface ThemeFooterProps extends FooterProps {}
 
-const ThemeFooter: SectionComponent<'auth', 'footer'> = ({ props }) => {
+const ThemeFooter: SectionComponent<"auth", "footer"> = ({ props }) => {
   const { themeName } = useParams();
   const t = useTranslations(`themePage.${themeName}.auth.footer`);
 
@@ -28,7 +28,14 @@ const ThemeFooter: SectionComponent<'auth', 'footer'> = ({ props }) => {
       )
     : {};
 
-  return <Footer logo={props?.logo} description={props?.description} navigationItems={navItems} />;
+  return (
+    <Footer
+      logo={props?.logo}
+      description={props?.description}
+      navigationItems={navItems}
+      className="bg-primary"
+    />
+  );
 };
 
 export default ThemeFooter;

@@ -19,5 +19,10 @@ export const vbiAboutUs = {
           'Become the Top 1 provider of high quality human resources in the APAC region for Blockchain and Web3.',
       },
     },
+    vbiCore: {
+      title: 'CORE VALUE',
+      titleSub:
+        'VBI Academy has identified five core values that will help us achieve our vision and therefore our team is always encouraged to adopt these values ​​wherever possible.',
+    },
   },
 };

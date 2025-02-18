@@ -26,7 +26,7 @@ export type HomeSection =
   | 'availEco'
   | 'availBlogs';
 
-export type AboutSection = 'theme' | 'team' | 'vbiIntro' | 'vbiGoal';
+export type AboutSection = 'theme' | 'team' | 'vbiIntro' | 'vbiGoal' | 'vbiCore';
 export type AuthLayout =
   | 'theme'
   | 'login'

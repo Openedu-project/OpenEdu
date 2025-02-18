@@ -106,9 +106,6 @@ export default function ThemeSettingPages({
 
   const handleSubmitConfig = useCallback(
     (configSections: PageSectionConfigs<ThemePageKey>) => {
-      console.log("configSections", configSections);
-      console.log("stateConfigSections", stateConfigSections);
-
       onSubmit({
         ...themeConfig,
         pages: {

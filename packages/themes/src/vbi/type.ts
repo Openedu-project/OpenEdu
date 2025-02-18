@@ -1,3 +1,4 @@
+import type { VbiAboutUsCoreProps } from './about-us/core';
 import type { VbiAboutUsGoalProps } from './about-us/goal';
 import type { VbiAboutUsIntroProps } from './about-us/intro';
 import type { VbiHomepageAchievementsProps } from './homepage/vbi-achievements/vbi-achievements';
@@ -23,6 +24,7 @@ export type {
   // ABOUT US
   VbiAboutUsIntroProps,
   VbiAboutUsGoalProps,
+  VbiAboutUsCoreProps,
   // PARTNERS
   VbiPartnersList,
 };

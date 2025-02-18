@@ -32,6 +32,7 @@ import AvailHomepage from './avail/homepage/index';
 import { fonts } from './fonts';
 import { ScholarHomepageAboutUs, ScholarHomepageHero, ScholarHomepageService } from './scholar';
 import { ScholarAboutUs, ScholarHomePage } from './scholar';
+import { VbiAboutUsCore } from './vbi/about-us/core';
 import { VbiAboutUsGoal } from './vbi/about-us/goal';
 import VbiAboutUs from './vbi/about-us/index';
 import { VbiAboutUsIntro } from './vbi/about-us/intro';
@@ -99,6 +100,7 @@ export const THEMES: ThemeRender = {
       theme: VbiAboutUs,
       vbiIntro: VbiAboutUsIntro,
       vbiGoal: VbiAboutUsGoal,
+      vbiCore: VbiAboutUsCore,
     },
     partners: {
       theme: VbiPartners,
@@ -168,6 +170,7 @@ export const THEMES_SERVER: ThemeRender = {
       theme: VbiAboutUs,
       vbiIntro: VbiAboutUsIntro,
       vbiGoal: VbiAboutUsGoal,
+      vbiCore: VbiAboutUsCore,
     },
     partners: {
       theme: VbiPartners,
