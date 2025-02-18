@@ -93,7 +93,7 @@ function NotificationRow({ notification, onMarkAsRead }: NotificationRowProps) {
       <Link
         href={redirectLink(notification)}
         className={cn(
-          'mb-1 block h-auto whitespace-pre-wrap p-0 text-foreground text-sm hover:no-underline',
+          '!text-foreground !border-none mb-1 block h-auto whitespace-pre-wrap p-0 text-sm hover:no-underline',
           !notification.read_at && 'font-medium'
         )}
       >
