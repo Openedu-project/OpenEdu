@@ -190,6 +190,7 @@ export default function AffiliateManagementContent() {
         size: 180,
         cell: ({ row }) => {
           const item = row.original;
+
           return (
             <div className="flex items-center justify-center gap-3">
               <Button variant="default" onClick={() => handleOpenCommissionDetailModal(item)} className=" px-2 py-1">
@@ -207,7 +208,9 @@ export default function AffiliateManagementContent() {
                   item?.course_name
                 }&org_domain=${item?.org_domain}&course_slug=${
                   item?.course_slug
-                }&course_price=${item?.price}&start_date=${item?.start_date}&end_date=${item?.end_date}`}
+                }&course_price=${item?.price}&currency=${
+                  item?.currency
+                }&start_date=${item?.start_date}&end_date=${item?.end_date}`}
               >
                 {t('detailBtn')}
               </Link>

@@ -11,7 +11,8 @@ import { API_ENDPOINT } from '@oe/api/utils/endpoints';
 import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
 import { formatDateTime } from '@oe/core/utils/datetime';
 import type { FilterOption } from '@oe/ui/components/filter-search';
-import { formatCurrency } from '@oe/ui/components/input-currency';
+
+import { formatNumber } from '@oe/core/utils/utils';
 import type { ColumnDef, TableRef } from '@oe/ui/components/table';
 import { Badge } from '@oe/ui/shadcn/badge';
 import { Button } from '@oe/ui/shadcn/button';
@@ -149,7 +150,7 @@ export default function CouponList() {
       {
         header: tCouponForm('quantity'),
         accessorKey: 'maximum_total_usage',
-        cell: info => <>{formatCurrency(String(info.getValue()), false)}</>,
+        cell: info => <>{formatNumber(Number(info.getValue()))}</>,
       },
       {
         header: tCouponForm('startDate'),
