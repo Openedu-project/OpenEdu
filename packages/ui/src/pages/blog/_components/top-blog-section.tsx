@@ -33,7 +33,7 @@ export function TopBlogs({ blogs = [], className, title, contentRight = false, s
                   <BlogCard
                     key={`rank-${index + 1}`}
                     blog={item}
-                    className="w-full min-w-64 bg-white lg:w-auto lg:min-w-0"
+                    className="w-full min-w-64 lg:w-auto lg:min-w-0"
                     authorOnTop={!contentRight}
                     contentRight={contentRight}
                   />

@@ -4,7 +4,7 @@ import { AUTH_ROUTES, BLOG_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
 import { getTranslations } from 'next-intl/server';
 import { redirect } from 'next/navigation';
-import { Breadcrumb, type IBreadcrumbItem } from '#components/breadcrumb';
+import type { IBreadcrumbItem } from '#components/breadcrumb';
 import MyBlogManagement from '../../../components/blog/my-blog-management';
 
 export default async function PersonalBlogMgtPage() {
@@ -29,10 +29,5 @@ export default async function PersonalBlogMgtPage() {
       label: tBlogs('blogManagement'),
     },
   ];
-  return (
-    <>
-      <Breadcrumb items={navItems} className="px-4 pt-2" />
-      <MyBlogManagement type="personal" canUnpublish />
-    </>
-  );
+  return <MyBlogManagement type="personal" canUnpublish breadcrumbs={navItems} />;
 }

@@ -59,6 +59,7 @@ export const BLOG_ADMIN_ROUTES = {
   writerMgt: '/blog-admin/writer-management',
   editorMgt: '/blog-admin/editor-management',
   inviteMgt: '/blog-admin/invitation-management',
+  inviteEditorMgt: '/blog-admin/invitation-management/editor',
   orgBlogMgt: '/blog-admin/org-blog',
   userBlogMgt: '/blog-admin/user-blog',
   requestMgt: '/blog-admin/request',

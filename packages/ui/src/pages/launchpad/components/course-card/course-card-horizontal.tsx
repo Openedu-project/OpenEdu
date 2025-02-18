@@ -11,6 +11,7 @@ const CourseCardHorizontal = async ({
 }) => {
   const t = await getTranslations('launchpadDetailPage');
   const course = campaign?.courses?.[0];
+  console.log('CourseCardHorizontal', course);
 
   if (!course) {
     return null;
@@ -31,7 +32,7 @@ const CourseCardHorizontal = async ({
         <h4 className="font-semibold text-lg sm:text-xl">{course.name}</h4>
         <p className="text-sm sm:text-base">
           {t('common.createBy')}
-          <span className="font-semibold">{course.description}</span>
+          <span className="font-semibold">{campaign.owner?.display_name}</span>
         </p>
         <p className="text-sm sm:text-base">
           {t('common.createAt')}

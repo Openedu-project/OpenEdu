@@ -1,5 +1,6 @@
 import type { IAgenConfigs, TAgentType } from '@oe/api/types/conversation';
 import { AI_ROUTES } from '@oe/core/utils/routes';
+import { buildUrl } from '@oe/core/utils/url';
 import {
   Image as ImageIcon,
   ListFilter,
@@ -13,60 +14,53 @@ import type { AISidebarItem, IInputButton } from './type';
 
 export const AI_SIDEBAR: AISidebarItem[] = [
   {
-    lableKey: 'aiChat',
+    lableKey: 'generalChat',
     descKey: 'aiChatDesc',
-    value: 'ai-chat',
+    value: 'chat',
     href: AI_ROUTES.chat,
     icon: <MessageCircle className="h-4 w-4 text-white" />,
   },
   {
-    lableKey: 'aiSearch',
-    descKey: 'aiSearchDesc',
-    value: 'ai-search',
-    href: AI_ROUTES.search,
-    icon: <Search className="h-4 w-4 text-white" />,
-    isComming: true,
-  },
-  {
-    lableKey: 'aiSlide',
+    lableKey: 'presentation',
     descKey: 'aiSlideDesc',
-    value: 'ai-slide',
-    href: AI_ROUTES.slide,
+    value: 'ai_slide',
+    href: buildUrl({ endpoint: AI_ROUTES.chat, queryParams: { agent: 'ai_slide' } }),
     icon: <ListFilter className="h-4 w-4 text-white" />,
-    isComming: true,
   },
   {
-    lableKey: 'aiImage',
+    lableKey: 'imageGenerator',
     descKey: 'aiImageDesc',
-    value: 'ai-image',
-    href: AI_ROUTES.imageGenerator,
+    value: 'ai_image_generate',
+    href: buildUrl({ endpoint: AI_ROUTES.chat, queryParams: { agent: 'ai_image_generate' } }),
     icon: <ImageIcon className="h-4 w-4 text-white" />,
-    isComming: true,
   },
   {
-    lableKey: 'aiVideo',
+    lableKey: 'slideToVideo',
     descKey: 'aiVideoDesc',
     value: 'ai-video',
     href: AI_ROUTES.video,
     icon: <SquarePlay className="h-4 w-4 text-white" />,
     isComming: true,
   },
+  {
+    lableKey: 'deepSearch',
+    descKey: 'aiSearchDesc',
+    value: 'ai-search',
+    href: AI_ROUTES.search,
+    icon: <Search className="h-4 w-4 text-white" />,
+    isComming: true,
+  },
 ];
 
 export const BG_COLOR = [
   'var(--ai-agent-green-background)',
-  'var(--ai-agent-orange-background)',
   'var(--ai-agent-aqua-background)',
   'var(--ai-agent-pink-background)',
   'var(--ai-agent-blue-background)',
+  'var(--ai-agent-orange-background)',
 ];
 
 export const INPUT_BUTTON: IInputButton[] = [
-  {
-    type: 'ai_image_analysis',
-    textKey: 'imageAnalysis',
-    icon: <ScanSearch size={16} className="text-pink-500" />,
-  },
   {
     type: 'ai_image_generate',
     textKey: 'imageGenerator',
@@ -81,6 +75,11 @@ export const INPUT_BUTTON: IInputButton[] = [
     type: 'ai_slide',
     textKey: 'presentation',
     icon: <PanelsRightBottom size={16} className="text-info-500" />,
+  },
+  {
+    type: 'ai_image_analysis',
+    textKey: 'imageAnalysis',
+    icon: <ScanSearch size={16} className="text-pink-500" />,
   },
 ];
 
