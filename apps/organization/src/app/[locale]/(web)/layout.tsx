@@ -67,8 +67,6 @@ export default async function OpeneduLayout({
     className: footerProps?.className,
   };
 
-  console.log(footerConfig);
-
   return (
     <MainLayout
       sidebarItems={sidebarItems}
