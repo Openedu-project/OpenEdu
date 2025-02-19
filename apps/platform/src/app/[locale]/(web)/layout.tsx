@@ -6,8 +6,10 @@ import type { ReactNode } from 'react';
 
 export default async function OpeneduLayout({
   children,
+  hasFooter,
 }: {
   children: ReactNode;
+  hasFooter?: boolean;
 }) {
   const t = await getTranslations('headerMenu');
   const sidebarItems = [
@@ -57,7 +59,7 @@ export default async function OpeneduLayout({
   ];
 
   return (
-    <MainLayout sidebarItems={sidebarItems} subSidebarItems={subSidebarItems}>
+    <MainLayout sidebarItems={sidebarItems} subSidebarItems={subSidebarItems} hasFooter={hasFooter}>
       {children}
     </MainLayout>
   );

@@ -8,7 +8,7 @@ export default async function AIAssistantPage() {
   const [tAI, me] = await Promise.all([getTranslations('aiAssistant'), getMeServiceWithoutError()]);
 
   return (
-    <div className="container relative flex min-h-[calc(100vh-var(--header-height))] flex-col items-center justify-center px-4 py-8">
+    <div className="container relative flex min-h-[calc(100dvh-var(--header-height))] flex-col items-center justify-center px-4 py-8">
       <Image
         src={AIBg.src}
         noContainer

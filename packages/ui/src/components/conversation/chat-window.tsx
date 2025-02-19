@@ -189,6 +189,10 @@ export function ChatWindow({
         setIsNewChat(true);
         router.push(createAPIUrl({ endpoint: AI_ROUTES.chatDetail, params: { id: data.id } }));
       }
+
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+      }
     } catch (error) {
       setStatus('failed');
       setMessages(prevMessage);

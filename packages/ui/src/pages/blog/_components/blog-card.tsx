@@ -4,7 +4,6 @@ import type { IBlog } from '@oe/api/types/blog';
 import { formatDateHourMinute } from '@oe/core/utils/datetime';
 import { BLOG_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
-import { getLocaleFromPathname } from '@oe/i18n/utils';
 import { useRouter } from '@oe/ui/common/navigation';
 import { formatDistanceToNow } from 'date-fns';
 import type React from 'react';
@@ -45,11 +44,10 @@ export function BlogCard({
     });
 
     if (typeof window !== 'undefined') {
-      if (blog?.org?.domain !== window?.location?.hostname) {
-        const locale = getLocaleFromPathname(window?.location?.pathname);
-        window.open(`https://${blog?.org?.domain}/${locale}${targetPath}`, '_blank');
-      } else {
+      if (!blog?.org || blog?.org?.domain === window.location.hostname) {
         router.push(targetPath);
+      } else {
+        window.open(`https://${blog?.org?.domain}/${blog?.locale}${targetPath}`, '_blank');
       }
     }
   };
@@ -58,15 +56,13 @@ export function BlogCard({
     (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       e.preventDefault();
       if (typeof window !== 'undefined') {
-        if (blog?.org?.domain !== window.location.hostname) {
-          const locale = getLocaleFromPathname(window?.location?.pathname);
-
+        if (!blog?.org || blog?.org?.domain === window.location.hostname) {
+          router.push(buildUrl({ endpoint: BLOG_ROUTES.authorBlog, params: { username: blog?.author?.username } }));
+        } else {
           window.open(
-            `https://${blog?.org?.domain}/${locale}${buildUrl({ endpoint: BLOG_ROUTES.authorBlog, params: { username: blog?.author?.username } })}`,
+            `https://${blog?.org?.domain}/${blog?.locale}${buildUrl({ endpoint: BLOG_ROUTES.authorBlog, params: { username: blog?.author?.username } })}`,
             '_blank'
           );
-        } else {
-          router.push(buildUrl({ endpoint: BLOG_ROUTES.authorBlog, params: { username: blog?.author?.username } }));
         }
       }
     },

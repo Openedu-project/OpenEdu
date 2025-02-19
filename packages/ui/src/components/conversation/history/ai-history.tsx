@@ -139,6 +139,7 @@ export default function AIHistory({ className, isLogin = false, pauseAddMessage,
   const isDesktop = useIsDesktop();
   const { mutate: globalMutate } = useSWRConfig();
   const { isNewChat } = useConversationStore();
+  const { id } = useParams();
 
   const [searchParams, setSearchParams] = useState(HISTORY_DEFAULT_PARAMS);
 
@@ -154,6 +155,11 @@ export default function AIHistory({ className, isLogin = false, pauseAddMessage,
       mutate();
     }
   }, [isNewChat]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    setIsShow(false);
+  }, [id]);
 
   const updateFirstPageOnly = async () => {
     if (!initData) {
@@ -235,7 +241,7 @@ export default function AIHistory({ className, isLogin = false, pauseAddMessage,
             </Button>
           )}
           <Drawer open={isShow} onOpenChange={setIsShow} direction="right">
-            <DrawerContent className="!duration-300 top-0 h-[calc(100vh-100px] lg:w-1/2 first:[&>div]:hidden">
+            <DrawerContent className="!duration-300 top-0 h-[calc(100dvh-100px] lg:w-1/2 first:[&>div]:hidden">
               <DrawerTitle>
                 <VisuallyHidden asChild>Title</VisuallyHidden>
               </DrawerTitle>
