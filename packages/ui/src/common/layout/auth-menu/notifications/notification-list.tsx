@@ -97,22 +97,24 @@ function NotificationRow({ notification, onMarkAsRead }: NotificationRowProps) {
           !notification.read_at && 'font-medium'
         )}
       >
-        {t?.rich(`code${notification.code}`, {
-          strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
-          course_name: notification?.props?.course_name ?? '',
-          org_name: notification?.props?.org_name ?? '',
-          organization_name: notification?.props?.org_name ?? '',
-          user_name: notification?.props?.username ?? '',
-          blog_name: notification?.props?.blog_title ?? '',
-          display_name: notification?.props?.display_name ?? '',
-          launchpad_name: notification?.props?.launchpad_name ?? '',
-          amount: formatCurrency(String(Number.parseFloat(notification?.props?.amount ?? '') ?? 0)) ?? '',
-          currency: notification?.props?.currency ?? '',
-          collaborator: notification?.props?.course_roles?.join(', ') ?? '',
-          course_ai_tool: t?.(notification?.props?.provider ?? 'ai_tool'),
-        })}
+        <p>
+          {t?.rich(`code${notification.code}`, {
+            strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
+            course_name: notification?.props?.course_name ?? '',
+            org_name: notification?.props?.org_name ?? '',
+            organization_name: notification?.props?.org_name ?? '',
+            user_name: notification?.props?.username ?? '',
+            blog_name: notification?.props?.blog_title ?? '',
+            display_name: notification?.props?.display_name ?? '',
+            launchpad_name: notification?.props?.launchpad_name ?? '',
+            amount: formatCurrency(String(Number.parseFloat(notification?.props?.amount ?? '') ?? 0)) ?? '',
+            currency: notification?.props?.currency ?? '',
+            collaborator: notification?.props?.course_roles?.join(', ') ?? '',
+            course_ai_tool: t?.(notification?.props?.provider ?? 'ai_tool'),
+          })}
+        </p>
+        <time className="text-muted-foreground text-xs">{formatDate(notification.create_at)}</time>
       </Link>
-      <time className="text-muted-foreground text-xs">{formatDate(notification.create_at)}</time>
     </div>
   );
 }

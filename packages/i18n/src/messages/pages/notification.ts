@@ -62,5 +62,16 @@ export const notificationMessage = {
       'New review required: Educator <strong>{user_name}</strong> submitted <strong>{launchpad_name}</strong> launchpad.',
     code701: '<strong>{launchpad_name}</strong> launchpad approved! Ready for funding setup 🚀.',
     code702: '<strong>{launchpad_name}</strong> launchpad request rejected. Updates needed before publishing.',
+    code703: '<strong>{launchpad_name}</strong> funding unsuccessful - Request rejected. Goal not reached.',
+    code704: '<strong>{launchpad_name}</strong> entered waiting period. Funding goal reached.',
+    code705: '<strong>{launchpad_name}</strong> Ready for next phase 🎉.',
+    code706: '<strong>{launchpad_name}</strong> progress review - Your vote matters!',
+    code707: '<strong>{launchpad_name}</strong> voting period ended - Your vote automatically approved.',
+    code708: '<strong>{launchpad_name}</strong> voting passed - Funds released! Continue development 🎉.',
+    code709: '<strong>{launchpad_name}</strong> voting unsuccessful - Development halted.',
+    code710:
+      '<strong>{launchpad_name}</strong> by <strong>{user_name}</strong> ready for publishing review - Launchpad completed.',
+    code711: '<strong>{launchpad_name}</strong> oting failed - Your refund is available.',
+    code712: '<strong>{course_name}</strong> Educator inactive - Claim your investment back.',
   },
 } as const;
