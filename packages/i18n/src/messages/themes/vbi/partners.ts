@@ -4,10 +4,62 @@ export const vbiPartners = {
       title: 'PARTNERS GROUP IN GROWTH',
       titleSub:
         'Top 1 partner in training web3 developers for leading ecosystems, organizations, and universities in Vietnam.',
+      labelFoundation: 'Foundation',
+      labelEntrepreneur: 'Entrepreneur',
+      labelUniversity: 'University',
+      foundation: {
+        'foundation-0': {
+          content: 'One of the top blockchain platforms for interoperability, connecting multiple chains',
+        },
+        'foundation-1': {
+          content: 'The largest blockchain by market cap, leader in decentralized applications',
+        },
+        'foundation-2': {
+          content: '2nd in Web3 innovation, pushing the boundaries of technology',
+        },
+        'foundation-3': {
+          content: 'Best Performance for Web3 Applications 4th place',
+        },
+        'foundation-4': {
+          content: 'The 5th largest blockchain, known for its eco-friendly and scientific approach',
+        },
+        'foundation-5': {
+          content: 'A growing platform specialized in data availability for blockchain solutions',
+        },
+        'foundation-6': {
+          content: 'Algorand is an energy-efficient, quantum-secure, single-layer blockchain with instant finality',
+        },
+        'foundation-7': {
+          content:
+            'NEAR is the chain abstraction stack, empowering builders to create apps that scale to billions of users',
+        },
+      },
+      entrepreneur: {
+        'entrepreneur-0': {
+          content: 'Digital transformation leader, serving 100 million+ users globally',
+        },
+        'entrepreneur-1': {
+          content: '#1 tech innovator, shaping the future with AI and cloud computing',
+        },
+        'entrepreneur-2': {
+          content: 'GFI is the largest Web3 Firm in Vietnam',
+        },
+      },
+      university: {
+        'university-0': {
+          content: "Vietnam's top engineering program, producing world-class tech talent",
+        },
+        'university-1': {
+          content: 'Best in research and education, with 100+ global projects and partnerships',
+        },
+        'university-2': {
+          content: 'Leading in creative education, training 15,000+ students annually',
+        },
+      },
     },
     vbiTesti: {
       title: 'TESTIMONIAL',
-      titleSub: ' VBI Academy collaborates with over 10 leading IT universities in Vietnam to provide Blockchain.',
+      titleSub: 'VBI Academy collaborates with over 10 leading IT universities in Vietnam to provide Blockchain.',
       button: {
         text: 'Explore all',
       },
@@ -53,9 +105,9 @@ export const vbiPartners = {
       },
     },
     vbiCta: {
-      title: 'CTA',
+      title: 'COMPREHENSIVE BLOCKCHAIN AND MARKETING SOLUTIONS FOR ENTERPRISES',
       titleSub:
-        'Display Instagram Stories Widget on your website, that auto-syncs, and updates each time you add a photo in your active story. ',
+        'Attract and onboard thousands of developers through bootcamps, gamified challenges, hackathons, bounties, and live events. Foster their long-term growth with strategic incubators.',
     },
     vbiShowcase: {
       title: 'SHOWCASE / OUTSTANDING',
@@ -66,47 +118,47 @@ export const vbiPartners = {
       },
       projects: {
         project1: {
-          title: 'NEAR Viet Name Hub',
+          title: 'MOVEMENT HACKTHON',
           description: '',
           stats: {
             stat1: {
-              label: 'Granted in 2022',
+              label: 'Developer Engaged',
             },
             stat2: {
-              label: 'Granted in 2022',
+              label: 'Demo Day Attendees',
             },
             stat3: {
-              label: 'Granted in 2022',
+              label: 'Project Submissions',
             },
           },
         },
         project2: {
-          title: 'NEAR Viet Name Hub',
+          title: 'SUI HACKCAMP',
           description: '',
           stats: {
             stat1: {
-              label: 'Granted in 2022',
+              label: 'Bootcamps Attendees',
             },
             stat2: {
-              label: 'Granted in 2022',
+              label: 'Project Submissions',
             },
             stat3: {
-              label: 'Granted in 2022',
+              label: 'Demo Day Attendees',
             },
           },
         },
         project3: {
-          title: 'NEAR Viet Name Hub',
+          title: 'POLKADOT HACKCAMP',
           description: '',
           stats: {
             stat1: {
-              label: 'Granted in 2022',
+              label: 'Bootcamps Attendees',
             },
             stat2: {
-              label: 'Granted in 2022',
+              label: 'Project Submissions',
             },
             stat3: {
-              label: 'Granted in 2022',
+              label: 'Demo Day Attendees',
             },
           },
         },

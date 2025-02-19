@@ -75,7 +75,7 @@ export type IFiatWithdrawPayload = z.infer<typeof fiatWithdrawSchema>;
 
 export const rejectWithdrawSchema = z.object({
   value: z.string(),
-  note: z.string().min(1, 'errors.isRequired'),
+  note: z.string().min(1, 'wallets.withdrawPage.form.errors.isRequired'),
 });
 
 export type IRejectWithdrawType = z.infer<typeof rejectWithdrawSchema>;

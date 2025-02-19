@@ -267,3 +267,141 @@ export const createAvailAuthLayoutConfig = (getThemeTranslation: (path: string[]
     order: 6,
   }),
 });
+
+export const createVbiAuthLayoutConfig = (getThemeTranslation: (path: string[]) => string) => ({
+  login: createSection<'auth', 'login'>({
+    props: {
+      title: getThemeTranslation(['auth', 'login', 'title']),
+      seperate: getThemeTranslation(['auth', 'login', 'seperate']),
+      banner: { mime: 'image/png' },
+      slogan: getThemeTranslation(['auth', 'login', 'slogan']),
+    },
+    order: 0,
+  }),
+  signUp: createSection<'auth', 'signUp'>({
+    props: {
+      title: getThemeTranslation(['auth', 'signup', 'title']),
+      seperate: getThemeTranslation(['auth', 'signup', 'seperate']),
+      banner: { mime: 'image/png' },
+      slogan: getThemeTranslation(['auth', 'signup', 'slogan']),
+    },
+    order: 1,
+  }),
+  forgotPassword: createSection<'auth', 'forgotPassword'>({
+    props: {
+      title: getThemeTranslation(['auth', 'forgotPassword', 'title']),
+      banner: { mime: 'image/png' },
+      slogan: getThemeTranslation(['auth', 'forgotPassword', 'slogan']),
+    },
+    order: 2,
+  }),
+  emailVerify: createSection<'auth', 'emailVerify'>({
+    props: {
+      banner: { mime: 'image/png' },
+      slogan: getThemeTranslation(['auth', 'emailVerify', 'slogan']),
+    },
+    order: 3,
+  }),
+  authConfirm: createSection<'auth', 'authConfirm'>({
+    props: {
+      title: getThemeTranslation(['auth', 'authConfirm', 'title']),
+      banner: { mime: 'image/png' },
+      slogan: getThemeTranslation(['auth', 'authConfirm', 'slogan']),
+    },
+    order: 4,
+  }),
+  header: createSection<'auth', 'header'>({
+    props: {
+      logo: { mime: 'image/png' },
+      sidebarItems: [
+        {
+          id: 'courses',
+          label: 'Courses',
+          href: '/courses',
+          isHighlight: false,
+        },
+        { id: 'blog', label: 'Blog', href: '/blog', isHighlight: false },
+        { id: 'partners', label: 'Partners', href: '/partners', isHighlight: false },
+        { id: 'aboutus', label: 'About Us', href: '/about-us', isHighlight: false },
+      ],
+    },
+    order: 5,
+  }),
+  footer: createSection<'auth', 'footer'>({
+    props: {
+      logo: { mime: 'image/png' },
+      description: getThemeTranslation(['auth', 'footer', 'description']),
+      navigationItems: {
+        registration: {
+          label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'registration', 'label']),
+          colSpan: 3,
+          items: [
+            {
+              href: '/about-us',
+              label: getThemeTranslation([
+                'auth',
+                'footer',
+                'navigationItems',
+                'registration',
+                'items',
+                'items-0',
+                'label',
+              ]),
+            },
+            {
+              href: '/partners',
+              label: getThemeTranslation([
+                'auth',
+                'footer',
+                'navigationItems',
+                'registration',
+                'items',
+                'items-1',
+                'label',
+              ]),
+            },
+          ],
+        },
+        terms: {
+          label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'label']),
+          colSpan: 3,
+          items: [
+            {
+              href: '/terms',
+              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'items', 'items-0', 'label']),
+            },
+            {
+              href: '/faq',
+              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'items', 'items-1', 'label']),
+            },
+          ],
+        },
+        social: {
+          label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'social', 'label']),
+          colSpan: 2,
+          items: [
+            {
+              href: 'https://www.facebook.com/VBIAcademy',
+              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'social', 'items', 'items-0', 'label']),
+            },
+            {
+              href: 'https://x.com/vbi_academy',
+              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'social', 'items', 'items-1', 'label']),
+            },
+            {
+              href: 'https://www.linkedin.com/company/vbi-academy',
+              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'social', 'items', 'items-1', 'label']),
+            },
+            {
+              href: 'https://www.youtube.com/@VBIAcademy',
+              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'social', 'items', 'items-1', 'label']),
+            },
+          ],
+        },
+      },
+      className: 'bg-primary',
+      variant: 'org',
+    },
+    order: 6,
+  }),
+});

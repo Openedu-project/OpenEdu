@@ -1,5 +1,5 @@
 import type { PagesConfig, ThemePageKey } from '../../../_types';
-import { createAuthLayoutConfig } from '../core/auth';
+import { createVbiAuthLayoutConfig } from '../core/auth';
 import { defaultMetadataAtPage } from '../core/metadata';
 import { createVbiAboutUsConfig } from './about-us';
 import { createVbiHomepageConfig } from './homepage';
@@ -21,7 +21,7 @@ export const createVbiConfig = (
   },
   auth: {
     label: t('labels.authLayout'),
-    config: createAuthLayoutConfig(vbiT),
+    config: createVbiAuthLayoutConfig(vbiT),
     metadata: undefined,
   },
   partners: {
