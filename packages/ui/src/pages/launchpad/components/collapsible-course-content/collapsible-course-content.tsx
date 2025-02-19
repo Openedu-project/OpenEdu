@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import type { ILesson, ISection } from "@oe/api/types/course/segment";
-import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
-import { useState } from "react";
+import type { ILesson, ISection } from '@oe/api/types/course/segment';
+import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
+import { useState } from 'react';
 
 const CollapsibleCourseContent = ({ outline }: { outline: ISection[] }) => {
   return (
     <div className="space-y-3">
-      {outline.map((section) => (
+      {outline.map(section => (
         <CollapsibleCourseSection key={section.order} outline={section} />
       ))}
     </div>
@@ -24,21 +24,12 @@ const CollapsibleCourseSection = ({ outline }: { outline: ISection }) => {
             Section {outline.order}: {outline.title}
           </h4>
           <button type="button" onClick={() => setIsExpanded(!isExpanded)}>
-            {isExpanded ? (
-              <ChevronUpIcon className="h-6 w-6" />
-            ) : (
-              <ChevronDownIcon className="h-6 w-6" />
-            )}
+            {isExpanded ? <ChevronUpIcon className="h-6 w-6" /> : <ChevronDownIcon className="h-6 w-6" />}
           </button>
         </div>
       </div>
       {isExpanded &&
-        outline.lessons?.map((lession) => (
-          <CollapsibleCourseLession
-            key={lession.lesson_count}
-            lession={lession}
-          />
-        ))}
+        outline.lessons?.map(lession => <CollapsibleCourseLession key={lession.lesson_count} lession={lession} />)}
     </div>
   );
 };
@@ -46,7 +37,7 @@ const CollapsibleCourseSection = ({ outline }: { outline: ISection }) => {
 const CollapsibleCourseLession = ({ lession }: { lession: ILesson }) => {
   return (
     <div className="space-y-1 rounded-2xl border-neutral-100 border-[1px] bg-neutral-20 p-3">
-      <p className="font-semibold text-xs">Lession {lession.lesson_count}</p>
+      <p className="font-semibold text-xs">Lession {lession.order}</p>
       <h5 className="font-semibold text-base">{lession.title}</h5>
     </div>
   );

@@ -7,6 +7,7 @@ import { Calendar } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '#common/navigation';
 import { CircularProgress } from '#components/circular-progress';
+import { CourseTimeline } from '#components/course-time-line';
 import { Image } from '#components/image';
 import { Button } from '#shadcn/button';
 import { formatCurrency } from '#utils/format-currency';
@@ -21,6 +22,10 @@ const CampaignDetailsSection = async ({
 }: {
   campaign: ILaunchpad | null;
 }) => {
+  if (!campaign) {
+    return null;
+  }
+
   const [isLoggedIn, t] = await Promise.all([isLogin(), getTranslations('launchpadDetailPage')]);
 
   const timeLeft = getTimeStatus(campaign?.funding_end_date || 0);
@@ -40,6 +45,15 @@ const CampaignDetailsSection = async ({
       );
     }
   };
+
+  console.log(campaign);
+
+  const timelineItems =
+    campaign.voting_milestones?.map((milestone, index) => ({
+      number: index + 1,
+      sections: milestone.target_section,
+      description: new Date(milestone.estimated_open_vote_date).toLocaleDateString(),
+    })) || [];
 
   return (
     <div className="w-full px-4 md:w-[60%] md:px-0">
@@ -66,7 +80,10 @@ const CampaignDetailsSection = async ({
         </p>
       </div>
 
-      <div className="flex items-center justify-between gap-6 md:hidden">
+      <h3 className="mt-7 mb-4 font-semibold text-xl md:text-2xl">{t('title.votingPlan')}</h3>
+      <CourseTimeline items={timelineItems} />
+
+      <div className="flex items-center justify-between gap-6 md:hidden mt-6">
         <div className="space-y-2">
           <p className="text-base">
             <span className="font-semibold text-xl md:text-2xl">{formatCurrency(Number(campaign?.total_amount))}</span>

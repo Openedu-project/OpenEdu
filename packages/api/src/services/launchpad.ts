@@ -59,14 +59,14 @@ export async function getLaunchpadService(
 }
 
 export async function getBackerService(
-  url: string,
+  url: string | undefined,
   { id, init, preloads }: { id: string; init?: RequestInit; preloads?: string[] }
 ): Promise<IBackerData | null> {
   let endpointKey = url;
 
   if (!endpointKey) {
     endpointKey = createAPIUrl({
-      endpoint: API_ENDPOINT.LAUNCHPADS_INVESTMENTS,
+      endpoint: API_ENDPOINT.LAUNCHPADS_ID_INVESTMENTS,
       params: {
         id,
       },

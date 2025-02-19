@@ -1,6 +1,7 @@
 export const launchpadDetailPageMessages = {
   launchpadDetailPage: {
     title: {
+      votingPlan: 'Voting Plan',
       creator: 'Creator & Collabs',
       course: 'Course',
       description: 'Description',
