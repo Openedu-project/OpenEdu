@@ -145,7 +145,13 @@ export default function AIHistory({ className, isLogin = false, pauseAddMessage,
 
   const { data, mutate, size, setSize, isLoading, getKey } = useGetListConversation(searchParams, isLogin);
   const historyData = useMemo(
-    () => data?.flatMap(item => item?.results?.map(history => ({ ...history, page: item.pagination.page ?? 1 }))),
+    () =>
+      data?.flatMap(item =>
+        item?.results?.map(history => ({
+          ...history,
+          page: item.pagination.page ?? 1,
+        }))
+      ),
     [data]
   );
 
@@ -158,7 +164,9 @@ export default function AIHistory({ className, isLogin = false, pauseAddMessage,
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    setIsShow(false);
+    if (isShow) {
+      setIsShow(false);
+    }
   }, [id]);
 
   const updateFirstPageOnly = async () => {
@@ -232,7 +240,7 @@ export default function AIHistory({ className, isLogin = false, pauseAddMessage,
           {!isShow && (
             <Button
               className={cn(
-                '!p-2 !rounded-l-full !rounded-r-none pointer-events-auto absolute right-0 z-[60] mb-1 bg-primary lg:hidden',
+                '!p-2 !rounded-r-full !rounded-l-none pointer-events-auto absolute left-0 z-[60] mb-1 bg-primary lg:hidden',
                 isShow ? 'top-0 rotate-90 opacity-100' : 'bottom-2 opacity-80'
               )}
               onClick={() => setIsShow(!isShow)}
@@ -240,7 +248,7 @@ export default function AIHistory({ className, isLogin = false, pauseAddMessage,
               <FileClock className="h-4 w-4 text-primary-foreground" />
             </Button>
           )}
-          <Drawer open={isShow} onOpenChange={setIsShow} direction="right">
+          <Drawer open={isShow} onOpenChange={setIsShow} direction="left">
             <DrawerContent className="!duration-300 top-0 h-[calc(100dvh-100px] lg:w-1/2 first:[&>div]:hidden">
               <DrawerTitle>
                 <VisuallyHidden asChild>Title</VisuallyHidden>
@@ -250,7 +258,7 @@ export default function AIHistory({ className, isLogin = false, pauseAddMessage,
               </DrawerDescription>
 
               <SearchHistory
-                className={cn('w-full grow rounded-l-4 bg-background', isShow ? 'translate-x-0' : 'translate-x-full')}
+                className={cn('w-full grow rounded-r-4 bg-background', isShow ? 'translate-x-0' : '-translate-x-full')}
                 chatHistory={historyData}
                 handleSearch={searchChatHistory}
                 pauseAddMessage={pauseAddMessage}

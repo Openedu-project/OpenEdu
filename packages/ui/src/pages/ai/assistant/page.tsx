@@ -26,7 +26,7 @@ export default async function AIAssistantPage() {
         })}
       </h2>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-3 md:grid-cols-2 md:gap-6">
         <AIModule showDesc className="items-start shadow" />
       </div>
     </div>
