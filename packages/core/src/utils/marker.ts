@@ -1,10 +1,12 @@
 import hljs from 'highlight.js';
 import { Marked, type Renderer, type Tokens } from 'marked';
+const regexLinkButton = /^\[(\d+)\]$/;
 
 export const marked = new Marked({
   renderer: {
     link(this: Renderer, { href, title, text }: Tokens.Link) {
-      return `<a href="${href}" target="_blank" class="text-primary underline" ${title ? `title="${title}"` : ''}>${text}</a>`;
+      const isButton = regexLinkButton.test(text ?? '');
+      return `<a href="${href}" target="_blank" class="text-primary ${isButton ? 'border font-bold rounded-full bg-primary/10 p-1 text-xs h-5 w-5 inline-flex items-center justify-center' : 'underline'}" ${title ? `title="${title}"` : ''}>${isButton ? text.substring(1, text.length - 1) : text}</a>`;
     },
     code(this: Renderer, { text, lang }: Tokens.Code) {
       // Store the original unformatted code

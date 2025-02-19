@@ -17,7 +17,7 @@ import { Button } from '#shadcn/button';
 import { Card } from '#shadcn/card';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
-import { INPUT_BUTTON } from '../constants';
+import { DESKTOP_BREAKPOINT, INPUT_BUTTON } from '../constants';
 import type { MessageFormValues, MessageInputProps } from '../type';
 import { InputField } from './message-input-field';
 import { InputOption } from './message-input-option';
@@ -62,6 +62,23 @@ const MessageInput: React.FC<MessageInputProps> = ({
 
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const { setLoginRequiredModal } = useLoginRequiredStore();
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkDesktop = () => setIsDesktop(window?.innerWidth >= DESKTOP_BREAKPOINT);
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
+
+  useEffect(() => {
+    if (!(inputRef.current && isDesktop) || document.activeElement === inputRef.current) {
+      return;
+    }
+    inputRef.current.focus();
+    inputRef.current.selectionStart = inputRef.current.value.length;
+    inputRef.current.selectionEnd = inputRef.current.value.length;
+  });
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -214,6 +231,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
           <Card
             className={cn(
               'relative flex flex-row items-center space-x-2 rounded-full border border-primary bg-background p-2 pl-4',
+              selectedAgent === 'ai_chat' && 'pl-8',
               className
             )}
             onClick={() => {

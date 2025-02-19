@@ -10,6 +10,7 @@ export interface AISidebarItem {
   icon: ReactNode;
   href: string;
   isComming?: boolean;
+  bgColor: string;
 }
 
 export interface ISendMessageParams {

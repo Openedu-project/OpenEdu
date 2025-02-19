@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 import { Link, usePathname } from '#common/navigation';
 import { Badge } from '#shadcn/badge';
 import { cn } from '#utils/cn';
-import { AI_SIDEBAR, BG_COLOR } from './constants';
+import { AI_SIDEBAR } from './constants';
 
 export function AIModule({
   className,
@@ -24,7 +24,7 @@ export function AIModule({
 
   return (
     <>
-      {AI_SIDEBAR.map((item, index) => (
+      {AI_SIDEBAR.map(item => (
         <Link
           key={item.lableKey}
           href={item.href}
@@ -39,7 +39,7 @@ export function AIModule({
         >
           <div
             className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full md:h-8 md:w-8"
-            style={{ background: BG_COLOR[index % BG_COLOR.length] }}
+            style={{ background: item.bgColor }}
           >
             {item.icon}
           </div>

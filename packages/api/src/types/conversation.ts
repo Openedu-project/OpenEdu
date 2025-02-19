@@ -48,6 +48,7 @@ export interface IAgenConfigs {
   image_generator_enabled: boolean;
   present_creator_enabled: boolean;
   code_executor_enabled: boolean;
+  searcher_enabled: boolean;
 }
 export interface Configs extends IAgenConfigs {
   stream_response_enabled: boolean;
