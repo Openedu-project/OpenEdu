@@ -104,6 +104,7 @@ export const walletMessages = {
           unexpectedErr: 'An unexpected error occurred',
           requiredToken: 'Token is required',
           requiredBankAccount: 'Bank account is required',
+          isRequired: 'This field is required',
         },
       },
       button: {
