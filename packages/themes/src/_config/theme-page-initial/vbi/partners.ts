@@ -5,6 +5,71 @@ export const createVbiPartnersConfig = (getThemeTranslation: (path: string[]) =>
     props: {
       title: getThemeTranslation(['partners', 'vbiPartnerList', 'title']),
       titleSub: getThemeTranslation(['partners', 'vbiPartnerList', 'titleSub']),
+      labelFoundation: getThemeTranslation(['partners', 'vbiPartnerList', 'labelFoundation']),
+      labelEntrepreneur: getThemeTranslation(['partners', 'vbiPartnerList', 'labelEntrepreneur']),
+      labelUniversity: getThemeTranslation(['partners', 'vbiPartnerList', 'labelUniversity']),
+      foundation: [
+        {
+          logo: { mime: 'image/png' },
+          content: getThemeTranslation(['partners', 'vbiPartnerList', 'foundation', 'foundation-0', 'content']),
+        },
+        {
+          logo: { mime: 'image/png' },
+          content: getThemeTranslation(['partners', 'vbiPartnerList', 'foundation', 'foundation-1', 'content']),
+        },
+        {
+          logo: { mime: 'image/png' },
+          content: getThemeTranslation(['partners', 'vbiPartnerList', 'foundation', 'foundation-2', 'content']),
+        },
+        {
+          logo: { mime: 'image/png' },
+          content: getThemeTranslation(['partners', 'vbiPartnerList', 'foundation', 'foundation-3', 'content']),
+        },
+        {
+          logo: { mime: 'image/png' },
+          content: getThemeTranslation(['partners', 'vbiPartnerList', 'foundation', 'foundation-4', 'content']),
+        },
+        {
+          logo: { mime: 'image/png' },
+          content: getThemeTranslation(['partners', 'vbiPartnerList', 'foundation', 'foundation-5', 'content']),
+        },
+        {
+          logo: { mime: 'image/png' },
+          content: getThemeTranslation(['partners', 'vbiPartnerList', 'foundation', 'foundation-6', 'content']),
+        },
+        {
+          logo: { mime: 'image/png' },
+          content: getThemeTranslation(['partners', 'vbiPartnerList', 'foundation', 'foundation-7', 'content']),
+        },
+      ],
+      entrepreneur: [
+        {
+          logo: { mime: 'image/png' },
+          content: getThemeTranslation(['partners', 'vbiPartnerList', 'entrepreneur', 'entrepreneur-0', 'content']),
+        },
+        {
+          logo: { mime: 'image/png' },
+          content: getThemeTranslation(['partners', 'vbiPartnerList', 'entrepreneur', 'entrepreneur-1', 'content']),
+        },
+        {
+          logo: { mime: 'image/png' },
+          content: getThemeTranslation(['partners', 'vbiPartnerList', 'entrepreneur', 'entrepreneur-2', 'content']),
+        },
+      ],
+      university: [
+        {
+          logo: { mime: 'image/png' },
+          content: getThemeTranslation(['partners', 'vbiPartnerList', 'university', 'university-0', 'content']),
+        },
+        {
+          logo: { mime: 'image/png' },
+          content: getThemeTranslation(['partners', 'vbiPartnerList', 'university', 'university-1', 'content']),
+        },
+        {
+          logo: { mime: 'image/png' },
+          content: getThemeTranslation(['partners', 'vbiPartnerList', 'university', 'university-2', 'content']),
+        },
+      ],
     },
     order: 0,
   }),
@@ -28,7 +93,7 @@ export const createVbiPartnersConfig = (getThemeTranslation: (path: string[]) =>
                 'stat1',
                 'label',
               ]),
-              value: 2100,
+              value: 100,
             },
             stat2: {
               label: getThemeTranslation([
@@ -40,7 +105,7 @@ export const createVbiPartnersConfig = (getThemeTranslation: (path: string[]) =>
                 'stat2',
                 'label',
               ]),
-              value: 2100,
+              value: 120,
             },
             stat3: {
               label: getThemeTranslation([
@@ -52,7 +117,7 @@ export const createVbiPartnersConfig = (getThemeTranslation: (path: string[]) =>
                 'stat3',
                 'label',
               ]),
-              value: 2100,
+              value: 20,
             },
           },
         },
@@ -71,7 +136,7 @@ export const createVbiPartnersConfig = (getThemeTranslation: (path: string[]) =>
                 'stat1',
                 'label',
               ]),
-              value: 2100,
+              value: 700,
             },
             stat2: {
               label: getThemeTranslation([
@@ -83,7 +148,7 @@ export const createVbiPartnersConfig = (getThemeTranslation: (path: string[]) =>
                 'stat2',
                 'label',
               ]),
-              value: 2100,
+              value: 30,
             },
             stat3: {
               label: getThemeTranslation([
@@ -95,7 +160,7 @@ export const createVbiPartnersConfig = (getThemeTranslation: (path: string[]) =>
                 'stat3',
                 'label',
               ]),
-              value: 2100,
+              value: 300,
             },
           },
         },
@@ -114,7 +179,7 @@ export const createVbiPartnersConfig = (getThemeTranslation: (path: string[]) =>
                 'stat1',
                 'label',
               ]),
-              value: 2100,
+              value: 500,
             },
             stat2: {
               label: getThemeTranslation([
@@ -126,7 +191,7 @@ export const createVbiPartnersConfig = (getThemeTranslation: (path: string[]) =>
                 'stat2',
                 'label',
               ]),
-              value: 2100,
+              value: 30,
             },
             stat3: {
               label: getThemeTranslation([
@@ -138,7 +203,7 @@ export const createVbiPartnersConfig = (getThemeTranslation: (path: string[]) =>
                 'stat3',
                 'label',
               ]),
-              value: 2100,
+              value: 150,
             },
           },
         },

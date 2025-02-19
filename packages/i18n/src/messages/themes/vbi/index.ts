@@ -34,6 +34,51 @@ export const vbiMessage = {
           },
         },
       },
+      footer: {
+        description:
+          'The largest Blockchain and Web3 training academy in Vietnam, specializing in providing comprehensive technology training solutions and connecting the developer community with businesses, from strategic consulting to planning and execution.',
+        navigationItems: {
+          registration: {
+            label: 'Information',
+            items: {
+              'items-0': {
+                label: 'About Us',
+              },
+              'items-1': {
+                label: 'Partners',
+              },
+            },
+          },
+          terms: {
+            label: 'Terms & Condition',
+            items: {
+              'items-0': {
+                label: 'Openedu T&C',
+              },
+              'items-1': {
+                label: 'Openedu FAQ',
+              },
+            },
+          },
+          social: {
+            label: 'Social',
+            items: {
+              'items-0': {
+                label: 'Facebook',
+              },
+              'items-1': {
+                label: 'X',
+              },
+              'items-2': {
+                label: 'LinkedIn',
+              },
+              'items-3': {
+                label: 'Youtube',
+              },
+            },
+          },
+        },
+      },
     },
   },
 };

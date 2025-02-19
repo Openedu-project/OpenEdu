@@ -14,7 +14,7 @@ interface StatProps {
 const Stat = ({ value, label }: StatProps) => (
   <div className="min-w-0 flex-1 text-center">
     <div className="truncate font-bold text-lg text-primary sm:text-xl md:text-2xl">
-      {value}
+      {value}+
     </div>
     <div className="mt-1 line-clamp-2 text-muted-foreground text-xs sm:text-sm">
       {label}

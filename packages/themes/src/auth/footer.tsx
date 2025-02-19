@@ -34,6 +34,7 @@ const ThemeFooter: SectionComponent<"auth", "footer"> = ({ props }) => {
       description={props?.description}
       navigationItems={navItems}
       className="bg-primary"
+      variant={props?.variant}
     />
   );
 };

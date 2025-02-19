@@ -25,6 +25,7 @@ import type {
   VbiHomepageHeroProps,
   VbiHomepageMapProps,
   VbiPartnersCtaProps,
+  VbiPartnersListProps,
   VbiPartnersShowcaseProps,
   VbiPartnersTestiProps,
 } from '../../vbi/type';
@@ -90,6 +91,7 @@ export interface SectionPropsMap<K extends ThemePageKey> {
   vbiTesti: DynamicProps<K, VbiPartnersTestiProps>;
   vbiCta: DynamicProps<K, VbiPartnersCtaProps>;
   vbiShowcase: DynamicProps<K, VbiPartnersShowcaseProps>;
+  vbiPartnerList: DynamicProps<K, VbiPartnersListProps>;
 
   // Avail
   availHero: DynamicProps<K, AvailHomepageHeroProps>;
