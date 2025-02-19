@@ -247,7 +247,7 @@ export default function BlogForm({
               labelClassName="giant-iheading-semibold16 mb-4"
             >
               <RichTextEditor
-                className="md:h-[calc(100vh-150px)]"
+                className="md:h-[calc(100dvh-150px)]"
                 defaultValue={defaultValues?.content ?? ''}
                 aiParams={{ blog_cuid: data?.cuid ?? '' }}
                 aiButton={blogType === 'org'}

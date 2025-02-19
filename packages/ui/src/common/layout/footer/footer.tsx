@@ -24,6 +24,7 @@ export interface FooterProps {
   navigationItems?: Record<string, NavigationItem>;
   description?: string;
   className?: string;
+  variant?: string; // root | org
 }
 
 export function Footer({
@@ -31,6 +32,7 @@ export function Footer({
   navigationItems,
   description,
   className,
+  variant = "root",
 }: FooterProps) {
   const t = useTranslations("footer");
 
@@ -86,7 +88,11 @@ export function Footer({
 
   return (
     <footer
-      className={cn("w-full bg-footer-gradient px-4 py-8 lg:py-16", className)}
+      className={cn(
+        "w-full bg-footer-gradient px-4 py-8 lg:py-16",
+        variant === "org" && "bg-primary",
+        className
+      )}
     >
       <div className="container mx-auto">
         <div className="flex flex-col gap-8 lg:grid lg:grid-cols-12">
@@ -118,7 +124,12 @@ export function Footer({
               </div>
             </Link>
 
-            <div className="mcaption-regular16 max-w-sm">
+            <div
+              className={cn(
+                "mcaption-regular16 max-w-sm",
+                variant === "org" && "!text-primary-foreground"
+              )}
+            >
               {description ||
                 t.rich("headline", {
                   emphasis: (chunks) => (
@@ -132,7 +143,14 @@ export function Footer({
             {Object.entries(navigationItems || openEduNavigationItem).map(
               ([key, section]) => (
                 <div key={key} className={`lg:col-span-${section.colSpan}`}>
-                  <h3 className="mbutton-semibold16 mb-4">{section.label}</h3>
+                  <h3
+                    className={cn(
+                      "mbutton-semibold16 mb-4",
+                      variant === "org" && "!text-primary-foreground"
+                    )}
+                  >
+                    {section.label}
+                  </h3>
                   <ul className="space-y-1">
                     {section.items.map((link: NavigationLink) => (
                       <li key={link.href}>
@@ -146,7 +164,10 @@ export function Footer({
                               ? "noopener noreferrer"
                               : undefined
                           }
-                          className="mcaption-regular16 p-0 text-[#464646] transition-colors hover:text-[#2B3674]"
+                          className={cn(
+                            "mcaption-regular16 p-0 text-[#464646] transition-colors hover:text-[#2B3674]",
+                            variant === "org" && "!text-primary-foreground"
+                          )}
                         >
                           {link.icon && <link.icon className="mr-2 h-5 w-5" />}
                           <span>{link.label}</span>

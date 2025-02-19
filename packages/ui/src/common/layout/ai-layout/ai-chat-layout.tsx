@@ -27,7 +27,7 @@ export default async function AIChatLayout({ children, className }: Props) {
   return (
     <div
       className={cn(
-        'flex h-[calc(100vh-var(--header-small-height))] md:h-[calc(100vh-var(--header-height))]',
+        'flex h-[calc(100dvh-var(--header-small-height))] md:h-[calc(100dvh-var(--header-height))]',
         className
       )}
     >

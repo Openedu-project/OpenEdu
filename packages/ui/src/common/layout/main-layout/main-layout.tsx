@@ -16,12 +16,14 @@ export function MainLayout({
   footerProps,
   logo,
   subSidebarItems,
+  hasFooter = true,
 }: {
   children: ReactNode;
   sidebarItems?: ISidebarItem[];
   subSidebarItems?: ISidebarItem[];
   footerProps?: FooterProps;
   logo?: FileType;
+  hasFooter?: boolean;
 }) {
   return (
     <>
@@ -62,12 +64,15 @@ export function MainLayout({
       </Header>
       {children}
       <LoginWarningModal />
-      <Footer
-        logo={footerProps?.logo}
-        description={footerProps?.description}
-        navigationItems={footerProps?.navigationItems}
-        className={footerProps?.className}
-      />
+      {hasFooter && (
+        <Footer
+          logo={footerProps?.logo}
+          description={footerProps?.description}
+          navigationItems={footerProps?.navigationItems}
+          className={footerProps?.className}
+          variant={footerProps?.variant}
+        />
+      )}
     </>
   );
 }
