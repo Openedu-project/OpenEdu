@@ -2,6 +2,7 @@ import Discord from "@oe/assets/icons/social-icon/discord";
 import Facebook from "@oe/assets/icons/social-icon/facebook";
 import Telegram from "@oe/assets/icons/social-icon/telegram";
 import OpeneduLogo from "@oe/assets/images/logo-openedu-2.png";
+import { Separator } from "@radix-ui/react-select";
 import { useTranslations } from "next-intl";
 import type React from "react";
 import { Link } from "#common/navigation";
@@ -35,6 +36,7 @@ export function Footer({
   variant = "root",
 }: FooterProps) {
   const t = useTranslations("footer");
+  const currentYear = new Date().getFullYear();
 
   const openEduNavigationItem = {
     registration: {
@@ -179,6 +181,15 @@ export function Footer({
               )
             )}
           </div>
+        </div>
+        <Separator className="mt-8 mb-4 h-[1px] w-full bg-muted/80" />
+        <div
+          className={cn(
+            "text-sm",
+            variant === "org" && "!text-primary-foreground"
+          )}
+        >
+          Copyright © {currentYear}. Powered by Openedu
         </div>
       </div>
     </footer>
