@@ -51,7 +51,8 @@ export default async function OpeneduLayout({
           ])
         )
       : {},
-    className: footerProps?.className,
+    className: "bg-primary text-foreground",
+    variant: "org",
   };
 
   return (
