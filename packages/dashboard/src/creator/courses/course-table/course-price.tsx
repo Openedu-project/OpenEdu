@@ -1,6 +1,6 @@
-import type { ICourse } from "@oe/api/types/course/course";
-import { formatCurrency } from "@oe/core/utils/currency";
-import { useTranslations } from "next-intl";
+import type { ICourse } from '@oe/api/types/course/course';
+import { formatCurrency } from '@oe/core/utils/currency';
+import { useTranslations } from 'next-intl';
 
 // const findLocaleForCurrency = (currencyCode: string): LanguageCode => {
 //   const entry = Object.entries(languageWithCurrency).find(
@@ -11,31 +11,19 @@ import { useTranslations } from "next-intl";
 
 export default function CoursePrice({
   priceSettings,
-  variant = "block",
+  variant = 'block',
 }: {
-  priceSettings: ICourse["price_settings"];
-  variant?: "block" | "inline";
+  priceSettings: ICourse['price_settings'];
+  variant?: 'block' | 'inline';
 }) {
-<<<<<<< HEAD
-  const tCourses = useTranslations("courses");
-=======
   const tCourse = useTranslations('course');
->>>>>>> 5fce17a9 (feat: create course)
 
   if (!priceSettings) {
     return <span className="giant-iheading-semibold20 text-primary">-</span>;
   }
 
   if (!priceSettings.is_pay) {
-<<<<<<< HEAD
-    return (
-      <div className="mcaption-bold14 text-success">
-        {tCourses("payment.free")}
-      </div>
-    );
-=======
     return <div className="mcaption-bold14 text-success">{tCourse('price.free')}</div>;
->>>>>>> 5fce17a9 (feat: create course)
   }
 
   // const fiatLocale = findLocaleForCurrency(priceSettings.fiat_currency);
@@ -45,13 +33,7 @@ export default function CoursePrice({
 
   return (
     <div className="flex flex-col gap-2 text-sm">
-      <div
-        className={`flex gap-0.5 ${
-          variant === "block"
-            ? "flex-col"
-            : "flex-row flex-wrap items-center gap-2"
-        } `}
-      >
+      <div className={`flex gap-0.5 ${variant === 'block' ? 'flex-col' : 'flex-row flex-wrap items-center gap-2'} `}>
         {hasFiatDiscount ? (
           <>
             <span className="mcaption-bold14">
@@ -61,14 +43,10 @@ export default function CoursePrice({
               })}
             </span>
             <span className="mcaption-regular12 lg:mcaption-regular16 text-muted-foreground line-through">
-              {formatCurrency(
-                Number(priceSettings.fiat_discount_price) +
-                  Number(priceSettings.fiat_price),
-                {
-                  currency: priceSettings.fiat_currency,
-                  // locale: fiatLocale,
-                }
-              )}
+              {formatCurrency(Number(priceSettings.fiat_discount_price) + Number(priceSettings.fiat_price), {
+                currency: priceSettings.fiat_currency,
+                // locale: fiatLocale,
+              })}
             </span>
           </>
         ) : (
@@ -82,13 +60,7 @@ export default function CoursePrice({
       </div>
 
       {hasCrypto && (
-        <div
-          className={`flex gap-0.5 ${
-            variant === "block"
-              ? "flex-col"
-              : "flex-row flex-wrap items-center gap-2"
-          } `}
-        >
+        <div className={`flex gap-0.5 ${variant === 'block' ? 'flex-col' : 'flex-row flex-wrap items-center gap-2'} `}>
           {hasCryptoDiscount ? (
             <>
               <span className="mcaption-bold14">
@@ -98,14 +70,10 @@ export default function CoursePrice({
                 })}
               </span>
               <span className="mcaption-regular12 lg:mcaption-regular16 text-muted-foreground line-through">
-                {formatCurrency(
-                  Number(priceSettings.crypto_price) +
-                    Number(priceSettings.crypto_discount_price),
-                  {
-                    currency: priceSettings.crypto_currency,
-                    decimals: 2,
-                  }
-                )}
+                {formatCurrency(Number(priceSettings.crypto_price) + Number(priceSettings.crypto_discount_price), {
+                  currency: priceSettings.crypto_currency,
+                  decimals: 2,
+                })}
               </span>
             </>
           ) : (
