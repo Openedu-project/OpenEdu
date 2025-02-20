@@ -1,4 +1,5 @@
 import { getMeServiceWithoutError } from '@oe/api/services/auth';
+import { getCertLayerByCourseIdService } from '@oe/api/services/certificate';
 import { getCourseOutlineService } from '@oe/api/services/course';
 import { getLearningProgressesService, latestLessonProgressService } from '@oe/api/services/learning-progress';
 import type { ILatestLessonProgressPayload, ISectionLearningProgress } from '@oe/api/types/course/learning-progress';
@@ -24,6 +25,9 @@ export default async function LearningPage({
           id: course?.slug,
         })
       : undefined;
+
+  const certLayerData =
+    course && (await getCertLayerByCourseIdService(undefined, { params: { courseId: course?.id ?? '' } }));
 
   const latestLessonPayload = {
     course_cuid: course?.cuid ?? '',
@@ -51,7 +55,9 @@ export default async function LearningPage({
           learning_data={learningData as ISectionLearningProgress[]}
           lesson_uid={lesson as string}
         />
-        {course?.is_enrolled && <CourseLearning course={course} section_uid={section} lesson_uid={lesson} />}
+        {course?.is_enrolled && (
+          <CourseLearning course={course} section_uid={section} lesson_uid={lesson} certificate={certLayerData} />
+        )}
       </>
     )
   );

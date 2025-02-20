@@ -53,4 +53,19 @@ export const courseLearningMessages = {
       exploreNewCourse: 'Explore New Course',
     },
   },
+
+  receiveCertificateModal: {
+    congratulations: 'Congratulations',
+    yourCert: 'Your Certificate',
+    successfullyCompleted: 'You have successfully completed the course!',
+    certIsNowAvailable:
+      'Your certificate is now available. You can receive it or share it on your professional networks.',
+    displayName: 'Your display name',
+    reviewYourName:
+      'Please review your name carefully. This name will appear on your certificate, so make sure it is correct.',
+    next: 'Next',
+    editName: 'Edit Name',
+    receiveCertificate: 'Receive Certificate',
+    toastSuccess: 'Certificate received successfully',
+  },
 };

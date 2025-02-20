@@ -1,0 +1,162 @@
+'use client';
+
+import { useReceiveCertificate } from '@oe/api/hooks/useCertificate';
+import { useGetMe } from '@oe/api/hooks/useMe';
+import type { ICertificate } from '@oe/api/types/certificate';
+import { Trophy } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useCallback, useEffect, useState } from 'react';
+import { toast } from 'sonner';
+import { Input } from '#components/dynamic-form/form-components/input';
+import { Modal } from '#components/modal';
+import { ViewCertificate, useUploadCertificate } from '#components/pdf-certificate';
+import { Button } from '#shadcn/button';
+import { Label } from '#shadcn/label';
+import { useSocketStore } from '#store/socket';
+
+interface IProps {
+  certificate: ICertificate;
+}
+
+const ReceiveCertificateModal = ({ certificate }: IProps) => {
+  const tReceiveCertModal = useTranslations('receiveCertificateModal');
+  const { certificateData } = useSocketStore();
+  const { dataMe } = useGetMe();
+
+  const [learnerName, setLearnerName] = useState<string | undefined>();
+  const [certificateState, setCertificateState] = useState<ICertificate>(certificate);
+  const [step, setStep] = useState<number>(1);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const { uploadPDF, uploadPNG, isUploading } = useUploadCertificate({
+    certificate: certificateState,
+  });
+  const { triggerReceiveCert } = useReceiveCertificate();
+
+  const handleNextStep = () => {
+    if (!learnerName?.trim()) {
+      return;
+    }
+    setStep(2);
+  };
+
+  const handlePreviousStep = () => setStep(1);
+
+  const handleLearnerNameChange = (value: string) => {
+    setLearnerName(value);
+    setCertificateState(prev => ({
+      ...prev,
+      learner_name: value,
+    }));
+  };
+
+  const handleReceiveCert = useCallback(async () => {
+    try {
+      const [pdfResponse, pngResponse] = await Promise.all([uploadPDF(), uploadPNG()]);
+
+      if (!(pdfResponse?.id && pngResponse?.id)) {
+        throw new Error('PDF upload failed');
+      }
+
+      const receiveRes = await triggerReceiveCert({
+        course_cuid: certificate.course_cuid,
+        file: { id: pdfResponse.id },
+        image: { id: pngResponse.id },
+        completed_at: Date.now(),
+      });
+
+      if (!receiveRes) {
+        throw new Error('Failed to receive certificate');
+      }
+
+      toast.success(tReceiveCertModal('toastSuccess'));
+      setIsOpen(false);
+    } catch (error) {
+      console.error('Error in handleReceiveCert:', error);
+      toast.error('Error receiving certificate');
+    }
+  }, [certificate.course_cuid, triggerReceiveCert, uploadPDF, uploadPNG, tReceiveCertModal]);
+
+  const renderStep1 = () => (
+    <div className="py-4">
+      <Trophy className="mx-auto my-4 h-16 w-16 text-yellow-400" />
+      <Label htmlFor="learnerName" className="mb-2 block">
+        {tReceiveCertModal('displayName')}
+      </Label>
+      <Input
+        id="learnerName"
+        value={learnerName}
+        onChange={e => handleLearnerNameChange(e.currentTarget.value)}
+        className="mb-4"
+      />
+      <Label className="mb-2 block text-gray-600 text-sm">{tReceiveCertModal('reviewYourName')}</Label>
+    </div>
+  );
+
+  const renderStep2 = () => (
+    <ViewCertificate
+      certificate={{
+        ...certificateState,
+        date: Date.now(),
+      }}
+    />
+  );
+
+  const renderFooter = () => {
+    if (step === 1) {
+      return (
+        <Button type="button" disabled={!learnerName?.trim()} onClick={handleNextStep} className="ml-auto">
+          {tReceiveCertModal('next')}
+        </Button>
+      );
+    }
+
+    return (
+      <div className="ml-auto w-fit space-x-2">
+        <Button variant="outline" type="button" onClick={handlePreviousStep}>
+          {tReceiveCertModal('editName')}
+        </Button>
+        <Button disabled={isUploading} onClick={handleReceiveCert}>
+          {tReceiveCertModal('receiveCertificate')}
+        </Button>
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    if (certificateData?.data?.can_receive && !certificateData.data.is_received) {
+      setIsOpen(true);
+    } else {
+      setIsOpen(false);
+    }
+  }, [certificateData?.data]);
+
+  useEffect(() => {
+    if (dataMe?.display_name) {
+      handleLearnerNameChange(dataMe.display_name);
+    }
+  }, [dataMe]);
+
+  return (
+    <Modal
+      title={step === 1 ? tReceiveCertModal('congratulations') : tReceiveCertModal('yourCert')}
+      open={isOpen}
+      description={
+        step === 1 ? (
+          <>
+            <span className="block">{tReceiveCertModal('successfullyCompleted')}</span>
+            <span>{tReceiveCertModal('certIsNowAvailable')}</span>
+          </>
+        ) : null
+      }
+      hasCancelButton={false}
+      className="h-[500px]"
+      contentClassName="h-full flex flex-col pb-4 gap-4"
+    >
+      {step === 1 ? renderStep1() : renderStep2()}
+      {renderFooter()}
+    </Modal>
+  );
+};
+
+export default ReceiveCertificateModal;
