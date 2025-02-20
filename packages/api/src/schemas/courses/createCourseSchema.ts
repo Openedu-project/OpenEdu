@@ -67,7 +67,7 @@ export const courseFormSchema = z.object({
         name: z.string(),
       })
     )
-    .min(1, { message: 'course.validation.levelMin' }),
+    .min(1, { message: 'course.validation.levelMin--min:1' }),
 
   categories: z
     .array(
@@ -76,7 +76,7 @@ export const courseFormSchema = z.object({
         name: z.string(),
       })
     )
-    .min(1, { message: 'course.validation.categoryMin' }),
+    .min(1, { message: 'course.validation.categoryMin--min:1' }),
   docs: z.array(fileResponseSchema).default([]).optional(),
   props: z.object({
     preview_lessons: z
@@ -90,12 +90,14 @@ export const courseFormSchema = z.object({
           video: fileResponseSchema.optional(),
         })
       )
+      .nullable()
       .default([])
       .optional(),
     support_channel: z
       .object({
         channels: z.string().array().default([]).optional(),
       })
+      .nullable()
       .optional(),
     achievements: z.string().array().default([]).optional(),
   }),
