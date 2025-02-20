@@ -124,6 +124,12 @@
 
     /* pink */
     --pink-500: 303 97% 73%; /* #FD77F3 */
+
+    /* turquoise */
+    --turquoise-500: 184 82% 55%; /* #2CDEE9 */
+
+    /* violet */
+    --violet-500: 255 100% 68%; /* #7B5AFF */
   }
 
   .dark {
@@ -239,6 +245,12 @@
 
     /* pink */
     --pink-500: 303 97% 73%; /* #FD77F3 */
+
+    /* turquoise */
+    --turquoise-500: 184 82% 55%; /* #2CDEE9 */
+
+    /* violet */
+    --violet-500: 255 100% 68%; /* #7B5AFF */
   }
 }
 

@@ -8,10 +8,12 @@ export interface ISidebarItem {
   icon?: ReactNode;
   isRoot?: boolean;
   isHighlight?: boolean;
+  isLoginRequired?: boolean;
 }
 
 export interface ISidebarItemProps {
   item: ISidebarItem;
+  disabled?: boolean;
   depth: number;
   maxDepth: number;
   pathname: string;
@@ -25,4 +27,5 @@ export interface ISidebarProps {
   pathnamesNoSidebar?: string[];
   className?: string;
   isDrawer?: boolean;
+  isLoggedIn?: boolean;
 }

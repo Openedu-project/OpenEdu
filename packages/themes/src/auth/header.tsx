@@ -41,7 +41,7 @@ const ThemeHeader: SectionComponent<'auth', 'header'> = ({ props }) => {
               href={item.href ?? ''}
               className={cn(
                 'mcaption-semibold14 lg:mcaption-semibold16 p-2 hover:bg-transparent hover:p-2 hover:text-primary-foreground hover:underline',
-                item.isHighlight && 'bg-gradient-to-b from-[#2CDEE9] to-[#7B5AFF]'
+                item.isHighlight && 'bg-gradient-to-b from-turquoise-500 to-violet-500'
               )}
               variant="ghost"
               activeClassName="border-0"

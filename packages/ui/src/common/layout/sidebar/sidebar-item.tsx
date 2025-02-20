@@ -8,11 +8,18 @@ import { cn } from '#utils/cn';
 import { useRef } from 'react';
 
 import { useState } from 'react';
-
 import type { FC } from 'react';
 import type { ISidebarItem, ISidebarItemProps } from './types';
 
-export const SidebarItem: FC<ISidebarItemProps> = ({ item, depth, maxDepth, pathname, isCollapsed, onNavigate }) => {
+export const SidebarItem: FC<ISidebarItemProps> = ({
+  item,
+  depth,
+  maxDepth,
+  pathname,
+  isCollapsed,
+  disabled = false,
+  onNavigate,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const hasChildren = item.items && item.items.length > 0 && depth < maxDepth;
   const contentRef = useRef<HTMLDivElement>(null);
@@ -92,7 +99,14 @@ export const SidebarItem: FC<ISidebarItemProps> = ({ item, depth, maxDepth, path
     }
 
     return (
-      <Link href={item.href} variant="ghost" exact={item.isRoot} onClick={onNavigate} {...commonProps}>
+      <Link
+        href={item.href}
+        variant="ghost"
+        exact={item.isRoot}
+        disabled={disabled}
+        onClick={onNavigate}
+        {...commonProps}
+      >
         {content}
       </Link>
     );

@@ -13,12 +13,14 @@ export function Header({
   className,
   children,
   isHideAuthMenu = false,
+  isLoggedIn = false,
 }: {
   sidebarItems?: ISidebarItem[];
   subSidebarItems?: ISidebarItem[];
   pathnamesNoSidebar?: string[];
   className?: string;
   isHideAuthMenu?: boolean;
+  isLoggedIn?: boolean;
   children?: ReactNode;
 }) {
   return (
@@ -40,6 +42,7 @@ export function Header({
             pathnamesNoSidebar={pathnamesNoSidebar}
             className="w-full flex-1"
             isDrawer
+            isLoggedIn={isLoggedIn}
           />
         )}
         {children}

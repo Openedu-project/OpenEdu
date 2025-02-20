@@ -1,14 +1,14 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 
-import OpeneduLogo from "@oe/assets/images/logo-openedu.png";
+import OpeneduLogo from '@oe/assets/images/logo-openedu.png';
 
-import { Link } from "#common/navigation";
-import { Image } from "#components/image";
-import type { FileType } from "#components/uploader";
-import { cn } from "#utils/cn";
-import { Footer, type FooterProps } from "../footer";
-import { HeaderClient } from "../header";
-import type { ISidebarItem } from "../sidebar";
+import { Link } from '#common/navigation';
+import { Image } from '#components/image';
+import type { FileType } from '#components/uploader';
+import { cn } from '#utils/cn';
+import { Footer, type FooterProps } from '../footer';
+import { HeaderClient } from '../header';
+import type { ISidebarItem } from '../sidebar';
 
 export function MainLayoutClient({
   children,
@@ -40,14 +40,13 @@ export function MainLayoutClient({
           />
         </Link>
         <ul className="ml-6 hidden gap-3 text-primary-foreground md:flex">
-          {sidebarItems?.map((item) => (
+          {sidebarItems?.map(item => (
             <li key={item.id}>
               <Link
-                href={item.href ?? ""}
+                href={item.href ?? ''}
                 className={cn(
-                  "mcaption-semibold14 lg:mcaption-semibold16 p-2 hover:bg-transparent hover:p-2 hover:text-primary-foreground hover:underline",
-                  item.isHighlight &&
-                    "bg-gradient-to-b from-[#2CDEE9] to-[#7B5AFF]"
+                  'mcaption-semibold14 lg:mcaption-semibold16 p-2 hover:bg-transparent hover:p-2 hover:text-primary-foreground hover:underline',
+                  item.isHighlight && 'bg-gradient-to-b from-[#2CDEE9] to-violet-500'
                 )}
                 variant="ghost"
                 activeClassName="border-0"
