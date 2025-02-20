@@ -39,7 +39,7 @@ const VbiHomepageCert: SectionComponent<"homepage", "vbiCert"> = ({
         <InfoSection
           title={t("title")}
           titleSub={t("titleSub")}
-          button={{ text: t("button.text"), link: t("button.link") }}
+          button={{ text: t("button.text"), link: props?.button?.link }}
           variant="outline"
           className="flex flex-col items-center justify-center text-center md:items-start md:text-left"
         />

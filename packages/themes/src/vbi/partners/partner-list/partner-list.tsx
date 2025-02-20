@@ -39,8 +39,8 @@ const VbiPartnersList: SectionComponent<"partners", "vbiPartnerList"> = ({
         className="flex flex-col items-center text-center"
       />
       <div className="space-y-2 md:space-y-4">
-        <div className="flex flex-col gap-2 lg:flex-row">
-          <h3 className="flex w-full items-center justify-center rounded-lg bg-primary px-2 py-4 text-accent text-bold text-xl uppercase md:text-2xl lg:max-w-[240px] mb-0">
+        <div className="flex flex-col gap-1 lg:flex-row">
+          <h3 className="mb-0 flex w-full items-center justify-center rounded-lg bg-primary px-2 py-4 text-accent text-bold text-xl uppercase md:text-2xl lg:max-w-[240px]">
             {t("labelFoundation")}
           </h3>
           <div className="grid grid-cols-2 gap-1 lg:grid-cols-4">
@@ -54,8 +54,8 @@ const VbiPartnersList: SectionComponent<"partners", "vbiPartnerList"> = ({
           </div>
         </div>
 
-        <div className="flex flex-col gap-2 lg:flex-row">
-          <h3 className="flex w-full items-center justify-center rounded-lg bg-primary px-2 py-4 text-accent text-bold text-xl uppercase md:text-2xl lg:max-w-[240px] mb-0">
+        <div className="flex flex-col gap-1 lg:flex-row">
+          <h3 className="mb-0 flex w-full items-center justify-center rounded-lg bg-primary px-2 py-4 text-accent text-bold text-xl uppercase md:text-2xl lg:max-w-[240px]">
             {t("labelEntrepreneur")}
           </h3>
           <div className="grid grid-cols-1 gap-1 md:grid-cols-3">
@@ -69,8 +69,8 @@ const VbiPartnersList: SectionComponent<"partners", "vbiPartnerList"> = ({
           </div>
         </div>
 
-        <div className="flex flex-col gap-2 lg:flex-row">
-          <h3 className="flex w-full items-center justify-center rounded-lg bg-primary px-2 py-4 text-accent text-bold text-xl uppercase md:text-2xl lg:max-w-[240px] mb-0">
+        <div className="flex flex-col gap-1 lg:flex-row">
+          <h3 className="mb-0 flex w-full items-center justify-center rounded-lg bg-primary px-2 py-4 text-accent text-bold text-xl uppercase md:text-2xl lg:max-w-[240px]">
             {t("labelUniversity")}
           </h3>
           <div className="grid grid-cols-1 gap-1 md:grid-cols-3">
