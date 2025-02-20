@@ -47,6 +47,7 @@ const VbiPartnersTesti: SectionComponent<"partners", "vbiTesti"> = ({
             logo={props?.partners?.partner1?.logo}
             author={props?.partners?.partner1?.author}
             variant="dark"
+            className="basis-1/2"
           />
           <TestimonialCard
             key="light"
@@ -56,6 +57,7 @@ const VbiPartnersTesti: SectionComponent<"partners", "vbiTesti"> = ({
             logo={props?.partners?.partner2?.logo}
             author={props?.partners?.partner2?.author}
             variant="light"
+            className="basis-1/2"
           />
         </div>
       </div>

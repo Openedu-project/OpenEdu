@@ -29,13 +29,13 @@ const EventCard = ({
         <Image
           alt="Developer at work"
           src={image?.url}
-          className="w-full flex-0 rounded"
+          className="-top-8 mx-0 w-[calc(100%-2rem)] flex-0 rounded-lg"
           fill
           aspectRatio="16:9"
           containerHeight="auto"
           sizes="(max-width: 768px) 280px, 380px"
         />
-        <div className={cn("space-y-4 p-4 text-accent")}>
+        <div className={cn("space-y-4 p-4 pt-0 text-accent")}>
           {/* Content Sections */}
           <ContentSection
             title={title}

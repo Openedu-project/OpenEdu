@@ -1,10 +1,10 @@
 import { Image } from "@oe/ui/components/image";
 import type { FileType } from "@oe/ui/components/uploader";
-import { Button } from "@oe/ui/shadcn/button";
+// import { Button } from "@oe/ui/shadcn/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@oe/ui/shadcn/card";
 import { cn } from "@oe/ui/utils/cn";
-import { ChevronRight } from "lucide-react";
-import { useTranslations } from "next-intl";
+// import { ChevronRight } from "lucide-react";
+// import { useTranslations } from "next-intl";
 
 interface StatProps {
   value?: number;
@@ -41,15 +41,15 @@ const ProjectCard = ({
   stats,
   className,
 }: ProjectCardProps) => {
-  const t = useTranslations("themePage.vbi.partners.components");
+  // const t = useTranslations("themePage.vbi.partners.components");
   return (
     <Card
       className={cn(
-        "w-full bg-card shadow-lg transition-shadow duration-300 hover:shadow-xl",
+        "w-full space-y-2 bg-card px-4 py-2 shadow-lg transition-shadow duration-300 hover:shadow-xl sm:p-6 md:space-y-4",
         className
       )}
     >
-      <CardHeader className="px-4 py-2 sm:p-6">
+      <CardHeader className="!p-0">
         {/* biome-ignore lint/nursery/useSortedClasses: <explanation> */}
         <CardTitle className="text-xl sm:text-2xl font-bold line-clamp-1 text-card-foreground">
           {title}
@@ -65,30 +65,30 @@ const ProjectCard = ({
         </div>
       </CardHeader>
 
-      <CardContent className="space-y-4 px-4 py-2 sm:p-6">
+      <CardContent className="!p-0">
         {/* Description */}
         <p className="line-clamp-3 text-muted-foreground text-sm leading-relaxed sm:line-clamp-4 sm:text-base">
           {description}
         </p>
 
         {/* Image Container */}
-        <div className="group relative h-32 w-full overflow-hidden rounded-lg bg-accent sm:h-40 md:h-48">
+        <div className="group relative h-36 w-full overflow-hidden rounded-lg bg-accent sm:h-44 md:h-52">
           <Image
             src={image?.url}
             alt={title ?? "image"}
             fill
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className="h-full w-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-105"
           />
         </div>
 
         {/* Button */}
-        <Button
+        {/* <Button
           className="h-10 w-full transition-all duration-300 hover:translate-y-[-2px] sm:h-12"
           variant="default"
         >
           {t("seeDetail")}
           <ChevronRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
-        </Button>
+        </Button> */}
       </CardContent>
     </Card>
   );
