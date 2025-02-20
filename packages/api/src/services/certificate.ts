@@ -158,7 +158,7 @@ export async function removeCertLayerService(
 }
 
 export async function getCertLayerByCourseIdService(
-  url: string,
+  url: string | null | undefined,
   { params, init }: { params: { courseId: string }; init?: RequestInit }
 ): Promise<ICertificate | null> {
   let endpointKey = url;
