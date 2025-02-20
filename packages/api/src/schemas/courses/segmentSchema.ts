@@ -18,7 +18,11 @@ export const validationMessages = {
 
 const baseContentSchema = z.object({
   id: z.string().optional(),
-  type: z.enum(['video', 'pdf', 'text', 'embedded', 'quiz']),
+  type: z
+    .enum(['video', 'pdf', 'text', 'embedded', 'quiz'])
+    .nullable()
+    .default('video')
+    .transform(val => val || 'video'),
   title: z.string(),
   note: z.string().optional(),
   free: z.boolean().optional(),

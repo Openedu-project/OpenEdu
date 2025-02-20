@@ -101,7 +101,7 @@ export const courseFormSchema = z.object({
       .optional(),
     achievements: z.string().array().default([]).optional(),
   }),
-  medias: z.array(fileResponseSchema).optional(),
+  medias: z.array(fileResponseSchema).nullable().optional(),
   price_settings: priceSettingsSchema.optional(),
 });
 
