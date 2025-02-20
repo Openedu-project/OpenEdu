@@ -45,7 +45,7 @@ const Tooltip = ({
       <TooltipTrigger asChild className={className}>
         {children}
       </TooltipTrigger>
-      <TooltipContent sideOffset={0} {...contentProps}>
+      <TooltipContent sideOffset={0} className="max-w-[300px]" {...contentProps}>
         {content}
       </TooltipContent>
     </RadixTooltip>

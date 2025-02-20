@@ -27,7 +27,7 @@ export function CourseOutlineForm({
   className?: string;
   course: ICourse | null;
 }) {
-  const tAICourseForm = useTranslations('courses.aiCourse');
+  const tAICourseForm = useTranslations('course.aiCourse');
   const tGeneral = useTranslations('general');
 
   const router = useRouter();
@@ -72,7 +72,12 @@ export function CourseOutlineForm({
         current_step: 'learner_description_generate',
         type: 'learner_description',
       });
-      router.push(buildUrl({ endpoint: CREATOR_ROUTES.aiCourseDetail, params: { id: res.id } }));
+      router.push(
+        buildUrl({
+          endpoint: CREATOR_ROUTES.aiCourseDetail,
+          params: { id: res.id },
+        })
+      );
     } catch {
       toast.error(tAICourseForm('aiCreateError'));
     }

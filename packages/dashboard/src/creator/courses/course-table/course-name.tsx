@@ -5,7 +5,7 @@ import TooltipLink from '@oe/ui/shadcn/tooltip';
 import { useTranslations } from 'next-intl';
 
 export default function CourseName({ data }: { data: ICourse }) {
-  const tCourses = useTranslations('courses');
+  const tCourse = useTranslations('course');
   const isAiGenerated = data.is_ai_generated;
   const aiCourse = data.ai_course;
   const aiCompleted = data?.ai_generate_status === 'completed';
@@ -36,5 +36,5 @@ export default function CourseName({ data }: { data: ICourse }) {
       />
     );
   }
-  return <span>{name ?? tCourses('noName')}</span>;
+  return <span>{name ?? tCourse('common.noName')}</span>;
 }

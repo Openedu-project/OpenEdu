@@ -36,7 +36,7 @@ export function Selectbox({
     <Select value={value} onValueChange={onChange} disabled={disabled}>
       <SelectTrigger className={className} hasIcon={hasIcon}>
         <SelectValue placeholder={placeholder ?? `${tGeneral('select')}...`} className={valueClassName}>
-          {value && displayValue ? displayValue(value) : value}
+          {value && displayValue ? displayValue(value) : options.find(option => option.value === value)?.label}
         </SelectValue>
       </SelectTrigger>
       <SelectContent>

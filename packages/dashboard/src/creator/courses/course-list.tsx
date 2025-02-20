@@ -6,7 +6,7 @@ import Courses from './course-table/course-table';
 
 export default function CourseListPagge() {
   const tDashboard = useTranslations('dashboard');
-  const tCourses = useTranslations('courses');
+  const tCourse = useTranslations('course');
 
   return (
     <TableProvider>
@@ -15,7 +15,7 @@ export default function CourseListPagge() {
         breadcrumbs={[{ label: tDashboard('courses.title') }]}
         header={
           <div className="flex flex-wrap items-center justify-between">
-            <h1 className="text-2xl">{tCourses('title')}</h1>
+            <h1 className="text-2xl">{tCourse('common.coursesTitle')}</h1>
             <CreateCourseButton />
           </div>
         }

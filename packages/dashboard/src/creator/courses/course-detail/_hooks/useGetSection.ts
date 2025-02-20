@@ -47,6 +47,8 @@ export const useGetSection = () => {
 
   return {
     courseId,
+    sectionId,
+    lessonId,
     sections,
     activeSection,
     activeLessons,

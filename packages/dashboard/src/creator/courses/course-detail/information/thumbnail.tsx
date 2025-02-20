@@ -3,7 +3,7 @@ import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
 import { useTranslations } from 'next-intl';
 
 export default function Thumbnail() {
-  const tCourses = useTranslations('courses');
+  const tCourse = useTranslations('course');
 
   return (
     <FormFieldWithLabel
@@ -12,24 +12,28 @@ export default function Thumbnail() {
       label={
         <div className="flex flex-col gap-1">
           <span className="font-medium text-lg">
-            {tCourses('information.thumbnailTitle')}
+            {tCourse('information.sections.thumbnail.title')}
             <span className="text-red-500">*</span>
           </span>
-          <span className="text-muted-foreground text-xs">{tCourses('information.thumbnailDescription')}</span>
+          <span className="text-muted-foreground text-xs">{tCourse('information.sections.thumbnail.subtitle')}</span>
         </div>
       }
       className="rounded-lg bg-background p-4 shadow-sm"
       labelClassName="mb-4 text-lg"
-      render={({ field }) => (
-        <Uploader
-          accept="image/*"
-          listType="picture"
-          value={field.value ? [field.value] : []}
-          className="h-48"
-          fileListVisible={false}
-          onChange={files => field.onChange(files[0])}
-        />
-      )}
+      render={({ field }) => {
+        const { onChange, value } = field;
+
+        return (
+          <Uploader
+            accept="image/*"
+            listType="picture"
+            className="h-48"
+            fileListVisible={false}
+            value={Array.isArray(value) ? value : value ? [value] : undefined}
+            onChange={files => onChange(files)}
+          />
+        );
+      }}
     />
   );
 }

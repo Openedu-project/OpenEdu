@@ -12,7 +12,15 @@ export type TLessonContent = 'video' | 'pdf' | 'text' | 'quiz' | 'embedded';
 
 export type TCourseAprrovalStatus = 'new' | 'pending' | 'approved' | 'rejected' | 'cancelled';
 
-export type TCourseStatus = 'draft' | 'publish' | 'un-publish' | 'cancelled' | 'reject' | 'reviewing' | 'publish_root';
+export type TCourseStatus =
+  | 'draft'
+  | 'publish'
+  | 'un-publish'
+  | 'cancelled'
+  | 'reject'
+  | 'reviewing'
+  | 'publish_root'
+  | 'preview';
 
 // the excluded fields when requesting
 export type TExcludedFieldRequest = 'id' | 'create_at' | 'delete_at' | 'update_at';
@@ -125,10 +133,12 @@ export interface ICoursePriceSettings {
   fiat_currency: string;
   fiat_price: string;
   fiat_discount_price: string;
+  fiat_unit_cost: string;
   crypto_payment_enabled: boolean;
   crypto_currency: string;
   crypto_price: string;
   crypto_discount_price: string;
+  crypto_unit_cost: string;
 }
 
 export interface ICoursePreviewVideo {

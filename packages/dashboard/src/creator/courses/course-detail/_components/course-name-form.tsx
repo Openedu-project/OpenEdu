@@ -9,11 +9,13 @@ import { Button } from '@oe/ui/shadcn/button';
 import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
 import { Input } from '@oe/ui/shadcn/input';
 import { Check, PencilLine } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import { COURSE_DETAIL_FORM_IDS } from '../_utils/constants';
 
 export default function CourseNameForm() {
+  const tCourse = useTranslations('course');
   const { courseId } = useParams<{ courseId: string }>();
   const { course, mutateCourse } = useGetCourseById(courseId);
   const [edit, setEdit] = useState(false);
@@ -46,7 +48,7 @@ export default function CourseNameForm() {
       onSubmit={handleSubmit}
     >
       {({ loading, form }) => {
-        const courseName = form.watch('name') || 'Course Detail';
+        const courseName = form.watch('name') || tCourse('common.noName');
 
         return (
           <>

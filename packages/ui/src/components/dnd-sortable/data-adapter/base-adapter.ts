@@ -211,6 +211,52 @@ export abstract class DataAdapter<ItemType, ChildItemType = ItemType> {
     });
   }
 
+  updateItemWithNewItem(
+    newItem: IDndSortableItem<ItemType, ChildItemType> | IDndSortableChildItem<ChildItemType> | undefined,
+    activeItem: IDndSortableItem<ItemType, ChildItemType> | IDndSortableChildItem<ChildItemType>,
+    items: IDndSortableItem<ItemType, ChildItemType>[]
+  ): IDndSortableItem<ItemType, ChildItemType>[] {
+    const newItems = [...items];
+
+    const itemIndex = newItems.findIndex(item => item.id === activeItem.id);
+
+    if (itemIndex !== -1) {
+      newItems[itemIndex] = {
+        ...activeItem,
+        original: {
+          ...activeItem.original,
+          ...newItem?.original,
+        } as ItemType,
+      } as IDndSortableItem<ItemType, ChildItemType>;
+
+      return newItems;
+    }
+
+    return newItems.map(item => {
+      if (item.items) {
+        const childIndex = item.items.findIndex(child => child.id === activeItem.id);
+
+        if (childIndex !== -1) {
+          return {
+            ...item,
+            items: item.items.map((child, index) =>
+              index === childIndex
+                ? {
+                    ...child,
+                    original: {
+                      ...child.original,
+                      ...newItem?.original,
+                    } as ChildItemType,
+                  }
+                : child
+            ),
+          };
+        }
+      }
+      return item;
+    });
+  }
+
   abstract convertToContainerItem(data: ItemType[]): IDndSortableItem<ItemType, ChildItemType>[];
   abstract convertToOriginal(data: IDndSortableItem<ItemType, ChildItemType>[]): ItemType[];
   abstract handleDragEnd(props: IHandleDragEndProps<ItemType, ChildItemType>): void;

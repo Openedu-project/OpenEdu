@@ -7,7 +7,7 @@ import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
 import { useTranslations } from 'next-intl';
 
 export default function Category() {
-  const tCourses = useTranslations('courses');
+  const tCourse = useTranslations('course');
   const { organizationByDomain } = useGetOrganizationByDomain();
   const { levels } = useGetLevels({
     type: 'level',
@@ -21,10 +21,10 @@ export default function Category() {
       label={
         <div className="flex flex-col gap-1">
           <span className="font-medium text-lg">
-            {tCourses('information.levelTitle')}
+            {tCourse('information.sections.level.title')}
             <span className="text-red-500">*</span>
           </span>
-          <span className="text-muted-foreground text-xs">{tCourses('information.levelDescription')}</span>
+          <span className="text-muted-foreground text-xs">{tCourse('information.sections.level.subtitle')}</span>
         </div>
       }
       className="rounded-lg bg-background p-4 shadow-sm"
@@ -32,7 +32,7 @@ export default function Category() {
     >
       <AutocompeteMultiple<ICourseCategory>
         options={levels ?? []}
-        placeholder={tCourses('information.levelPlaceholder')}
+        placeholder={tCourse('information.sections.level.placeholder')}
         getOptionLabel={option => option.name}
         getOptionValue={option => option.id}
       />

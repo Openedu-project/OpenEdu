@@ -127,7 +127,11 @@ export function FormNestedWrapper<TFormSchema extends z.ZodType>({
       <form
         ref={formRef}
         className={cn('space-y-4', className)}
-        onSubmit={form.handleSubmit(handleSubmit, handleError)}
+        onSubmit={e => {
+          e.preventDefault();
+          e.stopPropagation();
+          form.handleSubmit(handleSubmit, handleError)(e);
+        }}
         {...props}
       >
         {typeof children === 'function' ? children({ loading, form, control, watch, setValue }) : children}

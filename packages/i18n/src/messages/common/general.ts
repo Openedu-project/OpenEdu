@@ -74,6 +74,23 @@ export const generalMessages = {
       new: 'New',
       approved: 'Approved',
       rejected: 'Rejected',
+      setting: 'Setting',
+      preview: 'Preview',
+    },
+    statusDescription: {
+      section: {
+        draft:
+          'When you change the section status to draft, all lessons in the section will be hidden from the course.',
+        publish: 'To change the status to publish, there must be at least 1 lesson with status publish or preview.',
+        preview:
+          'To change the status to preview, there must be at least 1 lesson with status publish or preview. All lessons with status publish and preview will be published and can be previewed before entering the course.',
+      },
+      lesson: {
+        draft: 'When you change the lesson status to draft, the lesson will be hidden from the course.',
+        publish: 'To change the status to publish, all lesson content must be created.',
+        preview:
+          'To change the status to preview, all lesson content must be created. The lesson will have publish status and can be previewed when entering the course.',
+      },
     },
     language: 'Language',
     follow: 'Follow',

@@ -22,8 +22,8 @@ const NumberDayRunFunding = <TFormValues extends FieldValues>({ form }: NumberDa
               {...field}
               type="number"
               value={field.value}
-              onChange={e => {
-                field.onChange(Number(e.target.value));
+              onChange={value => {
+                field.onChange(Number(value));
               }}
               suffixIcon="Days"
             />

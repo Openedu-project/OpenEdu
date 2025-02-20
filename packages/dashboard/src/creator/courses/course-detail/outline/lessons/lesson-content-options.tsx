@@ -1,110 +1,68 @@
 import {
   embeddedContentSchema,
   pdfContentSchema,
+  quizContentSchema,
   textContentSchema,
   videoContentSchema,
 } from '@oe/api/schemas/courses/segmentSchema';
 import type { TLessonContent } from '@oe/api/types/course/basic';
-import type { ILessonContent } from '@oe/api/types/course/segment';
-import { z } from '@oe/api/utils/zod';
-import { RichTextEditor } from '@oe/ui/components/rich-text';
+import type { z } from '@oe/api/utils/zod';
 import type { SelectboxOption } from '@oe/ui/components/selectbox';
-import { Uploader } from '@oe/ui/components/uploader';
-import { Button } from '@oe/ui/shadcn/button';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
-import { Code2Icon, FileIcon, FileVideoIcon, MessageCircleQuestion, ScrollText, Video } from 'lucide-react';
+import { Code2Icon, FileIcon, FileVideoIcon, MessageCircleQuestion, ScrollText } from 'lucide-react';
 import type { ReactNode } from 'react';
-
+import { EmbeddedBlockContent } from './embedded-block-content';
+import { PdfBlockContent } from './pdf-block-content';
+import { QuizBlockContent } from './quiz-block-content';
+import { TextBlockContent } from './text-block-content';
+import { VideoBlockContent } from './video-block-content';
 export interface LessonContentOption extends SelectboxOption {
   id: string;
   value: string;
   label: string;
   icon?: ReactNode;
   schema: z.ZodSchema;
-  content: (content: ILessonContent, order: number) => ReactNode;
+  content: (order: number) => ReactNode;
 }
 
 export const tabOptions: Record<TLessonContent, LessonContentOption> = {
   text: {
     id: 'text',
     value: 'text',
-    label: 'Text',
+    label: 'contentTypes.text',
     icon: <ScrollText className="h-4 w-4" />,
     schema: textContentSchema,
-    content: (content: ILessonContent, order: number) => (
-      <FormFieldWithLabel key={content.id} name={`contents.${order}.content`} showErrorMessage>
-        <RichTextEditor
-          key={content.id}
-          className="h-full rounded-none border-none"
-          menuBarClassName="bg-background"
-          maxHeight="100%"
-        />
-      </FormFieldWithLabel>
-    ),
+    content: (order: number) => <TextBlockContent order={order} />,
   },
   video: {
     id: 'video',
     value: 'video',
-    label: 'Video',
+    label: 'contentTypes.video',
     icon: <FileVideoIcon className="h-4 w-4" />,
     schema: videoContentSchema,
-    content: (content: ILessonContent, order: number) => (
-      <FormFieldWithLabel key={content.id} name={`contents.${order}.files`} showErrorMessage>
-        <Uploader key={content.id} accept="video/*" listType="text" maxSizeBytes={1024 * 1024 * 5120}>
-          <Button variant="outline" className="h-full w-full">
-            <Video />
-          </Button>
-        </Uploader>
-      </FormFieldWithLabel>
-    ),
+    content: (order: number) => <VideoBlockContent order={order} />,
   },
   pdf: {
     id: 'pdf',
     value: 'pdf',
-    label: 'PDF',
+    label: 'contentTypes.pdf',
     icon: <FileIcon className="h-4 w-4" />,
     schema: pdfContentSchema,
-    content: (content: ILessonContent, order: number) => (
-      <FormFieldWithLabel key={content.id} name={`contents.${order}.files`} showErrorMessage>
-        <Uploader
-          key={content.id}
-          accept=".pdf"
-          listType="text"
-          maxSizeBytes={1024 * 1024 * 5120} // 5GB
-          className="min-h-auto"
-        />
-      </FormFieldWithLabel>
-    ),
+    content: (order: number) => <PdfBlockContent order={order} />,
   },
   embedded: {
     id: 'embedded',
     value: 'embedded',
-    label: 'Embedded',
+    label: 'contentTypes.embedded',
     icon: <Code2Icon className="h-4 w-4" />,
     schema: embeddedContentSchema,
-    content: (content: ILessonContent, order: number) => (
-      <FormFieldWithLabel key={content.id} name={`contents.${order}.content`} showErrorMessage>
-        <Input key={content.id} type="text" placeholder="Enter embed URL" />
-      </FormFieldWithLabel>
-    ),
+    content: (order: number) => <EmbeddedBlockContent order={order} />,
   },
   quiz: {
     id: 'quiz',
     value: 'quiz',
-    label: 'Quiz',
+    label: 'contentTypes.quiz',
     icon: <MessageCircleQuestion className="h-4 w-4" />,
-    schema: z.object({}),
-    content: (content: ILessonContent, order: number) => (
-      <FormFieldWithLabel key={content.id} name={`contents.${order}.quizzes`} showErrorMessage>
-        {/* <QuizEditor /> */}
-        {content.quizzes?.map(quiz => (
-          <div key={quiz.id}>
-            <h3>{quiz.title}</h3>
-            <p>{quiz.description}</p>
-          </div>
-        ))}
-      </FormFieldWithLabel>
-    ),
+    schema: quizContentSchema,
+    content: (order: number) => <QuizBlockContent order={order} />,
   },
 };

@@ -251,8 +251,6 @@ export const walletMessages = {
       title: 'Currency',
       usd: 'USD',
       vnd: 'VND',
-      usdLabel: 'United States Dollar',
-      vndLabel: 'Vietnamese Dong',
       near: 'Near Protocol',
       eth: 'Ethereum',
       avail: 'Avail',

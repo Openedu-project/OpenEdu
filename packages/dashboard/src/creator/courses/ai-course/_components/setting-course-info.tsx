@@ -20,7 +20,7 @@ export function SettingCourseInfomation({
 }: {
   course?: ICourse | null;
 }) {
-  const tAICourse = useTranslations('courses.aiCourse');
+  const tAICourse = useTranslations('course.aiCourse');
   const [status, setStatus] = useState<IAICourseStatus>();
   const [openStatusModal, setOpenStatusModal] = useState<boolean>(false);
   const { AICourseStatusData, resetSocketData } = useSocketStore();
@@ -74,7 +74,10 @@ export function SettingCourseInfomation({
     <div>
       <div className="flex gap-2">
         <Link
-          href={buildUrl({ endpoint: CREATOR_ROUTES.aiCourseDetail, params: { id: course?.id } })}
+          href={buildUrl({
+            endpoint: CREATOR_ROUTES.aiCourseDetail,
+            params: { id: course?.id },
+          })}
           variant="ghost"
           className="!px-1"
           activeClassName=""

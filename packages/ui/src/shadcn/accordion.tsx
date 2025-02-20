@@ -13,33 +13,36 @@ const AccordionItem = forwardRef<ComponentRef<typeof Item>, ComponentPropsWithou
 );
 AccordionItem.displayName = 'AccordionItem';
 
-const AccordionTrigger = forwardRef<ComponentRef<typeof Trigger>, ComponentPropsWithoutRef<typeof Trigger>>(
-  ({ className, children, ...props }, ref) => {
-    const content = props.asChild ? (
-      children
-    ) : (
-      <>
-        {children}
-        <ChevronDown className="size-4 shrink-0 transition-transform duration-200" />
-      </>
-    );
-
-    return (
-      <Header className="flex">
-        <Trigger
-          ref={ref}
-          className={cn(
-            'flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180',
-            className
-          )}
-          {...props}
-        >
-          {content}
-        </Trigger>
-      </Header>
-    );
+const AccordionTrigger = forwardRef<
+  ComponentRef<typeof Trigger>,
+  ComponentPropsWithoutRef<typeof Trigger> & {
+    headerClassName?: string;
   }
-);
+>(({ className, headerClassName, children, ...props }, ref) => {
+  const content = props.asChild ? (
+    children
+  ) : (
+    <>
+      {children}
+      <ChevronDown className="size-4 shrink-0 transition-transform duration-200" />
+    </>
+  );
+
+  return (
+    <Header className={cn('flex', headerClassName)}>
+      <Trigger
+        ref={ref}
+        className={cn(
+          'flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180',
+          className
+        )}
+        {...props}
+      >
+        {content}
+      </Trigger>
+    </Header>
+  );
+});
 AccordionTrigger.displayName = Trigger.displayName;
 
 const AccordionContent = forwardRef<ComponentRef<typeof Content>, ComponentPropsWithoutRef<typeof Content>>(

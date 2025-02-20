@@ -6,16 +6,14 @@ import { FormFieldWrapper } from './form-field-wrapper';
 export default function FormMinConfig({
   field,
   handleConfigChange,
-}: { field: FormFieldType; handleConfigChange: (key: keyof FormFieldType, value: number) => void }) {
+}: {
+  field: FormFieldType;
+  handleConfigChange: (key: keyof FormFieldType, value: number) => void;
+}) {
   const tDynamicForms = useTranslations('dynamicForms.fieldConfig');
   return (
     <FormFieldWrapper label={tDynamicForms('min')}>
-      <InputNumber
-        name="min"
-        min={0}
-        value={field.min}
-        onChange={e => handleConfigChange('min', Number(e.target.value))}
-      />
+      <InputNumber name="min" min={0} value={field.min} onChange={value => handleConfigChange('min', value)} />
     </FormFieldWrapper>
   );
 }

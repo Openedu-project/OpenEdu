@@ -58,9 +58,9 @@ interface SheetContentProps extends ComponentPropsWithoutRef<typeof Content>, Va
 const SheetContent = forwardRef<ComponentRef<typeof Content>, SheetContentProps>(
   ({ side = 'right', className, children, container, overlayClassName, hasCloseButton = true, ...props }, ref) => {
     return (
-      <SheetPortal container={container ?? (typeof window !== 'undefined' ? document.body : undefined)}>
+      <SheetPortal container={container}>
         <SheetOverlay className={overlayClassName} />
-        <Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
+        <Content ref={ref} className={cn(sheetVariants({ side }), className)} aria-describedby={undefined} {...props}>
           {children}
           {hasCloseButton && (
             <Close className="absolute top-5 right-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
@@ -88,7 +88,7 @@ SheetFooter.displayName = 'SheetFooter';
 const SheetTitle = forwardRef<ComponentRef<typeof Title>, ComponentPropsWithoutRef<typeof Title>>(
   ({ className, hidden, ...props }, ref) =>
     hidden ? (
-      <VisuallyHidden>
+      <VisuallyHidden asChild>
         <Title ref={ref} className={cn('font-semibold text-foreground text-lg', className)} {...props} />
       </VisuallyHidden>
     ) : (
@@ -100,7 +100,7 @@ SheetTitle.displayName = Title.displayName;
 const SheetDescription = forwardRef<ComponentRef<typeof Description>, ComponentPropsWithoutRef<typeof Description>>(
   ({ className, hidden, ...props }, ref) =>
     hidden ? (
-      <VisuallyHidden>
+      <VisuallyHidden asChild>
         <Description ref={ref} className={cn('text-muted-foreground text-sm', className)} {...props} />
       </VisuallyHidden>
     ) : (

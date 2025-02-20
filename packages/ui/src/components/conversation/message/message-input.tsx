@@ -1,5 +1,5 @@
 'use client';
-import { type IFileResponse, fileResponseScheme } from '@oe/api/types/file';
+import { type IFileResponse, fileResponseSchema } from '@oe/api/types/file';
 import { usePathname } from 'next/navigation';
 
 import { cancelConversation } from '@oe/api/services/conversation';
@@ -28,7 +28,7 @@ const createFormSchema = (inputType: TAgentType) => {
       return z.object({
         message: z.string().min(1, 'formValidation.required'),
         images: z.array(
-          fileResponseScheme.optional().refine(data => data !== undefined, {
+          fileResponseSchema.optional().refine(data => data !== undefined, {
             message: 'formValidation.required',
           })
         ),

@@ -8,7 +8,7 @@ import { useTranslations } from 'next-intl';
 
 export default function Courses() {
   const tDashboard = useTranslations('dashboard');
-  const tCourses = useTranslations('courses');
+  const tCourse = useTranslations('course');
 
   const columns = [
     {
@@ -21,26 +21,26 @@ export default function Courses() {
     <>
       <DashboardHeaderCard dashboard="creator" breadcrumbs={[{ label: tDashboard('courses.title') }]}>
         <div className="flex flex-wrap items-center justify-between">
-          <h1 className="text-2xl">{tCourses('title')}</h1>
+          <h1 className="text-2xl">{tCourse('coursesTitle')}</h1>
           <ButtonDropdown
-            label={tCourses('create.title')}
+            label={tCourse('create.title')}
             href="/creator"
             icon={<PlusIcon className="mr-2 h-4 w-4" />}
             options={[
               {
-                label: tCourses('create.title'),
+                label: tCourse('create.title'),
                 value: 'create',
                 icon: <PlusIcon className="mr-2 h-4 w-4" />,
                 href: '/creator',
               },
               {
-                label: tCourses('create.youtube'),
+                label: tCourse('create.youtube'),
                 value: 'youtube',
                 icon: <YoutubeIcon className="mr-2 h-4 w-4" />,
                 href: '/creator/youtube',
               },
               {
-                label: tCourses('create.ai'),
+                label: tCourse('create.ai'),
                 value: 'ai',
                 icon: <SparklesIcon className="mr-2 h-4 w-4" />,
                 href: '/creator/ai',

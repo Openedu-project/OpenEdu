@@ -16,12 +16,12 @@ export const FIAT_CURRENCIES = {
   USD: {
     icon: UsdIcon,
     value: 'USD',
-    name: 'usdLabel',
+    name: 'usd',
   },
   VND: {
     icon: VndIcon,
     value: 'VND',
-    name: 'vndLabel',
+    name: 'vnd',
   },
 };
 
