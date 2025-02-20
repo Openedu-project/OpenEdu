@@ -46,7 +46,7 @@ const PriceDisplay = ({ value, currency = 'VND', discount, isBold }: PriceDispla
 };
 
 const PriceRow = ({ isBold, priceSettings }: PriceRowProps) => {
-  const tCourse = useTranslations('course.payment');
+  const tCourse = useTranslations('course');
 
   if (!priceSettings?.is_pay) {
     return (

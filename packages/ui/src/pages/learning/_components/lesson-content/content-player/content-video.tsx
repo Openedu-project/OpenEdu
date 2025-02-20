@@ -8,6 +8,7 @@ import { type IframeHTMLAttributes, useEffect, useRef, useState } from 'react';
 import { Spinner } from '#components/spinner';
 import { useQuizSubmissionStore } from '../../../_store/learning-store';
 import { usePlayerProgress } from './_hooks';
+import NextLessonAlert from './next-lesson-alert';
 import { EVENTS, usePlayer } from './player';
 import VideoQuizInfo from './video-quiz-infor';
 import VideoQuizModal from './video-quiz-modal';
@@ -62,7 +63,7 @@ const ContentVideo = ({
   };
   const triggerConditions = triggerQuizConditions();
 
-  const { checkProgress } = usePlayerProgress(onComplete, {
+  const { checkProgress, handleNavigateLesson, showNextLessonAlert, dialogProps } = usePlayerProgress(onComplete, {
     quizzes,
     onlyVideoContent,
     quizResult,
@@ -145,6 +146,8 @@ const ContentVideo = ({
           }}
         />
       )}
+
+      <NextLessonAlert isOpen={showNextLessonAlert} onContinue={handleNavigateLesson} {...dialogProps} />
     </div>
   );
 };
