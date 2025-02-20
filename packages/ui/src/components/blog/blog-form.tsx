@@ -3,6 +3,7 @@ import { type IBlogFormType, blogSchema } from '@oe/api/schemas/blogSchema';
 import { postBlog, updateBlog } from '@oe/api/services/blog';
 import type { IBlog, IBlogRequest } from '@oe/api/types/blog';
 import type { ICategoryTree } from '@oe/api/types/categories';
+import type { IFileResponse } from '@oe/api/types/file';
 import type { IHashtag } from '@oe/api/types/hashtag';
 import { API_ENDPOINT } from '@oe/api/utils/endpoints';
 import type { HTTPError } from '@oe/api/utils/http-error';
@@ -67,7 +68,7 @@ const blogFormAction = async ({
       ...baseData,
       is_publish: isPublish,
       blog_type: blogType,
-      banner_id: thumbnail.id,
+      banner_id: (thumbnail as IFileResponse[])[0]?.id ?? '',
       category_ids: category_ids?.map(obj => {
         return { id: obj.id };
       }),
@@ -212,15 +213,20 @@ export default function BlogForm({
                 required
                 label={tBlogs('image')}
                 name="thumbnail"
-                render={({ field }) => (
-                  <Uploader
-                    listType="picture"
-                    value={field.value ? [field.value] : []}
-                    onChange={files => field.onChange(files[0])}
-                    fileListVisible={false}
-                    accept="image/*"
-                  />
-                )}
+                render={({ field }) => {
+                  const { onChange, value } = field;
+
+                  return (
+                    <Uploader
+                      accept="image/*"
+                      listType="picture"
+                      className="h-48"
+                      fileListVisible={false}
+                      value={Array.isArray(value) ? value : value ? [value] : undefined}
+                      onChange={files => onChange(files)}
+                    />
+                  );
+                }}
               />
 
               <FormFieldWithLabel label={tBlogs('imageDesc')} name="image_description" className="mt-4">
