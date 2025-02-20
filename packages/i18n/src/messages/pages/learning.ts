@@ -66,5 +66,6 @@ export const courseLearningMessages = {
     next: 'Next',
     editName: 'Edit Name',
     receiveCertificate: 'Receive Certificate',
+    toastSuccess: 'Certificate received successfully',
   },
 };

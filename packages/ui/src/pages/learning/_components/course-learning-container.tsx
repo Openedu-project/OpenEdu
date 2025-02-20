@@ -31,7 +31,7 @@ export default function CourseLearning({ course, section_uid, lesson_uid, certif
           <CourseOutline courseData={course} activeSection={section_uid} activeLesson={lesson_uid} />
         </ScrollArea>
       </div>
-      {certificate && <ReceiveCertificateModal certificate={certificate} lessonUid={lesson_uid} />}
+      {course?.has_certificate && certificate && <ReceiveCertificateModal certificate={certificate} />}
     </>
   );
 }
