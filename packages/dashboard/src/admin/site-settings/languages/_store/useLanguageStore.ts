@@ -1,6 +1,6 @@
 import type { IFileResponse } from '@oe/api/types/file';
 import type { LanguageStats } from '@oe/api/types/i18n';
-import { deepMergeWithCleanup } from '@oe/core/utils/object';
+import { deepMerge } from '@oe/core/utils/object';
 import { DEFAULT_LOCALE, DEFAULT_LOCALES } from '@oe/i18n/constants';
 import { type LanguageCode, languages } from '@oe/i18n/languages';
 import { messages } from '@oe/i18n/messages';
@@ -248,14 +248,17 @@ export const useLanguageStore = create<LanguageState & LanguageActions>()((set, 
       );
     } else if (translations) {
       const mergedTranslations = Object.fromEntries(
-        Object.entries(translations).map(([locale, msgs]) => [
-          locale,
-          deepMergeWithCleanup(msgs, messages, locale === DEFAULT_LOCALE),
-        ])
+        Object.entries(translations).map(([locale, msgs]) => [locale, deepMerge(messages, msgs)])
       ) as Record<LanguageCode, I18nMessage>;
+
+      // console.log("messages",messages)
+      // console.log("translations",translations)
+
+      // console.log("mergedTranslations",mergedTranslations)
       newTranslations = convertMessagesToTableData(mergedTranslations, localeList);
     }
 
+    // console.log("newTranslations", newTranslations);
     set({
       translations: newTranslations,
       languageStats: calculateLanguageStats(newTranslations, localeList),
