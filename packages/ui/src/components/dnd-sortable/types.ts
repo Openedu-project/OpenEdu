@@ -38,16 +38,20 @@ export interface IRenderChildItemProps<ChildItemType> {
     key: keyof ChildItemType,
     item: IDndSortableChildItem<ChildItemType>
   ) => void;
+  onUpdateItemWithNewItem?: (newItem: ChildItemType, currentItem: IDndSortableChildItem<ChildItemType>) => void;
 }
 
 export type RenderChildItemFunction<ChildItemType> = ({
   item,
   onRemoveItem,
   onUpdateItem,
+  onUpdateItemWithNewItem,
 }: IRenderChildItemProps<ChildItemType>) => ReactNode;
 
 export interface IRenderItemProps<ItemType, ChildItemType> {
+  items?: ItemType[];
   item: IDndSortableItem<ItemType, ChildItemType>;
+  index?: number;
   descendants?: IDndSortableItem<ItemType, ChildItemType>[];
   dragOverlay?: boolean;
   onAddChild?: (defaultItem: ChildItemType) => void;
@@ -57,10 +61,15 @@ export interface IRenderItemProps<ItemType, ChildItemType> {
     key: keyof ItemType | keyof ChildItemType,
     item: IDndSortableItem<ItemType, ChildItemType> | IDndSortableChildItem<ChildItemType>
   ) => void;
+  onUpdateItemWithNewItem?: (
+    newItem: ItemType | ChildItemType,
+    currentItem: IDndSortableItem<ItemType, ChildItemType> | IDndSortableChildItem<ChildItemType>
+  ) => void;
 }
 
 export type RenderItemFunction<ItemType, ChildItemType> = ({
   item,
+  index,
   descendants,
   dragOverlay,
   onAddChild,

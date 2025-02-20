@@ -19,7 +19,7 @@ import CreateCourseModal from './create-course-modal';
 import CreateCourseYoutubeModal from './create-course-youtube';
 
 export default function CreateCourseButton() {
-  const tCourses = useTranslations('courses');
+  const tCourse = useTranslations('course');
   const tAIStatus = useTranslations('aiStatusModal');
   const router = useRouter();
   const { mutate } = useTable();
@@ -27,7 +27,10 @@ export default function CreateCourseButton() {
 
   const [showBasicModal, setShowBasicModal] = useState(false);
   const [showYoutubeModal, setShowYoutubeModal] = useState(false);
-  const [AIStatus, setAIStatus] = useState<{ id: string; status: IAIStatus } | null>(null);
+  const [AIStatus, setAIStatus] = useState<{
+    id: string;
+    status: IAIStatus;
+  } | null>(null);
   const [openAIStatusModal, setOpenAIStatusModal] = useState<boolean>(false);
   const { AICourseStatusData, resetSocketData } = useSocketStore();
 
@@ -47,7 +50,11 @@ export default function CreateCourseButton() {
   const handleBasicCourseSubmit = async (data: ICreateBaseCourse) => {
     const course = await createCourseService(undefined, data);
     await mutate?.();
-    toast.success(tCourses('formValidation.createCourseSuccess'));
+    toast.success(
+      tCourse('common.toast.createSuccess', {
+        item: tCourse('common.courseTitle'),
+      })
+    );
     router.push(
       buildUrl({
         endpoint: CREATOR_ROUTES.courseSettingUp,
@@ -65,7 +72,11 @@ export default function CreateCourseButton() {
     await mutate?.();
     setAIStatus({ id: course.id, status: 'generating' });
     setOpenAIStatusModal(true);
-    toast.success(tCourses('formValidation.createCourseSuccess'));
+    toast.success(
+      tCourse('common.toast.createSuccess', {
+        item: tCourse('common.courseTitle'),
+      })
+    );
   };
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
@@ -75,7 +86,10 @@ export default function CreateCourseButton() {
         if (AICourseStatusData?.data?.status.toLowerCase() === 'completed') {
           setOpenAIStatusModal(false);
         }
-        setAIStatus({ ...AIStatus, status: AICourseStatusData?.data?.status as unknown as IAIStatus });
+        setAIStatus({
+          ...AIStatus,
+          status: AICourseStatusData?.data?.status as unknown as IAIStatus,
+        });
       }
       globalMutate((key: string) => !!key?.includes(API_ENDPOINT.COURSES), undefined, { revalidate: false });
       void mutate?.();
@@ -86,28 +100,31 @@ export default function CreateCourseButton() {
   return (
     <>
       <ButtonDropdown
-        label={tCourses('create.title')}
+        label={tCourse('create.title')}
         icon={<PlusIcon className="mr-2 h-4 w-4" />}
         onClick={() => setShowBasicModal(true)}
-        className="ml-auto"
+        className="ml-auto h-9"
         options={[
           {
-            label: tCourses('create.title'),
+            label: tCourse('create.title'),
             value: 'create',
             icon: <PlusIcon className="mr-2 h-4 w-4" />,
             onClick: () => handleOptionSelect('create'),
           },
           {
-            label: tCourses('create.youtube'),
+            label: tCourse('create.youtube'),
             value: 'youtube',
             icon: <YoutubeIcon className="mr-2 h-4 w-4" />,
             onClick: () => handleOptionSelect('youtube'),
           },
           {
-            label: tCourses('create.ai'),
+            label: tCourse('create.ai'),
             value: 'ai',
             icon: <SparklesIcon className="mr-2 h-4 w-4" />,
-            href: buildUrl({ endpoint: CREATOR_ROUTES.aiCourse, params: { id: '' } }),
+            href: buildUrl({
+              endpoint: CREATOR_ROUTES.aiCourse,
+              params: { id: '' },
+            }),
           },
         ]}
       />

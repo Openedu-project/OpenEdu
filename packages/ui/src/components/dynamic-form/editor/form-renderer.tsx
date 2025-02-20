@@ -43,15 +43,19 @@ export function FormRenderer({ fields, className }: FormRendererProps) {
                   required={rest.required}
                   description={rest.description}
                   className={cn('flex-1 p-2', rest.border && 'border p-4')}
-                  fieldType={fieldType}
+                  isToggleField={fieldType === 'checkbox' || fieldType === 'switch'}
                 >
                   <Component
                     {...('min' in rest && { min: rest.min })}
                     {...('max' in rest && { max: rest.max })}
-                    {...('placeholder' in rest && { placeholder: rest.placeholder })}
+                    {...('placeholder' in rest && {
+                      placeholder: rest.placeholder,
+                    })}
                     {...('text' in rest && { text: rest.text })}
                     {...(rest.disabled && { disabled: rest.disabled })}
-                    {...(fieldType === 'selectbox' && { options: rest.options })}
+                    {...(fieldType === 'selectbox' && {
+                      options: rest.options,
+                    })}
                   />
                 </FormFieldWithLabel>
               </div>

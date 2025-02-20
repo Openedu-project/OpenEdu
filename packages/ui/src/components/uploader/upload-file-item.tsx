@@ -3,7 +3,6 @@ import { useTranslations } from 'next-intl';
 import type React from 'react';
 import { useCallback, useState } from 'react';
 import { Button } from '#shadcn/button';
-import { Input } from '#shadcn/input';
 import { Progress } from '#shadcn/progress';
 import { cn } from '#utils/cn';
 import type { UploadFileItemProps } from './types';
@@ -38,11 +37,11 @@ export const UploadFileItem = (props: UploadFileItemProps) => {
   const { previewImage } = usePreviewImage(file, listType);
   const [isEditing, setIsEditing] = useState(false);
   const [editName, setEditName] = useState(file.name);
-  const [error, setError] = useState<string | null>(null);
+  // const [error, setError] = useState<string | null>(null);
 
   const handleNameChange = useCallback(() => {
     if (!editName) {
-      setError('Name is required');
+      // setError("Name is required");
       return;
     }
 
@@ -56,25 +55,26 @@ export const UploadFileItem = (props: UploadFileItemProps) => {
     return (
       <div className="flex min-w-0 flex-1 items-center gap-2">
         {isEditing ? (
-          <div className="flex flex-1 items-center gap-2">
-            <Input
+          <div className="flex items-center gap-2">
+            <input
               value={editName}
               onChange={e => setEditName(e.target.value)}
-              onBlur={handleNameChange}
-              onKeyDown={e => e.key === 'Enter' && handleNameChange()}
-              autoFocus
-              className={cn('h-6 w-full p-1 text-sm', error && 'border-destructive')}
+              className="h-5 border-primary border-b text-base outline-none"
             />
-            {error && <span className="text-destructive text-xs">{error}</span>}
+            <Button type="button" variant="ghost" className="h-6 w-6 p-0" onClick={handleNameChange}>
+              <Check className="h-4 w-4" />
+            </Button>
           </div>
         ) : (
-          <span className="truncate text-sm">{file.name}</span>
+          <div className="flex items-center gap-2">
+            <span className="truncate text-sm">{file.name}</span>
+            {allowRename && (
+              <Button variant="ghost" className="h-6 w-6 p-0" onClick={() => setIsEditing(!isEditing)}>
+                <Pencil className="h-4 w-4" />
+              </Button>
+            )}
+          </div>
         )}
-        {allowRename ? (
-          <Button variant="ghost" className="h-6 w-6 p-0" onClick={() => setIsEditing(!isEditing)}>
-            {isEditing ? <Check className="h-4 w-4" /> : <Pencil className="h-4 w-4" />}
-          </Button>
-        ) : null}
       </div>
     );
   };
@@ -239,8 +239,10 @@ export const UploadFileItem = (props: UploadFileItemProps) => {
   };
 
   const renderFileSize = () => {
-    if (file.status !== 'error' && file.originFile) {
-      return <span className="text-muted-foreground text-xs">{formatSize(file?.originFile?.size)}</span>;
+    if (file.status !== 'error' && ((file?.originFile?.size ?? 0) > 0 || (file?.size ?? 0) > 0)) {
+      return (
+        <span className="text-muted-foreground text-xs">{formatSize(file?.originFile?.size ?? file?.size ?? 0)}</span>
+      );
     }
     return null;
   };
@@ -248,7 +250,7 @@ export const UploadFileItem = (props: UploadFileItemProps) => {
   const renderFilePanel = () => {
     const fileElement = renderFileName();
     return (
-      <div className="relative flex min-w-0 flex-1 flex-col pb-1">
+      <div className="relative flex min-w-0 flex-1 flex-col py-1">
         {renderFileInfo ? renderFileInfo(file, fileElement) : fileElement}
         {renderErrorStatus()}
         {renderFileSize()}

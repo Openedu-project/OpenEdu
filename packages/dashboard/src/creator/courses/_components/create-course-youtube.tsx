@@ -19,14 +19,14 @@ export default function CreateCourseYoutubeModal({
   onClose: () => void;
   onSubmit: (data: ICreateYoutubeCourse) => Promise<void>;
 }) {
-  const tCourses = useTranslations('courses');
+  const tCourse = useTranslations('course');
   const locale = getCookieClient(process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY);
 
   const toneOptions: SelectboxOption[] = [
-    { label: tCourses('tone.normal'), value: 'normal', id: 'normal' },
-    { label: tCourses('tone.humorous'), value: 'humorous', id: 'humorous' },
+    { label: tCourse('tone.normal'), value: 'normal', id: 'normal' },
+    { label: tCourse('tone.humorous'), value: 'humorous', id: 'humorous' },
     {
-      label: tCourses('tone.professional'),
+      label: tCourse('tone.professional'),
       value: 'professional',
       id: 'professional',
     },
@@ -34,24 +34,28 @@ export default function CreateCourseYoutubeModal({
 
   const quizOptions: SelectboxOption[] = [
     {
-      label: tCourses('quiz.singleChoice'),
+      label: tCourse('outline.lesson.content.quiz.types.singleChoice'),
       value: 'single_choice',
       id: 'single_choice',
     },
     {
-      label: tCourses('quiz.multipleChoice'),
+      label: tCourse('outline.lesson.content.quiz.types.multipleChoice'),
       value: 'multiple_choice',
       id: 'multiple_choice',
     },
   ];
 
   const handleError = () => {
-    toast.error(tCourses('formValidation.createCourseError'));
+    toast.error(
+      tCourse('common.toast.createError', {
+        item: tCourse('common.courseTitle'),
+      })
+    );
   };
 
   return (
     <Modal
-      title={tCourses('create.youtube')}
+      title={tCourse('create.youtube')}
       open={open}
       onClose={onClose}
       validationSchema={createYoutubeCourseSchema}
@@ -61,45 +65,45 @@ export default function CreateCourseYoutubeModal({
       defaultValues={{ language: locale, type: 'youtube_playlist' }}
       buttons={[
         {
-          label: tCourses('form.cancel'),
+          label: tCourse('common.actions.cancel'),
           type: 'button',
           onClick: onClose,
           variant: 'outline',
         },
-        { label: tCourses('form.create'), type: 'submit' },
+        { label: tCourse('common.actions.create'), type: 'submit' },
       ]}
     >
       {form => {
         return (
           <>
-            <FormFieldWithLabel name="playlist_link" label={tCourses('form.playlistLink')} required>
+            <FormFieldWithLabel name="playlist_link" label={tCourse('create.form.playlistLink')} required>
               <Input />
             </FormFieldWithLabel>
-            <FormFieldWithLabel name="language" label={tCourses('form.language')}>
+            <FormFieldWithLabel name="language" label={tCourse('create.form.language')}>
               <SelectLanguage />
             </FormFieldWithLabel>
             <FormFieldWithLabel
               name="summary_included"
-              label={tCourses('form.includeSummary')}
+              label={tCourse('create.form.includeSummary')}
               render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} />}
             />
             {form.watch('summary_included') && (
-              <FormFieldWithLabel name="tone" label={tCourses('form.tone')}>
+              <FormFieldWithLabel name="tone" label={tCourse('create.form.tone')}>
                 <Selectbox options={toneOptions ?? []} />
               </FormFieldWithLabel>
             )}
             <FormFieldWithLabel
               name="quiz_included"
-              label={tCourses('form.includeQuiz')}
+              label={tCourse('create.form.includeQuiz')}
               render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} />}
             />
             {form.watch('quiz_included') && (
-              <FormFieldWithLabel name="quiz_type" label={tCourses('form.quizType')}>
+              <FormFieldWithLabel name="quiz_type" label={tCourse('create.form.quizType')}>
                 <Selectbox options={quizOptions ?? []} />
               </FormFieldWithLabel>
             )}
             {form.watch('quiz_included') && (
-              <FormFieldWithLabel name="number_of_question" label={tCourses('form.numberOfQuestion')}>
+              <FormFieldWithLabel name="number_of_question" label={tCourse('create.form.numberOfQuestion')}>
                 <InputNumber />
               </FormFieldWithLabel>
             )}

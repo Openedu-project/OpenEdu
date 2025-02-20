@@ -85,7 +85,7 @@ const MenuItem = ({ url, title, label, onClick, socialUrl, ShareComponent, class
 export const MenuContent = ({ align = 'end', courseData }: MenuContentProps) => {
   const { dataMe } = useGetMe();
   const tCommonAction = useTranslations('general');
-  const tCourses = useTranslations('courses');
+  const tCourse = useTranslations('course');
 
   const url = buildUrl({
     endpoint: PLATFORM_ROUTES.courseDetail,
@@ -118,7 +118,7 @@ export const MenuContent = ({ align = 'end', courseData }: MenuContentProps) => 
       {shareConfig.permalink?.enabled && (
         <MenuItem
           url={shareConfig.permalink.url ?? ''}
-          label={shareConfig.permalink.label || tCourses('share.permalink')}
+          label={shareConfig.permalink.label || tCourse('share.permalink')}
           onClick={handlePermalinkCopy}
         />
       )}

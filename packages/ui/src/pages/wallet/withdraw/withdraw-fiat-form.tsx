@@ -67,7 +67,6 @@ export const WithdrawFiatForm = () => {
             <FormFieldWithLabel
               name="currency"
               label={t('currency.title')}
-              fieldType="select"
               render={({ field }) => (
                 <Selectbox
                   value={field.value}

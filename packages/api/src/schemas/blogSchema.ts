@@ -1,4 +1,4 @@
-import { fileResponseScheme } from '#types/file';
+import { fileResponseSchema } from '#types/file';
 import { z } from '#utils/zod';
 
 export const blogSchema = z.object({
@@ -6,7 +6,7 @@ export const blogSchema = z.object({
     message: 'blogForm.titleMessage',
   }),
   locale: z.string(),
-  thumbnail: fileResponseScheme.optional().refine(data => data !== undefined, {
+  thumbnail: fileResponseSchema.optional().refine(data => data !== undefined, {
     message: 'blogForm.isRequiredThumbnail',
   }),
   image_description: z.string().optional(),

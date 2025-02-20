@@ -1,32 +1,21 @@
 'use client';
-import { useGetSegmentById } from '@oe/api/hooks/useCourse';
-import { updateSegmentService } from '@oe/api/services/course';
-import type { ILessonContent, ISegment } from '@oe/api/types/course/segment';
+import type { ILessonContent } from '@oe/api/types/course/segment';
 import { DndSortable, DndSortableDragButton } from '@oe/ui/components/dnd-sortable';
 import { Button } from '@oe/ui/shadcn/button';
-import { toast } from '@oe/ui/shadcn/sonner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@oe/ui/shadcn/tabs';
 import { cn } from '@oe/ui/utils/cn';
 import { PlusIcon } from 'lucide-react';
-import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { type FieldErrors, useFormContext } from 'react-hook-form';
+import { useLessonActions } from '../../_hooks/useLessonActions';
 import { useOutlineStore } from '../../_store/useOutlineStore';
 import { tabOptions } from './lesson-content-options';
 import { LessonContentTabHeader } from './lesson-content-tab-header';
 
 export function LessonContents() {
-  const { sectionId, lessonId } = useParams<{
-    courseId: string;
-    sectionId: string;
-    lessonId: string;
-  }>();
-  const { segment: activeSection, mutateSegment } = useGetSegmentById(sectionId);
-
-  const activeLessons = activeSection?.lessons ?? [];
-
-  const activeLesson = activeLessons.find(lesson => lesson.id === lessonId);
-  const activeLessonContents = activeLesson?.contents?.sort((a, b) => a.order - b.order) ?? [];
+  const tCourseLesson = useTranslations('course.outline.lesson');
+  const { activeLessonContents, activeLesson, handleSortContents, handleAddLessonContent } = useLessonActions();
 
   const { activeLessonContent, setActiveLessonContent } = useOutlineStore();
 
@@ -35,18 +24,6 @@ export function LessonContents() {
   const { formState } = useFormContext();
 
   const contentErrors = (formState.errors as unknown as Record<string, FieldErrors<ILessonContent>[]>).contents;
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    if (activeLessonContents[0] && !activeLessonContent) {
-      setActiveLessonContent(activeLessonContents[0]);
-    }
-    return () => {
-      if (activeLessonContent) {
-        setActiveLessonContent(null);
-      }
-    };
-  }, [lessonId, sectionId, activeLessonContents, setActiveLessonContent]);
 
   useEffect(() => {
     if (contentErrors) {
@@ -58,60 +35,29 @@ export function LessonContents() {
         }
       }
       if (errorTabOrder !== null) {
-        setActiveLessonContent(activeLessonContents.find(content => content.order === errorTabOrder) ?? null);
+        const errorContent = activeLessonContents.find(content => content.order === errorTabOrder);
+        if (errorContent) {
+          setActiveLessonContent(errorContent);
+        }
       }
     }
   }, [contentErrors, activeLessonContents, setActiveLessonContent]);
 
-  const handleAddLessonContent = async () => {
-    try {
-      const order = activeLessonContents.length;
-      const newLesson = await updateSegmentService(undefined, {
-        ...activeLesson,
-        contents: [
-          ...activeLessonContents,
-          {
-            status: 'draft',
-            title: 'New Lesson Content',
-            note: '',
-            free: false,
-            type: 'text',
-            order,
-            content: '',
-            duration: 0,
-          },
-        ],
-      } as ISegment);
-      await mutateSegment();
-      setActiveLessonContent(newLesson.contents?.find(content => content.order === order) ?? null);
-    } catch {
-      toast.error('Failed to add lesson content');
-    }
+  const onAddLessonContent = async () => {
+    await handleAddLessonContent();
   };
 
   const handleTabsChange = (value: string) => {
     setActiveLessonContent(activeLessonContents.find(content => content.id === value) ?? null);
   };
 
-  const handleSortContents = async (items: ILessonContent[]) => {
+  const onSortContents = async (items: ILessonContent[]) => {
     setIsSorting(true);
-    try {
-      await updateSegmentService(undefined, {
-        ...activeLesson,
-        contents: items.map((content, index) => ({
-          ...content,
-          order: index,
-        })),
-      } as ISegment);
-      await mutateSegment();
-    } catch {
-      toast.error('Failed to sort lesson contents');
-    }
+    await handleSortContents(items);
     setIsSorting(false);
   };
 
   return (
-    // <div className="mx-auto w-full max-w-3xl">
     <Tabs
       value={activeLessonContent?.id ?? activeLessonContents[0]?.id}
       onValueChange={handleTabsChange}
@@ -131,7 +77,6 @@ export function LessonContents() {
             className: 'flex-1',
             renderItem: ({ item }) => {
               const tabOption = tabOptions[item.original.type];
-              // const hasError = !!errors.content || !!errors.files;
               return (
                 <TabsList className="h-auto items-center justify-start p-0">
                   <TabsTrigger value={item.original.id ?? ''} asChild>
@@ -146,7 +91,7 @@ export function LessonContents() {
                       <DndSortableDragButton className="mr-1 h-4 w-4" />
                       <div className="flex items-center gap-2">
                         {tabOption?.icon}
-                        <span>{tabOption?.label}</span>
+                        <span>{tCourseLesson(tabOption?.label)}</span>
                       </div>
                     </div>
                   </TabsTrigger>
@@ -154,13 +99,13 @@ export function LessonContents() {
               );
             },
           }}
-          onChange={handleSortContents}
+          onChange={onSortContents}
         />
         <Button
           variant="default"
           size="icon"
           className="h-8 w-8 shrink-0 rounded-md rounded-b-none border-b-0"
-          onClick={handleAddLessonContent}
+          onClick={onAddLessonContent}
         >
           <PlusIcon className="h-4 w-4" />
         </Button>
@@ -178,7 +123,6 @@ export function LessonContents() {
             <div className="space-y-0">
               <LessonContentTabHeader
                 value={content.type}
-                activeLessonContent={activeLessonContent ?? activeLessonContents[0]}
                 activeLesson={activeLesson}
                 hasErrors={!!contentErrors?.[content.order]}
               />
@@ -188,13 +132,12 @@ export function LessonContents() {
                   contentErrors?.[content.order] && 'border-destructive'
                 )}
               >
-                {tabOption?.content(content, content.order)}
+                {tabOption?.content(content.order)}
               </div>
             </div>
           </TabsContent>
         );
       })}
     </Tabs>
-    // </div>
   );
 }

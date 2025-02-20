@@ -1,9 +1,9 @@
 // schemas.ts
-'use client';
-import { fileResponseScheme } from '@oe/api/types/file';
+"use client";
+import { fileResponseSchema } from "@oe/api/types/file";
 // import { personalSchema, accountSchema, addressSchema, preferencesSchema } from './schemas';
 // import { toast } from '@oe/ui/shadcn/use-toast';
-import { z } from '@oe/api/utils/zod';
+import { z } from "@oe/api/utils/zod";
 import {
   FormNestedProvider,
   FormNestedWrapper,
@@ -14,53 +14,53 @@ import {
   FormWrapper,
   type INestedFormsValues,
   SubmitFormsButton,
-} from '@oe/ui/components/form-wrapper';
-import { Selectbox } from '@oe/ui/components/selectbox';
-import { Uploader } from '@oe/ui/components/uploader';
-import { Button } from '@oe/ui/shadcn/button';
-import { Checkbox } from '@oe/ui/shadcn/checkbox';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
-import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
-import { create } from './action';
+} from "@oe/ui/components/form-wrapper";
+import { Selectbox } from "@oe/ui/components/selectbox";
+import { Uploader } from "@oe/ui/components/uploader";
+import { Button } from "@oe/ui/shadcn/button";
+import { Checkbox } from "@oe/ui/shadcn/checkbox";
+import { FormFieldWithLabel } from "@oe/ui/shadcn/form";
+import { Input } from "@oe/ui/shadcn/input";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { create } from "./action";
 
 export const personalSchema = z.object({
-  firstName: z.string().min(2, 'First name must be at least 2 characters'),
-  lastName: z.string().min(2, 'Last name must be at least 2 characters'),
-  dob: z.string().min(1, 'Date of birth is required'),
-  phone: z.string().min(10, 'Phone number must be at least 10 characters'),
-  files: z.array(fileResponseScheme).min(1, 'Please upload at least one file'),
+  firstName: z.string().min(2, "First name must be at least 2 characters"),
+  lastName: z.string().min(2, "Last name must be at least 2 characters"),
+  dob: z.string().min(1, "Date of birth is required"),
+  phone: z.string().min(10, "Phone number must be at least 10 characters"),
+  files: z.array(fileResponseSchema).min(1, "Please upload at least one file"),
 });
 
 export const accountSchema = z
   .object({
-    email: z.string().email('Invalid email address'),
+    email: z.string().email("Invalid email address"),
     password: z
       .string()
-      .min(8, 'Password must be at least 8 characters')
-      .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
-      .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
-      .regex(/[0-9]/, 'Password must contain at least one number'),
+      .min(8, "Password must be at least 8 characters")
+      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+      .regex(/[0-9]/, "Password must contain at least one number"),
     confirmPassword: z.string(),
   })
-  .refine(data => data.password === data.confirmPassword, {
+  .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
-    path: ['confirmPassword'],
+    path: ["confirmPassword"],
   });
 
 export const addressSchema = z.object({
-  street: z.string().min(5, 'Street address must be at least 5 characters'),
-  city: z.string().min(2, 'City must be at least 2 characters'),
-  state: z.string().min(2, 'State must be at least 2 characters'),
-  zipCode: z.string().min(5, 'ZIP code must be at least 5 characters'),
+  street: z.string().min(5, "Street address must be at least 5 characters"),
+  city: z.string().min(2, "City must be at least 2 characters"),
+  state: z.string().min(2, "State must be at least 2 characters"),
+  zipCode: z.string().min(5, "ZIP code must be at least 5 characters"),
 });
 
 export const preferencesSchema = z.object({
   notifications: z.boolean(),
   newsletter: z.boolean(),
-  theme: z.enum(['light', 'dark', 'system']),
-  language: z.string().min(1, 'Please select a language'),
+  theme: z.enum(["light", "dark", "system"]),
+  language: z.string().min(1, "Please select a language"),
 });
 
 // registration-form.tsx
@@ -70,10 +70,10 @@ export function RegistrationForm() {
     try {
       // Submit to your API here
       const res = await create();
-      console.info('Final form values:', values, res);
-      toast.success('Registration successful!');
+      console.info("Final form values:", values, res);
+      toast.success("Registration successful!");
     } catch {
-      toast.error('Registration failed');
+      toast.error("Registration failed");
     }
   };
 
@@ -83,10 +83,10 @@ export function RegistrationForm() {
     setTimeout(
       () =>
         setUser({
-          firstName: 'Frank',
-          lastName: 'Murphy',
-          dob: '1980-01-01',
-          phone: '1234567890',
+          firstName: "Frank",
+          lastName: "Murphy",
+          dob: "1980-01-01",
+          phone: "1234567890",
         }),
       5000
     );
@@ -102,7 +102,11 @@ export function RegistrationForm() {
       >
         {({ loading }) => (
           <div>
-            <FormFieldWithLabel label="First Name" name="firstName" infoText="aaaa">
+            <FormFieldWithLabel
+              label="First Name"
+              name="firstName"
+              infoText="aaaa"
+            >
               <Input />
             </FormFieldWithLabel>
             <FormFieldWithLabel label="Last Name" name="lastName">
@@ -115,7 +119,12 @@ export function RegistrationForm() {
               <Input type="tel" />
             </FormFieldWithLabel>
             <FormFieldWithLabel label="Files" name="files">
-              <Uploader multiple listType="picture" triggerProps={{ className: 'order-1 h-24 w-24' }} className="p-0">
+              <Uploader
+                multiple
+                listType="picture"
+                triggerProps={{ className: "order-1 h-24 w-24" }}
+                className="p-0"
+              >
                 <Button variant="outline" className="h-full w-full">
                   Upload
                 </Button>
@@ -128,8 +137,17 @@ export function RegistrationForm() {
         )}
       </FormWrapper>
 
-      <FormNestedProvider onSubmit={handleSubmit} defaultTab="personal" className="mx-auto w-full max-w-3xl p-6">
-        <FormTabs defaultValue="personal" className="w-full" showProgress showValidationSummary>
+      <FormNestedProvider
+        onSubmit={handleSubmit}
+        defaultTab="personal"
+        className="mx-auto w-full max-w-3xl p-6"
+      >
+        <FormTabs
+          defaultValue="personal"
+          className="w-full"
+          showProgress
+          showValidationSummary
+        >
           <FormTabsList className="grid w-full grid-cols-4">
             <FormTabsTrigger tabId="personal" showIcon>
               Personal
@@ -152,8 +170,8 @@ export function RegistrationForm() {
               tabId="personal"
               schema={personalSchema}
               onError={() => {
-                toast.error('Validation Error', {
-                  description: 'Please check your personal information.',
+                toast.error("Validation Error", {
+                  description: "Please check your personal information.",
                 });
               }}
             >
@@ -192,7 +210,10 @@ export function RegistrationForm() {
                   <FormFieldWithLabel label="Password" name="password">
                     <Input disabled={loading} />
                   </FormFieldWithLabel>
-                  <FormFieldWithLabel label="Confirm Password" name="confirmPassword">
+                  <FormFieldWithLabel
+                    label="Confirm Password"
+                    name="confirmPassword"
+                  >
                     <Input disabled={loading} />
                   </FormFieldWithLabel>
                 </div>
@@ -208,8 +229,8 @@ export function RegistrationForm() {
               schema={addressSchema}
               // dependencies={['account-form']}
               onError={() => {
-                toast.error('Validation Error', {
-                  description: 'Please check your address information.',
+                toast.error("Validation Error", {
+                  description: "Please check your address information.",
                 });
               }}
             >
@@ -233,7 +254,11 @@ export function RegistrationForm() {
           </FormTabsContent>
 
           {/* Preferences Tab */}
-          <FormTabsContent value="preferences" showProgress showValidationSummary>
+          <FormTabsContent
+            value="preferences"
+            showProgress
+            showValidationSummary
+          >
             <FormNestedWrapper
               id="preferences-form"
               tabId="preferences"
@@ -242,7 +267,10 @@ export function RegistrationForm() {
             >
               {({ loading }) => (
                 <div className="space-y-6">
-                  <FormFieldWithLabel label="Notifications" name="notifications">
+                  <FormFieldWithLabel
+                    label="Notifications"
+                    name="notifications"
+                  >
                     <Checkbox disabled={loading} />
                   </FormFieldWithLabel>
                   <FormFieldWithLabel label="Newsletter" name="newsletter">
@@ -252,9 +280,9 @@ export function RegistrationForm() {
                     <Selectbox
                       disabled={loading}
                       options={[
-                        { id: 'light', value: 'light', label: 'Light' },
-                        { id: 'dark', value: 'dark', label: 'Dark' },
-                        { id: 'system', value: 'system', label: 'System' },
+                        { id: "light", value: "light", label: "Light" },
+                        { id: "dark", value: "dark", label: "Dark" },
+                        { id: "system", value: "system", label: "System" },
                       ]}
                     />
                   </FormFieldWithLabel>
@@ -262,9 +290,9 @@ export function RegistrationForm() {
                     <Selectbox
                       disabled={loading}
                       options={[
-                        { id: 'en', value: 'en', label: 'English' },
-                        { id: 'fr', value: 'fr', label: 'French' },
-                        { id: 'de', value: 'de', label: 'German' },
+                        { id: "en", value: "en", label: "English" },
+                        { id: "fr", value: "fr", label: "French" },
+                        { id: "de", value: "de", label: "German" },
                       ]}
                     />
                   </FormFieldWithLabel>

@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import { CourseFormField } from './form-field';
 
 export function LevelField() {
-  const tAICourse = useTranslations('courses.aiCourse');
+  const tAICourse = useTranslations('course.aiCourse');
   const { organizationByDomain } = useGetOrganizationByDomain();
 
   const { levels } = useGetLevels({

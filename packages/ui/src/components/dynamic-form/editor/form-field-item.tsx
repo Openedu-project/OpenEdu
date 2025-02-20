@@ -7,7 +7,13 @@ import { componentWithoutLabel } from '../constants';
 import { formComponents } from '../form-components';
 import type { FormComponentConfig, FormFieldType } from '../types';
 
-export default function FormFieldItem({ field, form }: { field: FormFieldType; form: UseFormReturn<FieldValues> }) {
+export default function FormFieldItem({
+  field,
+  form,
+}: {
+  field: FormFieldType;
+  form: UseFormReturn<FieldValues>;
+}) {
   const { fieldType, fieldId, ...rest } = field;
   const Component = formComponents[fieldType]?.component as ComponentType<
     Partial<FormComponentConfig> & { className?: string }
@@ -33,7 +39,7 @@ export default function FormFieldItem({ field, form }: { field: FormFieldType; f
             required={rest.required}
             description={rest.description}
             className={cn('flex-1 p-2', rest.border && 'border p-4')}
-            fieldType={fieldType}
+            isToggleField={fieldType === 'checkbox' || fieldType === 'switch'}
           >
             <Component
               {...('min' in rest && { min: rest.min })}

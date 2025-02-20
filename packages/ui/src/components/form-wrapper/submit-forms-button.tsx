@@ -13,6 +13,8 @@ export const SubmitFormsButton: FC<IFormSubmitButtonProps & ButtonProps> = ({
   className,
   disabled,
   asChild = false,
+  formIds,
+  loading,
   onClick,
   ...props
 }) => {
@@ -21,12 +23,14 @@ export const SubmitFormsButton: FC<IFormSubmitButtonProps & ButtonProps> = ({
 
   const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
+    console.log('loading', loading);
     if (onClick) {
       onClick(e);
     }
-    await submitForm();
+    await submitForm(formIds);
   };
+
+  // console.log("isSubmitting", isSubmitting);
 
   const Component = asChild ? Slot : Button;
 
@@ -38,9 +42,9 @@ export const SubmitFormsButton: FC<IFormSubmitButtonProps & ButtonProps> = ({
         isSubmitting && 'cursor-not-allowed opacity-50',
         className
       )}
-      disabled={disabled || isSubmitting}
+      disabled={disabled || loading || isSubmitting}
       onClick={handleClick}
-      loading={isSubmitting}
+      loading={loading || isSubmitting}
       {...props}
     >
       {children ? children : <span>{tGeneral('submit')}</span>}

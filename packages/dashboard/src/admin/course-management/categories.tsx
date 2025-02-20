@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 
 export default function CourseCategories() {
   const tDashboard = useTranslations('dashboard.courses');
-  const tCourses = useTranslations('courses');
+  const tCourse = useTranslations('course');
 
   return (
     <>
@@ -14,7 +14,7 @@ export default function CourseCategories() {
           { label: tDashboard('courseCategories') },
         ]}
         dashboard="admin"
-        title={tCourses('categories.title')}
+        title={tCourse('categories.title')}
         mainClassName="overflow-hidden"
       >
         <SetupCategoryTree type="course" />

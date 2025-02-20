@@ -83,7 +83,6 @@ export const WithdrawTokenForm = () => {
             <FormFieldWithLabel
               name="network"
               label={t('withdrawPage.form.network')}
-              fieldType="select"
               render={({ field }) => (
                 <Selectbox
                   value={field.value}
@@ -99,7 +98,6 @@ export const WithdrawTokenForm = () => {
             <FormFieldWithLabel
               name="token"
               label={t('withdrawPage.form.token')}
-              fieldType="select"
               render={({ field }) => (
                 <Selectbox
                   value={field.value}

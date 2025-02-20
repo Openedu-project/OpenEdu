@@ -148,5 +148,6 @@ export interface IFormSubmitButtonProps {
   className?: string;
   disabled?: boolean;
   asChild?: boolean;
+  formIds?: string[];
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }

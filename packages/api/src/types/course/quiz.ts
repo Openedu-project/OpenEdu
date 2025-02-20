@@ -27,6 +27,7 @@ export interface IQuizQuestion {
   quiz_id?: string;
   order?: number;
   id: string | null;
+  question_id?: string;
   title: string;
   description?: string;
   text?: string;
@@ -64,6 +65,7 @@ export interface IQuizItemResponse {
 }
 
 export interface IQuizAns {
+  answer_id?: string;
   id?: string;
   type?: string;
   text?: string;
@@ -74,10 +76,10 @@ export interface IQuizAns {
 
 export interface IQuizPayload {
   id?: string;
-  type: string;
+  type?: string;
   relation_type: QuizRelationType;
   trigger_conditions?: ITriggerConditions;
-  title: string;
+  title?: string;
   description?: string;
   settings: IQuizSettings;
   questions: IQuizQuestion[];
@@ -90,6 +92,7 @@ export interface ITriggerConditions {
   timestamp?: string;
   is_trigger_by_reach_page_number: boolean;
   page_number?: number;
+  show_at_percentage?: number;
 }
 
 export interface IQuizSettings {

@@ -42,7 +42,7 @@ export async function getCoursesService(
 
 export async function getCourseByIdService(
   url: string | undefined,
-  { id, init }: { id: string; init?: RequestInit }
+  { id, init }: { id?: string; init?: RequestInit }
 ): Promise<ICourse | null> {
   let endpointKey = url;
   if (!endpointKey) {
@@ -169,7 +169,11 @@ export const createAICourseService = async (
   payload: ICreateYoutubeCourse | IAICourseRequest,
   init?: RequestInit
 ) => {
-  const response = await postAPI<ICourse, ICreateYoutubeCourse | IAICourseRequest>(url ?? API_ENDPOINT.COURSES_AI, payload, init);
+  const response = await postAPI<ICourse, ICreateYoutubeCourse | IAICourseRequest>(
+    url ?? API_ENDPOINT.COURSES_AI,
+    payload,
+    init
+  );
   return response.data;
 };
 
@@ -365,5 +369,26 @@ export const getSectionsHaveLessonsByCourseIdService = async (
 
   const response = await fetchAPI<ISectionRes>(endpointKey, init);
 
+  return response.data;
+};
+
+export const publishCourseService = async (url: string | undefined, id: string, init?: RequestInit) => {
+  const response = await postAPI<ICourse, unknown>(
+    url ?? buildUrl({ endpoint: API_ENDPOINT.COURSES_ID_PUBLISH, params: { id } }),
+    {
+      status: 'publish',
+      note: '',
+    },
+    init
+  );
+  return response.data;
+};
+
+export const unpublishCourseService = async (url: string | undefined, id: string, init?: RequestInit) => {
+  const response = await deleteAPI<ICourse, undefined>(
+    url ?? buildUrl({ endpoint: API_ENDPOINT.COURSES_ID_PUBLISH, params: { id } }),
+    undefined,
+    init
+  );
   return response.data;
 };

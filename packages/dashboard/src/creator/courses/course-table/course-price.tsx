@@ -16,18 +16,26 @@ export default function CoursePrice({
   priceSettings: ICourse["price_settings"];
   variant?: "block" | "inline";
 }) {
+<<<<<<< HEAD
   const tCourses = useTranslations("courses");
+=======
+  const tCourse = useTranslations('course');
+>>>>>>> 5fce17a9 (feat: create course)
 
   if (!priceSettings) {
     return <span className="giant-iheading-semibold20 text-primary">-</span>;
   }
 
   if (!priceSettings.is_pay) {
+<<<<<<< HEAD
     return (
       <div className="mcaption-bold14 text-success">
         {tCourses("payment.free")}
       </div>
     );
+=======
+    return <div className="mcaption-bold14 text-success">{tCourse('price.free')}</div>;
+>>>>>>> 5fce17a9 (feat: create course)
   }
 
   // const fiatLocale = findLocaleForCurrency(priceSettings.fiat_currency);

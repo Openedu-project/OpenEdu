@@ -55,6 +55,7 @@ export function FormWrapper<TFormSchema extends z.ZodType>({
         await onSubmit?.(values);
 
         if (resetOnSuccess) {
+          console.log('reset form');
           form.reset(undefined, useFormProps?.resetOptions);
         }
       } catch (error) {
@@ -70,6 +71,14 @@ export function FormWrapper<TFormSchema extends z.ZodType>({
     [resetOnSuccess, useFormProps?.resetOptions, onError, form.reset, onSubmit]
   );
 
+  const handleError = useCallback(
+    (error: unknown) => {
+      console.error('Form validation error', error);
+      onError?.(error);
+    },
+    [onError]
+  );
+
   return (
     <RHFFormProvider {...form}>
       <form
@@ -79,7 +88,7 @@ export function FormWrapper<TFormSchema extends z.ZodType>({
         onSubmit={e => {
           e.preventDefault();
           e.stopPropagation();
-          form.handleSubmit(handleSubmit)(e);
+          form.handleSubmit(handleSubmit, handleError)(e);
         }}
         noValidate
       >

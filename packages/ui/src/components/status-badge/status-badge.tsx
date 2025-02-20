@@ -2,14 +2,14 @@ import type { TApprovalStatus } from '@oe/api/types/approvals';
 import type { IAICourseStatus } from '@oe/api/types/course/ai-course';
 import type { TCourseStatus } from '@oe/api/types/course/basic';
 import { Badge, type BadgeProps } from '@oe/ui/shadcn/badge';
-import { Loader, RotateCcw } from 'lucide-react';
+import { Loader } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import { Tooltip, TooltipProvider } from '#shadcn/tooltip';
 
-export type TStatus = TCourseStatus | IAICourseStatus | TApprovalStatus;
+export type TStatus = TCourseStatus | IAICourseStatus | TApprovalStatus | 'preview';
 
-const statusColorMap: Record<TStatus, BadgeProps['variant']> = {
+export const statusColorMap: Record<TStatus, BadgeProps['variant']> = {
   draft: 'muted',
   publish: 'success',
   publish_root: 'success',
@@ -26,9 +26,10 @@ const statusColorMap: Record<TStatus, BadgeProps['variant']> = {
   new: 'muted',
   approved: 'success',
   rejected: 'destructive',
+  preview: 'outline_primary',
 };
 
-const statusIcon: Record<TStatus, ReactNode | null> = {
+export const statusIcon: Record<TStatus, ReactNode | null> = {
   draft: null,
   publish: null,
   publish_root: null,
@@ -42,16 +43,21 @@ const statusIcon: Record<TStatus, ReactNode | null> = {
   new: null,
   approved: null,
   rejected: null,
-  generating: <Loader className="mr-1 h-3 w-3 animate-spin" />,
-  pending: <Loader className="mr-1 h-3 w-3 animate-spin" />,
-  waiting: <RotateCcw className="mr-1 h-3 w-3" />,
+  generating: <Loader className="mr-1 h-4 w-4 animate-spin" />,
+  pending: <Loader className="mr-1 h-4 w-4 animate-spin" />,
+  waiting: <Loader className="mr-1 h-4 w-4 animate-spin" />,
+  preview: null,
 };
 
 export function StatusBadge({
   status,
   errorMessage,
   className,
-}: { status: TStatus; errorMessage?: string; className?: string }) {
+}: {
+  status: TStatus;
+  errorMessage?: string;
+  className?: string;
+}) {
   const tStatus = useTranslations('general.statusVariants');
   return status === 'failed' ? (
     <TooltipProvider>

@@ -4,8 +4,8 @@ import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
 import { UploadIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-export default function Referrence() {
-  const tCourses = useTranslations('courses');
+export default function References() {
+  const tCourse = useTranslations('course');
   return (
     <FormFieldWithLabel
       name="docs"
@@ -20,8 +20,10 @@ export default function Referrence() {
           renderTrigger={props => (
             <div className="flex justify-between">
               <div>
-                <div className="font-medium text-lg">{tCourses('information.referrenceTitle')}</div>
-                <span className="text-muted-foreground text-xs">{tCourses('information.referrenceDescription')}</span>
+                <div className="font-medium text-lg">{tCourse('information.sections.reference.title')}</div>
+                <span className="text-muted-foreground text-xs">
+                  {tCourse('information.sections.reference.subtitle')}
+                </span>
               </div>
               <UploadTrigger {...props}>
                 <Button
@@ -30,7 +32,7 @@ export default function Referrence() {
                   size="sm"
                 >
                   <UploadIcon className="mr-2 h-4 w-4" />
-                  {tCourses('information.referrenceUpload')}
+                  {tCourse('information.sections.reference.uploadButton')}
                 </Button>
               </UploadTrigger>
             </div>

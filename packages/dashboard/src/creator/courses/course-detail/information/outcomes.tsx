@@ -8,7 +8,7 @@ import { useTranslations } from 'next-intl';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 export default function Outcomes() {
-  const tCourses = useTranslations('courses');
+  const tCourse = useTranslations('course');
 
   const { control } = useFormContext();
   const { fields, append, remove } = useFieldArray({
@@ -22,8 +22,8 @@ export default function Outcomes() {
       label={
         <>
           <div className="flex flex-col gap-1">
-            <span className="font-medium text-lg">{tCourses('information.outcomesTitle')}</span>
-            <span className="text-muted-foreground text-xs">{tCourses('information.outcomesDescription')}</span>
+            <span className="font-medium text-lg">{tCourse('information.sections.outcomes.title')}</span>
+            <span className="text-muted-foreground text-xs">{tCourse('information.sections.outcomes.subtitle')}</span>
           </div>
           <Button
             type="button"
@@ -33,7 +33,7 @@ export default function Outcomes() {
             className="flex items-center gap-2 border-primary text-primary hover:text-primary/90"
           >
             <PlusIcon className="h-4 w-4" />
-            {tCourses('information.outcomesAdd')}
+            {tCourse('information.sections.outcomes.addButton')}
           </Button>
         </>
       }
@@ -44,7 +44,7 @@ export default function Outcomes() {
           {fields.map((field, index) => (
             <div key={field.id} className="flex gap-2">
               <FormFieldWithLabel name={`props.achievements.${index}`} className="flex-1">
-                <Input placeholder={tCourses('information.outcomesPlaceholder')} />
+                <Input placeholder={tCourse('information.sections.outcomes.placeholder')} />
               </FormFieldWithLabel>
               <Button type="button" variant="ghost" size="icon" onClick={() => remove(index)}>
                 <TrashIcon className="h-4 w-4" />

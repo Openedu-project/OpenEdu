@@ -23,8 +23,8 @@ const SharePercentage = <TFormValues extends FieldValues>({ form }: SharePercent
               {...field}
               type="number"
               value={field.value}
-              onChange={e => {
-                field.onChange(Number(e.target.value));
+              onChange={value => {
+                field.onChange(Number(value));
               }}
               suffixIcon={<CirclePercent size={20} />}
             />
