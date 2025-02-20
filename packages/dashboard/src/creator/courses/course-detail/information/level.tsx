@@ -22,7 +22,7 @@ export default function Category() {
         <div className="flex flex-col gap-1">
           <span className="font-medium text-lg">
             {tCourse('information.sections.level.title')}
-            <span className="text-red-500">*</span>
+            {/* <span className="text-red-500">*</span> */}
           </span>
           <span className="text-muted-foreground text-xs">{tCourse('information.sections.level.subtitle')}</span>
         </div>

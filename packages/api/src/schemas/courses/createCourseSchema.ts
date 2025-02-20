@@ -81,7 +81,7 @@ export const courseFormSchema = z.object({
     .nullable()
     .default([])
     .optional(),
-  docs: z.array(fileResponseSchema).default([]).optional(),
+  docs: z.array(fileResponseSchema).nullable().default([]).optional(),
   props: z.object({
     preview_lessons: z
       .array(
@@ -99,11 +99,11 @@ export const courseFormSchema = z.object({
       .optional(),
     support_channel: z
       .object({
-        channels: z.string().array().default([]).optional(),
+        channels: z.string().array().nullable().default([]).optional(),
       })
       .nullable()
       .optional(),
-    achievements: z.string().array().default([]).optional(),
+    achievements: z.string().array().nullable().default([]).optional(),
   }),
   medias: z.array(fileResponseSchema).nullable().optional(),
   price_settings: priceSettingsSchema.optional(),
