@@ -36,6 +36,10 @@ export const courseLearningMessages = {
       toast: {
         loading: 'Go to the next lesson in {seconds} seconds',
         success: 'Navigating to next lesson...',
+        title: 'Moving to Next Lesson',
+        description: "You're about to move to the next lesson automatically.",
+        continueText: 'Continue Now',
+        cancelText: 'Stay Here',
       },
     },
     courseNotiModal: {

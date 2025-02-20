@@ -2,9 +2,8 @@ import type { IQuizItemResponse } from '@oe/api/types/course/quiz';
 import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from '#common/navigation';
-import { toast } from '#shadcn/sonner';
 import { createCourseUrl } from '#utils/course-url';
 import { useLessonLearningStore } from '../../../_store/learning-store';
 import { getLessonGlobalIndex, getTotalLessons, getUidByLessonIndex } from '../../../_utils/utils';
@@ -24,17 +23,16 @@ export const usePlayerProgress = (
   }
 ) => {
   const tPlayerToast = useTranslations('learningPage.player.toast');
-
   const { slug, lesson } = useParams();
   const router = useRouter();
+  const currentLessonRef = useRef(lesson);
 
   const [lastCompletedPercentage, setLastCompletedPercentage] = useState<number>(0);
   const [timestamp, setTimestamp] = useState({
     seconds: 0,
     duration: 0,
   });
-  const [count, setCount] = useState<number>(5);
-  const [showCountdown, setShowCountdown] = useState<boolean>(false);
+  const [showNextLessonAlert, setShowNextLessonAlert] = useState(false);
 
   const { sectionsProgressData, getLessonStatus, setIsNavigatingLesson } = useLessonLearningStore();
   const currentLessonIndex = getLessonGlobalIndex(sectionsProgressData, lesson as string);
@@ -42,9 +40,8 @@ export const usePlayerProgress = (
 
   const checkNextLesson = getLessonStatus(currentLessonIndex + 1);
 
-  const handleNavigateLesson = () => {
+  const handleNavigateLesson = useCallback(() => {
     let newIndex = currentLessonIndex;
-
     newIndex = currentLessonIndex < totalItems ? currentLessonIndex + 1 : 0;
 
     const lessonInfo = getUidByLessonIndex(sectionsProgressData, newIndex);
@@ -57,59 +54,11 @@ export const usePlayerProgress = (
         lesson: lessonInfo?.lessonUid,
       });
 
-    return learningPageUrl && router.push(learningPageUrl);
-  };
-
-  const handleShowToast = () => {
-    setShowCountdown(true);
-    setCount(5);
-
-    const promise = new Promise(resolve => {
-      let currentCount = 5;
-
-      const interval = setInterval(() => {
-        currentCount -= 1;
-
-        if (currentCount > 0) {
-          // Update toast message
-          toast.loading(tPlayerToast('loading', { seconds: currentCount }), {
-            id: 'next-lesson-countdown',
-          });
-        } else {
-          clearInterval(interval);
-          handleNavigateLesson();
-          resolve(true);
-        }
-      }, 1000);
-    });
-
-    toast.promise(promise, {
-      loading: tPlayerToast('loading', { seconds: 5 }),
-      success: () => {
-        setShowCountdown(false);
-        return tPlayerToast('success');
-      },
-      id: 'next-lesson-countdown',
-    });
-  };
-
-  useEffect(() => {
-    setIsNavigatingLesson(false);
-  }, []);
-
-  useEffect(() => {
-    if (showCountdown && count > 0) {
-      const timer = setTimeout(() => {
-        setCount(count - 1);
-      }, 1000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [showCountdown, count]);
+    return learningPageUrl ? router.push(learningPageUrl) : null;
+  }, [currentLessonIndex, totalItems, sectionsProgressData, slug, router]);
 
   const checkProgress = useCallback(
     (currentTime: number, duration: number) => {
-      // Update timestamp
       setTimestamp({ seconds: currentTime, duration });
       options?.onTimeUpdate?.(currentTime, duration);
 
@@ -137,19 +86,53 @@ export const usePlayerProgress = (
           Boolean(options?.quizzes) === Boolean(options?.quizResult)
         ) {
           setIsNavigatingLesson(true);
-          handleShowToast();
+          setShowNextLessonAlert(true);
         }
 
         return roundedPercentage;
       }
       return null;
     },
-    [lastCompletedPercentage, onComplete, options]
+    [lastCompletedPercentage, onComplete, options, checkNextLesson]
   );
+
+  useEffect(() => {
+    setIsNavigatingLesson(false);
+  }, []);
+
+  // Update currentLessonRef when lesson changes
+  useEffect(() => {
+    currentLessonRef.current = lesson;
+
+    const nextLessonInfo = getUidByLessonIndex(
+      sectionsProgressData,
+      currentLessonIndex < totalItems ? currentLessonIndex + 1 : 0
+    );
+    const isOnTargetLesson = lesson === nextLessonInfo?.lessonUid;
+
+    if (isOnTargetLesson) {
+      setShowNextLessonAlert(false);
+    }
+  }, [lesson, sectionsProgressData, currentLessonIndex, totalItems]);
 
   return {
     lastCompletedPercentage,
     checkProgress,
     timestamp,
+    // Return values for AlertDialog
+    showNextLessonAlert,
+    setShowNextLessonAlert,
+    handleNavigateLesson,
+    dialogProps: {
+      title: tPlayerToast('title'),
+      description: tPlayerToast('description'),
+      continueText: tPlayerToast('continueText'),
+      cancelText: tPlayerToast('cancelText'),
+      onOpenChange: (open: boolean) => {
+        if (!open) {
+          setShowNextLessonAlert(false);
+        }
+      },
+    },
   };
 };
