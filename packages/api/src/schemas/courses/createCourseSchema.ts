@@ -67,7 +67,9 @@ export const courseFormSchema = z.object({
         name: z.string(),
       })
     )
-    .min(1, { message: 'course.validation.levelMin--min:1' }),
+    .nullable()
+    .default([])
+    .optional(),
 
   categories: z
     .array(
@@ -76,7 +78,9 @@ export const courseFormSchema = z.object({
         name: z.string(),
       })
     )
-    .min(1, { message: 'course.validation.categoryMin--min:1' }),
+    .nullable()
+    .default([])
+    .optional(),
   docs: z.array(fileResponseSchema).default([]).optional(),
   props: z.object({
     preview_lessons: z

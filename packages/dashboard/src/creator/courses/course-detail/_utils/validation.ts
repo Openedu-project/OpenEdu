@@ -35,12 +35,12 @@ export const validateCourse = ({
   if (!course?.thumbnail?.id) {
     informationErrors.push(tCourse('validation.genThumbnail'));
   }
-  if (course?.categories?.length === 0) {
-    informationErrors.push(tCourse('validation.categoryMin', { min: '1' }));
-  }
-  if (course?.levels?.length === 0) {
-    informationErrors.push(tCourse('validation.levelMin', { min: '1' }));
-  }
+  // if (course?.categories?.length === 0) {
+  //   informationErrors.push(tCourse('validation.categoryMin', { min: '1' }));
+  // }
+  // if (course?.levels?.length === 0) {
+  //   informationErrors.push(tCourse('validation.levelMin', { min: '1' }));
+  // }
 
   // Validate Outline tab
   if (course?.active_section && course?.active_lesson) {
