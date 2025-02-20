@@ -20,5 +20,9 @@ export async function changeLanguage(locale: string) {
   // // Tạo URL mới với locale đã cập nhật
   // const newPath = `/${segments.join('/')}${url.search}`;
 
-  redirect(headerUrl.replace(currentLocale, locale));
+  // Do openedu.net co "en" nên khi xài hàm replace openedu.net/en với locale khác sẽ thành op{locale}edu.net/en
+  // Solution: thay vì replace "en", thì replace "/en"
+
+  // redirect(headerUrl.replace(currentLocale, locale));
+  redirect(headerUrl.replace(`/${currentLocale}`, `/${locale}`));
 }

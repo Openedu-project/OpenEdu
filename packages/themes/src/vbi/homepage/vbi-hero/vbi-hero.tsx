@@ -47,7 +47,7 @@ const VbiHomepageHero: SectionComponent<"homepage", "vbiHero"> = ({
 
           <Button className="w-full sm:w-fit">
             <Link
-              href={props?.button?.link ? t?.("button.link") ?? "#" : "#"}
+              href={props?.button?.link ?? "#"}
               className="bg-inherit text-primary-foreground hover:no-underline"
             >
               {t?.("button.text")}

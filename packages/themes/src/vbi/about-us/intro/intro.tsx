@@ -1,3 +1,4 @@
+import aboutBg from "@oe/assets/images/theme/about-bg.png";
 import { Image } from "@oe/ui/components/image";
 import type { FileType } from "@oe/ui/components/uploader";
 import { cn } from "@oe/ui/utils/cn";
@@ -11,7 +12,7 @@ export interface VbiAboutUsIntroProps {
 }
 
 const VbiAboutUsIntro: SectionComponent<"about-us", "vbiIntro"> = ({
-  props,
+  // props,
   className,
 }) => {
   const t = useTranslations("themePage.vbi.about-us.vbiIntro");
@@ -32,10 +33,11 @@ const VbiAboutUsIntro: SectionComponent<"about-us", "vbiIntro"> = ({
 
       <Image
         alt="banner"
-        src={props?.image?.url}
+        src={aboutBg?.src}
         className="h-full w-full rounded-lg object-contain"
-        height={props?.image?.height}
-        width={props?.image?.width}
+        height={aboutBg?.height}
+        width={aboutBg?.width}
+        quality={100}
       />
     </div>
   );

@@ -94,7 +94,7 @@ const VbiHomepageAchievements: SectionComponent<
       <InfoSection
         title={t?.("title")}
         titleSub={t?.("titleSub")}
-        button={{ text: t?.("button.text"), link: t?.("button.link") }}
+        button={undefined}
         className="flex flex-col items-center"
       />
       <div className="space-y-4">

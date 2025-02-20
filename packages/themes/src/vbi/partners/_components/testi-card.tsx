@@ -1,6 +1,7 @@
 import { Image } from "@oe/ui/components/image";
 import type { FileType } from "@oe/ui/components/uploader";
 import { Card, CardContent } from "@oe/ui/shadcn/card";
+import { cn } from "@oe/ui/utils/cn";
 
 interface TestimonialCardProps {
   variant?: "dark" | "light";
@@ -9,6 +10,7 @@ interface TestimonialCardProps {
   authorName: string;
   authorRole: string;
   author?: FileType;
+  className?: string;
 }
 
 const TestimonialCard = ({
@@ -18,14 +20,17 @@ const TestimonialCard = ({
   authorName,
   authorRole,
   author,
+  className,
 }: TestimonialCardProps) => {
   const isDark = variant === "dark";
 
   return (
     <Card
-      className={`p-4 md:p-8 ${
-        isDark ? "bg-primary text-accent" : "bg-background"
-      }`}
+      className={cn(
+        "p-4 md:p-8",
+        isDark ? "bg-primary text-accent" : "bg-background",
+        className
+      )}
     >
       <CardContent className="p-0">
         {/* Logo */}
