@@ -206,6 +206,7 @@ export function useNotifications() {
         return buildUrl({
           endpoint: ADMIN_ROUTES.launchpadRequestsDetail,
           params: { id: notification.props?.launchpad_id },
+          queryParams: { orderId: notification.props?.approval_id },
         });
       case 701:
       case 702:
