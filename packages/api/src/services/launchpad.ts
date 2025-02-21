@@ -59,14 +59,14 @@ export async function getLaunchpadService(
 }
 
 export async function getBackerService(
-  url: string,
+  url: string | undefined,
   { id, init, preloads }: { id: string; init?: RequestInit; preloads?: string[] }
 ): Promise<IBackerData | null> {
   let endpointKey = url;
 
   if (!endpointKey) {
     endpointKey = createAPIUrl({
-      endpoint: API_ENDPOINT.LAUNCHPADS_INVESTMENTS,
+      endpoint: API_ENDPOINT.LAUNCHPADS_ID_INVESTMENTS,
       params: {
         id,
       },
@@ -165,6 +165,29 @@ export const postInitPoolLaunchpadService = async (
 
   const response = await postAPI<ILaunchpad, { wallet_id: string }>(
     endpoint ?? API_ENDPOINT.LAUNCHPADS_POOLS_ID,
+    payload,
+    init
+  );
+
+  return response.data;
+};
+
+export const postLaunchpadVote = async (
+  endpoint: string | null | undefined,
+  { milestone_id, payload, init }: { milestone_id: string; payload: { status: string }; init?: RequestInit }
+) => {
+  let endpointKey = endpoint;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.LAUNCHPADS_VOTE_ID,
+      params: {
+        milestone_id: milestone_id,
+      },
+    });
+  }
+
+  const response = await postAPI<ILaunchpad, { status: string }>(
+    endpointKey ?? API_ENDPOINT.LAUNCHPADS_VOTE_ID,
     payload,
     init
   );

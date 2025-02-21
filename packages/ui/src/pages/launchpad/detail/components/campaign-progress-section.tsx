@@ -27,6 +27,7 @@ const CampaignProgressSection = async ({
       : `${timeLeft} ${timeLeft === 1 ? t('common.day') : t('common.days')} ${t('common.left')}`;
 
   const progress = calculateProgress(Number(campaign?.total_amount), Number(campaign?.funding_goal.target_funding));
+
   const renderBtn = () => {
     if (isLoggedIn && campaign?.status === LAUNCHPAD_STATUS.FUNDING) {
       return (
@@ -35,15 +36,23 @@ const CampaignProgressSection = async ({
         </Link>
       );
     }
+    if (campaign?.status === LAUNCHPAD_STATUS.VOTING && campaign?.investment) {
+      return (
+        <Link href={`/launchpad/${campaign?.id}/vote`} className="mt-6 w-full p-0">
+          <Button className="h-fit w-full rounded-xl px-6 py-4 font-semibold text-base">{t('buttons.vote')}</Button>
+        </Link>
+      );
+    }
+    return null;
   };
 
   return (
     <aside className="sticky top-[90px] hidden h-full w-full md:block md:w-[40%]">
       <div className="rounded-2xl bg-white p-6 shadow-[0px_4px_30px_0px_#F4F5F6]">
-        <div className="relative mb-6 h-full min-h-[224px] w-full cursor-pointer overflow-hidden rounded-2xl">
+        <div className="relative mb-6 aspect-video h-full min-h-[224px] w-full cursor-pointer overflow-hidden rounded-2xl">
           <Image
             className="h-full w-full"
-            alt="campain full card image"
+            alt="campaign full card image"
             src={campaign?.thumbnail?.url || DefaultImg.src}
             fill
             containerHeight={224}

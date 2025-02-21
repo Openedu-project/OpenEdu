@@ -4,7 +4,7 @@ import { CampaignDetailsSection, CampaignProgressSection } from './components';
 const LaunchpadDetailPage = async ({ id }: { id: string }) => {
   const campaign = await getLaunchpadService(undefined, {
     id,
-    preloads: ['Owner', 'Courses', 'User', 'Outline', 'Investment'],
+    preloads: ['Owner', 'Courses', 'User', 'Outline', 'Investment', 'VotingMilestones'],
   });
 
   return (
