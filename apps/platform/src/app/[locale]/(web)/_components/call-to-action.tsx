@@ -9,7 +9,7 @@ export default function CTASection() {
   const t = useTranslations("homePageLayout.ctaSection");
 
   return (
-    <div className="flex flex-col items-center gap-8 py-5 lg:flex-row lg:py-10">
+    <div className="flex flex-col items-center gap-8 pb-5 lg:flex-row lg:pb-10">
       <div className="relative w-full overflow-hidden rounded-[40px] bg-[linear-gradient(148.02deg,#FFFFFF_21.53%,rgba(242,241,255,0.5)_49.58%)] p-4 backdrop-blur-[2px] md:p-12 lg:w-1/2">
         <h2 className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold32 max-w-[80%]">
           {t("title")}
