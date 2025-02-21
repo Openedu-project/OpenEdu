@@ -13,9 +13,11 @@ import {
 } from '#services/admin-launchpad';
 import {
   getLaunchpadConfigService,
+  postBookmarkLaunchpadService,
   postCreateLaunchpadService,
   postInitPoolLaunchpadService,
   postPledgeLaunchpadService,
+  removeBookmarkLaunchpadService,
 } from '#services/launchpad';
 import type {
   IAdminLaunchpadItem,
@@ -333,5 +335,33 @@ export const usePostPledgeLaunchpad = () => {
     triggerPostPledgeLaunchpad: trigger,
     isLoadingPostPledgeLaunchpad: isMutating,
     errorPostPledgeLaunchpad: error,
+  };
+};
+
+export const usePostBookmarkLaunchpad = () => {
+  const { trigger, isMutating, error } = useSWRMutation(
+    API_ENDPOINT.BOOKMARKS,
+    async (endpoint: string, { arg }: { arg: { id: string } }): Promise<ILaunchpad> =>
+      postBookmarkLaunchpadService(endpoint, { payload: arg })
+  );
+
+  return {
+    triggerPostBookmarkLaunchpad: trigger,
+    isLoadingPostBookmarkLaunchpad: isMutating,
+    errorPostBookmarkLaunchpad: error,
+  };
+};
+
+export const useDeleteBookmarkLaunchpad = () => {
+  const { trigger, isMutating, error } = useSWRMutation(
+    API_ENDPOINT.BOOKMARKS_ID,
+    async (endpoint: string, { arg }: { arg: { id: string } }): Promise<unknown> =>
+      removeBookmarkLaunchpadService(endpoint, { payload: arg })
+  );
+
+  return {
+    triggerDeleteBookmarkLaunchpad: trigger,
+    isLoadingDeleteBookmarkLaunchpad: isMutating,
+    errorDeleteBookmarkLaunchpad: error,
   };
 };
