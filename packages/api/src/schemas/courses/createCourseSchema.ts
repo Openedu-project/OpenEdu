@@ -31,7 +31,7 @@ export const createYoutubeCourseSchema = z.object({
   tone: z.string().optional(),
   quiz_included: z.boolean(),
   quiz_type: z.string().optional(),
-  number_of_question: z.string().transform(Number).optional(),
+  number_of_question: z.coerce.number().gte(1, { message: 'course.validation.questionNumber' }).optional(),
   type: z.enum(['youtube_playlist', 'learner_description']),
 });
 
@@ -116,7 +116,7 @@ export interface ICreateCourse extends z.infer<typeof courseFormSchema> {}
 export const courseOutlineSchema = z.object({
   learner_info: z.string().min(1, { message: 'course.validation.leanerInfo' }),
   content_info: z.string().min(1, { message: 'course.validation.contentInfo' }),
-  material_file: fileResponseSchema.optional(),
+  material_file: z.array(fileResponseSchema).nullable().default([]).optional(),
   level_id: z.string().optional(),
   language: z.string(),
   duration_type: z.enum(['day', 'week']),

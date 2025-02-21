@@ -104,7 +104,7 @@ export default function CreateCourseYoutubeModal({
             )}
             {form.watch('quiz_included') && (
               <FormFieldWithLabel name="number_of_question" label={tCourse('create.form.numberOfQuestion')}>
-                <InputNumber />
+                <InputNumber min={1} />
               </FormFieldWithLabel>
             )}
           </>

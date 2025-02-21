@@ -39,7 +39,7 @@ export default function AffiliateManagementContent() {
         accessorKey: 'name',
         size: 155,
         className: 'font-medium py-4',
-
+        enableSorting: false,
         cell: ({ row }) => {
           const item = row.original;
           return (
@@ -54,6 +54,7 @@ export default function AffiliateManagementContent() {
         accessorKey: 'course_name',
         size: 155,
         className: 'font-medium py-4',
+        enableSorting: false,
         cell: ({ row }) => {
           const item = row.original;
           return (
@@ -68,6 +69,7 @@ export default function AffiliateManagementContent() {
         accessorKey: 'price',
         size: 100,
         className: 'font-medium py-4',
+        enableSorting: false,
         cell: ({ row }) => {
           const item = row.original;
           return (
@@ -83,6 +85,7 @@ export default function AffiliateManagementContent() {
         accessorKey: 'premium_share_rate_max',
         size: 140,
         className: 'font-medium py-4',
+        enableSorting: false,
         cell: ({ row }) => {
           const item = row.original;
           return (
@@ -96,10 +99,12 @@ export default function AffiliateManagementContent() {
       {
         header: t('learner'),
         align: 'center',
+        enableSorting: false,
         columns: [
           {
             accessorKey: 'base_rate_max',
             header: t('ref1'),
+            enableSorting: false,
             cell: ({ row }) => {
               const item = row.original;
               return (
@@ -116,6 +121,7 @@ export default function AffiliateManagementContent() {
           {
             accessorKey: 'base_rate_ref2',
             header: t('ref2'),
+            enableSorting: false,
             cell: ({ row }) => {
               const item = row.original;
               return <div className="py-2 text-center">{item?.base_rate_ref2}%</div>;
@@ -126,10 +132,12 @@ export default function AffiliateManagementContent() {
       {
         header: t('basicUser'),
         align: 'center',
+        enableSorting: false,
         columns: [
           {
             accessorKey: 'learner_rate_min',
             header: t('ref1'),
+            enableSorting: false,
             cell: ({ row }) => {
               const item = row.original;
               return (
@@ -146,6 +154,7 @@ export default function AffiliateManagementContent() {
           {
             accessorKey: 'learner_rate_max',
             header: t('ref2'),
+            enableSorting: false,
             cell: ({ row }) => {
               const item = row.original;
               return <div className="py-2 text-center">{item?.learner_rate_max === 0 ? 0 : item?.base_rate_ref2}%</div>;
@@ -156,10 +165,12 @@ export default function AffiliateManagementContent() {
       {
         header: t('premiumUser'),
         align: 'center',
+        enableSorting: false,
         columns: [
           {
             accessorKey: 'premium_rate_min',
             header: t('ref1'),
+            enableSorting: false,
             cell: ({ row }) => {
               const item = row.original;
               return (
@@ -176,6 +187,7 @@ export default function AffiliateManagementContent() {
           {
             accessorKey: 'premium_rate_max',
             header: t('ref2'),
+            enableSorting: false,
             cell: ({ row }) => {
               const item = row.original;
               return <div className="py-2 text-center">{item?.premium_rate_max === 0 ? 0 : item?.base_rate_ref2}%</div>;
@@ -187,6 +199,7 @@ export default function AffiliateManagementContent() {
         header: t('action'),
         sticky: 'right',
         align: 'center',
+        enableSorting: false,
         size: 180,
         cell: ({ row }) => {
           const item = row.original;
