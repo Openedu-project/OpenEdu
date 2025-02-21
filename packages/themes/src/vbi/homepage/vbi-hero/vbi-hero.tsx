@@ -38,7 +38,7 @@ const VbiHomepageHero: SectionComponent<"homepage", "vbiHero"> = ({
       <div className="flex flex-col items-center gap-12 md:h-[calc(100vh-var(--header-height)-120px)] md:flex-row">
         {/* Content */}
         <div className="flex h-[60vh] flex-auto flex-col justify-center space-y-6 py-2 text-foreground md:h-full lg:flex-1">
-          <h1 className="font-bold text-3xl leading-tight md:text-5xl">
+          <h1 className="!leading-[1.5] font-bold text-3xl md:text-5xl ">
             {t?.("title")}
           </h1>
           <p className="text-foreground/80 text-md md:text-lg">

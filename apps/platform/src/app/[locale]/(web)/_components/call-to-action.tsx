@@ -10,7 +10,7 @@ export default function CTASection() {
 
   return (
     <div className="flex flex-col items-center gap-8 py-5 lg:flex-row lg:py-10">
-      <div className="] relative w-full overflow-hidden rounded-[40px] border-4 border-white bg-gradient-to-l from-25% from-white via-primary-20/30 to-primary-20/30 p-4 backdrop-blur-[2px] md:p-12 lg:w-1/2">
+      <div className="relative w-full overflow-hidden rounded-[40px] bg-[linear-gradient(148.02deg,#FFFFFF_21.53%,rgba(242,241,255,0.5)_49.58%)] p-4 backdrop-blur-[2px] md:p-12 lg:w-1/2">
         <h2 className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold32 max-w-[80%]">
           {t("title")}
         </h2>
@@ -18,18 +18,23 @@ export default function CTASection() {
           {t("description")}
         </p>
 
-        <Link href={PLATFORM_ROUTES.courses} className="mt-8 p-0">
-          <Button>{t("buttons.start")}</Button>
+        <Link
+          href={PLATFORM_ROUTES.courses}
+          className="mt-8 w-full justify-start p-0"
+        >
+          <Button className="mbutton-bold16 w-full sm:w-fit">
+            {t("buttons.start")}
+          </Button>
         </Link>
       </div>
       <div className="relative w-full lg:w-1/2">
-        <div className="relative mx-auto w-full max-w-[600px]">
-          <div className="relative w-full">
+        <div className="relative mx-auto h-full w-full max-w-[600px]">
+          <div className="relative h-full w-full">
             <Image
               src={BannerJouney.src}
               alt="CTA banner"
               width={554}
-              height={582}
+              height={380}
               priority
               className="object-contain"
               sizes="(max-width: 768px) 100vw, (max-width: 1440px) 50vw, 720px"

@@ -1,15 +1,13 @@
-import { isLogin } from '@oe/api/utils/auth';
-import OpeneduLogo from '@oe/assets/images/logo-openedu.png';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import type { ReactNode } from 'react';
-import { Link } from '#common/navigation';
-import { Image } from '#components/image';
-import { LoginWarningModal } from '#components/login-required-modal';
-import type { FileType } from '#components/uploader';
-import { cn } from '#utils/cn';
-import { Footer, type FooterProps } from '../footer';
-import { Header } from '../header';
-import type { ISidebarItem } from '../sidebar';
+import { isLogin } from "@oe/api/utils/auth";
+import type { ReactNode } from "react";
+import { Link } from "#common/navigation";
+import { LoginWarningModal } from "#components/login-required-modal";
+import type { FileType } from "#components/uploader";
+import { cn } from "#utils/cn";
+import { Footer, type FooterProps } from "../footer";
+import { Header } from "../header";
+import type { ISidebarItem } from "../sidebar";
+import { Logo } from "./logo";
 
 export async function MainLayout({
   children,
@@ -30,31 +28,22 @@ export async function MainLayout({
 
   return (
     <>
-      <Header sidebarItems={sidebarItems} subSidebarItems={subSidebarItems} isLoggedIn={isLoggedIn}>
-        <Link
-          href={PLATFORM_ROUTES.homepage}
-          className="w-[115px] min-w-[115px] p-0 hover:bg-transparent md:w-[172px]"
-          variant="ghost"
-          activeClassName="border-0"
-        >
-          <Image
-            src={logo?.url ?? OpeneduLogo.src}
-            alt="OpenEdu"
-            width={logo?.width ?? 172}
-            height={logo?.height ?? 40}
-            className="!h-8 object-contain"
-            priority
-          />
-        </Link>
+      <Header
+        sidebarItems={sidebarItems}
+        subSidebarItems={subSidebarItems}
+        isLoggedIn={isLoggedIn}
+      >
+        <Logo logo={logo} />
         <ul className="ml-6 hidden gap-3 text-primary-foreground md:flex">
-          {sidebarItems?.map(item => (
+          {sidebarItems?.map((item) => (
             <li key={item.id}>
               <Link
-                href={item.href ?? ''}
+                href={item.href ?? ""}
                 disabled={item.isLoginRequired && !isLoggedIn}
                 className={cn(
-                  'mcaption-semibold14 lg:mcaption-semibold16 p-2 hover:bg-transparent hover:p-2 hover:text-primary-foreground hover:underline',
-                  item.isHighlight && 'bg-gradient-to-b from-turquoise-500 to-violet-500'
+                  "mcaption-semibold14 lg:mcaption-semibold16 p-2 hover:bg-transparent hover:p-2 hover:text-primary-foreground hover:underline",
+                  item.isHighlight &&
+                    "bg-gradient-to-b from-turquoise-500 to-violet-500"
                 )}
                 variant="ghost"
                 activeClassName="border-0"

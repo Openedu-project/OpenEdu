@@ -1,4 +1,7 @@
-import ReferralImage from "@oe/assets/images/openedu-homepage/banner-referral.svg";
+import Ref1 from "@oe/assets/images/openedu-homepage/referral/ref-1.png";
+import Ref2 from "@oe/assets/images/openedu-homepage/referral/ref-2.png";
+import Ref3 from "@oe/assets/images/openedu-homepage/referral/ref-3.png";
+
 // import { Link } from '@oe/ui/common/navigation';
 import { Image } from "@oe/ui/components/image";
 // import { MoveRight } from 'lucide-react';
@@ -25,15 +28,63 @@ export default function ReferralProgramSection() {
             </Link> */}
           </p>
         </div>
-        <div className="w-full">
-          <div className="relative mx-auto flex w-full">
+        <div className="mt-4 flex w-full flex-col gap-8 lg:mt-10 lg:flex-row">
+          <div className="relative w-full md:min-w-[500px] md:basis-1/2">
             <Image
-              src={ReferralImage.src}
-              alt="Referral Gift"
-              height={352}
-              width={322}
-              className="object-contain"
+              src={Ref1.src}
+              alt="referral"
+              width={554}
+              height={582}
+              priority
+              className="relative z-10 object-contain"
+              sizes="(max-width: 768px) 100vw, (max-width: 1440px) 50vw, 720px"
             />
+          </div>
+          <div className="flex flex-col gap-8 md:basis-1/2">
+            <div>
+              <h3 className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold28 mb-4 text-center md:mb-8">
+                {t.rich("reward", {
+                  span: (chunks) => (
+                    <span className="bg-gradient-to-br from-[#2CDEE9] via-[#7B5AFF] to-[#7B5AFF] bg-clip-text text-transparent">
+                      {chunks}
+                    </span>
+                  ),
+                })}
+              </h3>
+              <div className="relative w-full">
+                <Image
+                  src={Ref2.src}
+                  alt="referral"
+                  width={554}
+                  height={582}
+                  priority
+                  className="relative z-10 object-contain"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1440px) 50vw, 720px"
+                />
+              </div>
+            </div>
+            <div>
+              <h3 className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold28 mb-4 text-center md:mb-8">
+                {t.rich("easy", {
+                  span: (chunks) => (
+                    <span className="bg-gradient-to-br from-[#2CDEE9] via-[#7B5AFF] to-[#7B5AFF] bg-clip-text text-transparent">
+                      {chunks}
+                    </span>
+                  ),
+                })}
+              </h3>
+              <div className="relative w-full">
+                <Image
+                  src={Ref3.src}
+                  alt="referral"
+                  width={554}
+                  height={582}
+                  priority
+                  className="relative z-10 object-contain"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1440px) 50vw, 720px"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
