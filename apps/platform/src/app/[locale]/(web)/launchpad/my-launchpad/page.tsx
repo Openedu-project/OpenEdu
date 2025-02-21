@@ -1,7 +1,9 @@
 import MyLaunchpadList from '@oe/ui/pages/launchpad/my-launchpad';
 
-const Page = () => {
-  return <MyLaunchpadList />;
-};
-
-export default Page;
+export default function MyLaunchpadPage({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) {
+  return <MyLaunchpadList searchParams={searchParams} />;
+}
