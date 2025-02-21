@@ -29,7 +29,7 @@ export function getNextConfig(config: NextConfig = {}): NextConfig {
         {
           protocol: 'https',
           hostname: process.env.NEXT_PUBLIC_MEDIA_CDN_HOST ?? '',
-          pathname: process.env.NODE_ENV === 'development' ? '/images/**' : '/**',
+          pathname: process.env.NODE_ENV === 'development' ? '/**' : '/**',
         },
         {
           protocol: 'https',

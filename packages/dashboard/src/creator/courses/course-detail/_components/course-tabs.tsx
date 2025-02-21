@@ -4,6 +4,7 @@ import { Link, usePathname } from '@oe/ui/common/navigation';
 import { cn } from '@oe/ui/utils/cn';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
+import { useMemo } from 'react';
 import { COURSE_DETAIL_TABS } from '../_utils/constants';
 
 export default function CourseTabs({ segments }: { segments?: ISegment[] }) {
@@ -14,8 +15,12 @@ export default function CourseTabs({ segments }: { segments?: ISegment[] }) {
     sectionId: string;
     lessonId: string;
   }>();
-  const firstSection = segments?.find(segment => segment.order === 0);
-  const firstLesson = firstSection?.lessons?.find(lesson => lesson.order === 0);
+  const minOrder = useMemo(() => Math.min(...(segments?.map(segment => segment.order) ?? [])), [segments]);
+  const firstSection = useMemo(() => segments?.find(segment => segment.order === minOrder), [segments, minOrder]);
+  const firstLesson = useMemo(
+    () => firstSection?.lessons?.find(lesson => lesson.order === minOrder),
+    [firstSection, minOrder]
+  );
 
   return (
     <div className="scrollbar overflow-x-auto">

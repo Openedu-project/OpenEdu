@@ -646,6 +646,9 @@ importers:
       marked-highlight:
         specifier: ^2.2.1
         version: 2.2.1(marked@15.0.7)
+      nanoid:
+        specifier: ^5.1.0
+        version: 5.1.0
       next:
         specifier: 15.1.4
         version: 15.1.4(babel-plugin-react-compiler@19.0.0-beta-63e3235-20250105)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -655,6 +658,9 @@ importers:
       next-themes:
         specifier: ^0.4.4
         version: 0.4.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      re-resizable:
+        specifier: ^6.10.3
+        version: 6.10.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react:
         specifier: 19.0.0
         version: 19.0.0
@@ -3129,6 +3135,11 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  nanoid@5.1.0:
+    resolution: {integrity: sha512-zDAl/llz8Ue/EblwSYwdxGBYfj46IM1dhjVi8dyp9LQffoIGxJEAHj2oeZ4uNcgycSRcQ83CnfcZqEJzVDLcDw==}
+    engines: {node: ^18 || >=20}
+    hasBin: true
+
   napi-build-utils@2.0.0:
     resolution: {integrity: sha512-GEbrYkbfF7MoNaoh2iGG84Mnf/WZfB0GdGEsM8wz7Expx/LlWf5U8t9nvJKXSp3qr5IsEbK04cBGhol/KwOsWA==}
 
@@ -3424,6 +3435,12 @@ packages:
   rc@1.2.8:
     resolution: {integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==}
     hasBin: true
+
+  re-resizable@6.10.3:
+    resolution: {integrity: sha512-zvWb7X3RJMA4cuSrqoxgs3KR+D+pEXnGrD2FAD6BMYAULnZsSF4b7AOVyG6pC3VVNVOtlagGDCDmZSwWLjjBBw==}
+    peerDependencies:
+      react: ^16.13.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.13.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   react-currency-input-field@3.9.0:
     resolution: {integrity: sha512-OmkO0rRSGiNGbcO4F1wzC+Szm2A7tLRGtDAKF6t0xNrFr07q99AHo3BAn/68RTEG4iwqc2m2jekKZi33/8SV+Q==}
@@ -6667,6 +6684,8 @@ snapshots:
 
   nanoid@3.3.8: {}
 
+  nanoid@5.1.0: {}
+
   napi-build-utils@2.0.0:
     optional: true
 
@@ -7022,6 +7041,11 @@ snapshots:
       minimist: 1.2.8
       strip-json-comments: 2.0.1
     optional: true
+
+  re-resizable@6.10.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+    dependencies:
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
 
   react-currency-input-field@3.9.0(react@19.0.0):
     dependencies:
