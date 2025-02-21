@@ -11,7 +11,7 @@ import ReferralProgramSection from "./_components/referral";
 
 export default function Home() {
   return (
-    <div className="container mx-auto max-w-[1440px] px-4 py-0 md:px-6 lg:px-8">
+    <div className="container mx-auto flex max-w-[1440px] flex-col gap-[60px] px-4 py-0 md:px-6 lg:px-8">
       <HeroSection />
       <PopularCoursesSection />
       <LearningPathSection />
@@ -20,8 +20,8 @@ export default function Home() {
       <AIFeatureSection />
       <CourseLaunchpadSection />
       {/* <TestimonialsSection /> */}
-      <BlogsSection />
       <CreatorsSection />
+      <BlogsSection />
       <OrganizationSection />
       <CTASection />
     </div>

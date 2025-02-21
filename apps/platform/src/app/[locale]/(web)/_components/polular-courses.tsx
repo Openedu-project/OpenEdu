@@ -1,19 +1,19 @@
-import { getCoursesPublishService } from '@oe/api/services/course';
-import { Carousel } from '@oe/ui/shadcn/carousel';
-import { getTranslations } from 'next-intl/server';
-import { CarouselWrapper } from './popular-course-carousel';
+import { getCoursesPublishService } from "@oe/api/services/course";
+import { Carousel } from "@oe/ui/shadcn/carousel";
+import { getTranslations } from "next-intl/server";
+import { CarouselWrapper } from "./popular-course-carousel";
 
 export default async function PopularCoursesSection() {
   const params = {
     page: 1,
     per_page: 16,
     enable_root: true,
-    sort: 'create_at desc',
-    preloads: ['Categories', 'Owner', 'Levels'],
+    sort: "create_at desc",
+    preloads: ["Categories", "Owner", "Levels"],
   };
 
   const [t, coursesData] = await Promise.all([
-    getTranslations('homePageLayout.popularCoursesSection'),
+    getTranslations("homePageLayout.popularCoursesSection"),
     getCoursesPublishService(undefined, {
       params,
     }),
@@ -28,10 +28,10 @@ export default async function PopularCoursesSection() {
   // }
 
   return (
-    <section className="container relative mx-auto px-0 py-5 md:px-4 md:py-10">
+    <section className="container relative mx-auto px-0 md:px-4">
       <Carousel
         opts={{
-          align: 'start',
+          align: "start",
           loop: false,
         }}
         className="w-full"
@@ -39,10 +39,9 @@ export default async function PopularCoursesSection() {
         <CarouselWrapper
           coursesData={coursesData}
           // hasMultipleSlides={hasMultipleSlides}
-          viewAllText={t('viewAll')}
-          title={t('title')}
-          params={params
-          }
+          viewAllText={t("viewAll")}
+          title={t("title")}
+          params={params}
         />
       </Carousel>
     </section>
