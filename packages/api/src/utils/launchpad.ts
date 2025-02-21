@@ -52,3 +52,9 @@ export const ROLES_USER_MAPPING = {
   org_moderator: 'admin',
   org_admin: 'admin',
 };
+
+export const VOTING_STATUS = {
+  RUNNING: 'running',
+  COMPLETED: 'completed',
+  PENDING: 'pending',
+};

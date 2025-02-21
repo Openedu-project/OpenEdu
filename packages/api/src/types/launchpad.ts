@@ -301,3 +301,6 @@ export type ILaunchpadTabsType =
   | 'voting-plan'
   | 'owner-and-collaborators'
   | 'payment-method';
+
+
+export type VotingStatus = 'pending' | 'completed' | 'running';

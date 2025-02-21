@@ -3,11 +3,14 @@ import DefaultImg from '@oe/assets/images/defaultimage.png';
 import { formatDate } from '@oe/core/utils/datetime';
 import { getTranslations } from 'next-intl/server';
 import { Image } from '#components/image';
+import { cn } from '#utils/cn';
 
 const CourseCardHorizontal = async ({
   campaign,
+  className,
 }: {
   campaign: ILaunchpad | undefined;
+  className?: string;
 }) => {
   const t = await getTranslations('launchpadDetailPage');
   const course = campaign?.courses?.[0];
@@ -18,10 +21,15 @@ const CourseCardHorizontal = async ({
   }
 
   return (
-    <div className="flex items-center gap-2 rounded-2xl bg-white p-3 shadow-[0px_4px_30px_0px_#F4F5F6] sm:gap-3 sm:p-4">
-      <div className="relative h-24 min-h-[96px] w-[30%] cursor-pointer overflow-hidden rounded-xl sm:h-full sm:min-h-[120px] sm:rounded-2xl">
+    <div
+      className={cn(
+        className,
+        'flex items-center gap-2 rounded-2xl bg-white p-3 shadow-[0px_4px_30px_0px_#F4F5F6] sm:gap-3 sm:p-4'
+      )}
+    >
+      <div className="relative aspect-video h-24 min-h-[96px] cursor-pointer overflow-hidden rounded-xl sm:h-full sm:min-h-[120px] sm:rounded-2xl">
         <Image
-          className="h-full w-full object-cover"
+          className="h-full w-full object-fill"
           alt="campaign full card image"
           src={course.thumbnail?.thumbnail_url || DefaultImg.src}
           fill

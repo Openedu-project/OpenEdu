@@ -28,8 +28,7 @@ const CollapsibleCourseSection = ({ outline }: { outline: ISection }) => {
           </button>
         </div>
       </div>
-      {isExpanded &&
-        outline.lessons?.map((lession, index) => (
+      {isExpanded && outline.lessons?.map((lession, index) => (
           <CollapsibleCourseLession key={lession.lesson_count} lession={lession} index={index + 1} />
         ))}
     </div>
