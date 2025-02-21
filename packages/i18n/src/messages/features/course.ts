@@ -311,6 +311,13 @@ export const courseMessages = {
               noQuestion: 'No question',
             },
           },
+          placeholder: {
+            embedded: 'Enter embed video URL',
+          },
+          alert: {
+            embedded:
+              'We only support embed video from YouTube, Facebook, Twitch, SoundCloud, Streamable, Vimeo, Wistia, and some other platforms.',
+          },
         },
       },
     },

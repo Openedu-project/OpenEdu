@@ -46,12 +46,13 @@ export const SectionsDrawer = ({ trigger }: { trigger?: ReactNode }) => {
   };
 
   const handleSelectSection = (section: ISection) => {
+    const minOrder = Math.min(...(section.lessons?.map(lesson => lesson.order) ?? []));
     const buildOutlineRoute = buildUrl({
       endpoint: CREATOR_ROUTES.courseOutline,
       params: {
         courseId,
         sectionId: section.id,
-        lessonId: section.lessons?.find(lesson => lesson.order === 0)?.id ?? section.lessons?.[0]?.id,
+        lessonId: section.lessons?.find(lesson => lesson.order === minOrder)?.id ?? section.lessons?.[minOrder]?.id,
       },
     });
     if (buildOutlineRoute) {
