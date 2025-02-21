@@ -208,3 +208,26 @@ export const postInitPoolLaunchpadService = async (
 
   return response.data;
 };
+
+export const postLaunchpadVote = async (
+  endpoint: string | null | undefined,
+  { milestone_id, payload, init }: { milestone_id: string; payload: { status: string }; init?: RequestInit }
+) => {
+  let endpointKey = endpoint;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.LAUNCHPADS_VOTE_ID,
+      params: {
+        milestone_id: milestone_id,
+      },
+    });
+  }
+
+  const response = await postAPI<ILaunchpad, { status: string }>(
+    endpointKey ?? API_ENDPOINT.LAUNCHPADS_VOTE_ID,
+    payload,
+    init
+  );
+
+  return response.data;
+};

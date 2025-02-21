@@ -1,6 +1,6 @@
 import type { ILaunchpad } from '@oe/api/types/launchpad';
 import { isLogin } from '@oe/api/utils/auth';
-import { LAUNCHPAD_STATUS } from '@oe/api/utils/launchpad';
+import { LAUNCHPAD_STATUS, VOTING_STATUS } from '@oe/api/utils/launchpad';
 import DefaultImg from '@oe/assets/images/defaultimage.png';
 import { formatDate } from '@oe/core/utils/datetime';
 import { Calendar } from 'lucide-react';
@@ -16,6 +16,7 @@ import { CollapsibleCourseContent } from '../../components/collapsible-course-co
 import { CourseCardHorizontal } from '../../components/course-card';
 import { CreatorCard } from '../../components/creator-card';
 import { DescriptionCard } from '../../components/description-card';
+import VotingResultCard from '../../components/voting-result-card/voting-result-card';
 
 const CampaignDetailsSection = async ({
   campaign,
@@ -46,14 +47,14 @@ const CampaignDetailsSection = async ({
     }
   };
 
-  console.log(campaign);
-
   const timelineItems =
     campaign.voting_milestones?.map((milestone, index) => ({
       number: index + 1,
       sections: milestone.target_section,
       description: new Date(milestone.estimated_open_vote_date).toLocaleDateString(),
     })) || [];
+
+  const currentVoting = campaign.voting_milestones?.find(milestone => milestone.status === VOTING_STATUS.RUNNING);
 
   return (
     <div className="w-full px-4 md:w-[60%] md:px-0">
@@ -80,10 +81,17 @@ const CampaignDetailsSection = async ({
         </p>
       </div>
 
+      {campaign.status === 'voting' && currentVoting && (
+        <>
+          <h3 className="mt-7 mb-4 font-semibold text-xl md:text-2xl">{t('title.votingProcess')}</h3>
+          <VotingResultCard votingProcess={currentVoting} />
+        </>
+      )}
+
       <h3 className="mt-7 mb-4 font-semibold text-xl md:text-2xl">{t('title.votingPlan')}</h3>
       <CourseTimeline items={timelineItems} />
 
-      <div className="flex items-center justify-between gap-6 md:hidden mt-6">
+      <div className="mt-6 flex items-center justify-between gap-6 md:hidden">
         <div className="space-y-2">
           <p className="text-base">
             <span className="font-semibold text-xl md:text-2xl">{formatCurrency(Number(campaign?.total_amount))}</span>

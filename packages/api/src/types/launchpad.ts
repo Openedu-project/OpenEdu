@@ -286,7 +286,6 @@ export type LaunchpadStatus =
   | 'got_revenue'
   | 'got_refunded';
 
-
 export type IPledgeLaunchpadPayload = {
   launchpad_id: string;
   wallet_id: string;
@@ -300,3 +299,4 @@ export type ILaunchpadTabsType =
   | 'owner-and-collaborators'
   | 'payment-method';
 
+export type VotingStatus = 'pending' | 'completed' | 'running';

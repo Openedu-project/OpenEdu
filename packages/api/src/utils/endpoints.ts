@@ -236,6 +236,7 @@ export const API_ENDPOINT = {
   LAUNCHPADS_CANCEL_LAUNCHPAD_ID: '/api/v1/launchpads/:id/cancel',
   LAUNCHPADS_PUBLISH_LAUNCHPAD_ID: '/api/v1/launchpads/:id/publish',
   LAUNCHPADS_START_VOTING_ID: '/api/v1/launchpads/:id/milestones/:milestone_id/start',
+  LAUNCHPADS_VOTE_ID: '/api/v1/milestones/:milestone_id/voting',
   LAUNCHPADS_FUNDING_TIME_ID: '/api/v1/launchpads/:id/funding-time',
   LAUNCHPADS_DECIDE_VOTING_ID: '/api/v1/launchpads/:id/decide-voting',
   LAUNCHPADS_MY_LAUNCHPAD: '/api/v1/launchpads/investments/me',
