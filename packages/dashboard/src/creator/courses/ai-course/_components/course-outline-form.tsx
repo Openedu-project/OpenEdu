@@ -47,6 +47,7 @@ export function CourseOutlineForm({
         duration: ai_course?.duration ?? 1,
         duration_type: ai_course?.duration_type ?? 'day',
         study_load: ai_course?.study_load ?? 1,
+        material_file: ai_course?.material ? [ai_course?.material] : [],
       };
     }
 
@@ -58,6 +59,7 @@ export function CourseOutlineForm({
       duration: 1,
       duration_type: 'day' as ICreateAICourseOutline['duration_type'],
       study_load: 1,
+      material_file: [],
     };
   }, [course]);
 
@@ -68,7 +70,7 @@ export function CourseOutlineForm({
       const res = await createAICourseService(undefined, {
         ...base,
         course_cuid: course?.ai_course?.course_cuid,
-        material_id: material_file?.id,
+        material_id: material_file?.[0]?.id,
         current_step: 'learner_description_generate',
         type: 'learner_description',
       });
@@ -104,15 +106,19 @@ export function CourseOutlineForm({
           <CourseFormField
             name="material_file"
             label={tAICourseForm('materialContent')}
-            render={({ field }) => (
-              <Uploader
-                value={field.value ? [field.value] : []}
-                onChange={files => field.onChange(files[0])}
-                maxSizeBytes={50 * 1024 * 1024}
-                fileListVisible={false}
-                accept="application/pdf, application/vnd.ms-excel"
-              />
-            )}
+            render={({ field }) => {
+              const { onChange, value } = field;
+
+              return (
+                <Uploader
+                  value={Array.isArray(value) ? value : value ? [value] : undefined}
+                  onChange={files => onChange(files)}
+                  maxSizeBytes={50 * 1024 * 1024}
+                  fileListVisible={false}
+                  accept="application/pdf, application/vnd.ms-excel"
+                />
+              );
+            }}
           />
           <LevelField />
           <CourseFormField name="language" label={tAICourseForm('language')}>
