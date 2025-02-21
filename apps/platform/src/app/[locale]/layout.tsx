@@ -4,6 +4,7 @@ import '@oe/core/global.css';
 import type { Metadata } from 'next';
 // import localFont from 'next/font/local';
 
+import { GoogleAnalytics } from '@next/third-parties/google';
 import Favicon from '@oe/assets/images/favicon.png';
 import { Provider } from '@oe/ui/common/providers';
 import { WebViewHandler } from '@oe/ui/components/webview-handler';
@@ -49,6 +50,7 @@ export default async function RootLayout({
           <Toaster />
         </Provider>
       </body>
+      <GoogleAnalytics gaId='G-NEDV7937ZQ'/>
     </html>
   );
 }
