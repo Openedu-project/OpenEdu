@@ -37,17 +37,19 @@ export const homePageMessage = {
       },
     },
     blogsSection: {
-      title: 'Explore Our Unlimited Resource',
+      title: 'News Feed - Sharing and Growing Together',
       description:
-        'We aim to empower individuals by sharing knowledge, success stories, cutting - edge research. Join us as we unlock the future of blockchain together!',
+        'Our News Feed transforms education into a social experience, allowing users to share knowledge, engage with the community, and discover fresh ideas. Join now and start sharing your knowledge today!',
       discoverLink: {
-        text: 'Discover OpenEdu Blog',
+        text: 'Discover OpenEdu News Feed',
       },
     },
     referralSection: {
       title: 'Join Our Referral Program To Earn Rewards',
       description: 'Come and join our affiliate program now to enjoy our rewards!',
       exploreMore: 'Explore More',
+      reward: 'Explore Our <span>Rewards</span>',
+      easy: 'Easy to Earn',
     },
     launchpadSection: {
       iconAlt: 'Course launch icon',
@@ -79,7 +81,7 @@ export const homePageMessage = {
         valueSharing: {
           title: 'Automatic Value Sharing',
           description:
-            'Seamlessly share revenues and rewards with contributors through our automated value-sharing system.',
+            'Seamlessly share revenues & rewards with contributors through our automated value-sharing system.',
         },
       },
     },
@@ -89,7 +91,7 @@ export const homePageMessage = {
     aiFeatureSection: {
       title: 'AI Agent - Easy Peasy',
       description: 'Super AI assistants for learn, for work, for personal, and more.',
-      discoverNow: 'Discover Now',
+      discoverNow: 'Discover OpenEdu AI Agent',
       comingSoon: 'Coming Soon',
       andMore: 'And More...',
       features: {
@@ -123,7 +125,7 @@ export const homePageMessage = {
       title: 'Over 100 Creators Join OpenEdu Platform',
       description: 'Are you ready to let OpenEdu help exploring your education branding?',
       buttons: {
-        become: 'Become Creator',
+        become: 'Become Educator',
       },
     },
     learningPathSection: {

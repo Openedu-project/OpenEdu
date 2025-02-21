@@ -49,7 +49,7 @@ export default async function LaunchpadSection() {
   ];
 
   const FeatureCard = ({ feature }: { feature: Feature }) => (
-    <div className="flex items-start gap-6 rounded-2xl bg-white/50 p-5 backdrop-blur-sm transition-shadow hover:shadow-lg">
+    <div className="flex items-start gap-3 rounded-2xl bg-white/50 p-3 backdrop-blur-sm transition-shadow hover:shadow-lg md:gap-6 md:p-4">
       <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-2xl bg-ai-feature-gradient">
         <span className="giant-iheading-bold24 lg:giant-iheading-bold44 text-primary">
           {feature.id}
@@ -60,7 +60,9 @@ export default async function LaunchpadSection() {
         <h3 className="giant-iheading-bold20 md:giant-iheading-bold24 mb-2">
           {feature.title}
         </h3>
-        <p className="mcaption-regular16">{feature.description}</p>
+        <p className="mcaption-regular12 lg:mcaption-regular16">
+          {feature.description}
+        </p>
       </div>
     </div>
   );
@@ -77,7 +79,7 @@ export default async function LaunchpadSection() {
         />
       </div>
 
-      <div className="container relative z-10 mx-auto px-4 pb-20">
+      <div className="container relative z-10 mx-auto px-4 pb-4 md:pb-12">
         <div className="mt-10 text-center">
           <h1 className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold32 mb-5">
             {t("title")}
@@ -90,16 +92,16 @@ export default async function LaunchpadSection() {
           </h2>
         </div>
 
-        <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-2">
+        <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-2 lg:gap-6">
           {/* Left Column */}
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-4 lg:gap-5">
             {leftFeatures.map((feature) => (
               <FeatureCard key={feature.id} feature={feature} />
             ))}
           </div>
 
           {/* Right Column */}
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-4 lg:gap-5">
             {rightFeatures.map((feature) => (
               <FeatureCard key={feature.id} feature={feature} />
             ))}
