@@ -1,36 +1,50 @@
+// import type { ICoursePreviewVideo } from "@oe/api/types/course/basic";
 import type { ICoursePreviewVideo } from '@oe/api/types/course/basic';
+import type { IFileResponse } from '@oe/api/types/file';
 import { UploadTrigger, Uploader } from '@oe/ui/components/uploader';
 import { Button } from '@oe/ui/shadcn/button';
 import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
 import { UploadIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useFormContext, useWatch } from 'react-hook-form';
+// import { useWatch } from "react-hook-form";
 
 export default function PreviewVideos() {
-  const tCourses = useTranslations('courses');
+  const tCourse = useTranslations('course');
+
+  const { setValue } = useFormContext();
+  const previewLessons: ICoursePreviewVideo[] = useWatch({
+    name: 'props.preview_lessons',
+  });
 
   return (
     <FormFieldWithLabel
-      name="props.preview_lessons"
+      name="medias"
       className="rounded-lg bg-background p-4 shadow-sm"
       render={({ field }) => {
         const { value, onChange } = field;
+
         return (
           <Uploader
-            value={value?.map((item: ICoursePreviewVideo) => ({
-              id: item.file_id,
-              name: item.title,
-              type: item.content_type,
+            value={value?.map((item: IFileResponse) => ({
+              ...item,
+              name: previewLessons?.find(lesson => lesson.file_id === item.id)?.title,
             }))}
             onChange={files => {
-              const newFiles = files.map((file, index) => ({
-                title: file.name,
-                content: '',
-                order: index,
-                content_type: 'video',
-                file_id: file.id,
-                video: file,
-              }));
-              onChange(newFiles as ICoursePreviewVideo[]);
+              onChange(files);
+              setValue(
+                'props.preview_lessons',
+                files.map(file => {
+                  return {
+                    title: file.name,
+                    content: '',
+                    order: 0,
+                    content_type: 'video',
+                    file_id: file.id,
+                    video: file,
+                  };
+                })
+              );
             }}
             accept="video/*"
             maxSizeBytes={10 * 1024 * 1024}
@@ -38,9 +52,9 @@ export default function PreviewVideos() {
             renderTrigger={props => (
               <div className="flex justify-between">
                 <div>
-                  <div className="font-medium text-lg">{tCourses('information.previewVideosTitle')}</div>
+                  <div className="font-medium text-lg">{tCourse('information.sections.previewVideos.title')}</div>
                   <span className="text-muted-foreground text-xs">
-                    {tCourses('information.previewVideosDescription')}
+                    {tCourse('information.sections.previewVideos.subtitle')}
                   </span>
                 </div>
                 <UploadTrigger {...props}>
@@ -50,7 +64,7 @@ export default function PreviewVideos() {
                     size="sm"
                   >
                     <UploadIcon className="mr-2 h-4 w-4" />
-                    {tCourses('information.previewVideosUpload')}
+                    {tCourse('information.sections.previewVideos.uploadButton')}
                   </Button>
                 </UploadTrigger>
               </div>

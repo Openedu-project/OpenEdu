@@ -24,11 +24,14 @@ export function CourseInfoForm({
   course: ICourse;
   handleSubmit?: (status: IAICourseStatus) => void;
 }) {
-  const tAICourseForm = useTranslations('courses.aiCourse');
+  const tAICourseForm = useTranslations('course.aiCourse');
   const tGeneral = useTranslations('general');
   const { courseInfo, setCourseInfo } = useEditAICourseInfo();
 
-  const [buttonProps, setButtonProps] = useState<{ loading: boolean; disabled: boolean }>();
+  const [buttonProps, setButtonProps] = useState<{
+    loading: boolean;
+    disabled: boolean;
+  }>();
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const defaultValues = useMemo(() => {

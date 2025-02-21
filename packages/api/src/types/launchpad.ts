@@ -1,6 +1,7 @@
 import type { ICategory } from './categories';
 import type { ICourse } from './course/course';
 import type { ISection } from './course/segment';
+import type { HTTPPagination } from './fetch';
 import type { IFileResponse } from './file';
 import type { IDataPagination } from './pagination';
 import type { IUser } from './user';
@@ -269,6 +270,8 @@ export interface IMyLaunchpadStatus {
     status: LaunchpadStatus;
   };
 }
+export type IMyLaunchpad = IMyLaunchpadStatus;
+export interface IMyLaunchpadResponse extends HTTPPagination<IMyLaunchpad> {}
 
 export type LaunchpadStatus =
   | 'draft'
@@ -298,5 +301,6 @@ export type ILaunchpadTabsType =
   | 'voting-plan'
   | 'owner-and-collaborators'
   | 'payment-method';
+
 
 export type VotingStatus = 'pending' | 'completed' | 'running';

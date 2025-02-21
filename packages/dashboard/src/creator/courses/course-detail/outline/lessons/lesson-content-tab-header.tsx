@@ -1,51 +1,42 @@
-import { useGetSegmentById } from '@oe/api/hooks/useCourse';
-import { deleteLessonContentService, updateSegmentService } from '@oe/api/services/course';
 import type { TLessonContent } from '@oe/api/types/course/basic';
-import type { ILesson, ILessonContent, ISegment } from '@oe/api/types/course/segment';
+import type { ILesson } from '@oe/api/types/course/segment';
 import { DeleteButton } from '@oe/ui/components/delete-button';
 import { Modal } from '@oe/ui/components/modal';
 import { Selectbox } from '@oe/ui/components/selectbox';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { Button } from '@oe/ui/shadcn/button';
 import { cn } from '@oe/ui/utils/cn';
-import { Trash2Icon } from 'lucide-react';
-import { useParams } from 'next/navigation';
+import { Copy, PlusIcon, Trash2Icon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { useLessonActions } from '../../_hooks/useLessonActions';
 import { useOutlineStore } from '../../_store/useOutlineStore';
 import { tabOptions } from './lesson-content-options';
+import { hasContent } from './utils';
 
 export interface LessonContentTabHeaderProps {
   activeLesson?: ILesson;
-  activeLessonContent?: ILessonContent;
   value: TLessonContent;
   hasErrors?: boolean;
 }
 
-export function LessonContentTabHeader({
-  value,
-  activeLesson,
-  activeLessonContent,
-  hasErrors,
-}: LessonContentTabHeaderProps) {
-  const { sectionId } = useParams<{
-    courseId: string;
-    sectionId: string;
-    lessonId: string;
-  }>();
-  const { mutateSegment } = useGetSegmentById(sectionId);
-  const { setActiveLessonContent } = useOutlineStore();
+export function LessonContentTabHeader({ value, activeLesson, hasErrors }: LessonContentTabHeaderProps) {
+  const tCourse = useTranslations('course');
+  const tCourseLesson = useTranslations('course.outline.lesson');
+  const { handleLessonContentTypeChange, handleRemoveLessonContent, handleDuplicateLessonContent, handleAddQuiz } =
+    useLessonActions();
+  const { activeLessonContent } = useOutlineStore();
+
+  const { reset, getValues } = useFormContext();
 
   const [isLoading, setIsLoading] = useState(false);
   const [type, setType] = useState<TLessonContent>(value);
   const [openWarning, setOpenWarning] = useState(false);
+  const [duplicateLoading, setDuplicateLoading] = useState(false);
+  const [addQuizLoading, setAddQuizLoading] = useState(false);
 
   const onChangeType = (value: string) => {
-    if (
-      ((activeLessonContent?.type === 'embedded' || activeLessonContent?.type === 'text') &&
-        activeLessonContent.content) ||
-      ((activeLessonContent?.type === 'video' || activeLessonContent?.type === 'pdf') &&
-        (activeLessonContent.files?.length ?? 0) > 0) ||
-      (activeLessonContent?.type === 'quiz' && (activeLessonContent.quizzes?.length ?? 0) > 0)
-    ) {
+    if (hasContent(activeLessonContent)) {
       setType(value as TLessonContent);
       setOpenWarning(true);
     } else {
@@ -54,63 +45,35 @@ export function LessonContentTabHeader({
   };
 
   const handleTypeChange = async (currentType?: TLessonContent) => {
-    if (!activeLessonContent) {
-      return;
-    }
     setIsLoading(true);
-    try {
-      await updateSegmentService(undefined, {
-        ...activeLesson,
-        contents: activeLesson?.contents?.map(content => {
-          if (content.id === activeLessonContent.id) {
-            return {
-              ...content,
-              type: currentType ?? type,
-              content: '',
-              quizzes: [],
-              files: [],
-            };
-          }
-          return content;
-        }),
-      } as ISegment);
-      mutateSegment();
-    } catch {
-      toast.error('Failed to update lesson content type');
-    }
+    await handleLessonContentTypeChange(currentType, type);
     setIsLoading(false);
     setOpenWarning(false);
   };
 
-  const handleRemoveLessonContent = async (onClose?: () => void) => {
-    if (!activeLessonContent?.id) {
-      return;
-    }
-    try {
-      await deleteLessonContentService(undefined, activeLessonContent.id);
-      await updateSegmentService(undefined, {
-        ...activeLesson,
-        contents: activeLesson?.contents
-          ?.filter(content => content.id !== activeLessonContent.id)
-          .map((content, index) => ({
-            ...content,
-            order: index,
-          })),
-      } as ISegment);
-      await mutateSegment();
-      const previousActiveLessonContent =
-        activeLesson?.contents?.findIndex(content => content.id === activeLessonContent.id) ?? -1;
-
-      const newActiveLessonContent =
-        previousActiveLessonContent > 0
-          ? activeLesson?.contents?.[previousActiveLessonContent - 1]
-          : activeLesson?.contents?.[0];
-
-      setActiveLessonContent(newActiveLessonContent ?? null);
-    } catch {
-      toast.error('Failed to remove lesson content');
-    }
+  const onRemoveLessonContent = async (onClose?: () => void) => {
+    await handleRemoveLessonContent();
     onClose?.();
+  };
+
+  const onDuplicateLessonContent = async () => {
+    setDuplicateLoading(true);
+    await handleDuplicateLessonContent();
+    setDuplicateLoading(false);
+  };
+
+  const onAddQuiz = async () => {
+    setAddQuizLoading(true);
+    const currentLesson = getValues();
+    const currentQuizzes = currentLesson.contents?.[activeLessonContent?.order ?? 0]?.quizzes;
+    const updatedLesson = await handleAddQuiz(currentQuizzes);
+    if (updatedLesson) {
+      reset({
+        contents: updatedLesson.contents,
+      });
+    }
+
+    setAddQuizLoading(false);
   };
 
   return (
@@ -122,7 +85,10 @@ export function LessonContentTabHeader({
     >
       <div className="flex items-center gap-2">
         <Selectbox
-          options={Object.values(tabOptions)}
+          options={Object.values(tabOptions).map(option => ({
+            ...option,
+            label: tCourseLesson(option.label),
+          }))}
           value={type ?? value}
           onChange={onChangeType}
           disabled={isLoading}
@@ -131,38 +97,66 @@ export function LessonContentTabHeader({
             return (
               <div className="flex items-center gap-2">
                 {option?.icon}
-                <span>{option?.label}</span>
+                <span>{tCourseLesson(option?.label)}</span>
               </div>
             );
           }}
           className="h-8 min-w-[200px]"
         />
       </div>
-      {(activeLesson?.contents?.length ?? 0) > 1 && (
-        <DeleteButton
-          variant="ghost"
-          title="Remove lesson content"
-          description="This action cannot be undone. Are you sure you want to remove this lesson content?"
-          onDelete={handleRemoveLessonContent}
-          className="ml-auto"
+      <div className="flex items-center gap-2">
+        <Button
+          variant="outline"
+          className="h-8 gap-2 px-2 py-0"
+          onClick={onAddQuiz}
+          disabled={addQuizLoading}
+          loading={addQuizLoading}
         >
-          <Trash2Icon className="h-4 w-4" />
-        </DeleteButton>
-      )}
+          <PlusIcon className="h-4 w-4" />
+          {tCourseLesson('actions.addQuiz')}
+        </Button>
+        <Button
+          variant="outline"
+          className="h-8 w-8 p-0"
+          onClick={onDuplicateLessonContent}
+          disabled={duplicateLoading}
+        >
+          <Copy className="h-4 w-4" />
+        </Button>
+        {(activeLesson?.contents?.length ?? 0) > 1 && (
+          <DeleteButton
+            variant="outline"
+            title={tCourse('common.modal.delete.title', {
+              item: tCourse('outline.lesson.contentTitle').toLowerCase(),
+            })}
+            description={tCourse('common.modal.delete.description', {
+              item: tCourse('outline.lesson.contentTitle').toLowerCase(),
+            })}
+            onDelete={onRemoveLessonContent}
+            className="ml-auto"
+          >
+            <Trash2Icon className="h-4 w-4" />
+          </DeleteButton>
+        )}
+      </div>
       <Modal
         open={openWarning}
-        title="Change lesson content"
-        description="The lesson content will be replaced with a new content of the selected type. Are you sure you want to continue?"
+        title={tCourse('common.modal.changeContent.title', {
+          item: tCourse('outline.lesson.contentTitle').toLowerCase(),
+        })}
+        description={tCourse('common.modal.changeContent.description', {
+          item: tCourse('outline.lesson.contentTitle').toLowerCase(),
+        })}
         buttons={[
           {
-            label: 'Cancel',
+            label: tCourse('common.actions.cancel'),
             variant: 'outline',
             onClick: () => {
               setOpenWarning(false);
             },
           },
           {
-            label: 'Continue',
+            label: tCourse('common.actions.continue'),
             variant: 'destructive',
             loading: isLoading,
             onClick: () => {

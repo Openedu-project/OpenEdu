@@ -39,6 +39,12 @@ export function DashboardHeaderCard({
 }) {
   const [breadcrumbs, setBreadcrumbs] = useState(initialBreadcrumbs);
 
+  useEffect(() => {
+    if (initialBreadcrumbs.length > 0) {
+      setBreadcrumbs(initialBreadcrumbs);
+    }
+  }, [initialBreadcrumbs]);
+
   return (
     <DashboardHeaderCardContext.Provider value={{ breadcrumbs, setBreadcrumbs }}>
       <div className={cn('mb-4 rounded-b bg-background px-4 py-2', className)}>

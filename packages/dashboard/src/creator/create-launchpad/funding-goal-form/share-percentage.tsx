@@ -17,14 +17,14 @@ const SharePercentage = <TFormValues extends FieldValues>({ form }: SharePercent
       name={'profit_percentage' as Path<TFormValues>}
       render={({ field }) => (
         <FormItem>
-          <FormLabel className="font-semibold text-base">{tLaunchpad('sharePercentage')} *</FormLabel>
+          <FormLabel className="font-semibold text-base">{tLaunchpad('sharePercentageAllBackers')} *</FormLabel>
           <FormControl>
             <InputNumber
               {...field}
               type="number"
               value={field.value}
-              onChange={e => {
-                field.onChange(Number(e.target.value));
+              onChange={value => {
+                field.onChange(Number(value));
               }}
               suffixIcon={<CirclePercent size={20} />}
             />

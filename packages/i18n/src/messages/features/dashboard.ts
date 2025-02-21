@@ -46,6 +46,7 @@ export const dashboardMessages = {
     withdrawRequest: 'Withdraw Request',
     blog: {
       title: 'Blog Management',
+      userMgt: 'User Management',
       writerMgt: 'Writer Management',
       editorMgt: 'Editor Management',
       inviteMgt: 'Invitation Management',

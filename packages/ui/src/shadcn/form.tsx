@@ -29,7 +29,7 @@ import { useTranslations } from 'next-intl';
 import { useFormStatus } from 'react-dom';
 import { Label, LabelWithInfo } from '#shadcn/label';
 import { cn } from '#utils/cn';
-import { parseFormMessage } from '#utils/form-message';
+import { getFormErrorMessage, parseFormMessage } from '#utils/form-message';
 import { Button, type ButtonProps } from './button';
 
 const Form = FormProvider;
@@ -135,8 +135,13 @@ const FormMessage = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagrap
   ({ className, children, ...props }, ref) => {
     const { error, formMessageId } = useFormField();
     const t = useTranslations();
-    const message = error?.message ? parseFormMessage(error.message) : undefined;
-    const body = message ? t(message.key, message) : children;
+    const messageObject = getFormErrorMessage(error);
+    const message = messageObject?.message ? parseFormMessage(messageObject.message) : undefined;
+    const body = message
+      ? messageObject?.count
+        ? `${t(message.key, message)} (${messageObject?.count})`
+        : t(message.key, message)
+      : children;
 
     if (!body) {
       return null;
@@ -190,7 +195,7 @@ export type FormFieldWithLabelProps = ComponentPropsWithoutRef<typeof Slot> &
     infoText?: string;
     description?: string;
     required?: boolean;
-    fieldType?: string;
+    isToggleField?: boolean;
     labelClassName?: string;
     formMessageClassName?: string;
     showErrorMessage?: boolean;
@@ -210,7 +215,7 @@ const FormFieldWithLabel = forwardRef<ComponentRef<typeof Slot>, FormFieldWithLa
       className,
       labelClassName,
       required,
-      fieldType,
+      isToggleField,
       render,
       formMessageClassName,
       showErrorMessage = true,
@@ -220,54 +225,51 @@ const FormFieldWithLabel = forwardRef<ComponentRef<typeof Slot>, FormFieldWithLa
   ) => {
     const formContext = useFormContext();
 
+    const renderLabel = () => (
+      <FormLabelInfo
+        infoText={infoText}
+        className={cn(labelClassName, isToggleField && 'cursor-pointer')}
+        data-field={name}
+      >
+        {label}
+        {required && <span className="ml-1 text-destructive">*</span>}
+      </FormLabelInfo>
+    );
+
+    const renderControl = (field: ControllerRenderProps<FieldValues, string>) => (
+      <FormControlSlot field={field} ref={ref} {...props}>
+        {typeof render === 'function' ? render({ field }) : props.children}
+      </FormControlSlot>
+    );
+
     return (
       <FormField
-        control={form ? form.control : formContext.control}
+        control={form?.control ?? formContext.control}
         name={name}
-        render={({ field }) => (
-          <FormItem
-            className={cn(
-              fieldType === 'checkbox' && 'flex flex-row items-start space-x-3 space-y-0 rounded-md',
-              className
-            )}
-          >
-            {fieldType === 'checkbox' ? (
-              <>
-                {typeof render === 'function' ? (
-                  render({ field })
-                ) : (
-                  <FormControlSlot field={field} ref={ref} {...props} />
-                )}
-                <div className="space-y-1 leading-none">
-                  {label && (
-                    <FormLabelInfo infoText={infoText} className={labelClassName} data-field={name}>
-                      {label}
-                      {required && <span className="ml-1 text-destructive">*</span>}
-                    </FormLabelInfo>
-                  )}
+        render={({ field }) => {
+          return (
+            <FormItem
+              className={cn(isToggleField && 'flex flex-row items-center space-x-3 space-y-0 rounded-md', className)}
+            >
+              {isToggleField ? (
+                <>
+                  {renderControl(field)}
+                  <div className="space-y-1 leading-none">
+                    {label && renderLabel()}
+                    {description && <FormDescription>{description}</FormDescription>}
+                  </div>
+                </>
+              ) : (
+                <>
+                  {label && renderLabel()}
+                  {renderControl(field)}
                   {description && <FormDescription>{description}</FormDescription>}
-                </div>
-                {showErrorMessage && <FormMessage className={formMessageClassName} />}
-              </>
-            ) : (
-              <>
-                {label && (
-                  <FormLabelInfo infoText={infoText} className={labelClassName} data-field={name}>
-                    {label}
-                    {required && <span className="ml-1 text-destructive">*</span>}
-                  </FormLabelInfo>
-                )}
-                {typeof render === 'function' ? (
-                  render({ field })
-                ) : (
-                  <FormControlSlot field={field} ref={ref} {...props} />
-                )}
-                {description && <FormDescription>{description}</FormDescription>}
-                {showErrorMessage && <FormMessage className={formMessageClassName} />}
-              </>
-            )}
-          </FormItem>
-        )}
+                </>
+              )}
+              {showErrorMessage && <FormMessage className={formMessageClassName} />}
+            </FormItem>
+          );
+        }}
       />
     );
   }
@@ -296,4 +298,5 @@ export {
   FormFieldWithLabel,
   FormSubmitButton,
   FormField,
+  FormLabelInfo,
 };

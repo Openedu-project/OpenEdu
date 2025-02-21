@@ -1,11 +1,9 @@
 export const aiAssistantMessages = {
   aiAssistant: {
     title: 'AI Agent',
-    aiImage: 'AI Image',
-    aiChat: 'AI Chat',
-    aiSearch: 'AI Search',
-    aiVideo: 'AI Video',
-    aiSlide: 'AI Slide',
+    generalChat: 'General Chat',
+    deepSearch: 'Deep research',
+    slideToVideo: 'Slide to video',
     commingSoon: 'comming soon',
     startNewChat: 'Start New Chat',
     noHistory: 'No History Here',

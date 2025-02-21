@@ -1,13 +1,13 @@
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI, postAPI } from '#utils/fetch';
+import { createAPIUrl, deleteAPI, fetchAPI, postAPI } from '#utils/fetch';
 import type {
   IBackerData,
   ICreateLaunchpadRequest,
   ILaunchpad,
   ILaunchpadResponse,
+  IMyLaunchpadResponse,
   IPledgeLaunchpadPayload,
-  LaunchpadStatus,
 } from '../types/launchpad';
 
 export const getLaunchpadsService = async (
@@ -113,55 +113,18 @@ export async function getMyLaunchpadService({
   params,
 }: {
   init?: RequestInit;
-  params?: {
-    page?: number;
-    per_page?: number;
-    sort?: string;
-    status?: LaunchpadStatus;
-  };
-}): Promise<ILaunchpadResponse | null> {
+  params: IFilter & { status?: string };
+}): Promise<IMyLaunchpadResponse | null> {
   const endpointKey = createAPIUrl({
     endpoint: API_ENDPOINT.LAUNCHPADS_MY_LAUNCHPAD,
     queryParams: {
-      page: params?.page || 1,
-      per_page: params?.per_page || 10,
+      ...params,
       sort: params?.sort || 'create_at desc',
-      status: params?.status,
     },
   });
-
   try {
-    const response = await fetchAPI<{
-      results: Array<{
-        launchpad: ILaunchpad;
-        investment: {
-          id: string;
-          create_at: number;
-          update_at: number;
-          delete_at: number;
-          user_id: string;
-          amount: string;
-          revenue_amount: string;
-          refunded_amount: string;
-          currency: string;
-          status: LaunchpadStatus;
-        };
-      }>;
-      pagination: {
-        page: number;
-        per_page: number;
-        total_pages: number;
-        total_items: number;
-      };
-    }>(endpointKey, init);
-
-    return {
-      results: response.data.results.map(item => ({
-        ...item.launchpad,
-        investment: item.investment,
-      })),
-      pagination: response.data.pagination,
-    };
+    const response = await fetchAPI<IMyLaunchpadResponse>(endpointKey, init);
+    return response.data;
   } catch {
     return null;
   }
@@ -228,6 +191,41 @@ export const postLaunchpadVote = async (
     payload,
     init
   );
+
+  return response.data;
+};
+
+export const postBookmarkLaunchpadService = async (
+  endpoint: string | null | undefined,
+  { payload, init }: { payload: { id: string }; init?: RequestInit }
+) => {
+  let endpointKey = endpoint;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.LAUNCHPADS_BOOKMARK_ID,
+      params: { id: payload.id },
+    });
+  }
+
+  const response = await postAPI<ILaunchpad, null>(endpointKey, null, init);
+
+  return response.data;
+};
+
+export const removeBookmarkLaunchpadService = async (
+  endpoint: string | null | undefined,
+  { payload, init }: { payload: { id: string }; init?: RequestInit }
+) => {
+  let endpointKey = endpoint;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.LAUNCHPADS_BOOKMARK_ID,
+      params: {
+        id: payload.id,
+      },
+    });
+  }
+  const response = await deleteAPI(endpointKey, init);
 
   return response.data;
 };

@@ -72,7 +72,7 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, lessonUid, ...props
       </div>
       <Link
         href={courseHref}
-        className="giant-iheading-semibold16 md:giant-iheading-semibold20 !text-foreground/85 mb-1 line-clamp-1 h-fit w-fit border-none p-0 hover:no-underline md:mb-3"
+        className="giant-iheading-semibold16 md:giant-iheading-semibold20 !text-foreground/85 mb-1 line-clamp-1 h-fit w-fit whitespace-normal border-none p-0 hover:no-underline md:mb-3"
       >
         {tLearningPage('course', { courseName })}
       </Link>

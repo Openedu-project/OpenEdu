@@ -52,11 +52,11 @@ export const useWallet = () => {
     mutate,
   } = useSWR<HTTPResponse<IWallet[]>>(API_ENDPOINT.USERS_ME_WALLETS, (endpoint: string) => fetchAPI(endpoint), {
     // revalidateIfStale: true,
-    // revalidateOnFocus: true,
+    revalidateOnFocus: true,
     // revalidateOnMount: true,
     // refreshInterval: 60_000,
   });
-  console.log('walletsData', walletsData);
+
   // Memoize empty array để tránh tạo reference mới
   // const emptyArray = useMemo(() => [], []);
   // const wallets = walletsData || emptyArray;

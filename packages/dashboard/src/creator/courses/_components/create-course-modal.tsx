@@ -15,15 +15,19 @@ export default function CreateCourseModal({
   onClose: () => void;
   onSubmit: (data: ICreateBaseCourse) => Promise<void>;
 }) {
-  const tCourses = useTranslations('courses');
+  const tCourse = useTranslations('course');
 
   const handleError = () => {
-    toast.error(tCourses('formValidation.createCourseError'));
+    toast.error(
+      tCourse('common.toast.createError', {
+        item: tCourse('common.courseTitle'),
+      })
+    );
   };
 
   return (
     <Modal
-      title={tCourses('create.title')}
+      title={tCourse('create.title')}
       open={open}
       onClose={onClose}
       validationSchema={createBaseCourseSchema}
@@ -32,20 +36,20 @@ export default function CreateCourseModal({
       showSubmit
       buttons={[
         {
-          label: tCourses('form.cancel'),
+          label: tCourse('common.actions.cancel'),
           type: 'button',
           onClick: onClose,
           variant: 'outline',
         },
-        { label: tCourses('form.create'), type: 'submit' },
+        { label: tCourse('common.actions.create'), type: 'submit' },
       ]}
     >
       {() => (
         <>
-          <FormFieldWithLabel name="name" label={tCourses('form.name')} required>
+          <FormFieldWithLabel name="name" label={tCourse('create.form.name')} required>
             <Input />
           </FormFieldWithLabel>
-          <FormFieldWithLabel name="description" label={tCourses('form.description')} required>
+          <FormFieldWithLabel name="description" label={tCourse('create.form.description')} required>
             <RichTextEditor />
           </FormFieldWithLabel>
         </>

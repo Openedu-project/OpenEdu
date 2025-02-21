@@ -10,11 +10,17 @@ import { cn } from '#utils/cn';
 import { SidebarItem } from './sidebar-item';
 import type { ISidebarProps } from './types';
 
-export const Sidebar: FC<ISidebarProps> = ({ items, maxDepth = 2, pathnamesNoSidebar = [], className, isDrawer }) => {
+export const Sidebar: FC<ISidebarProps> = ({
+  items,
+  maxDepth = 2,
+  pathnamesNoSidebar = [],
+  className,
+  isDrawer,
+  isLoggedIn,
+}) => {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [open, setOpen] = useState(false);
-
   const noSidebar = pathnamesNoSidebar?.some(path => pathname.includes(path));
 
   if (noSidebar) {
@@ -40,6 +46,7 @@ export const Sidebar: FC<ISidebarProps> = ({ items, maxDepth = 2, pathnamesNoSid
                   depth={0}
                   maxDepth={maxDepth}
                   pathname={pathname}
+                  disabled={item.isLoginRequired && !isLoggedIn}
                   isCollapsed={isCollapsed}
                   onNavigate={isDrawer ? () => setOpen(false) : undefined}
                 />
@@ -54,7 +61,10 @@ export const Sidebar: FC<ISidebarProps> = ({ items, maxDepth = 2, pathnamesNoSid
             variant="ghost"
             size="icon"
             className="flex h-8 w-full items-center justify-center hover:bg-accent"
-            onClick={() => setIsCollapsed(!isCollapsed)}
+            onClick={() => {
+              setIsCollapsed(!isCollapsed);
+              setOpen(isCollapsed);
+            }}
           >
             {isCollapsed ? <ChevronRightCircle className="h-5 w-5" /> : <ChevronLeftCircle className="h-5 w-5" />}
           </Button>
@@ -64,7 +74,13 @@ export const Sidebar: FC<ISidebarProps> = ({ items, maxDepth = 2, pathnamesNoSid
   };
 
   return isDrawer ? (
-    <Sheet open={open} onOpenChange={setOpen}>
+    <Sheet
+      open={open}
+      onOpenChange={open => {
+        setOpen(open);
+        setIsCollapsed(!open);
+      }}
+    >
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon" className="mr-2 hover:bg-transparent hover:opacity-80 md:hidden">
           <Menu className="h-5 w-5 text-primary-foreground" />

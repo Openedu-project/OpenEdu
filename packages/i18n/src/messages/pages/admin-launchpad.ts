@@ -151,7 +151,7 @@ export const adminLaunchpadMessages = {
       targetFundingGoal: 'Target Funding Goal',
       targetFundingGoalDesc: 'Your max funding goal may reach as double of this amount.',
       minPledge: 'Min Pledge',
-      sharePercentage: 'Share % total profit for backer',
+      sharePercentageAllBackers: 'Share % total profit for all backers',
       numberDayRunFunding: 'Number of days estimated to run the funding',
       errors: {
         validNumber: 'Please enter a valid number',

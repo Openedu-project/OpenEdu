@@ -1,4 +1,4 @@
-import { AI_ROUTES, BLOG_ROUTES, LAUNCHPAD_ROUTES, PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { AFFILIATE_ROUTES, AI_ROUTES, BLOG_ROUTES, LAUNCHPAD_ROUTES, PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { MainLayout } from '@oe/ui/common/layout';
 import { getTranslations } from 'next-intl/server';
 
@@ -6,8 +6,10 @@ import type { ReactNode } from 'react';
 
 export default async function OpeneduLayout({
   children,
+  hasFooter,
 }: {
   children: ReactNode;
+  hasFooter?: boolean;
 }) {
   const t = await getTranslations('headerMenu');
   const sidebarItems = [
@@ -16,27 +18,32 @@ export default async function OpeneduLayout({
       label: t('aiAgent'),
       href: AI_ROUTES.assistant,
       isHighlight: true,
+      isLoginRequired: false,
     },
     {
       id: 'courses',
       label: t('courses'),
       href: PLATFORM_ROUTES.courses,
+      isLoginRequired: false,
     },
     {
       id: 'newsFeed',
       label: t('newsFeed'),
       href: BLOG_ROUTES.blog,
+      isLoginRequired: false,
     },
     {
       id: 'launchpad',
       label: t('launchpad'),
       href: LAUNCHPAD_ROUTES.launchpad,
+      isLoginRequired: false,
     },
-    // {
-    //   id: 'become-creator',
-    //   label: t('becomeCreator'),
-    //   href: '#',
-    // },
+    {
+      id: 'Affiliate',
+      label: t('affiliate'),
+      href: AFFILIATE_ROUTES.campaigns,
+      isLoginRequired: true,
+    },
   ];
   const subSidebarItems = [
     {
@@ -57,7 +64,7 @@ export default async function OpeneduLayout({
   ];
 
   return (
-    <MainLayout sidebarItems={sidebarItems} subSidebarItems={subSidebarItems}>
+    <MainLayout sidebarItems={sidebarItems} subSidebarItems={subSidebarItems} hasFooter={hasFooter}>
       {children}
     </MainLayout>
   );

@@ -10,7 +10,7 @@ export default async function OrganizationSection() {
   ]);
 
   return (
-    <section className="py-5 lg:py-10">
+    <section className="">
       <div className="container mx-auto px-0 md:px-4">
         <h2 className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold32 mb-4 font-bold md:mb-8">
           {t("title")}
@@ -44,7 +44,7 @@ export default async function OrganizationSection() {
                     className="rounded-full"
                   />
                 </div>
-                <span className="giant-iheading-semibold20 md:giant-iheading-semibold24 font-medium">
+                <span className="giant-iheading-semibold20 md:giant-iheading-semibold24 font-medium uppercase">
                   {org?.name}
                 </span>
               </div>

@@ -6,15 +6,18 @@ import { FormFieldWrapper } from './form-field-wrapper';
 export default function FormImageContainerHeightConfig({
   field,
   handleConfigChange,
-}: { field: FormFieldType; handleConfigChange: (key: keyof FormFieldType, value: number) => void }) {
+}: {
+  field: FormFieldType;
+  handleConfigChange: (key: keyof FormFieldType, value: number) => void;
+}) {
   const tDynamicForms = useTranslations('dynamicForms.fieldConfig');
   return (
     <FormFieldWrapper label={tDynamicForms('containerHeight')}>
       <InputNumber
         name="containerHeight"
         min={0}
-        value={field.containerHeight}
-        onChange={e => handleConfigChange('containerHeight', Number(e.target.value))}
+        value={field.containerHeight as number}
+        onChange={value => handleConfigChange('containerHeight', value)}
       />
     </FormFieldWrapper>
   );

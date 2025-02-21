@@ -37,7 +37,7 @@ const IMAGE_NUMBER = 2;
 const MAX_GEN_THUMBNAIL = 2;
 
 export function ThumbnailField({ courseData, form, setSubmitButtonProps }: IThumbnailFieldProps) {
-  const tAICourseForm = useTranslations('courses.aiCourse');
+  const tAICourseForm = useTranslations('course.aiCourse');
   const [error, setError] = useState(false);
   const [status, setStatus] = useState<IAICourseStatus | undefined>(courseData?.ai_course?.thumbnail_status);
   const { AICourseStatusData, resetSocketData } = useSocketStore();
@@ -60,7 +60,10 @@ export function ThumbnailField({ courseData, form, setSubmitButtonProps }: IThum
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const defaultDesc = useMemo(() => {
     if (courseInfo?.courseId !== courseData.id) {
-      setCourseInfo({ ...courseInfo, thumbnail_desc: courseData?.ai_course?.thumbnail_description });
+      setCourseInfo({
+        ...courseInfo,
+        thumbnail_desc: courseData?.ai_course?.thumbnail_description,
+      });
       return courseData?.ai_course?.thumbnail_description;
     }
     const initValue =
@@ -117,7 +120,6 @@ export function ThumbnailField({ courseData, form, setSubmitButtonProps }: IThum
     <>
       <CourseFormField
         name="thumbnail_included"
-        fieldType="checkbox"
         label={tAICourseForm?.rich(remainGenThubmnail > 1 ? 'genAIForThumbnail2' : 'genAIForThumbnail', {
           number: remainGenThubmnail,
         })}

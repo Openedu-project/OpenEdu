@@ -14,7 +14,7 @@ import AIStatusModal, { type IAIStatus } from '../../_components/ai-status-modal
 import { CourseOutlineForm } from './course-outline-form';
 
 export function SettingCourseOutline({ course }: { course: ICourse | null }) {
-  const tAICourse = useTranslations('courses.aiCourse');
+  const tAICourse = useTranslations('course.aiCourse');
   const [status, setStatus] = useState<IAICourseStatus>();
   const [openStatusModal, setOpenStatusModal] = useState<boolean>(false);
   const { AICourseStatusData, resetSocketData } = useSocketStore();

@@ -3,7 +3,7 @@ import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
 import { useTranslations } from 'next-intl';
 
 export default function Description() {
-  const tCourses = useTranslations('courses');
+  const tCourse = useTranslations('course');
 
   return (
     <FormFieldWithLabel
@@ -11,16 +11,16 @@ export default function Description() {
       label={
         <div className="flex flex-col gap-1">
           <span className="font-medium text-lg">
-            {tCourses('information.descriptionTitle')}
+            {tCourse('information.sections.description.title')}
             <span className="text-red-500">*</span>
           </span>
-          <span className="text-muted-foreground text-xs">{tCourses('information.description')}</span>
+          <span className="text-muted-foreground text-xs">{tCourse('information.sections.description.subtitle')}</span>
         </div>
       }
       className="rounded-lg bg-background p-4 shadow-sm"
       labelClassName="mb-4 text-lg"
     >
-      <RichTextEditor placeholder={tCourses('information.descriptionPlaceholder')} />
+      <RichTextEditor placeholder={tCourse('information.sections.description.placeholder')} />
     </FormFieldWithLabel>
   );
 }

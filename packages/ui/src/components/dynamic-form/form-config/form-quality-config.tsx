@@ -6,7 +6,10 @@ import { FormFieldWrapper } from './form-field-wrapper';
 export default function FormQualityConfig({
   field,
   handleConfigChange,
-}: { field: FormFieldType; handleConfigChange: (key: keyof FormFieldType, value: number) => void }) {
+}: {
+  field: FormFieldType;
+  handleConfigChange: (key: keyof FormFieldType, value: number) => void;
+}) {
   const tDynamicForms = useTranslations('dynamicForms.fieldConfig');
   // const [value, setValue] = useState<InputValue>({ input: '', select: '' });
 
@@ -42,7 +45,7 @@ export default function FormQualityConfig({
           select: '%',
         }}
         onChange={handleChange}
-        containerClassName="w-full"
+        className="w-full"
       />
     </FormFieldWrapper>
   );

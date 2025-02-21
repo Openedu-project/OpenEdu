@@ -243,6 +243,7 @@ export const API_ENDPOINT = {
   LAUNCHPADS_CREATE: '/api/v1/launchpads/create',
   LAUNCHPADS_INVESTMENTS: '/api/v1/investments',
   LAUNCHPADS_POOLS_ID: '/api/v1/launchpads/:id/pools',
+  LAUNCHPADS_BOOKMARK_ID: '/api/v1/launchpads/:id/bookmarks',
 
   // WS
   WEBSOCKET: '/websocket',

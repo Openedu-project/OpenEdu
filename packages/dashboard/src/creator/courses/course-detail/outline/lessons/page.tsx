@@ -1,37 +1,37 @@
 'use client';
-import { useGetSegmentById } from '@oe/api/hooks/useCourse';
 import { type ILessonSchema, lessonSchema } from '@oe/api/schemas/courses/segmentSchema';
-import { updateSegmentService } from '@oe/api/services/course';
 import type { ISegment } from '@oe/api/types/course/segment';
 import { FormWrapper } from '@oe/ui/components/form-wrapper';
-import { toast } from '@oe/ui/shadcn/sonner';
-import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useLessonActions } from '../../_hooks/useLessonActions';
+import { useOutlineStore } from '../../_store/useOutlineStore';
 import { COURSE_DETAIL_FORM_IDS } from '../../_utils/constants';
 import { LessonContents } from './lesson-contents';
 import { LessonHeader } from './lesson-header';
+import LessonValidateModal from './lesson-validate-modal';
 
 export default function LessonPage() {
-  const { sectionId, lessonId } = useParams<{
-    sectionId: string;
-    lessonId: string;
-  }>();
-  const { segment: activeSection, mutateSegment } = useGetSegmentById(sectionId);
+  const { activeLesson, lessonId, handleUpdateLesson } = useLessonActions();
+  const { setActiveLessonContent } = useOutlineStore();
+  const [hasErrors, setHasErrors] = useState(false);
 
-  const activeLessons = activeSection?.lessons ?? [];
-
-  const activeLesson = activeLessons.find(lesson => lesson.id === lessonId);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (lessonId && activeLesson?.id) {
+      setActiveLessonContent(activeLesson.contents?.[0] ?? null);
+    }
+  }, [lessonId, activeLesson?.id]);
 
   const handleSubmit = async (data: ILessonSchema) => {
-    await updateSegmentService(undefined, {
+    await handleUpdateLesson({
       ...activeLesson,
       ...data,
     } as ISegment);
-    await mutateSegment();
-    toast.success('Lesson updated successfully');
   };
   const handleError = () => {
-    toast.error('Failed to update lesson');
+    setHasErrors(true);
   };
+
   return (
     <FormWrapper
       id={COURSE_DETAIL_FORM_IDS.lesson}
@@ -42,8 +42,17 @@ export default function LessonPage() {
         defaultValues: activeLesson as ILessonSchema,
       }}
     >
-      <LessonHeader />
-      <LessonContents />
+      {({ form, loading: submitLoading }) => {
+        return (
+          <>
+            <LessonHeader submitLoading={submitLoading} />
+            <LessonContents />
+            {hasErrors && (
+              <LessonValidateModal lesson={form.getValues()} open={hasErrors} onClose={() => setHasErrors(false)} />
+            )}
+          </>
+        );
+      }}
     </FormWrapper>
   );
 }

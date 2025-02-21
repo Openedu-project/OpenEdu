@@ -1,5 +1,5 @@
 'use client';
-import { type IFileResponse, fileResponseScheme } from '@oe/api/types/file';
+import { type IFileResponse, fileResponseSchema } from '@oe/api/types/file';
 import { usePathname } from 'next/navigation';
 
 import { cancelConversation } from '@oe/api/services/conversation';
@@ -17,7 +17,7 @@ import { Button } from '#shadcn/button';
 import { Card } from '#shadcn/card';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
-import { DESKTOP_BREAKPOINT, INPUT_BUTTON } from '../constants';
+import { INPUT_BUTTON } from '../constants';
 import type { MessageFormValues, MessageInputProps } from '../type';
 import { InputField } from './message-input-field';
 import { InputOption } from './message-input-option';
@@ -28,7 +28,7 @@ const createFormSchema = (inputType: TAgentType) => {
       return z.object({
         message: z.string().min(1, 'formValidation.required'),
         images: z.array(
-          fileResponseScheme.optional().refine(data => data !== undefined, {
+          fileResponseSchema.optional().refine(data => data !== undefined, {
             message: 'formValidation.required',
           })
         ),
@@ -62,23 +62,6 @@ const MessageInput: React.FC<MessageInputProps> = ({
 
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const { setLoginRequiredModal } = useLoginRequiredStore();
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  useEffect(() => {
-    const checkDesktop = () => setIsDesktop(window?.innerWidth >= DESKTOP_BREAKPOINT);
-    checkDesktop();
-    window.addEventListener('resize', checkDesktop);
-    return () => window.removeEventListener('resize', checkDesktop);
-  }, []);
-
-  useEffect(() => {
-    if (!(inputRef.current && isDesktop) || document.activeElement === inputRef.current) {
-      return;
-    }
-    inputRef.current.focus();
-    inputRef.current.selectionStart = inputRef.current.value.length;
-    inputRef.current.selectionEnd = inputRef.current.value.length;
-  });
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {

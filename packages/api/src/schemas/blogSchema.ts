@@ -1,4 +1,4 @@
-import { fileResponseScheme } from '#types/file';
+import { fileResponseSchema } from '#types/file';
 import { z } from '#utils/zod';
 
 export const blogSchema = z.object({
@@ -6,9 +6,15 @@ export const blogSchema = z.object({
     message: 'blogForm.titleMessage',
   }),
   locale: z.string(),
-  thumbnail: fileResponseScheme.optional().refine(data => data !== undefined, {
-    message: 'blogForm.isRequiredThumbnail',
-  }),
+  thumbnail: z.preprocess(
+    val => (val === undefined || (Array.isArray(val) && val.length === 0) ? null : val),
+    z
+      .union([z.array(fileResponseSchema), fileResponseSchema])
+      .nullable()
+      .refine(data => data !== null, {
+        message: 'blogForm.isRequiredThumbnail',
+      })
+  ),
   image_description: z.string().optional(),
   description: z.string().optional(),
   content: z.string().min(20, { message: 'blogForm.contentMessage' }),

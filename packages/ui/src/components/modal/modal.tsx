@@ -1,7 +1,7 @@
 import type { TypeOf, z } from "@oe/api/utils/zod";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import type { ReactNode } from "react";
+import type { MouseEvent, ReactNode } from "react";
 import type { DefaultValues, UseFormReturn } from "react-hook-form";
 import {
   type FormErrorHandler,
@@ -32,7 +32,7 @@ type ButtonVariant =
 
 export interface ButtonConfig extends Omit<ButtonProps, "onClick"> {
   label: string;
-  onClick?: (handleClose?: () => void) => void;
+  onClick?: (handleClose?: (e?: MouseEvent<HTMLButtonElement>) => void) => void;
   variant?: ButtonVariant;
   type?: "button" | "submit" | "reset";
 }
@@ -55,7 +55,7 @@ export interface ModalProps<TSchema extends z.ZodType> {
   defaultValues?: DefaultValues<TypeOf<TSchema>> | undefined;
   showSubmit?: boolean;
   validationSchema?: TSchema;
-  onSubmit?: (data: z.infer<TSchema>) => Promise<void>;
+  onSubmit?: (data: z.infer<TSchema>) => Promise<void> | void;
   onError?: FormErrorHandler;
 }
 
@@ -74,6 +74,11 @@ const ModalButtons = ({
 }) => {
   const t = useTranslations("general");
 
+  const onClose = (e?: MouseEvent<HTMLButtonElement>) => {
+    e?.stopPropagation();
+    handleClose?.();
+  };
+
   if (buttons && buttons.length > 0) {
     return (
       <>
@@ -83,6 +88,8 @@ const ModalButtons = ({
               key={button.label}
               variant={button.variant}
               disabled={isSubmitting}
+              loading={isSubmitting}
+              formIds={["modal-form"]}
             >
               {button.label}
             </SubmitFormsButton>
@@ -94,9 +101,12 @@ const ModalButtons = ({
               variant={button.variant ?? "default"}
               onClick={
                 button.onClick
-                  ? () => button.onClick?.(handleClose)
+                  ? (e) => {
+                      e.stopPropagation();
+                      button.onClick?.(onClose);
+                    }
                   : button.type === "button"
-                  ? handleClose
+                  ? onClose
                   : undefined
               }
             >
@@ -110,13 +120,19 @@ const ModalButtons = ({
 
   return (
     <>
-      {hasCancelButton && handleClose && (
-        <Button type="button" variant="outline" onClick={handleClose}>
+      {hasCancelButton && onClose && (
+        <Button type="button" variant="outline" onClick={onClose}>
           {t("close")}
         </Button>
       )}
       {showSubmit && (
-        <SubmitFormsButton key="submit" variant="default">
+        <SubmitFormsButton
+          key="submit"
+          variant="default"
+          formIds={["modal-form"]}
+          disabled={isSubmitting}
+          loading={isSubmitting}
+        >
           {isSubmitting ? t("submitting") : t("submit")}
         </SubmitFormsButton>
       )}
@@ -205,24 +221,28 @@ export const Modal = <TSchema extends z.ZodType>({
   const modalContent = (
     <DialogContent
       onPointerDownOutside={(e) => e.preventDefault()}
-      className={`flex max-w-[90vw] flex-col overflow-hidden p-0 md:max-w-lg ${
+      className={`flex max-w-[90vw] flex-col gap-0 overflow-hidden p-0 md:max-w-lg ${
         !hasCloseIcon && "[&>button]:hidden"
       } ${className}`}
     >
       <DialogHeader
-        className={cn("p-4 pb-0", hasTitleOrDescription ? "" : "hidden")}
+        className={cn("p-4", hasTitleOrDescription ? "" : "hidden")}
       >
         <DialogTitle>{title}</DialogTitle>
         <DialogDescription>{description}</DialogDescription>
       </DialogHeader>
       {content}
       {hasButtons && (
-        <DialogFooter className={cn("p-4 pt-0", buttonsClassName)}>
+        <DialogFooter
+          className={cn("gap-2 p-4 sm:space-x-0", buttonsClassName)}
+        >
           <ModalButtons
             buttons={buttons}
             hasCancelButton={hasCancelButton}
             showSubmit={showSubmit}
-            handleClose={() => handleOpenChange(false)}
+            handleClose={() => {
+              handleOpenChange(false);
+            }}
             isSubmitting={isSubmitting}
           />
         </DialogFooter>

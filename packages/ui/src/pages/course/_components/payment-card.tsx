@@ -46,10 +46,12 @@ const PriceDisplay = ({ value, currency = 'VND', discount, isBold }: PriceDispla
 };
 
 const PriceRow = ({ isBold, priceSettings }: PriceRowProps) => {
-  const t = useTranslations('courses.payment');
+  const tCourse = useTranslations('course');
 
   if (!priceSettings?.is_pay) {
-    return <span className={cn('giant-iheading-semibold20 uppercase', isBold && 'font-bold')}>{t('free')}</span>;
+    return (
+      <span className={cn('giant-iheading-semibold20 uppercase', isBold && 'font-bold')}>{tCourse('price.free')}</span>
+    );
   }
 
   return (

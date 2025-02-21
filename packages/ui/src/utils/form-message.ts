@@ -1,4 +1,5 @@
 import { toTitleCase } from '@oe/core/utils/string';
+import type { FieldError } from 'react-hook-form';
 
 export function parseFormMessage(message: string) {
   const messages = message.split('--');
@@ -13,4 +14,17 @@ export function parseFormMessage(message: string) {
     }
   }
   return result;
+}
+
+export function getFormErrorMessage(errors: FieldError | undefined) {
+  if (!errors) {
+    return undefined;
+  }
+  if (Array.isArray(errors)) {
+    const message = errors.find(error => error !== undefined).message;
+
+    return { message, count: errors.filter(error => error !== undefined).length };
+  }
+
+  return { message: errors.message };
 }

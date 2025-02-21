@@ -63,6 +63,12 @@ const config: Omit<Config, 'content'> = {
           500: 'hsl(var(--positive-500))',
           600: 'hsl(var(--positive-600))',
         },
+        turquoise: {
+          500: 'hsl(var(--turquoise-500))',
+        },
+        violet: {
+          500: 'hsl(var(--violet-500))',
+        },
         orange: {
           50: 'hsl(var(--orange-50))',
           500: 'hsl(var(--orange-500))',

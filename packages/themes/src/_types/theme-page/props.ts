@@ -12,6 +12,7 @@ import type { ThemeHeaderProps } from '../../auth/header';
 import type { AuthLayoutLoginProps } from '../../auth/login';
 import type { ScholarHomepageAboutUsProps, ScholarHomepageHeroProps, ScholarHomepageServiceProps } from '../../scholar';
 import type {
+  VbiAboutUsCoreProps,
   VbiAboutUsGoalProps,
   VbiAboutUsIntroProps,
   VbiHomepageAchievementsProps,
@@ -23,6 +24,10 @@ import type {
   VbiHomepageFeaturesProps,
   VbiHomepageHeroProps,
   VbiHomepageMapProps,
+  VbiPartnersCtaProps,
+  VbiPartnersListProps,
+  VbiPartnersShowcaseProps,
+  VbiPartnersTestiProps,
 } from '../../vbi/type';
 
 import type {
@@ -82,6 +87,11 @@ export interface SectionPropsMap<K extends ThemePageKey> {
   vbiMap: DynamicProps<K, VbiHomepageMapProps>;
   vbiIntro: DynamicProps<K, VbiAboutUsIntroProps>;
   vbiGoal: DynamicProps<K, VbiAboutUsGoalProps>;
+  vbiCore: DynamicProps<K, VbiAboutUsCoreProps>;
+  vbiTesti: DynamicProps<K, VbiPartnersTestiProps>;
+  vbiCta: DynamicProps<K, VbiPartnersCtaProps>;
+  vbiShowcase: DynamicProps<K, VbiPartnersShowcaseProps>;
+  vbiPartnerList: DynamicProps<K, VbiPartnersListProps>;
 
   // Avail
   availHero: DynamicProps<K, AvailHomepageHeroProps>;

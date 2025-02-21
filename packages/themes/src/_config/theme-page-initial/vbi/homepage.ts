@@ -7,7 +7,7 @@ export const createVbiHomepageConfig = (getThemeTranslation: (path: string[]) =>
       titleSub: getThemeTranslation(['homepage', 'vbiHero', 'titleSub']),
       button: {
         text: getThemeTranslation(['homepage', 'vbiHero', 'button', 'text']),
-        link: '/',
+        link: '/courses',
       },
       banner: {
         image: { mime: 'image/png' },
@@ -194,7 +194,7 @@ export const createVbiHomepageConfig = (getThemeTranslation: (path: string[]) =>
       titleSub: getThemeTranslation(['homepage', 'vbiCourses', 'titleSub']),
       button: {
         text: getThemeTranslation(['homepage', 'vbiCourses', 'button', 'text']),
-        link: '/',
+        link: '/courses',
       },
     },
     order: 2,
@@ -205,7 +205,7 @@ export const createVbiHomepageConfig = (getThemeTranslation: (path: string[]) =>
       titleSub: getThemeTranslation(['homepage', 'vbiCert', 'titleSub']),
       button: {
         text: getThemeTranslation(['homepage', 'vbiCert', 'button', 'text']),
-        link: '/',
+        link: '/courses',
       },
       image: { mime: 'image/png' },
     },
@@ -242,7 +242,7 @@ export const createVbiHomepageConfig = (getThemeTranslation: (path: string[]) =>
       titleSub: getThemeTranslation(['homepage', 'vbiBlogs', 'titleSub']),
       button: {
         text: getThemeTranslation(['homepage', 'vbiBlogs', 'button', 'text']),
-        link: '/',
+        link: '/blog',
       },
     },
     order: 5,

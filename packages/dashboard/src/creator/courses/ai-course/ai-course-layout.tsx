@@ -5,14 +5,14 @@ import type { ReactNode } from 'react';
 import { AICourseNavMenu } from './_components/ai-course-nav';
 
 export default function AICourseLayout({ children }: { children: ReactNode }) {
-  const tCourses = useTranslations('courses');
+  const tCourse = useTranslations('course');
 
   const breadcrumbs = [
     {
-      label: tCourses('title'),
+      label: tCourse('common.coursesTitle'),
     },
     {
-      label: tCourses('aiCourse.aiCreation'),
+      label: tCourse('aiCourse.aiCreation'),
       disabled: true,
     },
   ];

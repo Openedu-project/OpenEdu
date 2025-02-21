@@ -14,6 +14,7 @@ const CourseCardHorizontal = async ({
 }) => {
   const t = await getTranslations('launchpadDetailPage');
   const course = campaign?.courses?.[0];
+  console.log('CourseCardHorizontal', course);
 
   if (!course) {
     return null;

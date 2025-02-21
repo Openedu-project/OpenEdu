@@ -124,6 +124,12 @@
 
     /* pink */
     --pink-500: 303 97% 73%; /* #FD77F3 */
+
+    /* turquoise */
+    --turquoise-500: 184 82% 55%; /* #2CDEE9 */
+
+    /* violet */
+    --violet-500: 255 100% 68%; /* #7B5AFF */
   }
 
   .dark {
@@ -161,7 +167,7 @@
     --info: 208 100% 93%;
     --info-foreground: 209 100% 44%;
     --font-primary: var(--font-inter);
-    --font-secondary: var(--font-montserrat);
+    --font-secondary: var(--font-inter);
     --font-sub: var(--font-roboto-mono);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
@@ -239,6 +245,12 @@
 
     /* pink */
     --pink-500: 303 97% 73%; /* #FD77F3 */
+
+    /* turquoise */
+    --turquoise-500: 184 82% 55%; /* #2CDEE9 */
+
+    /* violet */
+    --violet-500: 255 100% 68%; /* #7B5AFF */
   }
 }
 
@@ -341,6 +353,9 @@
   .rich-text p + p {
     margin-bottom: 0.5rem;
   }
+  .rich-text p:empty::after {
+    content: "\00A0";
+}
 
   .rich-text pre {
     background: hsl(var(--accent-foreground));

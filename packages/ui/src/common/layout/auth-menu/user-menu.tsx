@@ -15,13 +15,20 @@ import { Button } from '#shadcn/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '#shadcn/dropdown-menu';
 import { MENU_ITEMS } from './constants';
 
+const extractDomain = (fullDomain: string) => {
+  if (!fullDomain) {
+    return '';
+  }
+  return fullDomain.split('/')[0];
+};
+
 export async function UserMenu({ me }: { me: IUser }) {
   const domain = (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? '';
 
   const [t, orgData] = await Promise.all([
     getTranslations('userMenu'),
     getOrgByDomainService(undefined, {
-      domain,
+      domain: extractDomain(domain) ?? '',
     }),
   ]);
 
@@ -39,18 +46,20 @@ export async function UserMenu({ me }: { me: IUser }) {
           className="flex items-center space-x-2 text-primary-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
         >
           <UserAvatar src={me?.avatar ?? ''} name={me?.display_name?.length > 0 ? me?.display_name : me?.username} />
-          <span>{me?.display_name?.length > 0 ? me?.display_name : me?.username}</span>
+          <span className="hidden max-w-[100px] truncate md:inline-block">
+            {me?.display_name?.length > 0 ? me?.display_name : me?.username}
+          </span>
           <ChevronDown className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem key="myProfile">
+        <DropdownMenuItem key="myProfile" className="p-0">
           <Link
             href={createAPIUrl({
               endpoint: PLATFORM_ROUTES.userProfile,
               params: { username: me.username },
             })}
-            className="flex h-auto w-full items-center justify-start p-0 text-foreground"
+            className="flex h-auto w-full items-center justify-start px-2 py-1.5 text-foreground"
           >
             <ProfileCircle className="mr-2 h-4 w-4" />
             <span>{t('myProfile')}</span>
@@ -59,8 +68,8 @@ export async function UserMenu({ me }: { me: IUser }) {
         <DropdownMenuSeparator className="mb-1 h-[1px] bg-neutral-100" />
         {visibleMenuItems.map(({ href, key, icon: Icon, hasSepratePage }) => (
           <Fragment key={key}>
-            <DropdownMenuItem>
-              <Link href={href} className="flex h-auto w-full items-center justify-start p-0 text-foreground">
+            <DropdownMenuItem className="p-0">
+              <Link href={href} className="flex h-auto w-full items-center justify-start px-2 py-1.5 text-foreground">
                 <Icon className="mr-2 h-4 w-4" />
                 <span>{t(key)}</span>
               </Link>

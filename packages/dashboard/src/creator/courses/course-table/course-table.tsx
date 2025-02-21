@@ -13,7 +13,7 @@ import CourseName from './course-name';
 import CoursePrice from './course-price';
 
 export default function Courses() {
-  const tCourses = useTranslations('courses');
+  const tCourse = useTranslations('course');
 
   const columns: ColumnDef<ICourse>[] = useMemo(() => {
     return [
@@ -36,12 +36,12 @@ export default function Courses() {
           <>
             {item.row.original.is_ai_generated ? (
               item.row.original.ai_course?.offer_type === 'youtube_playlist' ? (
-                <Badge variant="outline_destructive">{tCourses('type.youtube')}</Badge>
+                <Badge variant="outline_destructive">{tCourse('types.youtube')}</Badge>
               ) : (
-                <Badge variant="outline_secondary">{tCourses('type.ai')}</Badge>
+                <Badge variant="outline_secondary">{tCourse('types.ai')}</Badge>
               )
             ) : (
-              <Badge variant="outline_primary">{tCourses('type.manual')}</Badge>
+              <Badge variant="outline_primary">{tCourse('types.manual')}</Badge>
             )}
           </>
         ),
@@ -61,7 +61,11 @@ export default function Courses() {
         header: 'Reviewing',
         size: 100,
         align: 'center',
-        cell: item => <CourseBadgeVersion version={item.row.original.org_request?.entity_version} />,
+        cell: item => (
+          <CourseBadgeVersion
+            version={item.row.original.org_request?.entity_version ?? item.row.original.props?.request_version}
+          />
+        ),
       },
       {
         header: 'Learners',
@@ -89,7 +93,7 @@ export default function Courses() {
         cell: item => <CourseActions data={item.row.original} />,
       },
     ];
-  }, [tCourses]);
+  }, [tCourse]);
 
   return (
     <>

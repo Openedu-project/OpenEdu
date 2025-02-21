@@ -176,6 +176,19 @@ export function DndSortable<ItemType, ChildItemType>({
     [adapter, items, updateItems]
   );
 
+  const updateItemWithNewItem = useCallback(
+    (
+      newItem: ItemType | ChildItemType,
+      currentItem: IDndSortableItem<ItemType, ChildItemType> | IDndSortableChildItem<ChildItemType>
+    ) => {
+      const newItemContainer = adapter.convertToContainerItem([newItem as ItemType])[0];
+      const newItems = adapter.updateItemWithNewItem(newItemContainer, currentItem, items);
+      updateItems(newItems as IDndSortableItem<ItemType, ChildItemType>[]);
+      // return adapter.convertToOriginal(newItems);
+    },
+    [adapter, items, updateItems]
+  );
+
   useImperativeHandle(
     ref,
     () => ({
@@ -226,9 +239,11 @@ export function DndSortable<ItemType, ChildItemType>({
           item={items?.find(item => item.id === containerId)}
           adapter={adapter}
           content={renderItem?.({
+            items: adapter.convertToOriginal(items),
             item: items?.find(item => item.id === containerId) as IDndSortableItem<ItemType, ChildItemType>,
             descendants: descendants,
             dragOverlay: true,
+            index: 0,
           })}
           descendants={descendants}
           {...containerProps}
@@ -277,12 +292,13 @@ export function DndSortable<ItemType, ChildItemType>({
               item,
               onRemoveItem: () => removeItem(item),
               onUpdateItem: updateItem,
+              onUpdateItemWithNewItem: updateItemWithNewItem,
             })}
           </DndSortableChildItem>
         ))}
       </SortableContext>
     ),
-    [dataConfig?.itemDirection, removeItem, updateItem]
+    [dataConfig?.itemDirection, removeItem, updateItem, updateItemWithNewItem]
   );
 
   const dndContextCommonProps = {
@@ -302,7 +318,7 @@ export function DndSortable<ItemType, ChildItemType>({
           items={items.map(item => item.id)}
           strategy={dataConfig?.direction === 'vertical' ? verticalListSortingStrategy : horizontalListSortingStrategy}
         >
-          {items.map(item => {
+          {items.map((item, index) => {
             const { renderItem, renderChildItem, ...containerProps } = renderConfig ?? {};
             const descendants = adapter.findAllDescendants(clonedItems ?? [], item.id);
             return (
@@ -312,12 +328,15 @@ export function DndSortable<ItemType, ChildItemType>({
                 item={item}
                 adapter={adapter}
                 content={renderItem?.({
+                  items: adapter.convertToOriginal(items),
                   item,
                   dragOverlay: false,
                   descendants,
+                  index,
                   onAddChild: (defaultItem: ChildItemType) => addItem(item.id, defaultItem),
                   onRemoveItem: () => removeItem(item),
                   onUpdateItem: updateItem,
+                  onUpdateItemWithNewItem: updateItemWithNewItem,
                 })}
                 descendants={descendants}
                 toggleCollapse={() => toggleCollapse(item.id)}

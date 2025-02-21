@@ -1,4 +1,4 @@
-import { fileResponseScheme } from '#types/file';
+import { fileResponseSchema } from '#types/file';
 import { z } from '#utils/zod';
 
 export const rejectLaunchpadSchema = z.object({
@@ -13,14 +13,14 @@ export const startFundingSchema = z.object({
 
 export const generalInfoLaunchpadSchema = z.object({
   description: z.string().optional(),
-  thumbnail: fileResponseScheme
+  thumbnail: fileResponseSchema
     .nullable()
     .refine(data => !!data, {
       message: 'creatorSettingLaunchpad.generalInfo.errors.thumbnailRequired',
     })
     .optional(),
   thumbnail_id: z.string().default('').optional(),
-  preview_video: fileResponseScheme
+  preview_video: fileResponseSchema
     .nullable()
     .refine(data => !!data, {
       message: 'creatorSettingLaunchpad.generalInfo.errors.previewVideoRequired',

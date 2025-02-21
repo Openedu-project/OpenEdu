@@ -11,7 +11,7 @@ export default function AILayout({ children, className }: Props) {
   return (
     <main
       className={cn(
-        'relative flex h-[calc(100vh-var(--header-small-height))] w-full justify-end overflow-hidden overflow-x-hidden transition-[margin] md:h-[calc(100vh-var(--header-height))] md:overflow-y-hidden md:pt-0',
+        'relative flex h-[calc(100dvh-var(--header-small-height))] w-full justify-end overflow-hidden overflow-x-hidden transition-[margin] md:h-[calc(100dvh-var(--header-height))] md:overflow-y-hidden md:pt-0',
         className
       )}
     >

@@ -1,14 +1,21 @@
 import { setCookie } from '@oe/core/utils/cookie';
 import type { NextRequest } from 'next/server';
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_APP_ORIGIN || '',
-  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-  'Access-Control-Allow-Credentials': 'true',
-};
+function getCorsHeaders(origin: string | null) {
+  const allowedDomain = process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN;
+  const isAllowedOrigin = origin && (origin.endsWith(allowedDomain) || origin === process.env.NEXT_PUBLIC_APP_ORIGIN);
+
+  return {
+    'Access-Control-Allow-Origin': isAllowedOrigin ? origin : '',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Allow-Credentials': 'true',
+  };
+}
 
 export async function POST(request: NextRequest) {
+  const origin = request.headers.get('origin');
+  const corsHeaders = getCorsHeaders(origin);
   try {
     const body = await request.json();
 
@@ -31,4 +38,13 @@ export async function POST(request: NextRequest) {
   } catch {
     return Response.json({ error: 'An error occurred while setting cookie' }, { status: 500, headers: corsHeaders });
   }
+}
+
+// biome-ignore lint/suspicious/useAwait: <explanation>
+export async function OPTIONS(request: NextRequest) {
+  const origin = request.headers.get('origin');
+  return new Response(null, {
+    status: 204,
+    headers: getCorsHeaders(origin),
+  });
 }

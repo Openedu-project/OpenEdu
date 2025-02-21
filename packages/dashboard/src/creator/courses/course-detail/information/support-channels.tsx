@@ -7,7 +7,7 @@ import { useFormContext } from 'react-hook-form';
 import { useFieldArray } from 'react-hook-form';
 
 export default function SupportChannels() {
-  const tCourses = useTranslations('courses');
+  const tCourse = useTranslations('course');
   const { control } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
@@ -20,8 +20,10 @@ export default function SupportChannels() {
       label={
         <>
           <div className="flex flex-col gap-1">
-            <span className="font-medium text-lg">{tCourses('information.supportChannelsTitle')}</span>
-            <span className="text-muted-foreground text-xs">{tCourses('information.supportChannelsDescription')}</span>
+            <span className="font-medium text-lg">{tCourse('information.sections.supportChannels.title')}</span>
+            <span className="text-muted-foreground text-xs">
+              {tCourse('information.sections.supportChannels.subtitle')}
+            </span>
           </div>
           <Button
             variant="outline"
@@ -30,7 +32,7 @@ export default function SupportChannels() {
             className="ml-auto flex items-center gap-2 border-primary text-primary hover:text-primary/90"
           >
             <PlusIcon className="h-4 w-4" />
-            {tCourses('information.supportChannelsAdd')}
+            {tCourse('information.sections.supportChannels.addButton')}
           </Button>
         </>
       }

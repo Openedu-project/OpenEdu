@@ -1,171 +1,60 @@
-import { useGetSegmentById, useGetSegments } from '@oe/api/hooks/useCourse';
+'use client';
 import type { ISectionSchema } from '@oe/api/schemas/courses/segmentSchema';
 import { sectionSchema } from '@oe/api/schemas/courses/segmentSchema';
-import {
-  createSegmentService,
-  deleteSegmentService,
-  updateBulkSegmentsService,
-  updateSegmentService,
-} from '@oe/api/services/course';
-import type { ISegment } from '@oe/api/types/course/segment';
-import { CREATOR_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
-import { useRouter } from '@oe/ui/common/navigation';
 import { DeleteButton } from '@oe/ui/components/delete-button';
 import { FormWrapper } from '@oe/ui/components/form-wrapper';
-import { StatusBadge } from '@oe/ui/components/status-badge';
 import { Button } from '@oe/ui/shadcn/button';
 import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
 import { Input } from '@oe/ui/shadcn/input';
-import { toast } from '@oe/ui/shadcn/sonner';
 import { Check, CopyIcon, PencilLine, Trash2 } from 'lucide-react';
 import { MenuIcon } from 'lucide-react';
-import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { SegmentBadgeSelect } from '../../../_components/segment-badge-select';
+import { useSectionActions } from '../../_hooks/useSectionActions';
 import { COURSE_DETAIL_FORM_IDS } from '../../_utils/constants';
 import { SectionsDrawer } from './sections-drawer';
 
 export default function SectionHeader() {
-  const { courseId, sectionId } = useParams<{
-    courseId: string;
-    sectionId: string;
-  }>();
-  const router = useRouter();
-  const { segments: sections, mutateSegments } = useGetSegments({
-    course_id: courseId as string,
-  });
-  const { segment: activeSection, mutateSegment } = useGetSegmentById(sectionId);
+  const tCourse = useTranslations('course');
+  const tOutline = useTranslations('course.outline');
+  const { sections, activeSection, handleDeleteSection, handleUpdateSection, handleDuplicateSection } =
+    useSectionActions();
+
   const [edit, setEdit] = useState(false);
   const [duplicateLoading, setDuplicateLoading] = useState(false);
 
-  const handleDeleteSection = async (onClose?: () => void) => {
-    if (!activeSection) {
-      return;
-    }
-    const activeSectionIndex = sections?.findIndex(section => section.id === activeSection.id) ?? -1;
-
-    const previousSection = activeSectionIndex > 0 ? sections?.[activeSectionIndex - 1] : sections?.[0];
-
-    try {
-      if (previousSection?.lessons?.[0]?.id) {
-        await deleteSegmentService(undefined, activeSection.id);
-        await mutateSegments();
-
-        router.push(
-          buildUrl({
-            endpoint: CREATOR_ROUTES.courseOutline,
-            params: {
-              courseId,
-              sectionId: previousSection.id,
-              lessonId: previousSection.lessons[0].id,
-            },
-          })
-        );
-        toast.success('Section deleted successfully');
-      } else {
-        throw new Error('No lesson found');
-      }
-    } catch {
-      toast.error('Failed to delete section');
-    }
+  const onDeleteSection = async (onClose?: () => void) => {
+    await handleDeleteSection();
     onClose?.();
   };
 
   const handleSaveSection = async (data: ISectionSchema) => {
     if (activeSection?.title !== data.title) {
-      try {
-        await updateSegmentService(undefined, {
-          ...(activeSection as ISegment),
-          title: data.title,
-        } as ISegment);
-        await mutateSegments();
-        await mutateSegment();
-        toast.success('Section title updated successfully');
-      } catch {
-        toast.error('Failed to update section title');
-      }
+      await handleUpdateSection({ ...activeSection, title: data.title });
     }
     setEdit(false);
   };
 
-  const handleDuplicateSection = async () => {
-    if (!(activeSection && sections)) {
-      return;
-    }
-
+  const oDuplicateSection = async () => {
     setDuplicateLoading(true);
-    try {
-      const newSection = await createSegmentService(undefined, {
-        ...activeSection,
-        id: undefined,
-        title: `${activeSection.title} (Copy)`,
-        lessons: undefined,
-      });
-
-      sections.splice(sections.findIndex(section => section.id === activeSection.id) + 1, 0, {
-        ...newSection,
-        lessons:
-          activeSection.lessons?.map(lesson => ({
-            ...lesson,
-            id: undefined as unknown as string,
-            parent_id: newSection.id,
-            contents: lesson.contents?.map(content => ({
-              ...content,
-              id: undefined as unknown as string,
-              lesson_id: undefined as unknown as string,
-              section_id: newSection.id,
-            })),
-          })) ?? null,
-      });
-
-      const newSections = await updateBulkSegmentsService(undefined, {
-        course_id: courseId as string,
-        sections: sections.map((section, index) => ({
-          ...section,
-          order: index,
-        })),
-      });
-
-      await mutateSegments();
-      const newActiveSection = newSections.find(section => section.id === newSection.id);
-
-      if (newActiveSection?.lessons?.[0]?.id) {
-        router.push(
-          buildUrl({
-            endpoint: CREATOR_ROUTES.courseOutline,
-            params: {
-              courseId,
-              sectionId: newActiveSection.id,
-              lessonId: newActiveSection.lessons?.[0]?.id,
-            },
-          })
-        );
-      }
-      toast.success('Section duplicated successfully');
-    } catch {
-      toast.error('Failed to duplicate section');
-    }
+    await handleDuplicateSection();
     setDuplicateLoading(false);
   };
 
   return (
-    <div className="flex items-center gap-4 rounded-md border bg-background p-2">
+    <div className="flex flex-col items-center gap-2 rounded-md border bg-background p-2 md:flex-row md:gap-4">
       <div className="flex flex-1 items-center gap-2">
         <SectionsDrawer
           trigger={
-            <Button
-              variant="ghost"
-              size="icon"
-              // onClick={() => setOpenSectionDrawer(!openSectionDrawer)}
-              title="Open Section Drawer"
-            >
+            <Button variant="ghost" size="icon">
               <MenuIcon className="h-4 w-4" />
             </Button>
           }
         />
         {edit ? (
           <FormWrapper
-            id={COURSE_DETAIL_FORM_IDS.sectionHeader}
+            id={COURSE_DETAIL_FORM_IDS.sectionTitle}
             schema={sectionSchema}
             useFormProps={{
               defaultValues: activeSection as ISectionSchema,
@@ -178,7 +67,7 @@ export default function SectionHeader() {
                 <FormFieldWithLabel name="title" formMessageClassName="hidden" className="w-full">
                   <Input type="text" className="h-8" />
                 </FormFieldWithLabel>
-                <Button size="xs" type="submit" disabled={loading} loading={loading} title="Save Section">
+                <Button size="xs" type="submit" disabled={loading} loading={loading}>
                   <Check className="h-4 w-4" />
                 </Button>
               </>
@@ -187,29 +76,32 @@ export default function SectionHeader() {
         ) : (
           <div className="flex items-center gap-2">
             <span className="giant-iheading-semibold16">{activeSection?.title}</span>
-            <Button variant="ghost" size="xs" onClick={() => setEdit(true)} title="Edit Section">
+            <Button variant="ghost" size="xs" onClick={() => setEdit(true)}>
               <PencilLine className="h-4 w-4" />
             </Button>
           </div>
         )}
       </div>
       <div className="flex items-center gap-2">
-        {activeSection?.status && <StatusBadge status={activeSection?.status} />}
+        <SegmentBadgeSelect className="ml-auto" status={activeSection?.status} data={activeSection} type="section" />
         <Button
           variant="outline"
           className="h-8 w-8 p-0"
-          onClick={handleDuplicateSection}
+          onClick={oDuplicateSection}
           disabled={duplicateLoading}
-          loading={duplicateLoading}
-          title="Duplicate Section"
+          title={tOutline('section.actions.duplicate')}
         >
           <CopyIcon className="h-4 w-4" />
         </Button>
         {(sections?.length ?? 0) > 1 && (
           <DeleteButton
-            title="Delete Section"
-            description="All lessons and contents in this section will also be deleted. Are you sure you want to proceed?"
-            onDelete={handleDeleteSection}
+            title={tCourse('common.modal.delete.title', {
+              item: tOutline('section.title'),
+            })}
+            description={tCourse('common.modal.delete.description', {
+              item: tOutline('section.title'),
+            })}
+            onDelete={onDeleteSection}
             variant="outline"
           >
             <Trash2 className="h-4 w-4" />

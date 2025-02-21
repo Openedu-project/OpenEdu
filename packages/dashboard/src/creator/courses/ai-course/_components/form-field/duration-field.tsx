@@ -7,13 +7,18 @@ import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
 import { useTranslations } from 'next-intl';
 import type { UseFormReturn } from 'react-hook-form';
 
-export function DurationField({ form }: { form: UseFormReturn<ICreateAICourseOutline> }) {
-  const tAICourseForm = useTranslations('courses.aiCourse');
+export function DurationField({
+  form,
+}: {
+  form: UseFormReturn<ICreateAICourseOutline>;
+}) {
+  const tAICourseForm = useTranslations('course.aiCourse');
 
   return (
     <>
       <p className="mbutton-semibold16 mb-2">
-        {tAICourseForm('courseDuration')} <span className="ml-1 text-destructive">*</span>
+        {tAICourseForm('courseDuration')}
+        <span className="ml-1 text-destructive">*</span>
       </p>
       <div className="flex rounded border">
         <FormFieldWithLabel name="duration_type" className="min-w-24">

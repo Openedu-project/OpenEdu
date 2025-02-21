@@ -28,20 +28,20 @@ export default async function AIFeatureSection() {
     },
     {
       icon: IconTextToSlide.src,
-      title: t("features.textToSlide.title"),
-      subtitle: t("features.textToSlide.subtitle"),
+      title: t("features.presentation.title"),
+      subtitle: t("features.presentation.subtitle"),
       isCommingSoon: false,
     },
     {
       icon: IconTextToImage.src,
-      title: t("features.textToImage.title"),
-      subtitle: t("features.textToImage.subtitle"),
-      isCommingSoon: true,
+      title: t("features.imageGenerator.title"),
+      subtitle: t("features.imageGenerator.subtitle"),
+      isCommingSoon: false,
     },
     {
       icon: IconTextToVideo.src,
-      title: t("features.textToVideo.title"),
-      subtitle: t("features.textToVideo.subtitle"),
+      title: t("features.slideToVideo.title"),
+      subtitle: t("features.slideToVideo.subtitle"),
       isCommingSoon: true,
     },
     {
@@ -62,8 +62,8 @@ export default async function AIFeatureSection() {
             <p className="mx-auto">
               {t("description")}
               <Link
-                href={AI_ROUTES.assistant}
-                className="mcaption-regular16 lg:mcaption-regular24 mb-6 ml-1 inline-flex gap-1 p-0 lg:mb-10"
+                href={AI_ROUTES.chat}
+                className="mcaption-regular16 lg:mcaption-bold24 mb-6 ml-1 inline-flex gap-1 p-0 lg:mb-10"
               >
                 {t("discoverNow")}
                 <MoveRight />
@@ -72,8 +72,8 @@ export default async function AIFeatureSection() {
           </div>
         </div>
 
-        <div className="relative flex flex-wrap justify-center gap-8">
-          <div className="-z-10 absolute w-full">
+        <div className="relative flex flex-wrap justify-center gap-4 lg:gap-8">
+          <div className="-z-10 absolute hidden w-full lg:block">
             <Image
               src={FeatureBg.src}
               alt="Background"
@@ -85,10 +85,17 @@ export default async function AIFeatureSection() {
           {features.map((feature) => (
             <div
               key={feature.icon}
-              className="group relative flex w-full cursor-pointer flex-col items-start gap-4 rounded-[40px] border-[4px] border-white bg-gradient-to-b from-25% from-white to-100% to-[rgba(242,241,255,0.30)] p-6 backdrop-blur md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.334rem)]"
+              className="group relative flex w-full cursor-pointer flex-col items-start gap-4 overflow-hidden rounded-[40px] p-6 backdrop-blur md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.334rem)]"
             >
-              <div className="h-10 w-10 flex-shrink-0 rounded-full bg-white p-1 md:h-16 md:w-16">
-                <div className="h-[40px] w-[40px] rounded-full bg-ai-feature-gradient p-2">
+              {/* Gradient border background */}
+              <div className="absolute inset-0 rounded-[40px] bg-[linear-gradient(254.89deg,#B8F4F8_6.18%,#EDE3FE_70.53%)]" />
+
+              {/* White background with slightly smaller radius */}
+              <div className="absolute inset-[4px] rounded-[36px] bg-white" />
+
+              {/* Content - now relative to appear above the backgrounds */}
+              <div className="relative h-[40px] w-[40px] flex-shrink-0 rounded-full bg-white p-1 md:h-16 md:w-16">
+                <div className="h-[40px] w-[40px] rounded-full bg-ai-feature-gradient p-2 md:h-16 md:w-16">
                   <Image
                     src={feature.icon}
                     alt={feature.title}
@@ -99,7 +106,7 @@ export default async function AIFeatureSection() {
                   />
                 </div>
               </div>
-              <div className="flex-1">
+              <div className="relative flex-1">
                 <p className="mcaption-semibold14 md:mcaption-semibold20 mb-1">
                   {feature.title}
                 </p>
@@ -108,7 +115,7 @@ export default async function AIFeatureSection() {
                 </h3>
               </div>
               {feature.isCommingSoon && (
-                <div className="mcaption-regular10 absolute top-6 right-6 rounded-3xl border border-primary bg-primary-20 p-2 text-center text-primary">
+                <div className="mcaption-regular10 absolute top-6 right-6 z-10 rounded-3xl border border-primary bg-primary-20 p-2 text-center text-primary">
                   {t("comingSoon")}
                 </div>
               )}
@@ -116,8 +123,13 @@ export default async function AIFeatureSection() {
           ))}
         </div>
 
-        <div className="giant-iheading-semibold20 md:giant-iheading-semibold24 mx-auto mt-8 w-[350px] rounded-[40px] border-[4px] border-white bg-gradient-to-b from-25% from-white to-100% to-[rgba(242,241,255,0.30)] p-6 text-center">
-          {t("andMore")}
+        <div className=" mx-auto mt-4 w-full rounded-[40px] bg-[linear-gradient(180deg,#FBFBFF_0%,rgba(202,202,255,0)_100%)] p-6 text-center sm:w-[350px] lg:mt-8">
+          <Link
+            href={AI_ROUTES.chat}
+            className="giant-iheading-semibold20 md:giant-iheading-semibold24 justify-center text-center text-center text-foreground hover:no-underline"
+          >
+            {t("andMore")}
+          </Link>
         </div>
       </div>
     </section>

@@ -12,7 +12,7 @@ export const useGetSections = () => {
   });
 
   return {
-    sections,
+    sections: sections?.sort((a, b) => a.order - b.order) ?? [],
     mutateSections: mutateSegments,
     courseId,
   };
@@ -29,7 +29,17 @@ export const useGetSection = () => {
   const { segment: activeSection, mutateSegment } = useGetSegmentById(sectionId);
 
   const activeLessons = useMemo(() => {
-    return activeSection?.lessons?.sort((a, b) => a.order - b.order) ?? [];
+    const sortedLessons = activeSection?.lessons?.sort((a, b) => a.order - b.order) ?? [];
+
+    return (
+      sortedLessons?.map(lesson => ({
+        ...lesson,
+        contents: (lesson.contents?.sort((a, b) => a.order - b.order) ?? []).map((content, index) => ({
+          ...content,
+          order: index,
+        })),
+      })) ?? []
+    );
   }, [activeSection]);
 
   const activeLesson = useMemo(() => {
@@ -47,6 +57,8 @@ export const useGetSection = () => {
 
   return {
     courseId,
+    sectionId,
+    lessonId,
     sections,
     activeSection,
     activeLessons,

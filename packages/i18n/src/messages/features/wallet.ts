@@ -104,6 +104,7 @@ export const walletMessages = {
           unexpectedErr: 'An unexpected error occurred',
           requiredToken: 'Token is required',
           requiredBankAccount: 'Bank account is required',
+          isRequired: 'This field is required',
         },
       },
       button: {
@@ -250,8 +251,6 @@ export const walletMessages = {
       title: 'Currency',
       usd: 'USD',
       vnd: 'VND',
-      usdLabel: 'United States Dollar',
-      vndLabel: 'Vietnamese Dong',
       near: 'Near Protocol',
       eth: 'Ethereum',
       avail: 'Avail',

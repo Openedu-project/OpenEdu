@@ -23,7 +23,7 @@ interface TCourseNavMenuItem {
 }
 
 const AICourseNavMenu = ({ className }: { className?: string }) => {
-  const tCourseMenu = useTranslations('courses.aiCourse');
+  const tCourseMenu = useTranslations('course.aiCourse');
   const { id } = useParams();
   const pathname = usePathname();
   const { AICourseStatusData } = useSocketStore();

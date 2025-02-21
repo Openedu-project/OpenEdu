@@ -17,6 +17,7 @@ import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { AI_ROUTES } from '@oe/core/utils/routes';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef } from 'react';
 import { useRouter } from '#common/navigation';
 import { useConversationStore } from '#store/conversation-store';
@@ -38,6 +39,7 @@ export function ChatWindow({
 }) {
   const tAI = useTranslations('aiAssistant');
   const tError = useTranslations('errors');
+  const searchParams = useSearchParams();
 
   const { dataMe } = useGetMe();
 
@@ -83,10 +85,12 @@ export function ChatWindow({
     }
   };
 
+  const defaultAgent = useMemo(() => searchParams.get('agent'), [searchParams]);
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!isNewChat) {
-      setSelectedAgent('ai_chat');
+      setSelectedAgent((defaultAgent as TAgentType) ?? 'ai_chat');
     }
 
     if (id && prevId.current === id) {
@@ -105,7 +109,7 @@ export function ChatWindow({
     return () => {
       prevId.current = id;
     };
-  }, [id]);
+  }, [id, defaultAgent]);
 
   useEffect(() => {
     if (messageData?.results) {
@@ -184,6 +188,10 @@ export function ChatWindow({
       if (!id) {
         setIsNewChat(true);
         router.push(createAPIUrl({ endpoint: AI_ROUTES.chatDetail, params: { id: data.id } }));
+      }
+
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
       }
     } catch (error) {
       setStatus('failed');

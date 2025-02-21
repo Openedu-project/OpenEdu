@@ -86,18 +86,13 @@ import { useLocale } from 'next-intl';
 import CurrencyInput, { type CurrencyInputProps } from 'react-currency-input-field';
 import { cn } from '#utils/cn';
 
-function InputCurrency({
-  value,
-  onChange,
-  className,
-  hasCurrency = true,
-  locale,
-  ...props
-}: Omit<CurrencyInputProps, 'onChange'> & {
+export type InputCurrencyProps = Omit<CurrencyInputProps, 'onChange'> & {
   hasCurrency?: boolean;
   locale?: string;
   onChange: (value: string | undefined) => void;
-}) {
+};
+
+function InputCurrency({ value, onChange, className, hasCurrency = true, locale, ...props }: InputCurrencyProps) {
   const internalLocale = useLocale();
 
   const handleChange = (value: string | undefined) => {

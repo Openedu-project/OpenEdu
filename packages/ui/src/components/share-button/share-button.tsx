@@ -9,39 +9,8 @@ import { cn } from '#utils/cn';
 import { MenuContent } from './menu-share-item';
 import type { ShareButtonComponentProps } from './types';
 
-export default function ShareButton({
-  // config,
-  // children,
-  // onShareClick,
-  className,
-  // isAffiliate,
-  courseData,
-  ...props
-}: ShareButtonComponentProps) {
-  // console.log("courseData", courseData);
-  // const { dataMe } = useGetMe();
-  const tCourse = useTranslations('courses');
-  // const handleShare = (e: React.MouseEvent<HTMLButtonElement>) => {
-  //   e.stopPropagation();
-  //   e.preventDefault();
-  //   // onShareClick?.(e);
-  // };
-
-  // const url = buildUrl({
-  //   endpoint: PLATFORM_ROUTES.courseDetail,
-  //   params: { slug: courseData?.slug },
-  // });
-
-  // const shareConfig: ShareConfig = {
-  //   url: `https://${courseData?.org?.domain}${url}/${
-  //     dataMe ? `?ref_by=${dataMe?.id}` : ""
-  //   }`,
-  //   title: courseData?.name,
-  //   permalink: {
-  //     enabled: true,
-  //   },
-  //   socials: [{ id: "facebook" }, { id: "twitter" }, { id: "telegram" }],
-  // };
+export default function ShareButton({ className, courseData, ...props }: ShareButtonComponentProps) {
+  const tCourse = useTranslations('course');
 
   const AffiliatedBadge = courseData?.props?.is_affiliate && (
     <Badge
@@ -51,8 +20,6 @@ export default function ShareButton({
       {tCourse('share.referral')}
     </Badge>
   );
-
-  // const DefaultShareIcon = <Share2 className="h-3 w-3 md:h-4 md:w-4" />;
 
   return (
     <DropdownMenu>

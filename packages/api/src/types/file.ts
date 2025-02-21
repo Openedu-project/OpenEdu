@@ -1,6 +1,6 @@
 import { z } from '../utils/zod';
 
-export const fileResponseScheme = z.object({
+export const fileResponseSchema = z.object({
   bunny_library_id: z.string().optional(),
   bunny_video_id: z.string().optional(),
   create_at: z.number(),
@@ -20,7 +20,7 @@ export const fileResponseScheme = z.object({
   width: z.number(),
 });
 
-export type IFileResponse = z.infer<typeof fileResponseScheme>;
+export type IFileResponse = z.infer<typeof fileResponseSchema>;
 
 export interface IFilePayload {
   id: string;
