@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { CertificateTemplate } from '../types';
-import { CertificateRenderer } from './certificate-renderer';
+import { CertificateRenderer } from './renderer/certificate-renderer';
 
 interface TemplateManagerProps {
   onTemplateSelect: (template: CertificateTemplate) => void;

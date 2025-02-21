@@ -1,9 +1,9 @@
 import { DndContext, type DragEndEvent, useDraggable } from '@dnd-kit/core';
 import { cn } from '@oe/ui/utils/cn';
 import { Resizable } from 're-resizable';
-import { useBuilder } from '../builder-context';
-import type { CertificateElement } from '../types';
-import { ElementRenderer } from './element-renderer';
+import { useBuilder } from '../../builder-context';
+import type { CertificateElement } from '../../types';
+import { ElementRenderer } from '../renderer';
 import { Grid } from './grid';
 
 export const Preview = () => {

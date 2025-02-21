@@ -31,6 +31,7 @@ export default function LessonPage() {
   const handleError = () => {
     setHasErrors(true);
   };
+
   return (
     <FormWrapper
       id={COURSE_DETAIL_FORM_IDS.lesson}

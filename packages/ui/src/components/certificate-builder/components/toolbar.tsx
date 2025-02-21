@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Button } from '#shadcn/button';
 import { useBuilder } from '../builder-context';
 import type { CertificateElement } from '../types';
-import { ExportPDFButton } from './pdf-export';
+import { ExportPDFButton } from './pdf';
 
 // interface ToolbarProps {
 //   template: CertificateTemplate;
