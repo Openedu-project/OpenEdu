@@ -88,6 +88,7 @@ export const courseMessages = {
       minPlaylistLink: 'Playlist link must be at least {min} characters',
       invalidPlaylistLink: 'Invalid playlist link',
       language: 'Language is required',
+      questionNumber: 'There must be at least 1 question',
       invalidUrl: 'Invalid URL format',
       maxFileSize: 'File size must be less than {size}MB',
       supportedFormats: 'Supported formats: {formats}',
@@ -358,6 +359,7 @@ export const courseMessages = {
         numberOfQuestion: 'Number of question for each quiz',
         name: 'Name',
         description: 'Description',
+        quizType: 'Quiz Type',
       },
     },
 

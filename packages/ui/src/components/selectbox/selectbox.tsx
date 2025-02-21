@@ -32,11 +32,24 @@ export function Selectbox({
   displayValue,
 }: SelectboxProps) {
   const tGeneral = useTranslations('general');
+
+  const renderSelectedValue = () => {
+    if (!value) {
+      return null;
+    }
+
+    if (displayValue) {
+      return displayValue(value);
+    }
+
+    return options.find(option => option.value === value)?.label;
+  };
+
   return (
     <Select value={value} onValueChange={onChange} disabled={disabled}>
       <SelectTrigger className={className} hasIcon={hasIcon}>
         <SelectValue placeholder={placeholder ?? `${tGeneral('select')}...`} className={valueClassName}>
-          {value && displayValue ? displayValue(value) : options.find(option => option.value === value)?.label}
+          {renderSelectedValue()}
         </SelectValue>
       </SelectTrigger>
       <SelectContent>
