@@ -1,4 +1,4 @@
-import type { CertificateElement } from '../types';
+import type { CertificateElement } from '../../types';
 
 export const ElementRenderer = ({
   element,
@@ -25,20 +25,6 @@ export const ElementRenderer = ({
         </div>
       );
 
-    // case "datetime":
-    //   return (
-    //     <div
-    //       style={{
-    //         fontSize: element.fontSize,
-    //         color: element.color,
-    //         width: "100%",
-    //         height: "100%",
-    //       }}
-    //     >
-    //       {new Date().toLocaleDateString()}
-    //     </div>
-    //   );
-
     case 'image':
       return element.src ? (
         <img
@@ -55,23 +41,6 @@ export const ElementRenderer = ({
           <span className="text-gray-400">Image</span>
         </div>
       );
-
-    // case "signature":
-    //   return element.src ? (
-    //     <img
-    //       src={element.src}
-    //       alt=""
-    //       style={{
-    //         width: "100%",
-    //         height: "100%",
-    //         objectFit: "contain",
-    //       }}
-    //     />
-    //   ) : (
-    //     <div className="flex h-full w-full items-center justify-center border-2 border-gray-300 border-dashed">
-    //       <span className="text-gray-400">Signature</span>
-    //     </div>
-    //   );
 
     default:
       return null;

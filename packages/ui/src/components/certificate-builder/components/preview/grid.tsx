@@ -1,4 +1,4 @@
-import { useBuilder } from '../builder-context';
+import { useBuilder } from '../../builder-context';
 
 export const Grid = () => {
   const { showGrid, template } = useBuilder();

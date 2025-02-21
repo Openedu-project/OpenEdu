@@ -274,7 +274,7 @@ export function useLessonActions() {
       });
 
       const lessonIndex = activeLessons.findIndex(lesson => lesson.id === activeLesson.id);
-      const updatedLessons = [...activeLessons];
+      const updatedLessons = [...activeLessons] as ILesson[];
       updatedLessons.splice(lessonIndex + 1, 0, newLesson);
 
       await updateSegmentService(undefined, {

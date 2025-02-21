@@ -1,4 +1,4 @@
-import type { CertificateData, CertificateElement, CertificateTemplate } from '../types';
+import type { CertificateData, CertificateElement, CertificateTemplate } from '../../types';
 import { ElementRenderer } from './element-renderer';
 
 interface CertificateRendererProps {

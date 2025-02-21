@@ -2,7 +2,7 @@
 
 import { Document, Image, Page, Text, pdf } from '@react-pdf/renderer';
 import type { FC } from 'react';
-import type { CertificateData, CertificateTemplate } from '../types';
+import type { CertificateData, CertificateTemplate } from '../../types';
 import './pdf-fonts';
 import { Download } from 'lucide-react';
 import { Button, type ButtonProps } from '#shadcn/button';

@@ -1,9 +1,9 @@
 import { DndContext, type DragEndEvent, closestCenter } from '@dnd-kit/core';
 import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { EyeIcon, EyeOffIcon } from 'lucide-react';
-import { useBuilder } from '../builder-context';
-import type { CertificateElement } from '../types';
+import { EyeIcon, EyeOffIcon, GripVertical } from 'lucide-react';
+import { useBuilder } from '../../builder-context';
+import type { CertificateElement } from '../../types';
 
 export const LayerManager = () => {
   const { template, selectedElement, updateTemplate, selectElement } = useBuilder();
@@ -67,20 +67,8 @@ const SortableLayer = ({ element, isSelected, onSelect }: SortableLayerProps) =>
     >
       {/* Drag handle */}
       <div className="mr-2 cursor-move" {...attributes} {...listeners}>
-        ⋮⋮
+        <GripVertical className="h-4 w-4" />
       </div>
-
-      {/* Visibility toggle */}
-      <button
-        type="button"
-        onClick={e => {
-          e.stopPropagation();
-          updateElement(element.id, { visible: !element.visible });
-        }}
-        className="mr-2 text-gray-500 hover:text-gray-700"
-      >
-        {element.visible ? <EyeIcon className="w-4 h-4" /> : <EyeOffIcon className="w-4 h-4" />}
-      </button>
 
       {/* Clickable content */}
       <div
@@ -99,6 +87,18 @@ const SortableLayer = ({ element, isSelected, onSelect }: SortableLayerProps) =>
         <div className="text-sm font-medium">{element.type}</div>
         {element.type === 'text' && <div className="text-xs text-gray-500 truncate">{element.text}</div>}
       </div>
+
+      {/* Visibility toggle */}
+      <button
+        type="button"
+        onClick={e => {
+          e.stopPropagation();
+          updateElement(element.id, { visible: !element.visible });
+        }}
+        className="mr-2 text-gray-500 hover:text-gray-700"
+      >
+        {element.visible ? <EyeIcon className="w-4 h-4" /> : <EyeOffIcon className="w-4 h-4" />}
+      </button>
     </div>
   );
 };
