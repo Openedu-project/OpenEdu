@@ -1,20 +1,45 @@
 import { getLaunchpadsService } from '@oe/api/services/launchpad';
 import Icon from '@oe/assets/images/launchpad/icons/launchpad-list-icon.svg';
 import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { getTranslations } from 'next-intl/server';
 import { Link } from '#common/navigation';
 import { Image } from '#components/image';
 import { LaunchpadBackground } from './components';
-import { FeaturingSection, HeroSection, HowToSection, RecentLaunchpadSection, StepSection } from './sections';
+import { FeaturingSection, HowToSection, LaunchpadListSection, StepSection } from './sections';
 
 export default async function LaunchpadPage() {
-  const campains = await getLaunchpadsService(undefined, {
-    params: {
-      page: 1,
-      per_page: 12,
-      sort: 'create_at desc',
-      preloads: ['Owner', 'Investment'],
-    },
-  });
+  const [featuringCampaign, successCampaign, publicCampaigns, t] = await Promise.all([
+    getLaunchpadsService(undefined, {
+      params: {
+        page: 1,
+        per_page: 12,
+        sort: 'create_at desc',
+        preloads: ['Owner', 'Investment'],
+        status: 'funding',
+      },
+    }),
+    getLaunchpadsService(undefined, {
+      params: {
+        page: 1,
+        per_page: 8,
+        sort: 'create_at desc',
+        preloads: ['Owner', 'Investment'],
+        status: 'success',
+      },
+    }),
+    getLaunchpadsService(undefined, {
+      params: {
+        page: 1,
+        per_page: 8,
+        sort: 'create_at desc',
+        preloads: ['Owner', 'Investment'],
+        status: 'public',
+      },
+    }),
+    getTranslations('launchpadHomepage'),
+  ]);
+
+  console.log(publicCampaigns);
 
   return (
     <main className="relative">
@@ -25,12 +50,13 @@ export default async function LaunchpadPage() {
         </div>
       </Link>
       <div className="container z-1 mx-auto px-2 pb-24 sm:px-6 md:px-8 lg:px-10 xl:px-12">
-        <HeroSection />
+        {/* <HeroSection /> */}
 
         <div className="space-y-20">
-          <FeaturingSection campaigns={campains?.results} />
+          <FeaturingSection campaigns={featuringCampaign?.results} />
+          <LaunchpadListSection campaigns={publicCampaigns?.results} title={t('title.upcommingLaunchpad')} />
+          <LaunchpadListSection campaigns={successCampaign?.results} title={t('title.successfulLaunchpad')} />
           <StepSection />
-          <RecentLaunchpadSection campaigns={campains?.results} />
           <HowToSection />
         </div>
       </div>
