@@ -1,5 +1,9 @@
 export const launchpadHomepageMessage = {
   launchpadHomepage: {
+    title: {
+      upcommingLaunchpad: 'Upcoming Launchpad',
+      successfulLaunchpad: 'Successful Launchpad',
+    },
     heroSection: {
       tagline: 'Easily. Legally. Effectively.',
       title: 'Trusted Web3 Partner For Every Course Fund Raising',
@@ -41,7 +45,7 @@ export const launchpadHomepageMessage = {
     },
     recentLaunchpadSection: {
       title: 'Recent Launchpad',
-      noRecentLaunchpad: 'No recent launchpads available',
+      noRecentLaunchpad: 'No launchpads available',
     },
     howToSection: {
       title: 'How To Get Money From Pledging A Launchpad?',

@@ -1,7 +1,7 @@
 import FeaturingSection from './featuring-section';
 import HeroSection from './hero-section';
 import HowToSection from './how-to-section';
-import RecentLaunchpadSection from './recent-launchpad-section';
+import LaunchpadListSection from './launchpad-list-sections';
 import StepSection from './step-section';
 
-export { FeaturingSection, HeroSection, HowToSection, RecentLaunchpadSection, StepSection };
+export { FeaturingSection, HeroSection, HowToSection, LaunchpadListSection, StepSection };

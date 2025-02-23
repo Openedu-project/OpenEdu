@@ -3,9 +3,11 @@ import { Loader2 } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import { CampainCardCompact } from '../../components/campaign-card';
 
-const RecentLaunchpadSection = async ({
+const LaunchpadListSection = async ({
+  title,
   campaigns,
 }: {
+  title: string;
   campaigns: ILaunchpad[] | undefined;
 }) => {
   const t = await getTranslations('launchpadHomepage');
@@ -38,7 +40,7 @@ const RecentLaunchpadSection = async ({
   return (
     <div className="space-y-10">
       <div className="flex items-center justify-between">
-        <h2 className="font-semibold text-2xl leading-[125%]">{t('recentLaunchpadSection.title')}</h2>
+        <h2 className="font-semibold text-2xl leading-[125%]">{title}</h2>
         {/* <Button
           variant="outline"
           className="rounded-[12px] border-[2px] font-semibold text-neutral-600 text-sm"
@@ -52,4 +54,4 @@ const RecentLaunchpadSection = async ({
   );
 };
 
-export default RecentLaunchpadSection;
+export default LaunchpadListSection;
