@@ -6,7 +6,7 @@ import { CircleAlert } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '#common/navigation';
 import { FormWrapper } from '#components/form-wrapper';
-import { InputCurrency } from '#components/input-currency';
+import { InputNumber } from '#components/input-number';
 import { Spinner } from '#components/spinner';
 import { Button } from '#shadcn/button';
 import { FormFieldWithLabel } from '#shadcn/form';
@@ -53,13 +53,12 @@ const PledgeForm = ({
                 render={({ field }) => (
                   <div>
                     <div className="rounded-md border border-input">
-                      <InputCurrency
+                      <InputNumber
                         id={field.name}
                         {...field}
                         className="w-full border-none focus-visible:ring-0"
                         placeholder={t('minAmount')}
-                        decimalsLimit={1}
-                        allowNegativeValue={false}
+                        min={1}
                       />
                     </div>
                   </div>
