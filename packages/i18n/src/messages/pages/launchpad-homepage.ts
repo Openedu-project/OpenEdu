@@ -84,6 +84,30 @@ export const launchpadHomepageMessage = {
       ended: 'ended',
       noLaunchpads: 'No launchpads available at the moment',
     },
+    launchpadDialog: {
+      noCreator: {
+        title: 'You Are Not Creator Yet!',
+        desc: 'What you need to do to create a launchpad:',
+        list: {
+          listOne: 'Become OpenEdu Creator',
+          listTwo: 'Create a course and not publish yet',
+          listThree: 'Make a launchpad for that course',
+          listFour: 'Deposit 1 ETH to send request for launchpad publishing approval',
+        },
+        btnRegister: 'Register To Become Creator',
+      },
+      noCourse: {
+        title: 'You Have No Course Yet!',
+        desc: 'You need a course including at least 4 sections (at least 1 lesson included for each section) to make launchpad! Please create new course before making new launchpad!',
+        btnCreate: 'Create New Course',
+        btnCancel: 'Cancel',
+      },
+      selectCourse: {
+        title: 'Select From Course List',
+        desc: 'Notice: All course include 4 sections at least.',
+        btnMake: 'Make Launchpad',
+      },
+    },
   },
   myLaunchpadList: {
     title: 'My Launchpad List',
