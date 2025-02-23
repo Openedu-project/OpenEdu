@@ -19,7 +19,7 @@ const Logo = ({ logo }: { logo?: FileType }) => {
       activeClassName="border-0"
     >
       <Image
-        src={logo?.url ?? mobile ? OpeneduLogoMobile?.src : OpeneduLogo?.src}
+        src={logo?.url ? logo?.url : (mobile ? OpeneduLogoMobile?.src : OpeneduLogo?.src)}
         alt="OpenEdu"
         width={logo?.width ?? mobile ? 57 : 172}
         height={logo?.height ?? 40}
