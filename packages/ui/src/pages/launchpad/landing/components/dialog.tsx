@@ -11,9 +11,9 @@ async function LaunchpadDialog() {
   const partnerRoles = dataMe?.roles?.filter(role => role.role_id === 'partner') || [];
   const isPartner = partnerRoles.length > 0;
 
-  let dataCouses: ICourseResponse | undefined;
+  let dataCourses: ICourseResponse | undefined;
   if (isPartner) {
-    dataCouses = await getCoursesService(undefined, {
+    dataCourses = await getCoursesService(undefined, {
       params: {
         page: 1,
         has_launchpad: false,
@@ -31,8 +31,7 @@ async function LaunchpadDialog() {
       <DialogTrigger className="w-full rounded-[12px] bg-primary px-4 py-3 font-semibold text-[16px] text-sm text-white leading-tight hover:bg-primary/90 sm:w-auto sm:px-5 sm:text-base md:px-8">
         {t('createLaunchpad')}
       </DialogTrigger>
-
-      <LaunchpadDialogContent dataCouses={dataCouses} isPartner={isPartner} />
+      <LaunchpadDialogContent dataCourses={dataCourses} isPartner={isPartner} />
     </Dialog>
   );
 }

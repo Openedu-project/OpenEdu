@@ -2,6 +2,7 @@
 
 import type { ILaunchpad } from '@oe/api/types/launchpad';
 import DefaultImg from '@oe/assets/images/defaultimage.png';
+import { formatDate } from '@oe/core/utils/datetime';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '#common/navigation';
 import { Image } from '#components/image';
@@ -35,7 +36,7 @@ const CampaignCardCompact = ({ campaign }: { campaign: ILaunchpad }) => {
           src={campaign.thumbnail?.url || DefaultImg.src}
           alt="campaign card compact"
           fill
-          className="h-full w-full"
+          className="h-full w-full aspect-video"
           containerHeight={124}
         />
       </button>
@@ -55,19 +56,41 @@ const CampaignCardCompact = ({ campaign }: { campaign: ILaunchpad }) => {
           </button>
           {/* <HeartIcon className="cursor-pointer" /> */}
         </div>
-        <Progress value={progress.percentage} className="h-1" />
+        {campaign.status === 'publish' ? (
+          <>
+            <p className="font-normal text-base">
+              {t('common.createBy')}
+              <span className="font-semibold">{campaign.owner?.display_name}</span>
+            </p>
+            <p className="font-normal text-base">
+              {t('common.createAt')}
+              <span className="font-semibold">{formatDate(campaign.create_at)}</span>
+            </p>
+          </>
+        ) : (
+          <>
+            <Progress value={progress.percentage} className="h-1" />
+            <div className="flex items-start justify-between gap-2">
+              <p className="text-base">
+                <span className="font-semibold">{formatCurrency(Number(campaign.total_amount))} USDT</span> funded
+              </p>
 
-        <div className="flex items-start justify-between gap-2">
-          <p className="text-base">
-            <span className="font-semibold">{formatCurrency(Number(campaign.total_amount))} USDT</span> funded
+              <span className="font-semibold text-base text-primary">{progress.displayText}</span>
+            </div>
+          </>
+        )}
+
+        {campaign.status === 'success' ? (
+          <p className="text-base text-green-500 capitalize">
+            <span className="font-semibold">Success</span>
           </p>
-
-          <span className="font-semibold text-base text-primary">{progress.displayText}</span>
-        </div>
-
-        <p className="text-base">
-          <span className="font-semibold">{timeText}</span>
-        </p>
+        ) : campaign.status === 'publish' ? (
+          <></>
+        ) : (
+          <p className="text-base capitalize">
+            <span className="font-semibold">{timeText}</span>
+          </p>
+        )}
       </div>
     </div>
   );
