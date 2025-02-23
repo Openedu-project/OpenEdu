@@ -10,7 +10,7 @@ const StepSection = async () => {
   const stepData = launchpadStepData(t);
 
   return (
-    <section className="min-h-screen">
+    <section>
       <div className="mx-auto max-w-[720px] space-y-6 text-center">
         <H2Text>{t('stepSection.title')}</H2Text>
         <DescText>
