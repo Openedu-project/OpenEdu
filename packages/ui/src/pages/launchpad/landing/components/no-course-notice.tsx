@@ -1,4 +1,4 @@
-import WhaleNotFound from '@oe/assets/images/whale-not-found.png';
+import WhaleNotFound from '@oe/assets/images/whale-no-data.png';
 import { Root as VisuallyHiddenRoot } from '@radix-ui/react-visually-hidden';
 import { useTranslations } from 'next-intl';
 import { Link } from '#common/navigation';
