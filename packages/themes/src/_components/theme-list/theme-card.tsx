@@ -1,33 +1,67 @@
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import { ADMIN_ROUTES } from '@oe/core/utils/routes';
-import type { ThemeName } from '@oe/themes/types/theme-page/index';
-import { Link } from '@oe/ui/common/navigation';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { Button } from '@oe/ui/shadcn/button';
-import { Card, CardContent } from '@oe/ui/shadcn/card';
-import { cn } from '@oe/ui/utils/cn';
-import { useTranslations } from 'next-intl';
+import { createAPIUrl } from "@oe/api/utils/fetch";
+import { ADMIN_ROUTES } from "@oe/core/utils/routes";
+import type { ThemeName } from "@oe/themes/types/theme-page/index";
+import { Link } from "@oe/ui/common/navigation";
+import { Badge } from "@oe/ui/shadcn/badge";
+import { Button } from "@oe/ui/shadcn/button";
+import { Card, CardContent } from "@oe/ui/shadcn/card";
+import { cn } from "@oe/ui/utils/cn";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
 
 interface ThemeCardProps {
   name: ThemeName;
   isSelected: boolean;
+  added?: boolean;
   onSelect?: (theme: ThemeName) => void;
+  variant: "template" | "my-theme";
 }
 
-export const ThemeCard = ({ name, isSelected, onSelect }: ThemeCardProps) => {
-  const t = useTranslations('themeList');
+export const ThemeCard = ({
+  name,
+  isSelected,
+  onSelect,
+  added,
+  variant = "my-theme",
+}: ThemeCardProps) => {
+  const t = useTranslations("themeList");
+  const [currentSelected, setCurrentSelected] = useState(isSelected ?? false);
+  const displayName = name.replace(/([A-Z])/g, " $1").trim(); // Add spaces before capital letters
 
-  const displayName = name.replace(/([A-Z])/g, ' $1').trim(); // Add spaces before capital letters
+  const handleClick = useCallback(() => {
+    if (!added) {
+      onSelect?.(name);
+    }
+  }, [added, name, onSelect]);
 
+  const editUrl = useMemo(() => 
+    createAPIUrl({
+      endpoint: ADMIN_ROUTES.themeConfig,
+      params: {
+        themeName: name,
+        themeConfig: 'pages',
+        groupSettingKey: undefined,
+        itemSettingKey: undefined,
+      },
+      checkEmptyParams: true,
+    }),
+    [name]
+  );
   return (
     <Card
       className={cn(
-        'group relative cursor-pointer overflow-hidden transition-all',
-        'hover:ring-2 hover:ring-primary',
-        isSelected && 'ring-2 ring-primary',
-        'h-[400px] w-[300px]'
+        "group relative cursor-pointer overflow-hidden transition-all",
+        "hover:ring-2 hover:ring-primary",
+        isSelected && "ring-2 ring-primary",
+        "h-[400px] w-[300px]",
+        added && "cursor-not-allowed"
       )}
-      onClick={() => onSelect?.(name)}
+      onClick={() => {
+        if (!added) {
+          onSelect?.(name);
+          setCurrentSelected(true);
+        }
+      }}
     >
       <CardContent className="p-0">
         {/* Preview Image */}
@@ -40,23 +74,33 @@ export const ThemeCard = ({ name, isSelected, onSelect }: ThemeCardProps) => {
 
         {/* Overlay for selected state */}
         <div className="absolute inset-0 flex items-center justify-center hover:bg-primary/10">
-          {isSelected && <Badge className="absolute top-4 right-4">{t('selected')}</Badge>}
-          <Button variant="outline" className="hover:bg-primary">
-            <Link
-              href={createAPIUrl({
-                endpoint: ADMIN_ROUTES.themeConfig,
-                params: {
-                  themeName: name,
-                  themeConfig: 'pages',
-                  groupSettingKey: undefined,
-                  itemSettingKey: undefined,
-                },
-                checkEmptyParams: true,
-              })}
-              className="hover:text-white hover:no-underline"
-            >
-              {t('edit')}
-            </Link>
+          {currentSelected && (
+            <Badge className="absolute top-4 right-4">{t("selected")}</Badge>
+          )}
+          <Button
+            variant="outline"
+            className="hover:bg-primary"
+            disabled={variant === "template" && added}
+          >
+            {variant === "my-theme" ? (
+              <Link
+                href={createAPIUrl({
+                  endpoint: ADMIN_ROUTES.themeConfig,
+                  params: {
+                    themeName: name,
+                    themeConfig: "pages",
+                    groupSettingKey: undefined,
+                    itemSettingKey: undefined,
+                  },
+                  checkEmptyParams: true,
+                })}
+                className="hover:text-white hover:no-underline"
+              >
+                {t("edit")}
+              </Link>
+            ) : (
+              "Added"
+            )}
           </Button>
         </div>
       </CardContent>
