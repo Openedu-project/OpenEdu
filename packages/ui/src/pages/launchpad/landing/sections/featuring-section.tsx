@@ -47,7 +47,7 @@ const FeaturingSection = ({
   };
 
   return (
-    <section className="z-10 min-h-screen space-y-3 px-1 pt-5 md:pt-8">
+    <section className="z-10 space-y-3 px-1 pt-5 md:pt-8">
       <div className="flex items-center justify-between">
         <h2 className="font-semibold text-2xl leading-[125%]">{t('featuringSection.title')}</h2>
         {/* TODO: Temporarily hidden - Will be implemented later
