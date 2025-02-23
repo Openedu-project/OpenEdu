@@ -1,15 +1,10 @@
-import WhaleNotFound from '@oe/assets/images/whale-not-found.png';
+import WhaleNotFound from '@oe/assets/images/whale-no-data.png';
 import { Root as VisuallyHiddenRoot } from '@radix-ui/react-visually-hidden';
 import { useTranslations } from 'next-intl';
 import { Link } from '#common/navigation';
-import { Button } from '#shadcn/button';
 import { DialogContent, DialogTitle } from '#shadcn/dialog';
 
-const NoCourseNotice = ({
-  setIsOpen,
-}: {
-  setIsOpen: (isOpen: boolean) => void;
-}) => {
+const NoCourseNotice = () => {
   const t = useTranslations('launchpadHomepage.launchpadDialog.noCourse');
 
   return (
@@ -32,13 +27,6 @@ const NoCourseNotice = ({
           >
             {t('btnCreate')}
           </Link>
-          <Button
-            variant="outline"
-            className="block h-fit w-full rounded-lg border border-primary py-4 text-center font-inter font-semibold text-[16px] text-primary leading-[125%]"
-            onClick={() => setIsOpen(false)}
-          >
-            {t('btnCancel')}
-          </Button>
         </div>
       </div>
     </DialogContent>

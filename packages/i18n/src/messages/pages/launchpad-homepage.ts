@@ -24,7 +24,7 @@ export const launchpadHomepageMessage = {
           descOne: 'Become OpenEdu Creator',
           descTwo: 'Create a course and not publish yet',
           descThree: 'Make a launchpad for that course',
-          descFour: 'Deposit 1 NEAR to send request for publishing approval',
+          descFour: 'Deposit 1 ETH to send request for publishing approval',
         },
         stepTwo: {
           title: 'Get Backer Pledging',
