@@ -62,7 +62,7 @@ const CampainCardFull = ({ campaign }: { campaign: ILaunchpad }) => {
         </p>
         <p className="font-normal text-base">
           {t('common.createAt')}
-          <span className="font-semibold"> {formatDate(campaign.create_at)}</span>
+          <span className="font-semibold">{formatDate(campaign.create_at)}</span>
         </p>
       </div>
       <Progress value={progress.percentage} className="h-2" />
@@ -74,7 +74,7 @@ const CampainCardFull = ({ campaign }: { campaign: ILaunchpad }) => {
           {t('common.funded')}
         </p>
         <p>
-          <span className="font-semibold">{timeText}</span>
+          <span className="font-semibold capitalize">{timeText}</span>
         </p>
       </div>
     </div>

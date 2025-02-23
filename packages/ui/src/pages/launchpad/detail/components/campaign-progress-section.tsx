@@ -71,9 +71,19 @@ const CampaignProgressSection = async ({
               <span className="font-semibold text-2xl">{campaign?.total_backers || 0}</span>
               {t('common.backers')}
             </p>
-            <p className="text-base">
-              <span className="font-semibold text-base">{timeText}</span>
-            </p>
+            {campaign?.status === 'success' ? (
+              <p className="text-base text-green-500 capitalize">
+                <span className="font-semibold">Success</span>
+              </p>
+            ) : campaign?.status === 'publish' ? (
+              <p className="text-base text-yellow-500 capitalize">
+                <span className="font-semibold">Upcomming</span>
+              </p>
+            ) : (
+              <p className="text-base capitalize">
+                <span className="font-semibold">{timeText}</span>
+              </p>
+            )}
           </div>
           <CircularProgress value={progress.percentage} />
         </div>

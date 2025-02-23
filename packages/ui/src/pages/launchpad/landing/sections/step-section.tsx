@@ -1,11 +1,12 @@
+import { isLogin } from '@oe/api/utils/auth';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '#common/navigation';
-import { DescText, H2Text } from '../components';
+import { DescText, H2Text, LaunchpadDialog } from '../components';
 import StepCard from '../components/step-card';
 import { launchpadStepData } from '../lib/render-data';
 
 const StepSection = async () => {
-  const t = await getTranslations('launchpadHomepage');
+  const [t, isLoggedIn] = await Promise.all([getTranslations('launchpadHomepage'), isLogin()]);
   const stepData = launchpadStepData(t);
 
   return (
@@ -18,6 +19,9 @@ const StepSection = async () => {
             {t('stepSection.terms')}
           </Link>
         </DescText>
+      </div>
+      <div className="mt-10 flex flex-col items-center justify-center gap-5 sm:flex-row sm:gap-8">
+        {isLoggedIn && <LaunchpadDialog />}
       </div>
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {stepData.map(step => (

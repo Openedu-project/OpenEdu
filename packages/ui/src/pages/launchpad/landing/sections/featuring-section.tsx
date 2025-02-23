@@ -30,7 +30,7 @@ const FeaturingSection = ({
     const horizontalCardsCount = Math.min(2, campaigns.length - 1);
 
     return (
-      <div className="flex flex-col items-start gap-4 md:flex-row">
+      <div className="flex flex-col items-center gap-4 md:flex-row">
         <div className="w-full md:w-1/2">{campaigns[0] && <CampainCardFull campaign={campaigns[0]} />}</div>
 
         {horizontalCardsCount > 0 && (

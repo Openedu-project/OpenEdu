@@ -5,13 +5,21 @@ import NotCreator from './no-creator-notice';
 import SelectCreateCourse from './select-create-course';
 
 const LaunchpadDialogContent = ({
-  dataCouses,
+  dataCourses,
   isPartner,
 }: {
-  dataCouses: ICourseResponse | undefined;
+  dataCourses: ICourseResponse | undefined;
   isPartner: boolean;
 }) => {
-  return <>{isPartner ? <SelectCreateCourse dataCouses={dataCouses?.results || null} /> : <NotCreator />}</>;
+  if (!isPartner) {
+    return <NotCreator />;
+  }
+
+  if (dataCourses?.results.length === 0) {
+    return <NotCreator />;
+  }
+
+  return <SelectCreateCourse dataCouses={dataCourses?.results || null} />;
 };
 
 export default LaunchpadDialogContent;

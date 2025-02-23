@@ -8,7 +8,7 @@ import { LaunchpadBackground } from './components';
 import { FeaturingSection, HowToSection, LaunchpadListSection, StepSection } from './sections';
 
 export default async function LaunchpadPage() {
-  const [featuringCampaign, successCampaign, publicCampaigns, t] = await Promise.all([
+  const [featuringCampaign, successCampaign, publishCampaigns, t] = await Promise.all([
     getLaunchpadsService(undefined, {
       params: {
         page: 1,
@@ -33,13 +33,11 @@ export default async function LaunchpadPage() {
         per_page: 8,
         sort: 'create_at desc',
         preloads: ['Owner', 'Investment'],
-        status: 'public',
+        status: 'publish',
       },
     }),
     getTranslations('launchpadHomepage'),
   ]);
-
-  console.log(publicCampaigns);
 
   return (
     <main className="relative">
@@ -54,7 +52,7 @@ export default async function LaunchpadPage() {
 
         <div className="space-y-20">
           <FeaturingSection campaigns={featuringCampaign?.results} />
-          <LaunchpadListSection campaigns={publicCampaigns?.results} title={t('title.upcommingLaunchpad')} />
+          <LaunchpadListSection campaigns={publishCampaigns?.results} title={t('title.upcommingLaunchpad')} />
           <LaunchpadListSection campaigns={successCampaign?.results} title={t('title.successfulLaunchpad')} />
           <StepSection />
           <HowToSection />
