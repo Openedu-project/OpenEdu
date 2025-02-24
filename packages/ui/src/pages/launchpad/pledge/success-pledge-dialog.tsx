@@ -34,7 +34,7 @@ const SuccessDialog = ({
               {t('btnGoToLaunchpad')}
             </Link>
             <Link
-              href="/launchpad/list"
+              href="/launchpad/my-launchpad"
               variant="outline"
               className="block h-fit w-full rounded-lg border border-primary py-4 text-center font-inter font-semibold text-[16px] text-primary leading-[125%]"
             >
