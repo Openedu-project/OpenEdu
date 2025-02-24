@@ -55,14 +55,14 @@ const DepositModal = () => {
       <DialogContent className="h-fit">
         <DialogHeader>
           <DialogTitle>{tModal('title')}</DialogTitle>
-          <NoticeBlock content={<div className="text-center">{tLaunchpad('paymentMethod.depositAlert')}</div>} />
+          <NoticeBlock content={<div className="text-center">{tLaunchpad('paymentMethod.depositAlertForETH')}</div>} />
         </DialogHeader>
 
         <div className="grid gap-4 py-4">
           <div className="w-full">
             <h2 className="font-semibold text-base">{tModal('network')}</h2>
             <span className="flex items-center space-x-2 rounded-lg border border-neutral-100 p-4 text-neutral-900">
-              <p className="uppercase">{CHAIN.NEAR ?? ''}</p>
+              <p className="uppercase">{CHAIN.ETHEREUM ?? ''}</p>
             </span>
           </div>
           <div>

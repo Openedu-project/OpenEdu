@@ -240,7 +240,10 @@ export const adminLaunchpadMessages = {
       depositModal: {
         promptBefore: 'Please',
         promptAfter: '{amount} NEAR to proceed the launchpad publishing!',
+        promptAfterForETH: '{amount} ETH to proceed the launchpad publishing!',
       },
+      depositAlertForETH: 'Please deposit 0.1 ETH to proceed the launchpad publishing!',
+      depositSuccessForETH: 'Deposit 0.1 ETH is done! You are free to publish!',
       depositModalDialog: {
         title: 'Deposit',
         network: 'Network',
