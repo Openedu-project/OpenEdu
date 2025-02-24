@@ -1,4 +1,4 @@
-import type { IAIModel, IAIStatus, IMessage, TAgentType } from '@oe/api/types/conversation';
+import type { IAIModel, IAIStatus, IMessage, ISourceProps, TAgentType } from '@oe/api/types/conversation';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { create } from 'zustand';
 interface IConversationStore {
@@ -15,12 +15,12 @@ interface IConversationStore {
   setSelectedModel: (value: IAIModel) => void;
   resetStatus: () => void;
   genMessage?: IMessage;
-  setGenMessage: (value: IMessage, callback?: () => void, shortenedIndex?: number) => void;
-  resetGenMessage: () => void;
+  setGenMessage: (value: IMessage, callback?: () => void, reset?: boolean, shortenedIndex?: number) => void;
   selectedAgent: TAgentType;
   setSelectedAgent: (agent: TAgentType) => void;
-  openWebSource: boolean;
-  setOpenWebSource: (openWebSource: boolean) => void;
+  openWebSource: { messageId: string; isOpen: boolean; sourceList?: ISourceProps[] };
+  setOpenWebSource: (openWebSource: { messageId: string; isOpen: boolean; sourceList?: ISourceProps[] }) => void;
+  resetOpenWebSource: () => void;
 }
 
 export const useConversationStore = create<IConversationStore>(set => {
@@ -53,26 +53,9 @@ export const useConversationStore = create<IConversationStore>(set => {
       }),
     addMessage: (messageData: IMessage, callback?: () => void) =>
       set(state => {
-        let add = false;
-
-        let newMessages = state.messages.map(message => {
-          if (message.id === messageData.id) {
-            add = true;
-            return {
-              ...message,
-              ...messageData,
-              content: message.content + messageData.content,
-            };
-          }
-          return message;
-        });
-
-        if (!add) {
-          newMessages = [...state.messages, messageData];
-        }
         callback?.();
         return {
-          messages: newMessages,
+          messages: [...state.messages, messageData],
         };
       }),
     resetMessages: () => set({ messages: [] }),
@@ -87,14 +70,20 @@ export const useConversationStore = create<IConversationStore>(set => {
 
     setSelectedModel: (selectedModel: IAIModel) =>
       set(() => {
-        return { selectedModel, selectedAgent: 'ai_chat' };
+        return { selectedModel, selectedAgent: 'ai_search' };
       }),
 
     resetStatus: () => set({ status: undefined }),
 
-    setGenMessage: (data: IMessage, callback?: () => void, shortenedIndex?: number) => {
+    setGenMessage: (data: IMessage, callback?: () => void, reset?: boolean, shortenedIndex?: number) => {
       set(state => {
-        const newMessages = { ...data, content: (state.genMessage?.content ?? '') + data?.content };
+        const newMessages = reset
+          ? data
+          : {
+              ...data,
+              props: data.props ?? state.genMessage?.props,
+              content: (state.genMessage?.content ?? '') + data?.content,
+            };
         callback?.();
 
         if (!GENERATING_STATUS.includes(data?.status ?? '')) {
@@ -109,16 +98,16 @@ export const useConversationStore = create<IConversationStore>(set => {
         };
       });
     },
-    resetGenMessage: () => set({ genMessage: undefined }),
-    selectedAgent: 'ai_chat',
+    selectedAgent: 'ai_search',
     setSelectedAgent: (selectedAgent: TAgentType) =>
       set(() => {
         return { selectedAgent };
       }),
-    openWebSource: false,
-    setOpenWebSource: (openWebSource: boolean) =>
+    openWebSource: { messageId: '', isOpen: false, sourceList: undefined },
+    setOpenWebSource: (openWebSource: { messageId: string; isOpen: boolean; sourceList?: ISourceProps[] }) =>
       set(() => {
         return { openWebSource };
       }),
+    resetOpenWebSource: () => set({ openWebSource: { messageId: '', isOpen: false, sourceList: [] } }),
   };
 });

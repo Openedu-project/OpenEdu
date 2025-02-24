@@ -29,7 +29,7 @@ export const InputWithAgent = <TFormValues extends FieldValues>({
             type="button"
             size="icon"
             className="!p-2 h-8 w-8"
-            onClick={() => setInputType?.('ai_chat')}
+            onClick={() => setInputType?.('ai_search')}
           >
             <CircleX className="h-4 w-4" />
           </Button>

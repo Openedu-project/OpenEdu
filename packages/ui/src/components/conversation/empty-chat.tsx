@@ -2,7 +2,7 @@ import AIBg from '@oe/assets/images/ai-bg.png';
 import { useTranslations } from 'next-intl';
 import { Image } from '#components/image';
 
-export function EmptyChat() {
+export default function EmptyChat() {
   const tAI = useTranslations('aiAssistant');
 
   return (

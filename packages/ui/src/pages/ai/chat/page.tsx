@@ -2,7 +2,7 @@ import { getConversationDetail } from '@oe/api/services/conversation';
 import { isLogin } from '@oe/api/utils/auth';
 import { AI_ROUTES, AUTH_ROUTES } from '@oe/core/utils/routes';
 import { redirect } from 'next/navigation';
-import { ChatWindow } from '#components/conversation';
+import { ChatWithSource } from '#components/conversation';
 
 const getChatMessages = async (id?: string) => {
   if (!id) {
@@ -29,5 +29,5 @@ const getChatMessages = async (id?: string) => {
 
 export default async function AIChatPage({ id }: { id?: string }) {
   const chatData = await getChatMessages(id);
-  return <ChatWindow id={id} initData={chatData} className="max-w-3xl" />;
+  return <ChatWithSource id={id} initData={chatData} />;
 }

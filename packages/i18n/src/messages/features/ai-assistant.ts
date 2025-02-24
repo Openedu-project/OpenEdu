@@ -30,6 +30,7 @@ export const aiAssistantMessages = {
     aiModel: 'AI Model',
     sources: {
       title: 'Web Sources',
+      nodata: 'No Source Was Found',
     },
   },
 };

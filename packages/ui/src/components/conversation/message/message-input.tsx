@@ -231,7 +231,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
           <Card
             className={cn(
               'relative flex flex-row items-center space-x-2 rounded-full border border-primary bg-background p-2 pl-4',
-              selectedAgent === 'ai_chat' && 'pl-8',
+              selectedAgent === 'ai_search' && 'pl-8',
               className
             )}
             onClick={() => {

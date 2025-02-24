@@ -13,10 +13,13 @@ import LikeButton from '../message-actions/like';
 import Rewrite from '../message-actions/rewrite';
 import type { IAIMessageProps } from '../type';
 import '../highlight.css';
+import { Button } from '#shadcn/button';
+import { useConversationStore } from '#store/conversation-store';
 
 export const AIMessage = ({ message, loading, rewrite }: IAIMessageProps) => {
   const html = useMemo(() => marked.parse(message.content), [message.content]);
   const contentRef = useRef<HTMLDivElement>(null);
+  const { setOpenWebSource, openWebSource } = useConversationStore();
 
   return (
     <div className="flex flex-col space-y-9 lg:flex-row lg:justify-between lg:space-x-9 lg:space-y-0">
@@ -38,6 +41,21 @@ export const AIMessage = ({ message, loading, rewrite }: IAIMessageProps) => {
 
             <p className="mcaption-semibold14 text-test">{message?.ai_model?.display_name ?? 'AI Assistant'}</p>
           </div>
+          {(message.props?.source_results?.length ?? 0) > 0 && (
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => {
+                setOpenWebSource({
+                  messageId: message.id,
+                  isOpen: openWebSource?.messageId === message.id ? !openWebSource.isOpen : true,
+                  sourceList: message.props?.source_results,
+                });
+              }}
+            >
+              Sources
+            </Button>
+          )}
           {GENERATING_STATUS.includes(message.status ?? '') && message.content.length === 0 ? (
             <div className="flex w-12 items-end">
               <Image

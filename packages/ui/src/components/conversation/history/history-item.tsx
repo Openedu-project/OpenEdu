@@ -58,7 +58,7 @@ export default function AIHistoryItem({ className, item, mutate, pageIndex, acti
   const tError = useTranslations('errors');
 
   const [isEdit, setIsEdit] = useState(false);
-  const { setIsNewChat, resetGenMessage, resetStatus } = useConversationStore();
+  const { setIsNewChat, resetStatus } = useConversationStore();
   const router = useRouter();
   const handleEdit = async ({ messageInput }: ISendMessageParams) => {
     await updateConversationTitle(undefined, item.id, {
@@ -142,7 +142,6 @@ export default function AIHistoryItem({ className, item, mutate, pageIndex, acti
           })}
           onClick={() => {
             setIsNewChat(false);
-            resetGenMessage();
             resetStatus();
           }}
         >

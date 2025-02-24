@@ -1,9 +1,8 @@
 'use client';
-import { useEffect } from 'react';
-
 import type { IMessageData } from '@oe/api/types/conversation';
 import type { EventData, ISocketRes } from '@oe/api/types/socket';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
+import { useEffect } from 'react';
 import { useCallback } from 'react';
 import useWebSocket from 'react-use-websocket';
 import { useConversationStore } from '#store/conversation-store';
@@ -20,7 +19,7 @@ export const useSocket = (isAuthenticated: boolean) => {
   const { setSocketData } = useSocketStore();
   const { genMessage, setGenMessage, setStatus, status } = useConversationStore();
 
-  const handleAIConversation = useAIConversationHandler(status ?? '', genMessage?.id);
+  const handleAIConversation = useAIConversationHandler(status, genMessage?.id);
   const { shouldReconnect, reconnectInterval } = useReconnection(isAuthenticated, accessToken);
 
   const handleMessage = useCallback(
@@ -39,6 +38,7 @@ export const useSocket = (isAuthenticated: boolean) => {
 
         if (parsedData.event === 'ai_conversation') {
           const { data } = parsedData as ISocketRes<IMessageData>;
+
           const newMessage = handleAIConversation(data);
 
           if (newMessage) {

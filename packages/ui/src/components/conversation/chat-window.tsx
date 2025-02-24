@@ -9,6 +9,7 @@ import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { AI_ROUTES } from '@oe/core/utils/routes';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
+import dynamic from 'next/dynamic';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef } from 'react';
 import { useRouter } from '#common/navigation';
@@ -16,11 +17,12 @@ import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { ChatWithMessage } from './chat';
 import { AGENT_OPTIONS } from './constants';
-import { EmptyChat } from './empty-chat';
 import MessageInput from './message/message-input';
 import type { IChatWindowProps, ISendMessageParams } from './type';
 
-export function ChatWindow({ id, initData, agent = 'ai_chat', className }: IChatWindowProps) {
+const EmptyChat = dynamic(() => import('./empty-chat'), { ssr: false });
+
+export function ChatWindow({ id, initData, agent = 'ai_search', className }: IChatWindowProps) {
   const tError = useTranslations('errors');
   const searchParams = useSearchParams();
 
@@ -37,8 +39,8 @@ export function ChatWindow({ id, initData, agent = 'ai_chat', className }: IChat
     resetStatus,
     selectedModel,
     setGenMessage,
-    resetGenMessage,
     setSelectedAgent,
+    resetOpenWebSource,
   } = useConversationStore();
 
   const router = useRouter();
@@ -70,8 +72,10 @@ export function ChatWindow({ id, initData, agent = 'ai_chat', className }: IChat
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
+    resetOpenWebSource();
+
     if (!isNewChat) {
-      setSelectedAgent((defaultAgent as TAgentType) ?? 'ai_chat');
+      setSelectedAgent((defaultAgent as TAgentType) ?? 'ai_search');
     }
 
     if (id && prevId.current === id) {
@@ -81,7 +85,6 @@ export function ChatWindow({ id, initData, agent = 'ai_chat', className }: IChat
     if (!id) {
       resetMessages();
       resetStatus();
-      resetGenMessage();
       setIsNewChat(false);
       return;
     }
@@ -101,7 +104,7 @@ export function ChatWindow({ id, initData, agent = 'ai_chat', className }: IChat
   const messageType = useMemo(
     () =>
       [
-        'ai_chat',
+        'ai_search',
         ...Object.entries(AGENT_OPTIONS)
           .filter(([key]) => selectedModel?.configs[key as keyof IAgenConfigs])
           .map(([_, value]) => value),
@@ -111,7 +114,7 @@ export function ChatWindow({ id, initData, agent = 'ai_chat', className }: IChat
 
   const sendMessage = async ({ messageInput = '', type, images, message_id, role, status }: ISendMessageParams) => {
     const messageID = message_id ?? `id_${Date.now()}`;
-
+    resetOpenWebSource();
     const prevMessage = messages;
 
     const newMessage: IMessage = {
@@ -126,6 +129,7 @@ export function ChatWindow({ id, initData, agent = 'ai_chat', className }: IChat
       is_ai: true,
       ai_agent_type: type,
       sender: { role: role ?? 'user' },
+      props: null,
     };
 
     const index = messages?.findIndex(msg => msg.id === message_id) ?? -1;
@@ -140,6 +144,7 @@ export function ChatWindow({ id, initData, agent = 'ai_chat', className }: IChat
         () => {
           setStatus('pending');
         },
+        true,
         index
       );
     } else {
@@ -160,7 +165,7 @@ export function ChatWindow({ id, initData, agent = 'ai_chat', className }: IChat
         message_id,
       });
 
-      setGenMessage(data.messages?.at(-1) as IMessage);
+      setGenMessage(data.messages?.at(-1) as IMessage, undefined, true);
 
       if (messageID.includes('id_')) {
         updateMessages(data.messages?.at(0) as IMessage, undefined, undefined, messageID);
@@ -177,7 +182,6 @@ export function ChatWindow({ id, initData, agent = 'ai_chat', className }: IChat
     } catch (error) {
       setStatus('failed');
       setMessages(prevMessage);
-      resetGenMessage();
       console.error(error);
       toast.error(tError((error as HTTPError).message));
       if ((error as HTTPError).message.toString() === '32002') {

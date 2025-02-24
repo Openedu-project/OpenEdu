@@ -31,7 +31,7 @@ export const InputField = <TFormValues extends FieldValues>({
         />
       );
     }
-    case 'ai_chat': {
+    case 'ai_search': {
       return <InputDefault inputRef={inputRef} handleKeyDown={handleKeyDown} handleInputChange={handleInputChange} />;
     }
     default: {

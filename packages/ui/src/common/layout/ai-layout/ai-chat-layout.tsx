@@ -31,7 +31,7 @@ export default async function AIChatLayout({ children, className }: Props) {
     >
       <div className="flex grow flex-col gap-4 p-4">
         <div className="flex flex-wrap justify-between gap-2">
-          {AIChatModels?.length > 0 && <AIModelDropdown AIModels={AIChatModels} isLogin={login} />}
+          {AIChatModels && AIChatModels?.length > 0 && <AIModelDropdown AIModels={AIChatModels} isLogin={login} />}
           <Link variant="default" className="hover:no-underline" activeClassName="" href={AI_ROUTES.chat}>
             <Plus size={16} />
             <span className="ml-2 hidden md:block">{tAI('startNewChat')}</span>

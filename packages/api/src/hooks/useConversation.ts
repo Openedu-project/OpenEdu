@@ -1,7 +1,7 @@
 import type { HTTPResponse } from '@oe/api/types/fetch';
 import useSWR from 'swr';
 import useSWRInfinite from 'swr/infinite';
-import { getConversationDetail } from '#services/conversation';
+import { getConversationDetail, getMessageData } from '#services/conversation';
 import type { IChatHistoryResponse, IConversationDetails } from '#types/conversation';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl, fetchAPI } from '#utils/fetch';
@@ -80,5 +80,23 @@ export function useGetListConversation(params: Record<string, string | number>, 
     setSize,
     mutate,
     getKey,
+  };
+}
+
+export function useGetMessageData({
+  params,
+  shouldFetch = true,
+}: { params: { channelId?: string; messageId?: string }; shouldFetch?: boolean }) {
+  const endpointKey =
+    shouldFetch && params.channelId && params.messageId
+      ? createAPIUrl({ endpoint: API_ENDPOINT.COM_CHANNELS_ID_MESSAGES_ID, params })
+      : null;
+  const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) => getMessageData(endpoint));
+
+  return {
+    messageData: data,
+    messageError: error,
+    mutate,
+    isLoading,
   };
 }

@@ -2,27 +2,6 @@ import type { HTTPPagination } from './fetch';
 import type { IFileResponse } from './file';
 import type { IDataPagination } from './pagination';
 
-export interface DocumentInput<Metadata extends Record<string, unknown> = Record<string, unknown>> {
-  pageContent: string;
-  metadata?: Metadata;
-  id?: string;
-}
-
-export interface DocumentInterface<Metadata extends Record<string, unknown> = Record<string, unknown>> {
-  pageContent: string;
-  metadata: Metadata;
-  id?: string;
-}
-export declare class Document<Metadata extends Record<string, unknown> = Record<string, unknown>>
-  implements DocumentInput, DocumentInterface
-{
-  pageContent: string;
-  metadata: Metadata;
-
-  id?: string;
-  constructor(fields: DocumentInput<Metadata>);
-}
-
 export type IRole = 'user' | 'assistant';
 
 export type IProvider =
@@ -65,7 +44,7 @@ export interface IChatHistory {
   update_at: number;
 }
 
-export type TAgentType = 'ai_chat' | 'ai_search' | 'ai_slide' | 'ai_image_generate' | 'ai_image_analysis' | 'ai_code';
+export type TAgentType = 'ai_search' | 'ai_slide' | 'ai_image_generate' | 'ai_image_analysis' | 'ai_code';
 export interface IConversationRequest {
   ai_agent_type: TAgentType;
   message_ai_agent_type?: TAgentType;
@@ -103,7 +82,7 @@ export interface IMessageData {
   message_ai_agent_type: TAgentType;
 }
 
-export type IAIStatus = 'generating' | 'pending' | 'completed' | 'failed' | 'stopped';
+export type IAIStatus = 'generating' | 'pending' | 'completed' | 'failed' | 'stopped' | 'tool_ended';
 
 export type IContextType = 'text';
 
@@ -157,10 +136,11 @@ export interface IMessage {
   ai_model: IMessageAIModel;
   sender: IMessageSender;
   ai_agent_type: TAgentType;
+  props?: IMessageProps | null;
+}
 
-  // adjust later
-  suggestions?: string[];
-  sources?: Document[];
+export interface IMessageProps {
+  source_results: ISourceProps[];
 }
 
 interface IMessageAIModel {
