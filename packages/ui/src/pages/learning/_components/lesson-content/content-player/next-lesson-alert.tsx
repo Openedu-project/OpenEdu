@@ -9,6 +9,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '#shadcn/alert-dialog';
+import { useLessonLearningStore } from '../../../_store/learning-store';
 
 interface NextLessonAlertProps {
   isOpen: boolean;
@@ -34,6 +35,7 @@ const NextLessonAlert = ({
   const [count, setCount] = useState(countdownSeconds);
   const [isCountingDown, setIsCountingDown] = useState(false);
   const [shouldNavigate, setShouldNavigate] = useState(false);
+  const { setIsNavigatingLesson } = useLessonLearningStore();
 
   // Handle navigation effect
   useEffect(() => {
@@ -94,6 +96,7 @@ const NextLessonAlert = ({
             onClick={() => {
               setIsCountingDown(false);
               setCount(countdownSeconds);
+              setIsNavigatingLesson(false);
             }}
           >
             {cancelText}

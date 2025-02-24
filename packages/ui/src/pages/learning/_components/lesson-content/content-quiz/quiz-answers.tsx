@@ -35,7 +35,7 @@ const QuizAnswers = ({
                   <div
                     key={item.id}
                     className={cn(
-                      'mb-3 flex w-full items-center gap-2 rounded-[12px] border p-2 last:mb-0 md:p-3',
+                      'flex w-full items-center gap-2 rounded-[12px] border p-2 md:p-3',
                       field.value === item.id && 'border-[2px] border-primary'
                     )}
                   >

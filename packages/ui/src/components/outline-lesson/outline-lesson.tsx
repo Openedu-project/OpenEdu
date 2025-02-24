@@ -95,7 +95,7 @@ export const OutlineLesson = ({
       params: { slug: courseSlug, section: sectionUid, lesson: uid },
     });
 
-    if (type === 'learning') {
+    if (!isActive && type === 'learning') {
       router.push(learningPageUrl);
     } else if (type === 'detail') {
       setOpenPreviewModal(true);
