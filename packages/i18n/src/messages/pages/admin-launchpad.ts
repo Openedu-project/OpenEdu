@@ -233,13 +233,14 @@ export const adminLaunchpadMessages = {
       fee: 'Launchpad Publishing Fee',
       openEduWallet: 'OpenEdu Wallet',
       deposit: 'Deposit',
-      depositAlert: 'Please deposit 1 NEAR to proceed the launchpad publishing!',
+      // Todo-launchpad: turn back ETH to NEAR
+      depositAlert: 'Please deposit 0.1 ETH to proceed the launchpad publishing!',
       network: 'Network',
       amount: 'Available Amount',
-      depositSuccess: 'Deposit 1 NEAR is done! You are free to publish!',
+      depositSuccess: 'Deposit 1 0.1 ETH is done! You are free to publish!',
       depositModal: {
         promptBefore: 'Please',
-        promptAfter: '{amount} NEAR to proceed the launchpad publishing!',
+        promptAfter: '{amount} 0.1 ETH to proceed the launchpad publishing!',
       },
       depositModalDialog: {
         title: 'Deposit',
