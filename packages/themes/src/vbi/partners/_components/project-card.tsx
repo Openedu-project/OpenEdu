@@ -24,7 +24,7 @@ const Stat = ({ value, label }: StatProps) => (
 
 interface ProjectCardProps {
   title?: string;
-  description?: string;
+  // description?: string;
   image?: FileType;
   stats?: {
     stat1?: StatProps;
@@ -36,7 +36,7 @@ interface ProjectCardProps {
 
 const ProjectCard = ({
   title,
-  description,
+  // description,
   image,
   stats,
   className,
@@ -67,9 +67,9 @@ const ProjectCard = ({
 
       <CardContent className="!p-0">
         {/* Description */}
-        <p className="line-clamp-3 text-muted-foreground text-sm leading-relaxed sm:line-clamp-4 sm:text-base">
+        {/* <p className="line-clamp-3 text-muted-foreground text-sm leading-relaxed sm:line-clamp-4 sm:text-base">
           {description}
-        </p>
+        </p> */}
 
         {/* Image Container */}
         <div className="group relative h-36 w-full overflow-hidden rounded-lg bg-accent sm:h-44 md:h-52">

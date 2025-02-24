@@ -80,7 +80,7 @@ export const createVbiPartnersConfig = (getThemeTranslation: (path: string[]) =>
       projects: {
         project1: {
           title: getThemeTranslation(['partners', 'vbiShowcase', 'projects', 'project1', 'title']),
-          description: getThemeTranslation(['partners', 'vbiShowcase', 'projects', 'project1', 'description']),
+          // description: getThemeTranslation(['partners', 'vbiShowcase', 'projects', 'project1', 'description']),
           image: { mime: 'image/png' },
           stats: {
             stat1: {
@@ -123,7 +123,7 @@ export const createVbiPartnersConfig = (getThemeTranslation: (path: string[]) =>
         },
         project2: {
           title: getThemeTranslation(['partners', 'vbiShowcase', 'projects', 'project2', 'title']),
-          description: getThemeTranslation(['partners', 'vbiShowcase', 'projects', 'project2', 'description']),
+          // description: getThemeTranslation(['partners', 'vbiShowcase', 'projects', 'project2', 'description']),
           image: { mime: 'image/png' },
           stats: {
             stat1: {
@@ -166,7 +166,7 @@ export const createVbiPartnersConfig = (getThemeTranslation: (path: string[]) =>
         },
         project3: {
           title: getThemeTranslation(['partners', 'vbiShowcase', 'projects', 'project3', 'title']),
-          description: getThemeTranslation(['partners', 'vbiShowcase', 'projects', 'project3', 'description']),
+          // description: getThemeTranslation(['partners', 'vbiShowcase', 'projects', 'project3', 'description']),
           image: { mime: 'image/png' },
           stats: {
             stat1: {

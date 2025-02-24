@@ -28,7 +28,7 @@ const VbiPartnersShowcase: SectionComponent<"partners", "vbiShowcase"> = ({
   const projects = [
     {
       title: t("projects.project1.title"),
-      description: t("projects.project1.description"),
+      // description: t("projects.project1.description"),
       image: props?.projects?.project1?.image,
       stats: {
         stat1: {
@@ -47,7 +47,7 @@ const VbiPartnersShowcase: SectionComponent<"partners", "vbiShowcase"> = ({
     },
     {
       title: t("projects.project2.title"),
-      description: t("projects.project2.description"),
+      // description: t("projects.project2.description"),
       image: props?.projects?.project2?.image,
       stats: {
         stat1: {
@@ -66,7 +66,7 @@ const VbiPartnersShowcase: SectionComponent<"partners", "vbiShowcase"> = ({
     },
     {
       title: t("projects.project3.title"),
-      description: t("projects.project3.description"),
+      // description: t("projects.project3.description"),
       image: props?.projects?.project3?.image,
       stats: {
         stat1: {
@@ -102,7 +102,7 @@ const VbiPartnersShowcase: SectionComponent<"partners", "vbiShowcase"> = ({
           <ProjectCard
             key={index.toString()}
             title={p?.title}
-            description={p?.description}
+            // description={p?.description}
             image={p?.image}
             stats={p?.stats}
           />
