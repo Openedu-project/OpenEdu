@@ -1,11 +1,14 @@
+import { getCookies } from '@oe/core/utils/cookie';
+import { buildUrl } from '@oe/core/utils/url';
 import { DEFAULT_LOCALE, DEFAULT_LOCALES } from '@oe/i18n/constants';
 import type { LanguageCode } from '@oe/i18n/languages';
 import type { ThemeSystem } from '@oe/themes/types/index';
-import type { ISystemConfigRes } from '#types/system-config';
+import type { ISystemConfigKey, ISystemConfigRes } from '#types/system-config';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { systemConfigKeys } from '#utils/system-config';
+import { systemConfigKeys, themeSystemConfigKeyByReferrer } from '#utils/system-config';
 import { createOrUpdateSystemConfig, getSystemConfigClient, getSystemConfigServer } from './system-config';
 
+//TODO: remove
 export const createOrUpdateThemeConfig = async ({
   config,
   id,
@@ -26,6 +29,30 @@ export const createOrUpdateThemeConfig = async ({
   return response?.data;
 };
 
+export const createOrUpdateThemeConfigByReferrer = async ({
+  config,
+  id,
+  locale,
+}: {
+  config: ThemeSystem;
+  id?: string;
+  locale?: LanguageCode;
+}) => {
+  const cookies = await getCookies();
+  const referrer = cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY];
+
+  const response = await createOrUpdateSystemConfig(undefined, {
+    id,
+    payload: {
+      key: themeSystemConfigKeyByReferrer(referrer),
+      value: config,
+      locale,
+    },
+  });
+  return response?.data;
+};
+
+//TODO: remove
 export const getThemeConfigClient = async (endpoint?: string, init?: RequestInit) => {
   try {
     const themeSystem = await getSystemConfigClient<ThemeSystem>(endpoint ?? API_ENDPOINT.SYSTEM_CONFIGS, {
@@ -40,9 +67,40 @@ export const getThemeConfigClient = async (endpoint?: string, init?: RequestInit
   }
 };
 
+export const getThemeConfigByReffererClient = async (endpoint?: string, init?: RequestInit) => {
+  try {
+    const cookies = await getCookies();
+    const referrer = cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY];
+
+    const themeSystem = await getSystemConfigClient<ThemeSystem>(endpoint ?? API_ENDPOINT.SYSTEM_CONFIGS, {
+      key: buildUrl({
+        endpoint: systemConfigKeys.specificThemeSystem,
+        params: { themeName: referrer },
+      }) as ISystemConfigKey,
+      init,
+    });
+    return themeSystem;
+  } catch {
+    return { value: { locales: DEFAULT_LOCALES, locale: DEFAULT_LOCALE, stats: [] } } as unknown as Partial<
+      ISystemConfigRes<ThemeSystem>
+    >;
+  }
+};
+
+//TODO: remove
 export const getThemeConfigServer = async () => {
   const themeSystem = await getSystemConfigServer<ThemeSystem>({
     key: systemConfigKeys.themeSystem,
+  });
+  return themeSystem;
+};
+
+export const getThemeConfigByReferrerServer = async () => {
+  const cookies = await getCookies();
+  const referrer = cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY];
+
+  const themeSystem = await getSystemConfigServer<ThemeSystem>({
+    key: themeSystemConfigKeyByReferrer(referrer),
   });
   return themeSystem;
 };

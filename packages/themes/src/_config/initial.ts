@@ -1,4 +1,5 @@
-import type { ThemeSystem } from '../_types/theme-system-config';
+import type { ThemeName } from '../_types';
+import type { ThemeCollection, ThemeSystem } from '../_types/theme-system-config';
 import { getMetadata } from './theme-metadata';
 import { createThemePageConfig } from './theme-page-initial/index';
 
@@ -32,4 +33,11 @@ export const defaultThemeSystemConfig = (t: (key: string) => string): ThemeSyste
       },
     },
   };
+};
+
+export const themeSystemListNames = (t: (key: string) => string): ThemeName[] =>
+  Object.keys(defaultThemeSystemConfig(t).availableThemes) as ThemeName[];
+
+export const themeSystemListCollections = (t: (key: string) => string): ThemeCollection => {
+  return defaultThemeSystemConfig(t).availableThemes;
 };

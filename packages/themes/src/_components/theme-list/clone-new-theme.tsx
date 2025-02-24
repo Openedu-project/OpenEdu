@@ -5,10 +5,13 @@ import type { ThemeName } from "../../_types";
 import { ThemeTemplatesModal } from "./theme-templates-modal";
 
 interface CloneNewThemeModalModal {
-  addedTheme?: ThemeName[];
-  onCloned: (themeNames: ThemeName) => void;
+  alreadyClonedThemes?: ThemeName[];
+  onThemeCloned: (themeNames: ThemeName[]) => void;
 }
-const CloneNewTheme = ({ addedTheme, onCloned }: CloneNewThemeModalModal) => {
+const CloneNewTheme = ({
+  alreadyClonedThemes,
+  onThemeCloned,
+}: CloneNewThemeModalModal) => {
   const [open, setOpen] = useState(false);
 
   const handleClose = useCallback(() => {
@@ -16,9 +19,10 @@ const CloneNewTheme = ({ addedTheme, onCloned }: CloneNewThemeModalModal) => {
   }, []);
 
   const handleSubmit = useCallback(
-    (themeNames: ThemeName) => {
-      onCloned(themeNames);
+    (themeNames: ThemeName[]) => {
+      onThemeCloned(themeNames);
       handleClose();
+      console.log("themeNames", themeNames);
     },
     [handleClose]
   );
@@ -27,7 +31,7 @@ const CloneNewTheme = ({ addedTheme, onCloned }: CloneNewThemeModalModal) => {
       <Button onClick={() => setOpen(true)}>Add new theme</Button>
       {open && (
         <ThemeTemplatesModal
-          added={addedTheme}
+          alreadyClonedThemes={alreadyClonedThemes}
           onClose={() => setOpen(false)}
           onSubmit={handleSubmit}
         />

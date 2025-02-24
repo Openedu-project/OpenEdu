@@ -11,55 +11,40 @@ import { useState } from "react";
 
 interface ThemeCardProps {
   name: ThemeName;
-  isSelected: boolean;
-  added?: boolean;
+  // Whether this theme is currently active
+  isActive: boolean;
+  // For template cards: whether this theme has already been cloned
+  isCloned?: boolean;
+  // Callback when theme is selected/activated
   onSelect?: (theme: ThemeName) => void;
+  // Whether this card is for a template or user's theme
   variant: "template" | "my-theme";
 }
 
 export const ThemeCard = ({
   name,
-  isSelected,
+  isActive,
   onSelect,
-  added,
+  isCloned,
   variant = "my-theme",
 }: ThemeCardProps) => {
   const t = useTranslations("themeList");
-  const [currentSelected, setCurrentSelected] = useState(isSelected ?? false);
+  const [currentSelected, setCurrentSelected] = useState(isActive ?? false);
   const displayName = name.replace(/([A-Z])/g, " $1").trim(); // Add spaces before capital letters
 
-  const handleClick = useCallback(() => {
-    if (!added) {
-      onSelect?.(name);
-    }
-  }, [added, name, onSelect]);
-
-  const editUrl = useMemo(() => 
-    createAPIUrl({
-      endpoint: ADMIN_ROUTES.themeConfig,
-      params: {
-        themeName: name,
-        themeConfig: 'pages',
-        groupSettingKey: undefined,
-        itemSettingKey: undefined,
-      },
-      checkEmptyParams: true,
-    }),
-    [name]
-  );
   return (
     <Card
       className={cn(
         "group relative cursor-pointer overflow-hidden transition-all",
         "hover:ring-2 hover:ring-primary",
-        isSelected && "ring-2 ring-primary",
+        isActive && "ring-2 ring-primary",
         "h-[400px] w-[300px]",
-        added && "cursor-not-allowed"
+        isCloned && "cursor-not-allowed"
       )}
       onClick={() => {
-        if (!added) {
+        if (!isCloned && variant === "template") {
           onSelect?.(name);
-          setCurrentSelected(true);
+          setCurrentSelected(!currentSelected);
         }
       }}
     >
@@ -80,7 +65,7 @@ export const ThemeCard = ({
           <Button
             variant="outline"
             className="hover:bg-primary"
-            disabled={variant === "template" && added}
+            disabled={variant === "template" && isCloned}
           >
             {variant === "my-theme" ? (
               <Link
@@ -99,7 +84,7 @@ export const ThemeCard = ({
                 {t("edit")}
               </Link>
             ) : (
-              "Added"
+              "Cloned"
             )}
           </Button>
         </div>
