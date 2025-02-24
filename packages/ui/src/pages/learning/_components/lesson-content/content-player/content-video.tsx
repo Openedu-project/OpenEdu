@@ -102,7 +102,7 @@ const ContentVideo = ({
         player.off(EVENTS.TIMEUPDATE, handleTimeUpdate);
       };
     }
-  }, [player, checkProgress]);
+  }, [player, checkProgress, triggerConditions, shownQuizzes, isPreview]);
 
   return (
     <div ref={containerRef} className="flex h-full max-h-full max-w-full flex-col">

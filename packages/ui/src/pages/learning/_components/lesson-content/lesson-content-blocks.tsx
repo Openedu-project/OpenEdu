@@ -70,6 +70,12 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
         start_at,
       };
 
+      console.log('pause_at', pause_at);
+      console.log('complete_at', complete_at);
+      console.log('start_at', start_at);
+
+      console.log('==================================');
+
       try {
         await updateLearningProgressService(undefined, { payload });
         const newLearningProgres = await getLearningProgressesService(undefined, { id: course_data?.slug });
