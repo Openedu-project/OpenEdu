@@ -50,7 +50,7 @@ const CourseOutline = ({ courseData, activeSection, activeLesson, ...props }: IC
     }, 0); // Set timeout to 0
 
     return () => clearTimeout(timeoutId);
-  }, [activeLesson, sectionsProgressData?.length]);
+  }, [sectionsProgressData?.length]);
 
   if (!sectionsProgressData || sectionsProgressData?.length === 0) {
     return null;
