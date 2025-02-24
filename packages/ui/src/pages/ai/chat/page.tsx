@@ -29,5 +29,5 @@ const getChatMessages = async (id?: string) => {
 
 export default async function AIChatPage({ id }: { id?: string }) {
   const chatData = await getChatMessages(id);
-  return <ChatWindow id={id} initData={chatData} />;
+  return <ChatWindow id={id} initData={chatData} className="max-w-3xl" />;
 }

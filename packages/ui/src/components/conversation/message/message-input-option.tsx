@@ -68,7 +68,7 @@ export const InputOption = ({
   const tAI = useTranslations('aiAssistant');
 
   return (
-    <div className={cn('flex gap-2', align === 'vertical' && 'flex-col', className)}>
+    <div className={cn('flex flex-wrap gap-2', align === 'vertical' && 'flex-col', className)}>
       {INPUT_BUTTON.filter(btn => messageType?.includes(btn.type) || !hiddenDisableAgent).map((button, index) => {
         if (messageType?.includes(button.type)) {
           return (

@@ -1,4 +1,4 @@
-import type { IMessage, IRole, TAgentType } from '@oe/api/types/conversation';
+import type { IAIModel, IConversationDetails, IMessage, IRole, TAgentType } from '@oe/api/types/conversation';
 import type { IFileResponse } from '@oe/api/types/file';
 import type { ChangeEvent, KeyboardEventHandler, ReactNode, RefObject } from 'react';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
@@ -85,4 +85,12 @@ export interface IAIMessageProps {
   message: IMessage;
   loading: boolean;
   rewrite?: () => void;
+}
+
+export interface IChatWindowProps {
+  id?: string;
+  aiModels?: IAIModel[];
+  initData?: IConversationDetails;
+  agent?: TAgentType;
+  className?: string;
 }

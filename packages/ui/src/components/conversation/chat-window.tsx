@@ -1,16 +1,8 @@
 'use client';
 import { revalidateData } from '@oe/api/actions/revalidate';
 import { useGetConversationDetails } from '@oe/api/hooks/useConversation';
-import { useGetMe } from '@oe/api/hooks/useMe';
 import { cancelConversation, postConversation } from '@oe/api/services/conversation';
-import type {
-  IAIModel,
-  IAIStatus,
-  IAgenConfigs,
-  IConversationDetails,
-  IMessage,
-  TAgentType,
-} from '@oe/api/types/conversation';
+import type { IAIStatus, IAgenConfigs, IMessage, TAgentType } from '@oe/api/types/conversation';
 import { createAPIUrl } from '@oe/api/utils/fetch';
 import type { HTTPError } from '@oe/api/utils/http-error';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
@@ -24,24 +16,13 @@ import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { ChatWithMessage } from './chat';
 import { AGENT_OPTIONS } from './constants';
+import { EmptyChat } from './empty-chat';
 import MessageInput from './message/message-input';
-import type { ISendMessageParams } from './type';
+import type { IChatWindowProps, ISendMessageParams } from './type';
 
-export function ChatWindow({
-  id,
-  initData,
-  agent = 'ai_chat',
-}: {
-  id?: string;
-  aiModels?: IAIModel[];
-  initData?: IConversationDetails;
-  agent?: TAgentType;
-}) {
-  const tAI = useTranslations('aiAssistant');
+export function ChatWindow({ id, initData, agent = 'ai_chat', className }: IChatWindowProps) {
   const tError = useTranslations('errors');
   const searchParams = useSearchParams();
-
-  const { dataMe } = useGetMe();
 
   const {
     messages,
@@ -206,7 +187,7 @@ export function ChatWindow({
   };
 
   return (
-    <>
+    <div className={cn('flex h-full flex-col', className)}>
       <div
         ref={containerRef}
         className={cn('flex grow flex-col gap-2 overflow-hidden', id ? 'bg-background' : 'items-center')}
@@ -219,11 +200,7 @@ export function ChatWindow({
             id={id}
           />
         ) : (
-          <h2 className="mcaption-regular24 md:giant-iheading-bold40 !font-normal m-auto text-center">
-            {tAI.rich('aiHelloText', {
-              name: (dataMe?.display_name ?? '').length > 0 ? dataMe?.display_name : dataMe?.username,
-            })}
-          </h2>
+          <EmptyChat />
         )}
       </div>
       <div className="bg-background pt-2">
@@ -236,6 +213,6 @@ export function ChatWindow({
           resetOnSuccess
         />
       </div>
-    </>
+    </div>
   );
 }

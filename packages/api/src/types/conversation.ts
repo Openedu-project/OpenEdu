@@ -195,3 +195,9 @@ interface IMessageSender {
   org_id?: string;
   org_schema?: string;
 }
+
+export interface ISourceProps {
+  url: string;
+  title: string;
+  content: string;
+}

@@ -19,6 +19,8 @@ interface IConversationStore {
   resetGenMessage: () => void;
   selectedAgent: TAgentType;
   setSelectedAgent: (agent: TAgentType) => void;
+  openWebSource: boolean;
+  setOpenWebSource: (openWebSource: boolean) => void;
 }
 
 export const useConversationStore = create<IConversationStore>(set => {
@@ -112,6 +114,11 @@ export const useConversationStore = create<IConversationStore>(set => {
     setSelectedAgent: (selectedAgent: TAgentType) =>
       set(() => {
         return { selectedAgent };
+      }),
+    openWebSource: false,
+    setOpenWebSource: (openWebSource: boolean) =>
+      set(() => {
+        return { openWebSource };
       }),
   };
 });

@@ -28,5 +28,8 @@ export const aiAssistantMessages = {
     agentMessage: 'Please select another model to use this tool.',
     inputPlaceholder: 'Write something...',
     aiModel: 'AI Model',
+    sources: {
+      title: 'Web Sources',
+    },
   },
 };

@@ -17,7 +17,6 @@ import { Input } from '#shadcn/input';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { HISTORY_DEFAULT_PARAMS } from '../constants';
-import { useIsDesktop } from '../utils';
 import AIHistoryItem from './history-item';
 
 interface SearchHistoryProps {
@@ -134,9 +133,8 @@ const SearchHistory = ({ className, mutate, handleSearch, chatHistory = [], isLo
   );
 };
 
-export default function AIHistory({ className, isLogin = false, pauseAddMessage, initData }: SearchHistoryProps) {
+export default function AIHistory({ isLogin = false, pauseAddMessage, initData }: SearchHistoryProps) {
   const [isShow, setIsShow] = useState<boolean>(false);
-  const isDesktop = useIsDesktop();
   const { mutate: globalMutate } = useSWRConfig();
   const { isNewChat } = useConversationStore();
   const { id } = useParams();
@@ -224,51 +222,39 @@ export default function AIHistory({ className, isLogin = false, pauseAddMessage,
       });
     }
   };
+
   return (
     <>
-      {isDesktop ? (
-        <SearchHistory
-          className={cn('hidden lg:flex lg:w-1/4', className)}
-          chatHistory={historyData}
-          handleSearch={searchChatHistory}
-          pauseAddMessage={pauseAddMessage}
-          mutate={mutate}
-          isLoading={isLoading}
-        />
-      ) : (
-        <>
-          {!isShow && (
-            <Button
-              className={cn(
-                '!p-2 !rounded-r-full !rounded-l-none pointer-events-auto absolute left-0 z-[60] mb-1 bg-primary lg:hidden',
-                isShow ? 'top-0 rotate-90 opacity-100' : 'bottom-2 opacity-80'
-              )}
-              onClick={() => setIsShow(!isShow)}
-            >
-              <FileClock className="h-4 w-4 text-primary-foreground" />
-            </Button>
+      {!isShow && (
+        <Button
+          className={cn(
+            '!p-2 !rounded-r-full !rounded-l-none pointer-events-auto absolute left-0 z-[60] mb-1 bg-primary',
+            isShow ? 'top-0 rotate-90 opacity-100' : 'bottom-2 opacity-80'
           )}
-          <Drawer open={isShow} onOpenChange={setIsShow} direction="left">
-            <DrawerContent className="!duration-300 top-0 h-[calc(100dvh-100px] lg:w-1/2 first:[&>div]:hidden">
-              <DrawerTitle>
-                <VisuallyHidden asChild>Title</VisuallyHidden>
-              </DrawerTitle>
-              <DrawerDescription>
-                <VisuallyHidden asChild>Description</VisuallyHidden>
-              </DrawerDescription>
-
-              <SearchHistory
-                className={cn('w-full grow rounded-r-4 bg-background', isShow ? 'translate-x-0' : '-translate-x-full')}
-                chatHistory={historyData}
-                handleSearch={searchChatHistory}
-                pauseAddMessage={pauseAddMessage}
-                mutate={mutate}
-                isLoading={isLoading}
-              />
-            </DrawerContent>
-          </Drawer>
-        </>
+          onClick={() => setIsShow(!isShow)}
+        >
+          <FileClock className="h-4 w-4 text-primary-foreground" />
+        </Button>
       )}
+      <Drawer open={isShow} onOpenChange={setIsShow} direction="left">
+        <DrawerContent className="!duration-300 top-0 h-[calc(100dvh-100px] lg:w-1/2 first:[&>div]:hidden">
+          <DrawerTitle>
+            <VisuallyHidden asChild>Title</VisuallyHidden>
+          </DrawerTitle>
+          <DrawerDescription>
+            <VisuallyHidden asChild>Description</VisuallyHidden>
+          </DrawerDescription>
+
+          <SearchHistory
+            className={cn('w-full grow rounded-r-4 bg-background', isShow ? 'translate-x-0' : '-translate-x-full')}
+            chatHistory={historyData}
+            handleSearch={searchChatHistory}
+            pauseAddMessage={pauseAddMessage}
+            mutate={mutate}
+            isLoading={isLoading}
+          />
+        </DrawerContent>
+      </Drawer>
     </>
   );
 }
