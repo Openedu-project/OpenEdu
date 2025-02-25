@@ -48,7 +48,7 @@ const QuizHeader = ({
       const newRemainingTime = getRemainingTime();
       setRemainingTime(newRemainingTime);
 
-      if (newRemainingTime <= 0) {
+      if (newRemainingTime < 1) {
         if (onTimeUp) {
           onTimeUp();
         }
@@ -56,7 +56,7 @@ const QuizHeader = ({
           clearInterval(intervalRef.current);
         }
       }
-    }, 1000);
+    }, 500);
 
     return () => {
       if (intervalRef.current) {

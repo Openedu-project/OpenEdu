@@ -2,7 +2,6 @@ import { useTranslations } from 'next-intl';
 
 import type { IQuizSettings } from '@oe/api/types/course/quiz';
 import type { ICurrentQuestion } from '@oe/api/types/quiz';
-import background from '@oe/assets/images/learning-page/quiz.png';
 import { FormWrapper } from '#components/form-wrapper';
 import { Image } from '#components/image';
 import { Button } from '#shadcn/button';
@@ -19,10 +18,9 @@ interface IQuestionProps {
   settings?: IQuizSettings;
   quizStartAt: number;
   onSubmitAnswer: (value: TAnswerInput) => void;
-  onTimeUp?: () => void;
 }
 
-const QuizAssessment = ({ numQuestion, data, settings, onTimeUp, quizStartAt, onSubmitAnswer }: IQuestionProps) => {
+const QuizAssessment = ({ numQuestion, data, settings, quizStartAt, onSubmitAnswer }: IQuestionProps) => {
   const tContentQuiz = useTranslations('learningPage.quiz');
 
   const { question, has_next_question, current_question_index, start_at } = data;
@@ -36,7 +34,7 @@ const QuizAssessment = ({ numQuestion, data, settings, onTimeUp, quizStartAt, on
           curQuesIndex={current_question_index}
           numQuestion={numQuestion}
           timeLimitType={settings?.time_limit_type ?? 'overall'}
-          onTimeUp={() => onTimeUp?.()}
+          onTimeUp={() => settings?.time_limit_enabled && onSubmitAnswer({ answers: '' })}
           timeLimitEnabled={settings?.time_limit_enabled}
         />
 
@@ -55,7 +53,7 @@ const QuizAssessment = ({ numQuestion, data, settings, onTimeUp, quizStartAt, on
           {question?.files?.length > 0 && (
             <div className="aspect-video h-full max-h-[174px] w-full rounded-2xl bg-background p-3 text-center shadow-shadow-6">
               <Image
-                src={question?.files[0]?.url ?? background?.src}
+                src={question?.files[0]?.url ?? ''}
                 alt={question?.files[0]?.name ?? ''}
                 width={361}
                 height={174}
