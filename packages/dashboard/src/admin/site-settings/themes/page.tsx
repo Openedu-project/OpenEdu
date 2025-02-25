@@ -10,12 +10,12 @@ export default function ThemeListPage({
   return (
     <>
       <ThemeList
-        themesData={
+        userThemeList={
           themeSystem?.availableThemes
             ? (Object.keys(themeSystem?.availableThemes) as ThemeName[])
             : undefined
         }
-        selectedTheme={themeSystem?.activedTheme}
+        currentActiveTheme={themeSystem?.activedTheme}
       />
     </>
   );

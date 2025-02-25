@@ -1,6 +1,9 @@
 "use client";
+import { createOrUpdateThemeConfigByReferrer } from "@oe/api/services/theme";
 import type { ThemeName } from "@oe/themes/types/theme-page/index";
+import { toast } from "@oe/ui/shadcn/sonner";
 import { useTranslations } from "next-intl";
+import { useMemo } from "react";
 // import { createOrUpdateThemeConfigByReferrer } from "@oe/api/services/theme";
 import { defaultThemeSystemConfig } from "../../../src";
 import { CloneNewTheme } from "./clone-new-theme";
@@ -10,7 +13,7 @@ interface ThemeListProps {
   // The currently active/selected theme in use
   currentActiveTheme?: ThemeName;
   // List of all themes that user has created/customized
-  userThemeList: ThemeName[];
+  userThemeList?: ThemeName[];
   // Callback when user selects a different theme
   //  onThemeActivate?: (themeName: ThemeName) => void;
 }
@@ -20,10 +23,15 @@ export default function ThemeList({
   userThemeList,
 }: // onSelect,
 ThemeListProps) {
-  const t = useTranslations("themeList");
+  // const t = useTranslations("themeList");
   const tThemeConfig = useTranslations("themePage");
 
-  const handleNewThemeCloned = (themeNames: ThemeName[]) => {
+  const alreadyClonedThemes = useMemo(
+    () => (currentActiveTheme ? [currentActiveTheme] : undefined),
+    [currentActiveTheme]
+  );
+
+  const handleNewThemeCloned = async (themeNames: ThemeName[]) => {
     //TODO: mutate the list my themes - themesData
     //OR: add theme new ThemeName to themesData by state
     const initialData = defaultThemeSystemConfig(tThemeConfig);
@@ -42,16 +50,19 @@ ThemeListProps) {
     };
 
     console.log(data);
-    // try {
-    //   const res = await createOrUpdateThemeConfigByReferrer({ config: initialData });
-    //   if (!res) {
-    //     toast.error("Failed to clone the templates from the system.");
-    //     return;
-    //   }
-    //   toast.success("Clone the templates succesfully");
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    try {
+      const res = await createOrUpdateThemeConfigByReferrer({
+        config: initialData,
+      });
+      if (!res) {
+        toast.error("Failed to clone the templates from the system.");
+        return;
+      }
+      console.log(res);
+      toast.success("Clone the templates succesfully");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -59,13 +70,11 @@ ThemeListProps) {
       <div>
         <h2>The list template</h2>
         <CloneNewTheme
-          alreadyClonedThemes={
-            currentActiveTheme ? [currentActiveTheme] : undefined
-          }
+          alreadyClonedThemes={alreadyClonedThemes}
           onThemeCloned={handleNewThemeCloned}
         />
       </div>
-      <h2 className="mb-6 font-semibold text-2xl">{t("selectTheme")}</h2>
+      {/* <h2 className="mb-6 font-semibold text-2xl">{t("selectTheme")}</h2> */}
       <h2>My customize</h2>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {userThemeList?.map((theme) => (

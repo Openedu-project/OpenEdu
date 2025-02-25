@@ -1,5 +1,6 @@
 import { buildUrl } from '@oe/core/utils/url';
 import type { ISystemConfigKey } from '#types/system-config';
+import { getAPIReferrerAndOriginClient } from './referrer-origin';
 
 export const systemConfigKeys = {
   builderData: 'builder_data',
@@ -11,9 +12,11 @@ export const systemConfigKeys = {
   specificThemeSystem: 'theme_system_:themeName',
 } as const;
 
-export const themeSystemConfigKeyByReferrer = (referrer?: string): ISystemConfigKey => {
+export const themeSystemConfigKeyByHost = (): ISystemConfigKey => {
+  const { host } = getAPIReferrerAndOriginClient();
+
   return buildUrl({
     endpoint: systemConfigKeys.specificThemeSystem,
-    params: { themeName: referrer },
+    params: { themeName: host },
   }) as ISystemConfigKey;
 };

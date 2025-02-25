@@ -1,12 +1,11 @@
-import { createAPIUrl, fetchAPI, postAPI, putAPI } from '#utils/fetch';
-
-import { buildUrl } from '@oe/core/utils/url';
 import type { LanguageCode } from '@oe/i18n/languages';
+import { createAPIUrl, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 import {
   getAPIReferrerAndOrigin,
   getAPIReferrerAndOriginClient,
   getAPIReferrerAndOriginServer,
 } from '#utils/referrer-origin';
+import { themeSystemConfigKeyByHost } from '#utils/system-config';
 import type { ISystemConfigKey, ISystemConfigPayload, ISystemConfigRes } from '../types/system-config';
 import { API_ENDPOINT } from '../utils/endpoints';
 
@@ -23,16 +22,14 @@ export const createSystemConfigSWRKey = ({ key, locales }: { key: ISystemConfigK
   });
 };
 
-export const createThemeSystemConfigSWRKey = ({
-  key,
-  locales,
-}: { key: ISystemConfigKey; locales?: LanguageCode[] }) => {
-  const { host, referrer } = getAPIReferrerAndOriginClient();
-  console.info('host', host, 'referrer', referrer);
+// USE key=theme_system_:themeName
+export const createThemeSystemConfigSWRKey = ({ locales }: { locales?: LanguageCode[] }) => {
+  const { host } = getAPIReferrerAndOriginClient();
+  console.info('host', host);
   return createAPIUrl({
     endpoint: API_ENDPOINT.SYSTEM_CONFIGS,
     queryParams: {
-      keys: buildUrl({ endpoint: key, params: { themeName: referrer } }),
+      keys: themeSystemConfigKeyByHost(),
       domains: host,
       ...(locales ? { locales } : {}),
     },

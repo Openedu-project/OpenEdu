@@ -4,6 +4,7 @@ import ThemeListPage from "@oe/dashboard/admin/site-settings/themes/page";
 export default async function ThemePage() {
   // const [themeSystem] = await Promise.all([getThemeConfigServer()]);
   const [themeSystem] = await Promise.all([getThemeConfigByReferrerServer()]);
+  console.log("themeSystem", themeSystem);
 
   // if (!themeSystem?.[0]?.value) {
   //   return null;

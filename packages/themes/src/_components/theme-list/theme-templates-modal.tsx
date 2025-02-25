@@ -25,7 +25,11 @@ const ThemeTemplatesModal = ({
 
   const handleSubmit = () => {
     if (selectedNames) {
-      onSubmit(selectedNames);
+      // Remove the duplicate item
+      const filteredSeletedNames = selectedNames.filter(
+        (item, i) => alreadyClonedThemes?.indexOf(item) === i
+      );
+      onSubmit(filteredSeletedNames);
       return;
     }
 
