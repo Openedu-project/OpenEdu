@@ -3,6 +3,7 @@ import type { ICertificateDetail, ICertificateUser } from '@oe/api/types/certifi
 import { Modal } from '@oe/ui/components/modal';
 import { PdfViewer } from '@oe/ui/components/pdf-viewer';
 import { Badge } from '@oe/ui/shadcn/badge';
+import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
 import MintCertButton from './mint-cert-button';
 
@@ -26,6 +27,8 @@ export default function MintCertModal({ certificate, onClose, mutate }: IMintCer
         });
 
         mutate?.();
+
+        toast.success(tMintCert('mintSuccess'));
 
         onClose?.();
       } catch (err) {
