@@ -19,6 +19,7 @@ export default async function OpeneduLayout({
       href: AI_ROUTES.assistant,
       isHighlight: true,
       isLoginRequired: false,
+      version: 'BETA',
     },
     {
       id: 'courses',
