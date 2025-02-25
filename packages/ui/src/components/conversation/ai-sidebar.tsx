@@ -5,6 +5,7 @@ import { AI_ROUTES } from '@oe/core/utils/routes';
 import { Image } from '@oe/ui/components/image';
 import { useTranslations } from 'next-intl';
 import { Link } from '#common/navigation';
+import { Badge } from '#shadcn/badge';
 import { cn } from '#utils/cn';
 import { AIModule } from './ai-module';
 
@@ -14,8 +15,11 @@ export function AISidebar({ className }: { className?: string }) {
   return (
     <div className={cn('scrollbar flex flex-col space-y-2 overflow-y-auto p-1 lg:w-1/5 lg:p-3', className)}>
       <div className="mb-3 flex items-center space-x-1 md:px-2">
-        <Link href={AI_ROUTES.assistant} className="!p-0 !border-0 h-12 w-12 rounded-full bg-background">
+        <Link href={AI_ROUTES.assistant} className="!p-0 !border-0 relative h-12 w-12 rounded-full bg-background">
           <Image alt="ai-assistant" src={AIBot.src} width={48} height={48} className="object-contain" />
+          <Badge variant="success" className="-top-2 -right-6 mbutton-bold10 absolute">
+            BETA
+          </Badge>
         </Link>
         <span className="mcaption-semibold20 hidden text-foreground lg:block">{aiAssistant('title')}</span>
       </div>

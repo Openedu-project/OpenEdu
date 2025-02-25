@@ -8,6 +8,7 @@ export interface ISidebarItem {
   icon?: ReactNode;
   isRoot?: boolean;
   isHighlight?: boolean;
+  version?: string;
   isLoginRequired?: boolean;
 }
 
