@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import type { ThemeName } from "@oe/themes/types/theme-page/index";
 import { useTranslations } from "next-intl";
 // import { createOrUpdateThemeConfigByReferrer } from "@oe/api/services/theme";
@@ -8,7 +8,7 @@ import { ThemeCard } from "./theme-card";
 
 interface ThemeListProps {
   // The currently active/selected theme in use
-  currentActiveTheme: ThemeName;
+  currentActiveTheme?: ThemeName;
   // List of all themes that user has created/customized
   userThemeList: ThemeName[];
   // Callback when user selects a different theme
@@ -23,18 +23,22 @@ ThemeListProps) {
   const t = useTranslations("themeList");
   const tThemeConfig = useTranslations("themePage");
 
-  const handleNewThemeCloned = async (themeNames: ThemeName[]) => {
+  const handleNewThemeCloned = (themeNames: ThemeName[]) => {
     //TODO: mutate the list my themes - themesData
     //OR: add theme new ThemeName to themesData by state
     const initialData = defaultThemeSystemConfig(tThemeConfig);
+    let availableTheme = {};
+
+    for (const name of themeNames) {
+      availableTheme = {
+        ...availableTheme,
+        [name]: initialData.availableThemes?.[name],
+      };
+    }
 
     const data = {
-      activedTheme: themeNames.slice(-1),
-      availableTheme: {
-        ...themeNames.map((name) => ({
-          name: initialData.availableThemes?.[name],
-        })),
-      },
+      activedTheme: currentActiveTheme,
+      availableTheme: availableTheme,
     };
 
     console.log(data);
@@ -55,7 +59,9 @@ ThemeListProps) {
       <div>
         <h2>The list template</h2>
         <CloneNewTheme
-          alreadyClonedThemes={[currentActiveTheme]}
+          alreadyClonedThemes={
+            currentActiveTheme ? [currentActiveTheme] : undefined
+          }
           onThemeCloned={handleNewThemeCloned}
         />
       </div>
