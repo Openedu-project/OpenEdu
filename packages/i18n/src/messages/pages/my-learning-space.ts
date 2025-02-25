@@ -34,6 +34,7 @@ export const myLearningSpaceMessage = {
       back: 'Back to My Certificate',
       mintCertificate: 'Mint Certificate',
       viewInWallet: 'View in Wallet',
+      mintSuccess: 'Mint certificate successfully',
     },
   },
 } as const;

@@ -74,6 +74,7 @@ export default function UserBio({ data, isMe, handleFollowUser }: IUserBioProps)
           alt=""
           width={1080}
           height={316}
+          quality={100}
           className="aspect-video max-h-[316px] object-cover"
         />
       </div>

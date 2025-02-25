@@ -48,7 +48,7 @@ const QuizHeader = ({
       const newRemainingTime = getRemainingTime();
       setRemainingTime(newRemainingTime);
 
-      if (newRemainingTime <= 0) {
+      if (newRemainingTime < 1) {
         if (onTimeUp) {
           onTimeUp();
         }
@@ -56,7 +56,7 @@ const QuizHeader = ({
           clearInterval(intervalRef.current);
         }
       }
-    }, 1000);
+    }, 500);
 
     return () => {
       if (intervalRef.current) {
@@ -67,8 +67,8 @@ const QuizHeader = ({
 
   return (
     <div className="flex justify-between">
-      <div>
-        <span className="mcaption-regular16 mb-1 text-content-neutral-light-700">{t('question')}</span>
+      <div className="flex items-center gap-1 lg:flex-col">
+        <span className="mcaption-regular16 text-content-neutral-light-700">{t('question')}</span>
         <p className="mcaption-semibold24 text-content-neutral-medium-800">
           <span className="text-primary">{curQuesIndex}</span>/{numQuestion}
         </p>
