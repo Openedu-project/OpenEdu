@@ -100,24 +100,24 @@ const i18nCookieConfig = {
 };
 
 export const getI18nResponseMiddleware = async (referrer: string, origin: string, request: NextRequest) => {
-  const cookiesLocales = request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_LOCALES_KEY)?.value;
-  const cookiesLocale = request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY)?.value;
-  const cookiesLocaleFiles = request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_LOCALE_FILES_KEY)?.value;
-  const files = cookiesLocaleFiles ? JSON.parse(decodeURIComponent(cookiesLocaleFiles)) : null;
+  // const cookiesLocales = request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_LOCALES_KEY)?.value;
+  // const cookiesLocale = request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY)?.value;
+  // const cookiesLocaleFiles = request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_LOCALE_FILES_KEY)?.value;
+  // const files = cookiesLocaleFiles ? JSON.parse(decodeURIComponent(cookiesLocaleFiles)) : null;
 
-  if (cookiesLocales && cookiesLocale && files) {
-    const locales = JSON.parse(decodeURIComponent(cookiesLocales));
-    const response = createMiddleware({
-      locales,
-      defaultLocale: cookiesLocale,
-      localeCookie: {
-        name: process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY,
-        ...i18nCookieConfig,
-      },
-    })(request);
+  // if (cookiesLocales && cookiesLocale && files) {
+  //   const locales = JSON.parse(decodeURIComponent(cookiesLocales));
+  //   const response = createMiddleware({
+  //     locales,
+  //     defaultLocale: cookiesLocale,
+  //     localeCookie: {
+  //       name: process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY,
+  //       ...i18nCookieConfig,
+  //     },
+  //   })(request);
 
-    return response;
-  }
+  //   return response;
+  // }
 
   let i18nLocales = DEFAULT_LOCALES;
   let i18nLocale = DEFAULT_LOCALE;
