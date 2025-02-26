@@ -84,11 +84,8 @@ const PaymentCrypto = ({
     const amountWalletByCurrency = cryptoWallet?.filter(
       item => item.currency_symbol.toLowerCase() === cryptoCurrency.toLowerCase()
     )?.[0]?.balance;
-    console.log('amountDue', amountDue);
-    console.log('amountWalletByCurrency', amountWalletByCurrency);
     setAmountWalletByCurrency(amountWalletByCurrency ?? '0');
     const hasEnoughInsufficient = Number.parseFloat(amountWalletByCurrency ?? '0') >= amountDue;
-    console.log('hasEnoughInsufficient', hasEnoughInsufficient);
     setHasEnoughInsufficient(hasEnoughInsufficient);
   }, [amountDue, cryptoCurrency, cryptoWallet]);
 
