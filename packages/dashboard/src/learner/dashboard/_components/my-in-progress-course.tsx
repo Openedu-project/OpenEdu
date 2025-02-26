@@ -28,7 +28,12 @@ export default async function MyInProgressCourse() {
         <ScrollArea>
           <div className="mb-2 flex gap-4">
             {coursesInProgress?.results?.map(course => (
-              <CourseCard key={course.id} courseData={course} className="min-w-[234px]" courseStatus="in_progress" />
+              <CourseCard
+                key={course.id}
+                courseData={course}
+                className="min-w-[234px] max-w-[363px]"
+                courseStatus="in_progress"
+              />
             ))}
           </div>
           <ScrollBar orientation="horizontal" />
