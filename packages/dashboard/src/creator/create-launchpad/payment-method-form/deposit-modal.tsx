@@ -55,7 +55,7 @@ const DepositModal = () => {
       <DialogContent className="h-fit">
         <DialogHeader>
           <DialogTitle>{tModal('title')}</DialogTitle>
-          <NoticeBlock content={<div className="text-center">{tLaunchpad('paymentMethod.depositAlertForETH')}</div>} />
+          <NoticeBlock content={<div className="text-center">{tLaunchpad('paymentMethod.depositAlert')}</div>} />
         </DialogHeader>
 
         <div className="grid gap-4 py-4">

@@ -12,8 +12,7 @@ export const launchpadStepData = (t: TTranslations): TLaunchpadStep[] => [
       t('stepSection.step.stepOne.descOne'),
       t('stepSection.step.stepOne.descTwo'),
       t('stepSection.step.stepOne.descThree'),
-      // Todo-launchpad: move it back to NEAR, change back to descFour
-      t('stepSection.step.stepOne.descFourForETH'),
+      t('stepSection.step.stepOne.descFour'),
     ],
   },
   {

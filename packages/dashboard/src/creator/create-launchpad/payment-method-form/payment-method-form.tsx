@@ -43,7 +43,7 @@ const PaymentMethodBlock = () => {
           <div>
             <h2 className="font-semibold text-base">{tLaunchpad('fee')} *</h2>
             <div className="w-full rounded-xl border border-positive-600 bg-positive-50 p-4 text-center">
-              {tLaunchpad('depositSuccessForETH')}
+              {tLaunchpad('depositSuccess')}
             </div>
           </div>
         ) : (
@@ -54,7 +54,7 @@ const PaymentMethodBlock = () => {
                 <div className="text-center">
                   {tLaunchpad('depositModal.promptBefore')} <DepositModal />
                   &nbsp;
-                  {tLaunchpad.rich('depositModal.promptAfterForETH', {
+                  {tLaunchpad.rich('depositModal.promptAfter', {
                     amount: 0.1,
                   })}
                 </div>
