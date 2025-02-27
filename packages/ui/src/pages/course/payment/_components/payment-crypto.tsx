@@ -81,11 +81,11 @@ const PaymentCrypto = ({
   }, [usedCoupon]);
 
   useEffect(() => {
-    const amountWalletByCurrency = cryptoWallet?.filter(item => item.currency_symbol === cryptoCurrency)?.[0]?.balance;
-
+    const amountWalletByCurrency = cryptoWallet?.filter(
+      item => item.currency_symbol.toLowerCase() === cryptoCurrency.toLowerCase()
+    )?.[0]?.balance;
     setAmountWalletByCurrency(amountWalletByCurrency ?? '0');
     const hasEnoughInsufficient = Number.parseFloat(amountWalletByCurrency ?? '0') >= amountDue;
-
     setHasEnoughInsufficient(hasEnoughInsufficient);
   }, [amountDue, cryptoCurrency, cryptoWallet]);
 
@@ -239,8 +239,8 @@ const PaymentCrypto = ({
         </div>
         <div className="mcaption-semibold14 mx-4 flex flex-col gap-4 md:mx-10 md:gap-6">
           <div
-            className={`flex flex-col justify-between gap-4 rounded-2 bg-positive-50 px-3 py-2 ${
-              hasEnoughInsufficient ? 'bg-positive-50' : 'bg-[#FFDADD]'
+            className={`flex flex-col justify-between gap-4 rounded-2 px-3 py-2 ${
+              hasEnoughInsufficient ? 'bg-positive-50' : 'bg-negative-50'
             }`}
           >
             <p className="flex items-center justify-between">
@@ -263,14 +263,14 @@ const PaymentCrypto = ({
               </span>
             </p>
             {!hasEnoughInsufficient && (
-              <div className="md: flex flex-col justify-between rounded-2 bg-white p-3 md:flex-row">
+              <div className="flex-col justify-between rounded-2 bg-white p-3 md:flex md:flex-row">
                 <span className="text-negative-500">
                   {t?.rich('step3CryptoInsufficientAmount', {
                     number: amountDue - Number.parseFloat(amountWalletByCurrency ?? '0'),
                     currency: cryptoCurrency ?? 'USDT',
                   })}
                 </span>
-                <Link href={PLATFORM_ROUTES.wallet} className="mcaption-semibold14 text-primary underline">
+                <Link href={PLATFORM_ROUTES.wallet} className="mcaption-semibold14 h-auto p-0 text-primary underline">
                   {t('step3CryptoTopUp')}
                 </Link>
               </div>

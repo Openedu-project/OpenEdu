@@ -1,5 +1,5 @@
-import Courses from '@oe/dashboard/creator/page';
+import Coupon from '@oe/dashboard/creator/coupon/page';
 
 export default function CouponPage() {
-  return <Courses />;
+  return <Coupon />;
 }

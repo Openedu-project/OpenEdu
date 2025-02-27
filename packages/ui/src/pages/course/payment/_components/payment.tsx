@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 import { usePostValidateRefCode } from '@oe/api/hooks/useAffiliateCampaign';
+import { useExchangeRates } from '@oe/api/hooks/useExchangeRates';
 import { useGetMe } from '@oe/api/hooks/useMe';
 import {
   useCreateOrder,
@@ -10,15 +11,18 @@ import {
 } from '@oe/api/hooks/useOrder';
 import { useGetPaymentMethodList } from '@oe/api/hooks/usePayment';
 import { useGetShareRateByCode } from '@oe/api/hooks/useShareRate';
+import { useNFTTotalAssets, useWallet } from '@oe/api/hooks/useWallet';
 import type { ICourseOutline } from '@oe/api/types/course/course';
 import type { IOrderRes } from '@oe/api/types/order';
+import type { IWallet } from '@oe/api/types/wallet';
 import { createAPIUrl } from '@oe/api/utils/fetch';
+import { ASSET_TYPES, CHAIN, FIAT_CURRENCIES, SUPPORTED_EXCHANGE_RATES } from '@oe/api/utils/wallet';
 import { getCookieClient } from '@oe/core/utils/cookie';
 import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { useSocketStore } from '@oe/ui/store/socket';
 import { useTranslations } from 'next-intl';
 import { useParams, useRouter } from 'next/navigation';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import PaymentConfirmation from './payment-confirmation';
 import PaymentStatus from './payment-status';
@@ -30,6 +34,14 @@ export interface IPaymentCryptoWallet {
   balance: string;
   currency_symbol: string;
 }
+type AssetData = {
+  type: string;
+  assetType: string;
+  amount: number;
+  valueUSD: number;
+  original: IWallet;
+};
+
 const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
   const router = useRouter();
   const t = useTranslations('coursePayment.paymentConfirmation');
@@ -64,9 +76,55 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
   // const { wallets, isLoading, tokenBalances } = usePaymentWallet();
   const [usedCoupon, setUsedCoupon] = useState<string | null>(null);
   const { triggerOrderPaymentStatus } = useOrderPaymentStatus(orderId);
+  const { wallets } = useWallet();
+  const { tokenBalances } = useNFTTotalAssets();
+  const { exchangeRates } = useExchangeRates();
 
-  const [cryptoWallet] = useState<IPaymentCryptoWallet[] | null>(null);
+  const cryptoWallet = useMemo(() => {
+    if (!(wallets && exchangeRates)) {
+      return [];
+    }
 
+    // const allCurrencies = [...FIAT_CURRENCIES, ...CRYPTO_CURRENCIES];
+
+    const processedData = wallets
+      .map(wallet => {
+        const currencyInfo = SUPPORTED_EXCHANGE_RATES[wallet.currency as keyof typeof SUPPORTED_EXCHANGE_RATES];
+        if (!currencyInfo) {
+          return null;
+        }
+        const { tokens, near } = tokenBalances ?? {
+          near: { balance: 0 },
+          tokens: {} as { [key: string]: { balance: number } },
+        };
+        if (wallet.currency.toLocaleLowerCase() === CHAIN.NEAR) {
+          wallet.balance = String(near.balance);
+        } else if (!Object.keys(FIAT_CURRENCIES).includes(wallet.currency)) {
+          // Only set balance for non-fiat currencies
+          const tokenBalance = tokens[wallet.currency as keyof typeof tokens];
+          wallet.balance = String(tokenBalance?.balance ?? 0);
+        }
+
+        return {
+          assetType: wallet.type.toLowerCase(),
+          id: wallet,
+          native: wallet.currency,
+          balance: Number(wallet.balance),
+          currency_symbol: wallet.currency,
+        };
+      })
+      .filter(Boolean) as unknown as AssetData[];
+
+    return processedData.sort((a, b) => {
+      if (a.assetType === ASSET_TYPES.FIAT && b.assetType !== ASSET_TYPES.FIAT) {
+        return -1;
+      }
+      if (a.assetType !== ASSET_TYPES.FIAT && b.assetType === ASSET_TYPES.FIAT) {
+        return 1;
+      }
+      return 0;
+    });
+  }, [wallets, exchangeRates, tokenBalances]);
   useEffect(() => {
     if (courseData) {
       const { price_settings } = courseData;
@@ -302,7 +360,7 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
             dataMethods={dataPaymentMethodList?.results ?? []}
             fiatCurrency={fiatCurrency}
             cryptoCurrency={cryptoCurrency}
-            cryptoWallet={cryptoWallet}
+            cryptoWallet={cryptoWallet as unknown as IPaymentCryptoWallet[]}
             usedCoupon={usedCoupon ?? ''}
             onNextStep={handleNextStep}
             setVerifyOrderRes={setVerifyOrderRes}
