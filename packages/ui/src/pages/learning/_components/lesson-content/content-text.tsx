@@ -76,7 +76,7 @@ export default function ContentText({ data, onComplete }: ITextProps) {
     <div key={uid} className="flex w-full flex-1 flex-col px-2 md:px-0">
       <div
         ref={contentRef}
-        className="rich-text m-0"
+        className="rich-text [&>ol]:!leading-tight [&>ul]:!leading-tight [&>ul>li]:!mb-2 [&>ol>li]:!mb-2 m-0"
         // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
         dangerouslySetInnerHTML={{
           __html: content as string | TrustedHTML,
