@@ -23,11 +23,20 @@ export default function LessonPage() {
   }, [lessonId, activeLesson?.id]);
 
   const handleSubmit = async (data: ILessonSchema) => {
+    const newContents = data?.contents.map(content => {
+      return {
+        ...content,
+        course_id: data.course_id,
+      };
+    });
+
     await handleUpdateLesson({
       ...activeLesson,
       ...data,
+      contents: newContents,
     } as ISegment);
   };
+
   const handleError = () => {
     setHasErrors(true);
   };
