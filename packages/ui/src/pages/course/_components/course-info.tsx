@@ -23,9 +23,9 @@ export const CourseInfo = ({ courseData }: { courseData: ICourseOutline }) => {
         <LastUpdated update_at={update_at} />
       </div>
 
-      <ExpandableText content={description} className="rounded-xl border border-foreground/20 p-4" />
-
       <CourseStats learner_count={learner_count} mark_as_completed={mark_as_completed} levels={levels} />
+
+      <ExpandableText content={description} className="rounded-xl border border-foreground/20 p-4" />
     </div>
   );
 };

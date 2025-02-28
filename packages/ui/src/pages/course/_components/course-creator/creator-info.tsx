@@ -49,7 +49,12 @@ export default function CreatorInfor({
           if (value) {
             const url = hasHttp ? value : `${HTTP_PREFIX}${value}`;
             return (
-              <Link key={key} href={url} target="_blank" className="flex h-fit items-center gap-2 p-0 text-current">
+              <Link
+                key={key}
+                href={url}
+                target="_blank"
+                className="flex h-fit items-center gap-2 p-0 text-current hover:no-underline"
+              >
                 {key !== 'website' ? (
                   <SocialIcon url={value} iconClassName="h-5 w-5" showText={false} iconColor="#2C2C2C" />
                 ) : (
