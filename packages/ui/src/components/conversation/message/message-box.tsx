@@ -5,7 +5,7 @@ import { UserMessage } from './user-message';
 
 const MessageBox = ({ id, message, loading, rewrite, sendMessage, messageType }: IMessageBoxProps) => {
   return (
-    <div className="min-h-[100px] py-2" id={id}>
+    <div className="min-h-[100px] max-w-3xl py-2" id={id}>
       {message?.sender?.role === 'user' && (
         <UserMessage message={message} loading={loading} sendMessage={sendMessage} messageType={messageType} />
       )}

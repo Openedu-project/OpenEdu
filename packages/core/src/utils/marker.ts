@@ -1,7 +1,95 @@
 import hljs from 'highlight.js';
-import { Marked, type Renderer, type Tokens } from 'marked';
-const regexLinkButton = /^\[(\d+)\]$/;
+import katex from 'katex';
+import { Marked, type MarkedExtension, type Renderer, type Tokens } from 'marked';
+import 'katex/dist/katex.min.css';
 
+const regexLinkButton = /^\[(\d+)\]$/;
+const blockLatexRule: RegExp[] = [
+  /^\$\$([\s\S]+?)\$\$/,
+  /^\\\[([\s\S]+?)\\\]/,
+  /^\\begin\{math\}([\s\S]+?)\\end\{math\}/,
+];
+const inlineBlockLatexRule: RegExp[] = [
+  /^\$([^$\n]+?)\$/,
+  /^\\\(([\s\S]+?)\\\)/,
+  /^\\begin\{math\}([\s\S]+?)\\end\{math\}/,
+];
+
+function safeEncodeURIComponent(str: string) {
+  try {
+    return encodeURIComponent(str);
+  } catch {
+    try {
+      const cleaned = String(str).replace(/[\uD800-\uDFFF]/g, '�');
+      return encodeURIComponent(cleaned);
+    } catch {
+      return encodeURIComponent(String(str).replace(/[^\x20-\x7E]/g, '?'));
+    }
+  }
+}
+
+// Helper function to render LaTeX with consistent error handling
+function renderLatex(tex: string, displayMode: boolean): string {
+  try {
+    return katex.renderToString(tex, {
+      displayMode,
+      throwOnError: false,
+      strict: false,
+    });
+  } catch (e) {
+    console.error('KaTeX error:', e);
+    return displayMode
+      ? `<div class="tex-error">LaTeX Error: LaTeX format failed: ${tex}</div>`
+      : `<span class="tex-error">LaTeX Error: LaTeX format failed: ${tex}</span>`;
+  }
+}
+
+// LaTeX extension
+const latexExtension: MarkedExtension = {
+  extensions: [
+    {
+      name: 'blockLatex',
+      level: 'block',
+      tokenizer(src) {
+        const match = blockLatexRule.map(rule => rule.exec(src)).filter(match => !!match)?.[0];
+
+        if (match) {
+          return {
+            type: 'html',
+            raw: match[0],
+            text: `<div class="block-latex">${renderLatex((match[1] ?? '').trim(), true)}</div>`,
+            tokens: [],
+          };
+        }
+        return undefined;
+      },
+    },
+
+    // Inline LaTeX
+    {
+      name: 'inlineLatex',
+      level: 'inline',
+      tokenizer(src) {
+        if (src.startsWith('$$')) {
+          return undefined;
+        }
+
+        const match = inlineBlockLatexRule.map(rule => rule.exec(src)).filter(match => !!match)?.[0];
+        if (match) {
+          return {
+            type: 'html',
+            raw: match[0],
+            text: renderLatex((match[1] ?? '').trim(), false),
+            tokens: [],
+          };
+        }
+        return undefined;
+      },
+    },
+  ],
+};
+
+// Create and configure marked instance
 export const marked = new Marked({
   renderer: {
     link(this: Renderer, { href, title, text }: Tokens.Link) {
@@ -35,7 +123,7 @@ export const marked = new Marked({
         }, 2000);
       });
     })(this)"
-    data-copy-button data-code="${encodeURIComponent(originalCode)}" class="flex items-center justify-center h-6 w-6 border rounded hover:bg-gray-100">
+    data-copy-button data-code="${safeEncodeURIComponent(originalCode)}" class="flex items-center justify-center h-6 w-6 border rounded hover:bg-gray-100">
     <svg class="copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M8 17.929H6c-1.105 0-2-.912-2-2.036V5.036C4 3.912 4.895 3 6 3h8c1.105 0 2 .912 2 2.036v1.866m-6 .17h8c1.105 0 2 .91 2 2.035v10.857C20 21.088 19.105 22 18 22h-8c-1.105 0-2-.911-2-2.036V9.107c0-1.124.895-2.036 2-2.036z"/>
     </svg>
@@ -93,3 +181,6 @@ export const marked = new Marked({
     },
   },
 });
+
+// Add the LaTeX extension to marked
+marked.use(latexExtension);

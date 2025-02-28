@@ -192,10 +192,7 @@ export function ChatWindow({ id, initData, agent = 'ai_search', className }: ICh
 
   return (
     <div className={cn('flex h-full flex-col', className)}>
-      <div
-        ref={containerRef}
-        className={cn('flex grow flex-col gap-2 overflow-hidden', id ? 'bg-background' : 'items-center')}
-      >
+      <div ref={containerRef} className={cn('flex grow flex-col gap-2 overflow-hidden')}>
         {id ? (
           <ChatWithMessage
             messageType={messageType}
@@ -207,7 +204,7 @@ export function ChatWindow({ id, initData, agent = 'ai_search', className }: ICh
           <EmptyChat />
         )}
       </div>
-      <div className="bg-background pt-2">
+      <div className="max-w-3xl bg-background pt-2">
         <MessageInput
           messageType={messageType}
           sendMessage={sendMessage}

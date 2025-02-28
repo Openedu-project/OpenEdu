@@ -1,20 +1,18 @@
 'use client';
 import AIBot from '@oe/assets/images/ai-bot.png';
 import Openedu from '@oe/assets/images/openedu.png';
-
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { marked } from '@oe/core/utils/marker';
 import { useMemo, useRef } from 'react';
 import { Image } from '#components/image';
+import { Button } from '#shadcn/button';
+import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import Copy from '../message-actions/copy';
 import DisLikeButton from '../message-actions/dislike';
 import LikeButton from '../message-actions/like';
 import Rewrite from '../message-actions/rewrite';
 import type { IAIMessageProps } from '../type';
-import '../highlight.css';
-import { Button } from '#shadcn/button';
-import { useConversationStore } from '#store/conversation-store';
 
 export const AIMessage = ({ message, loading, rewrite }: IAIMessageProps) => {
   const html = useMemo(() => marked.parse(message.content), [message.content]);
