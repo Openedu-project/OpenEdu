@@ -87,9 +87,27 @@ export async function createCertHtmlTemplateService(
   return response.data;
 }
 
+export async function getTemplateByIdService(
+  endpoint: string | null | undefined,
+  { params, init }: { params: { id: string }; init?: RequestInit }
+) {
+  let endpointKey = endpoint;
+
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.HTML_TEMPLATES_ID,
+      params: { id: params.id },
+    });
+  }
+
+  const response = await fetchAPI<ICertificate>(endpointKey, init);
+
+  return response.data;
+}
+
 export async function updateCertHtmlTemplateService(
   endpoint: string | null | undefined,
-  { payload, init }: { payload: ICertificateUpdate; init?: RequestInit }
+  { payload, init }: { payload: Partial<ICertificateUpdate>; init?: RequestInit }
 ) {
   let endpointKey = endpoint;
 
@@ -100,7 +118,7 @@ export async function updateCertHtmlTemplateService(
     });
   }
 
-  const response = await putAPI<ICertificate, ICertificateUpdate>(endpointKey, payload, init);
+  const response = await putAPI<ICertificate, Partial<ICertificateUpdate>>(endpointKey, payload, init);
 
   return response.data;
 }
@@ -199,4 +217,22 @@ export async function getCertByIdService(
   } catch {
     return null;
   }
+}
+
+export async function updateCertEnableService(
+  endpoint: string | null | undefined,
+  { payload, init }: { payload: { id: string }; init?: RequestInit }
+) {
+  let endpointKey = endpoint;
+
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.HTML_TEMPLATES_ID_ENABLE,
+      params: { id: payload.id },
+    });
+  }
+
+  const response = await postAPI<ICertificate, unknown>(endpointKey, undefined, init);
+
+  return response.data;
 }

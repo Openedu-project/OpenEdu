@@ -93,5 +93,8 @@ export const dashboardMessages = {
       wishlist: 'Wishlist',
       myCertificates: 'My Certificates',
     },
+    certificate: {
+      title: 'Certificate',
+    },
   },
 };

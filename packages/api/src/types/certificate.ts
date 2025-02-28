@@ -36,6 +36,7 @@ export interface ICertificate {
   type: string; // certificate_template | certificate_layer
   html: string;
   user_id: string;
+  is_default: boolean;
   course_cuid: string;
   course_name: string;
   creator_name: string;
@@ -43,6 +44,7 @@ export interface ICertificate {
   enable: boolean;
   root_layer: IFounder;
   org_layer?: IFounder;
+  template: ICertificateTemplate;
 }
 
 export interface ICertificateUser {
@@ -68,23 +70,24 @@ export interface IRequestSelectTemplate {
   certificate_layer_id: string;
 }
 
-export interface ICertificateRequest extends Omit<ICertificate, 'root_layer' | 'id' | 'org_layer' | 'files'> {
-  root_layer: {
-    signature_name?: string;
-    logo_id: string;
-    signature_file_id?: string;
-    position?: string;
-  };
-  org_layer: {
-    signature_name?: string;
-    logo_id: string;
-    signature_file_id?: string;
-    position?: string;
-  };
-  file_id: string;
+export interface ICertificateRequest extends Omit<Partial<ICertificate>, 'root_layer' | 'id' | 'org_layer' | 'files'> {
+  // root_layer: {
+  //   signature_name?: string;
+  //   logo_id: string;
+  //   signature_file_id?: string;
+  //   position?: string;
+  // };
+  // org_layer: {
+  //   signature_name?: string;
+  //   logo_id: string;
+  //   signature_file_id?: string;
+  //   position?: string;
+  // };
+  // file_id: string;
+  // template: CertificateTemplate;
 }
 
-export interface ICertificateUpdate extends Omit<ICertificate, 'enable' | 'is_default' | 'type'> {}
+export interface ICertificateUpdate extends Omit<ICertificate, 'type'> {}
 
 export interface IReceiveCertificateRequest {
   file: {
@@ -116,4 +119,122 @@ export interface ICertificateDetail {
   nft_token_id: string;
   nft_tx_hash: string;
   mint_nft_enabled: boolean;
+}
+
+export interface IBaseStyles {
+  x?: number;
+  y?: number;
+  right?: number;
+  bottom?: number;
+  width?: number;
+  height?: number;
+  position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+}
+
+export interface ITextStyles extends IBaseStyles {
+  fontSize?: number;
+  fontFamily?: string;
+  color?: string;
+  bold?: boolean;
+  italic?: boolean;
+  underline?: boolean;
+  align?: 'left' | 'center' | 'right';
+}
+
+export interface ICertificateTextElement {
+  id: string;
+  type: 'text';
+  content?: string;
+  styles?: ITextStyles;
+  visible?: boolean;
+}
+
+export interface ICertificateRichTextElement {
+  id: string;
+  type: 'rich-text';
+  content?: string;
+  styles?: IBaseStyles;
+  visible?: boolean;
+}
+
+export interface ICertificateImageElement {
+  id: string;
+  type: 'image';
+  file?: IFileResponse;
+  styles?: IBaseStyles;
+  visible?: boolean;
+}
+
+export interface ICertificateSignatureElement {
+  id: string;
+  type: 'signature';
+  signature?: string | IFileResponse;
+  signatureStyles?: ITextStyles & IBaseStyles;
+  position?: string;
+  positionStyles?: ITextStyles;
+  lineStyles?: Pick<IBaseStyles, 'x' | 'y' | 'height'> & {
+    backgroundColor?: string;
+  };
+  order?: number; // begin from 0
+  visible?: boolean;
+  styles?: IBaseStyles;
+}
+
+export interface ICertificateOrganizationElement {
+  id: string;
+  type: 'organization';
+  file?: IFileResponse;
+  logoStyles?: Omit<IBaseStyles, 'x' | 'y'>;
+  name?: string;
+  nameStyles?: Omit<ITextStyles, 'x' | 'y'>;
+  order?: number; // begin from 0
+  orientation?: 'horizontal' | 'vertical';
+  showName?: boolean;
+  visible?: boolean;
+  styles?: IBaseStyles & { right?: number; align?: 'left' | 'center' | 'right' };
+}
+
+export type ICertificateElement =
+  | ICertificateTextElement
+  | ICertificateImageElement
+  | ICertificateRichTextElement
+  | ICertificateSignatureElement
+  | ICertificateOrganizationElement;
+
+export interface ICertificateFrame {
+  id?: string;
+  file?: IFileResponse;
+  width?: number;
+  height?: number;
+  backgroundColor?: string;
+  visible?: boolean;
+}
+
+export interface ICertificateTemplate {
+  id?: string;
+  name?: string;
+  elements?: ICertificateElement[];
+  frame?: ICertificateFrame;
+}
+
+export interface ISignature {
+  id?: string;
+  educator_name: string;
+  signature?: IFileResponse;
+  position: string;
+}
+
+export interface ICertificateOrganization {
+  id?: string;
+  name: string;
+  logo: IFileResponse;
+}
+
+export interface ICertificateData {
+  id?: string;
+  learner_name: string;
+  course_name: string;
+  issue_date: number;
+  organizations?: ICertificateOrganization[];
+  signatures?: ISignature[];
 }

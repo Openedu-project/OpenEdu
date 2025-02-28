@@ -28,7 +28,7 @@ export function DeleteButton({
 }) {
   const tGeneral = useTranslations('general');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const handleDelete = async () => {
+  const handleDelete = async (onClose?: () => void) => {
     setIsSubmitting(true);
     await onDelete(onClose);
     setIsSubmitting(false);

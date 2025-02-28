@@ -42,7 +42,7 @@ export function DatePicker({ isRange = false, className, onChange, value, ...pro
   };
 
   return (
-    <div className={cn('grid gap-2', className)}>
+    <>
       <Popover>
         <PopoverTrigger asChild>
           <Button
@@ -50,7 +50,8 @@ export function DatePicker({ isRange = false, className, onChange, value, ...pro
             variant="outline"
             className={cn(
               'w-[300px] justify-start text-left font-normal',
-              !(date || dateRange) && 'text-muted-foreground'
+              !(date || dateRange) && 'text-muted-foreground',
+              className
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
@@ -58,7 +59,7 @@ export function DatePicker({ isRange = false, className, onChange, value, ...pro
               dateRange?.from ? (
                 dateRange.to ? (
                   <>
-                    {format(dateRange.from, 'LLL dd, y')} - {format(dateRange.to, 'LLL dd, y')}
+                    {format(dateRange.from, 'LLL dd, y')} -{format(dateRange.to, 'LLL dd, y')}
                   </>
                 ) : (
                   format(dateRange.from, 'LLL dd, y')
@@ -94,7 +95,7 @@ export function DatePicker({ isRange = false, className, onChange, value, ...pro
           )}
         </PopoverContent>
       </Popover>
-    </div>
+    </>
   );
 }
 

@@ -1,4 +1,5 @@
 import type { Editor } from '@tiptap/core';
+import type { TRichTextFont } from '../fonts';
 import { type MenuItem, menuItemsMap } from './menu-items';
 
 export interface SharedMenuProps {
@@ -28,12 +29,20 @@ export const useSharedMenu = ({ editor, menuItems = [], defaultMenuItems }: Shar
     }
   }
 
-  const renderMenuItems = (aiParams?: Record<string, string>, onAIApply?: () => void) => (
+  const renderMenuItems = ({
+    aiParams,
+    fonts,
+    onAIApply,
+  }: {
+    aiParams?: Record<string, string>;
+    fonts: TRichTextFont[];
+    onAIApply?: () => void;
+  }) => (
     <>
       {finalMenuItems.map(item => {
         const MenuItemComponent = menuItemsMap[item as keyof typeof menuItemsMap];
         return MenuItemComponent ? (
-          <MenuItemComponent key={item} editor={editor} aiParams={aiParams} onAIApply={onAIApply} />
+          <MenuItemComponent key={item} editor={editor} aiParams={aiParams} onAIApply={onAIApply} fonts={fonts} />
         ) : null;
       })}
     </>

@@ -2,6 +2,7 @@
 import type { Editor } from '@tiptap/core';
 import type React from 'react';
 import { cn } from '#utils/cn';
+import type { TRichTextFont } from '../fonts';
 import type { MenuItem } from './menu-items';
 import { useSharedMenu } from './useSharedMenu';
 
@@ -39,9 +40,14 @@ export const MenuBar: React.FC<{
   aiParams?: Record<string, string>;
   aiButton?: boolean;
   onAIApply?: () => void;
-}> = ({ editor, className, aiParams, onAIApply, menuItems = [], aiButton }) => {
+  fonts: TRichTextFont[];
+}> = ({ editor, className, aiParams, onAIApply, menuItems = [], aiButton, fonts }) => {
   const defaultItems = aiButton ? ([...defaultMenuItems, 'aiGenerate'] as MenuItem[]) : defaultMenuItems;
-  const { renderMenuItems } = useSharedMenu({ editor, menuItems, defaultMenuItems: defaultItems });
+  const { renderMenuItems } = useSharedMenu({
+    editor,
+    menuItems,
+    defaultMenuItems: defaultItems,
+  });
 
   if (!(editor && renderMenuItems)) {
     return null;
@@ -49,7 +55,11 @@ export const MenuBar: React.FC<{
 
   return (
     <div className={cn('flex flex-wrap gap-1 border-b bg-muted p-2', className)}>
-      {renderMenuItems(aiParams, onAIApply)}
+      {renderMenuItems({
+        aiParams,
+        onAIApply,
+        fonts,
+      })}
     </div>
   );
 };

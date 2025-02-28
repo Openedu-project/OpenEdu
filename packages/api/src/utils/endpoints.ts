@@ -200,6 +200,7 @@ export const API_ENDPOINT = {
   CERTIFICATES_ID_NFT_FEES: '/api/v1/certificates/:id/nft/fees',
   HTML_TEMPLATES: '/api/v1/html-templates',
   HTML_TEMPLATES_ID: '/api/v1/html-templates/:id',
+  HTML_TEMPLATES_ID_ENABLE: '/api/v1/html-templates/:id/enable',
   AFFILIATE_CAMPAIGNS: '/api/v1/affiliate-campaigns',
   AFFILIATE_CAMPAIGNS_ID: '/api/v1/affiliate-campaigns/:id',
   AFFILIATE_CAMPAIGNS_ID_REFERRERS: '/api/v1/affiliate-campaigns/:id/referrers',
