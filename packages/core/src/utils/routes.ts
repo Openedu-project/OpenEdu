@@ -130,6 +130,8 @@ export const ADMIN_ROUTES = {
   launchpadApprovedDetail: '/admin/launchpad/approved/:id',
   launchpadRequests: '/admin/launchpad/requests',
   launchpadRequestsDetail: '/admin/launchpad/requests/:id',
+  certificates: '/admin/certificates',
+  certificateDetail: '/admin/certificates/:id',
 } as const;
 
 export const CREATOR_ROUTES = {

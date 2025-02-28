@@ -1,12 +1,17 @@
 'use client';
 import { EditorContent } from '@tiptap/react';
-import { useEffect } from 'react';
+import { type HTMLProps, useEffect } from 'react';
 import { useRichTextEditor } from './useRichTextEditor';
 
-export function RichTextRenderer({ content }: { content: string }) {
+interface RichTextRendererProps extends HTMLProps<HTMLDivElement> {
+  content: string;
+}
+
+export function RichTextRenderer({ content, ...props }: RichTextRendererProps) {
   const editor = useRichTextEditor({
     content,
     editable: false,
+    hasRichTextClass: false,
   });
 
   useEffect(() => {
@@ -15,5 +20,5 @@ export function RichTextRenderer({ content }: { content: string }) {
     }
   }, [content, editor]);
 
-  return <EditorContent editor={editor} />;
+  return <EditorContent editor={editor} {...props} />;
 }

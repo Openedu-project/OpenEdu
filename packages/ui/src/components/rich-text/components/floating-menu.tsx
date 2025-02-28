@@ -2,6 +2,7 @@ import type { Editor } from '@tiptap/core';
 import { FloatingMenu as TiptapFloatingMenu } from '@tiptap/react';
 import type React from 'react';
 import { cn } from '#utils/cn';
+import type { TRichTextFont } from '../fonts';
 import type { MenuItem } from './menu-items';
 import { useSharedMenu } from './useSharedMenu';
 
@@ -24,8 +25,13 @@ export const FloatingMenu: React.FC<{
   aiParams?: Record<string, string>;
   onAIApply?: () => void;
   menuItems?: MenuItem[];
-}> = ({ editor, className, aiParams, onAIApply, menuItems = [] }) => {
-  const { renderMenuItems } = useSharedMenu({ editor, menuItems, defaultMenuItems });
+  fonts: TRichTextFont[];
+}> = ({ editor, className, aiParams, onAIApply, menuItems = [], fonts }) => {
+  const { renderMenuItems } = useSharedMenu({
+    editor,
+    menuItems,
+    defaultMenuItems,
+  });
 
   if (!(editor && renderMenuItems)) {
     return null;
@@ -36,7 +42,11 @@ export const FloatingMenu: React.FC<{
       editor={editor}
       tippyOptions={{ duration: 100 }}
     >
-      {renderMenuItems(aiParams, onAIApply)}
+      {renderMenuItems({
+        aiParams,
+        onAIApply,
+        fonts,
+      })}
     </TiptapFloatingMenu>
   );
 };

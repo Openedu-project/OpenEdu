@@ -1,12 +1,15 @@
 import { useTranslations } from 'next-intl';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '#shadcn/select';
+import { cn } from '#utils/cn';
 
-export type SelectboxOption = {
+export interface SelectboxOption {
   id: string;
   value: string;
   label: ReactNode;
-};
+  className?: string;
+  style?: CSSProperties;
+}
 
 export interface SelectboxProps {
   options: SelectboxOption[];
@@ -18,6 +21,7 @@ export interface SelectboxProps {
   valueClassName?: string;
   hasIcon?: boolean;
   displayValue?: (value: string) => ReactNode;
+  style?: CSSProperties;
 }
 
 export function Selectbox({
@@ -30,6 +34,7 @@ export function Selectbox({
   valueClassName,
   hasIcon = true,
   displayValue,
+  style,
 }: SelectboxProps) {
   const tGeneral = useTranslations('general');
 
@@ -47,14 +52,19 @@ export function Selectbox({
 
   return (
     <Select value={value} onValueChange={onChange} disabled={disabled}>
-      <SelectTrigger className={className} hasIcon={hasIcon}>
+      <SelectTrigger className={className} hasIcon={hasIcon} style={style}>
         <SelectValue placeholder={placeholder ?? `${tGeneral('select')}...`} className={valueClassName}>
           {renderSelectedValue()}
         </SelectValue>
       </SelectTrigger>
       <SelectContent>
         {options?.map(option => (
-          <SelectItem key={option.id} value={option.value} className="cursor-pointer">
+          <SelectItem
+            key={option.id}
+            value={option.value}
+            className={cn('cursor-pointer', option.className)}
+            style={option.style}
+          >
             {option.label}
           </SelectItem>
         ))}

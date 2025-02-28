@@ -1,5 +1,5 @@
 'use client';
-import { type Editor, EditorContent } from '@tiptap/react';
+import { type Editor, EditorContent, type JSONContent } from '@tiptap/react';
 
 // import './styles.css';
 
@@ -10,6 +10,7 @@ import { BubbleMenu } from './components/bubble-menu';
 import { FloatingMenu } from './components/floating-menu';
 import { MenuBar } from './components/menu-bar';
 import type { MenuItem } from './components/menu-items';
+import { type TRichTextFont, fonts as defaultFonts } from './fonts';
 import { useRichTextEditor } from './useRichTextEditor';
 
 export interface RichTextEditorProps {
@@ -17,7 +18,7 @@ export interface RichTextEditorProps {
   className?: string;
   menuBarClassName?: string;
   value?: string;
-  onChange?: (value: string) => void;
+  onChange?: (value: string, json?: JSONContent) => void;
   ref?: Ref<RichTextEditorRef>;
   menuBarItems?: MenuItem[];
   bubbleMenuItems?: MenuItem[];
@@ -27,6 +28,7 @@ export interface RichTextEditorProps {
   aiButton?: boolean;
   placeholder?: string;
   maxHeight?: string;
+  fonts?: TRichTextFont[];
 }
 
 export interface RichTextEditorRef {
@@ -49,13 +51,14 @@ export const RichTextEditor = ({
   placeholder,
   ref,
   maxHeight,
+  fonts = defaultFonts,
 }: RichTextEditorProps) => {
   const tRichText = useTranslations('richText');
   const editor = useRichTextEditor({
     content: defaultValue || value,
     placeholder: placeholder || tRichText('placeholder'),
     onUpdate: (editor: Editor) => {
-      onChange?.(editor.getHTML());
+      onChange?.(editor.getHTML(), editor.getJSON());
     },
     maxHeight,
   });
@@ -82,8 +85,9 @@ export const RichTextEditor = ({
         onAIApply={onAIApply}
         aiButton={aiButton}
         className={menuBarClassName}
+        fonts={fonts}
       />
-      <div className="relative z-10 grow overflow-hidden">
+      <div className="relative z-50 grow overflow-hidden">
         <EditorContent editor={editor} className="scrollbar flex h-full min-h-40 overflow-auto [&>div]:grow" />
         <BubbleMenu
           editor={editor}
@@ -91,8 +95,15 @@ export const RichTextEditor = ({
           aiParams={aiParams}
           onAIApply={onAIApply}
           aiButton={aiButton}
+          fonts={fonts}
         />
-        <FloatingMenu editor={editor} menuItems={floatingMenuItems} aiParams={aiParams} onAIApply={onAIApply} />
+        <FloatingMenu
+          editor={editor}
+          menuItems={floatingMenuItems}
+          aiParams={aiParams}
+          onAIApply={onAIApply}
+          fonts={fonts}
+        />
       </div>
     </div>
   );

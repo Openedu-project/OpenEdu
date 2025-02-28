@@ -8,9 +8,10 @@ import { cn } from '#utils/cn';
 
 interface TextColorMenuProps {
   editor: Editor;
+  currentColor?: string;
 }
 
-export const TextColorMenu: React.FC<TextColorMenuProps> = ({ editor }) => {
+export const TextColorMenu: React.FC<TextColorMenuProps> = ({ editor, currentColor = '#000000' }) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     editor.chain().focus().setTextColor(e.target.value).run();
   };
@@ -26,6 +27,7 @@ export const TextColorMenu: React.FC<TextColorMenuProps> = ({ editor }) => {
       <div className="relative h-1 w-full overflow-hidden">
         <Input
           type="color"
+          value={currentColor}
           onChange={handleChange}
           className="-top-1 absolute right-0 h-3 cursor-pointer border-none p-0"
         />

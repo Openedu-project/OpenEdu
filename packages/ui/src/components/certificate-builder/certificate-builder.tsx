@@ -1,25 +1,22 @@
 'use client';
 
-import { DndContext } from '@dnd-kit/core';
-import { BuilderProvider } from './builder-context';
-import { Preview } from './components/preview';
-import { Settings } from './components/settings';
-import { Toolbar } from './components/toolbar';
+import { Editor } from './_components/editor';
+import { Header } from './_components/header';
+import { CertificateBuilderProvider } from './_components/provider';
+import { Sidebar } from './_components/sidebar';
 
 export const CertificateBuilder = () => {
   return (
-    <BuilderProvider>
+    <CertificateBuilderProvider>
       <div className="flex h-screen flex-col overflow-hidden">
-        <Toolbar />
-        <div className="flex flex-1 overflow-hidden">
+        <Header />
+        <div className="relative flex flex-1 overflow-hidden">
           <div className="scrollbar flex-1 overflow-auto">
-            <DndContext>
-              <Preview />
-            </DndContext>
+            <Editor />
           </div>
-          <Settings />
+          <Sidebar />
         </div>
       </div>
-    </BuilderProvider>
+    </CertificateBuilderProvider>
   );
 };

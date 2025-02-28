@@ -1,8 +1,10 @@
 import {
   Aleo,
+  Alex_Brush,
   Anek_Devanagari,
   Assistant,
   Bitter,
+  Great_Vibes,
   Inter,
   Montserrat,
   Mulish,
@@ -12,6 +14,7 @@ import {
   Oswald,
   Roboto_Condensed,
   Roboto_Mono,
+  Rouge_Script,
 } from 'next/font/google';
 
 const inter = Inter({
@@ -105,6 +108,30 @@ const notoSans = Noto_Sans({
   adjustFontFallback: false,
 });
 
+const alexBrush = Alex_Brush({
+  subsets: ['latin'],
+  variable: '--font-alex-brush',
+  display: 'swap',
+  adjustFontFallback: false,
+  weight: '400',
+});
+
+const greatVibes = Great_Vibes({
+  subsets: ['latin'],
+  variable: '--font-great-vibes',
+  display: 'swap',
+  adjustFontFallback: false,
+  weight: '400',
+});
+
+const rougeScript = Rouge_Script({
+  subsets: ['latin'],
+  variable: '--font-rouge-script',
+  display: 'swap',
+  adjustFontFallback: false,
+  weight: '400',
+});
+
 export const fonts = {
   inter,
   montserrat,
@@ -119,4 +146,7 @@ export const fonts = {
   robotoCondensed,
   robotoMono,
   notoSans,
+  alexBrush,
+  greatVibes,
+  rougeScript,
 };

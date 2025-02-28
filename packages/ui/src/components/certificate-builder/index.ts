@@ -1,4 +1,5 @@
+import { ExportPDFButton } from './_components/pdf';
+import { CertificateRenderer, PreviewModal } from './_components/renderer';
 import { CertificateBuilder } from './certificate-builder';
-import { ExportPDFButton } from './components/pdf/pdf-export';
 
-export { CertificateBuilder, ExportPDFButton };
+export { CertificateBuilder, CertificateRenderer, PreviewModal, ExportPDFButton };

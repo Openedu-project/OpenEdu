@@ -9,6 +9,7 @@ import {
   getCertByUserIdService,
   getCertLayerByCourseIdService,
   getCertLayersService,
+  getTemplateByIdService,
   getTemplatesService,
   receiveCertService,
   removeCertLayerService,
@@ -38,6 +39,24 @@ export function useGetCertLayers({ courseId, params }: { courseId: string; param
     isLoadingCertLayers: isLoading,
     errorCertLayers: error,
     mutateCertLayers: mutate,
+  };
+}
+
+export function useGetCertTemplateById(id: string) {
+  const endpointKey = createAPIUrl({
+    endpoint: API_ENDPOINT.HTML_TEMPLATES_ID,
+    params: { id },
+  });
+
+  const { data, isLoading, error, mutate } = useSWR(endpointKey, (url: string) =>
+    getTemplateByIdService(url, { params: { id } })
+  );
+
+  return {
+    certificateTemplate: data,
+    isLoadingCertificateTemplate: isLoading,
+    errorCertificateTemplate: error,
+    mutateCertificateTemplate: mutate,
   };
 }
 

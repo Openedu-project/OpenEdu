@@ -29,12 +29,14 @@ import {
 import { useTranslations } from 'next-intl';
 import type React from 'react';
 import type { ChangeEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, buttonVariants } from '#shadcn/button';
 import { Input } from '#shadcn/input';
 import { Label } from '#shadcn/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '#shadcn/select';
 import { Toggle } from '#shadcn/toggle';
 import { cn } from '#utils/cn';
+import type { TRichTextFont } from '../fonts';
 import { AIGeneratePopover } from './ai-generate-popover';
 import { AIRewriteModal } from './ai-rewrite-modal';
 import { ImagePopover } from './image-popover';
@@ -323,9 +325,32 @@ export const RedoMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => {
 
 export const HeadingMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => {
   const t = useTranslations('richText.menuItems');
+  const [headingLevel, setHeadingLevel] = useState<string>('normal');
+
+  useEffect(() => {
+    const updateHeadingLevel = () => {
+      let level = 'normal';
+      for (let i = 1; i <= 6; i++) {
+        if (editor.isActive('heading', { level: i })) {
+          level = i.toString();
+          break;
+        }
+      }
+      setHeadingLevel(level);
+    };
+
+    editor.on('selectionUpdate', updateHeadingLevel);
+    editor.on('transaction', updateHeadingLevel);
+
+    return () => {
+      editor.off('selectionUpdate', updateHeadingLevel);
+      editor.off('transaction', updateHeadingLevel);
+    };
+  }, [editor]);
+
   return (
     <Select
-      defaultValue="normal"
+      value={headingLevel}
       onValueChange={value => {
         if (value === 'normal') {
           editor.chain().focus().setParagraph().run();
@@ -333,7 +358,9 @@ export const HeadingMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => {
           editor
             .chain()
             .focus()
-            .toggleHeading({ level: Number.parseInt(value, 10) as 1 | 2 | 3 | 4 | 5 | 6 })
+            .toggleHeading({
+              level: Number.parseInt(value, 10) as 1 | 2 | 3 | 4 | 5 | 6,
+            })
             .run();
         }
       }}
@@ -366,77 +393,39 @@ export const HeadingMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => {
   );
 };
 
-export const FontFamilyMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => {
+export const FontFamilyMenuItem: React.FC<{
+  editor: Editor;
+  fonts: TRichTextFont[];
+}> = ({ editor, fonts }) => {
   const t = useTranslations('richText.menuItems');
+  const [fontFamily, setFontFamily] = useState<string>(editor.getAttributes('textStyle').fontFamily || 'Inter');
+
+  useEffect(() => {
+    const updateFontFamily = () => {
+      const currentFontFamily = editor.getAttributes('textStyle').fontFamily;
+      setFontFamily(currentFontFamily || 'Inter');
+    };
+
+    editor.on('selectionUpdate', updateFontFamily);
+    editor.on('transaction', updateFontFamily);
+
+    return () => {
+      editor.off('selectionUpdate', updateFontFamily);
+      editor.off('transaction', updateFontFamily);
+    };
+  }, [editor]);
+
   return (
-    <Select defaultValue="Inter" onValueChange={value => editor.chain().focus().setFontFamily(value).run()}>
+    <Select value={fontFamily} onValueChange={value => editor.chain().focus().setFontFamily(value).run()}>
       <SelectTrigger className="h-8 w-[120px]" title={t('fontFamily')}>
         <SelectValue placeholder="Font" />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="Inter" style={{ fontFamily: 'Inter' }}>
-          Inter
-        </SelectItem>
-        <SelectItem value="Helvetica, sans-serif" style={{ fontFamily: 'Helvetica, sans-serif' }}>
-          Helvetica
-        </SelectItem>
-        <SelectItem value="Arial, sans-serif" style={{ fontFamily: 'Arial, sans-serif' }}>
-          Arial
-        </SelectItem>
-        <SelectItem value="Arial Black, sans-serif" style={{ fontFamily: 'Arial Black, sans-serif' }}>
-          Arial Black
-        </SelectItem>
-        <SelectItem value="Verdana, sans-serif" style={{ fontFamily: 'Verdana, sans-serif' }}>
-          Verdana
-        </SelectItem>
-        <SelectItem value="Tahoma, sans-serif" style={{ fontFamily: 'Tahoma, sans-serif' }}>
-          Tahoma
-        </SelectItem>
-        <SelectItem value="Trebuchet MS, sans-serif" style={{ fontFamily: 'Trebuchet MS, sans-serif' }}>
-          Trebuchet MS
-        </SelectItem>
-        <SelectItem value="Impact, sans-serif" style={{ fontFamily: 'Impact, sans-serif' }}>
-          Impact
-        </SelectItem>
-        <SelectItem value="Gill Sans, sans-serif" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-          Gill Sans
-        </SelectItem>
-        <SelectItem value="Times New Roman, serif" style={{ fontFamily: 'Times New Roman, serif' }}>
-          Times New Roman
-        </SelectItem>
-        <SelectItem value="Georgia, serif" style={{ fontFamily: 'Georgia, serif' }}>
-          Georgia
-        </SelectItem>
-        <SelectItem value="Palatino, serif" style={{ fontFamily: 'Palatino, serif' }}>
-          Palatino
-        </SelectItem>
-        <SelectItem value="Baskerville, serif" style={{ fontFamily: 'Baskerville, serif' }}>
-          Baskerville
-        </SelectItem>
-        <SelectItem value="Andalé Mono, monospace" style={{ fontFamily: 'Andalé Mono, monospace' }}>
-          Andalé Mono
-        </SelectItem>
-        <SelectItem value="Courier, monospace" style={{ fontFamily: 'Courier, monospace' }}>
-          Courier
-        </SelectItem>
-        <SelectItem value="Lucida, monospace" style={{ fontFamily: 'Lucida, monospace' }}>
-          Lucida
-        </SelectItem>
-        <SelectItem value="Monaco, monospace" style={{ fontFamily: 'Monaco, monospace' }}>
-          Monaco
-        </SelectItem>
-        <SelectItem value="Bradley Hand, cursive" style={{ fontFamily: 'Bradley Hand, cursive' }}>
-          Bradley Hand
-        </SelectItem>
-        <SelectItem value="Brush Script MT, cursive" style={{ fontFamily: 'Brush Script MT, cursive' }}>
-          Brush Script MT
-        </SelectItem>
-        <SelectItem value="Luminari, fantasy" style={{ fontFamily: 'Luminari, fantasy' }}>
-          Luminari
-        </SelectItem>
-        <SelectItem value="Comic Sans MS, cursive" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
-          Comic Sans
-        </SelectItem>
+        {fonts.map(font => (
+          <SelectItem key={font.value} value={font.value} style={{ fontFamily: font.value }}>
+            {font.name}
+          </SelectItem>
+        ))}
       </SelectContent>
     </Select>
   );
@@ -444,8 +433,25 @@ export const FontFamilyMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => 
 
 export const FontSizeMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => {
   const t = useTranslations('richText.menuItems');
+  const [fontSize, setFontSize] = useState<string>(editor.getAttributes('textStyle').fontSize || '14px');
+
+  useEffect(() => {
+    const updateFontSize = () => {
+      const currentFontSize = editor.getAttributes('textStyle').fontSize;
+      setFontSize(currentFontSize || '14px');
+    };
+
+    editor.on('selectionUpdate', updateFontSize);
+    editor.on('transaction', updateFontSize);
+
+    return () => {
+      editor.off('selectionUpdate', updateFontSize);
+      editor.off('transaction', updateFontSize);
+    };
+  }, [editor]);
+
   return (
-    <Select defaultValue="14px" onValueChange={value => editor.chain().focus().setFontSize(value).run()}>
+    <Select value={fontSize} onValueChange={value => editor.chain().focus().setFontSize(value).run()}>
       <SelectTrigger className="h-8 w-[120px]" title={t('fontSize')}>
         <SelectValue placeholder="Font size" />
       </SelectTrigger>
@@ -497,6 +503,23 @@ export const HardBreakMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => {
 
 export const HighlightMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => {
   const t = useTranslations('richText.menuItems');
+  const [highlightColor, setHighlightColor] = useState<string>(editor.getAttributes('highlight').color || '#ffffff');
+
+  useEffect(() => {
+    const updateHighlightColor = () => {
+      const currentColor = editor.getAttributes('highlight').color;
+      setHighlightColor(currentColor || '#ffffff');
+    };
+
+    editor.on('selectionUpdate', updateHighlightColor);
+    editor.on('transaction', updateHighlightColor);
+
+    return () => {
+      editor.off('selectionUpdate', updateHighlightColor);
+      editor.off('transaction', updateHighlightColor);
+    };
+  }, [editor]);
+
   return (
     <Label
       className={cn(
@@ -509,7 +532,7 @@ export const HighlightMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => {
       <div className="relative mt-[1px] h-1 w-full overflow-hidden">
         <Input
           type="color"
-          defaultValue="#ffffff"
+          value={highlightColor}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             editor.chain().focus().setHighlight({ color: e.target.value }).run()
           }
@@ -524,7 +547,26 @@ export const ImagePopoverMenuItem: React.FC<{ editor: Editor }> = ({ editor }) =
 
 export const LinkPopoverMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => <LinkPopover editor={editor} />;
 
-export const TextColorMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => <TextColorMenu editor={editor} />;
+export const TextColorMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => {
+  const [textColor, setTextColor] = useState<string>(editor.getAttributes('textStyle').color || '#000000');
+
+  useEffect(() => {
+    const updateTextColor = () => {
+      const currentColor = editor.getAttributes('textStyle').color;
+      setTextColor(currentColor || '#000000');
+    };
+
+    editor.on('selectionUpdate', updateTextColor);
+    editor.on('transaction', updateTextColor);
+
+    return () => {
+      editor.off('selectionUpdate', updateTextColor);
+      editor.off('transaction', updateTextColor);
+    };
+  }, [editor]);
+
+  return <TextColorMenu editor={editor} currentColor={textColor} />;
+};
 
 export const VideoPopoverMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => <VideoPopover editor={editor} />;
 

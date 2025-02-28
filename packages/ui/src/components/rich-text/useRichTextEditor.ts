@@ -24,6 +24,7 @@ interface UseRichTextEditorProps {
   editable?: boolean;
   onUpdate?: (editor: Editor) => void;
   maxHeight?: string;
+  hasRichTextClass?: boolean;
 }
 
 export const useRichTextEditor = ({
@@ -32,6 +33,7 @@ export const useRichTextEditor = ({
   editable = true,
   onUpdate,
   maxHeight = '50dvh',
+  hasRichTextClass = true,
 }: UseRichTextEditorProps) => {
   return useEditor({
     extensions: [
@@ -67,7 +69,7 @@ export const useRichTextEditor = ({
     },
     editorProps: {
       attributes: {
-        class: `rich-text ${editable ? `max-h-[${maxHeight}]` : ''}`,
+        class: `${editable ? `max-h-[${maxHeight}]` : ''} ${hasRichTextClass ? 'rich-text' : ''}`,
       },
     },
     immediatelyRender: false,
