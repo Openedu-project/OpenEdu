@@ -47,13 +47,16 @@ export default function CourseIncludes({
       icon: <Book width={20} height={20} color="hsl(var(--muted-foreground))" />,
       content: (
         <span>
-          {active_section > 1
-            ? tCourse('totalSections', { total: active_section })
-            : tCourse('totalSection', { total: active_section })}
-          {active_section > 1 && active_lesson > 1 && <span className="mr-1">,</span>}
-          {active_lesson > 1
-            ? tCourse('totalLessons', { total: active_lesson })
-            : tCourse('totalLessons', { total: active_lesson })}
+          {active_section > 0 && (
+            <>
+              {tCourse(active_section === 1 ? 'totalSection' : 'totalSections', { total: active_section })}
+              {active_lesson > 0 && <span className="mr-1">,</span>}
+            </>
+          )}
+          {active_lesson > 0 &&
+            tCourse(active_lesson === 1 ? 'totalLesson' : 'totalLessons', {
+              total: active_lesson,
+            })}
         </span>
       ),
       key: 'total_section_lesson',

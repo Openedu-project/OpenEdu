@@ -7,6 +7,9 @@ export const courseOutlineMessages = {
     courseAchivements: 'What You Will Get From This Course',
     courseContent: 'Course content',
     supportingChannels: 'Supporting channels',
+    creatorAndColabs: {
+      title: 'Creator & Collabs',
+    },
 
     thisCourseIncludes: {
       title: 'This Course Includes:',
