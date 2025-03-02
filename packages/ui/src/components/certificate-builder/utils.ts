@@ -70,10 +70,10 @@ export function interpolateContent(content: string, data?: ICertificateData) {
   }
 
   return content.replace(/\{\{(.*?)\}\}/g, (match, key: keyof ICertificateData) => {
-    if (key === 'learner_name' || key === 'course_name') {
+    if ((key === 'learner_name' || key === 'course_name') && data[key]) {
       return data[key];
     }
-    if (key === 'issue_date') {
+    if (key === 'issue_date' && data[key]) {
       return formatDate(new Date(data[key]).getTime());
     }
     return match;

@@ -12,7 +12,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '#shadcn/popover';
 export const VideoPopover = ({ editor }: { editor: Editor }) => {
   const t = useTranslations('richText.popover');
   const [url, setUrl] = useState('');
-  const [files, setFiles] = useState<IFileResponse[]>([]);
+  const [file, setFile] = useState<IFileResponse>();
 
   const addVideo = (src: string) => {
     if (src) {
@@ -38,11 +38,11 @@ export const VideoPopover = ({ editor }: { editor: Editor }) => {
           <Uploader
             accept="video/*"
             listType="picture"
-            value={files}
-            onChange={files => {
-              setFiles(files);
-              setUrl(files[0]?.url ?? '');
-              addVideo(files[0]?.url ?? '');
+            value={file}
+            onChange={file => {
+              setFile(file as IFileResponse);
+              setUrl((file as IFileResponse)?.url as string);
+              addVideo((file as IFileResponse)?.url as string);
             }}
           />
         </div>

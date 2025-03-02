@@ -49,7 +49,7 @@ export const Uploader = (props: UploaderProps) => {
 
   useEffect(() => {
     if (value) {
-      setFiles(value.map(createFile));
+      setFiles(Array.isArray(value) ? value.map(createFile) : [createFile(value)]);
     }
   }, [value]);
 
@@ -74,9 +74,9 @@ export const Uploader = (props: UploaderProps) => {
     (file: FileType, newName: string) => {
       const updated = files.map(f => (f.fileId === file.fileId ? { ...f, name: newName } : f));
       setFiles(updated);
-      onChange?.(updated as IFileResponse[]);
+      onChange?.(multiple ? (updated as IFileResponse[]) : (updated[0] as IFileResponse));
     },
-    [files, onChange]
+    [files, onChange, multiple]
   );
 
   const handlePreview = useCallback(
@@ -166,10 +166,10 @@ export const Uploader = (props: UploaderProps) => {
       const allFinished = filesRef.current.every(f => f.status === 'finished' || f.status === 'error');
 
       if (allFinished) {
-        onChange?.(filesRef.current as IFileResponse[]);
+        onChange?.(multiple ? (filesRef.current as IFileResponse[]) : (filesRef.current[0] as IFileResponse));
       }
     },
-    [onChange]
+    [onChange, multiple]
   );
 
   const handleAjaxUploadError = useCallback((file: FileType, status: ErrorStatus) => {
@@ -208,12 +208,12 @@ export const Uploader = (props: UploaderProps) => {
   const handleRemove = useCallback(
     (file: FileType) => {
       const updated = files.filter(f => f.fileId !== file.fileId);
-      onChange?.(updated as IFileResponse[]);
+      onChange?.(multiple ? (updated as IFileResponse[]) : (updated[0] as IFileResponse));
       // setFiles(updated); // update files
 
       trigger.current?.clearInput();
     },
-    [files, onChange]
+    [files, onChange, multiple]
   );
 
   const handleCropComplete = useCallback(

@@ -99,7 +99,7 @@ export const ExportPDFButton = ({ fileName, template, data, onClick, ...props }:
         data?.learner_name && data?.course_name && data?.issue_date
           ? `${template.name}-${data.learner_name}-${data.course_name}-${data.issue_date}`
           : template.name;
-      a.download = `${fileName || name}.pdf`;
+      a.download = `${fileName || name}-${Date.now()}.pdf`;
       a.click();
       URL.revokeObjectURL(url);
       onClick?.(e);

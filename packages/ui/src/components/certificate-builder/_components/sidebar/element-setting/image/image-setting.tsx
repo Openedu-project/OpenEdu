@@ -19,12 +19,12 @@ export const ImageSetting = ({
           id="image"
           fileListVisible={false}
           listType="picture"
-          value={element?.file ? [element.file as IFileResponse] : []}
+          value={element?.file}
           accept="image/png, image/jpeg, image/jpg"
-          onChange={files =>
+          onChange={file =>
             updateElement(selectedElement?.id ?? '', {
               ...element,
-              file: files[0],
+              file: file as IFileResponse,
             })
           }
         />

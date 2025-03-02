@@ -34,7 +34,7 @@ export default function PreviewVideos() {
               onChange(files);
               setValue(
                 'props.preview_lessons',
-                files.map(file => {
+                (files as IFileResponse[]).map(file => {
                   return {
                     title: file.name,
                     content: '',

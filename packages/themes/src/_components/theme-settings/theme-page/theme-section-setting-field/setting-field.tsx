@@ -72,10 +72,10 @@ export const ThemePageSettingField: React.FC<ThemePageSettingFieldProps> = ({
         <Uploader
           accept="image/*"
           listType="picture"
-          value={(value as FileType)?.url ? [value as IFileResponse] : []}
+          value={value as IFileResponse}
           onChange={file => {
-            if (file?.[0]) {
-              onChange(file?.[0] as FileType);
+            if (file) {
+              onChange(file as FileType);
             } else {
               onChange({ mime: 'image/png' } as FileType); // set empty image
             }

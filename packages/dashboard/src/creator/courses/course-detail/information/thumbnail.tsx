@@ -29,8 +29,8 @@ export default function Thumbnail() {
             listType="picture"
             className="h-48"
             fileListVisible={false}
-            value={Array.isArray(value) ? value : value ? [value] : undefined}
-            onChange={files => onChange(files)}
+            value={value}
+            onChange={onChange}
           />
         );
       }}

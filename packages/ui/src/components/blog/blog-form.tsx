@@ -115,7 +115,10 @@ export default function BlogForm({
       content: data?.is_ai_generated ? marked.parse(data?.content, { async: false }) : (data?.content ?? ''),
       image_description: data.image_description,
       thumbnail: data.banner,
-      category_ids: data.categories?.map(cate => ({ id: cate.id, name: cate.name })),
+      category_ids: data.categories?.map(cate => ({
+        id: cate.id,
+        name: cate.name,
+      })),
       hashtag_names: data.hashtag?.map(hashtag => hashtag.name),
       is_ai_generated: data.is_ai_generated,
     };
@@ -222,8 +225,8 @@ export default function BlogForm({
                       listType="picture"
                       className="h-48"
                       fileListVisible={false}
-                      value={Array.isArray(value) ? value : value ? [value] : undefined}
-                      onChange={files => onChange(files)}
+                      value={value}
+                      onChange={onChange}
                     />
                   );
                 }}

@@ -80,6 +80,7 @@ export const certificateMessages = {
       },
       preview: {
         title: 'Certificate Preview',
+        config: 'Certificate Template Configuration',
         download: 'Export PDF',
         cancel: 'Cancel',
         downloadError: 'Failed to download PDF',

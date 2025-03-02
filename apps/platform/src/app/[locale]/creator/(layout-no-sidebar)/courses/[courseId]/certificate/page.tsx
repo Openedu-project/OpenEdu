@@ -1,7 +1,5 @@
-export default function CourseDetailCertificatePage() {
-  return (
-    <div className="mx-auto h-full max-w-[900px] px-1 py-4">
-      CourseDetailCertificatePage
-    </div>
-  );
+import CourseDetailCertificatePage from "@oe/dashboard/creator/courses/course-detail/certificate/page";
+
+export default function CourseCertificatePage() {
+  return <CourseDetailCertificatePage />;
 }

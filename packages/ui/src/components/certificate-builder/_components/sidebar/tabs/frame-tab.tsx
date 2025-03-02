@@ -158,9 +158,9 @@ export const FrameTab = () => {
             id="frame-image"
             fileListVisible={false}
             listType="picture"
-            value={template.frame?.file ? [template.frame.file as IFileResponse] : []}
+            value={template.frame?.file}
             accept="image/png, image/jpeg, image/jpg"
-            onChange={files => handleUploadFrame(files[0])}
+            onChange={file => handleUploadFrame(file as IFileResponse)}
           />
         </div>
       </div>

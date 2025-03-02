@@ -29,7 +29,7 @@ export default function EditProfileHeader() {
 
   const { user } = useParams();
 
-  const [files] = useState<IFileResponse[]>([]);
+  const [file] = useState<IFileResponse>();
 
   const { triggerMyProfile } = useUpdateMyProfile();
   const { mutateUserProfile, dataUserProfile } = useGetUserProfile(user as string);
@@ -80,9 +80,9 @@ export default function EditProfileHeader() {
   const coverphoto =
     dataUserProfile && dataUserProfile?.cover_photo?.length > 0 ? dataUserProfile?.cover_photo : background.src;
 
-  const handleEditCoverPhoto = (files: IFileResponse[]) => {
-    if (files?.length > 0) {
-      const cover_photo = files[0]?.url;
+  const handleEditCoverPhoto = (file: IFileResponse) => {
+    if (file) {
+      const cover_photo = file?.url;
 
       triggerMyProfile({ cover_photo })
         .then(() => {
@@ -101,8 +101,8 @@ export default function EditProfileHeader() {
     <>
       <Uploader
         accept="image/*"
-        value={files}
-        onChange={handleEditCoverPhoto}
+        value={file}
+        onChange={file => handleEditCoverPhoto(file as IFileResponse)}
         contentClassName="p-0"
         isShowInformation={false}
       >

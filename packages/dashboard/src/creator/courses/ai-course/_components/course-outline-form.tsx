@@ -111,8 +111,8 @@ export function CourseOutlineForm({
 
               return (
                 <Uploader
-                  value={Array.isArray(value) ? value : value ? [value] : undefined}
-                  onChange={files => onChange(files)}
+                  value={value}
+                  onChange={onChange}
                   maxSizeBytes={50 * 1024 * 1024}
                   fileListVisible={false}
                   accept="application/pdf, application/vnd.ms-excel"

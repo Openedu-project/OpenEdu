@@ -27,18 +27,21 @@ export default function UploadDemo() {
       <Uploader
         listType="picture-text"
         multiple
-        value={fileList}
-        onChange={setFileList}
+        value={fileList as IFileResponse[]}
+        onChange={(files) => {
+          console.log("files", files);
+          setFileList(files as IFileResponse[]);
+        }}
       >
         <Button>Select files...</Button>
       </Uploader>
       <Uploader
         multiple
         listType="picture"
-        value={fileList}
+        value={fileList as IFileResponse[]}
         onChange={(files) => {
           console.log("files", files);
-          setFileList(files);
+          setFileList(files as IFileResponse[]);
         }}
         triggerProps={{ className: "order-1 h-24 w-24" }}
       >
@@ -52,7 +55,10 @@ export default function UploadDemo() {
         crop
         fileListVisible={false}
         value={fileList}
-        onChange={setFileList}
+        onChange={(files) => {
+          console.log("files", files);
+          setFileList(files as IFileResponse[]);
+        }}
         fileItemProps={{
           thumbnailClassName: "object-cover",
           buttonsPosition: "center",
@@ -67,7 +73,10 @@ export default function UploadDemo() {
         multiple
         listType="picture-text"
         value={fileList}
-        onChange={setFileList}
+        onChange={(files) => {
+          console.log("files", files);
+          setFileList(files as IFileResponse[]);
+        }}
         // fileListVisible={false}
         // className="h-48"
       />

@@ -4,6 +4,7 @@ import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 import type {
   ICertificate,
+  ICertificateData,
   ICertificateDetail,
   ICertificateRequest,
   ICertificateUpdate,
@@ -233,6 +234,28 @@ export async function updateCertEnableService(
   }
 
   const response = await postAPI<ICertificate, unknown>(endpointKey, undefined, init);
+
+  return response.data;
+}
+
+export async function updateCourseCertTemplateService(
+  url: string | null | undefined,
+  {
+    params,
+    payload,
+    init,
+  }: { params: { courseId?: string; templateId?: string }; payload: Partial<ICertificateData>; init?: RequestInit }
+): Promise<ICertificate | null> {
+  let endpointKey = url;
+
+  if (!endpointKey && params.courseId && params.templateId) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.COURSES_ID_HTML_TEMPLATES_ID,
+      params: { id: params.courseId, template_id: params.templateId },
+    });
+  }
+
+  const response = await putAPI<ICertificate, Partial<ICertificateData>>(endpointKey ?? '', payload, init);
 
   return response.data;
 }

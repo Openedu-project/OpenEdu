@@ -1,5 +1,6 @@
 import { CertificateRenderer } from './certificate-renderer';
 import { ElementRenderer } from './element-renderer';
-import { PreviewModal } from './renderer-preview-modal';
+import { type ICertificateDataSchema, RendererConfigModal } from './renderer-config-modal';
+import { TemplateScalePreview } from './template-scale-preview';
 
-export { ElementRenderer, CertificateRenderer, PreviewModal };
+export { ElementRenderer, CertificateRenderer, TemplateScalePreview, RendererConfigModal, type ICertificateDataSchema };

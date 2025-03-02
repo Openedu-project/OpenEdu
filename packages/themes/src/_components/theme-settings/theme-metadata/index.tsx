@@ -238,9 +238,9 @@ const ThemeConfigMetadata = ({ data, isRoot = false, isSubmitting, onSubmit }: T
                     cropProps={{
                       crop: { unit: 'px', x: 0, y: 0, width: 12, height: 12 },
                     }}
-                    value={seoData?.icons?.icon ? [seoData?.icons?.icon] : []}
-                    onChange={files => {
-                      handleIconChange('icon', files?.[0]);
+                    value={seoData?.icons?.icon}
+                    onChange={file => {
+                      handleIconChange('icon', file as IFileResponse);
                     }}
                   />
                 </div>
@@ -256,9 +256,9 @@ const ThemeConfigMetadata = ({ data, isRoot = false, isSubmitting, onSubmit }: T
                     cropProps={{
                       crop: { unit: 'px', x: 0, y: 0, width: 12, height: 12 },
                     }}
-                    value={seoData?.icons?.shortcut ? [seoData?.icons?.shortcut] : []}
-                    onChange={files => {
-                      files?.[0] && handleIconChange('shortcut', files?.[0]);
+                    value={seoData?.icons?.shortcut}
+                    onChange={file => {
+                      file && handleIconChange('shortcut', file as IFileResponse);
                     }}
                   />
                 </div>
@@ -274,9 +274,9 @@ const ThemeConfigMetadata = ({ data, isRoot = false, isSubmitting, onSubmit }: T
                     cropProps={{
                       crop: { unit: 'px', x: 0, y: 0, width: 12, height: 12 },
                     }}
-                    value={seoData?.icons?.apple ? [seoData?.icons?.apple] : []}
-                    onChange={files => {
-                      files?.[0] && handleIconChange('apple', files?.[0]);
+                    value={seoData?.icons?.apple}
+                    onChange={file => {
+                      file && handleIconChange('apple', file as IFileResponse);
                     }}
                   />
                 </div>

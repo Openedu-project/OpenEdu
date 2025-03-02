@@ -18,6 +18,7 @@ export const CertificateRenderer = ({ template, data, showPlaceholder = false }:
       style={{
         width: frame?.width ?? '100%',
         height: frame?.height ?? '100%',
+        backgroundColor: frame?.backgroundColor ?? '#fff',
         backgroundImage: frame?.file?.url ? `url(${frame.file.url})` : undefined,
         position: 'relative',
         backgroundRepeat: 'no-repeat',

@@ -62,6 +62,7 @@ export const API_ENDPOINT = {
   COURSES_ID_REPLY_FEEDBACK: '/api/v1/courses/:id/reply-feedback',
   COURSES_ID_CERTIFICATES: '/api/v1/courses/:id/certificates',
   COURSES_ID_HTML_TEMPLATES: '/api/v1/courses/:id/html-templates',
+  COURSES_ID_HTML_TEMPLATES_ID: '/api/v1/courses/:id/html-templates/:template_id',
   COURSES_ID_CERTIFICATES_ENABLE: '/api/v1/courses/:id/certificates/enable',
   COURSES_ID_PREVIEW_ORG_ID: '/api/v1/courses/:id/preview/:org_id',
   PUBLISH_COURSES: '/api/v1/publish-courses',

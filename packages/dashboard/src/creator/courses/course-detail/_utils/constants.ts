@@ -78,4 +78,5 @@ export const COURSE_DETAIL_FORM_IDS = {
   information: 'information',
   lesson: 'lesson',
   sectionTitle: 'sectionTitle',
+  certificate: 'certificate',
 };

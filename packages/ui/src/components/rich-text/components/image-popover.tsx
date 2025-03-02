@@ -13,7 +13,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '#shadcn/popover';
 export const ImagePopover: React.FC<{ editor: Editor }> = ({ editor }) => {
   const t = useTranslations('richText.popover');
   const [url, setUrl] = useState('');
-  const [files, setFiles] = useState<IFileResponse[]>([]);
+  const [file, setFile] = useState<IFileResponse>();
   const addImage = (src: string) => {
     if (src) {
       editor.chain().focus().setImage({ src }).run();
@@ -38,11 +38,11 @@ export const ImagePopover: React.FC<{ editor: Editor }> = ({ editor }) => {
           <Uploader
             accept="image/*"
             listType="picture"
-            value={files}
-            onChange={files => {
-              setFiles(files);
-              setUrl(files[0]?.url as string);
-              addImage(files[0]?.url as string);
+            value={file}
+            onChange={file => {
+              setFile(file as IFileResponse);
+              setUrl((file as IFileResponse)?.url as string);
+              addImage((file as IFileResponse)?.url as string);
             }}
           />
         </div>

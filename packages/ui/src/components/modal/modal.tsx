@@ -42,6 +42,7 @@ export interface ModalProps<TSchema extends z.ZodType> {
   className?: string;
   buttonsClassName?: string;
   contentClassName?: string;
+  formClassName?: string;
   open?: boolean;
   hasCancelButton?: boolean;
   hasCloseIcon?: boolean;
@@ -52,6 +53,7 @@ export interface ModalProps<TSchema extends z.ZodType> {
   validationSchema?: TSchema;
   onSubmit?: (data: z.infer<TSchema>) => Promise<void> | void;
   onError?: FormErrorHandler;
+  onChange?: (data: z.infer<TSchema>) => Promise<void> | void;
 }
 
 const ModalButtons = ({
@@ -152,9 +154,11 @@ export const Modal = <TSchema extends z.ZodType>({
   showSubmit,
   defaultValues,
   hasCloseIcon,
+  formClassName,
   onClose,
   onSubmit,
   onError,
+  onChange,
   ...rest
 }: ModalProps<TSchema>) => {
   const [internalIsOpen, setInternalIsOpen] = useState(false);
@@ -193,7 +197,7 @@ export const Modal = <TSchema extends z.ZodType>({
     <FormNestedWrapper
       id="modal-form"
       schema={validationSchema}
-      className={cn('scrollbar px-4', hasTitleOrDescription && hasButtons ? 'overflow-y-auto' : '')}
+      className={cn('scrollbar px-4', hasTitleOrDescription && hasButtons ? 'overflow-y-auto' : '', formClassName)}
       useFormProps={{ defaultValues }}
     >
       {({ form }) => (typeof children === 'function' ? children(form) : children)}
@@ -237,7 +241,13 @@ export const Modal = <TSchema extends z.ZodType>({
   return (
     <Dialog open={internalIsOpen} onOpenChange={handleOpenChange} {...rest}>
       {trigger ? <DialogTrigger asChild>{trigger}</DialogTrigger> : null}
-      <FormNestedProvider onSubmit={handleSubmit} onError={handleError}>
+      <FormNestedProvider
+        onSubmit={handleSubmit}
+        onError={handleError}
+        onChange={data => {
+          onChange?.(data['modal-form']);
+        }}
+      >
         {modalContent}
       </FormNestedProvider>
     </Dialog>
