@@ -47,7 +47,13 @@ const QuizAssessment = ({ numQuestion, data, settings, quizStartAt, onSubmitAnsw
                 questionNum: current_question_index,
               })}
             </span>
-            <p className="mcaption-semibold16 h-full text-current">{question?.title}</p>
+            <div
+              className="rich-text mcaption-semibold16 h-full text-current"
+              // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+              dangerouslySetInnerHTML={{
+                __html: question?.title as string | TrustedHTML,
+              }}
+            />
           </div>
 
           {question?.files?.length > 0 && (
