@@ -76,52 +76,50 @@ export default function CourseListFilter({
   );
 
   useEffect(() => {
-    if (courseCategories && levelCategories && dataListOrganization?.results) {
-      setCategories(courseCategories ?? []);
-      setLevels(levelCategories ?? []);
-      setOrganizations(dataListOrganization?.results ?? []);
+    setCategories(courseCategories ?? []);
+    setLevels(levelCategories ?? []);
+    setOrganizations(dataListOrganization?.results ?? []);
 
-      const levelCheckboxes: Record<string, boolean> = {};
-      for (const level of levelCategories) {
-        const id = `level-${level.id}`;
-        if (checkedLevelIds.includes(level.id)) {
-          levelCheckboxes[id] = true;
-        } else {
-          levelCheckboxes[id] = false;
-        }
+    const levelCheckboxes: Record<string, boolean> = {};
+    for (const level of levelCategories ?? []) {
+      const id = `level-${level.id}`;
+      if (checkedLevelIds.includes(level.id)) {
+        levelCheckboxes[id] = true;
+      } else {
+        levelCheckboxes[id] = false;
       }
-
-      const orgCheckboxes: Record<string, boolean> = {};
-      for (const org of dataListOrganization?.results ?? []) {
-        if (org.active) {
-          const id = `org-${org.id}`;
-          if (checkedOrgIds.includes(org.id)) {
-            orgCheckboxes[id] = true;
-          } else {
-            orgCheckboxes[id] = false;
-          }
-        }
-      }
-      const checkedCourseStatus = ['completed', 'in-progress'];
-      const checkedCourseCheckboxes: Record<string, boolean> = {};
-      for (const item of checkedCourseStatus ?? []) {
-        if (item) {
-          const id = `status-${item}`;
-          if (checkedCompletedCourse.includes(item)) {
-            checkedCourseCheckboxes[id] = true;
-          } else {
-            checkedCourseCheckboxes[id] = false;
-          }
-        }
-      }
-
-      setCheckboxes(prev => ({
-        ...prev,
-        ...levelCheckboxes,
-        ...orgCheckboxes,
-        ...checkedCourseCheckboxes,
-      }));
     }
+
+    const orgCheckboxes: Record<string, boolean> = {};
+    for (const org of dataListOrganization?.results ?? []) {
+      if (org.active) {
+        const id = `org-${org.id}`;
+        if (checkedOrgIds.includes(org.id)) {
+          orgCheckboxes[id] = true;
+        } else {
+          orgCheckboxes[id] = false;
+        }
+      }
+    }
+    const checkedCourseStatus = ['completed', 'in-progress'];
+    const checkedCourseCheckboxes: Record<string, boolean> = {};
+    for (const item of checkedCourseStatus ?? []) {
+      if (item) {
+        const id = `status-${item}`;
+        if (checkedCompletedCourse.includes(item)) {
+          checkedCourseCheckboxes[id] = true;
+        } else {
+          checkedCourseCheckboxes[id] = false;
+        }
+      }
+    }
+
+    setCheckboxes(prev => ({
+      ...prev,
+      ...levelCheckboxes,
+      ...orgCheckboxes,
+      ...checkedCourseCheckboxes,
+    }));
   }, [courseCategories, levelCategories, dataListOrganization, checkedLevelIds, checkedOrgIds, checkedCompletedCourse]);
 
   const updateCheckedLevelIds = useCallback((updatedCheckboxes: Record<string, boolean>) => {
@@ -268,7 +266,7 @@ export default function CourseListFilter({
         </div>
 
         <div className="block">
-          <div className="px-4 py-3">
+          <div className="min-h-[100dvh] px-4 py-3">
             {/* Categories Section - Now using the updated component */}
             <CourseListFilterCategories
               title={t('categories')}
