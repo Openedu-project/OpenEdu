@@ -1,11 +1,11 @@
 "use client";
-import { createOrUpdateThemeConfigByReferrer } from "@oe/api/services/theme";
+import { createOrUpdateThemeConfig } from "@oe/api/services/theme";
 import type { ThemeName } from "@oe/themes/types/theme-page/index";
 import { toast } from "@oe/ui/shadcn/sonner";
 import { useTranslations } from "next-intl";
-import { useMemo } from "react";
 // import { createOrUpdateThemeConfigByReferrer } from "@oe/api/services/theme";
 import { defaultThemeSystemConfig } from "../../../src";
+import type { ThemeCollection, ThemeSystem } from "../../_types";
 import { CloneNewTheme } from "./clone-new-theme";
 import { ThemeCard } from "./theme-card";
 
@@ -16,52 +16,59 @@ interface ThemeListProps {
   userThemeList?: ThemeName[];
   // Callback when user selects a different theme
   //  onThemeActivate?: (themeName: ThemeName) => void;
+  // The id systemConfig
+  configId?: string;
+  currentAvailableThemes?: ThemeCollection;
 }
 
 export default function ThemeList({
   currentActiveTheme,
   userThemeList,
+  configId,
+  currentAvailableThemes,
 }: // onSelect,
 ThemeListProps) {
   // const t = useTranslations("themeList");
   const tThemeConfig = useTranslations("themePage");
 
-  const alreadyClonedThemes = useMemo(
-    () => (currentActiveTheme ? [currentActiveTheme] : undefined),
-    [currentActiveTheme]
-  );
-
   const handleNewThemeCloned = async (themeNames: ThemeName[]) => {
     //TODO: mutate the list my themes - themesData
     //OR: add theme new ThemeName to themesData by state
     const initialData = defaultThemeSystemConfig(tThemeConfig);
-    let availableTheme = {};
+    let clonedThemes = {};
 
     for (const name of themeNames) {
-      availableTheme = {
-        ...availableTheme,
-        [name]: initialData.availableThemes?.[name],
-      };
-    }
-
-    const data = {
-      activedTheme: currentActiveTheme,
-      availableTheme: availableTheme,
-    };
-
-    console.log(data);
-    try {
-      const res = await createOrUpdateThemeConfigByReferrer({
-        config: initialData,
-      });
-      if (!res) {
-        toast.error("Failed to clone the templates from the system.");
-        return;
+      if (initialData.availableThemes?.[name]) {
+        clonedThemes = {
+          ...clonedThemes,
+          [name]: initialData.availableThemes[name],
+        };
       }
-      console.log(res);
-      toast.success("Clone the templates succesfully");
-    } catch (error) {
-      console.error(error);
+    }
+    console.log("themeNames", themeNames);
+    console.log("clonedThemes", clonedThemes);
+
+    if (Object.keys(clonedThemes)?.length > 0) {
+      const data: ThemeSystem = {
+        activedTheme: currentActiveTheme as ThemeName | undefined,
+        availableThemes: { ...clonedThemes, ...currentAvailableThemes },
+      };
+
+      console.log(data);
+      try {
+        const res = await createOrUpdateThemeConfig({
+          config: data,
+          id: configId,
+        });
+        if (!res) {
+          toast.error("Failed to clone the templates from the system.");
+          return;
+        }
+        console.log(res);
+        toast.success("Clone the templates succesfully");
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -70,7 +77,7 @@ ThemeListProps) {
       <div>
         <h2>The list template</h2>
         <CloneNewTheme
-          alreadyClonedThemes={alreadyClonedThemes}
+          alreadyClonedThemes={userThemeList}
           onThemeCloned={handleNewThemeCloned}
         />
       </div>

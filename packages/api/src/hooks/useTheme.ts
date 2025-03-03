@@ -18,7 +18,7 @@ import type { ISystemConfigRes } from '#types/system-config';
 //   };
 // }
 
-export function useGetThemeByHost(shouldFetch = true) {
+export function useGetTheme(shouldFetch = true) {
   const endpoint = createThemeSystemConfigSWRKey({});
   const { data, isLoading, error, mutate } = useSWR(shouldFetch ? endpoint : null, (endpoint: string) =>
     getThemeConfigClient(endpoint)

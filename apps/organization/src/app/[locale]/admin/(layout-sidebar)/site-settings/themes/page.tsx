@@ -1,9 +1,8 @@
-import { getThemeConfigByReferrerServer } from "@oe/api/services/theme";
+import { getThemeConfigServer } from "@oe/api/services/theme";
 import ThemeListPage from "@oe/dashboard/admin/site-settings/themes/page";
 
 export default async function ThemePage() {
-  // const [themeSystem] = await Promise.all([getThemeConfigServer()]);
-  const [themeSystem] = await Promise.all([getThemeConfigByReferrerServer()]);
+  const [themeSystem] = await Promise.all([getThemeConfigServer()]);
   console.log("themeSystem", themeSystem);
 
   // if (!themeSystem?.[0]?.value) {
@@ -12,7 +11,10 @@ export default async function ThemePage() {
 
   return (
     <>
-      <ThemeListPage themeSystem={themeSystem?.[0]?.value} />
+      <ThemeListPage
+        themeSystem={themeSystem?.[0]?.value}
+        configId={themeSystem?.[0]?.id}
+      />
     </>
   );
 }

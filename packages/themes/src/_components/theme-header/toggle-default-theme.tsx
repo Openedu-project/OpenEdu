@@ -23,6 +23,7 @@ const ToggleDefaultTheme = ({
   const { themeName } = useParams();
   const [checked, setChecked] = useState(themeName === selectedTheme);
   const translate = useTranslations("themeHeader");
+  //TODO: remove logic use the default_theme if the actived theme was undefined.
   const handleSetSelectedTheme = async (checked: boolean) => {
     if (!checked && DEFAULT_THEME === themeName) {
       toast.error(translate("notPrevTheme"));

@@ -60,7 +60,9 @@ export const getSectionConfig = (
   selectedPage: ThemePageKey,
   selectedSectionKey: AllSectionKeys
 ) => {
-  const themeConfig = defaultThemeConfigs?.[selectedTheme].pages?.[selectedPage]?.config;
+  const themeConfig = defaultThemeConfigs?.[selectedTheme]
+    ? defaultThemeConfigs?.[selectedTheme].pages?.[selectedPage]?.config
+    : undefined;
   const sectionConfig = themeConfig
     ? themeConfig?.[selectedSectionKey as SectionsByPage[typeof selectedPage]]
     : undefined;

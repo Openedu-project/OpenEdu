@@ -1,6 +1,7 @@
 import { buildUrl } from '@oe/core/utils/url';
+import type { ThemeName } from '@oe/themes/types/index';
 import type { ISystemConfigKey } from '#types/system-config';
-import { getAPIReferrerAndOriginClient } from './referrer-origin';
+import { getAPIReferrerAndOriginClient, getAPIReferrerAndOriginServer } from './referrer-origin';
 
 export const systemConfigKeys = {
   builderData: 'builder_data',
@@ -12,11 +13,20 @@ export const systemConfigKeys = {
   specificThemeSystem: 'theme_system_:themeName',
 } as const;
 
-export const themeSystemConfigKeyByHost = (): ISystemConfigKey => {
+export const createThemeSystemConfigKeyServer = async (themeName?: ThemeName): Promise<ISystemConfigKey> => {
+  const { host } = await getAPIReferrerAndOriginServer();
+
+  return buildUrl({
+    endpoint: systemConfigKeys.specificThemeSystem,
+    params: { themeName: themeName || host?.split('.')?.[0] }, //theme_system_vbi
+  }) as ISystemConfigKey;
+};
+
+export const createThemeSystemConfigKeyClient = (themeName?: ThemeName): ISystemConfigKey => {
   const { host } = getAPIReferrerAndOriginClient();
 
   return buildUrl({
     endpoint: systemConfigKeys.specificThemeSystem,
-    params: { themeName: host },
+    params: { themeName: themeName || host?.split('.')?.[0] }, //theme_system_vbi
   }) as ISystemConfigKey;
 };

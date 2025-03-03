@@ -4,8 +4,10 @@ import type { ThemeSystem } from "@oe/themes/types/theme-system-config";
 
 export default function ThemeListPage({
   themeSystem,
+  configId,
 }: {
   themeSystem?: ThemeSystem;
+  configId?: string;
 }) {
   return (
     <>
@@ -16,6 +18,8 @@ export default function ThemeListPage({
             : undefined
         }
         currentActiveTheme={themeSystem?.activedTheme}
+        configId={configId}
+        currentAvailableThemes={themeSystem?.availableThemes}
       />
     </>
   );

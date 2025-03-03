@@ -6,7 +6,7 @@ import { createThemePageConfig } from './theme-page-initial/index';
 
 export const defaultThemeSystemConfig = (t: (key: string) => string): ThemeSystem => {
   return {
-    activedTheme: 'vbi',
+    activedTheme: undefined,
     availableThemes: {
       academia: {
         pages: createThemePageConfig(t).academia,
@@ -37,8 +37,8 @@ export const defaultThemeSystemConfig = (t: (key: string) => string): ThemeSyste
 };
 
 export const themeSystemListNames = (t: (key: string) => string): ThemeName[] => {
-  return Object.keys(defaultThemeSystemConfig(t).availableThemes) as ThemeName[];
+  return Object.keys(defaultThemeSystemConfig(t)?.availableThemes) as ThemeName[];
 };
 export const themeSystemListCollections = (t: (key: string) => string): ThemeCollection => {
-  return defaultThemeSystemConfig(t).availableThemes;
+  return defaultThemeSystemConfig(t)?.availableThemes;
 };

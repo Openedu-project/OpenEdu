@@ -18,6 +18,7 @@ const CloneNewTheme = ({
     setOpen(false);
   }, []);
 
+  console.log("alreadyClonedThemes", alreadyClonedThemes)
   const handleSubmit = useCallback(
     (themeNames: ThemeName[]) => {
       onThemeCloned(themeNames);

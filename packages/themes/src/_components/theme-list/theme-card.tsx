@@ -83,8 +83,10 @@ export const ThemeCard = ({
               >
                 {t("edit")}
               </Link>
-            ) : (
+            ) : isCloned ? (
               "Cloned"
+            ) : (
+              "Clone"
             )}
           </Button>
         </div>

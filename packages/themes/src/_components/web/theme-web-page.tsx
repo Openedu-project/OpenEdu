@@ -17,14 +17,27 @@ export default function ThemeWebPage({ pageKey, themeSystem }: ThemePageProps) {
     return <NotFoundPage />;
   }
 
+  if (!themeSystem?.activedTheme) {
+    return <div>Please select theme at admin</div>;
+  }
+
   const themeName = themeSystem.activedTheme;
-  const themeData = themeSystem?.availableThemes?.[themeName];
+  const themeData = themeSystem.availableThemes?.[themeName];
+
+  if (!themeData) {
+    return <div>No data</div>;
+  }
+
   const PageComponent = getThemeComponent<
     ThemePageKey,
     SectionsByPage[typeof pageKey]
   >(THEMES_SERVER, themeName, pageKey, "theme");
 
-  return PageComponent ? (
+  if (!PageComponent) {
+    return <NotFoundPage />;
+  }
+
+  return (
     <PageComponent
       props={{
         themeName,
@@ -33,7 +46,5 @@ export default function ThemeWebPage({ pageKey, themeSystem }: ThemePageProps) {
         currentConfigSections: themeData.pages?.[pageKey]?.config,
       }}
     />
-  ) : (
-    <NotFoundPage />
   );
 }

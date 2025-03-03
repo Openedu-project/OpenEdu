@@ -5,7 +5,7 @@ import {
   getAPIReferrerAndOriginClient,
   getAPIReferrerAndOriginServer,
 } from '#utils/referrer-origin';
-import { themeSystemConfigKeyByHost } from '#utils/system-config';
+import { createThemeSystemConfigKeyClient } from '#utils/system-config';
 import type { ISystemConfigKey, ISystemConfigPayload, ISystemConfigRes } from '../types/system-config';
 import { API_ENDPOINT } from '../utils/endpoints';
 
@@ -29,7 +29,7 @@ export const createThemeSystemConfigSWRKey = ({ locales }: { locales?: LanguageC
   return createAPIUrl({
     endpoint: API_ENDPOINT.SYSTEM_CONFIGS,
     queryParams: {
-      keys: themeSystemConfigKeyByHost(),
+      keys: createThemeSystemConfigKeyClient(),
       domains: host,
       ...(locales ? { locales } : {}),
     },

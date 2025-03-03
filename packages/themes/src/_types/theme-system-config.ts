@@ -10,10 +10,10 @@ export type ThemeDefinition = {
 };
 
 export type ThemeCollection = {
-  [Name in ThemeName]: ThemeDefinition;
+  [Name in ThemeName]?: ThemeDefinition;
 };
 
 export interface ThemeSystem {
-  activedTheme: ThemeName;
+  activedTheme?: ThemeName;
   availableThemes: ThemeCollection;
 }
