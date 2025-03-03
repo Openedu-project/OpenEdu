@@ -68,7 +68,7 @@ const blogFormAction = async ({
       ...baseData,
       is_publish: isPublish,
       blog_type: blogType,
-      banner_id: (thumbnail as IFileResponse[])[0]?.id ?? '',
+      banner_id: Array.isArray(thumbnail) ? ((thumbnail as IFileResponse[])[0]?.id ?? '') : thumbnail.id,
       category_ids: category_ids?.map(obj => {
         return { id: obj.id };
       }),
