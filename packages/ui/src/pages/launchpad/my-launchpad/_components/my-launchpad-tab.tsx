@@ -1,5 +1,6 @@
 'use client';
 
+import { buildQueryParam } from '@oe/core/utils/url';
 import { useTranslations } from 'next-intl';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
@@ -62,21 +63,26 @@ export default function MyLaunchpadTab() {
 
   const currentTab = searchParams.get('tab') || 'pledged';
 
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams);
-      params.set(name, value);
-      params.set('page', '1');
-      return params.toString();
+  const handleTabChange = useCallback(
+    (value: string) => {
+      router.push(
+        `${pathname}?${buildQueryParam({
+          currentParams: searchParams,
+          params: [
+            {
+              name: 'tab',
+              value,
+            },
+          ],
+          resetPage: true,
+        })}`,
+        {
+          scroll: false,
+        }
+      );
     },
-    [searchParams]
+    [router, pathname, searchParams]
   );
-
-  const handleTabChange = (value: string) => {
-    router.push(`${pathname}?${createQueryString('tab', value)}`, {
-      scroll: false,
-    });
-  };
 
   return (
     <Tabs value={currentTab} onValueChange={handleTabChange} className="w-full">
