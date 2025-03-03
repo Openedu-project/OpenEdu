@@ -51,3 +51,27 @@ export const buildUrl = ({ endpoint, params, queryParams }: IBuildUrl) => {
 
   return url;
 };
+
+export function buildQueryParam({
+  currentParams,
+  params,
+  resetPage = false,
+}: {
+  currentParams: URLSearchParams | string;
+  params: Array<{ name: string; value: string }>;
+  resetPage?: boolean;
+}): string {
+  const urlParams = new URLSearchParams(currentParams);
+
+  // Set multiple parameter values
+  for (const { name, value } of params) {
+    urlParams.set(name, value);
+  }
+
+  // Reset page to 1 if needed (typically when changing filters)
+  if (resetPage) {
+    urlParams.set('page', '1');
+  }
+
+  return urlParams.toString();
+}

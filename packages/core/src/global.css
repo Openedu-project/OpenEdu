@@ -71,6 +71,13 @@
       rgba(160, 244, 249, 0.5) 71.84%,
       rgba(255, 255, 255, 0.3) 99.69%
     );
+    --course-search-background: linear-gradient(
+      240deg,
+      rgba(255, 255, 255, 0.3) 4.37%,
+      rgba(208, 174, 250, 0.3) 37.02%,
+      rgba(160, 244, 249, 0.5) 71.84%,
+      rgba(255, 255, 255, 0.3) 99.69%
+    );
     --footer: linear-gradient(255deg, #b8f4f8 6.18%, #ede3fe 70.53%);
 
     --ai-agent-green-background: linear-gradient(#8ff9a4 0%, #11c541 100%);
@@ -196,6 +203,13 @@
       -110deg,
       rgba(255, 255, 255, 0.3) 4.37%,
       rgba(250, 174, 227, 0.3) 37.02%,
+      rgba(160, 244, 249, 0.5) 71.84%,
+      rgba(255, 255, 255, 0.3) 99.69%
+    );
+    --course-search-background: linear-gradient(
+      240deg,
+      rgba(255, 255, 255, 0.3) 4.37%,
+      rgba(208, 174, 250, 0.3) 37.02%,
       rgba(160, 244, 249, 0.5) 71.84%,
       rgba(255, 255, 255, 0.3) 99.69%
     );
@@ -355,7 +369,7 @@
   }
   .rich-text p:empty::after {
     content: "\00A0";
-}
+  }
 
   .rich-text pre {
     background: hsl(var(--accent-foreground));
