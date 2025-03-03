@@ -51,6 +51,7 @@ export default function CourseListPagination({
       totalCount={courses?.pagination?.total_items ?? 0}
       onPageChange={handlePageChange}
       pageSize={12}
+      className="my-6"
     />
   );
 }
