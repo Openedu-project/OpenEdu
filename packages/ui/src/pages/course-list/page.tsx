@@ -21,6 +21,7 @@ export default async function CoursesListPage({
     category_id_in = '',
     org_id_in = '',
     complete_status_in = '',
+    level_id_in = '',
   } = await searchParams;
 
   const courses = await getCoursesPublishService(undefined, {
@@ -32,16 +33,24 @@ export default async function CoursesListPage({
       search_categories: 'name',
       sort: `create_at ${sort}`,
       preloads: ['Categories', 'Owner', 'Levels'],
-      category_id_in: category_id_in ? category_id_in.split(',') : undefined,
-      org_id_in: org_id_in ? org_id_in.split(',') : undefined,
-      complete_status_in: complete_status_in ? complete_status_in.split(',') : undefined,
+      category_id_in: category_id_in ? category_id_in.split(',') : '',
+      level_id_in: level_id_in ? level_id_in.split(',') : '',
+      org_id_in: org_id_in ? org_id_in.split(',') : '',
+      complete_status_in: complete_status_in ? complete_status_in.split(',') : '',
     },
   });
 
   return (
     <div>
       <CourseListSearch searchValue={search} />
-      <CourseListHeader totalResult={courses?.pagination?.total_items ?? 0} sortValue={sort} />
+      <CourseListHeader
+        totalResult={courses?.pagination?.total_items ?? 0}
+        sortValue={sort}
+        categoryIdsSelected={category_id_in.split(',') ?? []}
+        levelIdsSelected={level_id_in.split(',') ?? []}
+        orgIdsSelected={org_id_in.split(',') ?? []}
+        completeCourseSelected={complete_status_in.split(',') ?? []}
+      />
       {courses?.results?.length === 0 ? (
         <div className="p-10">
           <Image

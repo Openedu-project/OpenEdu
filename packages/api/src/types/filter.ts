@@ -14,6 +14,7 @@ export interface IFilter {
   category_id_in?: string | string[];
   org_id_in?: string | string[];
   complete_status_in?: string | string[];
+  level_id_in?: string | string[];
   event?: string;
   role?: string;
   currency?: string;

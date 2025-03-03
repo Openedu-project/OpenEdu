@@ -7,14 +7,23 @@ import { useCallback, useState } from 'react';
 import { usePathname, useRouter } from '#common/navigation';
 import { Button } from '#shadcn/button';
 import CourseListFilter from './course-list-filter';
+interface ICourseListHeader {
+  categoryIdsSelected: string[];
+  levelIdsSelected: string[];
+  orgIdsSelected: string[];
+  completeCourseSelected: string[];
+  sortValue: string;
+  totalResult: number;
+}
 
 export default function CourseListHeader({
   sortValue = 'desc',
   totalResult = 0,
-}: {
-  sortValue: string;
-  totalResult: number;
-}) {
+  categoryIdsSelected,
+  levelIdsSelected,
+  orgIdsSelected,
+  completeCourseSelected,
+}: ICourseListHeader) {
   const t = useTranslations('courseList');
   const router = useRouter();
   const pathname = usePathname();
@@ -48,7 +57,12 @@ export default function CourseListHeader({
         {t('found')}
       </p>
       <div className="flex items-center gap-3">
-        <CourseListFilter />
+        <CourseListFilter
+          categoryIdsSelected={categoryIdsSelected}
+          levelIdsSelected={levelIdsSelected}
+          orgIdsSelected={orgIdsSelected}
+          completeCourseSelected={completeCourseSelected}
+        />
         <Button
           variant={sort === 'desc' ? 'outline' : 'secondary'}
           className="flex items-center gap-2"

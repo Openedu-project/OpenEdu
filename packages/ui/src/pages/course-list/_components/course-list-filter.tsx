@@ -19,8 +19,19 @@ import CourseListFilterCompletedCourses from './course-list-filter-completed-cou
 import CourseListFilterLevel from './course-list-filter-level';
 import CourseListFilterOrganizations from './course-list-filter-organizations';
 
-// Main CourseListFilter Component
-export default function CourseListFilter() {
+interface ICourseListFilter {
+  categoryIdsSelected: string[];
+  levelIdsSelected: string[];
+  orgIdsSelected: string[];
+  completeCourseSelected: string[];
+}
+
+export default function CourseListFilter({
+  categoryIdsSelected,
+  levelIdsSelected,
+  orgIdsSelected,
+  completeCourseSelected,
+}: ICourseListFilter) {
   const t = useTranslations('courseList');
   const router = useRouter();
   const pathname = usePathname();
@@ -30,10 +41,10 @@ export default function CourseListFilter() {
   const [levels, setLevels] = useState<ICategoryTree[]>([]);
   const [organizations, setOrganizations] = useState<IOrganization[]>([]);
   const [checkboxes, setCheckboxes] = useState<Record<string, boolean>>({});
-  const [checkedCategoryIds, setCheckedCategoryIds] = useState<string[]>([]);
-  const [checkedLevelIds, setCheckedLevelIds] = useState<string[]>([]);
-  const [checkedOrgIds, setCheckedOrgIds] = useState<string[]>([]);
-  const [checkedCompletedCourse, setCheckedCompletedCourse] = useState<string[]>([]);
+  const [checkedCategoryIds, setCheckedCategoryIds] = useState<string[]>(categoryIdsSelected ?? []);
+  const [checkedLevelIds, setCheckedLevelIds] = useState<string[]>(levelIdsSelected ?? []);
+  const [checkedOrgIds, setCheckedOrgIds] = useState<string[]>(orgIdsSelected ?? []);
+  const [checkedCompletedCourse, setCheckedCompletedCourse] = useState<string[]>(completeCourseSelected ?? []);
 
   const [openSections, setOpenSections] = useState({
     categories: true,
@@ -47,14 +58,22 @@ export default function CourseListFilter() {
   });
 
   const { organizationByDomain } = useGetOrganizationByDomain();
-  const { categoriesTree: courseCategories } = useCategoriesTree({
-    type: 'course',
-    org_id: organizationByDomain?.id ?? '',
-  });
-  const { categoriesTree: levelCategories } = useCategoriesTree({
-    type: 'level',
-    org_id: organizationByDomain?.id ?? '',
-  });
+  const { categoriesTree: courseCategories } = useCategoriesTree(
+    {
+      type: 'course',
+      org_id: organizationByDomain?.id ?? '',
+    },
+    undefined,
+    !!organizationByDomain?.id
+  );
+  const { categoriesTree: levelCategories } = useCategoriesTree(
+    {
+      type: 'level',
+      org_id: organizationByDomain?.id ?? '',
+    },
+    undefined,
+    !!organizationByDomain?.id
+  );
 
   useEffect(() => {
     if (courseCategories && levelCategories && dataListOrganization?.results) {
@@ -64,13 +83,35 @@ export default function CourseListFilter() {
 
       const levelCheckboxes: Record<string, boolean> = {};
       for (const level of levelCategories) {
-        levelCheckboxes[`level-${level.id}`] = false;
+        const id = `level-${level.id}`;
+        if (checkedLevelIds.includes(level.id)) {
+          levelCheckboxes[id] = true;
+        } else {
+          levelCheckboxes[id] = false;
+        }
       }
 
       const orgCheckboxes: Record<string, boolean> = {};
       for (const org of dataListOrganization?.results ?? []) {
         if (org.active) {
-          orgCheckboxes[`org-${org.id}`] = false;
+          const id = `org-${org.id}`;
+          if (checkedOrgIds.includes(org.id)) {
+            orgCheckboxes[id] = true;
+          } else {
+            orgCheckboxes[id] = false;
+          }
+        }
+      }
+      const checkedCourseStatus = ['completed', 'in-progress'];
+      const checkedCourseCheckboxes: Record<string, boolean> = {};
+      for (const item of checkedCourseStatus ?? []) {
+        if (item) {
+          const id = `status-${item}`;
+          if (checkedCompletedCourse.includes(item)) {
+            checkedCourseCheckboxes[id] = true;
+          } else {
+            checkedCourseCheckboxes[id] = false;
+          }
         }
       }
 
@@ -78,9 +119,10 @@ export default function CourseListFilter() {
         ...prev,
         ...levelCheckboxes,
         ...orgCheckboxes,
+        ...checkedCourseCheckboxes,
       }));
     }
-  }, [courseCategories, dataListOrganization, levelCategories]);
+  }, [courseCategories, levelCategories, dataListOrganization, checkedLevelIds, checkedOrgIds, checkedCompletedCourse]);
 
   const updateCheckedLevelIds = useCallback((updatedCheckboxes: Record<string, boolean>) => {
     const checkedIds = Object.entries(updatedCheckboxes)
@@ -161,11 +203,17 @@ export default function CourseListFilter() {
   }, []);
 
   const handleResetAll = useCallback(() => {
+    setCheckedCategoryIds([]);
     setCheckedOrgIds([]);
     setCheckedLevelIds([]);
     setCheckedCompletedCourse([]);
+    const updatedCheckboxes = { ...checkboxes };
+    for (const key of Object.keys(checkboxes)) {
+      updatedCheckboxes[key] = false;
+    }
+    setCheckboxes(updatedCheckboxes);
     router.push(pathname);
-  }, [router, pathname]);
+  }, [router, pathname, checkboxes]);
 
   const handleApplyFilter = useCallback(() => {
     router.push(
@@ -174,7 +222,11 @@ export default function CourseListFilter() {
         params: [
           {
             name: 'category_id_in',
-            value: `${checkedCategoryIds.join(',')},${checkedLevelIds.join(',')}`,
+            value: checkedCategoryIds.join(','),
+          },
+          {
+            name: 'level_id_in',
+            value: checkedLevelIds.join(','),
           },
           {
             name: 'org_id_in',
@@ -188,7 +240,7 @@ export default function CourseListFilter() {
         resetPage: true,
       })}`,
       {
-        scroll: false,
+        scroll: true,
       }
     );
   }, [checkedCategoryIds, checkedLevelIds, checkedOrgIds, checkedCompletedCourse, router, pathname, searchParams]);
