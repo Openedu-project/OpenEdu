@@ -11,6 +11,10 @@ export interface IFilter {
   type?: string;
   user_id?: string;
   preloads?: string | string[];
+  category_id_in?: string | string[];
+  org_id_in?: string | string[];
+  complete_status_in?: string | string[];
+  level_id_in?: string | string[];
   event?: string;
   role?: string;
   currency?: string;

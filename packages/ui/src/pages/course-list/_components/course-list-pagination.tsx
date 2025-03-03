@@ -1,22 +1,22 @@
 'use client';
-
+import type { ICourseResponse } from '@oe/api/types/course/course';
 import { buildQueryParam } from '@oe/core/utils/url';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { usePathname, useRouter } from '#common/navigation';
 import { PaginationCustom } from '#components/pagination-custom';
 
-export default function MyLaunchpadPagination({
-  currentPage = 1,
-  totalCount = 1,
+export default function CourseListPagination({
+  pageValue = 1,
+  courses,
 }: {
-  currentPage: number;
-  totalCount: number;
+  pageValue: number;
+  courses: ICourseResponse | undefined;
 }) {
-  const [page, setPage] = useState<number>(currentPage);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [page, setPage] = useState<number>(pageValue);
 
   const handlePageChange = useCallback(
     (page: number) => {
@@ -47,9 +47,8 @@ export default function MyLaunchpadPagination({
 
   return (
     <PaginationCustom
-      className="mt-6"
-      currentPage={page ?? 1}
-      totalCount={totalCount ?? 0}
+      currentPage={courses?.pagination?.page ?? page}
+      totalCount={courses?.pagination?.total_items ?? 0}
       onPageChange={handlePageChange}
       pageSize={12}
     />
