@@ -352,6 +352,14 @@ export const courseMessages = {
       syncToFiat: 'Sync to Fiat',
     },
 
+    certificate: {
+      title: 'Certificate',
+      display: 'Certificate Display',
+      displayDescription:
+        'Configure whether learners can receive a certificate upon course completion. This setting determines if the course offers a certificate.',
+      selectTemplate: 'Select Template',
+    },
+
     // Course creation
     create: {
       title: 'Create New Course',

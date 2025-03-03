@@ -28,6 +28,7 @@ export default function ContentText({ data, onComplete }: ITextProps) {
     const bottomMarker = document.createElement('div');
     bottomMarker.style.height = '1px';
     bottomMarker.style.width = '100%';
+    bottomMarker.style.marginBottom = '2px';
 
     // Append marker to content
     contentRef.current.appendChild(bottomMarker);

@@ -116,7 +116,7 @@ export interface ICreateCourse extends z.infer<typeof courseFormSchema> {}
 export const courseOutlineSchema = z.object({
   learner_info: z.string().min(1, { message: 'course.validation.leanerInfo' }),
   content_info: z.string().min(1, { message: 'course.validation.contentInfo' }),
-  material_file: z.array(fileResponseSchema).nullable().default([]).optional(),
+  material_file: fileResponseSchema.optional(),
   level_id: z.string().optional(),
   language: z.string(),
   duration_type: z.enum(['day', 'week']),
@@ -153,3 +153,16 @@ export const courseInfomationSchema = z
   });
 
 export type ICreateAICourseInfo = z.infer<typeof courseInfomationSchema>;
+
+export const courseCertificateSchema = z.object({
+  has_certificate: z.boolean().default(false),
+  completed_all_quiz: z.boolean().default(false),
+  completed_course: z.boolean().default(false),
+  course_completion_percentage: z.number().default(0),
+  completed_final_quiz: z.boolean().default(false),
+  final_quiz_completion_percentage: z.number().default(0),
+  completed_required_lesson: z.boolean().default(false),
+  required_lesson_uid: z.string().default(''),
+});
+
+export type ICreateCourseCertificate = z.infer<typeof courseCertificateSchema>;

@@ -106,8 +106,8 @@ export default function ApprovalWithdrawModal({ selectedItem, onSubmit, onClose 
                     accept="image/*"
                     listType="picture"
                     multiple
-                    onChange={file => {
-                      field.onChange(file);
+                    onChange={files => {
+                      field.onChange(files);
                     }}
                   >
                     <Button>

@@ -22,7 +22,7 @@ export function ImageFieldConfig({
   handleConfigChange: (key: keyof FormFieldType, value: string | number | boolean) => void;
 }) {
   const t = useTranslations('dynamicForms.fieldConfig');
-  const [files, setFiles] = useState<IFileResponse[]>([]);
+  const [file, setFile] = useState<IFileResponse>();
 
   if (field.fieldType !== 'image') {
     return null;
@@ -58,11 +58,11 @@ export function ImageFieldConfig({
           <Uploader
             listType="picture"
             accept="image/*"
-            value={files}
+            value={file}
             fileListVisible={false}
-            onChange={files => {
-              setFiles(files);
-              handleConfigChange('src', files[0]?.url ?? '');
+            onChange={file => {
+              setFile(file as IFileResponse);
+              handleConfigChange('src', (file as IFileResponse)?.url ?? '');
             }}
           />
           <FormQualityConfig field={field} handleConfigChange={handleConfigChange} />

@@ -29,7 +29,6 @@ export interface ICertificate {
   files: IFileResponse[];
   name?: string; //name of template
   date?: number;
-  learner_name?: string;
   create_at: number;
   update_at: number;
   delete_at: number;
@@ -38,13 +37,17 @@ export interface ICertificate {
   user_id: string;
   is_default: boolean;
   course_cuid: string;
-  course_name: string;
-  creator_name: string;
   org_id: string;
   enable: boolean;
   root_layer: IFounder;
   org_layer?: IFounder;
   template: ICertificateTemplate;
+  creator_name: string;
+  learner_name?: string;
+  issue_date?: number;
+  course_name: string;
+  organizations?: ICertificateOrganization[];
+  signatures?: ISignature[];
 }
 
 export interface ICertificateUser {

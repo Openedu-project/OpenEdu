@@ -15,10 +15,10 @@ interface IProps {
 }
 
 export default function EditAvatar({ onSetAvaUrl, avatar }: IProps) {
-  const [files] = useState<IFileResponse[]>([]);
+  const [file] = useState<IFileResponse[]>([]);
 
-  const handleEditAvatar = (files: IFileResponse[]) => {
-    const url = files[0]?.url;
+  const handleEditAvatar = (file: IFileResponse) => {
+    const url = file?.url;
 
     onSetAvaUrl(url ?? '');
   };
@@ -35,8 +35,8 @@ export default function EditAvatar({ onSetAvaUrl, avatar }: IProps) {
       accept="image/*"
       // minSizeBytes={1024}
       // maxSizeBytes={5 * 1024 * 1024}
-      value={files}
-      onChange={handleEditAvatar}
+      value={file}
+      onChange={file => handleEditAvatar(file as IFileResponse)}
       contentClassName="p-0 m-0 rounded-full"
       className="w-[60px] rounded-full"
     >

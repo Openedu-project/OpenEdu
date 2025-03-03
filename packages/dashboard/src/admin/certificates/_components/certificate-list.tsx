@@ -7,7 +7,7 @@ import { formatDate } from '@oe/core/utils/datetime';
 import { ADMIN_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
 import { Link } from '@oe/ui/common/navigation';
-import { CertificateRenderer } from '@oe/ui/components/certificate-builder';
+import { TemplateScalePreview } from '@oe/ui/components/certificate-builder';
 import { DeleteButton } from '@oe/ui/components/delete-button';
 import type { FilterOption } from '@oe/ui/components/filter-search';
 import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
@@ -112,19 +112,20 @@ export default function CertificatesList() {
           if (!template) {
             return null;
           }
-          return (
-            <div className="flex h-[150px] w-full items-center justify-center overflow-hidden">
-              <div
-                className="origin-center scale-[0.3] transform"
-                style={{
-                  width: template.frame?.width,
-                  height: template.frame?.height,
-                }}
-              >
-                <CertificateRenderer template={template} />
-              </div>
-            </div>
-          );
+          return <TemplateScalePreview template={template} />;
+          // return (
+          //   <div className="flex h-[150px] w-full items-center justify-center overflow-hidden">
+          //     <div
+          //       className="origin-center scale-[0.3] transform"
+          //       style={{
+          //         width: template.frame?.width,
+          //         height: template.frame?.height,
+          //       }}
+          //     >
+          //       <CertificateRenderer template={template} />
+          //     </div>
+          //   </div>
+          // );
         },
       },
       {

@@ -59,10 +59,16 @@ const DetailAnswerResult = ({ onFinish, answers }: AnswerResultProps) => {
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
-      <ScrollArea className="z-10 mx-auto mb-5 flex h-full max-h-[50dvh] w-[80%] flex-1 flex-col justify-center gap-4 px-3 md:max-w-[400px] [&>[data-radix-scroll-area-viewport]>div]:h-full">
+      <ScrollArea className="z-10 mx-auto mb-5 flex h-full max-h-[50dvh] w-[80%] flex-1 flex-col justify-center gap-4 md:max-w-[400px] md:px-3 [&>[data-radix-scroll-area-viewport]>div]:h-full">
         <div className="flex h-full flex-col justify-center space-y-4">
           <ResultCard title={tQuizResult('questionNum', { questionNum: quesIndex + 1 })}>
-            <p className="mcaption-semibold16 text-content-basic-dark">{title}</p>
+            <div
+              className="rich-text mcaption-semibold16 text-content-basic-dark"
+              // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+              dangerouslySetInnerHTML={{
+                __html: title as string | TrustedHTML,
+              }}
+            />
           </ResultCard>
 
           <ResultCard

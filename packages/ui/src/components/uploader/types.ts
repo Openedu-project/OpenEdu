@@ -34,11 +34,11 @@ export interface UploaderProps extends Omit<InputHTMLAttributes<HTMLInputElement
   cropProps?: Partial<ReactCropProps>;
   fileItemProps?: Partial<UploadFileItemProps>;
   triggerProps?: Partial<UploadTriggerProps>;
-  value?: IFileResponse[];
+  value?: IFileResponse | IFileResponse[];
   contentClassName?: string;
   isShowInformation?: boolean;
   allowRename?: boolean; // Flag cho phép đổi tên file
-  onChange?: (files: IFileResponse[]) => void;
+  onChange?: (files: IFileResponse | IFileResponse[]) => void;
   renderTrigger?: (triggerProps: UploadTriggerProps) => ReactNode; // Cho phép custom render trigger
   renderFileList?: (files: FileType[], fileItemProps: Partial<UploadFileItemProps>) => ReactNode; // Cho phép custom render file list
   onFileNameChange?: (file: FileType, newName: string) => void; // Callback khi tên file thay đổi

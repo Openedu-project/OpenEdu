@@ -10,7 +10,7 @@ import { Link } from '#common/navigation';
 import { Button } from '#shadcn/button';
 import { Input } from '#shadcn/input';
 import { useCertificateBuilder } from '../provider';
-import { PreviewModal } from '../renderer/renderer-preview-modal';
+import { RendererConfigModal } from '../renderer';
 
 export const Header = () => {
   const tCertificate = useTranslations('certificate');
@@ -55,12 +55,13 @@ export const Header = () => {
       </div>
 
       <div className="flex items-center gap-2">
-        <PreviewModal
+        <RendererConfigModal
           trigger={
             <Button variant="outline" size="icon" className="h-8 w-8">
               <Eye className="h-4 w-4" />
             </Button>
           }
+          isPreview
           template={template}
         />
         <Button onClick={handleSave} className="h-8" disabled={isSaving} loading={isSaving}>

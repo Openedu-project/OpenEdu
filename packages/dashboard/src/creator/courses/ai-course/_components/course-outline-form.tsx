@@ -47,7 +47,7 @@ export function CourseOutlineForm({
         duration: ai_course?.duration ?? 1,
         duration_type: ai_course?.duration_type ?? 'day',
         study_load: ai_course?.study_load ?? 1,
-        material_file: ai_course?.material ? [ai_course?.material] : [],
+        material_file: ai_course?.material,
       };
     }
 
@@ -59,7 +59,6 @@ export function CourseOutlineForm({
       duration: 1,
       duration_type: 'day' as ICreateAICourseOutline['duration_type'],
       study_load: 1,
-      material_file: [],
     };
   }, [course]);
 
@@ -70,7 +69,7 @@ export function CourseOutlineForm({
       const res = await createAICourseService(undefined, {
         ...base,
         course_cuid: course?.ai_course?.course_cuid,
-        material_id: material_file?.[0]?.id,
+        material_id: material_file?.id,
         current_step: 'learner_description_generate',
         type: 'learner_description',
       });
@@ -111,8 +110,8 @@ export function CourseOutlineForm({
 
               return (
                 <Uploader
-                  value={Array.isArray(value) ? value : value ? [value] : undefined}
-                  onChange={files => onChange(files)}
+                  value={value}
+                  onChange={onChange}
                   maxSizeBytes={50 * 1024 * 1024}
                   fileListVisible={false}
                   accept="application/pdf, application/vnd.ms-excel"

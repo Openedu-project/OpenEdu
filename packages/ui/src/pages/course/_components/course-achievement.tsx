@@ -21,7 +21,7 @@ export default function CourseAchievements({
             ?.map((achievement, index) => {
               return (
                 <div key={index} className="flex items-center justify-center gap-2">
-                  <CircleCheckBig className="h-5 w-5 text-success" />
+                  <CircleCheckBig className="h-5 w-5 text-primary/75" />
                   <span className="mcaption-regular14 flex-1 text-foreground opacity-80">{achievement}</span>
                 </div>
               );
