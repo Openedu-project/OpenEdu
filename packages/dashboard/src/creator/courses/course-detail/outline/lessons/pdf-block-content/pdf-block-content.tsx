@@ -16,6 +16,7 @@ export function PdfBlockContent({ order }: { order: number }) {
         <Uploader
           accept=".pdf"
           listType="text"
+          multiple
           maxSizeBytes={1024 * 1024 * 5120} // 5GB
         />
       </FormFieldWithLabel>

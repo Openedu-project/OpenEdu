@@ -4,7 +4,7 @@ import { createAPIUrl, fetchAPI, postAPI } from '#utils/fetch';
 
 export async function getCertNFTFeesService(
   url: string | undefined | null,
-  { id, init }: { id: string; init?: RequestInit }
+  { id, init }: { id?: string; init?: RequestInit }
 ): Promise<ICertNftFees | null> {
   let endpointKey = url;
 

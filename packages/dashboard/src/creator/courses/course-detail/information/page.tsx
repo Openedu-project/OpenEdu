@@ -28,7 +28,7 @@ export default function CourseDetailInformationPage() {
     if (!course) {
       return;
     }
-    const thumbnail = (data.thumbnail as IFileResponse[])?.[0] ?? course.thumbnail ?? null;
+    const thumbnail = (data.thumbnail as IFileResponse) ?? course.thumbnail ?? null;
     await updateCourseService(undefined, {
       ...course,
       ...data,
@@ -64,7 +64,7 @@ export default function CourseDetailInformationPage() {
         {({ loading }) => (
           <>
             <Header loading={loading} />
-            <div className="scrollbar h-full overflow-auto">
+            <div className="scrollbar h-full space-y-4 overflow-auto">
               <Description />
               <Outcomes />
               <Thumbnail />

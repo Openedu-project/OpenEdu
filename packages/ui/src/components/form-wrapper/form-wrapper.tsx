@@ -51,11 +51,11 @@ export function FormWrapper<TFormSchema extends z.ZodType>({
   const handleSubmit = useCallback(
     async (values: z.infer<TFormSchema>) => {
       setLoading(true);
+
       try {
         await onSubmit?.(values);
 
         if (resetOnSuccess) {
-          console.log('reset form');
           form.reset(undefined, useFormProps?.resetOptions);
         }
       } catch (error) {
@@ -88,6 +88,7 @@ export function FormWrapper<TFormSchema extends z.ZodType>({
         onSubmit={e => {
           e.preventDefault();
           e.stopPropagation();
+
           form.handleSubmit(handleSubmit, handleError)(e);
         }}
         noValidate

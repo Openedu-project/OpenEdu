@@ -24,12 +24,9 @@ const certificateSchema = z.object({
   organizations: z
     .array(
       z.object({
-        id: z.string(),
-        name: z.string(),
-        logo: z.object({
-          id: z.string(),
-          url: z.string(),
-        }),
+        id: z.string().optional(),
+        name: z.string().optional(),
+        logo: fileResponseSchema.partial().nullable().optional(),
       })
     )
     .nullable()
@@ -37,10 +34,10 @@ const certificateSchema = z.object({
   signatures: z
     .array(
       z.object({
-        id: z.string(),
-        educator_name: z.string(),
-        position: z.string(),
-        signature: fileResponseSchema.nullable().optional(),
+        id: z.string().optional(),
+        educator_name: z.string().optional(),
+        position: z.string().optional(),
+        signature: fileResponseSchema.partial().nullable().optional(),
       })
     )
     .nullable()
@@ -72,7 +69,6 @@ export const RendererConfigModal = ({
   ...props
 }: PreviewModalProps) => {
   const tCertificate = useTranslations('certificate');
-  const tGeneral = useTranslations('general');
   const [data, setData] = useState<ICertificateDataSchema>(defaultValues as ICertificateDataSchema);
 
   const handleChange = (data: ICertificateDataSchema) => {
@@ -118,7 +114,7 @@ export const RendererConfigModal = ({
           ? []
           : [
               {
-                label: tGeneral('save'),
+                label: tCertificate('selectTemplate.useTemplate'),
                 type: 'submit' as const,
               },
             ]),

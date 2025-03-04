@@ -16,6 +16,7 @@ export function VideoBlockContent({ order }: { order: number }) {
         <Uploader
           accept="video/*"
           listType="text"
+          multiple
           maxSizeBytes={1024 * 1024 * 5120} // 5GB
         />
       </FormFieldWithLabel>

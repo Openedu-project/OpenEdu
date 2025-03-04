@@ -43,6 +43,7 @@ export function CourseDetailHeader() {
 
   return (
     <DashboardHeaderCard
+      dashboard="creator"
       breadcrumbs={[
         { label: tCourse('common.coursesTitle'), path: CREATOR_ROUTES.courses },
         { label: course?.name || tCourse('common.noName') },

@@ -154,15 +154,33 @@ export const courseInfomationSchema = z
 
 export type ICreateAICourseInfo = z.infer<typeof courseInfomationSchema>;
 
-export const courseCertificateSchema = z.object({
-  has_certificate: z.boolean().default(false),
-  completed_all_quiz: z.boolean().default(false),
-  completed_course: z.boolean().default(false),
-  course_completion_percentage: z.number().default(0),
-  completed_final_quiz: z.boolean().default(false),
-  final_quiz_completion_percentage: z.number().default(0),
-  completed_required_lesson: z.boolean().default(false),
-  required_lesson_uid: z.string().default(''),
-});
+export const courseCertificateSchema = z
+  .object({
+    has_certificate: z.boolean().default(false),
+    // completed_all_quiz: z.boolean().default(false),
+    // completed_course: z.boolean().default(false),
+    // course_completion_percentage: z.number().default(0),
+    // completed_final_quiz: z.boolean().default(false),
+    // final_quiz_completion_percentage: z.number().default(0),
+    // completed_required_lesson: z.boolean().default(false),
+    // required_lesson_uid: z.string().default(''),
+    props: z
+      .object({
+        certificate_condition: z
+          .object({
+            completed_all_quiz: z.boolean().default(false),
+            completed_course: z.boolean().default(false),
+            completed_final_quiz: z.boolean().default(false),
+            course_completion_percentage: z.number().default(0),
+            final_quiz_completion_percentage: z.number().default(0),
+          })
+          .nullable()
+          .optional(),
+      })
+      .nullable()
+      .optional(),
+  })
+  .nullable()
+  .optional();
 
 export type ICreateCourseCertificate = z.infer<typeof courseCertificateSchema>;
