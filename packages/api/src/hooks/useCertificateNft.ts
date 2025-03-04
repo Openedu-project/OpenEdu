@@ -5,13 +5,15 @@ import type { IMintCertNftRequest } from '#types/certificate-nft';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
 
-export function useGetCertNFTFees(id: string) {
+export function useGetCertNFTFees(id?: string) {
   const endpointKey = createAPIUrl({
     endpoint: API_ENDPOINT.CERTIFICATES_ID_NFT_FEES,
     params: { id },
   });
 
-  const { data, isLoading, error, mutate } = useSWR(endpointKey, (url: string) => getCertNFTFeesService(url, { id }));
+  const { data, isLoading, error, mutate } = useSWR(id ? endpointKey : null, (url: string) =>
+    getCertNFTFeesService(url, { id })
+  );
 
   return {
     dataCertNftFees: data,

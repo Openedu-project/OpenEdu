@@ -3,51 +3,58 @@
 import { useGetCertLayers } from '@oe/api/hooks/useCertificate';
 import { useGetCourseById } from '@oe/api/hooks/useCourse';
 import { type ICreateCourseCertificate, courseCertificateSchema } from '@oe/api/schemas/courses/createCourseSchema';
-import { updateCourseCertTemplateService } from '@oe/api/services/certificate';
-import type { ICertificateData } from '@oe/api/types/certificate';
-import {
-  type ICertificateDataSchema,
-  RendererConfigModal,
-  TemplateScalePreview,
-} from '@oe/ui/components/certificate-builder';
+import { updateCourseService } from '@oe/api/services/course';
+import type { ICourse } from '@oe/api/types/course/course';
 import { FormWrapper } from '@oe/ui/components/form-wrapper';
 import { Button } from '@oe/ui/shadcn/button';
+import { CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@oe/ui/shadcn/carousel';
+import { Carousel } from '@oe/ui/shadcn/carousel';
 import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { Switch } from '@oe/ui/shadcn/switch';
-import { CheckIcon, Settings } from 'lucide-react';
+import { CheckIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { COURSE_DETAIL_FORM_IDS } from '../_utils/constants';
+import { CertificateCondition } from './_components/certificate-condition';
+import { CertificateTemplate } from './_components/certificate-template';
 
 export default function CourseDetailCertificatePage() {
   const tCourse = useTranslations('course');
+  const tCertificate = useTranslations('certificate');
   const { courseId } = useParams<{ courseId: string }>();
-  const { course } = useGetCourseById(courseId);
-  const { dataCertLayers, mutateCertLayers } = useGetCertLayers({
+  const { course, mutateCourse } = useGetCourseById(courseId);
+  const { dataCertLayers } = useGetCertLayers({
     courseId,
   });
 
-  const [selectedTemplate, setSelectedTemplate] = useState<string | undefined>(undefined);
+  const certificateLayer = dataCertLayers?.results?.find(layer => layer.type === 'certificate_layer');
 
-  const handleTemplateClick = (templateId: string) => {
-    setSelectedTemplate(templateId);
-  };
+  const certificateTemplates = dataCertLayers?.results?.filter(layer => layer.type === 'certificate_template');
 
-  const handleSubmit = (data: ICreateCourseCertificate) => {
-    console.log(data);
-  };
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      document.body.classList.add('overflow-hidden');
+    }
+  }, []);
 
-  const handleUpdateCertificateTemplate = async (data: ICertificateDataSchema) => {
-    await updateCourseCertTemplateService(undefined, {
-      params: {
-        courseId,
-        templateId: selectedTemplate,
-      },
-      payload: data as Partial<ICertificateData>,
-    });
-    await mutateCertLayers();
+  const handleSubmit = async (data: ICreateCourseCertificate) => {
+    const certificateLayer = dataCertLayers?.results?.find(layer => layer.type === 'certificate_layer');
+    if (!certificateLayer) {
+      toast.error(tCertificate('noCertificateLayer'));
+      return;
+    }
+    if (!course) {
+      return;
+    }
+    await updateCourseService(undefined, {
+      ...course,
+      ...data,
+      thumbnail: course?.thumbnail,
+      thumbnail_id: course?.thumbnail?.id,
+    } as ICourse);
+    await mutateCourse();
     toast.success(
       tCourse('common.toast.updateSuccess', {
         item: tCourse('common.courseTitle'),
@@ -56,95 +63,89 @@ export default function CourseDetailCertificatePage() {
   };
 
   return (
-    <div className="mx-auto h-full max-w-[900px] px-1 py-4">
-      <FormWrapper
-        id={COURSE_DETAIL_FORM_IDS.certificate}
-        schema={courseCertificateSchema}
-        useFormProps={{
-          defaultValues: course?.props?.certificate_condition,
-        }}
-        onSubmit={handleSubmit}
-        onError={() => {
-          toast.error(
-            tCourse('common.toast.updateError', {
-              item: tCourse('common.courseTitle'),
-            })
-          );
-        }}
-        className="flex h-full flex-col gap-4 space-y-0"
-      >
-        {({ loading }) => (
-          <>
-            <div className="flex items-center justify-between rounded-lg bg-background p-4 shadow-sm">
-              <h1 className="mb-0 font-semibold text-xl">{tCourse('certificate.title')}</h1>
+    <FormWrapper
+      id={COURSE_DETAIL_FORM_IDS.certificate}
+      schema={courseCertificateSchema}
+      useFormProps={{
+        defaultValues: course,
+      }}
+      onSubmit={handleSubmit}
+      onError={() => {
+        toast.error(
+          tCourse('common.toast.updateError', {
+            item: tCourse('common.courseTitle'),
+          })
+        );
+      }}
+      className="mx-auto flex h-full max-w-[900px] flex-col gap-4 space-y-0 px-1 py-4"
+    >
+      {({ loading, form }) => (
+        <>
+          <div className="flex items-center justify-between rounded-lg bg-background px-4 py-2 shadow-sm">
+            <div className="flex items-center gap-2">
+              <FormFieldWithLabel
+                name="has_certificate"
+                // className="py-2"
+                isToggleField
+                label={tCertificate('display.title')}
+                description={tCertificate('display.displayDescription')}
+                render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} />}
+              />
+            </div>
+            {form.watch('has_certificate') && (
               <Button size="sm" type="submit" disabled={loading} loading={loading}>
                 {tCourse('common.actions.save')}
                 <CheckIcon className="ml-2 h-4 w-4" />
               </Button>
-            </div>
-            <div className="scrollbar flex h-full flex-col gap-4 overflow-auto">
-              <FormFieldWithLabel
-                name="has_certificate"
-                className="rounded-lg bg-background p-4 shadow-sm"
-                labelClassName="mb-4 text-lg"
-                render={({ field }) => (
-                  <div className="flex flex-col gap-1">
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium text-lg">{tCourse('certificate.display')}</span>
-                      <Switch checked={field.value} onCheckedChange={field.onChange} />
-                    </div>
-                    <span className="text-muted-foreground text-xs">{tCourse('certificate.displayDescription')}</span>
-                  </div>
-                )}
-              />
-              <div className="rounded-lg bg-background p-4 shadow-sm">
-                <span className="font-medium text-lg">{tCourse('certificate.selectTemplate')}</span>
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-                  {dataCertLayers?.results?.map(certificateTemplate => {
-                    return (
-                      <div
-                        key={certificateTemplate.id}
-                        className={`cursor-pointer rounded-md border-2 text-left ${
-                          selectedTemplate === certificateTemplate.id ? 'border-primary' : 'border-transparent'
-                        }`}
-                        onClick={() => handleTemplateClick(certificateTemplate.id)}
-                        aria-pressed={selectedTemplate === certificateTemplate.id}
-                        onKeyDown={e => {
-                          if (e.key === 'Enter' || e.key === ' ') {
-                            handleTemplateClick(certificateTemplate.id);
-                          }
+            )}
+          </div>
+          <div className="scrollbar flex h-full flex-col gap-4 overflow-auto">
+            {form.watch('has_certificate') && (
+              <>
+                <div className="rounded-lg bg-background p-4 shadow-sm">
+                  <div className="flex flex-col gap-4">
+                    <div className="space-y-2">
+                      <span className="font-medium text-lg">{tCertificate('selectTemplate.title')}</span>
+                      <Carousel
+                        opts={{
+                          align: 'start',
+                          containScroll: 'trimSnaps',
                         }}
+                        className="w-full"
                       >
-                        <TemplateScalePreview template={certificateTemplate.template} />
-                        <div className="mt-2 flex items-center justify-between p-2">
-                          <p className="font-medium text-sm">{certificateTemplate.name || 'Mẫu chứng chỉ'}</p>
-                          <RendererConfigModal
-                            template={certificateTemplate.template}
-                            data={certificateTemplate}
-                            onSubmit={handleUpdateCertificateTemplate}
-                            onError={() => {
-                              toast.error(
-                                tCourse('common.toast.updateError', {
-                                  item: tCourse('common.courseTitle'),
-                                })
-                              );
-                            }}
-                            trigger={
-                              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                                <Settings className="h-4 w-4" />
-                              </Button>
-                            }
-                          />
-                        </div>
+                        <CarouselContent className="-ml-2 md:-ml-4">
+                          {certificateTemplates?.map(certificateTemplate => (
+                            <CarouselItem key={certificateTemplate.id} className="pl-2 md:basis-1/2 md:pl-4">
+                              <CertificateTemplate certificateTemplate={certificateTemplate} courseId={courseId} />
+                            </CarouselItem>
+                          ))}
+                        </CarouselContent>
+                        <CarouselPrevious className="-translate-x-0 absolute left-0" />
+                        <CarouselNext className="absolute right-0 translate-x-0" />
+                      </Carousel>
+                    </div>
+
+                    {certificateLayer && (
+                      <div className="space-y-2">
+                        <span className="font-medium text-lg">{tCertificate('selectTemplate.usedCertificate')}</span>
+                        <CertificateTemplate certificateTemplate={certificateLayer} courseId={courseId} />
                       </div>
-                    );
-                  })}
+                    )}
+
+                    <div className="space-y-2">
+                      <span className="font-medium text-lg">{tCertificate('conditions.title')}</span>
+                      <CertificateCondition />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </>
-        )}
-      </FormWrapper>
-    </div>
+                {/* {certificateLayer && (
+                  <CertificateMintNFT certificateLayer={certificateLayer} />
+                )} */}
+              </>
+            )}
+          </div>
+        </>
+      )}
+    </FormWrapper>
   );
 }

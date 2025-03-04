@@ -69,6 +69,7 @@ export const SignaturesConfig = ({
               label={tCertificate('builder.preview.signature')}
               render={({ field }) => {
                 const { value } = field;
+                console.log('value', value);
                 return isPreview ? (
                   <div className="flex items-center gap-2">
                     <Input

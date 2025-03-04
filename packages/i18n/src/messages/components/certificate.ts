@@ -4,6 +4,16 @@ export const certificateMessages = {
     copied: 'Copied',
     shareThisPage: 'Share this page',
     backToUserProfile: 'Back to user profile',
+    noCertificateLayer: 'Please select 1 certificate template before saving.',
+    selectTemplate: {
+      title: 'List of certificate templates',
+      defaultName: 'Certificate Template',
+      usedCertificate: 'Selected Certificate',
+      useTemplate: 'Use template',
+      configTemplate: 'Configure template',
+      useTemplateDescription:
+        'By using this template, the certificate will be generated based on the template configuration. This action will overwrite the current certificate configuration.',
+    },
     actions: {
       edit: 'Edit',
       delete: 'Delete',
@@ -39,6 +49,35 @@ export const certificateMessages = {
     },
     validation: {
       name: 'Name is required',
+    },
+    conditions: {
+      title: 'User Receive Certificate When:',
+      completedAllQuizzes: 'Completed all quizzes',
+      completeCourseAt: 'Complete course at',
+      completeFinalQuizAt: 'Complete final quiz at',
+      completeCourseAtDescription: 'Complete course at description',
+      completeFinalQuizAtDescription: 'Complete final quiz at description',
+    },
+    mintNFT: {
+      title: 'Mint NFT',
+      mintNFTEnabled: 'Mint NFT enabled',
+      mintNFTDisabled: 'Mint NFT disabled',
+      mintNFTEnabledDescription: 'Mint NFT enabled description',
+      mintNFTDisabledDescription: 'Mint NFT disabled description',
+      insufficientBalance: 'Insufficient available amount in wallet: {balance} {unit}',
+      learner: 'Learner',
+      creator: 'Creator',
+      deposit: 'Deposit',
+      estimatedGasFee: 'Estimated Gas Fee',
+      sponsorBalance: 'Sponsor Balance',
+      gasFeePayedBy: 'Gas Fee Payed By',
+      mintSuccess: 'Mint NFT successfully',
+      mintError: 'Mint NFT failed',
+    },
+    display: {
+      title: 'Certificate Display',
+      displayDescription:
+        'Configure whether learners can receive a certificate upon course completion. This setting determines if the course offers a certificate.',
     },
     builder: {
       addText: 'Add Text',
