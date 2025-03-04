@@ -25,6 +25,8 @@ on:
       #     - ORG_OPENEDUTEST
       #     - OPENEDU
 
+run-name: Deploy to ${{ inputs.environment }}
+
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets[format('VERCEL_PROJECT_ID_{0}', github.event.inputs.environment) ] }}
