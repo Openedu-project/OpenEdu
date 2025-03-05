@@ -191,7 +191,7 @@ export default function AffiliateCampaignList() {
     <>
       <Table
         api={API_ENDPOINT.AFFILIATE_CAMPAIGNS}
-        apiParams={{
+        apiQueryParams={{
           page: 1,
           per_page: 10,
           sort: 'create_at desc',

@@ -177,7 +177,7 @@ export default function LaunchpadApprovedList() {
       columns={columns}
       api={API_ENDPOINT.APPROVALS}
       hasNoColumn
-      apiParams={{
+      apiQueryParams={{
         page: 1,
         per_page: 10,
         sort: 'request_date desc',

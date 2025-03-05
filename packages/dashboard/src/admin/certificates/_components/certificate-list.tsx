@@ -189,7 +189,7 @@ export default function CertificatesList() {
       columns={columns}
       api={API_ENDPOINT.HTML_TEMPLATES}
       hasNoColumn
-      apiParams={{
+      apiQueryParams={{
         page: 1,
         per_page: 10,
       }}

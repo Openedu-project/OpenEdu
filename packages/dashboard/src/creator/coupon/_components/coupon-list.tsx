@@ -226,7 +226,7 @@ export default function CouponList() {
     <>
       <Table
         api={API_ENDPOINT.ADMIN_COUPONS}
-        apiParams={{
+        apiQueryParams={{
           page: 1,
           per_page: 10,
           sort: 'create_at desc',

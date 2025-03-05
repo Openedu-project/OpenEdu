@@ -100,7 +100,7 @@ export default function Courses() {
       <Table
         columns={columns}
         api={API_ENDPOINT.COURSES}
-        apiParams={{
+        apiQueryParams={{
           sort: 'update_at desc',
           preloads: ['Published', 'Reviewing', 'AICourse'],
         }}

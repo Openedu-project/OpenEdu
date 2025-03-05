@@ -284,7 +284,7 @@ export default function MyBlogManagement({ type, canUnpublish = false, AIButton 
     >
       <Table
         api={API_ENDPOINT.USERS_ME_BLOGS}
-        apiParams={{ blog_type: type, sort: 'update_at desc' }}
+        apiQueryParams={{ blog_type: type, sort: 'update_at desc' }}
         hasNoColumn
         columns={columns}
         filterOptions={filterOptions}

@@ -23,6 +23,7 @@ import { TableVirtualized } from './table-virtualized';
 export default function Table<TData>({
   api,
   apiParams,
+  apiQueryParams,
   data: staticData,
   columns,
   filterOptions,
@@ -73,7 +74,7 @@ export default function Table<TData>({
   });
   const { pagination, paginationOptions } = useTablePagination<TData>({
     options: tableOptions,
-    apiParams,
+    apiQueryParams,
     hasPagination,
     hasVirtualized,
   });
@@ -90,6 +91,7 @@ export default function Table<TData>({
     globalFilter,
     pagination,
     apiParams,
+    apiQueryParams,
   });
   const { tableData, updateTableData } = useTableData<TData>({
     data: data?.results ?? staticData,

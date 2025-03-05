@@ -222,7 +222,7 @@ export default function OrganizationsManagement() {
         columns={columns}
         api={API_ENDPOINT.ADMIN_ORGANIZATIONS}
         hasNoColumn
-        apiParams={{
+        apiQueryParams={{
           page: 1,
           per_page: 10,
           sort: 'create_at desc',

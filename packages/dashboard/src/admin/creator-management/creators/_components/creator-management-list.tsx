@@ -33,7 +33,9 @@ export default function CreatorsManagementList() {
 
   const { triggerInviteCreators } = useInviteCreators();
   const { triggerCreateCreator } = useCreateCreator();
-  const { triggerDeleteCreator } = useDeleteCreator({ creator_ids: [selectedCreator?.id ?? ''] });
+  const { triggerDeleteCreator } = useDeleteCreator({
+    creator_ids: [selectedCreator?.id ?? ''],
+  });
   const { mutateInviteUserList } = useGetUserInvitationsList({
     params: {
       page: 1,
@@ -196,7 +198,7 @@ export default function CreatorsManagementList() {
         columns={columns}
         api={API_ENDPOINT.ADMIN_CREATORS}
         hasNoColumn
-        apiParams={{
+        apiQueryParams={{
           page: 1,
           per_page: 10,
           sort: 'create_at desc',

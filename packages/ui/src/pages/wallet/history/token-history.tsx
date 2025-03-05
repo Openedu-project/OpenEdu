@@ -132,7 +132,7 @@ export default function FiatHistory() {
       }}
       columns={tokenColumns}
       filterOptions={tokenFilterOptions}
-      apiParams={{
+      apiQueryParams={{
         currency_type: 'crypto',
         page: 1,
         per_page: 10,

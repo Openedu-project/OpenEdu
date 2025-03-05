@@ -28,7 +28,7 @@ export default function ActionsList() {
       <Table
         columns={columns}
         api={API_ENDPOINT.PAGE_CONFIGS}
-        apiParams={{
+        apiQueryParams={{
           type: 'action',
           page: 1,
           per_page: 10,

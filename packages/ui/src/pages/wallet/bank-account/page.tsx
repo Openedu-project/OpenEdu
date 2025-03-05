@@ -144,7 +144,7 @@ export function BankAccountPage() {
       <Table
         columns={columns}
         api={API_ENDPOINT.USER_SETTINGS}
-        apiParams={{
+        apiQueryParams={{
           type: 'bank_account',
           page: 1,
           per_page: 10,

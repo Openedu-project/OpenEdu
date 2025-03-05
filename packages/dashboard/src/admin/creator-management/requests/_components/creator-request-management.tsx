@@ -179,11 +179,14 @@ export default function CreatorRequestMngmList() {
         columns={columns}
         api={
           formRegister?.id
-            ? createAPIUrl({ endpoint: API_ENDPOINT.FORMS_ID_SESSIONS, params: { id: formRegister?.id } })
+            ? createAPIUrl({
+                endpoint: API_ENDPOINT.FORMS_ID_SESSIONS,
+                params: { id: formRegister?.id },
+              })
             : undefined
         }
         hasNoColumn
-        apiParams={{
+        apiQueryParams={{
           page: 1,
           per_page: 10,
           sort: 'create_at desc',

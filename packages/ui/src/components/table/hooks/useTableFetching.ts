@@ -1,7 +1,6 @@
-import { createAPIUrl } from '@oe/api/utils/fetch';
-
 import type { HTTPPagination } from '@oe/api/types/fetch';
 import { fetchAPI } from '@oe/api/utils/fetch';
+import { buildUrl } from '@oe/core/utils/url';
 import type { SortingState } from '@tanstack/react-table';
 import type { PaginationState } from '@tanstack/react-table';
 import type { ColumnFiltersState } from '@tanstack/react-table';
@@ -20,9 +19,11 @@ export const useTableFetching = <T>({
   globalFilter,
   pagination,
   apiParams,
+  apiQueryParams,
 }: {
   api?: string;
   apiParams?: Record<string, unknown>;
+  apiQueryParams?: Record<string, unknown>;
   sorting: SortingState;
   columnFilters: ColumnFiltersState;
   globalFilter: string;
@@ -30,7 +31,7 @@ export const useTableFetching = <T>({
 }) => {
   const queryParams = useMemo(() => {
     const params: Record<string, unknown> = {
-      ...apiParams,
+      ...apiQueryParams,
       page: pagination?.pageIndex + 1,
       per_page: pagination?.pageSize,
     };
@@ -46,10 +47,10 @@ export const useTableFetching = <T>({
       params.search_term = globalFilter;
     }
     return params;
-  }, [sorting, columnFilters, globalFilter, pagination, apiParams]);
+  }, [sorting, columnFilters, globalFilter, pagination, apiQueryParams]);
 
   const { data, error, isLoading, mutate } = useSWR(
-    api ? createAPIUrl({ endpoint: api, queryParams }) : null,
+    api ? buildUrl({ endpoint: api, queryParams, params: apiParams }) : null,
     paginationFetcher<T>
   );
 
