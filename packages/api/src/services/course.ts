@@ -1,5 +1,6 @@
 import { buildUrl } from '@oe/core/utils/url';
 import type { ICreateBaseCourse, ICreateYoutubeCourse } from '#schemas/courses/createCourseSchema';
+import type { IAddPartnerSchema } from '#schemas/courses/partners';
 import type { IAICourseRequest } from '#types/course/ai-course';
 import type { ICourseCategory } from '#types/course/category';
 import type {
@@ -405,11 +406,11 @@ export const getCoursePartnersService = async (
   return response.data;
 };
 
-export const createCoursePartnerService = async (
+export const addCoursePartnerService = async (
   url: string | undefined,
-  { id, payload, init }: { id: string; payload: ICoursePartner[]; init?: RequestInit }
+  { id, payload, init }: { id: string; payload: IAddPartnerSchema; init?: RequestInit }
 ) => {
-  const response = await putAPI<ICoursePartner, ICoursePartner[]>(
+  const response = await putAPI<ICoursePartner, IAddPartnerSchema>(
     url ?? buildUrl({ endpoint: API_ENDPOINT.COURSES_ID_PARTNERS, params: { id } }),
     payload,
     init
@@ -419,7 +420,7 @@ export const createCoursePartnerService = async (
 
 export const deleteCoursePartnerService = async (
   url: string | undefined,
-  { id, queryParams, init }: { id: string; queryParams?: IFilter; init?: RequestInit }
+  { id, queryParams, init }: { id: string; queryParams?: { user_ids: string[] }; init?: RequestInit }
 ) => {
   const response = await deleteAPI(
     url ?? buildUrl({ endpoint: API_ENDPOINT.COURSES_ID_PARTNERS, params: { id }, queryParams }),

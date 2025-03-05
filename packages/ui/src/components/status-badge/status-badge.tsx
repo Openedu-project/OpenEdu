@@ -59,6 +59,7 @@ export function StatusBadge({
   className?: string;
 }) {
   const tStatus = useTranslations('general.statusVariants');
+  const lowerCaseStatus = status.toLowerCase() as TStatus;
   return status === 'failed' ? (
     <TooltipProvider>
       <Tooltip
@@ -66,14 +67,14 @@ export function StatusBadge({
           <p className="break-word max-w-[150px] text-start md:max-w-[200px]">{errorMessage ?? 'Unknown Error'}</p>
         }
       >
-        <Badge variant={statusColorMap[status]} className={className}>
-          {tStatus(status)}
+        <Badge variant={statusColorMap[lowerCaseStatus]} className={className}>
+          {tStatus(lowerCaseStatus)}
         </Badge>
       </Tooltip>
     </TooltipProvider>
   ) : (
-    <Badge variant={statusColorMap[status]} className={className}>
-      {statusIcon[status]} {tStatus(status)}
+    <Badge variant={statusColorMap[lowerCaseStatus]} className={className}>
+      {statusIcon[lowerCaseStatus]} {tStatus(lowerCaseStatus)}
     </Badge>
   );
 }

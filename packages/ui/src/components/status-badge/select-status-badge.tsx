@@ -48,8 +48,10 @@ export function SelectStatusBadge({
 }: SelectStatusBadgeProps) {
   const tStatus = useTranslations('general.statusVariants');
 
+  const lowerCaseValue = (value ?? '').toLowerCase() as TStatus;
+
   return (
-    <Select value={value} onValueChange={onValueChange}>
+    <Select value={lowerCaseValue} onValueChange={onValueChange}>
       <SelectTrigger
         className={cn(
           value && badgeVariants({ variant: statusColorMap[value] }),
@@ -62,12 +64,12 @@ export function SelectStatusBadge({
         {...props}
       >
         <SelectValue>
-          {value &&
+          {lowerCaseValue &&
             (displayValue ? (
-              displayValue(value)
+              displayValue(lowerCaseValue)
             ) : (
-              <Badge variant={statusColorMap[value]} className="w-fit border-none p-0">
-                {tStatus(value)}
+              <Badge variant={statusColorMap[lowerCaseValue]} className="w-fit border-none p-0">
+                {tStatus(lowerCaseValue)}
               </Badge>
             ))}
         </SelectValue>
@@ -76,15 +78,15 @@ export function SelectStatusBadge({
         {statuses.map(status => (
           <SelectItem
             key={status}
-            value={status}
+            value={status.toLowerCase()}
             className="w-auto cursor-pointer"
-            disabled={disabledItems?.includes(status)}
+            disabled={disabledItems?.includes(status.toLowerCase() as TStatus)}
           >
             {displayItem ? (
-              displayItem(status)
+              displayItem(status.toLowerCase() as TStatus)
             ) : (
-              <Badge variant={statusColorMap[status]} className="w-fit">
-                {tStatus(status)}
+              <Badge variant={statusColorMap[status.toLowerCase() as TStatus]} className="w-fit">
+                {tStatus(status.toLowerCase() as TStatus)}
               </Badge>
             )}
           </SelectItem>

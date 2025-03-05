@@ -74,6 +74,44 @@ export const courseMessages = {
       },
     },
 
+    partner: {
+      username: 'Username',
+      email: 'Email',
+      role: 'Role',
+      actions: 'Actions',
+      searchUsername: 'Search username',
+      searchEmail: 'Search email',
+      deleteSuccess: 'Partner deleted successfully',
+      deleteError: 'Failed to delete partner',
+      partnerInfo: 'Partner {index}',
+      roles: 'Roles',
+      selectRoles: 'Select roles',
+      addAnother: 'Add another partner',
+      addSuccess: 'Partner added successfully',
+      addError: 'Failed to add partner',
+      courseCollaborators: 'Course Collaborators',
+      addPartners: 'Add Partners',
+      addPartnersDescription: 'Add partners to the course',
+      editPartners: 'Edit Partners',
+      editPartnersDescription: 'Edit partners of the course',
+      enterEmail: 'Enter email',
+      coCreator: 'Co-creator',
+      mentor: 'Mentor',
+      supervisor: 'Supervisor',
+      sponsor: 'Sponsor',
+      owner: 'Owner',
+    },
+
+    learner: {
+      username: 'Username',
+      email: 'Email',
+      enrollDate: 'Enroll Date',
+      progress: 'Progress',
+      searchUsername: 'Search username',
+      searchEmail: 'Search email',
+      phone: 'Phone',
+    },
+
     // Form validation messages
     validation: {
       errors: 'Validation Errors',
@@ -131,7 +169,7 @@ export const courseMessages = {
       sections: {
         description: {
           title: 'Description',
-          subtitle: 'The description is used to describe the course.',
+          subtitle: 'The description is used to describe the course',
           placeholder: 'Write description here',
         },
         outcomes: {
