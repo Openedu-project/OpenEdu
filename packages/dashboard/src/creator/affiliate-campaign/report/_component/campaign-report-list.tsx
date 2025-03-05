@@ -117,7 +117,7 @@ export default function ReportAffiliateCampaignList() {
     <>
       <Table
         api={API_ENDPOINT.REFERRALS}
-        apiParams={{
+        apiQueryParams={{
           page: 1,
           per_page: 10,
           sort: 'create_at desc',

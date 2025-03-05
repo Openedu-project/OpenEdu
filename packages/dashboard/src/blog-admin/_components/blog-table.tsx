@@ -19,11 +19,7 @@ import { cn } from '@oe/ui/utils/cn';
 import { useTranslations } from 'next-intl';
 import { useMemo, useRef } from 'react';
 
-export default function BlogTable({
-  type,
-}: {
-  type: 'personal' | 'org';
-}) {
+export default function BlogTable({ type }: { type: 'personal' | 'org' }) {
   const tBlogs = useTranslations('blogManagement');
   const tGeneral = useTranslations('general');
   const tPublish = useTranslations('publishButton');
@@ -204,7 +200,7 @@ export default function BlogTable({
   return (
     <Table
       api={API_ENDPOINT.ADMIN_BLOGS}
-      apiParams={{ blog_type: type, sort: 'update_at desc' }}
+      apiQueryParams={{ blog_type: type, sort: 'update_at desc' }}
       columns={columns}
       filterOptions={filterOptions}
       ref={tableRef}

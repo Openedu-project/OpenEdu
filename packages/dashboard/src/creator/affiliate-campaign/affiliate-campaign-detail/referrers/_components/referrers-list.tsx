@@ -139,7 +139,7 @@ export default function ReferrerList() {
           endpoint: API_ENDPOINT.AFFILIATE_CAMPAIGNS_ID_REFERRERS,
           params: { id: campaignId },
         })}
-        apiParams={{
+        apiQueryParams={{
           page: 1,
           per_page: 10,
           sort: 'create_at desc',

@@ -11,6 +11,7 @@ import type {
   ISectionRes,
 } from '#types/course/course';
 import type { ICourseOutline } from '#types/course/course';
+import type { ICoursePartner } from '#types/course/partners';
 import type { IBulkSegments, ILessonContent, ISegment, ISegmentParams } from '#types/course/segment';
 import type { HTTPPagination } from '#types/fetch';
 import type { IFilter } from '#types/filter';
@@ -387,6 +388,41 @@ export const publishCourseService = async (url: string | undefined, id: string, 
 export const unpublishCourseService = async (url: string | undefined, id: string, init?: RequestInit) => {
   const response = await deleteAPI<ICourse, undefined>(
     url ?? buildUrl({ endpoint: API_ENDPOINT.COURSES_ID_PUBLISH, params: { id } }),
+    undefined,
+    init
+  );
+  return response.data;
+};
+
+export const getCoursePartnersService = async (
+  url: string | undefined,
+  { id, queryParams, init }: { id: string; queryParams?: IFilter; init?: RequestInit }
+) => {
+  const response = await fetchAPI<ICoursePartner[]>(
+    url ?? buildUrl({ endpoint: API_ENDPOINT.COURSES_ID_PARTNERS, params: { id }, queryParams }),
+    init
+  );
+  return response.data;
+};
+
+export const createCoursePartnerService = async (
+  url: string | undefined,
+  { id, payload, init }: { id: string; payload: ICoursePartner[]; init?: RequestInit }
+) => {
+  const response = await putAPI<ICoursePartner, ICoursePartner[]>(
+    url ?? buildUrl({ endpoint: API_ENDPOINT.COURSES_ID_PARTNERS, params: { id } }),
+    payload,
+    init
+  );
+  return response.data;
+};
+
+export const deleteCoursePartnerService = async (
+  url: string | undefined,
+  { id, queryParams, init }: { id: string; queryParams?: IFilter; init?: RequestInit }
+) => {
+  const response = await deleteAPI(
+    url ?? buildUrl({ endpoint: API_ENDPOINT.COURSES_ID_PARTNERS, params: { id }, queryParams }),
     undefined,
     init
   );

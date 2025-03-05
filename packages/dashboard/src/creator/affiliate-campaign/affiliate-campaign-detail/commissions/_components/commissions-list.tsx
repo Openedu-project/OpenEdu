@@ -422,7 +422,7 @@ export default function CommissionList() {
 
       <Table
         api={API_ENDPOINT.COMMISSIONS}
-        apiParams={{
+        apiQueryParams={{
           page: 1,
           per_page: 10,
           sort: 'create_at desc',

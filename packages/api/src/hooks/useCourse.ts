@@ -4,6 +4,7 @@ import useSWRMutation from 'swr/mutation';
 import {
   getCourseByIdService,
   getCourseOutlineService,
+  getCoursePartnersService,
   getCoursesPublishService,
   getCoursesService,
   getLevelsService,
@@ -273,5 +274,24 @@ export const useGetSectionsHaveLessonsByCourseId = (params?: ISegmentParams) => 
     loadingSections: isLoading,
     validSections: isValidating,
     mutateSectionsData: mutate,
+  };
+};
+
+export const useGetCoursePartners = (id: string, params?: IFilter) => {
+  const endpointKey = createAPIUrl({
+    endpoint: API_ENDPOINT.COURSES_ID_PARTNERS,
+    params: { id },
+    queryParams: {
+      ...params,
+    },
+  });
+  const { data, isLoading, mutate } = useSWR(id ? endpointKey : null, (_endpoint: string) =>
+    getCoursePartnersService(endpointKey, { id, queryParams: { ...params } })
+  );
+
+  return {
+    coursePartners: data,
+    isLoadingCoursePartners: isLoading,
+    mutateCoursePartners: mutate,
   };
 };

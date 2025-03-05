@@ -8,18 +8,18 @@ export type TablePaginationOptions<T> = {
 
 export function useTablePagination<T>({
   options,
-  apiParams,
+  apiQueryParams,
   hasPagination,
   hasVirtualized,
 }: {
   options?: Partial<TableOptions<T>>;
-  apiParams?: Record<string, unknown>;
+  apiQueryParams?: Record<string, unknown>;
   hasPagination?: boolean;
   hasVirtualized?: boolean;
 }): TablePaginationOptions<T> {
   const [pagination, setPagination] = useState<PaginationState>({
-    pageIndex: apiParams?.page ? Number(apiParams.page) - 1 : 0,
-    pageSize: apiParams?.per_page ? Number(apiParams.per_page) : 10,
+    pageIndex: apiQueryParams?.page ? Number(apiQueryParams.page) - 1 : 0,
+    pageSize: apiQueryParams?.per_page ? Number(apiQueryParams.per_page) : 10,
   });
 
   const paginationOptions = useMemo<Partial<TableOptions<T>>>(

@@ -186,7 +186,7 @@ export default function AffiliateManagementContent() {
     <>
       <Table
         api={me?.id ? API_ENDPOINT.REFERRALS_USER_REPORT : ''}
-        apiParams={{
+        apiQueryParams={{
           page: 1,
           per_page: 10,
           user_id: me?.id,

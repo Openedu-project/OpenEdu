@@ -11,11 +11,7 @@ import { useRef } from 'react';
 
 export type IBlogUserRole = 'org_writer' | 'org_editor';
 
-export function UserTable({
-  userRole,
-}: {
-  userRole: IBlogUserRole;
-}) {
+export function UserTable({ userRole }: { userRole: IBlogUserRole }) {
   const tBlogs = useTranslations('blogManagement');
   const tGeneral = useTranslations('general');
   const tableRef = useRef<TableRef<IUser>>(null);
@@ -111,7 +107,7 @@ export function UserTable({
       ref={tableRef}
       api={API_ENDPOINT.USERS}
       hasNoColumn
-      apiParams={{
+      apiQueryParams={{
         page: 1,
         per_page: 10,
         role_id: userRole,

@@ -82,7 +82,7 @@ export function InviteRequestTable({ userRole }: { userRole: IBlogUserRole }) {
       columns={columns}
       api={API_ENDPOINT.USER_INVITATIONS}
       hasNoColumn
-      apiParams={{
+      apiQueryParams={{
         page: 1,
         per_page: 10,
         is_verified: false,

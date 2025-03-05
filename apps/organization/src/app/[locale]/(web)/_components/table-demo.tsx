@@ -1,23 +1,28 @@
-'use client';
+"use client";
 
-import type { IOrganization } from '@oe/api/types/organizations';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import type { FilterOption } from '@oe/ui/components/filter-search';
-import { type ColumnDef, Table, TableEditableCell, type TableRef } from '@oe/ui/components/table';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { Button } from '@oe/ui/shadcn/button';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import type { IOrganization } from "@oe/api/types/organizations";
+import { API_ENDPOINT } from "@oe/api/utils/endpoints";
+import type { FilterOption } from "@oe/ui/components/filter-search";
+import {
+  type ColumnDef,
+  Table,
+  TableEditableCell,
+  type TableRef,
+} from "@oe/ui/components/table";
+import { Badge } from "@oe/ui/shadcn/badge";
+import { Button } from "@oe/ui/shadcn/button";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const filterOptions: FilterOption[] = [
-  { value: 'global', label: 'All', type: 'search', id: 'global' },
+  { value: "global", label: "All", type: "search", id: "global" },
   {
-    value: 'active',
-    label: 'Active',
-    type: 'select',
-    id: 'active',
+    value: "active",
+    label: "Active",
+    type: "select",
+    id: "active",
     options: [
-      { value: true, label: 'Active' },
-      { value: false, label: 'Inactive' },
+      { value: true, label: "Active" },
+      { value: false, label: "Inactive" },
     ],
   },
 ];
@@ -30,21 +35,23 @@ export default function TableDemo() {
   const columns: ColumnDef<IOrganization>[] = useMemo(() => {
     return [
       {
-        accessorKey: 'name',
-        header: 'Name',
-        sticky: 'left',
+        accessorKey: "name",
+        header: "Name",
+        sticky: "left",
       },
       {
-        accessorKey: 'domain',
-        header: 'Domain',
-        cell: info => <TableEditableCell<IOrganization> {...info} />,
+        accessorKey: "domain",
+        header: "Domain",
+        cell: (info) => <TableEditableCell<IOrganization> {...info} />,
         size: 500,
       },
       {
-        accessorKey: 'active',
-        header: 'Active',
-        cell: info => (
-          <Badge variant={info.getValue() ? 'success' : 'destructive'}>{info.getValue() ? 'Active' : 'Inactive'}</Badge>
+        accessorKey: "active",
+        header: "Active",
+        cell: (info) => (
+          <Badge variant={info.getValue() ? "success" : "destructive"}>
+            {info.getValue() ? "Active" : "Inactive"}
+          </Badge>
         ),
         enableSorting: false,
       },
@@ -54,8 +61,8 @@ export default function TableDemo() {
   const reviewColumns: ColumnDef<{ rating: number }>[] = useMemo(
     () => [
       {
-        accessorKey: 'rating',
-        header: 'Rating',
+        accessorKey: "rating",
+        header: "Rating",
       },
     ],
     []
@@ -69,7 +76,7 @@ export default function TableDemo() {
       <Table
         // data={data}
         api={API_ENDPOINT.ADMIN_ORGANIZATIONS}
-        apiParams={{
+        apiQueryParams={{
           page: 1,
           per_page: 2,
         }}
@@ -92,7 +99,9 @@ export default function TableDemo() {
           );
         }}
       >
-        <Button onClick={() => console.log(tableRef.current?.getData())}>save</Button>
+        <Button onClick={() => console.log(tableRef.current?.getData())}>
+          save
+        </Button>
         <Button>Add</Button>
       </Table>
     </div>

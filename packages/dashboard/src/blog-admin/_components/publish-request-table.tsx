@@ -129,7 +129,7 @@ export default function PublishRequestTable() {
     <>
       <Table
         api={API_ENDPOINT.APPROVALS}
-        apiParams={{ entity_type: 'blog', sort: 'request_date desc' }}
+        apiQueryParams={{ entity_type: 'blog', sort: 'request_date desc' }}
         columns={columns}
         ref={tableRef}
         hasNoColumn

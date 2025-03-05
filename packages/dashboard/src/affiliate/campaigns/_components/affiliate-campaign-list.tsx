@@ -257,7 +257,7 @@ export default function AffiliateManagementContent() {
     <>
       <Table
         api={API_ENDPOINT.USERS_ME_AFFILIATE_CAMPAIGNS}
-        apiParams={{
+        apiQueryParams={{
           page: 1,
           per_page: 10,
           sort: 'ac.create_at desc',

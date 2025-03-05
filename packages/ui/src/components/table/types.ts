@@ -24,6 +24,7 @@ export type TableProps<TData> = {
   columns: ColumnDef<TData>[];
   api?: string;
   apiParams?: Record<string, unknown>;
+  apiQueryParams?: Record<string, unknown>;
   data?: TData[];
   rows?: Row<TData>[];
   table?: Table<TData>;

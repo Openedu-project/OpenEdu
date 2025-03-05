@@ -154,7 +154,7 @@ export default function AffiliateCampaignCoursesList() {
           endpoint: API_ENDPOINT.AFFILIATE_CAMPAIGNS_ID_COURSES,
           params: { id: campaignId },
         })}
-        apiParams={{
+        apiQueryParams={{
           page: 1,
           per_page: 10,
           sort: 'create_at desc',

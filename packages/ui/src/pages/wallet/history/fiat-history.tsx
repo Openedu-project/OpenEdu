@@ -109,7 +109,7 @@ export default function FiatHistory() {
       }}
       columns={fiatColumns}
       filterOptions={fiatFilterOptions}
-      apiParams={{
+      apiQueryParams={{
         currency_type: 'fiat',
         page: 1,
         per_page: 10,

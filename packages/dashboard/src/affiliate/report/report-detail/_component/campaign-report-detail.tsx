@@ -173,7 +173,7 @@ export default function UserAffiliateReportDetailList() {
     <>
       <Table
         api={me?.id ? API_ENDPOINT.USERS_ME_REFERRALS : ''}
-        apiParams={{
+        apiQueryParams={{
           page: 1,
           per_page: 10,
           preloads: ['Campaign', 'Order'],

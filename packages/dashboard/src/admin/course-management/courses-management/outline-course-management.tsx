@@ -1,36 +1,33 @@
-"use client";
+'use client';
 
-import { usePutEnableCourse } from "@oe/api/hooks/useCourse";
-import { useGetOrganizationByDomain } from "@oe/api/hooks/useOrganization";
-import type {
-  ICoursePublished,
-  IEnableCourseRequest,
-} from "@oe/api/types/course/course";
-import type { IPagination } from "@oe/api/types/pagination";
-import { API_ENDPOINT } from "@oe/api/utils/endpoints";
-import { createAPIUrl } from "@oe/api/utils/fetch";
-import type { HTTPErrorMetadata } from "@oe/api/utils/http-error";
-import { formatDateHourMinute } from "@oe/core/utils/datetime";
-import { PLATFORM_ROUTES } from "@oe/core/utils/routes";
-import { formatPrice } from "@oe/core/utils/utils";
-import { Link } from "@oe/ui/common/navigation";
-import { BadgeCourseVerion } from "@oe/ui/components/badge-course-version";
-import { type ColumnDef, Table, type TableRef } from "@oe/ui/components/table";
-import { Button } from "@oe/ui/shadcn/button";
-import { toast } from "@oe/ui/shadcn/sonner";
-import { Tabs, TabsList, TabsTrigger } from "@oe/ui/shadcn/tabs";
-import { useTranslations } from "next-intl";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { usePutEnableCourse } from '@oe/api/hooks/useCourse';
+import { useGetOrganizationByDomain } from '@oe/api/hooks/useOrganization';
+import type { ICoursePublished, IEnableCourseRequest } from '@oe/api/types/course/course';
+import type { IPagination } from '@oe/api/types/pagination';
+import { API_ENDPOINT } from '@oe/api/utils/endpoints';
+import { createAPIUrl } from '@oe/api/utils/fetch';
+import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
+import { formatDateHourMinute } from '@oe/core/utils/datetime';
+import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { formatPrice } from '@oe/core/utils/utils';
+import { Link } from '@oe/ui/common/navigation';
+import { BadgeCourseVerion } from '@oe/ui/components/badge-course-version';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
+import { Button } from '@oe/ui/shadcn/button';
+import { toast } from '@oe/ui/shadcn/sonner';
+import { Tabs, TabsList, TabsTrigger } from '@oe/ui/shadcn/tabs';
+import { useTranslations } from 'next-intl';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
-type TypeOrg = "org" | "root";
+type TypeOrg = 'org' | 'root';
 
 export default function OutlineCourseManagement({
   isOpenEdu,
 }: {
   isOpenEdu: boolean;
 }) {
-  const t = useTranslations("coursesManagement");
-  const tError = useTranslations("errors");
+  const t = useTranslations('coursesManagement');
+  const tError = useTranslations('errors');
 
   const tableRef = useRef<TableRef<ICoursePublished>>(null);
 
@@ -42,10 +39,8 @@ export default function OutlineCourseManagement({
     per_page: 10,
   });
 
-  const [activeTab, setActiveTab] = useState<TypeOrg>(
-    isOpenEdu ? "root" : "org"
-  );
-  const orgIdParam = activeTab === "org" ? orgId : undefined;
+  const [activeTab, setActiveTab] = useState<TypeOrg>(isOpenEdu ? 'root' : 'org');
+  const orgIdParam = activeTab === 'org' ? orgId : undefined;
 
   const { triggerPutEnableCourse } = usePutEnableCourse();
 
@@ -55,10 +50,10 @@ export default function OutlineCourseManagement({
         const res = await triggerPutEnableCourse(data);
 
         if (!res) {
-          throw new Error("Enable failed");
+          throw new Error('Enable failed');
         }
 
-        toast.success(t("toastSuccess"));
+        toast.success(t('toastSuccess'));
         tableRef.current?.mutateAndClearCache?.();
       } catch (error) {
         console.error(error);
@@ -71,13 +66,13 @@ export default function OutlineCourseManagement({
   const columns: ColumnDef<ICoursePublished>[] = useMemo(
     () => [
       {
-        accessorKey: "id",
-        header: "ID",
+        accessorKey: 'id',
+        header: 'ID',
         size: 200,
       },
       {
-        accessorKey: "name",
-        header: t("name"),
+        accessorKey: 'name',
+        header: t('name'),
         size: 250,
         cell({ row }) {
           const item = row.original;
@@ -91,7 +86,7 @@ export default function OutlineCourseManagement({
                   orgId: item.org_id,
                 },
               })}`}
-              className='p-0 underline'
+              className="p-0 underline"
               target="_blank"
             >
               {item.name}
@@ -100,8 +95,8 @@ export default function OutlineCourseManagement({
         },
       },
       {
-        accessorKey: "version",
-        header: t("version"),
+        accessorKey: 'version',
+        header: t('version'),
         cell({ row }) {
           const item = row.original;
 
@@ -120,33 +115,31 @@ export default function OutlineCourseManagement({
         },
       },
       {
-        accessorKey: "price",
-        header: t("price"),
+        accessorKey: 'price',
+        header: t('price'),
         cell({ row }) {
           const item = row.original;
 
-          return (
-            <span>{formatPrice(Number(item?.price), "VND", !item.is_pay)}</span>
-          );
+          return <span>{formatPrice(Number(item?.price), 'VND', !item.is_pay)}</span>;
         },
       },
       {
-        accessorKey: "learner_count",
-        header: t("learners"),
+        accessorKey: 'learner_count',
+        header: t('learners'),
         cell({ row }) {
-          return <span>{row.getValue("learner_count") || "-"}</span>;
+          return <span>{row.getValue('learner_count') || '-'}</span>;
         },
       },
       {
-        accessorKey: "pub_date",
-        header: t("publishedDate"),
+        accessorKey: 'pub_date',
+        header: t('publishedDate'),
         cell({ row }) {
-          return <>{formatDateHourMinute(row.getValue("pub_date"))}</>;
+          return <>{formatDateHourMinute(row.getValue('pub_date'))}</>;
         },
       },
       {
-        id: "actions",
-        header: t("action"),
+        id: 'actions',
+        header: t('action'),
         cell({ row }) {
           const item = row.original;
 
@@ -154,33 +147,19 @@ export default function OutlineCourseManagement({
             <Button
               variant={
                 // activeTab === 'root'
-                isOpenEdu
-                  ? item.enable_root
-                    ? "destructive"
-                    : "outline"
-                  : item.enable
-                  ? "destructive"
-                  : "outline"
+                isOpenEdu ? (item.enable_root ? 'destructive' : 'outline') : item.enable ? 'destructive' : 'outline'
               }
               onClick={() => {
                 const data = {
                   cuid: item.course_cuid,
                   id: item.course_id,
-                  [isOpenEdu ? "enable_root" : "enable"]: isOpenEdu
-                    ? !item.enable_root
-                    : !item.enable,
+                  [isOpenEdu ? 'enable_root' : 'enable']: isOpenEdu ? !item.enable_root : !item.enable,
                 };
 
                 return handleEnableCourse(data);
               }}
             >
-              {isOpenEdu
-                ? item.enable_root
-                  ? t("disable")
-                  : t("enable")
-                : item.enable
-                ? t("disable")
-                : t("enable")}
+              {isOpenEdu ? (item.enable_root ? t('disable') : t('enable')) : item.enable ? t('disable') : t('enable')}
             </Button>
           );
         },
@@ -198,7 +177,7 @@ export default function OutlineCourseManagement({
       <Tabs
         className="w-full"
         value={activeTab}
-        onValueChange={(value) => {
+        onValueChange={value => {
           setActiveTab(value as TypeOrg);
           handleResetPagination();
         }}
@@ -206,14 +185,14 @@ export default function OutlineCourseManagement({
         <div className="mb-6 flex flex-col gap-3 rounded-b-2xl p-6 shadow-shadow-5">
           {isOpenEdu ? (
             <>
-              <p>{t("description")}</p>
+              <p>{t('description')}</p>
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="root">OpenEdu</TabsTrigger>
-                <TabsTrigger value="org">{t("organization")}</TabsTrigger>
+                <TabsTrigger value="org">{t('organization')}</TabsTrigger>
               </TabsList>
             </>
           ) : (
-            <p>{t("description")}</p>
+            <p>{t('description')}</p>
           )}
         </div>
 
@@ -223,12 +202,8 @@ export default function OutlineCourseManagement({
             api={API_ENDPOINT.PUBLISH_COURSES}
             hasNoColumn
             ref={tableRef}
-            apiParams={{
-              org_id: isOpenEdu
-                ? activeTab === "root"
-                  ? orgId
-                  : undefined
-                : orgIdParam,
+            apiQueryParams={{
+              org_id: isOpenEdu ? (activeTab === 'root' ? orgId : undefined) : orgIdParam,
               params: pagination,
               org_id_not: isOpenEdu ? orgIdParam : undefined,
             }}

@@ -197,11 +197,14 @@ export default function OrganizationRequest() {
         columns={columns}
         api={
           dataFormRegister?.id
-            ? createAPIUrl({ endpoint: API_ENDPOINT.FORMS_ID_SESSIONS, params: { id: dataFormRegister?.id } })
+            ? createAPIUrl({
+                endpoint: API_ENDPOINT.FORMS_ID_SESSIONS,
+                params: { id: dataFormRegister?.id },
+              })
             : undefined
         }
         hasNoColumn
-        apiParams={{
+        apiQueryParams={{
           page: 1,
           per_page: 10,
           sort: 'create_at desc',

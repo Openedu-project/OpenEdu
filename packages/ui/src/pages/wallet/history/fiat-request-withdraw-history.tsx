@@ -110,7 +110,7 @@ export function FiatRequestWithdrawHistory() {
       }}
       columns={fiatColumns}
       filterOptions={fiatFilterOptions}
-      apiParams={{
+      apiQueryParams={{
         type: 'wallet_fiat_withdrawal',
         page: 1,
         per_page: 10,
