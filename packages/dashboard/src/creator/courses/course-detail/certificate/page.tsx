@@ -37,6 +37,11 @@ export default function CourseDetailCertificatePage() {
     if (typeof window !== 'undefined') {
       document.body.classList.add('overflow-hidden');
     }
+    return () => {
+      if (typeof window !== 'undefined') {
+        document.body.classList.remove('overflow-hidden');
+      }
+    };
   }, []);
 
   const handleSubmit = async (data: ICreateCourseCertificate) => {
