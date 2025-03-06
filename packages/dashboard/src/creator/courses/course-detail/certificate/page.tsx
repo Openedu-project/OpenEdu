@@ -51,7 +51,6 @@ export default function CourseDetailCertificatePage() {
       return;
     }
 
-    console.log(data, 'data');
     await updateCourseService(undefined, {
       ...course,
       ...data,
@@ -144,10 +143,7 @@ export default function CourseDetailCertificatePage() {
                 </div>
 
                 {certificateLayer && (
-                  <CertificateMintNFT
-                    certificateLayer={certificateLayer}
-                    form={form as UseFormReturn<ICreateCourseCertificate & FieldValues>}
-                  />
+                  <CertificateMintNFT form={form as UseFormReturn<ICreateCourseCertificate & FieldValues>} />
                 )}
                 {/* {certificateLayer && (
                   <CertificateMintNFT certificateLayer={certificateLayer} />

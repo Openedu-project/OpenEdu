@@ -71,8 +71,8 @@ export const certificateMessages = {
       estimatedGasFee: 'Estimated Gas Fee',
       sponsorBalance: 'Sponsor Balance',
       gasFeePayedBy: 'Gas Fee Payed By',
-      mintSuccess: 'Mint NFT successfully',
-      mintError: 'Mint NFT failed',
+      depositSuccess: 'Deposit successfully',
+      depositError: 'Deposit failed',
     },
     display: {
       title: 'Certificate Display',
