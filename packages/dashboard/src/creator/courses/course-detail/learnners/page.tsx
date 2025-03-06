@@ -125,15 +125,17 @@ export default function CourseDetailLearnersPage() {
   }
 
   return (
-    <div className="scrollbar flex h-full flex-col gap-4 overflow-auto bg-background p-4">
-      <Table
-        api={API_ENDPOINT.COURSES_ID_ENROLLMENTS}
-        apiParams={{ id: course?.cuid }}
-        columns={columns}
-        hasNoColumn
-        filterOptions={filterOptions}
-        tableOptions={{ manualPagination: true }}
-      />
+    <div className="mx-auto h-full max-w-[900px] px-1 py-4">
+      <div className="scrollbar flex h-full flex-col gap-4 overflow-auto bg-background p-4">
+        <Table
+          api={API_ENDPOINT.COURSES_ID_ENROLLMENTS}
+          apiParams={{ id: course?.cuid }}
+          columns={columns}
+          hasNoColumn
+          filterOptions={filterOptions}
+          tableOptions={{ manualPagination: true }}
+        />
+      </div>
     </div>
   );
 }

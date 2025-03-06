@@ -11,3 +11,13 @@ export interface ICertNftFees {
 export interface IMintCertNftRequest {
   gas_fee_payer: TPayer;
 }
+
+export interface IEstimatedFee {
+  currency: string;
+  sponsor_balance: string;
+  estimated_fee: string;
+}
+
+export interface ISponsorGasCourseRequest {
+  amount: string;
+}

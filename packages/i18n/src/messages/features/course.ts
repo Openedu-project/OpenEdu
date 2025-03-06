@@ -112,6 +112,14 @@ export const courseMessages = {
       phone: 'Phone',
     },
 
+    history: {
+      name: 'Name',
+      version: 'Version',
+      publishDate: 'Publish Date',
+      requestTime: 'Request Time',
+      status: 'Status',
+    },
+
     // Form validation messages
     validation: {
       errors: 'Validation Errors',
@@ -207,6 +215,11 @@ export const courseMessages = {
           title: 'Support channels',
           subtitle: 'The support channels is used to support the course.',
           addButton: 'Add channel',
+        },
+        markAsCompleted: {
+          title: 'Mark as completed',
+          subtitle:
+            'Enabling this toggle marks your course as complete, allowing learners to receive certificates (if any) and preventing any further edits to the course outline.',
         },
       },
     },

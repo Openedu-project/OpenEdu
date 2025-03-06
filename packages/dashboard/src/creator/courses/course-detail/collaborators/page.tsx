@@ -170,34 +170,36 @@ export default function CourseDetailCollaboratorsPage() {
   };
 
   return (
-    <div className="scrollbar flex h-full flex-col gap-4 overflow-auto bg-background p-4">
-      {/* <h1 className="font-bold text-2xl">{t("partner.courseCollaborators")}</h1> */}
+    <div className="mx-auto h-full max-w-[900px] px-1 py-4">
+      <div className="scrollbar flex h-full flex-col gap-4 overflow-auto bg-background p-4">
+        {/* <h1 className="font-bold text-2xl">{t("partner.courseCollaborators")}</h1> */}
 
-      <Table
-        ref={tableRef}
-        api={API_ENDPOINT.COURSES_ID_PARTNERS}
-        apiParams={{ id: courseId }}
-        columns={columns}
-        hasNoColumn
-        filterOptions={filterOptions}
-        tableOptions={{ manualPagination: true }}
-      >
-        <Button variant="default" className="h-8 gap-2" onClick={() => setModalType('add')}>
-          <Plus className="h-4 w-4" />
-          {t('partner.addPartners')}
-        </Button>
-      </Table>
-      <Modal
-        title={modalType === 'add' ? t('partner.addPartners') : t('partner.editPartners')}
-        description={modalType === 'add' ? t('partner.addPartnersDescription') : t('partner.editPartnersDescription')}
-        validationSchema={addPartnerSchema}
-        onSubmit={handleAddPartners}
-        showSubmit
-        open={modalType === 'add' || modalType === 'edit'}
-        defaultValues={selectedPartner ? { partners: [selectedPartner] } : defaultValues}
-      >
-        {form => <PartnerForm form={form} />}
-      </Modal>
+        <Table
+          ref={tableRef}
+          api={API_ENDPOINT.COURSES_ID_PARTNERS}
+          apiParams={{ id: courseId }}
+          columns={columns}
+          hasNoColumn
+          filterOptions={filterOptions}
+          tableOptions={{ manualPagination: true }}
+        >
+          <Button variant="default" className="h-8 gap-2" onClick={() => setModalType('add')}>
+            <Plus className="h-4 w-4" />
+            {t('partner.addPartners')}
+          </Button>
+        </Table>
+        <Modal
+          title={modalType === 'add' ? t('partner.addPartners') : t('partner.editPartners')}
+          description={modalType === 'add' ? t('partner.addPartnersDescription') : t('partner.editPartnersDescription')}
+          validationSchema={addPartnerSchema}
+          onSubmit={handleAddPartners}
+          showSubmit
+          open={modalType === 'add' || modalType === 'edit'}
+          defaultValues={selectedPartner ? { partners: [selectedPartner] } : defaultValues}
+        >
+          {form => <PartnerForm form={form} />}
+        </Modal>
+      </div>
     </div>
   );
 }

@@ -429,3 +429,11 @@ export const deleteCoursePartnerService = async (
   );
   return response.data;
 };
+
+export const getCourseHistoryService = async (url: string | undefined, cuid: string, init?: RequestInit) => {
+  const response = await fetchAPI<ICourse[]>(
+    url ?? buildUrl({ endpoint: API_ENDPOINT.COURSES_ID_HISTORIES, params: { id: cuid } }),
+    init
+  );
+  return response.data;
+};
