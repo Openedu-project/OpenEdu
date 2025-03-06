@@ -15,8 +15,8 @@ export default function AILayout({ children, className }: Props) {
         className
       )}
     >
-      <AISidebar className="bg-primary/5" />
-      <div className="flex-1 overflow-hidden lg:max-w-[80%]">{children}</div>
+      <AISidebar />
+      <div className="flex-1 overflow-hidden">{children}</div>
     </main>
   );
 }

@@ -1,46 +1,24 @@
 'use client';
-import { type IFileResponse, fileResponseSchema } from '@oe/api/types/file';
-import { usePathname } from 'next/navigation';
-
-import { cancelConversation } from '@oe/api/services/conversation';
 import type { TAgentType } from '@oe/api/types/conversation';
+import type { IFileResponse } from '@oe/api/types/file';
 import { isLogin } from '@oe/api/utils/auth';
-import { z } from '@oe/api/utils/zod';
-import { MoveRight, Square } from 'lucide-react';
+import type { z } from '@oe/api/utils/zod';
 import { useTranslations } from 'next-intl';
 import type React from 'react';
 import { type ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
 import { FormWrapper } from '#components/form-wrapper';
 import { useLoginRequiredStore } from '#components/login-required-modal';
-import { Button } from '#shadcn/button';
 import { Card } from '#shadcn/card';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { DESKTOP_BREAKPOINT, INPUT_BUTTON } from '../constants';
 import type { MessageFormValues, MessageInputProps } from '../type';
+import { chatSchema } from '../utils';
+import { MessageInputAction } from './message-input-action';
 import { InputField } from './message-input-field';
 import { InputOption } from './message-input-option';
-
-const createFormSchema = (inputType: TAgentType) => {
-  switch (inputType) {
-    case 'ai_image_analysis': {
-      return z.object({
-        message: z.string().min(1, 'formValidation.required'),
-        images: z.array(
-          fileResponseSchema.optional().refine(data => data !== undefined, {
-            message: 'formValidation.required',
-          })
-        ),
-      });
-    }
-    default: {
-      return z.object({
-        message: z.string().min(1, 'formValidation.required'),
-      });
-    }
-  }
-};
+import { PreviewImage } from './preview-file';
 
 const MessageInput: React.FC<MessageInputProps> = ({
   generating = false,
@@ -49,13 +27,11 @@ const MessageInput: React.FC<MessageInputProps> = ({
   initialMessage = '',
   messageId,
   hiddenBtn = false,
-  showInputOption = false,
   messageType,
   images,
   resetOnSuccess = false,
 }) => {
   const tAI = useTranslations('aiAssistant');
-  const pathname = usePathname();
   const { selectedModel, selectedAgent, setSelectedAgent } = useConversationStore();
   const [filteredAgents, setFilteredAgents] = useState<TAgentType[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
@@ -103,13 +79,6 @@ const MessageInput: React.FC<MessageInputProps> = ({
           .includes(searchText ?? '') && messageType?.includes(agent.type)
     ).map(agent => agent.type);
     setFilteredAgents(filtered ?? []);
-  };
-
-  const handleCancel = async () => {
-    const id = pathname.split('/').pop();
-    if (id) {
-      await cancelConversation(undefined, id);
-    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>, form: UseFormReturn<MessageFormValues>) => {
@@ -167,9 +136,10 @@ const MessageInput: React.FC<MessageInputProps> = ({
     handleOpenAgentList(value);
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const inputSchema = useMemo(() => {
     setFilteredAgents([]);
-    return createFormSchema(selectedAgent);
+    return chatSchema;
   }, [selectedAgent]);
 
   const defaultValues = useMemo(() => ({ message: initialMessage ?? '', images }), [initialMessage, images]);
@@ -227,65 +197,38 @@ const MessageInput: React.FC<MessageInputProps> = ({
         useFormProps={{ defaultValues }}
         className="w-full"
       >
-        {({ loading, form }) => (
-          <Card
-            className={cn(
-              'relative flex flex-row items-center space-x-2 rounded-full border border-primary bg-background p-2 pl-4',
-              selectedAgent === 'ai_search' && 'pl-8',
-              className
-            )}
-            onClick={() => {
-              inputRef.current?.focus();
-            }}
-          >
-            <InputField
-              type={selectedAgent}
-              form={form}
-              handleKeyDown={e => {
-                handleKeyDown(e, form as UseFormReturn<MessageFormValues>);
-              }}
-              handleInputChange={handleInputChange}
-              setInputType={setSelectedAgent}
-              inputRef={inputRef}
-              canChangeType={messageType && messageType.length > 1}
-            />
-
-            <div className={cn('flex items-center', hiddenBtn && 'hidden')}>
-              {generating || loading ? (
-                <Button
-                  type="button"
-                  size="icon"
-                  className={cn('group/btn h-8 w-8 rounded-full bg-primary/10')}
-                  onClick={handleCancel}
-                >
-                  <Square
-                    fill="hsl(var(--primary))"
-                    strokeWidth={3}
-                    className="h-3 w-3 text-primary group-hover/btn:text-primary-foreground"
-                  />
-                </Button>
-              ) : (
-                <Button
-                  type="submit"
-                  size="icon"
-                  disabled={!form.formState.isValid || generating}
-                  className={cn(
-                    'group/btn h-8 w-8 rounded-full bg-primary/10',
-                    generating && 'cursor-not-allowed opacity-50'
-                  )}
-                  aria-label="Send message"
-                >
-                  <MoveRight strokeWidth={3} className="h-4 w-4 text-primary group-hover/btn:text-primary-foreground" />
-                </Button>
+        {({ loading, form }) => {
+          const imagesData = form.watch('images');
+          return (
+            <Card
+              className={cn(
+                'shadown relative flex min-h-40 flex-col gap-1 space-x-2 rounded-3xl bg-background p-2 pt-2 md:p-4',
+                className
               )}
-            </div>
-          </Card>
-        )}
+              onClick={() => {
+                inputRef.current?.focus();
+              }}
+            >
+              {Array.isArray(imagesData) && (imagesData?.length ?? 0) > 0 && (
+                <PreviewImage form={form} imagesData={imagesData} />
+              )}
+              <InputField
+                type={selectedAgent}
+                form={form}
+                handleKeyDown={e => {
+                  handleKeyDown(e, form as UseFormReturn<MessageFormValues>);
+                }}
+                handleInputChange={handleInputChange}
+                setInputType={setSelectedAgent}
+                inputRef={inputRef}
+                canChangeType={messageType && messageType.length > 1}
+                className="grow"
+              />
+              {!hiddenBtn && <MessageInputAction form={form} loading={loading || generating} />}
+            </Card>
+          );
+        }}
       </FormWrapper>
-
-      {showInputOption && (
-        <InputOption className="mt-4" messageType={messageType} handleSelect={opt => setSelectedAgent(opt)} />
-      )}
     </div>
   );
 };

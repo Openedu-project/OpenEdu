@@ -134,6 +134,7 @@ const config: Omit<Config, 'content'> = {
           ring: 'hsl(var(--sidebar-ring))',
         },
       },
+
       backgroundImage: {
         'auth-background': 'var(--auth-background)',
         'learning-gradient': 'var(--learning-path-background)',
@@ -141,6 +142,8 @@ const config: Omit<Config, 'content'> = {
         'launchpad-gradient': 'var(--launchpad-background)',
         'footer-gradient': 'var(--footer)',
         'course-search-gradient': 'var(--course-search-background)',
+        'ai-more-feature-gradient': 'var(--ai-more-feature-background)',
+        'ai-gradient': 'var(--ai-assistant-background)',
       },
       borderRadius: {
         default: 'var(--radius)',

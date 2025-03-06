@@ -6,7 +6,7 @@ export default function EmptyChat() {
   const tAI = useTranslations('aiAssistant');
 
   return (
-    <div className="relative flex h-full w-full max-w-3xl flex-col items-center justify-center">
+    <div className="relative flex h-full w-full max-w-4xl flex-col items-center justify-center">
       <Image
         src={AIBg.src}
         noContainer

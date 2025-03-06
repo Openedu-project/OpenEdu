@@ -1,4 +1,5 @@
 import type { IAgenConfigs, TAgentType } from '@oe/api/types/conversation';
+import SearchZoomIn from '@oe/assets/icons/search-zoom-in';
 import { AI_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
 import {
@@ -8,57 +9,61 @@ import {
   MessageCircle,
   PanelsRightBottom,
   ScanSearch,
-  Search,
   SquarePlay,
 } from 'lucide-react';
 import type { AISidebarItem, IInputButton } from './type';
 
-export const AI_SIDEBAR: AISidebarItem[] = [
+export const AI_SIDEBAR: (color?: string, size?: number) => AISidebarItem[] = (color = 'white', size = 12) => [
   {
     lableKey: 'generalChat',
+    shortLableKey: 'chat',
     descKey: 'aiChatDesc',
     value: 'chat',
     href: AI_ROUTES.chat,
-    icon: <MessageCircle className="h-4 w-4 text-white" />,
+    icon: <MessageCircle size={size} color={color} />,
     bgColor: 'var(--ai-agent-green-background)',
   },
   {
     lableKey: 'presentation',
+    shortLableKey: 'slide',
     descKey: 'aiSlideDesc',
     value: 'ai_slide',
     href: buildUrl({
       endpoint: AI_ROUTES.chat,
       queryParams: { agent: 'ai_slide' },
     }),
-    icon: <ListFilter className="h-4 w-4 text-white" />,
+    icon: <ListFilter size={size} color={color} />,
     bgColor: 'var(--ai-agent-aqua-background)',
   },
   {
     lableKey: 'imageGenerator',
+    shortLableKey: 'image',
     descKey: 'aiImageDesc',
     value: 'ai_image_generate',
     href: buildUrl({
       endpoint: AI_ROUTES.chat,
       queryParams: { agent: 'ai_image_generate' },
     }),
-    icon: <ImageIcon className="h-4 w-4 text-white" />,
+    icon: <ImageIcon size={size} color={color} />,
     bgColor: 'var(--ai-agent-pink-background)',
   },
   {
     lableKey: 'slideToVideo',
+    shortLableKey: 'video',
     descKey: 'aiVideoDesc',
     value: 'ai-video',
     href: AI_ROUTES.video,
-    icon: <SquarePlay className="h-4 w-4 text-white" />,
+    icon: <SquarePlay size={size} color={color} />,
     bgColor: 'var(--ai-agent-blue-background)',
     isComming: true,
   },
   {
     lableKey: 'deepResearch',
+    shortLableKey: 'search',
     descKey: 'aiSearchDesc',
     value: 'deepResearch',
     href: AI_ROUTES.search,
-    icon: <Search className="h-4 w-4 text-white" />,
+    icon: <SearchZoomIn width={size} height={size} color={color} />,
     bgColor: 'var(--ai-agent-orange-background)',
     isComming: true,
   },

@@ -6,8 +6,8 @@ import { Image } from '#components/image';
 import { Button } from '#shadcn/button';
 import { cn } from '#utils/cn';
 import EditButton from '../message-actions/edit';
+import MessageInput from '../message-input/message-input';
 import type { IMessageBoxProps } from '../type';
-import MessageInput from './message-input';
 
 const convertTextWithLink = (text: string) => {
   const urlRegex = /(https?:\/\/\S+)|(www\.\S+)/g;

@@ -13,7 +13,7 @@ import { Link, useRouter } from '#common/navigation';
 import { toast } from '#shadcn/sonner';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
-import MessageInput from '../message/message-input';
+import MessageInput from '../message-input/message-input';
 import type { ISendMessageParams } from '../type';
 import ActionDropdown from './history-actions-dropdown';
 

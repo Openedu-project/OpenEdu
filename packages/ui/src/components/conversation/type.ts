@@ -5,6 +5,7 @@ import type { FieldValues, UseFormReturn } from 'react-hook-form';
 
 export interface AISidebarItem {
   lableKey: string;
+  shortLableKey: string;
   descKey: string;
   value: string;
   icon: ReactNode;

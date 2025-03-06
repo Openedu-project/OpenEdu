@@ -1,11 +1,10 @@
-import { getAIModels, getListConversation } from '@oe/api/services/conversation';
+import { getAIModels } from '@oe/api/services/conversation';
 import { isLogin } from '@oe/api/utils/auth';
 import { AI_ROUTES } from '@oe/core/utils/routes';
 import { Plus } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
 import { Link } from '#common/navigation';
-import { AIHistory, HISTORY_DEFAULT_PARAMS } from '#components/conversation';
 import { AIModelDropdown } from '#components/conversation';
 import { cn } from '#utils/cn';
 
@@ -15,11 +14,11 @@ type Props = {
 };
 
 export default async function AIChatLayout({ children, className }: Props) {
-  const [AIChatModels, tAI, login, aiHistoryData] = await Promise.all([
+  const [AIChatModels, tAI, login] = await Promise.all([
     getAIModels(undefined, { next: { tags: ['get_ai_models'] } }),
     getTranslations('aiAssistant'),
     isLogin(),
-    getListConversation(undefined, HISTORY_DEFAULT_PARAMS),
+    // getListConversation(undefined, HISTORY_DEFAULT_PARAMS),
   ]);
 
   return (
@@ -39,7 +38,7 @@ export default async function AIChatLayout({ children, className }: Props) {
         </div>
         <div className="flex grow flex-col overflow-hidden">{children}</div>
       </div>
-      {aiHistoryData && <AIHistory isLogin={login} initData={aiHistoryData} />}
+      {/* {aiHistoryData && <AIHistory isLogin={login} initData={aiHistoryData} />} */}
     </div>
   );
 }
