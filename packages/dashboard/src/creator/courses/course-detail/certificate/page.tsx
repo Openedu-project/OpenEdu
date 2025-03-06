@@ -16,8 +16,10 @@ import { CheckIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useEffect } from 'react';
+import type { FieldValues, UseFormReturn } from 'react-hook-form';
 import { COURSE_DETAIL_FORM_IDS } from '../_utils/constants';
 import { CertificateCondition } from './_components/certificate-condition';
+import { CertificateMintNFT } from './_components/certificate-mint-nft';
 import { CertificateTemplate } from './_components/certificate-template';
 
 export default function CourseDetailCertificatePage() {
@@ -48,6 +50,8 @@ export default function CourseDetailCertificatePage() {
     if (!course) {
       return;
     }
+
+    console.log(data, 'data');
     await updateCourseService(undefined, {
       ...course,
       ...data,
@@ -138,6 +142,13 @@ export default function CourseDetailCertificatePage() {
                     </div>
                   </div>
                 </div>
+
+                {certificateLayer && (
+                  <CertificateMintNFT
+                    certificateLayer={certificateLayer}
+                    form={form as UseFormReturn<ICreateCourseCertificate & FieldValues>}
+                  />
+                )}
                 {/* {certificateLayer && (
                   <CertificateMintNFT certificateLayer={certificateLayer} />
                 )} */}

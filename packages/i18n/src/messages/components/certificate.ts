@@ -64,7 +64,7 @@ export const certificateMessages = {
       mintNFTDisabled: 'Mint NFT disabled',
       mintNFTEnabledDescription: 'Mint NFT enabled description',
       mintNFTDisabledDescription: 'Mint NFT disabled description',
-      insufficientBalance: 'Insufficient available amount in wallet: {balance} {unit}',
+      insufficientBalance: 'Insuffient available amount. Please deposit in wallet! ',
       learner: 'Learner',
       creator: 'Creator',
       deposit: 'Deposit',
