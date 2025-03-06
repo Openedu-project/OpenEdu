@@ -1,3 +1,5 @@
-export default function CourseDetailHistoryPage() {
-  return <div className="mx-auto h-full max-w-[900px] px-1 py-4">CourseDetailHistoryPage</div>;
+import CourseDetailHistoryPage from "@oe/dashboard/creator/courses/course-detail/history/page";
+
+export default function CourseHistoryPage() {
+  return <CourseDetailHistoryPage />;
 }
