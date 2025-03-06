@@ -107,6 +107,7 @@ export const courseFormSchema = z.object({
   }),
   medias: z.array(fileResponseSchema).nullable().optional(),
   price_settings: priceSettingsSchema.optional(),
+  mark_as_completed: z.boolean().default(false).optional(),
 });
 
 export interface IPriceSettings extends z.infer<typeof priceSettingsSchema> {}
@@ -173,6 +174,13 @@ export const courseCertificateSchema = z
             completed_final_quiz: z.boolean().default(false),
             course_completion_percentage: z.number().default(0),
             final_quiz_completion_percentage: z.number().default(0),
+          })
+          .nullable()
+          .optional(),
+        mint_cert_nft_settings: z
+          .object({
+            enabled: z.boolean().default(false),
+            gas_fee_payer: z.string().default('creator'),
           })
           .nullable()
           .optional(),

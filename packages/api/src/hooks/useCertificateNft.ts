@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
-import { getCertNFTFeesService, postMintCertNFTService } from '#services/certificate-nft';
+import { getCertNFTFeesService, getEstimatedFeeService, postMintCertNFTService } from '#services/certificate-nft';
 import type { IMintCertNftRequest } from '#types/certificate-nft';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
@@ -38,5 +38,23 @@ export function useMintCertNft(id: string) {
     triggerMintCertNft: trigger,
     isLoadingMintCertNft: isMutating,
     errorMintCertNft: error,
+  };
+}
+
+export function useGetEstimatedFee(id: string) {
+  const endpointKey = createAPIUrl({
+    endpoint: API_ENDPOINT.COURSES_ID_NFT_FEES,
+    params: { id },
+  });
+
+  const { data, isLoading, error, mutate } = useSWR(id ? endpointKey : null, (url: string) =>
+    getEstimatedFeeService(url, { id })
+  );
+
+  return {
+    dataEstimatedFee: data,
+    isLoadingEstimatedFee: isLoading,
+    errorEstimatedFee: error,
+    mutateEstimatedFee: mutate,
   };
 }

@@ -71,6 +71,7 @@ export const errorMessages = {
     '706': 'Wallet not allow withdraw',
     '707': 'Wallet need a minimum remaining',
     '708': 'Can not parse amount',
+    '712': 'Wallet balance not enough for withdrawal',
     '800': 'Create transaction failed',
     '801': 'Find transaction failed',
     '1000': 'Upload file failed',

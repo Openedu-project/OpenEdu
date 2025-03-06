@@ -170,6 +170,11 @@ export const courseMessages = {
           subtitle: 'The support channels is used to support the course.',
           addButton: 'Add channel',
         },
+        markAsCompleted: {
+          title: 'Mark as completed',
+          subtitle:
+            'Enabling this toggle marks your course as complete, allowing learners to receive certificates (if any) and preventing any further edits to the course outline.',
+        },
       },
     },
 

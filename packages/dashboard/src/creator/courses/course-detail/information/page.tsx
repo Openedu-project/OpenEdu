@@ -13,6 +13,7 @@ import Category from './category';
 import Description from './description';
 import Header from './header';
 import Level from './level';
+import MarkAsCompleted from './mark-as-completed';
 import Outcomes from './outcomes';
 import PreviewVideos from './preview-videos';
 import References from './references';
@@ -73,6 +74,7 @@ export default function CourseDetailInformationPage() {
               <Category />
               <Level />
               <SupportChannels />
+              <MarkAsCompleted />
             </div>
           </>
         )}
