@@ -70,7 +70,7 @@ export const certificateMessages = {
       deposit: 'Deposit',
       estimatedGasFee: 'Estimated Gas Fee',
       sponsorBalance: 'Sponsor Balance',
-      gasFeePayedBy: 'Gas Fee Payed By',
+      gasFeePayedBy: 'Gas Fee Would Be Paid by',
       depositSuccess: 'Deposit successfully',
       depositError: 'Deposit failed',
     },

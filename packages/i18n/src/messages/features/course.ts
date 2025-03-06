@@ -173,7 +173,7 @@ export const courseMessages = {
         markAsCompleted: {
           title: 'Mark as completed',
           subtitle:
-            'Enabling this toggle marks your course as complete, allowing learners to receive certificates and preventing any further edits to the course outline.',
+            'Enabling this toggle marks your course as complete, allowing learners to receive certificates (if any) and preventing any further edits to the course outline.',
         },
       },
     },
