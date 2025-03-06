@@ -112,6 +112,14 @@ export const courseMessages = {
       phone: 'Phone',
     },
 
+    history: {
+      name: 'Name',
+      version: 'Version',
+      publishDate: 'Publish Date',
+      requestTime: 'Request Time',
+      status: 'Status',
+    },
+
     // Form validation messages
     validation: {
       errors: 'Validation Errors',
