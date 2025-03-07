@@ -34,7 +34,12 @@ export const PDFSignatureRenderer = ({
       {/* <View> */}
       {signatureImage ? (
         <Image
-          src={signatureImage}
+          // src={signatureImage}
+          src={{
+            uri: `${signatureImage}?cachebuster=${Date.now()}`,
+            method: 'GET',
+            headers: { 'Cache-Control': 'no-cache' },
+          }}
           style={{
             objectFit: 'contain',
             width: 200,
