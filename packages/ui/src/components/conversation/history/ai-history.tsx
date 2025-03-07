@@ -1,147 +1,43 @@
 'use client';
 import { useGetListConversation } from '@oe/api/hooks/useConversation';
-import type { IChatHistory, IChatHistoryResponse } from '@oe/api/types/conversation';
-import type { HTTPResponse } from '@oe/api/types/fetch';
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
-import { FileClock, Search } from 'lucide-react';
+import MessageTime from '@oe/assets/icons/message-time';
+import { Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { KeyboardEvent } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import { useSWRConfig } from 'swr';
-import type { SWRInfiniteResponse } from 'swr/infinite';
+import { useDebouncedCallback } from 'use-debounce';
+import { Modal } from '#components/modal';
 import { Button } from '#shadcn/button';
-import { Drawer, DrawerContent, DrawerDescription, DrawerTitle } from '#shadcn/drawer';
 import { Input } from '#shadcn/input';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { HISTORY_DEFAULT_PARAMS } from '../constants';
+import { formatDate } from '../utils';
 import AIHistoryItem from './history-item';
 
 interface SearchHistoryProps {
   className?: string;
-  mutate?: SWRInfiniteResponse<HTTPResponse<IChatHistoryResponse>>['mutate'];
-  isLoading?: boolean;
-  chatHistory?: Array<IChatHistory & { page: number }>;
-  handleSearch?: (text?: string, nextPage?: boolean) => void;
-  pauseAddMessage?: () => void;
   isLogin?: boolean;
-  initData?: IChatHistoryResponse;
+  callbackFn?: () => void;
 }
 
-const SearchHistory = ({ className, mutate, handleSearch, chatHistory = [], isLoading }: SearchHistoryProps) => {
+const SearchHistory = ({ className, isLogin, callbackFn }: SearchHistoryProps) => {
   const tGeneral = useTranslations('general');
   const tAI = useTranslations('aiAssistant');
   const { id } = useParams();
 
   const searchRef = useRef<HTMLInputElement | null>(null);
 
-  const today = new Date().setHours(0, 0, 0, 0);
-  const yesterday = today - 86_400_000; // 24 hours in milliseconds
-
-  const getItemsByDate = (targetDate: number) =>
-    chatHistory
-      ?.filter(item => {
-        const itemDate = new Date(item.create_at).setHours(0, 0, 0, 0);
-
-        return itemDate === targetDate;
-      })
-      .sort((a, b) => b.create_at - a.create_at); // Sort items within same create_at descending
-  const getDates = () => {
-    const uniqueDates = [...new Set(chatHistory?.map(item => new Date(item.create_at).setHours(0, 0, 0, 0)))];
-
-    return uniqueDates.sort((a, b) => b - a); // Sort dates descending
-  };
-
-  const formatDate = (timestamp: number) => {
-    if (timestamp === today) {
-      return 'Today';
-    }
-    if (timestamp === yesterday) {
-      return 'Yesterday';
-    }
-
-    // Format as dd/mm/yyyy for all other dates
-    const date = new Date(timestamp);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-
-    return `${day}/${month}/${year}`;
-  };
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.nativeEvent.isComposing) {
-      return;
-    }
-
-    if (e.key === 'Enter' && searchRef.current) {
-      e.preventDefault();
-      handleSearch?.(searchRef.current.value ?? '');
-    }
-  };
-
-  return (
-    <div className={cn('mx-auto flex flex-col gap-2 bg-primary/5 p-4 text-foreground', className)}>
-      <Input
-        ref={searchRef}
-        prefixIcon={<Search color="#000" width={16} height={16} />}
-        className="!rounded-3xl mcaption-regular14 !border-1 w-full bg-gray-50 pl-8"
-        placeholder={tGeneral('search')}
-        onKeyDown={handleKeyDown}
-      />
-      {!isLoading && chatHistory.length === 0 ? (
-        <div className="p-4 text-center text-foreground">{tAI('noHistory')}</div>
-      ) : (
-        <Virtuoso
-          style={{ display: 'flex', flexGrow: 1 }}
-          data={getDates()}
-          firstItemIndex={0}
-          initialTopMostItemIndex={0}
-          increaseViewportBy={200}
-          className="scrollbar"
-          endReached={() => {
-            handleSearch?.(undefined, true);
-          }}
-          itemContent={(_, date: number) => (
-            <div key={date} className="mt-2 space-y-2">
-              <h5 className="mcaption-semibold14">{formatDate(date)}</h5>
-              <div className="pl-2">
-                {getItemsByDate(date)?.map(item => {
-                  const { page, ...baseData } = item;
-                  return (
-                    <AIHistoryItem
-                      key={item.id}
-                      item={baseData}
-                      pageIndex={page}
-                      mutate={mutate}
-                      activeId={id as string}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          )}
-          components={{
-            Footer: () =>
-              isLoading ? <div className="p-4 text-center text-foreground">{tAI('loadingHistory')}</div> : null,
-          }}
-        />
-      )}
-    </div>
-  );
-};
-
-export default function AIHistory({ isLogin = false, pauseAddMessage, initData }: SearchHistoryProps) {
-  const [isShow, setIsShow] = useState<boolean>(false);
   const { mutate: globalMutate } = useSWRConfig();
   const { isNewChat } = useConversationStore();
-  const { id } = useParams();
 
   const [searchParams, setSearchParams] = useState(HISTORY_DEFAULT_PARAMS);
 
   const { data, mutate, size, setSize, isLoading, getKey } = useGetListConversation(searchParams, isLogin);
+
   const historyData = useMemo(
     () =>
       data?.flatMap(item =>
@@ -160,41 +56,7 @@ export default function AIHistory({ isLogin = false, pauseAddMessage, initData }
     }
   }, [isNewChat]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    if (isShow) {
-      setIsShow(false);
-    }
-  }, [id]);
-
-  const updateFirstPageOnly = async () => {
-    if (!initData) {
-      return;
-    }
-    await mutate(currentData => {
-      if (!currentData?.[0]) {
-        return currentData;
-      }
-
-      // Keep and update only first page
-      return [
-        {
-          ...currentData[0],
-          data: initData,
-        },
-      ];
-    }, false);
-
-    // Reset to page 1
-    setSize(1);
-  };
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    updateFirstPageOnly();
-  }, [initData]);
-
-  const searchChatHistory = async (title?: string, isNextPage?: boolean) => {
+  const handleSearch = async (title?: string, isNextPage?: boolean) => {
     const pagination = data?.at(-1)?.pagination;
 
     if (isLoading || (title === undefined && size === pagination?.total_pages)) {
@@ -223,38 +85,119 @@ export default function AIHistory({ isLogin = false, pauseAddMessage, initData }
     }
   };
 
-  return (
-    <>
-      {!isShow && (
-        <Button
-          className={cn(
-            '!p-2 !rounded-r-full !rounded-l-none pointer-events-auto absolute left-0 z-[60] mb-1 bg-primary',
-            isShow ? 'top-0 rotate-90 opacity-100' : 'bottom-2 opacity-80'
-          )}
-          onClick={() => setIsShow(!isShow)}
-        >
-          <FileClock className="h-4 w-4 text-primary-foreground" />
-        </Button>
-      )}
-      <Drawer open={isShow} onOpenChange={setIsShow} direction="left">
-        <DrawerContent className="!duration-300 top-0 h-[calc(100dvh-100px] lg:w-1/2 first:[&>div]:hidden">
-          <DrawerTitle>
-            <VisuallyHidden asChild>Title</VisuallyHidden>
-          </DrawerTitle>
-          <DrawerDescription>
-            <VisuallyHidden asChild>Description</VisuallyHidden>
-          </DrawerDescription>
+  const getItemsByDate = useCallback(
+    (targetDate: number) =>
+      historyData
+        ?.filter(item => {
+          const itemDate = new Date(item.create_at).setHours(0, 0, 0, 0);
 
-          <SearchHistory
-            className={cn('w-full grow rounded-r-4 bg-background', isShow ? 'translate-x-0' : '-translate-x-full')}
-            chatHistory={historyData}
-            handleSearch={searchChatHistory}
-            pauseAddMessage={pauseAddMessage}
-            mutate={mutate}
-            isLoading={isLoading}
-          />
-        </DrawerContent>
-      </Drawer>
-    </>
+          return itemDate === targetDate;
+        })
+        .sort((a, b) => b.create_at - a.create_at),
+    [historyData]
+  ); // Sort items within same create_at descending
+
+  const datesData = useMemo(() => {
+    const uniqueDates = [...new Set(historyData?.map(item => new Date(item.create_at).setHours(0, 0, 0, 0)))];
+
+    return uniqueDates.sort((a, b) => b - a); // Sort dates descending
+  }, [historyData]);
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.nativeEvent.isComposing) {
+      return;
+    }
+
+    if (e.key === 'Enter' && searchRef.current) {
+      e.preventDefault();
+      handleSearch?.(searchRef.current.value ?? '');
+    }
+  };
+
+  const debouncedSetSearch = useDebouncedCallback(
+    () => searchRef.current && handleSearch?.(searchRef.current.value ?? ''),
+    300
+  );
+
+  return (
+    <div className={cn('mx-auto flex flex-col gap-2 p-4 text-foreground', className)}>
+      <Input
+        ref={searchRef}
+        prefixIcon={<Search color="#000" width={16} height={16} />}
+        className="!rounded-3xl mcaption-regular16 !border-1 w-full bg-gray-50 pl-8"
+        placeholder={tGeneral('search')}
+        onKeyDown={handleKeyDown}
+        onChange={debouncedSetSearch}
+      />
+      {!isLoading && historyData?.length === 0 ? (
+        <div className="p-4 text-center text-foreground">{tAI('noHistory')}</div>
+      ) : (
+        <Virtuoso
+          style={{ display: 'flex', flexGrow: 1 }}
+          data={datesData}
+          firstItemIndex={0}
+          initialTopMostItemIndex={0}
+          increaseViewportBy={200}
+          className="scrollbar"
+          endReached={() => {
+            handleSearch?.(undefined, true);
+          }}
+          itemContent={(_, date: number) => (
+            <div key={date} className="mt-2 space-y-2">
+              <h5 className="mcaption-semibold14">{formatDate(date)}</h5>
+              <div className="pl-2">
+                {getItemsByDate(date)?.map(item => {
+                  const { page, ...baseData } = item;
+                  return (
+                    <AIHistoryItem
+                      key={item.id}
+                      item={baseData}
+                      pageIndex={page}
+                      mutate={mutate}
+                      activeId={id as string}
+                      callbackFn={callbackFn}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          )}
+          components={{
+            Footer: () =>
+              isLoading ? <div className="p-4 text-center text-foreground">{tAI('loadingHistory')}</div> : null,
+          }}
+        />
+      )}
+    </div>
+  );
+};
+
+export function AIHistoryModal({ isLogin = false, ...props }: SearchHistoryProps) {
+  const [open, setOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setOpen(prev => !prev);
+  };
+
+  return (
+    <Modal
+      title="  "
+      open={open}
+      trigger={
+        <Button
+          {...props}
+          size="icon"
+          className="rounded-full bg-primary/5 hover:bg-primary/10"
+          onClick={handleOpenModal}
+        >
+          <MessageTime color="hsl(var(--primary))" />
+        </Button>
+      }
+      hasCloseIcon
+      hasCancelButton={false}
+      contentClassName="p-2 pt-0 md:pb-4 w-3xl"
+    >
+      <SearchHistory className={cn('h-[70dvh]')} isLogin={isLogin} callbackFn={handleOpenModal} />
+    </Modal>
   );
 }

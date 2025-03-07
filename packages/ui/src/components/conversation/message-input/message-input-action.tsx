@@ -2,23 +2,26 @@ import { cancelConversation } from '@oe/api/services/conversation';
 import type { z } from '@oe/api/utils/zod';
 import LampCharge from '@oe/assets/icons/lamp-charge';
 import Microphone from '@oe/assets/icons/microphone';
+import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { MoveRight, Square } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
 import { usePathname } from '#common/navigation';
 import { Button } from '#shadcn/button';
+import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { AI_SIDEBAR } from '../constants';
 import type { chatSchema } from '../utils';
 import { InputFile } from './input-file';
 
 export function MessageInputAction({
-  loading,
   form,
-}: { loading: boolean; form: UseFormReturn<z.infer<typeof chatSchema>> }) {
+  loading,
+}: { loading?: boolean; form: UseFormReturn<z.infer<typeof chatSchema>> }) {
   const pathname = usePathname();
   const tAI = useTranslations('aiAssistant');
+  const { status } = useConversationStore();
   const handleCancel = async () => {
     const id = pathname.split('/').pop();
     if (id) {
@@ -26,7 +29,10 @@ export function MessageInputAction({
     }
   };
 
-  const disableButton = useMemo(() => !form.formState.isValid || loading, [form, loading]);
+  const disableButton = useMemo(
+    () => !form.formState.isValid || loading || GENERATING_STATUS.includes(status ?? ''),
+    [form, status, loading]
+  );
 
   const deepResearch = AI_SIDEBAR('hsl(var(--foreground))', 16).find(agent => agent.lableKey === 'deepResearch');
   return (
@@ -46,7 +52,7 @@ export function MessageInputAction({
         <Button size="icon" variant="outline" disabled className="rounded-full">
           <Microphone />
         </Button>
-        {loading ? (
+        {GENERATING_STATUS.includes(status ?? '') ? (
           <Button
             type="button"
             size="icon"
@@ -64,7 +70,11 @@ export function MessageInputAction({
             type="submit"
             size="icon"
             disabled={disableButton}
-            className={cn('group/btn rounded-full bg-primary', loading && 'cursor-not-allowed opacity-50')}
+            loading={loading}
+            className={cn(
+              'group/btn rounded-full bg-primary',
+              GENERATING_STATUS.includes(status ?? '') && 'cursor-not-allowed opacity-50'
+            )}
             aria-label="Send message"
           >
             <MoveRight strokeWidth={3} className="h-6 w-6 text-primary-foreground" />

@@ -17,7 +17,7 @@ export function SourceCard({ url, title, content, className }: ISourceCardProps)
         <div>
           <Image
             externalSrc={faviconUrl}
-            alt={`${domain}-logo`}
+            alt="favicon"
             aspectRatio="1:1"
             fill
             sizes="30px"

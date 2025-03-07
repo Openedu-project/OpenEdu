@@ -15,9 +15,10 @@ interface ModelDropdownProps {
   onSelectSuccess?: () => void;
   AIModels: IAIModel[];
   isLogin?: boolean;
+  className?: string;
 }
 
-export function AIModelDropdown({ onSelectSuccess, AIModels, isLogin }: ModelDropdownProps) {
+export function AIModelDropdown({ onSelectSuccess, AIModels, isLogin, className }: ModelDropdownProps) {
   const { selectedModel, setSelectedModel } = useConversationStore();
   const tAI = useTranslations('aiAssistant');
 
@@ -50,7 +51,10 @@ export function AIModelDropdown({ onSelectSuccess, AIModels, isLogin }: ModelDro
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="!rounded-full relative w-[200px] justify-start gap-2 truncate border border-primary bg-background outline outline-4 outline-primary/5"
+          className={cn(
+            '!rounded-full relative w-[130px] justify-start gap-2 truncate border border-primary bg-background outline outline-4 outline-primary/5 md:w-[200px]',
+            className
+          )}
         >
           <div>
             <Image
@@ -64,7 +68,7 @@ export function AIModelDropdown({ onSelectSuccess, AIModels, isLogin }: ModelDro
               containerHeight="auto"
             />
           </div>
-          <p className="mr-4 w-[150px] truncate text-start">{selectedModel?.display_name ?? tAI('aiModel')}</p>
+          <p className="mr-4 truncate text-start">{selectedModel?.display_name ?? tAI('aiModel')}</p>
           <ChevronDown className="absolute right-2" />
         </Button>
       </DropdownMenuTrigger>

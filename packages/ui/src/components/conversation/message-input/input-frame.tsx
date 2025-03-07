@@ -27,7 +27,7 @@ export function InputFrame({
   );
 
   return (
-    <div className={cn('max-w-4xl bg-background pt-2', className)}>
+    <div className={cn('max-w-3xl bg-background pt-2 xl:max-w-4xl', className)}>
       <MessageInput
         messageType={messageType}
         sendMessage={sendMessage}

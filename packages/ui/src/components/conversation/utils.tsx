@@ -22,7 +22,8 @@ export const chatSchema = z.object({
         message: 'formValidation.required',
       })
     )
-    .optional(),
+    .optional()
+    .nullable(),
 });
 
 export function useIsDesktop() {
@@ -56,7 +57,6 @@ export const useHandleSendMessage = (agent: TAgentType, id?: string, model?: IAI
   const router = useRouter();
   const tError = useTranslations('errors');
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   return useCallback(
     async ({ messageInput = '', type, images, message_id, role, status }: ISendMessageParams) => {
       const messageID = message_id ?? `id_${Date.now()}`;
@@ -79,7 +79,6 @@ export const useHandleSendMessage = (agent: TAgentType, id?: string, model?: IAI
       };
 
       const index = messages?.findIndex(msg => msg.id === message_id) ?? -1;
-
       if (index === -1) {
         addMessage(newMessage, () => {
           setStatus('pending');
@@ -119,7 +118,12 @@ export const useHandleSendMessage = (agent: TAgentType, id?: string, model?: IAI
 
         if (!id) {
           setIsNewChat(true);
-          router.push(createAPIUrl({ endpoint: AI_ROUTES.chatDetail, params: { id: data.id } }));
+          router.push(
+            createAPIUrl({
+              endpoint: AI_ROUTES.chatDetail,
+              params: { id: data.id },
+            })
+          );
         }
       } catch (error) {
         setStatus('failed');
@@ -131,6 +135,41 @@ export const useHandleSendMessage = (agent: TAgentType, id?: string, model?: IAI
         }
       }
     },
-    [id, agent, model]
+    [
+      messages,
+      addMessage,
+      agent,
+      id,
+      model,
+      resetOpenWebSource,
+      selectedModel,
+      router,
+      setGenMessage,
+      setMessages,
+      setIsNewChat,
+      setStatus,
+      tError,
+      updateMessages,
+    ]
   );
+};
+
+export const formatDate = (timestamp: number) => {
+  const today = new Date().setHours(0, 0, 0, 0);
+  const yesterday = today - 86_400_000; // 24 hours in milliseconds
+
+  if (timestamp === today) {
+    return 'Today';
+  }
+  if (timestamp === yesterday) {
+    return 'Yesterday';
+  }
+
+  // Format as dd/mm/yyyy for all other dates
+  const date = new Date(timestamp);
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear();
+
+  return `${day}/${month}/${year}`;
 };

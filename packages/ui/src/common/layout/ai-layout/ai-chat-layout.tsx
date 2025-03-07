@@ -1,11 +1,12 @@
 import { getAIModels } from '@oe/api/services/conversation';
 import { isLogin } from '@oe/api/utils/auth';
 import { AI_ROUTES } from '@oe/core/utils/routes';
-import { Plus } from 'lucide-react';
+import { MessageSquareDiff } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
 import { Link } from '#common/navigation';
-import { AIModelDropdown } from '#components/conversation';
+import { AIHistoryModal, AIModelDropdown } from '#components/conversation';
+import { Tooltip } from '#shadcn/tooltip';
 import { cn } from '#utils/cn';
 
 type Props = {
@@ -13,12 +14,32 @@ type Props = {
   className?: string;
 };
 
+const ActionTooltip = ({
+  children,
+  label,
+  className,
+}: {
+  children: ReactNode;
+  label: string;
+  className?: string;
+}) => (
+  <Tooltip
+    content={label}
+    contentProps={{
+      side: 'left',
+      className: 'mbutton-bold10 rounded-full text-primary',
+    }}
+    className={cn('!border-0 rounded-full p-1', className)}
+  >
+    {children}
+  </Tooltip>
+);
+
 export default async function AIChatLayout({ children, className }: Props) {
-  const [AIChatModels, tAI, login] = await Promise.all([
+  const [AIChatModels, login, tAI] = await Promise.all([
     getAIModels(undefined, { next: { tags: ['get_ai_models'] } }),
-    getTranslations('aiAssistant'),
     isLogin(),
-    // getListConversation(undefined, HISTORY_DEFAULT_PARAMS),
+    getTranslations('aiAssistant'),
   ]);
 
   return (
@@ -28,17 +49,28 @@ export default async function AIChatLayout({ children, className }: Props) {
         className
       )}
     >
-      <div className="flex grow flex-col gap-4 p-4">
-        <div className="flex flex-wrap justify-between gap-2">
-          {AIChatModels && AIChatModels?.length > 0 && <AIModelDropdown AIModels={AIChatModels} isLogin={login} />}
-          <Link variant="default" className="hover:no-underline" activeClassName="" href={AI_ROUTES.chat}>
-            <Plus size={16} />
-            <span className="ml-2 hidden md:block">{tAI('startNewChat')}</span>
-          </Link>
-        </div>
+      <div className="flex grow flex-col gap-4 p-2 lg:p-4">
+        {AIChatModels && AIChatModels?.length > 0 && (
+          <AIModelDropdown AIModels={AIChatModels} isLogin={login} className="lg:mx-auto" />
+        )}
         <div className="flex grow flex-col overflow-hidden">{children}</div>
       </div>
-      {/* {aiHistoryData && <AIHistory isLogin={login} initData={aiHistoryData} />} */}
+      <div className="fixed right-2 flex gap-2 rounded-full bg-background p-2 shadow-shadow-8 lg:flex-col">
+        <ActionTooltip label={tAI('newChat')}>
+          <Link
+            size="icon"
+            variant="default"
+            className="rounded-full hover:no-underline"
+            activeClassName=""
+            href={AI_ROUTES.chat}
+          >
+            <MessageSquareDiff size={16} />
+          </Link>
+        </ActionTooltip>
+        <ActionTooltip label={tAI('history')}>
+          <AIHistoryModal isLogin={login} />
+        </ActionTooltip>
+      </div>
     </div>
   );
 }

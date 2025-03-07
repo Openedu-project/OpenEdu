@@ -4,16 +4,23 @@ import { Marked, type MarkedExtension, type Renderer, type Tokens } from 'marked
 import 'katex/dist/katex.min.css';
 
 const regexLinkButton = /^\[(\d+)\]$/;
+
 const blockLatexRule: RegExp[] = [
   /^\$\$([\s\S]+?)\$\$/,
   /^\\\[([\s\S]+?)\\\]/,
+  /^\\begin\{equation\}([\s\S]+?)\\end\{equation\}/,
+  /^\\begin\{align\}([\s\S]+?)\\end\{align\}/,
   /^\\begin\{math\}([\s\S]+?)\\end\{math\}/,
 ];
-const inlineBlockLatexRule: RegExp[] = [
+
+const inlineLatexRule: RegExp[] = [
   /^\$([^$\n]+?)\$/,
   /^\\\(([\s\S]+?)\\\)/,
   /^\\begin\{math\}([\s\S]+?)\\end\{math\}/,
+  /^\\begin\{inline\}([\s\S]+?)\\end\{inline\}/,
 ];
+const inlineLatexStart = /^\$|\\\(|\\begin\{/;
+const blockLatexStart = /^\$\$|\\\[|\\begin\{/;
 
 function safeEncodeURIComponent(str: string) {
   try {
@@ -31,7 +38,10 @@ function safeEncodeURIComponent(str: string) {
 // Helper function to render LaTeX with consistent error handling
 function renderLatex(tex: string, displayMode: boolean): string {
   try {
-    return katex.renderToString(tex, {
+    // Trim and sanitize the LaTeX content
+    const sanitizedTex = tex.trim().replace(/\\$/g, '\\');
+
+    return katex.renderToString(sanitizedTex, {
       displayMode,
       throwOnError: false,
       strict: false,
@@ -39,8 +49,8 @@ function renderLatex(tex: string, displayMode: boolean): string {
   } catch (e) {
     console.error('KaTeX error:', e);
     return displayMode
-      ? `<div class="tex-error">LaTeX Error: LaTeX format failed: ${tex}</div>`
-      : `<span class="tex-error">LaTeX Error: LaTeX format failed: ${tex}</span>`;
+      ? `<div class="tex-error">LaTeX Error: ${e instanceof Error ? e.message : 'Unknown error'}</div>`
+      : `<span class="tex-error">LaTeX Error: ${e instanceof Error ? e.message : 'Unknown error'}</span>`;
   }
 }
 
@@ -50,16 +60,20 @@ const latexExtension: MarkedExtension = {
     {
       name: 'blockLatex',
       level: 'block',
+      start(src: string) {
+        return src.match(blockLatexStart)?.index ?? -1;
+      },
       tokenizer(src) {
-        const match = blockLatexRule.map(rule => rule.exec(src)).filter(match => !!match)?.[0];
-
-        if (match) {
-          return {
-            type: 'html',
-            raw: match[0],
-            text: `<div class="block-latex">${renderLatex((match[1] ?? '').trim(), true)}</div>`,
-            tokens: [],
-          };
+        for (const rule of blockLatexRule) {
+          const match = rule.exec(src);
+          if (match) {
+            return {
+              type: 'html',
+              raw: match[0],
+              text: match[1] ? `<div class="block-latex">${renderLatex(match[1], true)}</div>` : '',
+              tokens: [],
+            };
+          }
         }
         return undefined;
       },
@@ -69,19 +83,27 @@ const latexExtension: MarkedExtension = {
     {
       name: 'inlineLatex',
       level: 'inline',
+      start(src: string) {
+        if (src.startsWith('$$')) {
+          return -1;
+        }
+        return src.match(inlineLatexStart)?.index ?? -1;
+      },
       tokenizer(src) {
         if (src.startsWith('$$')) {
           return undefined;
         }
 
-        const match = inlineBlockLatexRule.map(rule => rule.exec(src)).filter(match => !!match)?.[0];
-        if (match) {
-          return {
-            type: 'html',
-            raw: match[0],
-            text: renderLatex((match[1] ?? '').trim(), false),
-            tokens: [],
-          };
+        for (const rule of inlineLatexRule) {
+          const match = rule.exec(src);
+          if (match) {
+            return {
+              type: 'html',
+              raw: match[0],
+              text: match[1] ? renderLatex(match[1], false) : '',
+              tokens: [],
+            };
+          }
         }
         return undefined;
       },
@@ -89,7 +111,6 @@ const latexExtension: MarkedExtension = {
   ],
 };
 
-// Create and configure marked instance
 export const marked = new Marked({
   renderer: {
     link(this: Renderer, { href, title, text }: Tokens.Link) {
@@ -97,10 +118,13 @@ export const marked = new Marked({
       return `<a href="${href}" target="_blank" class="text-primary ${isButton ? 'border font-bold rounded-full bg-primary/10 p-1 text-xs h-5 w-5 inline-flex items-center justify-center' : 'underline'}" ${title ? `title="${title}"` : ''}>${isButton ? text.substring(1, text.length - 1) : text}</a>`;
     },
     code(this: Renderer, { text, lang }: Tokens.Code) {
-      // Store the original unformatted code
       const originalCode = text;
-      // Get the language or fallback to plaintext
       const language = hljs.getLanguage(lang ?? '') ? lang : 'plaintext';
+
+      // Check if this might be LaTeX code block
+      if (lang === 'latex' || lang === 'tex') {
+        return `<div class="latex-block">${renderLatex(text, true)}</div>`;
+      }
 
       const highlightedCode = hljs.highlight(originalCode, {
         language: language || 'plaintext',
@@ -134,6 +158,7 @@ export const marked = new Marked({
 </div>
 <code class="hljs overflow-x-auto language-${lang}">${highlightedCode}</code></pre>`;
     },
+
     image(this: Renderer, { href, title, text }: Tokens.Image) {
       if (!href) {
         return '';

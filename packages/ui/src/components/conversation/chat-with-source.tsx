@@ -3,7 +3,8 @@ import { type SpringValue, animated, config, useSpring, useTransition } from '@r
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { ChatWindow } from './chat-window';
-import { SourceList, SourcePopup } from './sources/source-list';
+import { SourceList } from './sources/source-list';
+import { SourcePopup } from './sources/sources-popup';
 import type { IChatWindowProps } from './type';
 import { useIsDesktop } from './utils';
 
@@ -46,7 +47,7 @@ export function ChatWithSource({ id, initData, agent = 'ai_search' }: IChatWindo
       {isDesktop ? (
         <div
           className={cn(
-            'relative ml-2 hidden shrink-0 overflow-visible lg:w-[300px] xl:w-[400px]',
+            'relative mt-4 ml-2 hidden shrink-0 overflow-visible lg:w-[300px] xl:w-[400px]',
             openWebSource.isOpen && 'block'
           )}
         >

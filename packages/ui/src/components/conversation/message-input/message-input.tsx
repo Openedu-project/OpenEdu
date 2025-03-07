@@ -30,6 +30,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
   messageType,
   images,
   resetOnSuccess = false,
+  type,
 }) => {
   const tAI = useTranslations('aiAssistant');
   const { selectedModel, selectedAgent, setSelectedAgent } = useConversationStore();
@@ -202,7 +203,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
           return (
             <Card
               className={cn(
-                'shadown relative flex min-h-40 flex-col gap-1 space-x-2 rounded-3xl bg-background p-2 pt-2 md:p-4',
+                'relative flex min-h-40 flex-col gap-1 space-x-2 rounded-3xl bg-background p-2 pt-2 shadow md:p-4',
                 className
               )}
               onClick={() => {
@@ -213,7 +214,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
                 <PreviewImage form={form} imagesData={imagesData} />
               )}
               <InputField
-                type={selectedAgent}
+                type={type ?? selectedAgent}
                 form={form}
                 handleKeyDown={e => {
                   handleKeyDown(e, form as UseFormReturn<MessageFormValues>);
@@ -224,7 +225,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
                 canChangeType={messageType && messageType.length > 1}
                 className="grow"
               />
-              {!hiddenBtn && <MessageInputAction form={form} loading={loading || generating} />}
+              {!hiddenBtn && <MessageInputAction form={form} loading={loading} />}
             </Card>
           );
         }}

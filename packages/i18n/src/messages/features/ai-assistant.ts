@@ -5,7 +5,8 @@ export const aiAssistantMessages = {
     deepResearch: 'Deep Research',
     slideToVideo: 'Slide To Video',
     commingSoon: 'comming soon',
-    startNewChat: 'Start New Chat',
+    newChat: 'New Chat',
+    history: 'History',
     noHistory: 'No History Here',
     imageAnalysis: 'Image Analysis',
     placeholderMessage: 'Type your message',
@@ -42,5 +43,6 @@ export const aiAssistantMessages = {
     connectDrive: 'Connect with Google Drive',
     connectOneDrive: 'Connect with Microsoft One Drive',
     reasoning: 'Reasoning',
+    resources: 'Resources',
   },
 };

@@ -1,7 +1,6 @@
 import { X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Fragment } from 'react';
-import { Modal } from '#components/modal';
 import { Button } from '#shadcn/button';
 import { ScrollArea } from '#shadcn/scroll-area';
 import { Separator } from '#shadcn/separator';
@@ -43,20 +42,5 @@ export function SourceList() {
         </div>
       </div>
     </>
-  );
-}
-
-export function SourcePopup() {
-  const { openWebSource } = useConversationStore();
-
-  return (
-    <Modal
-      title="  "
-      open={openWebSource.isOpen}
-      contentClassName="h-[calc(100dvh-100px)] flex flex-col"
-      hasCancelButton={false}
-    >
-      <SourceList />
-    </Modal>
   );
 }

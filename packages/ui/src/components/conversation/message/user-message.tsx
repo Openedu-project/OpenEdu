@@ -97,8 +97,8 @@ export const UserMessage = ({ message, loading, sendMessage, messageType }: IMes
       ) : (
         <div
           className={cn(
-            'mcaption-semibold14 max-w-full whitespace-pre-line rounded-[20px] bg-primary/10 px-4 py-2 text-foreground lg:max-w-[80%]',
-            'before:!rounded-[20px] before:absolute before:right-0 before:z-[-1] before:h-full before:w-full before:bg-white before:content-[""]'
+            'mcaption-semibold14 max-w-full whitespace-pre-line rounded-xl border bg-primary/10 p-4 text-foreground lg:max-w-[80%]',
+            'before:!rounded-xl before:absolute before:right-0 before:z-[-1] before:h-full before:w-full before:bg-white before:content-[""]'
           )}
         >
           {convertTextWithLink(message.content)}
@@ -115,6 +115,7 @@ export const UserMessage = ({ message, loading, sendMessage, messageType }: IMes
                     className="absolute rounded-lg"
                     alt="screen-shot"
                     sizes="160px"
+                    fill
                     noContainer
                     objectFit="contain"
                     style={{ objectPosition: 'center' }}

@@ -103,7 +103,11 @@ export function Image({
   };
 
   return noContainer ? (
-    <NextImage {...commonProps} {...(fill && { fill: true })} className={imageClasses} {...props} />
+    externalSrc ? (
+      <img {...props} src={externalSrc} alt={props.alt || 'image'} className={imageClasses} />
+    ) : (
+      <NextImage {...commonProps} {...(fill && { fill: true })} className={imageClasses} {...props} />
+    )
   ) : (
     <div
       className={cn(
