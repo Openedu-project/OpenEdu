@@ -66,6 +66,10 @@ export const validateCourse = ({
     priceErrors.push(tCourse('validation.required', { field: tCourse('price.title') }));
   }
 
+  if (course?.published?.[0]?.mark_as_completed && course?.mark_as_completed) {
+    informationErrors.push(tCourse('validation.courseIsCompleted'));
+  }
+
   return {
     informationErrors,
     outlineErrors,

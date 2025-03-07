@@ -35,7 +35,7 @@ const certificateSchema = z.object({
     .array(
       z.object({
         id: z.string().optional(),
-        educator_name: z.string().optional(),
+        creator_name: z.string().optional(),
         position: z.string().optional(),
         signature: fileResponseSchema.partial().nullable().optional(),
       })

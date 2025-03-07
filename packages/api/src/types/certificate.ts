@@ -222,7 +222,7 @@ export interface ICertificateTemplate {
 
 export interface ISignature {
   id?: string;
-  educator_name: string;
+  creator_name: string;
   signature?: IFileResponse;
   position: string;
 }

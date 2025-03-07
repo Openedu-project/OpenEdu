@@ -46,11 +46,11 @@ export const SignatureRenderer = ({
             textDecoration: element?.signatureStyles?.underline ? 'underline' : 'none',
           }}
         >
-          {signatureContent?.educator_name ??
+          {signatureContent?.creator_name ??
             (showPlaceholder && tCertificate('builder.elements.signature.educatorName'))}
         </p>
       )}
-      {((signatureImage || signatureContent?.educator_name) && signatureContent?.position) || showPlaceholder ? (
+      {((signatureImage || signatureContent?.creator_name) && signatureContent?.position) || showPlaceholder ? (
         <div
           className="my-1 h-[2px] w-full shrink-0 bg-border"
           style={{
