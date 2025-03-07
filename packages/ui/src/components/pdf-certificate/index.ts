@@ -1,9 +1,3 @@
-import {
-  CertificateHTML,
-  CertificatePDF,
-  ExportPDFCertificate,
-  ViewCertificate,
-  useUploadCertificate,
-} from './pdf-certficate';
+import { useUploadCertificate } from './pdf-certficate';
 
-export { CertificatePDF, ViewCertificate, ExportPDFCertificate, useUploadCertificate, CertificateHTML };
+export { useUploadCertificate };

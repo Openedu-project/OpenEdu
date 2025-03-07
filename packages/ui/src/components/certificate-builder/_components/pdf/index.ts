@@ -1,3 +1,3 @@
-import { ExportPDFButton } from './pdf-export';
+import { ExportPDFButton, generatePDF } from './pdf-export';
 
-export { ExportPDFButton };
+export { ExportPDFButton, generatePDF };

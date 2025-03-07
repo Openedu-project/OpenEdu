@@ -22,7 +22,7 @@ export interface ICertificateConditions {
   required_lesson_uid?: string;
 }
 
-export interface ICertificate {
+export interface ICertificate extends ICertificateData {
   id: string;
   conditions?: ICertificateConditions;
   props: Styles;
@@ -43,11 +43,11 @@ export interface ICertificate {
   org_layer?: IFounder;
   template: ICertificateTemplate;
   creator_name: string;
-  learner_name?: string;
-  issue_date?: number;
-  course_name: string;
-  organizations?: ICertificateOrganization[];
-  signatures?: ISignature[];
+  // learner_name?: string;
+  // issue_date?: number;
+  // course_name: string;
+  // organizations?: ICertificateOrganization[];
+  // signatures?: ISignature[];
 }
 
 export interface ICertificateUser {
@@ -96,7 +96,7 @@ export interface IReceiveCertificateRequest {
   file: {
     id: string;
   };
-  image: {
+  image?: {
     id: string;
   };
   course_cuid: string;
@@ -222,7 +222,7 @@ export interface ICertificateTemplate {
 
 export interface ISignature {
   id?: string;
-  educator_name: string;
+  creator_name: string;
   signature?: IFileResponse;
   position: string;
 }

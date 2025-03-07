@@ -101,14 +101,19 @@ export interface ICourseCertCondition {
 
 export interface ICourseVersion {
   id: string;
+  end_date: number;
+  is_root: boolean;
+  latest: boolean;
+  mark_as_completed: boolean;
   name: string;
-  version: number;
-  status: TCourseStatus;
+  org_id: string;
   pub_date: number;
-  pub_root_date: number;
   pub_reject_date: number;
+  pub_root_date: number;
   pub_root_reject_date: number;
-  is_root: boolean; // Distinguish between org and openedu
+  start_date: number;
+  status: TCourseStatus;
+  version: number;
 }
 
 export interface ICourseOrganization extends Omit<IOrganization, 'user_id' | 'settings' | 'sub_domains'> {
