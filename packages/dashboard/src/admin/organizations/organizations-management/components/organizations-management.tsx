@@ -103,7 +103,7 @@ export default function OrganizationsManagement() {
           email: value.email,
           name: value.name,
           phone: value.phone,
-          domain: `${value.domain}.${process.env.NEXT_PUBLIC_APP_ROOT_DOMAIN_NAME}`,
+          domain: `${value.domain?.trim()}.${process.env.NEXT_PUBLIC_APP_ROOT_DOMAIN_NAME}`,
           full_name: '',
           thumbnail_id,
         });
