@@ -100,5 +100,9 @@ export const dashboardMessages = {
     certificate: {
       title: 'Certificate',
     },
+    referralProgram: {
+      title: 'Referral Program',
+      programManagement: 'Program Management',
+    },
   },
 };
