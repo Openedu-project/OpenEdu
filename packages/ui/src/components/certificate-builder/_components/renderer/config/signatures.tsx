@@ -49,7 +49,7 @@ export const SignaturesConfig = ({
         {fields.map((field, index) => (
           <div key={field.id} className="space-y-2 rounded-md border p-2">
             <FormFieldWithLabel
-              name={`signatures.${index}.educator_name`}
+              name={`signatures.${index}.creator_name`}
               label={tCertificate('builder.preview.signerName')}
               render={({ field }) => (
                 <Input {...field} placeholder={tCertificate('builder.preview.signerName')} className="flex-1" />
@@ -120,7 +120,7 @@ export const SignaturesConfig = ({
         onClick={() =>
           append({
             id: nanoid(),
-            educator_name: '',
+            creator_name: '',
             position: '',
             signature: null,
           })

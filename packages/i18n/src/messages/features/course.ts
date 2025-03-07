@@ -153,6 +153,8 @@ export const courseMessages = {
       sectionRequired: 'There must be at least 1 section have status publish or preview',
       lessonRequired: 'There must be at least 1 lesson have status publish or preview in the published section',
       sectionOrLessonRequired: 'There must be at least 1 section and 1 lesson have status publish or preview',
+      courseIsCompleted:
+        'Your course is currently marked as completed. To publish a new version, please disable the completion marking in your course settings first.',
       content: {
         required: 'Content is required',
         videoRequired: 'Video content is required',

@@ -215,6 +215,8 @@ export const errorMessages = {
     '2537': "Affiliate campaign don't available this time",
     '2538': 'Commission disabled',
     '2539': 'Get applicable commission failed',
+    '2077':
+      'We noticed this email appears to be a variation of an existing account. Please use a different email or sign in with your existing account.',
     '3000': 'domain already existed',
     '3001': 'find one failed',
     '3002': 'create failed',

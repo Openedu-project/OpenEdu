@@ -32,7 +32,12 @@ export const CertificatePDF: FC<{
         {/* Background Image */}
         {template.frame?.file?.url && (
           <Image
-            src={template.frame?.file?.url}
+            // src={template.frame?.file?.url}
+            src={{
+              uri: `${template.frame?.file?.url}?cachebuster=${Date.now()}`,
+              method: 'GET',
+              headers: { 'Cache-Control': 'no-cache' },
+            }}
             style={{
               position: 'absolute',
               top: 0,

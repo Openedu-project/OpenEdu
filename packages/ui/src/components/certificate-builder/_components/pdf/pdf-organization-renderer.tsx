@@ -56,7 +56,12 @@ export const PDFOrganizationRenderer = ({
         <View>
           {organizationContent?.logo?.url ? (
             <Image
-              src={organizationContent.logo.url}
+              // src={organizationContent.logo.url}
+              src={{
+                uri: `${organizationContent?.logo?.url}?cachebuster=${Date.now()}`,
+                method: 'GET',
+                headers: { 'Cache-Control': 'no-cache' },
+              }}
               style={{
                 objectFit: 'contain',
                 width: element?.logoStyles?.width ?? 50,

@@ -1,4 +1,3 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { type ICreateOrganizationSchemaType, createOrganizationSchema } from '@oe/api/schemas/organization';
 import type { IOrganization } from '@oe/api/types/organizations';
 import { Modal } from '@oe/ui/components/modal';
@@ -6,8 +5,7 @@ import { Uploader } from '@oe/ui/components/uploader';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
 import { Input } from '@oe/ui/shadcn/input';
 import { useTranslations } from 'next-intl';
-import { useCallback, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useCallback } from 'react';
 
 interface IViewOrganizationModal {
   onSubmit: (value: unknown) => void;
@@ -20,37 +18,12 @@ const DOMAIN_NAME = process.env.NEXT_PUBLIC_APP_ROOT_DOMAIN_NAME;
 export function ViewOrganizationModal({ onSubmit, onClose, isEdit = false, data }: IViewOrganizationModal) {
   const t = useTranslations('organizationsManagement.viewOrganizationModal');
 
-  const form = useForm<ICreateOrganizationSchemaType>({
-    resolver: zodResolver(createOrganizationSchema),
-    mode: 'onChange',
-    defaultValues: {
-      email: '',
-      phone: '',
-      name: '',
-      domain: '',
-      thumbnail: undefined,
-    },
-  });
-
-  const { setValue } = form;
-
   const handleSubmit = useCallback(
     async (value: ICreateOrganizationSchemaType) => {
       await onSubmit?.(value);
     },
     [onSubmit]
   );
-
-  useEffect(() => {
-    if (data) {
-      const { email, phone } = data.user;
-
-      setValue('phone', phone);
-      setValue('name', data.name);
-      setValue('domain', data.domain);
-      setValue('email', email);
-    }
-  }, [data, setValue]);
 
   return (
     <Modal
@@ -72,13 +45,12 @@ export function ViewOrganizationModal({ onSubmit, onClose, isEdit = false, data 
       ]}
       validationSchema={createOrganizationSchema}
       onSubmit={handleSubmit}
-      // defaultValues={
-      //   {
-      //     ...data,
-      //     email: data?.user.email,
-      //     phone: data?.user.phone,
-      //   } as unknown as ICreateOrganizationSchemaType
-      // }
+      defaultValues={{
+        phone: data?.user?.phone ?? '',
+        name: data?.name ?? '',
+        domain: data?.domain ?? '',
+        email: data?.user?.email ?? '',
+      }}
     >
       {form => (
         <>

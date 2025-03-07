@@ -1,6 +1,6 @@
 import type { ICertificateData, ICertificateElement, ICertificateSignatureElement } from '@oe/api/types/certificate';
 import { Image, Text, View } from '@react-pdf/renderer';
-import { getElementPosition, getJustifyContent } from '../../utils';
+import { getElementPosition } from '../../utils';
 
 export const PDFSignatureRenderer = ({
   element,
@@ -25,7 +25,8 @@ export const PDFSignatureRenderer = ({
         height: 'auto',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: getJustifyContent(element),
+        // alignItems: getJustifyContent(element),
+        alignItems: 'center',
         justifyContent: 'flex-end',
         textAlign: 'center',
       }}
@@ -33,7 +34,12 @@ export const PDFSignatureRenderer = ({
       {/* <View> */}
       {signatureImage ? (
         <Image
-          src={signatureImage}
+          // src={signatureImage}
+          src={{
+            uri: `${signatureImage}?cachebuster=${Date.now()}`,
+            method: 'GET',
+            headers: { 'Cache-Control': 'no-cache' },
+          }}
           style={{
             objectFit: 'contain',
             width: 200,
@@ -49,14 +55,14 @@ export const PDFSignatureRenderer = ({
             fontSize: element?.signatureStyles?.fontSize,
             color: element?.signatureStyles?.color,
             fontFamily: element?.signatureStyles?.fontFamily,
-            width: '100%',
+            // width: '100%',
           }}
         >
-          {signatureContent?.educator_name ?? (showPlaceholder && 'Educator Name')}
+          {signatureContent?.creator_name ?? (showPlaceholder && 'Educator Name')}
         </Text>
       )}
       {/* </View> */}
-      {((signatureImage || signatureContent?.educator_name) && signatureContent?.position) || showPlaceholder ? (
+      {((signatureImage || signatureContent?.creator_name) && signatureContent?.position) || showPlaceholder ? (
         <View
           style={{
             height: element?.lineStyles?.height ?? 1,
@@ -68,21 +74,19 @@ export const PDFSignatureRenderer = ({
         />
       ) : null}
 
-      <View>
-        <Text
-          style={{
-            fontSize: element?.positionStyles?.fontSize ?? 12,
-            fontFamily: element?.positionStyles?.fontFamily,
-            color: element?.positionStyles?.color ?? '#64748b',
-            fontWeight: element?.positionStyles?.bold ? 'bold' : 'normal',
-            fontStyle: element?.positionStyles?.italic ? 'italic' : 'normal',
-            textDecoration: element?.positionStyles?.underline ? 'underline' : 'none',
-            width: '100%',
-          }}
-        >
-          {signatureContent?.position ?? (showPlaceholder && 'Position')}
-        </Text>
-      </View>
+      <Text
+        style={{
+          fontSize: element?.positionStyles?.fontSize ?? 12,
+          fontFamily: element?.positionStyles?.fontFamily,
+          color: element?.positionStyles?.color ?? '#64748b',
+          fontWeight: element?.positionStyles?.bold ? 'bold' : 'normal',
+          fontStyle: element?.positionStyles?.italic ? 'italic' : 'normal',
+          textDecoration: element?.positionStyles?.underline ? 'underline' : 'none',
+          // width: '100%',
+        }}
+      >
+        {signatureContent?.position ?? (showPlaceholder && 'Position')}
+      </Text>
     </View>
   );
 };
