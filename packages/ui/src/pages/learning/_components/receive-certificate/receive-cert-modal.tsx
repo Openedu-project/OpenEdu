@@ -2,14 +2,16 @@
 
 import { useReceiveCertificate } from '@oe/api/hooks/useCertificate';
 import { useGetMe } from '@oe/api/hooks/useMe';
-import type { ICertificate } from '@oe/api/types/certificate';
+import type { ICertificate, ICertificateData } from '@oe/api/types/certificate';
 import { Trophy } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import { TemplateScalePreview } from '#components/certificate-builder';
+import { ExportPDFButton, generatePDF } from '#components/certificate-builder/_components/pdf';
 import { Input } from '#components/dynamic-form/form-components/input';
 import { Modal } from '#components/modal';
-import { ViewCertificate, useUploadCertificate } from '#components/pdf-certificate';
+import { useUploadCertificate } from '#components/pdf-certificate';
 import { Button } from '#shadcn/button';
 import { Label } from '#shadcn/label';
 import { useSocketStore } from '#store/socket';
@@ -28,7 +30,7 @@ const ReceiveCertificateModal = ({ certificate }: IProps) => {
   const [step, setStep] = useState<number>(1);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const { uploadPDF, uploadPNG, isUploading } = useUploadCertificate({
+  const { uploadPDF, isUploading } = useUploadCertificate({
     certificate: certificateState,
   });
   const { triggerReceiveCert } = useReceiveCertificate();
@@ -52,18 +54,24 @@ const ReceiveCertificateModal = ({ certificate }: IProps) => {
 
   const handleReceiveCert = useCallback(async () => {
     try {
-      const [pdfResponse, pngResponse] = await Promise.all([uploadPDF(), uploadPNG()]);
+      const blob = await generatePDF(certificate?.template, {
+        ...certificateState,
+        issue_date: Date.now(),
+      } as unknown as ICertificateData);
 
-      if (!(pdfResponse?.id && pngResponse?.id)) {
+      const [pdfResponse] = await Promise.all([uploadPDF(blob)]);
+
+      if (!pdfResponse?.id) {
         throw new Error('PDF upload failed');
       }
 
-      const receiveRes = await triggerReceiveCert({
-        course_cuid: certificate.course_cuid,
-        file: { id: pdfResponse.id },
-        image: { id: pngResponse.id },
-        completed_at: Date.now(),
-      });
+      const receiveRes =
+        pdfResponse &&
+        (await triggerReceiveCert({
+          course_cuid: certificate.course_cuid,
+          file: { id: pdfResponse.id },
+          completed_at: Date.now(),
+        }));
 
       if (!receiveRes) {
         throw new Error('Failed to receive certificate');
@@ -75,7 +83,7 @@ const ReceiveCertificateModal = ({ certificate }: IProps) => {
       console.error('Error in handleReceiveCert:', error);
       toast.error('Error receiving certificate');
     }
-  }, [certificate.course_cuid, triggerReceiveCert, uploadPDF, uploadPNG, tReceiveCertModal]);
+  }, [certificate.course_cuid, triggerReceiveCert, uploadPDF, tReceiveCertModal, certificateState]);
 
   const renderStep1 = () => (
     <div className="py-4">
@@ -94,11 +102,15 @@ const ReceiveCertificateModal = ({ certificate }: IProps) => {
   );
 
   const renderStep2 = () => (
-    <ViewCertificate
-      certificate={{
-        ...certificateState,
-        date: Date.now(),
-      }}
+    <TemplateScalePreview
+      className="flex-1"
+      template={certificate?.template}
+      data={
+        {
+          ...certificateState,
+          date: Date.now(),
+        } as unknown as ICertificateData
+      }
     />
   );
 
@@ -112,13 +124,25 @@ const ReceiveCertificateModal = ({ certificate }: IProps) => {
     }
 
     return (
-      <div className="ml-auto w-fit space-x-2">
-        <Button variant="outline" type="button" onClick={handlePreviousStep}>
-          {tReceiveCertModal('editName')}
-        </Button>
-        <Button disabled={isUploading} onClick={handleReceiveCert}>
-          {tReceiveCertModal('receiveCertificate')}
-        </Button>
+      <div className="flex justify-between">
+        <ExportPDFButton
+          variant="outline"
+          template={certificate?.template}
+          data={
+            {
+              ...certificateState,
+              date: Date.now(),
+            } as unknown as ICertificateData
+          }
+        />
+        <div className="ml-auto w-fit space-x-2">
+          <Button variant="outline" type="button" onClick={handlePreviousStep}>
+            {tReceiveCertModal('editName')}
+          </Button>
+          <Button disabled={isUploading} onClick={handleReceiveCert}>
+            {tReceiveCertModal('receiveCertificate')}
+          </Button>
+        </div>
       </div>
     );
   };

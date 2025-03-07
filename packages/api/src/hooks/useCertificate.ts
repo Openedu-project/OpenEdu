@@ -140,7 +140,6 @@ export function useGetCertByUserId(user_id: string, params?: IFilter) {
     endpoint: API_ENDPOINT.CERTIFICATES,
     queryParams: { ...params, user_id },
   });
-  console.log(endpointKey, 'endpoint');
 
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (url: string) =>
     getCertByUserIdService(url, { params: { user_id } })
