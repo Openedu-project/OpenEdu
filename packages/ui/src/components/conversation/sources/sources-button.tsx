@@ -34,9 +34,11 @@ export function SourcesButton({ sources, messageId }: { sources: ISourceProps[];
             containerHeight="auto"
           />
         ))}
-        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-foreground/80 font-medium text-background text-xs hover:bg-gray-600 dark:border-gray-800">
-          +{(sources?.length ?? 5) - 3}
-        </span>
+        {sources?.length > 3 && (
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-foreground/80 font-medium text-background text-xs hover:bg-gray-600 dark:border-gray-800">
+            +{sources?.length - 3}
+          </span>
+        )}
       </div>
     </Button>
   );

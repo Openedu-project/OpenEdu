@@ -24,10 +24,10 @@ export const InputFile = <TFormValues extends FieldValues>() => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="flex flex-col gap-2 rounded-3xl p-2 md:p-4">
-        <DropdownMenuItem>
+        <DropdownMenuItem disabled>
           <DriveLogo /> <span className="mcaption-regular14 ml-2">{tAI('connectDrive')}</span>
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem disabled>
           <OneDriveLogo />
           <span className="mcaption-regular14 ml-2">{tAI('connectOneDrive')}</span>
         </DropdownMenuItem>

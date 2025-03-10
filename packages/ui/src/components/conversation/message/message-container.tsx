@@ -1,7 +1,9 @@
 import { useGetConversationDetails } from '@oe/api/hooks/useConversation';
 import type { IMessage, TAgentType } from '@oe/api/types/conversation';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
-import { useEffect, useRef, useState } from 'react';
+import { ChevronsDown } from 'lucide-react';
+import { type RefObject, useEffect, useRef, useState } from 'react';
+import { Button } from '#shadcn/button';
 import { Skeleton } from '#shadcn/skeleton';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
@@ -14,6 +16,7 @@ interface IContainerProps {
   nextCursorPage?: string;
   messageType: TAgentType[];
   className?: string;
+  containerRef: RefObject<HTMLDivElement | null>;
   sendMessage: ({
     messageInput,
     type,
@@ -24,15 +27,20 @@ interface IContainerProps {
   }: // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   ISendMessageParams) => void | Promise<unknown>;
 }
-export const MessageContainer = ({ id, sendMessage, nextCursorPage = '', messageType }: IContainerProps) => {
-  const { messages, status, setMessages } = useConversationStore();
+export const MessageContainer = ({
+  id,
+  sendMessage,
+  nextCursorPage = '',
+  messageType,
+  containerRef,
+}: IContainerProps) => {
+  const { messages, status, setMessages, isNewChat, setIsNewChat } = useConversationStore();
   const [shouldGetData, setShouldGetData] = useState<boolean>(false);
   const [prevScrollHeight, setPrevScrollHeight] = useState(0);
+  const [initScrollBottom, setInitScrollBottom] = useState(false);
+  const [showScrollButton, setShowScrollButton] = useState(false);
 
   const nextKeyRef = useRef<string>(nextCursorPage);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const scrollBottom = useRef<boolean>(false);
-
   const { data, isLoading } = useGetConversationDetails({
     shouldFetch: shouldGetData && nextKeyRef.current.length > 0,
     id,
@@ -57,29 +65,57 @@ export const MessageContainer = ({ id, sendMessage, nextCursorPage = '', message
     requestAnimationFrame(() => {
       if (containerRef.current) {
         const newScrollHeight = containerRef.current.scrollHeight;
-        const scrollDiff = newScrollHeight - prevScrollHeight;
+        const scrollDiff = newScrollHeight - prevScrollHeight - 200;
         containerRef.current.scrollTop = scrollDiff;
       }
     });
   }, [data]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (!containerRef.current || messages.length === 0 || scrollBottom.current) {
+    if (!containerRef.current || messages.length === 0 || initScrollBottom) {
       return;
     }
-    const { scrollHeight } = containerRef.current;
+    handleScrollToBottom();
 
-    containerRef.current.scrollTop = scrollHeight;
-    scrollBottom.current = true;
-  }, [messages.length]);
+    if (isNewChat) {
+      setIsNewChat(false);
+    }
+  }, [messages.length, initScrollBottom, containerRef]);
+
+  const handleScrollToBottom = () => {
+    if (!containerRef) {
+      return;
+    }
+    requestAnimationFrame(() => {
+      if (containerRef.current) {
+        containerRef.current.scrollTo({
+          top: containerRef.current.scrollHeight,
+          behavior: isNewChat ? 'auto' : 'smooth',
+        });
+      }
+    });
+  };
 
   const handleScroll = () => {
     if (!containerRef.current) {
       return;
     }
-    if (containerRef?.current?.scrollTop < 100 && !shouldGetData) {
-      setPrevScrollHeight(containerRef.current.scrollHeight);
+    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+
+    if (scrollTop < 100 && !shouldGetData && initScrollBottom) {
+      setPrevScrollHeight(scrollHeight);
       setShouldGetData(true);
+    }
+
+    if (scrollTop + clientHeight === scrollHeight && !initScrollBottom) {
+      setInitScrollBottom(true);
+    }
+
+    if (scrollTop + clientHeight < scrollHeight - 100) {
+      setShowScrollButton(true);
+    } else {
+      setShowScrollButton(false);
     }
   };
 
@@ -97,7 +133,7 @@ export const MessageContainer = ({ id, sendMessage, nextCursorPage = '', message
   return (
     <div
       ref={containerRef}
-      className={cn('no-scrollbar flex grow flex-col gap-2 overflow-y-auto overflow-x-hidden')}
+      className={cn('no-scrollbar relative flex grow flex-col gap-2 overflow-y-auto overflow-x-hidden')}
       onScroll={handleScroll}
     >
       <div className="flex max-w-3xl flex-col gap-4 xl:max-w-4xl">
@@ -124,6 +160,11 @@ export const MessageContainer = ({ id, sendMessage, nextCursorPage = '', message
           );
         })}
         <GenMessage containerRef={containerRef} />
+        <div className={cn('sticky bottom-0 hidden translate-x-1/2', showScrollButton && 'block')}>
+          <Button size="icon" variant="outline" className="rounded-full" onClick={handleScrollToBottom}>
+            <ChevronsDown className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
     </div>
   );

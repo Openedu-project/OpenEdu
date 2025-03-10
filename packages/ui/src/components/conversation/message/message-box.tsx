@@ -17,7 +17,7 @@ const PureMessageBox = ({ id, message, loading, rewrite, sendMessage, messageTyp
 };
 
 const MessageBox = memo(PureMessageBox, (prevProps, nextProps) => {
-  if (equal(prevProps.message, nextProps.message)) {
+  if (!equal(prevProps.message, nextProps.message)) {
     return false;
   }
   return true;

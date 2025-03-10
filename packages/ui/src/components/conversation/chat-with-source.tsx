@@ -1,5 +1,6 @@
 'use client';
-import { type SpringValue, animated, config, useSpring, useTransition } from '@react-spring/web';
+import { type SpringValue, animated, useSpring, useTransition } from '@react-spring/web';
+import { useMemo } from 'react';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { ChatWindow } from './chat-window';
@@ -11,23 +12,30 @@ import { useIsDesktop } from './utils';
 const AnimatedDiv = animated('div');
 
 export function ChatWithSource({ id, initData, agent = 'ai_search' }: IChatWindowProps) {
-  const { openWebSource } = useConversationStore();
+  const { openWebSource, width } = useConversationStore();
 
   const isDesktop = useIsDesktop();
 
   const smoothSpring = {
-    ...config.wobbly,
     tension: 180,
     friction: 18,
     mass: 0.6,
     clamp: false,
     precision: 0.001,
-    velocity: 0.001,
-    duration: 200,
+    velocity: 0,
   };
 
+  const transformX = useMemo(() => {
+    if (!width) {
+      return 0;
+    }
+    const containerWidth = window.innerWidth > 1440 ? 1440 : window.innerWidth;
+
+    return (containerWidth - width - 200) / 2;
+  }, [width]);
+
   const chatProps = useSpring({
-    transform: openWebSource.isOpen ? 'translateX(0px)' : 'translateX(100px)',
+    x: openWebSource.isOpen ? 0 : transformX,
     config: smoothSpring,
   });
 
@@ -39,7 +47,7 @@ export function ChatWithSource({ id, initData, agent = 'ai_search' }: IChatWindo
   });
 
   return (
-    <div className="flex grow gap-4 overflow-hidden">
+    <div className="container flex grow gap-4 overflow-hidden">
       <AnimatedDiv className="grow" style={isDesktop ? chatProps : undefined}>
         <ChatWindow id={id} initData={initData} agent={agent} />
       </AnimatedDiv>

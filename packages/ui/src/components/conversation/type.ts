@@ -1,6 +1,6 @@
 import type { IAIModel, IConversationDetails, IMessage, IRole, TAgentType } from '@oe/api/types/conversation';
 import type { IFileResponse } from '@oe/api/types/file';
-import type { ChangeEvent, KeyboardEventHandler, ReactNode, RefObject } from 'react';
+import type { ChangeEvent, KeyboardEventHandler, ReactNode, Ref, RefObject } from 'react';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
 
 export interface AISidebarItem {
@@ -97,4 +97,5 @@ export interface IChatWindowProps {
   initData?: IConversationDetails;
   agent?: TAgentType;
   className?: string;
+  inputRef?: Ref<HTMLDivElement>;
 }

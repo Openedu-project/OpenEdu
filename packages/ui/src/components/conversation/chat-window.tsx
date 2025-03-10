@@ -14,11 +14,12 @@ import EmptyChat from './empty-chat';
 import { InputFrame } from './message-input/input-frame';
 import { MessageContainer } from './message/message-container';
 import type { IChatWindowProps } from './type';
-import { useHandleSendMessage } from './utils';
+import { useSendMessageHandler } from './utils';
 
 export function ChatWindow({ id, initData, agent = 'ai_search', className }: IChatWindowProps) {
   const tError = useTranslations('errors');
   const searchParams = useSearchParams();
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const {
     isNewChat,
@@ -27,12 +28,14 @@ export function ChatWindow({ id, initData, agent = 'ai_search', className }: ICh
     resetMessages,
     resetStatus,
     selectedModel,
+    messages,
+    resetGenMessage,
     setSelectedAgent,
     resetOpenWebSource,
   } = useConversationStore();
 
   const prevId = useRef<string>('');
-  const sendMessage = useHandleSendMessage(agent, id);
+  const sendMessage = useSendMessageHandler(agent, id, undefined);
 
   const { data: messageData, mutate } = useGetConversationDetails({
     id,
@@ -63,6 +66,7 @@ export function ChatWindow({ id, initData, agent = 'ai_search', className }: ICh
 
     if (!isNewChat) {
       setSelectedAgent((defaultAgent as TAgentType) ?? 'ai_search');
+      resetGenMessage();
     }
 
     if (id && prevId.current === id) {
@@ -101,18 +105,19 @@ export function ChatWindow({ id, initData, agent = 'ai_search', className }: ICh
 
   return (
     <div className={cn('flex h-full flex-col', className)}>
-      {id ? (
+      {messages.length > 0 || id ? (
         <MessageContainer
           className="overflow-x-hidden"
           messageType={messageType}
           nextCursorPage={messageData?.pagination?.next_cursor}
-          id={id}
+          id={id ?? ''}
           sendMessage={sendMessage}
+          containerRef={containerRef}
         />
       ) : (
         <EmptyChat />
       )}
-      <InputFrame id={id} />
+      <InputFrame id={id} containerRef={containerRef} />
     </div>
   );
 }

@@ -7,7 +7,7 @@ import type { HTTPError } from '@oe/api/utils/http-error';
 import { z } from '@oe/api/utils/zod';
 import { AI_ROUTES } from '@oe/core/utils/routes';
 import { useTranslations } from 'next-intl';
-import React, { useCallback } from 'react';
+import React, { type RefObject, useCallback } from 'react';
 import { useRouter } from '#common/navigation';
 import { toast } from '#shadcn/sonner';
 import { useConversationStore } from '#store/conversation-store';
@@ -42,7 +42,12 @@ export function useIsDesktop() {
   return !!isDesktop;
 }
 
-export const useHandleSendMessage = (agent: TAgentType, id?: string, model?: IAIModel) => {
+export const useSendMessageHandler = (
+  agent: TAgentType,
+  id?: string,
+  model?: IAIModel,
+  containerRef?: RefObject<HTMLDivElement | null>
+) => {
   const {
     messages,
     setMessages,
@@ -125,6 +130,17 @@ export const useHandleSendMessage = (agent: TAgentType, id?: string, model?: IAI
             })
           );
         }
+
+        if (containerRef?.current) {
+          requestAnimationFrame(() => {
+            if (containerRef.current) {
+              containerRef.current.scrollTo({
+                top: containerRef.current.scrollHeight,
+                behavior: 'smooth',
+              });
+            }
+          });
+        }
       } catch (error) {
         setStatus('failed');
         setMessages(prevMessage);
@@ -150,6 +166,7 @@ export const useHandleSendMessage = (agent: TAgentType, id?: string, model?: IAI
       setStatus,
       tError,
       updateMessages,
+      containerRef,
     ]
   );
 };
