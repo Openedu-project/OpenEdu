@@ -1,96 +1,119 @@
-import { createAPIUrl } from "@oe/api/utils/fetch";
-import { ADMIN_ROUTES } from "@oe/core/utils/routes";
-import type { ThemeName } from "@oe/themes/types/theme-page/index";
-import { Link } from "@oe/ui/common/navigation";
-import { Badge } from "@oe/ui/shadcn/badge";
-import { Button } from "@oe/ui/shadcn/button";
-import { Card, CardContent } from "@oe/ui/shadcn/card";
-import { cn } from "@oe/ui/utils/cn";
-import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { createAPIUrl } from '@oe/api/utils/fetch';
+import { ADMIN_ROUTES } from '@oe/core/utils/routes';
+import type { ThemeName } from '@oe/themes/types/theme-page/index';
+import { Link } from '@oe/ui/common/navigation';
+import { Image } from '@oe/ui/components/image';
+import { Badge } from '@oe/ui/shadcn/badge';
+import { Button } from '@oe/ui/shadcn/button';
+import { Card, CardContent, CardDescription, CardFooter, CardTitle } from '@oe/ui/shadcn/card';
+import { Checkbox } from '@oe/ui/shadcn/checkbox';
+import { cn } from '@oe/ui/utils/cn';
+import { Trash2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import type { ThemeInfo } from '../../_types/theme-info';
+import DeleteThemeModal from './delete-theme-modal';
 
 interface ThemeCardProps {
   name: ThemeName;
+  theme: ThemeInfo;
   // Whether this theme is currently active
-  isActive: boolean;
+  isActived?: boolean;
   // For template cards: whether this theme has already been cloned
   isCloned?: boolean;
-  // Callback when theme is selected/activated
-  onSelect?: (theme: ThemeName) => void;
+  // Callback when theme select the checkbox
+  onCloneToggle?: (theme: ThemeName, isChecked: boolean) => void;
   // Whether this card is for a template or user's theme
-  variant: "template" | "my-theme";
+  variant: 'template' | 'my-theme';
+  onRemove?: (theme: ThemeName) => void;
 }
 
 export const ThemeCard = ({
+  theme,
   name,
-  isActive,
-  onSelect,
   isCloned,
-  variant = "my-theme",
+  isActived = false,
+  onCloneToggle,
+  variant = 'my-theme',
+  onRemove,
 }: ThemeCardProps) => {
-  const t = useTranslations("themeList");
-  const [currentSelected, setCurrentSelected] = useState(isActive ?? false);
-  const displayName = name.replace(/([A-Z])/g, " $1").trim(); // Add spaces before capital letters
-
+  const t = useTranslations('themeList');
+  const [currentCloned, setCurrentCloned] = useState(isCloned ?? false);
+  const [openRemoveModal, setOpenRemoveModal] = useState(false);
+  const displayName = (theme?.name || name).replace(/([A-Z])/g, ' $1').trim(); // Add spaces before capital letters
   return (
-    <Card
-      className={cn(
-        "group relative cursor-pointer overflow-hidden transition-all",
-        "hover:ring-2 hover:ring-primary",
-        isActive && "ring-2 ring-primary",
-        "h-[400px] w-[300px]",
-        isCloned && "cursor-not-allowed"
-      )}
-      onClick={() => {
-        if (!isCloned && variant === "template") {
-          onSelect?.(name);
-          setCurrentSelected(!currentSelected);
-        }
-      }}
-    >
-      <CardContent className="p-0">
+    <>
+      <Card
+        className={cn(
+          'group relative space-y-4 overflow-hidden transition-all hover:shadow-lg',
+          isActived && 'ring-2 ring-primary',
+          isCloned && 'cursor-not-allowed bg-muted'
+        )}
+      >
         {/* Preview Image */}
-        {/* <div className="relative h-[250px] w-full bg-muted"></div> */}
-
-        {/* Theme Info */}
-        <div className="p-4">
-          <h3 className="font-semibold text-lg">{displayName}</h3>
-        </div>
-
-        {/* Overlay for selected state */}
-        <div className="absolute inset-0 flex items-center justify-center hover:bg-primary/10">
-          {currentSelected && (
-            <Badge className="absolute top-4 right-4">{t("selected")}</Badge>
-          )}
-          <Button
-            variant="outline"
-            className="hover:bg-primary"
-            disabled={variant === "template" && isCloned}
-          >
-            {variant === "my-theme" ? (
-              <Link
-                href={createAPIUrl({
-                  endpoint: ADMIN_ROUTES.themeConfig,
-                  params: {
-                    themeName: name,
-                    themeConfig: "pages",
-                    groupSettingKey: undefined,
-                    itemSettingKey: undefined,
-                  },
-                  checkEmptyParams: true,
-                })}
-                className="hover:text-white hover:no-underline"
-              >
-                {t("edit")}
-              </Link>
-            ) : isCloned ? (
-              "Cloned"
-            ) : (
-              "Clone"
+        <Image src={theme?.thumbnail?.url} alt={name} height={250} width={400} className="h-full w-full object-cover" />
+        <CardContent>
+          {/* Theme Info */}
+          <div className="flex items-start justify-between">
+            <CardTitle className="text-xl">{displayName}</CardTitle>
+            {theme?.creator && (
+              <Badge variant="outline" className="mr-1 text-xs">
+                {t('creator', { creator: theme.creator })}
+              </Badge>
             )}
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
+          </div>
+          {theme?.description && (
+            <CardDescription className="line-clamp-2 flex h-[44px] whitespace-break-spaces text-foreground">
+              {theme.description}
+            </CardDescription>
+          )}
+
+          {/* Overlay for selected state */}
+          {variant === 'my-theme' && isActived && <Badge className="absolute top-4 right-4">{t('actived')}</Badge>}
+          {variant === 'template' && isCloned && <Badge className="absolute top-4 right-4">{t('cloned')}</Badge>}
+
+          {variant === 'template' && !isCloned && (
+            <div className="absolute top-2 left-2 z-10">
+              <Checkbox
+                checked={currentCloned}
+                onCheckedChange={() => {
+                  setCurrentCloned(!currentCloned);
+                  onCloneToggle?.(name, !currentCloned);
+                }}
+              />
+            </div>
+          )}
+        </CardContent>
+        <CardFooter className="w-full">
+          {variant === 'my-theme' && (
+            <div className="flex w-full justify-between gap-2">
+              <Button className="w-full">
+                <Link
+                  href={createAPIUrl({
+                    endpoint: ADMIN_ROUTES.themeConfig,
+                    params: {
+                      themeName: name,
+                      themeConfig: 'pages',
+                      groupSettingKey: undefined,
+                      itemSettingKey: undefined,
+                    },
+                    checkEmptyParams: true,
+                  })}
+                  className="text-accent hover:no-underline"
+                >
+                  {t('edit')}
+                </Link>
+              </Button>
+              {!isActived && (
+                <Button variant="destructive" onClick={() => setOpenRemoveModal(true)}>
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
+          )}
+        </CardFooter>
+      </Card>
+      {openRemoveModal && <DeleteThemeModal setOpen={setOpenRemoveModal} onRemove={() => onRemove?.(name)} />}
+    </>
   );
 };

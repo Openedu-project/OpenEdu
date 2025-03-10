@@ -1,9 +1,9 @@
-import { getThemeConfigServer } from "@oe/api/services/theme";
-import ThemeListPage from "@oe/dashboard/admin/site-settings/themes/page";
+import { getThemeConfigServer } from '@oe/api/services/theme';
+import ThemeListPage from '@oe/dashboard/admin/site-settings/themes/page';
 
 export default async function ThemePage() {
   const [themeSystem] = await Promise.all([getThemeConfigServer()]);
-  console.log("themeSystem", themeSystem);
+  console.log('themeSystem', themeSystem);
 
   // if (!themeSystem?.[0]?.value) {
   //   return null;
@@ -11,10 +11,7 @@ export default async function ThemePage() {
 
   return (
     <>
-      <ThemeListPage
-        themeSystem={themeSystem?.[0]?.value}
-        configId={themeSystem?.[0]?.id}
-      />
+      <ThemeListPage themeSystemRes={themeSystem} />
     </>
   );
 }

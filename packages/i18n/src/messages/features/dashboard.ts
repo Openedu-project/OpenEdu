@@ -13,6 +13,10 @@ export const dashboardMessages = {
       notification: 'Notification',
       pages: 'Pages',
       themes: 'Theme',
+      theme: {
+        gallery: 'Theme Gallery',
+        description: 'Pick and config beautiful themes for your organization',
+      },
     },
     courses: {
       courseManagement: 'Course Management',

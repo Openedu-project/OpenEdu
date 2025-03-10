@@ -1,99 +1,71 @@
-"use client";
-import { createOrUpdateThemeConfig } from "@oe/api/services/theme";
-import type { ThemeName } from "@oe/themes/types/theme-page/index";
-import { toast } from "@oe/ui/shadcn/sonner";
-import { useTranslations } from "next-intl";
-// import { createOrUpdateThemeConfigByReferrer } from "@oe/api/services/theme";
-import { defaultThemeSystemConfig } from "../../../src";
-import type { ThemeCollection, ThemeSystem } from "../../_types";
-import { CloneNewTheme } from "./clone-new-theme";
-import { ThemeCard } from "./theme-card";
+'use client';
+import { useGetTheme } from '@oe/api/hooks/useTheme';
+import { createOrUpdateThemeConfig } from '@oe/api/services/theme';
+import type { ISystemConfigRes } from '@oe/api/types/system-config';
+import type { ThemeName } from '@oe/themes/types/theme-page/index';
+import { ScrollArea } from '@oe/ui/shadcn/scroll-area';
+import { toast } from '@oe/ui/shadcn/sonner';
+import { useTranslations } from 'next-intl';
+import type { ThemeSystem } from '../../_types';
+import { ThemeCard } from './theme-card';
 
 interface ThemeListProps {
-  // The currently active/selected theme in use
-  currentActiveTheme?: ThemeName;
-  // List of all themes that user has created/customized
-  userThemeList?: ThemeName[];
-  // Callback when user selects a different theme
-  //  onThemeActivate?: (themeName: ThemeName) => void;
-  // The id systemConfig
-  configId?: string;
-  currentAvailableThemes?: ThemeCollection;
+  themeSystemRes?: ISystemConfigRes<ThemeSystem>[];
 }
 
-export default function ThemeList({
-  currentActiveTheme,
-  userThemeList,
-  configId,
-  currentAvailableThemes,
-}: // onSelect,
-ThemeListProps) {
-  // const t = useTranslations("themeList");
-  const tThemeConfig = useTranslations("themePage");
+export default function ThemeList({ themeSystemRes }: ThemeListProps) {
+  const { theme, mutateTheme } = useGetTheme(themeSystemRes);
+  const t = useTranslations('themeList');
 
-  const handleNewThemeCloned = async (themeNames: ThemeName[]) => {
-    //TODO: mutate the list my themes - themesData
-    //OR: add theme new ThemeName to themesData by state
-    const initialData = defaultThemeSystemConfig(tThemeConfig);
-    let clonedThemes = {};
+  const handleRemove = async (name: ThemeName) => {
+    const configId = theme?.[0]?.id;
+    const currentAvailableThemes = theme?.[0]?.value?.availableThemes || {};
 
-    for (const name of themeNames) {
-      if (initialData.availableThemes?.[name]) {
-        clonedThemes = {
-          ...clonedThemes,
-          [name]: initialData.availableThemes[name],
-        };
-      }
+    // Remove item from object by key
+    if (!currentAvailableThemes?.[name]) {
+      toast.error(t('delInvalid'));
+      return;
     }
-    console.log("themeNames", themeNames);
-    console.log("clonedThemes", clonedThemes);
+    delete currentAvailableThemes?.[name];
 
-    if (Object.keys(clonedThemes)?.length > 0) {
-      const data: ThemeSystem = {
-        activedTheme: currentActiveTheme as ThemeName | undefined,
-        availableThemes: { ...clonedThemes, ...currentAvailableThemes },
-      };
+    const data: ThemeSystem = {
+      activedTheme: theme?.[0]?.value?.activedTheme as ThemeName | undefined,
+      availableThemes: currentAvailableThemes,
+    };
 
-      console.log(data);
-      try {
-        const res = await createOrUpdateThemeConfig({
-          config: data,
-          id: configId,
-        });
-        if (!res) {
-          toast.error("Failed to clone the templates from the system.");
-          return;
-        }
-        console.log(res);
-        toast.success("Clone the templates succesfully");
-      } catch (error) {
-        console.error(error);
+    try {
+      const res = await createOrUpdateThemeConfig({
+        config: data,
+        id: configId,
+      });
+      if (!res) {
+        toast.error(t('delFail'));
+        return;
       }
+      toast.success(t('delSuccess'));
+      await mutateTheme();
+    } catch (error) {
+      console.error(error);
     }
   };
-
   return (
-    <div className="p-6">
-      <div>
-        <h2>The list template</h2>
-        <CloneNewTheme
-          alreadyClonedThemes={userThemeList}
-          onThemeCloned={handleNewThemeCloned}
-        />
+    <ScrollArea>
+      <div className="flex-1 space-y-4 rounded bg-background p-4">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {(theme?.[0]?.value?.availableThemes ? Object.entries(theme?.[0]?.value?.availableThemes) : undefined)?.map(
+            ([key, value]) => (
+              <ThemeCard
+                key={key}
+                name={key as ThemeName}
+                theme={value?.info || { name: key }}
+                isActived={theme?.[0]?.value?.activedTheme === key}
+                variant="my-theme"
+                onRemove={handleRemove}
+              />
+            )
+          )}
+        </div>
       </div>
-      {/* <h2 className="mb-6 font-semibold text-2xl">{t("selectTheme")}</h2> */}
-      <h2>My customize</h2>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {userThemeList?.map((theme) => (
-          <ThemeCard
-            key={theme}
-            name={theme}
-            isActive={currentActiveTheme === theme}
-            onSelect={undefined}
-            variant="my-theme"
-          />
-        ))}
-      </div>
-    </div>
+    </ScrollArea>
   );
 }

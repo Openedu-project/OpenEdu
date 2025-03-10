@@ -5,7 +5,7 @@ import { getThemeConfigClient } from '#services/theme';
 import type { ISystemConfigRes } from '#types/system-config';
 
 // export function useGetTheme(shouldFetch = true) {
-//   const endpoint = createSystemConfigSWRKey({ key: systemConfigKeys.themeSystem });
+//   const endpoint = createThemeSystemConfigSWRKey({});
 //   const { data, isLoading, error, mutate } = useSWR(shouldFetch ? endpoint : null, (endpoint: string) =>
 //     getThemeConfigClient(endpoint)
 //   );
@@ -18,11 +18,12 @@ import type { ISystemConfigRes } from '#types/system-config';
 //   };
 // }
 
-export function useGetTheme(shouldFetch = true) {
+export function useGetTheme(fallback: ISystemConfigRes<ThemeSystem>[] | undefined = undefined) {
   const endpoint = createThemeSystemConfigSWRKey({});
-  const { data, isLoading, error, mutate } = useSWR(shouldFetch ? endpoint : null, (endpoint: string) =>
-    getThemeConfigClient(endpoint)
-  );
+
+  const { data, isLoading, error, mutate } = useSWR(endpoint, (endpoint: string) => getThemeConfigClient(endpoint), {
+    fallbackData: fallback,
+  });
 
   return {
     theme: data as ISystemConfigRes<ThemeSystem>[],

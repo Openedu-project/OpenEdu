@@ -9,6 +9,7 @@ import { Switch } from '@oe/ui/shadcn/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@oe/ui/shadcn/tabs';
 import { Textarea } from '@oe/ui/shadcn/textarea';
 import { Save } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { defaultMetadata } from '../../../_config/theme-metadata';
 import type { ThemeMetadata, ThemeMetadataIcons } from '../../../_types';
@@ -22,7 +23,7 @@ interface ThemeConfigMetaDataProps {
 
 const ThemeConfigMetadata = ({ data, isRoot = false, isSubmitting, onSubmit }: ThemeConfigMetaDataProps) => {
   const [seoData, setSeoData] = useState<ThemeMetadata | undefined>(defaultMetadata);
-
+  const t = useTranslations('themeMetadata');
   useEffect(() => {
     if (data) {
       setSeoData(data);
@@ -96,27 +97,27 @@ const ThemeConfigMetadata = ({ data, isRoot = false, isSubmitting, onSubmit }: T
       <Card className="w-full rounded-none border-none shadow-none">
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
-            <CardTitle>SEO Configuration</CardTitle>
-            <p className="mt-1 text-muted-foreground text-sm">Optimize your page for search engines</p>
+            <CardTitle>{t('seoConfig')}</CardTitle>
+            <p className="mt-1 text-muted-foreground text-sm">{t('seoDesc')}</p>
           </div>
           <Button onClick={handleSave} disabled={!!isSubmitting}>
             <Save className="mr-2 h-4 w-4" />
-            Save SEO Settings
+            {t('saveSeo')}
           </Button>
         </CardHeader>
         <CardContent className="flex justify-between gap-8">
           <Tabs defaultValue="basic" className="w-full border-r pr-8">
             <TabsList>
-              <TabsTrigger value="basic">Basic SEO</TabsTrigger>
-              <TabsTrigger value="social">Social Media</TabsTrigger>
-              <TabsTrigger value="advanced">Advanced</TabsTrigger>
-              {isRoot && <TabsTrigger value="icons">Icons</TabsTrigger>}
+              <TabsTrigger value="basic">{t('basic')}</TabsTrigger>
+              <TabsTrigger value="social">{t('social')}</TabsTrigger>
+              <TabsTrigger value="advanced">{t('advanced')}</TabsTrigger>
+              {isRoot && <TabsTrigger value="icons">{t('icons')}</TabsTrigger>}
             </TabsList>
 
             <TabsContent value="basic" className="space-y-4">
               <div className="space-y-2">
                 <Label>
-                  Page Title
+                  {t('pageTitle')}
                   <span className="text-muted-foreground text-xs">({calculateLength(seoData.title, 60)})</span>
                 </Label>
                 <Input
@@ -129,7 +130,7 @@ const ThemeConfigMetadata = ({ data, isRoot = false, isSubmitting, onSubmit }: T
 
               <div className="space-y-2">
                 <Label>
-                  Meta Description
+                  {t('metaDesc')}
                   <span className="text-muted-foreground text-xs">({calculateLength(seoData.description, 160)})</span>
                 </Label>
                 <Textarea
@@ -142,7 +143,7 @@ const ThemeConfigMetadata = ({ data, isRoot = false, isSubmitting, onSubmit }: T
               </div>
 
               <div className="space-y-2">
-                <Label>Keywords</Label>
+                <Label>{t('keywords')}</Label>
                 <Input
                   value={seoData.keywords}
                   onChange={e => handleInputChange('keywords', e.target.value)}
@@ -153,7 +154,7 @@ const ThemeConfigMetadata = ({ data, isRoot = false, isSubmitting, onSubmit }: T
 
             <TabsContent value="social" className="space-y-4">
               <div className="space-y-2">
-                <Label>OG Title</Label>
+                <Label>{t('ogTitle')}</Label>
                 <Input
                   value={seoData.openGraph?.title}
                   onChange={e => handleNestedInputChange('openGraph', 'title', e.target.value)}
@@ -162,7 +163,7 @@ const ThemeConfigMetadata = ({ data, isRoot = false, isSubmitting, onSubmit }: T
               </div>
 
               <div className="space-y-2">
-                <Label>OG Description</Label>
+                <Label>{t('ogDesc')}</Label>
                 <Textarea
                   value={seoData.openGraph?.description}
                   onChange={e => handleNestedInputChange('openGraph', 'description', e.target.value)}
@@ -172,7 +173,7 @@ const ThemeConfigMetadata = ({ data, isRoot = false, isSubmitting, onSubmit }: T
               </div>
 
               <div className="space-y-2">
-                <Label>OG Images</Label>
+                <Label>{t('ogImage')}</Label>
                 <Input
                   value={seoData.openGraph?.images?.join(', ')}
                   onChange={e =>
@@ -189,7 +190,7 @@ const ThemeConfigMetadata = ({ data, isRoot = false, isSubmitting, onSubmit }: T
 
             <TabsContent value="advanced" className="space-y-4">
               <div className="space-y-2">
-                <Label>Canonical URL</Label>
+                <Label>{t('canonical')}</Label>
                 <Input
                   value={seoData.alternates?.canonical}
                   onChange={e => handleNestedInputChange('alternates', 'canonical', e.target.value)}
@@ -198,12 +199,12 @@ const ThemeConfigMetadata = ({ data, isRoot = false, isSubmitting, onSubmit }: T
               </div>
 
               <div className="space-y-4">
-                <Label>Robots Meta Tags</Label>
+                <Label>{t('robots')}</Label>
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
-                      <Label>Allow Indexing</Label>
-                      <p className="text-muted-foreground text-sm">Allow search engines to index this page</p>
+                      <Label>{t('indexTitle')}</Label>
+                      <p className="text-muted-foreground text-sm">{t('indexDesc')}</p>
                     </div>
                     <Switch
                       checked={seoData.robots?.index}
@@ -213,8 +214,8 @@ const ThemeConfigMetadata = ({ data, isRoot = false, isSubmitting, onSubmit }: T
 
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
-                      <Label>Allow Following</Label>
-                      <p className="text-muted-foreground text-sm">Allow search engines to follow links on this page</p>
+                      <Label>{t('followTitle')}</Label>
+                      <p className="text-muted-foreground text-sm">{t('followDesc')}</p>
                     </div>
                     <Switch
                       checked={seoData.robots?.follow}
@@ -228,7 +229,7 @@ const ThemeConfigMetadata = ({ data, isRoot = false, isSubmitting, onSubmit }: T
             {isRoot && (
               <TabsContent value="icons" className="overflow-scroll-y h-[66vh] space-y-4">
                 <div className="space-y-2">
-                  <Label>Main Icon URL</Label>
+                  <Label>{t('mainIcon')}</Label>
                   <Uploader
                     listType="picture"
                     accept="image/*"
@@ -246,7 +247,7 @@ const ThemeConfigMetadata = ({ data, isRoot = false, isSubmitting, onSubmit }: T
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Shortcut Icon URL</Label>
+                  <Label>{t('shortcut')}</Label>
                   <Uploader
                     listType="picture"
                     accept="image/*"
@@ -264,7 +265,7 @@ const ThemeConfigMetadata = ({ data, isRoot = false, isSubmitting, onSubmit }: T
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Apple Icon URL</Label>
+                  <Label>{t('appleIcon')}</Label>
                   <Uploader
                     listType="picture"
                     accept="image/*"
@@ -285,12 +286,10 @@ const ThemeConfigMetadata = ({ data, isRoot = false, isSubmitting, onSubmit }: T
           </Tabs>
 
           <div className="w-full space-y-4">
-            <Label>Preview</Label>
+            <Label>{t('preview')}</Label>
             <Card className="p-4">
               <h2 className="cursor-pointer text-blue-600 text-xl hover:underline">{seoData.title || 'Page Title'}</h2>
-              <p className="mt-1 text-gray-600 text-sm">
-                {seoData.description || 'Meta description will appear here...'}
-              </p>
+              <p className="mt-1 text-gray-600 text-sm">{seoData?.description || t('seoDataDesc')}</p>
             </Card>
           </div>
         </CardContent>

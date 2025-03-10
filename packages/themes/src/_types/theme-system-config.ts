@@ -1,4 +1,5 @@
 import type { ThemeGlobal } from './theme-global';
+import type { ThemeInfo } from './theme-info';
 import type { ThemeMetadata } from './theme-metadata';
 import type { PagesConfig, ThemeName, ThemePageKey } from './theme-page';
 
@@ -7,6 +8,7 @@ export type ThemeDefinition = {
   metadata?: ThemeMetadata;
   components?: never;
   globals?: ThemeGlobal;
+  info?: ThemeInfo;
 };
 
 export type ThemeCollection = {
