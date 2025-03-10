@@ -86,6 +86,9 @@ export interface IAIMessageProps {
   message: IMessage;
   loading: boolean;
   rewrite?: () => void;
+  content?: string;
+  actionsButton?: boolean;
+  className?: string;
 }
 
 export interface IChatWindowProps {

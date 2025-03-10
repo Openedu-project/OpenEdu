@@ -1,11 +1,13 @@
 'use client';
+import equal from 'fast-deep-equal';
+import { memo } from 'react';
 import type { IMessageBoxProps } from '../type';
 import { AIMessage } from './ai-message';
 import { UserMessage } from './user-message';
 
-const MessageBox = ({ id, message, loading, rewrite, sendMessage, messageType }: IMessageBoxProps) => {
+const PureMessageBox = ({ id, message, loading, rewrite, sendMessage, messageType }: IMessageBoxProps) => {
   return (
-    <div className="min-h-[100px] max-w-3xl py-2 xl:max-w-4xl" id={id}>
+    <div className="min-h-[100px] py-2" id={id}>
       {message?.sender?.role === 'user' && (
         <UserMessage message={message} loading={loading} sendMessage={sendMessage} messageType={messageType} />
       )}
@@ -13,5 +15,12 @@ const MessageBox = ({ id, message, loading, rewrite, sendMessage, messageType }:
     </div>
   );
 };
+
+const MessageBox = memo(PureMessageBox, (prevProps, nextProps) => {
+  if (equal(prevProps.message, nextProps.message)) {
+    return false;
+  }
+  return true;
+});
 
 export default MessageBox;

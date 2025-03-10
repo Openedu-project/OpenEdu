@@ -1,6 +1,6 @@
 'use client';
 
-import AIBot from '@oe/assets/images/ai-bot.png';
+import AIBot from '@oe/assets/images/ai/ai-bot.png';
 import { AI_ROUTES } from '@oe/core/utils/routes';
 import { Image } from '@oe/ui/components/image';
 import { LayoutGrid } from 'lucide-react';
@@ -44,7 +44,7 @@ export function AISidebar({ className }: { className?: string }) {
             <div key={item.value}>
               <Tooltip
                 content={tAI(item.lableKey)}
-                contentProps={{ side: 'right', className: 'bg-primary/10 text-primary mbutton-bold10 rounded-full' }}
+                contentProps={{ side: 'right', className: 'text-primary mbutton-bold10 rounded-full' }}
                 className={cn(
                   '!border-0 rounded-full p-1',
                   activeAgent?.includes(item.value) && 'outline outline-primary outline-offset-1'

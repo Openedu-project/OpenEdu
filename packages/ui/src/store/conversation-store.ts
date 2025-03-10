@@ -1,5 +1,4 @@
 import type { IAIModel, IAIStatus, IMessage, ISourceProps, TAgentType } from '@oe/api/types/conversation';
-import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { create } from 'zustand';
 interface IConversationStore {
   messages: IMessage[];
@@ -16,6 +15,7 @@ interface IConversationStore {
   resetStatus: () => void;
   genMessage?: IMessage;
   setGenMessage: (value: IMessage, callback?: () => void, reset?: boolean, shortenedIndex?: number) => void;
+  resetGenMessage: () => void;
   selectedAgent: TAgentType;
   setSelectedAgent: (agent: TAgentType) => void;
   openWebSource: { messageId: string; isOpen: boolean; sourceList?: ISourceProps[] };
@@ -77,7 +77,7 @@ export const useConversationStore = create<IConversationStore>(set => {
 
     setGenMessage: (data: IMessage, callback?: () => void, reset?: boolean, shortenedIndex?: number) => {
       set(state => {
-        const newMessages = reset
+        const newMessage = reset
           ? data
           : {
               ...data,
@@ -86,18 +86,13 @@ export const useConversationStore = create<IConversationStore>(set => {
             };
         callback?.();
 
-        if (!GENERATING_STATUS.includes(data?.status ?? '')) {
-          return {
-            messages: [...state.messages.slice(0, shortenedIndex ?? state.messages.length), newMessages],
-            genMessage: undefined,
-          };
-        }
         return {
-          genMessage: newMessages,
+          genMessage: newMessage,
           messages: state.messages.slice(0, shortenedIndex ?? state.messages.length),
         };
       });
     },
+    resetGenMessage: () => set({ genMessage: undefined, status: undefined }),
     selectedAgent: 'ai_search',
     setSelectedAgent: (selectedAgent: TAgentType) =>
       set(() => {

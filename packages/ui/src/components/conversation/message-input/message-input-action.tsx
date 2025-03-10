@@ -1,11 +1,12 @@
 import { cancelConversation } from '@oe/api/services/conversation';
+import type { IMessage } from '@oe/api/types/conversation';
 import type { z } from '@oe/api/utils/zod';
 import LampCharge from '@oe/assets/icons/lamp-charge';
 import Microphone from '@oe/assets/icons/microphone';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
-import { MoveRight, Square } from 'lucide-react';
+import { LoaderCircle, MoveRight, Pause } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
 import { usePathname } from '#common/navigation';
 import { Button } from '#shadcn/button';
@@ -18,15 +19,49 @@ import { InputFile } from './input-file';
 export function MessageInputAction({
   form,
   loading,
-}: { loading?: boolean; form: UseFormReturn<z.infer<typeof chatSchema>> }) {
+}: {
+  loading?: boolean;
+  form: UseFormReturn<z.infer<typeof chatSchema>>;
+}) {
   const pathname = usePathname();
   const tAI = useTranslations('aiAssistant');
-  const { status } = useConversationStore();
+  const { status, addMessage, resetGenMessage, genMessage } = useConversationStore();
+  const [cancelLoading, setCancelLoading] = useState(false);
+  const genMessageRef = useRef<IMessage>(undefined);
+
+  useEffect(() => {
+    genMessageRef.current = genMessage;
+    if (!genMessage) {
+      setCancelLoading(false);
+    }
+  }, [genMessage]);
+
   const handleCancel = async () => {
     const id = pathname.split('/').pop();
     if (id) {
+      setCancelLoading(true);
       await cancelConversation(undefined, id);
     }
+
+    const messageHandler = setInterval(() => {
+      const currentGenMessage = genMessageRef.current;
+
+      if (!currentGenMessage) {
+        clearInterval(messageHandler);
+        return;
+      }
+      const statusIncluded = GENERATING_STATUS.includes(currentGenMessage?.status ?? '');
+
+      if (!statusIncluded) {
+        addMessage(currentGenMessage, resetGenMessage);
+        setCancelLoading(false);
+        clearInterval(messageHandler);
+      }
+    }, 500);
+
+    return () => {
+      clearInterval(messageHandler);
+    };
   };
 
   const disableButton = useMemo(
@@ -35,6 +70,7 @@ export function MessageInputAction({
   );
 
   const deepResearch = AI_SIDEBAR('hsl(var(--foreground))', 16).find(agent => agent.lableKey === 'deepResearch');
+
   return (
     <div className="flex w-full flex-wrap justify-between gap-2">
       <div className="flex items-center gap-2">
@@ -56,14 +92,18 @@ export function MessageInputAction({
           <Button
             type="button"
             size="icon"
-            className={cn('group/btn rounded-full bg-primary/10')}
+            className={cn('group/btn rounded-full')}
             onClick={handleCancel}
+            disabled={cancelLoading}
           >
-            <Square
-              fill="hsl(var(--primary))"
-              strokeWidth={3}
-              className="h-4 w-4 text-primary group-hover/btn:text-primary-foreground"
-            />
+            {cancelLoading ? (
+              <LoaderCircle className="animate-spin text-primary-foreground" />
+            ) : (
+              <Pause
+                fill="hsl(var(--primary-foreground))"
+                className="h-6 w-6 text-primary group-hover/btn:text-primary-foreground"
+              />
+            )}
           </Button>
         ) : (
           <Button

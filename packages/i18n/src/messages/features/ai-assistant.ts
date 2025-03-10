@@ -44,5 +44,6 @@ export const aiAssistantMessages = {
     connectOneDrive: 'Connect with Microsoft One Drive',
     reasoning: 'Reasoning',
     resources: 'Resources',
+    chatDesc: 'You can find ideation for your content by OpenEdu Chat Agent',
   },
 };

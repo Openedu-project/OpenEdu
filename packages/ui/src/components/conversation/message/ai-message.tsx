@@ -1,5 +1,5 @@
 'use client';
-import AIBot from '@oe/assets/images/ai-bot-2.png';
+import AIBot from '@oe/assets/images/ai/ai-bot-2.png';
 import Openedu from '@oe/assets/images/openedu.png';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { marked } from '@oe/core/utils/marker';
@@ -13,13 +13,13 @@ import Rewrite from '../message-actions/rewrite';
 import { SourcesButton } from '../sources/sources-button';
 import type { IAIMessageProps } from '../type';
 
-export const AIMessage = ({ message, loading, rewrite }: IAIMessageProps) => {
-  const html = useMemo(() => marked.parse(message.content), [message.content]);
+export const AIMessage = ({ message, loading, rewrite, content, actionsButton = true, className }: IAIMessageProps) => {
+  const html = useMemo(() => marked.parse(content ?? message.content), [message.content, content]);
   const contentRef = useRef<HTMLDivElement>(null);
   const sources = message.props?.source_results;
 
   return (
-    <div className="flex gap-3">
+    <div className={cn('flex gap-3', className)}>
       <Image
         src={AIBot.src}
         alt="ai-bot"
@@ -70,7 +70,7 @@ export const AIMessage = ({ message, loading, rewrite }: IAIMessageProps) => {
             </div>
           )}
           {sources && (sources?.length ?? 0) > 0 && <SourcesButton sources={sources} messageId={message.id} />}
-          {!GENERATING_STATUS.includes(message.status ?? '') && (
+          {actionsButton && !GENERATING_STATUS.includes(message.status ?? '') && (
             <div className="flex w-fit items-center rounded-[20px] border-2 px-2">
               <Copy disabled={loading} initialMessage={message.content} contentRef={contentRef} />
               <LikeButton messageId={message.id} disabled />

@@ -25,7 +25,7 @@ export function SourcesButton({ sources, messageId }: { sources: ISourceProps[];
         {sources?.slice(0, 3).map(link => (
           <Image
             key={link.title}
-            className="h-6 w-6 rounded-full border"
+            className="h-6 w-6 rounded-full border bg-background"
             externalSrc={`https://www.google.com/s2/favicons?domain=${new URL(link.url).hostname ?? ''}&sz=32`}
             alt="favicon"
             width={24}
@@ -35,7 +35,7 @@ export function SourcesButton({ sources, messageId }: { sources: ISourceProps[];
           />
         ))}
         <span className="flex h-6 w-6 items-center justify-center rounded-full bg-foreground/80 font-medium text-background text-xs hover:bg-gray-600 dark:border-gray-800">
-          {(sources?.length ?? 5) - 3}
+          +{(sources?.length ?? 5) - 3}
         </span>
       </div>
     </Button>

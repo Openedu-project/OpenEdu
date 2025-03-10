@@ -174,7 +174,7 @@ const SearchHistory = ({ className, isLogin, callbackFn }: SearchHistoryProps) =
 
 export function AIHistoryModal({ isLogin = false, ...props }: SearchHistoryProps) {
   const [open, setOpen] = useState(false);
-
+  const tAI = useTranslations('aiAssistant');
   const handleOpenModal = () => {
     setOpen(prev => !prev);
   };
@@ -186,16 +186,17 @@ export function AIHistoryModal({ isLogin = false, ...props }: SearchHistoryProps
       trigger={
         <Button
           {...props}
-          size="icon"
-          className="rounded-full bg-primary/5 hover:bg-primary/10"
+          className="flex justify-start gap-2 rounded-full bg-primary/5 hover:bg-primary/10"
           onClick={handleOpenModal}
         >
           <MessageTime color="hsl(var(--primary))" />
+          <span className="mcaption-semibold14 hidden text-primary md:block">{tAI('history')}</span>
         </Button>
       }
       hasCloseIcon
+      className="md:max-w-3xl"
       hasCancelButton={false}
-      contentClassName="p-2 pt-0 md:pb-4 w-3xl"
+      contentClassName="p-2 pt-0 md:pb-4"
     >
       <SearchHistory className={cn('h-[70dvh]')} isLogin={isLogin} callbackFn={handleOpenModal} />
     </Modal>

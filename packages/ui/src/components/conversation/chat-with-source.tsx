@@ -39,7 +39,7 @@ export function ChatWithSource({ id, initData, agent = 'ai_search' }: IChatWindo
   });
 
   return (
-    <div className="flex grow gap-4 ">
+    <div className="flex grow gap-4 overflow-hidden">
       <AnimatedDiv className="grow" style={isDesktop ? chatProps : undefined}>
         <ChatWindow id={id} initData={initData} agent={agent} />
       </AnimatedDiv>
@@ -47,7 +47,7 @@ export function ChatWithSource({ id, initData, agent = 'ai_search' }: IChatWindo
       {isDesktop ? (
         <div
           className={cn(
-            'relative mt-4 ml-2 hidden shrink-0 overflow-visible lg:w-[300px] xl:w-[400px]',
+            'relative mt-8 ml-2 hidden shrink-0 overflow-visible lg:w-[300px] xl:w-[400px]',
             openWebSource.isOpen && 'block'
           )}
         >

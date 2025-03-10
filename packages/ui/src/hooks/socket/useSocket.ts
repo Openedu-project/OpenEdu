@@ -1,7 +1,6 @@
 'use client';
 import type { IMessageData } from '@oe/api/types/conversation';
 import type { EventData, ISocketRes } from '@oe/api/types/socket';
-import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 import useWebSocket from 'react-use-websocket';
@@ -17,7 +16,7 @@ export const useSocket = (isAuthenticated: boolean) => {
   const endpoint = useWebSocketEndpoint(accessToken, referrer);
 
   const { setSocketData } = useSocketStore();
-  const { genMessage, setGenMessage, setStatus, status } = useConversationStore();
+  const { genMessage, setGenMessage, status } = useConversationStore();
 
   const handleAIConversation = useAIConversationHandler(status, genMessage?.id);
   const { shouldReconnect, reconnectInterval } = useReconnection(isAuthenticated, accessToken);
@@ -42,11 +41,7 @@ export const useSocket = (isAuthenticated: boolean) => {
           const newMessage = handleAIConversation(data);
 
           if (newMessage) {
-            setGenMessage(newMessage, () => {
-              if (!GENERATING_STATUS.includes(data.status)) {
-                setStatus(data?.status);
-              }
-            });
+            setGenMessage(newMessage);
           }
         } else {
           setSocketData(parsedData);
@@ -55,7 +50,7 @@ export const useSocket = (isAuthenticated: boolean) => {
         console.error('Error parsing socket data:', error);
       }
     },
-    [handleAIConversation, setGenMessage, setStatus, setSocketData]
+    [handleAIConversation, setGenMessage, setSocketData]
   );
 
   const { getWebSocket } = useWebSocket(endpoint, {

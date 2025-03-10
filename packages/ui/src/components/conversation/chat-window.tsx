@@ -5,18 +5,16 @@ import type { IAgenConfigs, TAgentType } from '@oe/api/types/conversation';
 import type { HTTPError } from '@oe/api/utils/http-error';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
-import dynamic from 'next/dynamic';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef } from 'react';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
-import { ChatWithMessage } from './chat';
 import { AGENT_OPTIONS } from './constants';
+import EmptyChat from './empty-chat';
 import { InputFrame } from './message-input/input-frame';
+import { MessageContainer } from './message/message-container';
 import type { IChatWindowProps } from './type';
 import { useHandleSendMessage } from './utils';
-
-const EmptyChat = dynamic(() => import('./empty-chat'), { ssr: false });
 
 export function ChatWindow({ id, initData, agent = 'ai_search', className }: IChatWindowProps) {
   const tError = useTranslations('errors');
@@ -33,7 +31,6 @@ export function ChatWindow({ id, initData, agent = 'ai_search', className }: ICh
     resetOpenWebSource,
   } = useConversationStore();
 
-  const containerRef = useRef<HTMLDivElement | null>(null);
   const prevId = useRef<string>('');
   const sendMessage = useHandleSendMessage(agent, id);
 
@@ -104,18 +101,17 @@ export function ChatWindow({ id, initData, agent = 'ai_search', className }: ICh
 
   return (
     <div className={cn('flex h-full flex-col', className)}>
-      <div ref={containerRef} className={cn('flex grow flex-col gap-2 overflow-hidden')}>
-        {id ? (
-          <ChatWithMessage
-            messageType={messageType}
-            sendMessage={sendMessage}
-            nextCursorPage={messageData?.pagination?.next_cursor}
-            id={id}
-          />
-        ) : (
-          <EmptyChat />
-        )}
-      </div>
+      {id ? (
+        <MessageContainer
+          className="overflow-x-hidden"
+          messageType={messageType}
+          nextCursorPage={messageData?.pagination?.next_cursor}
+          id={id}
+          sendMessage={sendMessage}
+        />
+      ) : (
+        <EmptyChat />
+      )}
       <InputFrame id={id} />
     </div>
   );
