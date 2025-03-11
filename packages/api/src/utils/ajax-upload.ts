@@ -68,7 +68,7 @@ export async function ajaxUpload(options: Options) {
     withCredentials,
     disableMultipart,
   } = options;
-  const urlAPI = url.startsWith('https://') ? url : `${process.env.NEXT_PUBLIC_API_ORIGIN}${url}`;
+  const urlAPI = url.startsWith('https://') ? url : `${process.env.NEXT_PUBLIC_API_UPLOAD_ORIGIN}${url}`;
   const xhr = new XMLHttpRequest();
   let sendableData: FormData | File;
 
