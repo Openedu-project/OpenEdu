@@ -32,7 +32,6 @@ const ThemeTemplatesModal = ({
   const handleSubmit = () => {
     if (selectedNames.length === 0) {
       toast.warning(t('cloneFail'));
-
       return;
     }
     // Remove the duplicate item
@@ -67,19 +66,22 @@ const ThemeTemplatesModal = ({
         className="mx-auto w-[90%]"
       >
         <CarouselContent>
-          {Object.entries(themeInfo(tThemeInfo)).map(([key, theme]) => (
-            <CarouselItem key={key} className="md:basis-1/2 lg:basis-1/3">
-              <ThemeCard
-                key={key}
-                theme={theme}
-                name={key as ThemeName}
-                isCloned={(alreadyClonedThemes?.find(t => t === key)?.length ?? 0) > 0}
-                onCloneToggle={handleCheckboxToggle}
-                isActived={false}
-                variant="template"
-              />
-            </CarouselItem>
-          ))}
+          {Object.entries(themeInfo(tThemeInfo)).map(
+            ([key, theme]) =>
+              (alreadyClonedThemes?.find(t => t === key)?.length ?? 0) <= 0 && (
+                <CarouselItem key={key} className="md:basis-1/2 lg:basis-1/3">
+                  <ThemeCard
+                    key={key}
+                    theme={theme}
+                    name={key as ThemeName}
+                    isCloned={false}
+                    onCloneToggle={handleCheckboxToggle}
+                    isActived={false}
+                    variant="template"
+                  />
+                </CarouselItem>
+              )
+          )}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />

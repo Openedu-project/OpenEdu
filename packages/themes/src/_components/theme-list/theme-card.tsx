@@ -11,6 +11,7 @@ import { cn } from '@oe/ui/utils/cn';
 import { Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { themeInfoThumbnail } from '../../_config/theme-info';
 import type { ThemeInfo } from '../../_types/theme-info';
 import DeleteThemeModal from './delete-theme-modal';
 
@@ -41,6 +42,8 @@ export const ThemeCard = ({
   const [currentCloned, setCurrentCloned] = useState(isCloned ?? false);
   const [openRemoveModal, setOpenRemoveModal] = useState(false);
   const displayName = (theme?.name || name).replace(/([A-Z])/g, ' $1').trim(); // Add spaces before capital letters
+  const thumbnailSrc = themeInfoThumbnail?.[name]?.src;
+
   return (
     <>
       <Card
@@ -51,7 +54,7 @@ export const ThemeCard = ({
         )}
       >
         {/* Preview Image */}
-        <Image src={theme?.thumbnail?.url} alt={name} height={250} width={400} className="h-full w-full object-cover" />
+        <Image src={thumbnailSrc} alt={name} height={200} width={400} className="h-[200px] w-full object-contain" />
         <CardContent>
           {/* Theme Info */}
           <div className="flex items-start justify-between">

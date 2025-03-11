@@ -1,3 +1,8 @@
+import AcademiaThumbnail from '@oe/assets/images/theme/thumbnail/academia.png';
+import AvailThumbnail from '@oe/assets/images/theme/thumbnail/avail.png';
+import ScholarThumbnail from '@oe/assets/images/theme/thumbnail/scholar.png';
+import VbiThumbnail from '@oe/assets/images/theme/thumbnail/vbi.png';
+
 export const themeInfo = (t: (key: string) => string) => {
   return {
     academia: {
@@ -25,4 +30,11 @@ export const themeInfo = (t: (key: string) => string) => {
       creator: t('themeInfo.vbi.creator'),
     },
   };
+};
+
+export const themeInfoThumbnail = {
+  avail: AvailThumbnail,
+  vbi: VbiThumbnail,
+  academia: AcademiaThumbnail,
+  scholar: ScholarThumbnail,
 };
