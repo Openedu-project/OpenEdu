@@ -6,7 +6,6 @@ import { refreshTokenService } from '#services/auth';
 import type { IToken } from '#types/auth';
 import type { HTTPResponse } from '#types/fetch';
 import { handleError, handleResponse } from './error-handling';
-import { getAPIReferrerAndOriginServer } from './referrer-origin';
 
 interface ICreateAPIUrl {
   endpoint: string;
@@ -75,9 +74,8 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
   const shouldRefreshToken = options.shouldRefreshToken ?? true;
 
   const cookies = await getCookies();
-  const { origin: internalOrigin, referrer: internalReferrer } = await getAPIReferrerAndOriginServer();
-  const origin = options.origin ?? internalOrigin ?? cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY];
-  const referrer = options.referrer ?? internalReferrer ?? cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY];
+  const origin = options.origin ?? cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY];
+  const referrer = options.referrer ?? cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY];
   const accessToken = cookies?.[process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY];
   const locale = cookies?.[process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY];
 
@@ -85,8 +83,6 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
   urlAPIWithLocale.searchParams.set('locale', urlAPIWithLocale.searchParams.get('locale') ?? locale ?? DEFAULT_LOCALE);
   const queryParams = urlAPIWithLocale.searchParams.toString();
   const tag = `${urlAPIWithLocale.pathname}${queryParams ? `?${queryParams}` : ''}`;
-
-  console.log('-----------------------fetch', referrer, origin);
 
   const headers = {
     ...defaultOptions.headers,
