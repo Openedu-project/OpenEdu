@@ -207,3 +207,27 @@ export const hslStringToHex = (hslString: string): string | undefined => {
 
   return hslToHex(h, s, l);
 };
+
+const CAPITAL_LETTERS_PATTERN = /([A-Z])/g;
+const LEADING_HYPHEN_PATTERN = /^-/;
+
+/**
+ * Converts a camelCase string to kebab-case
+ * @param {string} camelStr - The camelCase string to convert
+ * @returns {string} The string converted to kebab-case
+ */
+export function camelToKebab(camelStr: string): string {
+  // Handle edge cases
+  if (!camelStr) {
+    return '';
+  }
+
+  // Replace any capital letter with a hyphen followed by the lowercase version
+  return (
+    camelStr
+      .replace(CAPITAL_LETTERS_PATTERN, '-$1')
+      .toLowerCase()
+      // Remove any leading hyphen that might occur if the first letter was capitalized
+      .replace(LEADING_HYPHEN_PATTERN, '')
+  );
+}
