@@ -17,6 +17,7 @@ interface IContainerProps {
   messageType: TAgentType[];
   className?: string;
   containerRef: RefObject<HTMLDivElement | null>;
+  scrollBehavior?: 'auto' | 'smooth';
   sendMessage: ({
     messageInput,
     type,
@@ -33,6 +34,8 @@ export const MessageContainer = ({
   nextCursorPage = '',
   messageType,
   containerRef,
+  className,
+  scrollBehavior,
 }: IContainerProps) => {
   const { messages, status, setMessages, isNewChat, setIsNewChat } = useConversationStore();
   const [shouldGetData, setShouldGetData] = useState<boolean>(false);
@@ -76,14 +79,14 @@ export const MessageContainer = ({
     if (!containerRef.current || messages.length === 0 || initScrollBottom) {
       return;
     }
-    handleScrollToBottom();
+    handleScrollToBottom(scrollBehavior);
 
     if (isNewChat) {
       setIsNewChat(false);
     }
   }, [messages.length, initScrollBottom, containerRef]);
 
-  const handleScrollToBottom = () => {
+  const handleScrollToBottom = (scrollBehavior?: 'auto' | 'smooth') => {
     if (!containerRef) {
       return;
     }
@@ -91,7 +94,7 @@ export const MessageContainer = ({
       if (containerRef.current) {
         containerRef.current.scrollTo({
           top: containerRef.current.scrollHeight,
-          behavior: isNewChat ? 'auto' : 'smooth',
+          behavior: scrollBehavior ?? (isNewChat ? 'auto' : 'smooth'),
         });
       }
     });
@@ -133,7 +136,7 @@ export const MessageContainer = ({
   return (
     <div
       ref={containerRef}
-      className={cn('no-scrollbar relative flex grow flex-col gap-2 overflow-y-auto overflow-x-hidden')}
+      className={cn('no-scrollbar relative flex grow flex-col gap-2 overflow-y-auto overflow-x-hidden', className)}
       onScroll={handleScroll}
     >
       <div className="flex max-w-3xl flex-col gap-4 xl:max-w-4xl">
@@ -161,7 +164,7 @@ export const MessageContainer = ({
         })}
         <GenMessage containerRef={containerRef} />
         <div className={cn('sticky bottom-0 hidden translate-x-1/2', showScrollButton && 'block')}>
-          <Button size="icon" variant="outline" className="rounded-full" onClick={handleScrollToBottom}>
+          <Button size="icon" variant="outline" className="rounded-full" onClick={() => handleScrollToBottom()}>
             <ChevronsDown className="h-4 w-4" />
           </Button>
         </div>

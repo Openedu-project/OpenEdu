@@ -1,16 +1,11 @@
 import type { IAgenConfigs, TAgentType } from '@oe/api/types/conversation';
+import Gallery from '@oe/assets/icons/gallery';
+import Grid3 from '@oe/assets/icons/grid-3';
 import SearchZoomIn from '@oe/assets/icons/search-zoom-in';
+import { VideoSquare } from '@oe/assets/icons/video-square';
 import { AI_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
-import {
-  FileCode,
-  Image as ImageIcon,
-  ListFilter,
-  MessageCircle,
-  PanelsRightBottom,
-  ScanSearch,
-  SquarePlay,
-} from 'lucide-react';
+import { FileCode, MessageCircle, ScanSearch } from 'lucide-react';
 import type { AISidebarItem, IInputButton } from './type';
 
 export const AI_SIDEBAR: (color?: string, size?: number) => AISidebarItem[] = (color = 'white', size = 12) => [
@@ -32,7 +27,7 @@ export const AI_SIDEBAR: (color?: string, size?: number) => AISidebarItem[] = (c
       endpoint: AI_ROUTES.chat,
       queryParams: { agent: 'ai_slide' },
     }),
-    icon: <ListFilter size={size} color={color} />,
+    icon: <Grid3 width={size} height={size} color={color} />,
     bgColor: 'var(--ai-agent-aqua-background)',
   },
   {
@@ -44,7 +39,7 @@ export const AI_SIDEBAR: (color?: string, size?: number) => AISidebarItem[] = (c
       endpoint: AI_ROUTES.chat,
       queryParams: { agent: 'ai_image_generate' },
     }),
-    icon: <ImageIcon size={size} color={color} />,
+    icon: <Gallery width={size} height={size} color={color} />,
     bgColor: 'var(--ai-agent-pink-background)',
   },
   {
@@ -53,7 +48,7 @@ export const AI_SIDEBAR: (color?: string, size?: number) => AISidebarItem[] = (c
     descKey: 'aiVideoDesc',
     value: 'ai-video',
     href: AI_ROUTES.video,
-    icon: <SquarePlay size={size} color={color} />,
+    icon: <VideoSquare width={size} height={size} color={color} />,
     bgColor: 'var(--ai-agent-blue-background)',
     isComming: true,
   },
@@ -78,12 +73,12 @@ export const INPUT_BUTTON: IInputButton[] = [
   {
     type: 'ai_image_generate',
     textKey: 'imageGenerator',
-    icon: <ImageIcon size={16} className="text-pink-500" />,
+    icon: <Gallery width={16} height={16} color="hsl(var(--pink-500))" />,
   },
   {
     type: 'ai_slide',
     textKey: 'presentation',
-    icon: <PanelsRightBottom size={16} className="text-info-500" />,
+    icon: <Grid3 width={16} height={16} color="hsl(var(--info-500))" />,
   },
   {
     type: 'ai_code',

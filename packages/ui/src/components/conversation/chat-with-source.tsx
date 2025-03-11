@@ -3,6 +3,7 @@ import { type SpringValue, animated, useSpring, useTransition } from '@react-spr
 import { useMemo } from 'react';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
+import { Artifact } from './artifact/artifact';
 import { ChatWindow } from './chat-window';
 import { SourceList } from './sources/source-list';
 import { SourcePopup } from './sources/sources-popup';
@@ -80,6 +81,7 @@ export function ChatWithSource({ id, initData, agent = 'ai_search' }: IChatWindo
       ) : (
         <SourcePopup />
       )}
+      <Artifact chatId={id} agent={agent} />
     </div>
   );
 }

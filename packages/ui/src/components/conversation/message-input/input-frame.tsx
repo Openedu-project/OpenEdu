@@ -13,7 +13,14 @@ export function InputFrame({
   id,
   agent = 'ai_search',
   containerRef,
-}: { className?: string; id?: string; agent?: TAgentType; containerRef?: RefObject<HTMLDivElement | null> }) {
+  updateWidth = false,
+}: {
+  className?: string;
+  id?: string;
+  agent?: TAgentType;
+  containerRef?: RefObject<HTMLDivElement | null>;
+  updateWidth?: boolean;
+}) {
   const sendMessage = useSendMessageHandler(agent, id, undefined, containerRef);
   const { selectedModel, setWidth } = useConversationStore();
   const messageType = useMemo(
@@ -31,8 +38,8 @@ export function InputFrame({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    const updateWidth = () => {
-      if (inputRef?.current) {
+    const getWidth = () => {
+      if (inputRef?.current && updateWidth) {
         const width = inputRef.current.getBoundingClientRect().width;
         if (width > 0) {
           setWidth(width);
@@ -40,10 +47,10 @@ export function InputFrame({
       }
     };
 
-    updateWidth();
-    window.addEventListener('resize', updateWidth);
+    getWidth();
+    window.addEventListener('resize', getWidth);
 
-    return () => window.removeEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', getWidth);
   }, []);
 
   return (

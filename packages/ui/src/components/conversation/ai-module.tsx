@@ -31,7 +31,7 @@ export function AIModule({
             key={item.lableKey}
             href={item.href}
             className={cn(
-              'flex h-auto w-full items-center justify-between gap-3 whitespace-normal rounded-2xl border-2 border-transparent bg-background p-2 text-foreground hover:border-primary hover:no-underline',
+              'flex h-auto w-full items-center justify-between gap-3 whitespace-normal rounded-2xl border-2 border-transparent bg-background p-2 text-foreground shadow-shadow-7 hover:border-primary hover:no-underline',
               item.isComming ? 'pointer-events-none' : 'cursor-pointer',
               className,
               // pathname.includes(item.value) && '!border-primary'

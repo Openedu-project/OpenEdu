@@ -35,7 +35,7 @@ export function ChatWindow({ id, initData, agent = 'ai_search', className }: ICh
   } = useConversationStore();
 
   const prevId = useRef<string>('');
-  const sendMessage = useSendMessageHandler(agent, id, undefined);
+  const sendMessage = useSendMessageHandler(agent, id);
 
   const { data: messageData, mutate } = useGetConversationDetails({
     id,
@@ -117,7 +117,7 @@ export function ChatWindow({ id, initData, agent = 'ai_search', className }: ICh
       ) : (
         <EmptyChat />
       )}
-      <InputFrame id={id} containerRef={containerRef} />
+      <InputFrame id={id} containerRef={containerRef} updateWidth />
     </div>
   );
 }
