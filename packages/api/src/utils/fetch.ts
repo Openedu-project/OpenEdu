@@ -84,6 +84,8 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
   const queryParams = urlAPIWithLocale.searchParams.toString();
   const tag = `${urlAPIWithLocale.pathname}${queryParams ? `?${queryParams}` : ''}`;
 
+  console.log('-----------------------fetch', referrer, origin);
+
   const headers = {
     ...defaultOptions.headers,
     ...options.headers,

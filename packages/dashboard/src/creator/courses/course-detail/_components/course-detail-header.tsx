@@ -8,7 +8,7 @@ import { Badge } from '@oe/ui/shadcn/badge';
 import { FileDown, FileUp } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { isCourseValid } from '../_utils/validation';
 import CourseNameForm from './course-name-form';
 import { CourseRequestPublishModal } from './course-request-publish-modal';
@@ -27,6 +27,17 @@ export function CourseDetailHeader() {
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
   const [isRequestPublish, setIsRequestPublish] = useState(false);
   const [isUnPublish, setIsUnPublish] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      document.body.classList.add('overflow-hidden');
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        document.body.classList.remove('overflow-hidden');
+      }
+    };
+  }, []);
 
   const handlePublish = () => {
     const courseValid = isCourseValid({ course, segments, tCourse });

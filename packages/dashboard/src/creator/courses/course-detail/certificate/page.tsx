@@ -15,7 +15,6 @@ import { Switch } from '@oe/ui/shadcn/switch';
 import { CheckIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
-import { useEffect } from 'react';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
 import { COURSE_DETAIL_FORM_IDS } from '../_utils/constants';
 import { CertificateCondition } from './_components/certificate-condition';
@@ -35,16 +34,16 @@ export default function CourseDetailCertificatePage() {
 
   const certificateTemplates = dataCertLayers?.results?.filter(layer => layer.type === 'certificate_template');
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      document.body.classList.add('overflow-hidden');
-    }
-    return () => {
-      if (typeof window !== 'undefined') {
-        document.body.classList.remove('overflow-hidden');
-      }
-    };
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //     document.body.classList.add('overflow-hidden');
+  //   }
+  //   return () => {
+  //     if (typeof window !== 'undefined') {
+  //       document.body.classList.remove('overflow-hidden');
+  //     }
+  //   };
+  // }, []);
 
   const handleSubmit = async (data: ICreateCourseCertificate) => {
     const certificateLayer = dataCertLayers?.results?.find(layer => layer.type === 'certificate_layer');

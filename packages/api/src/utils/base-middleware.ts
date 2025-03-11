@@ -19,6 +19,8 @@ export async function baseMiddleware(request: NextRequest, host?: string | null)
   const userUrl = appUrl.replace(appHost, userHost);
   const { origin, referrer } = getReferrerAndOriginForAPIByUserUrl(userUrl);
 
+  console.log('-----------------------origin, referrer', origin, referrer);
+
   const oauthToken = request.nextUrl.searchParams.get('oauth_token');
   if (oauthToken) {
     const authToken = base64ToJson(oauthToken);
