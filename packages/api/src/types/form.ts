@@ -1,13 +1,12 @@
-import type { FORM_EVENT, FORM_STATUS, FORM_TYPE, QUESTION_TYPE } from '@oe/core/utils/constants';
 import type { IPagination } from './fetch';
 export type TSort = 'create_at desc' | 'create_at asc' | '"order" asc';
 
 type Timestamp = number;
 
-export type TFormStatus = keyof typeof FORM_STATUS;
-export type TFormEvent = keyof typeof FORM_EVENT;
-export type TFormType = keyof typeof FORM_TYPE;
-export type TQuestionType = keyof typeof QUESTION_TYPE;
+export type TFormStatus = 'draft' | 'published_org' | 'published_all' | 'unpublished';
+export type TFormEvent = 'register_course' | 'others' | 'contact_organization';
+export type TFormType = 'page' | 'slide';
+// export type TQuestionType = keyof typeof QUESTION_TYPE;
 
 export interface IBaseEntity {
   id: string;
@@ -30,16 +29,19 @@ export interface IFormSettings {
   other_option_enabled: boolean;
   base_domain: string;
   key?: string;
+  props?: Record<string, unknown>;
 }
 
 export interface IFormQuestion extends IBaseEntity {
   title: string;
   description?: string;
-  question_type: TQuestionType;
+  question_type: string;
   sub_questions?: IFormSubquestion[];
   order: number;
   options?: IFormOption[];
   settings: IFormSettings;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  props?: Record<string, any>;
 }
 
 export interface IFormSubquestion extends IFormQuestion {
@@ -84,12 +86,12 @@ export interface IFormResponse extends IBaseEntity {
 export interface IFormParams {
   id?: string;
   title: string;
-  description?: string;
-  event: string;
+  description: string;
+  event: TFormEvent;
   type: TFormType;
   start_date?: Timestamp;
   end_date?: Timestamp;
-  questions: IQuestionParam[];
+  questions?: IQuestionParam[];
   is_template?: boolean;
 }
 
@@ -106,6 +108,7 @@ export interface IQuestionParam {
   settings: IFormSettings;
   options?: IFormOption[] | null;
   sub_questions?: IFormSubquestion[] | null;
+  props?: Record<string, unknown>;
 }
 
 export interface IValidateFormPayload {

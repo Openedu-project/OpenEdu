@@ -1,11 +1,11 @@
-import { type ComponentType, Suspense } from 'react';
+import { Suspense } from 'react';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
 import { FormFieldWithLabel } from '#shadcn/form';
 import { Skeleton } from '#shadcn/skeleton';
 import { cn } from '#utils/cn';
 import { componentWithoutLabel } from '../constants';
 import { formComponents } from '../form-components';
-import type { FormComponentConfig, FormFieldType } from '../types';
+import type { FormFieldType } from '../types';
 
 export default function FormFieldItem({
   field,
@@ -15,9 +15,7 @@ export default function FormFieldItem({
   form: UseFormReturn<FieldValues>;
 }) {
   const { fieldType, fieldId, ...rest } = field;
-  const Component = formComponents[fieldType]?.component as ComponentType<
-    Partial<FormComponentConfig> & { className?: string }
-  >;
+  const Component = formComponents[fieldType]?.component;
 
   if (!Component) {
     return null;

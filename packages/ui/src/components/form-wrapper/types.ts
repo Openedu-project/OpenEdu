@@ -96,6 +96,7 @@ export interface INestedFormsValues {
 export interface IFormNestedProviderProps<TFormSchema extends z.ZodType> {
   children: ReactNode;
   defaultTab?: string;
+  hasScroll?: boolean;
   scrollOptions?: ScrollOptions;
   className?: string;
   onSubmit: (values: INestedFormsValues) => Promise<void>;

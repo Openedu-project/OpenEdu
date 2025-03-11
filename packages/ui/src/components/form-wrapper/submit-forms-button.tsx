@@ -23,7 +23,6 @@ export const SubmitFormsButton: FC<IFormSubmitButtonProps & ButtonProps> = ({
 
   const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log('loading', loading);
     if (onClick) {
       onClick(e);
     }

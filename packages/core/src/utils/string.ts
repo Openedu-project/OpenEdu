@@ -31,3 +31,20 @@ export const pickCharacters = (input: string): string => {
   }
   return input.slice(0, 2).toUpperCase();
 };
+
+const lowerCaseRegex = /^(.)/;
+const upperCaseRegex = /[-_\s]+(.)?/g;
+
+export function toCamelCase(str: string): string {
+  if (!str) {
+    return '';
+  }
+
+  const cleaned = str.replace(/[^\w\s-_]/g, ' ').trim();
+
+  const lowerCase = cleaned.toLowerCase();
+
+  return lowerCase
+    .replace(upperCaseRegex, (_, c) => (c ? c.toUpperCase() : ''))
+    .replace(lowerCaseRegex, (_, c) => c.toLowerCase());
+}

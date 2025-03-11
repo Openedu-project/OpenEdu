@@ -1,5 +1,6 @@
+import type { IFormOption, IFormSettings, IQuestionParam } from '@oe/api/types/form';
 import { z } from '@oe/api/utils/zod';
-import type { FormFieldOrGroup, FormFieldType } from './types';
+import type { FormComponent, FormFieldOrGroup, FormFieldType } from './types';
 
 export const generateZodSchema = (formFields: FormFieldOrGroup[]): z.ZodObject<Record<string, z.ZodTypeAny>> => {
   const schemaObject: Record<string, z.ZodTypeAny> = {};
@@ -109,3 +110,88 @@ export const generateDefaultValues = (
 
   return defaultValues;
 };
+
+export function convertFieldsToQuestions(fields: FormFieldOrGroup[]): IQuestionParam[] {
+  const questions: IQuestionParam[] = [];
+
+  for (const field of fields) {
+    if (Array.isArray(field)) {
+      // Xử lý nhóm trường
+      for (const subField of field) {
+        // if (!componentWithoutLabel.includes(subField.fieldType)) {
+        // }
+        questions.push(convertFieldToQuestion(subField));
+      }
+    } else {
+      questions.push(convertFieldToQuestion(field));
+    }
+  }
+
+  return questions;
+}
+
+export function convertFieldTypeToQuestionType(fieldType: FormComponent): string {
+  // Trong hầu hết các trường hợp, question_type giống hệt fieldType
+  // Chỉ ánh xạ một số trường hợp đặc biệt nếu cần
+  const typeMap: Partial<Record<FormComponent, string>> = {
+    input: 'input',
+    inputNumber: 'inputNumber',
+    inputPassword: 'inputPassword',
+    inputUrl: 'inputUrl',
+    inputCurrency: 'inputCurrency',
+    textarea: 'textarea',
+    heading: 'heading',
+    paragraph: 'paragraph',
+    space: 'space',
+    label: 'label',
+    email: 'email',
+    checkbox: 'checkbox',
+    multiSelect: 'multiSelect',
+    tagsInput: 'tagsInput',
+    image: 'image',
+    selectbox: 'selectbox',
+    datetimePicker: 'datetimePicker',
+    smartDatetimeInput: 'smartDatetimeInput',
+    inputPhoneNumber: 'inputPhoneNumber',
+    datePicker: 'datePicker',
+    locationInput: 'locationInput',
+    slider: 'slider',
+    signatureInput: 'signatureInput',
+    number: 'number',
+    switch: 'switch',
+    submitButton: 'submitButton',
+  };
+
+  return typeMap[fieldType] || fieldType;
+}
+
+function convertFieldToQuestion(field: FormFieldType): IQuestionParam {
+  // Chuyển đổi fieldType sang question_type (trong trường hợp này giữ nguyên)
+  const questionType = convertFieldTypeToQuestionType(field.fieldType);
+
+  // Tạo đối tượng cài đặt
+  const settings: IFormSettings = {
+    required: field.required ?? false,
+    other_option_enabled: false,
+    base_domain: '',
+    props: field,
+  };
+
+  // Xử lý options cho selectbox, multiSelect, v.v.
+  const options = field.options
+    ? field.options.map((option, idx) => ({
+        id: `${field.fieldId}-option-${idx}`,
+        text: typeof option === 'string' ? option : option.label,
+        order: idx,
+      }))
+    : null;
+
+  return {
+    title: field.label,
+    description: field.description || '',
+    question_type: questionType,
+    settings,
+    options: options as IFormOption[],
+    sub_questions: null,
+  };
+}

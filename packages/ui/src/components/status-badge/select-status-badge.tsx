@@ -34,6 +34,9 @@ const ALL_STATUSES: TStatus[] = [
   'approved',
   'rejected',
   'preview',
+  'published_org',
+  'published_all',
+  'unpublished',
 ] as const;
 
 export function SelectStatusBadge({

@@ -1,7 +1,8 @@
 export const dynamicFormsMessages = {
   dynamicForms: {
-    formList: 'Forms',
-    createForm: 'Create A New Form',
+    formList: 'Form Templates',
+    createForm: 'Create A New Form Template',
+    noName: '[Untitled Form Template]',
     templates: {
       title: 'Templates',
       placeholder: 'Select a template',
@@ -100,6 +101,41 @@ export const dynamicFormsMessages = {
       optionLabel: 'Label',
       optionValue: 'value',
       addOption: 'Add Option',
+    },
+    toast: {
+      createSuccess: 'Form created successfully',
+      createError: 'Failed to create form',
+      updateSuccess: 'Form updated successfully',
+      updateError: 'Failed to update form',
+      saveSuccess: 'Form saved successfully',
+      saveError: 'Failed to save form',
+    },
+    create: {
+      title: 'Create Form',
+      description: 'Create a new form',
+    },
+    actions: {
+      cancel: 'Cancel',
+      create: 'Create',
+      save: 'Save',
+      back: 'Back',
+      preview: 'Preview',
+    },
+    form: {
+      forms: 'Form Templates',
+      actions: 'Actions',
+      name: 'Name',
+      description: 'Description',
+      lastUpdated: 'Last Updated',
+      status: 'Status',
+      deleteSuccess: 'Form deleted successfully',
+      deleteError: 'Failed to delete form',
+      delete: 'Delete Form',
+      deleteDescription: 'Are you sure you want to delete this form?',
+    },
+    validation: {
+      name: 'Name is required',
+      description: 'Description is required',
     },
   },
 };

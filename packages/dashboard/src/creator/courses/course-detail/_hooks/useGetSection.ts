@@ -1,4 +1,5 @@
 import { useGetSegmentById, useGetSegments } from '@oe/api/hooks/useCourse';
+import type { ILesson } from '@oe/api/types/course/segment';
 import { useParams } from 'next/navigation';
 import { useMemo } from 'react';
 
@@ -27,6 +28,10 @@ export const useGetSection = () => {
 
   const { sections, mutateSections, courseId } = useGetSections();
   const { segment: activeSection, mutateSegment } = useGetSegmentById(sectionId);
+
+  const allLessons: ILesson[] = useMemo(() => {
+    return (sections?.flatMap(section => section.lessons) ?? []).filter(lesson => lesson !== null) as ILesson[];
+  }, [sections]);
 
   const activeLessons = useMemo(() => {
     const sortedLessons = activeSection?.lessons?.sort((a, b) => a.order - b.order) ?? [];
@@ -60,6 +65,7 @@ export const useGetSection = () => {
     sectionId,
     lessonId,
     sections,
+    allLessons,
     activeSection,
     activeLessons,
     activeLesson,

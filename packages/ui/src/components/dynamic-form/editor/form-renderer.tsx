@@ -1,13 +1,15 @@
 'use client';
 
 import { Suspense } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { FormWrapper } from '#components/form-wrapper';
+// import { useFormContext } from 'react-hook-form';
 import { FormFieldWithLabel } from '#shadcn/form';
 import { Skeleton } from '#shadcn/skeleton';
 import { cn } from '#utils/cn';
 import { componentWithoutLabel } from '../constants';
 import { formComponents } from '../form-components';
 import type { FormFieldType } from '../types';
+import { generateZodSchema } from '../utils';
 
 interface FormRendererProps {
   fields: FormFieldType[];
@@ -15,10 +17,11 @@ interface FormRendererProps {
 }
 
 export function FormRenderer({ fields, className }: FormRendererProps) {
-  const form = useFormContext();
+  // const form = useFormContext();
+  const formSchema = generateZodSchema(fields);
 
   return (
-    <div className={cn('space-y-4', className)}>
+    <FormWrapper id="form-renderer" schema={formSchema} className={cn('space-y-4', className)}>
       {fields.map(field => {
         const { fieldType, fieldId, ...rest } = field;
         const Component = formComponents[fieldType]?.component;
@@ -38,7 +41,6 @@ export function FormRenderer({ fields, className }: FormRendererProps) {
                 <FormFieldWithLabel
                   name={rest.name}
                   label={rest.label}
-                  form={form}
                   infoText={rest.infoText}
                   required={rest.required}
                   description={rest.description}
@@ -63,6 +65,6 @@ export function FormRenderer({ fields, className }: FormRendererProps) {
           </Suspense>
         );
       })}
-    </div>
+    </FormWrapper>
   );
 }

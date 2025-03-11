@@ -48,7 +48,7 @@ export function DashboardHeaderCard({
   return (
     <DashboardHeaderCardContext.Provider value={{ breadcrumbs, setBreadcrumbs }}>
       <div className={cn('mb-4 rounded-b bg-background px-4 py-2', className)}>
-        <Breadcrumb items={breadcrumbs} dashboard={dashboard} />
+        {breadcrumbs?.length > 0 && <Breadcrumb items={breadcrumbs} dashboard={dashboard} />}
         {children}
       </div>
     </DashboardHeaderCardContext.Provider>

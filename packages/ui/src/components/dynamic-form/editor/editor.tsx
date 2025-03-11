@@ -16,27 +16,31 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import { useGetForm } from '@oe/api/hooks/useForms';
+import { useParams } from 'next/navigation';
+import { useEffect } from 'react';
 import { FormWrapper } from '#components/form-wrapper';
 import { useFormEditorStore } from '../store';
-import type { FormFieldOrGroup, FormFieldType, FormValues } from '../types';
+import type { FormFieldOrGroup, FormFieldType } from '../types';
 import { generateZodSchema } from '../utils';
 import { FormField } from './form-field';
 
 export function Editor() {
   const { fields, updateFields } = useFormEditorStore();
 
+  const { id } = useParams<{ id: string }>();
+  const { dataForm } = useGetForm({ id });
   const formSchema = generateZodSchema(fields);
 
-  // const form = useForm<z.infer<typeof formSchema>>({
-  //   resolver: useMemo(() => zodResolver(formSchema), [formSchema]),
-  //   mode: 'onSubmit',
-  // });
-
-  // useEffect(() => {
-  //   const defaults = generateDefaultValues(fields);
-  //   console.log(fields);
-  //   // form.reset(defaults);
-  // }, [fields, form]);
+  useEffect(() => {
+    if ((dataForm?.questions?.length ?? 0) > 0) {
+      updateFields(
+        dataForm?.questions
+          .map(question => question?.settings?.props as FormFieldType)
+          .filter(question => question !== undefined) ?? []
+      );
+    }
+  }, [dataForm, updateFields]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -80,12 +84,8 @@ export function Editor() {
     }
   };
 
-  const onSubmit = (values: FormValues) => {
-    console.log('Form values:', values);
-  };
-
   return (
-    <FormWrapper id="dynamic-form" schema={formSchema} onSubmit={onSubmit}>
+    <FormWrapper id="dynamic-form" schema={formSchema}>
       {/* <form onSubmit={form.handleSubmit(onSubmit)}> */}
       <DndContext
         sensors={sensors}
