@@ -3,16 +3,7 @@ import { Affiliate } from '@oe/assets/icons/affliliate';
 import { CREATOR_ROUTES } from '@oe/core/utils/routes';
 import { checkSidebarPermissions } from '@oe/core/utils/sidebar-menu';
 import { DashboardLayout } from '@oe/ui/common/layout';
-import {
-  BookOpen,
-  CirclePercent,
-  FileText,
-  House,
-  LayoutTemplate,
-  NotebookText,
-  Receipt,
-  ReceiptText,
-} from 'lucide-react';
+import { BookOpen, CirclePercent, House, LayoutTemplate, NotebookText, Receipt } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
 
@@ -50,23 +41,24 @@ export default async function Layout({ children }: { children: ReactNode }) {
         href: CREATOR_ROUTES.courses,
       },
       {
-        id: 'forms',
-        label: tDashboard('forms.title'),
-        icon: <FileText className="h-5 w-5" />,
-        items: [
-          {
-            id: 'form-templates',
-            label: tDashboard('forms.formTemplates'),
-            icon: <LayoutTemplate className="h-5 w-5" />,
-            href: CREATOR_ROUTES.formTemplates,
-          },
-          {
-            id: 'form-list',
-            label: tDashboard('forms.formList'),
-            icon: <ReceiptText className="h-5 w-5" />,
-            href: CREATOR_ROUTES.formList,
-          },
-        ],
+        id: 'forms-templates',
+        label: tDashboard('forms.formTemplates'),
+        icon: <LayoutTemplate className="h-5 w-5" />,
+        href: CREATOR_ROUTES.formList,
+        // items: [
+        //   {
+        //     id: 'form-templates',
+        //     label: tDashboard('forms.formTemplates'),
+        //     icon: <LayoutTemplate className="h-5 w-5" />,
+        //     href: CREATOR_ROUTES.formTemplates,
+        //   },
+        //   {
+        //     id: 'form-list',
+        //     label: tDashboard('forms.formList'),
+        //     icon: <ReceiptText className="h-5 w-5" />,
+        //     href: CREATOR_ROUTES.formList,
+        //   },
+        // ],
       },
       {
         id: 'affiliate-campaigns',

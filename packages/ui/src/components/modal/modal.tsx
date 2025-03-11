@@ -50,6 +50,7 @@ export interface ModalProps<TSchema extends z.ZodType> {
   buttons?: ButtonConfig[];
   defaultValues?: DefaultValues<TypeOf<TSchema>> | undefined;
   showSubmit?: boolean;
+  hasScroll?: boolean;
   validationSchema?: TSchema;
   onSubmit?: (data: z.infer<TSchema>) => Promise<void> | void;
   onError?: FormErrorHandler;
@@ -155,6 +156,7 @@ export const Modal = <TSchema extends z.ZodType>({
   defaultValues,
   hasCloseIcon,
   formClassName,
+  hasScroll = true,
   onClose,
   onSubmit,
   onError,
@@ -198,7 +200,7 @@ export const Modal = <TSchema extends z.ZodType>({
       id="modal-form"
       schema={validationSchema}
       className={cn('scrollbar px-4', hasTitleOrDescription && hasButtons ? 'overflow-y-auto' : '', formClassName)}
-      useFormProps={{ defaultValues }}
+      useFormProps={{ defaultValues, shouldFocusError: hasScroll }}
     >
       {({ form }) => (typeof children === 'function' ? children(form) : children)}
     </FormNestedWrapper>
@@ -244,6 +246,7 @@ export const Modal = <TSchema extends z.ZodType>({
       <FormNestedProvider
         onSubmit={handleSubmit}
         onError={handleError}
+        hasScroll={hasScroll}
         onChange={data => {
           onChange?.(data['modal-form']);
         }}

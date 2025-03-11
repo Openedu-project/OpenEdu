@@ -43,7 +43,7 @@ export async function UserMenu({ me }: { me: IUser }) {
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="flex items-center space-x-2 text-primary-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
+          className="flex items-center space-x-2 text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground/80 focus-visible:ring-0 focus-visible:ring-offset-0"
         >
           <UserAvatar src={me?.avatar ?? ''} name={me?.display_name?.length > 0 ? me?.display_name : me?.username} />
           <span className="hidden max-w-[100px] truncate md:inline-block">
@@ -65,7 +65,7 @@ export async function UserMenu({ me }: { me: IUser }) {
             <span>{t('myProfile')}</span>
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuSeparator className="mb-1 h-[1px] bg-neutral-100" />
+        <DropdownMenuSeparator className="my-1 h-[1px] bg-border" />
         {visibleMenuItems.map(({ href, key, icon: Icon, hasSepratePage }) => (
           <Fragment key={key}>
             <DropdownMenuItem className="p-0">
@@ -74,7 +74,7 @@ export async function UserMenu({ me }: { me: IUser }) {
                 <span>{t(key)}</span>
               </Link>
             </DropdownMenuItem>
-            {hasSepratePage && <DropdownMenuSeparator className="mb-1 h-[1px] bg-neutral-100" />}
+            {hasSepratePage && <DropdownMenuSeparator className="my-1 h-[1px] bg-border" />}
           </Fragment>
         ))}
 

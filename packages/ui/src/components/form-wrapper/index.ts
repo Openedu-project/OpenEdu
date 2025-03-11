@@ -8,6 +8,7 @@ import { StepperForm } from './stepper-form';
 import { SubmitFormsButton } from './submit-forms-button';
 import type {
   FormErrorHandler,
+  IFormMetadata,
   IFormNestedProviderProps,
   IFormSubmitButtonProps,
   IFormTabsProps,
@@ -32,4 +33,5 @@ export {
   type IFormSubmitButtonProps,
   type INestedFormsValues,
   type FormErrorHandler,
+  type IFormMetadata,
 };

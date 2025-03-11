@@ -6,12 +6,12 @@ import type { FieldValues } from 'react-hook-form';
 import type { ExtendedImageProps } from '#components/image';
 import type { SelectboxOption } from '#components/selectbox';
 // Form Editor Store types
-export interface FormField {
-  id: string;
-  type: FormComponent;
-  config: FormComponentConfig;
-  validation?: FormFieldValidation;
-}
+// export interface FormField {
+//   id: string;
+//   type: FormComponent;
+//   config: FormComponentConfig;
+//   validation?: FormFieldValidation;
+// }
 
 export interface FormFieldValidation {
   required?: boolean;
@@ -22,15 +22,15 @@ export interface FormFieldValidation {
 }
 
 // Form Values type
-export interface FormValues {
-  [key: string]: unknown;
-}
+// export interface FormValues {
+//   [key: string]: unknown;
+// }
 
 // Form Config Return type
-export interface FormConfig {
-  defaultValues: FormValues;
-  zodSchema: z.ZodObject<Record<string, z.ZodType>>;
-}
+// export interface FormConfig {
+//   defaultValues: FormValues;
+//   zodSchema: z.ZodObject<Record<string, z.ZodType>>;
+// }
 
 export interface FormEditorStore {
   fields: FormFieldOrGroup[];
@@ -82,61 +82,40 @@ export interface FormComponentDefinition {
 
 export type FormComponents = Partial<Record<FormComponent, FormComponentDefinition>>;
 
-// Dynamic Form types
-export interface IFormItem {
-  id: string;
-  type:
-    | 'text'
-    | 'number'
-    | 'email'
-    | 'checkbox'
-    | 'date'
-    | 'daterange'
-    | 'radio'
-    | 'select'
-    | 'switch'
-    | 'textarea'
-    | 'combobox'
-    | 'submitButton';
-  label: string;
-  placeholder?: string;
-  options?: string[];
-}
-
 // Form Config types
-export type BaseFormComponentConfig = {
-  name: string;
-  label?: string;
-  fieldType: FormComponent;
-  description?: string;
-  disabled?: boolean;
-  required?: boolean;
-  defaultValue?: string;
-};
+// export type BaseFormComponentConfig = {
+//   name: string;
+//   label?: string;
+//   fieldType: FormComponent;
+//   description?: string;
+//   disabled?: boolean;
+//   required?: boolean;
+//   defaultValue?: string;
+// };
 
-export type InputFormComponentConfig = BaseFormComponentConfig & {
-  placeholder?: string;
-  min?: number;
-  max?: number;
-};
+// export type InputFormComponentConfig = BaseFormComponentConfig & {
+//   placeholder?: string;
+//   min?: number;
+//   max?: number;
+// };
 
-export type CheckboxFormComponentConfig = BaseFormComponentConfig & {
-  checked?: boolean;
-};
+// export type CheckboxFormComponentConfig = BaseFormComponentConfig & {
+//   checked?: boolean;
+// };
 
-export type EmailFormComponentConfig = InputFormComponentConfig & {
-  pattern?: RegExp;
-};
+// export type EmailFormComponentConfig = InputFormComponentConfig & {
+//   pattern?: RegExp;
+// };
 
-export type SubmitButtonFormComponentConfig = BaseFormComponentConfig & {
-  text: string;
-};
+// export type SubmitButtonFormComponentConfig = BaseFormComponentConfig & {
+//   text: string;
+// };
 
-export type FormComponentConfig =
-  | InputFormComponentConfig
-  | EmailFormComponentConfig
-  | CheckboxFormComponentConfig
-  | SubmitButtonFormComponentConfig;
+// export type FormComponentConfig =
+//   | InputFormComponentConfig
+//   | EmailFormComponentConfig
+//   | CheckboxFormComponentConfig
+//   | SubmitButtonFormComponentConfig;
 
 // Form Field Props types
 export interface FormFieldProps {
@@ -176,7 +155,7 @@ export type FormFieldType = Partial<Omit<ExtendedImageProps, 'placeholder' | 'bl
   options?: SelectboxOption[];
 };
 
-export type FieldType = { name: string; isNew: boolean; index?: number };
+// export type FieldType = { name: string; isNew: boolean; index?: number };
 
 export type FormFieldOrGroup = FormFieldType | FormFieldType[];
 

@@ -33,8 +33,12 @@ export function NotificationButton() {
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button variant="ghost" size="icon" className="group relative">
-          <Bell className="h-5 w-5 text-primary-foreground transition-colors group-hover:text-accent-foreground" />
+        <Button
+          variant="ghost"
+          size="icon"
+          className="group relative hover:bg-primary/80 hover:text-primary-foreground/80 focus-visible:ring-0 focus-visible:ring-offset-0"
+        >
+          <Bell className="h-5 w-5 text-primary-foreground transition-colors group-hover:text-primary-foreground/80" />
           {typeof badges === 'number' && badges > 0 && (
             <span className="-top-1 -right-1 absolute flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-[11px] text-destructive-foreground">
               {badges > 99 ? '99+' : badges}

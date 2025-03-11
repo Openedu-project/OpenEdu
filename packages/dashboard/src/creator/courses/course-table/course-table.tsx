@@ -2,6 +2,7 @@
 import type { ICourse } from '@oe/api/types/course/course';
 import { API_ENDPOINT } from '@oe/api/utils/endpoints';
 import { formatDateTime } from '@oe/core/utils/datetime';
+import type { FilterOption } from '@oe/ui/components/filter-search';
 import { type ColumnDef, Table } from '@oe/ui/components/table';
 import { Badge } from '@oe/ui/shadcn/badge';
 import { useTranslations } from 'next-intl';
@@ -18,19 +19,19 @@ export default function Courses() {
   const columns: ColumnDef<ICourse>[] = useMemo(() => {
     return [
       {
-        header: 'Name',
+        header: tCourse('table.name'),
         accessorKey: 'name',
         size: 250,
         cell: item => <CourseName data={item.row.original} />,
       },
       {
-        header: 'Status',
+        header: tCourse('table.status'),
         accessorKey: 'active',
         cell: item => <CourseStatus data={item.row.original} />,
         size: 130,
       },
       {
-        header: 'Type',
+        header: tCourse('table.type'),
         size: 100,
         cell: item => (
           <>
@@ -47,18 +48,18 @@ export default function Courses() {
         ),
       },
       {
-        header: 'Price',
+        header: tCourse('table.price'),
         size: 150,
         cell: item => <CoursePrice priceSettings={item.row.original.price_settings} />,
       },
       {
-        header: 'Published',
+        header: tCourse('table.published'),
         size: 100,
         align: 'center',
         cell: item => <CourseBadgeVersion version={item.row.original.published?.[0]?.version} />,
       },
       {
-        header: 'Reviewing',
+        header: tCourse('table.reviewing'),
         size: 100,
         align: 'center',
         cell: item => (
@@ -68,13 +69,13 @@ export default function Courses() {
         ),
       },
       {
-        header: 'Learners',
+        header: tCourse('table.learners'),
         size: 100,
         accessorKey: 'learner_count',
         align: 'center',
       },
       {
-        header: 'Updated At',
+        header: tCourse('table.updatedAt'),
         size: 150,
         // accessorKey: "updated_at",
         align: 'center',
@@ -86,7 +87,7 @@ export default function Courses() {
           ),
       },
       {
-        header: 'Actions',
+        header: tCourse('table.actions'),
         size: 250,
         align: 'center',
         sticky: 'right',
@@ -95,11 +96,25 @@ export default function Courses() {
     ];
   }, [tCourse]);
 
+  const filterOptions: FilterOption[] = useMemo(
+    () => [
+      {
+        label: tCourse('table.name'),
+        value: 'name',
+        placeholder: tCourse('table.searchName'),
+        type: 'search',
+        id: 'name',
+      },
+    ],
+    [tCourse]
+  );
+
   return (
     <>
       <Table
         columns={columns}
         api={API_ENDPOINT.COURSES}
+        filterOptions={filterOptions}
         apiQueryParams={{
           sort: 'update_at desc',
           preloads: ['Published', 'Reviewing', 'AICourse'],

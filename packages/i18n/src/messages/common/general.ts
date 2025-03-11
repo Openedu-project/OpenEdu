@@ -76,6 +76,9 @@ export const generalMessages = {
       rejected: 'Rejected',
       setting: 'Setting',
       preview: 'Preview',
+      published_org: 'Published Org',
+      published_all: 'Published All',
+      unpublished: 'Unpublished',
     },
     statusDescription: {
       section: {

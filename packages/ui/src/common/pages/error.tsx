@@ -96,11 +96,11 @@ export default function ErrorBoundary({ error, reset }: Props) {
       title={title}
       description={description}
       action={
-        <div className="flex flex-col gap-2">
+        <div className="flex gap-2">
           <Link variant="default" href="/" className="mt-4 w-full">
             {tGeneral('backToHomepage')}
           </Link>
-          <Button onClick={reset} className="mt-4 w-full">
+          <Button variant="outline" onClick={reset} className="mt-4 w-full">
             {tErrors('tryAgain')}
           </Button>
         </div>

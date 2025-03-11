@@ -20,6 +20,7 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
   children,
   defaultTab,
   scrollOptions,
+  hasScroll = true,
   onSubmit,
   onError,
   onChange,
@@ -157,7 +158,7 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
     }
 
     const { isValid, errorElement } = await validateSingleForm(form);
-    if (errorElement) {
+    if (errorElement && hasScroll) {
       scrollToError(errorElement, scrollOptions);
     }
     return isValid;
@@ -178,7 +179,7 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
         })
       );
 
-      if (firstErrorElement) {
+      if (firstErrorElement && hasScroll) {
         scrollToError(firstErrorElement, scrollOptions);
       }
 
