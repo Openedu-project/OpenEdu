@@ -55,6 +55,8 @@ const ThemeLayout = ({
           ])
         )
       : {},
+    className: footerProps?.className,
+    variant: "org",
   };
 
   return (
