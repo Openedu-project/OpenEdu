@@ -4,7 +4,7 @@ import {
   getGlobalThemeMenu,
   getMetadataMenu,
   getPagesMenu,
-} from "@oe/themes/config/theme-sidebar-config";
+} from '@oe/themes/config/theme-sidebar-config';
 import type {
   AllGroupSidebarKeys,
   AllSidebarKeys,
@@ -12,17 +12,15 @@ import type {
   SimpleMenuItem,
   ThemeConfigKey,
   ThemeName,
-} from "@oe/themes/types/index";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroupContent,
-  SidebarMenu,
-} from "@oe/ui/shadcn/sidebar";
-import { SidebarGroup } from "./sidebar-group";
-import { SidebarItem } from "./sidebar-item";
+  ThemePageKey,
+  ThemeSystem,
+} from '@oe/themes/types/index';
+import { Sidebar, SidebarContent, SidebarGroupContent, SidebarMenu } from '@oe/ui/shadcn/sidebar';
+import { SidebarGroup } from './sidebar-group';
+import { SidebarItem } from './sidebar-item';
 
 interface ThemeSidebarProps {
+  themeSystem?: ThemeSystem;
   themeName: ThemeName;
   configKey: ThemeConfigKey; //menu key
   activedSidbarKey?: AllSidebarKeys | AllGroupSidebarKeys;
@@ -30,14 +28,22 @@ interface ThemeSidebarProps {
 }
 
 export default function ThemeSidebar({
+  themeSystem,
   themeName,
   configKey,
   activedSidbarKey,
   groupKey,
 }: ThemeSidebarProps) {
+  const pagesMenu = themeSystem?.availableThemes?.[themeName]?.pages
+    ? Object.entries(themeSystem?.availableThemes?.[themeName]?.pages)?.map(([key, page]) => ({
+        key: key as ThemePageKey,
+        label: page.label,
+      }))
+    : [];
+
   const renderMenuContent = () => {
     const menuItems = {
-      pages: getPagesMenu(themeName),
+      pages: getPagesMenu(themeName, pagesMenu),
       components: getComponentsMenu(themeName),
       metadata: getMetadataMenu(themeName),
       globals: getGlobalThemeMenu(themeName),
@@ -45,12 +51,8 @@ export default function ThemeSidebar({
     };
 
     return menuItems[configKey]?.map(
-      (
-        item:
-          | SimpleMenuItem<AllSidebarKeys>
-          | GroupMenuItem<AllGroupSidebarKeys, AllSidebarKeys>
-      ) =>
-        item.type === "group" ? (
+      (item: SimpleMenuItem<AllSidebarKeys> | GroupMenuItem<AllGroupSidebarKeys, AllSidebarKeys>) =>
+        item.type === 'group' ? (
           <SidebarGroup
             key={item.key}
             label={item.label}
@@ -59,12 +61,7 @@ export default function ThemeSidebar({
             isCurrentGroup={groupKey === item.key}
           />
         ) : (
-          <SidebarItem
-            key={item.key}
-            label={item.label}
-            isActive={activedSidbarKey === item.key}
-            href={item.href}
-          />
+          <SidebarItem key={item.key} label={item.label} isActive={activedSidbarKey === item.key} href={item.href} />
         )
     );
   };

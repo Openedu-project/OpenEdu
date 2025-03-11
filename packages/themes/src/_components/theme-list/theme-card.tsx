@@ -42,7 +42,7 @@ export const ThemeCard = ({
   const [currentCloned, setCurrentCloned] = useState(isCloned ?? false);
   const [openRemoveModal, setOpenRemoveModal] = useState(false);
   const displayName = (theme?.name || name).replace(/([A-Z])/g, ' $1').trim(); // Add spaces before capital letters
-  const thumbnailSrc = themeInfoThumbnail?.[name]?.src;
+  const thumbnailSrc = theme?.thumbnail?.url || themeInfoThumbnail?.[name]?.src;
 
   return (
     <>

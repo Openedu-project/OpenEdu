@@ -15,10 +15,6 @@ export default async function ThemeHeaderContent({
   const [themeSystem] = await Promise.all([getThemeConfigServer()]);
   const themeName = themeSystem?.[0]?.value?.activedTheme;
 
-  if (!themeSystem?.[0]?.value) {
-    return null;
-  }
-
   return (
     <>
       <Button title="Back to Dashboard" size="sm" variant="ghost" className="hover:bg-transparent">
