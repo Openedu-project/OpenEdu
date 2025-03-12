@@ -46,18 +46,20 @@ export async function baseMiddleware(request: NextRequest, host?: string | null)
 
   let i18nResponse = await getI18nResponseMiddleware(referrer, origin, request);
 
-  i18nResponse.cookies.set({
-    name: process.env.NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY,
-    value: origin,
-    ...cookieOptions(),
-    maxAge: 60 * 60 * 24 * 365, // 1 year
-  });
-  i18nResponse.cookies.set({
-    name: process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY,
-    value: referrer,
-    ...cookieOptions(),
-    maxAge: 60 * 60 * 24 * 365, // 1 year
-  });
+  if (userUrl.includes(referrer) || userUrl.includes('localhost')) {
+    i18nResponse.cookies.set({
+      name: process.env.NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY,
+      value: origin,
+      ...cookieOptions(),
+      maxAge: 60 * 60 * 24 * 365, // 1 year
+    });
+    i18nResponse.cookies.set({
+      name: process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY,
+      value: referrer,
+      ...cookieOptions(),
+      maxAge: 60 * 60 * 24 * 365, // 1 year
+    });
+  }
 
   i18nResponse.headers.set('x-url', request.nextUrl.toString());
 
