@@ -46,12 +46,18 @@ export const cookieOptions = (options?: CookieOptions): CookieOptions => {
 };
 
 export const getCookieClient = (key: string, options?: CookieOptions) => {
+  if (typeof window === 'undefined') {
+    return '';
+  }
   const domain = new URL(window.location.href).host;
   return getCookieNextClient(key, cookieOptions({ ...options, domain }));
 };
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const setCookieClient = (key: string, value: any, options?: CookieOptions) => {
+  if (typeof window === 'undefined') {
+    return;
+  }
   const domain = new URL(window.location.href).host;
   return setCookieNextClient(key, value, cookieOptions({ ...options, domain }));
 };
@@ -82,8 +88,14 @@ export const setCookie = async (key: string, value: any, options?: CookieOptions
 };
 
 export const deleteCookie = async (key: string, options?: CookieOptions): Promise<void> => {
-  const domain = new URL(window.location.href).host;
-  await setCookie(key, '', { ...cookieOptions({ ...options, domain }), maxAge: 0 });
+  if (typeof window === 'undefined') {
+    const { cookies } = await import('next/headers');
+    const serverCookies = await cookies();
+    serverCookies.delete(key);
+  } else {
+    const domain = new URL(window.location.href).host;
+    await setCookie(key, '', { ...cookieOptions({ ...options, domain }), maxAge: 0 });
+  }
 };
 
 export const getCookies = async (options?: CookieOptions) => {

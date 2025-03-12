@@ -1,4 +1,4 @@
-'use client';
+// "use client";
 
 import type { ICourse } from '@oe/api/types/course/course';
 import SendSquare from '@oe/assets/icons/send-square';

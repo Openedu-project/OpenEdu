@@ -1,4 +1,4 @@
-'use client';
+// "use client";
 
 import type { ICourse, ICourseOutline, ICourseResponse } from '@oe/api/types/course/course';
 import type { IFeaturedContent } from '@oe/api/types/featured-contents';

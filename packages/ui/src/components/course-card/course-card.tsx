@@ -1,9 +1,12 @@
+'use client';
+
 import type { ICourse, ICourseResponse } from '@oe/api/types/course/course';
 import type { IFeaturedContent } from '@oe/api/types/featured-contents';
 import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { Card, CardContent } from '@oe/ui/shadcn/card';
 import { cn } from '@oe/ui/utils/cn';
 import type React from 'react';
+import { useEffect, useState } from 'react';
 import type { KeyedMutator } from 'swr';
 import { Link } from '#common/navigation';
 import { CourseDetails } from './course-detail';
@@ -32,12 +35,20 @@ export default function CourseCard({
   ...props
 }: ICourseCard) {
   const { org } = courseData;
+  const [isExternal, setIsExternal] = useState(false);
+  const [href, setHref] = useState('');
 
-  const basePath = process.env.NEXT_PUBLIC_APP_ROOT_DOMAIN_NAME;
-  const isExternal = courseData?.org?.domain !== basePath;
-  const href = org?.domain
-    ? `https://${org.domain}${PLATFORM_ROUTES.courseDetail.replace(':slug', courseData?.slug)}`
-    : PLATFORM_ROUTES.courseDetail.replace(':slug', courseData?.slug);
+  useEffect(() => {
+    if (process.env.NODE_ENV !== 'development' && typeof window !== 'undefined' && location.origin) {
+      const isExternalLink = !!((org?.alt_domain || org?.domain) !== new URL(location.origin).host);
+      setIsExternal(isExternalLink);
+    }
+    setHref(
+      process.env.NODE_ENV !== 'development' && typeof window !== 'undefined' && (org?.alt_domain || org?.domain)
+        ? `https://${org.alt_domain || org.domain}${PLATFORM_ROUTES.courseDetail.replace(':slug', courseData?.slug)}`
+        : PLATFORM_ROUTES.courseDetail.replace(':slug', courseData?.slug)
+    );
+  }, [org, courseData?.slug]);
 
   return (
     <div className={cn('group relative w-full', className)}>

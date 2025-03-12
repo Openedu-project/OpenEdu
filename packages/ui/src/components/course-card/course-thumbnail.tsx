@@ -1,4 +1,4 @@
-'use client';
+// "use client";
 
 import type { ICourse } from '@oe/api/types/course/course';
 import { Image } from '@oe/ui/components/image';
