@@ -6,6 +6,7 @@ import { refreshTokenService } from '#services/auth';
 import type { IToken } from '#types/auth';
 import type { HTTPResponse } from '#types/fetch';
 import { handleError, handleResponse } from './error-handling';
+import { getReferrerAndOriginForAPIByUserUrl } from './referrer-origin';
 
 interface ICreateAPIUrl {
   endpoint: string;
@@ -74,8 +75,17 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
   const shouldRefreshToken = options.shouldRefreshToken ?? true;
 
   const cookies = await getCookies();
-  const origin = options.origin ?? cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY];
-  const referrer = options.referrer ?? cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY];
+  let origin = options.origin;
+  let referrer = options.referrer;
+
+  if (typeof window !== 'undefined') {
+    const urlInfo = getReferrerAndOriginForAPIByUserUrl(window.location.href);
+    origin = origin ?? urlInfo.origin;
+    referrer = referrer ?? urlInfo.referrer;
+  } else {
+    origin = origin ?? cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY];
+    referrer = referrer ?? cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY];
+  }
   const accessToken = cookies?.[process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY];
   const locale = cookies?.[process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY];
 
