@@ -2,15 +2,15 @@ import { setCookie } from '@oe/core/utils/cookie';
 import type { NextRequest } from 'next/server';
 
 function getCorsHeaders(origin: string | null) {
-  const allowedDomain = process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN;
-  const isAllowedOrigin =
-    origin &&
-    (origin.endsWith(allowedDomain) ||
-      origin === process.env.NEXT_PUBLIC_APP_ORIGIN ||
-      origin === 'https://vbiacademy.edu.vn');
+  // const allowedDomain = process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN;
+  // const isAllowedOrigin =
+  //   origin &&
+  //   (origin.endsWith(allowedDomain) ||
+  //     origin === process.env.NEXT_PUBLIC_APP_ORIGIN ||
+  //     origin === 'https://vbiacademy.edu.vn');
 
   return {
-    'Access-Control-Allow-Origin': isAllowedOrigin ? origin : '',
+    'Access-Control-Allow-Origin': origin ?? '',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Allow-Credentials': 'true',
