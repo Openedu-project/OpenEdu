@@ -25,7 +25,8 @@ export function MessageInputAction({
 }) {
   const pathname = usePathname();
   const tAI = useTranslations('aiAssistant');
-  const { status, addMessage, resetGenMessage, genMessage } = useConversationStore();
+  const { status, addMessage, resetGenMessage, genMessage, thinking, setThinking, selectedModel } =
+    useConversationStore();
   const [cancelLoading, setCancelLoading] = useState(false);
   const genMessageRef = useRef<IMessage>(undefined);
 
@@ -79,9 +80,16 @@ export function MessageInputAction({
           {deepResearch?.icon}
           <span className="mcaption-semibold12 ml-2 hidden md:inline-block">{tAI(deepResearch?.lableKey)}</span>
         </Button>
-        <Button variant="outline" className="!p-2 rounded-full" disabled>
-          <LampCharge />
-          <span className="mcaption-semibold12 ml-2 hidden md:inline-block">{tAI('reasoning')}</span>
+        <Button
+          variant="outline"
+          className={cn('!p-2 rounded-full', thinking && 'border-primary bg-primary/5 text-primary hover:text-primary')}
+          disabled={!selectedModel?.configs?.extended_thinking_enabled}
+          onClick={() => {
+            setThinking(!thinking);
+          }}
+        >
+          <LampCharge color={`hsl(var(${thinking ? '--primary' : '--foreground'}))`} />
+          <span className="mcaption-semibold12 ml-2 hidden md:inline-block">{tAI('thinking')}</span>
         </Button>
       </div>
       <div className="flex gap-2">

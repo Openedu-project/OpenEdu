@@ -57,6 +57,7 @@ export const useAIConversationHandler = (status?: IAIStatus, genMessageId?: stri
         ai_agent_type: data.message_ai_agent_type,
         is_ai: true,
         props: messageData?.props,
+        reasoning: data?.reasoning,
       };
     },
     [status, genMessageId, messageData]

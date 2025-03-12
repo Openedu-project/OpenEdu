@@ -12,6 +12,7 @@ import LikeButton from '../message-actions/like';
 import Rewrite from '../message-actions/rewrite';
 import { SourcesButton } from '../sources/sources-button';
 import type { IAIMessageProps } from '../type';
+import { ThinkingMessage } from './thinking-message';
 
 export const AIMessage = ({ message, loading, rewrite, content, actionsButton = true, className }: IAIMessageProps) => {
   const html = useMemo(() => marked.parse(content ?? message.content), [message.content, content]);
@@ -48,7 +49,12 @@ export const AIMessage = ({ message, loading, rewrite, content, actionsButton = 
 
             <p className="mcaption-semibold14 text-test">{message?.ai_model?.display_name ?? 'AI Assistant'}</p>
           </div>
-          {GENERATING_STATUS.includes(message.status ?? '') && message.content.length === 0 ? (
+          {message.reasoning && (
+            <ThinkingMessage thinking={message.reasoning ?? ''} isGenerating={message.status === 'reasoning'} />
+          )}
+          {GENERATING_STATUS.includes(message.status ?? '') &&
+          message.content.length === 0 &&
+          message.reasoning?.length === 0 ? (
             <div className="flex w-12 items-end">
               <div className="flex items-center justify-center space-x-1 py-4">
                 <div className="h-2 w-2 animate-[bounce_1s_infinite] rounded-full bg-primary" />

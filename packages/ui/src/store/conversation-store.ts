@@ -23,6 +23,8 @@ interface IConversationStore {
   resetOpenWebSource: () => void;
   width: number;
   setWidth: (width: number) => void;
+  thinking: boolean;
+  setThinking: (thinking: boolean) => void;
 }
 
 export const useConversationStore = create<IConversationStore>(set => {
@@ -85,9 +87,9 @@ export const useConversationStore = create<IConversationStore>(set => {
               ...data,
               props: data.props ?? state.genMessage?.props,
               content: (state.genMessage?.content ?? '') + data?.content,
+              reasoning: (state.genMessage?.reasoning ?? '') + data?.reasoning,
             };
         callback?.();
-
         return {
           genMessage: newMessage,
           messages: state.messages.slice(0, shortenedIndex ?? state.messages.length),
@@ -111,5 +113,11 @@ export const useConversationStore = create<IConversationStore>(set => {
       set(() => {
         return { width };
       }),
+    thinking: false,
+    setThinking: (thinking: boolean) => {
+      set(() => {
+        return { thinking };
+      });
+    },
   };
 });

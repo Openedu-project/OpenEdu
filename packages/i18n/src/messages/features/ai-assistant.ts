@@ -45,5 +45,6 @@ export const aiAssistantMessages = {
     reasoning: 'Reasoning',
     resources: 'Resources',
     chatDesc: 'You can find ideation for your content by OpenEdu Chat Agent',
+    thinking: 'Thinking',
   },
 };

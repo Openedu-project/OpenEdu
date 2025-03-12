@@ -28,6 +28,7 @@ export interface IAgenConfigs {
   present_creator_enabled: boolean;
   code_executor_enabled: boolean;
   searcher_enabled: boolean;
+  extended_thinking_enabled: boolean;
 }
 export interface Configs extends IAgenConfigs {
   stream_response_enabled: boolean;
@@ -54,6 +55,7 @@ export interface IConversationRequest {
   attachment_ids?: string[];
   ai_conversation_id?: string;
   message_id?: string;
+  extended_thinking: boolean;
 }
 
 export interface IUpdateConversationPayload {
@@ -80,9 +82,10 @@ export interface IMessageData {
   is_image_analysis: boolean;
   ai_agent_type: TAgentType;
   message_ai_agent_type: TAgentType;
+  reasoning: string;
 }
 
-export type IAIStatus = 'generating' | 'pending' | 'completed' | 'failed' | 'stopped' | 'tool_ended';
+export type IAIStatus = 'generating' | 'pending' | 'completed' | 'failed' | 'stopped' | 'tool_ended' | 'reasoning';
 
 export type IContextType = 'text';
 
@@ -137,6 +140,7 @@ export interface IMessage {
   sender: IMessageSender;
   ai_agent_type: TAgentType;
   props?: IMessageProps | null;
+  reasoning?: string | null;
 }
 
 export interface IMessageProps {

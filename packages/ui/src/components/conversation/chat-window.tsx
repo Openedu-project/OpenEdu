@@ -11,10 +11,10 @@ import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { AGENT_OPTIONS } from './constants';
 import EmptyChat from './empty-chat';
+import { useSendMessageHandler } from './hooks/useMessageHandler';
 import { InputFrame } from './message-input/input-frame';
 import { MessageContainer } from './message/message-container';
 import type { IChatWindowProps } from './type';
-import { useSendMessageHandler } from './utils';
 
 export function ChatWindow({ id, initData, agent = 'ai_search', className }: IChatWindowProps) {
   const tError = useTranslations('errors');

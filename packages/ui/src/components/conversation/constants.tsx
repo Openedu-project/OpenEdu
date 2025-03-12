@@ -92,7 +92,7 @@ export const INPUT_BUTTON: IInputButton[] = [
   },
 ];
 
-export const AGENT_OPTIONS: Record<keyof IAgenConfigs, TAgentType> = {
+export const AGENT_OPTIONS: Partial<Record<keyof IAgenConfigs, TAgentType>> = {
   image_analysis_enabled: 'ai_image_analysis',
   present_creator_enabled: 'ai_slide',
   code_executor_enabled: 'ai_code',

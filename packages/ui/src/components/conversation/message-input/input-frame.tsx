@@ -5,7 +5,7 @@ import { type RefObject, useEffect, useMemo, useRef } from 'react';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { AGENT_OPTIONS } from '../constants';
-import { useSendMessageHandler } from '../utils';
+import { useSendMessageHandler } from '../hooks/useMessageHandler';
 import MessageInput from './message-input';
 
 export function InputFrame({
@@ -21,8 +21,9 @@ export function InputFrame({
   containerRef?: RefObject<HTMLDivElement | null>;
   updateWidth?: boolean;
 }) {
-  const sendMessage = useSendMessageHandler(agent, id, undefined, containerRef);
   const { selectedModel, setWidth } = useConversationStore();
+  const sendMessage = useSendMessageHandler(agent, id, undefined, containerRef);
+
   const messageType = useMemo(
     () =>
       [

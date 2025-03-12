@@ -3,7 +3,6 @@ import { type SpringValue, animated, useSpring, useTransition } from '@react-spr
 import { useMemo } from 'react';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
-import { Artifact } from './artifact/artifact';
 import { ChatWindow } from './chat-window';
 import { SourceList } from './sources/source-list';
 import { SourcePopup } from './sources/sources-popup';
@@ -48,7 +47,7 @@ export function ChatWithSource({ id, initData, agent = 'ai_search' }: IChatWindo
   });
 
   return (
-    <div className="container flex grow gap-4 overflow-hidden">
+    <div className="flex grow gap-4 overflow-hidden md:container">
       <AnimatedDiv className="grow" style={isDesktop ? chatProps : undefined}>
         <ChatWindow id={id} initData={initData} agent={agent} />
       </AnimatedDiv>
@@ -81,7 +80,6 @@ export function ChatWithSource({ id, initData, agent = 'ai_search' }: IChatWindo
       ) : (
         <SourcePopup />
       )}
-      <Artifact chatId={id} agent={agent} />
     </div>
   );
 }
