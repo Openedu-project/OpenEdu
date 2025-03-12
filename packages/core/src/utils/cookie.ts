@@ -78,7 +78,9 @@ export const setCookie = async (key: string, value: any, options?: CookieOptions
     const { cookies, headers } = await import('next/headers');
     const serverCookies = await cookies();
     const serverHeaders = await headers();
-    const host = new URL(serverHeaders.get('x-url') ?? '').host ?? new URL(serverHeaders.get('host') ?? '').host;
+    const xUrl = serverHeaders.get('x-url');
+    const fallbackHost = serverHeaders.get('host');
+    const host = (xUrl ? new URL(xUrl).host : fallbackHost) ?? undefined;
 
     const payload = { name: key, value: stringify(value), ...cookieOptions({ ...options, domain: host }) };
     serverCookies.set(payload);
