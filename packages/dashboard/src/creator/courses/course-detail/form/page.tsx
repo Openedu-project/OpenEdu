@@ -18,6 +18,7 @@ import { Badge } from '@oe/ui/shadcn/badge';
 import { Button } from '@oe/ui/shadcn/button';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { Switch } from '@oe/ui/shadcn/switch';
+import { AnswersModal } from './_components/answers-modal';
 import { FormTriggerForm } from './_components/form-trigger-form';
 
 const defaultValues: ICourseFormTrigger = {
@@ -171,10 +172,17 @@ export default function CourseDetailFormPage() {
           const formTrigger = row.original;
           return (
             <div className="flex items-center gap-2">
-              <Button variant="outline" className="h-8 w-auto gap-2 px-2">
-                <Eye className="h-4 w-4" />
-                {t('form.viewAnswers')}
-              </Button>
+              <AnswersModal
+                id={formTrigger.form?.id ?? ''}
+                formUID={formTrigger.form?.uid ?? ''}
+                title={t('form.viewAnswers')}
+                trigger={
+                  <Button variant="outline" className="h-8 w-auto gap-2 px-2">
+                    <Eye className="h-4 w-4" />
+                    {t('form.viewAnswers')}
+                  </Button>
+                }
+              />
               <DeleteButton
                 variant="destructive"
                 className="h-8 w-auto gap-2 px-2"

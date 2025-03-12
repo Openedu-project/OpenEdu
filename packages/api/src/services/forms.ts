@@ -92,3 +92,40 @@ export const deleteFormTriggerService = async (
   );
   return response.data;
 };
+
+export const getFormResponsesService = async (
+  url: string | undefined,
+  {
+    id,
+    queryParams,
+    init,
+  }: { id?: string; queryParams?: Record<string, string | boolean | number>; init?: RequestInit }
+) => {
+  const response = await fetchAPI<HTTPPagination<IFormResponse>>(
+    url ?? buildUrl({ endpoint: API_ENDPOINT.FORMS_ID_SESSIONS, params: { id }, queryParams }),
+    init
+  );
+  return response.data;
+};
+
+export const getQuestionAnswersStatsService = async (
+  url: string | undefined,
+  { id, init }: { id?: string; init?: RequestInit }
+) => {
+  const response = await fetchAPI<HTTPPagination<IFormResponse>>(
+    url ?? buildUrl({ endpoint: API_ENDPOINT.FORM_QUESTIONS_ID_ANSWERS, params: { id } }),
+    init
+  );
+  return response.data;
+};
+
+export const getFormSummaryService = async (
+  url: string | undefined,
+  { id, init }: { id?: string; init?: RequestInit }
+) => {
+  const response = await fetchAPI<HTTPPagination<IFormResponse>>(
+    url ?? buildUrl({ endpoint: API_ENDPOINT.FORMS_ID_SUMMARY, params: { id } }),
+    init
+  );
+  return response.data;
+};

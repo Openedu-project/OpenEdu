@@ -56,7 +56,7 @@ export const checkDomainService = async (
 export const getOrganizationByHostMiddleware = async (referrer: string, origin: string) => {
   const { host } = new URL(origin);
   try {
-    const endpoint = `${API_ENDPOINT.ADMIN_ORGANIZATIONS}?domain=${host}`;
+    const endpoint = `${API_ENDPOINT.ADMIN_ORGANIZATIONS}?domain_or_alt_domain=${host}`;
     const apiURL = `${process.env.NEXT_PUBLIC_API_ORIGIN}${endpoint}`;
     const organizationResponse = await fetch(apiURL, {
       headers: {
