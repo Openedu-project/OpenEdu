@@ -21,6 +21,7 @@ export function getNextConfig(config: NextConfig = {}): NextConfig {
       // ppr: 'incremental',
       reactCompiler: true,
       optimizeServerReact: true,
+      optimizePackageImports: ['@oe/core', '@oe/ui', '@oe/i18n', '@oe/api', '@oe/assets'],
     },
     images: {
       loader: 'default',

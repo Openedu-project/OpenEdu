@@ -18,6 +18,7 @@ export async function baseMiddleware(request: NextRequest, host?: string | null)
   const userHost = host ?? request.headers.get('x-forwarded-host') ?? appHost;
   const userUrl = appUrl.replace(appHost, userHost);
   const { origin, referrer } = getReferrerAndOriginForAPIByUserUrl(userUrl);
+  const domain = new URL(userUrl).host;
 
   const oauthToken = request.nextUrl.searchParams.get('oauth_token');
   if (oauthToken) {
@@ -31,12 +32,12 @@ export async function baseMiddleware(request: NextRequest, host?: string | null)
     response.cookies.set({
       name: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY,
       value: access_token,
-      ...cookieOptions(),
+      ...cookieOptions({ domain }),
     });
     response.cookies.set({
       name: process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY,
       value: refresh_token,
-      ...cookieOptions(),
+      ...cookieOptions({ domain }),
     });
 
     return response;
@@ -47,13 +48,13 @@ export async function baseMiddleware(request: NextRequest, host?: string | null)
   i18nResponse.cookies.set({
     name: process.env.NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY,
     value: origin,
-    ...cookieOptions(),
+    ...cookieOptions({ domain }),
     maxAge: 60 * 60 * 24 * 365, // 1 year
   });
   i18nResponse.cookies.set({
     name: process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY,
     value: referrer,
-    ...cookieOptions(),
+    ...cookieOptions({ domain }),
     maxAge: 60 * 60 * 24 * 365, // 1 year
   });
 

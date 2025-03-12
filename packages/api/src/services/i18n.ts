@@ -148,6 +148,7 @@ export const getI18nResponseMiddleware = async (referrer: string, origin: string
     localeCookie: {
       name: process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY,
       ...i18nCookieConfig,
+      domain: new URL(origin).host,
     },
   })(request);
 
@@ -155,6 +156,7 @@ export const getI18nResponseMiddleware = async (referrer: string, origin: string
     name: process.env.NEXT_PUBLIC_COOKIE_LOCALES_KEY,
     value: JSON.stringify(i18nLocales),
     ...i18nCookieConfig,
+    domain: new URL(origin).host,
   });
 
   if (i18nFiles) {
@@ -162,6 +164,7 @@ export const getI18nResponseMiddleware = async (referrer: string, origin: string
       name: process.env.NEXT_PUBLIC_COOKIE_LOCALE_FILES_KEY,
       value: JSON.stringify(i18nFiles),
       ...i18nCookieConfig,
+      domain: new URL(origin).host,
     });
   }
 

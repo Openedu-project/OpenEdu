@@ -263,15 +263,19 @@ export const refreshTokenMiddlewareService = async ({
   res,
 }: { referrer: string; origin: string; req: NextRequest; res: NextResponse }) => {
   const refreshToken = req.cookies.get(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY)?.value;
+  const domain = new URL(origin).host;
   try {
     const data = await postRefreshToken(referrer, origin, refreshToken);
-
-    res.cookies.set(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, data.access_token, { ...cookieOptions() });
-    res.cookies.set(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, data.refresh_token, { ...cookieOptions() });
+    res.cookies.set(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, data.access_token, {
+      ...cookieOptions({ domain }),
+    });
+    res.cookies.set(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, data.refresh_token, {
+      ...cookieOptions({ domain }),
+    });
     return { ...data, response: res };
   } catch (error) {
-    res.cookies.set(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, '', { ...cookieOptions(), maxAge: 0 });
-    res.cookies.set(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, '', { ...cookieOptions(), maxAge: 0 });
+    res.cookies.set(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, '', { ...cookieOptions({ domain }), maxAge: 0 });
+    res.cookies.set(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, '', { ...cookieOptions({ domain }), maxAge: 0 });
     console.error('==========refreshToken error=============', error);
 
     return { response: res };

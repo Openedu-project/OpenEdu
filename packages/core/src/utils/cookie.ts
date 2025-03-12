@@ -38,18 +38,22 @@ export const cookieOptions = (options?: CookieOptions): CookieOptions => {
     sameSite: 'lax',
     path: '/',
     maxAge: defaultExpiredTime,
-    ...(process.env.NODE_ENV === 'development' ? {} : { domain: process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN }),
+    ...(process.env.NODE_ENV === 'development'
+      ? {}
+      : { domain: options?.domain ?? process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN }),
     ...options,
   };
 };
 
 export const getCookieClient = (key: string, options?: CookieOptions) => {
-  return getCookieNextClient(key, cookieOptions(options));
+  const domain = new URL(window.location.href).host;
+  return getCookieNextClient(key, cookieOptions({ ...options, domain }));
 };
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const setCookieClient = (key: string, value: any, options?: CookieOptions) => {
-  return setCookieNextClient(key, value, cookieOptions(options));
+  const domain = new URL(window.location.href).host;
+  return setCookieNextClient(key, value, cookieOptions({ ...options, domain }));
 };
 
 export const getCookie = async (key: string, options?: CookieOptions): Promise<CookieValueTypes> => {
@@ -58,16 +62,19 @@ export const getCookie = async (key: string, options?: CookieOptions): Promise<C
     const serverCookies = await cookies();
     return serverCookies.get(key)?.value;
   }
-  return getCookieNextClient(key, cookieOptions(options));
+  const domain = new URL(window.location.href).host;
+  return getCookieNextClient(key, cookieOptions({ ...options, domain }));
 };
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const setCookie = async (key: string, value: any, options?: CookieOptions): Promise<void> => {
   if (typeof window === 'undefined') {
-    const payload = { name: key, value: stringify(value), ...cookieOptions(options) };
-
-    const { cookies } = await import('next/headers');
+    const { cookies, headers } = await import('next/headers');
     const serverCookies = await cookies();
+    const serverHeaders = await headers();
+    const host = new URL(serverHeaders.get('x-url') ?? '').host ?? new URL(serverHeaders.get('host') ?? '').host;
+
+    const payload = { name: key, value: stringify(value), ...cookieOptions({ ...options, domain: host }) };
     serverCookies.set(payload);
   } else {
     setCookieNextClient(key, value, cookieOptions(options));
@@ -75,7 +82,8 @@ export const setCookie = async (key: string, value: any, options?: CookieOptions
 };
 
 export const deleteCookie = async (key: string, options?: CookieOptions): Promise<void> => {
-  await setCookie(key, '', { ...cookieOptions(options), maxAge: 0 });
+  const domain = new URL(window.location.href).host;
+  await setCookie(key, '', { ...cookieOptions({ ...options, domain }), maxAge: 0 });
 };
 
 export const getCookies = async (options?: CookieOptions) => {
@@ -85,5 +93,6 @@ export const getCookies = async (options?: CookieOptions) => {
     const cookiesMap = Object.fromEntries(serverCookies.getAll().map(({ name, value }) => [name, value]));
     return cookiesMap;
   }
-  return getCookiesNextClient(cookieOptions(options));
+  const domain = new URL(window.location.href).host;
+  return getCookiesNextClient(cookieOptions({ ...options, domain }));
 };
