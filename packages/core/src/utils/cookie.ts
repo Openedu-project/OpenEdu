@@ -79,11 +79,10 @@ export const setCookie = async (key: string, value: any, options?: CookieOptions
     const { cookies, headers } = await import('next/headers');
     const serverCookies = await cookies();
     const serverHeaders = await headers();
-    const xUrl = serverHeaders.get('x-url');
-    const fallbackHost = serverHeaders.get('host');
-    const host = (xUrl ? new URL(xUrl).host : fallbackHost) ?? undefined;
+    const referer = serverHeaders.get('referer');
+    const domain = referer ? new URL(referer).host : '';
 
-    const payload = { name: key, value: stringify(value), ...cookieOptions({ ...options, domain: host }) };
+    const payload = { name: key, value: stringify(value), ...cookieOptions({ ...options, domain }) };
     serverCookies.set(payload);
   } else {
     setCookieNextClient(key, value, cookieOptions(options));
