@@ -22,17 +22,20 @@ export function LogoutButton() {
       resetAllStores();
       toast.success(tToast('logoutSuccess'));
       await mutate(() => true, undefined, { revalidate: false });
-      const domain = typeof window !== 'undefined' ? new URL(window.location.href).host : '';
       await setCookiesService([
         {
           key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY,
           value: '',
-          options: domain ? { domain, maxAge: 0 } : { maxAge: 0 },
+          options: {
+            maxAge: 0,
+          },
         },
         {
           key: process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY,
           value: '',
-          options: domain ? { domain, maxAge: 0 } : { maxAge: 0 },
+          options: {
+            maxAge: 0,
+          },
         },
       ]);
       router.replace(nextPath);

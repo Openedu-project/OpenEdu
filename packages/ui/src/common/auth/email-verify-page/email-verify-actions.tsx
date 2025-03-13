@@ -21,17 +21,14 @@ export function EmailVerifyActions({
 
   const handleNavigate = async (path: string) => {
     if (!isError && accessToken && refreshToken) {
-      const domain = typeof window !== 'undefined' ? new URL(window.location.href).host : '';
       await setCookiesService([
         {
           key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY,
           value: accessToken,
-          options: domain ? { domain } : undefined,
         },
         {
           key: process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY,
           value: refreshToken,
-          options: domain ? { domain } : undefined,
         },
       ]);
       router.replace(path);
