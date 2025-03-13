@@ -165,6 +165,7 @@ export const Editor = () => {
           style={{
             width: template.frame?.width ?? '100%',
             height: template.frame?.height ?? '100%',
+            maxHeight: '100%',
             backgroundColor: gradientBg?.isGradient ? undefined : template.frame?.backgroundColor,
             backgroundImage: template.frame?.file?.url
               ? `url(${template.frame?.file?.url})${gradientBg?.isGradient ? `, ${frameBackgroundColor}` : ''}`
