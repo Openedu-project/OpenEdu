@@ -82,7 +82,11 @@ export const setCookie = async (key: string, value: any, options?: CookieOptions
     const referer = serverHeaders.get('referer');
     const domain = referer ? new URL(referer).host : '';
 
-    const payload = { name: key, value: stringify(value), ...cookieOptions({ ...options, domain }) };
+    const payload = {
+      name: key,
+      value: stringify(value),
+      ...cookieOptions({ ...options, domain: options?.domain ?? domain }),
+    };
     serverCookies.set(payload);
   } else {
     setCookieNextClient(key, value, cookieOptions(options));

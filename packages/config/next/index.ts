@@ -19,7 +19,7 @@ export function getNextConfig(config: NextConfig = {}): NextConfig {
     // },
     experimental: {
       // ppr: 'incremental',
-      reactCompiler: true,
+      // reactCompiler: true,
       optimizeServerReact: true,
       optimizePackageImports: ['@oe/core', '@oe/ui', '@oe/i18n', '@oe/api', '@oe/assets'],
     },
