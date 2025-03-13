@@ -39,15 +39,23 @@ export default function CourseCard({
   const [href, setHref] = useState('');
 
   useEffect(() => {
-    if (process.env.NODE_ENV !== 'development' && typeof window !== 'undefined' && location.origin) {
-      const isExternalLink = !!((org?.alt_domain || org?.domain) !== new URL(location.origin).host);
+    if (process.env.NODE_ENV !== 'development' && typeof window !== 'undefined') {
+      const isExternalLink =
+        org?.alt_domain !== new URL(location.origin).host && org?.domain !== new URL(location.origin).host;
       setIsExternal(isExternalLink);
+
+      if (isExternalLink) {
+        if (org?.alt_domain || org?.domain) {
+          setHref(
+            `https://${org.alt_domain || org.domain}${PLATFORM_ROUTES.courseDetail.replace(':slug', courseData?.slug)}`
+          );
+        } else {
+          setHref(PLATFORM_ROUTES.courseDetail.replace(':slug', courseData?.slug));
+        }
+      } else {
+        setHref(PLATFORM_ROUTES.courseDetail.replace(':slug', courseData?.slug));
+      }
     }
-    setHref(
-      process.env.NODE_ENV !== 'development' && typeof window !== 'undefined' && (org?.alt_domain || org?.domain)
-        ? `https://${org.alt_domain || org.domain}${PLATFORM_ROUTES.courseDetail.replace(':slug', courseData?.slug)}`
-        : PLATFORM_ROUTES.courseDetail.replace(':slug', courseData?.slug)
-    );
   }, [org, courseData?.slug]);
 
   return (

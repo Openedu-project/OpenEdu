@@ -174,10 +174,15 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false, onClick }
   const { triggerPostEnrollCourse } = usePostEnrollCourse(courseData?.cuid ?? '');
 
   const domain = courseData?.org?.domain;
-  const isExternalDomain = useMemo(
-    () => typeof window !== 'undefined' && domain && domain !== window.location.hostname,
-    [domain]
-  );
+  const isExternalDomain = useMemo(() => {
+    if (process.env.NODE_ENV !== 'development' && typeof window !== 'undefined') {
+      const isExternalLink =
+        courseData?.org?.alt_domain !== new URL(location.origin).host &&
+        courseData?.org?.domain !== new URL(location.origin).host;
+      return isExternalLink;
+    }
+    return false;
+  }, [courseData?.org]);
 
   useEffect(() => {
     if (refCode) {
@@ -302,6 +307,7 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false, onClick }
       setLoginRequiredModal,
       triggerPostEnrollCourse,
       slug,
+      onClick,
     ]
   );
 
