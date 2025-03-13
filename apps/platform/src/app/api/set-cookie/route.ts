@@ -20,8 +20,9 @@ function getCorsHeaders(origin: string | null) {
 export async function POST(request: NextRequest) {
   const origin = request.headers.get('origin');
   const userUrl = request.headers.get('x-url');
-  console.log('🚀 ~ POST ~ userUrl:', userUrl, origin, request.nextUrl);
+
   const corsHeaders = getCorsHeaders(userUrl ? new URL(userUrl).host : origin);
+  const domain = userUrl ? new URL(userUrl).host : origin;
   try {
     const body = await request.json();
 
@@ -31,7 +32,7 @@ export async function POST(request: NextRequest) {
         if (!key || value === undefined) {
           return Response.json({ error: 'key and value are required for all cookies' }, { status: 400 });
         }
-        await setCookie(key, value, options);
+        await setCookie(key, value, { ...options, domain });
       }
       return Response.json({ message: 'Multiple cookies set successfully' }, { status: 200, headers: corsHeaders });
     }
@@ -39,7 +40,7 @@ export async function POST(request: NextRequest) {
     if (!key || value === undefined) {
       return Response.json({ error: 'key and value are required' }, { status: 400, headers: corsHeaders });
     }
-    await setCookie(key, value, options);
+    await setCookie(key, value, { ...options, domain });
     return Response.json({ message: 'Cookie set successfully' }, { status: 200, headers: corsHeaders });
   } catch {
     return Response.json({ error: 'An error occurred while setting cookie' }, { status: 500, headers: corsHeaders });
