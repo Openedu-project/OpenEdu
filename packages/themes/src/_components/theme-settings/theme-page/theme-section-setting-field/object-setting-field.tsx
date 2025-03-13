@@ -6,6 +6,7 @@ import { Label } from '@oe/ui/shadcn/label';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import type React from 'react';
 import { useState } from 'react';
+import { camelToNormal } from '../../../../_utils/function';
 import {
   ThemePageSettingArrayField,
   ThemePageSettingField,
@@ -35,7 +36,7 @@ export const ThemePageSettingObjectField: React.FC<ThemePageSettingObjectFieldPr
         onClick={() => setIsExpanded(!isExpanded)}
       >
         {isExpanded ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
-        <Label className="font-medium capitalize">{label}</Label>
+        <Label className="font-medium">{camelToNormal(label)}</Label>
       </Card>
 
       {isExpanded && (

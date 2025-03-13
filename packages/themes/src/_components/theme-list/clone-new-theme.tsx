@@ -14,6 +14,7 @@ import { ThemeTemplatesModal } from './theme-templates-modal';
 interface CloneNewThemeModalModal {
   themeSystemRes?: ISystemConfigRes<ThemeSystem>[];
 }
+
 const CloneNewTheme = ({ themeSystemRes }: CloneNewThemeModalModal) => {
   const tThemeConfig = useTranslations('themePage');
   const t = useTranslations('themeList');
@@ -21,6 +22,7 @@ const CloneNewTheme = ({ themeSystemRes }: CloneNewThemeModalModal) => {
 
   const [open, setOpen] = useState(false);
   const { theme, mutateTheme } = useGetTheme(themeSystemRes);
+
   const alreadyClonedThemes = theme?.[0]?.value?.availableThemes
     ? (Object.keys(theme?.[0]?.value?.availableThemes) as ThemeName[])
     : undefined;
@@ -37,50 +39,51 @@ const CloneNewTheme = ({ themeSystemRes }: CloneNewThemeModalModal) => {
     [handleClose]
   );
 
-  const handleNewThemeCloned = async (themeNames: ThemeName[]) => {
-    //TODO: mutate the list my themes - themesData
-    //OR: add theme new ThemeName to themesData by state
-    const configId = theme?.[0]?.id;
-    const currentAvailableThemes = theme?.[0]?.value?.availableThemes || {};
+  const handleNewThemeCloned = useCallback(
+    async (themeNames: ThemeName[]) => {
+      const configId = theme?.[0]?.id;
+      const currentAvailableThemes = theme?.[0]?.value?.availableThemes || {};
 
-    let clonedThemes = {};
+      let clonedThemes = {};
 
-    for (const name of themeNames) {
-      if (initialData.availableThemes?.[name]) {
-        clonedThemes = {
-          ...clonedThemes,
-          [name]: initialData.availableThemes[name],
-        };
-      }
-    }
-
-    if (Object.keys(clonedThemes)?.length > 0) {
-      const mergedThemes = {
-        ...currentAvailableThemes, // Existing themes come first
-        ...clonedThemes, // New themes override existing ones if names conflict
-      };
-
-      const data: ThemeSystem = {
-        activedTheme: theme?.[0]?.value?.activedTheme as ThemeName | undefined,
-        availableThemes: mergedThemes,
-      };
-
-      try {
-        const res = await createOrUpdateThemeConfig({
-          config: data,
-          id: configId,
-        });
-        if (!res) {
-          toast.error(t('cloneFail'));
-          return;
+      for (const name of themeNames) {
+        if (initialData.availableThemes?.[name]) {
+          clonedThemes = {
+            ...clonedThemes,
+            [name]: initialData.availableThemes[name],
+          };
         }
-        toast.success(t('cloneSuccess'));
-        await mutateTheme();
-      } catch (error) {
-        console.error(error);
       }
-    }
-  };
+
+      if (Object.keys(clonedThemes)?.length > 0) {
+        const mergedThemes = {
+          ...currentAvailableThemes, // Existing themes come first
+          ...clonedThemes, // New themes override existing ones if names conflict
+        };
+
+        const data: ThemeSystem = {
+          activedTheme: theme?.[0]?.value?.activedTheme as ThemeName | undefined,
+          availableThemes: mergedThemes,
+        };
+
+        try {
+          const res = await createOrUpdateThemeConfig({
+            config: data,
+            id: configId,
+          });
+          if (!res) {
+            toast.error(t('cloneFail'));
+            return;
+          }
+          toast.success(t('cloneSuccess'));
+          await mutateTheme();
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    },
+    [theme, initialData?.availableThemes, t, mutateTheme]
+  );
 
   return (
     <>

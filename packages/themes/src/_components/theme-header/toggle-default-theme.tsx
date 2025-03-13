@@ -11,7 +11,6 @@ import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import type { ThemeSystem } from '../../_types/index';
 import type { ThemeName } from '../../_types/theme-page';
-import { DEFAULT_THEME } from '../../_utils/constants';
 
 const ToggleDefaultTheme = ({
   selectedTheme,
@@ -25,10 +24,10 @@ const ToggleDefaultTheme = ({
   const { themeName } = useParams();
   const [checked, setChecked] = useState(themeName === selectedTheme);
   const translate = useTranslations('themeHeader');
-  const { mutateTheme } = useGetTheme(themeSystemRes);
+  const { theme, mutateTheme } = useGetTheme(themeSystemRes);
   //TODO: remove logic use the default_theme if the actived theme was undefined.
   const handleSetSelectedTheme = async (checked: boolean) => {
-    if (!checked && DEFAULT_THEME === themeName) {
+    if (!checked && selectedTheme === themeName) {
       toast.error(translate('notPrevTheme'));
       return;
     }
@@ -37,7 +36,7 @@ const ToggleDefaultTheme = ({
       return;
     }
 
-    if (!themeSystemRes?.[0]?.value?.availableThemes) {
+    if (!theme?.[0]?.value?.availableThemes) {
       toast.error(translate('notPrevTheme'));
       return;
     }
@@ -45,7 +44,7 @@ const ToggleDefaultTheme = ({
     try {
       const currentThemeSystem: ThemeSystem = {
         activedTheme: (checked ? themeName : selectedTheme) as ThemeName,
-        availableThemes: themeSystemRes?.[0]?.value?.availableThemes,
+        availableThemes: theme?.[0]?.value?.availableThemes,
       };
       const res = await createOrUpdateThemeConfig({
         config: currentThemeSystem,

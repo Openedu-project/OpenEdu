@@ -6,6 +6,7 @@ import type { ThemeName } from '@oe/themes/types/theme-page/index';
 import { ScrollArea } from '@oe/ui/shadcn/scroll-area';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
+import { useMemo } from 'react';
 import type { ThemeSystem } from '../../_types';
 import { ThemeCard } from './theme-card';
 
@@ -21,11 +22,13 @@ export default function ThemeList({ themeSystemRes }: ThemeListProps) {
     const configId = theme?.[0]?.id;
     const currentAvailableThemes = theme?.[0]?.value?.availableThemes || {};
 
-    // Remove item from object by key
+    // Check if theme exists before attempting to delete
     if (!currentAvailableThemes?.[name]) {
       toast.error(t('delInvalid'));
       return;
     }
+
+    // Create a new object without the specified theme
     delete currentAvailableThemes?.[name];
 
     const data: ThemeSystem = {
@@ -48,22 +51,45 @@ export default function ThemeList({ themeSystemRes }: ThemeListProps) {
       console.error(error);
     }
   };
+
+  // Sort to put active theme first
+  const sortedThemes = useMemo(() => {
+    const availableThemes = theme?.[0]?.value?.availableThemes;
+    const activeTheme = theme?.[0]?.value?.activedTheme;
+
+    if (!availableThemes) {
+      return [];
+    }
+
+    // Convert to array of [key, value] pairs
+    const themeEntries = Object.entries(availableThemes);
+
+    // Move active theme to first
+    return themeEntries.sort(([key1], [key2]) => {
+      if (key1 === activeTheme) {
+        return -1;
+      }
+      if (key2 === activeTheme) {
+        return 1;
+      }
+      return 0;
+    });
+  }, [theme]);
+
   return (
     <ScrollArea>
       <div className="flex-1 space-y-4 rounded bg-background p-4">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {(theme?.[0]?.value?.availableThemes ? Object.entries(theme?.[0]?.value?.availableThemes) : undefined)?.map(
-            ([key, value]) => (
-              <ThemeCard
-                key={key}
-                name={key as ThemeName}
-                theme={value?.info || { name: key }}
-                isActived={theme?.[0]?.value?.activedTheme === key}
-                variant="my-theme"
-                onRemove={handleRemove}
-              />
-            )
-          )}
+          {sortedThemes?.map(([key, value]) => (
+            <ThemeCard
+              key={key}
+              name={key as ThemeName}
+              theme={value?.info || { name: key }}
+              isActived={theme?.[0]?.value?.activedTheme === key}
+              variant="my-theme"
+              onRemove={handleRemove}
+            />
+          ))}
         </div>
       </div>
     </ScrollArea>
