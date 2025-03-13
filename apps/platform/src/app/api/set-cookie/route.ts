@@ -28,14 +28,17 @@ export async function POST(request: NextRequest) {
         }
         await setCookie(key, value, { ...options, domain });
       }
-      return Response.json({ message: 'Multiple cookies set successfully' }, { status: 200, headers: corsHeaders });
+      return Response.json(
+        { message: 'Multiple cookies set successfully', domain, headers: request.headers },
+        { status: 200, headers: corsHeaders }
+      );
     }
     const { key, value, options } = body;
     if (!key || value === undefined) {
       return Response.json({ error: 'key and value are required' }, { status: 400, headers: corsHeaders });
     }
     await setCookie(key, value, { ...options, domain });
-    return Response.json({ message: 'Cookie set successfully' }, { status: 200, headers: corsHeaders });
+    return Response.json({ message: 'Cookie set successfully', domain }, { status: 200, headers: corsHeaders });
   } catch {
     return Response.json({ error: 'An error occurred while setting cookie' }, { status: 500, headers: corsHeaders });
   }
