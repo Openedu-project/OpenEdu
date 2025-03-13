@@ -44,7 +44,6 @@ export async function baseMiddleware(request: NextRequest, host?: string | null)
   }
 
   let i18nResponse = await getI18nResponseMiddleware(referrer, origin, request);
-
   i18nResponse.cookies.set({
     name: process.env.NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY,
     value: origin,

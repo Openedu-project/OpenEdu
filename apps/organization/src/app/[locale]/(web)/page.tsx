@@ -1,8 +1,8 @@
-import { getThemeConfigServer } from '@oe/api/services/theme';
-import { getMetadata } from '@oe/themes';
-import ThemeWebPage from '@oe/themes/components/web/theme-web-page';
+import { getThemeConfigServer } from "@oe/api/services/theme";
+import { getMetadata } from "@oe/themes";
+import ThemeWebPage from "@oe/themes/components/web/theme-web-page";
 
-import type { Metadata } from 'next';
+import type { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [themeSystem] = await Promise.all([getThemeConfigServer()]);
@@ -17,5 +17,7 @@ export default async function Home() {
     return null;
   }
 
-  return <ThemeWebPage pageKey="homepage" themeSystem={themeSystem?.[0]?.value} />;
+  return (
+    <ThemeWebPage pageKey="homepage" themeSystem={themeSystem?.[0]?.value} />
+  );
 }

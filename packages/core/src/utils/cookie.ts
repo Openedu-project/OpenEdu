@@ -35,13 +35,13 @@ export const defaultExpiredTime = 7 * 86400; // 7 days for refresh token expired
 export const cookieOptions = (options?: CookieOptions): CookieOptions => {
   return {
     // secure: process.env.NODE_ENV !== 'development',
-    sameSite: 'none',
+    sameSite: 'lax',
     secure: true,
     path: '/',
     maxAge: defaultExpiredTime,
     ...options,
     ...(process.env.NODE_ENV === 'development'
-      ? {}
+      ? { domain: options?.domain ? options?.domain?.split(':')[0] : undefined }
       : { domain: options?.domain ?? process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN }),
   };
 };

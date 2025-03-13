@@ -3,7 +3,7 @@ import { API_ENDPOINT } from '#utils/endpoints';
 import { type FetchOptions, createAPIUrl, fetchAPI, postAPI } from '#utils/fetch';
 
 import type { IAccessTokenResponse, ISignUpResponse, ISocialLoginPayload, IToken } from '@oe/api/types/auth';
-import { cookieOptions, getCookies } from '@oe/core/utils/cookie';
+import { cookieOptions } from '@oe/core/utils/cookie';
 import type { NextRequest } from 'next/server';
 import type { NextResponse } from 'next/server';
 import type { LoginSchemaType, SignUpSchemaType } from '#schemas/authSchema';
@@ -38,7 +38,7 @@ export const loginService = async (
   });
   const data = response.data;
   if (data.access_token && data.refresh_token) {
-    await setCookiesService([
+    await setCookiesService(typeof window !== 'undefined' ? window.location.origin : '', [
       {
         key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY,
         value: data.access_token,
@@ -231,23 +231,33 @@ async function postRefreshToken(referrer?: string, origin?: string, refreshToken
   return data;
 }
 
-export async function refreshTokenService(): Promise<IToken | null> {
-  const cookies = await getCookies();
-  const origin = cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY];
-  const referrer = cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY];
-  const refreshToken = cookies?.[process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY];
-
+export async function refreshTokenService({
+  origin,
+  referrer,
+  refreshToken,
+}: {
+  origin?: string;
+  referrer?: string;
+  refreshToken?: string;
+}): Promise<IToken | null> {
+  if (!(origin && refreshToken && referrer)) {
+    return null;
+  }
+  // const cookies = await getCookies();
+  // const origin = cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY];
+  // const refreshToken = cookies?.[process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY];
+  console.info('==========refreshTokenService=============', origin);
   try {
     const data = await postRefreshToken(referrer, origin, refreshToken);
     if (data.access_token && data.refresh_token) {
-      await setCookiesService([
+      await setCookiesService(origin, [
         { key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, value: data.access_token },
         { key: process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, value: data.refresh_token },
       ]);
     }
     return data;
   } catch (error) {
-    await setCookiesService([
+    await setCookiesService(origin, [
       { key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, value: '', options: { maxAge: 0 } },
       { key: process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, value: '', options: { maxAge: 0 } },
     ]);

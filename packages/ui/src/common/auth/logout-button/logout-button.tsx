@@ -22,7 +22,7 @@ export function LogoutButton() {
       resetAllStores();
       toast.success(tToast('logoutSuccess'));
       await mutate(() => true, undefined, { revalidate: false });
-      await setCookiesService([
+      await setCookiesService(typeof window !== 'undefined' ? window.location.origin : '', [
         {
           key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY,
           value: '',

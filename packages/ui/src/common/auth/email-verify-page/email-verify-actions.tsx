@@ -21,7 +21,7 @@ export function EmailVerifyActions({
 
   const handleNavigate = async (path: string) => {
     if (!isError && accessToken && refreshToken) {
-      await setCookiesService([
+      await setCookiesService(typeof window !== 'undefined' ? window.location.origin : '', [
         {
           key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY,
           value: accessToken,

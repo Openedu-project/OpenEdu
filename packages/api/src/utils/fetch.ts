@@ -122,7 +122,11 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
       retryCount++;
       if (!isRefreshing) {
         isRefreshing = true;
-        refreshPromise = refreshTokenService().finally(() => {
+        refreshPromise = refreshTokenService({
+          origin: origin,
+          referrer: referrer,
+          refreshToken: cookies?.[process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY],
+        }).finally(() => {
           isRefreshing = false;
           refreshPromise = null;
         });
@@ -139,7 +143,6 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
     }
     return response;
   }
-
   try {
     const response = await attemptFetch();
     const res = await handleResponse(response);
