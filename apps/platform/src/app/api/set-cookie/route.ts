@@ -2,15 +2,11 @@ import { setCookie } from '@oe/core/utils/cookie';
 import type { NextRequest } from 'next/server';
 
 function getCorsHeaders(origin: string | null) {
-  // const allowedDomain = process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN;
-  // const isAllowedOrigin =
-  //   origin &&
-  //   (origin.endsWith(allowedDomain) ||
-  //     origin === process.env.NEXT_PUBLIC_APP_ORIGIN ||
-  //     origin === 'https://vbiacademy.edu.vn');
+  const allowedDomain = process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN;
+  const isAllowedOrigin = origin && (origin.endsWith(allowedDomain) || origin === process.env.NEXT_PUBLIC_APP_ORIGIN);
 
   return {
-    'Access-Control-Allow-Origin': origin ?? '',
+    'Access-Control-Allow-Origin': isAllowedOrigin ? origin : '',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Allow-Credentials': 'true',
@@ -19,10 +15,7 @@ function getCorsHeaders(origin: string | null) {
 
 export async function POST(request: NextRequest) {
   const origin = request.headers.get('origin');
-  const userUrl = request.headers.get('x-url');
-
-  const corsHeaders = getCorsHeaders(userUrl ? new URL(userUrl).host : origin);
-  const domain = userUrl ? new URL(userUrl).host : origin;
+  const corsHeaders = getCorsHeaders(origin);
   try {
     const body = await request.json();
 
@@ -32,7 +25,7 @@ export async function POST(request: NextRequest) {
         if (!key || value === undefined) {
           return Response.json({ error: 'key and value are required for all cookies' }, { status: 400 });
         }
-        await setCookie(key, value, { ...options, domain });
+        await setCookie(key, value, options);
       }
       return Response.json({ message: 'Multiple cookies set successfully' }, { status: 200, headers: corsHeaders });
     }
@@ -40,7 +33,7 @@ export async function POST(request: NextRequest) {
     if (!key || value === undefined) {
       return Response.json({ error: 'key and value are required' }, { status: 400, headers: corsHeaders });
     }
-    await setCookie(key, value, { ...options, domain });
+    await setCookie(key, value, options);
     return Response.json({ message: 'Cookie set successfully' }, { status: 200, headers: corsHeaders });
   } catch {
     return Response.json({ error: 'An error occurred while setting cookie' }, { status: 500, headers: corsHeaders });

@@ -38,14 +38,17 @@ export const loginService = async (
   });
   const data = response.data;
   if (data.access_token && data.refresh_token) {
+    const domain = typeof window !== 'undefined' ? new URL(window.location.href).host : '';
     await setCookiesService([
       {
         key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY,
         value: data.access_token,
+        options: domain ? { domain } : undefined,
       },
       {
         key: process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY,
         value: data.refresh_token,
+        options: domain ? { domain } : undefined,
       },
     ]);
   }
@@ -237,19 +240,37 @@ export async function refreshTokenService(): Promise<IToken | null> {
   const referrer = cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY];
   const refreshToken = cookies?.[process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY];
 
+  const domain = origin ? new URL(origin).host : '';
+
   try {
     const data = await postRefreshToken(referrer, origin, refreshToken);
     if (data.access_token && data.refresh_token) {
       await setCookiesService([
-        { key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, value: data.access_token },
-        { key: process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, value: data.refresh_token },
+        {
+          key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY,
+          value: data.access_token,
+          options: domain ? { domain } : undefined,
+        },
+        {
+          key: process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY,
+          value: data.refresh_token,
+          options: domain ? { domain } : undefined,
+        },
       ]);
     }
     return data;
   } catch (error) {
     await setCookiesService([
-      { key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, value: '', options: { maxAge: 0 } },
-      { key: process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY, value: '', options: { maxAge: 0 } },
+      {
+        key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY,
+        value: '',
+        options: domain ? { domain, maxAge: 0 } : { maxAge: 0 },
+      },
+      {
+        key: process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY,
+        value: '',
+        options: domain ? { domain, maxAge: 0 } : { maxAge: 0 },
+      },
     ]);
     console.error('==========refreshToken error=============', error);
     return null;
