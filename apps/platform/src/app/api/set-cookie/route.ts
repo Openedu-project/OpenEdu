@@ -19,7 +19,8 @@ function getCorsHeaders(origin: string | null) {
 
 export async function POST(request: NextRequest) {
   const origin = request.headers.get('origin');
-  const corsHeaders = getCorsHeaders(origin);
+  const userUrl = request.headers.get('x-url');
+  const corsHeaders = getCorsHeaders(userUrl ? new URL(userUrl).host : origin);
   try {
     const body = await request.json();
 
