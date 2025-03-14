@@ -1,6 +1,5 @@
 'use client';
 import { useGetLevels } from '@oe/api/hooks/useCourse';
-import { useGetOrganizationByDomain } from '@oe/api/hooks/useOrganization';
 import type { ICourseCategory } from '@oe/api/types/course/category';
 import { AutocompeteMultiple } from '@oe/ui/components/autocomplete';
 import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
@@ -8,11 +7,10 @@ import { useTranslations } from 'next-intl';
 
 export default function Category() {
   const tCourse = useTranslations('course');
-  const { organizationByDomain } = useGetOrganizationByDomain();
   const { levels } = useGetLevels({
     type: 'level',
     active: true,
-    org_id: organizationByDomain?.id ?? '',
+    // org_id: organizationByDomain?.id ?? '',
   });
   return (
     <FormFieldWithLabel

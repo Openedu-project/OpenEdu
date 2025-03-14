@@ -1,18 +1,17 @@
 'use client';
 
 import { useGetLevels } from '@oe/api/hooks/useCourse';
-import { useGetOrganizationByDomain } from '@oe/api/hooks/useOrganization';
 import { Autocomplete } from '@oe/ui/components/autocomplete';
 import { useTranslations } from 'next-intl';
 import { CourseFormField } from './form-field';
 
 export function LevelField() {
   const tAICourse = useTranslations('course.aiCourse');
-  const { organizationByDomain } = useGetOrganizationByDomain();
+  // const { organizationByDomain } = useGetOrganizationByDomain();
 
   const { levels } = useGetLevels({
     type: 'level',
-    org_id: organizationByDomain?.id ?? '',
+    // org_id: organizationByDomain?.id ?? '',
     active: true,
     sort: `"order" asc`,
   });
