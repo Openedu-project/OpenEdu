@@ -69,7 +69,6 @@ export default function CourseListFilter({
   const { categoriesTree: levelCategories } = useCategoriesTree(
     {
       type: 'level',
-      org_id: organizationByDomain?.id ?? '',
     },
     undefined,
     !!organizationByDomain?.id
