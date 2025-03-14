@@ -97,7 +97,7 @@ export const UserMessage = ({ message, loading, sendMessage, messageType }: IMes
       ) : (
         <div
           className={cn(
-            'mcaption-semibold14 max-w-full whitespace-pre-line rounded-xl border bg-primary/10 p-4 text-foreground lg:max-w-[80%]',
+            'mcaption-semibold14 max-w-[90%] whitespace-pre-line rounded-xl border bg-primary/10 p-4 text-foreground',
             'before:!rounded-xl before:absolute before:right-0 before:z-[-1] before:h-full before:w-full before:bg-white before:content-[""]'
           )}
         >

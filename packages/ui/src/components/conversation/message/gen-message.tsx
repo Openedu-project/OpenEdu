@@ -7,20 +7,20 @@ import { TypewriterState } from '../hooks/useTypingText';
 import { AIMessage } from './ai-message';
 
 export const GenMessage = memo(({ containerRef }: { containerRef: RefObject<HTMLDivElement | null> }) => {
-  const { genMessage, setOpenWebSource, openWebSource, addMessage, resetGenMessage } = useConversationStore();
+  const { genMessage, setOpenWebSource, addMessage, resetGenMessage } = useConversationStore();
   const [text, setText] = useState(TypewriterState.currentText);
   const [prevScrollTop, setPrevScrollTop] = useState(0);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (genMessage?.props?.source_results && openWebSource.messageId !== genMessage?.id) {
+    if (genMessage?.props?.source_results) {
       setOpenWebSource({
         messageId: genMessage?.id ?? '',
         isOpen: true,
         sourceList: genMessage?.props?.source_results,
       });
     }
-  }, [genMessage?.props]);
+  }, [genMessage?.props?.source_results]);
 
   useEffect(() => {
     const unsubscribe = TypewriterState.addSubscriber(setText);

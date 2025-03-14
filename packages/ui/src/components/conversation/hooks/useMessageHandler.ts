@@ -81,7 +81,9 @@ export const useSendMessageHandler = (
           extended_thinking: thinking,
         });
 
-        setGenMessage(data.messages?.at(-1) as IMessage, undefined, true);
+        if (data) {
+          setGenMessage(data.messages?.at(-1) as IMessage, undefined, true);
+        }
 
         if (messageID.includes('id_')) {
           updateMessages(data.messages?.at(0) as IMessage, undefined, undefined, messageID);

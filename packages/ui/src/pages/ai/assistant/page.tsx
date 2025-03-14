@@ -27,7 +27,7 @@ export default function AIAssistantPage() {
         </h2>
 
         <div className="grid gap-3 md:grid-cols-2 md:gap-6">
-          <AIModule showDesc className="items-start shadow" />
+          <AIModule showDesc />
         </div>
       </div>
       <InputFrame className="mb-4 w-full" updateWidth reset />

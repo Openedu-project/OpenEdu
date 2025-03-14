@@ -78,6 +78,7 @@ export const InputOption = ({
               handleSelect={handleSelect}
               className={buttonClassName}
               active={selectedIndex === index}
+              align={align}
             />
           );
         }

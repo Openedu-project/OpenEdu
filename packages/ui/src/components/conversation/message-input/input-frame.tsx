@@ -23,15 +23,16 @@ export function InputFrame({
   updateWidth?: boolean;
   reset?: boolean;
 }) {
-  const { selectedModel, setWidth, setSelectedModel, resetStatus } = useConversationStore();
+  const { selectedModel, setWidth, setSelectedModel, resetStatus, setThinking } = useConversationStore();
   const sendMessage = useSendMessageHandler(agent, id, undefined, containerRef);
 
   useEffect(() => {
     if (reset) {
       setSelectedModel(undefined);
       resetStatus();
+      setThinking(false);
     }
-  }, [reset, setSelectedModel, resetStatus]);
+  }, [reset, setSelectedModel, resetStatus, setThinking]);
 
   const messageType = useMemo(
     () =>

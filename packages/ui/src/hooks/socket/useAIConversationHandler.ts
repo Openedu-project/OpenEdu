@@ -20,7 +20,7 @@ export const useAIConversationHandler = (status?: IAIStatus, genMessageId?: stri
     }
   }, [genMessageId, globalMutate]);
 
-  const { messageData } = useGetMessageData({
+  const { messageData, mutate } = useGetMessageData({
     params: {
       channelId,
       messageId: genMessageId,
@@ -36,9 +36,12 @@ export const useAIConversationHandler = (status?: IAIStatus, genMessageId?: stri
       if (!genMessageId || genMessageId !== data.message_id) {
         return;
       }
+      if (!channelId) {
+        setChannelId(data.conversation_id);
+      }
 
       if (data.status === 'tool_ended') {
-        setChannelId(data.conversation_id);
+        mutate();
       }
 
       return {
@@ -60,6 +63,6 @@ export const useAIConversationHandler = (status?: IAIStatus, genMessageId?: stri
         reasoning: data?.reasoning,
       };
     },
-    [status, genMessageId, messageData]
+    [status, genMessageId, messageData, mutate, channelId]
   );
 };

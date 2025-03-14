@@ -21,7 +21,7 @@ export const InputWithAgent = <TFormValues extends FieldValues>({
     <>
       <div className="flex shrink-0 items-center gap-1">
         {buttonData?.icon}
-        <p className="mcaption-semibold12 hidden lg:block">{tAI(buttonData?.textKey)}</p>
+        <p className="mcaption-semibold12">{tAI(buttonData?.textKey)}</p>
 
         {canChangeType && (
           <Button
