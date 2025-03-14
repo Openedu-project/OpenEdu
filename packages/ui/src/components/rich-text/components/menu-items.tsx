@@ -39,6 +39,7 @@ import { cn } from '#utils/cn';
 import type { TRichTextFont } from '../fonts';
 import { AIGeneratePopover } from './ai-generate-popover';
 import { AIRewriteModal } from './ai-rewrite-modal';
+import { FontSizeMenuItem } from './font-size-menu-item';
 import { ImagePopover } from './image-popover';
 import { LinkPopover } from './link-popover';
 import { TextColorMenu } from './text-color-menu';
@@ -431,43 +432,43 @@ export const FontFamilyMenuItem: React.FC<{
   );
 };
 
-export const FontSizeMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => {
-  const t = useTranslations('richText.menuItems');
-  const [fontSize, setFontSize] = useState<string>(editor.getAttributes('textStyle').fontSize || '14px');
+// export const FontSizeMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => {
+//   const t = useTranslations('richText.menuItems');
+//   const [fontSize, setFontSize] = useState<string>(editor.getAttributes('textStyle').fontSize || '14px');
 
-  useEffect(() => {
-    const updateFontSize = () => {
-      const currentFontSize = editor.getAttributes('textStyle').fontSize;
-      setFontSize(currentFontSize || '14px');
-    };
+//   useEffect(() => {
+//     const updateFontSize = () => {
+//       const currentFontSize = editor.getAttributes('textStyle').fontSize;
+//       setFontSize(currentFontSize || '14px');
+//     };
 
-    editor.on('selectionUpdate', updateFontSize);
-    editor.on('transaction', updateFontSize);
+//     editor.on('selectionUpdate', updateFontSize);
+//     editor.on('transaction', updateFontSize);
 
-    return () => {
-      editor.off('selectionUpdate', updateFontSize);
-      editor.off('transaction', updateFontSize);
-    };
-  }, [editor]);
+//     return () => {
+//       editor.off('selectionUpdate', updateFontSize);
+//       editor.off('transaction', updateFontSize);
+//     };
+//   }, [editor]);
 
-  return (
-    <Select value={fontSize} onValueChange={value => editor.chain().focus().setFontSize(value).run()}>
-      <SelectTrigger className="h-8 w-[120px]" title={t('fontSize')}>
-        <SelectValue placeholder="Font size" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="12px">12px</SelectItem>
-        <SelectItem value="14px">14px</SelectItem>
-        <SelectItem value="16px">16px</SelectItem>
-        <SelectItem value="18px">18px</SelectItem>
-        <SelectItem value="20px">20px</SelectItem>
-        <SelectItem value="24px">24px</SelectItem>
-        <SelectItem value="30px">30px</SelectItem>
-        <SelectItem value="36px">36px</SelectItem>
-      </SelectContent>
-    </Select>
-  );
-};
+//   return (
+//     <Select value={fontSize} onValueChange={value => editor.chain().focus().setFontSize(value).run()}>
+//       <SelectTrigger className="h-8 w-[120px]" title={t('fontSize')}>
+//         <SelectValue placeholder="Font size" />
+//       </SelectTrigger>
+//       <SelectContent>
+//         <SelectItem value="12px">12px</SelectItem>
+//         <SelectItem value="14px">14px</SelectItem>
+//         <SelectItem value="16px">16px</SelectItem>
+//         <SelectItem value="18px">18px</SelectItem>
+//         <SelectItem value="20px">20px</SelectItem>
+//         <SelectItem value="24px">24px</SelectItem>
+//         <SelectItem value="30px">30px</SelectItem>
+//         <SelectItem value="36px">36px</SelectItem>
+//       </SelectContent>
+//     </Select>
+//   );
+// };
 
 export const HorizontalRuleMenuItem: React.FC<{ editor: Editor }> = ({ editor }) => {
   const t = useTranslations('richText.menuItems');

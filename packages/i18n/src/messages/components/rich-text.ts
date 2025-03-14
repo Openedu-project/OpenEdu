@@ -28,6 +28,7 @@ export const richTextMessages = {
       redo: 'Redo',
       horizontalRule: 'Horizontal Rule',
       hardBreak: 'Hard Break',
+      fontSizeCustom: 'Custom Font Size',
     },
     popover: {
       addLink: 'Add Link',

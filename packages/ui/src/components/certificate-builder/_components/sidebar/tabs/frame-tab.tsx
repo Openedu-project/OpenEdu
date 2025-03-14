@@ -11,7 +11,7 @@ import { Button } from '#shadcn/button';
 import { Switch } from '#shadcn/switch';
 import { cn } from '#utils/cn';
 import { useCertificateBuilder } from '../../provider';
-import { SIDEBAR_STYLES } from '../constants';
+import { SIDEBAR_STYLES, defaultFrame } from '../constants';
 
 export const FrameTab = () => {
   const tCertificate = useTranslations('certificate');
@@ -110,15 +110,36 @@ export const FrameTab = () => {
     img.src = file.url;
 
     img.onload = () => {
-      // Cập nhật frame với kích thước thực của ảnh
+      const aspectRatio = img.naturalWidth / img.naturalHeight;
+      let newWidth: number;
+      let newHeight: number;
+
+      // Tính toán kích thước mới dựa trên tỷ lệ khung hình
+      if (img.naturalWidth > defaultFrame.width || img.naturalHeight > defaultFrame.height) {
+        if (aspectRatio > 1) {
+          // Ảnh ngang
+          newWidth = Math.min(defaultFrame.width, img.naturalWidth);
+          newHeight = newWidth / aspectRatio;
+        } else {
+          // Ảnh dọc hoặc vuông
+          newHeight = Math.min(defaultFrame.height, img.naturalHeight);
+          newWidth = newHeight * aspectRatio;
+        }
+      } else {
+        // Ảnh nhỏ hơn kích thước mặc định
+        newWidth = img.naturalWidth;
+        newHeight = img.naturalHeight;
+      }
+
+      // Cập nhật frame với kích thước đã tính toán theo tỷ lệ
       updateTemplate({
         ...template,
         frame: {
           ...template.frame,
           file: file as IFileResponse,
-          width: img.naturalWidth,
-          height: img.naturalHeight,
-          backgroundColor: template.frame?.backgroundColor,
+          width: Math.round(newWidth),
+          height: Math.round(newHeight),
+          backgroundColor: template.frame?.backgroundColor ?? defaultFrame.backgroundColor,
         },
       });
 

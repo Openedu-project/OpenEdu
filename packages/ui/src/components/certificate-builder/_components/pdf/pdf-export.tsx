@@ -8,6 +8,7 @@ import { Download } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 import { Button, type ButtonProps } from '#shadcn/button';
+import { defaultFrame } from '../sidebar/constants';
 import { PDFImageRenderer } from './pdf-image-renderer';
 import { PDFOrganizationRenderer } from './pdf-organization-renderer';
 import { PDFRichTextRenderer } from './pdf-rich-text-renderer';
@@ -22,7 +23,7 @@ export const CertificatePDF: FC<{
     <Document style={{ fontFamily: 'Inter', fontSize: 14 }}>
       <Page
         key={template.id}
-        size={[template.frame?.width ?? 800, template.frame?.height ?? 600]}
+        size={[template.frame?.width ?? defaultFrame.width, template.frame?.height ?? defaultFrame.height]}
         style={{
           backgroundColor: template.frame?.backgroundColor,
           position: 'relative',
