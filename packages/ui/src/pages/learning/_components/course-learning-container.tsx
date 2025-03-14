@@ -1,39 +1,52 @@
-import type { ICourseOutline } from '@oe/api';
-import type { ICertificate } from '@oe/api';
-import { CourseFormTriggerModal } from '#components/course-form-trigger';
-import { ScrollArea } from '#shadcn/scroll-area';
-import { ContentSection } from './content-section';
-import { CourseOutline } from './course-sidebar-section';
-import { CourseTabs } from './course-tabs/course-tabs';
-import { ReceiveCertificateModal } from './receive-certificate/receive-cert-modal';
+import type { ICourseOutline, ILesson } from "@oe/api";
+import type { ICertificate } from "@oe/api";
+import { CourseFormTriggerModal } from "#components/course-form-trigger";
+import { ContentSection } from "./content-section";
+import { CourseOutline } from "./course-sidebar-section";
+import { CourseTabs } from "./course-tabs/course-tabs";
+import { ReceiveCertificateModal } from "./receive-certificate/receive-cert-modal";
+import { memo } from "react";
+import { useCurrentLesson } from "../_context/learning-context";
 
 interface ICourseLearning {
   course: ICourseOutline;
   section_uid: string;
   lesson_uid: string;
   certificate?: ICertificate | null;
+  lessonData?: ILesson | null;
 }
 
-export function CourseLearning({ course, section_uid, lesson_uid, certificate }: ICourseLearning) {
+function CourseLearningInternal({
+  course,
+  section_uid,
+  lesson_uid,
+  certificate,
+  lessonData,
+}: ICourseLearning) {
+  const { currentSection, currentLesson } = useCurrentLesson();
+
   return (
     <>
-      <div className="flex h-full flex-col gap-1 bg-muted/50 py-4 lg:flex-row">
-        <div className="h-full lg:w-2/3 lg:flex-1">
+      <div className="relative flex h-full w-full flex-col gap-1 bg-muted/50 py-4 lg:flex-row">
+        <div className="mx-auto h-full w-full max-w-[900px]">
           <ContentSection
-            courseData={course}
-            lesson={lesson_uid}
-            section={section_uid}
-            className="h-auto max-h-[calc(100vh-var(--header-height)-16px)] md:h-[calc(100vh-var(--header-height)-16px)]"
+            className="h-auto max-h-[calc(100dvh-var(--header-with-sub-item-height)-16px)] md:h-[calc(100dvh-var(--header-with-sub-item-height)-16px)]"
+            lessonData={lessonData}
           />
-          <CourseTabs courseData={course} activeSection={section_uid} activeLesson={lesson_uid} />
+
+          <CourseTabs
+            course_data={course}
+            active_section={currentSection || section_uid}
+            activeLesson={currentLesson || lesson_uid}
+          />
         </div>
 
-        <ScrollArea className="hidden h-full pr-4 pl-3 lg:block lg:w-1/3">
-          <CourseOutline courseData={course} activeSection={section_uid} activeLesson={lesson_uid} />
-        </ScrollArea>
+        <CourseOutline className="scrollbar hidden h-full w-full overflow-y-auto pr-4 pl-3 lg:block lg:w-1/3" />
       </div>
 
-      {course?.has_certificate && certificate && <ReceiveCertificateModal certificate={certificate} />}
+      {course?.has_certificate && certificate && (
+        <ReceiveCertificateModal certificate={certificate} />
+      )}
 
       {/* {course?.form_relations?.map((form) => ( form?.enabled &&
         <CourseFormTrigger
@@ -47,3 +60,5 @@ export function CourseLearning({ course, section_uid, lesson_uid, certificate }:
     </>
   );
 }
+
+export const CourseLearning = memo(CourseLearningInternal);

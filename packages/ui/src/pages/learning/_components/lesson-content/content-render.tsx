@@ -11,7 +11,8 @@ import { ContentText } from './content-text';
 const CONTENT_STYLES = {
   common: {
     default: 'h-full',
-    multi: 'min-h-[calc(100%-24px)] py-4',
+    multi: 'py-4',
+    // multi: 'min-h-[calc(100%-24px)] py-4',
   },
   video: 'h-full',
   embedded: '[&>div>div>div>iframe]:w-full',
@@ -45,8 +46,8 @@ export const CONTENT_RENDERERS: Record<TLessonContent, ContentRenderer> = {
         />
       );
     },
-    getClassName: isOnlyContent =>
-      cn(DEFAULT_CLASSNAME(isOnlyContent), CONTENT_STYLES.video, !isOnlyContent && 'md:[&>div>iframe]:w-full'),
+    getClassName: isOnlyContent => cn(DEFAULT_CLASSNAME(isOnlyContent), CONTENT_STYLES.video),
+    // cn(DEFAULT_CLASSNAME(isOnlyContent), CONTENT_STYLES.video, !isOnlyContent && 'md:[&>div>iframe]:w-full'),
   },
 
   pdf: {

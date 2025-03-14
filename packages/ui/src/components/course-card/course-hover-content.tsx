@@ -27,7 +27,7 @@ export function CourseHoverContent({ courseData, mutate, isExternal, href }: Cou
         href={href ?? ''}
         external={isExternal}
         target={isExternal ? '_blank' : undefined}
-        className="flex h-full w-full flex-col items-start gap-4 whitespace-break-spaces p-0 hover:no-underline"
+        className="flex h-full w-full flex-col items-start gap-4 whitespace-break-spaces border-none p-0 hover:no-underline"
       >
         <p className="giant-iheading-semibold20 line-clamp-2 whitespace-break-spaces text-primary">
           {courseData?.name}

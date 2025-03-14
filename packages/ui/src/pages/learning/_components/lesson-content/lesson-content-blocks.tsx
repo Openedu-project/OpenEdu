@@ -185,7 +185,14 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
         };
 
         return (
-          <div key={item.id} className={cn(renderer.getClassName(contents.length === 1), '[&>hr]:last:hidden')}>
+          <div
+            key={item.id}
+            className={cn(
+              renderer.getClassName(contents.length === 1),
+              item?.type === 'video' && 'aspect-video h-full w-auto max-w-full',
+              '[&>hr]:last:hidden'
+            )}
+          >
             <ContentElement
               onCompleteContent={props =>
                 onCompleteContent(item?.uid ?? '', item?.type, props?.duration, props?.pause_at, props?.quiz_id)
