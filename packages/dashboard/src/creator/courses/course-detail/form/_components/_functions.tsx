@@ -1,19 +1,18 @@
 import type { IFormResponse } from '@oe/api/types/form';
 import type { IFormUserResponse } from '@oe/api/types/form-user-response';
+import type { TFunction } from '@oe/i18n/types';
 import type { ColumnDef, ColumnExportConfig } from '@oe/ui/components/table';
 
-export const generateColumns = (detailFormData: IFormResponse): ColumnDef<IFormUserResponse>[] => {
+export const generateColumns = (detailFormData: IFormResponse, t: TFunction): ColumnDef<IFormUserResponse>[] => {
   const baseColumns: ColumnDef<IFormUserResponse>[] = [
     {
-      header: 'Response ID',
+      header: t('responseId'),
       accessorKey: 'id',
-      sticky: 'left',
       size: 200,
     },
     {
-      header: 'User',
+      header: t('user'),
       accessorKey: 'user',
-      sticky: 'left',
       cell: ({ row }) => <p>{row?.original?.user?.display_name || row?.original?.user?.email || '-'}</p>,
       size: 200,
     },
@@ -25,8 +24,12 @@ export const generateColumns = (detailFormData: IFormResponse): ColumnDef<IFormU
     (_, index) => {
       return {
         id: detailFormData.questions[index]?.id,
-        header: detailFormData.questions[index]?.title || `Answer ${index}`,
+        header: t('question', {
+          index: index + 1,
+          title: detailFormData.questions[index]?.title,
+        }),
         accessor: 'answers',
+        size: 250,
         cell({ row }) {
           const { answers } = row.original;
 
@@ -44,17 +47,17 @@ export const generateColumns = (detailFormData: IFormResponse): ColumnDef<IFormU
   return [...baseColumns, ...answerColumns];
 };
 
-export const generateExportConfig = (detailFormData: IFormResponse): ColumnExportConfig[] => {
+export const generateExportConfig = (detailFormData: IFormResponse, t: TFunction): ColumnExportConfig[] => {
   // Include the base columns first
   const baseExportConfig: ColumnExportConfig[] = [
     {
       columnId: 'id',
-      exportHeader: 'Response ID',
+      exportHeader: t('responseId'),
       order: 0,
     },
     {
       columnId: 'user',
-      exportHeader: 'User',
+      exportHeader: t('user'),
       order: 1,
       // Transform function to get display name or email
       transform: (_value, row: IFormUserResponse) => row?.user?.display_name || row?.user?.email || '-',
@@ -66,7 +69,10 @@ export const generateExportConfig = (detailFormData: IFormResponse): ColumnExpor
   const answerExportConfig: ColumnExportConfig[] = detailFormData.questions.map((question, index) => {
     return {
       columnId: question.id,
-      exportHeader: question.title || `Answer ${index}`,
+      exportHeader: t('question', {
+        index: index + 1,
+        title: question.title,
+      }),
       order: index + baseExportConfig.length, // Ensure correct ordering
       // This is the key part - a transform function to access the nested answer
       transform: (_value, row: IFormUserResponse) => {
@@ -87,3 +93,16 @@ export const generateExportConfig = (detailFormData: IFormResponse): ColumnExpor
 
   return [...baseExportConfig, ...answerExportConfig];
 };
+
+export function normalToSnake(text: string) {
+  if (!text) {
+    return '';
+  }
+
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/\s/g, '_');
+}

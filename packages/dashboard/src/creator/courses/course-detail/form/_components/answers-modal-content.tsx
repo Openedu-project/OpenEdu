@@ -1,18 +1,22 @@
+import { useGetCourseById } from '@oe/api/hooks/useCourse';
 import { useGetForm, useGetFormSummary, useGetFormUserResponses } from '@oe/api/hooks/useForms';
 import type { IFormUserResponse } from '@oe/api/types/form-user-response';
 import { ExportXLSXButton, Table, TableProvider, type TableRef } from '@oe/ui/components/table';
 import { Badge } from '@oe/ui/shadcn/badge';
 import type { Table as TableTanstack } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
 import { useCallback, useState } from 'react';
-import { generateColumns, generateExportConfig } from './_functions';
+import { generateColumns, generateExportConfig, normalToSnake } from './_functions';
 
 export function AnswersModalContent({
   id,
   formUID,
+  triggerType,
 }: {
   id: string;
   formUID: string;
+  triggerType: string;
 }) {
   const t = useTranslations('course.form.answers');
   const { dataFormUserResponses } = useGetFormUserResponses(id, {
@@ -21,7 +25,9 @@ export function AnswersModalContent({
   });
   const { dataFormSummary } = useGetFormSummary(formUID);
   const { dataForm } = useGetForm({ id });
-
+  const { courseId } = useParams<{ courseId: string }>();
+  const { course } = useGetCourseById(courseId);
+  console.log('triggerType', triggerType);
   const [tableInstance, setTableInstance] = useState<TableTanstack<IFormUserResponse> | null>(null);
 
   const tableRef = useCallback((node: TableRef<IFormUserResponse> | null) => {
@@ -32,7 +38,7 @@ export function AnswersModalContent({
     }
   }, []);
 
-  const canRenderTable = dataForm && generateColumns(dataForm) && dataFormUserResponses;
+  const canRenderTable = dataForm && generateColumns(dataForm, t) && dataFormUserResponses;
 
   const showExportButton = tableInstance && dataFormSummary?.total_responses;
 
@@ -58,16 +64,16 @@ export function AnswersModalContent({
             {showExportButton ? (
               <ExportXLSXButton
                 table={tableInstance}
-                filename="Report"
+                filename={normalToSnake(`${course?.name} ${triggerType} ${Date.now()}`)}
                 sheetName="Report"
-                columnConfig={generateExportConfig(dataForm)}
+                columnConfig={generateExportConfig(dataForm, t)}
               />
             ) : (
               <></>
             )}
           </div>
 
-          <Table ref={tableRef} columns={generateColumns(dataForm)} data={dataFormUserResponses} />
+          <Table ref={tableRef} columns={generateColumns(dataForm, t)} data={dataFormUserResponses} />
         </TableProvider>
       )}
     </>

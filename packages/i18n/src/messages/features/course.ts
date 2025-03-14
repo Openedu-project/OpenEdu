@@ -186,8 +186,11 @@ export const courseMessages = {
 
       answers: {
         general: 'General information',
+        responseId: 'Response ID',
+        user: 'User',
         response: '{count} response',
         responses: '{count} responses',
+        question: 'Question {index}: {title}',
       },
     },
 

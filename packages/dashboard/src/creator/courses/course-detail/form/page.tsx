@@ -192,6 +192,7 @@ export default function CourseDetailFormPage() {
                 <AnswersModal
                   id={formTrigger.form?.id ?? ''}
                   formUID={formTrigger.form?.uid ?? ''}
+                  triggerType={formTrigger.start_when.type}
                   title={t('form.viewAnswers')}
                   trigger={
                     <Button variant="outline" className="h-8 w-auto gap-2 px-2">
