@@ -4,14 +4,14 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Button } from '#shadcn/button';
 
-// Định nghĩa tùy chỉnh cho xuất cột
+// Updated export config definition
 export interface ColumnExportConfig {
   columnId: string; // ID cột trong bảng
   exportHeader?: string; // Tiêu đề khi xuất (nếu khác với tiêu đề gốc)
   include?: boolean; // Có xuất cột này không
   order?: number; // Thứ tự xuất
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  transform?: (value: any) => any;
+  transform?: (value: any, row: any) => any; // Added row parameter
 }
 
 interface ExportXLSXButtonProps<TData> {
@@ -70,7 +70,8 @@ export function ExportXLSXButton<TData>({
       // Xác định cột nào sẽ được xuất và theo thứ tự nào
       let columnsToExport: (Column<TData, unknown> & {
         exportHeader?: string;
-        transform?: (value: unknown) => unknown;
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        transform?: (value: any, row: any) => any;
       })[] = [];
 
       if (columnConfig) {
@@ -120,11 +121,13 @@ export function ExportXLSXButton<TData>({
         ...rows.map(row => {
           return columnsToExport.reduce(
             (acc, column) => {
+              // Get value using column ID
               let value = row.getValue(column.id);
+              const rowData = row.original;
 
-              // Áp dụng hàm transform nếu có
+              // Áp dụng hàm transform nếu có - pass both value and row
               if (column.transform) {
-                value = column.transform(value);
+                value = column.transform(value, rowData);
               }
 
               acc[column.id] = value;
