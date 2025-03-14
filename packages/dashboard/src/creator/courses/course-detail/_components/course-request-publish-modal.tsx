@@ -3,12 +3,12 @@ import { publishCourseService } from '@oe/api/services/course';
 import { API_ENDPOINT } from '@oe/api/utils/endpoints';
 import whaleSuccess from '@oe/assets/images/whale-success.png';
 import { CREATOR_ROUTES } from '@oe/core/utils/routes';
-import { useRouter } from '@oe/ui/common/navigation';
+// import { useRouter } from "@oe/ui/common/navigation";
 import { Image } from '@oe/ui/components/image';
 import { Modal } from '@oe/ui/components/modal';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useSWRConfig } from 'swr';
 
@@ -22,6 +22,7 @@ export function CourseRequestPublishModal({
   const tCourse = useTranslations('course');
   const [isRequestPublishSuccess, setIsRequestPublishSuccess] = useState(false);
   const { courseId } = useParams<{ courseId: string }>();
+  const [newCourseId, setNewCourseId] = useState<string | null>(null);
   const router = useRouter();
   const { mutate } = useSWRConfig();
   const { mutateCourse } = useGetCourseById(courseId);
@@ -31,12 +32,13 @@ export function CourseRequestPublishModal({
   const handleSendRequest = async () => {
     setIsLoading(true);
     try {
-      await publishCourseService(undefined, courseId);
+      const newCourse = await publishCourseService(undefined, courseId);
       await Promise.all([
         mutateCourse(),
         mutate((key: string) => !!key?.includes(API_ENDPOINT.COURSES), undefined, { revalidate: false }),
       ]);
       setIsRequestPublishSuccess(true);
+      setNewCourseId(newCourse.id);
       toast.success(tCourse('common.toast.requestPublishSuccess'));
     } catch {
       toast.error(tCourse('common.toast.requestPublishError'));
@@ -87,7 +89,17 @@ export function CourseRequestPublishModal({
             {
               label: tCourse('common.actions.cancel'),
               variant: 'outline',
-              onClick: () => setIsRequestPublishSuccess(false),
+              onClick: () => {
+                setIsRequestPublishSuccess(false);
+                if (newCourseId) {
+                  const newHref =
+                    typeof window !== 'undefined' ? window.location.href.replace(courseId, newCourseId) : '';
+                  const newPathname = new URL(newHref).pathname;
+                  if (newPathname) {
+                    router.replace(newPathname);
+                  }
+                }
+              },
               className: 'w-full',
             },
             {
