@@ -14,15 +14,24 @@ export function InputFrame({
   agent = 'ai_search',
   containerRef,
   updateWidth = false,
+  reset = false,
 }: {
   className?: string;
   id?: string;
   agent?: TAgentType;
   containerRef?: RefObject<HTMLDivElement | null>;
   updateWidth?: boolean;
+  reset?: boolean;
 }) {
-  const { selectedModel, setWidth } = useConversationStore();
+  const { selectedModel, setWidth, setSelectedModel, resetStatus } = useConversationStore();
   const sendMessage = useSendMessageHandler(agent, id, undefined, containerRef);
+
+  useEffect(() => {
+    if (reset) {
+      setSelectedModel(undefined);
+      resetStatus();
+    }
+  }, [reset, setSelectedModel, resetStatus]);
 
   const messageType = useMemo(
     () =>

@@ -11,7 +11,7 @@ interface IConversationStore {
   addMessage: (messageData: IMessage, callback?: () => void) => void;
   setIsNewChat: (value: boolean) => void;
   setStatus: (value: IAIStatus) => void;
-  setSelectedModel: (value: IAIModel) => void;
+  setSelectedModel: (value?: IAIModel) => void;
   resetStatus: () => void;
   genMessage?: IMessage;
   setGenMessage: (value: IMessage, callback?: () => void, reset?: boolean, shortenedIndex?: number) => void;
@@ -72,7 +72,7 @@ export const useConversationStore = create<IConversationStore>(set => {
         return { status };
       }),
 
-    setSelectedModel: (selectedModel: IAIModel) =>
+    setSelectedModel: (selectedModel?: IAIModel) =>
       set(() => {
         return { selectedModel, selectedAgent: 'ai_search' };
       }),

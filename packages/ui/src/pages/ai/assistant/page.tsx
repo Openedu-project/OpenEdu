@@ -30,7 +30,7 @@ export default function AIAssistantPage() {
           <AIModule showDesc className="items-start shadow" />
         </div>
       </div>
-      <InputFrame className="mb-4 w-full" updateWidth />
+      <InputFrame className="mb-4 w-full" updateWidth reset />
     </div>
   );
 }
