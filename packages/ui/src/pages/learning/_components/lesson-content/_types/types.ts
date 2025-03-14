@@ -30,7 +30,7 @@ export interface LessonContentBlockProps {
   contents?: ILessonContent[];
   // courseId: string;
   // course_slug: string;
-  course_data: ICourseOutline;
+  course_data?: ICourseOutline;
   lesson_uid: string;
   section_uid: string;
   // outline: ISectionLearningProgress[];

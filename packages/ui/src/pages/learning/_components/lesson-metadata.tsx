@@ -4,7 +4,8 @@ import { useTranslations } from 'next-intl';
 import type { HTMLAttributes } from 'react';
 import { Link, useRouter } from '#common/navigation';
 import { createCourseUrl } from '#utils/course-url';
-import { useLessonLearningStore } from '../_store/learning-store';
+import { useCurrentLesson } from '../_context';
+import { useProgress } from '../_context/progress-context';
 import { getLessonGlobalIndex, getTotalLessons, getUidByLessonIndex } from '../_utils/utils';
 import { NavigationButtons } from './navigate-button';
 
@@ -24,7 +25,12 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, lessonUid, ...props
 
   const courseHref = createCourseUrl('detail', { slug });
 
-  const { sectionsProgressData, getLessonStatus, isNavigating } = useLessonLearningStore();
+  const {
+    state: { sectionsProgressData, isNavigating },
+    getLessonStatus,
+  } = useProgress();
+  const { setCurrentLesson } = useCurrentLesson();
+
   const currentLessonIndex = getLessonGlobalIndex(sectionsProgressData, lessonUid);
   const totalItems = getTotalLessons(sectionsProgressData);
 
@@ -42,15 +48,17 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, lessonUid, ...props
 
     const lessonInfo = getUidByLessonIndex(sectionsProgressData, newIndex);
 
-    const learningPageUrl =
-      lessonInfo &&
-      createCourseUrl('learning', {
+    if (lessonInfo) {
+      setCurrentLesson(lessonInfo.sectionUid, lessonInfo.lessonUid);
+
+      const learningPageUrl = createCourseUrl('learning', {
         slug,
-        section: lessonInfo?.sectionUid,
-        lesson: lessonInfo?.lessonUid,
+        section: lessonInfo.sectionUid,
+        lesson: lessonInfo.lessonUid,
       });
 
-    return learningPageUrl && router.push(learningPageUrl);
+      return router.push(learningPageUrl);
+    }
   };
 
   return (

@@ -6,7 +6,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo } from "react";
 import { usePathname } from "#common/navigation";
 import { createCourseUrl } from "#utils/course-url";
-import { useCurrentLesson, useProgress } from "../_context/learning-context";
+import { useCurrentLesson } from "../_context";
+import { useProgress } from "../_context/progress-context";
 import { getUidByLessonIndex } from "../_utils/utils";
 
 interface AuthCheckProps {
@@ -47,10 +48,6 @@ export function AuthCheck({ course, me }: AuthCheckProps) {
       return;
     }
 
-    // const currentLessonIndex = getLessonGlobalIndex(
-    //   sectionsProgressData,
-    //   currentLesson
-    // );
     let lessonAvailable = false;
 
     for (const section of sectionsProgressData) {

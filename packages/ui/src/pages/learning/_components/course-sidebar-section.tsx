@@ -1,7 +1,9 @@
 "use client";
 
-import type { ILessonLearningProgress } from "@oe/api";
-import type { ISectionLearningProgress } from "@oe/api";
+import type {
+  ILessonLearningProgress,
+  ISectionLearningProgress,
+} from "@oe/api";
 import { type HTMLAttributes, memo, useEffect, useMemo, useRef } from "react";
 import { CircleProgressBar } from "#components/circle-progress-bar";
 import { OutlineLesson } from "#components/outline-lesson";
@@ -12,11 +14,7 @@ import {
   AccordionTrigger,
 } from "#shadcn/accordion";
 import { cn } from "#utils/cn";
-import {
-  useCourse,
-  useCurrentLesson,
-  useProgress,
-} from "../_context/learning-context";
+import { useCourse, useCurrentLesson, useProgress } from "../_context";
 import { sortByOrder } from "../_utils/utils";
 
 interface ICourseOutlineProps extends HTMLAttributes<HTMLDivElement> {}

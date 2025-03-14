@@ -1,8 +1,10 @@
-import type { ICourseOutline, ILesson } from "@oe/api";
+"use client";
 
+import type { ILesson } from "@oe/api";
 import { useMemo } from "react";
 import { cn } from "#utils/cn";
-import { useCourse, useCurrentLesson } from "../_context/learning-context";
+import { useCurrentLesson } from "../_context";
+import { useCourse } from "../_context/learning-context";
 import { sortByOrder } from "../_utils/utils";
 import { LessonContentBlocks } from "./lesson-content/lesson-content-blocks";
 import { LessonMetadata } from "./lesson-metadata";
@@ -36,7 +38,6 @@ const ContentSection = ({ className, lessonData }: IContentSectionProps) => {
       )}
     >
       <LessonContentBlocks
-        course_data={course as ICourseOutline}
         contents={sortedContents}
         section_uid={currentSection}
         lesson_uid={currentLesson}

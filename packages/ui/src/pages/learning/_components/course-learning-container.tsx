@@ -1,12 +1,14 @@
-import type { ICourseOutline, ILesson } from "@oe/api";
+"use client";
 import type { ICertificate } from "@oe/api";
+import type { ICourseOutline } from "@oe/api";
+import type { ILesson } from "@oe/api";
+import { memo } from "react";
 import { CourseFormTriggerModal } from "#components/course-form-trigger";
+import { useCurrentLesson } from "../_context";
 import { ContentSection } from "./content-section";
 import { CourseOutline } from "./course-sidebar-section";
 import { CourseTabs } from "./course-tabs/course-tabs";
 import { ReceiveCertificateModal } from "./receive-certificate/receive-cert-modal";
-import { memo } from "react";
-import { useCurrentLesson } from "../_context/learning-context";
 
 interface ICourseLearning {
   course: ICourseOutline;

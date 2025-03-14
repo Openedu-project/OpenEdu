@@ -1,22 +1,24 @@
-'use client';
-import type { TLessonContent } from '@oe/api';
-import type { ILessonContent } from '@oe/api';
-import { useGetForm } from '@oe/api';
-import { getLearningProgressesService, updateLearningProgressService } from '@oe/api';
-import type React from 'react';
-import { useCallback, useEffect } from 'react';
-import { toast } from 'sonner';
-import { useActivedTrigger, useLearnerFormTriggerStore } from '#components/course-form-trigger';
-import { ScrollArea } from '#shadcn/scroll-area';
-import { cn } from '#utils/cn';
-import { useLessonLearningStore, useQuizSubmissionStore } from '../../_store/learning-store';
-import { checkCompleteAt, isLessonContentComplete } from '../../_utils/learning-progress';
-import { mergeSectionWithProgress } from '../../_utils/utils';
-import type { LessonContentBlockProps } from './_types/types';
-import { ContentElement } from './content-block';
-import { CONTENT_RENDERERS } from './content-render';
+"use client";
+import { useGetForm } from "@oe/api";
+import type { TLessonContent } from "@oe/api";
+import type { ILessonContent } from "@oe/api";
+import type React from "react";
+import { useCallback, useEffect } from "react";
+import {
+  useActivedTrigger,
+  useLearnerFormTriggerStore,
+} from "#components/course-form-trigger";
+import { ScrollArea } from "#shadcn/scroll-area";
+import { cn } from "#utils/cn";
+import { useCourse, useProgress, useQuiz } from "../../_context";
+import type { LessonContentBlockProps } from "./_types/types";
+import { ContentElement } from "./content-block";
+import { CONTENT_RENDERERS } from "./content-render";
 
-type FormTriggerConditionLearning = 'completed_section' | 'completed_lesson' | 'started_lesson';
+type FormTriggerConditionLearning =
+  | "completed_section"
+  | "completed_lesson"
+  | "started_lesson";
 
 interface FormConditionProps {
   type: FormTriggerConditionLearning;
@@ -25,12 +27,13 @@ interface FormConditionProps {
 
 const getWrapperClassName = (contents: ILessonContent[]): string => {
   return cn(
-    'h-auto overflow-y-auto md:pr-2 md:pl-4 [&>[data-radix-scroll-area-viewport]>div]:h-full',
-    contents.every(item => item.type !== 'embedded') && 'h-full',
+    "h-auto overflow-y-auto md:pr-2 md:pl-4 [&>[data-radix-scroll-area-viewport]>div]:h-full",
+    contents.every((item) => item.type !== "embedded") && "h-full",
     contents.length === 1 &&
       contents[0] &&
-      ((contents[0].type === 'video' && contents[0].quizzes?.length === 0) || contents[0].type === 'embedded') &&
-      'h-auto aspect-video'
+      ((contents[0].type === "video" && contents[0].quizzes?.length === 0) ||
+        contents[0].type === "embedded") &&
+      "h-auto aspect-video"
   );
 };
 
@@ -41,13 +44,16 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
   course_data,
   isPreview = false,
 }) => {
-  const { sectionsProgressData, setSectionsProgressData, isSectionCompleted, isLessonCompleted } =
-    useLessonLearningStore();
-  const { quizResult } = useQuizSubmissionStore();
+  const { state, completeContent, isLessonCompleted, isSectionCompleted } =
+    useProgress();
+  const { quizResult } = useQuiz();
+  const { course } = useCourse();
+
+  const courseData = course_data || course;
 
   const { activedTrigger, checkActivedTrigger } = useActivedTrigger();
   const { setFormData, currentFormId } = useLearnerFormTriggerStore();
-  const { dataForm } = useGetForm({ id: currentFormId ?? '' });
+  const { dataForm } = useGetForm({ id: currentFormId ?? "" });
 
   useEffect(() => {
     if (dataForm) {
@@ -92,22 +98,32 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
         });
       }
     },
-    [course_data?.form_relations, activedTrigger, checkActivedTrigger, evaluateCondition]
+    [
+      course_data?.form_relations,
+      activedTrigger,
+      checkActivedTrigger,
+      evaluateCondition,
+    ]
   );
 
   useEffect(() => {
-    if (sectionsProgressData) {
+    if (state?.sectionsProgressData) {
       const conditions: FormConditionProps[] = [
-        { type: 'completed_section', entityId: section_uid as string },
-        { type: 'completed_lesson', entityId: lesson_uid as string },
-        { type: 'started_lesson', entityId: lesson_uid as string },
+        { type: "completed_section", entityId: section_uid as string },
+        { type: "completed_lesson", entityId: lesson_uid as string },
+        { type: "started_lesson", entityId: lesson_uid as string },
       ];
 
       for (const condition of conditions) {
         handleFormCondition(condition);
       }
     }
-  }, [handleFormCondition, section_uid, lesson_uid, sectionsProgressData]);
+  }, [
+    handleFormCondition,
+    section_uid,
+    lesson_uid,
+    state?.sectionsProgressData,
+  ]);
 
   const onCompleteContent = async (
     lesson_content_uid: string,
@@ -116,59 +132,33 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
     pauseAt = 0,
     quizId?: string
   ) => {
-    const start_at = Date.now();
-    const pause_at = Math.floor(pauseAt);
-    const complete_at = checkCompleteAt({
+    if (!courseData || isPreview) {
+      return;
+    }
+
+    await completeContent({
+      lesson_content_uid,
       type,
+      section_uid,
+      lesson_uid,
       videoDuration,
       pauseAt,
       quizId,
       quizResult,
     });
-
-    const hasUpdated = isLessonContentComplete({
-      outline: sectionsProgressData,
-      section_uid,
-      lesson_uid,
-      lesson_content_uid,
-      pause_at,
-    });
-
-    if (section_uid && lesson_uid && !hasUpdated) {
-      const payload = {
-        complete_at,
-        section_uid,
-        lesson_uid,
-        lesson_content_uid,
-        course_slug: course_data?.slug,
-        pause_at,
-        start_at,
-      };
-
-      try {
-        await updateLearningProgressService(undefined, { payload });
-        const newLearningProgres = await getLearningProgressesService(undefined, { id: course_data?.slug });
-
-        const data = mergeSectionWithProgress(course_data?.outline, newLearningProgres?.sections);
-        setSectionsProgressData(data);
-
-        // onComplete?.();
-        if (complete_at > 0) {
-          toast.success('Content completed');
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
   };
 
   if (contents.length === 0) {
     return <div className={getWrapperClassName([])}>No data</div>;
   }
 
+  if (!courseData) {
+    return <div className={getWrapperClassName([])}>No course data</div>;
+  }
+
   return (
     <ScrollArea className={cn(getWrapperClassName(contents))}>
-      {contents?.map(item => {
+      {contents?.map((item) => {
         const contentType = item.type;
         const renderer = CONTENT_RENDERERS[contentType];
         if (!renderer) {
@@ -177,7 +167,7 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
 
         const elementProps = {
           type: contentType,
-          courseData: course_data,
+          courseData,
           data: item,
           isOnlyContent: contents.length === 1,
           contents,
@@ -189,13 +179,19 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
             key={item.id}
             className={cn(
               renderer.getClassName(contents.length === 1),
-              item?.type === 'video' && 'aspect-video h-full w-auto max-w-full',
-              '[&>hr]:last:hidden'
+              item?.type === "video" && "aspect-video h-full w-auto max-w-full",
+              "[&>hr]:last:hidden"
             )}
           >
             <ContentElement
-              onCompleteContent={props =>
-                onCompleteContent(item?.uid ?? '', item?.type, props?.duration, props?.pause_at, props?.quiz_id)
+              onCompleteContent={(props) =>
+                onCompleteContent(
+                  item?.uid ?? "",
+                  item?.type,
+                  props?.duration,
+                  props?.pause_at,
+                  props?.quiz_id
+                )
               }
               {...elementProps}
             />
