@@ -2,6 +2,7 @@ import { buildUrl } from '@oe/core/utils/url';
 import type { ICourseFormTrigger } from '#schemas/courses/forms';
 import type { HTTPPagination } from '#types/fetch';
 import type { IFormParams, IFormResponse } from '#types/form';
+import type { IFormSummary, IFormUserResponse, IFormUserResponseAnswerStatsItem } from '#types/form-user-response';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 
@@ -112,7 +113,7 @@ export const getQuestionAnswersStatsService = async (
   url: string | undefined,
   { id, init }: { id?: string; init?: RequestInit }
 ) => {
-  const response = await fetchAPI<HTTPPagination<IFormResponse>>(
+  const response = await fetchAPI<HTTPPagination<IFormUserResponseAnswerStatsItem>>(
     url ?? buildUrl({ endpoint: API_ENDPOINT.FORM_QUESTIONS_ID_ANSWERS, params: { id } }),
     init
   );
@@ -123,8 +124,24 @@ export const getFormSummaryService = async (
   url: string | undefined,
   { id, init }: { id?: string; init?: RequestInit }
 ) => {
-  const response = await fetchAPI<HTTPPagination<IFormResponse>>(
+  const response = await fetchAPI<IFormSummary>(
     url ?? buildUrl({ endpoint: API_ENDPOINT.FORMS_ID_SUMMARY, params: { id } }),
+    init
+  );
+  return response.data;
+};
+
+// Use the get answers
+export const getFormUserResponsesService = async (
+  url: string | undefined,
+  {
+    id,
+    queryParams,
+    init,
+  }: { id?: string; queryParams?: Record<string, string | boolean | number>; init?: RequestInit }
+) => {
+  const response = await fetchAPI<HTTPPagination<IFormUserResponse>>(
+    url ?? buildUrl({ endpoint: API_ENDPOINT.FORMS_ID_SESSIONS, params: { id }, queryParams }),
     init
   );
   return response.data;

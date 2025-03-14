@@ -4,6 +4,7 @@ import {
   getFormResponsesService,
   getFormService,
   getFormSummaryService,
+  getFormUserResponsesService,
   getFormsService,
   getQuestionAnswersStatsService,
 } from '#services/forms';
@@ -58,7 +59,7 @@ export function useGetQuestionAnswersStats(id?: string) {
   );
 
   return {
-    dataQuestionAnswersStats: data?.results,
+    dataQuestionAnswersStats: data,
     error,
     mutateQuestionAnswersStats: mutate,
     isLoading,
@@ -72,9 +73,24 @@ export function useGetFormSummary(id?: string) {
   );
 
   return {
-    dataFormSummary: data?.results,
+    dataFormSummary: data,
     error,
     mutateFormSummary: mutate,
+    isLoading,
+  };
+}
+
+// Use the answers
+export function useGetFormUserResponses(id?: string, queryParams?: Record<string, string | boolean | number>) {
+  const endpointKey = buildUrl({ endpoint: API_ENDPOINT.FORMS_ID_SESSIONS, params: { id }, queryParams });
+  const { data, isLoading, error, mutate } = useSWR(id ? endpointKey : null, (endpoint: string) =>
+    getFormUserResponsesService(endpoint, { id, queryParams })
+  );
+
+  return {
+    dataFormUserResponses: data?.results,
+    error,
+    mutateFormResponses: mutate,
     isLoading,
   };
 }

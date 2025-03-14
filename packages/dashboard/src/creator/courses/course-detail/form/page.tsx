@@ -77,6 +77,22 @@ export default function CourseDetailFormPage() {
     [courseId, t]
   );
 
+  const renderedName = useCallback((course: ICourseFormTrigger) => {
+    if (course?.type === 'form') {
+      return course?.form?.title || course?.name || '';
+    }
+
+    return course?.confirmation_settings?.title || '';
+  }, []);
+
+  const renderedDescription = useCallback((course: ICourseFormTrigger) => {
+    if (course?.type === 'form') {
+      return course?.form?.description || '';
+    }
+
+    return course?.confirmation_settings?.description || '';
+  }, []);
+
   const columns: ColumnDef<ICourseFormTrigger>[] = useMemo(
     () => [
       {
@@ -91,7 +107,7 @@ export default function CourseDetailFormPage() {
               setModalType('edit');
             }}
           >
-            {row.original.form?.title || row.original.name || ''}
+            {renderedName(row.original)}
           </Button>
         ),
         size: 180,
@@ -100,7 +116,7 @@ export default function CourseDetailFormPage() {
         accessorKey: 'description',
         header: t('form.description'),
         enableSorting: false,
-        cell: ({ row }) => row.original.form?.description || '',
+        cell: ({ row }) => renderedDescription(row.original),
         size: 200,
       },
       {
@@ -171,18 +187,20 @@ export default function CourseDetailFormPage() {
         cell: ({ row }) => {
           const formTrigger = row.original;
           return (
-            <div className="flex items-center gap-2">
-              <AnswersModal
-                id={formTrigger.form?.id ?? ''}
-                formUID={formTrigger.form?.uid ?? ''}
-                title={t('form.viewAnswers')}
-                trigger={
-                  <Button variant="outline" className="h-8 w-auto gap-2 px-2">
-                    <Eye className="h-4 w-4" />
-                    {t('form.viewAnswers')}
-                  </Button>
-                }
-              />
+            <div className="flex w-full items-center justify-end gap-2">
+              {formTrigger?.type === 'form' && (
+                <AnswersModal
+                  id={formTrigger.form?.id ?? ''}
+                  formUID={formTrigger.form?.uid ?? ''}
+                  title={t('form.viewAnswers')}
+                  trigger={
+                    <Button variant="outline" className="h-8 w-auto gap-2 px-2">
+                      <Eye className="h-4 w-4" />
+                      {t('form.viewAnswers')}
+                    </Button>
+                  }
+                />
+              )}
               <DeleteButton
                 variant="destructive"
                 className="h-8 w-auto gap-2 px-2"
@@ -202,7 +220,7 @@ export default function CourseDetailFormPage() {
         },
       },
     ],
-    [t, tGeneral, handleToggleFormTrigger]
+    [t, tGeneral, handleToggleFormTrigger, renderedDescription, renderedName]
   );
 
   const filterOptions: FilterOption[] = useMemo(

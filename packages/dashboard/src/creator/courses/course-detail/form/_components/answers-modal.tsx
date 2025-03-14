@@ -8,7 +8,7 @@ export function AnswersModal({
 }: // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 ModalProps<any> & { id: string; formUID: string }) {
   return (
-    <Modal {...props}>
+    <Modal {...props} className="md:max-h-[90dvh] md:max-w-[90dvw]">
       <AnswersModalContent id={id} formUID={formUID} />
     </Modal>
   );

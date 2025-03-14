@@ -183,6 +183,12 @@ export const courseMessages = {
       confirmationButtons: 'Confirmation Buttons',
       confirmationAutoCloseAfterSeconds: 'Confirmation Auto Close After Seconds',
       confirmationAutoCloseEnabled: 'Confirmation Auto Close Enabled',
+
+      answers: {
+        general: 'General information',
+        response: '{count} response',
+        responses: '{count} responses',
+      },
     },
 
     partner: {
