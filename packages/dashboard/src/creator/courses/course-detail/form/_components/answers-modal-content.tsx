@@ -27,7 +27,6 @@ export function AnswersModalContent({
   const { dataForm } = useGetForm({ id });
   const { courseId } = useParams<{ courseId: string }>();
   const { course } = useGetCourseById(courseId);
-  console.log('triggerType', triggerType);
   const [tableInstance, setTableInstance] = useState<TableTanstack<IFormUserResponse> | null>(null);
 
   const tableRef = useCallback((node: TableRef<IFormUserResponse> | null) => {
