@@ -79,6 +79,7 @@ export const generalMessages = {
       published_org: 'Published Org',
       published_all: 'Published All',
       unpublished: 'Unpublished',
+      un_publish: 'Un-publish',
     },
     statusDescription: {
       section: {

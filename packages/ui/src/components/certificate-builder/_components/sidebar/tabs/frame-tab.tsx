@@ -137,8 +137,8 @@ export const FrameTab = () => {
         frame: {
           ...template.frame,
           file: file as IFileResponse,
-          width: Math.round(newWidth),
-          height: Math.round(newHeight),
+          width: Math.floor(newWidth),
+          height: Math.floor(newHeight),
           backgroundColor: template.frame?.backgroundColor ?? defaultFrame.backgroundColor,
         },
       });

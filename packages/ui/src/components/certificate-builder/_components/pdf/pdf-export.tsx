@@ -1,7 +1,7 @@
 'use client';
 
 import type { ICertificateData, ICertificateTemplate } from '@oe/api/types/certificate';
-import { Document, Image, Page, pdf } from '@react-pdf/renderer';
+import { Document, Image, Page, View, pdf } from '@react-pdf/renderer';
 import type { FC, MouseEvent } from 'react';
 import './pdf-fonts';
 import { Download } from 'lucide-react';
@@ -20,56 +20,61 @@ export const CertificatePDF: FC<{
   data?: ICertificateData;
 }> = ({ template, data }) => {
   return (
-    <Document style={{ fontFamily: 'Inter', fontSize: 14 }}>
+    <Document style={{ fontFamily: 'Inter', fontSize: 14, padding: 20 }}>
       <Page
         key={template.id}
-        size={[template.frame?.width ?? defaultFrame.width, template.frame?.height ?? defaultFrame.height]}
+        size={[
+          Math.floor(template.frame?.width ?? defaultFrame.width),
+          Math.floor(template.frame?.height ?? defaultFrame.height),
+        ]}
         style={{
           backgroundColor: template.frame?.backgroundColor,
           position: 'relative',
           padding: 0,
         }}
       >
-        {/* Background Image */}
-        {template.frame?.file?.url && (
-          <Image
-            // src={template.frame?.file?.url}
-            src={{
-              uri: `${template.frame?.file?.url}?cachebuster=${Date.now()}`,
-              method: 'GET',
-              headers: { 'Cache-Control': 'no-cache' },
-            }}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: template.frame?.width,
-              height: template.frame?.height,
-            }}
-          />
-        )}
+        <View>
+          {/* Background Image */}
+          {template.frame?.file?.url && (
+            <Image
+              // src={template.frame?.file?.url}
+              src={{
+                uri: `${template.frame?.file?.url}?cachebuster=${Date.now()}`,
+                method: 'GET',
+                headers: { 'Cache-Control': 'no-cache' },
+              }}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: template.frame?.width,
+                height: template.frame?.height,
+              }}
+            />
+          )}
 
-        {template.elements?.map(element => {
-          if (element.visible === false) {
-            return null;
-          }
-
-          switch (element.type) {
-            case 'text':
-              return <PDFTextRenderer key={element.id} element={element} data={data} />;
-            case 'image':
-              return <PDFImageRenderer key={element.id} element={element} />;
-            case 'rich-text':
-              return <PDFRichTextRenderer key={element.id} element={element} data={data} />;
-            case 'signature':
-              return <PDFSignatureRenderer key={element.id} element={element} data={data} />;
-            case 'organization':
-              return <PDFOrganizationRenderer key={element.id} element={element} data={data} />;
-
-            default:
+          {template.elements?.map(element => {
+            if (element.visible === false) {
               return null;
-          }
-        })}
+            }
+
+            switch (element.type) {
+              case 'text':
+                return <PDFTextRenderer key={element.id} element={element} data={data} />;
+              case 'image':
+                return <PDFImageRenderer key={element.id} element={element} />;
+              case 'rich-text':
+                return <PDFRichTextRenderer key={element.id} element={element} data={data} />;
+              case 'signature':
+                return <PDFSignatureRenderer key={element.id} element={element} data={data} />;
+              case 'organization':
+                return <PDFOrganizationRenderer key={element.id} element={element} data={data} />;
+
+              default:
+                return null;
+            }
+          })}
+        </View>
       </Page>
     </Document>
   );
