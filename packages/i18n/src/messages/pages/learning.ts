@@ -51,6 +51,8 @@ export const courseLearningMessages = {
       notCompletedYet: "Please complete all previous lessons before moving to the next one. You're almost there!",
       returnToClass: 'Return to Class',
       exploreNewCourse: 'Explore New Course',
+      keepMovingForward: 'Keep Moving Forward!',
+      keepMovingForwardDesc: "You've archieved 50% of this course! Let's continue your learning with OpenEdu!",
     },
   },
 

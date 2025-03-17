@@ -6,7 +6,7 @@ import type { IQuizSubmissionResponse } from '@oe/api';
 import { convertTimeStringToSeconds } from '@oe/core';
 import { type IframeHTMLAttributes, useEffect, useRef, useState } from 'react';
 import { Spinner } from '#components/spinner';
-import { useQuizSubmissionStore } from '../../../_store/learning-store';
+import { useQuiz } from '../../../_context';
 import { usePlayerProgress } from './_hooks';
 import { NextLessonAlert } from './next-lesson-alert';
 import { EVENTS, usePlayer } from './player';
@@ -44,7 +44,7 @@ const ContentVideo = ({
     duration: 0,
   });
 
-  const { quizResult } = useQuizSubmissionStore();
+  const { quizResult } = useQuiz();
 
   const triggerQuizConditions = () => {
     if (quizzes) {
