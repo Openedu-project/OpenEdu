@@ -12,6 +12,7 @@ import type {
   ISectionRes,
 } from '#types/course/course';
 import type { ICourseOutline } from '#types/course/course';
+import type { IDiscussionRequest } from '#types/course/discuss';
 import type { ICoursePartner } from '#types/course/partners';
 import type { IBulkSegments, ILessonContent, ISegment, ISegmentParams } from '#types/course/segment';
 import type { HTTPPagination } from '#types/fetch';
@@ -435,5 +436,43 @@ export const getCourseHistoryService = async (url: string | undefined, cuid: str
     url ?? buildUrl({ endpoint: API_ENDPOINT.COURSES_ID_HISTORIES, params: { id: cuid } }),
     init
   );
+  return response.data;
+};
+
+export const putCancelRequestCourseService = async (
+  endpoint: string | null | undefined,
+  { payload, init }: { payload: string; init?: RequestInit }
+) => {
+  let endpointKey = endpoint;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.COURSES_ID_PUBLISH,
+      params: {
+        id: payload,
+      },
+    });
+  }
+
+  const response = await putAPI<ICourse, string>(endpointKey, payload, init);
+
+  return response.data;
+};
+
+export const putReplyFeedbackCourseService = async (
+  endpoint: string | null | undefined,
+  { payload, init }: { payload: IDiscussionRequest; init?: RequestInit }
+) => {
+  let endpointKey = endpoint;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.COURSES_ID_REPLY_FEEDBACK,
+      params: {
+        id: payload,
+      },
+    });
+  }
+
+  const response = await putAPI<ICourse, IDiscussionRequest>(endpointKey, payload, init);
+
   return response.data;
 };

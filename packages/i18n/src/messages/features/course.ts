@@ -238,6 +238,29 @@ export const courseMessages = {
       publishDate: 'Publish Date',
       requestTime: 'Request Time',
       status: 'Status',
+      toast: {
+        noRequest: 'Do not have any the request publish',
+        actionFail: 'Failed to action cancel request',
+        replyFail: 'Failed to reply feedback',
+        missId: 'Missing ID',
+      },
+      published: 'Published:',
+      reviewing: 'Reviewing:',
+      cancelRequest: 'Cancel Request',
+      titleCancle: 'Confirm To Cancel Request',
+      confirmCancelContent:
+        'Are you sure you want to cancel this request? Your request to this course may no longer be available.',
+      feedback: {
+        you: '(You)',
+        actionRequest: '{action} your request',
+        minCharacter: 'Response must be at least 2 characters long',
+        submit: 'Submit Response',
+        includes:
+          "  When you check this box, Open EDU admin and Org admin will see and review the latest course version that you've updated changes.",
+        org: 'in organization',
+        oe: 'in OpenEdu',
+        response: 'Your response {location}',
+      },
     },
 
     // Form validation messages

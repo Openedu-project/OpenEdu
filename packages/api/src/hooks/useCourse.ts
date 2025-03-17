@@ -14,7 +14,9 @@ import {
   getSegmentByIdService,
   getSegmentsService,
   postEnrollCourseService,
+  putCancelRequestCourseService,
   putEnableCourseService,
+  putReplyFeedbackCourseService,
 } from '#services/course';
 import type {
   ICourse,
@@ -23,6 +25,7 @@ import type {
   IEnableCourseRequest,
   IEnrollCoursePayload,
 } from '#types/course/course';
+import type { IDiscussionRequest } from '#types/course/discuss';
 import type { ISegmentParams } from '#types/course/segment';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
@@ -293,5 +296,48 @@ export const useGetCoursePartners = (id: string, params?: IFilter) => {
     coursePartners: data,
     isLoadingCoursePartners: isLoading,
     mutateCoursePartners: mutate,
+  };
+};
+
+export const usePutCancelRequestCourse = () => {
+  const { trigger, error, isMutating } = useSWRMutation(
+    API_ENDPOINT.COURSES_ID_PUBLISH,
+    async (_endpoint: string, { arg }: { arg: string }): Promise<ICourse> =>
+      putCancelRequestCourseService(
+        createAPIUrl({
+          endpoint: API_ENDPOINT.COURSES_ID_STAGE,
+          params: {
+            id: arg,
+          },
+        }),
+        { payload: arg }
+      )
+  );
+  return {
+    triggerPutCancelRequestCourse: trigger,
+    putCancelRequestCourseError: error,
+    isLoadingPutCancelRequestCourse: isMutating,
+  };
+};
+
+export const usePutRelyFeedback = (courseId?: string) => {
+  const { trigger, error, isMutating } = useSWRMutation(
+    courseId ? API_ENDPOINT.COURSES_ID_REPLY_FEEDBACK : '',
+    async (_endpoint: string, { arg }: { arg: IDiscussionRequest }): Promise<ICourse> =>
+      putReplyFeedbackCourseService(
+        createAPIUrl({
+          endpoint: API_ENDPOINT.COURSES_ID_REPLY_FEEDBACK,
+          params: {
+            id: courseId,
+          },
+        }),
+        { payload: arg }
+      )
+  );
+
+  return {
+    triggerReplyFeedback: trigger,
+    replyFeedbackError: error,
+    isLoadingReplyFeedback: isMutating,
   };
 };
