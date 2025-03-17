@@ -5,16 +5,16 @@ import { DescText, H2Text, HowToCard } from '../components';
 import { howToGetMoneyData } from '../lib/render-data';
 
 const HowToSection = async () => {
-  const t = await getTranslations('launchpadHomepage');
+  const t = await getTranslations('launchpadHomepage.howToSection');
   const translatedData = howToGetMoneyData(t);
   return (
     <section className="flex flex-col items-start justify-between gap-10 pb-10 md:flex-row md:gap-16">
       <div className="w-full md:w-[40%]">
-        <H2Text>How To Get Money From Pledging A Launchpad?</H2Text>
+        <H2Text>{t('title')}</H2Text>
         <DescText>
-          With a token wallet in OpenEdu, you can easily make a donate for any course launchpad in OpenEdu Platform.
+          {t('desc')}
           <Link href="/terms" className="block p-0 font-normal text-sm leading-tight sm:text-base md:text-xl">
-            Read More For Terms & Conditions
+            {t('terms')}
           </Link>
         </DescText>
       </div>
