@@ -137,15 +137,9 @@ const MessageInput: React.FC<MessageInputProps> = ({
     handleOpenAgentList(value);
   };
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  const inputSchema = useMemo(() => {
-    setFilteredAgents([]);
-    return chatSchema;
-  }, [selectedAgent]);
-
   const defaultValues = useMemo(() => ({ message: initialMessage ?? '', images }), [initialMessage, images]);
 
-  const handleSubmit = async (values: z.infer<typeof inputSchema>) => {
+  const handleSubmit = async (values: z.infer<typeof chatSchema>) => {
     setFilteredAgents([]);
     if (generating) {
       return;
@@ -193,7 +187,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
       <FormWrapper
         id="messange-input"
         resetOnSuccess={resetOnSuccess}
-        schema={inputSchema}
+        schema={chatSchema}
         onSubmit={handleSubmit}
         useFormProps={{ defaultValues }}
         className="w-full"

@@ -3,6 +3,7 @@ import { useGetConversationDetails } from '@oe/api/hooks/useConversation';
 import { cancelConversation } from '@oe/api/services/conversation';
 import type { IAgenConfigs, TAgentType } from '@oe/api/types/conversation';
 import type { HTTPError } from '@oe/api/utils/http-error';
+import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
@@ -88,7 +89,9 @@ export function ChatWindow({ id, initData, agent = 'ai_search', className }: ICh
 
   useEffect(() => {
     if (messageData?.results) {
-      setMessages([...messageData.results.messages].reverse());
+      setMessages(
+        [...messageData.results.messages.filter(msg => !GENERATING_STATUS.includes(msg.status ?? ''))].reverse()
+      );
     }
   }, [messageData, setMessages]);
 

@@ -1,5 +1,5 @@
 'use client';
-import AIBot from '@oe/assets/images/ai/ai-bot-2.png';
+import AIMascot from '@oe/assets/images/ai/ai-mascot.png';
 import Openedu from '@oe/assets/images/openedu.png';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { marked } from '@oe/core/utils/marker';
@@ -22,7 +22,7 @@ export const AIMessage = ({ message, loading, rewrite, content, actionsButton = 
   return (
     <div className={cn('flex gap-3', className)}>
       <Image
-        src={AIBot.src}
+        src={AIMascot.src}
         alt="ai-bot"
         aspectRatio="1:1"
         width={40}
