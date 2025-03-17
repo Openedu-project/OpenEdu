@@ -10,6 +10,7 @@ import { Provider } from '@oe/ui/common/providers';
 import { WebViewHandler } from '@oe/ui/components/webview-handler';
 import { Toaster } from '@oe/ui/shadcn/sonner';
 import { getLocale, getMessages } from 'next-intl/server';
+import Script from 'next/script';
 import type { ReactNode } from 'react';
 
 // const geistSans = localFont({
@@ -42,7 +43,21 @@ export default async function RootLayout({
     .join(' ');
 
   return (
-    <html lang={locale ?? 'en'} suppressHydrationWarning className={fontVariables}>
+    <html
+      lang={locale ?? "en"}
+      suppressHydrationWarning
+      className={fontVariables}
+    >
+      <header>
+        <Script id="clarity">
+          {`(function(c,l,a,r,i,t,y) {
+              c[a]=c[a]||function() {(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "qpk1sozolu");
+          `}
+        </Script>
+      </header>
       <body className="scrollbar font-primary antialiased">
         <Provider messages={messages ?? {}} locale={locale}>
           <WebViewHandler />
@@ -50,7 +65,7 @@ export default async function RootLayout({
           <Toaster />
         </Provider>
       </body>
-      <GoogleAnalytics gaId='G-NEDV7937ZQ'/>
+      <GoogleAnalytics gaId="G-NEDV7937ZQ" />
     </html>
   );
 }
