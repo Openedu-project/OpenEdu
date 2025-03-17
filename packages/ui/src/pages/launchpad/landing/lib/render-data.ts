@@ -52,7 +52,7 @@ export const howToGetMoneyData = (t: TTranslations): THowToGetMoney[] => [
     ],
   },
   {
-    title: 'Get Share',
+    title: t('howToSection.step.stepThree.title'),
     icon: CirclePercent,
     listDesc: [t('howToSection.step.stepThree.descOne'), t('howToSection.step.stepThree.descTwo')],
   },
