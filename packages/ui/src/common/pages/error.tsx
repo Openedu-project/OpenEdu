@@ -24,10 +24,12 @@
 //     </ErrorException>
 //   );
 // }
-
+'use client';
 import { UnderMaintainImage } from '@oe/assets/icons/maintain';
+import { useRollbar } from '@rollbar/react';
 import { AlertCircleIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useEffect } from 'react';
 import { Link } from '#common/navigation';
 import { ErrorException } from '#components/error-handler';
 import { Button } from '#shadcn/button';
@@ -67,7 +69,7 @@ function getErrorDetails(error: Error & { digest?: string }) {
 export default function ErrorBoundary({ error, reset }: Props) {
   const tErrors = useTranslations('errors');
   const tGeneral = useTranslations('general');
-
+  const rollbar = useRollbar();
   const { errorKey, isServerError, isKnownError, digestValue } = getErrorDetails(error);
 
   let title: string;
@@ -89,6 +91,11 @@ export default function ErrorBoundary({ error, reset }: Props) {
       description += ` (Digest: ${digestValue})`;
     }
   }
+
+  useEffect(() => {
+    console.log('NextErrorHandler useEffect', rollbar);
+    rollbar.error(error);
+  }, [error, rollbar]);
 
   return (
     <ErrorException

@@ -27,5 +27,9 @@
   "packageManager": "pnpm@9.15.3",
   "engines": {
     "node": ">=20"
+  },
+  "dependencies": {
+    "@rollbar/react": "^0.12.1",
+    "rollbar": "^2.26.4"
   }
 }

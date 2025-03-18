@@ -1,7 +1,9 @@
 import { getCookies } from '@oe/core/utils/cookie';
 
+import { clientConfig } from '@oe/core/utils/rollbar';
 import { DEFAULT_LOCALE } from '@oe/i18n/constants';
 import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
+import Rollbar, { type LogArgument } from 'rollbar';
 import { refreshTokenService } from '#services/auth';
 import type { IToken } from '#types/auth';
 import type { HTTPResponse } from '#types/fetch';
@@ -93,6 +95,7 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
   urlAPIWithLocale.searchParams.set('locale', urlAPIWithLocale.searchParams.get('locale') ?? locale ?? DEFAULT_LOCALE);
   const queryParams = urlAPIWithLocale.searchParams.toString();
   const tag = `${urlAPIWithLocale.pathname}${queryParams ? `?${queryParams}` : ''}`;
+  const rollbar = new Rollbar(clientConfig);
 
   const headers = {
     ...defaultOptions.headers,
@@ -148,6 +151,8 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
     const res = await handleResponse(response);
     return res as HTTPResponse<T>;
   } catch (error) {
+    rollbar.error(error as LogArgument);
+
     console.error('--------------Fetch Error--------------------', (error as Error).message);
     throw handleError(error);
   }
