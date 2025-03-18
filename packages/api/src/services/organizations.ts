@@ -22,7 +22,7 @@ export const getOrgByIdService = async (
 ) => {
   const endpointKey = endpoint ?? `${API_ENDPOINT.ADMIN_ORGANIZATIONS}/${id}`;
 
-  const response = await organizationsService(endpointKey, { queryParams: {}, init });
+  const response = await organizationsService(endpointKey, { queryParams: { id }, init });
 
   return response.results?.[0];
 };

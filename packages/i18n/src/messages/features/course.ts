@@ -251,15 +251,19 @@ export const courseMessages = {
       confirmCancelContent:
         'Are you sure you want to cancel this request? Your request to this course may no longer be available.',
       feedback: {
+        title: 'Feedback History',
+        subTitle: 'This history includes Admin Organization and Educator (You)',
         you: '(You)',
         actionRequest: '{action} your request',
         minCharacter: 'Response must be at least 2 characters long',
         submit: 'Submit Response',
         includes:
-          "  When you check this box, Open EDU admin and Org admin will see and review the latest course version that you've updated changes.",
+          "  When you check this box, Organization Admin will see and review the latest course version that you've updated changes.",
         org: 'in organization',
         oe: 'in OpenEdu',
         response: 'Your response {location}',
+        view: 'View Feedback',
+        hide: 'Hide Feedback',
       },
     },
 

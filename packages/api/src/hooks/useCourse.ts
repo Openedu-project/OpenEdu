@@ -305,7 +305,7 @@ export const usePutCancelRequestCourse = () => {
     async (_endpoint: string, { arg }: { arg: string }): Promise<ICourse> =>
       putCancelRequestCourseService(
         createAPIUrl({
-          endpoint: API_ENDPOINT.COURSES_ID_STAGE,
+          endpoint: API_ENDPOINT.COURSES_ID_PUBLISH,
           params: {
             id: arg,
           },

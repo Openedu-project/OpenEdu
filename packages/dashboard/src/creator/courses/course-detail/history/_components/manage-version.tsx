@@ -1,29 +1,57 @@
 'use client';
 
 import { useGetCourseById, usePutCancelRequestCourse } from '@oe/api/hooks/useCourse';
+import { useGetOrganizationById } from '@oe/api/hooks/useOrganization';
+import { createAPIUrl } from '@oe/api/utils/fetch';
+import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { Link } from '@oe/ui/common/navigation';
 import { Modal } from '@oe/ui/components/modal';
-import { Badge } from '@oe/ui/shadcn/badge';
 import { Button } from '@oe/ui/shadcn/button';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 interface IProps {
   publishedVersion: number;
   reviewingVersion?: number;
-  previewUrl?: string;
 }
 
-const ManageVersion = ({ publishedVersion, reviewingVersion, previewUrl }: IProps) => {
+const generateVersion = (version?: number) => (
+  <p className="!no-underline font-bold text-primary text-sm">{version ? `V.${version}.0` : '-'}</p>
+);
+
+const ManageVersion = ({ publishedVersion, reviewingVersion }: IProps) => {
   const { courseId } = useParams();
   const t = useTranslations('course.history');
 
   const { course, mutateCourse } = useGetCourseById(courseId as string);
+
+  const orgId = useMemo(() => course?.published?.find(p => p.status === 'publish')?.org_id, [course]);
+
+  const { dataListOrganizationById } = useGetOrganizationById({
+    id: orgId || '',
+  });
+
   const { triggerPutCancelRequestCourse } = usePutCancelRequestCourse();
 
   const [openModal, setOpenModal] = useState(false);
+
+  const previewUrl = useMemo(() => {
+    if (!orgId) {
+      return '';
+    }
+
+    return course
+      ? `https://${dataListOrganizationById?.alt_domain || dataListOrganizationById?.domain}${createAPIUrl({
+          endpoint: PLATFORM_ROUTES.previewCourse,
+          params: {
+            courseId: course.id,
+            orgId: orgId,
+          },
+        })}`
+      : '#';
+  }, [orgId, dataListOrganizationById, course]);
 
   const handleCancelRequest = useCallback(async () => {
     try {
@@ -42,23 +70,23 @@ const ManageVersion = ({ publishedVersion, reviewingVersion, previewUrl }: IProp
     } catch {
       toast.error(t('toast.actionFail'));
     }
-  }, [triggerPutCancelRequestCourse, course?.org_request, mutateCourse, t, toast, setOpenModal]);
+  }, [triggerPutCancelRequestCourse, course?.org_request, mutateCourse, t]);
 
   return (
-    <div className="flex items-center gap-spacing-m">
+    <div className="flex w-full items-center justify-between gap-spacing-m">
       <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2">
-          {t('published')}
+        <div className="flex items-center gap-1">
+          <p className="font-bold">{t('published')}</p>
           {
-            <Link href={previewUrl ?? '#'}>
-              <Badge variant="outline_primary">v{publishedVersion}.0</Badge>
+            <Link target="_blank" href={previewUrl} className="h-fit p-0">
+              {generateVersion(publishedVersion)}
             </Link>
           }
         </div>
         <span>|</span>
-        <div className="flex items-center gap-2">
-          {t('reviewing')}
-          {<Badge variant="outline_primary">v{reviewingVersion}.0</Badge>}
+        <div className="flex items-center gap-1">
+          <p className="font-bold">{t('reviewing')}</p>
+          {generateVersion(reviewingVersion)}
         </div>
       </div>
 
@@ -76,7 +104,18 @@ const ManageVersion = ({ publishedVersion, reviewingVersion, previewUrl }: IProp
       )}
 
       {openModal && (
-        <Modal open={true} title={t('titleCancel')} onSubmit={handleCancelRequest}>
+        <Modal
+          open={true}
+          title={t('titleCancle')}
+          onSubmit={handleCancelRequest}
+          buttons={[
+            {
+              label: 'aaa',
+              type: 'submit',
+              variant: 'destructive',
+            },
+          ]}
+        >
           <p>{t('confirmCancelContent')}</p>
         </Modal>
       )}

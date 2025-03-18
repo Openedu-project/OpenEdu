@@ -10,8 +10,8 @@ import { useCallback, useMemo, useRef } from 'react';
 import { DiscussItem } from './discuss-item';
 import { SendReply } from './send-reply';
 
-const FeedbackSection = () => {
-  // const t = useTranslations("course.history.feedback");
+const FeedbackSection = ({ showFeedback }: { showFeedback: boolean }) => {
+  const t = useTranslations('course.history.feedback');
   const tToast = useTranslations('course.history.toast');
   const params = useParams<{ courseId: string }>();
   const pathName = usePathname();
@@ -22,8 +22,6 @@ const FeedbackSection = () => {
   const { course, mutateCourse } = useGetCourseById(courseId);
   const { dataMe: me } = useGetMe();
   const { triggerReplyFeedback } = usePutRelyFeedback(courseId as string);
-
-  const isOrgFeedback = true;
 
   const renderedConversation = useMemo(() => {
     const orgDiscussion = course?.org_request?.props?.discussion || [];
@@ -90,17 +88,30 @@ const FeedbackSection = () => {
         toast.error(tToast('replyFail'));
       }
     },
-    [changeCurrentId, course?.org_request?.id, courseId, mutateCourse, scrollToBottom, toast, triggerReplyFeedback]
+    [changeCurrentId, course?.org_request?.id, courseId, mutateCourse, scrollToBottom, tToast, triggerReplyFeedback]
   );
 
   return (
-    <div className="flex min-h-[150px] flex-col gap-4">
-      <div className="flex flex-col gap-spacing-ml">
-        {renderedConversation?.map((discuss, index) => (
-          <DiscussItem username={me?.username} discuss={discuss} key={`${discuss.id}${index}`} />
-        ))}
-        <SendReply onSubmit={handleSubmit} isOrgFeedback={isOrgFeedback} textareaRef={textareaRef} />
+    <div
+      className={`flex h-full shrink-0 flex-col gap-4 rounded-md bg-background p-4 transition-all duration-600 ease-in-out ${
+        showFeedback
+          ? 'w-1/3 translate-x-0 cursor-default opacity-100 md:flex'
+          : 'pointer-events-none absolute right-0 w-0 translate-x-full opacity-0 md:flex'
+      }`}
+    >
+      <div className="space-y-1 border-b p-2 ">
+        <p className="font-bold text-lg">{t('title')}</p>
+        <p className="text-foreground/80 text-xs">{t('subTitle')}</p>
       </div>
+
+      <div className="flex min-h-[150px] flex-auto flex-auto flex-col gap-4 overflow-y-scroll">
+        <div className="flex flex-col space-y-2">
+          {renderedConversation?.map((discuss, index) => (
+            <DiscussItem username={me?.username} discuss={discuss} key={`${discuss.id}${index}`} />
+          ))}
+        </div>
+      </div>
+      <SendReply onSubmit={handleSubmit} textareaRef={textareaRef} />
     </div>
   );
 };
