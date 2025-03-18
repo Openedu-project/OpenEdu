@@ -3,7 +3,7 @@ import katex from 'katex';
 import { Marked, type MarkedExtension, type Renderer, type Tokens } from 'marked';
 import 'katex/dist/katex.min.css';
 
-const regexLinkButton = /^\[(\d+)\]$/;
+const regexLinkButton = /^\[(.*)\]$/;
 
 const blockLatexRule: RegExp[] = [
   /^\$\$([\s\S]+?)\$\$/,
@@ -115,7 +115,24 @@ export const marked = new Marked({
   renderer: {
     link(this: Renderer, { href, title, text }: Tokens.Link) {
       const isButton = regexLinkButton.test(text ?? '');
-      return `<a href="${href}" target="_blank" class="text-primary break-all ${isButton ? 'border font-bold rounded-full bg-primary/10 p-1 text-xs h-5 w-5 inline-flex items-center justify-center' : 'underline'}" ${title ? `title="${title}"` : ''}>${isButton ? text.substring(1, text.length - 1) : text}</a>`;
+      if (isButton) {
+        return `
+          <a href="${href}" 
+             target="_blank" 
+             data-meta-trigger="true"
+             data-meta-href="${href}"
+             class="hidden"
+             ${title ? `title="${title}"` : ''}>${text.substring(1, text.length - 1)}</a>
+        `;
+      }
+
+      // Regular links don't get tooltip trigger attributes
+      return `<a 
+        href="${href}" 
+        target="_blank" 
+        class="text-primary break-all underline" 
+        ${title ? `title="${title}"` : ''}
+      >${text}</a>`;
     },
     code(this: Renderer, { text, lang }: Tokens.Code) {
       const originalCode = text;

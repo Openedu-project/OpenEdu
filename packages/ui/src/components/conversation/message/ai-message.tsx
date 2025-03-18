@@ -3,7 +3,7 @@ import AIMascot from '@oe/assets/images/ai/ai-mascot.png';
 import Openedu from '@oe/assets/images/openedu.png';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { marked } from '@oe/core/utils/marker';
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Image } from '#components/image';
 import { cn } from '#utils/cn';
 import Copy from '../message-actions/copy';
@@ -12,6 +12,7 @@ import LikeButton from '../message-actions/like';
 import Rewrite from '../message-actions/rewrite';
 import { SourcesButton } from '../sources/sources-button';
 import type { IAIMessageProps } from '../type';
+import { LinkPreviewHydration } from './preview-link';
 import { ThinkingMessage } from './thinking-message';
 
 export const AIMessage = ({ message, loading, rewrite, content, actionsButton = true, className }: IAIMessageProps) => {
@@ -19,17 +20,54 @@ export const AIMessage = ({ message, loading, rewrite, content, actionsButton = 
   const contentRef = useRef<HTMLDivElement>(null);
   const sources = message.props?.source_results;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (!contentRef.current) {
+      return;
+    }
+
+    const buttonLinks = contentRef.current.querySelectorAll('a[data-meta-trigger="true"]');
+
+    for (const link of buttonLinks) {
+      const href = link.getAttribute('href');
+      if (!href) {
+        continue;
+      }
+
+      if (link.parentElement?.classList.contains('link-preview-wrapper')) {
+        continue;
+      }
+
+      // Create a wrapper for the link
+      const wrapper = document.createElement('span');
+      wrapper.className = 'link-preview-wrapper';
+      wrapper.setAttribute('data-link-href', href);
+
+      const parent = link.parentElement;
+      if (!parent) {
+        continue;
+      }
+
+      const clone = link.cloneNode(true);
+
+      wrapper.appendChild(clone);
+
+      link.insertAdjacentElement('beforebegin', wrapper);
+      link.remove();
+    }
+  }, [html]);
   return (
     <div className={cn('flex gap-3', className)}>
       <Image
         src={AIMascot.src}
         alt="ai-bot"
         aspectRatio="1:1"
-        width={40}
+        width={50}
         height={40}
-        className="rounded-full bg-background"
+        className=" bg-background"
         wrapClassNames="w-auto"
-        containerHeight={40}
+        objectFit="contain"
+        containerHeight={50}
       />
       <div className={cn('flex grow flex-col space-y-6', !message.content && 'basis-full')}>
         <div className="flex flex-col space-y-2">
@@ -73,6 +111,7 @@ export const AIMessage = ({ message, loading, rewrite, content, actionsButton = 
                 // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
                 dangerouslySetInnerHTML={{ __html: html }}
               />
+              <LinkPreviewHydration id={message?.id} />
             </div>
           )}
           {sources && (sources?.length ?? 0) > 0 && <SourcesButton sources={sources} messageId={message.id} />}

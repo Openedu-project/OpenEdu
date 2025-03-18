@@ -26,12 +26,12 @@ export function SourceCard({ url, title, content, className }: ISourceCardProps)
             containerHeight="auto"
           />
         </div>
-        <p className="mcaption-semibold12">{domain}</p>
+        <p className="mcaption-regular12">{domain}</p>
       </div>
-      <Link href={url} className="!p-0 mcaption-semibold14 !m-0 h-auto justify-start whitespace-normal" target="_blank">
+      <Link href={url} className="!p-0 mcaption-bold14 !m-0 h-auto justify-start whitespace-normal" target="_blank">
         {title}
       </Link>
-      <p className="mcaption-regular14 line-clamp-3">{content}</p>
+      <p className="mcaption-regular12 line-clamp-3">{content}</p>
     </Card>
   );
 }
