@@ -139,3 +139,7 @@ export const getItemsClass = (element?: ICertificateElement) => {
 
   return 'items-start';
 };
+
+export const pxToPt = (px: number): number => {
+  return Math.round(((px * 72) / 96) * 100) / 100;
+};
