@@ -93,7 +93,6 @@ export default function ErrorBoundary({ error, reset }: Props) {
   }
 
   useEffect(() => {
-    console.log('NextErrorHandler useEffect', rollbar);
     rollbar.error(error);
   }, [error, rollbar]);
 

@@ -1,5 +1,6 @@
 'use client';
-import { useGetLevels } from '@oe/api/hooks/useCourse';
+import { useCategoriesTree } from '@oe/api/hooks/useCategories';
+import { useGetOrganizationByDomain } from '@oe/api/hooks/useOrganization';
 import type { ICourseCategory } from '@oe/api/types/course/category';
 import { AutocompeteMultiple } from '@oe/ui/components/autocomplete';
 import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
@@ -7,11 +8,16 @@ import { useTranslations } from 'next-intl';
 
 export default function Category() {
   const tCourse = useTranslations('course');
-  const { levels } = useGetLevels({
-    type: 'level',
-    active: true,
-    // org_id: organizationByDomain?.id ?? '',
-  });
+  const { organizationByDomain } = useGetOrganizationByDomain();
+
+  const { categoriesTree: levels } = useCategoriesTree(
+    {
+      type: 'level',
+    },
+    undefined,
+    !!organizationByDomain?.id
+  );
+
   return (
     <FormFieldWithLabel
       name="levels"
@@ -29,7 +35,7 @@ export default function Category() {
       labelClassName="mb-4 text-lg"
     >
       <AutocompeteMultiple<ICourseCategory>
-        options={levels ?? []}
+        options={(levels ?? []) as ICourseCategory[]}
         placeholder={tCourse('information.sections.level.placeholder')}
         getOptionLabel={option => option.name}
         getOptionValue={option => option.id}
