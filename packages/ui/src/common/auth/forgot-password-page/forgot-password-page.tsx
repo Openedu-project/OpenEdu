@@ -4,10 +4,10 @@ import type { FileType } from '#components/uploader';
 import { AuthLayout } from '../auth-layout';
 import { ForgotPasswordForm } from './forgot-password-form';
 
-import type { ThemeName } from '@oe/themes/types';
+// import type { ThemeName } from '@oe/themes/types';
 
 interface ForgotPasswordProps {
-  themeName?: ThemeName;
+  themeName?: string;
   banner?: FileType;
 }
 export function ForgotPasswordPage({ themeName = 'academia', banner }: ForgotPasswordProps) {

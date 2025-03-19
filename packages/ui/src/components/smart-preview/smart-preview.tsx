@@ -1,6 +1,6 @@
 'use client';
 
-import type { ThemeGlobal } from '@oe/themes/types';
+// import type { ThemeGlobal } from '@oe/themes/types';
 import { Button } from '@oe/ui/shadcn/button';
 import { Monitor, Smartphone, Tablet } from 'lucide-react';
 import type React from 'react';
@@ -10,7 +10,8 @@ import { createPortal } from 'react-dom';
 interface PreviewFrameProps {
   children: React.ReactNode;
   containerPadding?: number;
-  themeGlobal?: ThemeGlobal;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  themeGlobal?: Record<string, any>;
 }
 
 interface ViewportButtonProps {

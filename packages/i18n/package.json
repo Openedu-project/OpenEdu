@@ -19,6 +19,7 @@
     "next-intl": "3.26.3"
   },
   "devDependencies": {
+    "@types/node": "^22.10.5",
     "@oe/config": "workspace:*",
     "@oe/types": "workspace:*"
   }

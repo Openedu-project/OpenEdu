@@ -132,6 +132,9 @@ importers:
       '@oe/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
+      '@oe/themes':
+        specifier: workspace:*
+        version: link:../../packages/themes
       '@oe/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -377,6 +380,9 @@ importers:
       '@oe/types':
         specifier: workspace:*
         version: link:../types
+      '@types/node':
+        specifier: ^22.10.5
+        version: 22.13.10
 
   packages/themes:
     dependencies:
