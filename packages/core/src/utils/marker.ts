@@ -3,7 +3,7 @@ import katex from 'katex';
 import { Marked, type MarkedExtension, type Renderer, type Tokens } from 'marked';
 import 'katex/dist/katex.min.css';
 
-const regexLinkButton = /^\[(.*)\]$/;
+const regexPreviewLink = /^\[(.*)\]$/;
 
 const blockLatexRule: RegExp[] = [
   /^\$\$([\s\S]+?)\$\$/,
@@ -114,14 +114,14 @@ const latexExtension: MarkedExtension = {
 export const marked = new Marked({
   renderer: {
     link(this: Renderer, { href, title, text }: Tokens.Link) {
-      const isButton = regexLinkButton.test(text ?? '');
+      const isButton = regexPreviewLink.test(text ?? '');
       if (isButton) {
         return `
           <a href="${href}" 
              target="_blank" 
              data-meta-trigger="true"
              data-meta-href="${href}"
-             class="hidden"
+             class="my-1 inline-flex items-center justify-center break-all rounded-full border bg-primary/10 px-2 py-1 hover:border-primary hover:bg-background hover:text-primary"
              ${title ? `title="${title}"` : ''}>${text.substring(1, text.length - 1)}</a>
         `;
       }

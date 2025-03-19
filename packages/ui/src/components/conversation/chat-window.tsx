@@ -16,7 +16,6 @@ import type { IChatWindowProps } from './type';
 export function ChatWindow({ id, initData, agent = 'ai_search', className }: IChatWindowProps) {
   const searchParams = useSearchParams();
   const containerRef = useRef<HTMLDivElement | null>(null);
-
   const {
     isNewChat,
     setMessages,

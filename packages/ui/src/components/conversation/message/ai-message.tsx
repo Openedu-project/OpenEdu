@@ -49,7 +49,6 @@ export const AIMessage = ({
       // Create a wrapper for the link
       const wrapper = document.createElement('span');
       wrapper.className = 'link-preview-wrapper';
-      wrapper.setAttribute('data-link-href', href);
 
       const parent = link.parentElement;
       if (!parent) {
