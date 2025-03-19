@@ -9,7 +9,7 @@ export default function AIAssistantPage() {
   return (
     <div className="flex h-[calc(100dvh-var(--header-height))] flex-col items-center gap-4 px-2 md:container">
       <div className="scrollbar relative flex w-full grow flex-col items-center justify-start gap-4 overflow-y-auto pt-4 md:justify-center">
-        <div className="-z-10 -translate-x-1/2 -translate-y-1/2 absolute top-1/4 left-1/2 h-2/3 w-2/3 transform">
+        <div className="-z-10 -translate-x-1/2 -translate-y-1/6 absolute top-1/4 left-1/2 h-2/3 w-2/3 transform">
           <Image
             src={AIBg.src}
             noContainer

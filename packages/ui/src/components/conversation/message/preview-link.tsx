@@ -1,3 +1,5 @@
+'use client';
+
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@oe/ui/shadcn/hover-card';
 import type React from 'react';
 import { useEffect, useState } from 'react';
@@ -31,7 +33,7 @@ export const LinkPreview = ({ children, href }: LinkPreviewProps) => {
   };
 
   return (
-    <HoverCard openDelay={300} closeDelay={200}>
+    <HoverCard openDelay={100} closeDelay={100}>
       <HoverCardTrigger asChild onMouseEnter={getMetadata}>
         {children}
       </HoverCardTrigger>
@@ -59,13 +61,11 @@ export const LinkPreviewHydration = ({ id }: { id: string }) => {
   return (
     <>
       {previews.map(({ href, element }) => {
-        // Get the original link element
         const linkElement = element.querySelector('a');
         if (!linkElement) {
           return null;
         }
 
-        // Create a portal for each link
         return createPortal(
           <LinkPreview key={href} href={href}>
             <a

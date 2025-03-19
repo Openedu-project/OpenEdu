@@ -1,11 +1,7 @@
 'use client';
 import { useGetConversationDetails } from '@oe/api/hooks/useConversation';
-import { cancelConversation } from '@oe/api/services/conversation';
 import type { IAgenConfigs, TAgentType } from '@oe/api/types/conversation';
-import type { HTTPError } from '@oe/api/utils/http-error';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
-import { toast } from '@oe/ui/shadcn/sonner';
-import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef } from 'react';
 import { useConversationStore } from '#store/conversation-store';
@@ -18,7 +14,6 @@ import { MessageContainer } from './message/message-container';
 import type { IChatWindowProps } from './type';
 
 export function ChatWindow({ id, initData, agent = 'ai_search', className }: IChatWindowProps) {
-  const tError = useTranslations('errors');
   const searchParams = useSearchParams();
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -33,6 +28,9 @@ export function ChatWindow({ id, initData, agent = 'ai_search', className }: ICh
     resetGenMessage,
     setSelectedAgent,
     resetOpenWebSource,
+    setGenMessage,
+    setStatus,
+    setResetPage,
   } = useConversationStore();
 
   const prevId = useRef<string>('');
@@ -47,24 +45,11 @@ export function ChatWindow({ id, initData, agent = 'ai_search', className }: ICh
     fallback: initData,
   });
 
-  const handleInitData = async () => {
-    if (!isNewChat && id) {
-      try {
-        await cancelConversation(undefined, id);
-        await mutate();
-      } catch (error) {
-        console.error(error);
-        toast.error(tError((error as HTTPError).message));
-      }
-    }
-  };
-
   const defaultAgent = useMemo(() => searchParams.get('agent'), [searchParams]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     resetOpenWebSource();
-
     if (!isNewChat) {
       setSelectedAgent((defaultAgent as TAgentType) ?? 'ai_search');
       resetGenMessage();
@@ -80,7 +65,6 @@ export function ChatWindow({ id, initData, agent = 'ai_search', className }: ICh
       setIsNewChat(false);
       return;
     }
-    handleInitData();
 
     return () => {
       prevId.current = id;
@@ -89,7 +73,19 @@ export function ChatWindow({ id, initData, agent = 'ai_search', className }: ICh
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
+    setResetPage(false);
     if (messageData?.results && !isNewChat) {
+      const genMsgData = messageData.results.messages.find(msg => GENERATING_STATUS.includes(msg.status ?? ''));
+      if (genMsgData) {
+        setGenMessage(
+          genMsgData,
+          () => {
+            setStatus('generating');
+            setResetPage(true);
+          },
+          true
+        );
+      }
       setMessages(
         [...messageData.results.messages.filter(msg => !GENERATING_STATUS.includes(msg.status ?? ''))].reverse()
       );
@@ -117,6 +113,7 @@ export function ChatWindow({ id, initData, agent = 'ai_search', className }: ICh
           id={id ?? ''}
           sendMessage={sendMessage}
           containerRef={containerRef}
+          mutate={mutate}
         />
       ) : (
         <EmptyChat />

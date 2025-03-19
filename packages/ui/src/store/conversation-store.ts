@@ -25,6 +25,8 @@ interface IConversationStore {
   setWidth: (width: number) => void;
   thinking: boolean;
   setThinking: (thinking: boolean) => void;
+  resetPage: boolean;
+  setResetPage: (resetPage: boolean) => void;
 }
 
 export const useConversationStore = create<IConversationStore>(set => {
@@ -117,6 +119,12 @@ export const useConversationStore = create<IConversationStore>(set => {
     setThinking: (thinking: boolean) => {
       set(() => {
         return { thinking };
+      });
+    },
+    resetPage: false,
+    setResetPage: (resetPage: boolean) => {
+      set(() => {
+        return { resetPage };
       });
     },
   };

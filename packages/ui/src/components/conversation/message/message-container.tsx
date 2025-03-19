@@ -1,8 +1,9 @@
 import { useGetConversationDetails } from '@oe/api/hooks/useConversation';
-import type { IMessage, TAgentType } from '@oe/api/types/conversation';
+import type { IConversationDetails, IMessage, TAgentType } from '@oe/api/types/conversation';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { ChevronsDown } from 'lucide-react';
 import { type RefObject, useEffect, useRef, useState } from 'react';
+import type { KeyedMutator } from 'swr';
 import { Button } from '#shadcn/button';
 import { Skeleton } from '#shadcn/skeleton';
 import { useConversationStore } from '#store/conversation-store';
@@ -27,6 +28,7 @@ interface IContainerProps {
     role,
   }: // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   ISendMessageParams) => void | Promise<unknown>;
+  mutate: KeyedMutator<IConversationDetails>;
 }
 export const MessageContainer = ({
   id,
@@ -36,6 +38,7 @@ export const MessageContainer = ({
   containerRef,
   className,
   scrollBehavior,
+  mutate,
 }: IContainerProps) => {
   const { messages, status, setMessages, isNewChat, setIsNewChat } = useConversationStore();
   const [shouldGetData, setShouldGetData] = useState<boolean>(false);
@@ -162,7 +165,7 @@ export const MessageContainer = ({
             />
           );
         })}
-        <GenMessage containerRef={containerRef} />
+        <GenMessage containerRef={containerRef} mutate={mutate} />
       </div>
       <div className={cn('sticky bottom-0 hidden max-w-3xl translate-x-1/2 xl:max-w-4xl', showScrollButton && 'block')}>
         <Button size="icon" variant="outline" className="rounded-full" onClick={() => handleScrollToBottom()}>
