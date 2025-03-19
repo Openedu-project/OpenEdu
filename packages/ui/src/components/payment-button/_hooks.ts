@@ -149,7 +149,7 @@ const ACTION_HANDLERS: Record<ActionType, ActionHandler> = {
   },
   [ACTION_TYPES.DEFAULT]: {
     handle: async params => {
-      await handleEnrollCourse(params);
+      params?.isCourseDetail && (await handleEnrollCourse(params));
       redirectToLearningPage(params);
     },
     getText: t => t('goToCourse'),
