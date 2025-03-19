@@ -97,6 +97,7 @@
     "embla-carousel-react": "^8.5.2",
     "highlight.js": "^11.11.1",
     "html2canvas-pro": "^1.5.8",
+    "logrocket": "^9.0.2",
     "marked": "^15.0.6",
     "marked-highlight": "^2.2.1",
     "nanoid": "^5.1.0",
