@@ -1,9 +1,7 @@
 import { getCookies } from '@oe/core/utils/cookie';
-
-import { clientConfig } from '@oe/core/utils/rollbar';
 import { DEFAULT_LOCALE } from '@oe/i18n/constants';
+import LogRocket from 'logrocket'; // Import LogRocket
 import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
-import Rollbar, { type LogArgument } from 'rollbar';
 import { refreshTokenService } from '#services/auth';
 import type { IToken } from '#types/auth';
 import type { HTTPResponse } from '#types/fetch';
@@ -33,6 +31,55 @@ export interface RequestInitAPI extends RequestInit {
   cookies?: () => ReadonlyRequestCookies;
   [key: string]: unknown;
 }
+
+// Types for logger
+interface LogData {
+  url?: string;
+  method?: string;
+  status?: number;
+  statusText?: string;
+  duration?: number;
+  requestId?: string;
+  headers?: Record<string, string>;
+  responseBody?: unknown;
+  phase?: string;
+}
+
+// Tạo trình logger riêng để quản lý logs API
+const apiLogger = {
+  info: (message: string, data?: LogData): void => {
+    if (typeof window !== 'undefined') {
+      LogRocket.log(message, data);
+    }
+  },
+
+  warn: (message: string, data?: LogData): void => {
+    if (typeof window !== 'undefined') {
+      LogRocket.warn(message, data);
+    }
+  },
+
+  error: (error: Error | string, data?: LogData): void => {
+    const errorMessage = error instanceof Error ? error.message : error;
+
+    if (typeof window !== 'undefined') {
+      if (error instanceof Error) {
+        const { headers, responseBody, ...logData } = data || {};
+        LogRocket.captureException(error, {
+          tags: {
+            type: 'api_error',
+            ...logData,
+          },
+        });
+      } else {
+        LogRocket.error(errorMessage, {
+          type: 'api_error',
+          ...data,
+        });
+      }
+    }
+  },
+};
 
 let isRefreshing = false;
 let refreshPromise: Promise<IToken | null> | null = null;
@@ -95,7 +142,6 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
   urlAPIWithLocale.searchParams.set('locale', urlAPIWithLocale.searchParams.get('locale') ?? locale ?? DEFAULT_LOCALE);
   const queryParams = urlAPIWithLocale.searchParams.toString();
   const tag = `${urlAPIWithLocale.pathname}${queryParams ? `?${queryParams}` : ''}`;
-  const rollbar = new Rollbar(clientConfig);
 
   const headers = {
     ...defaultOptions.headers,
@@ -119,41 +165,98 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
   let retryCount = 0;
   const MAX_RETRIES = 1;
 
+  const requestStartTime = Date.now();
+  const requestId = Math.random().toString(36).substring(2, 15);
+
+  // Log request information
+  apiLogger.info(`Request: ${options.method || 'GET'} ${urlAPIWithLocale.toString()}`, {
+    requestId,
+    method: options.method || 'GET',
+    url: urlAPIWithLocale.toString(),
+  });
+
   async function attemptFetch(): Promise<Response> {
-    const response = await fetch(urlAPIWithLocale, mergedOptions);
-    if (response.status === 401 && shouldRefreshToken && retryCount < MAX_RETRIES) {
-      retryCount++;
-      if (!isRefreshing) {
-        isRefreshing = true;
-        refreshPromise = refreshTokenService({
-          origin: origin,
-          referrer: referrer,
-          refreshToken: cookies?.[process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY],
-        }).finally(() => {
-          isRefreshing = false;
-          refreshPromise = null;
+    try {
+      const response = await fetch(urlAPIWithLocale, mergedOptions);
+
+      // Log response status
+      const requestDuration = Date.now() - requestStartTime;
+
+      if (response.status >= 400) {
+        apiLogger.error(`HTTP Error: ${response.status} ${response.statusText}`, {
+          requestId,
+          url: urlAPIWithLocale.toString(),
+          status: response.status,
+          statusText: response.statusText,
+          method: options.method || 'GET',
+          duration: requestDuration,
         });
       }
 
-      const token = await refreshPromise;
-      if (token) {
-        mergedOptions.headers = {
-          ...mergedOptions.headers,
-          Authorization: `Bearer ${token.access_token}`,
-        };
+      if (response.status === 401 && shouldRefreshToken && retryCount < MAX_RETRIES) {
+        retryCount++;
+        apiLogger.warn(`Token expired, attempting refresh (${retryCount}/${MAX_RETRIES})`, {
+          requestId,
+          url: urlAPIWithLocale.toString(),
+        });
+
+        if (!isRefreshing) {
+          isRefreshing = true;
+          refreshPromise = refreshTokenService({
+            origin: origin,
+            referrer: referrer,
+            refreshToken: cookies?.[process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY],
+          }).finally(() => {
+            isRefreshing = false;
+            refreshPromise = null;
+          });
+        }
+
+        const token = await refreshPromise;
+        if (token) {
+          apiLogger.info('Token refreshed successfully, retrying request', {
+            requestId,
+          });
+
+          mergedOptions.headers = {
+            ...mergedOptions.headers,
+            Authorization: `Bearer ${token.access_token}`,
+          };
+        } else {
+          apiLogger.error('Token refresh failed', {
+            requestId,
+          });
+        }
+        return attemptFetch();
       }
-      return attemptFetch();
+
+      return response;
+    } catch (networkError) {
+      // Network errors (không kết nối được đến server)
+      apiLogger.error(networkError instanceof Error ? networkError : new Error('Network error'), {
+        requestId,
+        url: urlAPIWithLocale.toString(),
+        method: options.method || 'GET',
+        duration: Date.now() - requestStartTime,
+      });
+      throw networkError;
     }
-    return response;
   }
+
   try {
     const response = await attemptFetch();
     const res = await handleResponse(response);
     return res as HTTPResponse<T>;
   } catch (error) {
-    rollbar.error(error as LogArgument);
-
     console.error('--------------Fetch Error--------------------', (error as Error).message);
+
+    apiLogger.error(error instanceof Error ? error : new Error(String(error)), {
+      requestId,
+      url: urlAPIWithLocale.toString(),
+      method: options.method || 'GET',
+      duration: Date.now() - requestStartTime,
+    });
+
     throw handleError(error);
   }
 }
