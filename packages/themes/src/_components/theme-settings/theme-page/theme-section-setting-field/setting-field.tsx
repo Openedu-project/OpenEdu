@@ -1,5 +1,4 @@
 import type { IFileResponse } from '@oe/api/types/file';
-import { ADMIN_ROUTES } from '@oe/core/utils/routes';
 import { Link } from '@oe/ui/common/navigation';
 import { type FileType, Uploader } from '@oe/ui/components/uploader';
 import { Button } from '@oe/ui/shadcn/button';
@@ -9,6 +8,7 @@ import { Switch } from '@oe/ui/shadcn/switch';
 import { cn } from '@oe/ui/utils/cn';
 import { Languages } from 'lucide-react';
 import type React from 'react';
+import { ADMIN_ROUTES } from '../../../../_utils/constants';
 import { camelToNormal } from '../../../../_utils/function';
 import type { ThemePageSettingFieldProps } from '../theme-section-setting-field';
 

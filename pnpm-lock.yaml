@@ -282,12 +282,6 @@ importers:
       '@oe/config':
         specifier: workspace:*
         version: link:../config
-      '@oe/i18n':
-        specifier: workspace:*
-        version: link:../i18n
-      '@oe/themes':
-        specifier: workspace:*
-        version: link:../themes
       '@oe/types':
         specifier: workspace:*
         version: link:../types
@@ -327,9 +321,6 @@ importers:
       '@oe/i18n':
         specifier: workspace:*
         version: link:../i18n
-      '@oe/themes':
-        specifier: workspace:*
-        version: link:../themes
       '@oe/ui':
         specifier: workspace:*
         version: link:../ui
@@ -398,12 +389,6 @@ importers:
       '@oe/assets':
         specifier: workspace:*
         version: link:../assets
-      '@oe/core':
-        specifier: workspace:*
-        version: link:../core
-      '@oe/i18n':
-        specifier: workspace:*
-        version: link:../i18n
       '@oe/ui':
         specifier: workspace:*
         version: link:../ui
@@ -426,6 +411,9 @@ importers:
       '@oe/config':
         specifier: workspace:*
         version: link:../config
+      '@oe/core':
+        specifier: workspace:*
+        version: link:../core
       '@oe/types':
         specifier: workspace:*
         version: link:../types

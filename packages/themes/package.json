@@ -12,6 +12,7 @@
     "./store/*": "./src/_store/*.ts",
     "./config/*": "./src/_config/*.ts",
     "./components/*": "./src/_components/*.tsx",
+    "./common/*": "./src/_common/*.tsx",
     "./types": "./src/_types/index.ts",
     "./utils/*": "./src/_utils/*.ts"
   },
@@ -24,18 +25,16 @@
     "next-intl": "3.26.3",
     "react": "19.0.0",
     "zustand": "^5.0.2",
-    "cookies-next": "^5.0.2"
-  },
-  "dependencies": {
-    "@oe/i18n": "workspace:*",
+    "cookies-next": "^5.0.2",
     "@oe/ui": "workspace:*",
     "@oe/api": "workspace:*",
-    "@oe/core": "workspace:*",
     "@oe/assets": "workspace:*"
   },
+  "dependencies": {},
   "devDependencies": {
     "@oe/types": "workspace:*",
     "@oe/config": "workspace:*",
+    "@oe/core": "workspace:*",
     "@types/wicg-file-system-access": "^2023.10.5",
     "@types/node": "^22.10.5",
     "@types/react": "19.0.3",
