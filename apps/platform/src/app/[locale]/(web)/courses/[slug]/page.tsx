@@ -16,11 +16,12 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const metadata = await getCourseOutlineService(undefined, { id: params?.slug });
+  const { slug } = await params;
+  const metadata = await getCourseOutlineService(undefined, { id: slug });
   const [themeSystem] = await Promise.all([getThemeConfigServer()]);
   const settings = getMetadata(themeSystem?.[0]?.value);
 
-  const title  = metadata?.name
+  const title = metadata?.name
     ? `${metadata?.name}${settings?.title?.length > 0 ? ` | ${settings?.title}` : ''}`
     : settings?.title;
 
@@ -50,7 +51,7 @@ export async function generateMetadata({
       description: extractText(metadata?.description ?? ''),
       images: metadata?.thumbnail?.url ? [metadata?.thumbnail?.url] : [],
     },
-  };                        
+  };
 
   const newSetting = {
     ...newMetadata,
