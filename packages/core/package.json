@@ -22,6 +22,7 @@
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "peerDependencies": {
+    "@oe/i18n": "workspace:*",
     "next": "15.1.4",
     "next-intl": "3.26.3",
     "react": "19.0.0",

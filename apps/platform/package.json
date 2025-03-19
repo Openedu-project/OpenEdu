@@ -17,7 +17,6 @@
     "@oe/core": "workspace:*",
     "@oe/dashboard": "workspace:*",
     "@oe/i18n": "workspace:*",
-    "@oe/themes": "workspace:*",
     "@oe/ui": "workspace:*",
     "avail-js-sdk": "^0.3.0",
     "lucide-react": "0.469.0",
