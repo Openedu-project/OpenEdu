@@ -2,7 +2,7 @@
 import { useGetTheme } from '@oe/api/hooks/useTheme';
 import { createOrUpdateThemeConfig } from '@oe/api/services/theme';
 import type { ISystemConfigRes } from '@oe/api/types/system-config';
-import type { ThemeName } from '@oe/themes/types/theme-page/index';
+import type { ThemeName } from '@oe/themes/types';
 import { ScrollArea } from '@oe/ui/shadcn/scroll-area';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';

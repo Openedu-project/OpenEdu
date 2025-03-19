@@ -1,8 +1,8 @@
-import type { ThemeSystem } from '@oe/themes/types/theme-system-config';
 import useSWR from 'swr';
 import { createThemeSystemConfigSWRKey } from '#services/system-config';
 import { getThemeConfigClient } from '#services/theme';
 import type { ISystemConfigRes } from '#types/system-config';
+import type { ThemeSystem } from '../../../themes/src/_types';
 
 // export function useGetTheme(shouldFetch = true) {
 //   const endpoint = createThemeSystemConfigSWRKey({});

@@ -1,7 +1,7 @@
 import type { ISystemConfigRes } from '@oe/api/types/system-config';
 import { CloneNewTheme } from '@oe/themes/_components/theme-list/clone-new-theme';
 import ThemeList from '@oe/themes/_components/theme-list/theme-list';
-import type { ThemeSystem } from '@oe/themes/types/theme-system-config';
+import type { ThemeSystem } from '@oe/themes/types';
 import { DashboardHeaderCard } from '@oe/ui/common/layout';
 import { getTranslations } from 'next-intl/server';
 

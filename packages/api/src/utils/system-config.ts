@@ -1,6 +1,8 @@
 import { buildUrl } from '@oe/core/utils/url';
-import type { ThemeName } from '@oe/themes/types/index';
 import type { ISystemConfigKey } from '#types/system-config';
+
+import type { ThemeName } from '../../../themes/src/_types/theme-page';
+
 import { getAPIReferrerAndOriginClient, getAPIReferrerAndOriginServer } from './referrer-origin';
 
 export const systemConfigKeys = {

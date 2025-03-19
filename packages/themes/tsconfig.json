@@ -1,7 +1,6 @@
 {
   "extends": "@oe/config/tsconfig/react.json",
   "compilerOptions": {
-    "jsx": "preserve",
     "baseUrl": ".",
     "types": ["node", "@oe/types/global.d.ts", "@types/wicg-file-system-access", "next/image-types/global"]
   },

@@ -1,9 +1,9 @@
 import { DEFAULT_LOCALE, DEFAULT_LOCALES } from '@oe/i18n/constants';
 import type { LanguageCode } from '@oe/i18n/languages';
-import type { ThemeSystem } from '@oe/themes/types/index';
 import type { ISystemConfigRes } from '#types/system-config';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createThemeSystemConfigKeyClient, createThemeSystemConfigKeyServer } from '#utils/system-config';
+import type { ThemeSystem } from '../../../themes/src/_types';
 import { createOrUpdateSystemConfig, getSystemConfigClient, getSystemConfigServer } from './system-config';
 
 //TODO: remove

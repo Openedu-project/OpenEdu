@@ -1,7 +1,7 @@
 import type { AbstractIntlMessages } from 'next-intl';
 import type { ReactNode } from 'react';
 
-import type { ThemeDefinition } from '@oe/themes/types/theme-system-config';
+import type { ThemeDefinition } from '@oe/themes/types';
 import type { SWRConfiguration } from 'swr';
 import { AuthProvider } from './auth-provider';
 // import { AuthProvider } from './auth-provider';

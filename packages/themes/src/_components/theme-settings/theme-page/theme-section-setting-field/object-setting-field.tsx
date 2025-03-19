@@ -1,4 +1,4 @@
-import type { ThemeFieldConfig, ThemeFieldValue } from '@oe/themes/types/theme-page/index';
+import type { ThemeFieldConfig, ThemeFieldValue } from '@oe/themes/types';
 
 import { Card } from '@oe/ui/shadcn/card';
 import { Label } from '@oe/ui/shadcn/label';

@@ -82,7 +82,7 @@ importers:
         version: 3.24.2
       zustand:
         specifier: ^5.0.3
-        version: 5.0.3(@types/react@19.0.2)(react@19.0.0)(use-sync-external-store@1.4.0(react@19.0.0))
+        version: 5.0.3(@types/react@19.0.3)(react@19.0.0)(use-sync-external-store@1.4.0(react@19.0.0))
     devDependencies:
       '@oe/config':
         specifier: workspace:*
@@ -94,11 +94,11 @@ importers:
         specifier: ^22.10.5
         version: 22.13.10
       '@types/react':
-        specifier: 19.0.2
-        version: 19.0.2
+        specifier: 19.0.3
+        version: 19.0.3
       '@types/react-dom':
         specifier: 19.0.2
-        version: 19.0.2(@types/react@19.0.2)
+        version: 19.0.2(@types/react@19.0.3)
       babel-plugin-react-compiler:
         specifier: 19.0.0-beta-63e3235-20250105
         version: 19.0.0-beta-63e3235-20250105
@@ -295,7 +295,7 @@ importers:
         specifier: workspace:*
         version: link:../types
       '@types/node':
-        specifier: ^22.10.2
+        specifier: ^22.10.5
         version: 22.13.10
       '@types/wicg-file-system-access':
         specifier: ^2023.10.5
@@ -401,27 +401,15 @@ importers:
       '@oe/assets':
         specifier: workspace:*
         version: link:../assets
-      '@oe/config':
-        specifier: workspace:*
-        version: link:../config
       '@oe/core':
         specifier: workspace:*
         version: link:../core
       '@oe/i18n':
         specifier: workspace:*
         version: link:../i18n
-      '@oe/types':
-        specifier: workspace:*
-        version: link:../types
       '@oe/ui':
         specifier: workspace:*
         version: link:../ui
-      '@types/node':
-        specifier: ^22.10.2
-        version: 22.13.10
-      '@types/wicg-file-system-access':
-        specifier: ^2023.10.5
-        version: 2023.10.5
       cookies-next:
         specifier: ^5.0.2
         version: 5.1.0(next@15.1.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
@@ -437,6 +425,28 @@ importers:
       zustand:
         specifier: ^5.0.2
         version: 5.0.3(@types/react@19.0.3)(react@19.0.0)(use-sync-external-store@1.4.0(react@19.0.0))
+    devDependencies:
+      '@oe/config':
+        specifier: workspace:*
+        version: link:../config
+      '@oe/types':
+        specifier: workspace:*
+        version: link:../types
+      '@types/node':
+        specifier: ^22.10.5
+        version: 22.13.10
+      '@types/react':
+        specifier: 19.0.3
+        version: 19.0.3
+      '@types/react-dom':
+        specifier: 19.0.2
+        version: 19.0.2(@types/react@19.0.3)
+      '@types/wicg-file-system-access':
+        specifier: ^2023.10.5
+        version: 2023.10.5
+      typescript:
+        specifier: ^5.7.2
+        version: 5.8.2
 
   packages/types: {}
 
@@ -672,7 +682,7 @@ importers:
         version: 3.0.14(@types/react@19.0.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react-currency-input-field:
         specifier: ^3.9.0
-        version: 3.9.0(react@19.0.0)
+        version: 3.10.0(react@19.0.0)
       react-day-picker:
         specifier: 9.5.0
         version: 9.5.0(react@19.0.0)
@@ -2282,9 +2292,6 @@ packages:
     peerDependencies:
       '@types/react': ^19.0.0
 
-  '@types/react@19.0.2':
-    resolution: {integrity: sha512-USU8ZI/xyKJwFTpjSVIrSeHBVAGagkHQKPNbxeWwql/vDmnTIBgx+TJnhFnj1NXgz8XfprU0egV2dROLGpsBEg==}
-
   '@types/react@19.0.3':
     resolution: {integrity: sha512-UavfHguIjnnuq9O67uXfgy/h3SRJbidAYvNjLceB+2RIKVRBzVsh0QO+Pw6BCSQqFS9xwzKfwstXx0m6AbAREA==}
 
@@ -3475,7 +3482,7 @@ packages:
   react-currency-input-field@3.10.0:
     resolution: {integrity: sha512-GRmZogHh1e1LrmgXg/fKHSuRLYUnj/c/AumfvfuDMA0UX1mDR6u2NR0fzDemRdq4tNHNLucJeJ2OKCr3ehqyDA==}
     peerDependencies:
-      react: ^16.9.0 || ^17.0.0 || ^18.0.0
+      react: ^16.9.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   react-day-picker@9.5.0:
     resolution: {integrity: sha512-WmJnPFVLnKh5Qscm7wavMNg86rqPverSWjx+zgK8/ZmGRSQ8c8OoqW10RI+AzAfT2atIxImpCUU2R9Z7Xb2SUA==}
@@ -5928,17 +5935,9 @@ snapshots:
     dependencies:
       undici-types: 6.20.0
 
-  '@types/react-dom@19.0.2(@types/react@19.0.2)':
-    dependencies:
-      '@types/react': 19.0.2
-
   '@types/react-dom@19.0.2(@types/react@19.0.3)':
     dependencies:
       '@types/react': 19.0.3
-
-  '@types/react@19.0.2':
-    dependencies:
-      csstype: 3.1.3
 
   '@types/react@19.0.3':
     dependencies:
@@ -7792,12 +7791,6 @@ snapshots:
   yoga-layout@3.2.1: {}
 
   zod@3.24.2: {}
-
-  zustand@5.0.3(@types/react@19.0.2)(react@19.0.0)(use-sync-external-store@1.4.0(react@19.0.0)):
-    optionalDependencies:
-      '@types/react': 19.0.2
-      react: 19.0.0
-      use-sync-external-store: 1.4.0(react@19.0.0)
 
   zustand@5.0.3(@types/react@19.0.3)(react@19.0.0)(use-sync-external-store@1.4.0(react@19.0.0)):
     optionalDependencies:

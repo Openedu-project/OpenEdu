@@ -1,4 +1,4 @@
-import type { PageSectionConfig, SectionsByPage, ThemePageKey } from '@oe/themes/types/index';
+import type { PageSectionConfig, SectionsByPage, ThemePageKey } from '@oe/themes/types';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@oe/ui/shadcn/collapsible';
 import { cn } from '@oe/ui/utils/cn';
 import { ChevronDown } from 'lucide-react';

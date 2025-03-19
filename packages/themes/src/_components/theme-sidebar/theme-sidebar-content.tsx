@@ -14,7 +14,7 @@ import type {
   ThemeName,
   ThemePageKey,
   ThemeSystem,
-} from '@oe/themes/types/index';
+} from '@oe/themes/types';
 import { Sidebar, SidebarContent, SidebarGroupContent, SidebarMenu } from '@oe/ui/shadcn/sidebar';
 import { SidebarGroup } from './sidebar-group';
 import { SidebarItem } from './sidebar-item';

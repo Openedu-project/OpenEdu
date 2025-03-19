@@ -6,7 +6,7 @@ import { type AuthEventName, authEvents } from '@oe/api/utils/auth';
 import loginBanner from '@oe/assets/images/login-banner.png';
 import { base64ToJson } from '@oe/core/utils/decoded-token';
 import { AUTH_ROUTES, PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import type { ThemeName } from '@oe/themes/types/theme-page/index';
+import type { ThemeName } from '@oe/themes/types';
 import { getTranslations } from 'next-intl/server';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';

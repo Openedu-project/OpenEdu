@@ -7,7 +7,7 @@ import type {
   ThemeMetadata,
   ThemeName,
   ThemeSystem,
-} from "@oe/themes/types/index";
+} from "@oe/themes/types";
 import { toast } from "@oe/ui/shadcn/sonner";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
