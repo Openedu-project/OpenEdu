@@ -28,10 +28,10 @@ export function useGetOrganization({ params }: { params: IFilter }) {
   };
 }
 
-export function useGetOrganizationById({ id, init = undefined }: { id: string; init?: RequestInit }) {
-  const endpointKey = `${API_ENDPOINT.ADMIN_ORGANIZATIONS}/${id}`;
+export function useGetOrganizationById({ id, init = undefined }: { id?: string; init?: RequestInit }) {
+  const endpointKey = id ? `${API_ENDPOINT.ADMIN_ORGANIZATIONS}/${id}` : '';
   const { data, isLoading, error, mutate } = useSWR(endpointKey, () =>
-    getOrgByIdService(API_ENDPOINT.ADMIN_ORGANIZATIONS, { id, init })
+    id ? getOrgByIdService(API_ENDPOINT.ADMIN_ORGANIZATIONS, { id, init }) : null
   );
 
   return {
