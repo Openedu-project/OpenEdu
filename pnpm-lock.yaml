@@ -220,9 +220,6 @@ importers:
       '@oe/i18n':
         specifier: workspace:*
         version: link:../i18n
-      '@oe/themes':
-        specifier: workspace:*
-        version: link:../themes
       '@oe/ui':
         specifier: workspace:*
         version: link:../ui
@@ -482,9 +479,6 @@ importers:
       '@oe/i18n':
         specifier: workspace:*
         version: link:../i18n
-      '@oe/themes':
-        specifier: workspace:*
-        version: link:../themes
       '@radix-ui/react-accordion':
         specifier: ^1.2.2
         version: 1.2.3(@types/react-dom@19.0.2(@types/react@19.0.3))(@types/react@19.0.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
