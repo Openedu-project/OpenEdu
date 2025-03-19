@@ -31,7 +31,6 @@ export interface IInputButton {
 }
 
 export interface MessageInputProps {
-  generating?: boolean;
   sendMessage: ({
     messageInput,
     type,
@@ -89,6 +88,7 @@ export interface IAIMessageProps {
   content?: string;
   actionsButton?: boolean;
   className?: string;
+  hiddenSourceBtn?: boolean;
 }
 
 export interface IChatWindowProps {

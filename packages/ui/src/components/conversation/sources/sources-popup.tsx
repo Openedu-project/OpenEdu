@@ -9,7 +9,7 @@ export function SourcePopup() {
     <Modal
       title="  "
       open={openWebSource.isOpen}
-      contentClassName="h-[calc(100dvh-100px)] flex flex-col"
+      contentClassName="h-[calc(80dvh-100px)] flex flex-col"
       hasCancelButton={false}
     >
       <SourceList />

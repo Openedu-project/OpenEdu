@@ -47,7 +47,7 @@ export const LinkPreview = ({ children, href }: LinkPreviewProps) => {
 export const LinkPreviewHydration = ({ id }: { id: string }) => {
   const [previews, setPreviews] = useState<{ href: string; element: HTMLElement }[]>([]);
   useEffect(() => {
-    const wrappers = document.querySelectorAll(`#${id} .link-preview-wrapper`);
+    const wrappers = document?.querySelectorAll(`#${CSS.escape(id)} .link-preview-wrapper`);
     const previewsData = Array.from(wrappers).map(wrapper => {
       const href = wrapper.getAttribute('data-link-href') || '';
       return { href, element: wrapper as HTMLElement };

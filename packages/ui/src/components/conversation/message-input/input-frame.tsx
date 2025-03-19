@@ -71,7 +71,6 @@ export function InputFrame({
         sendMessage={sendMessage}
         showInputOption
         className="w-full"
-        generating={false}
         resetOnSuccess
       />
     </div>

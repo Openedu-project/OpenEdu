@@ -64,5 +64,14 @@ export const GenMessage = memo(({ containerRef }: { containerRef: RefObject<HTML
     return null;
   }
 
-  return <AIMessage className="pt-2 pb-16" message={genMessage} content={text} loading={true} actionsButton={false} />;
+  return (
+    <AIMessage
+      className="pt-2 pb-16"
+      message={genMessage}
+      content={text}
+      loading={true}
+      actionsButton={false}
+      hiddenSourceBtn
+    />
+  );
 });

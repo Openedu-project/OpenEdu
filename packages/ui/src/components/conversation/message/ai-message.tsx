@@ -15,7 +15,15 @@ import type { IAIMessageProps } from '../type';
 import { LinkPreviewHydration } from './preview-link';
 import { ThinkingMessage } from './thinking-message';
 
-export const AIMessage = ({ message, loading, rewrite, content, actionsButton = true, className }: IAIMessageProps) => {
+export const AIMessage = ({
+  message,
+  loading,
+  rewrite,
+  content,
+  actionsButton = true,
+  className,
+  hiddenSourceBtn,
+}: IAIMessageProps) => {
   const html = useMemo(() => marked.parse(content ?? message.content), [message.content, content]);
   const contentRef = useRef<HTMLDivElement>(null);
   const sources = message.props?.source_results;
@@ -114,7 +122,9 @@ export const AIMessage = ({ message, loading, rewrite, content, actionsButton = 
               <LinkPreviewHydration id={message?.id} />
             </div>
           )}
-          {sources && (sources?.length ?? 0) > 0 && <SourcesButton sources={sources} messageId={message.id} />}
+          {sources && (sources?.length ?? 0) > 0 && !hiddenSourceBtn && (
+            <SourcesButton sources={sources} messageId={message.id} />
+          )}
           {actionsButton && !GENERATING_STATUS.includes(message.status ?? '') && (
             <div className="flex w-fit items-center rounded-[20px] border-2 px-2">
               <Copy disabled={loading} initialMessage={message.content} contentRef={contentRef} />

@@ -3,6 +3,7 @@ import type { TAgentType } from '@oe/api/types/conversation';
 import type { IFileResponse } from '@oe/api/types/file';
 import { isLogin } from '@oe/api/utils/auth';
 import type { z } from '@oe/api/utils/zod';
+import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { useTranslations } from 'next-intl';
 import type React from 'react';
 import { type ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
@@ -21,7 +22,6 @@ import { InputOption } from './message-input-option';
 import { PreviewImage } from './preview-file';
 
 const MessageInput: React.FC<MessageInputProps> = ({
-  generating = false,
   sendMessage,
   className,
   initialMessage = '',
@@ -33,13 +33,14 @@ const MessageInput: React.FC<MessageInputProps> = ({
   type,
 }) => {
   const tAI = useTranslations('aiAssistant');
-  const { selectedModel, selectedAgent, setSelectedAgent } = useConversationStore();
+  const { selectedModel, selectedAgent, setSelectedAgent, status } = useConversationStore();
   const [filteredAgents, setFilteredAgents] = useState<TAgentType[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const { setLoginRequiredModal } = useLoginRequiredStore();
   const [isDesktop, setIsDesktop] = useState(false);
+  const isGenerating = useMemo(() => GENERATING_STATUS.includes(status ?? ''), [status]);
 
   useEffect(() => {
     const checkDesktop = () => setIsDesktop(window?.innerWidth >= DESKTOP_BREAKPOINT);
@@ -114,7 +115,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
       return;
     }
 
-    if (e.key === 'Enter' && !e.shiftKey && !generating) {
+    if (e.key === 'Enter' && !e.shiftKey && !isGenerating) {
       e.preventDefault();
       void form.trigger();
       if (Object.keys(form.formState.errors)?.length === 0) {
@@ -141,7 +142,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
 
   const handleSubmit = async (values: z.infer<typeof chatSchema>) => {
     setFilteredAgents([]);
-    if (generating) {
+    if (isGenerating) {
       return;
     }
     const login = await isLogin();

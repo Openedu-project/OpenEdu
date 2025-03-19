@@ -139,7 +139,7 @@ export const MessageContainer = ({
       className={cn('no-scrollbar relative flex grow flex-col gap-2 overflow-y-auto overflow-x-hidden', className)}
       onScroll={handleScroll}
     >
-      <div className="flex max-w-3xl flex-col gap-4 xl:max-w-4xl">
+      <div className="flex max-w-3xl grow flex-col gap-4 xl:max-w-4xl">
         {isLoading && (
           <div className="flex flex-col items-end gap-4">
             <Skeleton className="h-10 w-2/3 rounded-[20px]" />
@@ -163,11 +163,11 @@ export const MessageContainer = ({
           );
         })}
         <GenMessage containerRef={containerRef} />
-        <div className={cn('sticky bottom-0 hidden translate-x-1/2', showScrollButton && 'block')}>
-          <Button size="icon" variant="outline" className="rounded-full" onClick={() => handleScrollToBottom()}>
-            <ChevronsDown className="h-4 w-4" />
-          </Button>
-        </div>
+      </div>
+      <div className={cn('sticky bottom-0 hidden max-w-3xl translate-x-1/2 xl:max-w-4xl', showScrollButton && 'block')}>
+        <Button size="icon" variant="outline" className="rounded-full" onClick={() => handleScrollToBottom()}>
+          <ChevronsDown className="h-4 w-4" />
+        </Button>
       </div>
     </div>
   );

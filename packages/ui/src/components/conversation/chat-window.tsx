@@ -87,8 +87,9 @@ export function ChatWindow({ id, initData, agent = 'ai_search', className }: ICh
     };
   }, [id, defaultAgent]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (messageData?.results) {
+    if (messageData?.results && !isNewChat) {
       setMessages(
         [...messageData.results.messages.filter(msg => !GENERATING_STATUS.includes(msg.status ?? ''))].reverse()
       );
