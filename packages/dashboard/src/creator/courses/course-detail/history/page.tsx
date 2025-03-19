@@ -4,7 +4,7 @@
 import type { ICourse } from '@oe/api/types/course/course';
 import { API_ENDPOINT } from '@oe/api/utils/endpoints';
 import { useTranslations } from 'next-intl';
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import { useMemo, useRef, useState } from 'react';
 
 import { useGetCourseById } from '@oe/api/hooks/useCourse';
@@ -23,8 +23,10 @@ export default function CourseDetailHistoryPage() {
   const t = useTranslations('course');
   const params = useParams<{ courseId: string }>();
   const courseId = params.courseId;
+  const searchParams = useSearchParams();
+  const isShowFeedback = searchParams.get('feedback');
   const { course } = useGetCourseById(courseId);
-  const [showFeedback, setShowFeedback] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(!!isShowFeedback);
   const tableRef = useRef<TableRef<ICourse>>(null);
 
   const columns: ColumnDef<ICourse>[] = useMemo(
@@ -89,7 +91,7 @@ export default function CourseDetailHistoryPage() {
   };
 
   return (
-    <div className="relative flex h-full gap-2 px-4 py-2" id="outline-history-container">
+    <div className="relative flex h-full flex-1 gap-2 px-4 py-2" id="outline-history-container">
       <div
         className={cn(
           'relative h-full space-y-4 transition-all duration-300 ease-in-out',
@@ -101,16 +103,16 @@ export default function CourseDetailHistoryPage() {
           <ManageVersion
             publishedVersion={getPublishedVersionFromCourseData(course)}
             reviewingVersion={getReviewingVersionFromCourseData(course)}
-            // previewUrl={getPreviewUrl(course)}
           />
           {/* Trigger to open the feedback section */}
+
           <Button onClick={toggleFeedback} size="sm" variant="secondary">
             {showFeedback ? t('history.feedback.hide') : t('history.feedback.view')}
           </Button>
         </div>
 
         {/* Content: history table */}
-        <div className="flex h-[calc(100%-76px)] h-full w-full justify-center overflow-hidden rounded">
+        <div className="flex h-[calc(100%-76px)] w-full flex-1 justify-center overflow-hidden rounded">
           {/* <div className="relative mx-auto flex w-full gap-2"> */}
           <div
             className={cn(

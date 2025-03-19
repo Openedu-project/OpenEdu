@@ -23,6 +23,7 @@ function PriceSettingsForm() {
     await updateCourseService(undefined, {
       ...course,
       price_settings: data,
+      thumbnail_id: course?.thumbnail?.id,
     } as ICourse);
     await mutateCourse();
     toast.success(

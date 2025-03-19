@@ -32,6 +32,7 @@ export default function CourseNameForm() {
     await updateCourseService(undefined, {
       ...course,
       name: data.name,
+      thumbnail_id: course?.thumbnail?.id,
     });
     mutateCourse();
     setEdit(false);

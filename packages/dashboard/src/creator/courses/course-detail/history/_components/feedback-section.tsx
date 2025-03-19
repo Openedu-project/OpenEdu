@@ -2,6 +2,7 @@
 
 import { useGetCourseById, usePutRelyFeedback } from '@oe/api/hooks/useCourse';
 import { useGetMe } from '@oe/api/hooks/useMe';
+import { createAPIUrl } from '@oe/api/utils/fetch';
 import { usePathname, useRouter } from '@oe/ui/common/navigation';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
@@ -45,7 +46,8 @@ const FeedbackSection = ({ showFeedback }: { showFeedback: boolean }) => {
       if (currentIdIndex !== -1) {
         pathParts[currentIdIndex] = newId;
         const newPath = pathParts.join('/');
-        router.push(newPath);
+        // Add query params '?feedback=true' to open the feedback section when redirecting with new courseID
+        router.push(createAPIUrl({ endpoint: newPath, queryParams: { feedback: true } }));
       }
     },
     [pathName, course?.id, router]

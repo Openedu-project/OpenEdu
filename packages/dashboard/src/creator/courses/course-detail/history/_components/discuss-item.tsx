@@ -1,9 +1,9 @@
 import type { IDiscussion } from '@oe/api/types/course/discuss';
 import CheckFilledCircle from '@oe/assets/icons/check-filled-circle';
-import CloseCircle from '@oe/assets/icons/close-circle';
 import { formatTimeHourMinute } from '@oe/core/utils/datetime';
 import { Card } from '@oe/ui/shadcn/card';
 import { cn } from '@oe/ui/utils/cn';
+import { CircleX } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
@@ -20,8 +20,8 @@ const DiscussItem = ({
   return (
     <Card
       className={cn(
-        'flex w-[80%] flex-col gap-1 border-none bg-transparent p-0 shadow-none',
-        isMe ? 'self-end' : 'self-start'
+        'flex flex-col gap-1 border-none bg-transparent p-0 shadow-none',
+        isMe ? 'w-[80%] self-end' : 'w-full self-start'
       )}
       onClick={() => {
         setIsShowTime(true);
@@ -37,9 +37,11 @@ const DiscussItem = ({
               {discuss.action === 'approved' ? (
                 <CheckFilledCircle height={16} width={16} className="text-primary" />
               ) : (
-                <CloseCircle height={16} width={16} />
+                <CircleX className="h-4 w-4 text-destructive" />
               )}
-              <p className="text-primary text-sm">{t('actionRequest', { action: discuss.action })}</p>
+              <p className={cn('text-sm', discuss.action === 'approved' ? 'text-primary' : 'text-destructive')}>
+                {t('actionRequest', { action: discuss.action })}
+              </p>
             </div>
           )}
         </div>
