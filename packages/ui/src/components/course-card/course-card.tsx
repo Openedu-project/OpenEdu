@@ -1,21 +1,23 @@
-'use client';
+"use client";
 
-import type { ICourse, ICourseResponse } from '@oe/api/types/course/course';
-import type { IFeaturedContent } from '@oe/api/types/featured-contents';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import { Card, CardContent } from '@oe/ui/shadcn/card';
-import { cn } from '@oe/ui/utils/cn';
-import type React from 'react';
-import { useEffect, useState } from 'react';
-import type { KeyedMutator } from 'swr';
-import { Link } from '#common/navigation';
-import { CourseDetails } from './course-detail';
-import { CourseHoverContent } from './course-hover-content';
-import { CourseThumbnail } from './course-thumbnail';
+import type { ICourse, ICourseResponse } from "@oe/api/types/course/course";
+import type { IFeaturedContent } from "@oe/api/types/featured-contents";
+import { PLATFORM_ROUTES } from "@oe/core/utils/routes";
+import { Card, CardContent } from "@oe/ui/shadcn/card";
+import { cn } from "@oe/ui/utils/cn";
+import type React from "react";
+import { useEffect, useState } from "react";
+import type { KeyedMutator } from "swr";
+import { Link } from "#common/navigation";
+import { CourseDetails } from "./course-detail";
+import { CourseHoverContent } from "./course-hover-content";
+import { CourseThumbnail } from "./course-thumbnail";
 
 interface ICourseCard extends React.ComponentProps<typeof Card> {
   courseData: ICourse;
-  mutate?: KeyedMutator<ICourseResponse | undefined> | KeyedMutator<IFeaturedContent<ICourse>[]>;
+  mutate?:
+    | KeyedMutator<ICourseResponse | undefined>
+    | KeyedMutator<IFeaturedContent<ICourse>[]>;
   showHover?: boolean;
   showPrice?: boolean;
   showThubnail?: boolean;
@@ -23,10 +25,10 @@ interface ICourseCard extends React.ComponentProps<typeof Card> {
   contentClassName?: string;
 }
 
-export default function CourseCard({
+export function CourseCard({
   courseData,
   className,
-  contentClassName = '',
+  contentClassName = "",
   mutate,
   showHover = true,
   showPrice = true,
@@ -36,40 +38,50 @@ export default function CourseCard({
 }: ICourseCard) {
   const { org } = courseData;
   const [isExternal, setIsExternal] = useState(false);
-  const [href, setHref] = useState('');
+  const [href, setHref] = useState("");
 
   useEffect(() => {
-    if (process.env.NODE_ENV !== 'development' && typeof window !== 'undefined') {
+    if (
+      process.env.NODE_ENV !== "development" &&
+      typeof window !== "undefined"
+    ) {
       const isExternalLink =
-        org?.alt_domain !== new URL(location.origin).host && org?.domain !== new URL(location.origin).host;
+        org?.alt_domain !== new URL(location.origin).host &&
+        org?.domain !== new URL(location.origin).host;
       setIsExternal(isExternalLink);
 
       if (isExternalLink) {
         if (org?.alt_domain || org?.domain) {
           setHref(
-            `https://${org.alt_domain || org.domain}${PLATFORM_ROUTES.courseDetail.replace(':slug', courseData?.slug)}`
+            `https://${
+              org.alt_domain || org.domain
+            }${PLATFORM_ROUTES.courseDetail.replace(":slug", courseData?.slug)}`
           );
         } else {
-          setHref(PLATFORM_ROUTES.courseDetail.replace(':slug', courseData?.slug));
+          setHref(
+            PLATFORM_ROUTES.courseDetail.replace(":slug", courseData?.slug)
+          );
         }
       } else {
-        setHref(PLATFORM_ROUTES.courseDetail.replace(':slug', courseData?.slug));
+        setHref(
+          PLATFORM_ROUTES.courseDetail.replace(":slug", courseData?.slug)
+        );
       }
     }
   }, [org, courseData?.slug]);
 
   return (
-    <div className={cn('group relative w-full', className)}>
+    <div className={cn("group relative w-full", className)}>
       <Link
         href={href}
         external={isExternal}
-        target={isExternal ? '_blank' : undefined}
+        target={isExternal ? "_blank" : undefined}
         className="h-full w-full p-0 hover:no-underline"
       >
         <Card
           id={courseData?.id}
           className={cn(
-            'mx-auto flex h-full min-h-[360px] w-full flex-col gap-3 rounded-m p-4 shadow-lg',
+            "mx-auto flex h-full min-h-[360px] w-full flex-col gap-3 rounded-m p-4 shadow-lg",
             contentClassName
           )}
           {...props}
@@ -81,7 +93,14 @@ export default function CourseCard({
         </Card>
       </Link>
 
-      {showHover && <CourseHoverContent courseData={courseData} mutate={mutate} href={href} isExternal={isExternal} />}
+      {showHover && (
+        <CourseHoverContent
+          courseData={courseData}
+          mutate={mutate}
+          href={href}
+          isExternal={isExternal}
+        />
+      )}
     </div>
   );
 }

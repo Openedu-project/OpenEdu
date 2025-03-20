@@ -152,5 +152,5 @@ export const getMetadataMenu = (themeName: ThemeName): TThemeMenuDefinition<AllG
     )
   );
 
-export const getPagesMenu = (themeName: ThemeName) =>
-  MENU_STRUCTURE.PAGES.flatMap(({ key, label }) => createPageSections(themeName, key, label));
+export const getPagesMenu = (themeName: ThemeName, pagesMenu?: { label: string; key: ThemePageKey }[]) =>
+  (pagesMenu || MENU_STRUCTURE.PAGES).flatMap(({ key, label }) => createPageSections(themeName, key, label));

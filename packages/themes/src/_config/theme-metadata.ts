@@ -25,8 +25,8 @@ export const defaultMetadata: ThemeMetadata = {
 
 // if not provide the pageKey data, return the metadata of system
 export const getMetadata = (themeSystem?: ThemeSystem, pageKey?: ThemePageKey): ThemeMetadata => {
-  const activeTheme = themeSystem?.availableThemes?.[themeSystem?.activedTheme];
-  const metadata = pageKey ? activeTheme?.pages?.[pageKey]?.metadata : activeTheme?.metadata;
+  const activeTheme = themeSystem?.activedTheme ? themeSystem?.availableThemes?.[themeSystem?.activedTheme] : undefined;
+  const metadata = pageKey && activeTheme ? activeTheme?.pages?.[pageKey]?.metadata : activeTheme?.metadata;
 
   if (!metadata) {
     return defaultMetadata;

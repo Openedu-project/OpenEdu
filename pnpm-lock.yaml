@@ -82,7 +82,7 @@ importers:
         version: 3.24.2
       zustand:
         specifier: ^5.0.3
-        version: 5.0.3(@types/react@19.0.2)(react@19.0.0)(use-sync-external-store@1.4.0(react@19.0.0))
+        version: 5.0.3(@types/react@19.0.3)(react@19.0.0)(use-sync-external-store@1.4.0(react@19.0.0))
     devDependencies:
       '@oe/config':
         specifier: workspace:*
@@ -94,11 +94,11 @@ importers:
         specifier: ^22.10.5
         version: 22.13.10
       '@types/react':
-        specifier: 19.0.2
-        version: 19.0.2
+        specifier: 19.0.3
+        version: 19.0.3
       '@types/react-dom':
         specifier: 19.0.2
-        version: 19.0.2(@types/react@19.0.2)
+        version: 19.0.2(@types/react@19.0.3)
       babel-plugin-react-compiler:
         specifier: 19.0.0-beta-63e3235-20250105
         version: 19.0.0-beta-63e3235-20250105
@@ -220,9 +220,6 @@ importers:
       '@oe/i18n':
         specifier: workspace:*
         version: link:../i18n
-      '@oe/themes':
-        specifier: workspace:*
-        version: link:../themes
       '@oe/ui':
         specifier: workspace:*
         version: link:../ui
@@ -288,14 +285,11 @@ importers:
       '@oe/i18n':
         specifier: workspace:*
         version: link:../i18n
-      '@oe/themes':
-        specifier: workspace:*
-        version: link:../themes
       '@oe/types':
         specifier: workspace:*
         version: link:../types
       '@types/node':
-        specifier: ^22.10.2
+        specifier: ^22.10.5
         version: 22.13.10
       '@types/wicg-file-system-access':
         specifier: ^2023.10.5
@@ -330,9 +324,6 @@ importers:
       '@oe/i18n':
         specifier: workspace:*
         version: link:../i18n
-      '@oe/themes':
-        specifier: workspace:*
-        version: link:../themes
       '@oe/ui':
         specifier: workspace:*
         version: link:../ui
@@ -376,9 +367,6 @@ importers:
       '@oe/api':
         specifier: workspace:*
         version: link:../api
-      '@oe/core':
-        specifier: workspace:*
-        version: link:../core
       next:
         specifier: 15.1.4
         version: 15.1.4(babel-plugin-react-compiler@19.0.0-beta-63e3235-20250105)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -392,6 +380,9 @@ importers:
       '@oe/types':
         specifier: workspace:*
         version: link:../types
+      '@types/node':
+        specifier: ^22.10.5
+        version: 22.13.10
 
   packages/themes:
     dependencies:
@@ -401,27 +392,9 @@ importers:
       '@oe/assets':
         specifier: workspace:*
         version: link:../assets
-      '@oe/config':
-        specifier: workspace:*
-        version: link:../config
-      '@oe/core':
-        specifier: workspace:*
-        version: link:../core
-      '@oe/i18n':
-        specifier: workspace:*
-        version: link:../i18n
-      '@oe/types':
-        specifier: workspace:*
-        version: link:../types
       '@oe/ui':
         specifier: workspace:*
         version: link:../ui
-      '@types/node':
-        specifier: ^22.10.2
-        version: 22.13.10
-      '@types/wicg-file-system-access':
-        specifier: ^2023.10.5
-        version: 2023.10.5
       cookies-next:
         specifier: ^5.0.2
         version: 5.1.0(next@15.1.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
@@ -437,6 +410,31 @@ importers:
       zustand:
         specifier: ^5.0.2
         version: 5.0.3(@types/react@19.0.3)(react@19.0.0)(use-sync-external-store@1.4.0(react@19.0.0))
+    devDependencies:
+      '@oe/config':
+        specifier: workspace:*
+        version: link:../config
+      '@oe/core':
+        specifier: workspace:*
+        version: link:../core
+      '@oe/types':
+        specifier: workspace:*
+        version: link:../types
+      '@types/node':
+        specifier: ^22.10.5
+        version: 22.13.10
+      '@types/react':
+        specifier: 19.0.3
+        version: 19.0.3
+      '@types/react-dom':
+        specifier: 19.0.2
+        version: 19.0.2(@types/react@19.0.3)
+      '@types/wicg-file-system-access':
+        specifier: ^2023.10.5
+        version: 2023.10.5
+      typescript:
+        specifier: ^5.7.2
+        version: 5.8.2
 
   packages/types: {}
 
@@ -472,9 +470,6 @@ importers:
       '@oe/i18n':
         specifier: workspace:*
         version: link:../i18n
-      '@oe/themes':
-        specifier: workspace:*
-        version: link:../themes
       '@radix-ui/react-accordion':
         specifier: ^1.2.2
         version: 1.2.3(@types/react-dom@19.0.2(@types/react@19.0.3))(@types/react@19.0.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -2281,9 +2276,6 @@ packages:
     resolution: {integrity: sha512-c1s+7TKFaDRRxr1TxccIX2u7sfCnc3RxkVyBIUA2lCpyqCF+QoAwQ/CBg7bsMdVwP120HEH143VQezKtef5nCg==}
     peerDependencies:
       '@types/react': ^19.0.0
-
-  '@types/react@19.0.2':
-    resolution: {integrity: sha512-USU8ZI/xyKJwFTpjSVIrSeHBVAGagkHQKPNbxeWwql/vDmnTIBgx+TJnhFnj1NXgz8XfprU0egV2dROLGpsBEg==}
 
   '@types/react@19.0.3':
     resolution: {integrity: sha512-UavfHguIjnnuq9O67uXfgy/h3SRJbidAYvNjLceB+2RIKVRBzVsh0QO+Pw6BCSQqFS9xwzKfwstXx0m6AbAREA==}
@@ -5928,17 +5920,9 @@ snapshots:
     dependencies:
       undici-types: 6.20.0
 
-  '@types/react-dom@19.0.2(@types/react@19.0.2)':
-    dependencies:
-      '@types/react': 19.0.2
-
   '@types/react-dom@19.0.2(@types/react@19.0.3)':
     dependencies:
       '@types/react': 19.0.3
-
-  '@types/react@19.0.2':
-    dependencies:
-      csstype: 3.1.3
 
   '@types/react@19.0.3':
     dependencies:
@@ -7792,12 +7776,6 @@ snapshots:
   yoga-layout@3.2.1: {}
 
   zod@3.24.2: {}
-
-  zustand@5.0.3(@types/react@19.0.2)(react@19.0.0)(use-sync-external-store@1.4.0(react@19.0.0)):
-    optionalDependencies:
-      '@types/react': 19.0.2
-      react: 19.0.0
-      use-sync-external-store: 1.4.0(react@19.0.0)
 
   zustand@5.0.3(@types/react@19.0.3)(react@19.0.0)(use-sync-external-store@1.4.0(react@19.0.0)):
     optionalDependencies:

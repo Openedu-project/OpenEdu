@@ -1,9 +1,10 @@
-import type { PageSectionConfig, SectionsByPage, ThemePageKey } from '@oe/themes/types/index';
+import type { PageSectionConfig, SectionsByPage, ThemePageKey } from '@oe/themes/types';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@oe/ui/shadcn/collapsible';
 import { cn } from '@oe/ui/utils/cn';
 import { ChevronDown } from 'lucide-react';
 import { memo } from 'react';
 import type React from 'react';
+import { camelToNormal } from '../../../_utils/function';
 import { SettingsForm } from './theme-section-setting-form';
 
 interface ConfigSectionProps {
@@ -45,7 +46,7 @@ export const ConfigSection = memo(function ConfigSection({
       >
         {dragButton}
         <CollapsibleTrigger className="flex w-full items-center justify-between group-data-[state=open]/collapsible:bg-accent/50 group-data-[state=open]/collapsible:text-primary">
-          <span className="font-medium text-sm capitalize">{sectionKey}</span>
+          <span className="font-medium text-sm">{camelToNormal(sectionKey)}</span>
           <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180" />
         </CollapsibleTrigger>
       </div>

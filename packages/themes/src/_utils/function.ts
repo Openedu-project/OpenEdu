@@ -60,7 +60,9 @@ export const getSectionConfig = (
   selectedPage: ThemePageKey,
   selectedSectionKey: AllSectionKeys
 ) => {
-  const themeConfig = defaultThemeConfigs?.[selectedTheme].pages?.[selectedPage]?.config;
+  const themeConfig = defaultThemeConfigs?.[selectedTheme]
+    ? defaultThemeConfigs?.[selectedTheme].pages?.[selectedPage]?.config
+    : undefined;
   const sectionConfig = themeConfig
     ? themeConfig?.[selectedSectionKey as SectionsByPage[typeof selectedPage]]
     : undefined;
@@ -228,3 +230,21 @@ export const convertValueAndPathToConfig = (
 
   return newValues;
 };
+
+export function camelToNormal(camelCase: string): string {
+  // Handle empty strings
+  if (!camelCase) {
+    return camelCase;
+  }
+
+  // Insert space before uppercase letters and numbers
+  // Remove the '-' character
+  const normalText = camelCase
+    .replace(/([A-Z])/g, ' $1')
+    .replace(/([0-9]+)/g, ' $1')
+    .replace('-', '')
+    .trim();
+
+  // Capitalize first letter if requested (default is true)
+  return normalText.charAt(0).toUpperCase() + normalText.slice(1);
+}

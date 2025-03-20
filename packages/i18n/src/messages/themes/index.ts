@@ -7,7 +7,9 @@ import { pageSettingMessages } from './page-settings';
 import { scholarMessage } from './scholar';
 import { sidbarMessages } from './sidebar';
 import { themeFeaturedContentMessages } from './theme-featured-content';
+import { themeInfoMessages } from './theme-info';
 import { themeListMessages } from './theme-list';
+import { themeMetadataMessages } from './theme-metadata';
 import { themeUIMessage } from './theme-ui';
 import { vbiMessage } from './vbi';
 export const themeMessages = {
@@ -23,13 +25,15 @@ export const themeMessages = {
       authLayout: 'Auth / Layout',
       partners: 'Partners',
     },
+    ...authMessages,
+    ...themeInfoMessages,
     ...academiaMessage,
     ...scholarMessage,
     ...vbiMessage,
     ...availMessage,
-    ...authMessages,
   },
   ...themeUIMessage,
   ...themeNotiMessages,
   ...themeFeaturedContentMessages,
+  ...themeMetadataMessages,
 };

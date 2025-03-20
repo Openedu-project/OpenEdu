@@ -1,4 +1,4 @@
-import type { ThemeFieldConfig, ThemeFieldValue } from '@oe/themes/types/theme-page/index';
+import type { ThemeFieldConfig, ThemeFieldValue } from '@oe/themes/types';
 import { type FileType, isFileType } from '@oe/ui/components/uploader';
 import type { SettingsFieldType } from './_type';
 
