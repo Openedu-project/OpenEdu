@@ -31,12 +31,13 @@ const CloneNewTheme = ({ themeSystemRes }: CloneNewThemeModalModal) => {
     setOpen(false);
   }, []);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleSubmit = useCallback(
     (themeNames: ThemeName[]) => {
       handleNewThemeCloned(themeNames);
       handleClose();
     },
-    [handleClose]
+    [handleClose, theme]
   );
 
   const handleNewThemeCloned = useCallback(
