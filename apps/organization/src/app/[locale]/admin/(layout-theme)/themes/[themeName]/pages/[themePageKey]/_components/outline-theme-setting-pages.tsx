@@ -14,7 +14,7 @@ import type {
 import { toast } from "@oe/ui/shadcn/sonner";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 interface OutlineThemeSettingPagesProps {
   selectedSidebarPageKey: ThemeSidebarPageKey;
@@ -35,6 +35,39 @@ const OutlineThemeSettingPages = ({
       themeName as ThemeName
     ];
 
+  const handleSubmit = useCallback(
+    async (specificTheme: ThemeDefinition) => {
+      const currentThemeSystem: ThemeSystem = {
+        activedTheme: themeName as ThemeName,
+        availableThemes: {
+          ...theme[0]?.value?.availableThemes,
+          [themeName as ThemeName]: {
+            ...theme[0]?.value?.availableThemes?.[themeName as ThemeName],
+            ...specificTheme,
+          },
+        } as ThemeCollection,
+      };
+
+      try {
+        setIsLoading(true);
+        const res = await createOrUpdateThemeConfig({
+          config: currentThemeSystem,
+          id: theme?.[0]?.id,
+        });
+        if (res) {
+          setIsLoading(false);
+          await mutateTheme();
+          toast.success(t("updateSuccess"));
+        }
+      } catch (error) {
+        console.error(error);
+        setIsLoading(false);
+        toast.error(t("updateFail"));
+      }
+    },
+    [mutateTheme, t, themeName, theme]
+  );
+
   if (!themeConfig) {
     return (
       <div className="flex h-full items-center justify-center text-muted-foreground">
@@ -50,36 +83,6 @@ const OutlineThemeSettingPages = ({
       </div>
     );
   }
-
-  const handleSubmit = async (specificTheme: ThemeDefinition) => {
-    const currentThemeSystem: ThemeSystem = {
-      activedTheme: themeName as ThemeName,
-      availableThemes: {
-        ...theme[0]?.value?.availableThemes,
-        [themeName as ThemeName]: {
-          ...theme[0]?.value?.availableThemes?.[themeName as ThemeName],
-          ...specificTheme,
-        },
-      } as ThemeCollection,
-    };
-
-    try {
-      setIsLoading(true);
-      const res = await createOrUpdateThemeConfig({
-        config: currentThemeSystem,
-        id: theme?.[0]?.id,
-      });
-      if (res) {
-        setIsLoading(false);
-        await mutateTheme();
-        toast.success(t("updateSuccess"));
-      }
-    } catch (error) {
-      console.error(error);
-      setIsLoading(false);
-      toast.error(t("updateFail"));
-    }
-  };
 
   return (
     <>
