@@ -1,6 +1,5 @@
 import { getCookies } from '@oe/core/utils/cookie';
 import { DEFAULT_LOCALE } from '@oe/i18n/constants';
-import { apiLogger } from '@oe/ui/components/logrocket-handler';
 import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 import { refreshTokenService } from '#services/auth';
 import type { IToken } from '#types/auth';
@@ -116,40 +115,40 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
   let retryCount = 0;
   const MAX_RETRIES = 1;
 
-  const requestStartTime = Date.now();
-  const requestId = Math.random().toString(36).substring(2, 15);
+  // const requestStartTime = Date.now();
+  // const requestId = Math.random().toString(36).substring(2, 15);
 
   // Log request information
-  apiLogger.info(`Request: ${options.method || 'GET'} ${urlAPIWithLocale.toString()}`, {
-    requestId,
-    method: options.method || 'GET',
-    url: urlAPIWithLocale.toString(),
-  });
+  // apiLogger.info(`Request: ${options.method || 'GET'} ${urlAPIWithLocale.toString()}`, {
+  //   requestId,
+  //   method: options.method || 'GET',
+  //   url: urlAPIWithLocale.toString(),
+  // });
 
   async function attemptFetch(): Promise<Response> {
     try {
       const response = await fetch(urlAPIWithLocale, mergedOptions);
 
       // Log response status
-      const requestDuration = Date.now() - requestStartTime;
+      // const requestDuration = Date.now() - requestStartTime;
 
       if (response.status >= 400) {
-        apiLogger.error(`HTTP Error: ${response.status} ${response.statusText}`, {
-          requestId,
-          url: urlAPIWithLocale.toString(),
-          status: response.status,
-          statusText: response.statusText,
-          method: options.method || 'GET',
-          duration: requestDuration,
-        });
+        // apiLogger.error(`HTTP Error: ${response.status} ${response.statusText}`, {
+        //   requestId,
+        //   url: urlAPIWithLocale.toString(),
+        //   status: response.status,
+        //   statusText: response.statusText,
+        //   method: options.method || 'GET',
+        //   duration: requestDuration,
+        // });
       }
 
       if (response.status === 401 && shouldRefreshToken && retryCount < MAX_RETRIES) {
         retryCount++;
-        apiLogger.warn(`Token expired, attempting refresh (${retryCount}/${MAX_RETRIES})`, {
-          requestId,
-          url: urlAPIWithLocale.toString(),
-        });
+        // apiLogger.warn(`Token expired, attempting refresh (${retryCount}/${MAX_RETRIES})`, {
+        //   requestId,
+        //   url: urlAPIWithLocale.toString(),
+        // });
 
         if (!isRefreshing) {
           isRefreshing = true;
@@ -165,18 +164,18 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
 
         const token = await refreshPromise;
         if (token) {
-          apiLogger.info('Token refreshed successfully, retrying request', {
-            requestId,
-          });
+          // apiLogger.info('Token refreshed successfully, retrying request', {
+          //   requestId,
+          // });
 
           mergedOptions.headers = {
             ...mergedOptions.headers,
             Authorization: `Bearer ${token.access_token}`,
           };
         } else {
-          apiLogger.error('Token refresh failed', {
-            requestId,
-          });
+          // apiLogger.error('Token refresh failed', {
+          //   requestId,
+          // });
         }
         return attemptFetch();
       }
@@ -184,12 +183,13 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
       return response;
     } catch (networkError) {
       // Network errors (không kết nối được đến server)
-      apiLogger.error(networkError instanceof Error ? networkError : new Error('Network error'), {
-        requestId,
-        url: urlAPIWithLocale.toString(),
-        method: options.method || 'GET',
-        duration: Date.now() - requestStartTime,
-      });
+      // apiLogger.error(networkError instanceof Error ? networkError : new Error('Network error'), {
+      //   requestId,
+      //   url: urlAPIWithLocale.toString(),
+      //   method: options.method || 'GET',
+      //   duration: Date.now() - requestStartTime,
+      // });
+      // biome-ignore lint/complexity/noUselessCatch: <explanation>
       throw networkError;
     }
   }
@@ -201,12 +201,12 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
   } catch (error) {
     console.error('--------------Fetch Error--------------------', (error as Error).message);
 
-    apiLogger.error(error instanceof Error ? error : new Error(String(error)), {
-      requestId,
-      url: urlAPIWithLocale.toString(),
-      method: options.method || 'GET',
-      duration: Date.now() - requestStartTime,
-    });
+    // apiLogger.error(error instanceof Error ? error : new Error(String(error)), {
+    //   requestId,
+    //   url: urlAPIWithLocale.toString(),
+    //   method: options.method || 'GET',
+    //   duration: Date.now() - requestStartTime,
+    // });
 
     throw handleError(error);
   }
