@@ -40,7 +40,7 @@ export const MessageContainer = ({
   scrollBehavior,
   mutate,
 }: IContainerProps) => {
-  const { messages, status, setMessages, isNewChat, setIsNewChat } = useConversationStore();
+  const { messages, status, setMessages, isNewChat } = useConversationStore();
   const [shouldGetData, setShouldGetData] = useState<boolean>(false);
   const [prevScrollHeight, setPrevScrollHeight] = useState(0);
   const [initScrollBottom, setInitScrollBottom] = useState(false);
@@ -77,17 +77,12 @@ export const MessageContainer = ({
     });
   }, [data]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!containerRef.current || messages.length === 0 || initScrollBottom) {
       return;
     }
     handleScrollToBottom(scrollBehavior);
-
-    if (isNewChat) {
-      setIsNewChat(false);
-    }
-  }, [messages.length, initScrollBottom, containerRef]);
+  }, [messages.length, initScrollBottom, containerRef, scrollBehavior]);
 
   const handleScrollToBottom = (scrollBehavior?: 'auto' | 'smooth') => {
     if (!containerRef) {

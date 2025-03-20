@@ -108,6 +108,7 @@ export default function AIHistoryItem({ className, item, mutate, pageIndex, acti
           };
         });
       });
+      callbackFn?.();
     } catch (error) {
       console.error(error);
       toast.error(tError((error as HTTPError).message));
