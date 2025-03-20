@@ -36,12 +36,9 @@ export function InputFrame({
 
   const messageType = useMemo(
     () =>
-      [
-        'ai_search',
-        ...Object.entries(AGENT_OPTIONS)
-          .filter(([key]) => selectedModel?.configs[key as keyof IAgenConfigs])
-          .map(([_, value]) => value),
-      ] as TAgentType[],
+      Object.entries(AGENT_OPTIONS)
+        .filter(([key]) => selectedModel?.configs[key as keyof IAgenConfigs])
+        .map(([_, value]) => value),
     [selectedModel]
   );
 

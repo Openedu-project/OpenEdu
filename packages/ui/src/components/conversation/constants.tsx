@@ -5,7 +5,7 @@ import SearchZoomIn from '@oe/assets/icons/search-zoom-in';
 import { VideoSquare } from '@oe/assets/icons/video-square';
 import { AI_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
-import { FileCode, MessageCircle, ScanSearch } from 'lucide-react';
+import { FileCode, MessageCircle } from 'lucide-react';
 import type { AISidebarItem, IInputButton } from './type';
 
 export const AI_SIDEBAR: (color?: string, size?: number) => AISidebarItem[] = (color = 'white', size = 12) => [
@@ -65,11 +65,6 @@ export const AI_SIDEBAR: (color?: string, size?: number) => AISidebarItem[] = (c
 ];
 
 export const INPUT_BUTTON: IInputButton[] = [
-  // {
-  //   type: 'ai_search',
-  //   textKey: 'deepResearch',
-  //   icon: <SearchIcon size={16} className="text-orange-500" />,
-  // },
   {
     type: 'ai_image_generate',
     textKey: 'imageGenerator',
@@ -85,22 +80,14 @@ export const INPUT_BUTTON: IInputButton[] = [
     textKey: 'code',
     icon: <FileCode size={16} className="text-positive-500" />,
   },
-  {
-    type: 'ai_image_analysis',
-    textKey: 'imageAnalysis',
-    icon: <ScanSearch size={16} className="text-pink-500" />,
-  },
 ];
 
 export const AGENT_OPTIONS: Partial<Record<keyof IAgenConfigs, TAgentType>> = {
-  image_analysis_enabled: 'ai_image_analysis',
   present_creator_enabled: 'ai_slide',
   code_executor_enabled: 'ai_code',
   image_generator_enabled: 'ai_image_generate',
   searcher_enabled: 'ai_search',
 };
-
-export const CHAT_OPTIONS: TAgentType[] = ['ai_image_analysis', 'ai_search'];
 
 export const DESKTOP_BREAKPOINT = 1024;
 export const HISTORY_PER_PAGE = 50;

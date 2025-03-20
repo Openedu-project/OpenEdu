@@ -31,8 +31,8 @@ export const aiAssistantMessages = {
     inputPlaceholder: 'Write something / Tip: Use @ to mention an AI Agent ',
     aiModel: 'AI Model',
     sources: {
-      title: 'Web Sources',
-      nodata: 'No Source Was Found',
+      title: 'Web Resources',
+      nodata: 'No Resource Was Found',
     },
     chat: 'Chat',
     image: 'Image',

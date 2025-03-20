@@ -9,35 +9,49 @@ import EditButton from '../message-actions/edit';
 import MessageInput from '../message-input/message-input';
 import type { IMessageBoxProps } from '../type';
 
-const convertTextWithLink = (text: string) => {
-  const urlRegex = /(https?:\/\/\S+)|(www\.\S+)/g;
+export const convertTextWithLink = (text: string): ReactNode[] => {
+  // Regular expression to match URLs - avoid capturing trailing punctuation
+  const urlRegex = /(\bhttps?:\/\/[^\s,]+)|\b(www\.[^\s,]+)/g;
   const parts: ReactNode[] = [];
   let lastIndex = 0;
 
   // Find all matches and build the parts array
-  text.replaceAll(urlRegex, (match, _, __, index: number) => {
+  text.replace(urlRegex, (match, _, __, index: number) => {
     // Add text before the match
     if (index > lastIndex) {
       parts.push(text.slice(lastIndex, index));
     }
 
-    // Add the link
-    const fullUrl = match.startsWith('www.') ? `https://${match}` : match;
+    // Clean up the URL if it ends with unwanted punctuation
+    let cleanMatch = match;
+    const unwantedEndings = ['.', ',', ')', ']', ';', ':', '"', "'"];
+
+    for (const char of unwantedEndings) {
+      if (cleanMatch.endsWith(char)) {
+        cleanMatch = cleanMatch.slice(0, -1);
+        break;
+      }
+    }
+
+    // Add the link - ensure www. links have https:// prefix
+    const fullUrl = cleanMatch.startsWith('www.') ? `https://${cleanMatch}` : cleanMatch;
 
     parts.push(
       <Link
-        key={index}
+        key={`link-${index}`}
         href={fullUrl}
         target="_blank"
-        className="!p-0 whitespace-normal text-primary underline hover:text-primary/80"
+        className="!p-0 h-auto whitespace-normal break-all text-primary underline hover:text-primary/80"
       >
-        {match}
+        {cleanMatch}
       </Link>
     );
 
     lastIndex = index + match.length;
     return match;
   });
+
+  // Add any remaining text after the last match
   if (lastIndex < text.length) {
     parts.push(text.slice(lastIndex));
   }
@@ -63,12 +77,7 @@ export const UserMessage = ({ message, loading, sendMessage, messageType }: IMes
       )}
 
       {isEdit ? (
-        <div
-          className={cn(
-            'flex w-full flex-col items-end justify-end gap-2 rounded-2xl bg-background p-2 md:w-3/4',
-            message.ai_agent_type === 'ai_image_analysis' && 'pt-[130px]'
-          )}
-        >
+        <div className={cn('flex w-full flex-col items-end justify-end gap-2 rounded-2xl bg-background p-2 md:w-3/4')}>
           <MessageInput
             className="w-full"
             sendMessage={({ messageInput, images }) => {

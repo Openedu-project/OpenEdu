@@ -28,6 +28,12 @@ const MessageBox = memo(PureMessageBox, (prevProps, nextProps) => {
   if (!equal(prevProps.message, nextProps.message)) {
     return false;
   }
+  if (prevProps.loading !== nextProps.loading) {
+    return false;
+  }
+  if (!equal(prevProps.messageType, nextProps.messageType)) {
+    return false;
+  }
   return true;
 });
 

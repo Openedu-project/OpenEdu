@@ -45,7 +45,7 @@ export interface IChatHistory {
   update_at: number;
 }
 
-export type TAgentType = 'ai_search' | 'ai_slide' | 'ai_image_generate' | 'ai_image_analysis' | 'ai_code';
+export type TAgentType = 'ai_search' | 'ai_slide' | 'ai_image_generate' | 'ai_code';
 export interface IConversationRequest {
   ai_agent_type: TAgentType;
   message_ai_agent_type?: TAgentType;
