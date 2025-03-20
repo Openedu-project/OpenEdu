@@ -31,7 +31,7 @@ export const getOrgByDomainService = async (
   endpoint: string | null | undefined,
   { domain, init }: { domain: string; init?: RequestInit }
 ) => {
-  const response = await organizationsService(endpoint, { queryParams: { domain }, init });
+  const response = await organizationsService(endpoint, { queryParams: { domain_or_alt_domain: domain }, init });
 
   return response.results?.[0];
 };
