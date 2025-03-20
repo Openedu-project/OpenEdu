@@ -4,7 +4,6 @@ import { type FetchOptions, createAPIUrl, fetchAPI, postAPI } from '#utils/fetch
 
 import type { IAccessTokenResponse, ISignUpResponse, ISocialLoginPayload, IToken } from '@oe/api/types/auth';
 import { cookieOptions } from '@oe/core/utils/cookie';
-import { identifyUser } from '@oe/ui/components/logrocket-handler';
 import type { NextRequest } from 'next/server';
 import type { NextResponse } from 'next/server';
 import type { LoginSchemaType, SignUpSchemaType } from '#schemas/authSchema';
@@ -123,11 +122,11 @@ export async function getMeService(url?: string, init?: FetchOptions): Promise<I
   if (isLoggedIn) {
     const res = await fetchAPI<IUser>(url ?? API_ENDPOINT.USERS_ME, { ...init, shouldRefreshToken: false });
     const { data } = res;
-    identifyUser(data.id, {
-      name: data.username,
-      email: data.email,
-      role: data.roles.map(role => role.role_id).join(','),
-    });
+    // identifyUser(data.id, {
+    //   name: data.username,
+    //   email: data.email,
+    //   role: data.roles.map(role => role.role_id).join(','),
+    // });
     return data as IUser;
   }
   return null;
