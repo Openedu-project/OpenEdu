@@ -449,6 +449,7 @@
   .rich-text ul[data-type="taskList"] li {
     display: flex;
     align-items: center;
+    margin-bottom: 0.5rem;
   }
 
   .rich-text ul[data-type="taskList"] li > label {
@@ -463,6 +464,15 @@
 
   .rich-text ul[data-type="taskList"] li > label input[type="checkbox"] {
     top: 0;
+  }
+
+  .rich-text > ul > li + li,
+  .rich-text > ol > li + li {
+    margin-top: 0.5rem;
+  }
+
+  .rich-text li li + li {
+    margin-top: 0.25rem; 
   }
 
   .rich-text p.is-editor-empty:first-child::before {

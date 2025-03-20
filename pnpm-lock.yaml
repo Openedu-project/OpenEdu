@@ -551,6 +551,9 @@ importers:
       '@react-pdf/renderer':
         specifier: ^4.2.2
         version: 4.3.0(react@19.0.0)
+      '@react-spring/web':
+        specifier: ^9.7.5
+        version: 9.7.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@tanstack/match-sorter-utils':
         specifier: ^8.19.4
         version: 8.19.4
@@ -635,6 +638,9 @@ importers:
       html2canvas-pro:
         specifier: ^1.5.8
         version: 1.5.8
+      katex:
+        specifier: ^0.16.21
+        version: 0.16.21
       logrocket:
         specifier: ^9.0.2
         version: 9.0.2
@@ -2975,6 +2981,10 @@ packages:
   jsonpointer@5.0.1:
     resolution: {integrity: sha512-p/nXbhSEcu3pZRdkW1OfJhpsVtW1gd4Wa1fnQc9YLiTfAjn0312eMKimbdIQzuZl9aa9xUGaRlP9T/CJE/ditQ==}
     engines: {node: '>=0.10.0'}
+
+  katex@0.16.21:
+    resolution: {integrity: sha512-XvqR7FgOHtWupfMiigNzmh+MgUVmDGU2kXZm899ZkPfcuoPuFxyHmXsgATDpFZDAXCI8tvinaVcDo8PIIJSo4A==}
+    hasBin: true
 
   lefthook-darwin-arm64@1.11.3:
     resolution: {integrity: sha512-IYzAOf8Qwqk7q+LoRyy7kSk9vzpUZ5wb/vLzEAH/F86Vay9AUaWe1f2pzeLwFg18qEc1QNklT69h9p/uLQMojA==}
@@ -6621,6 +6631,10 @@ snapshots:
       - supports-color
 
   jsonpointer@5.0.1: {}
+
+  katex@0.16.21:
+    dependencies:
+      commander: 8.3.0
 
   lefthook-darwin-arm64@1.11.3:
     optional: true

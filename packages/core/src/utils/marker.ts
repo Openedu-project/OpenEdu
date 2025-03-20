@@ -121,7 +121,7 @@ export const marked = new Marked({
              target="_blank" 
              data-meta-trigger="true"
              data-meta-href="${href}"
-             class="my-1 inline-flex items-center justify-center break-all rounded-full border bg-primary/10 px-2 py-1 hover:border-primary hover:bg-background hover:text-primary"
+             class="inline-flex items-center justify-center break-all rounded-full border bg-primary/10 px-2 py-1 hover:border-primary hover:bg-background hover:text-primary"
              ${title ? `title="${title}"` : ''}>${text.substring(1, text.length - 1)}</a>
         `;
       }

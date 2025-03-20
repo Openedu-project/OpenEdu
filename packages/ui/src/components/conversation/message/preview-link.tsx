@@ -82,7 +82,7 @@ export const LinkPreviewHydration = ({ id }: { id: string }) => {
           <LinkPreview key={href} href={href}>
             <a
               href={href}
-              className="my-1 inline-flex items-center justify-center break-all rounded-full border bg-primary/10 px-2 py-1 hover:border-primary hover:bg-background hover:text-primary"
+              className="inline-flex items-center justify-center break-all rounded-full border bg-primary/10 px-2 py-1 hover:border-primary hover:bg-background hover:text-primary"
               target="_blank"
               rel="noopener noreferrer"
             >

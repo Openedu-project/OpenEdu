@@ -186,7 +186,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
         </div>
       )}
       <FormWrapper
-        id="messange-input"
+        id="message-input"
         resetOnSuccess={resetOnSuccess}
         schema={chatSchema}
         onSubmit={handleSubmit}

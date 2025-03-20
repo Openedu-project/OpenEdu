@@ -1,5 +1,13 @@
-import type { IAIModel, IAIStatus, IMessage, ISourceProps, TAgentType } from '@oe/api/types/conversation';
+import type { IAIModel, IAIStatus, IAgenConfigs, IMessage, ISourceProps, TAgentType } from '@oe/api/types/conversation';
 import { create } from 'zustand';
+
+export const AGENT_CONFIG: Record<TAgentType, keyof IAgenConfigs> = {
+  ai_slide: 'present_creator_enabled',
+  ai_code: 'code_executor_enabled',
+  ai_image_generate: 'image_generator_enabled',
+  ai_search: 'searcher_enabled',
+};
+
 interface IConversationStore {
   messages: IMessage[];
   isNewChat: boolean;
@@ -75,8 +83,12 @@ export const useConversationStore = create<IConversationStore>(set => {
       }),
 
     setSelectedModel: (selectedModel?: IAIModel) =>
-      set(() => {
-        return { selectedModel, selectedAgent: 'ai_search' };
+      set(state => {
+        const currentSelectedAgent = state.selectedAgent;
+        const updatedAgent = selectedModel?.configs?.[AGENT_CONFIG[currentSelectedAgent]]
+          ? currentSelectedAgent
+          : 'ai_search';
+        return { selectedModel, selectedAgent: updatedAgent };
       }),
 
     resetStatus: () => set({ status: undefined }),
