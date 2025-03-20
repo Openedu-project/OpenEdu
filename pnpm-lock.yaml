@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      logrocket:
-        specifier: ^9.0.2
-        version: 9.0.2
     devDependencies:
       '@biomejs/biome':
         specifier: 1.9.4
@@ -1986,8 +1982,8 @@ packages:
   '@substrate/connect-extension-protocol@2.2.2':
     resolution: {integrity: sha512-t66jwrXA0s5Goq82ZtjagLNd7DPGCNjHeehRlE/gcJmJ+G56C0W+2plqOMRicJ8XGR1/YFnUSEqUFiSNbjGrAA==}
 
-  '@substrate/connect-known-chains@1.9.2':
-    resolution: {integrity: sha512-uEmm+rKJQQhhbforvmcg74TsDHKFVBkstjPwblGT1RdHMxUKR7Gq7F8vbkGnr5ce9tMK2Ylil760Z7vtX013hw==}
+  '@substrate/connect-known-chains@1.9.3':
+    resolution: {integrity: sha512-CPcykiKcVuG4J424gNUFak4AdIJ1sXbu/Bk1IGVPOz74NlBO8EvUyRlpPA7IY0vEf7/n4HQ1gEN5lfgERo4q3w==}
 
   '@substrate/connect@0.8.8':
     resolution: {integrity: sha512-zwaxuNEVI9bGt0rT8PEJiXOyebLIo6QN1SyiAHRPBOl6g3Sy0KKdSN8Jmyn++oXhVRD8aIe75/V8ZkS81T+BPQ==}
@@ -5615,13 +5611,13 @@ snapshots:
   '@substrate/connect-extension-protocol@2.2.2':
     optional: true
 
-  '@substrate/connect-known-chains@1.9.2':
+  '@substrate/connect-known-chains@1.9.3':
     optional: true
 
   '@substrate/connect@0.8.8':
     dependencies:
       '@substrate/connect-extension-protocol': 2.2.2
-      '@substrate/connect-known-chains': 1.9.2
+      '@substrate/connect-known-chains': 1.9.3
       '@substrate/light-client-extension-helpers': 0.0.4(smoldot@2.0.22)
       smoldot: 2.0.22
     transitivePeerDependencies:
@@ -5636,7 +5632,7 @@ snapshots:
       '@polkadot-api/json-rpc-provider-proxy': 0.0.1-492c132563ea6b40ae1fc5470dec4cd18768d182.1.0
       '@polkadot-api/substrate-client': 0.0.1-492c132563ea6b40ae1fc5470dec4cd18768d182.1.0
       '@substrate/connect-extension-protocol': 2.2.2
-      '@substrate/connect-known-chains': 1.9.2
+      '@substrate/connect-known-chains': 1.9.3
       rxjs: 7.8.2
       smoldot: 2.0.22
     optional: true
