@@ -2,7 +2,7 @@ import { DEFAULT_LOCALE, DEFAULT_LOCALES } from '@oe/i18n/constants';
 import type { LanguageCode } from '@oe/i18n/languages';
 import type { ISystemConfigRes } from '#types/system-config';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createThemeSystemConfigKeyClient, createThemeSystemConfigKeyServer } from '#utils/system-config';
+import { createThemeSystemConfigKeyServer } from '#utils/system-config';
 import type { ThemeSystem } from '../../../themes/src/_types';
 import { createOrUpdateSystemConfig, getSystemConfigClient, getSystemConfigServer } from './system-config';
 
@@ -37,7 +37,7 @@ export const createOrUpdateThemeConfig = async ({
   id?: string;
   locale?: LanguageCode;
 }) => {
-  const key = createThemeSystemConfigKeyClient();
+  const key = await createThemeSystemConfigKeyServer();
 
   const response = await createOrUpdateSystemConfig(undefined, {
     id,
@@ -66,7 +66,7 @@ export const createOrUpdateThemeConfig = async ({
 // };
 
 export const getThemeConfigClient = async (endpoint?: string, init?: RequestInit) => {
-  const key = createThemeSystemConfigKeyClient();
+  const key = await createThemeSystemConfigKeyServer();
 
   try {
     const themeSystem = await getSystemConfigClient<ThemeSystem>(endpoint ?? API_ENDPOINT.SYSTEM_CONFIGS, {

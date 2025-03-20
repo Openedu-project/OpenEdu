@@ -130,6 +130,7 @@ export default function SmartPreview({ children, containerPadding = 48, themeGlo
   };
 
   // Effect for setting up the iframe
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!iframeRef.current) {
       return;
@@ -190,7 +191,7 @@ export default function SmartPreview({ children, containerPadding = 48, themeGlo
     }
   }, [themeGlobal]);
 
-  // Rest of the effects...
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const updateViewportWidth = () => {
       viewportWidths.desktop = window.innerWidth > 1024 ? 1024 : window.innerWidth;
@@ -203,6 +204,7 @@ export default function SmartPreview({ children, containerPadding = 48, themeGlo
     return () => window.removeEventListener('resize', updateViewportWidth);
   }, [viewport]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (isAutoZoom) {
       calculateZoom();

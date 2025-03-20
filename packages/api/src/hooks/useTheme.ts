@@ -1,8 +1,14 @@
 import useSWR from 'swr';
-import { createThemeSystemConfigSWRKey } from '#services/system-config';
 import { getThemeConfigClient } from '#services/theme';
 import type { ISystemConfigRes } from '#types/system-config';
-import type { ThemeSystem } from '../../../themes/src/_types';
+import { API_ENDPOINT } from '#utils/endpoints';
+import { createAPIUrl } from '#utils/fetch';
+import { getAPIReferrerAndOriginClient } from '#utils/referrer-origin';
+import { createThemeSystemConfigKeyClient } from '#utils/system-config';
+
+import type { ThemeName, ThemeSystem } from '../../../themes/src/_types';
+
+import { useGetOrganizationByDomain } from './useOrganization';
 
 // export function useGetTheme(shouldFetch = true) {
 //   const endpoint = createThemeSystemConfigSWRKey({});
@@ -19,7 +25,18 @@ import type { ThemeSystem } from '../../../themes/src/_types';
 // }
 
 export function useGetTheme(fallback: ISystemConfigRes<ThemeSystem>[] | undefined = undefined) {
-  const endpoint = createThemeSystemConfigSWRKey({});
+  const { organizationByDomain } = useGetOrganizationByDomain();
+  const { host } = getAPIReferrerAndOriginClient();
+
+  const endpoint = createAPIUrl({
+    endpoint: API_ENDPOINT.SYSTEM_CONFIGS,
+    queryParams: {
+      keys: createThemeSystemConfigKeyClient(organizationByDomain?.domain?.split('.')?.[0] as ThemeName | undefined),
+      domains: host,
+    },
+  });
+
+  console.info('host', host);
 
   const { data, isLoading, error, mutate } = useSWR(endpoint, (endpoint: string) => getThemeConfigClient(endpoint), {
     fallbackData: fallback,

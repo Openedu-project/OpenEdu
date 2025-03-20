@@ -19,7 +19,7 @@ import { useCallback, useState } from 'react';
 import { defaultThemeSystemConfig } from '../../../_config/initial';
 import { initialThemeGlobal } from '../../../_config/theme-global-initial';
 import ThemeConfigMetadata from '../theme-metadata';
-import ThemeLayout from './theme-layout';
+import ThemePreviewLayout from './theme-preview-layout';
 import { PreviewPanel } from './theme-preview-panel';
 import { SettingsPanel } from './theme-setting-panel';
 
@@ -145,7 +145,7 @@ export default function ThemeSettingPages({
         <ResizableHandle />
         <ResizablePanel defaultSize={75}>
           <SmartPreview themeGlobal={themeConfig?.globals ?? initialThemeGlobal}>
-            <ThemeLayout themeDefinition={themeConfig} themeName={themeName}>
+            <ThemePreviewLayout themeDefinition={themeConfig} themeName={themeName}>
               <PreviewPanel
                 themeName={themeName}
                 selectedPage={selectedPage}
@@ -154,7 +154,7 @@ export default function ThemeSettingPages({
                 stateConfigSections={stateConfigSections}
                 currentConfigSections={currentPages?.config}
               />
-            </ThemeLayout>
+            </ThemePreviewLayout>
           </SmartPreview>
         </ResizablePanel>
       </ResizablePanelGroup>

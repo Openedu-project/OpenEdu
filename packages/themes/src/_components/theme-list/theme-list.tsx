@@ -6,7 +6,7 @@ import type { ThemeName } from '@oe/themes/types';
 import { ScrollArea } from '@oe/ui/shadcn/scroll-area';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { useTranslations } from 'next-intl';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import type { ThemeSystem } from '../../_types';
 import { ThemeCard } from './theme-card';
 
@@ -18,39 +18,42 @@ export default function ThemeList({ themeSystemRes }: ThemeListProps) {
   const { theme, mutateTheme } = useGetTheme(themeSystemRes);
   const t = useTranslations('themeList');
 
-  const handleRemove = async (name: ThemeName) => {
-    const configId = theme?.[0]?.id;
-    const currentAvailableThemes = theme?.[0]?.value?.availableThemes || {};
+  const handleRemove = useCallback(
+    async (name: ThemeName) => {
+      const configId = theme?.[0]?.id;
+      const currentAvailableThemes = theme?.[0]?.value?.availableThemes || {};
 
-    // Check if theme exists before attempting to delete
-    if (!currentAvailableThemes?.[name]) {
-      toast.error(t('delInvalid'));
-      return;
-    }
-
-    // Create a new object without the specified theme
-    delete currentAvailableThemes?.[name];
-
-    const data: ThemeSystem = {
-      activedTheme: theme?.[0]?.value?.activedTheme as ThemeName | undefined,
-      availableThemes: currentAvailableThemes,
-    };
-
-    try {
-      const res = await createOrUpdateThemeConfig({
-        config: data,
-        id: configId,
-      });
-      if (!res) {
-        toast.error(t('delFail'));
+      // Check if theme exists before attempting to delete
+      if (!currentAvailableThemes?.[name]) {
+        toast.error(t('delInvalid'));
         return;
       }
-      toast.success(t('delSuccess'));
-      await mutateTheme();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
+      // Create a new object without the specified theme
+      delete currentAvailableThemes?.[name];
+
+      const data: ThemeSystem = {
+        activedTheme: theme?.[0]?.value?.activedTheme as ThemeName | undefined,
+        availableThemes: currentAvailableThemes,
+      };
+
+      try {
+        const res = await createOrUpdateThemeConfig({
+          config: data,
+          id: configId,
+        });
+        if (!res) {
+          toast.error(t('delFail'));
+          return;
+        }
+        toast.success(t('delSuccess'));
+        await mutateTheme();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [mutateTheme, theme, t]
+  );
 
   // Sort to put active theme first
   const sortedThemes = useMemo(() => {
