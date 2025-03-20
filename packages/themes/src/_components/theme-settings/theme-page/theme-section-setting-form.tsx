@@ -10,7 +10,7 @@ import type {
   ThemeFieldValue,
   ThemeName,
   ThemePageKey,
-} from '@oe/themes/types/theme-page/index';
+} from '@oe/themes/types';
 import { Button } from '@oe/ui/shadcn/button';
 import { Label } from '@oe/ui/shadcn/label';
 import { toast } from '@oe/ui/shadcn/sonner';

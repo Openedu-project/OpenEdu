@@ -1,5 +1,5 @@
 'use client';
-import type { ThemeConfigKey, ThemeName } from '@oe/themes/types/index';
+import type { ThemeConfigKey, ThemeName } from '@oe/themes/types';
 import { Link, usePathname } from '@oe/ui/common/navigation';
 import { ToggleGroup, ToggleGroupItem } from '@oe/ui/shadcn/toggle-group';
 import { PanelTop } from 'lucide-react';

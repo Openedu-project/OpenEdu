@@ -1,4 +1,4 @@
-import type { AllSectionKeys, ThemeSystem } from '@oe/themes/types/index';
+import type { AllSectionKeys, ThemeSystem } from '@oe/themes/types';
 import type { FileType } from '@oe/ui/components/uploader';
 
 export const getBannerByPageKey = (authPageKey: AllSectionKeys, themeSystem?: ThemeSystem) => {

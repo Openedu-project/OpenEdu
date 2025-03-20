@@ -2,7 +2,7 @@ import { verifyEmailService } from '@oe/api/services/auth';
 import loginBanner from '@oe/assets/images/login-banner.png';
 import { base64ToJson } from '@oe/core/utils/decoded-token';
 import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import type { ThemeName } from '@oe/themes/types/theme-page/index';
+// import type { ThemeName } from '@oe/themes/types';
 import { getTranslations } from 'next-intl/server';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -14,7 +14,7 @@ import { EmailVerifyActions } from './email-verify-actions';
 export const dynamic = 'force-static';
 
 interface EmailVerifyProps {
-  themeName?: ThemeName;
+  themeName?: string;
   banner?: FileType;
 }
 
@@ -60,7 +60,10 @@ export async function EmailVerifyPage({ themeName, banner }: EmailVerifyProps) {
 
   return (
     <AuthLayout
-      banner={{ src: banner?.url ?? loginBanner.src, alt: 'verify email background' }}
+      banner={{
+        src: banner?.url ?? loginBanner.src,
+        alt: 'verify email background',
+      }}
       slogan={tThemeAuth('emailVerify.slogan')}
       className={cn(isError ? 'text-destructive' : '')}
     >

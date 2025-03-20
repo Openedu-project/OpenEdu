@@ -4,19 +4,16 @@ import type {
   PageSectionConfigs,
   SectionsByPage,
   ThemePageKey,
-} from "@oe/themes/types/index";
-import {
-  DndSortable,
-  DndSortableDragButton,
-} from "@oe/ui/components/dnd-sortable";
-import { Button } from "@oe/ui/shadcn/button";
-import { ScrollArea } from "@oe/ui/shadcn/scroll-area";
-import { Save } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { memo, useState } from "react";
-import ConfirmSubmitModal from "./confirm-submit-modal";
-import { ConfigSection } from "./theme-section-config";
-import { ThemeSectionUpdateKeys } from "./theme-section-update-key";
+} from '@oe/themes/types';
+import { DndSortable, DndSortableDragButton } from '@oe/ui/components/dnd-sortable';
+import { Button } from '@oe/ui/shadcn/button';
+import { ScrollArea } from '@oe/ui/shadcn/scroll-area';
+import { Save } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { memo, useState } from 'react';
+import ConfirmSubmitModal from './confirm-submit-modal';
+import { ConfigSection } from './theme-section-config';
+import { ThemeSectionUpdateKeys } from './theme-section-update-key';
 
 export interface SimpleItem<K extends ThemePageKey> {
   key: SectionsByPage[K];
@@ -33,10 +30,7 @@ interface SettingsPanelProps {
   isSubmitting: boolean;
   onSectionSelect: (key: SectionsByPage[ThemePageKey] | undefined) => void;
   onConfigUpdate: (configs: PageSectionConfigs<ThemePageKey>) => void;
-  onPreview: (
-    val: PageSectionConfig<ThemePageKey>,
-    sectionKey: SectionsByPage[ThemePageKey]
-  ) => void;
+  onPreview: (val: PageSectionConfig<ThemePageKey>, sectionKey: SectionsByPage[ThemePageKey]) => void;
   onReset: (sectionKey: SectionsByPage[ThemePageKey]) => void;
   onSubmit: (configSections: PageSectionConfigs<ThemePageKey>) => void;
 }
@@ -50,10 +44,7 @@ function createMergedObject<T extends PageSectionConfigs<ThemePageKey>>(
 
   for (const key of keys) {
     // Check if value in childObj exists and is valid
-    newObj[key] =
-      childObj[key] !== undefined && childObj[key] !== null
-        ? childObj[key]
-        : parentObj[key];
+    newObj[key] = childObj[key] !== undefined && childObj[key] !== null ? childObj[key] : parentObj[key];
   }
 
   return newObj;
@@ -73,7 +64,7 @@ export const SettingsPanel = memo(function SettingsPanel({
   onSubmit,
   onReset,
 }: SettingsPanelProps) {
-  const t = useTranslations("themePageSettings");
+  const t = useTranslations('themePageSettings');
   const [openSubmitModal, setOpenSubmitModal] = useState(false);
 
   const createMenuSection = (): SimpleItem<ThemePageKey>[] => {
@@ -108,11 +99,7 @@ export const SettingsPanel = memo(function SettingsPanel({
       // TODO: show toast warning - no data fetching
       return;
     }
-    const newConfig = createMergedObject(
-      defaultConfigSections,
-      fetchConfigSections,
-      keys
-    );
+    const newConfig = createMergedObject(defaultConfigSections, fetchConfigSections, keys);
     onConfigUpdate(newConfig);
   };
 
@@ -126,25 +113,23 @@ export const SettingsPanel = memo(function SettingsPanel({
           disabled={isSubmitting}
         >
           <Save className="mr-2 h-4 w-4" />
-          {isSubmitting ? t("saving") : t("save")}
+          {isSubmitting ? t('saving') : t('save')}
         </Button>
       </div>
 
       <ScrollArea className="h-[calc(100vh-10rem)]">
         <div className="space-y-4 pt-4 pr-4">
           <ThemeSectionUpdateKeys
-            defaultConfigSectionKeys={
-              Object.keys(defaultConfigSections) as AllSectionKeys[]
-            }
+            defaultConfigSectionKeys={Object.keys(defaultConfigSections) as AllSectionKeys[]}
             configSectionKeys={Object.keys(configSections) as AllSectionKeys[]}
             onUpdateSectionKeys={handleUpdateSectionKeys}
           />
           <DndSortable<SimpleItem<ThemePageKey>, unknown>
             data={createMenuSection()}
             dataConfig={{
-              idProp: "key",
-              type: "array",
-              direction: "vertical",
+              idProp: 'key',
+              type: 'array',
+              direction: 'vertical',
             }}
             className="flex flex-col gap-4"
             renderConfig={{
@@ -164,10 +149,8 @@ export const SettingsPanel = memo(function SettingsPanel({
                 );
               },
             }}
-            onChange={(configs) => {
-              const newConfigs = sortedConfig(
-                configs as PageSectionConfigs<ThemePageKey>
-              );
+            onChange={configs => {
+              const newConfigs = sortedConfig(configs as PageSectionConfigs<ThemePageKey>);
               onConfigUpdate(newConfigs);
             }}
           />
@@ -176,7 +159,7 @@ export const SettingsPanel = memo(function SettingsPanel({
 
       {openSubmitModal && (
         <ConfirmSubmitModal
-          onClose={()=>            setOpenSubmitModal(false)          }
+          onClose={() => setOpenSubmitModal(false)}
           onSubmit={() => {
             onSubmit(configSections);
             setOpenSubmitModal(false);

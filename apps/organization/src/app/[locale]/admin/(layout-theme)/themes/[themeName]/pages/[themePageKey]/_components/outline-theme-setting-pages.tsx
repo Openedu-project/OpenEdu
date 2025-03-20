@@ -10,7 +10,7 @@ import type {
   ThemePageKey,
   ThemeSidebarPageKey,
   ThemeSystem,
-} from "@oe/themes/types/index";
+} from "@oe/themes/types";
 import { toast } from "@oe/ui/shadcn/sonner";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
@@ -71,7 +71,7 @@ const OutlineThemeSettingPages = ({
       });
       if (res) {
         setIsLoading(false);
-        mutateTheme();
+        await mutateTheme();
         toast.success(t("updateSuccess"));
       }
     } catch (error) {

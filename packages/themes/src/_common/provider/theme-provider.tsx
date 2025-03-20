@@ -1,7 +1,7 @@
 'use client';
 
 import { initialThemeGlobal, updateGlobalTheme } from '@oe/themes';
-import type { ThemeDefinition } from '@oe/themes/types/index';
+import type { ThemeDefinition } from '@oe/themes/types';
 import { type ReactNode, createContext, useContext, useEffect } from 'react';
 
 const ThemeContext = createContext<ThemeDefinition | null>(null);

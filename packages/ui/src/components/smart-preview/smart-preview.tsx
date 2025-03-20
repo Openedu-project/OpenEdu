@@ -1,16 +1,17 @@
-"use client";
+'use client';
 
-import type { ThemeGlobal } from "@oe/themes/types/theme-global";
-import { Button } from "@oe/ui/shadcn/button";
-import { Monitor, Smartphone, Tablet } from "lucide-react";
-import type React from "react";
-import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+// import type { ThemeGlobal } from '@oe/themes/types';
+import { Button } from '@oe/ui/shadcn/button';
+import { Monitor, Smartphone, Tablet } from 'lucide-react';
+import type React from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 interface PreviewFrameProps {
   children: React.ReactNode;
   containerPadding?: number;
-  themeGlobal?: ThemeGlobal;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  themeGlobal?: Record<string, any>;
 }
 
 interface ViewportButtonProps {
@@ -19,29 +20,14 @@ interface ViewportButtonProps {
   children: React.ReactNode;
 }
 
-const ViewportButton = ({
-  isActive,
-  onClick,
-  children,
-}: ViewportButtonProps) => (
-  <Button
-    variant={isActive ? "default" : "ghost"}
-    size="icon"
-    onClick={onClick}
-    className="h-10 w-10"
-  >
+const ViewportButton = ({ isActive, onClick, children }: ViewportButtonProps) => (
+  <Button variant={isActive ? 'default' : 'ghost'} size="icon" onClick={onClick} className="h-10 w-10">
     {children}
   </Button>
 );
 
-export default function SmartPreview({
-  children,
-  containerPadding = 48,
-  themeGlobal,
-}: PreviewFrameProps) {
-  const [viewport, setViewport] = useState<"desktop" | "tablet" | "mobile">(
-    "desktop"
-  );
+export default function SmartPreview({ children, containerPadding = 48, themeGlobal }: PreviewFrameProps) {
+  const [viewport, setViewport] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const [zoom, setZoom] = useState(100);
   const [isAutoZoom, setIsAutoZoom] = useState(true);
   const [iframeBody, setIframeBody] = useState<HTMLElement | null>(null);
@@ -62,7 +48,7 @@ export default function SmartPreview({
     const containerWidth = containerRef.current.clientWidth - containerPadding;
     const contentWidth = viewportWidths[viewport];
 
-    if (viewport === "desktop") {
+    if (viewport === 'desktop') {
       const newZoom = (containerWidth / contentWidth) * 100;
       setZoom(Math.max(30, Math.min(100, newZoom)));
     } else {
@@ -73,12 +59,12 @@ export default function SmartPreview({
 
   const handleZoomIn = () => {
     setIsAutoZoom(false);
-    setZoom((prev) => Math.min(prev + 10, 200));
+    setZoom(prev => Math.min(prev + 10, 200));
   };
 
   const handleZoomOut = () => {
     setIsAutoZoom(false);
-    setZoom((prev) => Math.max(prev - 10, 30));
+    setZoom(prev => Math.max(prev - 10, 30));
   };
 
   const handleZoomReset = () => {
@@ -138,7 +124,7 @@ export default function SmartPreview({
       })();
     `;
 
-    const script = iframeDoc.createElement("script");
+    const script = iframeDoc.createElement('script');
     script.textContent = updateThemeInIframe;
     iframeDoc.head.appendChild(script);
   };
@@ -157,19 +143,19 @@ export default function SmartPreview({
 
     // Copy styles from parent page
     const styles = Array.from(document.styleSheets)
-      .map((sheet) => {
+      .map(sheet => {
         try {
           return Array.from(sheet.cssRules)
-            .map((rule) => rule.cssText)
-            .join("\n");
+            .map(rule => rule.cssText)
+            .join('\n');
         } catch (_e) {
-          const link = document.createElement("link");
-          link.rel = "stylesheet";
-          link.href = sheet.href || "";
+          const link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = sheet.href || '';
           return link.outerHTML;
         }
       })
-      .join("\n");
+      .join('\n');
 
     // Create the iframe content
     const html = `
@@ -207,23 +193,22 @@ export default function SmartPreview({
   // Rest of the effects...
   useEffect(() => {
     const updateViewportWidth = () => {
-      viewportWidths.desktop =
-        window.innerWidth > 1024 ? 1024 : window.innerWidth;
-      if (viewport === "desktop") {
+      viewportWidths.desktop = window.innerWidth > 1024 ? 1024 : window.innerWidth;
+      if (viewport === 'desktop') {
         calculateZoom();
       }
     };
 
-    window.addEventListener("resize", updateViewportWidth);
-    return () => window.removeEventListener("resize", updateViewportWidth);
+    window.addEventListener('resize', updateViewportWidth);
+    return () => window.removeEventListener('resize', updateViewportWidth);
   }, [viewport]);
 
   useEffect(() => {
     if (isAutoZoom) {
       calculateZoom();
       const handleResize = () => calculateZoom();
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
     }
   }, [viewport, isAutoZoom]);
 
@@ -234,10 +219,10 @@ export default function SmartPreview({
 
     iframeRef.current.contentWindow.postMessage(
       {
-        type: "viewport-change",
+        type: 'viewport-change',
         width: viewportWidths[viewport],
       },
-      "*"
+      '*'
     );
   }, [viewport]);
 
@@ -245,50 +230,29 @@ export default function SmartPreview({
     <div className="flex flex-col">
       <div className="flex items-center justify-between border-b bg-background p-4">
         <div className="flex gap-1">
-          <ViewportButton
-            isActive={viewport === "desktop"}
-            onClick={() => setViewport("desktop")}
-          >
+          <ViewportButton isActive={viewport === 'desktop'} onClick={() => setViewport('desktop')}>
             <Monitor className="h-4 w-4" />
           </ViewportButton>
-          <ViewportButton
-            isActive={viewport === "tablet"}
-            onClick={() => setViewport("tablet")}
-          >
+          <ViewportButton isActive={viewport === 'tablet'} onClick={() => setViewport('tablet')}>
             <Tablet className="h-4 w-4" />
           </ViewportButton>
-          <ViewportButton
-            isActive={viewport === "mobile"}
-            onClick={() => setViewport("mobile")}
-          >
+          <ViewportButton isActive={viewport === 'mobile'} onClick={() => setViewport('mobile')}>
             <Smartphone className="h-4 w-4" />
           </ViewportButton>
         </div>
         <div className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleZoomOut}
-            className="h-8 w-8"
-            disabled={zoom <= 30}
-          >
+          <Button variant="ghost" size="icon" onClick={handleZoomOut} className="h-8 w-8" disabled={zoom <= 30}>
             <span className="font-bold">−</span>
           </Button>
           <Button
             variant="ghost"
             size="sm"
             onClick={handleZoomReset}
-            className={`text-xs ${isAutoZoom ? "" : "text-orange-500"}`}
+            className={`text-xs ${isAutoZoom ? '' : 'text-orange-500'}`}
           >
             {Math.round(zoom)}%
           </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleZoomIn}
-            className="h-8 w-8"
-            disabled={zoom >= 200}
-          >
+          <Button variant="ghost" size="icon" onClick={handleZoomIn} className="h-8 w-8" disabled={zoom >= 200}>
             <span className="font-bold">+</span>
           </Button>
         </div>
@@ -300,23 +264,19 @@ export default function SmartPreview({
             className="overflow-y-scroll rounded-lg bg-white shadow-lg transition-all duration-200"
             style={{
               transform: `scale(${zoom / 100})`,
-              transformOrigin: "top center",
+              transformOrigin: 'top center',
             }}
           >
             <iframe
               ref={iframeRef}
               style={{
                 width: `${viewportWidths[viewport]}px`,
-                height: "90vh",
-                border: "none",
+                height: '90vh',
+                border: 'none',
               }}
               title="preview"
             />
-            {iframeBody &&
-              createPortal(
-                <div style={{ width: "100%", height: "100%" }}>{children}</div>,
-                iframeBody
-              )}
+            {iframeBody && createPortal(<div style={{ width: '100%', height: '100%' }}>{children}</div>, iframeBody)}
           </div>
         </div>
       </div>

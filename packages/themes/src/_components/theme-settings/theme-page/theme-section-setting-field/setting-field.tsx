@@ -9,6 +9,8 @@ import { Switch } from '@oe/ui/shadcn/switch';
 import { cn } from '@oe/ui/utils/cn';
 import { Languages } from 'lucide-react';
 import type React from 'react';
+// import { ADMIN_ROUTES } from '../../../../_utils/constants';
+import { camelToNormal } from '../../../../_utils/function';
 import type { ThemePageSettingFieldProps } from '../theme-section-setting-field';
 
 export const ThemePageSettingField: React.FC<ThemePageSettingFieldProps> = ({
@@ -21,7 +23,7 @@ export const ThemePageSettingField: React.FC<ThemePageSettingFieldProps> = ({
   return (
     <div className="space-y-2">
       <div className={cn('flex', type === 'text' ? 'flex-row items-center justify-between' : 'flex-col')}>
-        <Label className="capitalize">{label}</Label>
+        <Label className="capitalize">{camelToNormal(label)}</Label>
 
         {/* TODO: add prefix "/" automatically */}
         {type === 'link' && (
@@ -72,7 +74,7 @@ export const ThemePageSettingField: React.FC<ThemePageSettingFieldProps> = ({
         <Uploader
           accept="image/*"
           listType="picture"
-          value={value as IFileResponse}
+          value={(value as IFileResponse)?.url ? (value as IFileResponse) : undefined}
           onChange={file => {
             if (file) {
               onChange(file as FileType);

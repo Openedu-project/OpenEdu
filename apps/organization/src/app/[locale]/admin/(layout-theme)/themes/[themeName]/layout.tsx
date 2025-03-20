@@ -1,5 +1,5 @@
-import { ThemeLayout } from '@oe/ui/common/layout';
-import type { ReactNode } from 'react';
+import ThemeLayout from "@oe/themes/common/layout/theme-layout";
+import type { ReactNode } from "react";
 
 export default function Layout({
   children,

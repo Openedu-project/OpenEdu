@@ -1,7 +1,18 @@
+'use client';
 import LogRocket from 'logrocket';
 
 const LOGGED_ENVIRONMENTS = ['production'];
-
+interface LogData {
+  url?: string;
+  method?: string;
+  status?: number;
+  statusText?: string;
+  duration?: number;
+  requestId?: string;
+  headers?: Record<string, string>;
+  responseBody?: unknown;
+  phase?: string;
+}
 export const initLogger = () => {
   if (typeof window === 'undefined') {
     return;
@@ -46,41 +57,37 @@ export const identifyUser = (userId: string, userInfo: Record<string, string | n
 /**
  * Logger utility for both client and server
  */
-export const logger = {
-  info: (message: string, data?: Record<string, string | number>) => {
+export const apiLogger = {
+  info: (message: string, data?: LogData): void => {
     if (typeof window !== 'undefined') {
       LogRocket.log(message, data);
     }
   },
 
-  warn: (message: string, data?: Record<string, string | number>) => {
+  warn: (message: string, data?: LogData): void => {
     if (typeof window !== 'undefined') {
       LogRocket.warn(message, data);
     }
   },
 
-  error: (error: Error | string, data?: Record<string, string | number>) => {
+  error: (error: Error | string, data?: LogData): void => {
     const errorMessage = error instanceof Error ? error.message : error;
 
     if (typeof window !== 'undefined') {
       if (error instanceof Error) {
+        const { headers, responseBody, ...logData } = data || {};
         LogRocket.captureException(error, {
           tags: {
-            ...data,
+            type: 'api_error',
+            ...logData,
           },
         });
       } else {
-        LogRocket.error(errorMessage, data);
+        LogRocket.error(errorMessage, {
+          type: 'api_error',
+          ...data,
+        });
       }
     }
   },
-
-  // Track important events
-  track: (eventName: string, properties?: Record<string, string | number>) => {
-    if (typeof window !== 'undefined') {
-      LogRocket.track(eventName, properties);
-    }
-  },
 };
-
-export default logger;

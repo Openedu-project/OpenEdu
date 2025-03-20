@@ -1,6 +1,6 @@
 import { getCookies } from '@oe/core/utils/cookie';
 import { DEFAULT_LOCALE } from '@oe/i18n/constants';
-import LogRocket from 'logrocket'; // Import LogRocket
+import { apiLogger } from '@oe/ui/components/logrocket-handler';
 import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 import { refreshTokenService } from '#services/auth';
 import type { IToken } from '#types/auth';
@@ -31,55 +31,6 @@ export interface RequestInitAPI extends RequestInit {
   cookies?: () => ReadonlyRequestCookies;
   [key: string]: unknown;
 }
-
-// Types for logger
-interface LogData {
-  url?: string;
-  method?: string;
-  status?: number;
-  statusText?: string;
-  duration?: number;
-  requestId?: string;
-  headers?: Record<string, string>;
-  responseBody?: unknown;
-  phase?: string;
-}
-
-// Tạo trình logger riêng để quản lý logs API
-const apiLogger = {
-  info: (message: string, data?: LogData): void => {
-    if (typeof window !== 'undefined') {
-      LogRocket.log(message, data);
-    }
-  },
-
-  warn: (message: string, data?: LogData): void => {
-    if (typeof window !== 'undefined') {
-      LogRocket.warn(message, data);
-    }
-  },
-
-  error: (error: Error | string, data?: LogData): void => {
-    const errorMessage = error instanceof Error ? error.message : error;
-
-    if (typeof window !== 'undefined') {
-      if (error instanceof Error) {
-        const { headers, responseBody, ...logData } = data || {};
-        LogRocket.captureException(error, {
-          tags: {
-            type: 'api_error',
-            ...logData,
-          },
-        });
-      } else {
-        LogRocket.error(errorMessage, {
-          type: 'api_error',
-          ...data,
-        });
-      }
-    }
-  },
-};
 
 let isRefreshing = false;
 let refreshPromise: Promise<IToken | null> | null = null;

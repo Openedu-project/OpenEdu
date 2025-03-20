@@ -5,6 +5,7 @@ import {
   Assistant,
   Bitter,
   Great_Vibes,
+  Hanken_Grotesk,
   Inter,
   Montserrat,
   Mulish,
@@ -15,6 +16,7 @@ import {
   Roboto_Condensed,
   Roboto_Mono,
   Rouge_Script,
+  Space_Grotesk,
 } from 'next/font/google';
 
 const inter = Inter({
@@ -132,6 +134,22 @@ const rougeScript = Rouge_Script({
   weight: '400',
 });
 
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-space-grotesk',
+  display: 'swap',
+  adjustFontFallback: false,
+  weight: '400',
+});
+
+const hankenGrotesk = Hanken_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-hanken-grotesk',
+  display: 'swap',
+  adjustFontFallback: false,
+  weight: '400',
+});
+
 export const fonts = {
   inter,
   montserrat,
@@ -149,4 +167,6 @@ export const fonts = {
   alexBrush,
   greatVibes,
   rougeScript,
+  spaceGrotesk,
+  hankenGrotesk,
 };

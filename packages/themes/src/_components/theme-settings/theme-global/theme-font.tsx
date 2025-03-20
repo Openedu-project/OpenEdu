@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { initialThemeGlobalFonts } from '../../../_config/theme-global-initial';
 import type { ThemeGlobalFontConfig } from '../../../_types';
 import { fonts } from '../../../fonts';
-import { getFontDisplayName, setFontVariable } from './_utils';
+import { camelToKebab, getFontDisplayName, setFontVariable } from './_utils';
 
 interface ThemeFontsProps {
   fontData: ThemeGlobalFontConfig;
@@ -67,7 +67,9 @@ const ThemeFonts = ({ fontData, isLoading, onSubmitFonts }: ThemeFontsProps) => 
               </div>
               <Select
                 value={value}
-                onValueChange={newValue => updateFontVariable(key as keyof ThemeGlobalFontConfig, newValue)}
+                onValueChange={newValue => {
+                  updateFontVariable(key as keyof ThemeGlobalFontConfig, newValue);
+                }}
               >
                 <SelectTrigger className="w-[240px]">
                   <SelectValue />
@@ -76,8 +78,10 @@ const ThemeFonts = ({ fontData, isLoading, onSubmitFonts }: ThemeFontsProps) => 
                   {Object.entries(fonts).map(([fontKey, _font]) => (
                     <SelectItem
                       key={fontKey}
-                      value={`var(--font-${fontKey})`}
-                      style={{ fontFamily: `var(--font-${fontKey})` }}
+                      value={`var(--font-${camelToKebab(fontKey)})`}
+                      style={{
+                        fontFamily: `var(--font-${camelToKebab(fontKey)})`,
+                      }}
                     >
                       {getFontDisplayName(fontKey)}
                     </SelectItem>

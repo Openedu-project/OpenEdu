@@ -132,7 +132,6 @@
     "@oe/core": "workspace:*",
     "@oe/dashboard": "workspace:*",
     "@oe/i18n": "workspace:*",
-    "@oe/themes": "workspace:*",
     "lucide-react": "0.469.0",
     "next": "15.1.4",
     "next-intl": "3.26.3",

@@ -8,8 +8,8 @@ import { getLocale, getMessages } from "next-intl/server";
 import type { ReactNode } from "react";
 
 import { getThemeConfigServer } from "@oe/api/services/theme";
+import { ThemeProvider } from "@oe/themes/common/provider/theme-provider";
 import { WebViewHandler } from "@oe/ui/components/webview-handler";
-
 // const geistSans = localFont({
 //   src: './fonts/GeistVF.woff',
 //   variable: '--font-geist-sans',
@@ -50,13 +50,13 @@ export default async function RootLayout({
       className={fontVariables}
     >
       <body className="scrollbar font-primary antialiased">
-        <Provider
-          messages={messages ?? {}}
-          locale={locale}
-          theme={themeSystem?.[0]?.value?.availableThemes?.[themeName]}
-        >
+        <Provider messages={messages ?? {}} locale={locale}>
           <WebViewHandler />
-          {children}
+          <ThemeProvider
+            theme={themeSystem?.[0]?.value?.availableThemes?.[themeName]}
+          >
+            {children}
+          </ThemeProvider>
           <Toaster />
         </Provider>
       </body>

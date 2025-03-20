@@ -11,6 +11,7 @@ import type { ThemeFooterProps } from '../../auth/footer';
 import type { ThemeHeaderProps } from '../../auth/header';
 import type { AuthLayoutLoginProps } from '../../auth/login';
 import type { ScholarHomepageAboutUsProps, ScholarHomepageHeroProps, ScholarHomepageServiceProps } from '../../scholar';
+
 import type {
   VbiAboutUsCoreProps,
   VbiAboutUsGoalProps,
