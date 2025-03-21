@@ -107,8 +107,6 @@ const AvailHomepageSolution: SectionComponent<"homepage", "availSolution"> = ({
                 ))}
               </CarouselContent>
               <div className="hidden lg:block">
-                {/* <CarouselPrevious className="-translate-x-1/2 absolute top-[-40px] right-0 inline-flex h-[48px] w-[48px] items-center justify-center whitespace-nowrap rounded-full border border-input bg-white font-medium text-sm shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" />
-              <CarouselNext className="absolute top-[-40px] right-0 inline-flex h-[48px] w-[48px] items-center justify-center whitespace-nowrap rounded-full border border-input bg-primary font-medium text-sm shadow-sm transition-colors hover:bg-primary hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" /> */}
                 <CarouselPrevious />
                 <CarouselNext />
               </div>

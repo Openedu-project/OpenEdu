@@ -33,6 +33,13 @@ const AvailHomepageHero: SectionComponent<"homepage", "availHero"> = ({
           height={props?.banner?.height ?? 530}
           className="rounded-lg object-cover"
         />
+        <Image
+          alt="image"
+          src={props?.banner?.url}
+          width={props?.banner?.width ?? 1127}
+          height={props?.banner?.height ?? 530}
+          className="rounded-lg object-cover"
+        />
       </div>
     </div>
   );
