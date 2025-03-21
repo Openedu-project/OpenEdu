@@ -103,13 +103,12 @@ export const MessageContainer = ({
       return;
     }
     const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
-
     if (scrollTop < 100 && !shouldGetData && initScrollBottom) {
       setPrevScrollHeight(scrollHeight);
       setShouldGetData(true);
     }
 
-    if (scrollTop + clientHeight === scrollHeight && !initScrollBottom) {
+    if (scrollTop + clientHeight > scrollHeight - 50 && !initScrollBottom) {
       setInitScrollBottom(true);
     }
 

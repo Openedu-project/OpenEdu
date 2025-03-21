@@ -45,7 +45,7 @@ const SearchHistory = ({ className, isLogin, callbackFn }: SearchHistoryProps) =
           ...history,
           page: item.pagination.page ?? 1,
         }))
-      ),
+      ) ?? [],
     [data]
   );
 
@@ -130,7 +130,7 @@ const SearchHistory = ({ className, isLogin, callbackFn }: SearchHistoryProps) =
         onChange={debouncedSetSearch}
       />
       {!isLoading && historyData?.length === 0 ? (
-        <div className="p-4 text-center text-foreground">{tAI('noHistory')}</div>
+        <div className="m-auto p-4 text-center text-foreground">{tAI('noHistory')}</div>
       ) : (
         <Virtuoso
           style={{ display: 'flex', flexGrow: 1 }}

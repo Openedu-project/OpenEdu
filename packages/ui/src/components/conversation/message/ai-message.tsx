@@ -64,17 +64,17 @@ export const AIMessage = ({
     }
   }, [html]);
   return (
-    <div className={cn('flex gap-3', className)}>
+    <div className={cn('flex gap-2', className)}>
       <Image
         src={AIMascot.src}
         alt="ai-bot"
         aspectRatio="1:1"
-        width={50}
+        width={40}
         height={40}
-        className=" bg-background"
+        className="h-8 w-8 bg-background md:h-10 md:w-10"
         wrapClassNames="w-auto"
         objectFit="contain"
-        containerHeight={50}
+        containerHeight={40}
       />
       <div className={cn('flex grow flex-col space-y-6', !message.content && 'basis-full')}>
         <div className="flex flex-col space-y-2">
