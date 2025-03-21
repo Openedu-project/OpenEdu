@@ -3,7 +3,7 @@ export const errorMessages = {
     tryAgain: 'Try again',
     unknown: {
       title: 'Something went wrong.',
-      description: 'We are looking to fix it. Please try again in a few minutes.',
+      description: 'We are maintaining this page. Please try again in a few minutes.',
     },
     networkError: {
       title: 'Network connection error.',
@@ -16,7 +16,7 @@ export const errorMessages = {
     rateLimitError: '409 conflict error',
     serverError: {
       title: 'Server error.',
-      description: 'We are looking to fix it. Please try again in a few minutes.',
+      description: 'We are maintaining this page. Please try again in a few minutes.',
     },
     notFound: {
       title: 'OOps! Page Not Found.',
