@@ -1,13 +1,13 @@
-import { Heart, Star } from 'lucide-react';
+import { Heart, Star } from "lucide-react";
 
 interface StatementCardProps {
-  icon?: 'star' | 'heart';
+  icon?: "star" | "heart";
   title: string;
   content: string;
 }
 
 const StatementCard = ({ icon, title, content }: StatementCardProps) => {
-  const Icon = icon === 'star' ? Star : Heart;
+  const Icon = icon === "star" ? Star : Heart;
 
   return (
     <div className="rounded-2xl bg-background p-8 shadow-sm">
@@ -22,5 +22,5 @@ const StatementCard = ({ icon, title, content }: StatementCardProps) => {
     </div>
   );
 };
-
+StatementCard.displayName = "StatementCard";
 export { StatementCard, type StatementCardProps };

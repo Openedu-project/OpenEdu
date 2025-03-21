@@ -69,5 +69,5 @@ const EventCard = ({
   );
 };
 
+EventCard.displayName = "EventCard";
 export { EventCard, type EventCardProps };
-export default EventCard;

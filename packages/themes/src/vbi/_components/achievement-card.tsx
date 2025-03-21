@@ -74,5 +74,5 @@ const AchievementCard = ({
   );
 };
 
+AchievementCard.displayName = "AchievementCard";
 export { AchievementCard, type AchievementCardProps };
-export default AchievementCard;
