@@ -171,6 +171,18 @@ export function FormTriggerForm() {
           )}
         </>
       )}
+
+      {type === 'notification' && (
+        <FormFieldWithLabel
+          name="confirmation_settings.display_on_detail"
+          label={t('form.confirmationDisplayOnDetail')}
+          isToggleField
+          className="flex-row-reverse justify-between space-x-0"
+          render={({ field }) => (
+            <Switch checked={field.value} onCheckedChange={field.onChange} id="confirmation-enabled" />
+          )}
+        />
+      )}
     </div>
   );
 }

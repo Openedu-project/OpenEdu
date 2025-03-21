@@ -167,8 +167,10 @@ export const courseMessages = {
         variantPlaceholder: 'Select button variant',
         selectVariant: 'Select variant',
         text: 'Text',
-        type: 'Type',
-        typePlaceholder: 'Select type',
+        type: 'Link',
+        typePlaceholder: 'Enter button link',
+        // type: 'Type',
+        // typePlaceholder: 'Select type',
         variant: 'Variant',
         button: 'Button',
         submit: 'Submit',
@@ -183,6 +185,7 @@ export const courseMessages = {
       confirmationButtons: 'Confirmation Buttons',
       confirmationAutoCloseAfterSeconds: 'Confirmation Auto Close After Seconds',
       confirmationAutoCloseEnabled: 'Confirmation Auto Close Enabled',
+      confirmationDisplayOnDetail: 'Display button on course detail page',
 
       answers: {
         general: 'General information',

@@ -10,7 +10,7 @@ export default function PaymentButton({
   onClick,
   ...props
 }: IPaymentButton) {
-  const { buttonText, showCart, handleClick, currentAction } = usePaymentButton({
+  const { buttonText, showCart, handleClick, currentAction, isLoading } = usePaymentButton({
     courseData,
     isCourseDetail,
     onClick,
@@ -22,6 +22,7 @@ export default function PaymentButton({
       rightSection={rightSection}
       onClick={handleClick}
       data-action={currentAction}
+      loading={isLoading}
       {...props}
     >
       {buttonText}
