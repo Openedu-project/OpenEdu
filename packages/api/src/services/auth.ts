@@ -122,11 +122,7 @@ export async function getMeService(url?: string, init?: FetchOptions): Promise<I
   if (isLoggedIn) {
     const res = await fetchAPI<IUser>(url ?? API_ENDPOINT.USERS_ME, { ...init, shouldRefreshToken: false });
     const { data } = res;
-    // identifyUser(data.id, {
-    //   name: data.username,
-    //   email: data.email,
-    //   role: data.roles.map(role => role.role_id).join(','),
-    // });
+
     return data as IUser;
   }
   return null;

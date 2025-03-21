@@ -96,7 +96,7 @@ export default function ErrorBoundary({ error, reset }: Props) {
       description={description}
       action={
         <div className="flex gap-2">
-          <Link variant="default" href="/" className="mt-4 w-full">
+          <Link variant="default" href="/" className="!text-primary-foreground mt-4 w-full">
             {tGeneral('backToHomepage')}
           </Link>
           <Button variant="outline" onClick={reset} className="mt-4 w-full">
