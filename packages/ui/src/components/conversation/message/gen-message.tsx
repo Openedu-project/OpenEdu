@@ -42,10 +42,6 @@ export const GenMessage = memo(
           return;
         }
 
-        if (!GENERATING_STATUS.includes(genMessage.status ?? '') && resetPage) {
-          mutate();
-        }
-
         const nextChars = genMessage.content.substring(TypewriterState.position, TypewriterState.position + 2);
         if (!(GENERATING_STATUS.includes(genMessage.status ?? '') || nextChars)) {
           addMessage(genMessage, () => {
