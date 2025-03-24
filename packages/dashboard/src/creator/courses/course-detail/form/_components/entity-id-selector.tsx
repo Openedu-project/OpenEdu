@@ -16,16 +16,16 @@ export const EntityIdSelector = () => {
 
   if (triggerType === 'started_lesson' || triggerType === 'completed_lesson') {
     options = allLessons.map(lesson => ({
-      value: lesson.id,
+      value: lesson.uid,
       label: lesson.title,
-      id: lesson.id,
+      id: lesson.uid,
     }));
     labelKey = 'form.trigger.selectLesson';
   } else if (triggerType === 'completed_section') {
     options = sections.map(section => ({
-      value: section.id,
+      value: section.uid,
       label: section.title,
-      id: section.id,
+      id: section.uid,
     }));
     labelKey = 'form.trigger.selectSection';
   } else if (triggerType === 'clicked_on') {

@@ -6,7 +6,7 @@ import { getCookieClient, setCookieClient } from '@oe/core/utils/cookie';
 import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { useTranslations } from 'next-intl';
 import { useParams, useSearchParams } from 'next/navigation';
-import { type MouseEvent, useCallback, useEffect, useMemo } from 'react';
+import { type MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from '#common/navigation';
 import { useLoginRequiredStore } from '#components/login-required-modal';
 import { createCourseUrl } from '#utils/course-url';
@@ -166,6 +166,8 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false, onClick }
   const fromUser = searchParams.get('ref_by') ?? '';
   const { slug } = useParams();
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const { dataMe } = useGetMe();
   const { setLoginRequiredModal } = useLoginRequiredStore();
 
@@ -277,6 +279,7 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false, onClick }
 
   const handleClick = useCallback(
     (event: MouseEvent<HTMLButtonElement>) => {
+      setIsLoading(true);
       event.preventDefault();
       event.stopPropagation();
 
@@ -330,5 +333,6 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false, onClick }
     showCart,
     handleClick,
     currentAction,
+    isLoading,
   };
 };

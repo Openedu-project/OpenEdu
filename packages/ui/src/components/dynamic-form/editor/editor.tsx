@@ -35,9 +35,7 @@ export function Editor() {
   useEffect(() => {
     if ((dataForm?.questions?.length ?? 0) > 0) {
       updateFields(
-        dataForm?.questions
-          .map(question => question?.settings?.props as FormFieldType)
-          .filter(question => question !== undefined) ?? []
+        dataForm?.questions.map(question => question?.settings?.props as FormFieldType).filter(Boolean) ?? []
       );
     }
   }, [dataForm, updateFields]);
