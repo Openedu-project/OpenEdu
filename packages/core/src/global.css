@@ -86,6 +86,13 @@
     --ai-agent-blue-background: linear-gradient(#86c5ff 0%, #0a8aff 100%);
     --ai-agent-aqua-background: linear-gradient(180deg, #aafaff 0%, #22c5ce 100%);
     --ai-assistant-background: linear-gradient(144deg, #2cdee9 18.7%, #7b5aff 82.64%);
+    --ai-more-feature-background: linear-gradient(
+      6deg,
+      rgba(255, 213, 242, 0.5) 6.56%,
+      rgba(226, 161, 253, 0.5) 41.61%,
+      rgba(160, 244, 249, 0.7) 72.28%,
+      rgba(255, 255, 255, 0.3) 99.54%
+    );
 
     --primary-20: 243 100% 98%; /* #F2F1FF */
     --primary-50: 238 47% 86%; /* #C4C6F2 */
@@ -215,6 +222,14 @@
     );
     --footer: linear-gradient(255deg, #b8f4f8 6.18%, #ede3fe 70.53%);
 
+    --ai-more-feature-background: linear-gradient(
+      6deg,
+      rgba(255, 213, 242, 0.5) 6.56%,
+      rgba(226, 161, 253, 0.5) 41.61%,
+      rgba(160, 244, 249, 0.7) 72.28%,
+      rgba(255, 255, 255, 0.3) 99.54%
+    );
+
     --primary-20: 243 100% 98%; /* #F2F1FF */
     --primary-50: 238 47% 86%; /* #C4C6F2 */
     --primary-100: 252 100% 94%; /* #E4E1FF */
@@ -300,6 +315,9 @@
     margin: 1rem;
     font-size: 14px;
   }
+  .rich-text > * {
+    line-height: 150%;
+  }
   .rich-text:focus-visible {
     /* List styles */
     /* Heading styles */
@@ -311,13 +329,13 @@
   }
   .rich-text ul {
     padding: 0 1rem;
-    margin: 1.25rem 1rem 1.25rem 0.4rem;
+    margin: 1.25rem 0rem 1.25rem 0.4rem;
     list-style: initial;
   }
 
   .rich-text ol {
     padding: 0 1rem;
-    margin: 1.25rem 1rem 1.25rem 0.4rem;
+    margin: 1.25rem 0rem 1.25rem 0.4rem;
     list-style: decimal;
   }
 
@@ -334,7 +352,7 @@
   }
   .rich-text h1,
   .rich-text h2 {
-    margin-top: 3.5rem;
+    margin-top: 1.5rem;
     margin-bottom: 1.5rem;
   }
   .rich-text h3,
@@ -434,6 +452,7 @@
   .rich-text ul[data-type="taskList"] li {
     display: flex;
     align-items: center;
+    margin-bottom: 0.5rem;
   }
 
   .rich-text ul[data-type="taskList"] li > label {
@@ -448,6 +467,15 @@
 
   .rich-text ul[data-type="taskList"] li > label input[type="checkbox"] {
     top: 0;
+  }
+
+  .rich-text > ul > li + li,
+  .rich-text > ol > li + li {
+    margin-top: 0.5rem;
+  }
+
+  .rich-text li li + li {
+    margin-top: 0.25rem; 
   }
 
   .rich-text p.is-editor-empty:first-child::before {
@@ -490,4 +518,248 @@
     border-radius: 100vh;
     border: 3px solid #f6f7ed;
   }
+}
+
+/* VS Code Dark+ theme for highlight.js */
+.hljs {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  padding: 1em;
+  border-radius: 6px;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow: auto;
+}
+
+/* Selection */
+.hljs ::selection {
+  background: #264f78;
+}
+
+/* Keywords */
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in,
+.hljs-type {
+  color: #569cd6;
+}
+
+/* Control keywords */
+.hljs-literal,
+.hljs-number {
+  color: #b5cea8;
+}
+
+/* Function names and classes */
+.hljs-function {
+  color: #dcdcaa;
+}
+
+/* Function parameters */
+.hljs-params {
+  color: #9cdcfe;
+}
+
+/* Strings */
+.hljs-string,
+.hljs-regex,
+.hljs-subst {
+  color: #ce9178;
+}
+
+/* Classes and types */
+.hljs-class,
+.hljs-title {
+  color: #4ec9b0;
+}
+
+/* Variables */
+.hljs-variable,
+.hljs-attr {
+  color: #9cdcfe;
+}
+
+/* Comments */
+.hljs-comment,
+.hljs-quote,
+.hljs-doctag {
+  color: #6a9955;
+  font-style: italic;
+}
+
+/* Template strings */
+.hljs-template-string {
+  color: #ce9178;
+}
+
+/* Object keys */
+.hljs-property {
+  color: #9cdcfe;
+}
+
+/* Tags in HTML/XML */
+.hljs-tag,
+.hljs-name {
+  color: #569cd6;
+}
+
+/* HTML/XML attributes */
+.hljs-attr {
+  color: #9cdcfe;
+}
+
+/* CSS properties */
+.hljs-attribute {
+  color: #9cdcfe;
+}
+
+/* CSS values */
+.hljs-number,
+.hljs-literal {
+  color: #b5cea8;
+}
+
+/* Markdown headings */
+.hljs-section {
+  color: #569cd6;
+}
+
+/* Important keywords */
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+/* Code container styling */
+.code-block {
+  position: relative;
+  margin: 1.5em 0;
+  background: #1e1e1e;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Line numbers */
+.line-numbers {
+  counter-reset: line;
+}
+
+.line-numbers code {
+  counter-increment: line;
+}
+
+.line-numbers code:before {
+  content: counter(line);
+  display: inline-block;
+  width: 2em;
+  padding-right: 1em;
+  margin-right: 1em;
+  text-align: right;
+  color: #858585;
+  border-right: 1px solid #404040;
+}
+
+/* Editor chrome */
+.editor-title-bar {
+  background: #252526;
+  padding: 0.5em 1em;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-bottom: 1px solid #404040;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  color: #cccccc;
+}
+
+/* Scrollbar styling */
+.hljs::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+
+.hljs::-webkit-scrollbar-thumb {
+  background: #424242;
+  border: 4px solid transparent;
+  background-clip: padding-box;
+  border-radius: 7px;
+}
+
+.hljs::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Selection highlight */
+::selection {
+  background: #afe4ff;
+}
+
+/* Active line highlight */
+.line-highlight {
+  background: #282828;
+}
+
+/* Copy button */
+.copy-button {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  padding: 0.5em;
+  background: #333333;
+  border: 1px solid #404040;
+  border-radius: 4px;
+  color: #d4d4d4;
+  font-size: 12px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.code-block:hover .copy-button {
+  opacity: 1;
+}
+
+.copy-button:hover {
+  background: #404040;
+}
+
+/* Different language-specific tweaks */
+/* JavaScript/TypeScript */
+.language-javascript .hljs-keyword,
+.language-typescript .hljs-keyword {
+  color: #569cd6;
+}
+
+.language-javascript .hljs-string,
+.language-typescript .hljs-string {
+  color: #ce9178;
+}
+
+/* Python */
+.language-python .hljs-keyword {
+  color: #569cd6;
+}
+
+.language-python .hljs-string {
+  color: #ce9178;
+}
+
+/* HTML/XML */
+.language-html .hljs-tag,
+.language-xml .hljs-tag {
+  color: #569cd6;
+}
+
+/* CSS */
+.language-css .hljs-selector-class,
+.language-css .hljs-selector-id {
+  color: #d7ba7d;
+}
+
+/* JSON */
+.language-json .hljs-property {
+  color: #9cdcfe;
 }

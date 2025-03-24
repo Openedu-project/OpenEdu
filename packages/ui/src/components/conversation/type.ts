@@ -1,15 +1,17 @@
-import type { IMessage, IRole, TAgentType } from '@oe/api/types/conversation';
+import type { IAIModel, IConversationDetails, IMessage, IRole, TAgentType } from '@oe/api/types/conversation';
 import type { IFileResponse } from '@oe/api/types/file';
-import type { ChangeEvent, KeyboardEventHandler, ReactNode, RefObject } from 'react';
+import type { ChangeEvent, KeyboardEventHandler, ReactNode, Ref, RefObject } from 'react';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
 
 export interface AISidebarItem {
   lableKey: string;
+  shortLableKey: string;
   descKey: string;
   value: string;
   icon: ReactNode;
   href: string;
   isComming?: boolean;
+  bgColor: string;
 }
 
 export interface ISendMessageParams {
@@ -29,7 +31,6 @@ export interface IInputButton {
 }
 
 export interface MessageInputProps {
-  generating?: boolean;
   sendMessage: ({
     messageInput,
     type,
@@ -84,4 +85,17 @@ export interface IAIMessageProps {
   message: IMessage;
   loading: boolean;
   rewrite?: () => void;
+  content?: string;
+  actionsButton?: boolean;
+  className?: string;
+  hiddenSourceBtn?: boolean;
+}
+
+export interface IChatWindowProps {
+  id?: string;
+  aiModels?: IAIModel[];
+  initData?: IConversationDetails;
+  agent?: TAgentType;
+  className?: string;
+  inputRef?: Ref<HTMLDivElement>;
 }

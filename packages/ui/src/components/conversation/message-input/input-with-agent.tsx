@@ -19,9 +19,9 @@ export const InputWithAgent = <TFormValues extends FieldValues>({
 
   return (
     <>
-      <div className="flex shrink-0 items-center gap-1 border-r">
+      <div className="flex shrink-0 items-center gap-1">
         {buttonData?.icon}
-        <p className="mcaption-semibold12 hidden lg:block">{tAI(buttonData?.textKey)}</p>
+        <p className="mcaption-semibold12">{tAI(buttonData?.textKey)}</p>
 
         {canChangeType && (
           <Button
@@ -29,7 +29,7 @@ export const InputWithAgent = <TFormValues extends FieldValues>({
             type="button"
             size="icon"
             className="!p-2 h-8 w-8"
-            onClick={() => setInputType?.('ai_chat')}
+            onClick={() => setInputType?.('ai_search')}
           >
             <CircleX className="h-4 w-4" />
           </Button>

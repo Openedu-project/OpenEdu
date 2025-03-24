@@ -29,7 +29,11 @@ export async function MainLayout({
 
   return (
     <>
-      <Header sidebarItems={sidebarItems} subSidebarItems={subSidebarItems} isLoggedIn={isLoggedIn}>
+      <Header
+        sidebarItems={sidebarItems}
+        subSidebarItems={hasFooter ? subSidebarItems : undefined}
+        isLoggedIn={isLoggedIn}
+      >
         <Logo logo={logo} />
         <ul className="ml-6 hidden gap-3 text-primary-foreground md:flex">
           {sidebarItems?.map(item => (

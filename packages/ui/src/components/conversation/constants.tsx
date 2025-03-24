@@ -1,96 +1,93 @@
 import type { IAgenConfigs, TAgentType } from '@oe/api/types/conversation';
+import Gallery from '@oe/assets/icons/gallery';
+import Grid3 from '@oe/assets/icons/grid-3';
+import SearchZoomIn from '@oe/assets/icons/search-zoom-in';
+import { VideoSquare } from '@oe/assets/icons/video-square';
 import { AI_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
-import {
-  Image as ImageIcon,
-  ListFilter,
-  MessageCircle,
-  PanelsRightBottom,
-  ScanSearch,
-  Search,
-  SquarePlay,
-} from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 import type { AISidebarItem, IInputButton } from './type';
 
-export const AI_SIDEBAR: AISidebarItem[] = [
+export const AI_SIDEBAR: (color?: string, size?: number) => AISidebarItem[] = (color = 'white', size = 12) => [
   {
     lableKey: 'generalChat',
+    shortLableKey: 'chat',
     descKey: 'aiChatDesc',
     value: 'chat',
     href: AI_ROUTES.chat,
-    icon: <MessageCircle className="h-4 w-4 text-white" />,
+    icon: <MessageCircle size={size} color={color} />,
+    bgColor: 'var(--ai-agent-green-background)',
   },
   {
     lableKey: 'presentation',
+    shortLableKey: 'slide',
     descKey: 'aiSlideDesc',
     value: 'ai_slide',
-    href: buildUrl({ endpoint: AI_ROUTES.chat, queryParams: { agent: 'ai_slide' } }),
-    icon: <ListFilter className="h-4 w-4 text-white" />,
+    href: buildUrl({
+      endpoint: AI_ROUTES.chat,
+      queryParams: { agent: 'ai_slide' },
+    }),
+    icon: <Grid3 width={size} height={size} color={color} />,
+    bgColor: 'var(--ai-agent-aqua-background)',
   },
   {
     lableKey: 'imageGenerator',
+    shortLableKey: 'image',
     descKey: 'aiImageDesc',
     value: 'ai_image_generate',
-    href: buildUrl({ endpoint: AI_ROUTES.chat, queryParams: { agent: 'ai_image_generate' } }),
-    icon: <ImageIcon className="h-4 w-4 text-white" />,
+    href: buildUrl({
+      endpoint: AI_ROUTES.chat,
+      queryParams: { agent: 'ai_image_generate' },
+    }),
+    icon: <Gallery width={size} height={size} color={color} />,
+    bgColor: 'var(--ai-agent-pink-background)',
   },
   {
     lableKey: 'slideToVideo',
+    shortLableKey: 'video',
     descKey: 'aiVideoDesc',
     value: 'ai-video',
     href: AI_ROUTES.video,
-    icon: <SquarePlay className="h-4 w-4 text-white" />,
+    icon: <VideoSquare width={size} height={size} color={color} />,
+    bgColor: 'var(--ai-agent-blue-background)',
     isComming: true,
   },
   {
-    lableKey: 'deepSearch',
+    lableKey: 'deepResearch',
+    shortLableKey: 'search',
     descKey: 'aiSearchDesc',
-    value: 'ai-search',
+    value: 'deepResearch',
     href: AI_ROUTES.search,
-    icon: <Search className="h-4 w-4 text-white" />,
+    icon: <SearchZoomIn width={size} height={size} color={color} />,
+    bgColor: 'var(--ai-agent-orange-background)',
     isComming: true,
   },
-];
-
-export const BG_COLOR = [
-  'var(--ai-agent-green-background)',
-  'var(--ai-agent-aqua-background)',
-  'var(--ai-agent-pink-background)',
-  'var(--ai-agent-blue-background)',
-  'var(--ai-agent-orange-background)',
 ];
 
 export const INPUT_BUTTON: IInputButton[] = [
   {
     type: 'ai_image_generate',
     textKey: 'imageGenerator',
-    icon: <ImageIcon size={16} className="text-pink-500" />,
+    icon: <Gallery width={16} height={16} color="hsl(var(--pink-500))" />,
+  },
+  {
+    type: 'ai_slide',
+    textKey: 'presentation',
+    icon: <Grid3 width={16} height={16} color="hsl(var(--info-500))" />,
   },
   // {
   //   type: 'ai_code',
   //   textKey: 'code',
   //   icon: <FileCode size={16} className="text-positive-500" />,
   // },
-  {
-    type: 'ai_slide',
-    textKey: 'presentation',
-    icon: <PanelsRightBottom size={16} className="text-info-500" />,
-  },
-  {
-    type: 'ai_image_analysis',
-    textKey: 'imageAnalysis',
-    icon: <ScanSearch size={16} className="text-pink-500" />,
-  },
 ];
 
-export const AGENT_OPTIONS: Record<keyof IAgenConfigs, TAgentType> = {
-  image_analysis_enabled: 'ai_image_analysis',
+export const AGENT_OPTIONS: Partial<Record<keyof IAgenConfigs, TAgentType>> = {
   present_creator_enabled: 'ai_slide',
   code_executor_enabled: 'ai_code',
   image_generator_enabled: 'ai_image_generate',
+  searcher_enabled: 'ai_search',
 };
-
-export const CHAT_OPTIONS: TAgentType[] = ['ai_image_analysis', 'ai_chat'];
 
 export const DESKTOP_BREAKPOINT = 1024;
 export const HISTORY_PER_PAGE = 50;

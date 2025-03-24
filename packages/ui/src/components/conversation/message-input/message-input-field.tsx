@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import type { FieldValues } from 'react-hook-form';
 import type { InputFieldProps } from '../type';
 import { InputDefault } from './input-default';
-import { InputImageAnalysis } from './input-image-analysis';
 import { InputWithAgent } from './input-with-agent';
 
 export const InputField = <TFormValues extends FieldValues>({
@@ -13,6 +12,7 @@ export const InputField = <TFormValues extends FieldValues>({
   handleInputChange,
   inputRef,
   canChangeType,
+  className,
 }: InputFieldProps<TFormValues>) => {
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -20,19 +20,15 @@ export const InputField = <TFormValues extends FieldValues>({
   }, [type]);
 
   switch (type) {
-    case 'ai_image_analysis': {
+    case 'ai_search': {
       return (
-        <InputImageAnalysis
-          handleKeyDown={handleKeyDown}
-          setInputType={setInputType}
+        <InputDefault
           inputRef={inputRef}
-          canChangeType={canChangeType}
+          handleKeyDown={handleKeyDown}
+          className={className}
           handleInputChange={handleInputChange}
         />
       );
-    }
-    case 'ai_chat': {
-      return <InputDefault inputRef={inputRef} handleKeyDown={handleKeyDown} handleInputChange={handleInputChange} />;
     }
     default: {
       return (
@@ -43,6 +39,7 @@ export const InputField = <TFormValues extends FieldValues>({
           canChangeType={canChangeType}
           type={type}
           handleInputChange={handleInputChange}
+          className={className}
         />
       );
     }

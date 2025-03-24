@@ -15,7 +15,7 @@ export const InputDefault = <TFormValues extends FieldValues>({
   return (
     <FormFieldWithLabel
       name={'message' as Path<TFormValues>}
-      className={cn('w-full', className)}
+      className={cn('w-full grow', className)}
       showErrorMessage={false}
     >
       <TextareaAutosize
@@ -23,9 +23,9 @@ export const InputDefault = <TFormValues extends FieldValues>({
         onChange={handleInputChange}
         placeholder={tAI('inputPlaceholder')}
         className={cn(
-          'mcaption-regular16 no-scrollbar block h-[22px] w-full resize-none bg-transparent pl-3 focus-within:outline-none'
+          'mcaption-regular16 no-scrollbar block h-[22px] w-full resize-none bg-transparent focus-within:outline-none'
         )}
-        maxRows={4}
+        maxRows={5}
         ref={inputRef}
       />
     </FormFieldWithLabel>
