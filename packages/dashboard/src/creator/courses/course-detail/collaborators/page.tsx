@@ -18,8 +18,8 @@ import { toast } from '@oe/ui/shadcn/sonner';
 import { PartnerForm } from './_components/partner-form';
 
 // Form cho thêm partner
-const defaultValues: IAddPartnerSchema = {
-  partners: [{ email: '', role: [], enable: true }],
+const defaultValues = {
+  partners: [{ email: '', roles: [], enable: true }],
 };
 
 export default function CourseDetailCollaboratorsPage() {
@@ -81,12 +81,13 @@ export default function CourseDetailCollaboratorsPage() {
                 className="h-8 gap-2"
                 onClick={() => {
                   setSelectedPartner({
-                    role: partner.roles as IPartnerSchema['role'],
-                    email: '',
+                    roles: partner.roles as IPartnerSchema['roles'],
+                    email: partner?.email ?? '',
                     enable: partner.enable,
                   });
                   setModalType('edit');
                 }}
+                disabled={partner.roles?.includes('owner')}
               >
                 <Pencil className="h-4 w-4" />
                 {tGeneral('edit')}
@@ -136,7 +137,7 @@ export default function CourseDetailCollaboratorsPage() {
     }
 
     try {
-      await deleteCoursePartnerService(API_ENDPOINT.COURSES_ID_PARTNERS, {
+      await deleteCoursePartnerService(undefined, {
         id: courseId,
         queryParams: { user_ids: [partnerId] },
       });
@@ -154,14 +155,22 @@ export default function CourseDetailCollaboratorsPage() {
     if (!courseId) {
       return;
     }
+    const payload = {
+      partners: data.partners?.map(p => ({
+        id: p.id,
+        enable: p.enable,
+        roles: p.roles,
+      })),
+    };
 
     try {
-      await addCoursePartnerService(API_ENDPOINT.COURSES_ID_PARTNERS, {
+      await addCoursePartnerService(undefined, {
         id: courseId,
-        payload: data,
+        payload: payload,
       });
 
       await tableRef.current?.mutateAndClearCache?.();
+      setSelectedPartner(null);
       toast.success(t('partner.addSuccess'));
     } catch (error) {
       console.error('Error adding partners:', error);
@@ -173,7 +182,6 @@ export default function CourseDetailCollaboratorsPage() {
     <div className="mx-auto h-full max-w-[900px] px-1 py-4">
       <div className="scrollbar flex h-full flex-col gap-4 overflow-auto bg-background p-4">
         {/* <h1 className="font-bold text-2xl">{t("partner.courseCollaborators")}</h1> */}
-
         <Table
           ref={tableRef}
           api={API_ENDPOINT.COURSES_ID_PARTNERS}
@@ -183,7 +191,14 @@ export default function CourseDetailCollaboratorsPage() {
           filterOptions={filterOptions}
           tableOptions={{ manualPagination: true }}
         >
-          <Button variant="default" className="h-8 gap-2" onClick={() => setModalType('add')}>
+          <Button
+            variant="default"
+            className="h-8 gap-2"
+            onClick={() => {
+              setModalType('add');
+              setSelectedPartner(null);
+            }}
+          >
             <Plus className="h-4 w-4" />
             {t('partner.addPartners')}
           </Button>
@@ -196,8 +211,11 @@ export default function CourseDetailCollaboratorsPage() {
           showSubmit
           open={modalType === 'add' || modalType === 'edit'}
           defaultValues={selectedPartner ? { partners: [selectedPartner] } : defaultValues}
+          onClose={() => {
+            setModalType(null);
+          }}
         >
-          {form => <PartnerForm form={form} />}
+          {form => <PartnerForm form={form} type={modalType} />}
         </Modal>
       </div>
     </div>

@@ -1,31 +1,65 @@
+import { useSearchPartnersByEmail } from '@oe/api/hooks/useCourse';
 import type { IAddPartnerSchema } from '@oe/api/schemas/courses/partners';
 import type { TCourseRoles } from '@oe/api/types/course/basic';
-import { Badge } from '@oe/ui/shadcn/badge';
+import { Autocomplete } from '@oe/ui/components/autocomplete';
 import { Button } from '@oe/ui/shadcn/button';
 import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@oe/ui/shadcn/select';
-import { Trash2, X } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { type UseFormReturn, useFieldArray } from 'react-hook-form';
 
 export function PartnerForm({
   form,
+  type,
 }: {
   form: UseFormReturn<IAddPartnerSchema>;
+  type: 'add' | 'edit' | null;
 }) {
   const t = useTranslations('course');
   const tGeneral = useTranslations('general');
+  const [searchEmail, setSearchEmail] = useState(type === 'edit' ? form.getValues('partners.0.email') : '');
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Debounce function for search
+  const debouncedSearch = (value: string) => {
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    debounceTimerRef.current = setTimeout(() => {
+      setSearchEmail(value);
+    }, 500); // 500ms debounce time
+  };
+
+  // Clear timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, []);
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: 'partners',
   });
 
+  // TODO: merge the current partners and the "filteredPartnersData by email" => can not choose the email that existed the table
+  const { filteredPartnersData } = useSearchPartnersByEmail(!!searchEmail, {
+    page: 1,
+    per_page: 999,
+    role_id: 'partner',
+    sort: 'create_at desc',
+    search_categories: 'email',
+    search_term: searchEmail,
+  });
+
   const ROLE_OPTIONS: { value: TCourseRoles; label: string }[] = useMemo(
     () => [
-      { value: 'owner', label: t('partner.owner') },
+      // { value: 'owner', label: t('partner.owner') }, // Can not set role owner
       { value: 'co-creator', label: t('partner.coCreator') },
       { value: 'mentor', label: t('partner.mentor') },
       { value: 'supervisor', label: t('partner.supervisor') },
@@ -33,6 +67,15 @@ export function PartnerForm({
     ],
     [t]
   );
+
+  const email = useMemo(() => form.watch('partners.0.email'), [form.watch]);
+  const id = useMemo(() => filteredPartnersData?.find(v => v.email === email)?.id ?? '', [filteredPartnersData, email]);
+
+  useEffect(() => {
+    if (type === 'edit') {
+      form.setValue('partners.0.id', id);
+    }
+  });
 
   return (
     <div className="space-y-4">
@@ -52,21 +95,41 @@ export function PartnerForm({
             name={`partners.${index}.email`}
             label={t('partner.email')}
             required
-            render={({ field }) => <Input {...field} placeholder={t('partner.enterEmail')} />}
+            render={({ field }) => {
+              return (
+                <Autocomplete<string>
+                  options={filteredPartnersData?.map(v => v.email).filter(email => email != null) ?? []}
+                  showSearch={type === 'add'}
+                  value={field.value}
+                  onChange={email => {
+                    if (type === 'edit') {
+                      return;
+                    }
+                    if (email) {
+                      field.onChange(email);
+                      form.setValue(
+                        `partners.${index}.id`,
+                        filteredPartnersData?.find(v => v.email === email)?.id ?? ''
+                      );
+                    }
+                  }}
+                  onSearch={v => {
+                    debouncedSearch(v);
+                  }}
+                />
+              );
+            }}
           />
 
           <FormFieldWithLabel
             name={`partners.${index}.roles`}
-            label={t('partner.roles')}
+            label={t('partner.role')}
             required
             render={({ field }) => (
               <Select
+                value={field.value?.[0]}
                 onValueChange={value => {
-                  const currentValues = field.value || [];
-                  if (currentValues.includes(value)) {
-                    return;
-                  }
-                  field.onChange([...currentValues, value]);
+                  field.onChange([value]);
                 }}
               >
                 <SelectTrigger>
@@ -82,41 +145,18 @@ export function PartnerForm({
               </Select>
             )}
           />
-
-          {/* Hiển thị các roles đã chọn */}
-          <div className="flex flex-wrap gap-1">
-            {form.watch(`partners.${index}.role`)?.map(role => (
-              <Badge key={role} variant="secondary" className="flex items-center gap-1">
-                {role}
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="h-4 p-0"
-                  onClick={() => {
-                    const currentValues = form.getValues(`partners.${index}.role`) || [];
-                    form.setValue(
-                      `partners.${index}.role`,
-                      currentValues.filter(r => r !== role)
-                    );
-                  }}
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              </Badge>
-            ))}
-          </div>
         </div>
       ))}
-
-      <Button
-        type="button"
-        variant="outline"
-        onClick={() => append({ email: '', role: [], enable: true })}
-        className="w-full border-primary text-primary hover:border-primary/80 hover:text-primary/80"
-      >
-        {t('partner.addAnother')}
-      </Button>
+      {type === 'add' && (
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => append({ id: '', roles: [], enable: true })}
+          className="w-full border-primary text-primary hover:border-primary/80 hover:text-primary/80"
+        >
+          {t('partner.addAnother')}
+        </Button>
+      )}
     </div>
   );
 }

@@ -13,10 +13,12 @@ import type {
 } from '#types/course/course';
 import type { ICourseOutline } from '#types/course/course';
 import type { IDiscussionRequest } from '#types/course/discuss';
+import type { ICoursePartnersParams } from '#types/course/partner';
 import type { ICoursePartner } from '#types/course/partners';
 import type { IBulkSegments, ILessonContent, ISegment, ISegmentParams } from '#types/course/segment';
 import type { HTTPPagination } from '#types/fetch';
 import type { IFilter } from '#types/filter';
+import type { IDataPagination } from '#types/pagination';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { type FetchOptions, createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 
@@ -396,6 +398,9 @@ export const unpublishCourseService = async (url: string | undefined, id: string
   return response.data;
 };
 
+/* =================
+COLLABORATORS TAB
+====================*/
 export const getCoursePartnersService = async (
   url: string | undefined,
   { id, queryParams, init }: { id: string; queryParams?: IFilter; init?: RequestInit }
@@ -431,6 +436,20 @@ export const deleteCoursePartnerService = async (
   return response.data;
 };
 
+export const getPartnersByEmailService = async (
+  url: string | undefined,
+  { queryParams, init }: { queryParams?: ICoursePartnersParams; init?: RequestInit }
+) => {
+  const response = await fetchAPI<IDataPagination<ICoursePartner[]>>(
+    url ?? buildUrl({ endpoint: API_ENDPOINT.USERS, params: undefined, queryParams }),
+    init
+  );
+  return response.data;
+};
+
+/* =================
+*******HISTORY TAB*****
+====================*/
 export const getCourseHistoryService = async (url: string | undefined, cuid: string, init?: RequestInit) => {
   const response = await fetchAPI<ICourse[]>(
     url ?? buildUrl({ endpoint: API_ENDPOINT.COURSES_ID_HISTORIES, params: { id: cuid } }),

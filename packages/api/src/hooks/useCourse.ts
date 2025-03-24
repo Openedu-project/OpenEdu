@@ -8,6 +8,7 @@ import {
   getCoursesPublishService,
   getCoursesService,
   getLevelsService,
+  getPartnersByEmailService,
   getPreviewCourseByIdService,
   getPublishedCourseByAdminService,
   getSectionsHaveLessonsByCourseIdService,
@@ -26,6 +27,7 @@ import type {
   IEnrollCoursePayload,
 } from '#types/course/course';
 import type { IDiscussionRequest } from '#types/course/discuss';
+import type { ICoursePartnersParams } from '#types/course/partner';
 import type { ISegmentParams } from '#types/course/segment';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
@@ -296,6 +298,22 @@ export const useGetCoursePartners = (id: string, params?: IFilter) => {
     coursePartners: data,
     isLoadingCoursePartners: isLoading,
     mutateCoursePartners: mutate,
+  };
+};
+
+export const useSearchPartnersByEmail = (shouldFetch?: boolean, params?: ICoursePartnersParams) => {
+  const endpointKey = createAPIUrl({
+    endpoint: API_ENDPOINT.USERS,
+    queryParams: params,
+  });
+  const { data, isLoading, mutate } = useSWR(shouldFetch ? endpointKey : null, (_endpoint: string) =>
+    getPartnersByEmailService(endpointKey, { queryParams: params })
+  );
+
+  return {
+    filteredPartnersData: data?.results,
+    isLoadingFilteredPartnersData: isLoading,
+    mutateFilteredPartnersData: mutate,
   };
 };
 

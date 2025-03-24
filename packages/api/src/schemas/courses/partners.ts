@@ -2,12 +2,19 @@ import { z } from '@oe/api/utils/zod';
 
 export const partnerSchema = z.object({
   email: z.string().email(),
-  role: z.array(z.enum(['mentor', 'co-creator', 'supervisor'])).min(1),
+  roles: z.array(z.enum(['mentor', 'co-creator', 'supervisor'])).min(1),
   enable: z.boolean().optional(),
 });
 
+export const addPartnerItemSchema = z.object({
+  id: z.string(),
+  roles: z.array(z.enum(['mentor', 'co-creator', 'supervisor'])).min(1),
+  enable: z.boolean().optional(),
+  email: z.string().optional(),
+});
+
 export const addPartnerSchema = z.object({
-  partners: z.array(partnerSchema).min(1),
+  partners: z.array(addPartnerItemSchema).min(1),
 });
 
 export type IAddPartnerSchema = z.infer<typeof addPartnerSchema>;
