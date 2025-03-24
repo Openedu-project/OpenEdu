@@ -16,6 +16,7 @@ export type AutocompleteProps<T extends OptionType | string> = BaseAutocompleteP
   value?: T | null;
   onChange?: (option: T | null) => void;
   isGetCustomValue?: boolean;
+  onSearch?: (value: string) => void;
 };
 
 export function Autocomplete<T extends OptionType | string>({
@@ -35,6 +36,7 @@ export function Autocomplete<T extends OptionType | string>({
   renderOption,
   renderTrigger,
   isGetCustomValue = false,
+  onSearch,
 }: AutocompleteProps<T>) {
   const t = useTranslations('general');
   const [open, setOpen] = useState(false);
@@ -118,7 +120,10 @@ export function Autocomplete<T extends OptionType | string>({
           showSearch={showSearch}
           searchValue={searchValue}
           placeholder={searchPlaceholder}
-          onSearch={setSearchValue}
+          onSearch={val => {
+            setSearchValue(val);
+            onSearch?.(val);
+          }}
           renderItem={renderCommandItem}
         />
       </PopoverContent>
