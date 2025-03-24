@@ -53,7 +53,7 @@ export default function CourseDetailLearnersPage() {
       {
         accessorKey: 'create_at',
         header: t('learner.enrollDate'),
-        enableSorting: false,
+        enableSorting: true,
         size: 200,
         cell: ({ row }) => {
           const timestamp = row.original.create_at;
@@ -97,13 +97,13 @@ export default function CourseDetailLearnersPage() {
   // Filter options
   const filterOptions: FilterOption[] = useMemo(
     () => [
-      {
-        label: t('learner.username'),
-        value: 'username',
-        placeholder: t('learner.searchUsername'),
-        type: 'search',
-        id: 'username',
-      },
+      // {
+      //   label: t('learner.username'),
+      //   value: 'username',
+      //   placeholder: t('learner.searchUsername'),
+      //   type: 'search',
+      //   id: 'username',
+      // },
       {
         label: t('learner.email'),
         value: 'email',

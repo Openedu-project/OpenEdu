@@ -28,7 +28,7 @@ interface ActionHandlerParams {
   refBy?: string;
   fromSource?: string;
   slug?: string;
-  // createCourseUrl: (type: 'learning' | 'detail', params: Record<string, string>) => string;
+  setIsLoading?: (isLoading: boolean) => void;
   setLoginRequiredModal: (show: boolean) => void;
   triggerPostEnrollCourse: (params: IEnrollCoursePayload) => void;
 }
@@ -45,7 +45,7 @@ const redirectToLearningPage = ({
   isExternalDomain,
   domain,
   router,
-  // createCourseUrl,
+  setIsLoading,
   isCourseDetail,
 }: ActionHandlerParams) => {
   const hasOutlines = hasValidOutlineItems(courseData);
@@ -67,6 +67,8 @@ const redirectToLearningPage = ({
 
   const fullUrl = isExternalDomain ? `https://${domain}${url}` : url;
   isExternalDomain ? window.open(fullUrl, '_blank') : router.push(fullUrl);
+
+  (isExternalDomain || !hasOutlines) && setIsLoading?.(false);
 };
 
 const handleEnrollCourse = async (params: ActionHandlerParams) => {
@@ -289,7 +291,7 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false, onClick }
         isExternalDomain: isExternalDomain as boolean,
         domain,
         router,
-        // createCourseUrl,
+        setIsLoading,
         isCourseDetail,
         setLoginRequiredModal,
         triggerPostEnrollCourse,

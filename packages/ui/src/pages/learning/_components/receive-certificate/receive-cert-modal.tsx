@@ -30,7 +30,7 @@ const ReceiveCertificateModal = ({ certificate }: IProps) => {
   const [step, setStep] = useState<number>(1);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const { uploadPDF, isUploading } = useUploadCertificate({
+  const { uploadPDF, uploadPNG, isUploading } = useUploadCertificate({
     certificate: certificateState,
   });
   const { triggerReceiveCert } = useReceiveCertificate();
@@ -59,10 +59,13 @@ const ReceiveCertificateModal = ({ certificate }: IProps) => {
         issue_date: Date.now(),
       } as unknown as ICertificateData);
 
-      const [pdfResponse] = await Promise.all([uploadPDF(blob)]);
+      const [pdfResponse, pngResponse] = await Promise.all([uploadPDF(blob), uploadPNG(blob)]);
 
       if (!pdfResponse?.id) {
         throw new Error('PDF upload failed');
+      }
+      if (!pngResponse?.id) {
+        throw new Error('PNG upload failed');
       }
 
       const receiveRes =
@@ -70,6 +73,7 @@ const ReceiveCertificateModal = ({ certificate }: IProps) => {
         (await triggerReceiveCert({
           course_cuid: certificate.course_cuid,
           file: { id: pdfResponse.id },
+          image: { id: pngResponse?.id ?? '' },
           completed_at: Date.now(),
         }));
 
