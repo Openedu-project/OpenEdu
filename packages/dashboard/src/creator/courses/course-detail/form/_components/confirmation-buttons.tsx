@@ -20,7 +20,7 @@ export const ConfirmationButtons = () => {
 
   useEffect(() => {
     if (fields.length === 0 && !hasInitialized.current) {
-      append({ text: 'Submit', variant: 'default', type: 'submit' });
+      append({ text: 'Submit', variant: 'default', type: '' });
       hasInitialized.current = true;
     }
   }, [fields.length, append]);
@@ -38,10 +38,10 @@ export const ConfirmationButtons = () => {
     { id: 'link', value: 'link', label: t('form.button.link') },
   ];
 
-  const buttonTypes = [
-    { id: 'button', value: 'button', label: t('form.button.button') },
-    { id: 'submit', value: 'submit', label: t('form.button.submit') },
-  ];
+  // const buttonTypes = [
+  //   { id: 'button', value: 'button', label: t('form.button.button') },
+  //   { id: 'submit', value: 'submit', label: t('form.button.submit') },
+  // ];
 
   const handleRemove = (index: number) => {
     if (fields.length > 1) {
@@ -79,7 +79,8 @@ export const ConfirmationButtons = () => {
             </FormFieldWithLabel>
 
             <FormFieldWithLabel name={`confirmation_settings.buttons.${index}.type`} label={t('form.button.type')}>
-              <Selectbox placeholder={t('form.button.typePlaceholder')} options={buttonTypes} />
+              <Input placeholder={t('form.button.typePlaceholder')} />
+              {/* <Selectbox placeholder={t('form.button.typePlaceholder')} options={buttonTypes} /> */}
             </FormFieldWithLabel>
           </div>
 

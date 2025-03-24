@@ -4,6 +4,7 @@ import type {
   IConversation,
   IConversationDetails,
   IConversationRequest,
+  IMessage,
   IUpdateConversationPayload,
 } from '#types/conversation';
 import { isLogin } from '#utils/auth';
@@ -11,9 +12,15 @@ import { API_ENDPOINT } from '#utils/endpoints';
 import { type FetchOptions, createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 
 export const getAIModels = async (url?: string, init?: FetchOptions) => {
-  const response = await fetchAPI<IAIModel[]>(url ?? API_ENDPOINT.AI_MODELS, init);
+  try {
+    const response = await fetchAPI<IAIModel[]>(url ?? API_ENDPOINT.AI_MODELS, init);
 
-  return response.data;
+    return response.data;
+  } catch (e) {
+    console.error(e);
+
+    return undefined;
+  }
 };
 
 export const getConversationDetail = async (
@@ -80,4 +87,20 @@ export const updateConversationTitle = async (
   const response = await putAPI<IConversation, IUpdateConversationPayload>(endpointKey, payload, init);
 
   return response.data;
+};
+
+export const getMessageData = async (
+  url?: string,
+  params?: { channelId: string; messageId: string },
+  init?: FetchOptions
+) => {
+  const endpointKey = url ?? createAPIUrl({ endpoint: API_ENDPOINT.COM_CHANNELS_ID_MESSAGES_ID, params });
+
+  try {
+    const response = await fetchAPI<IMessage>(endpointKey, init);
+
+    return response.data;
+  } catch {
+    return undefined;
+  }
 };

@@ -1,18 +1,47 @@
-import type { IRole } from '@oe/api/types/conversation';
+import { useGetMessageData } from '@oe/api/hooks/useConversation';
+import type { IAIStatus, IRole } from '@oe/api/types/conversation';
 
 import type { IMessageData } from '@oe/api/types/conversation';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useSWRConfig } from 'swr';
 
-export const useAIConversationHandler = (status: string, genMessageId?: string) => {
+export const useAIConversationHandler = (status?: IAIStatus, genMessageId?: string) => {
+  const [channelId, setChannelId] = useState<string | undefined>(undefined);
+  const prevGenMessage = useRef<string>('');
+  const { mutate: globalMutate } = useSWRConfig();
+
+  useEffect(() => {
+    setChannelId(undefined);
+    if (prevGenMessage.current === genMessageId) {
+      globalMutate((key: string) => !!key?.includes(`/messages/${genMessageId}`), undefined, { revalidate: false });
+    } else {
+      prevGenMessage.current = genMessageId ?? '';
+    }
+  }, [genMessageId, globalMutate]);
+
+  const { messageData, mutate } = useGetMessageData({
+    params: {
+      channelId,
+      messageId: genMessageId,
+    },
+  });
+
   return useCallback(
     (data: IMessageData) => {
-      if (!GENERATING_STATUS.includes(status)) {
+      if (!(status && GENERATING_STATUS.includes(status))) {
         return null;
       }
 
       if (!genMessageId || genMessageId !== data.message_id) {
         return;
+      }
+      if (!channelId) {
+        setChannelId(data.conversation_id);
+      }
+
+      if (data.status === 'tool_ended') {
+        mutate();
       }
 
       return {
@@ -30,8 +59,10 @@ export const useAIConversationHandler = (status: string, genMessageId?: string) 
         content_type: 'text' as const,
         ai_agent_type: data.message_ai_agent_type,
         is_ai: true,
+        props: messageData?.props,
+        reasoning: data?.reasoning,
       };
     },
-    [status, genMessageId]
+    [status, genMessageId, messageData, mutate, channelId]
   );
 };

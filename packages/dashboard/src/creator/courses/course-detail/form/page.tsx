@@ -79,18 +79,18 @@ export default function CourseDetailFormPage() {
 
   const renderedName = useCallback((course: ICourseFormTrigger) => {
     if (course?.type === 'form') {
-      return course?.form?.title || course?.name || '';
+      return course?.form?.title || course?.name || '-';
     }
 
-    return course?.confirmation_settings?.title || '';
+    return course?.confirmation_settings?.title || '-';
   }, []);
 
   const renderedDescription = useCallback((course: ICourseFormTrigger) => {
     if (course?.type === 'form') {
-      return course?.form?.description || '';
+      return course?.form?.description || '-';
     }
 
-    return course?.confirmation_settings?.description || '';
+    return course?.confirmation_settings?.description || '-';
   }, []);
 
   const columns: ColumnDef<ICourseFormTrigger>[] = useMemo(
@@ -275,7 +275,15 @@ export default function CourseDetailFormPage() {
         toast.success(t('form.updateSuccess'));
       } else {
         await createFormTriggerService(undefined, {
-          data: payload,
+          data: {
+            ...payload,
+            confirmation_settings: payload?.confirmation_settings
+              ? {
+                  ...payload?.confirmation_settings,
+                  enabled: payload.type === 'form' ? !!payload?.confirmation_settings?.enabled : true,
+                }
+              : undefined,
+          },
         });
         toast.success(t('form.addSuccess'));
       }

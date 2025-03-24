@@ -13,7 +13,7 @@ import { Link, useRouter } from '#common/navigation';
 import { toast } from '#shadcn/sonner';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
-import MessageInput from '../message/message-input';
+import MessageInput from '../message-input/message-input';
 import type { ISendMessageParams } from '../type';
 import ActionDropdown from './history-actions-dropdown';
 
@@ -25,6 +25,7 @@ interface IHistoryItem {
   pauseAddMessage?: () => void;
   pageIndex: number;
   activeId?: string;
+  callbackFn?: () => void;
 }
 
 export function useClickOutside<T extends HTMLElement>(
@@ -54,11 +55,11 @@ export function useClickOutside<T extends HTMLElement>(
   return ref;
 }
 
-export default function AIHistoryItem({ className, item, mutate, pageIndex, activeId }: IHistoryItem) {
+export default function AIHistoryItem({ className, item, mutate, pageIndex, activeId, callbackFn }: IHistoryItem) {
   const tError = useTranslations('errors');
 
   const [isEdit, setIsEdit] = useState(false);
-  const { setIsNewChat, resetGenMessage, resetStatus } = useConversationStore();
+  const { setIsNewChat, resetStatus } = useConversationStore();
   const router = useRouter();
   const handleEdit = async ({ messageInput }: ISendMessageParams) => {
     await updateConversationTitle(undefined, item.id, {
@@ -107,6 +108,7 @@ export default function AIHistoryItem({ className, item, mutate, pageIndex, acti
           };
         });
       });
+      callbackFn?.();
     } catch (error) {
       console.error(error);
       toast.error(tError((error as HTTPError).message));
@@ -121,7 +123,8 @@ export default function AIHistoryItem({ className, item, mutate, pageIndex, acti
           initialMessage={item.context?.title}
           sendMessage={handleEdit}
           hiddenBtn
-          className="!rounded-lg w-full"
+          className="!rounded-lg min-h-6 w-full md:p-2"
+          type="ai_search"
         />
       </div>
     );
@@ -130,20 +133,20 @@ export default function AIHistoryItem({ className, item, mutate, pageIndex, acti
   return (
     <div className={cn('group/history flex items-center rounded-lg hover:bg-primary/10', className)}>
       {activeId === item.id ? (
-        <p className="mcaption-regular14 !font-bold w-[calc(100%-20px)] truncate p-2 opacity-50">
+        <p className="mcaption-regular14 md:mcaption-regular16 !font-bold w-[calc(100%-20px)] truncate p-2 opacity-50">
           {item.context?.title}
         </p>
       ) : (
         <Link
-          className="mcaption-regular14 block h-auto w-[calc(100%-20px)] truncate px-2 text-start text-foreground hover:no-underline"
+          className="mcaption-regular14 md:mcaption-regular16 block h-auto w-[calc(100%-20px)] truncate px-2 text-start text-foreground hover:no-underline"
           href={createAPIUrl({
             endpoint: AI_ROUTES.chatDetail,
             params: { id: item.id },
           })}
           onClick={() => {
             setIsNewChat(false);
-            resetGenMessage();
             resetStatus();
+            callbackFn?.();
           }}
         >
           {item.context?.title}

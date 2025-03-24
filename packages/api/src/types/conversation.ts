@@ -2,27 +2,6 @@ import type { HTTPPagination } from './fetch';
 import type { IFileResponse } from './file';
 import type { IDataPagination } from './pagination';
 
-export interface DocumentInput<Metadata extends Record<string, unknown> = Record<string, unknown>> {
-  pageContent: string;
-  metadata?: Metadata;
-  id?: string;
-}
-
-export interface DocumentInterface<Metadata extends Record<string, unknown> = Record<string, unknown>> {
-  pageContent: string;
-  metadata: Metadata;
-  id?: string;
-}
-export declare class Document<Metadata extends Record<string, unknown> = Record<string, unknown>>
-  implements DocumentInput, DocumentInterface
-{
-  pageContent: string;
-  metadata: Metadata;
-
-  id?: string;
-  constructor(fields: DocumentInput<Metadata>);
-}
-
 export type IRole = 'user' | 'assistant';
 
 export type IProvider =
@@ -48,6 +27,8 @@ export interface IAgenConfigs {
   image_generator_enabled: boolean;
   present_creator_enabled: boolean;
   code_executor_enabled: boolean;
+  searcher_enabled: boolean;
+  extended_thinking_enabled: boolean;
 }
 export interface Configs extends IAgenConfigs {
   stream_response_enabled: boolean;
@@ -64,16 +45,17 @@ export interface IChatHistory {
   update_at: number;
 }
 
-export type TAgentType = 'ai_chat' | 'ai_search' | 'ai_slide' | 'ai_image_generate' | 'ai_image_analysis' | 'ai_code';
+export type TAgentType = 'ai_search' | 'ai_slide' | 'ai_image_generate' | 'ai_code';
 export interface IConversationRequest {
   ai_agent_type: TAgentType;
   message_ai_agent_type?: TAgentType;
-  ai_model: IProvider;
+  ai_model?: IProvider;
   content: string;
   content_type: IContextType;
   attachment_ids?: string[];
   ai_conversation_id?: string;
   message_id?: string;
+  extended_thinking: boolean;
 }
 
 export interface IUpdateConversationPayload {
@@ -100,9 +82,10 @@ export interface IMessageData {
   is_image_analysis: boolean;
   ai_agent_type: TAgentType;
   message_ai_agent_type: TAgentType;
+  reasoning: string;
 }
 
-export type IAIStatus = 'generating' | 'pending' | 'completed' | 'failed' | 'stopped';
+export type IAIStatus = 'generating' | 'pending' | 'completed' | 'failed' | 'stopped' | 'tool_ended' | 'reasoning';
 
 export type IContextType = 'text';
 
@@ -156,10 +139,12 @@ export interface IMessage {
   ai_model: IMessageAIModel;
   sender: IMessageSender;
   ai_agent_type: TAgentType;
+  props?: IMessageProps | null;
+  reasoning?: string | null;
+}
 
-  // adjust later
-  suggestions?: string[];
-  sources?: Document[];
+export interface IMessageProps {
+  source_results: ISourceProps[];
 }
 
 interface IMessageAIModel {
@@ -193,4 +178,10 @@ interface IMessageSender {
   permission?: string;
   org_id?: string;
   org_schema?: string;
+}
+
+export interface ISourceProps {
+  url: string;
+  title: string;
+  content: string;
 }

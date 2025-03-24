@@ -1,8 +1,10 @@
 import { useGetConversationDetails } from '@oe/api/hooks/useConversation';
-import type { IMessage, TAgentType } from '@oe/api/types/conversation';
+import type { IConversationDetails, IMessage, TAgentType } from '@oe/api/types/conversation';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
-import { useEffect, useRef, useState } from 'react';
-import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
+import { ChevronsDown } from 'lucide-react';
+import { type RefObject, useEffect, useRef, useState } from 'react';
+import type { KeyedMutator } from 'swr';
+import { Button } from '#shadcn/button';
 import { Skeleton } from '#shadcn/skeleton';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
@@ -13,9 +15,10 @@ import MessageBox from './message-box';
 interface IContainerProps {
   id: string;
   nextCursorPage?: string;
-  rewrite: (msg: IMessage) => void;
   messageType: TAgentType[];
   className?: string;
+  containerRef: RefObject<HTMLDivElement | null>;
+  scrollBehavior?: 'auto' | 'smooth';
   sendMessage: ({
     messageInput,
     type,
@@ -25,22 +28,25 @@ interface IContainerProps {
     role,
   }: // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   ISendMessageParams) => void | Promise<unknown>;
+  mutate: KeyedMutator<IConversationDetails>;
 }
 export const MessageContainer = ({
   id,
   sendMessage,
   nextCursorPage = '',
-  rewrite,
   messageType,
+  containerRef,
   className,
+  scrollBehavior,
+  mutate,
 }: IContainerProps) => {
-  const { messages, status, setMessages } = useConversationStore();
+  const { messages, status, setMessages, isNewChat } = useConversationStore();
   const [shouldGetData, setShouldGetData] = useState<boolean>(false);
+  const [prevScrollHeight, setPrevScrollHeight] = useState(0);
+  const [initScrollBottom, setInitScrollBottom] = useState(false);
+  const [showScrollButton, setShowScrollButton] = useState(false);
 
-  const firstItemIndexRef = useRef<number>(99999);
-  const virtuosoRef = useRef<VirtuosoHandle>(null);
   const nextKeyRef = useRef<string>(nextCursorPage);
-
   const { data, isLoading } = useGetConversationDetails({
     shouldFetch: shouldGetData && nextKeyRef.current.length > 0,
     id,
@@ -61,63 +67,105 @@ export const MessageContainer = ({
 
     if (data.results.messages) {
       setMessages([...data.results.messages.reverse(), ...messages]);
-      firstItemIndexRef.current -= data.results.messages.length;
     }
+    requestAnimationFrame(() => {
+      if (containerRef.current) {
+        const newScrollHeight = containerRef.current.scrollHeight;
+        const scrollDiff = newScrollHeight - prevScrollHeight - 200;
+        containerRef.current.scrollTop = scrollDiff;
+      }
+    });
   }, [data]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (status && GENERATING_STATUS.includes(status)) {
-      virtuosoRef.current?.scrollToIndex({
-        index: messages.length - 1,
-        align: 'end',
-        behavior: 'auto',
+    if (!containerRef.current || messages.length === 0 || initScrollBottom) {
+      return;
+    }
+    handleScrollToBottom(scrollBehavior);
+  }, [messages.length, initScrollBottom, containerRef, scrollBehavior]);
+
+  const handleScrollToBottom = (scrollBehavior?: 'auto' | 'smooth') => {
+    if (!containerRef) {
+      return;
+    }
+    requestAnimationFrame(() => {
+      if (containerRef.current) {
+        containerRef.current.scrollTo({
+          top: containerRef.current.scrollHeight,
+          behavior: scrollBehavior ?? (isNewChat ? 'auto' : 'smooth'),
+        });
+      }
+    });
+  };
+
+  const handleScroll = () => {
+    if (!containerRef.current) {
+      return;
+    }
+    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+    if (scrollTop < 100 && !shouldGetData && initScrollBottom) {
+      setPrevScrollHeight(scrollHeight);
+      setShouldGetData(true);
+    }
+
+    if (scrollTop + clientHeight > scrollHeight - 50 && !initScrollBottom) {
+      setInitScrollBottom(true);
+    }
+
+    if (scrollTop + clientHeight < scrollHeight - 100) {
+      setShowScrollButton(true);
+    } else {
+      setShowScrollButton(false);
+    }
+  };
+
+  const rewrite = (msg: IMessage) => {
+    if (!msg.ai_agent_type || messageType.includes(msg.ai_agent_type)) {
+      void sendMessage({
+        message_id: msg.id,
+        type: msg.ai_agent_type,
+        status: 'pending',
+        role: msg.sender.role,
       });
     }
-  }, [messages.length]);
+  };
 
   return (
-    <Virtuoso
-      className={cn('no-scrollbar', className)}
-      data={messages}
-      ref={virtuosoRef}
-      totalCount={messages.length}
-      firstItemIndex={firstItemIndexRef.current}
-      followOutput="auto"
-      initialTopMostItemIndex={{
-        align: 'end',
-        index: messages.length - 1,
-      }}
-      startReached={() => {
-        if (nextKeyRef.current.length === 0) {
-          return;
-        }
-        firstItemIndexRef.current -= 1;
-        if (!(GENERATING_STATUS.includes(status ?? '') || isLoading)) {
-          setShouldGetData(true);
-        }
-      }}
-      itemContent={(_, msg: IMessage) => (
-        <MessageBox
-          key={msg.id}
-          id={msg.id}
-          message={msg}
-          loading={GENERATING_STATUS.includes(status ?? '')}
-          rewrite={!msg.ai_agent_type || messageType.includes(msg.ai_agent_type) ? () => rewrite(msg) : undefined}
-          sendMessage={sendMessage}
-          messageType={messageType}
-        />
-      )}
-      components={{
-        Header: () =>
-          nextKeyRef.current.length > 0 ? (
-            <div className="flex flex-col items-end gap-4">
-              <Skeleton className="h-10 w-2/3 rounded-[20px]" />
-              <Skeleton className="h-20 w-full rounded-[20px]" />
-            </div>
-          ) : null,
-        Footer: () => <GenMessage sendMessage={sendMessage} messageType={messageType} />,
-      }}
-    />
+    <div
+      ref={containerRef}
+      className={cn('no-scrollbar relative flex grow flex-col gap-2 overflow-y-auto overflow-x-hidden', className)}
+      onScroll={handleScroll}
+    >
+      <div className="flex max-w-3xl grow flex-col gap-4 xl:max-w-4xl">
+        {isLoading && (
+          <div className="flex flex-col items-end gap-4">
+            <Skeleton className="h-10 w-2/3 rounded-[20px]" />
+            <Skeleton className="h-20 w-full rounded-[20px]" />
+          </div>
+        )}
+        {messages.map(msg => {
+          if (!msg) {
+            return null;
+          }
+          return (
+            <MessageBox
+              key={msg.id}
+              id={msg.id}
+              message={msg}
+              loading={GENERATING_STATUS.includes(status ?? '')}
+              rewrite={!msg.ai_agent_type || messageType.includes(msg.ai_agent_type) ? () => rewrite(msg) : undefined}
+              sendMessage={sendMessage}
+              messageType={messageType}
+            />
+          );
+        })}
+        <GenMessage containerRef={containerRef} mutate={mutate} />
+      </div>
+      <div className={cn('sticky bottom-0 hidden max-w-3xl translate-x-1/2 xl:max-w-4xl', showScrollButton && 'block')}>
+        <Button size="icon" variant="outline" className="rounded-full" onClick={() => handleScrollToBottom()}>
+          <ChevronsDown className="h-4 w-4" />
+        </Button>
+      </div>
+    </div>
   );
 };

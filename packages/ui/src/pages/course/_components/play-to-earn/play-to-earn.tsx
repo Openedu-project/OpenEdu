@@ -50,7 +50,7 @@ const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
             formInfo.type === 'lesson'
               ? `${formInfo?.lesson?.title} of section ${formInfo?.section?.index}`
               : formInfo.type === 'section'
-                ? `section ${formInfo?.section?.index}`
+                ? `Section ${formInfo?.section?.index}: ${formInfo?.section?.title}`
                 : 'Unknown',
         };
       });

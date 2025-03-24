@@ -12,10 +12,7 @@ export function FormRendererModal({
 Partial<ModalProps<any>> & { formData?: IFormResponse }) {
   const tGeneral = useTranslations('general');
 
-  const fields =
-    formData?.questions
-      ?.map(question => question?.settings?.props as FormFieldType)
-      .filter(question => question !== undefined) ?? [];
+  const fields = formData?.questions?.map(question => question?.settings?.props as FormFieldType).filter(Boolean) ?? [];
 
   const fieldsWithoutSubmitButton = fields.filter(field => field.fieldType !== 'submitButton');
   const submitButton = fields.find(field => field.fieldType === 'submitButton');

@@ -40,7 +40,7 @@ export const USER_ROLE_EVENT: Record<string, string> = {
   creator: 'INVITE_CREATOR',
 };
 
-export const GENERATING_STATUS = ['pending', 'generating', 'setting'];
+export const GENERATING_STATUS = ['pending', 'generating', 'setting', 'tool_ended', 'reasoning'];
 export const QUESTION_OBJECT_TYPE = {
   checkbox: 'Checkbox',
   multiple_choice: 'Multiple Choice',

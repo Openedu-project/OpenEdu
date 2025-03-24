@@ -39,6 +39,7 @@ export const VideoPopover = ({ editor }: { editor: Editor }) => {
             accept="video/*"
             listType="picture"
             value={file}
+            maxSizeBytes={2 * 1024 * 1024 * 1024}
             onChange={file => {
               setFile(file as IFileResponse);
               setUrl((file as IFileResponse)?.url as string);

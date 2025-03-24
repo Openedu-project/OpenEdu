@@ -10,7 +10,7 @@ export default function AIAssistantLayout({
 }) {
   return (
     <OpeneduLayout hasFooter={false}>
-      <AILayout className="lg:h-[calc(100dvh-var(--header-with-sub-item-height))]">{children}</AILayout>
+      <AILayout>{children}</AILayout>
     </OpeneduLayout>
   );
 }
