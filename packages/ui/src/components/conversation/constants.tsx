@@ -5,7 +5,7 @@ import SearchZoomIn from '@oe/assets/icons/search-zoom-in';
 import { VideoSquare } from '@oe/assets/icons/video-square';
 import { AI_ROUTES } from '@oe/core/utils/routes';
 import { buildUrl } from '@oe/core/utils/url';
-import { FileCode, MessageCircle } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 import type { AISidebarItem, IInputButton } from './type';
 
 export const AI_SIDEBAR: (color?: string, size?: number) => AISidebarItem[] = (color = 'white', size = 12) => [
@@ -75,11 +75,11 @@ export const INPUT_BUTTON: IInputButton[] = [
     textKey: 'presentation',
     icon: <Grid3 width={16} height={16} color="hsl(var(--info-500))" />,
   },
-  {
-    type: 'ai_code',
-    textKey: 'code',
-    icon: <FileCode size={16} className="text-positive-500" />,
-  },
+  // {
+  //   type: 'ai_code',
+  //   textKey: 'code',
+  //   icon: <FileCode size={16} className="text-positive-500" />,
+  // },
 ];
 
 export const AGENT_OPTIONS: Partial<Record<keyof IAgenConfigs, TAgentType>> = {
