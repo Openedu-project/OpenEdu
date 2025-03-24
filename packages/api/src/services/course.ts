@@ -417,7 +417,7 @@ export const addCoursePartnerService = async (
   { id, payload, init }: { id: string; payload: IAddPartnerSchema; init?: RequestInit }
 ) => {
   const response = await putAPI<ICoursePartner, IAddPartnerSchema>(
-    url ?? buildUrl({ endpoint: API_ENDPOINT.COURSES_ID_PARTNERS, params: { id } }),
+    url ?? buildUrl({ endpoint: API_ENDPOINT.COURSES_ID_PARTNERS, params: { id: id } }),
     payload,
     init
   );

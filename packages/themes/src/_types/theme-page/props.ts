@@ -39,6 +39,7 @@ import type {
   AvailHomepageHeroProps,
   AvailHomepageSolutionProps,
 } from '../../avail/type';
+import type { ScholarHomepageAchievementsProps } from '../../scholar/type';
 import type { PageSectionConfig } from './config';
 export interface BaseSectionProps<K extends ThemePageKey> {
   sectionConfig?: PageSectionConfig<K>;
@@ -75,6 +76,7 @@ export interface SectionPropsMap<K extends ThemePageKey> {
   scholarHero: DynamicProps<K, ScholarHomepageHeroProps>;
   scholarService: DynamicProps<K, ScholarHomepageServiceProps>;
   scholarAboutUs: DynamicProps<K, ScholarHomepageAboutUsProps>;
+  scholarAchievements: DynamicProps<K, ScholarHomepageAchievementsProps>;
 
   // VBI
   vbiHero: DynamicProps<K, VbiHomepageHeroProps>;
