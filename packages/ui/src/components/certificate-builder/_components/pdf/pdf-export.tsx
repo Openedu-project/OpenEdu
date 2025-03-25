@@ -19,7 +19,6 @@ export const CertificatePDF: FC<{
   template: ICertificateTemplate;
   data?: ICertificateData;
 }> = ({ template, data }) => {
-  console.log('--------------------data', data);
   return (
     <Document style={{ fontFamily: 'Inter' }}>
       <Page

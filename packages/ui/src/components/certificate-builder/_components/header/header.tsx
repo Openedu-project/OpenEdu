@@ -28,7 +28,7 @@ export const Header = () => {
           template,
         },
       });
-      await globalMutate((key: string) => !!key?.includes(API_ENDPOINT.HTML_TEMPLATES), undefined, {
+      await globalMutate((key: string) => !!key?.includes(`${API_ENDPOINT.HTML_TEMPLATES}?`), undefined, {
         revalidate: false,
       });
 
