@@ -48,7 +48,9 @@ export const updateGlobalTheme = (themeGlobal: ThemeGlobal): void => {
   if (getSystemTheme() === 'light') {
     setColorScheme(colorVariables.light);
   } else {
-    setColorScheme(colorVariables.dark);
+    // setColorScheme(colorVariables.dark);
+    // TODO: use the light/dark theme
+    setColorScheme(colorVariables.light);
   }
 
   // Update border radius
