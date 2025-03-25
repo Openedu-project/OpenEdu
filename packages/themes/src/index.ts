@@ -35,6 +35,12 @@ import { ScholarAboutUs, ScholarHomePage } from './scholar';
 
 import { ScholarHomepageAchievements } from './scholar/homepage/achievements';
 
+import { ScholarHomepageTeam } from './scholar/homepage/team';
+
+import { ScholarHomepageProjects } from './scholar/homepage/projects';
+
+import { ScholarHomepageTestimonials } from './scholar/homepage/testimonials';
+
 import { VbiAboutUsCore } from './vbi/about-us/core';
 import { VbiAboutUsGoal } from './vbi/about-us/goal';
 import VbiAboutUs from './vbi/about-us/index';
@@ -85,6 +91,9 @@ export const THEMES: ThemeRender = {
       scholarService: ScholarHomepageService,
       scholarAboutUs: ScholarHomepageAboutUs,
       scholarAchievements: ScholarHomepageAchievements,
+      scholarTeam: ScholarHomepageTeam,
+      scholarProjects: ScholarHomepageProjects,
+      scholarTestimonials: ScholarHomepageTestimonials,
     },
     'about-us': {
       theme: ScholarAboutUs,
@@ -158,6 +167,9 @@ export const THEMES_SERVER: ThemeRender = {
       scholarService: ScholarHomepageService,
       scholarAboutUs: ScholarHomepageAboutUs,
       scholarAchievements: ScholarHomepageAchievements,
+      scholarTeam: ScholarHomepageTeam,
+      scholarProjects: ScholarHomepageProjects,
+      scholarTestimonials: ScholarHomepageTestimonials,
     },
     'about-us': {
       theme: ScholarAboutUs,

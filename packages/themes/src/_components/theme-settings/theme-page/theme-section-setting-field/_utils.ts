@@ -25,7 +25,7 @@ export const getFieldType = (value: unknown): SettingsFieldType => {
   }
   if (typeof value === 'string') {
     // Check if the string starts with '/' to identify it as a link
-    if (value.startsWith('/') || isValidUrl(value)) {
+    if (value.startsWith('/') || isValidUrl(value) || value.startsWith('http')) {
       return 'link';
     }
     if (value.startsWith('id-')) {

@@ -84,5 +84,56 @@ export const scholarHomepage = {
         },
       },
     },
+    scholarTeam: {
+      title: 'Our certified experts',
+      subtitle: 'Team',
+      description: 'Quis eleifend quam adipiscing vitae proin sagittis nisl. Lectus vestibulum.',
+      experts: {
+        expert1: {
+          name: 'Sebastian Doe',
+          role: 'Code Expert',
+        },
+        expert2: {
+          name: 'John Smith',
+          role: 'Code Expert',
+        },
+        expert3: {
+          name: 'Sarah Corner',
+          role: 'Code Expert',
+        },
+      },
+    },
+    scholarProjects: {
+      title: 'Our amazing project that has been completed',
+      subtitle: 'Projects',
+      description:
+        'Turpis cursus in hac habitasse platea dictumst quisque sagittis purus. Ligula ullamcorper malesuada proin libero nunc consequat. Dignissim sodales ut eu sem integer vitae justo. Tincidunt tortor aliquam nulla facilisi cras.',
+      button: {
+        text: 'View All Projects',
+      },
+    },
+    scholarTestimonials: {
+      title: 'Our successful clients',
+      subtitle: 'Testimonials',
+      description: 'Turpis cursus in hac habitasse platea dictumst quisque sagittis purus.',
+      testimonial1: {
+        quote:
+          'Nisi rhoncus mattis rhoncus urna neque viverra. Turpis egestas pretium aenean pharetra magna ac placerat vestibulum.',
+        name: 'ROBERT DOE',
+        position: 'Businessman',
+      },
+      testimonial2: {
+        quote:
+          'Nisi rhoncus mattis rhoncus urna neque viverra. Turpis egestas pretium aenean pharetra magna ac placerat vestibulum.',
+        name: 'JULIA DOE',
+        position: 'Businesswoman',
+      },
+      testimonial3: {
+        quote:
+          'Nisi rhoncus mattis rhoncus urna neque viverra. Turpis egestas pretium aenean pharetra magna ac placerat vestibulum.',
+        name: 'SARAH DOE',
+        position: 'Businesswoman',
+      },
+    },
   },
 };

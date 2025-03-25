@@ -42,7 +42,7 @@ export const createScholarHomepageConfig = (getThemeTranslation: (path: string[]
     },
     order: 1,
   }),
-  scholarAboutUs: createSection<'homepage', 'scholarService'>({
+  scholarAboutUs: createSection<'homepage', 'scholarAboutUs'>({
     props: {
       titleSection: getThemeTranslation(['homepage', 'scholarAboutUs', 'titleSection']),
       titleMain: getThemeTranslation(['homepage', 'scholarAboutUs', 'titleMain']),
@@ -83,7 +83,7 @@ export const createScholarHomepageConfig = (getThemeTranslation: (path: string[]
     },
     order: 2,
   }),
-  scholarAchievements: createSection<'homepage', 'scholarService'>({
+  scholarAchievements: createSection<'homepage', 'scholarAchievements'>({
     props: {
       title: getThemeTranslation(['homepage', 'scholarAchievements', 'title']),
       subtitle: getThemeTranslation(['homepage', 'scholarAchievements', 'subtitle']),
@@ -109,5 +109,88 @@ export const createScholarHomepageConfig = (getThemeTranslation: (path: string[]
       },
     },
     order: 3,
+  }),
+  scholarTeam: createSection<'homepage', 'scholarTeam'>({
+    props: {
+      title: getThemeTranslation(['homepage', 'scholarTeam', 'title']),
+      subtitle: getThemeTranslation(['homepage', 'scholarTeam', 'subtitle']),
+      description: getThemeTranslation(['homepage', 'scholarTeam', 'description']),
+      expert1: {
+        name: getThemeTranslation(['homepage', 'scholarTeam', 'experts.expert1.name']),
+        role: getThemeTranslation(['homepage', 'scholarTeam', 'experts.expert1.role']),
+        image: { mime: 'image/png' },
+        socialLinks: {
+          facebook: 'https://',
+          x: 'https://',
+          linkedin: 'https://',
+        },
+      },
+      expert2: {
+        name: getThemeTranslation(['homepage', 'scholarTeam', 'experts.expert2.name']),
+        role: getThemeTranslation(['homepage', 'scholarTeam', 'experts.expert2.role']),
+        image: { mime: 'image/png' },
+        socialLinks: {
+          facebook: 'https://',
+          x: 'https://',
+          linkedin: 'https://',
+        },
+      },
+      expert3: {
+        name: getThemeTranslation(['homepage', 'scholarTeam', 'experts.expert3.name']),
+        role: getThemeTranslation(['homepage', 'scholarTeam', 'experts.expert3.role']),
+        image: { mime: 'image/png' },
+        socialLinks: {
+          facebook: 'https://www.facebook.com/',
+          x: 'https://',
+          linkedin: 'https://',
+        },
+      },
+    },
+    order: 4,
+  }),
+  scholarProjects: createSection<'homepage', 'scholarProjects'>({
+    props: {
+      title: getThemeTranslation(['homepage', 'scholarProjects', 'title']),
+      subtitle: getThemeTranslation(['homepage', 'scholarProjects', 'subtitle']),
+      description: getThemeTranslation(['homepage', 'scholarProjects', 'description']),
+      button: {
+        text: getThemeTranslation(['homepage', 'scholarProjects', 'button', 'text']),
+        link: '/',
+      },
+      banner1: { mime: 'image/png' },
+      banner2: { mime: 'image/png' },
+      banner3: { mime: 'image/png' },
+      banner4: { mime: 'image/png' },
+    },
+    order: 5,
+  }),
+  scholarTestimonials: createSection<'homepage', 'scholarTestimonials'>({
+    props: {
+      title: getThemeTranslation(['homepage', 'scholarTestimonials', 'title']),
+      subtitle: getThemeTranslation(['homepage', 'scholarTestimonials', 'subtitle']),
+      description: getThemeTranslation(['homepage', 'scholarTestimonials', 'description']),
+      testimonial1: {
+        quote: getThemeTranslation(['homepage', 'scholarTestimonials', 'testimonial1', 'quote']),
+        rating: 5,
+        avatar: { mime: 'image/png' },
+        name: getThemeTranslation(['homepage', 'scholarTestimonials', 'testimonial1', 'name']),
+        position: getThemeTranslation(['homepage', 'scholarTestimonials', 'testimonial1', 'position']),
+      },
+      testimonial2: {
+        quote: getThemeTranslation(['homepage', 'scholarTestimonials', 'testimonial2', 'quote']),
+        rating: 5,
+        avatar: { mime: 'image/png' },
+        name: getThemeTranslation(['homepage', 'scholarTestimonials', 'testimonial2', 'name']),
+        position: getThemeTranslation(['homepage', 'scholarTestimonials', 'testimonial2', 'position']),
+      },
+      testimonial3: {
+        quote: getThemeTranslation(['homepage', 'scholarTestimonials', 'testimonial3', 'quote']),
+        rating: 5,
+        avatar: { mime: 'image/png' },
+        name: getThemeTranslation(['homepage', 'scholarTestimonials', 'testimonial3', 'name']),
+        position: getThemeTranslation(['homepage', 'scholarTestimonials', 'testimonial3', 'position']),
+      },
+    },
+    order: 6,
   }),
 });

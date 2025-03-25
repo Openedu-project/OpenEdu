@@ -110,11 +110,13 @@ export default function SmartPreview({ children, containerPadding = 48, themeGlo
         const { colorVariables, radius, fonts } = themeGlobal;
 
         setColorScheme(colorVariables.light);
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          setColorScheme(colorVariables.dark);
-        } else {
-          setColorScheme(colorVariables.light);
-        }
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+              // setColorScheme(colorVariables.dark);
+              // TODO: only use light theme
+              setColorScheme(colorVariables.light);
+            } else {
+              setColorScheme(colorVariables.light);
+            }
 
         setRadiusVariable(radius.default);
 
