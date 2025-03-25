@@ -52,7 +52,7 @@ export const WithdrawTokenForm = () => {
             ...data,
             network: data.network.toLowerCase(),
             currency: data.token,
-            is_mainnet: process.env.NODE_ENV !== 'development',
+            is_mainnet: process.env.NODE_ENV === 'production',
           },
         });
         await mutateWallets();
