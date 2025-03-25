@@ -9,7 +9,7 @@ export const getAvailBalance = async (address: string): Promise<string> => {
     return '0.000000';
   }
   const result: { data: { account_info: { data: { free: string } } } } = await fetchAPI(
-    `${API_ENDPOINT.CHAIN_ACCOUNT_INFO.replace(':network', CHAIN.AVAIL).replace(':address', address)}?is_mainnet=${process.env.NODE_ENV !== 'development'}`
+    `${API_ENDPOINT.CHAIN_ACCOUNT_INFO.replace(':network', CHAIN.AVAIL).replace(':address', address)}?is_mainnet=${process.env.NODE_ENV === 'production'}`
   );
   const balance: string = result?.data?.account_info?.data?.free || '0';
   const amount: string = toAvail(balance, 18);

@@ -25,19 +25,24 @@ export const CertificateRenderer = ({ template, data, showPlaceholder = false }:
         backgroundSize: 'contain',
       }}
     >
-      {template?.elements?.map(element => (
-        <div
-          key={element.id}
-          style={{
-            position: 'absolute',
-            ...getElementPosition(element),
-            width: element.styles?.width,
-            height: element.styles?.height,
-          }}
-        >
-          <ElementRenderer key={element.id} element={element} data={data} showPlaceholder={showPlaceholder} />
-        </div>
-      ))}
+      {template?.elements?.map(element => {
+        if (element.visible === false) {
+          return null;
+        }
+        return (
+          <div
+            key={element.id}
+            style={{
+              position: 'absolute',
+              ...getElementPosition(element),
+              width: element.styles?.width,
+              height: element.styles?.height,
+            }}
+          >
+            <ElementRenderer key={element.id} element={element} data={data} showPlaceholder={showPlaceholder} />
+          </div>
+        );
+      })}
     </div>
   );
 };

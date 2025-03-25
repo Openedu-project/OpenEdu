@@ -1,12 +1,12 @@
-"use client";
-import { Footer, type FooterProps } from "@oe/ui/common/layout/footer";
-import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
-import type { SectionComponent } from "../_types/theme-page";
+'use client';
+import { Footer, type FooterProps } from '@oe/ui/common/layout/footer';
+import { useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
+import type { SectionComponent } from '../_types/theme-page';
 
 export interface ThemeFooterProps extends FooterProps {}
 
-const ThemeFooter: SectionComponent<"auth", "footer"> = ({ props }) => {
+const ThemeFooter: SectionComponent<'auth', 'footer'> = ({ props }) => {
   const { themeName } = useParams();
   const t = useTranslations(`themePage.${themeName}.auth.footer`);
 
@@ -15,10 +15,12 @@ const ThemeFooter: SectionComponent<"auth", "footer"> = ({ props }) => {
         Object.entries(props.navigationItems).map(([key, value]) => [
           key,
           {
+            id: key,
             label: t(`navigationItems.${key}.label`),
             colSpan: value?.colSpan,
             items:
               value?.items?.map((item, index) => ({
+                id: item.id,
                 href: item.href,
                 label: t(`navigationItems.${key}.items.items-${index}.label`),
                 icon: item?.icon,
