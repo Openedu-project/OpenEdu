@@ -1,6 +1,8 @@
 "use client";
-import { useGetTheme } from "@oe/api/hooks/useTheme";
-import { createOrUpdateThemeConfig } from "@oe/api/services/theme";
+import {
+  useCreateOrUpdateThemeConfig,
+  useGetTheme,
+} from "@oe/api/hooks/useTheme";
 import { ThemeConfigMetadata } from "@oe/themes/_components/theme-settings/index";
 import type {
   ThemeCollection,
@@ -11,14 +13,14 @@ import type {
 import { toast } from "@oe/ui/shadcn/sonner";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
-import { useState } from "react";
 import ComingSoon from "../../_components/coming-soon";
 
 export default function MetadataPage() {
   const translate = useTranslations("themeNoti");
   const { settingKey, themeName } = useParams();
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const { theme } = useGetTheme();
+  const { createOrUpdateThemeConfig, isLoadingCreateOrUpdateThemeConfig } =
+    useCreateOrUpdateThemeConfig();
 
   const currentTheme = theme?.[0]?.value;
   const themeDefinition =
@@ -39,7 +41,6 @@ export default function MetadataPage() {
       return;
     }
 
-    setIsSubmitting(true);
     try {
       const updatedSystem = updateThemeSystem(data);
       const response = await createOrUpdateThemeConfig({
@@ -55,15 +56,13 @@ export default function MetadataPage() {
     } catch (error) {
       toast.error(translate("metadata.error"));
       console.error("Theme update error:", error);
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
   if (settingKey === "metadata") {
     return (
       <ThemeConfigMetadata
-        isSubmitting={isSubmitting}
+        isSubmitting={isLoadingCreateOrUpdateThemeConfig}
         data={themeDefinition?.metadata}
         onSubmit={handleSubmitMetadata}
         isRoot

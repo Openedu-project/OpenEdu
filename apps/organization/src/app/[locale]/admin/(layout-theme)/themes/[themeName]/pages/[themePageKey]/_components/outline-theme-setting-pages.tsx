@@ -1,6 +1,8 @@
 "use client";
-import { useGetTheme } from "@oe/api/hooks/useTheme";
-import { createOrUpdateThemeConfig } from "@oe/api/services/theme";
+import {
+  useCreateOrUpdateThemeConfig,
+  useGetTheme,
+} from "@oe/api/hooks/useTheme";
 import { defaultThemeSystemConfig } from "@oe/themes";
 import { ThemeSettingPages } from "@oe/themes/_components/theme-settings/index";
 import type {
@@ -14,7 +16,7 @@ import type {
 import { toast } from "@oe/ui/shadcn/sonner";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 
 interface OutlineThemeSettingPagesProps {
   selectedSidebarPageKey: ThemeSidebarPageKey;
@@ -24,11 +26,11 @@ const OutlineThemeSettingPages = ({
   selectedSidebarPageKey,
 }: OutlineThemeSettingPagesProps) => {
   const { themeName, themePageKey } = useParams();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { theme, mutateTheme } = useGetTheme();
   const t = useTranslations("themePageSettings");
   const tThemeConfig = useTranslations("themePage");
-
+  const { createOrUpdateThemeConfig, isLoadingCreateOrUpdateThemeConfig } =
+    useCreateOrUpdateThemeConfig();
   const themeConfig =
     theme?.[0]?.value?.availableThemes?.[themeName as ThemeName] ||
     defaultThemeSystemConfig(tThemeConfig)?.availableThemes?.[
@@ -49,23 +51,20 @@ const OutlineThemeSettingPages = ({
       };
 
       try {
-        setIsLoading(true);
         const res = await createOrUpdateThemeConfig({
           config: currentThemeSystem,
           id: theme?.[0]?.id,
         });
         if (res) {
-          setIsLoading(false);
           await mutateTheme();
           toast.success(t("updateSuccess"));
         }
       } catch (error) {
         console.error(error);
-        setIsLoading(false);
         toast.error(t("updateFail"));
       }
     },
-    [mutateTheme, t, themeName, theme]
+    [mutateTheme, t, themeName, theme, createOrUpdateThemeConfig]
   );
 
   if (!themeConfig) {
@@ -87,7 +86,7 @@ const OutlineThemeSettingPages = ({
   return (
     <>
       <ThemeSettingPages
-        isLoading={isLoading}
+        isLoading={isLoadingCreateOrUpdateThemeConfig}
         themeConfig={themeConfig}
         themeName={themeName as ThemeName}
         selectedPage={themePageKey as ThemePageKey}

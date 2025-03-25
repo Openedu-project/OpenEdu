@@ -65,5 +65,24 @@ export const scholarHomepage = {
         },
       },
     },
+    scholarAchievements: {
+      title: 'We have helped more than 700+ clients worldwide',
+      subtitle: 'Achievements',
+      description: 'Quis eleifend quam adipiscing vitae proin sagittis nisl. Lectus vestibulum.',
+      achievements: {
+        stat1: {
+          description: 'Quis eleifend quam adipiscing.',
+        },
+        stat2: {
+          description: 'Quis eleifend quam adipiscing.',
+        },
+        stat3: {
+          description: 'Quis eleifend quam adipiscing.',
+        },
+        stat4: {
+          description: 'Quis eleifend quam adipiscing.',
+        },
+      },
+    },
   },
 };

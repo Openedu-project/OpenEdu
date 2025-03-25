@@ -10,6 +10,7 @@ export type HomeSection =
   | 'scholarHero'
   | 'scholarService'
   | 'scholarAboutUs'
+  | 'scholarAchievements'
   | 'vbiHero'
   | 'vbiAchievements'
   | 'vbiCourses'

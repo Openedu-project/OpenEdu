@@ -2,13 +2,16 @@ import type { LanguageCode } from '@oe/i18n/languages';
 import useSWR from 'swr';
 import { createSystemConfigSWRKey, getSystemConfigClient } from '#services/system-config';
 import type { ISystemConfigKey } from '#types/system-config';
+import { useGetOrganizationByDomain } from './useOrganization';
 
 export const useSystemConfig = <T>({
   key,
   locales,
   shouldFetch = true,
 }: { key: ISystemConfigKey; locales?: LanguageCode[]; shouldFetch?: boolean }) => {
-  const endpointKey = createSystemConfigSWRKey({ key, locales });
+  const { organizationByDomain } = useGetOrganizationByDomain();
+  const endpointKey = createSystemConfigSWRKey({ key, locales, domain: organizationByDomain?.domain });
+
   const { data, isLoading, error, mutate } = useSWR(shouldFetch ? endpointKey : null, (endpoint: string) =>
     getSystemConfigClient<T>(endpoint, { key })
   );

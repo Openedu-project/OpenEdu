@@ -1,7 +1,9 @@
 "use client";
 
-import { useGetTheme } from "@oe/api/hooks/useTheme";
-import { createOrUpdateThemeConfig } from "@oe/api/services/theme";
+import {
+  useCreateOrUpdateThemeConfig,
+  useGetTheme,
+} from "@oe/api/hooks/useTheme";
 import { initialThemeGlobal } from "@oe/themes";
 import { ThemeSettingGlobal } from "@oe/themes/_components/theme-settings/index";
 import type {
@@ -21,7 +23,7 @@ export default function GlobalThemeSetting() {
   const { settingKey, themeName } = useParams();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { theme, mutateTheme } = useGetTheme();
-
+  const { createOrUpdateThemeConfig } = useCreateOrUpdateThemeConfig();
   const currentTheme = theme?.[0]?.value;
   const themeDefinition =
     currentTheme?.availableThemes?.[themeName as ThemeName];
@@ -63,7 +65,13 @@ export default function GlobalThemeSetting() {
         setIsSubmitting(false);
       }
     },
-    [theme, updateThemeSystem, translate, mutateTheme]
+    [
+      theme,
+      updateThemeSystem,
+      translate,
+      mutateTheme,
+      createOrUpdateThemeConfig,
+    ]
   );
 
   return (
