@@ -1,6 +1,5 @@
 'use client';
-import { useGetTheme } from '@oe/api/hooks/useTheme';
-import { createOrUpdateThemeConfig } from '@oe/api/services/theme';
+import { useCreateOrUpdateThemeConfig, useGetTheme } from '@oe/api/hooks/useTheme';
 import type { ISystemConfigRes } from '@oe/api/types/system-config';
 import { Button } from '@oe/ui/shadcn/button';
 import { toast } from '@oe/ui/shadcn/sonner';
@@ -22,7 +21,7 @@ const CloneNewTheme = ({ themeSystemRes }: CloneNewThemeModalModal) => {
 
   const [open, setOpen] = useState(false);
   const { theme, mutateTheme } = useGetTheme(themeSystemRes);
-
+  const { createOrUpdateThemeConfig } = useCreateOrUpdateThemeConfig();
   const alreadyClonedThemes = theme?.[0]?.value?.availableThemes
     ? (Object.keys(theme?.[0]?.value?.availableThemes) as ThemeName[])
     : undefined;

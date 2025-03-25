@@ -1,7 +1,6 @@
 'use client';
 
-import { useGetTheme } from '@oe/api/hooks/useTheme';
-import { createOrUpdateThemeConfig } from '@oe/api/services/theme';
+import { useCreateOrUpdateThemeConfig, useGetTheme } from '@oe/api/hooks/useTheme';
 import type { ISystemConfigRes } from '@oe/api/types/system-config';
 import { toast } from '@oe/ui/shadcn/sonner';
 import { Switch } from '@oe/ui/shadcn/switch';
@@ -25,6 +24,8 @@ const ToggleDefaultTheme = ({
   const [checked, setChecked] = useState(themeName === selectedTheme);
   const translate = useTranslations('themeHeader');
   const { theme, mutateTheme } = useGetTheme(themeSystemRes);
+  const { createOrUpdateThemeConfig } = useCreateOrUpdateThemeConfig();
+
   //TODO: remove logic use the default_theme if the actived theme was undefined.
   const handleSetSelectedTheme = async (checked: boolean) => {
     if (!checked && selectedTheme === themeName) {

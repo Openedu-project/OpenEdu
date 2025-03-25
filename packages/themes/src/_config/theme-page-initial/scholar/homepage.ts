@@ -83,4 +83,31 @@ export const createScholarHomepageConfig = (getThemeTranslation: (path: string[]
     },
     order: 2,
   }),
+  scholarAchievements: createSection<'homepage', 'scholarService'>({
+    props: {
+      title: getThemeTranslation(['homepage', 'scholarAchievements', 'title']),
+      subtitle: getThemeTranslation(['homepage', 'scholarAchievements', 'subtitle']),
+      description: getThemeTranslation(['homepage', 'scholarAchievements', 'description']),
+      image: { mime: 'image/png' },
+      achievements: {
+        stat1: {
+          percentage: 90,
+          description: getThemeTranslation(['homepage', 'scholarAchievements', 'achievements.stat1.description']),
+        },
+        stat2: {
+          percentage: 85,
+          description: getThemeTranslation(['homepage', 'scholarAchievements', 'achievements.stat2.description']),
+        },
+        stat3: {
+          percentage: 90,
+          description: getThemeTranslation(['homepage', 'scholarAchievements', 'achievements.stat3.description']),
+        },
+        stat4: {
+          percentage: 90,
+          description: getThemeTranslation(['homepage', 'scholarAchievements', 'achievements.stat4.description']),
+        },
+      },
+    },
+    order: 3,
+  }),
 });

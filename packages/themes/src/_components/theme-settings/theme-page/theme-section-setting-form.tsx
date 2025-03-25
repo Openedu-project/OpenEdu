@@ -1,7 +1,6 @@
 'use client';
 
-import { useGetTheme } from '@oe/api/hooks/useTheme';
-import { createOrUpdateThemeConfig } from '@oe/api/services/theme';
+import { useCreateOrUpdateThemeConfig, useGetTheme } from '@oe/api/hooks/useTheme';
 import type {
   PageSectionConfig,
   SectionProps,
@@ -55,7 +54,7 @@ export function SettingsForm<K extends ThemePageKey>({
   const t = useTranslations('themePageSettings');
   const { themeName, themePageKey } = useParams();
   const { theme } = useGetTheme();
-
+  const { createOrUpdateThemeConfig } = useCreateOrUpdateThemeConfig();
   useEffect(() => {
     setValues(extractFormFields(config));
     setEnabled(!!config?.enable);

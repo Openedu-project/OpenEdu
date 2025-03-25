@@ -1,6 +1,5 @@
 'use client';
-import { useGetTheme } from '@oe/api/hooks/useTheme';
-import { createOrUpdateThemeConfig } from '@oe/api/services/theme';
+import { useCreateOrUpdateThemeConfig, useGetTheme } from '@oe/api/hooks/useTheme';
 import type { ISystemConfigRes } from '@oe/api/types/system-config';
 import type { ThemeName } from '@oe/themes/types';
 import { ScrollArea } from '@oe/ui/shadcn/scroll-area';
@@ -17,6 +16,7 @@ interface ThemeListProps {
 export default function ThemeList({ themeSystemRes }: ThemeListProps) {
   const { theme, mutateTheme } = useGetTheme(themeSystemRes);
   const t = useTranslations('themeList');
+  const { createOrUpdateThemeConfig } = useCreateOrUpdateThemeConfig();
 
   const handleRemove = useCallback(
     async (name: ThemeName) => {
@@ -52,7 +52,7 @@ export default function ThemeList({ themeSystemRes }: ThemeListProps) {
         console.error(error);
       }
     },
-    [mutateTheme, theme, t]
+    [mutateTheme, theme, t, createOrUpdateThemeConfig]
   );
 
   // Sort to put active theme first

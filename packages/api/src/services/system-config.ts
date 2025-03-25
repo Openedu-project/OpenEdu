@@ -1,3 +1,4 @@
+import { getCookie } from '@oe/core/utils/cookie';
 import type { LanguageCode } from '@oe/i18n/languages';
 import { createAPIUrl, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 import {
@@ -7,15 +8,20 @@ import {
 } from '#utils/referrer-origin';
 import type { ISystemConfigKey, ISystemConfigPayload, ISystemConfigRes } from '../types/system-config';
 import { API_ENDPOINT } from '../utils/endpoints';
+import { getOrgByDomainService } from './organizations';
 
-export const createSystemConfigSWRKey = ({ key, locales }: { key: ISystemConfigKey; locales?: LanguageCode[] }) => {
+export const createSystemConfigSWRKey = ({
+  key,
+  locales,
+  domain,
+}: { key: ISystemConfigKey; locales?: LanguageCode[]; domain?: string }) => {
   const { host } = getAPIReferrerAndOriginClient();
-  console.info('host', host);
+  console.info('host', host, 'domain', domain);
   return createAPIUrl({
     endpoint: API_ENDPOINT.SYSTEM_CONFIGS,
     queryParams: {
       keys: key,
-      domains: host,
+      domains: domain ?? host,
       ...(locales ? { locales } : {}),
     },
   });
@@ -34,17 +40,28 @@ export async function getSystemConfigClient<T>(
   return res?.data;
 }
 
+// OK
 export async function getSystemConfigServer<T>({
   key,
   locales,
   init,
 }: { key: ISystemConfigKey; locales?: LanguageCode[]; init?: RequestInit }) {
   const { host } = await getAPIReferrerAndOriginServer();
+  const domain = (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? '';
+  const [orgData] = await Promise.all([
+    getOrgByDomainService(undefined, {
+      domain: domain?.split('/')?.[0] ?? domain,
+    }),
+  ]);
+
+  console.info('org', orgData?.domain);
   const endpointKey = createAPIUrl({
     endpoint: API_ENDPOINT.SYSTEM_CONFIGS,
     queryParams: {
       keys: key,
-      domains: host,
+      domains: orgData?.domain || host,
+      // domains: host,
+
       ...(locales ? { locales: locales.join(',') } : {}),
     },
   });
@@ -53,19 +70,26 @@ export async function getSystemConfigServer<T>({
   return res?.data;
 }
 
+//TODO: get domain based on host (call api get org by domain)
 export const createSystemConfig = async <T>(
   endpoint: string | null | undefined,
-  { payload, init }: { payload: ISystemConfigPayload<T>; init?: RequestInit }
+  { payload, init, domain }: { payload: ISystemConfigPayload<T>; init?: RequestInit; domain?: string }
 ) => {
   const { key, data_type, value, ...rest } = payload;
   const { host } = await getAPIReferrerAndOrigin();
+  // const domain = (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? '';
+  // const [orgData] = await Promise.all([
+  //   getOrgByDomainService(undefined, {
+  //     domain: domain?.split('/')?.[0] ?? domain,
+  //   }),
+  // ]);
 
   return await postAPI<ISystemConfigRes<T>, ISystemConfigPayload<T>>(
     endpoint ?? API_ENDPOINT.ADMIN_SYSTEM_CONFIGS,
     {
       key,
       data_type: data_type ?? 'jsonb',
-      domain: host,
+      domain: domain ?? host,
       value: JSON.stringify(value),
       ...rest,
     },
@@ -73,9 +97,10 @@ export const createSystemConfig = async <T>(
   );
 };
 
+//TODO: get domain based on host (call api get org by domain)
 export const updateSystemConfig = async <T>(
   endpoint: string | null | undefined,
-  { id, payload, init }: { id: string; payload: ISystemConfigPayload<T>; init?: RequestInit }
+  { id, payload, init, domain }: { id: string; payload: ISystemConfigPayload<T>; init?: RequestInit; domain?: string }
 ) => {
   const { key, data_type, value, ...rest } = payload;
   const { host } = await getAPIReferrerAndOrigin();
@@ -90,7 +115,7 @@ export const updateSystemConfig = async <T>(
     {
       key,
       data_type: data_type ?? 'jsonb',
-      domain: host,
+      domain: domain ?? host,
       value: JSON.stringify(value),
       ...rest,
     },
@@ -100,10 +125,10 @@ export const updateSystemConfig = async <T>(
 
 export const createOrUpdateSystemConfig = async <T>(
   endpoint: string | null | undefined,
-  { id, payload, init }: { id?: string; payload: ISystemConfigPayload<T>; init?: RequestInit }
+  { id, payload, init, domain }: { id?: string; payload: ISystemConfigPayload<T>; init?: RequestInit; domain?: string }
 ) => {
   if (id) {
-    return await updateSystemConfig(endpoint, { id, payload, init });
+    return await updateSystemConfig(endpoint, { id, payload, init, domain });
   }
-  return await createSystemConfig(endpoint, { payload, init });
+  return await createSystemConfig(endpoint, { payload, init, domain });
 };

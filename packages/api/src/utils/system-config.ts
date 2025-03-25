@@ -1,8 +1,6 @@
 import { buildUrl } from '@oe/core/utils/url';
 import type { ISystemConfigKey } from '#types/system-config';
 
-import type { ThemeName } from '../../../themes/src/_types/theme-page';
-
 import { getCookie } from '@oe/core/utils/cookie';
 import { getOrgByDomainService } from '#services/organizations';
 import { getAPIReferrerAndOriginClient } from './referrer-origin';
@@ -17,25 +15,25 @@ export const systemConfigKeys = {
   specificThemeSystem: 'theme_system_:themeName',
 } as const;
 
-export const createThemeSystemConfigKeyServer = async (themeName?: ThemeName): Promise<ISystemConfigKey> => {
+export const createThemeSystemConfigKeyServer = async (): Promise<ISystemConfigKey> => {
   const domain = (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? '';
   const [orgData] = await Promise.all([
     getOrgByDomainService(undefined, {
-      domain: domain?.split('/')?.[0] ?? domain,
+      domain: domain?.split('/')?.[0] ?? '',
     }),
   ]);
 
   return buildUrl({
     endpoint: systemConfigKeys.specificThemeSystem,
-    params: { themeName: themeName || orgData?.domain?.split('.')?.[0] }, //theme_system_vbi
+    params: { themeName: orgData?.domain?.split('.')?.[0] }, //theme_system_vbi
   }) as ISystemConfigKey;
 };
 
-export const createThemeSystemConfigKeyClient = (themeName?: ThemeName): ISystemConfigKey => {
+export const createThemeSystemConfigKeyClient = (domain?: string): ISystemConfigKey => {
   const { host } = getAPIReferrerAndOriginClient();
 
   return buildUrl({
     endpoint: systemConfigKeys.specificThemeSystem,
-    params: { themeName: themeName || host?.split('.')?.[0] }, //theme_system_vbi
+    params: { themeName: (domain || host)?.split('.')?.[0] }, //theme_system_vbi
   }) as ISystemConfigKey;
 };
