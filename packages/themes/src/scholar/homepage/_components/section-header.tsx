@@ -10,7 +10,7 @@ interface SectionHeaderProps {
 
 const SectionHeader = ({ subtitle, title, description, centered = true, variant = 'primary' }: SectionHeaderProps) => {
   return (
-    <div className={`max-w-3xl ${centered ? 'mx-auto text-center' : ''}`}>
+    <div className={`max-w-3xl ${centered ? 'mx-auto text-center' : 'text-center sm:text-start'}`}>
       <h3
         className={cn(
           'mb-3 font-semibold text-primary text-sm uppercase tracking-wider md:text-lg',

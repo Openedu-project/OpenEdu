@@ -10,7 +10,6 @@ import type {
 import type { ThemeFooterProps } from '../../auth/footer';
 import type { ThemeHeaderProps } from '../../auth/header';
 import type { AuthLayoutLoginProps } from '../../auth/login';
-import type { ScholarHomepageAboutUsProps, ScholarHomepageHeroProps, ScholarHomepageServiceProps } from '../../scholar';
 
 import type {
   VbiAboutUsCoreProps,
@@ -40,8 +39,12 @@ import type {
   AvailHomepageSolutionProps,
 } from '../../avail/type';
 import type {
+  ScholarHomepageAboutUsProps,
   ScholarHomepageAchievementsProps,
+  ScholarHomepageContactProps,
+  ScholarHomepageHeroProps,
   ScholarHomepageProjectsProps,
+  ScholarHomepageServiceProps,
   ScholarHomepageTeamProps,
   ScholarHomepageTestimonialsProps,
 } from '../../scholar/type';
@@ -86,6 +89,7 @@ export interface SectionPropsMap<K extends ThemePageKey> {
   scholarTeam: DynamicProps<K, ScholarHomepageTeamProps>;
   scholarProjects: DynamicProps<K, ScholarHomepageProjectsProps>;
   scholarTestimonials: DynamicProps<K, ScholarHomepageTestimonialsProps>;
+  scholarContact: DynamicProps<K, ScholarHomepageContactProps>;
 
   // VBI
   vbiHero: DynamicProps<K, VbiHomepageHeroProps>;

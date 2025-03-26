@@ -1,7 +1,7 @@
 import { Image } from '@oe/ui/components/image';
 import type { FileType } from '@oe/ui/components/uploader';
 import { Card, CardContent } from '@oe/ui/shadcn/card';
-import { Star, StarHalf } from 'lucide-react';
+import { Quote, Star, StarHalf } from 'lucide-react';
 
 interface TestimonialCardProps {
   quote?: string;
@@ -42,7 +42,9 @@ const TestimonialCard = ({ quote, rating = 0, avatar, name, position }: Testimon
     <Card className="mx-auto max-w-md overflow-visible bg-card shadow-sm">
       <CardContent className="relative p-8 text-center">
         {/* Quote Icon */}
-        <div className="-translate-x-1/2 -translate-y-1/2 absolute top-4 left-1/2 transform text-primary">"</div>
+        <div className="mt-4 flex w-full justify-center">
+          <Quote className="h-10 w-10 fill-primary text-primary" />
+        </div>
 
         {/* Quote Text */}
         <p className="mt-6 mb-4 text-center text-foreground/60">{quote}</p>

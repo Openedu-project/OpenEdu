@@ -8,15 +8,19 @@ export const createScholarHomepageConfig = (getThemeTranslation: (path: string[]
       bannerMain: { mime: 'image/png' },
       bannerTop: { mime: 'image/png' },
       bannerBottom: { mime: 'image/png' },
+      button: {
+        text: getThemeTranslation(['homepage', 'scholarHero', 'button', 'text']),
+        link: '/',
+      },
       partners: new Array(6).fill({ mime: 'image/png' }),
     },
     order: 0,
   }),
   scholarService: createSection<'homepage', 'scholarService'>({
     props: {
-      titleSection: getThemeTranslation(['homepage', 'scholarService', 'titleSection']),
-      titleMain: getThemeTranslation(['homepage', 'scholarService', 'titleMain']),
-      titleSub: getThemeTranslation(['homepage', 'scholarService', 'titleSub']),
+      subtitle: getThemeTranslation(['homepage', 'scholarService', 'subtitle']),
+      title: getThemeTranslation(['homepage', 'scholarService', 'title']),
+      description: getThemeTranslation(['homepage', 'scholarService', 'description']),
       services: {
         service1: {
           title: getThemeTranslation(['homepage', 'scholarService', 'services.service1.title']),
@@ -44,9 +48,9 @@ export const createScholarHomepageConfig = (getThemeTranslation: (path: string[]
   }),
   scholarAboutUs: createSection<'homepage', 'scholarAboutUs'>({
     props: {
-      titleSection: getThemeTranslation(['homepage', 'scholarAboutUs', 'titleSection']),
-      titleMain: getThemeTranslation(['homepage', 'scholarAboutUs', 'titleMain']),
-      titleSub: getThemeTranslation(['homepage', 'scholarAboutUs', 'titleSub']),
+      title: getThemeTranslation(['homepage', 'scholarAboutUs', 'title']),
+      subtitle: getThemeTranslation(['homepage', 'scholarAboutUs', 'subtitle']),
+      description: getThemeTranslation(['homepage', 'scholarAboutUs', 'description']),
       image: { mime: 'image/png' },
       features: {
         feature1: {
@@ -192,5 +196,17 @@ export const createScholarHomepageConfig = (getThemeTranslation: (path: string[]
       },
     },
     order: 6,
+  }),
+  scholarContact: createSection<'homepage', 'scholarContact'>({
+    props: {
+      title: getThemeTranslation(['homepage', 'scholarContact', 'title']),
+      description: getThemeTranslation(['homepage', 'scholarContact', 'description']),
+      button: {
+        text: getThemeTranslation(['homepage', 'scholarContact', 'button', 'text']),
+        link: '/',
+      },
+      image: { mime: 'image/png' },
+    },
+    order: 7,
   }),
 });

@@ -30,8 +30,6 @@ import { AvailHomepageSolution } from './avail/homepage/avail-solution';
 import AvailHomepage from './avail/homepage/index';
 
 import { fonts } from './fonts';
-import { ScholarHomepageAboutUs, ScholarHomepageHero, ScholarHomepageService } from './scholar';
-import { ScholarAboutUs, ScholarHomePage } from './scholar';
 
 import { ScholarHomepageAchievements } from './scholar/homepage/achievements';
 
@@ -41,6 +39,12 @@ import { ScholarHomepageProjects } from './scholar/homepage/projects';
 
 import { ScholarHomepageTestimonials } from './scholar/homepage/testimonials';
 
+import ScholarHomepage from './scholar/homepage/index';
+
+import { ScholarHomepageAboutUs } from './scholar/homepage/about-us';
+import { ScholarHomepageContact } from './scholar/homepage/contact';
+import ScholarHomepageHero from './scholar/homepage/hero/hero';
+import { ScholarHomepageService } from './scholar/homepage/service';
 import { VbiAboutUsCore } from './vbi/about-us/core';
 import { VbiAboutUsGoal } from './vbi/about-us/goal';
 import VbiAboutUs from './vbi/about-us/index';
@@ -86,7 +90,7 @@ export const THEMES: ThemeRender = {
   },
   scholar: {
     homepage: {
-      theme: ScholarHomePage,
+      theme: ScholarHomepage,
       scholarHero: ScholarHomepageHero,
       scholarService: ScholarHomepageService,
       scholarAboutUs: ScholarHomepageAboutUs,
@@ -94,9 +98,7 @@ export const THEMES: ThemeRender = {
       scholarTeam: ScholarHomepageTeam,
       scholarProjects: ScholarHomepageProjects,
       scholarTestimonials: ScholarHomepageTestimonials,
-    },
-    'about-us': {
-      theme: ScholarAboutUs,
+      scholarContact: ScholarHomepageContact,
     },
     auth,
   },
@@ -162,7 +164,7 @@ export const THEMES_SERVER: ThemeRender = {
   },
   scholar: {
     homepage: {
-      theme: ScholarHomePage,
+      theme: ScholarHomepage,
       scholarHero: ScholarHomepageHero,
       scholarService: ScholarHomepageService,
       scholarAboutUs: ScholarHomepageAboutUs,
@@ -170,9 +172,7 @@ export const THEMES_SERVER: ThemeRender = {
       scholarTeam: ScholarHomepageTeam,
       scholarProjects: ScholarHomepageProjects,
       scholarTestimonials: ScholarHomepageTestimonials,
-    },
-    'about-us': {
-      theme: ScholarAboutUs,
+      scholarContact: ScholarHomepageContact,
     },
     auth: {
       theme: AuthLayout,

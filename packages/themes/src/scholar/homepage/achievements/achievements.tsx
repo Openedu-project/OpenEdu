@@ -21,8 +21,8 @@ const ScholarHomepageAchievements: SectionComponent<'homepage', 'scholarAchievem
   const t = useTranslations('themePage.scholar.homepage.scholarAchievements');
 
   return (
-    <div className={cn('bg-primary py-8 md:py-12 lg:py-16', className)}>
-      <div className="container space-y-12 md:space-y-8">
+    <div className={cn('bg-primary py-12 md:py-16 lg:py-20', className)}>
+      <div className="container space-y-8">
         <SectionHeader title={t('title')} subtitle={t('subtitle')} description={t('description')} variant="secondary" />
         <div className="flex flex-col gap-2 md:flex-row md:gap-4">
           <Image

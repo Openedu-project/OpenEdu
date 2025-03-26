@@ -20,7 +20,7 @@ interface ExpertProps {
 
 const ExpertCard = ({ name, role, image, socialLinks }: ExpertProps) => {
   return (
-    <Card className="mx-auto h-full max-w-[300px] overflow-hidden border-none bg-card p-2 shadow-sm transition-shadow duration-300 hover:shadow-md md:mx-0 md:w-full md:max-w-none">
+    <Card className="mx-auto h-full max-w-[320px] overflow-hidden border-none bg-card p-2 shadow-sm transition-shadow duration-300 hover:shadow-md md:mx-0 md:w-full md:max-w-none">
       <Image
         src={image?.url}
         height={image?.height ?? 300}
@@ -32,11 +32,11 @@ const ExpertCard = ({ name, role, image, socialLinks }: ExpertProps) => {
         <h3 className="mt-1 font-bold text-base text-foreground uppercase tracking-wide sm:mt-2 sm:text-lg">{name}</h3>
         <p className="text-foreground/80 text-xs sm:text-sm">{role}</p>
       </CardContent>
-      <CardFooter className="!pt-0 flex justify-center space-x-2 p-3 sm:p-4">
+      <CardFooter className="!pt-0 flex justify-center space-x-2 p-3 sm:p-4 md:space-x-4">
         {socialLinks?.facebook && (
           <Link
             href={socialLinks.facebook}
-            className="flex h-7 w-7 items-center justify-center rounded-full border-primary p-0 text-primary transition-colors hover:bg-primary sm:h-8 sm:w-8"
+            className="flex h-7 w-7 items-center justify-center rounded-full border-primary p-0 text-primary transition-colors sm:h-8 sm:w-8"
             aria-label={`${name}'s Twitter`}
             target="_blank"
             rel="noopener noreferrer"
@@ -47,7 +47,7 @@ const ExpertCard = ({ name, role, image, socialLinks }: ExpertProps) => {
         {socialLinks?.x && (
           <Link
             href={socialLinks.x}
-            className="flex h-7 w-7 items-center justify-center rounded-full border-primary p-0 text-primary transition-colors hover:bg-primary sm:h-8 sm:w-8"
+            className="flex h-7 w-7 items-center justify-center rounded-full border-primary p-0 text-primary transition-colors sm:h-8 sm:w-8"
             aria-label={`${name}'s Twitter`}
             target="_blank"
             rel="noopener noreferrer"
@@ -58,7 +58,7 @@ const ExpertCard = ({ name, role, image, socialLinks }: ExpertProps) => {
         {socialLinks?.linkedin && (
           <Link
             href={socialLinks.linkedin}
-            className="flex h-7 w-7 items-center justify-center rounded-full border-primary p-0 text-primary transition-colors hover:bg-primary sm:h-8 sm:w-8"
+            className="flex h-7 w-7 items-center justify-center rounded-full border-primary p-0 text-primary transition-colors sm:h-8 sm:w-8"
             aria-label={`${name}'s Twitter`}
             target="_blank"
             rel="noopener noreferrer"

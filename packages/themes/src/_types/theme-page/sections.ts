@@ -14,6 +14,7 @@ export type HomeSection =
   | 'scholarTeam'
   | 'scholarProjects'
   | 'scholarTestimonials'
+  | 'scholarContact'
   | 'vbiHero'
   | 'vbiAchievements'
   | 'vbiCourses'

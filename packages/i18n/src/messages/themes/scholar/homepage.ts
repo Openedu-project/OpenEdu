@@ -4,11 +4,14 @@ export const scholarHomepage = {
       title: 'High quality IT-Solutions for help your problems about technology.',
       subTitle:
         'Quis eleifend quam adipiscing vitae proin sagittis nisl. Lectus vestibulum mattis. Quis eleifend quam adipiscing vitae proin sagittis nis.',
+      button: {
+        text: 'EXPLORE MORE',
+      },
     },
     scholarService: {
-      titleSection: 'SERVICES',
-      titleMain: 'We provide All-in-one Solution',
-      titleSub: 'Quis eleifend quam adipiscing vitae proin sagittis nisl. Lectus vestibulum.',
+      subtitle: 'SERVICES',
+      title: 'We provide All-in-one Solution',
+      description: 'Quis eleifend quam adipiscing vitae proin sagittis nisl. Lectus vestibulum.',
       services: {
         service1: {
           title: 'Software Development',
@@ -33,9 +36,9 @@ export const scholarHomepage = {
       },
     },
     scholarAboutUs: {
-      titleSection: 'About us',
-      titleMain: 'We have over 25+ years in the Tech Industry',
-      titleSub: 'Quis eleifend quam adipiscing vitae proin sagittis nisl. Lectus vestibulum.',
+      subtitle: 'About us',
+      title: 'We have over 25+ years in the Tech Industry',
+      description: 'Quis eleifend quam adipiscing vitae proin sagittis nisl. Lectus vestibulum.',
       features: {
         feature1: {
           title: 'DEDICATED TEAMS',
@@ -133,6 +136,14 @@ export const scholarHomepage = {
           'Nisi rhoncus mattis rhoncus urna neque viverra. Turpis egestas pretium aenean pharetra magna ac placerat vestibulum.',
         name: 'SARAH DOE',
         position: 'Businesswoman',
+      },
+    },
+    scholarContact: {
+      title: 'Let us help to thrive and shine your business goal to the very next level',
+      description:
+        'Turpis cursus in hac habitasse platea dictumst quisque sagittis purus. Ligula ullamcorper malesuada proin libero nunc consequat. Dignissim sodales ut eu sem integer vitae justo. Tincidunt tortor aliquam nulla facilisi cras.',
+      button: {
+        text: 'CONTACT FOR FREE CONSULTANT',
       },
     },
   },

@@ -26,7 +26,7 @@ const ScholarHomepageProjects: SectionComponent<'homepage', 'scholarProjects'> =
 
   const banners = [props?.banner1, props?.banner2, props?.banner3, props?.banner4];
   return (
-    <div className={cn('bg-background py-12 md:py-16 lg:py-20', className)}>
+    <div className={cn('bg-accent py-12 md:py-16 lg:py-20', className)}>
       <div className="container space-y-8 md:flex md:gap-8">
         <div className="space-y-4 md:order-last">
           <SectionHeader
@@ -36,10 +36,10 @@ const ScholarHomepageProjects: SectionComponent<'homepage', 'scholarProjects'> =
             variant="primary"
             centered={false}
           />
-          <Button>
+          <Button className="w-full sm:w-fit">
             <Link
               href={props?.button?.link ? props?.button?.link : '#'}
-              className="!text-primary-foreground bg-inherit hover:bg-transparent hover:no-underline"
+              className="!text-primary-foreground w-full bg-inherit hover:bg-transparent hover:no-underline"
             >
               {t('button.text')}
             </Link>
