@@ -1,4 +1,4 @@
-import CreatorImage from '@oe/assets/images/openedu-homepage/banner-creators.svg';
+import CreatorImage from '@oe/assets/images/openedu-homepage/banner-creators.png';
 import { Image } from '@oe/ui/components/image';
 import { Button } from '@oe/ui/shadcn/button';
 import { useTranslations } from 'next-intl';
