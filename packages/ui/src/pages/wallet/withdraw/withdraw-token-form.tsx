@@ -47,8 +47,7 @@ export const WithdrawTokenForm = () => {
           toast.error(t('form.error.invalidWallet'));
           return;
         }
-        console.log('process.env.NODE_ENV', process.env.NODE_ENV);
-        console.log("process.env.NODE_ENV === 'production'", process.env.NODE_ENV === 'production');
+
         await tokenSubmitWithdrawService(null, walletId, {
           payload: {
             ...data,
