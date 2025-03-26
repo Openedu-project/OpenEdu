@@ -46,7 +46,7 @@ const ScholarHomepageService: SectionComponent<'homepage', 'scholarService'> = (
 
   return (
     <div className={cn('bg-accent py-12 md:py-16 lg:py-20', className)}>
-      <div className="container space-y-8 md:space-y-12">
+      <div className="container space-y-8">
         <SectionHeader title={t('title')} subtitle={t('subtitle')} description={t('description')} />
 
         {/* Services Grid */}

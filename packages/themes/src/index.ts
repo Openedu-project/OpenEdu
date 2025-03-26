@@ -41,6 +41,11 @@ import { ScholarHomepageTestimonials } from './scholar/homepage/testimonials';
 
 import ScholarHomepage from './scholar/homepage/index';
 
+import { FenetHomepageExperience } from './fenet/homepage/experience';
+import { FenetHomepageFeature } from './fenet/homepage/feature';
+import { FenetHomepageHero } from './fenet/homepage/hero';
+import FenetHomepage from './fenet/homepage/index';
+import { FenetHomepageService } from './fenet/homepage/service';
 import { ScholarHomepageAboutUs } from './scholar/homepage/about-us';
 import { ScholarHomepageContact } from './scholar/homepage/contact';
 import ScholarHomepageHero from './scholar/homepage/hero/hero';
@@ -143,6 +148,16 @@ export const THEMES: ThemeRender = {
     },
     auth,
   },
+  fenet: {
+    homepage: {
+      theme: FenetHomepage,
+      fenetHero: FenetHomepageHero,
+      fenetService: FenetHomepageService,
+      fenetFeature: FenetHomepageFeature,
+      fenetExperience: FenetHomepageExperience,
+    },
+    auth,
+  },
 } as const;
 
 export const THEMES_SERVER: ThemeRender = {
@@ -218,6 +233,16 @@ export const THEMES_SERVER: ThemeRender = {
       availSolution: AvailHomepageSolution,
       availEco: AvailHomepageEco,
       availBlogs: AvailHomepageBlogsServer,
+    },
+    auth,
+  },
+  fenet: {
+    homepage: {
+      theme: FenetHomepage,
+      fenetHero: FenetHomepageHero,
+      fenetService: FenetHomepageService,
+      fenetFeature: FenetHomepageFeature,
+      fenetExperience: FenetHomepageExperience,
     },
     auth,
   },

@@ -39,6 +39,12 @@ import type {
   AvailHomepageSolutionProps,
 } from '../../avail/type';
 import type {
+  FenetHomepageExperienceProps,
+  FenetHomepageFeatureProps,
+  FenetHomepageHeroProps,
+  FenetHomepageServiceProps,
+} from '../../fenet/type';
+import type {
   ScholarHomepageAboutUsProps,
   ScholarHomepageAchievementsProps,
   ScholarHomepageContactProps,
@@ -116,4 +122,10 @@ export interface SectionPropsMap<K extends ThemePageKey> {
   availSolution: DynamicProps<K, AvailHomepageSolutionProps>;
   availEco: DynamicProps<K, AvailHomepageEcoProps>;
   availBlogs: DynamicProps<K, AvailHomepageBlogsProps>;
+
+  // Fenet
+  fenetHero: DynamicProps<K, FenetHomepageHeroProps>;
+  fenetService: DynamicProps<K, FenetHomepageServiceProps>;
+  fenetFeature: DynamicProps<K, FenetHomepageFeatureProps>;
+  fenetExperience: DynamicProps<K, FenetHomepageExperienceProps>;
 }
