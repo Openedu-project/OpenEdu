@@ -1,5 +1,4 @@
 import type { ICertificateData, ICertificateElement, ICertificateRichTextElement } from '@oe/api/types/certificate';
-import { View } from '@react-pdf/renderer';
 import Html from 'react-pdf-html';
 import { getElementPosition, interpolateContent } from '../../utils';
 
@@ -18,17 +17,8 @@ export const PDFRichTextRenderer = ({
   html = interpolateContent(html ?? '', data);
 
   const styles = {
-    container: {
-      position: 'absolute' as const,
-      ...getElementPosition(element as ICertificateElement),
-      width: element.styles?.width || 'auto',
-      height: element.styles?.height || 'auto',
-      fontSize: 14,
-      fontFamily: 'Inter',
-    },
     p: {
       margin: 0,
-      lineHeight: 1.625,
     },
     strong: {
       fontWeight: '700',
@@ -39,8 +29,18 @@ export const PDFRichTextRenderer = ({
   };
 
   return (
-    <View key={element.id} style={styles.container}>
-      <Html stylesheet={styles}>{html}</Html>
-    </View>
+    <Html
+      style={{
+        position: 'absolute' as const,
+        ...getElementPosition(element as ICertificateElement),
+        width: element.styles?.width || 'auto',
+        height: element.styles?.height || 'auto',
+        fontSize: 14,
+        fontFamily: 'Inter',
+      }}
+      stylesheet={styles}
+    >
+      {html}
+    </Html>
   );
 };

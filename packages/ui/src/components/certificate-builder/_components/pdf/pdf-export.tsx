@@ -1,9 +1,10 @@
 'use client';
 
 import type { ICertificateData, ICertificateTemplate } from '@oe/api/types/certificate';
-import { Document, Image, Page, View, pdf } from '@react-pdf/renderer';
+import { Document, Image, Page, pdf } from '@react-pdf/renderer';
 import type { FC, MouseEvent } from 'react';
 import './pdf-fonts';
+import { formatDate } from '@oe/core/utils/datetime';
 import { Download } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
@@ -33,48 +34,48 @@ export const CertificatePDF: FC<{
           padding: 0,
         }}
       >
-        <View>
-          {/* Background Image */}
-          {template.frame?.file?.url && (
-            <Image
-              // src={template.frame?.file?.url}
-              src={{
-                uri: `${template.frame?.file?.url}?cachebuster=${Date.now()}`,
-                method: 'GET',
-                headers: { 'Cache-Control': 'no-cache' },
-              }}
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: template.frame?.width,
-                height: template.frame?.height,
-              }}
-            />
-          )}
+        {/* <View> */}
+        {/* Background Image */}
+        {template.frame?.file?.url && (
+          <Image
+            // src={template.frame?.file?.url}
+            src={{
+              uri: `${template.frame?.file?.url}?cachebuster=${Date.now()}`,
+              method: 'GET',
+              headers: { 'Cache-Control': 'no-cache' },
+            }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: template.frame?.width,
+              height: template.frame?.height,
+            }}
+          />
+        )}
 
-          {template.elements?.map(element => {
-            if (element.visible === false) {
+        {template.elements?.map(element => {
+          if (!element.visible) {
+            return null;
+          }
+
+          switch (element.type) {
+            case 'text':
+              return <PDFTextRenderer key={element.id} element={element} data={data} />;
+            case 'image':
+              return <PDFImageRenderer key={element.id} element={element} />;
+            case 'rich-text':
+              return <PDFRichTextRenderer key={element.id} element={element} data={data} />;
+            case 'signature':
+              return <PDFSignatureRenderer key={element.id} element={element} data={data} />;
+            case 'organization':
+              return <PDFOrganizationRenderer key={element.id} element={element} data={data} />;
+
+            default:
               return null;
-            }
-
-            switch (element.type) {
-              case 'text':
-                return <PDFTextRenderer key={element.id} element={element} data={data} />;
-              case 'image':
-                return <PDFImageRenderer key={element.id} element={element} />;
-              case 'rich-text':
-                return <PDFRichTextRenderer key={element.id} element={element} data={data} />;
-              case 'signature':
-                return <PDFSignatureRenderer key={element.id} element={element} data={data} />;
-              case 'organization':
-                return <PDFOrganizationRenderer key={element.id} element={element} data={data} />;
-
-              default:
-                return null;
-            }
-          })}
-        </View>
+          }
+        })}
+        {/* </View> */}
       </Page>
     </Document>
   );
@@ -108,7 +109,9 @@ export const ExportPDFButton = ({ fileName, template, data, onClick, ...props }:
       a.href = url;
       const name =
         data?.learner_name && data?.course_name && data?.issue_date
-          ? `${template.name}-${data.learner_name}-${data.course_name}-${data.issue_date}`
+          ? `${template.name}-${data.learner_name}-${
+              data.course_name
+            }-${formatDate(new Date(data.issue_date).getTime())}`
           : template.name;
       a.download = `${fileName || name}-${Date.now()}.pdf`;
       a.click();
