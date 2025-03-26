@@ -1,4 +1,11 @@
-import type { IFormOption, IFormSettings, IQuestionParam } from '@oe/api/types/form';
+import type {
+  IAnswerParams,
+  IFormAnswer,
+  IFormOption,
+  IFormQuestion,
+  IFormSettings,
+  IQuestionParam,
+} from '@oe/api/types/form';
 import { z } from '@oe/api/utils/zod';
 import type { FormComponent, FormFieldOrGroup, FormFieldType } from './types';
 
@@ -194,4 +201,132 @@ function convertFieldToQuestion(field: FormFieldType): IQuestionParam {
     options: options as IFormOption[],
     sub_questions: null,
   };
+}
+
+function createNameToIdMapping(questions: IFormQuestion[]): Record<string, string> {
+  return questions.reduce(
+    (result, question) => {
+      const name = question?.settings?.props?.name as string;
+      const id = question.id;
+      result[name] = id;
+      return result;
+    },
+    {} as Record<string, string>
+  );
+}
+
+/**
+ * Tạo mapping từ value của option đến option id cho mỗi câu hỏi
+ * @param questions Danh sách câu hỏi từ API
+ * @returns Object với key là question id và value là mapping từ option value đến option id
+ */
+function createValueToOptionIdMapping(questions: IFormQuestion[]): Record<string, Record<string, string>> {
+  return questions.reduce(
+    (result, question) => {
+      if (
+        question.options &&
+        question.options.length > 0 &&
+        question?.settings?.props?.options &&
+        Array.isArray(question?.settings?.props?.options) &&
+        question?.settings?.props?.options.length > 0
+      ) {
+        const questionId = question.id;
+        result[questionId] = {};
+
+        // Tạo map text -> option
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        const optionMap: Record<string, any> = {};
+        for (const option of question.options) {
+          optionMap[option.text] = option;
+        }
+
+        // Map value -> option id
+        const options = Array.isArray(question.settings?.props?.options) ? question.settings.props.options : [];
+        for (const propOption of options) {
+          const option = optionMap[propOption.label];
+          if (option) {
+            result[questionId][propOption.value] = option.id;
+          }
+        }
+      }
+      return result;
+    },
+    {} as Record<string, Record<string, string>>
+  );
+}
+
+export function convertFormValueToAnswers(
+  formValue: z.ZodObject<Record<string, z.ZodTypeAny>>,
+  questions: IFormQuestion[]
+): IFormAnswer[] {
+  // Danh sách các loại câu hỏi sử dụng field options
+  const optionsTypes = ['selectbox', 'multiple_choice', 'radio', 'checkbox'];
+
+  // Danh sách các loại câu hỏi sử dụng field answer_text
+  const answerTextTypes = ['email', 'text', 'phone', 'input', 'textarea', 'date', 'time', 'url'];
+
+  // Tạo các mappings cần thiết
+  const nameToIdMap = createNameToIdMapping(questions);
+  const valueToOptionIdMap = createValueToOptionIdMapping(questions);
+
+  // Map question_type từ question id
+  const questionTypeMap = questions.reduce(
+    (map, question) => {
+      map[question.id] = question.question_type;
+      return map;
+    },
+    {} as Record<string, string>
+  );
+
+  // Danh sách kết quả
+  const answers: IAnswerParams[] = [];
+
+  // Xử lý từng trường trong form value
+  for (const [fieldName, fieldValue] of Object.entries(formValue)) {
+    // Bỏ qua các trường không liên quan
+    if (fieldName === 'heading' || fieldName === 'space' || fieldName === 'paragraph' || !nameToIdMap[fieldName]) {
+      continue;
+    }
+
+    const questionId = nameToIdMap[fieldName];
+    const questionType = questionTypeMap[questionId];
+
+    // Bỏ qua các nút submit button hoặc undefined type
+    if (!questionType || questionType === 'submitButton') {
+      continue;
+    }
+
+    // Xử lý các loại câu hỏi sử dụng field options
+    if (optionsTypes.includes(questionType as string)) {
+      // Xử lý trường hợp multiple choice (giá trị là mảng)
+      if (Array.isArray(fieldValue)) {
+        const optionIds = fieldValue
+          .map(value => valueToOptionIdMap[questionId]?.[value])
+          .filter((id): id is string => id !== undefined);
+
+        if (optionIds.length > 0) {
+          answers.push({
+            question_id: questionId,
+            options: optionIds,
+          });
+        }
+      }
+      // Xử lý trường hợp giá trị đơn (selectbox, radio)
+      else if (typeof fieldValue === 'string' && valueToOptionIdMap[questionId]?.[fieldValue]) {
+        answers.push({
+          question_id: questionId,
+          options: [valueToOptionIdMap[questionId][fieldValue]],
+        });
+      }
+    }
+    // Xử lý các loại câu hỏi sử dụng field answer_text
+    else if (answerTextTypes.includes(questionType as string) && typeof fieldValue === 'string') {
+      answers.push({
+        question_id: questionId,
+        answer_text: fieldValue,
+      });
+    }
+  }
+
+  return answers;
 }

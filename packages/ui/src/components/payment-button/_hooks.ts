@@ -177,7 +177,7 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false, onClick }
   const refByStorage = getCookieClient(String(process.env.NEXT_PUBLIC_APP_COOKIE_REF_BY));
   const { triggerPostEnrollCourse } = usePostEnrollCourse(courseData?.cuid ?? '');
 
-  const domain = courseData?.org?.domain;
+  const domain = courseData?.org?.alt_domain?.length > 0 ? courseData?.org?.alt_domain : courseData?.org?.domain;
   const isExternalDomain = useMemo(() => {
     if (process.env.NODE_ENV !== 'development' && typeof window !== 'undefined') {
       const isExternalLink =

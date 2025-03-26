@@ -1,30 +1,71 @@
-import type { IFormResponse } from '@oe/api/types/form';
+import type { IFormQuestion, IFormResponse } from '@oe/api/types/form';
+import type { z } from '@oe/api/utils/zod';
 import { useTranslations } from 'next-intl';
-import type { MouseEvent } from 'react';
+import { type MouseEvent, Suspense } from 'react';
 import { type ButtonConfig, Modal, type ModalProps } from '#components/modal';
+import { FormFieldWithLabel } from '#shadcn/form';
+import { Skeleton } from '#shadcn/skeleton';
+import { cn } from '#utils/cn';
+import { componentWithoutLabel } from '../constants';
+import { formComponents } from '../form-components';
 import type { FormFieldType } from '../types';
-import { FormRenderer } from './form-renderer';
+import { convertFormValueToAnswers, generateZodSchema } from '../utils';
 
 export function FormRendererModal({
   formData,
+  onSubmit,
   ...props
 }: // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 Partial<ModalProps<any>> & { formData?: IFormResponse }) {
   const tGeneral = useTranslations('general');
 
-  const fields = formData?.questions?.map(question => question?.settings?.props as FormFieldType).filter(Boolean) ?? [];
+  const fields =
+    formData?.questions
+      ?.map(question => {
+        return {
+          ...question?.settings?.props,
+          // name: question.id,
+        } as FormFieldType;
+      })
+      .filter(Boolean) ?? [];
 
-  const fieldsWithoutSubmitButton = fields.filter(field => field.fieldType !== 'submitButton');
+  const formSchema = generateZodSchema(fields);
+
+  const fieldsWithoutSubmitButton = fields.filter(field => field?.fieldType !== 'submitButton');
   const submitButton = fields.find(field => field.fieldType === 'submitButton');
+
+  const handleSubmit = (values: z.infer<z.ZodType>) => {
+    console.log(values, 'values');
+    const answers = convertFormValueToAnswers(values, formData?.questions as IFormQuestion[]);
+
+    // if (isRegisterOrg) {
+    //   try {
+    //     const res = await triggerValidateForm(
+    //       getDomainValidatedKeys(formData, convertValue)
+    //     );
+
+    //     if (res?.data) {
+    //       onSubmit?.(convertValue);
+    //     }
+    //   } catch (error) {
+    //     console.error("error", error);
+    //   }
+    // } else {
+    onSubmit?.(answers);
+    // }
+  };
 
   return (
     <Modal
       {...props}
       title=""
       description=""
+      validationSchema={formSchema}
+      onSubmit={handleSubmit}
       buttons={
         [
-          {
+          // {
+          props?.hasCancelButton && {
             label: tGeneral('cancel'),
             variant: 'outline',
             type: 'button',
@@ -37,7 +78,49 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
         ].filter(Boolean) as ButtonConfig[]
       }
     >
-      <FormRenderer fields={fieldsWithoutSubmitButton} />
+      {fieldsWithoutSubmitButton.map(field => {
+        const { fieldType, fieldId, ...rest } = field;
+        const Component = formComponents[fieldType]?.component;
+
+        if (!Component) {
+          return null;
+        }
+
+        return (
+          <Suspense key={fieldId} fallback={<Skeleton className="h-10 w-full" />}>
+            {componentWithoutLabel.includes(fieldType) ? (
+              <div className="p-2">
+                <Component {...rest} text={rest.label} />
+              </div>
+            ) : (
+              <div className={cn(fieldType === 'checkbox' && 'p-2')}>
+                <FormFieldWithLabel
+                  name={rest.name}
+                  label={rest.label}
+                  infoText={rest.infoText}
+                  required={rest.required}
+                  description={rest.description}
+                  className={cn('flex-1 p-2', rest.border && 'border p-4')}
+                  isToggleField={fieldType === 'checkbox' || fieldType === 'switch'}
+                >
+                  <Component
+                    {...('min' in rest && { min: rest.min })}
+                    {...('max' in rest && { max: rest.max })}
+                    {...('placeholder' in rest && {
+                      placeholder: rest.placeholder,
+                    })}
+                    {...('text' in rest && { text: rest.text })}
+                    {...(rest.disabled && { disabled: rest.disabled })}
+                    {...(fieldType === 'selectbox' && {
+                      options: rest.options,
+                    })}
+                  />
+                </FormFieldWithLabel>
+              </div>
+            )}
+          </Suspense>
+        );
+      })}
     </Modal>
   );
 }
