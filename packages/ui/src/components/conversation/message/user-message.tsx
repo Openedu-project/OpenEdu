@@ -80,18 +80,18 @@ export const UserMessage = ({ message, loading, sendMessage, messageType }: IMes
         <div className={cn('flex w-full flex-col items-end justify-end gap-2 rounded-2xl bg-background p-2 md:w-3/4')}>
           <MessageInput
             className="w-full"
-            sendMessage={({ messageInput, images }) => {
+            sendMessage={({ messageInput, files }) => {
               void sendMessage({
                 messageInput,
                 type: message.ai_agent_type,
                 message_id: message.id,
-                images,
+                files,
               });
               setIsEdit(false);
             }}
             initialMessage={message.content}
             type={message.ai_agent_type}
-            images={message.attachments}
+            files={message.attachments}
           />
           <Button
             variant="outline"

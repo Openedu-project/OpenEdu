@@ -5,7 +5,7 @@ import { DESKTOP_BREAKPOINT } from './constants';
 
 export const chatSchema = z.object({
   message: z.string().min(1, 'formValidation.required'),
-  images: z
+  files: z
     .array(
       fileResponseSchema.optional().refine(data => data !== undefined, {
         message: 'formValidation.required',

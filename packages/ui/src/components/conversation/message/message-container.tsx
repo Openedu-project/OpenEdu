@@ -23,7 +23,7 @@ interface IContainerProps {
     messageInput,
     type,
     url,
-    images,
+    files,
     message_id,
     role,
   }: // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>

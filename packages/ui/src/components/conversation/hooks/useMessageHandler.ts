@@ -17,14 +17,22 @@ export const useSendMessageHandler = (
   model?: IAIModel,
   containerRef?: RefObject<HTMLDivElement | null>
 ) => {
-  const { setMessages, setIsNewChat, updateMessages, addMessage, setStatus, setGenMessage, resetOpenWebSource } =
-    useConversationStore();
+  const {
+    setMessages,
+    setIsNewChat,
+    updateMessages,
+    addMessage,
+    setStatus,
+    setGenMessage,
+    resetOpenWebSource,
+    resetGenMessage,
+  } = useConversationStore();
 
   const router = useRouter();
   const tError = useTranslations('errors');
 
   return useCallback(
-    async ({ messageInput = '', type, images, message_id, role, status }: ISendMessageParams) => {
+    async ({ messageInput = '', type, files, message_id, role, status }: ISendMessageParams) => {
       const currentSelectedModel = useConversationStore.getState().selectedModel;
       const messages = useConversationStore.getState().messages;
       const thinking = useConversationStore.getState().thinking;
@@ -34,13 +42,13 @@ export const useSendMessageHandler = (
       const prevMessage = messages;
       const newMessage: IMessage = {
         content: messageInput,
-        attachments: images,
+        attachments: files,
         id: messageID,
         conversation_id: (id as string) ?? 'new-chat',
         create_at: Date.now(),
         content_type: 'text',
         status: (status ?? 'compeleted') as IAIStatus,
-        ai_model: currentSelectedModel ?? model ?? { name: 'gpt-4o-mini' },
+        ai_model: currentSelectedModel ?? model ?? { id: 'id_gpt', name: 'gpt-4o-mini' },
         is_ai: true,
         ai_agent_type: type,
         sender: { role: role ?? 'user' },
@@ -72,10 +80,10 @@ export const useSendMessageHandler = (
         const data = await postConversation(undefined, {
           ai_agent_type: agent,
           message_ai_agent_type: type,
-          ai_model: currentSelectedModel?.name ?? 'gpt-4o-mini',
+          ai_model_id: currentSelectedModel?.id,
           content: messageInput,
           content_type: 'text',
-          attachment_ids: images?.map(image => image.id),
+          attachment_ids: files?.map(image => image.id),
           ai_conversation_id: id as string,
           message_id,
           extended_thinking: thinking,
@@ -112,6 +120,7 @@ export const useSendMessageHandler = (
       } catch (error) {
         setStatus('failed');
         setMessages(prevMessage);
+        resetGenMessage();
         console.error(error);
         toast.error(tError((error as HTTPError).message));
         if ((error as HTTPError).message.toString() === '32002') {
@@ -133,6 +142,7 @@ export const useSendMessageHandler = (
       tError,
       updateMessages,
       containerRef,
+      resetGenMessage,
     ]
   );
 };
