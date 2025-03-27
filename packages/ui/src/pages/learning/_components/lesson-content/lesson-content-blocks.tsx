@@ -77,8 +77,6 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
         return;
       }
 
-      console.log(course_data?.form_relations, 'form_relations');
-
       const condition = evaluateCondition(type);
 
       const isTriggerActive = checkActivedTrigger({

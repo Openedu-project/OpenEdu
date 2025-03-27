@@ -1,6 +1,6 @@
-import { useFormTriggerStore, useLearnerFormTriggerStore, useTriggerModalStore } from './_store';
+import { useLearnerFormTriggerStore, useTriggerModalStore } from './_store';
 import { useActivedTrigger } from './_utils';
 import { CourseFormTriggerModal } from './course-trigger-modal';
 
 export { CourseFormTriggerModal, useActivedTrigger };
-export { useLearnerFormTriggerStore, useFormTriggerStore, useTriggerModalStore };
+export { useLearnerFormTriggerStore, useTriggerModalStore };

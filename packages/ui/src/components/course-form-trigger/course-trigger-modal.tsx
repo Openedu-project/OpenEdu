@@ -52,7 +52,6 @@ const useNotiTrigger = () => {
       }
       // Open modal MODAL_ID.afterSubmitFormTrigger
       setOpenTriggerModal(MODAL_ID.afterSubmitFormTrigger, true);
-      console.log(settings, 'setting');
 
       // After 5000ms the after submission form will be closed
       if (currentConfirmationSettings?.auto_close_enabled) {
@@ -100,8 +99,6 @@ const useActivedTrigger = () => {
   }) => {
     if (relations && entityId) {
       const currentTrigger = findFormRelationByEntityId(relations, entityId);
-
-      console.log(currentTrigger, 'currentTrigger');
 
       if (currentTrigger) {
         setActivedTriggerId(currentTrigger.id);
@@ -224,6 +221,7 @@ const CourseFormTriggerModal = ({ mutate }: IProps) => {
       {currentConfirmationSettings?.enabled && (
         <Modal
           open={modals[MODAL_ID.afterSubmitFormTrigger]}
+          onClose={() => setOpenTriggerModal(MODAL_ID.afterSubmitFormTrigger, false)}
           title={currentConfirmationSettings.title}
           hasCancelButton={false}
           hasCloseIcon

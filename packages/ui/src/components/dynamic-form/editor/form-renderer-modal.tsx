@@ -35,7 +35,6 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
   const submitButton = fields.find(field => field.fieldType === 'submitButton');
 
   const handleSubmit = (values: z.infer<z.ZodType>) => {
-    console.log(values, 'values');
     const answers = convertFormValueToAnswers(values, formData?.questions as IFormQuestion[]);
 
     // if (isRegisterOrg) {
@@ -62,6 +61,7 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
       description=""
       validationSchema={formSchema}
       onSubmit={handleSubmit}
+      formClassName="overflow-y-auto"
       buttons={
         [
           // {
