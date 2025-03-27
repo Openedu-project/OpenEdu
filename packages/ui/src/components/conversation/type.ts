@@ -18,7 +18,7 @@ export interface ISendMessageParams {
   messageInput?: string;
   type: TAgentType;
   url?: string;
-  images?: IFileResponse[];
+  files?: IFileResponse[];
   message_id?: string;
   role?: IRole;
   status?: string;
@@ -35,7 +35,7 @@ export interface MessageInputProps {
     messageInput,
     type,
     url,
-    images,
+    files,
     message_id,
     role,
     // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
@@ -48,7 +48,7 @@ export interface MessageInputProps {
   type?: TAgentType;
   showInputOption?: boolean;
   messageType?: TAgentType[];
-  images?: IFileResponse[];
+  files?: IFileResponse[];
   resetOnSuccess?: boolean;
 }
 
@@ -65,7 +65,7 @@ export type InputFieldProps<TFormValues extends FieldValues> = {
 
 export interface MessageFormValues {
   message: string;
-  images?: IFileResponse[];
+  files?: IFileResponse[];
 }
 
 export interface IMessageBoxProps extends IAIMessageProps {
@@ -74,7 +74,7 @@ export interface IMessageBoxProps extends IAIMessageProps {
     messageInput,
     type,
     url,
-    images,
+    files,
     message_id,
     role,
     // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>

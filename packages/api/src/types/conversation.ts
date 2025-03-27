@@ -49,7 +49,7 @@ export type TAgentType = 'ai_search' | 'ai_slide' | 'ai_image_generate' | 'ai_co
 export interface IConversationRequest {
   ai_agent_type: TAgentType;
   message_ai_agent_type?: TAgentType;
-  ai_model?: IProvider;
+  ai_model_id?: string;
   content: string;
   content_type: IContextType;
   attachment_ids?: string[];
