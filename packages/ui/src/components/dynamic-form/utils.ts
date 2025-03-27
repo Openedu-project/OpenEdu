@@ -311,6 +311,11 @@ export function convertFormValueToAnswers(
           options: [valueToOptionIdMap[questionId][fieldValue]],
         });
       }
+    } else if (fieldName?.includes('number') && typeof fieldValue === 'number') {
+      answers.push({
+        question_id: questionId,
+        answer_text: String(fieldValue),
+      });
     }
     // Processing types of questions using field answer_text (all the remaining cases)
     else if (typeof fieldValue === 'string') {
