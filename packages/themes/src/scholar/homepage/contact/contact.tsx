@@ -25,14 +25,12 @@ const ScholarHomepageContact: SectionComponent<'homepage', 'scholarContact'> = (
         <div className="space-y-2 md:w-full md:max-w-[500px] md:space-y-4">
           <h2 className="mb-4 font-bold text-3xl text-foreground text-primary md:text-4xl">{t('title')}</h2>
           <p className="text-md text-primary md:text-lg">{t('description')}</p>
-          <Button className="!mt-8 w-full sm:w-fit">
-            <Link
-              href={props?.button?.link ? props?.button?.link : '#'}
-              className="!text-primary-foreground border-none bg-inherit hover:border-none hover:bg-transparent hover:no-underline"
-            >
-              {t('button.text')}
-            </Link>
-          </Button>
+          <Link
+            href={props?.button?.link ? props?.button?.link : '#'}
+            className="!mt-8 w-full border-none p-0 hover:bg-transparent hover:no-underline md:w-fit"
+          >
+            <Button className="w-full">{t('button.text')}</Button>
+          </Link>
         </div>
         <div className="flex justify-end md:w-full md:max-w-[500px]">
           <Image

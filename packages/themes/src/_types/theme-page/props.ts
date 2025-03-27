@@ -39,9 +39,13 @@ import type {
   AvailHomepageSolutionProps,
 } from '../../avail/type';
 import type {
+  FenetHomepageBlogProps,
+  FenetHomepageCustomerProps,
   FenetHomepageExperienceProps,
+  FenetHomepageExpertProps,
   FenetHomepageFeatureProps,
   FenetHomepageHeroProps,
+  FenetHomepagePriceProps,
   FenetHomepageServiceProps,
 } from '../../fenet/type';
 import type {
@@ -128,4 +132,8 @@ export interface SectionPropsMap<K extends ThemePageKey> {
   fenetService: DynamicProps<K, FenetHomepageServiceProps>;
   fenetFeature: DynamicProps<K, FenetHomepageFeatureProps>;
   fenetExperience: DynamicProps<K, FenetHomepageExperienceProps>;
+  fenetCustomer: DynamicProps<K, FenetHomepageCustomerProps>;
+  fenetExpert: DynamicProps<K, FenetHomepageExpertProps>;
+  fenetPrice: DynamicProps<K, FenetHomepagePriceProps>;
+  fenetBlog: DynamicProps<K, FenetHomepageBlogProps>;
 }

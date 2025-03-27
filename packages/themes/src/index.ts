@@ -41,10 +41,14 @@ import { ScholarHomepageTestimonials } from './scholar/homepage/testimonials';
 
 import ScholarHomepage from './scholar/homepage/index';
 
+import { FenetHomepageBlog } from './fenet/homepage/blog';
+import { FenetHomepageCustomer } from './fenet/homepage/customer';
 import { FenetHomepageExperience } from './fenet/homepage/experience';
+import { FenetHomepageExpert } from './fenet/homepage/expert';
 import { FenetHomepageFeature } from './fenet/homepage/feature';
 import { FenetHomepageHero } from './fenet/homepage/hero';
 import FenetHomepage from './fenet/homepage/index';
+import { FenetHomepagePrice } from './fenet/homepage/price';
 import { FenetHomepageService } from './fenet/homepage/service';
 import { ScholarHomepageAboutUs } from './scholar/homepage/about-us';
 import { ScholarHomepageContact } from './scholar/homepage/contact';
@@ -155,6 +159,10 @@ export const THEMES: ThemeRender = {
       fenetService: FenetHomepageService,
       fenetFeature: FenetHomepageFeature,
       fenetExperience: FenetHomepageExperience,
+      fenetCustomer: FenetHomepageCustomer,
+      fenetExpert: FenetHomepageExpert,
+      fenetPrice: FenetHomepagePrice,
+      fenetBlog: FenetHomepageBlog,
     },
     auth,
   },
@@ -243,6 +251,10 @@ export const THEMES_SERVER: ThemeRender = {
       fenetService: FenetHomepageService,
       fenetFeature: FenetHomepageFeature,
       fenetExperience: FenetHomepageExperience,
+      fenetCustomer: FenetHomepageCustomer,
+      fenetExpert: FenetHomepageExpert,
+      fenetPrice: FenetHomepagePrice,
+      fenetBlog: FenetHomepageBlog,
     },
     auth,
   },

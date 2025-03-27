@@ -39,14 +39,14 @@ const ScholarHomepageHero: SectionComponent<'homepage', 'scholarHero'> = ({ prop
           <div className="w-full space-y-6 text-background md:w-[80%] lg:w-full">
             <h1 className="font-bold text-xl leading-tight md:text-2xl lg:text-3xl">{t('title')}</h1>
             <p className="text-background/80 text-md md:text-lg">{t('subTitle')}</p>
-            <Button className="w-full sm:w-fit" variant="outline">
-              <Link
-                href={props?.button?.link ? props?.button?.link : '#'}
-                className="!text-primary w-full bg-inherit hover:bg-transparent hover:no-underline"
-              >
+            <Link
+              href={props?.button?.link ? props?.button?.link : '#'}
+              className="w-full border-none p-0 hover:bg-transparent hover:no-underline md:w-fit"
+            >
+              <Button className="w-full" variant="outline">
                 {t('button.text')}
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </div>
         </div>
 

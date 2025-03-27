@@ -10,7 +10,7 @@ interface SectionTitleProps {
 
 const SectionTitle = ({ subtitle, title, centered = true, variant = 'primary', className }: SectionTitleProps) => {
   return (
-    <div className={cn(`max-w-3xl ${centered ? 'mx-auto text-center' : ''}`, className)}>
+    <div className={cn(`max-w-3xl ${centered ? 'mx-auto text-center' : 'text-center md:text-start'}`, className)}>
       <h2
         className={cn(
           // biome-ignore lint/nursery/useSortedClasses: <explanation>

@@ -29,14 +29,12 @@ const FenetHomepageHero: SectionComponent<'homepage', 'fenetHero'> = ({ props, c
       <div className="container flex h-full flex-col items-center justify-center gap-4 py-12 md:flex-row md:justify-between md:gap-16">
         <div className="w-full space-y-8">
           <SectionTitle title={t('title')} subtitle={t('subtitle')} centered={false} />
-          <Button className="w-full sm:w-fit">
-            <Link
-              href={props?.button?.link ? props?.button?.link : '#'}
-              className="!text-primary-foreground w-full bg-inherit hover:bg-transparent hover:no-underline"
-            >
-              {t('button.text')}
-            </Link>
-          </Button>
+          <Link
+            href={props?.button?.link ? props?.button?.link : '#'}
+            className="w-full border-none p-0 hover:bg-transparent hover:no-underline md:w-fit"
+          >
+            <Button className="w-full">{t('button.text')}</Button>
+          </Link>
         </div>
         <Image
           alt="banner"

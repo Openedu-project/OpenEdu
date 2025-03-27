@@ -71,7 +71,116 @@ export const createFenetHomepageConfig = (getThemeTranslation: (path: string[]) 
     props: {
       title: getThemeTranslation(['homepage', 'fenetExperience', 'title']),
       image: { mime: 'image/png' },
+      button: {
+        text: getThemeTranslation(['homepage', 'fenetExperience', 'button', 'text']),
+        link: '/',
+      },
     },
     order: 3,
+  }),
+  fenetCustomer: createSection<'homepage', 'fenetCustomer'>({
+    props: {
+      title: getThemeTranslation(['homepage', 'fenetCustomer', 'title']),
+      button: {
+        text: getThemeTranslation(['homepage', 'fenetCustomer', 'button', 'text']),
+        link: '/',
+      },
+      customer1: {
+        description: getThemeTranslation(['homepage', 'fenetCustomer', 'customer1', 'description']),
+        tag: getThemeTranslation(['homepage', 'fenetCustomer', 'customer1', 'tag']),
+        image: { mime: 'image/png' },
+      },
+      customer2: {
+        description: getThemeTranslation(['homepage', 'fenetCustomer', 'customer2', 'description']),
+        tag: getThemeTranslation(['homepage', 'fenetCustomer', 'customer2', 'tag']),
+        image: { mime: 'image/png' },
+      },
+    },
+    order: 4,
+  }),
+  fenetExpert: createSection<'homepage', 'fenetExpert'>({
+    props: {
+      title: getThemeTranslation(['homepage', 'fenetExpert', 'title']),
+      subtitle: getThemeTranslation(['homepage', 'fenetExpert', 'subtitle']),
+      expert1: {
+        name: getThemeTranslation(['homepage', 'fenetExpert', 'expert1.name']),
+        role: getThemeTranslation(['homepage', 'fenetExpert', 'expert1.role']),
+        image: { mime: 'image/png' },
+        socialLinks: {
+          facebook: 'https://',
+          x: 'https://',
+          linkedin: 'https://',
+        },
+      },
+      expert2: {
+        name: getThemeTranslation(['homepage', 'fenetExpert', 'expert2.name']),
+        role: getThemeTranslation(['homepage', 'fenetExpert', 'expert2.role']),
+        image: { mime: 'image/png' },
+        socialLinks: {
+          facebook: 'https://',
+          x: 'https://',
+          linkedin: 'https://',
+        },
+      },
+      expert3: {
+        name: getThemeTranslation(['homepage', 'fenetExpert', 'expert3.name']),
+        role: getThemeTranslation(['homepage', 'fenetExpert', 'expert3.role']),
+        image: { mime: 'image/png' },
+        socialLinks: {
+          facebook: 'https://www.facebook.com/',
+          x: 'https://',
+          linkedin: 'https://',
+        },
+      },
+    },
+    order: 5,
+  }),
+  fenetPrice: createSection<'homepage', 'fenetPrice'>({
+    props: {
+      title: getThemeTranslation(['homepage', 'fenetPrice', 'title']),
+      subtitle: getThemeTranslation(['homepage', 'fenetPrice', 'subtitle']),
+      price1: {
+        price: getThemeTranslation(['homepage', 'fenetPrice', 'price1.price']),
+        banner: { mime: 'image/png' },
+        link: '/',
+        tag: getThemeTranslation(['homepage', 'fenetPrice', 'price1.tag']),
+        buttonText: getThemeTranslation(['homepage', 'fenetPrice', 'price1.buttonText']),
+        // features: [{ features1: getThemeTranslation(['homepage', 'fenetPrice', 'features.features1']) }],
+      },
+      price2: {
+        price: getThemeTranslation(['homepage', 'fenetPrice', 'price2.price']),
+        banner: { mime: 'image/png' },
+        link: '/',
+        tag: getThemeTranslation(['homepage', 'fenetPrice', 'price2.tag']),
+        buttonText: getThemeTranslation(['homepage', 'fenetPrice', 'price2.buttonText']),
+      },
+      price3: {
+        price: getThemeTranslation(['homepage', 'fenetPrice', 'price3.price']),
+        banner: { mime: 'image/png' },
+        link: '/',
+        tag: getThemeTranslation(['homepage', 'fenetPrice', 'price3.tag']),
+        buttonText: getThemeTranslation(['homepage', 'fenetPrice', 'price3.buttonText']),
+      },
+    },
+    order: 6,
+  }),
+  fenetBlog: createSection<'homepage', 'fenetBlog'>({
+    props: {
+      title: getThemeTranslation(['homepage', 'fenetBlog', 'title']),
+      subtitle: getThemeTranslation(['homepage', 'fenetBlog', 'subtitle']),
+      blog1: {
+        date: getThemeTranslation(['homepage', 'fenetBlog', 'blog1.date']),
+        banner: { mime: 'image/png' },
+        creator: getThemeTranslation(['homepage', 'fenetBlog', 'blog1.creator']),
+        title: getThemeTranslation(['homepage', 'fenetBlog', 'blog1.title']),
+      },
+      blog2: {
+        date: getThemeTranslation(['homepage', 'fenetBlog', 'blog2.date']),
+        banner: { mime: 'image/png' },
+        creator: getThemeTranslation(['homepage', 'fenetBlog', 'blog2.creator']),
+        title: getThemeTranslation(['homepage', 'fenetBlog', 'blog2.title']),
+      },
+    },
+    order: 7,
   }),
 });

@@ -36,14 +36,12 @@ const ScholarHomepageProjects: SectionComponent<'homepage', 'scholarProjects'> =
             variant="primary"
             centered={false}
           />
-          <Button className="w-full sm:w-fit">
-            <Link
-              href={props?.button?.link ? props?.button?.link : '#'}
-              className="!text-primary-foreground w-full bg-inherit hover:bg-transparent hover:no-underline"
-            >
-              {t('button.text')}
-            </Link>
-          </Button>
+          <Link
+            href={props?.button?.link ? props?.button?.link : '#'}
+            className="w-full border-none p-0 hover:bg-transparent hover:no-underline md:w-fit"
+          >
+            <Button className="w-full">{t('button.text')}</Button>
+          </Link>
         </div>
         <div className="grid grid-cols-1 gap-2 gap-4 md:order-first md:grid-cols-2">
           {banners?.filter(Boolean)?.map((b, index) => (

@@ -22,7 +22,15 @@ type ScholarHomepageSection =
   | 'scholarTestimonials'
   | 'scholarContact';
 type AcademiaHomepageSection = 'theme' | 'hero' | 'features' | 'partners' | 'explores' | 'organizations';
-type FenetHomepageSection = 'fenetHero' | 'fenetService' | 'fenetFeature' | 'fenetExperience';
+type FenetHomepageSection =
+  | 'fenetHero'
+  | 'fenetService'
+  | 'fenetFeature'
+  | 'fenetExperience'
+  | 'fenetCustomer'
+  | 'fenetExpert'
+  | 'fenetPrice'
+  | 'fenetBlog';
 
 export type HomeSection =
   | AcademiaHomepageSection

@@ -55,6 +55,74 @@ export const fenetHomepage = {
     },
     fenetExperience: {
       title: 'A Clean And Easy To Use Experience In One App',
+      button: {
+        text: 'VIEW MORE',
+      },
+    },
+    fenetCustomer: {
+      title: 'What Customers Are Saying About The App',
+      button: {
+        text: 'CUSTOMER STORIES',
+      },
+      customer1: {
+        description:
+          'We are satisfied of their services. Put your trust on the app and share your growth Asset Management.',
+        tag: 'Case Study',
+      },
+      customer2: {
+        description:
+          'They are amazing team of experts, committed and experienced with a passion for financial markets. ',
+        tag: 'Case Study',
+      },
+    },
+    fenetExpert: {
+      title: 'We Have Expert Team',
+      subtitle: 'Meet our expert management ream members',
+      expert1: {
+        name: 'Sebastian Doe',
+        role: 'Code Expert',
+      },
+      expert2: {
+        name: 'John Smith',
+        role: 'Code Expert',
+      },
+      expert3: {
+        name: 'Sarah Corner',
+        role: 'Code Expert',
+      },
+    },
+    fenetPrice: {
+      title: 'Transparent Pricing For Your Plan',
+      subtitle: 'Start saving time today and choose your best plan',
+      price1: {
+        price: '$25 USD',
+        tag: 'Verified',
+        buttonText: '1 Month Subscription',
+      },
+      price2: {
+        price: '$55 USD',
+        tag: 'Verified',
+        buttonText: '1 Month Subscription',
+      },
+      price3: {
+        price: '$95 USD',
+        tag: 'Verified',
+        buttonText: '1 Month Subscription',
+      },
+    },
+    fenetBlog: {
+      title: 'Trending News From Our Blog',
+      subtitle: 'We believe that the success of our company is a result of our clients growth.',
+      blog1: {
+        date: 'Publised in Jun 25, 2025',
+        creator: 'By: Albenlz Kerry',
+        title: 'How to Stretch Your Budget When Money Is Tight.',
+      },
+      blog2: {
+        date: 'Publised in Jun 25, 2025',
+        creator: 'By: Albenlz Kerry',
+        title: 'Planning Your Household Budget on a Limited Income.',
+      },
     },
   },
 };
