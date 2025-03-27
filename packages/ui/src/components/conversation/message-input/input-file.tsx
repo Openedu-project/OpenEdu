@@ -25,16 +25,18 @@ export const InputFile = <TFormValues extends FieldValues>() => {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="flex flex-col gap-2 rounded-3xl p-2 md:p-4">
         <DropdownMenuItem disabled>
-          <DriveLogo /> <span className="mcaption-regular14 ml-2">{tAI('connectDrive')}</span>
+          <DriveLogo />
+          <span className="mcaption-regular14 ml-2">{tAI('connectDrive')}</span>
         </DropdownMenuItem>
         <DropdownMenuItem disabled>
           <OneDriveLogo />
           <span className="mcaption-regular14 ml-2">{tAI('connectOneDrive')}</span>
         </DropdownMenuItem>
         <Separator className="h-0.5 w-full bg-primary/10" />
+
         <FormFieldWithLabel
-          className="relative flex "
-          name={'images' as Path<TFormValues>}
+          className="relative flex"
+          name={'files' as Path<TFormValues>}
           render={({ field }) => (
             <div className="flex cursor-pointer select-none items-center gap-2 gap-2 overflow-hidden rounded-sm px-2 py-1.5 text-sm outline-none transition-colors">
               <DocumentUploadIcon width={16} height={16} color="hsl(var(--foreground))" />

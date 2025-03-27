@@ -19,7 +19,7 @@ import { chatSchema } from '../utils';
 import { MessageInputAction } from './message-input-action';
 import { InputField } from './message-input-field';
 import { InputOption } from './message-input-option';
-import { PreviewImage } from './preview-file';
+import { PreviewFile } from './preview-file';
 
 const MessageInput: React.FC<MessageInputProps> = ({
   sendMessage,
@@ -28,7 +28,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
   messageId,
   hiddenBtn = false,
   messageType,
-  images,
+  files,
   resetOnSuccess = false,
   type,
 }) => {
@@ -138,7 +138,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
     handleOpenAgentList(value);
   };
 
-  const defaultValues = useMemo(() => ({ message: initialMessage ?? '', images }), [initialMessage, images]);
+  const defaultValues = useMemo(() => ({ message: initialMessage ?? '', files }), [initialMessage, files]);
 
   const handleSubmit = async (values: z.infer<typeof chatSchema>) => {
     setFilteredAgents([]);
@@ -158,7 +158,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
       await sendMessage({
         messageInput: message,
         type: selectedAgent,
-        images: (values as unknown as { images: IFileResponse[] }).images,
+        files: (values as unknown as { files: IFileResponse[] }).files,
         message_id: messageId,
       });
       inputRef.current?.focus();
@@ -194,7 +194,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
         className="w-full"
       >
         {({ loading, form }) => {
-          const imagesData = form.watch('images');
+          const filesData = form.watch('files');
           return (
             <Card
               className={cn(
@@ -205,8 +205,8 @@ const MessageInput: React.FC<MessageInputProps> = ({
                 inputRef.current?.focus();
               }}
             >
-              {Array.isArray(imagesData) && (imagesData?.length ?? 0) > 0 && (
-                <PreviewImage form={form} imagesData={imagesData} />
+              {Array.isArray(filesData) && (filesData?.length ?? 0) > 0 && (
+                <PreviewFile form={form} filesData={filesData} />
               )}
               <InputField
                 type={type ?? selectedAgent}
