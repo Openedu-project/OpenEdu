@@ -176,7 +176,7 @@ export function AIHistoryModal({ isLogin = false, ...props }: SearchHistoryProps
       trigger={
         <Button
           {...props}
-          className="rounded-full bg-primary/5 hover:bg-primary/10"
+          className={cn('rounded-full bg-primary/5 hover:bg-primary/10', props.className)}
           onClick={handleOpenModal}
           size="icon"
         >
