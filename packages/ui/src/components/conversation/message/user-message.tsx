@@ -117,7 +117,7 @@ export const UserMessage = ({ message, loading, sendMessage, messageType }: IMes
                 image.mime.includes('image') ? (
                   <Link
                     key={image.id}
-                    className="block h-[120px] w-[120px] rounded-lg bg-background p-0"
+                    className="relative block h-[120px] w-[120px] rounded-lg bg-background p-0"
                     href={image?.url}
                     target="_blank"
                   >
