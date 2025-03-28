@@ -36,7 +36,6 @@ const ThemeTemplatesModal = ({
     }
     // Remove the duplicate item
     const filteredSeletedNames = selectedNames.filter((item, i) => selectedNames?.indexOf(item) === i);
-
     onSubmit(filteredSeletedNames);
   };
 

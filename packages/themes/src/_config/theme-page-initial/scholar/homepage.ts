@@ -8,15 +8,19 @@ export const createScholarHomepageConfig = (getThemeTranslation: (path: string[]
       bannerMain: { mime: 'image/png' },
       bannerTop: { mime: 'image/png' },
       bannerBottom: { mime: 'image/png' },
+      button: {
+        text: getThemeTranslation(['homepage', 'scholarHero', 'button', 'text']),
+        link: '/',
+      },
       partners: new Array(6).fill({ mime: 'image/png' }),
     },
     order: 0,
   }),
   scholarService: createSection<'homepage', 'scholarService'>({
     props: {
-      titleSection: getThemeTranslation(['homepage', 'scholarService', 'titleSection']),
-      titleMain: getThemeTranslation(['homepage', 'scholarService', 'titleMain']),
-      titleSub: getThemeTranslation(['homepage', 'scholarService', 'titleSub']),
+      subtitle: getThemeTranslation(['homepage', 'scholarService', 'subtitle']),
+      title: getThemeTranslation(['homepage', 'scholarService', 'title']),
+      description: getThemeTranslation(['homepage', 'scholarService', 'description']),
       services: {
         service1: {
           title: getThemeTranslation(['homepage', 'scholarService', 'services.service1.title']),
@@ -42,11 +46,11 @@ export const createScholarHomepageConfig = (getThemeTranslation: (path: string[]
     },
     order: 1,
   }),
-  scholarAboutUs: createSection<'homepage', 'scholarService'>({
+  scholarAboutUs: createSection<'homepage', 'scholarAboutUs'>({
     props: {
-      titleSection: getThemeTranslation(['homepage', 'scholarAboutUs', 'titleSection']),
-      titleMain: getThemeTranslation(['homepage', 'scholarAboutUs', 'titleMain']),
-      titleSub: getThemeTranslation(['homepage', 'scholarAboutUs', 'titleSub']),
+      title: getThemeTranslation(['homepage', 'scholarAboutUs', 'title']),
+      subtitle: getThemeTranslation(['homepage', 'scholarAboutUs', 'subtitle']),
+      description: getThemeTranslation(['homepage', 'scholarAboutUs', 'description']),
       image: { mime: 'image/png' },
       features: {
         feature1: {
@@ -83,7 +87,7 @@ export const createScholarHomepageConfig = (getThemeTranslation: (path: string[]
     },
     order: 2,
   }),
-  scholarAchievements: createSection<'homepage', 'scholarService'>({
+  scholarAchievements: createSection<'homepage', 'scholarAchievements'>({
     props: {
       title: getThemeTranslation(['homepage', 'scholarAchievements', 'title']),
       subtitle: getThemeTranslation(['homepage', 'scholarAchievements', 'subtitle']),
@@ -109,5 +113,100 @@ export const createScholarHomepageConfig = (getThemeTranslation: (path: string[]
       },
     },
     order: 3,
+  }),
+  scholarTeam: createSection<'homepage', 'scholarTeam'>({
+    props: {
+      title: getThemeTranslation(['homepage', 'scholarTeam', 'title']),
+      subtitle: getThemeTranslation(['homepage', 'scholarTeam', 'subtitle']),
+      description: getThemeTranslation(['homepage', 'scholarTeam', 'description']),
+      expert1: {
+        name: getThemeTranslation(['homepage', 'scholarTeam', 'experts.expert1.name']),
+        role: getThemeTranslation(['homepage', 'scholarTeam', 'experts.expert1.role']),
+        image: { mime: 'image/png' },
+        socialLinks: {
+          facebook: 'https://',
+          x: 'https://',
+          linkedin: 'https://',
+        },
+      },
+      expert2: {
+        name: getThemeTranslation(['homepage', 'scholarTeam', 'experts.expert2.name']),
+        role: getThemeTranslation(['homepage', 'scholarTeam', 'experts.expert2.role']),
+        image: { mime: 'image/png' },
+        socialLinks: {
+          facebook: 'https://',
+          x: 'https://',
+          linkedin: 'https://',
+        },
+      },
+      expert3: {
+        name: getThemeTranslation(['homepage', 'scholarTeam', 'experts.expert3.name']),
+        role: getThemeTranslation(['homepage', 'scholarTeam', 'experts.expert3.role']),
+        image: { mime: 'image/png' },
+        socialLinks: {
+          facebook: 'https://www.facebook.com/',
+          x: 'https://',
+          linkedin: 'https://',
+        },
+      },
+    },
+    order: 4,
+  }),
+  scholarProjects: createSection<'homepage', 'scholarProjects'>({
+    props: {
+      title: getThemeTranslation(['homepage', 'scholarProjects', 'title']),
+      subtitle: getThemeTranslation(['homepage', 'scholarProjects', 'subtitle']),
+      description: getThemeTranslation(['homepage', 'scholarProjects', 'description']),
+      button: {
+        text: getThemeTranslation(['homepage', 'scholarProjects', 'button', 'text']),
+        link: '/',
+      },
+      banner1: { mime: 'image/png' },
+      banner2: { mime: 'image/png' },
+      banner3: { mime: 'image/png' },
+      banner4: { mime: 'image/png' },
+    },
+    order: 5,
+  }),
+  scholarTestimonials: createSection<'homepage', 'scholarTestimonials'>({
+    props: {
+      title: getThemeTranslation(['homepage', 'scholarTestimonials', 'title']),
+      subtitle: getThemeTranslation(['homepage', 'scholarTestimonials', 'subtitle']),
+      description: getThemeTranslation(['homepage', 'scholarTestimonials', 'description']),
+      testimonial1: {
+        quote: getThemeTranslation(['homepage', 'scholarTestimonials', 'testimonial1', 'quote']),
+        rating: 5,
+        avatar: { mime: 'image/png' },
+        name: getThemeTranslation(['homepage', 'scholarTestimonials', 'testimonial1', 'name']),
+        position: getThemeTranslation(['homepage', 'scholarTestimonials', 'testimonial1', 'position']),
+      },
+      testimonial2: {
+        quote: getThemeTranslation(['homepage', 'scholarTestimonials', 'testimonial2', 'quote']),
+        rating: 5,
+        avatar: { mime: 'image/png' },
+        name: getThemeTranslation(['homepage', 'scholarTestimonials', 'testimonial2', 'name']),
+        position: getThemeTranslation(['homepage', 'scholarTestimonials', 'testimonial2', 'position']),
+      },
+      testimonial3: {
+        quote: getThemeTranslation(['homepage', 'scholarTestimonials', 'testimonial3', 'quote']),
+        rating: 5,
+        avatar: { mime: 'image/png' },
+        name: getThemeTranslation(['homepage', 'scholarTestimonials', 'testimonial3', 'name']),
+        position: getThemeTranslation(['homepage', 'scholarTestimonials', 'testimonial3', 'position']),
+      },
+    },
+    order: 6,
+  }),
+  scholarContact: createSection<'homepage', 'scholarContact'>({
+    props: {
+      title: getThemeTranslation(['homepage', 'scholarContact', 'title']),
+      description: getThemeTranslation(['homepage', 'scholarContact', 'description']),
+      button: {
+        text: getThemeTranslation(['homepage', 'scholarContact', 'button', 'text']),
+        link: '/',
+      },
+      image: { mime: 'image/png' },
+    },
+    order: 7,
   }),
 });

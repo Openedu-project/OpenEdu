@@ -10,10 +10,10 @@ interface SectionHeaderProps {
 
 const SectionHeader = ({ subtitle, title, description, centered = true, variant = 'primary' }: SectionHeaderProps) => {
   return (
-    <div className={`max-w-3xl ${centered ? 'mx-auto text-center' : ''}`}>
+    <div className={`max-w-3xl ${centered ? 'mx-auto text-center' : 'text-center sm:text-start'}`}>
       <h3
         className={cn(
-          'mb-3 font-semibold text-lg text-primary uppercase tracking-wider',
+          'mb-3 font-semibold text-primary text-sm uppercase tracking-wider md:text-lg',
           variant === 'secondary' && 'text-background'
         )}
       >
@@ -21,13 +21,15 @@ const SectionHeader = ({ subtitle, title, description, centered = true, variant 
       </h3>
       <h2
         className={cn(
-          'mb-4 font-bold text-4xl text-foreground md:text-5xl',
+          'mb-4 font-bold text-3xl text-foreground md:text-4xl',
           variant === 'secondary' && 'text-background'
         )}
       >
         {title}
       </h2>
-      <p className={cn('text-foreground/80', variant === 'secondary' && 'text-background/80')}>{description}</p>
+      <p className={cn('text-foreground/80 text-md md:text-lg', variant === 'secondary' && 'text-background/80')}>
+        {description}
+      </p>
     </div>
   );
 };

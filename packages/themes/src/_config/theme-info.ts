@@ -1,5 +1,6 @@
 import AcademiaThumbnail from '@oe/assets/images/theme/thumbnail/academia.png';
 import AvailThumbnail from '@oe/assets/images/theme/thumbnail/avail.png';
+import FenetThumbnail from '@oe/assets/images/theme/thumbnail/fenet.png';
 import ScholarThumbnail from '@oe/assets/images/theme/thumbnail/scholar.png';
 import VbiThumbnail from '@oe/assets/images/theme/thumbnail/vbi.png';
 
@@ -29,6 +30,12 @@ export const themeInfo = (t: (key: string) => string) => {
       thumbnail: undefined,
       creator: t('themeInfo.vbi.creator'),
     },
+    fenet: {
+      name: t('themeInfo.fenet.name'),
+      description: t('themeInfo.fenet.description'),
+      thumbnail: undefined,
+      creator: t('themeInfo.fenet.creator'),
+    },
   };
 };
 
@@ -37,4 +44,5 @@ export const themeInfoThumbnail = {
   vbi: VbiThumbnail,
   academia: AcademiaThumbnail,
   scholar: ScholarThumbnail,
+  fenet: FenetThumbnail,
 };

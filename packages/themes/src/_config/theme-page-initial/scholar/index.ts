@@ -12,11 +12,6 @@ export const createScholarConfig = (
     config: createScholarHomepageConfig(scholarT),
     metadata: defaultMetadataAtPage,
   },
-  'about-us': {
-    label: t('labels.aboutus'),
-    config: undefined,
-    metadata: defaultMetadataAtPage,
-  },
   auth: {
     label: t('labels.authLayout'),
     config: createAuthLayoutConfig(scholarT),

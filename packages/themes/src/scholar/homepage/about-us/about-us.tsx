@@ -3,13 +3,11 @@ import type { FileType } from '@oe/ui/components/uploader';
 import { cn } from '@oe/ui/utils/cn';
 
 import { useTranslations } from 'next-intl';
-import type { SectionComponent } from '../../_types/theme-page';
-import { FeatureItem, type FeatureItemProps, StatItem, type StatItemProps } from './_components/about-us-component';
+import type { SectionComponent } from '../../../_types';
+import { FeatureItem, type FeatureItemProps, StatItem, type StatItemProps } from '../_components/about-us-component';
+import { SectionHeader, type SectionHeaderProps } from '../_components/section-header';
 
-export interface ScholarHomepageAboutUsProps {
-  titleSection?: string;
-  titleMain?: string;
-  titleSub?: string;
+export interface ScholarHomepageAboutUsProps extends SectionHeaderProps {
   image?: FileType;
   features?: {
     feature1: FeatureItemProps;
@@ -24,7 +22,7 @@ export interface ScholarHomepageAboutUsProps {
   };
 }
 
-const ScholarAboutUsPage: SectionComponent<'homepage', 'scholarAboutUs'> = ({ props, className }) => {
+const ScholarHomepageAboutUs: SectionComponent<'homepage', 'scholarAboutUs'> = ({ props, className }) => {
   const t = useTranslations('themePage.scholar.homepage.scholarAboutUs');
 
   const features = [
@@ -50,17 +48,18 @@ const ScholarAboutUsPage: SectionComponent<'homepage', 'scholarAboutUs'> = ({ pr
   ];
 
   return (
-    <section className={cn('py-16', className)}>
-      <div className="container mx-auto max-w-7xl px-4">
+    <section className={cn('py-12 md:py-16 lg:py-20', className)}>
+      <div className="container space-y-8 md:space-y-12">
         {/* Main Content */}
         <div className="mb-16 grid gap-12 lg:grid-cols-2">
           {/* Left Column - Content */}
           <div className="space-y-8">
-            <div>
-              <h2 className="mb-2 font-semibold text-lg text-primary uppercase">{t('titleSection')}</h2>
-              <h1 className="mb-4 font-bold text-4xl text-foreground/80">{t('titleMain')}</h1>
-              <p className="text-gray-600">{t('titleSub')}</p>
-            </div>
+            <SectionHeader
+              title={t('title')}
+              subtitle={t('subtitle')}
+              description={t('description')}
+              centered={false}
+            />
 
             {/* Features List */}
             <div className="space-y-8">
@@ -91,4 +90,4 @@ const ScholarAboutUsPage: SectionComponent<'homepage', 'scholarAboutUs'> = ({ pr
   );
 };
 
-export default ScholarAboutUsPage;
+export default ScholarHomepageAboutUs;
