@@ -14,6 +14,13 @@ import { cn } from "#utils/cn";
 import type { TFileResponse, TFileStatus } from "../type";
 import type { chatSchema } from "../utils";
 
+interface IPreviewFileProps {
+  file: TFileResponse;
+  remove?: UseFieldArrayRemove;
+  filePosition?: number;
+  viewOnly?: boolean;
+}
+
 export const PreviewFile = ({
   filesData,
   form,
@@ -53,17 +60,14 @@ export const PreviewImage = ({
   file,
   remove,
   filePosition,
-}: {
-  file: TFileResponse;
-  remove: UseFieldArrayRemove;
-  filePosition: number;
-}) => {
+  viewOnly,
+}: IPreviewFileProps) => {
   const onRemove = () => {
-    remove(filePosition);
+    remove?.(filePosition);
   };
   return (
-    <div className="relative flex h-[90px] w-[160px] shrink-0 items-center justify-center rounded-lg bg-foreground/10">
-      <HitboxLayer file={file} handleRemove={onRemove} />
+    <div className="relative flex h-[120px] w-[120px] shrink-0 items-center justify-center rounded-lg bg-foreground/10">
+      {!viewOnly && <HitboxLayer file={file} handleRemove={onRemove} />}
       {file.status === "error" ? (
         <div className={cn("flex items-center gap-1 p-2 text-destructive")}>
           <ImageIcon className="h-3 w-3 shrink-0" />
@@ -89,18 +93,20 @@ export const PreviewDocument = ({
   file,
   remove,
   filePosition,
-}: {
-  file: TFileResponse;
-  remove: UseFieldArrayRemove;
-  filePosition: number;
-}) => {
+  viewOnly,
+}: IPreviewFileProps) => {
   const onRemove = () => {
-    remove(filePosition);
+    remove?.(filePosition);
   };
 
   return (
-    <div className="relative flex h-[90px] w-[160px] shrink-0 items-center justify-center rounded-lg bg-foreground/10">
-      <HitboxLayer file={file} handleRemove={onRemove} />
+    <div
+      className={cn(
+        "relative flex h-[120px] w-[120px] shrink-0 items-center justify-center rounded-lg bg-foreground/10",
+        viewOnly && "border bg-background"
+      )}
+    >
+      {!viewOnly && <HitboxLayer file={file} handleRemove={onRemove} />}
       <div
         className={cn(
           "flex items-center gap-1 p-2",
@@ -162,7 +168,7 @@ const HitboxLayer = ({
   }, [status, progress]);
 
   return (
-    <div className="absolute flex h-[90px] w-[160px] shrink-0 items-center justify-center rounded-lg bg-foreground/10">
+    <div className="absolute flex h-[120px] w-[120px] shrink-0 items-center justify-center rounded-lg bg-foreground/10">
       <Button
         variant="ghost"
         type="button"
