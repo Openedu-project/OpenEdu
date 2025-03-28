@@ -7,7 +7,9 @@ import type {
   IQuestionParam,
 } from '@oe/api/types/form';
 import { z } from '@oe/api/utils/zod';
-import type { FormComponent, FormFieldOrGroup, FormFieldType } from './types';
+import { convertToTimeStamp } from '@oe/core/utils/datetime';
+import { COMPONENT_TYPES, KEYWORDS } from './constants';
+import type { ComponentTypeEnum, FormComponent, FormFieldOrGroup, FormFieldType } from './types';
 
 export const generateZodSchema = (formFields: FormFieldOrGroup[]): z.ZodObject<Record<string, z.ZodTypeAny>> => {
   const schemaObject: Record<string, z.ZodTypeAny> = {};
@@ -203,126 +205,199 @@ function convertFieldToQuestion(field: FormFieldType): IQuestionParam {
   };
 }
 
-function createNameToIdMapping(questions: IFormQuestion[]): Record<string, string> {
-  return questions.reduce(
-    (result, question) => {
-      const name = question?.settings?.props?.name as string;
-      const id = question.id;
-      result[name] = id;
-      return result;
-    },
-    {} as Record<string, string>
-  );
-}
-
 /**
- * Create mapping from Value of Option to Option ID for each question
- * @param questions List from API
- * @returns object with the key is Question ID and Value is mapping from Option Value to Option ID
+ * Process questions to create mappings for field name to ID and collect other necessary information
+ * to avoid repeated iterations through questions
  */
-function createValueToOptionIdMapping(questions: IFormQuestion[]): Record<string, Record<string, string>> {
-  return questions.reduce(
-    (result, question) => {
-      if (
-        question.options &&
-        question.options.length > 0 &&
-        question?.settings?.props?.options &&
-        Array.isArray(question?.settings?.props?.options) &&
-        question?.settings?.props?.options.length > 0
-      ) {
-        const questionId = question.id;
-        result[questionId] = {};
+function processQuestions(questions: IFormQuestion[]): {
+  nameToIdMap: Record<string, string>;
+  valueToOptionIdMap: Record<string, Record<string, string>>;
+  fieldTypeMap: Record<string, string>;
+} {
+  const nameToIdMap: Record<string, string> = {};
+  const valueToOptionIdMap: Record<string, Record<string, string>> = {};
+  const fieldTypeMap: Record<string, string> = {};
 
-        // Map text -> option
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-        const optionMap: Record<string, any> = {};
-        for (const option of question.options) {
-          optionMap[option.text] = option;
-        }
+  for (const question of questions) {
+    const questionId = question.id;
+    const name = question?.settings?.props?.name as string;
 
-        // Map value -> option id
-        const options = Array.isArray(question.settings?.props?.options) ? question.settings.props.options : [];
-        for (const propOption of options) {
-          const option = optionMap[propOption.label];
-          if (option) {
-            result[questionId][propOption.value] = option.id;
-          }
+    // Map name to id if name exists
+    if (name) {
+      nameToIdMap[name] = questionId;
+    }
+
+    // Map field type
+    fieldTypeMap[questionId] = (question?.settings?.props?.fieldType as string) || '';
+
+    // Create value to option id mapping when both options arrays exist
+    const hasOptions = Array.isArray(question.options) && question.options.length > 0;
+    const hasPropOptions =
+      Array.isArray(question?.settings?.props?.options) && question?.settings?.props?.options.length > 0;
+
+    if (hasOptions && hasPropOptions) {
+      valueToOptionIdMap[questionId] = {};
+
+      // Create a map of text to option for faster lookup
+      // biome-ignore lint/suspicious/noExplicitAny: Option structure needs generic typing
+      const optionMap: Record<string, any> = {};
+
+      for (const option of question.options || []) {
+        optionMap[option.text] = option;
+      }
+
+      // Map prop option value to option id
+      for (const propOption of (question.settings?.props?.options || []) as { label: string; value: string }[]) {
+        const option = optionMap[propOption.label];
+        if (option) {
+          valueToOptionIdMap[questionId][propOption.value] = option.id;
         }
       }
-      return result;
-    },
-    {} as Record<string, Record<string, string>>
-  );
+    }
+  }
+
+  return { nameToIdMap, valueToOptionIdMap, fieldTypeMap };
 }
 
-// TODO: check field types when the form has more field types
+/**
+ * Determine component type based on fieldType and fieldName
+ * Uses a single check instead of multiple iterations
+ */
+function getComponentType(fieldType: string | undefined, fieldName: string): ComponentTypeEnum {
+  // Check by fieldType if available
+  if (fieldType) {
+    if (COMPONENT_TYPES.OPTION_BASED.has(fieldType)) {
+      return 'option';
+    }
+    if (COMPONENT_TYPES.TEXT_BASED.has(fieldType)) {
+      return 'text';
+    }
+    if (COMPONENT_TYPES.SKIP.has(fieldType)) {
+      return 'skip';
+    }
+    if (COMPONENT_TYPES.CHECKBOX.has(fieldType)) {
+      return 'checkbox';
+    }
+    if (COMPONENT_TYPES.DATE.has(fieldType)) {
+      return 'date';
+    }
+  }
+
+  // Create lowercase once for comparison
+  const lowerFieldName = fieldName.toLowerCase();
+
+  // Check all keywords in a single pass
+  for (const keyword of KEYWORDS.SKIP) {
+    if (lowerFieldName.includes(keyword)) {
+      return 'skip';
+    }
+  }
+
+  for (const keyword of KEYWORDS.OPTION) {
+    if (lowerFieldName.includes(keyword)) {
+      return 'option';
+    }
+  }
+
+  for (const keyword of KEYWORDS.DATE) {
+    if (lowerFieldName.includes(keyword)) {
+      return 'date';
+    }
+  }
+
+  // Default to text type
+  return 'text';
+}
 
 /**
- * Convert the value form into answer format to submit form
- * @param Formvalue Value from form
- * @param Questionions List from API
- * @returns Answers array according to the required format
+ * Process option-based components and add to answers array
+ */
+function processOptionComponent(
+  questionId: string,
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  fieldValue: any,
+  optionMapping: Record<string, string>,
+  answers: IAnswerParams[]
+): void {
+  if (!optionMapping) {
+    return;
+  }
+
+  if (Array.isArray(fieldValue)) {
+    const optionIds = fieldValue.map(value => optionMapping[value]).filter(Boolean);
+
+    const validOptionIds = optionIds.filter((id): id is string => id !== undefined);
+    if (validOptionIds.length > 0) {
+      answers.push({
+        question_id: questionId,
+        options: validOptionIds,
+      });
+    }
+  } else if (typeof fieldValue === 'string') {
+    const optionId = optionMapping[fieldValue];
+    if (optionId) {
+      answers.push({
+        question_id: questionId,
+        options: [optionId],
+      });
+    }
+  }
+}
+
+/**
+ * Convert form values to answer format for API submission
  */
 export function convertFormValueToAnswers(
-  formValue: z.ZodObject<Record<string, z.ZodTypeAny>>,
+  // biome-ignore lint/suspicious/noExplicitAny: Form values can be of various types
+  formValue: Record<string, any>,
   questions: IFormQuestion[]
 ): IFormAnswer[] {
-  const nameToIdMap = createNameToIdMapping(questions);
-  const valueToOptionIdMap = createValueToOptionIdMapping(questions);
-
+  // Process questions once to create necessary mappings
+  const { nameToIdMap, valueToOptionIdMap, fieldTypeMap } = processQuestions(questions);
   const answers: IAnswerParams[] = [];
 
-  // List of keywords to classify
-  const optionKeywords = ['select', 'radio', 'checkbox', 'choice', 'option'];
-  const skipKeywords = ['submit', 'button', 'space', 'paragraph', 'heading', 'divider'];
-
-  // Processing each field in form value
+  // Process each field in form value
   for (const [fieldName, fieldValue] of Object.entries(formValue)) {
-    // Ignore fields not in mapping or empty values
-    if (!nameToIdMap[fieldName] || fieldValue === '') {
+    // Skip fields not in mapping or with null values
+    if (!nameToIdMap[fieldName] || fieldValue === null || fieldValue === undefined) {
       continue;
     }
 
     const questionId = nameToIdMap[fieldName];
+    const fieldType = fieldTypeMap[questionId];
+    const componentType = getComponentType(fieldType, fieldName);
 
-    if (skipKeywords.some(keyword => fieldName.includes(keyword))) {
+    // Skip components that don't need processing
+    if (componentType === 'skip') {
       continue;
     }
 
-    // Processing types of questions using field options
-    if (optionKeywords.some(keyword => fieldName.includes(keyword))) {
-      // Handling the case of multiple choice (the value is array)
-      if (Array.isArray(fieldValue)) {
-        const optionIds = fieldValue
-          .map(value => valueToOptionIdMap[questionId]?.[value])
-          .filter((id): id is string => id !== undefined);
+    // Process different component types
+    switch (componentType) {
+      case 'option':
+        processOptionComponent(questionId, fieldValue, valueToOptionIdMap[questionId] ?? {}, answers);
+        break;
 
-        if (optionIds.length > 0) {
-          answers.push({
-            question_id: questionId,
-            options: optionIds,
-          });
-        }
-      }
-      // Handling cases of single value (selectbox, radio)
-      else if (typeof fieldValue === 'string' && valueToOptionIdMap[questionId]?.[fieldValue]) {
+      case 'date':
         answers.push({
           question_id: questionId,
-          options: [valueToOptionIdMap[questionId][fieldValue]],
+          answer_text: String(convertToTimeStamp(fieldValue)),
         });
-      }
-    } else if (fieldName?.includes('number') && typeof fieldValue === 'number') {
-      answers.push({
-        question_id: questionId,
-        answer_text: String(fieldValue),
-      });
-    }
-    // Processing types of questions using field answer_text (all the remaining cases)
-    else if (typeof fieldValue === 'string') {
-      answers.push({
-        question_id: questionId,
-        answer_text: fieldValue,
-      });
+        break;
+
+      case 'checkbox':
+        answers.push({
+          question_id: questionId,
+          answer_text: String(fieldValue === true),
+        });
+        break;
+
+      default:
+        answers.push({
+          question_id: questionId,
+          answer_text: String(fieldValue),
+        });
+        break;
     }
   }
 

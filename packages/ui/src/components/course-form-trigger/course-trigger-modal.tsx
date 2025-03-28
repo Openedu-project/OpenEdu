@@ -4,9 +4,7 @@ import { useParams } from 'next/navigation';
 import { useCallback } from 'react';
 
 import { useGetCourseOutline } from '@oe/api/hooks/useCourse';
-import type { TFormTriggerConfirmationSettings } from '@oe/api/schemas/courseTrigger';
 import { postSubmitForm } from '@oe/api/services/forms';
-import type { FormTriggerCondition, IFormTrigger } from '@oe/api/types/course/course-trigger';
 import type { IAnswerParams } from '@oe/api/types/form';
 import { getCookieClient } from '@oe/core/utils/cookie';
 import { buildUrl } from '@oe/core/utils/url';
@@ -17,8 +15,9 @@ import { Modal } from '#components/modal';
 import { Button, buttonVariants } from '#shadcn/button';
 import { cn } from '#utils/cn';
 import { FormRendererModal } from '../dynamic-form/editor/form-renderer-modal';
+import { useNotiTrigger } from './_hooks';
 import { useLearnerFormTriggerStore, useTriggerModalStore } from './_store';
-import { MODAL_ID, findFormRelationByEntityId } from './_utils';
+import { MODAL_ID } from './_utils';
 
 interface IProps {
   type?: 'page' | 'slide';
@@ -34,91 +33,6 @@ type ButtonVariant = ButtonVariantProps['variant'];
 // function addNewId<T extends IBaseItem>(data: T[]) {
 //   return data.map((item, index) => (item.id ? item : { ...item, id: `item-${index}` }));
 // }
-
-const useNotiTrigger = () => {
-  const { setOpenTriggerModal } = useTriggerModalStore();
-  const { resetLearnerFormTrigger } = useLearnerFormTriggerStore();
-
-  const handleShowFormAfterSubmission = useCallback(
-    (currentConfirmationSettings?: TFormTriggerConfirmationSettings) => {
-      const settings = currentConfirmationSettings?.enabled;
-      const seconds =
-        currentConfirmationSettings?.auto_close_after_seconds &&
-        currentConfirmationSettings.auto_close_after_seconds * 1000;
-
-      if (!settings) {
-        resetLearnerFormTrigger();
-        return;
-      }
-      // Open modal MODAL_ID.afterSubmitFormTrigger
-      setOpenTriggerModal(MODAL_ID.afterSubmitFormTrigger, true);
-
-      // After 5000ms the after submission form will be closed
-      if (currentConfirmationSettings?.auto_close_enabled) {
-        setTimeout(() => {
-          setOpenTriggerModal(MODAL_ID.afterSubmitFormTrigger, false);
-          resetLearnerFormTrigger();
-        }, seconds);
-      }
-    },
-    [resetLearnerFormTrigger, setOpenTriggerModal]
-  );
-
-  return { handleShowFormAfterSubmission };
-};
-
-const useActivedTrigger = () => {
-  const { setOpenTriggerModal } = useTriggerModalStore();
-  const { setActivedTriggerId, setCurrentFormId, setCurrentConfirmationSettings, setTriggerType } =
-    useLearnerFormTriggerStore();
-  const { handleShowFormAfterSubmission } = useNotiTrigger();
-
-  const checkActivedTrigger = ({
-    relations,
-    entityId,
-    type,
-  }: {
-    relations?: IFormTrigger[];
-    entityId?: string;
-    type?: FormTriggerCondition;
-    // eslint-disable-next-line unicorn/consistent-function-scoping
-  }) => {
-    if (relations && entityId && type) {
-      const currentTrigger = findFormRelationByEntityId(relations, entityId);
-
-      return !!(currentTrigger && currentTrigger.submitted === false && currentTrigger?.start_when?.type === type);
-    }
-  };
-
-  const activedTrigger = ({
-    relations,
-    entityId,
-  }: {
-    relations?: IFormTrigger[];
-    entityId?: string;
-  }) => {
-    if (relations && entityId) {
-      const currentTrigger = findFormRelationByEntityId(relations, entityId);
-
-      if (currentTrigger) {
-        setActivedTriggerId(currentTrigger.id);
-        setTriggerType(currentTrigger.type);
-        if (currentTrigger.confirmation_settings?.enabled) {
-          setCurrentConfirmationSettings(currentTrigger.confirmation_settings);
-        }
-
-        if (currentTrigger.type === 'form') {
-          setCurrentFormId(currentTrigger.form_id);
-          setOpenTriggerModal(MODAL_ID.learnerCourseFormTrigger, true);
-        } else {
-          handleShowFormAfterSubmission(currentTrigger?.confirmation_settings);
-        }
-      }
-    }
-  };
-
-  return { activedTrigger, checkActivedTrigger };
-};
 
 const CourseFormTriggerModal = ({ mutate }: IProps) => {
   // const CourseFormTriggerModal = ({ type = 'page', mutate }: IProps) => {
@@ -183,6 +97,7 @@ const CourseFormTriggerModal = ({ mutate }: IProps) => {
   const handleSubmit = useCallback(
     async (values: IAnswerParams[]) => {
       try {
+        console.log(values, 'values');
         const res = await postSubmitForm(undefined, {
           payload: {
             form_relation_id: currentFormId,
@@ -284,4 +199,4 @@ const CourseFormTriggerModal = ({ mutate }: IProps) => {
 };
 
 CourseFormTriggerModal.displayName = 'CourseFormTriggerModal';
-export { CourseFormTriggerModal, useActivedTrigger };
+export { CourseFormTriggerModal };

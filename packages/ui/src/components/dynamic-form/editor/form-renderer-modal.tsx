@@ -24,7 +24,6 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
       ?.map(question => {
         return {
           ...question?.settings?.props,
-          // name: question.id,
         } as FormFieldType;
       })
       .filter(Boolean) ?? [];
@@ -64,7 +63,6 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
       formClassName="overflow-y-auto"
       buttons={
         [
-          // {
           props?.hasCancelButton && {
             label: tGeneral('cancel'),
             variant: 'outline',
@@ -102,20 +100,25 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
                   description={rest.description}
                   className={cn('flex-1 p-2', rest.border && 'border p-4')}
                   isToggleField={fieldType === 'checkbox' || fieldType === 'switch'}
-                >
-                  <Component
-                    {...('min' in rest && { min: rest.min })}
-                    {...('max' in rest && { max: rest.max })}
-                    {...('placeholder' in rest && {
-                      placeholder: rest.placeholder,
-                    })}
-                    {...('text' in rest && { text: rest.text })}
-                    {...(rest.disabled && { disabled: rest.disabled })}
-                    {...(fieldType === 'selectbox' && {
-                      options: rest.options,
-                    })}
-                  />
-                </FormFieldWithLabel>
+                  render={({ field }) => (
+                    <Component
+                      {...('min' in rest && { min: rest.min })}
+                      {...('max' in rest && { max: rest.max })}
+                      {...('placeholder' in rest && {
+                        placeholder: rest.placeholder,
+                      })}
+                      {...('text' in rest && { text: rest.text })}
+                      {...(rest.disabled && { disabled: rest.disabled })}
+                      {...(fieldType === 'selectbox' && {
+                        options: rest.options,
+                      })}
+                      {...((fieldType === 'checkbox' || fieldType === 'switch') && {
+                        checked: field.value,
+                        onCheckedChange: field.onChange,
+                      })}
+                    />
+                  )}
+                />
               </div>
             )}
           </Suspense>

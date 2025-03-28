@@ -1,28 +1,13 @@
+'use client';
+
 import type { TFormTriggerConfirmationSettings } from '@oe/api/schemas/courseTrigger';
 import type { FormTriggerCondition, IFormTrigger } from '@oe/api/types/course/course-trigger';
 import { useCallback } from 'react';
 import { useLearnerFormTriggerStore, useTriggerModalStore } from './_store';
-
-export const MODAL_ID = {
-  afterSubmitFormTrigger: 'after_submit_form_trigger',
-  learnerCourseFormTrigger: 'learner_form_trigger',
-};
-
-export type TypeTriggerClickedOn = 'enroll_course' | 'get_certificate' | 'add_book_mark';
-
-export const TRIGGER_CLICKED_ON_ID: { [K in TypeTriggerClickedOn]: K } = {
-  enroll_course: 'enroll_course',
-  get_certificate: 'get_certificate',
-  add_book_mark: 'add_book_mark',
-  // share_course_lesson: 'share_course_lesson',
-};
-
-export const findFormRelationByEntityId = (formRelations: IFormTrigger[], entityId: string) =>
-  formRelations.find(relation => relation.start_when.entity_id === entityId && relation.enabled && !relation.submitted);
+import { MODAL_ID, findFormRelationByEntityId } from './_utils';
 
 const useNotiTrigger = () => {
   const { setOpenTriggerModal } = useTriggerModalStore();
-
   const { resetLearnerFormTrigger } = useLearnerFormTriggerStore();
 
   const handleShowFormAfterSubmission = useCallback(
@@ -53,7 +38,7 @@ const useNotiTrigger = () => {
   return { handleShowFormAfterSubmission };
 };
 
-export const useActivedTrigger = () => {
+const useActivedTrigger = () => {
   const { setOpenTriggerModal } = useTriggerModalStore();
   const { setActivedTriggerId, setCurrentFormId, setCurrentConfirmationSettings, setTriggerType } =
     useLearnerFormTriggerStore();
@@ -67,6 +52,7 @@ export const useActivedTrigger = () => {
     relations?: IFormTrigger[];
     entityId?: string;
     type?: FormTriggerCondition;
+    // eslint-disable-next-line unicorn/consistent-function-scoping
   }) => {
     if (relations && entityId && type) {
       const currentTrigger = findFormRelationByEntityId(relations, entityId);
@@ -85,6 +71,8 @@ export const useActivedTrigger = () => {
     if (relations && entityId) {
       const currentTrigger = findFormRelationByEntityId(relations, entityId);
 
+      console.log(currentTrigger, 'currentTrigger');
+
       if (currentTrigger) {
         setActivedTriggerId(currentTrigger.id);
         setTriggerType(currentTrigger.type);
@@ -93,6 +81,7 @@ export const useActivedTrigger = () => {
         }
 
         if (currentTrigger.type === 'form') {
+          console.log(currentTrigger.type, 'aaaaaaaaaaaa');
           setCurrentFormId(currentTrigger.form_id);
           setOpenTriggerModal(MODAL_ID.learnerCourseFormTrigger, true);
         } else {
@@ -104,3 +93,5 @@ export const useActivedTrigger = () => {
 
   return { activedTrigger, checkActivedTrigger };
 };
+
+export { useNotiTrigger, useActivedTrigger };
