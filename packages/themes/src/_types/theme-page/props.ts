@@ -10,7 +10,6 @@ import type {
 import type { ThemeFooterProps } from '../../auth/footer';
 import type { ThemeHeaderProps } from '../../auth/header';
 import type { AuthLayoutLoginProps } from '../../auth/login';
-import type { ScholarHomepageAboutUsProps, ScholarHomepageHeroProps, ScholarHomepageServiceProps } from '../../scholar';
 
 import type {
   VbiAboutUsCoreProps,
@@ -39,8 +38,28 @@ import type {
   AvailHomepageHeroProps,
   AvailHomepageSolutionProps,
 } from '../../avail/type';
-import type { ScholarHomepageAchievementsProps } from '../../scholar/type';
+import type {
+  FenetHomepageBlogProps,
+  FenetHomepageCustomerProps,
+  FenetHomepageExperienceProps,
+  FenetHomepageExpertProps,
+  FenetHomepageFeatureProps,
+  FenetHomepageHeroProps,
+  FenetHomepagePriceProps,
+  FenetHomepageServiceProps,
+} from '../../fenet/type';
+import type {
+  ScholarHomepageAboutUsProps,
+  ScholarHomepageAchievementsProps,
+  ScholarHomepageContactProps,
+  ScholarHomepageHeroProps,
+  ScholarHomepageProjectsProps,
+  ScholarHomepageServiceProps,
+  ScholarHomepageTeamProps,
+  ScholarHomepageTestimonialsProps,
+} from '../../scholar/type';
 import type { PageSectionConfig } from './config';
+
 export interface BaseSectionProps<K extends ThemePageKey> {
   sectionConfig?: PageSectionConfig<K>;
   className?: string;
@@ -77,6 +96,10 @@ export interface SectionPropsMap<K extends ThemePageKey> {
   scholarService: DynamicProps<K, ScholarHomepageServiceProps>;
   scholarAboutUs: DynamicProps<K, ScholarHomepageAboutUsProps>;
   scholarAchievements: DynamicProps<K, ScholarHomepageAchievementsProps>;
+  scholarTeam: DynamicProps<K, ScholarHomepageTeamProps>;
+  scholarProjects: DynamicProps<K, ScholarHomepageProjectsProps>;
+  scholarTestimonials: DynamicProps<K, ScholarHomepageTestimonialsProps>;
+  scholarContact: DynamicProps<K, ScholarHomepageContactProps>;
 
   // VBI
   vbiHero: DynamicProps<K, VbiHomepageHeroProps>;
@@ -103,4 +126,14 @@ export interface SectionPropsMap<K extends ThemePageKey> {
   availSolution: DynamicProps<K, AvailHomepageSolutionProps>;
   availEco: DynamicProps<K, AvailHomepageEcoProps>;
   availBlogs: DynamicProps<K, AvailHomepageBlogsProps>;
+
+  // Fenet
+  fenetHero: DynamicProps<K, FenetHomepageHeroProps>;
+  fenetService: DynamicProps<K, FenetHomepageServiceProps>;
+  fenetFeature: DynamicProps<K, FenetHomepageFeatureProps>;
+  fenetExperience: DynamicProps<K, FenetHomepageExperienceProps>;
+  fenetCustomer: DynamicProps<K, FenetHomepageCustomerProps>;
+  fenetExpert: DynamicProps<K, FenetHomepageExpertProps>;
+  fenetPrice: DynamicProps<K, FenetHomepagePriceProps>;
+  fenetBlog: DynamicProps<K, FenetHomepageBlogProps>;
 }

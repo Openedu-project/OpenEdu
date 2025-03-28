@@ -37,6 +37,13 @@ export const defaultThemeSystemConfig = (t: (key: string) => string): ThemeSyste
         components: undefined,
         info: themeInfo(t).avail,
       },
+      fenet: {
+        pages: createThemePageConfig(t).fenet,
+        metadata: getMetadata(),
+        globals: initialThemeGlobal,
+        components: undefined,
+        info: themeInfo(t).fenet,
+      },
     },
   };
 };

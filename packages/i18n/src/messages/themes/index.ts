@@ -1,6 +1,7 @@
 import { academiaMessage } from './academia';
 import { authMessages } from './auth';
 import { availMessage } from './avail';
+import { fenetMessage } from './fenet';
 import { headerMessages } from './header';
 import { themeNotiMessages } from './noti';
 import { pageSettingMessages } from './page-settings';
@@ -31,6 +32,7 @@ export const themeMessages = {
     ...scholarMessage,
     ...vbiMessage,
     ...availMessage,
+    ...fenetMessage,
   },
   ...themeUIMessage,
   ...themeNotiMessages,

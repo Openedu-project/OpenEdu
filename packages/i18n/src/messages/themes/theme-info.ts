@@ -21,5 +21,10 @@ export const themeInfoMessages = {
       description: 'TOP 1 WEB3 DEVELOPER ACADEMY IN VIETNAM',
       creator: 'Openedu',
     },
+    fenet: {
+      name: 'Fenet',
+      description: 'Make your life easier to manage finances',
+      creator: 'Openedu',
+    },
   },
 };

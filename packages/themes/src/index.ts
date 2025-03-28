@@ -30,11 +30,30 @@ import { AvailHomepageSolution } from './avail/homepage/avail-solution';
 import AvailHomepage from './avail/homepage/index';
 
 import { fonts } from './fonts';
-import { ScholarHomepageAboutUs, ScholarHomepageHero, ScholarHomepageService } from './scholar';
-import { ScholarAboutUs, ScholarHomePage } from './scholar';
 
 import { ScholarHomepageAchievements } from './scholar/homepage/achievements';
 
+import { ScholarHomepageTeam } from './scholar/homepage/team';
+
+import { ScholarHomepageProjects } from './scholar/homepage/projects';
+
+import { ScholarHomepageTestimonials } from './scholar/homepage/testimonials';
+
+import ScholarHomepage from './scholar/homepage/index';
+
+import { FenetHomepageBlog } from './fenet/homepage/blog';
+import { FenetHomepageCustomer } from './fenet/homepage/customer';
+import { FenetHomepageExperience } from './fenet/homepage/experience';
+import { FenetHomepageExpert } from './fenet/homepage/expert';
+import { FenetHomepageFeature } from './fenet/homepage/feature';
+import { FenetHomepageHero } from './fenet/homepage/hero';
+import FenetHomepage from './fenet/homepage/index';
+import { FenetHomepagePrice } from './fenet/homepage/price';
+import { FenetHomepageService } from './fenet/homepage/service';
+import { ScholarHomepageAboutUs } from './scholar/homepage/about-us';
+import { ScholarHomepageContact } from './scholar/homepage/contact';
+import ScholarHomepageHero from './scholar/homepage/hero/hero';
+import { ScholarHomepageService } from './scholar/homepage/service';
 import { VbiAboutUsCore } from './vbi/about-us/core';
 import { VbiAboutUsGoal } from './vbi/about-us/goal';
 import VbiAboutUs from './vbi/about-us/index';
@@ -80,14 +99,15 @@ export const THEMES: ThemeRender = {
   },
   scholar: {
     homepage: {
-      theme: ScholarHomePage,
+      theme: ScholarHomepage,
       scholarHero: ScholarHomepageHero,
       scholarService: ScholarHomepageService,
       scholarAboutUs: ScholarHomepageAboutUs,
       scholarAchievements: ScholarHomepageAchievements,
-    },
-    'about-us': {
-      theme: ScholarAboutUs,
+      scholarTeam: ScholarHomepageTeam,
+      scholarProjects: ScholarHomepageProjects,
+      scholarTestimonials: ScholarHomepageTestimonials,
+      scholarContact: ScholarHomepageContact,
     },
     auth,
   },
@@ -132,6 +152,20 @@ export const THEMES: ThemeRender = {
     },
     auth,
   },
+  fenet: {
+    homepage: {
+      theme: FenetHomepage,
+      fenetHero: FenetHomepageHero,
+      fenetService: FenetHomepageService,
+      fenetFeature: FenetHomepageFeature,
+      fenetExperience: FenetHomepageExperience,
+      fenetCustomer: FenetHomepageCustomer,
+      fenetExpert: FenetHomepageExpert,
+      fenetPrice: FenetHomepagePrice,
+      fenetBlog: FenetHomepageBlog,
+    },
+    auth,
+  },
 } as const;
 
 export const THEMES_SERVER: ThemeRender = {
@@ -153,14 +187,15 @@ export const THEMES_SERVER: ThemeRender = {
   },
   scholar: {
     homepage: {
-      theme: ScholarHomePage,
+      theme: ScholarHomepage,
       scholarHero: ScholarHomepageHero,
       scholarService: ScholarHomepageService,
       scholarAboutUs: ScholarHomepageAboutUs,
       scholarAchievements: ScholarHomepageAchievements,
-    },
-    'about-us': {
-      theme: ScholarAboutUs,
+      scholarTeam: ScholarHomepageTeam,
+      scholarProjects: ScholarHomepageProjects,
+      scholarTestimonials: ScholarHomepageTestimonials,
+      scholarContact: ScholarHomepageContact,
     },
     auth: {
       theme: AuthLayout,
@@ -206,6 +241,20 @@ export const THEMES_SERVER: ThemeRender = {
       availSolution: AvailHomepageSolution,
       availEco: AvailHomepageEco,
       availBlogs: AvailHomepageBlogsServer,
+    },
+    auth,
+  },
+  fenet: {
+    homepage: {
+      theme: FenetHomepage,
+      fenetHero: FenetHomepageHero,
+      fenetService: FenetHomepageService,
+      fenetFeature: FenetHomepageFeature,
+      fenetExperience: FenetHomepageExperience,
+      fenetCustomer: FenetHomepageCustomer,
+      fenetExpert: FenetHomepageExpert,
+      fenetPrice: FenetHomepagePrice,
+      fenetBlog: FenetHomepageBlog,
     },
     auth,
   },

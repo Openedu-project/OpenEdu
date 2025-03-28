@@ -39,13 +39,13 @@ const CloneNewTheme = ({ themeSystemRes }: CloneNewThemeModalModal) => {
     [handleClose, theme]
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleNewThemeCloned = useCallback(
     async (themeNames: ThemeName[]) => {
       const configId = theme?.[0]?.id;
       const currentAvailableThemes = theme?.[0]?.value?.availableThemes || {};
 
       let clonedThemes = {};
-
       for (const name of themeNames) {
         if (initialData.availableThemes?.[name]) {
           clonedThemes = {
@@ -71,6 +71,7 @@ const CloneNewTheme = ({ themeSystemRes }: CloneNewThemeModalModal) => {
             config: data,
             id: configId,
           });
+
           if (!res) {
             toast.error(t('cloneFail'));
             return;

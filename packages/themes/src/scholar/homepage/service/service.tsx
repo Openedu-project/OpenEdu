@@ -1,14 +1,11 @@
-import type { FileType } from '@oe/ui/components/uploader';
 import { cn } from '@oe/ui/utils/cn';
 
 import { useTranslations } from 'next-intl';
-import type { SectionComponent } from '../../_types/theme-page';
-import { ServiceCard, type ServiceCardProps } from './_components/service-card';
+import type { SectionComponent } from '../../../_types/theme-page';
+import { SectionHeader, type SectionHeaderProps } from '../_components/section-header';
+import { ServiceCard, type ServiceCardProps } from '../_components/service-card';
 
-export interface ScholarHomepageServiceProps {
-  titleSection?: string;
-  titleMain?: string;
-  titleSub?: FileType;
+export interface ScholarHomepageServiceProps extends SectionHeaderProps {
   services?: {
     service1: ServiceCardProps;
     service2: ServiceCardProps;
@@ -17,7 +14,7 @@ export interface ScholarHomepageServiceProps {
   };
 }
 
-const ScholarServicePage: SectionComponent<'homepage', 'scholarService'> = ({ props, className }) => {
+const ScholarHomepageService: SectionComponent<'homepage', 'scholarService'> = ({ props, className }) => {
   const t = useTranslations('themePage.scholar.homepage.scholarService');
 
   const services = [
@@ -48,14 +45,9 @@ const ScholarServicePage: SectionComponent<'homepage', 'scholarService'> = ({ pr
   ];
 
   return (
-    <div className={cn('min-h-screen bg-gray-50 px-4 py-16', className)}>
-      <div className="container mx-auto max-w-6xl">
-        {/* Header Section */}
-        <div className="mb-16 text-center">
-          <h2 className="mb-2 font-semibold text-lg text-primary uppercase">{t('titleSection')}</h2>
-          <h1 className="mb-4 font-bold text-4xl text-foreground">{t('titleMain')}</h1>
-          <p className="mx-auto max-w-2xl text-foreground/80">{t('titleSub')}</p>
-        </div>
+    <div className={cn('bg-accent py-12 md:py-16 lg:py-20', className)}>
+      <div className="container space-y-8">
+        <SectionHeader title={t('title')} subtitle={t('subtitle')} description={t('description')} />
 
         {/* Services Grid */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -74,4 +66,4 @@ const ScholarServicePage: SectionComponent<'homepage', 'scholarService'> = ({ pr
   );
 };
 
-export default ScholarServicePage;
+export default ScholarHomepageService;

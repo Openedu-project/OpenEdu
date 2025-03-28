@@ -1,3 +1,5 @@
+import { Image } from '@oe/ui/components/image';
+
 import type { FileType } from '@oe/ui/components/uploader';
 import { cn } from '@oe/ui/utils/cn';
 import { useTranslations } from 'next-intl';
@@ -19,19 +21,28 @@ const ScholarHomepageAchievements: SectionComponent<'homepage', 'scholarAchievem
   const t = useTranslations('themePage.scholar.homepage.scholarAchievements');
 
   return (
-    <div className={cn('bg-primary p-4 md:p-8 lg:p-12', className)}>
-      <div className="container mt-4 space-y-12 md:space-y-8">
+    <div className={cn('bg-primary py-12 md:py-16 lg:py-20', className)}>
+      <div className="container space-y-8">
         <SectionHeader title={t('title')} subtitle={t('subtitle')} description={t('description')} variant="secondary" />
-        <div className="grid grid-cols-1 md:grid-cols-2">
-          {props?.achievements &&
-            Object.entries(props.achievements).map(([key, value], index) => (
-              <AchievementStat
-                key={key}
-                percentage={value.percentage}
-                variant={index % 2 ? 'primary' : 'secondary'}
-                description={value.description}
-              />
-            ))}
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4">
+          <Image
+            src={props?.image?.url}
+            height={props?.image?.height ?? 500}
+            width={props?.image?.width ?? 300}
+            alt="achievement"
+            className="rounded-lg"
+          />
+          <div className="grid w-full grid-cols-1 gap-2 md:grid-cols-2 md:gap-4">
+            {props?.achievements &&
+              Object.entries(props.achievements).map(([key, value], index) => (
+                <AchievementStat
+                  key={key}
+                  percentage={value.percentage}
+                  variant={index % 3 ? 'primary' : 'secondary'}
+                  description={value.description}
+                />
+              ))}
+          </div>
         </div>
       </div>
     </div>
