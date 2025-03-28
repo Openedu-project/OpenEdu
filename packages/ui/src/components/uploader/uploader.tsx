@@ -3,6 +3,7 @@ import { type ErrorStatus, ajaxUpload } from '@oe/api/utils/ajax-upload';
 import { uniqueID } from '@oe/core/utils/unique';
 import { useTranslations } from 'next-intl';
 import { type RefObject, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { toast } from '#shadcn/sonner';
 import { cn } from '#utils/cn';
 import { CropModal } from './crop-modal';
 import { ImagePreviewModal } from './image-preview-modal';
@@ -37,6 +38,8 @@ export const Uploader = (props: UploaderProps) => {
     renderTrigger,
     renderFileList,
     onChange,
+    setIsLoading,
+    maxFiles,
     ...restProps
   } = props;
   const t = useTranslations('uploader');
@@ -108,6 +111,11 @@ export const Uploader = (props: UploaderProps) => {
 
   const handleChange = useCallback(
     async (inputFiles: FileList | File[]) => {
+      if (maxFiles && files.length + Array.from(inputFiles).length > maxFiles) {
+        trigger.current?.clearInput();
+        toast.error(t('limitUpload', { number: maxFiles }));
+      }
+      setIsLoading?.(true);
       let newFiles: FileType[] = Array.from(inputFiles)
         .filter(file => !isDuplicateFile(file, files.map(f => f.originFile).filter(Boolean) as File[]))
         .map(file => ({
@@ -133,13 +141,22 @@ export const Uploader = (props: UploaderProps) => {
       filesRef.current = nextFileList;
       setFiles(nextFileList);
 
-      for (const file of nextFileList) {
-        if (file.status === 'inited') {
-          await uploadFile(file);
+      const allError = validatedFileList.every(f => f.status === 'error');
+
+      if (allError) {
+        setTimeout(() => {
+          setIsLoading?.(false);
+          onChange?.(multiple ? (nextFileList as IFileResponse[]) : (nextFileList[0] as IFileResponse));
+        }, 500);
+      } else {
+        for (const file of nextFileList) {
+          if (file.status === 'inited') {
+            await uploadFile(file);
+          }
         }
       }
     },
-    [multiple, validateFile, files]
+    [multiple, validateFile, files, onChange, setIsLoading, maxFiles, t]
   );
 
   const handleAjaxUploadProgress = useCallback((file: FileType, percent: number) => {
@@ -166,10 +183,11 @@ export const Uploader = (props: UploaderProps) => {
       const allFinished = filesRef.current.every(f => f.status === 'finished' || f.status === 'error');
 
       if (allFinished) {
+        setIsLoading?.(false);
         onChange?.(multiple ? (filesRef.current as IFileResponse[]) : (filesRef.current[0] as IFileResponse));
       }
     },
-    [onChange, multiple]
+    [onChange, multiple, setIsLoading]
   );
 
   const handleAjaxUploadError = useCallback((file: FileType, status: ErrorStatus) => {

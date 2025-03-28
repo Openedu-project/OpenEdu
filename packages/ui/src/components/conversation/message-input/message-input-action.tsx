@@ -65,10 +65,9 @@ export function MessageInputAction({
     };
   };
 
-  const disableButton = useMemo(
-    () => !form.formState.isValid || loading || GENERATING_STATUS.includes(status ?? ''),
-    [form, status, loading]
-  );
+  const disableButton = useMemo(() => {
+    return !form.formState.isValid || loading || GENERATING_STATUS.includes(status ?? '');
+  }, [form, status, loading]);
 
   const deepResearch = AI_SIDEBAR('var(--foreground)', 16).find(agent => agent.lableKey === 'deepResearch');
 

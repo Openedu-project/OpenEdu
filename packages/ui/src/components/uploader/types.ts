@@ -1,5 +1,5 @@
 import type { IFileResponse } from '@oe/api/types/file';
-import type { InputHTMLAttributes, MouseEvent, RefObject } from 'react';
+import type { Dispatch, InputHTMLAttributes, MouseEvent, RefObject, SetStateAction } from 'react';
 import type { ReactNode } from 'react';
 import type { ReactCropProps } from 'react-image-crop';
 
@@ -42,6 +42,8 @@ export interface UploaderProps extends Omit<InputHTMLAttributes<HTMLInputElement
   renderTrigger?: (triggerProps: UploadTriggerProps) => ReactNode; // Cho phép custom render trigger
   renderFileList?: (files: FileType[], fileItemProps: Partial<UploadFileItemProps>) => ReactNode; // Cho phép custom render file list
   onFileNameChange?: (file: FileType, newName: string) => void; // Callback khi tên file thay đổi
+  setIsLoading?: Dispatch<SetStateAction<boolean>>;
+  maxFiles?: number;
 }
 
 export type UploadTriggerInstance = {

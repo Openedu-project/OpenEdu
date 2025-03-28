@@ -1,6 +1,5 @@
 'use client';
 import type { TAgentType } from '@oe/api/types/conversation';
-import type { IFileResponse } from '@oe/api/types/file';
 import { isLogin } from '@oe/api/utils/auth';
 import type { z } from '@oe/api/utils/zod';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
@@ -14,7 +13,7 @@ import { Card } from '#shadcn/card';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { DESKTOP_BREAKPOINT, INPUT_BUTTON } from '../constants';
-import type { MessageFormValues, MessageInputProps } from '../type';
+import type { MessageFormValues, MessageInputProps, TFileResponse } from '../type';
 import { chatSchema } from '../utils';
 import { MessageInputAction } from './message-input-action';
 import { InputField } from './message-input-field';
@@ -158,7 +157,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
       await sendMessage({
         messageInput: values.message,
         type: selectedAgent,
-        files: (values as unknown as { files: IFileResponse[] }).files,
+        files: (values as unknown as { files: TFileResponse[] }).files,
         message_id: messageId,
       });
       inputRef.current?.focus();
@@ -206,8 +205,9 @@ const MessageInput: React.FC<MessageInputProps> = ({
               }}
             >
               {Array.isArray(filesData) && (filesData?.length ?? 0) > 0 && (
-                <PreviewFile form={form} filesData={filesData} />
+                <PreviewFile form={form} filesData={filesData as unknown as TFileResponse[]} />
               )}
+
               <InputField
                 type={type ?? selectedAgent}
                 form={form}

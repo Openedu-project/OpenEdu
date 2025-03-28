@@ -1,59 +1,196 @@
-import type { IFileResponse } from '@oe/api/types/file';
-import type { z } from '@oe/api/utils/zod';
-import { CircleX, Paperclip } from 'lucide-react';
-import type { UseFormReturn } from 'react-hook-form';
-import { Image } from '#components/image';
-import { Button } from '#shadcn/button';
-import type { chatSchema } from '../utils';
+import type { z } from "@oe/api/utils/zod";
+import { CircleX, Image as ImageIcon, Paperclip } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import {
+  type UseFieldArrayRemove,
+  type UseFormReturn,
+  useFieldArray,
+} from "react-hook-form";
+import { Image } from "#components/image";
+import { Button } from "#shadcn/button";
+import { Progress } from "#shadcn/progress";
+import { cn } from "#utils/cn";
+import type { TFileResponse, TFileStatus } from "../type";
+import type { chatSchema } from "../utils";
 
 export const PreviewFile = ({
   filesData,
   form,
 }: {
-  filesData: IFileResponse[];
+  filesData: TFileResponse[];
   form: UseFormReturn<z.infer<typeof chatSchema>>;
-}) => (
-  <div className="scrollbar mb-2 flex w-full gap-2 overflow-x-auto">
-    {filesData?.map(file => (
-      <div
-        key={file.id}
-        className="relative flex h-[90px] w-[160px] shrink-0 items-center justify-center rounded-lg bg-foreground/10"
-      >
-        {file.thumbnail_url ? (
-          <Image
-            className="absolute rounded-lg object-cover"
-            alt="screen-shot"
-            fill
-            sizes="160px"
-            noContainer
-            src={file?.thumbnail_url}
+}) => {
+  const { remove } = useFieldArray({
+    control: form.control,
+    name: "files",
+  });
+
+  return (
+    <div className="scrollbar mb-2 flex w-full gap-2 overflow-x-auto">
+      {filesData?.map((file, index) =>
+        file.mime.includes("image") ? (
+          <PreviewImage
+            key={file.id}
+            file={file}
+            remove={remove}
+            filePosition={index}
           />
         ) : (
-          <div className="flex items-center gap-1 p-2">
-            <Paperclip className="h-3 w-3 shrink-0" />
-            <p className="mcaption-regular12 line-clamp-3 break-all">{file.name}</p>
-          </div>
-        )}
-        <Button
-          variant="ghost"
-          type="button"
-          size="icon"
-          className="!p-0 absolute top-0 right-0 h-[16px] w-[16px] rounded-full bg-foreground/40 hover:bg-foreground/50"
-          onClick={() => {
-            form.setValue(
-              'files',
-              filesData?.filter(item => item.id !== file.id)
-            );
-          }}
-        >
-          <CircleX width={16} height={16} color="var(--background)" />
-        </Button>
-        {!file.mime?.includes('image') && (
-          <p className="mcaption-regular10 absolute right-1 bottom-1 rounded-lg bg-foreground/50 p-1 text-center text-background">
-            {file.ext?.slice(1).toUpperCase()}
+          <PreviewDocument
+            key={file.id}
+            file={file}
+            remove={remove}
+            filePosition={index}
+          />
+        )
+      )}
+    </div>
+  );
+};
+
+export const PreviewImage = ({
+  file,
+  remove,
+  filePosition,
+}: {
+  file: TFileResponse;
+  remove: UseFieldArrayRemove;
+  filePosition: number;
+}) => {
+  const onRemove = () => {
+    remove(filePosition);
+  };
+  return (
+    <div className="relative flex h-[90px] w-[160px] shrink-0 items-center justify-center rounded-lg bg-foreground/10">
+      <HitboxLayer file={file} handleRemove={onRemove} />
+      {file.status === "error" ? (
+        <div className={cn("flex items-center gap-1 p-2 text-destructive")}>
+          <ImageIcon className="h-3 w-3 shrink-0" />
+          <p className={cn("mcaption-regular12 line-clamp-3 break-all")}>
+            {file.name}
           </p>
+        </div>
+      ) : (
+        <Image
+          className="absolute rounded-lg object-cover"
+          alt="screen-shot"
+          fill
+          sizes="160px"
+          noContainer
+          src={file?.url}
+        />
+      )}
+    </div>
+  );
+};
+
+export const PreviewDocument = ({
+  file,
+  remove,
+  filePosition,
+}: {
+  file: TFileResponse;
+  remove: UseFieldArrayRemove;
+  filePosition: number;
+}) => {
+  const onRemove = () => {
+    remove(filePosition);
+  };
+
+  return (
+    <div className="relative flex h-[90px] w-[160px] shrink-0 items-center justify-center rounded-lg bg-foreground/10">
+      <HitboxLayer file={file} handleRemove={onRemove} />
+      <div
+        className={cn(
+          "flex items-center gap-1 p-2",
+          file.status === "error" && "text-destructive",
+          file.status === "loading" && "opacity-50"
         )}
+      >
+        <Paperclip className="h-3 w-3 shrink-0" />
+        <p className={cn("mcaption-regular12 line-clamp-3 break-all")}>
+          {file.name}
+        </p>
       </div>
-    ))}
-  </div>
-);
+    </div>
+  );
+};
+
+const HitboxLayer = ({
+  file,
+  handleRemove,
+}: {
+  file: TFileResponse;
+  handleRemove: () => void;
+}) => {
+  const tStatus = useTranslations("general.statusVariants");
+  const [status, setStatus] = useState<TFileStatus>();
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    setStatus(file.status);
+  }, [file]);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout | undefined;
+
+    if (status === "loading" && progress < 90) {
+      interval = setInterval(() => {
+        setProgress((prevProgress) => {
+          const increment = 0.2 + Math.random() * 0.15;
+          const newProgress = Math.min(prevProgress + increment, 95);
+          return newProgress;
+        });
+      }, 100);
+    } else if (status === "finished") {
+      interval = setInterval(() => {
+        setProgress((prevProgress) => {
+          if (prevProgress >= 100) {
+            return 100;
+          }
+          return prevProgress + 2;
+        });
+      }, 30);
+    }
+
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [status, progress]);
+
+  return (
+    <div className="absolute flex h-[90px] w-[160px] shrink-0 items-center justify-center rounded-lg bg-foreground/10">
+      <Button
+        variant="ghost"
+        type="button"
+        size="icon"
+        className="!p-0 absolute top-0 right-0 z-10 h-[16px] w-[16px] rounded-full bg-foreground/40 hover:bg-foreground/50"
+        onClick={handleRemove}
+      >
+        <CircleX width={16} height={16} color="hsl(var(--background))" />
+      </Button>
+      <div className="absolute right-0.5 bottom-0.5 flex w-full items-end gap-1">
+        <div className="grow px-2">
+          {file.status === "loading" && (
+            <Progress value={progress} className="h-3 transition-all" />
+          )}
+        </div>
+        <p
+          className={cn(
+            "mcaption-regular10 rounded-lg p-1 text-center",
+            file.status === "error"
+              ? "bg-background text-destructive"
+              : "bg-foreground/50 text-background"
+          )}
+        >
+          {file.status === "error"
+            ? tStatus("failed")
+            : file.ext?.slice(1).toUpperCase()}
+        </p>
+      </div>
+    </div>
+  );
+};
