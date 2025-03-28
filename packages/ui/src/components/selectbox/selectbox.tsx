@@ -58,9 +58,9 @@ export function Selectbox({
         </SelectValue>
       </SelectTrigger>
       <SelectContent>
-        {options?.map(option => (
+        {options?.map((option, index) => (
           <SelectItem
-            key={option.id}
+            key={`${option.id}-${index}`}
             value={option.value}
             className={cn('cursor-pointer', option.className)}
             style={option.style}

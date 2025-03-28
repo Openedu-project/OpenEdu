@@ -1,9 +1,10 @@
-import { useGetForms } from '@oe/api/hooks/useForms';
+import { useGetForms, usePostCloneForm } from '@oe/api/hooks/useForms';
 import { CreateFormButton } from '@oe/ui/components/dynamic-form';
 import { InputNumber } from '@oe/ui/components/input-number';
 import { Selectbox } from '@oe/ui/components/selectbox';
 import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
 import { Input } from '@oe/ui/shadcn/input';
+import { toast } from '@oe/ui/shadcn/sonner';
 import { Switch } from '@oe/ui/shadcn/switch';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
@@ -11,7 +12,11 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { ConfirmationButtons } from './confirmation-buttons';
 import { EntityIdSelector } from './entity-id-selector';
 
-export function FormTriggerForm() {
+export function FormTriggerForm({
+  modalType,
+}: {
+  modalType: 'edit' | 'add' | null;
+}) {
   const t = useTranslations('course');
 
   const { setValue } = useFormContext();
@@ -30,11 +35,15 @@ export function FormTriggerForm() {
     name: 'form_id',
   });
 
+  const form = useWatch({ name: 'form' });
+
   const { dataForms } = useGetForms({
     is_template: true,
     page: 1,
     per_page: 99999,
   });
+
+  const { triggerCloneForm } = usePostCloneForm();
 
   useEffect(() => {
     if (formId && dataForms) {
@@ -80,27 +89,66 @@ export function FormTriggerForm() {
     },
   ];
 
+  const handleSelectForm = async (val?: string) => {
+    if (!val) {
+      toast.error(t('form.missingId'));
+      return;
+    }
+    try {
+      const res = await triggerCloneForm(val);
+
+      if (!res) {
+        throw new Error('Failed to clone the new form');
+      }
+
+      setValue(formId, res?.id);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="space-y-4">
-      <FormFieldWithLabel name="type" label={t('form.type.type')}>
-        <Selectbox placeholder={t('form.type.selectType')} options={types} />
+      <FormFieldWithLabel
+        name="type"
+        label={t('form.type.type')}
+        description={modalType === 'edit' ? t('form.type.notEditType') : undefined}
+      >
+        {modalType === 'edit' ? (
+          <Input value={type} disabled />
+        ) : (
+          <Selectbox placeholder={t('form.type.selectType')} options={types} />
+        )}
       </FormFieldWithLabel>
 
       {type === 'form' && (
         <div className="flex flex-col">
-          <FormFieldWithLabel name="form_id" label={t('form.selectForm')} required>
-            <Selectbox
-              placeholder={t('form.selectFormPlaceholder')}
-              options={
-                dataForms?.map(form => ({
-                  value: form.id,
-                  label: form.title,
-                  id: form.id,
-                })) ?? []
-              }
-            />
+          <FormFieldWithLabel
+            name="form_id"
+            label={t('form.selectForm')}
+            description={modalType === 'edit' ? t('form.type.notEditForm') : undefined}
+            required
+          >
+            {/* ONLY CHOOSE THE FORM AT CREATE MODE */}
+            {modalType === 'edit' ? (
+              <Input value={form?.title} disabled />
+            ) : (
+              <Selectbox
+                placeholder={t('form.selectFormPlaceholder')}
+                options={
+                  dataForms?.map(form => ({
+                    value: form.id,
+                    label: form.title,
+                    id: form.id,
+                  })) ?? []
+                }
+                onChange={handleSelectForm}
+              />
+            )}
           </FormFieldWithLabel>
-          <CreateFormButton className="justify-end p-0" variant="link" queryParams={{ type: 'component' }} />
+          {formId === 'create' && (
+            <CreateFormButton className="justify-end p-0" variant="link" queryParams={{ type: 'component' }} />
+          )}
         </div>
       )}
 

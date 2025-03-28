@@ -1,5 +1,6 @@
 import { buildUrl } from '@oe/core/utils/url';
 import useSWR from 'swr';
+import useSWRMutation from 'swr/mutation';
 import {
   getFormResponsesService,
   getFormService,
@@ -7,8 +8,11 @@ import {
   getFormUserResponsesService,
   getFormsService,
   getQuestionAnswersStatsService,
+  postCloneForm,
 } from '#services/forms';
+import type { IFormResponse } from '#types/form';
 import { API_ENDPOINT } from '#utils/endpoints';
+import { createAPIUrl } from '#utils/fetch';
 
 export function useGetForm({ id }: { id: string }) {
   const endpointKey = buildUrl({ endpoint: API_ENDPOINT.FORMS_ID, params: { id } });
@@ -94,3 +98,27 @@ export function useGetFormUserResponses(id?: string, queryParams?: Record<string
     isLoading,
   };
 }
+
+export const usePostCloneForm = () => {
+  const { trigger, isMutating, error } = useSWRMutation(
+    API_ENDPOINT.FORMS_ID_DUPLICATE,
+    async (_endpoint: string, { arg }: { arg: string }): Promise<IFormResponse> =>
+      postCloneForm(
+        createAPIUrl({
+          endpoint: API_ENDPOINT.FORMS_ID_DUPLICATE,
+          params: {
+            id: arg,
+          },
+        }),
+        {
+          payload: arg,
+        }
+      )
+  );
+
+  return {
+    triggerCloneForm: trigger,
+    isLoadingCloneForm: isMutating,
+    cloneFormError: error,
+  };
+};
