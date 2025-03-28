@@ -48,7 +48,7 @@ export const QUESTION_OBJECT_TYPE = {
   // dropdown: 'Dropdown',
   multipleChoice: 'Multiple Choice',
   multipleChoiceGrid: 'Multiple Choice Grid',
-  selectBox: 'Select Box',
+  selectbox: 'Select Box',
   singleChoiceGrid: 'Single Choice Grid',
 };
 
@@ -73,9 +73,11 @@ export const QUESTION_TYPE = {
   singleChoice: 'Single Choice',
   checkbox: 'Checkbox',
   datetimePicker: 'Datetime Picker',
+  textarea: 'Textarea',
 
   //new
   submitButton: 'Submit Button',
+  image: 'Image',
 } as const;
 
 export const FORM_TYPE = {

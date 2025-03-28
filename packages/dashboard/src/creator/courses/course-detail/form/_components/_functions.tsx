@@ -1,5 +1,6 @@
 import type { IFormQuestion, IFormResponse } from '@oe/api/types/form';
-import type { IFormUserResponse } from '@oe/api/types/form-user-response';
+import type { IFormUserResponse, IFormUserResponseAnswerItem } from '@oe/api/types/form-user-response';
+import { formatDateHourMinute } from '@oe/core/utils/datetime';
 import type { TFunction } from '@oe/i18n/types';
 import type { ColumnDef, ColumnExportConfig } from '@oe/ui/components/table';
 
@@ -7,12 +8,32 @@ const filterdQuestions = (questions: IFormQuestion[]) => {
   return questions
     ?.filter(question => {
       const type = question?.question_type;
-      if (type === 'heading' || type === 'space' || type === 'paragraph' || type === 'submitButton') {
+      if (
+        type === 'heading' ||
+        type === 'space' ||
+        type === 'paragraph' ||
+        type === 'submitButton' ||
+        type === 'image'
+      ) {
         return undefined;
       }
       return question;
     })
     ?.filter(Boolean);
+};
+
+const getAnswer = (answer?: IFormUserResponseAnswerItem) => {
+  let value = answer?.answer_text;
+
+  if (answer?.question_type === 'datetimePicker') {
+    value = formatDateHourMinute(Number(value));
+  }
+
+  if (answer?.question_type === 'selectbox') {
+    value = answer?.option_text;
+  }
+
+  return value;
 };
 
 export const generateColumns = (detailFormData: IFormResponse, t: TFunction): ColumnDef<IFormUserResponse>[] => {
@@ -45,11 +66,13 @@ export const generateColumns = (detailFormData: IFormResponse, t: TFunction): Co
         const { answers } = row.original;
 
         if (Array.isArray(answers)) {
-          return <div>{answers[index]?.answer_text || ''}</div>;
+          return <div>{getAnswer(answers[index])}</div>;
         }
+
+        //TODO: format data before print based on question_type
         const key = Object.keys(answers)[index];
 
-        return key && <div>{answers[key]?.answer_text || ''}</div>;
+        return key && <div>{getAnswer(answers[key]) || ''}</div>;
       },
     };
   });
@@ -93,11 +116,11 @@ export const generateExportConfig = (detailFormData: IFormResponse, t: TFunction
 
         // Handle different answer data structures
         if (Array.isArray(row.answers)) {
-          return row.answers[index]?.answer_text || '';
+          return getAnswer(row.answers[index]);
         }
 
         // Object structure with question IDs as keys
-        return row.answers[question.id]?.answer_text || '';
+        return getAnswer(row.answers[question.id]) || '';
       },
     };
   });
