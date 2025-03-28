@@ -7,6 +7,7 @@ interface LessonLearningState {
   setSectionsProgressData: (sectionsProgressData: ISectionLearningProgress[]) => void;
   getLessonStatus: (lessonIndex: number) => boolean | undefined;
   isAllLessonsCompleted: () => boolean;
+  isLessonCompleted: (lessonUid: string) => boolean;
   isSectionCompleted: (sectionUid: string) => boolean;
 
   isNavigating: boolean;
@@ -45,6 +46,19 @@ export const useLessonLearningStore = create<LessonLearningState>((set, get) => 
       );
 
       return check;
+    },
+
+    isLessonCompleted(lesson_uid: string) {
+      const { sectionsProgressData } = get();
+
+      for (const section of sectionsProgressData) {
+        const lesson = section.lessons.find(lesson => lesson.uid === lesson_uid);
+
+        if (lesson) {
+          return lesson.complete_at !== 0;
+        }
+      }
+      return false;
     },
 
     isSectionCompleted(sectionUid: string) {

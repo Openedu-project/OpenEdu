@@ -47,7 +47,7 @@ export default async function LearningPage({
     course && dataLearningProgress && mergeSectionWithProgress(course?.outline, dataLearningProgress?.sections);
 
   return (
-    course && (
+    !!course && (
       <>
         <AuthCheck
           me={me}

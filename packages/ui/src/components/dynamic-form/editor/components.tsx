@@ -1,5 +1,6 @@
 'use client';
 
+import { uniqueID } from '@oe/core/utils/unique';
 import { Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Combobox } from '#components/combobox';
@@ -17,7 +18,7 @@ export function Components() {
   const handleAddField = (fieldType?: FormComponent) => {
     const component = components.find(component => component.fieldType === fieldType);
     if (component) {
-      addField(component);
+      addField({ ...component, name: `${component.name}-${uniqueID()}` });
     }
   };
 
@@ -38,7 +39,11 @@ export function Components() {
         {components.map(component => {
           const Icon = formComponents[component.fieldType]?.icon;
           return (
-            <Button key={component.fieldType} onClick={() => addField(component)} className="justify-start gap-2">
+            <Button
+              key={component.fieldType}
+              onClick={() => addField({ ...component, name: `${component.name}-${uniqueID()}` })}
+              className="justify-start gap-2"
+            >
               {Icon && <Icon className="h-4 w-4" />}
               <span>{tComponents(`${component.fieldType}`)}</span>
               <Plus className="ml-auto h-4 w-4" />

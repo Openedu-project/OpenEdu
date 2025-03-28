@@ -1,5 +1,6 @@
 import type { ICertificate } from '@oe/api/types/certificate';
 import type { ICourseOutline } from '@oe/api/types/course/course';
+import { CourseFormTriggerModal } from '#components/course-form-trigger';
 import { ScrollArea } from '#shadcn/scroll-area';
 import ContentSection from './content-section';
 import CourseOutline from './course-sidebar-section';
@@ -31,7 +32,18 @@ export default function CourseLearning({ course, section_uid, lesson_uid, certif
           <CourseOutline courseData={course} activeSection={section_uid} activeLesson={lesson_uid} />
         </ScrollArea>
       </div>
+
       {course?.has_certificate && certificate && <ReceiveCertificateModal certificate={certificate} />}
+
+      {/* {course?.form_relations?.map((form) => ( form?.enabled &&
+        <CourseFormTrigger
+          key={form?.id}
+          formData={form}
+          courseData={course}
+        />
+      ))} */}
+
+      <CourseFormTriggerModal />
     </>
   );
 }

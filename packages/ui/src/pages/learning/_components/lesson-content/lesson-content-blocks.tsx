@@ -1,9 +1,12 @@
 'use client';
+import { useGetForm } from '@oe/api/hooks/useForms';
 import { getLearningProgressesService, updateLearningProgressService } from '@oe/api/services/learning-progress';
 import type { TLessonContent } from '@oe/api/types/course/basic';
 import type { ILessonContent } from '@oe/api/types/course/segment';
 import type React from 'react';
+import { useCallback, useEffect } from 'react';
 import { toast } from 'sonner';
+import { useActivedTrigger, useLearnerFormTriggerStore } from '#components/course-form-trigger';
 import { ScrollArea } from '#shadcn/scroll-area';
 import { cn } from '#utils/cn';
 import { useLessonLearningStore, useQuizSubmissionStore } from '../../_store/learning-store';
@@ -12,6 +15,13 @@ import { mergeSectionWithProgress } from '../../_utils/utils';
 import type { LessonContentBlockProps } from './_types/types';
 import { ContentElement } from './content-block';
 import { CONTENT_RENDERERS } from './content-render';
+
+type FormTriggerConditionLearning = 'completed_section' | 'completed_lesson' | 'started_lesson';
+
+interface FormConditionProps {
+  type: FormTriggerConditionLearning;
+  entityId: string;
+}
 
 const getWrapperClassName = (contents: ILessonContent[]): string => {
   return cn(
@@ -31,8 +41,73 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
   course_data,
   isPreview = false,
 }) => {
-  const { sectionsProgressData, setSectionsProgressData } = useLessonLearningStore();
+  const { sectionsProgressData, setSectionsProgressData, isSectionCompleted, isLessonCompleted } =
+    useLessonLearningStore();
   const { quizResult } = useQuizSubmissionStore();
+
+  const { activedTrigger, checkActivedTrigger } = useActivedTrigger();
+  const { setFormData, currentFormId } = useLearnerFormTriggerStore();
+  const { dataForm } = useGetForm({ id: currentFormId ?? '' });
+
+  useEffect(() => {
+    if (dataForm) {
+      setFormData(dataForm);
+    }
+  }, [dataForm, setFormData]);
+
+  const evaluateCondition = useCallback(
+    (type: FormTriggerConditionLearning): boolean => {
+      const conditions: Record<FormTriggerConditionLearning, () => boolean> = {
+        completed_section: () => isSectionCompleted(section_uid as string),
+        completed_lesson() {
+          return isLessonCompleted(lesson_uid) ?? false;
+        },
+        started_lesson: () => true,
+      };
+
+      return conditions[type]?.() ?? false;
+    },
+    [isSectionCompleted, isLessonCompleted, section_uid, lesson_uid]
+  );
+
+  // Memoize form condition handler
+  const handleFormCondition = useCallback(
+    ({ type, entityId }: FormConditionProps) => {
+      if (!course_data?.form_relations) {
+        return;
+      }
+
+      const condition = evaluateCondition(type);
+
+      const isTriggerActive = checkActivedTrigger({
+        relations: course_data.form_relations,
+        entityId,
+        type,
+      });
+
+      if (condition && isTriggerActive) {
+        activedTrigger({
+          relations: course_data.form_relations,
+          entityId,
+        });
+      }
+    },
+    [course_data?.form_relations, activedTrigger, checkActivedTrigger, evaluateCondition]
+  );
+
+  useEffect(() => {
+    if (sectionsProgressData) {
+      const conditions: FormConditionProps[] = [
+        { type: 'completed_section', entityId: section_uid as string },
+        { type: 'completed_lesson', entityId: lesson_uid as string },
+        { type: 'started_lesson', entityId: lesson_uid as string },
+      ];
+
+      for (const condition of conditions) {
+        handleFormCondition(condition);
+      }
+    }
+  }, [handleFormCondition, section_uid, lesson_uid, sectionsProgressData]);
 
   const onCompleteContent = async (
     lesson_content_uid: string,
@@ -69,12 +144,6 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
         pause_at,
         start_at,
       };
-
-      console.log('pause_at', pause_at);
-      console.log('complete_at', complete_at);
-      console.log('start_at', start_at);
-
-      console.log('==================================');
 
       try {
         await updateLearningProgressService(undefined, { payload });
