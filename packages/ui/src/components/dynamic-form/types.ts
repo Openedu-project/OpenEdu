@@ -174,3 +174,6 @@ export interface SortableContainerProps {
   onSelect: (name: string) => void;
   onRemove: (name: string) => void;
 }
+
+// Component type enum for better type safety
+export type ComponentTypeEnum = 'option' | 'text' | 'skip' | 'date' | 'checkbox';

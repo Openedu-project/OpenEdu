@@ -1,7 +1,7 @@
 import { buildUrl } from '@oe/core/utils/url';
 import type { ICourseFormTrigger } from '#schemas/courses/forms';
 import type { HTTPPagination } from '#types/fetch';
-import type { IFormParams, IFormResponse } from '#types/form';
+import type { IFormParams, IFormResponse, IRegisterOrgRequest } from '#types/form';
 import type { IFormSummary, IFormUserResponse, IFormUserResponseAnswerStatsItem } from '#types/form-user-response';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
@@ -144,5 +144,31 @@ export const getFormUserResponsesService = async (
     url ?? buildUrl({ endpoint: API_ENDPOINT.FORMS_ID_SESSIONS, params: { id }, queryParams }),
     init
   );
+  return response.data;
+};
+
+export const postSubmitForm = async (
+  endpoint: string | null | undefined,
+  {
+    queryParams,
+    payload,
+    init,
+  }: {
+    queryParams?: Record<string, string | boolean | number>;
+    payload: IRegisterOrgRequest;
+    init?: RequestInit;
+  }
+) => {
+  const response = await postAPI(
+    endpoint ??
+      buildUrl({
+        endpoint: API_ENDPOINT.FORMS_ID_SUBMIT,
+        params: { id: payload?.form_relation_id },
+        queryParams,
+      }),
+    payload,
+    init
+  );
+
   return response.data;
 };
