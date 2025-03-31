@@ -62,8 +62,8 @@ export function Header({ isComponent = true }: { isComponent?: boolean }) {
             questions,
           },
         });
-        await mutateForm();
         await globalMutate((key: string) => !!key?.includes(API_ENDPOINT.FORMS), undefined, { revalidate: false });
+        await mutateForm();
       } else {
         const res = await createFormService(undefined, {
           data: {
