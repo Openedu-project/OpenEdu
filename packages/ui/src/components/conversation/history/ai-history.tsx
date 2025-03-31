@@ -166,7 +166,7 @@ const SearchHistory = ({ className, isLogin, callbackFn }: SearchHistoryProps) =
 export function AIHistoryModal({ isLogin = false, ...props }: SearchHistoryProps) {
   const [open, setOpen] = useState(false);
   const handleOpenModal = () => {
-    setOpen(prev => !prev);
+    setOpen(true);
   };
 
   return (
@@ -188,7 +188,13 @@ export function AIHistoryModal({ isLogin = false, ...props }: SearchHistoryProps
       hasCancelButton={false}
       contentClassName="p-2 pt-0 md:pb-4"
     >
-      <SearchHistory className={cn('h-[70dvh]')} isLogin={isLogin} callbackFn={handleOpenModal} />
+      <SearchHistory
+        className={cn('h-[70dvh]')}
+        isLogin={isLogin}
+        callbackFn={() => {
+          setOpen(false);
+        }}
+      />
     </Modal>
   );
 }
