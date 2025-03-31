@@ -1,7 +1,10 @@
 'use client';
+import { useGetForm } from '@oe/api/hooks/useForms';
+import { getCourseOutlineService } from '@oe/api/services/course';
 import type { ICourseOutline } from '@oe/api/types/course/course';
 import type { IUserProfile } from '@oe/api/types/user-profile';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { CourseFormTriggerModal, useLearnerFormTriggerStore } from '#components/course-form-trigger';
 import { CourseContext } from './course-context';
 // import { useRef } from "react";
 import { CourseInfo } from './course-info';
@@ -18,6 +21,9 @@ export default function CourseDetailContent({
 }) {
   const [courseData, setCourseData] = useState(initialCourseData);
 
+  const { setFormData, currentFormId } = useLearnerFormTriggerStore();
+  const { dataForm } = useGetForm({ id: currentFormId ?? '' });
+
   const updateWishlistStatus = useCallback((bookmarkId?: string, isWishlist?: boolean) => {
     setCourseData(
       prev =>
@@ -28,6 +34,20 @@ export default function CourseDetailContent({
         }) as ICourseOutline
     );
   }, []);
+
+  const updateFormRelationStatus = useCallback(async () => {
+    const newCourseData = await getCourseOutlineService(undefined, { id: initialCourseData?.slug });
+
+    if (newCourseData) {
+      setCourseData(newCourseData);
+    }
+  }, [initialCourseData.slug]);
+
+  useEffect(() => {
+    if (dataForm) {
+      setFormData(dataForm);
+    }
+  }, [dataForm, setFormData]);
 
   return (
     <CourseContext.Provider value={{ courseData, updateWishlistStatus, creatorData }}>
@@ -45,6 +65,8 @@ export default function CourseDetailContent({
 
           <CourseOutlineDetails className="md:hidden" courseData={courseData} />
         </div>
+
+        <CourseFormTriggerModal mutate={updateFormRelationStatus} />
       </div>
     </CourseContext.Provider>
   );

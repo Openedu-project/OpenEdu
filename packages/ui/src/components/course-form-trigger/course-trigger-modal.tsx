@@ -97,7 +97,6 @@ const CourseFormTriggerModal = ({ mutate }: IProps) => {
   const handleSubmit = useCallback(
     async (values: IAnswerParams[]) => {
       try {
-        console.log(values, 'values');
         const res = await postSubmitForm(undefined, {
           payload: {
             form_relation_id: currentFormId,
@@ -114,6 +113,7 @@ const CourseFormTriggerModal = ({ mutate }: IProps) => {
         toast.success('Submit your answers successfully!');
 
         handleShowFormAfterSubmission(currentConfirmationSettings);
+
         mutate?.();
       } catch (error) {
         console.error(error);
