@@ -21,7 +21,7 @@ export interface ISendMessageParams {
   messageInput?: string;
   type: TAgentType;
   url?: string;
-  files?: IFileResponse[];
+  files?: TFileResponse[];
   message_id?: string;
   role?: IRole;
   status?: string;
@@ -54,6 +54,7 @@ export interface MessageInputProps {
   files?: IFileResponse[];
   resetOnSuccess?: boolean;
   autoSend?: boolean;
+  chatId?: string;
 }
 
 export type InputFieldProps<TFormValues extends FieldValues> = {

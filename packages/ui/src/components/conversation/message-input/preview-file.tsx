@@ -1,7 +1,9 @@
+"use client";
+import { postEmbedDocument } from "@oe/api/services/conversation";
 import type { z } from "@oe/api/utils/zod";
 import { CircleX, Image as ImageIcon, Paperclip } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   type UseFieldArrayRemove,
   type UseFormReturn,
@@ -10,6 +12,7 @@ import {
 import { Image } from "#components/image";
 import { Button } from "#shadcn/button";
 import { Progress } from "#shadcn/progress";
+import { useSocketStore } from "#store/socket";
 import { cn } from "#utils/cn";
 import type { TFileResponse, TFileStatus } from "../type";
 import type { chatSchema } from "../utils";
@@ -19,36 +22,46 @@ interface IPreviewFileProps {
   remove?: UseFieldArrayRemove;
   filePosition?: number;
   viewOnly?: boolean;
+  updateFile?: (index: number, newValue: TFileResponse) => void;
+  chatId?: string;
 }
 
 export const PreviewFile = ({
   filesData,
   form,
+  chatId,
 }: {
   filesData: TFileResponse[];
   form: UseFormReturn<z.infer<typeof chatSchema>>;
+  chatId?: string;
 }) => {
   const { remove } = useFieldArray({
     control: form.control,
     name: "files",
   });
 
+  const updateFile = (index: number, newValue: TFileResponse) => {
+    form.setValue(`files.${index}`, newValue);
+  };
+
   return (
     <div className="scrollbar mb-2 flex w-full gap-2 overflow-x-auto">
       {filesData?.map((file, index) =>
-        file.mime.includes("image") ? (
+        file.mime?.includes("image") ? (
           <PreviewImage
-            key={file.id}
+            key={file.id ?? crypto.randomUUID()}
             file={file}
             remove={remove}
             filePosition={index}
           />
         ) : (
           <PreviewDocument
-            key={file.id}
+            key={file.id ?? crypto.randomUUID()}
             file={file}
             remove={remove}
             filePosition={index}
+            updateFile={updateFile}
+            chatId={chatId}
           />
         )
       )}
@@ -94,9 +107,14 @@ export const PreviewDocument = ({
   remove,
   filePosition,
   viewOnly,
+  updateFile,
+  chatId,
 }: IPreviewFileProps) => {
   const onRemove = () => {
     remove?.(filePosition);
+  };
+  const updateFileStatus = (status: TFileStatus) => {
+    updateFile?.(filePosition ?? 0, { ...file, status });
   };
 
   return (
@@ -106,14 +124,15 @@ export const PreviewDocument = ({
         viewOnly && "border bg-background"
       )}
     >
-      {!viewOnly && <HitboxLayer file={file} handleRemove={onRemove} />}
-      <div
-        className={cn(
-          "flex items-center gap-1 p-2",
-          file.status === "error" && "text-destructive",
-          file.status === "loading" && "opacity-50"
-        )}
-      >
+      {!viewOnly && (
+        <HitboxLayer
+          file={file}
+          handleRemove={onRemove}
+          updateStatus={updateFileStatus}
+          chatId={chatId}
+        />
+      )}
+      <div className={cn("flex items-center gap-1 p-2")}>
         <Paperclip className="h-3 w-3 shrink-0" />
         <p className={cn("mcaption-regular12 line-clamp-3 break-all")}>
           {file.name}
@@ -126,26 +145,48 @@ export const PreviewDocument = ({
 const HitboxLayer = ({
   file,
   handleRemove,
+  updateStatus,
+  chatId,
 }: {
   file: TFileResponse;
   handleRemove: () => void;
+  updateStatus?: (status: TFileStatus) => void;
+  chatId?: string;
 }) => {
   const tStatus = useTranslations("general.statusVariants");
-  const [status, setStatus] = useState<TFileStatus>();
+  const apiCalledRef = useRef(false);
+  const { AIDocumentStatusData, resetSocketData } = useSocketStore();
+
+  const [status, setStatus] = useState<TFileStatus>("loading");
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    setStatus(file.status);
-  }, [file]);
+    if (file.status === "loading" && !apiCalledRef.current) {
+      const res = postEmbedDocument(undefined, {
+        attachment_id: file.id,
+        ai_conversation_id: chatId,
+      });
+      apiCalledRef.current = true;
+
+      if (!res) {
+        updateStatus?.("error");
+        setStatus("error");
+      }
+    }
+
+    if (file.status) {
+      setStatus(file.status);
+    }
+  }, [file, chatId, updateStatus]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout | undefined;
 
-    if (status === "loading" && progress < 90) {
+    if (status === "loading") {
       interval = setInterval(() => {
         setProgress((prevProgress) => {
           const increment = 0.2 + Math.random() * 0.15;
-          const newProgress = Math.min(prevProgress + increment, 95);
+          const newProgress = Math.min(prevProgress + increment, 90);
           return newProgress;
         });
       }, 100);
@@ -153,11 +194,15 @@ const HitboxLayer = ({
       interval = setInterval(() => {
         setProgress((prevProgress) => {
           if (prevProgress >= 100) {
+            clearInterval(interval);
             return 100;
           }
           return prevProgress + 2;
         });
       }, 30);
+    } else {
+      setProgress(100);
+      clearInterval(interval);
     }
 
     return () => {
@@ -165,10 +210,31 @@ const HitboxLayer = ({
         clearInterval(interval);
       }
     };
-  }, [status, progress]);
+  }, [status]);
+
+  useEffect(() => {
+    if (
+      AIDocumentStatusData &&
+      AIDocumentStatusData.data?.file_id === file.id &&
+      AIDocumentStatusData.data?.status !== "generating"
+    ) {
+      const fileStatus =
+        AIDocumentStatusData.data?.status === "completed"
+          ? "finished"
+          : "error";
+      updateStatus?.(fileStatus);
+      setStatus(fileStatus);
+      resetSocketData("ai_chat_document_status");
+    }
+  }, [AIDocumentStatusData, file.id, resetSocketData, updateStatus]);
 
   return (
-    <div className="absolute flex h-[120px] w-[120px] shrink-0 items-center justify-center rounded-lg bg-foreground/10">
+    <div
+      className={cn(
+        "absolute flex h-[120px] w-[120px] shrink-0 items-center justify-center rounded-lg bg-foreground/10",
+        status === "error" && "border border-destructive bg-background/30"
+      )}
+    >
       <Button
         variant="ghost"
         type="button"
@@ -178,24 +244,25 @@ const HitboxLayer = ({
       >
         <CircleX width={16} height={16} color="hsl(var(--background))" />
       </Button>
-      <div className="absolute right-0.5 bottom-0.5 flex w-full items-end gap-1">
-        <div className="grow px-2">
-          {file.status === "loading" && (
+      <div className="absolute right-0 bottom-0 flex w-full items-end justify-end gap-1">
+        {status === "loading" || progress < 100 ? (
+          <div className="grow">
             <Progress value={progress} className="h-3 transition-all" />
-          )}
-        </div>
-        <p
-          className={cn(
-            "mcaption-regular10 rounded-lg p-1 text-center",
-            file.status === "error"
-              ? "bg-background text-destructive"
-              : "bg-foreground/50 text-background"
-          )}
-        >
-          {file.status === "error"
-            ? tStatus("failed")
-            : file.ext?.slice(1).toUpperCase()}
-        </p>
+          </div>
+        ) : (
+          <p
+            className={cn(
+              "mcaption-regular10 m-1 rounded-lg p-1 text-center",
+              status === "error"
+                ? "bg-destructive-foreground text-destructive"
+                : "bg-foreground/50 text-background"
+            )}
+          >
+            {status === "error"
+              ? tStatus("failed")
+              : file.ext?.slice(1).toUpperCase()}
+          </p>
+        )}
       </div>
     </div>
   );

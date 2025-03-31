@@ -19,8 +19,8 @@ import { Separator } from "#shadcn/separator";
 import { cn } from "#utils/cn";
 import type { TFileResponse } from "../type";
 
-const MAX_SIZE_BYTES = 200 * 1024 * 1024;
-const MAX_FILES = 10;
+const MAX_SIZE_BYTES = 2 * 1024 * 1024;
+const MAX_FILES = 2;
 
 export const InputFile = <TFormValues extends FieldValues>() => {
   const tAI = useTranslations("aiAssistant");
@@ -78,7 +78,7 @@ export const InputFile = <TFormValues extends FieldValues>() => {
                 value={field.value}
                 onChange={(files: IFileResponse | IFileResponse[]) => {
                   const customFiles = (files as TFileResponse[])?.map((f) => {
-                    if (f.mime.includes("image") || f.status !== "finished") {
+                    if (f.mime?.includes("image") || f.status !== "finished") {
                       return f;
                     }
                     return { ...f, status: "loading" };

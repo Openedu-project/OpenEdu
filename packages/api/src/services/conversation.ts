@@ -4,6 +4,7 @@ import type {
   IConversation,
   IConversationDetails,
   IConversationRequest,
+  IDocumentRequest,
   IMessage,
   IPromptsResponse,
   IUpdateConversationPayload,
@@ -115,6 +116,19 @@ export const getPrompts = async (
 
   try {
     const response = await fetchAPI<IPromptsResponse>(endpointKey, init);
+
+    return response.data;
+  } catch {
+    return undefined;
+  }
+};
+
+export const postEmbedDocument = async (url: string | undefined, payload: IDocumentRequest) => {
+  try {
+    const response = await postAPI<{ message: string }, IDocumentRequest | undefined>(
+      url ?? API_ENDPOINT.COM_CHANNELS_DOCUMENTS,
+      payload
+    );
 
     return response.data;
   } catch {

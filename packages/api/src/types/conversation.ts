@@ -208,3 +208,7 @@ export interface IPrompt {
 }
 
 export type IPromptsResponse = HTTPPagination<IPrompt>;
+export interface IDocumentRequest {
+  ai_conversation_id?: string;
+  attachment_id: string;
+}
