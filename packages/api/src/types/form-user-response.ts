@@ -1,4 +1,5 @@
 import type { FileType } from '@oe/ui/components/uploader';
+import type { TQuestionType } from './form';
 import type { IUser } from './user';
 
 export interface IFormUserResponseAnswerItem {
@@ -14,6 +15,11 @@ export interface IFormUserResponseAnswerItem {
   answer_text: string;
   files?: FileType[];
   key: string;
+  question_type: TQuestionType;
+  // New field
+  option_id?: string;
+  option_uid?: string; // Get value by uid
+  option_text?: string;
 }
 
 export interface IFormUserResponseAnswer {

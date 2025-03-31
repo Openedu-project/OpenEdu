@@ -4,7 +4,7 @@ import type { HTTPPagination } from '#types/fetch';
 import type { IFormParams, IFormResponse, IRegisterOrgRequest } from '#types/form';
 import type { IFormSummary, IFormUserResponse, IFormUserResponseAnswerStatsItem } from '#types/form-user-response';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
+import { createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 
 export const getFormsService = async (
   url: string | undefined,
@@ -169,6 +169,24 @@ export const postSubmitForm = async (
     payload,
     init
   );
+  return response.data;
+};
+
+export const postCloneForm = async (
+  endpoint: string | null | undefined,
+  { payload, init }: { payload: string; init?: RequestInit }
+) => {
+  let endpointKey = endpoint;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.FORMS_ID_DUPLICATE,
+      params: {
+        id: payload,
+      },
+    });
+  }
+
+  const response = await postAPI<IFormResponse, null>(endpointKey, null, init);
 
   return response.data;
 };

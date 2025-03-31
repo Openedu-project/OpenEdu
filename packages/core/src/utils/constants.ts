@@ -42,22 +42,42 @@ export const USER_ROLE_EVENT: Record<string, string> = {
 
 export const GENERATING_STATUS = ['pending', 'generating', 'setting', 'tool_ended', 'reasoning'];
 export const QUESTION_OBJECT_TYPE = {
-  checkbox: 'Checkbox',
-  multiple_choice: 'Multiple Choice',
-  file: 'File',
-  dropdown: 'Dropdown',
+  // checkbox: 'Checkbox',
+  // multiple_choice: 'Multiple Choice',
+  // file: 'File',
+  // dropdown: 'Dropdown',
+  multipleChoice: 'Multiple Choice',
+  multipleChoiceGrid: 'Multiple Choice Grid',
+  selectbox: 'Select Box',
+  singleChoiceGrid: 'Single Choice Grid',
 };
 
 export const QUESTION_TYPE = {
+  // ...QUESTION_OBJECT_TYPE,
+  // checkbox_grid: 'Checkbox Grid',
+  // multiple_choice_grid: 'Multiple Choice Grid',
+  // long_text: 'Long Text',
+  // phone: 'Phone',
+  // number: 'Number',
+  // sub_domain: 'Sub Domain',
+  // email: 'Email',
+  // text: 'Text',
   ...QUESTION_OBJECT_TYPE,
-  checkbox_grid: 'Checkbox Grid',
-  multiple_choice_grid: 'Multiple Choice Grid',
-  long_text: 'Long Text',
-  phone: 'Phone',
-  number: 'Number',
-  sub_domain: 'Sub Domain',
+  heading: 'Heading',
+  space: 'Space',
+  input: 'Input',
+  paragraph: 'Paragraph',
+  inputNumber: 'Input Number',
+  inpurPhoneNumber: 'Input Phone Number',
   email: 'Email',
-  text: 'Text',
+  singleChoice: 'Single Choice',
+  checkbox: 'Checkbox',
+  datetimePicker: 'Datetime Picker',
+  textarea: 'Textarea',
+
+  //new
+  submitButton: 'Submit Button',
+  image: 'Image',
 } as const;
 
 export const FORM_TYPE = {
