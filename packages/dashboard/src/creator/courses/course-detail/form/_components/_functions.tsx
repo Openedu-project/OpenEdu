@@ -69,7 +69,6 @@ export const generateColumns = (detailFormData: IFormResponse, t: TFunction): Co
           return <div>{getAnswer(answers[index])}</div>;
         }
 
-        //TODO: format data before print based on question_type
         const key = Object.keys(answers)[index];
 
         return key && <div>{getAnswer(answers[key]) || ''}</div>;

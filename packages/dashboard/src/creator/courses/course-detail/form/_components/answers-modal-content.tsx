@@ -22,6 +22,8 @@ export function AnswersModalContent({
   const { dataFormUserResponses } = useGetFormUserResponses(id, {
     all_versions: true,
     preloads: 'Users',
+    //TODO: improve later, should get all data
+    per_page: 99999,
   });
   const { dataFormSummary } = useGetFormSummary(formUID);
   const { dataForm } = useGetForm({ id });
