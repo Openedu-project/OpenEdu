@@ -25,7 +25,8 @@ const ContentEmbedded = ({
 
   return (
     <>
-      <div className="mx-auto flex aspect-video h-auto flex-col md:aspect-auto md:h-full [&>div>div>iframe]:mx-auto [&>div>div>iframe]:aspect-video [&>div>div>iframe]:w-auto [&>div>div>iframe]:max-w-full [&>div>div>iframe]:rounded-2xl [&>div]:flex-1">
+      <div className="mx-auto flex aspect-video h-auto flex-col md:h-full [&>div>div>iframe]:mx-auto [&>div>div>iframe]:aspect-video [&>div>div>iframe]:w-auto [&>div>div>iframe]:max-w-full [&>div>div>iframe]:rounded-2xl [&>div]:flex-1">
+        {/* <div className="mx-auto flex aspect-video h-auto flex-col md:aspect-auto md:h-full [&>div>div>iframe]:mx-auto [&>div>div>iframe]:aspect-video [&>div>div>iframe]:w-auto [&>div>div>iframe]:max-w-full [&>div>div>iframe]:rounded-2xl [&>div]:flex-1"> */}
         <ReactPlayer
           url={url}
           width="100%"

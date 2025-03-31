@@ -8,7 +8,6 @@ import {
   useActivedTrigger,
   useLearnerFormTriggerStore,
 } from "#components/course-form-trigger";
-import { ScrollArea } from "#shadcn/scroll-area";
 import { cn } from "#utils/cn";
 import { useCourse, useProgress, useQuiz } from "../../_context";
 import type { LessonContentBlockProps } from "./_types/types";
@@ -27,7 +26,8 @@ interface FormConditionProps {
 
 const getWrapperClassName = (contents: ILessonContent[]): string => {
   return cn(
-    "h-auto overflow-y-auto md:pr-2 md:pl-4 [&>[data-radix-scroll-area-viewport]>div]:h-full",
+    "h-auto md:pr-2 md:pl-4 [&>[data-radix-scroll-area-viewport]>div]:h-full",
+    // 'h-auto overflow-y-auto md:pr-2 md:pl-4 [&>[data-radix-scroll-area-viewport]>div]:h-full',
     contents.every((item) => item.type !== "embedded") && "h-full",
     contents.length === 1 &&
       contents[0] &&
@@ -79,31 +79,26 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
   // Memoize form condition handler
   const handleFormCondition = useCallback(
     ({ type, entityId }: FormConditionProps) => {
-      if (!course_data?.form_relations) {
+      if (!courseData?.form_relations) {
         return;
       }
 
       const condition = evaluateCondition(type);
 
       const isTriggerActive = checkActivedTrigger({
-        relations: course_data.form_relations,
+        relations: courseData.form_relations,
         entityId,
         type,
       });
 
       if (condition && isTriggerActive) {
         activedTrigger({
-          relations: course_data.form_relations,
+          relations: courseData.form_relations,
           entityId,
         });
       }
     },
-    [
-      course_data?.form_relations,
-      activedTrigger,
-      checkActivedTrigger,
-      evaluateCondition,
-    ]
+    [courseData, activedTrigger, checkActivedTrigger, evaluateCondition]
   );
 
   useEffect(() => {
@@ -118,12 +113,7 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
         handleFormCondition(condition);
       }
     }
-  }, [
-    handleFormCondition,
-    section_uid,
-    lesson_uid,
-    state?.sectionsProgressData,
-  ]);
+  }, [handleFormCondition, section_uid, lesson_uid, state]);
 
   const onCompleteContent = async (
     lesson_content_uid: string,
@@ -157,7 +147,7 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
   }
 
   return (
-    <ScrollArea className={cn(getWrapperClassName(contents))}>
+    <div className={cn(getWrapperClassName(contents))}>
       {contents?.map((item) => {
         const contentType = item.type;
         const renderer = CONTENT_RENDERERS[contentType];
@@ -177,11 +167,11 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
         return (
           <div
             key={item.id}
-            className={cn(
-              renderer.getClassName(contents.length === 1),
-              item?.type === "video" && "aspect-video h-full w-auto max-w-full",
-              "[&>hr]:last:hidden"
-            )}
+            // className={cn(
+            //   renderer.getClassName(contents.length === 1),
+            //   item?.type === 'video' && 'aspect-video h-full w-auto max-w-full',
+            //   '[&>hr]:last:hidden'
+            // )}
           >
             <ContentElement
               onCompleteContent={(props) =>
@@ -199,7 +189,7 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
           </div>
         );
       })}
-    </ScrollArea>
+    </div>
   );
 };
 

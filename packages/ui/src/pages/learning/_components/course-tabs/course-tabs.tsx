@@ -19,13 +19,14 @@ const CourseTabs = ({ course_data }: ICourseTabsProps) => {
       label: 'Course Content',
       icon: <Note />,
       content: <CourseOutline />,
-      className: 'lg:hidden',
+      className: 'h-full lg:hidden overflow-y-auto',
     },
     {
       value: 'description',
       label: 'Description',
       icon: <InfoCircle />,
       content: <CourseDescription courseData={course_data} />,
+      className: 'h-full overflow-y-auto',
     },
   ];
 

@@ -3,8 +3,8 @@
 import { useTranslations } from 'next-intl';
 import type { HTMLAttributes } from 'react';
 import { Link, useRouter } from '#common/navigation';
+import { cn } from '#utils/cn';
 import { createCourseUrl } from '#utils/course-url';
-import { useCurrentLesson } from '../_context';
 import { useProgress } from '../_context/progress-context';
 import { getLessonGlobalIndex, getTotalLessons, getUidByLessonIndex } from '../_utils/utils';
 import { NavigationButtons } from './navigate-button';
@@ -29,7 +29,7 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, lessonUid, ...props
     state: { sectionsProgressData, isNavigating },
     getLessonStatus,
   } = useProgress();
-  const { setCurrentLesson } = useCurrentLesson();
+  // const { setCurrentLesson } = useCurrentLesson();
 
   const currentLessonIndex = getLessonGlobalIndex(sectionsProgressData, lessonUid);
   const totalItems = getTotalLessons(sectionsProgressData);
@@ -49,7 +49,7 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, lessonUid, ...props
     const lessonInfo = getUidByLessonIndex(sectionsProgressData, newIndex);
 
     if (lessonInfo) {
-      setCurrentLesson(lessonInfo.sectionUid, lessonInfo.lessonUid);
+      // setCurrentLesson(lessonInfo.sectionUid, lessonInfo.lessonUid);
 
       const learningPageUrl = createCourseUrl('learning', {
         slug,
@@ -62,29 +62,29 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, lessonUid, ...props
   };
 
   return (
-    <div {...props}>
-      <div className="flex justify-between gap-2">
+    <div {...props} className={cn('flex flex-col justify-between gap-2 md:flex-row', props.className)}>
+      <div className="flex flex-col">
         <h3 className="giant-iheading-semibold16 md:giant-iheading-semibold24 mb-1 text-primary md:mb-3 md:line-clamp-1">
           {title}
         </h3>
 
-        <NavigationButtons
-          mode="lesson"
-          currentIndex={currentLessonIndex}
-          totalItems={totalItems}
-          onNavigate={handleNavigateLesson}
-          disableNext={!checkNextLesson || currentLessonIndex === totalItems || isNavigating}
-          disablePrev={currentLessonIndex === 0 || !checkPreviousLesson || isNavigating}
-          t={tLessonNavigate}
-        />
+        <Link
+          href={courseHref}
+          className="giant-iheading-semibold16 md:giant-iheading-semibold20 !text-foreground/85 line-clamp-1 h-fit w-fit whitespace-normal border-none p-0 hover:no-underline"
+        >
+          {tLearningPage('course', { courseName })}
+        </Link>
       </div>
-      <Link
-        href={courseHref}
-        className="giant-iheading-semibold16 md:giant-iheading-semibold20 !text-foreground/85 mb-1 line-clamp-1 h-fit w-fit whitespace-normal border-none p-0 hover:no-underline md:mb-3"
-      >
-        {tLearningPage('course', { courseName })}
-      </Link>
-      {/* <LastUpdated update_at={updateAt} /> */}
+
+      <NavigationButtons
+        mode="lesson"
+        currentIndex={currentLessonIndex}
+        totalItems={totalItems}
+        onNavigate={handleNavigateLesson}
+        disableNext={!checkNextLesson || currentLessonIndex === totalItems || isNavigating}
+        disablePrev={currentLessonIndex === 0 || !checkPreviousLesson || isNavigating}
+        t={tLessonNavigate}
+      />
     </div>
   );
 };

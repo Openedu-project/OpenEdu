@@ -90,15 +90,14 @@ export async function LearningPage({
         initialLesson={lesson}
       >
         <AuthCheck me={me} course={course} />
-
-        {course?.is_enrolled && (
-          <Suspense
-            fallback={
-              <div className="h-[calc(100dvh-var(--header-with-sub-item-height))]">
-                <Spinner />
-              </div>
-            }
-          >
+        <Suspense
+          fallback={
+            <div className="h-[calc(100dvh-var(--header-with-sub-item-height))]">
+              <Spinner />
+            </div>
+          }
+        >
+          {course?.is_enrolled && (
             <CourseLearning
               course={course}
               section_uid={section}
@@ -106,8 +105,8 @@ export async function LearningPage({
               certificate={certLayerData}
               lessonData={lessonData}
             />
-          </Suspense>
-        )}
+          )}
+        </Suspense>
       </LearningProviders>
     )
   );

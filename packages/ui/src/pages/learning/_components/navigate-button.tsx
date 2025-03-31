@@ -17,7 +17,7 @@ interface NavigationButtonsProps {
 
 const baseStyles = {
   quiz: '!rounded-full h-10 w-10 px-0 shadow-shadow-5 hover:bg-primary hover:opacity-75 disabled:border disabled:border-neutral-900 disabled:bg-white disabled:opacity-100 [&>svg>path]:fill-primary-foreground [&>svg>path]:disabled:fill-neutral-900',
-  lesson: 'mbutton-bold12 !text-sm border border-primary bg-transparent text-primary hover:bg-inherit',
+  lesson: 'w-full mbutton-bold12 !text-sm border border-primary bg-transparent text-primary hover:bg-inherit',
 };
 
 const ButtonWrapper = ({
@@ -34,7 +34,7 @@ const ButtonWrapper = ({
       </div>
     );
   }
-  return <div className="hidden sm:flex sm:justify-end sm:gap-2">{children}</div>;
+  return <div className="flex justify-between gap-2 sm:justify-end">{children}</div>;
 };
 
 export const NavigationButtons = ({

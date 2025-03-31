@@ -21,7 +21,7 @@ import {
   isLessonContentComplete,
 } from "../_utils/learning-progress";
 import { mergeSectionWithProgress } from "../_utils/utils";
-import { useCourse } from "./learning-context";
+import { useCourse } from "./course-context";
 
 type ProgressState = {
   sectionsProgressData: ISectionLearningProgress[];
@@ -144,7 +144,7 @@ export function ProgressProvider({
 
       return undefined;
     },
-    [state.sectionsProgressData]
+    [state.sectionsProgressData, state]
   );
 
   // Check all the completed lessons yet
@@ -156,7 +156,7 @@ export function ProgressProvider({
         section.total_lesson > 0 &&
         section.completed_lesson / section.total_lesson === 1
     );
-  }, [state.sectionsProgressData]);
+  }, [state.sectionsProgressData, state]);
 
   const isLessonCompleted = useCallback(
     (lesson_uid: string) => {
