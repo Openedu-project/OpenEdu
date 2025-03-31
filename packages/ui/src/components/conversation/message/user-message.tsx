@@ -114,7 +114,7 @@ export const UserMessage = ({ message, loading, sendMessage, messageType }: IMes
           {message.attachments && (
             <div className="mt-2 flex flex-wrap gap-2">
               {message.attachments.map((image, index) =>
-                image.mime.includes('image') ? (
+                image.mime?.includes('image') ? (
                   <Link
                     key={image.id}
                     className="relative block h-[120px] w-[120px] rounded-lg bg-background p-0"
