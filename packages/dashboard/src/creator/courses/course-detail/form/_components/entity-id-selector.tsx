@@ -18,14 +18,14 @@ export const EntityIdSelector = () => {
     options = allLessons.map(lesson => ({
       value: lesson.uid,
       label: lesson.title,
-      id: lesson.uid,
+      id: lesson.id,
     }));
     labelKey = 'form.trigger.selectLesson';
   } else if (triggerType === 'completed_section') {
     options = sections.map(section => ({
       value: section.uid,
       label: section.title,
-      id: section.uid,
+      id: section.id,
     }));
     labelKey = 'form.trigger.selectSection';
   } else if (triggerType === 'clicked_on') {

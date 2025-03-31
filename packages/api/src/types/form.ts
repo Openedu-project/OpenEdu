@@ -1,3 +1,4 @@
+import type { QUESTION_TYPE } from '@oe/core/utils/constants';
 import type { IPagination } from './fetch';
 export type TSort = 'create_at desc' | 'create_at asc' | '"order" asc';
 
@@ -6,7 +7,7 @@ type Timestamp = number;
 export type TFormStatus = 'draft' | 'published_org' | 'published_all' | 'unpublished';
 export type TFormEvent = 'register_course' | 'others' | 'contact_organization';
 export type TFormType = 'page' | 'slide';
-// export type TQuestionType = keyof typeof QUESTION_TYPE;
+export type TQuestionType = keyof typeof QUESTION_TYPE;
 
 export interface IBaseEntity {
   id: string;
@@ -35,7 +36,7 @@ export interface IFormSettings {
 export interface IFormQuestion extends IBaseEntity {
   title: string;
   description?: string;
-  question_type: string;
+  question_type: TQuestionType;
   sub_questions?: IFormSubquestion[];
   order: number;
   options?: IFormOption[];
@@ -123,3 +124,5 @@ export type IRejectFormRegisterCreatorPayload = IRejectFormPayload;
 export type IRejectFormRegisterCreatorRes = IRejectFormRegisterCreatorPayload;
 export type IRejectFormRegisterOrgPayload = IRejectFormPayload;
 export type IRejectFormRegisterOrgRes = IRejectFormPayload;
+
+export type TQuestionTypeResponse = Omit<TQuestionType, 'heading' | 'space' | 'paragraph' | 'submitButton'>;

@@ -1,7 +1,40 @@
-import type { IFormResponse } from '@oe/api/types/form';
-import type { IFormUserResponse } from '@oe/api/types/form-user-response';
+import type { IFormQuestion, IFormResponse } from '@oe/api/types/form';
+import type { IFormUserResponse, IFormUserResponseAnswerItem } from '@oe/api/types/form-user-response';
+import { formatDateHourMinute } from '@oe/core/utils/datetime';
 import type { TFunction } from '@oe/i18n/types';
 import type { ColumnDef, ColumnExportConfig } from '@oe/ui/components/table';
+
+const filterdQuestions = (questions: IFormQuestion[]) => {
+  return questions
+    ?.filter(question => {
+      const type = question?.question_type;
+      if (
+        type === 'heading' ||
+        type === 'space' ||
+        type === 'paragraph' ||
+        type === 'submitButton' ||
+        type === 'image'
+      ) {
+        return undefined;
+      }
+      return question;
+    })
+    ?.filter(Boolean);
+};
+
+const getAnswer = (answer?: IFormUserResponseAnswerItem) => {
+  let value = answer?.answer_text;
+
+  if (answer?.question_type === 'datetimePicker') {
+    value = formatDateHourMinute(Number(value));
+  }
+
+  if (answer?.question_type === 'selectbox') {
+    value = answer?.option_text;
+  }
+
+  return value;
+};
 
 export const generateColumns = (detailFormData: IFormResponse, t: TFunction): ColumnDef<IFormUserResponse>[] => {
   const baseColumns: ColumnDef<IFormUserResponse>[] = [
@@ -19,30 +52,29 @@ export const generateColumns = (detailFormData: IFormResponse, t: TFunction): Co
     // Add other base columns as needed
   ];
 
-  const answerColumns: ColumnDef<IFormUserResponse>[] = Array.from(
-    { length: detailFormData.questions.length },
-    (_, index) => {
-      return {
-        id: detailFormData.questions[index]?.id,
-        header: t('question', {
-          index: index + 1,
-          title: detailFormData.questions[index]?.title,
-        }),
-        accessor: 'answers',
-        size: 250,
-        cell({ row }) {
-          const { answers } = row.original;
+  const questions = filterdQuestions(detailFormData.questions);
+  const answerColumns: ColumnDef<IFormUserResponse>[] = Array.from({ length: questions.length }, (_, index) => {
+    return {
+      id: questions[index]?.id,
+      header: t('question', {
+        index: index + 1,
+        title: questions[index]?.title,
+      }),
+      accessor: 'answers',
+      size: 250,
+      cell({ row }) {
+        const { answers } = row.original;
 
-          if (Array.isArray(answers)) {
-            return <div>{answers[index]?.answer_text || ''}</div>;
-          }
-          const key = Object.keys(answers)[index];
+        if (Array.isArray(answers)) {
+          return <div>{getAnswer(answers[index])}</div>;
+        }
 
-          return key && <div>{answers[key]?.answer_text || ''}</div>;
-        },
-      };
-    }
-  );
+        const key = Object.keys(answers)[index];
+
+        return key && <div>{getAnswer(answers[key]) || ''}</div>;
+      },
+    };
+  });
 
   return [...baseColumns, ...answerColumns];
 };
@@ -65,8 +97,9 @@ export const generateExportConfig = (detailFormData: IFormResponse, t: TFunction
     // Add other base columns as needed
   ];
 
+  const questions = filterdQuestions(detailFormData.questions);
   // Add question/answer columns
-  const answerExportConfig: ColumnExportConfig[] = detailFormData.questions.map((question, index) => {
+  const answerExportConfig: ColumnExportConfig[] = questions.map((question, index) => {
     return {
       columnId: question.id,
       exportHeader: t('question', {
@@ -82,11 +115,11 @@ export const generateExportConfig = (detailFormData: IFormResponse, t: TFunction
 
         // Handle different answer data structures
         if (Array.isArray(row.answers)) {
-          return row.answers[index]?.answer_text || '';
+          return getAnswer(row.answers[index]);
         }
 
         // Object structure with question IDs as keys
-        return row.answers[question.id]?.answer_text || '';
+        return getAnswer(row.answers[question.id]) || '';
       },
     };
   });

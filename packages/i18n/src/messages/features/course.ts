@@ -121,12 +121,15 @@ export const courseMessages = {
       confirmationButtonsRequired: 'Please enter a confirmation buttons',
       confirmationAutoCloseRequired: 'Please enter a confirmation auto close after seconds',
       viewAnswers: 'View Answers',
+      missingId: 'Missing ID',
 
       type: {
         type: 'Type',
         selectType: 'Select type',
         form: 'Form',
         notification: 'Confirmation Modal',
+        notEditType: 'Can not edit type',
+        notEditForm: 'Can not select the form template',
       },
 
       trigger: {

@@ -287,7 +287,6 @@ export default function CourseDetailFormPage() {
         });
         toast.success(t('form.addSuccess'));
       }
-
       await tableRef.current?.mutateAndClearCache?.();
       setModalType(null);
     } catch (error) {
@@ -332,7 +331,7 @@ export default function CourseDetailFormPage() {
             }
           }
         >
-          <FormTriggerForm />
+          <FormTriggerForm modalType={modalType} />
         </Modal>
       </div>
     </div>
