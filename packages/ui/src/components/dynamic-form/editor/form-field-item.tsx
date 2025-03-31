@@ -46,6 +46,9 @@ export default function FormFieldItem({
               {...('text' in rest && { text: rest.text })}
               {...(rest.disabled && { disabled: rest.disabled })}
               {...(fieldType === 'selectbox' && { options: rest.options })}
+              {...(fieldType === 'multipleSelection' && {
+                options: rest.options,
+              })}
             />
           </FormFieldWithLabel>
         </div>

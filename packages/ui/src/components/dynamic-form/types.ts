@@ -51,7 +51,7 @@ export type FormComponent =
   | 'input'
   | 'inputNumber'
   | 'inputPassword'
-  | 'inputUrl'
+  | 'inputUrl' // TODO
   | 'inputCurrency'
   | 'textarea'
   | 'heading'
@@ -60,19 +60,21 @@ export type FormComponent =
   | 'label'
   | 'email'
   | 'checkbox'
-  | 'multiSelect'
-  | 'tagsInput'
+  // | 'multiSelect'
+  | 'multipleSelection'
+  | 'tagsInput' //TODO
   | 'image'
   | 'selectbox'
   | 'datetimePicker'
-  | 'smartDatetimeInput'
+  | 'smartDatetimeInput' //TODO
   | 'inputPhoneNumber'
-  | 'datePicker'
-  | 'locationInput'
-  | 'slider'
-  | 'signatureInput'
-  | 'number'
-  | 'switch'
+  | 'datePicker' //TODO
+  | 'locationInput' //TODO
+  | 'slider' // TODO
+  | 'signatureInput' //TODO
+  | 'number' // ???
+  | 'switch' // Current
+  | 'questionGrid' //TODO
   | 'submitButton';
 
 export interface FormComponentDefinition {

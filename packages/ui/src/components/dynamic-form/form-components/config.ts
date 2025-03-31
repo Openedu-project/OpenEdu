@@ -10,6 +10,7 @@ import { inputPasswordDefaultConfig } from './input-password/config';
 import { inputPhoneNumberDefaultConfig } from './input-phonenumber/config';
 // import { inputUrlDefaultConfig } from './input-url/config';
 import { inputDefaultConfig } from './input/config';
+import { multipleSelectionDefaultConfig } from './multiple-selection/config';
 import { paragraphConfig } from './paragraph/config';
 import { selectboxDefaultConfig } from './selectbox/config';
 import { spaceConfig } from './space/config';
@@ -31,6 +32,7 @@ export const config: Partial<Record<FormComponent, FormFieldType>> = {
   datetimePicker: dateTimePickerDefaultConfig,
   checkbox: checkboxDefaultConfig,
   selectbox: selectboxDefaultConfig,
+  multipleSelection: multipleSelectionDefaultConfig,
   image: formImageDefaultConfig,
   submitButton: submitButtonDefaultConfig,
 };

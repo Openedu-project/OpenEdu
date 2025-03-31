@@ -58,6 +58,9 @@ export const generateZodSchema = (formFields: FormFieldOrGroup[]): z.ZodObject<R
       case 'tagsInput':
         fieldSchema = z.array(z.string()).nonempty('formValidation.arrayError');
         break;
+      case 'multipleSelection':
+        fieldSchema = z.array(z.string()).nonempty('formValidation.arrayError');
+        break;
       default:
         fieldSchema = z.string({ required_error: 'formValidation.required' });
         break;
@@ -100,7 +103,7 @@ export const generateDefaultValues = (
     }
 
     switch (field.fieldType) {
-      case 'multiSelect':
+      case 'multipleSelection':
         defaultValues[field.name] = ['React'];
         break;
       case 'tagsInput':
@@ -155,7 +158,7 @@ export function convertFieldTypeToQuestionType(fieldType: FormComponent): string
     label: 'label',
     email: 'email',
     checkbox: 'checkbox',
-    multiSelect: 'multiSelect',
+    multipleSelection: 'multipleSelection',
     tagsInput: 'tagsInput',
     image: 'image',
     selectbox: 'selectbox',

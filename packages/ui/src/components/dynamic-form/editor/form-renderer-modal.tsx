@@ -112,6 +112,9 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
                       {...(fieldType === 'selectbox' && {
                         options: rest.options,
                       })}
+                      {...(fieldType === 'multipleSelection' && {
+                        options: rest.options,
+                      })}
                       {...((fieldType === 'checkbox' || fieldType === 'switch') && {
                         checked: field.value,
                         onCheckedChange: field.onChange,

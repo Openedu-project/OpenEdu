@@ -21,7 +21,7 @@ export const dynamicFormsMessages = {
       label: 'Label',
       email: 'Email',
       checkbox: 'Checkbox',
-      multiSelect: 'Multi Select',
+      multipleSelection: 'Multiple Selection',
       tagsInput: 'Tags Input',
       image: 'Image',
       datetimePicker: 'Datetime Picker',

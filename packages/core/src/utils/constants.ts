@@ -78,6 +78,7 @@ export const QUESTION_TYPE = {
   //new
   submitButton: 'Submit Button',
   image: 'Image',
+  multipleSelection: 'Multiple Selection',
 } as const;
 
 export const FORM_TYPE = {

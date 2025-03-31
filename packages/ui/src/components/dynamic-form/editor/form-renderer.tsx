@@ -58,6 +58,9 @@ export function FormRenderer({ fields, className }: FormRendererProps) {
                     {...(fieldType === 'selectbox' && {
                       options: rest.options,
                     })}
+                    {...(fieldType === 'multipleSelection' && {
+                      options: rest.options,
+                    })}
                   />
                 </FormFieldWithLabel>
               </div>

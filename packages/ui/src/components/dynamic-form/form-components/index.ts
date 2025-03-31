@@ -8,8 +8,10 @@ import {
   HeadingIcon,
   ImageIcon,
   Link,
-  List,
+  ListCheck,
+  ListChecks,
   Phone,
+  Send,
   SquareCheck,
   SquareDashed,
   TextCursorInput,
@@ -27,6 +29,7 @@ import { InputNumber } from './input-number';
 import { InputPassword } from './input-password';
 import { InputPhoneNumber } from './input-phonenumber';
 import { InputURL } from './input-url';
+import { MultipleSelection } from './multiple-selection';
 import { Paragraph } from './paragraph';
 import { Selectbox } from './selectbox';
 import { Space } from './space';
@@ -80,7 +83,11 @@ export const formComponents: FormComponents = {
   },
   selectbox: {
     component: Selectbox,
-    icon: List,
+    icon: ListCheck,
+  },
+  multipleSelection: {
+    component: MultipleSelection,
+    icon: ListChecks,
   },
   datetimePicker: {
     component: DateTimePicker,
@@ -96,6 +103,6 @@ export const formComponents: FormComponents = {
   },
   submitButton: {
     component: SubmitButton,
-    icon: SquareCheck,
+    icon: Send,
   },
 };

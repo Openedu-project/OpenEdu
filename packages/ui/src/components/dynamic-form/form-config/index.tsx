@@ -16,6 +16,7 @@ import { InputPasswordFieldConfig } from '../form-components/input-password/inpu
 import { InputPhoneNumberFieldConfig } from '../form-components/input-phonenumber/input-phonenumber-field-config';
 import { InputUrlFieldConfig } from '../form-components/input-url/input-url-field-config';
 import { InputFieldConfig } from '../form-components/input/input-field-config';
+import { MultipleSelectionFieldConfig } from '../form-components/multiple-selection/multiple-selection-config';
 import { ParagraphFieldConfig } from '../form-components/paragraph/paragraph-field-config';
 import { SelectboxFieldConfig } from '../form-components/selectbox/selectbox-config';
 import { SpaceFieldConfig } from '../form-components/space/space-field-config';
@@ -88,6 +89,7 @@ export function FieldConfig() {
           <CheckboxFieldConfig field={field} handleConfigChange={handleConfigChange} />
           <ImageFieldConfig field={field} handleConfigChange={handleConfigChange} />
           <SelectboxFieldConfig field={field} handleConfigChange={handleConfigChange} />
+          <MultipleSelectionFieldConfig field={field} handleConfigChange={handleConfigChange} />
           <SubmitFieldConfig field={field} handleConfigChange={handleConfigChange} />
         </div>
       </div>
