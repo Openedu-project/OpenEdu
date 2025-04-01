@@ -315,7 +315,7 @@ export default function FormCouponModal({
                 <Suspense>
                   <AutocompeteMultiple
                     options={dataCourses}
-                    value={field.value.map(
+                    value={field?.value?.map(
                       courseId =>
                         dataCourses.find(course => course.value === courseId) ?? {
                           label: courseId,
