@@ -21,12 +21,12 @@ import { useParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { FormWrapper } from '#components/form-wrapper';
 import { useFormEditorStore } from '../store';
-import type { FormFieldOrGroup, FormFieldType } from '../types';
+import type { FormEditorAction, FormFieldOrGroup, FormFieldType } from '../types';
 import { generateZodSchema } from '../utils';
 import { FormField } from './form-field';
 
-export function Editor() {
-  const { fields, updateFields } = useFormEditorStore();
+export function Editor({ action }: { action?: FormEditorAction }) {
+  const { fields, updateFields, reset } = useFormEditorStore();
 
   const { id } = useParams<{ id: string }>();
   const { dataForm } = useGetForm({ id });
@@ -37,8 +37,11 @@ export function Editor() {
       updateFields(
         dataForm?.questions.map(question => question?.settings?.props as FormFieldType).filter(Boolean) ?? []
       );
+    } else if (action === 'create') {
+      // Reset state at the create mode
+      reset();
     }
-  }, [dataForm, updateFields]);
+  }, [dataForm, updateFields, reset, action]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),

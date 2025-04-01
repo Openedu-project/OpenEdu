@@ -1,7 +1,9 @@
-import Discord from '@oe/assets/icons/social-icon/discord';
 import Facebook from '@oe/assets/icons/social-icon/facebook';
-import Telegram from '@oe/assets/icons/social-icon/telegram';
+import Linkedin from '@oe/assets/icons/social-icon/linkedin';
+import Twitter from '@oe/assets/icons/social-icon/twitter';
 import OpeneduLogo from '@oe/assets/images/logo-openedu-2.png';
+import { YoutubeIcon } from 'lucide-react';
+
 import { Separator } from '@radix-ui/react-select';
 import { useTranslations } from 'next-intl';
 import type React from 'react';
@@ -68,22 +70,28 @@ export function Footer({ logo, navigationItems, description, className, variant 
       colSpan: 2,
       items: [
         {
-          id: 'discord',
-          href: 'https://discord.com/invite/hWq4TXEDxW',
-          icon: Discord,
-          label: t('navigation.social.discord'),
-        },
-        {
-          id: 'telegram',
-          href: 'https://t.me/+z2s3BWk8jZhkNzY1',
-          icon: Telegram,
-          label: t('navigation.social.telegram'),
-        },
-        {
           id: 'facebook',
-          href: 'https://www.facebook.com/openedu101',
+          href: 'https://www.facebook.com/OpenEduOfficial',
           icon: Facebook,
           label: t('navigation.social.facebook'),
+        },
+        {
+          id: 'twitter',
+          href: 'https://x.com/OpenEdu_HQ',
+          icon: Twitter,
+          label: t('navigation.social.twitter'),
+        },
+        {
+          id: 'linkedin',
+          href: 'https://www.linkedin.com/company/106319142/admin/dashboard/',
+          icon: Linkedin,
+          label: t('navigation.social.linkedin'),
+        },
+        {
+          id: 'youtube',
+          href: 'https://www.youtube.com/@OpenEdu_Official',
+          icon: YoutubeIcon,
+          label: t('navigation.social.youtube'),
         },
       ],
     },
