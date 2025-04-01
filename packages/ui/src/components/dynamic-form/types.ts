@@ -43,6 +43,7 @@ export interface FormEditorStore {
   updateFields: (fields: FormFieldOrGroup[] | FormFieldOrGroup, index?: number) => void;
   reorderFields: (fromIndex: number, toIndex: number) => void;
   setSelectedField: (id: string | null) => void;
+  reset: () => void;
 }
 
 // Form Components types
@@ -177,3 +178,5 @@ export interface SortableContainerProps {
 
 // Component type enum for better type safety
 export type ComponentTypeEnum = 'option' | 'text' | 'skip' | 'date' | 'checkbox';
+
+export type FormEditorAction = 'create' | 'edit';
