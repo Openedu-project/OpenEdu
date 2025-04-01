@@ -71,8 +71,6 @@ const useActivedTrigger = () => {
     if (relations && entityId) {
       const currentTrigger = findFormRelationByEntityId(relations, entityId);
 
-      console.log(currentTrigger, 'currentTrigger');
-
       if (currentTrigger) {
         setActivedTriggerId(currentTrigger.id);
         setTriggerType(currentTrigger.type);
@@ -81,7 +79,6 @@ const useActivedTrigger = () => {
         }
 
         if (currentTrigger.type === 'form') {
-          console.log(currentTrigger.type, 'aaaaaaaaaaaa');
           setCurrentFormId(currentTrigger.form_id);
           setOpenTriggerModal(MODAL_ID.learnerCourseFormTrigger, true);
         } else {

@@ -13,6 +13,7 @@ export default function Category() {
   const { categoriesTree: levels } = useCategoriesTree(
     {
       type: 'level',
+      org_id: organizationByDomain?.id ?? '',
     },
     undefined,
     !!organizationByDomain?.id

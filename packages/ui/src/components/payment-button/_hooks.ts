@@ -8,6 +8,7 @@ import { useTranslations } from 'next-intl';
 import { useParams, useSearchParams } from 'next/navigation';
 import { type MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from '#common/navigation';
+import { useActivedTrigger } from '#components/course-form-trigger';
 import { useLoginRequiredStore } from '#components/login-required-modal';
 import { createCourseUrl } from '#utils/course-url';
 import { ACTION_TYPES, type ActionType, type IPaymentButton } from './types';
@@ -31,6 +32,8 @@ interface ActionHandlerParams {
   setIsLoading?: (isLoading: boolean) => void;
   setLoginRequiredModal: (show: boolean) => void;
   triggerPostEnrollCourse: (params: IEnrollCoursePayload) => void;
+  shouldActiveTrigger?: boolean;
+  handleShowTrigger: () => void;
 }
 
 type FromSourceType = {
@@ -137,7 +140,12 @@ const ACTION_HANDLERS: Record<ActionType, ActionHandler> = {
   },
   [ACTION_TYPES.NOT_PAY_ENROLLED]: {
     handle: params => {
-      redirectToLearningPage(params);
+      if (params?.shouldActiveTrigger) {
+        params?.setIsLoading?.(false);
+        params.handleShowTrigger();
+      } else {
+        redirectToLearningPage(params);
+      }
     },
     getText: t => t('goToCourse'),
     shouldShowCart: false,
@@ -145,14 +153,32 @@ const ACTION_HANDLERS: Record<ActionType, ActionHandler> = {
   [ACTION_TYPES.TRIGGER]: {
     handle: params => {
       redirectToLearningPage(params);
+      if (params?.isCourseDetail) {
+        params?.setIsLoading?.(false);
+        params.handleShowTrigger;
+      } else {
+        redirectToLearningPage(params);
+      }
     },
     getText: t => t('goToCourse'),
     shouldShowCart: false,
   },
   [ACTION_TYPES.DEFAULT]: {
     handle: async params => {
-      params?.isCourseDetail && (await handleEnrollCourse(params));
-      redirectToLearningPage(params);
+      if (!params) {
+        return;
+      }
+
+      // Handle loading state based on trigger condition
+      params.setIsLoading?.(!params.shouldActiveTrigger);
+
+      // Handle course enrollment if needed
+      params.isCourseDetail && (await handleEnrollCourse(params));
+
+      // Show trigger or redirect based on condition
+      params.shouldActiveTrigger
+        ? !params.courseData?.is_enrolled && params.handleShowTrigger?.()
+        : redirectToLearningPage(params);
     },
     getText: t => t('goToCourse'),
     shouldShowCart: false,
@@ -172,6 +198,7 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false, onClick }
 
   const { dataMe } = useGetMe();
   const { setLoginRequiredModal } = useLoginRequiredStore();
+  const { activedTrigger, checkActivedTrigger } = useActivedTrigger();
 
   const fromSourceStorage = getCookieClient(String(process.env.NEXT_PUBLIC_APP_COOKIE_FROM_SOURCE));
   const refByStorage = getCookieClient(String(process.env.NEXT_PUBLIC_APP_COOKIE_REF_BY));
@@ -258,11 +285,6 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false, onClick }
     }
   }, [courseData, fromUser, refByStorage]);
 
-  // const createCourseUrl = useCallback((type: 'learning' | 'detail', params: Record<string, string>) => {
-  //   const endpoint = type === 'learning' ? PLATFORM_ROUTES.courseLearning : PLATFORM_ROUTES.courseDetail;
-  //   return createAPIUrl({ endpoint, params });
-  // }, []);
-
   const baseAction = useMemo(
     () =>
       determineAction({
@@ -285,6 +307,16 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false, onClick }
       event.preventDefault();
       event.stopPropagation();
 
+      const entityId = event.currentTarget.id;
+      const handleShowTrigger = () => {
+        activedTrigger({ relations: courseData?.form_relations, entityId });
+      };
+      const shouldActiveTrigger = checkActivedTrigger({
+        relations: courseData?.form_relations,
+        entityId,
+        type: 'clicked_on',
+      });
+
       const params: ActionHandlerParams = {
         slug: slug as string,
         courseData,
@@ -295,6 +327,8 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false, onClick }
         isCourseDetail,
         setLoginRequiredModal,
         triggerPostEnrollCourse,
+        shouldActiveTrigger,
+        handleShowTrigger,
       };
 
       void actionHandler.handle(params);
@@ -307,12 +341,13 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false, onClick }
       domain,
       isExternalDomain,
       router,
-      // createCourseUrl,
       isCourseDetail,
       setLoginRequiredModal,
       triggerPostEnrollCourse,
       slug,
       onClick,
+      activedTrigger,
+      checkActivedTrigger,
     ]
   );
 
