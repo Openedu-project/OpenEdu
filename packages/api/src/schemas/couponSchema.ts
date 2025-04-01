@@ -23,7 +23,7 @@ export const couponSchema = z
       })
       .optional(),
     description: z.string().optional(),
-    allow_courses: z.array(z.string()).min(1, 'coupon.errors.selectOneCourse'),
+    allow_courses: z.array(z.string()).optional(),
     fiat_discount_percentage: z
       .union([z.string(), z.number()])
       .optional()
