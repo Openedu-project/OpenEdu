@@ -15,16 +15,16 @@ export default async function HeroSection() {
 
   return (
     <section className="container mx-auto px-0 py-4 pb-10 md:px-4 lg:py-10">
-      <div className="flex flex-col items-center justify-center gap-4 md:gap-8">
-        <div className="relative w-full rounded-lg px-2 text-center lg:px-4">
-          <div className="relative z-10 text-center">
-            <div className="mb-2 flex justify-center">
-              <div className="mt-6 flex max-w-[210px] justify-center">
+      <div className="flex flex-col items-center justify-center gap-4 md:gap-8 lg:flex-row">
+        <div className="relative w-full rounded-lg px-2 lg:px-4">
+          <div className="relative z-10 ">
+            <div className="mb-2 flex">
+              <div className="mt-6 flex max-w-[210px]">
                 <Image src={LogoOpenEdu.src} alt={t('logo.alt')} width={280} height={42} className="object-contain" />
               </div>
             </div>
 
-            <h1 className="mb-4 flex items-center justify-center gap-2">
+            <h1 className="mb-4 flex items-center gap-2">
               <span className="giant-iheading-bold16 sm:giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold32 text-primary">
                 {t('tagline.learning')}
               </span>
@@ -45,14 +45,14 @@ export default async function HeroSection() {
               </span>
             </h1>
 
-            <div className="mx-auto mb-6 max-w-[80%]">
+            <div className="mb-6 max-w-[80%]">
               <h2 className="mcaption-regular16 lg:mcaption-regular20">
                 {t.rich('headline', {
                   highlight: chunks => <span className="text-primary">{chunks}</span>,
                 })}
               </h2>
             </div>
-            <Link href={PLATFORM_ROUTES.courses} className="w-full justify-center p-0">
+            <Link href={PLATFORM_ROUTES.courses} className="w-full justify-start p-0">
               <Button className="mbutton-bold16 w-full sm:w-fit">{t('cta.button')}</Button>
             </Link>
           </div>
