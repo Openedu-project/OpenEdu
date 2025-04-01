@@ -10,7 +10,7 @@ export default function EmptyChat() {
       <div className="h-24 w-24 md:h-40 md:w-40">
         <Image src={AIChat.src} alt="ai-chat" objectFit="contain" width={40} height={40} />
       </div>
-      <h2 className="mcaption-regular24 md:giant-iheading-bold32 !font-normal">{tAI('generalChat')}</h2>
+      <h2 className="mcaption-regular24 md:giant-iheading-semibold32 -mt-8">{tAI('generalChat')}</h2>
       <p className="md:mcaption-regular20">{tAI('chatDesc')}</p>
     </div>
   );
