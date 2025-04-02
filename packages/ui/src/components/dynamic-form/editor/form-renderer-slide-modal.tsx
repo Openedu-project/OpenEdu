@@ -1,20 +1,20 @@
-import type { IFormQuestion, IFormResponse } from '@oe/api/types/form';
-import type { z } from '@oe/api/utils/zod';
-import { useTranslations } from 'next-intl';
-import { type MouseEvent, Suspense } from 'react';
-import { type ButtonConfig, Modal, type ModalProps } from '#components/modal';
+import type { IFormQuestion, IFormResponse } from "@oe/api/types/form";
+import type { z } from "@oe/api/utils/zod";
+import { useTranslations } from "next-intl";
+import { type MouseEvent, Suspense } from "react";
+import { type ButtonConfig, Modal, type ModalProps } from "#components/modal";
 
-import type { MultipleChoiceGridOption } from '#components/multiple-choice-grid';
-import { FormFieldWithLabel } from '#shadcn/form';
-import { Skeleton } from '#shadcn/skeleton';
-import { cn } from '#utils/cn';
-import { componentWithoutLabel } from '../constants';
-import { formComponents } from '../form-components';
-import { MultipleChoiceGridFormField } from '../form-components/multiple-choice-grid/multiple-choice-grid-form-field';
-import type { FormFieldType } from '../types';
-import { convertFormValueToAnswers, generateZodSchema } from '../utils';
+import type { MultipleChoiceGridOption } from "#components/multiple-choice-grid";
+import { FormFieldWithLabel } from "#shadcn/form";
+import { Skeleton } from "#shadcn/skeleton";
+import { cn } from "#utils/cn";
+import { componentWithoutLabel } from "../constants";
+import { formComponents } from "../form-components";
+import { MultipleChoiceGridFormField } from "../form-components/multiple-choice-grid/multiple-choice-grid-form-field";
+import type { FormFieldType } from "../types";
+import { convertFormValueToAnswers, generateZodSchema } from "../utils";
 
-export function FormRendererModal({
+export function FormRendererSlideModal({
   formData,
   onSubmit,
   ...props
@@ -28,7 +28,7 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
         return {
           ...question?.settings?.props,
           columns: question?.options,
-          rows: question?.sub_questions?.map(row => ({
+          rows: question?.sub_questions?.map((row) => ({
             ...row,
             text: row.title,
           })),
@@ -110,14 +110,14 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
                 <Component {...rest} text={rest.label} />
               </div>
             ) : (
-              <div className={cn(fieldType === 'checkbox' && 'p-2')}>
-                {fieldType === 'multipleChoiceGrid' ? (
+              <div className={cn(fieldType === "checkbox" && "p-2")}>
+                {fieldType === "multipleChoiceGrid" ? (
                   <MultipleChoiceGridFormField
                     name={rest.name}
                     label={rest.label}
                     required={rest.required}
                     description={rest.description}
-                    className={cn('flex-1 p-2', rest.border && 'border p-4')}
+                    className={cn("flex-1 p-2", rest.border && "border p-4")}
                     rows={rest?.rows as MultipleChoiceGridOption[]}
                     columns={rest?.columns as MultipleChoiceGridOption[]}
                   />
@@ -128,28 +128,27 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
                     infoText={rest.infoText}
                     required={rest.required}
                     description={rest.description}
-                    className={cn('flex-1 p-2', rest.border && 'border p-4')}
-                    isToggleField={fieldType === 'checkbox' || fieldType === 'switch'}
+                    className={cn("flex-1 p-2", rest.border && "border p-4")}
+                    isToggleField={
+                      fieldType === "checkbox" || fieldType === "switch"
+                    }
                     render={({ field }) => (
                       <Component
-                        {...('min' in rest && { min: rest.min })}
-                        {...('max' in rest && { max: rest.max })}
-                        {...('placeholder' in rest && {
+                        {...("min" in rest && { min: rest.min })}
+                        {...("max" in rest && { max: rest.max })}
+                        {...("placeholder" in rest && {
                           placeholder: rest.placeholder,
                         })}
-                        {...('text' in rest && { text: rest.text })}
+                        {...("text" in rest && { text: rest.text })}
                         {...(rest.disabled && { disabled: rest.disabled })}
-                        {...(fieldType === 'selectbox' && {
+                        {...(fieldType === "selectbox" && {
                           options: rest.options,
                         })}
-                        {...(fieldType === 'multipleSelection' && {
+                        {...(fieldType === "multipleSelection" && {
                           options: rest.options,
-                          hasOtherOption: rest?.otherOption,
-                          // onAddOtherOption: (val: string) => {
-                          //   rest?.onChange?.(val);
-                          // },
                         })}
-                        {...((fieldType === 'checkbox' || fieldType === 'switch') && {
+                        {...((fieldType === "checkbox" ||
+                          fieldType === "switch") && {
                           checked: field.value,
                           onCheckedChange: field.onChange,
                         })}
