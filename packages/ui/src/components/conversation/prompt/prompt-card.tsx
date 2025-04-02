@@ -84,7 +84,7 @@ export const ExpandPromptCard = ({
         <Button
           variant="outline"
           className={cn(
-            'mcaption-regular14 group relative h-auto w-full animate-fadeIn flex-col items-end whitespace-normal rounded-3xl bg-background p-1.5 md:p-3',
+            'mcaption-regular14 group relative h-auto w-full animate-fadeIn flex-col items-end whitespace-normal rounded-3xl bg-background p-3',
             'before:absolute before:top-0 before:left-0 before:z-[-1]',
             'before:rounded-3xl before:bg-white before:content-[""]',
             'before:h-full before:w-full',
@@ -104,7 +104,7 @@ export const ExpandPromptCard = ({
             <div className="absolute right-0 bottom-0 left-0 h-10 bg-gradient-to-t from-white to-transparent group-hover:hidden" />
           </div>
           {loading ? (
-            <LoaderCircle className={cn('mt-2 hidden h-4 w-4 animate-spin text-primary group-hover:block')} />
+            <LoaderCircle className={cn('mt-2 h-4 w-4 animate-spin text-primary')} />
           ) : (
             <MoveRight className={cn('mt-2 hidden h-4 w-4 text-primary group-hover:block')} />
           )}

@@ -8,7 +8,7 @@ export default function AIAssistantPage() {
   const tAI = useTranslations('aiAssistant');
 
   return (
-    <div className="flex h-[calc(100dvh-var(--header-height))] flex-col items-center gap-4 px-2 md:container">
+    <div className="flex h-[calc(100dvh-var(--header-height))] flex-col gap-4 px-2 md:container lg:items-center">
       <div className="no-scrollbar relative flex w-full grow flex-col justify-center gap-4 overflow-y-auto px-4 pt-4 md:pt-8 xl:px-40">
         <div className="-z-10 -translate-x-1/2 -translate-y-1/6 fixed top-1/4 left-[54%] h-1/2 w-1/2 transform md:h-2/5 md:w-2/5">
           <Image
