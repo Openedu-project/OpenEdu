@@ -4,6 +4,7 @@ import {
   CaseSensitive,
   DollarSign,
   EyeOff,
+  Grip,
   Hash,
   HeadingIcon,
   ImageIcon,
@@ -17,6 +18,7 @@ import {
   TextCursorInput,
   Type,
 } from 'lucide-react';
+import { MultipleChoiceGrid } from '#components/multiple-choice-grid';
 import type { FormComponents } from '../types';
 import { Checkbox } from './checkbox';
 import { DateTimePicker } from './date-time-picker';
@@ -100,6 +102,10 @@ export const formComponents: FormComponents = {
   image: {
     component: FormImage,
     icon: ImageIcon,
+  },
+  multipleChoiceGrid: {
+    component: MultipleChoiceGrid,
+    icon: Grip,
   },
   submitButton: {
     component: SubmitButton,

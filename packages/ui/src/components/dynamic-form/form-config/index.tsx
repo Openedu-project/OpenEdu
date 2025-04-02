@@ -2,6 +2,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { InputValue } from '#components/input-select';
+import type { MultipleChoiceGridOption } from '#components/multiple-choice-grid';
 import type { SelectboxOption } from '#components/selectbox';
 import { Button } from '#shadcn/button';
 import { cn } from '#utils/cn';
@@ -16,6 +17,7 @@ import { InputPasswordFieldConfig } from '../form-components/input-password/inpu
 import { InputPhoneNumberFieldConfig } from '../form-components/input-phonenumber/input-phonenumber-field-config';
 import { InputUrlFieldConfig } from '../form-components/input-url/input-url-field-config';
 import { InputFieldConfig } from '../form-components/input/input-field-config';
+import { MultipleChoiceGridFieldConfig } from '../form-components/multiple-choice-grid/multiple-choice-grid';
 import { MultipleSelectionFieldConfig } from '../form-components/multiple-selection/multiple-selection-config';
 import { ParagraphFieldConfig } from '../form-components/paragraph/paragraph-field-config';
 import { SelectboxFieldConfig } from '../form-components/selectbox/selectbox-config';
@@ -49,9 +51,11 @@ export function FieldConfig() {
 
   const handleConfigChange = (
     key: keyof FormFieldType,
-    value: string | number | boolean | SelectboxOption[] | InputValue
+    value: string | number | boolean | SelectboxOption[] | InputValue,
+    rows?: MultipleChoiceGridOption[],
+    columns?: MultipleChoiceGridOption[]
   ) => {
-    updateField(field?.name, { [key]: value });
+    updateField(field?.name, { [key]: value, rows: rows, columns: columns });
   };
 
   return (
@@ -74,6 +78,7 @@ export function FieldConfig() {
         </h5>
 
         <div className="space-y-4">
+          <p>aaaaaaaaa</p>
           <HeadingFieldConfig field={field} handleConfigChange={handleConfigChange} />
           <ParagraphFieldConfig field={field} handleConfigChange={handleConfigChange} />
           <SpaceFieldConfig field={field} handleConfigChange={handleConfigChange} />
@@ -90,6 +95,7 @@ export function FieldConfig() {
           <ImageFieldConfig field={field} handleConfigChange={handleConfigChange} />
           <SelectboxFieldConfig field={field} handleConfigChange={handleConfigChange} />
           <MultipleSelectionFieldConfig field={field} handleConfigChange={handleConfigChange} />
+          <MultipleChoiceGridFieldConfig field={field} handleConfigChange={handleConfigChange} />
           <SubmitFieldConfig field={field} handleConfigChange={handleConfigChange} />
         </div>
       </div>

@@ -10,6 +10,7 @@ import { inputPasswordDefaultConfig } from './input-password/config';
 import { inputPhoneNumberDefaultConfig } from './input-phonenumber/config';
 // import { inputUrlDefaultConfig } from './input-url/config';
 import { inputDefaultConfig } from './input/config';
+import { multipleChoiceGridDefaultConfig } from './multiple-choice-grid/config';
 import { multipleSelectionDefaultConfig } from './multiple-selection/config';
 import { paragraphConfig } from './paragraph/config';
 import { selectboxDefaultConfig } from './selectbox/config';
@@ -34,5 +35,6 @@ export const config: Partial<Record<FormComponent, FormFieldType>> = {
   selectbox: selectboxDefaultConfig,
   multipleSelection: multipleSelectionDefaultConfig,
   image: formImageDefaultConfig,
+  multipleChoiceGrid: multipleChoiceGridDefaultConfig,
   submitButton: submitButtonDefaultConfig,
 };

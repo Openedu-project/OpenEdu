@@ -1,23 +1,26 @@
-import type { MultipleSelectionOption } from '#components/multiple-selection';
+import type { MultipleChoiceGridOption } from '#components/multiple-choice-grid';
 import FormDescriptionConfig from '../../form-config/form-description-config';
 import FormDisabledConfig from '../../form-config/form-disabled-config';
+import { FormGridColumnConfig, FormGridRowConfig } from '../../form-config/form-grid-config';
 import { FormLabelConfig } from '../../form-config/form-label-config';
-import FormMaxConfig from '../../form-config/form-max-config';
-import FormMinConfig from '../../form-config/form-min-config';
-import FormOptionsConfig from '../../form-config/form-options-config';
 import FormPlaceholderConfig from '../../form-config/form-placeholder-config';
 import FormRequiredConfig from '../../form-config/form-required-config';
 import FormTooltipConfig from '../../form-config/form-tooltip-config';
 import type { FormFieldType } from '../../types';
 
-export function MultipleSelectionFieldConfig({
+export function MultipleChoiceGridFieldConfig({
   field,
   handleConfigChange,
 }: {
   field: FormFieldType;
-  handleConfigChange: (key: keyof FormFieldType, value: string | number | boolean | MultipleSelectionOption[]) => void;
+  handleConfigChange: (
+    key: keyof FormFieldType,
+    value: string | number | boolean,
+    rows?: MultipleChoiceGridOption[],
+    columns?: MultipleChoiceGridOption[]
+  ) => void;
 }) {
-  if (field.fieldType !== 'multipleSelection') {
+  if (field.fieldType !== 'multipleChoiceGrid') {
     return null;
   }
   return (
@@ -27,11 +30,26 @@ export function MultipleSelectionFieldConfig({
       <FormPlaceholderConfig field={field} handleConfigChange={handleConfigChange} />
       <FormDescriptionConfig field={field} handleConfigChange={handleConfigChange} />
       <FormTooltipConfig field={field} handleConfigChange={handleConfigChange} />
-      <FormOptionsConfig field={field} handleConfigChange={handleConfigChange} />
+      {/* <FormOptionsConfig field={field} handleConfigChange={handleConfigChange} /> */}
+      <FormGridColumnConfig
+        field={field}
+        handleConfigChange={(key, cols) => {
+          // console.log(field);
+          // console.log("k", key, "col", cols);
+          handleConfigChange(key, '', field?.rows, cols);
+        }}
+      />
+      <FormGridRowConfig
+        field={field}
+        handleConfigChange={(key, rows) => {
+          // console.log(field);
+          // console.log("k", key, "row", rows);
+          handleConfigChange(key, '', rows, field?.columns);
+        }}
+      />
+
       <FormRequiredConfig field={field} handleConfigChange={handleConfigChange} />
       <FormDisabledConfig field={field} handleConfigChange={handleConfigChange} />
-      <FormMinConfig field={field} handleConfigChange={handleConfigChange} />
-      <FormMaxConfig field={field} handleConfigChange={handleConfigChange} />
     </div>
   );
 }

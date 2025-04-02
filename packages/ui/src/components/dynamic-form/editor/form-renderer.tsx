@@ -2,12 +2,14 @@
 
 import { Suspense } from 'react';
 import { FormWrapper } from '#components/form-wrapper';
+import type { MultipleChoiceGridOption } from '#components/multiple-choice-grid';
 // import { useFormContext } from 'react-hook-form';
 import { FormFieldWithLabel } from '#shadcn/form';
 import { Skeleton } from '#shadcn/skeleton';
 import { cn } from '#utils/cn';
 import { componentWithoutLabel } from '../constants';
 import { formComponents } from '../form-components';
+import { MultipleChoiceGridFormField } from '../form-components/multiple-choice-grid/multiple-choice-grid-form-field';
 import type { FormFieldType } from '../types';
 import { generateZodSchema } from '../utils';
 
@@ -36,6 +38,16 @@ export function FormRenderer({ fields, className }: FormRendererProps) {
               <div className="p-2">
                 <Component {...rest} text={rest.label} />
               </div>
+            ) : fieldType === 'multipleChoiceGrid' ? (
+              <MultipleChoiceGridFormField
+                name={rest.name}
+                label={rest.label}
+                required={rest.required}
+                description={rest.description}
+                className={cn('flex-1 p-2', rest.border && 'border p-4')}
+                rows={rest?.rows as MultipleChoiceGridOption[]}
+                columns={rest?.columns as MultipleChoiceGridOption[]}
+              />
             ) : (
               <div className={cn(fieldType === 'checkbox' && 'p-2')}>
                 <FormFieldWithLabel

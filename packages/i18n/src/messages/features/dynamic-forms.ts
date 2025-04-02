@@ -39,6 +39,7 @@ export const dynamicFormsMessages = {
       submitButton: 'Submit Button',
       textarea: 'Textarea',
       selectbox: 'Selectbox',
+      multipleChoiceGrid: 'Multiple Choice Grid',
     },
     fieldConfig: {
       title: 'Configuration',
@@ -101,6 +102,12 @@ export const dynamicFormsMessages = {
       optionLabel: 'Label',
       optionValue: 'value',
       addOption: 'Add Option',
+      column: 'Column',
+      row: 'Row',
+      addColumn: 'Add Column',
+      addRow: 'Add Row',
+      columns: 'Columns',
+      rows: 'Rows',
     },
     toast: {
       createSuccess: 'Form created successfully',

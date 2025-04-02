@@ -51,6 +51,7 @@ export function Header({ isComponent = true }: { isComponent?: boolean }) {
     try {
       const questions: IQuestionParam[] = convertFieldsToQuestions(fields);
 
+      console.log(questions);
       if (id) {
         await updateFormService(undefined, {
           id,
