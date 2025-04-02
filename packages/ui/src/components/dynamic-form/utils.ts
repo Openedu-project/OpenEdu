@@ -424,8 +424,8 @@ export function convertFormValueToAnswers(
     }
 
     // console.log(questions);
-    console.log(fieldValue);
-    console.log(valueToOptionIdMap[questionId], 'valueToOptionIdMap[questionId] ');
+    // console.log(fieldValue);
+    // console.log(valueToOptionIdMap[questionId], 'valueToOptionIdMap[questionId] ');
     // Process different component types
     switch (componentType) {
       case 'option':

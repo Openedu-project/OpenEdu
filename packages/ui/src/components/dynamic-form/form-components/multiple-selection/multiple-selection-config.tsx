@@ -14,7 +14,6 @@ export function MultipleSelectionFieldConfig({
   field: FormFieldType;
   handleConfigChange: (key: keyof FormFieldType, value: string | number | boolean | MultipleSelectionOption[]) => void;
 }) {
-  console.log(field);
   if (field.fieldType !== 'multipleSelection') {
     return null;
   }

@@ -43,8 +43,6 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
 
   const handleSubmit = (values: z.infer<z.ZodType>) => {
     const answers = convertFormValueToAnswers(values, formData?.questions as IFormQuestion[]);
-    console.log(values);
-    console.log(answers);
 
     // if (isRegisterOrg) {
     //   try {

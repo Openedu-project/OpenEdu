@@ -63,6 +63,7 @@ export function MultipleSelection({
     }
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (inputRef?.current) {
       // Add blur event listener to handle when user loses focus
