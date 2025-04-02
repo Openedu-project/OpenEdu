@@ -2,16 +2,7 @@ import { getPermissionMyAccessService } from '@oe/api/services/permissions';
 import { CREATOR_ROUTES } from '@oe/core/utils/routes';
 import { checkSidebarPermissions } from '@oe/core/utils/sidebar-menu';
 import { DashboardLayout } from '@oe/ui/common/layout';
-import {
-  BookOpen,
-  CirclePercent,
-  FileText,
-  House,
-  LayoutTemplate,
-  NotebookText,
-  Receipt,
-  ReceiptText,
-} from 'lucide-react';
+import { BookOpen, CirclePercent, House, NotebookText, Receipt, ReceiptText } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
 import { Affiliate } from '../../../assets/src/icons/affliliate';
@@ -50,23 +41,10 @@ export default async function Layout({ children }: { children: ReactNode }) {
         href: CREATOR_ROUTES.courses,
       },
       {
-        id: 'formValidation',
-        label: tDashboard('formValidation.title'),
-        icon: <FileText className="h-5 w-5" />,
-        items: [
-          {
-            id: 'form-templates',
-            label: tDashboard('formValidation.formTemplates'),
-            icon: <LayoutTemplate className="h-5 w-5" />,
-            href: CREATOR_ROUTES.formTemplates,
-          },
-          {
-            id: 'form-list',
-            label: tDashboard('formValidation.formList'),
-            icon: <ReceiptText className="h-5 w-5" />,
-            href: CREATOR_ROUTES.formList,
-          },
-        ],
+        id: 'form-list',
+        label: tDashboard('forms.formTemplates'),
+        icon: <ReceiptText className="h-5 w-5" />,
+        href: CREATOR_ROUTES.formList,
       },
       {
         id: 'affiliate-campaigns',

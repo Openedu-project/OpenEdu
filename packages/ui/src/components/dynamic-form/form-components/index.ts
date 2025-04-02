@@ -4,17 +4,21 @@ import {
   CaseSensitive,
   DollarSign,
   EyeOff,
+  Grip,
   Hash,
   HeadingIcon,
   ImageIcon,
   Link,
-  List,
+  ListCheck,
+  ListChecks,
   Phone,
+  Send,
   SquareCheck,
   SquareDashed,
   TextCursorInput,
   Type,
 } from 'lucide-react';
+import { MultipleChoiceGrid } from '#components/multiple-choice-grid';
 import type { FormComponents } from '../types';
 import { Checkbox } from './checkbox';
 import { DateTimePicker } from './date-time-picker';
@@ -27,6 +31,7 @@ import { InputNumber } from './input-number';
 import { InputPassword } from './input-password';
 import { InputPhoneNumber } from './input-phonenumber';
 import { InputURL } from './input-url';
+import { MultipleSelection } from './multiple-selection';
 import { Paragraph } from './paragraph';
 import { Selectbox } from './selectbox';
 import { Space } from './space';
@@ -80,7 +85,11 @@ export const formComponents: FormComponents = {
   },
   selectbox: {
     component: Selectbox,
-    icon: List,
+    icon: ListCheck,
+  },
+  multipleSelection: {
+    component: MultipleSelection,
+    icon: ListChecks,
   },
   datetimePicker: {
     component: DateTimePicker,
@@ -94,8 +103,12 @@ export const formComponents: FormComponents = {
     component: FormImage,
     icon: ImageIcon,
   },
+  multipleChoiceGrid: {
+    component: MultipleChoiceGrid,
+    icon: Grip,
+  },
   submitButton: {
     component: SubmitButton,
-    icon: SquareCheck,
+    icon: Send,
   },
 };
