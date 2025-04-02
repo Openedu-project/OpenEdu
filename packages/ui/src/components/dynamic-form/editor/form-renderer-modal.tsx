@@ -35,7 +35,7 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
         } as FormFieldType;
       })
       .filter(Boolean) ?? [];
-  console.log('fields', fields);
+
   const formSchema = generateZodSchema(fields);
 
   const fieldsWithoutSubmitButton = fields.filter(field => field?.fieldType !== 'submitButton');

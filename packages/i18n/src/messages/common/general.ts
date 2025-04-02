@@ -24,6 +24,7 @@ export const generalMessages = {
     close: 'Close',
     open: 'Open',
     next: 'Next',
+    back: 'Back',
     previous: 'Previous',
     loading: 'Loading...',
     success: 'Success',
@@ -114,5 +115,8 @@ export const generalMessages = {
     generate: 'Generate',
     generating: 'Generating',
     remove: 'Remove',
+    errorRequiredFields: 'Please fill all required fields',
+    failedSubmitAnswer: 'Failed to submit your answer!',
+    successSubmitAnswer: 'Submit your answers successfully!',
   },
 };
