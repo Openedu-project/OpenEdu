@@ -185,3 +185,25 @@ export interface ISourceProps {
   title: string;
   content: string;
 }
+
+export interface IPrompSearchParams extends Record<string, unknown> {
+  page: number;
+  per_page: number;
+  ai_agent_type?: TAgentType;
+  category_id?: string;
+}
+
+export interface IPrompt {
+  id: string;
+  create_at: number;
+  update_at: number;
+  delete_at: number;
+  user_id: string;
+  text: string;
+  enable: boolean;
+  ai_agent_type: string;
+  category_id: string;
+  order: number;
+}
+
+export type IPromptsResponse = HTTPPagination<IPrompt>;

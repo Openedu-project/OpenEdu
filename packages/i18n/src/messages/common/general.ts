@@ -118,5 +118,6 @@ export const generalMessages = {
     errorRequiredFields: 'Please fill all required fields',
     failedSubmitAnswer: 'Failed to submit your answer!',
     successSubmitAnswer: 'Submit your answers successfully!',
+    viewMore: 'View more',
   },
 };

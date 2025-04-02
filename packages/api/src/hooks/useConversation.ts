@@ -1,8 +1,8 @@
 import type { HTTPResponse } from '@oe/api/types/fetch';
 import useSWR from 'swr';
 import useSWRInfinite from 'swr/infinite';
-import { getConversationDetail, getMessageData } from '#services/conversation';
-import type { IChatHistoryResponse, IConversationDetails } from '#types/conversation';
+import { getConversationDetail, getMessageData, getPrompts } from '#services/conversation';
+import type { IChatHistoryResponse, IConversationDetails, IPrompSearchParams } from '#types/conversation';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl, fetchAPI } from '#utils/fetch';
 
@@ -96,6 +96,21 @@ export function useGetMessageData({
   return {
     messageData: data,
     messageError: error,
+    mutate,
+    isLoading,
+  };
+}
+
+export function useGetPromps({
+  queryParams,
+  shouldFetch = true,
+}: { queryParams?: IPrompSearchParams; shouldFetch?: boolean }) {
+  const endpointKey = shouldFetch ? createAPIUrl({ endpoint: API_ENDPOINT.AI_PROMPTS, queryParams }) : null;
+  const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) => getPrompts(endpoint));
+
+  return {
+    prompts: data,
+    error,
     mutate,
     isLoading,
   };

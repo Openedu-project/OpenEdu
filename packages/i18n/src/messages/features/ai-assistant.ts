@@ -46,5 +46,6 @@ export const aiAssistantMessages = {
     resources: 'Resources',
     chatDesc: 'You can find ideation for your content by OpenEdu Chat Agent',
     thinking: 'Thinking',
+    allPromptingWithName: '{name} - All Prompting',
   },
 };
