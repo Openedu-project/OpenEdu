@@ -2,7 +2,7 @@
 import type { TAgentType } from '@oe/api/types/conversation';
 import { isLogin } from '@oe/api/utils/auth';
 import { animated, useSpring } from '@react-spring/web';
-import { MoveRight } from 'lucide-react';
+import { LoaderCircle, MoveRight } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useLoginRequiredStore } from '#components/login-required-modal';
 import { Button } from '#shadcn/button';
@@ -16,16 +16,21 @@ export const ExpandPromptCard = ({
   agent = 'ai_search',
   text,
   side = 'bottom',
+  disabled,
+  callbackFn,
 }: {
   agent?: TAgentType;
   text: string;
   side?: 'bottom' | 'top';
+  disabled?: boolean;
+  callbackFn?: () => void;
 }) => {
   const { selectedAgent } = useConversationStore();
   const sendMessage = useSendMessageHandler(agent);
   const { setLoginRequiredModal } = useLoginRequiredStore();
 
   const [isHovered, setIsHovered] = useState(false);
+  const [loading, setLoading] = useState(false);
   const cardRef = useRef(null);
   const textRef = useRef<HTMLParagraphElement>(null);
 
@@ -45,10 +50,12 @@ export const ExpandPromptCard = ({
       setLoginRequiredModal(true);
       return;
     }
+    setLoading(true);
     await sendMessage({
       messageInput: text,
       type: selectedAgent,
     });
+    callbackFn?.();
   };
 
   return (
@@ -81,20 +88,26 @@ export const ExpandPromptCard = ({
             'before:absolute before:top-0 before:left-0 before:z-[-1]',
             'before:rounded-3xl before:bg-white before:content-[""]',
             'before:h-full before:w-full',
-            'hover:bg-primary/10 hover:shadow-xl'
+            'hover:bg-primary/10 hover:shadow-xl',
+            'disabled:bg-primary'
           )}
           onClick={openNewChatWithPrompt}
+          disabled={disabled || loading}
         >
           <div className="relative w-full">
             <AnimatedDiv style={textSpring} className="overflow-hidden">
-              <p ref={textRef} className="mcaption-regular14 line-clamp-[8] text-start">
+              <p ref={textRef} className="mcaption-regular14 text-start">
                 {text}
               </p>
             </AnimatedDiv>
 
             <div className="absolute right-0 bottom-0 left-0 h-10 bg-gradient-to-t from-white to-transparent group-hover:hidden" />
           </div>
-          <MoveRight className={cn('mt-2 hidden hidden h-4 w-4 text-primary group-hover:block')} />
+          {loading ? (
+            <LoaderCircle className={cn('mt-2 hidden h-4 w-4 animate-spin text-primary group-hover:block')} />
+          ) : (
+            <MoveRight className={cn('mt-2 hidden h-4 w-4 text-primary group-hover:block')} />
+          )}
         </Button>
       </div>
     </div>

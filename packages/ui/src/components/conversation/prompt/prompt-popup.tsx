@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 import { Modal } from '#components/modal';
 import { Button } from '#shadcn/button';
+import { ScrollArea, ScrollBar } from '#shadcn/scroll-area';
 import { useConversationStore } from '#store/conversation-store';
 import { PromptGrid } from './prompt-grid';
 
@@ -22,7 +23,12 @@ export function PromptPopup({
       className="md:max-w-[80dvw] xl:max-w-[60dvw]"
       trigger={<Button variant="link">{tGeneral('viewAll')}</Button>}
     >
-      <PromptGrid categoryId={categoryId} agent={selectedAgent} perPage={12} />
+      <ScrollArea className="h-[70dvh]">
+        <div className="h-full w-full px-2 pb-4">
+          <PromptGrid categoryId={categoryId} agent={selectedAgent} perPage={50} />
+        </div>
+        <ScrollBar className="ml-4" />
+      </ScrollArea>
     </Modal>
   );
 }

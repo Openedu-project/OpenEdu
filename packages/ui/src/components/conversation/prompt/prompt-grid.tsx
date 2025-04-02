@@ -1,27 +1,33 @@
 'use client';
 import { useGetPromps } from '@oe/api/hooks/useConversation';
 import type { IPrompt, TAgentType } from '@oe/api/types/conversation';
+import { LoaderCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { memo, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '#shadcn/button';
+import { cn } from '#utils/cn';
 import { ExpandPromptCard } from './prompt-card';
 import { PromptPopup } from './prompt-popup';
 
-export const PurePromptGrid = ({
+export const PromptGrid = ({
   categoryId,
   agent,
   perPage,
   litmited,
   name,
+  className,
 }: {
   name?: string;
   categoryId?: string;
   agent?: TAgentType;
   perPage?: number;
   litmited?: number;
+  className?: string;
 }) => {
   const tGeneral = useTranslations('general');
   const [promptData, setPromptData] = useState<IPrompt[]>([]);
+  const [count, setCount] = useState(4);
+  const [disabled, setDisabled] = useState(false);
   const [searchParams, setSearchParams] = useState({
     page: 1,
     per_page: perPage ?? 4,
@@ -35,14 +41,15 @@ export const PurePromptGrid = ({
     }
     setSearchParams({
       page: 1,
-      per_page: perPage ?? 4,
+      per_page: perPage ?? litmited ?? 8,
       ai_agent_type: agent,
       category_id: categoryId,
     });
     setPromptData([]);
-  }, [agent, perPage, categoryId]);
+    setCount(4);
+  }, [agent, perPage, categoryId, litmited]);
 
-  const { prompts } = useGetPromps({
+  const { prompts, isLoading } = useGetPromps({
     queryParams: searchParams,
     shouldFetch: !!searchParams.ai_agent_type || !!searchParams?.category_id,
   });
@@ -55,44 +62,52 @@ export const PurePromptGrid = ({
   }, [prompts]);
 
   const loadMore = () => {
-    setSearchParams(prev => ({ ...prev, page: prev.page + 1 }));
+    if (!litmited) {
+      setSearchParams(prev => ({ ...prev, page: prev.page + 1 }));
+      return;
+    }
+    setCount(prev => prev + 4);
   };
+
+  if (isLoading) {
+    return (
+      <div className="m-auto w-fit">
+        <LoaderCircle className="animate-spin" />
+      </div>
+    );
+  }
 
   if (!prompts || prompts?.results?.length === 0) {
     return null;
   }
 
   return (
-    <div className="w-full md:mt-4">
+    <div className={cn('w-full md:mt-4', className)}>
       <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-4">
-        {promptData.map((prompt, i) => (
-          <ExpandPromptCard key={prompt.id} text={prompt.text} side={i < 4 ? 'bottom' : 'top'} />
+        {promptData?.slice(0, litmited ? count : promptData.length).map((prompt, i) => (
+          <ExpandPromptCard
+            key={prompt.id}
+            text={prompt.text}
+            side={i < 4 ? 'bottom' : 'top'}
+            disabled={disabled}
+            callbackFn={() => {
+              setDisabled(true);
+            }}
+          />
         ))}
       </div>
 
       <div className="mx-auto mt-4 w-fit lg:mt-8">
-        {prompts.pagination?.page < prompts.pagination?.total_pages &&
-          (!litmited || promptData.length < litmited ? (
-            <Button variant="link" onClick={loadMore}>
-              {tGeneral('viewMore')}
-            </Button>
-          ) : (
+        {(!litmited && prompts.pagination?.page < prompts.pagination?.total_pages) || (litmited && count < litmited) ? (
+          <Button variant="link" onClick={loadMore}>
+            {tGeneral('viewMore')}
+          </Button>
+        ) : (
+          prompts.pagination?.page < prompts.pagination?.total_pages && (
             <PromptPopup categoryId={categoryId} name={name} />
-          ))}
+          )
+        )}
       </div>
     </div>
   );
 };
-
-export const PromptGrid = memo(PurePromptGrid, (prevProps, nextProps) => {
-  if (prevProps.agent !== nextProps.agent) {
-    return false;
-  }
-  if (prevProps.categoryId !== nextProps.categoryId) {
-    return false;
-  }
-  if (prevProps.perPage !== nextProps.perPage) {
-    return false;
-  }
-  return true;
-});

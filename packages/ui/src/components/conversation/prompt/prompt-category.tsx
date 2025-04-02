@@ -46,7 +46,9 @@ export const PromptCategory = () => {
           </ScrollArea>
         </div>
       )}
-      <PromptGrid categoryId={selectedCategory?.id} name={selectedCategory?.name} litmited={8} />
+      <div className="min-h-44">
+        <PromptGrid categoryId={selectedCategory?.id} name={selectedCategory?.name} litmited={8} />
+      </div>
     </div>
   );
 };
