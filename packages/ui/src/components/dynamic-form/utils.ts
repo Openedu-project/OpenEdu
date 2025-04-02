@@ -4,6 +4,7 @@ import type {
   IFormOption,
   IFormQuestion,
   IFormSettings,
+  IFormSubquestion,
   IQuestionParam,
 } from '@oe/api/types/form';
 import { z } from '@oe/api/utils/zod';
@@ -58,6 +59,12 @@ export const generateZodSchema = (formFields: FormFieldOrGroup[]): z.ZodObject<R
       case 'tagsInput':
         fieldSchema = z.array(z.string()).nonempty('formValidation.arrayError');
         break;
+      case 'multipleSelection':
+        fieldSchema = z.array(z.string()).nonempty('formValidation.arrayError');
+        break;
+      case 'multipleChoiceGrid':
+        fieldSchema = z.record(z.string()).optional();
+        break;
       default:
         fieldSchema = z.string({ required_error: 'formValidation.required' });
         break;
@@ -100,7 +107,7 @@ export const generateDefaultValues = (
     }
 
     switch (field.fieldType) {
-      case 'multiSelect':
+      case 'multipleSelection':
         defaultValues[field.name] = ['React'];
         break;
       case 'tagsInput':
@@ -155,7 +162,7 @@ export function convertFieldTypeToQuestionType(fieldType: FormComponent): string
     label: 'label',
     email: 'email',
     checkbox: 'checkbox',
-    multiSelect: 'multiSelect',
+    multipleSelection: 'multipleSelection',
     tagsInput: 'tagsInput',
     image: 'image',
     selectbox: 'selectbox',
@@ -168,6 +175,8 @@ export function convertFieldTypeToQuestionType(fieldType: FormComponent): string
     signatureInput: 'signatureInput',
     number: 'number',
     switch: 'switch',
+    multipleChoiceGrid: 'multipleChoiceGrid',
+    multipleChoice: 'multipleChoice', //radio
     submitButton: 'submitButton',
   };
 
@@ -177,6 +186,7 @@ export function convertFieldTypeToQuestionType(fieldType: FormComponent): string
 function convertFieldToQuestion(field: FormFieldType): IQuestionParam {
   // Chuyển đổi fieldType sang question_type (trong trường hợp này giữ nguyên)
   const questionType = convertFieldTypeToQuestionType(field.fieldType);
+  const { fieldType } = field;
 
   // Tạo đối tượng cài đặt
   const settings: IFormSettings = {
@@ -195,13 +205,31 @@ function convertFieldToQuestion(field: FormFieldType): IQuestionParam {
       }))
     : null;
 
+  const columns: IFormOption[] | null = field?.columns
+    ? field.columns.map((col, idx) => ({
+        id: `${field.fieldId}-column-${idx}`,
+        text: typeof col === 'string' ? col : col.text,
+        order: idx,
+      }))
+    : null;
+
+  const rows: IFormSubquestion[] | null = field?.rows
+    ? field.rows.map((row, idx) => ({
+        id: `${field.fieldId}-row-${idx}`,
+        title: typeof row === 'string' ? row : row.text,
+        order: idx,
+        question_type: 'multipleChoice',
+        require: true,
+      }))
+    : null;
+
   return {
     title: field.label,
     description: field.description || '',
     question_type: questionType,
     settings,
-    options: options as IFormOption[],
-    sub_questions: null,
+    options: fieldType === 'multipleChoiceGrid' ? columns : (options as IFormOption[]),
+    sub_questions: rows,
   };
 }
 
@@ -281,6 +309,9 @@ function getComponentType(fieldType: string | undefined, fieldName: string): Com
     if (COMPONENT_TYPES.DATE.has(fieldType)) {
       return 'date';
     }
+    if (COMPONENT_TYPES.GRID_BASED.has(fieldType)) {
+      return 'grid';
+    }
   }
 
   // Create lowercase once for comparison
@@ -344,6 +375,22 @@ function processOptionComponent(
   }
 }
 
+// Converts a MultipleChoiceGrid's Record<string, string>,CheckboxGrid's Record<string, string[]> value to the submission format
+
+export function convertGridForSubmission(gridValue: Record<string, string[]>, questionId: string): IAnswerParams[] {
+  // If gridValue is null or undefined, return an empty array
+  if (!gridValue) {
+    return [];
+  }
+
+  // Convert each row selection to the expected format
+  return Object.entries(gridValue).map(([rowId, columnId]) => ({
+    question_id: questionId,
+    sub_question_id: rowId,
+    options: Array.isArray(columnId) ? columnId : [columnId], // Put the column ID in an array since API expects array
+  }));
+}
+
 /**
  * Convert form values to answer format for API submission
  */
@@ -390,6 +437,10 @@ export function convertFormValueToAnswers(
           question_id: questionId,
           answer_text: String(fieldValue === true),
         });
+        break;
+
+      case 'grid':
+        answers.push(...convertGridForSubmission(fieldValue, questionId));
         break;
 
       default:

@@ -46,10 +46,11 @@ export const QUESTION_OBJECT_TYPE = {
   // multiple_choice: 'Multiple Choice',
   // file: 'File',
   // dropdown: 'Dropdown',
-  multipleChoice: 'Multiple Choice',
+  multipleSelection: 'Multiple Selection',
   multipleChoiceGrid: 'Multiple Choice Grid',
   selectbox: 'Select Box',
-  singleChoiceGrid: 'Single Choice Grid',
+  multipleChoice: 'Multiple Choice',
+  checkboxGrid: 'Checkbox Grid',
 };
 
 export const QUESTION_TYPE = {

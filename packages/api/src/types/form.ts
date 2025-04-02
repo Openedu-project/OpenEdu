@@ -40,7 +40,7 @@ export interface IFormQuestion extends IBaseEntity {
   sub_questions?: IFormSubquestion[];
   order: number;
   options?: IFormOption[];
-  settings: IFormSettings;
+  settings?: IFormSettings; //maybe undefined
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   props?: Record<string, any>;
 }

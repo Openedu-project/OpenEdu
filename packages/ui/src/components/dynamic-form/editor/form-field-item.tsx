@@ -1,10 +1,12 @@
 import { Suspense } from 'react';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
+import type { MultipleChoiceGridOption } from '#components/multiple-choice-grid';
 import { FormFieldWithLabel } from '#shadcn/form';
 import { Skeleton } from '#shadcn/skeleton';
 import { cn } from '#utils/cn';
 import { componentWithoutLabel } from '../constants';
 import { formComponents } from '../form-components';
+import { MultipleChoiceGridFormField } from '../form-components/multiple-choice-grid/multiple-choice-grid-form-field';
 import type { FormFieldType } from '../types';
 
 export default function FormFieldItem({
@@ -27,6 +29,16 @@ export default function FormFieldItem({
         <div className="p-2">
           <Component {...rest} text={rest.label} />
         </div>
+      ) : fieldType === 'multipleChoiceGrid' ? (
+        <MultipleChoiceGridFormField
+          name={rest.name}
+          label={rest.label}
+          required={rest.required}
+          description={rest.description}
+          className={cn('flex-1 p-2', rest.border && 'border p-4')}
+          rows={rest?.rows as MultipleChoiceGridOption[]}
+          columns={rest?.columns as MultipleChoiceGridOption[]}
+        />
       ) : (
         <div className={cn(fieldType === 'checkbox' && 'p-2')}>
           <FormFieldWithLabel
@@ -46,6 +58,9 @@ export default function FormFieldItem({
               {...('text' in rest && { text: rest.text })}
               {...(rest.disabled && { disabled: rest.disabled })}
               {...(fieldType === 'selectbox' && { options: rest.options })}
+              {...(fieldType === 'multipleSelection' && {
+                options: rest.options,
+              })}
             />
           </FormFieldWithLabel>
         </div>

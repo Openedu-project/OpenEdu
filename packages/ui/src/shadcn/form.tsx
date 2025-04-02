@@ -287,6 +287,135 @@ const FormSubmitButton = forwardRef<HTMLButtonElement, ButtonProps & { label: st
 
 FormSubmitButton.displayName = 'FormSubmitButton';
 
+/** */
+
+// Create a generic version of FormFieldWithLabelProps
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export type GenericFormFieldWithLabelProps<TFieldValue = any> = Omit<
+  ComponentPropsWithoutRef<typeof Slot>,
+  'children'
+> &
+  FormFieldContextValue & {
+    label?: ReactNode;
+    form?: UseFormReturn<TypeOf<z.ZodAny>, z.ZodAny, undefined>;
+    infoText?: string;
+    description?: string;
+    required?: boolean;
+    isToggleField?: boolean;
+    labelClassName?: string;
+    formMessageClassName?: string;
+    showErrorMessage?: boolean;
+    // Make render function generic to handle different field value types
+    render?: (props: {
+      field: Omit<ControllerRenderProps<FieldValues, string>, 'value' | 'onChange'> & {
+        value: TFieldValue;
+        onChange: (value: TFieldValue) => void;
+      };
+    }) => ReactNode;
+    children?: ReactNode;
+  };
+
+// Create a generic version of FormFieldWithLabel
+const GenericFormFieldWithLabel = forwardRef<ComponentRef<typeof Slot>, GenericFormFieldWithLabelProps>(
+  (
+    {
+      name,
+      label,
+      form,
+      infoText,
+      description,
+      className,
+      labelClassName,
+      required,
+      isToggleField,
+      render,
+      formMessageClassName,
+      showErrorMessage = true,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const formContext = useFormContext();
+
+    const renderLabel = () => (
+      <FormLabelInfo
+        infoText={infoText}
+        className={cn(labelClassName, isToggleField && 'cursor-pointer')}
+        data-field={name}
+      >
+        {label}
+        {required && <span className="ml-1 text-destructive">*</span>}
+      </FormLabelInfo>
+    );
+
+    const renderControl = (field: ControllerRenderProps<FieldValues, string>) => (
+      <Slot
+        {...field}
+        ref={ref}
+        id={`${name}-form-item`}
+        aria-describedby={`${name}-form-item-description ${name}-form-item-message`}
+        {...props}
+      >
+        {typeof render === 'function' ? render({ field }) : children}
+      </Slot>
+    );
+
+    return (
+      <FormField
+        control={form?.control ?? formContext.control}
+        name={name}
+        render={({ field }) => {
+          return (
+            <FormItem
+              className={cn(isToggleField && 'flex flex-row items-center space-x-3 space-y-0 rounded-md', className)}
+            >
+              {isToggleField ? (
+                <>
+                  {renderControl(field)}
+                  <div className="space-y-1 leading-none">
+                    {label && renderLabel()}
+                    {description && <FormDescription>{description}</FormDescription>}
+                  </div>
+                </>
+              ) : (
+                <>
+                  {label && renderLabel()}
+                  {renderControl(field)}
+                  {description && <FormDescription>{description}</FormDescription>}
+                </>
+              )}
+              {showErrorMessage && <FormMessage className={formMessageClassName} />}
+            </FormItem>
+          );
+        }}
+      />
+    );
+  }
+);
+
+GenericFormFieldWithLabel.displayName = 'GenericFormFieldWithLabel';
+
+export function createTypedFormField<T>() {
+  return function TypedFormField(props: GenericFormFieldWithLabelProps<T>) {
+    return <GenericFormFieldWithLabel {...props} />;
+  };
+}
+
+const RecordStringFormField = createTypedFormField<Record<string, string>>();
+function NumberFormField(props: GenericFormFieldWithLabelProps<number>) {
+  return <GenericFormFieldWithLabel {...props} />;
+}
+
+function BooleanFormField(props: GenericFormFieldWithLabelProps<boolean>) {
+  return <GenericFormFieldWithLabel {...props} />;
+}
+
+function StringFormField(props: GenericFormFieldWithLabelProps<string>) {
+  return <GenericFormFieldWithLabel {...props} />;
+}
+/** */
+
 export {
   useFormField,
   Form,
@@ -299,4 +428,9 @@ export {
   FormSubmitButton,
   FormField,
   FormLabelInfo,
+  //New
+  RecordStringFormField,
+  NumberFormField,
+  BooleanFormField,
+  StringFormField,
 };

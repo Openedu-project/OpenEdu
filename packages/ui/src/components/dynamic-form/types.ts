@@ -5,6 +5,7 @@ import type { UseFormReturn } from 'react-hook-form';
 import type { FieldValues } from 'react-hook-form';
 import type { ExtendedImageProps } from '#components/image';
 import type { SelectboxOption } from '#components/selectbox';
+import type { MultipleChoiceGridOption } from '../multiple-choice-grid/multiple-choice-grid';
 // Form Editor Store types
 // export interface FormField {
 //   id: string;
@@ -51,7 +52,7 @@ export type FormComponent =
   | 'input'
   | 'inputNumber'
   | 'inputPassword'
-  | 'inputUrl'
+  | 'inputUrl' // TODO
   | 'inputCurrency'
   | 'textarea'
   | 'heading'
@@ -60,19 +61,23 @@ export type FormComponent =
   | 'label'
   | 'email'
   | 'checkbox'
-  | 'multiSelect'
-  | 'tagsInput'
+  // | 'multiSelect'
+  | 'multipleSelection' //new
+  | 'tagsInput' //TODO
   | 'image'
   | 'selectbox'
   | 'datetimePicker'
-  | 'smartDatetimeInput'
+  | 'smartDatetimeInput' //TODO
   | 'inputPhoneNumber'
-  | 'datePicker'
-  | 'locationInput'
-  | 'slider'
-  | 'signatureInput'
-  | 'number'
-  | 'switch'
+  | 'datePicker' //TODO
+  | 'locationInput' //TODO
+  | 'slider' // TODO
+  | 'signatureInput' //TODO
+  | 'number' // ???
+  | 'switch' // TODO
+  | 'multipleChoiceGrid' //new
+  | 'checkboxGrid' //new
+  | 'multipleChoice' //radio
   | 'submitButton';
 
 export interface FormComponentDefinition {
@@ -136,10 +141,10 @@ export type FormFieldType = Partial<Omit<ExtendedImageProps, 'placeholder' | 'bl
   description?: string;
   infoText?: string;
   disabled?: boolean;
-  value?: string | boolean | Date | number | string[];
+  value?: string | boolean | Date | number | string[] | Record<string, string>;
   setValue?: (value: string | boolean) => void;
   checked?: boolean;
-  onChange?: (value: string | string[] | boolean | Date | number | number[]) => void;
+  onChange?: (value: string | string[] | boolean | Date | number | number[] | Record<string, string>) => void;
   onSelect?: (value: string | string[] | boolean | Date | number | number[]) => void;
   rowIndex?: number;
   required?: boolean;
@@ -154,6 +159,9 @@ export type FormFieldType = Partial<Omit<ExtendedImageProps, 'placeholder' | 'bl
   headingType?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   height?: number;
   options?: SelectboxOption[];
+  rows?: MultipleChoiceGridOption[]; // used to grid
+  columns?: MultipleChoiceGridOption[]; // used to grid
+  values?: Record<string, string>; //used to grid: rowId->colId
 };
 
 // export type FieldType = { name: string; isNew: boolean; index?: number };
@@ -177,6 +185,6 @@ export interface SortableContainerProps {
 }
 
 // Component type enum for better type safety
-export type ComponentTypeEnum = 'option' | 'text' | 'skip' | 'date' | 'checkbox';
+export type ComponentTypeEnum = 'option' | 'text' | 'skip' | 'date' | 'checkbox' | 'grid';
 
 export type FormEditorAction = 'create' | 'edit';
