@@ -108,6 +108,7 @@ export const dynamicFormsMessages = {
       addRow: 'Add Row',
       columns: 'Columns',
       rows: 'Rows',
+      otherOption: 'Other Option',
     },
     toast: {
       createSuccess: 'Form created successfully',

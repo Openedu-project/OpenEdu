@@ -161,7 +161,7 @@ export type FormFieldType = Partial<Omit<ExtendedImageProps, 'placeholder' | 'bl
   options?: SelectboxOption[];
   rows?: MultipleChoiceGridOption[]; // used to grid
   columns?: MultipleChoiceGridOption[]; // used to grid
-  values?: Record<string, string>; //used to grid: rowId->colId
+  otherOption?: boolean;
 };
 
 // export type FieldType = { name: string; isNew: boolean; index?: number };

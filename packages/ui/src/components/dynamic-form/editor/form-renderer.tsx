@@ -72,6 +72,10 @@ export function FormRenderer({ fields, className }: FormRendererProps) {
                     })}
                     {...(fieldType === 'multipleSelection' && {
                       options: rest.options,
+                      hasOtherOption: rest?.otherOption,
+                      // onAddOtherOption: (val: string) => {
+                      //   rest?.onChange?.(val);
+                      // },
                     })}
                   />
                 </FormFieldWithLabel>

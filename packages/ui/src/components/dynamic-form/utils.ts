@@ -191,7 +191,7 @@ function convertFieldToQuestion(field: FormFieldType): IQuestionParam {
   // Tạo đối tượng cài đặt
   const settings: IFormSettings = {
     required: field.required ?? false,
-    other_option_enabled: false,
+    other_option_enabled: field?.otherOption ?? false,
     base_domain: '',
     props: field,
   };
@@ -354,8 +354,12 @@ function processOptionComponent(
     return;
   }
 
+  // console.log(fieldValue);
+  // console.log(optionMapping);
+  // console.log(answers);
   if (Array.isArray(fieldValue)) {
-    const optionIds = fieldValue.map(value => optionMapping[value]).filter(Boolean);
+    // const optionIds = fieldValue.map(value => optionMapping[value]).filter(Boolean);
+    const optionIds = fieldValue.map(value => optionMapping[value] || value || undefined).filter(Boolean);
 
     const validOptionIds = optionIds.filter((id): id is string => id !== undefined);
     if (validOptionIds.length > 0) {
@@ -419,6 +423,9 @@ export function convertFormValueToAnswers(
       continue;
     }
 
+    // console.log(questions);
+    // console.log(fieldValue);
+    // console.log(valueToOptionIdMap[questionId], 'valueToOptionIdMap[questionId] ');
     // Process different component types
     switch (componentType) {
       case 'option':

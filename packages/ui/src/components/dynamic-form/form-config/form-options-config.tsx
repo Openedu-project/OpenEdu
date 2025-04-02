@@ -65,7 +65,7 @@ export default function FormOptionsConfig({
     <FormFieldWrapper label={tDynamicForms('options')}>
       <>
         <DndSortable<SelectboxOption, unknown>
-          data={field?.options ?? []}
+          data={field?.options?.map(p => (p.id === 'option1' ? { ...p, id: uniqueID().toString() } : p)) ?? []}
           onChange={items => {
             handleConfigChange('options', items);
           }}

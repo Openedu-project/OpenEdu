@@ -78,7 +78,6 @@ export function FieldConfig() {
         </h5>
 
         <div className="space-y-4">
-          <p>aaaaaaaaa</p>
           <HeadingFieldConfig field={field} handleConfigChange={handleConfigChange} />
           <ParagraphFieldConfig field={field} handleConfigChange={handleConfigChange} />
           <SpaceFieldConfig field={field} handleConfigChange={handleConfigChange} />
