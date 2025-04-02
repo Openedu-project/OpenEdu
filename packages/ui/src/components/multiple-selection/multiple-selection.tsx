@@ -113,8 +113,8 @@ export function MultipleSelection({
             }}
             disabled={disabled || !otherValue.trim()}
           />
-          <Label htmlFor="other-option" className="font-normal text-sm">
-            Khac:
+          <Label htmlFor="other-option" className="!opacity-100 font-normal text-sm">
+            Khác:
           </Label>
           <Input
             placeholder=""

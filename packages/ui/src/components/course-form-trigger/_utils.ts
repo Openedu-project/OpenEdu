@@ -6,6 +6,7 @@ import { useLearnerFormTriggerStore, useTriggerModalStore } from './_store';
 export const MODAL_ID = {
   afterSubmitFormTrigger: 'after_submit_form_trigger',
   learnerCourseFormTrigger: 'learner_form_trigger',
+  newUserSignInFormTrigger: 'new_user_sign_in_form_trigger',
 };
 
 export type TypeTriggerClickedOn = 'enroll_course' | 'get_certificate' | 'add_book_mark';

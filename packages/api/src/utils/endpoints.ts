@@ -158,6 +158,7 @@ export const API_ENDPOINT = {
   FORMS_ID_DUPLICATE: '/api/v1/forms/:id/duplicate',
   FORM_QUESTIONS_ID_ANSWERS: '/api/v1/form-questions/:id/answers',
   FORM_QUESTIONS_ID_SUB_QUESTIONS_SUB_ID_ANSWERS: '/api/v1/form-questions/:id/sub-questions/:sub_id/answers',
+  FORM_NEW_USER_SURVEY: '/api/v1/forms/new_user',
   FORM_RELATIONS: '/api/v1/form-relations',
   FORM_RELATIONS_ID: '/api/v1/form-relations/:id',
   FORM_SESSIONS_ID: '/api/v1/form-sessions/:id',
