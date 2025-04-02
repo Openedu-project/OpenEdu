@@ -88,7 +88,7 @@ export const ExpandPromptCard = ({
             'before:absolute before:top-0 before:left-0 before:z-[-1]',
             'before:rounded-3xl before:bg-white before:content-[""]',
             'before:h-full before:w-full',
-            'hover:bg-primary/10 hover:shadow-xl',
+            'hover:bg-primary/10',
             loading && 'disabled:bg-primary/40 disabled:opacity-100'
           )}
           onClick={openNewChatWithPrompt}

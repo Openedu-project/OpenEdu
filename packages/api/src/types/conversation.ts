@@ -43,6 +43,7 @@ export interface IChatHistory {
   context: Context;
   create_at: number;
   update_at: number;
+  ai_agent_type: TAgentType;
 }
 
 export type TAgentType = 'ai_search' | 'ai_slide' | 'ai_image_generate' | 'ai_code';

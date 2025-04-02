@@ -9,7 +9,7 @@ export default function EmptyChat() {
   const tAI = useTranslations('aiAssistant');
   const { selectedAgent } = useConversationStore();
   return (
-    <div className="scrollbar flex h-[calc(100%-150px)] w-full max-w-3xl flex-col items-center justify-start overflow-auto md:justify-center xl:max-w-4xl">
+    <div className="no-scrollbar flex h-[calc(100%-150px)] w-full max-w-3xl flex-col items-center justify-start overflow-auto md:justify-center xl:max-w-4xl">
       <div className="h-24 w-24 md:h-40 md:w-40">
         <Image src={AIChat.src} alt="ai-chat" objectFit="contain" width={40} height={40} />
       </div>

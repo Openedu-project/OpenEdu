@@ -98,7 +98,8 @@ export const PromptGrid = ({
       </div>
 
       <div className="mx-auto mt-4 w-fit lg:mt-8">
-        {(!litmited && prompts.pagination?.page < prompts.pagination?.total_pages) || (litmited && count < litmited) ? (
+        {(!litmited && prompts.pagination?.page < prompts.pagination?.total_pages) ||
+        (litmited && count < litmited && count < prompts.pagination?.total_items) ? (
           <Button variant="link" onClick={loadMore}>
             {tGeneral('viewMore')}
           </Button>

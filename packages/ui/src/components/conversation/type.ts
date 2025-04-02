@@ -12,6 +12,7 @@ export interface AISidebarItem {
   href: string;
   isComming?: boolean;
   bgColor: string;
+  agent?: TAgentType;
 }
 
 export interface ISendMessageParams {
