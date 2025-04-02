@@ -2,7 +2,7 @@
 
 import type { ILesson } from "@oe/api";
 import { ChevronUp } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Button } from "#shadcn/button";
 import { cn } from "#utils/cn";
 import { useCourse, useCurrentLesson } from "../_context";
@@ -26,17 +26,34 @@ const ContentSection = ({
   const { course } = useCourse();
   const { currentSection, currentLesson } = useCurrentLesson();
   const contentRef = useRef<HTMLDivElement>(null);
+  const lessonMetadataRef = useRef<HTMLDivElement>(null);
   const [reachedEnd, setReachedEnd] = useState(false);
+  const [lessonMetadataHeight, setLessonMetadataHeight] = useState(0);
 
   const sortedContents = useMemo(() => {
     return lessonData?.contents?.sort(sortByOrder) ?? [];
   }, [lessonData]);
 
+  // Update LessonMetadata's height to calculate max-height for content
+  useLayoutEffect(() => {
+    if (lessonMetadataRef.current) {
+      const updateMetadataHeight = () => {
+        const height = lessonMetadataRef.current?.offsetHeight || 0;
+        setLessonMetadataHeight(height);
+      };
+
+      updateMetadataHeight();
+      window.addEventListener("resize", updateMetadataHeight);
+
+      return () => {
+        window.removeEventListener("resize", updateMetadataHeight);
+      };
+    }
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       if (contentRef.current) {
-        // const { scrollTop, scrollHeight, clientHeight } =
-        //   document.documentElement;
         const contentRect = contentRef.current.getBoundingClientRect();
         const contentBottom = contentRect.bottom;
 
@@ -46,7 +63,6 @@ const ContentSection = ({
     };
 
     window.addEventListener("scroll", handleScroll);
-
     handleScroll();
 
     return () => {
@@ -61,18 +77,21 @@ const ContentSection = ({
         className
       )}
     >
-      <div ref={contentRef} className="flex flex-grow flex-col">
+      <div ref={contentRef} className="flex flex-grow flex-col md:pl-4">
         <LessonContentBlocks
           contents={sortedContents}
           section_uid={currentSection}
           lesson_uid={currentLesson}
+          lessonMetadataHeight={lessonMetadataHeight}
         />
       </div>
 
       <div
+        ref={lessonMetadataRef}
         className={cn(
-          "relative w-full transition-all duration-200",
-          reachedEnd ? "block" : "sticky bottom-0 bg-white"
+          "relative z-10 w-full transition-all duration-200",
+          reachedEnd ? "block" : "sticky bottom-0 bg-white",
+          showButtonDrawer && "rounded-t-[20px]"
         )}
       >
         {showButtonDrawer && (

@@ -86,7 +86,7 @@ const QuizContainer = ({
   const Component = QUIZ_COMPONENTS[currentState];
 
   return (
-    <div className="mx-auto h-full max-h-full min-h-full w-auto max-w-full rounded-2xl border border-primary">
+    <div className="mx-auto h-full max-h-full min-h-full w-auto max-w-full rounded-2xl border border-primary md:aspect-video">
       <Component />
     </div>
   );

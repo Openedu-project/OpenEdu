@@ -107,7 +107,7 @@ function CourseLearningInternal({
   const renderSidebarToggle = isDesktop && !sidebarOpen && (
     <Button
       onClick={toggleSidebar}
-      className="group fixed top-[calc(var(--header-with-sub-item-height)+1rem)] right-0 z-10 items-center transition-all duration-300 ease-in-out"
+      className="group fixed right-0 z-10 mt-4 items-center transition-all duration-300 ease-in-out"
       style={{
         transition: "right 0.3s ease",
       }}

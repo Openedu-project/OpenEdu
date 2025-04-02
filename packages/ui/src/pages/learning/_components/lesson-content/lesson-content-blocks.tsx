@@ -1,17 +1,20 @@
 "use client";
+
 import { useGetForm } from "@oe/api";
 import type { TLessonContent } from "@oe/api";
-import type { ILessonContent } from "@oe/api";
 import type React from "react";
-import { useCallback, useEffect } from "react";
+import { memo, useCallback, useEffect } from "react";
 import {
   useActivedTrigger,
   useLearnerFormTriggerStore,
 } from "#components/course-form-trigger";
+import { NoDataAvailable } from "#components/no-data-available";
 import { cn } from "#utils/cn";
 import { useCourse, useProgress, useQuiz } from "../../_context";
-import type { LessonContentBlockProps } from "./_types/types";
-import { ContentElement } from "./content-block";
+import type {
+  ContentRendererProps,
+  LessonContentBlockProps,
+} from "./_types/types";
 import { CONTENT_RENDERERS } from "./content-render";
 
 type FormTriggerConditionLearning =
@@ -24,59 +27,74 @@ interface FormConditionProps {
   entityId: string;
 }
 
-const getWrapperClassName = (contents: ILessonContent[]): string => {
-  return cn(
-    "h-auto md:pr-2 md:pl-4 [&>[data-radix-scroll-area-viewport]>div]:h-full",
-    // 'h-auto overflow-y-auto md:pr-2 md:pl-4 [&>[data-radix-scroll-area-viewport]>div]:h-full',
-    contents.every((item) => item.type !== "embedded") && "h-full",
-    contents.length === 1 &&
-      contents[0] &&
-      ((contents[0].type === "video" && contents[0].quizzes?.length === 0) ||
-        contents[0].type === "embedded") &&
-      "h-auto aspect-video"
-  );
-};
+interface ContentElementProps extends ContentRendererProps {
+  type: TLessonContent;
+  onCompleteContent: (props?: {
+    duration?: number;
+    pause_at?: number;
+    quiz_id?: string;
+  }) => void;
+}
 
-const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
+const ContentElement = memo(function ContentElement({
+  type,
+  onCompleteContent,
+  ...props
+}: ContentElementProps) {
+  const renderer = CONTENT_RENDERERS[type];
+
+  if (!renderer) {
+    return null;
+  }
+
+  return renderer.render({ ...props, onCompleteContent });
+});
+
+const LessonContentBlocks: React.FC<
+  LessonContentBlockProps & { lessonMetadataHeight?: number }
+> = memo(function LessonContentBlocks({
   contents = [],
   section_uid,
   lesson_uid,
   course_data,
   isPreview = false,
-}) => {
+  lessonMetadataHeight = 0,
+}) {
   const { state, completeContent, isLessonCompleted, isSectionCompleted } =
     useProgress();
   const { quizResult } = useQuiz();
   const { course } = useCourse();
-
   const courseData = course_data || course;
 
   const { activedTrigger, checkActivedTrigger } = useActivedTrigger();
   const { setFormData, currentFormId } = useLearnerFormTriggerStore();
   const { dataForm } = useGetForm({ id: currentFormId ?? "" });
 
+  // Set form data when it changes
   useEffect(() => {
     if (dataForm) {
       setFormData(dataForm);
     }
   }, [dataForm, setFormData]);
 
+  // Evaluate form trigger condition - memoized for performance
   const evaluateCondition = useCallback(
     (type: FormTriggerConditionLearning): boolean => {
-      const conditions: Record<FormTriggerConditionLearning, () => boolean> = {
-        completed_section: () => isSectionCompleted(section_uid as string),
-        completed_lesson() {
+      switch (type) {
+        case "completed_section":
+          return isSectionCompleted(section_uid as string);
+        case "completed_lesson":
           return isLessonCompleted(lesson_uid) ?? false;
-        },
-        started_lesson: () => true,
-      };
-
-      return conditions[type]?.() ?? false;
+        case "started_lesson":
+          return true;
+        default:
+          return false;
+      }
     },
     [isSectionCompleted, isLessonCompleted, section_uid, lesson_uid]
   );
 
-  // Memoize form condition handler
+  // Form condition handler - memoized for performance
   const handleFormCondition = useCallback(
     ({ type, entityId }: FormConditionProps) => {
       if (!courseData?.form_relations) {
@@ -84,7 +102,6 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
       }
 
       const condition = evaluateCondition(type);
-
       const isTriggerActive = checkActivedTrigger({
         relations: courseData.form_relations,
         entityId,
@@ -101,79 +118,83 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
     [courseData, activedTrigger, checkActivedTrigger, evaluateCondition]
   );
 
+  // Check form conditions on state change
   useEffect(() => {
-    if (state?.sectionsProgressData) {
-      const conditions: FormConditionProps[] = [
-        { type: "completed_section", entityId: section_uid as string },
-        { type: "completed_lesson", entityId: lesson_uid as string },
-        { type: "started_lesson", entityId: lesson_uid as string },
-      ];
-
-      for (const condition of conditions) {
-        handleFormCondition(condition);
-      }
-    }
-  }, [handleFormCondition, section_uid, lesson_uid, state]);
-
-  const onCompleteContent = async (
-    lesson_content_uid: string,
-    type: TLessonContent,
-    videoDuration = 0,
-    pauseAt = 0,
-    quizId?: string
-  ) => {
-    if (!courseData || isPreview) {
+    if (!state?.sectionsProgressData) {
       return;
     }
 
-    await completeContent({
-      lesson_content_uid,
-      type,
-      section_uid,
+    const conditions: FormConditionProps[] = [
+      { type: "completed_section", entityId: section_uid as string },
+      { type: "completed_lesson", entityId: lesson_uid as string },
+      { type: "started_lesson", entityId: lesson_uid as string },
+    ];
+
+    conditions.forEach(handleFormCondition);
+  }, [handleFormCondition, section_uid, lesson_uid, state]);
+
+  // Content completion handler
+  const onCompleteContent = useCallback(
+    async (
+      lesson_content_uid: string,
+      type: TLessonContent,
+      videoDuration = 0,
+      pauseAt = 0,
+      quizId?: string
+    ) => {
+      if (!courseData || isPreview) {
+        return;
+      }
+
+      await completeContent({
+        lesson_content_uid,
+        type,
+        section_uid,
+        lesson_uid,
+        videoDuration,
+        pauseAt,
+        quizId,
+        quizResult,
+      });
+    },
+    [
+      completeContent,
+      courseData,
+      isPreview,
       lesson_uid,
-      videoDuration,
-      pauseAt,
-      quizId,
       quizResult,
-    });
-  };
+      section_uid,
+    ]
+  );
 
-  if (contents.length === 0) {
-    return <div className={getWrapperClassName([])}>No data</div>;
-  }
-
-  if (!courseData) {
-    return <div className={getWrapperClassName([])}>No course data</div>;
+  // Early return if no content
+  if (!courseData || contents.length === 0) {
+    return <NoDataAvailable />;
   }
 
   return (
-    <div className={cn(getWrapperClassName(contents))}>
-      {contents?.map((item) => {
+    <div className="space-y-4 md:space-y-6">
+      {contents.map((item) => {
         const contentType = item.type;
         const renderer = CONTENT_RENDERERS[contentType];
+
         if (!renderer) {
           return null;
         }
 
-        const elementProps = {
-          type: contentType,
-          courseData,
-          data: item,
-          isOnlyContent: contents.length === 1,
-          contents,
-          isPreview,
-        };
-
         return (
           <div
             key={item.id}
-            // className={cn(
-            //   renderer.getClassName(contents.length === 1),
-            //   item?.type === 'video' && 'aspect-video h-full w-auto max-w-full',
-            //   '[&>hr]:last:hidden'
-            // )}
+            className={cn("space-y-4 md:space-y-6 [&>hr]:last:hidden")}
           >
             <ContentElement
+              type={contentType}
+              courseData={courseData}
+              data={item}
+              isOnlyContent={contents.length === 1}
+              contents={contents}
+              isPreview={isPreview}
+              lessonMetadataHeight={lessonMetadataHeight}
               onCompleteContent={(props) =>
                 onCompleteContent(
                   item?.uid ?? "",
@@ -183,14 +204,13 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
                   props?.quiz_id
                 )
               }
-              {...elementProps}
             />
-            <hr className="mt-8" />
+            <hr />
           </div>
         );
       })}
     </div>
   );
-};
+});
 
 export { LessonContentBlocks, type LessonContentBlockProps };
