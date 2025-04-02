@@ -2,6 +2,4 @@
 
 import dynamic from 'next/dynamic';
 
-export const MultipleSelection = dynamic(() =>
-  import('#components/multiple-selection').then(mod => mod.MultipleSelection)
-);
+export const CheckboxGrid = dynamic(() => import('#components/checkbox-grid').then(mod => mod.CheckboxGrid));

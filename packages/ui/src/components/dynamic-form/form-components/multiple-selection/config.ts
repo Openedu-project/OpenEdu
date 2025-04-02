@@ -19,6 +19,7 @@ export const multipleSelectionDefaultConfig: FormFieldType = {
   locale: 'en',
   hour12: false,
   className: '',
+  otherOption: false,
   options: [
     {
       id: 'option1',

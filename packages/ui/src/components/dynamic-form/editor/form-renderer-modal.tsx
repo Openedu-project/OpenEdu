@@ -43,6 +43,8 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
 
   const handleSubmit = (values: z.infer<z.ZodType>) => {
     const answers = convertFormValueToAnswers(values, formData?.questions as IFormQuestion[]);
+    console.log(values);
+    console.log(answers);
 
     // if (isRegisterOrg) {
     //   try {
@@ -133,6 +135,10 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
                         })}
                         {...(fieldType === 'multipleSelection' && {
                           options: rest.options,
+                          hasOtherOption: rest?.otherOption,
+                          // onAddOtherOption: (val: string) => {
+                          //   rest?.onChange?.(val);
+                          // },
                         })}
                         {...((fieldType === 'checkbox' || fieldType === 'switch') && {
                           checked: field.value,

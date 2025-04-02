@@ -60,6 +60,10 @@ export default function FormFieldItem({
               {...(fieldType === 'selectbox' && { options: rest.options })}
               {...(fieldType === 'multipleSelection' && {
                 options: rest.options,
+                hasOtherOption: rest?.otherOption,
+                // onAddOtherOption: (val: string) => {
+                //   rest?.onChange?.(val);
+                // },
               })}
             />
           </FormFieldWithLabel>
