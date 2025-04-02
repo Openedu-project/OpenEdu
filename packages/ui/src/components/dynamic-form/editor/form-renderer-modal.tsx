@@ -20,11 +20,11 @@ export function FormRendererModal({
   ...props
 }: // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 Partial<ModalProps<any>> & { formData?: IFormResponse }) {
-  const tGeneral = useTranslations("general");
+  const tGeneral = useTranslations('general');
 
   const fields =
     formData?.questions
-      ?.map((question) => {
+      ?.map(question => {
         return {
           ...question?.settings?.props,
           columns: question?.options,
@@ -35,21 +35,14 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
         } as FormFieldType;
       })
       .filter(Boolean) ?? [];
-  console.log("fields", fields);
+  console.log('fields', fields);
   const formSchema = generateZodSchema(fields);
 
-  const fieldsWithoutSubmitButton = fields.filter(
-    (field) => field?.fieldType !== "submitButton"
-  );
-  const submitButton = fields.find(
-    (field) => field.fieldType === "submitButton"
-  );
+  const fieldsWithoutSubmitButton = fields.filter(field => field?.fieldType !== 'submitButton');
+  const submitButton = fields.find(field => field.fieldType === 'submitButton');
 
   const handleSubmit = (values: z.infer<z.ZodType>) => {
-    const answers = convertFormValueToAnswers(
-      values,
-      formData?.questions as IFormQuestion[]
-    );
+    const answers = convertFormValueToAnswers(values, formData?.questions as IFormQuestion[]);
 
     // if (isRegisterOrg) {
     //   try {
@@ -79,20 +72,19 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
       buttons={
         [
           props?.hasCancelButton && {
-            label: tGeneral("cancel"),
-            variant: "outline",
-            type: "button",
-            onClick: (onClose: (e?: MouseEvent<HTMLButtonElement>) => void) =>
-              onClose?.(),
+            label: tGeneral('cancel'),
+            variant: 'outline',
+            type: 'button',
+            onClick: (onClose: (e?: MouseEvent<HTMLButtonElement>) => void) => onClose?.(),
           },
           submitButton && {
             label: submitButton.label,
-            type: "submit",
+            type: 'submit',
           },
         ].filter(Boolean) as ButtonConfig[]
       }
     >
-      {fieldsWithoutSubmitButton.map((field) => {
+      {fieldsWithoutSubmitButton.map(field => {
         const { fieldType, fieldId, ...rest } = field;
         const Component = formComponents[fieldType]?.component;
 
@@ -101,10 +93,7 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
         }
 
         return (
-          <Suspense
-            key={fieldId}
-            fallback={<Skeleton className="h-10 w-full" />}
-          >
+          <Suspense key={fieldId} fallback={<Skeleton className="h-10 w-full" />}>
             {componentWithoutLabel.includes(fieldType) ? (
               <div className="p-2">
                 <Component {...rest} text={rest.label} />
