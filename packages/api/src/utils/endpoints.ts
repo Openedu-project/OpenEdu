@@ -158,6 +158,7 @@ export const API_ENDPOINT = {
   FORMS_ID_DUPLICATE: '/api/v1/forms/:id/duplicate',
   FORM_QUESTIONS_ID_ANSWERS: '/api/v1/form-questions/:id/answers',
   FORM_QUESTIONS_ID_SUB_QUESTIONS_SUB_ID_ANSWERS: '/api/v1/form-questions/:id/sub-questions/:sub_id/answers',
+  FORM_NEW_USER_SURVEY: '/api/v1/forms/new_user',
   FORM_RELATIONS: '/api/v1/form-relations',
   FORM_RELATIONS_ID: '/api/v1/form-relations/:id',
   FORM_SESSIONS_ID: '/api/v1/form-sessions/:id',
@@ -257,6 +258,7 @@ export const API_ENDPOINT = {
   CHAIN_ACCOUNT_INFO: '/api/v1/chains/:network/accounts/:address',
 
   AI_MODELS: '/api/v1/ai/models',
+  AI_PROMPTS: '/api/v1/ai/prompts',
   COM_CHANNELS: '/api/com-v1/channels',
   COM_CHANNELS_ID: '/api/com-v1/channels/:id',
   COM_CHANNELS_ID_CANCEL: '/api/com-v1/channels/:id/cancel',

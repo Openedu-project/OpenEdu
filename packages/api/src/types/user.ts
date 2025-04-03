@@ -30,6 +30,7 @@ export interface IUser {
   active?: boolean;
   avatar?: string;
   blocked?: boolean;
+  new_user_survey_completed: boolean;
   cover_photo?: string;
   create_at?: number;
   delete_at?: number;

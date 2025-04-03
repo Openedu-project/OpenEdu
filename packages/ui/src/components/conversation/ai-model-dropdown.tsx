@@ -75,7 +75,7 @@ export function AIModelDropdown({ onSelectSuccess, AIModels, isLogin, className 
           <ChevronDown className="absolute right-2" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="flex w-[200px] flex-col gap-2 rounded-3xl p-2">
+      <DropdownMenuContent className="flex flex-col gap-2 rounded-3xl p-2">
         {AIModels.map(model => (
           <DropdownMenuItem
             key={model.id}

@@ -2,6 +2,7 @@ import { isLogin } from '@oe/api/utils/auth';
 import type { ReactNode } from 'react';
 import { Link } from '#common/navigation';
 import { LoginWarningModal } from '#components/login-required-modal';
+import { NewUserSignInTriggerModal } from '#components/new-user-signin-trigger-modal';
 import type { FileType } from '#components/uploader';
 import { Badge } from '#shadcn/badge';
 import { cn } from '#utils/cn';
@@ -61,6 +62,7 @@ export async function MainLayout({
       </Header>
       {children}
       <LoginWarningModal />
+      <NewUserSignInTriggerModal />
       {hasFooter && (
         <Footer
           logo={footerProps?.logo}

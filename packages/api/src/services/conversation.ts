@@ -5,6 +5,7 @@ import type {
   IConversationDetails,
   IConversationRequest,
   IMessage,
+  IPromptsResponse,
   IUpdateConversationPayload,
 } from '#types/conversation';
 import { isLogin } from '#utils/auth';
@@ -98,6 +99,22 @@ export const getMessageData = async (
 
   try {
     const response = await fetchAPI<IMessage>(endpointKey, init);
+
+    return response.data;
+  } catch {
+    return undefined;
+  }
+};
+
+export const getPrompts = async (
+  url?: string,
+  queryParams?: { ai_agent_type?: string; category_id?: string },
+  init?: FetchOptions
+) => {
+  const endpointKey = url ?? createAPIUrl({ endpoint: API_ENDPOINT.AI_PROMPTS, queryParams });
+
+  try {
+    const response = await fetchAPI<IPromptsResponse>(endpointKey, init);
 
     return response.data;
   } catch {

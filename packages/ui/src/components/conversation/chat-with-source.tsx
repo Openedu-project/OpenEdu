@@ -31,7 +31,10 @@ export function ChatWithSource({ id, initData, agent = 'ai_search' }: IChatWindo
     }
     const containerWidth = window.innerWidth > 1440 ? 1440 : window.innerWidth;
 
-    return (containerWidth - width - 200) / 2;
+    const extendTransform =
+      window.innerWidth > 1440 ? (window.innerWidth < 1440 + 200 ? 200 - (window.innerWidth - 1440) / 2 : 70) : 200;
+
+    return (containerWidth - width - extendTransform) / 2;
   }, [width]);
 
   const chatProps = useSpring({

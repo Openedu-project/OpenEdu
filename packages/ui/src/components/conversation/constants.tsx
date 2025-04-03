@@ -98,3 +98,10 @@ export const HISTORY_DEFAULT_PARAMS = {
   sort: 'create_at desc',
   search_term: '',
 };
+
+export const TRANSLATE_AGENT_KEY = {
+  ai_slide: 'presentation',
+  ai_code: 'code',
+  ai_image_generate: 'imageGenerator',
+  ai_search: 'generalChat',
+};

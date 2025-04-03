@@ -6,6 +6,7 @@ import type { HTTPResponse } from '@oe/api/types/fetch';
 import { createAPIUrl } from '@oe/api/utils/fetch';
 import type { HTTPError } from '@oe/api/utils/http-error';
 import { AI_ROUTES } from '@oe/core/utils/routes';
+import { MessageCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { RefObject } from 'react';
 import type { SWRInfiniteResponse } from 'swr/infinite';
@@ -13,6 +14,7 @@ import { Link, useRouter } from '#common/navigation';
 import { toast } from '#shadcn/sonner';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
+import { INPUT_BUTTON } from '../constants';
 import MessageInput from '../message-input/message-input';
 import type { ISendMessageParams } from '../type';
 import ActionDropdown from './history-actions-dropdown';
@@ -61,6 +63,9 @@ export default function AIHistoryItem({ className, item, mutate, pageIndex, acti
   const [isEdit, setIsEdit] = useState(false);
   const { setIsNewChat, resetStatus } = useConversationStore();
   const router = useRouter();
+
+  const agentData = INPUT_BUTTON.find(data => data.type === item.ai_agent_type);
+
   const handleEdit = async ({ messageInput }: ISendMessageParams) => {
     await updateConversationTitle(undefined, item.id, {
       title: messageInput ?? '',
@@ -119,6 +124,7 @@ export default function AIHistoryItem({ className, item, mutate, pageIndex, acti
   if (isEdit) {
     return (
       <div ref={editTitleRef} className={cn('flex items-center gap-2 rounded-lg px-2', className)}>
+        {agentData?.icon ?? <MessageCircle size={16} color="hsl(var(--warning-500))" />}
         <MessageInput
           initialMessage={item.context?.title}
           sendMessage={handleEdit}
@@ -131,7 +137,8 @@ export default function AIHistoryItem({ className, item, mutate, pageIndex, acti
   }
 
   return (
-    <div className={cn('group/history flex items-center rounded-lg hover:bg-primary/10', className)}>
+    <div className={cn('group/history flex items-center rounded-lg pl-2 hover:bg-primary/10', className)}>
+      {agentData?.icon ?? <MessageCircle size={16} color="hsl(var(--warning-500))" />}
       {activeId === item.id ? (
         <p className="mcaption-regular14 md:mcaption-regular16 !font-bold w-[calc(100%-20px)] truncate p-2 opacity-50">
           {item.context?.title}
