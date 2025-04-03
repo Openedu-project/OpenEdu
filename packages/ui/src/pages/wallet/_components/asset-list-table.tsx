@@ -112,7 +112,7 @@ export const AssetListTable = () => {
       },
       {
         id: 'value',
-        header: t('value', { currency: selectedCurrency }),
+        header: t('value', { currency: selectedCurrency ?? '' }),
         className: 'p-0 flex-1',
         headerClassName: 'flex-1 bg-background',
         size: 250,

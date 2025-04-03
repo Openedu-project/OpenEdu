@@ -52,7 +52,7 @@ const FileDownloader: React.FC<Props> = ({ fileUrl, fileName, me }) => {
         disabled={isLoading}
         className="mcaption-regular14 h-fit text-primary"
       >
-        {isLoading ? t('downloading') : <Import color="hsl(var(--primary))" />}
+        {isLoading ? t('downloading') : <Import color="var(--primary)" />}
       </Button>
     </div>
   );

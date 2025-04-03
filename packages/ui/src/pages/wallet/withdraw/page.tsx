@@ -6,7 +6,7 @@ import { WithdrawTypeSelect } from './withdraw-type-select';
 const Withdraw = () => {
   const t = useTranslations('wallets.withdrawPage');
   return (
-    <SubPageLayout title={t('title')} className="mx-auto max-w-xl rounded-xl bg-background p-4 shadow">
+    <SubPageLayout title={t('title')} className="mx-auto max-w-xl rounded-xl bg-background p-4 shadow-sm">
       <WithdrawTypeSelect />
       <WithdrawForm />
     </SubPageLayout>

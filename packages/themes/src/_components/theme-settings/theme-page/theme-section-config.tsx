@@ -34,7 +34,7 @@ export const ConfigSection = memo(function ConfigSection({
     <Collapsible
       open={isSelected}
       onOpenChange={open => onSelect(open ? sectionKey : undefined)}
-      className={`group/collapsible w-full space-y-1 rounded-md border-[0.4px] shadow ${
+      className={`group/collapsible w-full space-y-1 rounded-md border-[0.4px] shadow-sm ${
         isSelected ? '!border-primary' : 'border-border'
       }`}
     >

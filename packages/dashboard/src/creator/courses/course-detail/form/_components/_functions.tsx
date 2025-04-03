@@ -63,7 +63,7 @@ export const generateColumns = (detailFormData: IFormResponse, t: TFunction): Co
       id: questions[index]?.id,
       header: t('question', {
         index: index + 1,
-        title: questions[index]?.title,
+        title: questions[index]?.title || '',
       }),
       accessor: 'answers',
       size: 250,

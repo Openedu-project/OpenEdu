@@ -90,7 +90,7 @@ export default function ReferrerList() {
       {
         header: t('type'),
         accessorKey: 'type',
-        cell: info => <>{info.getValue() === 'kol' ? t('partner') : t(info.getValue())}</>,
+        cell: info => <>{info.getValue() === 'kol' ? t('partner') : t(info.getValue() as string)}</>,
       },
       {
         header: t('status'),

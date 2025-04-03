@@ -20,7 +20,7 @@ interface ExpertProps {
 
 const ExpertCard = ({ name, role, image, socialLinks }: ExpertProps) => {
   return (
-    <Card className="mx-auto h-full max-w-[320px] overflow-hidden border-none bg-card p-2 shadow-sm transition-shadow duration-300 hover:shadow-md md:mx-0 md:w-full md:max-w-none">
+    <Card className="mx-auto h-full max-w-[320px] overflow-hidden border-none bg-card p-2 shadow-xs transition-shadow duration-300 hover:shadow-md md:mx-0 md:w-full md:max-w-none">
       <Image
         src={image?.url}
         height={image?.height ?? 300}

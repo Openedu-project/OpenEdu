@@ -1,10 +1,11 @@
 import { ChevronsUpDown } from 'lucide-react';
-import { type ComponentProps, type ComponentRef, type ForwardRefExoticComponent, forwardRef } from 'react';
+import type React from 'react';
+import { type ComponentProps, forwardRef, useMemo } from 'react';
 import RPNInput, {
   type FlagProps,
   getCountryCallingCode,
   type Country,
-  type Props,
+  type Props as RPNProps,
   type Value,
 } from 'react-phone-number-input';
 import flags from 'react-phone-number-input/flags';
@@ -12,33 +13,68 @@ import { Autocomplete } from '#components/autocomplete';
 import { Input } from '#shadcn/input';
 import { cn } from '#utils/cn';
 
-type PhoneInputProps = Omit<ComponentProps<'input'>, 'onChange' | 'value' | 'ref'> &
-  Omit<Props<typeof RPNInput>, 'onChange'> & {
+type PhoneInputProps = Omit<ComponentProps<'input'>, 'onChange' | 'value'> &
+  Omit<RPNProps<typeof RPNInput>, 'onChange'> & {
     onChange?: (value: Value) => void;
   };
 
-const InputPhoneNumber: ForwardRefExoticComponent<PhoneInputProps> = forwardRef<
-  ComponentRef<typeof RPNInput>,
-  PhoneInputProps
->(({ className, onChange, ...props }, ref) => {
+const InputPhoneNumber = ({ className, onChange, ...restProps }: PhoneInputProps) => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  const rpnInputProps: Partial<RPNProps<typeof RPNInput>> = useMemo(() => {
+    const {
+      autoComplete,
+      autoFocus,
+      checked,
+      disabled,
+      form,
+      id,
+      max,
+      maxLength,
+      min,
+      minLength,
+      multiple,
+      name,
+      pattern,
+      placeholder,
+      readOnly,
+      required,
+      size,
+      step,
+      type,
+      value,
+      ...rpnProps
+    } = restProps;
+
+    return rpnProps as Partial<RPNProps<typeof RPNInput>>;
+  }, []);
+
+  const handleValueChange = (value: Value) => {
+    onChange?.(value || ('' as Value));
+  };
+
   return (
     <RPNInput
-      ref={ref}
       className={cn('flex', className)}
       flagComponent={FlagComponent}
       countrySelectComponent={CountrySelect}
       inputComponent={InputComponent}
       smartCaret={false}
-      onChange={value => onChange?.(value || ('' as Value))}
+      onChange={handleValueChange}
+      {...rpnInputProps}
+    />
+  );
+};
+
+const InputComponent = forwardRef<HTMLInputElement, ComponentProps<'input'>>(({ className, ...props }, ref) => {
+  return (
+    <Input
+      className={cn('rounded-s-none rounded-e-lg', className)}
       {...props}
+      data-slot="phone-input"
+      ref={ref as React.RefObject<HTMLInputElement | null>}
     />
   );
 });
-InputPhoneNumber.displayName = 'InputPhoneNumber';
-
-const InputComponent = forwardRef<HTMLInputElement, ComponentProps<'input'>>(({ className, ...props }, ref) => (
-  <Input className={cn('rounded-s-none rounded-e-lg', className)} {...props} ref={ref} />
-));
 InputComponent.displayName = 'InputComponent';
 
 type CountryEntry = { label: string; value: Country | undefined };
@@ -101,7 +137,7 @@ const FlagComponent = ({ country, countryName }: FlagProps) => {
   const Flag = flags[country];
 
   return (
-    <span className="flex h-4 w-6 overflow-hidden rounded-sm bg-foreground/20">
+    <span className="flex h-4 w-6 overflow-hidden rounded-xs bg-foreground/20">
       {Flag && <Flag title={countryName} />}
     </span>
   );

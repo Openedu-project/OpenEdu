@@ -83,12 +83,12 @@ function CourseFeatures({ courseData }: { courseData: ICourse }) {
     <div className="flex w-full flex-grow flex-col gap-3">
       {courseData?.has_certificate && (
         <div className="flex items-center gap-2">
-          <MedalStar width={20} height={20} color="hsl(var(--foreground))" />
+          <MedalStar width={20} height={20} color="var(--foreground)" />
           <span className="mcaption-regular14 text-foreground">{tDetail('completionCertificate')}</span>
         </div>
       )}
       <div className="flex items-center gap-2">
-        <Book width={20} height={20} color="hsl(var(--foreground))" />
+        <Book width={20} height={20} color="var(--foreground)" />
         <span className="mcaption-regular14 text-foreground">
           {tDetail('totalSections', {
             total: courseData?.active_section ?? 0,
@@ -102,7 +102,7 @@ function CourseFeatures({ courseData }: { courseData: ICourse }) {
         </span>
       </div>
       <div className="flex items-center gap-2">
-        <VideoSquare width={20} height={20} color="hsl(var(--foreground))" />
+        <VideoSquare width={20} height={20} color="var(--foreground)" />
         <span className="mcaption-regular14 text-foreground">
           {tDetail('totalVideos', {
             total: courseData?.video_count ?? 0,

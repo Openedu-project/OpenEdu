@@ -58,11 +58,11 @@ export function BlogCarousel({ title, viewAllProps, className, blogs, blogCardPr
         </CarouselContent>
         {blogs && blogs?.length > 0 && (
           <>
-            <CarouselPrevious className="top-[-40px] left-[calc(100%-130px)] hidden h-[48px] w-[48px] bg-white shadow md:flex">
-              <ChevronLeft color="hsl(var(--primary))" />
+            <CarouselPrevious className="top-[-40px] left-[calc(100%-130px)] hidden h-[48px] w-[48px] bg-white shadow-sm md:flex">
+              <ChevronLeft color="var(--primary)" />
             </CarouselPrevious>
-            <CarouselNext className="top-[-40px] right-[20px] hidden h-[48px] w-[48px] bg-primary shadow hover:bg-primary md:flex">
-              <ChevronRight color="hsl(var(--primary-foreground))" />
+            <CarouselNext className="top-[-40px] right-[20px] hidden h-[48px] w-[48px] bg-primary shadow-sm hover:bg-primary md:flex">
+              <ChevronRight color="var(--primary-foreground)" />
             </CarouselNext>
           </>
         )}

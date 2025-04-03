@@ -46,7 +46,7 @@ export const PreviewFile = ({
             );
           }}
         >
-          <CircleX width={16} height={16} color="hsl(var(--background))" />
+          <CircleX width={16} height={16} color="var(--background)" />
         </Button>
         {!file.mime?.includes('image') && (
           <p className="mcaption-regular10 absolute right-1 bottom-1 rounded-lg bg-foreground/50 p-1 text-center text-background">

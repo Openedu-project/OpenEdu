@@ -20,7 +20,7 @@ export default function PreviewVideos() {
   return (
     <FormFieldWithLabel
       name="medias"
-      className="rounded-lg bg-background p-4 shadow-sm"
+      className="rounded-lg bg-background p-4 shadow-xs"
       render={({ field }) => {
         const { value, onChange } = field;
 

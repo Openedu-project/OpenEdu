@@ -49,7 +49,7 @@ export default function Courses() {
           />
         </div>
       </DashboardHeaderCard>
-      <div className="rounded bg-background p-4">
+      <div className="rounded-sm bg-background p-4">
         <Table columns={columns} api={API_ENDPOINT.COURSES} tableOptions={{ manualPagination: true }} />
       </div>
     </>

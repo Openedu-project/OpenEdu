@@ -48,7 +48,7 @@ export default function CourseTabs({ segments }: { segments?: ISegment[] }) {
                   "after:-bottom-2 border border-primary text-primary after:absolute after:h-0.5 after:w-full after:bg-primary/80 after:content-[''] hover:bg-primary/20 hover:text-primary"
               )}
             >
-              <tab.Icon className="h-4 w-4" color="hsl(var(--foreground))" />
+              <tab.Icon className="h-4 w-4" color="var(--foreground)" />
               {tCourse(tab.label)}
               {tab.required && <span className="text-red-500">*</span>}
             </Link>

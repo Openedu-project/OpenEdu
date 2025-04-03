@@ -180,7 +180,7 @@ export function AIHistoryModal({ isLogin = false, ...props }: SearchHistoryProps
           onClick={handleOpenModal}
           size="icon"
         >
-          <MessageTime color="hsl(var(--primary))" width={20} height={20} />
+          <MessageTime color="var(--primary)" width={20} height={20} />
         </Button>
       }
       hasCloseIcon

@@ -99,7 +99,7 @@ function ContactField({ icon, value }: ContactFieldProps) {
       <CardContent className="bg-neutral-100 p-4">
         <div className="flex items-center gap-2">
           {icon}
-          <p className="flex-1 select-all rounded p-2">{value}</p>
+          <p className="flex-1 select-all rounded-sm p-2">{value}</p>
           <ContactCopyButton value={value} />
         </div>
       </CardContent>

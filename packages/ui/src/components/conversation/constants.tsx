@@ -73,12 +73,12 @@ export const INPUT_BUTTON: IInputButton[] = [
   {
     type: 'ai_image_generate',
     textKey: 'imageGenerator',
-    icon: <Gallery width={16} height={16} color="hsl(var(--pink-500))" />,
+    icon: <Gallery width={16} height={16} color="var(--pink-500)" />,
   },
   {
     type: 'ai_slide',
     textKey: 'presentation',
-    icon: <Grid3 width={16} height={16} color="hsl(var(--info-500))" />,
+    icon: <Grid3 width={16} height={16} color="var(--info-500)" />,
   },
   // {
   //   type: 'ai_code',

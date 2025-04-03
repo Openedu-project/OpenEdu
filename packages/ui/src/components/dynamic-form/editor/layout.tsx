@@ -33,7 +33,7 @@ export function FormEditorLayout({
         <Header isComponent={type === 'component'} />
       </DashboardHeaderCard>
       <div className="flex h-full flex-1 flex-col overflow-hidden md:flex-row">
-        <div className="scrollbar flex flex-shrink-0 flex-wrap gap-2 overflow-auto bg-background p-2 md:block md:w-60">
+        <div className="scrollbar flex shrink-0 flex-wrap gap-2 overflow-auto bg-background p-2 md:block md:w-60">
           {/* <Templates /> */}
           <Components />
         </div>

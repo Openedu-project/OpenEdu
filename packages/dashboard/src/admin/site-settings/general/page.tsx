@@ -9,7 +9,7 @@ export default function GeneralSettingsPage() {
       >
         GeneralSettingsPage
       </DashboardHeaderCard>
-      <div className="rounded bg-background p-4">GeneralSettingsPage</div>
+      <div className="rounded-sm bg-background p-4">GeneralSettingsPage</div>
     </>
   );
 }

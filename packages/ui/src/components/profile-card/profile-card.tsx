@@ -30,7 +30,7 @@ export default function ProfileCard({
   return (
     <Card
       className={cn(
-        'rounded-sm bg-transparent p-3 shadow-shadow-6',
+        'rounded-xs bg-transparent p-3 shadow-shadow-6',
         align && 'max-w-[200px] px-10 py-3',
         className,
         handleClick && 'cursor-pointer'

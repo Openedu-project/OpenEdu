@@ -15,7 +15,7 @@ export default function SupportChannels() {
   });
 
   return (
-    <div className="space-y-4 rounded-lg bg-background p-4 shadow-sm">
+    <div className="space-y-4 rounded-lg bg-background p-4 shadow-xs">
       <div className="mb-4 flex items-start justify-between text-lg">
         <div className="flex flex-col gap-1">
           <span className="font-medium text-lg">{tCourse('information.sections.supportChannels.title')}</span>

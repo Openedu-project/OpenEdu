@@ -4,7 +4,7 @@ export default function SendSquare({
   width = 16,
   height = 16,
   className = '',
-  color = 'hsl(var(--background))',
+  color = 'var(--background)',
 }: ISvgProps) {
   return (
     <svg

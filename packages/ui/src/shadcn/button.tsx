@@ -2,11 +2,11 @@ import { Slot } from '@radix-ui/react-slot';
 import { type VariantProps, cva } from 'class-variance-authority';
 
 import { Loader2 } from 'lucide-react';
-import { type ButtonHTMLAttributes, type ReactNode, forwardRef } from 'react';
+import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { cn } from '#utils/cn';
 
 const buttonVariants = cva(
-  'select-none inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-normal transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50',
+  'select-none inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-normal transition-colors focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
@@ -39,44 +39,37 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, Va
   rightSection?: ReactNode;
 }
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      className,
-      variant,
-      size,
-      asChild = false,
-      children,
-      disabled,
-      loading = false,
-      leftSection,
-      rightSection,
-      ...props
-    },
-    ref
-  ) => {
-    const Comp = asChild ? Slot : 'button';
+function Button({
+  className,
+  variant,
+  size,
+  asChild = false,
+  children,
+  disabled,
+  loading = false,
+  leftSection,
+  rightSection,
+  ...props
+}: ButtonProps) {
+  const Comp = asChild ? Slot : 'button';
 
-    return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        disabled={loading || disabled}
-        type="button"
-        {...props}
-      >
-        {((leftSection && loading) || (!(leftSection || rightSection) && loading)) && (
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-        )}
-        {!loading && leftSection && <div className="mr-2">{leftSection}</div>}
-        {children}
-        {!loading && rightSection && <div className="ml-2">{rightSection}</div>}
-        {rightSection && loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
-      </Comp>
-    );
-  }
-);
-
-Button.displayName = 'Button';
+  return (
+    <Comp
+      data-slot="button"
+      className={cn(buttonVariants({ variant, size, className }))}
+      disabled={loading || disabled}
+      type="button"
+      {...props}
+    >
+      {((leftSection && loading) || (!(leftSection || rightSection) && loading)) && (
+        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+      )}
+      {!loading && leftSection && <div className="mr-2">{leftSection}</div>}
+      {children}
+      {!loading && rightSection && <div className="ml-2">{rightSection}</div>}
+      {rightSection && loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
+    </Comp>
+  );
+}
 
 export { Button, buttonVariants };

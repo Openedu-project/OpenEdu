@@ -238,7 +238,7 @@ export default function KanbanDemo() {
               </>
             ),
             renderChildItem: ({ item }) => (
-              <div className="group/field flex items-center justify-between rounded-lg shadow-sm">
+              <div className="group/field flex items-center justify-between rounded-lg shadow-xs">
                 <div className="flex items-center gap-2">
                   <input type="checkbox" checked={item.original.completed} readOnly />
                   <span>{item.original.title}</span>
@@ -269,7 +269,7 @@ export default function KanbanDemo() {
           renderConfig={{
             renderItem: ({ item, descendants, dragOverlay, onAddChild, onRemoveItem, onUpdateItem }) => {
               return (
-                <div className={cn('w-full gap-2 bg-background p-2', dragOverlay && 'bg-background shadow')}>
+                <div className={cn('w-full gap-2 bg-background p-2', dragOverlay && 'bg-background shadow-sm')}>
                   <DndSortableDragButton className="group-hover/field:opacity-100" />
                   <DndSortableCollapseButton />
                   <span>{item?.original.label}</span>
@@ -293,7 +293,10 @@ export default function KanbanDemo() {
                     variant="ghost"
                     size="icon"
                     onClick={() =>
-                      onAddChild?.({ id: Math.random().toString(), label: `New item ${Math.random().toString()}` })
+                      onAddChild?.({
+                        id: Math.random().toString(),
+                        label: `New item ${Math.random().toString()}`,
+                      })
                     }
                   >
                     <PlusIcon className="h-4 w-4" />
@@ -321,7 +324,7 @@ export default function KanbanDemo() {
               renderItem: ({ item }) => (
                 <AccordionItem value={item?.original.id}>
                   <AccordionTrigger asChild>
-                    <div className="flex items-center gap-2 rounded bg-background p-4 shadow">
+                    <div className="flex items-center gap-2 rounded-sm bg-background p-4 shadow-sm">
                       <DndSortableDragButton />
                       <span>{item?.original.label}</span>
                     </div>
@@ -336,7 +339,15 @@ export default function KanbanDemo() {
       </div>
       <div className="p-8">
         <h1 className="mb-8 font-bold text-2xl">Kanban Board Demo</h1>
-        <Button onClick={() => kanbanBoardRef.current?.addItem({ id: '1', title: 'New item', completed: false })}>
+        <Button
+          onClick={() =>
+            kanbanBoardRef.current?.addItem({
+              id: '1',
+              title: 'New item',
+              completed: false,
+            })
+          }
+        >
           Add item
         </Button>
 
@@ -383,7 +394,7 @@ export default function KanbanDemo() {
               </div>
             ),
             renderChildItem: ({ item, onRemoveItem }) => (
-              <div className="group/field mb-2 flex items-center justify-between rounded bg-white p-3 shadow-sm">
+              <div className="group/field mb-2 flex items-center justify-between rounded-sm bg-white p-3 shadow-xs">
                 <span>{item.original.title}</span>
                 <DndSortableDragButtonChildItem className="opacity-0" />
                 <DeleteButton

@@ -1,11 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function Trigger({
-  width = 16,
-  height = 16,
-  className = '',
-  color = 'hsl(var(--foreground))',
-}: ISvgProps) {
+export default function Trigger({ width = 16, height = 16, className = '', color = 'var(--foreground)' }: ISvgProps) {
   return (
     <svg
       className={className}

@@ -16,6 +16,7 @@ export function i18nMiddleware(
       {
         domain: org.domain,
         defaultLocale: defaultLocale ?? DEFAULT_LOCALE,
+        locales: locales ?? DEFAULT_LOCALES,
       },
     ],
   });

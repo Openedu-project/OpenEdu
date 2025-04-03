@@ -198,7 +198,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
           return (
             <Card
               className={cn(
-                'relative flex min-h-40 flex-col gap-1 rounded-3xl bg-background p-2 pt-2 shadow md:p-4',
+                'relative flex min-h-40 flex-col gap-1 rounded-3xl bg-background p-2 pt-2 shadow-sm md:p-4',
                 className
               )}
               onClick={() => {

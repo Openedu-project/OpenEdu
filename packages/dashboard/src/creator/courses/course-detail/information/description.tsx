@@ -17,7 +17,7 @@ export default function Description() {
           <span className="text-muted-foreground text-xs">{tCourse('information.sections.description.subtitle')}</span>
         </div>
       }
-      className="rounded-lg bg-background p-4 shadow-sm"
+      className="rounded-lg bg-background p-4 shadow-xs"
       labelClassName="mb-4 text-lg"
     >
       <RichTextEditor placeholder={tCourse('information.sections.description.placeholder')} />

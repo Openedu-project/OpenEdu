@@ -77,7 +77,7 @@ export function InputTags({
         </Badge>
       ))}
       <input
-        className="min-w-[120px] flex-1 bg-transparent outline-none placeholder:text-muted-foreground"
+        className="min-w-[120px] flex-1 bg-transparent outline-hidden placeholder:text-muted-foreground"
         value={inputValue}
         onChange={e => onInputChange(e.target.value)}
         onKeyDown={handleKeyDown}

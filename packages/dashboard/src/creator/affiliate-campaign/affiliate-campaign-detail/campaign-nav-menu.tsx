@@ -38,7 +38,7 @@ const ClientNavMenuItem = React.memo(({ nav }: { nav: TAffiliateNavMenuItem }) =
           }
           `}
         >
-          {nav.label(isActive ? 'hsl(var(--primary))' : '#6e6e6e')}
+          {nav.label(isActive ? 'var(--primary)' : '#6e6e6e')}
         </NavigationMenuLink>
       </Link>
     </NavigationMenuItem>

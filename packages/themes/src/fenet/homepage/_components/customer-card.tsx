@@ -10,7 +10,7 @@ interface CustomerProps {
 
 const CustomerCard = ({ description, tag, image }: CustomerProps) => {
   return (
-    <Card className="mx-auto h-full max-w-[320px] overflow-hidden border-none bg-card p-2 shadow-sm transition-shadow duration-300 hover:shadow-md md:mx-0 md:w-full md:max-w-none md:p-4">
+    <Card className="mx-auto h-full max-w-[320px] overflow-hidden border-none bg-card p-2 shadow-xs transition-shadow duration-300 hover:shadow-md md:mx-0 md:w-full md:max-w-none md:p-4">
       <Image
         src={image?.url}
         height={image?.height ?? 300}

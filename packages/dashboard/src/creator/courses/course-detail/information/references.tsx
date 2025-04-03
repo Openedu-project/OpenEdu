@@ -9,7 +9,7 @@ export default function References() {
   return (
     <FormFieldWithLabel
       name="docs"
-      className="rounded-lg bg-background p-4 shadow-sm"
+      className="rounded-lg bg-background p-4 shadow-xs"
       render={({ field }) => (
         <Uploader
           value={field.value}

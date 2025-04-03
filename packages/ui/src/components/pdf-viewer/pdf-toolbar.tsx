@@ -41,7 +41,7 @@ const ToolbarButton = ({
 
 const PdfToolbar = ({ page, numPages, scale, onPageChange, onZoom, showPerPage }: PdfToolbarProps) => {
   return (
-    <div className="w-full border-b bg-white/80 shadow-sm backdrop-blur-sm">
+    <div className="w-full border-b bg-white/80 shadow-xs backdrop-blur-xs">
       <div className="mx-auto flex w-full max-w-full flex-row-reverse items-center justify-between gap-2 px-4 py-2">
         {showPerPage && (
           <div className="flex items-center gap-2">
@@ -50,7 +50,7 @@ const PdfToolbar = ({ page, numPages, scale, onPageChange, onZoom, showPerPage }
               disabled={page <= 1}
               ariaLabel="Previous page"
             >
-              <ArrowLeft2 color="hsl(var(--foreground))" width={16} height={16} />
+              <ArrowLeft2 color="var(--foreground)" width={16} height={16} />
             </ToolbarButton>
 
             <div className="mcaption-regular14 min-w-[80px] text-center">
@@ -62,7 +62,7 @@ const PdfToolbar = ({ page, numPages, scale, onPageChange, onZoom, showPerPage }
               disabled={page >= numPages}
               ariaLabel="Next page"
             >
-              <ArrowRight2 color="hsl(var(--foreground))" width={16} height={16} />
+              <ArrowRight2 color="var(--foreground)" width={16} height={16} />
             </ToolbarButton>
           </div>
         )}

@@ -50,7 +50,7 @@ export default function CourseResources({ docs }: { docs: IFileResponse[] }) {
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger className="flex w-full items-center justify-between">
           <div className="mcaption-regular14 flex items-center gap-3 text-content-neutral-light-700">
-            <DocumentDownload width={20} height={20} color="hsl(var(--muted-foreground))" />
+            <DocumentDownload width={20} height={20} color="var(--muted-foreground)" />
             <span className="line-clamp-1 text-left">{t('title', { total: docs?.length })}</span>
           </div>
           {isOpen ? (
@@ -60,7 +60,7 @@ export default function CourseResources({ docs }: { docs: IFileResponse[] }) {
           )}
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className="mt-3 grid grid-cols-1 gap-3 rounded-lg border border-foreground/20 bg-background p-2 shadow">
+          <div className="mt-3 grid grid-cols-1 gap-3 rounded-lg border border-foreground/20 bg-background p-2 shadow-sm">
             <div className="flex items-center justify-between space-x-6">
               <span className="mcaption-semibold16 text-foreground/90">{t('resources')}</span>
               {docs?.length > 1 && (

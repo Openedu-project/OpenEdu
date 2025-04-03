@@ -3,7 +3,7 @@
 import type { INotificationItem } from '@oe/api/types/notification';
 import { formatDate } from '@oe/core/utils/datetime';
 import { useTranslations } from 'next-intl';
-import React, { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import { Link } from '#common/navigation';
 import { formatCurrency } from '#components/input-currency';
@@ -41,11 +41,11 @@ export function NotificationList() {
           }}
           overscan={10}
           components={{
-            List: React.forwardRef(({ style, children }, ref) => (
+            List: ({ style, children, ref }) => (
               <div ref={ref} style={style} className="w-full">
                 {children}
               </div>
-            )),
+            ),
             EmptyPlaceholder: () => (
               <div className="p-4 text-center text-muted-foreground text-sm">{t('noNotifications')}</div>
             ),

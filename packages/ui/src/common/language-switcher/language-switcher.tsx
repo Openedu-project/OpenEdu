@@ -63,7 +63,7 @@ export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
       value={currentLang}
       onChange={handleChangeLanguage}
       className={cn(
-        'flex aspect-square h-8 w-8 items-center justify-center rounded-full border-background bg-transparent p-1 text-background capitalize outline-none ring-0 ring-offset-0 hover:bg-background/10 hover:text-background focus:border focus:border-background focus:outline-none focus:ring-0 focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0',
+        'flex aspect-square h-8 w-8 items-center justify-center rounded-full border-background bg-transparent p-1 text-background capitalize outline-hidden ring-0 ring-offset-0 hover:bg-background/10 hover:text-background focus:border focus:border-background focus:outline-hidden focus:ring-0 focus:ring-offset-0 focus-visible:outline-hidden focus-visible:ring-0 focus-visible:ring-offset-0',
         className
       )}
       hasIcon={false}

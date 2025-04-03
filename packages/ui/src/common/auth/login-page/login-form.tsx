@@ -75,7 +75,7 @@ export function LoginForm({ tLoginTitle, tSignupTitle, tForgotpasswordTitle }: L
           </Link>
           {error || loginError ? (
             <Alert variant="destructive">
-              <AlertDescription>{loginError ? tErrors(loginError) : tErrors(error)}</AlertDescription>
+              <AlertDescription>{loginError ? tErrors(loginError) : tErrors(error || '')}</AlertDescription>
             </Alert>
           ) : null}
           <Button type="submit" className="w-full" loading={loading}>
