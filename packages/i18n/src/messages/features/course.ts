@@ -283,7 +283,7 @@ export const courseMessages = {
       minLength: '{field} must be at least {min} characters',
       maxLength: '{field} must be less than {max} characters',
       minMaxCourseName: 'Course name must be between {min} and {max} characters',
-      minMaxCourseDescription: 'Course description must be between {min} and {max} characters',
+      minCourseDescription: 'Course description must be at least {min} characters',
       minPlaylistLink: 'Playlist link must be at least {min} characters',
       invalidPlaylistLink: 'Invalid playlist link',
       language: 'Language is required',

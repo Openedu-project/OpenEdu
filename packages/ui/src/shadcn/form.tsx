@@ -191,7 +191,8 @@ const FormLabelInfo = ({ className, children, ref, ...props }: ComponentProps<ty
 export type FormFieldWithLabelProps = ComponentPropsWithoutRef<typeof Slot> &
   FormFieldContextValue & {
     label?: ReactNode;
-    form?: UseFormReturn<TypeOf<z.ZodAny>, z.ZodAny, undefined>;
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    form?: UseFormReturn<any>;
     infoText?: string;
     description?: string;
     required?: boolean;
