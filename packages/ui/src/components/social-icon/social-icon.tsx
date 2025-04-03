@@ -32,7 +32,7 @@ const ICON_MAP: Record<SocialType, React.ComponentType<IconProps>> = {
 };
 
 export const getSocialType = (url: string): SocialType => {
-  const lowercaseUrl = url.toLowerCase();
+  const lowercaseUrl = url?.toLowerCase();
 
   if (EMAIL_REGEX.test(lowercaseUrl)) {
     return 'email';
@@ -87,6 +87,10 @@ export const SocialIcon: React.FC<SocialIconLinkProps> = ({
   linkClassName = 'text-foreground/90 ml-3 line-clamp-1',
   shortenedLink = false,
 }) => {
+  if (typeof url !== 'string') {
+    return;
+  }
+
   const socialType = getSocialType(url);
   const { displayUrl, linkUrl } = formatUrl(url, socialType, shortenedLink);
 

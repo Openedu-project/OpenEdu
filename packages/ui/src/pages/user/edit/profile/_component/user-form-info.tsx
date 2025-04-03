@@ -57,7 +57,7 @@ export default function UserFormInfo({ onSubmit, data }: IUserFormInfo) {
           display_name: data?.display_name || '',
           headline: data?.headline || '',
           about: data?.about || '',
-          props: Object.values(data?.props || {}).filter(value => value !== '') || [],
+          props: Object.values(data?.props || {}).filter(value => value !== '' && typeof value === 'string') || [],
         },
       }}
       onSubmit={handleFormSubmit}
