@@ -16,7 +16,7 @@ export const createBaseCourseSchema = courseNameSchema.extend({
   description: z
     .string()
     .min(20, { message: 'course.validation.minMaxCourseDescription--min:20--max:1000' })
-    .max(1000, { message: 'course.validation.minMaxCourseDescription--min:20--max:1000' }),
+    .max(10000, { message: 'course.validation.minMaxCourseDescription--min:20--max:1000' }),
 });
 export interface ICourseNameSchema extends z.infer<typeof courseNameSchema> {}
 export interface ICreateBaseCourse extends z.infer<typeof createBaseCourseSchema> {}
@@ -56,7 +56,7 @@ export const courseFormSchema = z.object({
     .min(20, {
       message: 'course.validation.minMaxCourseDescription--min:20--max:1000',
     })
-    .max(1000, {
+    .max(10000, {
       message: 'course.validation.minMaxCourseDescription--min:20--max:1000',
     }),
   thumbnail: z.union([z.array(fileResponseSchema), fileResponseSchema]).nullable(),
