@@ -3,8 +3,15 @@ import { z } from '@oe/api/utils/zod';
 import React from 'react';
 import { DESKTOP_BREAKPOINT } from './constants';
 
+const nonWhitespaceRegex = /\S/;
+
 export const chatSchema = z.object({
-  message: z.string().min(1, 'formValidation.required'),
+  message: z
+    .string()
+    .min(1, 'formValidation.required')
+    .refine(value => nonWhitespaceRegex.test(value), {
+      message: 'formValidation.required',
+    }),
   files: z
     .array(
       fileResponseSchema.optional().refine(data => data !== undefined, {

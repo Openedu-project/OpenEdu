@@ -17,8 +17,8 @@ export const aiAssistantMessages = {
     aiSlideDesc: 'Prompt to generate a slide',
     aiImageDesc: 'Prompt to generate an image',
     aiVideoDesc: 'Prompt to generate a video',
-    aiAssitantStrongText: 'Easy Peasy',
-    aiAssitantText: 'For Your Education Task And More',
+    aiAssitantStrongText: 'AI Agent - Easy Peasy',
+    aiAssitantText: 'For Your Work Activity And More',
     delTitle: 'Delete chat?',
     delDesc: '<span>This will delete <strong>{chat_name}</strong> .</span>',
     modelLimitedWarning:
@@ -46,5 +46,6 @@ export const aiAssistantMessages = {
     resources: 'Resources',
     chatDesc: 'You can find ideation for your content by OpenEdu Chat Agent',
     thinking: 'Thinking',
+    allPromptingWithName: '{name} - All Prompting',
   },
 };

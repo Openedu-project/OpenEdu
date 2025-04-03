@@ -258,6 +258,7 @@ export const API_ENDPOINT = {
   CHAIN_ACCOUNT_INFO: '/api/v1/chains/:network/accounts/:address',
 
   AI_MODELS: '/api/v1/ai/models',
+  AI_PROMPTS: '/api/v1/ai/prompts',
   COM_CHANNELS: '/api/com-v1/channels',
   COM_CHANNELS_ID: '/api/com-v1/channels/:id',
   COM_CHANNELS_ID_CANCEL: '/api/com-v1/channels/:id/cancel',

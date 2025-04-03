@@ -21,7 +21,7 @@ export const useCategoriesTree = (
     categoriesTreeMutate: mutate,
   };
 };
-export const useCategories = (queryParams?: Record<string, string | boolean>) => {
+export const useCategories = (queryParams?: Record<string, string | boolean | number>) => {
   const { data, error, isLoading, mutate } = useSWR(
     createAPIUrl({ endpoint: API_ENDPOINT.CATEGORIES, queryParams }),
     getCategoriesService
