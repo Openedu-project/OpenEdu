@@ -6,12 +6,14 @@ import Global from '@oe/assets/icons/global';
 import Mail from '@oe/assets/icons/mail';
 import { abbreviateNumber } from '@oe/core/utils/helpers';
 import { Link } from '#common/navigation';
-import { SocialIcon } from '#components/social-icon';
+import { SocialIcon, getFilteredSocialProps } from '#components/social-icon';
 
 export default function AboutMe({ data }: { data: IUserProfile }) {
   const tProfile = useTranslations('userProfile.profile');
 
   const { followers, email, props, total_courses, total_blogs, headline, about } = data;
+
+  const socialData = getFilteredSocialProps(props as unknown as Record<string, string>);
 
   return (
     <div className="flex flex-col gap-6">
@@ -34,8 +36,8 @@ export default function AboutMe({ data }: { data: IUserProfile }) {
           <span>{email}</span>
         </Link>
 
-        {Object.entries(props).map(([key, value]) => {
-          if (value && key !== 'website' && typeof value === 'string') {
+        {Object.entries(socialData).map(([key, value]) => {
+          if (value && key !== 'website') {
             const socialLink = value?.includes('http') ? value : `//${value}`;
             return (
               <Link

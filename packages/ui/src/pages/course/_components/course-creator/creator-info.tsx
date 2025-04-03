@@ -2,7 +2,7 @@ import type { IUserProfile } from '@oe/api/types/user-profile';
 import Global from '@oe/assets/icons/global';
 import { abbreviateNumber } from '@oe/core/utils/helpers';
 import { Link } from '#common/navigation';
-import { SocialIcon } from '#components/social-icon';
+import { SocialIcon, getFilteredSocialProps } from '#components/social-icon';
 
 const HTTP_REGEX = /^(https?:\/\/)/;
 const HTTP_PREFIX = 'https://';
@@ -12,7 +12,7 @@ export default function CreatorInfor({
 }: {
   creatorData: IUserProfile;
 }) {
-  const props = creatorData?.props;
+  const props = getFilteredSocialProps(creatorData?.props as unknown as Record<string, string>);
 
   const stats = [
     {
@@ -46,7 +46,7 @@ export default function CreatorInfor({
       <div className="mcaption-regular16 flex flex-wrap gap-x-4 gap-y-2">
         {Object.entries(props).map(([key, value]) => {
           const hasHttp = HTTP_REGEX.test(value);
-          if (value && typeof value === 'string') {
+          if (value) {
             const url = hasHttp ? value : `${HTTP_PREFIX}${value}`;
             return (
               <Link
