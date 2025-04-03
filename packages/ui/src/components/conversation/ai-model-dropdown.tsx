@@ -10,6 +10,7 @@ import { Button } from '#shadcn/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '#shadcn/dropdown-menu';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
+import { AGENT_OPTIONS } from './constants';
 
 interface ModelDropdownProps {
   onSelectSuccess?: () => void;
@@ -19,7 +20,7 @@ interface ModelDropdownProps {
 }
 
 export function AIModelDropdown({ onSelectSuccess, AIModels, isLogin, className }: ModelDropdownProps) {
-  const { selectedModel, setSelectedModel, setThinking } = useConversationStore();
+  const { selectedModel, setSelectedModel, setThinking, selectedAgent } = useConversationStore();
   const tAI = useTranslations('aiAssistant');
 
   const handleSelect = (value: IAIModel) => {
@@ -36,10 +37,19 @@ export function AIModelDropdown({ onSelectSuccess, AIModels, isLogin, className 
       return;
     }
     if (AIModels.length > 0) {
-      const defaultModal = AIModels.find(model => model.is_available) ?? (AIModels[0] as IAIModel);
+      const defaultModal =
+        selectedAgent === 'ai_search'
+          ? AIModels.find(model => model.is_available)
+          : (AIModels.find(
+              model =>
+                model.is_available &&
+                Object.entries(model.configs).filter(
+                  ([key, value]) => value === true && AGENT_OPTIONS[key as keyof typeof AGENT_OPTIONS] === selectedAgent
+                ).length > 0
+            ) ?? (AIModels[0] as IAIModel));
       setSelectedModel(defaultModal);
     }
-  }, [AIModels]);
+  }, [AIModels, selectedAgent]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {

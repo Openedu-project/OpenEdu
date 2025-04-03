@@ -10,6 +10,7 @@ export const InputDefault = <TFormValues extends FieldValues>({
   inputRef,
   className,
   handleInputChange,
+  placeholder,
 }: InputFieldProps<TFormValues>) => {
   const tAI = useTranslations('aiAssistant');
   return (
@@ -21,7 +22,7 @@ export const InputDefault = <TFormValues extends FieldValues>({
       <TextareaAutosize
         onKeyDown={handleKeyDown}
         onChange={handleInputChange}
-        placeholder={tAI('inputPlaceholder')}
+        placeholder={placeholder ?? tAI('inputPlaceholder')}
         className={cn(
           'mcaption-regular16 no-scrollbar block h-[22px] w-full resize-none bg-transparent focus-within:outline-none'
         )}

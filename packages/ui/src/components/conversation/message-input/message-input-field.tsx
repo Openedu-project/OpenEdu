@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 import type { FieldValues } from 'react-hook-form';
 import type { InputFieldProps } from '../type';
@@ -14,6 +15,8 @@ export const InputField = <TFormValues extends FieldValues>({
   canChangeType,
   className,
 }: InputFieldProps<TFormValues>) => {
+  const tAI = useTranslations('aiAssistant');
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     form?.reset();
@@ -27,6 +30,7 @@ export const InputField = <TFormValues extends FieldValues>({
           handleKeyDown={handleKeyDown}
           className={className}
           handleInputChange={handleInputChange}
+          placeholder={tAI('inputPlaceholderWithTip')}
         />
       );
     }

@@ -1,5 +1,5 @@
-import AIChatPage from '@oe/ui/pages/ai/chat';
+import AIChatPage from "@oe/ui/pages/ai/chat";
 
 export default function AIChat() {
-  return <AIChatPage />;
+  return <AIChatPage agent="ai_search" />;
 }

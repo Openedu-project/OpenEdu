@@ -189,7 +189,7 @@ export interface ISourceProps {
 
 export interface IPrompSearchParams extends Record<string, unknown> {
   page: number;
-  per_page: number;
+  per_page?: number;
   ai_agent_type?: TAgentType;
   category_id?: string;
 }

@@ -31,6 +31,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
   files,
   resetOnSuccess = false,
   type,
+  autoSend,
 }) => {
   const tAI = useTranslations('aiAssistant');
   const { selectedModel, selectedAgent, setSelectedAgent, status } = useConversationStore();
@@ -115,7 +116,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
       return;
     }
 
-    if (e.key === 'Enter' && !e.shiftKey && !isGenerating) {
+    if (e.key === 'Enter' && !e.shiftKey && (!isGenerating || autoSend)) {
       e.preventDefault();
       void form.trigger();
       if (Object.keys(form.formState.errors)?.length === 0) {
@@ -142,9 +143,10 @@ const MessageInput: React.FC<MessageInputProps> = ({
 
   const handleSubmit = async (values: z.infer<typeof chatSchema>) => {
     setFilteredAgents([]);
-    if (isGenerating) {
+    if (isGenerating && !autoSend) {
       return;
     }
+
     const login = await isLogin();
 
     if (!login) {
@@ -152,11 +154,9 @@ const MessageInput: React.FC<MessageInputProps> = ({
       return;
     }
 
-    const message = values.message ? values.message : tAI('messageImage');
-
     try {
       await sendMessage({
-        messageInput: message,
+        messageInput: values.message,
         type: selectedAgent,
         files: (values as unknown as { files: IFileResponse[] }).files,
         message_id: messageId,

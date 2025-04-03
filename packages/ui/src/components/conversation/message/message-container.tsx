@@ -1,9 +1,10 @@
 import { useGetConversationDetails } from '@oe/api/hooks/useConversation';
 import type { IConversationDetails, IMessage, TAgentType } from '@oe/api/types/conversation';
+import { API_ENDPOINT } from '@oe/api/utils/endpoints';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
 import { ChevronsDown } from 'lucide-react';
 import { type RefObject, useEffect, useRef, useState } from 'react';
-import type { KeyedMutator } from 'swr';
+import { type KeyedMutator, useSWRConfig } from 'swr';
 import { Button } from '#shadcn/button';
 import { Skeleton } from '#shadcn/skeleton';
 import { useConversationStore } from '#store/conversation-store';
@@ -40,7 +41,9 @@ export const MessageContainer = ({
   scrollBehavior,
   mutate,
 }: IContainerProps) => {
-  const { messages, status, setMessages, isNewChat } = useConversationStore();
+  const { cache, mutate: globalMutate } = useSWRConfig();
+
+  const { messages, status, setMessages, isNewChat, setIsNewChat } = useConversationStore();
   const [shouldGetData, setShouldGetData] = useState<boolean>(false);
   const [prevScrollHeight, setPrevScrollHeight] = useState(0);
   const [initScrollBottom, setInitScrollBottom] = useState(false);
@@ -82,7 +85,27 @@ export const MessageContainer = ({
       return;
     }
     handleScrollToBottom(scrollBehavior);
-  }, [messages.length, initScrollBottom, containerRef, scrollBehavior]);
+    if (isNewChat) {
+      setIsNewChat(false);
+      const keysToReset = Array.from(cache.keys()).filter(
+        key => typeof key === 'string' && key.includes(`${API_ENDPOINT.COM_CHANNELS}?`)
+      );
+
+      // Then clear each one
+      for (const key of keysToReset) {
+        globalMutate(key, undefined, { revalidate: false });
+      }
+    }
+  }, [
+    messages.length,
+    initScrollBottom,
+    containerRef,
+    scrollBehavior,
+    isNewChat,
+    setIsNewChat,
+    globalMutate,
+    cache.keys,
+  ]);
 
   const handleScrollToBottom = (scrollBehavior?: 'auto' | 'smooth') => {
     if (!containerRef) {

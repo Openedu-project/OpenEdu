@@ -9,6 +9,7 @@ import { type RefObject, useCallback } from 'react';
 import { useRouter } from '#common/navigation';
 import { toast } from '#shadcn/sonner';
 import { useConversationStore } from '#store/conversation-store';
+import { AI_SIDEBAR } from '../constants';
 import type { ISendMessageParams } from '../type';
 
 export const useSendMessageHandler = (
@@ -27,9 +28,10 @@ export const useSendMessageHandler = (
     resetOpenWebSource,
     resetGenMessage,
   } = useConversationStore();
-
   const router = useRouter();
   const tError = useTranslations('errors');
+
+  const agentData = AI_SIDEBAR().find(data => data.agent === agent);
 
   return useCallback(
     async ({ messageInput = '', type, files, message_id, role, status }: ISendMessageParams) => {
@@ -101,7 +103,7 @@ export const useSendMessageHandler = (
           setIsNewChat(true);
           router.push(
             createAPIUrl({
-              endpoint: AI_ROUTES.chatDetail,
+              endpoint: agentData?.detailHref ?? AI_ROUTES.chatDetail,
               params: { id: data.id },
             })
           );
@@ -143,6 +145,7 @@ export const useSendMessageHandler = (
       updateMessages,
       containerRef,
       resetGenMessage,
+      agentData,
     ]
   );
 };

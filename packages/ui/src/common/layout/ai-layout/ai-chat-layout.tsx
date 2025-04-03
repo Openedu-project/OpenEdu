@@ -1,17 +1,19 @@
 import { getAIModels } from '@oe/api/services/conversation';
+import type { TAgentType } from '@oe/api/types/conversation';
 import { isLogin } from '@oe/api/utils/auth';
 import { AI_ROUTES } from '@oe/core/utils/routes';
 import { MessageSquareDiff } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
 import { Link } from '#common/navigation';
-import { AIHistoryModal, AIModelDropdown } from '#components/conversation';
+import { AIHistoryModal, AIModelDropdown, AI_SIDEBAR } from '#components/conversation';
 import { Tooltip } from '#shadcn/tooltip';
 import { cn } from '#utils/cn';
 
 type Props = {
   children: ReactNode;
   className?: string;
+  agent: TAgentType;
 };
 
 const ActionTooltip = ({
@@ -35,12 +37,14 @@ const ActionTooltip = ({
   </Tooltip>
 );
 
-export default async function AIChatLayout({ children, className }: Props) {
+export default async function AIChatLayout({ children, className, agent }: Props) {
   const [AIChatModels, login, tAI] = await Promise.all([
     getAIModels(undefined, { next: { tags: ['get_ai_models'] } }),
     isLogin(),
     getTranslations('aiAssistant'),
   ]);
+
+  const agentLink = AI_SIDEBAR().find(data => data.agent === agent)?.href;
 
   return (
     <div
@@ -62,7 +66,7 @@ export default async function AIChatLayout({ children, className }: Props) {
             variant="default"
             className="rounded-full hover:no-underline"
             activeClassName=""
-            href={AI_ROUTES.chat}
+            href={agentLink ?? AI_ROUTES.chat}
           >
             <MessageSquareDiff size={20} />
           </Link>
