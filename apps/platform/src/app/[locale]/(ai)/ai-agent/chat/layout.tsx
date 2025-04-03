@@ -1,7 +1,7 @@
-import { AIChatLayout } from '@oe/ui/common/layout/ai-layout';
+import { AIChatLayout } from "@oe/ui/common/layout/ai-layout";
 
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 export default function AILayout({ children }: { children: ReactNode }) {
-  return <AIChatLayout>{children}</AIChatLayout>;
+  return <AIChatLayout agent="ai_search">{children}</AIChatLayout>;
 }

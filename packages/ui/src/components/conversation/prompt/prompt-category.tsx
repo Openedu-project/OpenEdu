@@ -47,7 +47,7 @@ export const PromptCategory = () => {
         </div>
       )}
       <div className="min-h-44">
-        <PromptGrid categoryId={selectedCategory?.id} name={selectedCategory?.name} litmited={8} />
+        <PromptGrid categoryId={selectedCategory?.id} name={selectedCategory?.name} litmited={8} agent="ai_search" />
       </div>
     </div>
   );

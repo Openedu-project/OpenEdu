@@ -271,6 +271,7 @@ export default function AffiliateManagementContent() {
           manualPagination: true,
         }}
         filterOptions={filterOptions}
+        filterSearchProps={{ useQueryParams: true }}
       />
       {isOpenCommissionDetailModal && (
         <CampaignCommissionDetailModal

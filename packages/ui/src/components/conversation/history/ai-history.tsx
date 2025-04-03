@@ -4,7 +4,7 @@ import MessageTime from '@oe/assets/icons/message-time';
 import { Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import type { KeyboardEvent } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import { useSWRConfig } from 'swr';
@@ -12,7 +12,6 @@ import { useDebouncedCallback } from 'use-debounce';
 import { Modal } from '#components/modal';
 import { Button } from '#shadcn/button';
 import { Input } from '#shadcn/input';
-import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { HISTORY_DEFAULT_PARAMS } from '../constants';
 import { formatDate } from '../utils';
@@ -32,7 +31,6 @@ const SearchHistory = ({ className, isLogin, callbackFn }: SearchHistoryProps) =
   const searchRef = useRef<HTMLInputElement | null>(null);
 
   const { mutate: globalMutate } = useSWRConfig();
-  const { isNewChat } = useConversationStore();
 
   const [searchParams, setSearchParams] = useState(HISTORY_DEFAULT_PARAMS);
 
@@ -48,13 +46,6 @@ const SearchHistory = ({ className, isLogin, callbackFn }: SearchHistoryProps) =
       ) ?? [],
     [data]
   );
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    if (isNewChat) {
-      mutate();
-    }
-  }, [isNewChat]);
 
   const handleSearch = async (title?: string, isNextPage?: boolean) => {
     const pagination = data?.at(-1)?.pagination;

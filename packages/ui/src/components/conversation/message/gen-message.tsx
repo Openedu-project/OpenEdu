@@ -12,7 +12,10 @@ export const GenMessage = memo(
   ({
     containerRef,
     mutate,
-  }: { containerRef: RefObject<HTMLDivElement | null>; mutate: KeyedMutator<IConversationDetails> }) => {
+  }: {
+    containerRef: RefObject<HTMLDivElement | null>;
+    mutate: KeyedMutator<IConversationDetails>;
+  }) => {
     const { genMessage, setOpenWebSource, addMessage, resetGenMessage, resetPage } = useConversationStore();
     const [text, setText] = useState(TypewriterState.currentText);
     const [prevScrollTop, setPrevScrollTop] = useState(0);
@@ -35,13 +38,26 @@ export const GenMessage = memo(
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
     useEffect(() => {
+      const handleVisibilityChange = () => {
+        if (document.visibilityState === 'visible') {
+          if (!genMessage) {
+            return;
+          }
+          // Force update to latest content when becoming visible
+          TypewriterState.updateText(genMessage?.content ?? '');
+        }
+      };
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+    }, [document.visibilityState]);
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+    useEffect(() => {
       const handleGenText = setInterval(() => {
         if (!genMessage) {
           clearInterval(handleGenText);
           TypewriterState.reset();
           return;
         }
-
         const nextChars = genMessage.content.substring(TypewriterState.position, TypewriterState.position + 2);
         if (!(GENERATING_STATUS.includes(genMessage.status ?? '') || nextChars)) {
           addMessage(genMessage, () => {

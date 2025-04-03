@@ -65,6 +65,8 @@ export const courseOutlineMessages = {
       desc: 'to unlock this gaming challenge. Your journey awaits!',
     },
 
+    shareToEarn: 'Share To Earn',
+
     lastUpdated: 'Last updated {updateAt}',
     markAsComplete: 'Mark as complete',
     course: 'Course: {title}',

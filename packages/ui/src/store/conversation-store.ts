@@ -35,6 +35,7 @@ interface IConversationStore {
   setThinking: (thinking: boolean) => void;
   resetPage: boolean;
   setResetPage: (resetPage: boolean) => void;
+  resetStore: () => void;
 }
 
 export const useConversationStore = create<IConversationStore>(set => {
@@ -137,6 +138,19 @@ export const useConversationStore = create<IConversationStore>(set => {
     setResetPage: (resetPage: boolean) => {
       set(() => {
         return { resetPage };
+      });
+    },
+    resetStore: () => {
+      set(() => {
+        return {
+          messages: [],
+          isNewChat: false,
+          status: undefined,
+          selectedModel: undefined,
+          genMessage: undefined,
+          openWebSource: undefined,
+          resetPage: false,
+        };
       });
     },
   };

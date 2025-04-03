@@ -1,8 +1,7 @@
 'use client';
 import { useGetConversationDetails } from '@oe/api/hooks/useConversation';
-import type { IAgenConfigs, TAgentType } from '@oe/api/types/conversation';
+import type { IAgenConfigs } from '@oe/api/types/conversation';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
-import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef } from 'react';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
@@ -13,8 +12,7 @@ import { InputFrame } from './message-input/input-frame';
 import { MessageContainer } from './message/message-container';
 import type { IChatWindowProps } from './type';
 
-export function ChatWindow({ id, initData, agent = 'ai_search', className }: IChatWindowProps) {
-  const searchParams = useSearchParams();
+export function ChatWindow({ id, initData, agent, className }: IChatWindowProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const {
     isNewChat,
@@ -44,13 +42,12 @@ export function ChatWindow({ id, initData, agent = 'ai_search', className }: ICh
     fallback: initData,
   });
 
-  const defaultAgent = useMemo(() => searchParams.get('agent'), [searchParams]);
-
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     resetOpenWebSource();
+
     if (!isNewChat) {
-      setSelectedAgent((defaultAgent as TAgentType) ?? 'ai_search');
+      setSelectedAgent(agent);
       resetGenMessage();
     }
 
@@ -68,7 +65,7 @@ export function ChatWindow({ id, initData, agent = 'ai_search', className }: ICh
     return () => {
       prevId.current = id;
     };
-  }, [id, defaultAgent]);
+  }, [id, agent, setSelectedAgent]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -112,9 +109,9 @@ export function ChatWindow({ id, initData, agent = 'ai_search', className }: ICh
           mutate={mutate}
         />
       ) : (
-        <EmptyChat />
+        <EmptyChat agent={agent} />
       )}
-      <InputFrame id={id} containerRef={containerRef} updateWidth />
+      <InputFrame id={id} containerRef={containerRef} updateWidth agent={agent} />
     </div>
   );
 }
