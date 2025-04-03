@@ -90,7 +90,7 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
               </Suspense>
             );
           })}
-          {/* // Con cho can */}
+
           {fieldWithoutText.map((field, index) => {
             const { fieldType, fieldId, ...rest } = field;
             const Component = formComponents[fieldType]?.component;
@@ -101,7 +101,7 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
 
             return (
               <Suspense key={fieldId} fallback={<Skeleton className="h-10 w-full" />}>
-                <div className={cn(fieldType === 'checkbox' && 'p-2')}>
+                <div className={cn(fieldType === 'checkbox' && 'p-6')}>
                   {fieldType === 'multipleChoiceGrid' ? (
                     <MultipleChoiceGridFormField
                       name={rest.name}
@@ -119,7 +119,11 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
                       infoText={rest.infoText}
                       required={rest.required}
                       description={rest.description}
-                      className={cn('flex-1 p-2', rest.border && 'border p-4', step === index + 1 ? '' : 'hidden')}
+                      className={cn(
+                        'flex-1 p-2 pb-10',
+                        rest.border && 'border p-4',
+                        step === index + 1 ? '' : 'hidden'
+                      )}
                       isToggleField={fieldType === 'checkbox' || fieldType === 'switch'}
                       render={({ field }) => (
                         <Component
@@ -145,7 +149,15 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
                       )}
                     />
                   )}
-                  <div className={cn('flex justify-end gap-3 pt-4', step === index + 1 ? '' : 'hidden')}>
+                  <div
+                    className={cn(
+                      'fixed bottom-0 left-0 flex w-full items-center justify-between gap-3 bg-white px-4 py-2 pt-4 shadow-sm',
+                      step === index + 1 ? '' : 'hidden'
+                    )}
+                  >
+                    <div className="flex gap-3 font-medium">
+                      {step} / {fieldWithoutText?.length}
+                    </div>
                     <div className="flex gap-3">
                       {step !== 1 && (
                         <Button
