@@ -1,9 +1,5 @@
 import type { IFormQuestion, IFormResponse } from '@oe/api/types/form';
-import type {
-  IFormUserResponse,
-  IFormUserResponseAnswer,
-  IFormUserResponseAnswerItem,
-} from '@oe/api/types/form-user-response';
+import type { IFormUserResponse, IFormUserResponseAnswerItem } from '@oe/api/types/form-user-response';
 import { formatDateHourMinute } from '@oe/core/utils/datetime';
 import type { TFunction } from '@oe/i18n/types';
 import type { ColumnDef, ColumnExportConfig } from '@oe/ui/components/table';
@@ -26,34 +22,20 @@ const filterdQuestions = (questions: IFormQuestion[]) => {
     ?.filter(Boolean);
 };
 
-const getAnswer = (
-  answer?: IFormUserResponseAnswerItem,
-  answers?: IFormUserResponseAnswer | IFormUserResponseAnswerItem[]
-) => {
+const getAnswer = (answer?: IFormUserResponseAnswerItem) => {
   let value = answer?.answer_text;
 
   if (answer?.question_type === 'datetimePicker') {
     value = formatDateHourMinute(Number(value));
   }
 
-  if (answer?.question_type === 'selectbox') {
+  if (
+    answer?.question_type === 'selectbox' ||
+    answer?.question_type === 'multipleChoice' ||
+    answer?.question_type === 'multipleSelection' ||
+    answer?.question_type === 'multipleChoiceGrid'
+  ) {
     value = answer?.option_text;
-  }
-
-  if (answer?.question_type === 'multipleSelection') {
-    if (Array.isArray(answers)) {
-      const vals = answers
-        ?.map(a => {
-          if (a.question_id === answer.question_id) {
-            return a.option_text;
-          }
-        })
-        ?.filter(Boolean)
-        ?.join(',');
-      value = vals;
-    } else {
-      value = answer?.answer_text;
-    }
   }
 
   return value;
@@ -87,14 +69,14 @@ export const generateColumns = (detailFormData: IFormResponse, t: TFunction): Co
       size: 250,
       cell({ row }) {
         const { answers } = row.original;
-
         if (Array.isArray(answers)) {
-          return <div>{getAnswer(answers[index], answers)}</div>;
+          const mergerdAnswers = mergeAnswersByQuestionId(answers as IFormUserResponseAnswerItem[]);
+          return <div>{getAnswer(mergerdAnswers[index])}</div>;
         }
 
         const key = Object.keys(answers)[index];
 
-        return key && <div>{getAnswer(answers[key], answers) || ''}</div>;
+        return key && <div>{getAnswer(answers[key]) || ''}</div>;
       },
     };
   });
@@ -138,11 +120,11 @@ export const generateExportConfig = (detailFormData: IFormResponse, t: TFunction
 
         // Handle different answer data structures
         if (Array.isArray(row.answers)) {
-          return getAnswer(row.answers[index], row.answers);
+          return getAnswer(row.answers[index]);
         }
 
         // Object structure with question IDs as keys
-        return getAnswer(row.answers[question.id], row.answers) || '';
+        return getAnswer(row.answers[question.id]) || '';
       },
     };
   });
@@ -161,4 +143,59 @@ export function normalToSnake(text: string) {
     .replace(/\s+/g, ' ')
     .trim()
     .replace(/\s/g, '_');
+}
+interface GroupedAnswers {
+  [questionId: string]: IFormUserResponseAnswerItem[];
+}
+
+function mergeAnswersByQuestionId(answers: IFormUserResponseAnswerItem[]): IFormUserResponseAnswerItem[] {
+  // Group the items by question_id
+  const groupedByQuestionId: GroupedAnswers = {};
+
+  // biome-ignore lint/complexity/noForEach: <explanation>
+  answers.forEach((item: IFormUserResponseAnswerItem) => {
+    const questionId: string = item.question_id;
+
+    if (!groupedByQuestionId[questionId]) {
+      groupedByQuestionId[questionId] = [];
+    }
+
+    groupedByQuestionId[questionId].push(item);
+  });
+
+  // Merge the items with the same question_id
+  const mergedAnswers: IFormUserResponseAnswerItem[] = [];
+
+  // biome-ignore lint/complexity/noForEach: <explanation>
+  Object.keys(groupedByQuestionId).forEach((questionId: string) => {
+    const group = groupedByQuestionId[questionId];
+
+    // If there's only one item in the group, add it directly
+    if (group && group?.length === 1 && group?.[0]) {
+      mergedAnswers.push(group[0]);
+      return;
+    }
+
+    // If there are multiple items, merge them
+    const mergedItem = { ...group?.[0] }; // Create a copy of the first item
+
+    // Create a set to collect unique option_text values to avoid duplicates
+    const uniqueOptionTexts: Set<string> = new Set();
+
+    // biome-ignore lint/complexity/noForEach: <explanation>
+    group?.forEach((item: IFormUserResponseAnswerItem) => {
+      if (item.option_text) {
+        uniqueOptionTexts.add(item.option_text);
+      }
+    });
+
+    // Join the unique option_text values with a comma
+    mergedItem.option_text = Array.from(uniqueOptionTexts).join(', ');
+
+    if (mergedItem?.id) {
+      mergedAnswers.push(mergedItem as IFormUserResponseAnswerItem);
+    }
+  });
+
+  return mergedAnswers;
 }
