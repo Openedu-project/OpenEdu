@@ -35,7 +35,7 @@ export default function AboutMe({ data }: { data: IUserProfile }) {
         </Link>
 
         {Object.entries(props).map(([key, value]) => {
-          if (value && key !== 'website') {
+          if (value && key !== 'website' && typeof value === 'string') {
             const socialLink = value?.includes('http') ? value : `//${value}`;
             return (
               <Link
