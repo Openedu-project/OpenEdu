@@ -35,13 +35,14 @@ export function InputFrame({
     }
   }, [reset, setSelectedModel, resetStatus, setThinking, resetMessages]);
 
-  const messageType = useMemo(
-    () =>
-      Object.entries(AGENT_OPTIONS)
-        .filter(([key]) => selectedModel?.configs[key as keyof IAgenConfigs])
-        .map(([_, value]) => value),
-    [selectedModel]
-  );
+  const messageType = useMemo(() => {
+    if (agent !== 'ai_search') {
+      return [];
+    }
+    return Object.entries(AGENT_OPTIONS)
+      .filter(([key]) => selectedModel?.configs[key as keyof IAgenConfigs])
+      .map(([_, value]) => value);
+  }, [selectedModel, agent]);
 
   const inputRef = useRef<HTMLDivElement>(null);
 

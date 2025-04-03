@@ -5,6 +5,7 @@ import { LoaderCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { Button } from '#shadcn/button';
+import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { ExpandPromptCard } from './prompt-card';
 import { PromptPopup } from './prompt-popup';
@@ -26,11 +27,12 @@ export const PromptGrid = ({
 }) => {
   const tGeneral = useTranslations('general');
   const [promptData, setPromptData] = useState<IPrompt[]>([]);
+  const { selectedAgent } = useConversationStore();
   const [count, setCount] = useState(4);
   const [disabled, setDisabled] = useState(false);
   const [searchParams, setSearchParams] = useState({
     page: 1,
-    per_page: perPage ?? 4,
+    per_page: perPage,
     ai_agent_type: agent,
     category_id: categoryId,
   });
@@ -42,16 +44,16 @@ export const PromptGrid = ({
     setSearchParams({
       page: 1,
       per_page: perPage ?? litmited ?? 8,
-      ai_agent_type: agent,
+      ai_agent_type: agent === 'ai_search' ? selectedAgent : agent,
       category_id: categoryId,
     });
     setPromptData([]);
     setCount(4);
-  }, [agent, perPage, categoryId, litmited]);
+  }, [agent, perPage, categoryId, litmited, selectedAgent]);
 
   const { prompts, isLoading } = useGetPromps({
     queryParams: searchParams,
-    shouldFetch: !!searchParams.ai_agent_type || !!searchParams?.category_id,
+    shouldFetch: (!!searchParams.ai_agent_type || !!searchParams?.category_id) && !!searchParams?.per_page,
   });
 
   useEffect(() => {
@@ -93,6 +95,7 @@ export const PromptGrid = ({
             callbackFn={() => {
               setDisabled(true);
             }}
+            agent={agent}
           />
         ))}
       </div>
@@ -105,7 +108,7 @@ export const PromptGrid = ({
           </Button>
         ) : (
           prompts.pagination?.page < prompts.pagination?.total_pages && (
-            <PromptPopup categoryId={categoryId} name={name} />
+            <PromptPopup categoryId={categoryId} name={name} agent={agent} />
           )
         )}
       </div>

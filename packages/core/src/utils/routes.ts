@@ -86,8 +86,10 @@ export const AI_ROUTES = {
   chatDetail: '/ai-agent/chat/:id',
   search: '/ai-agent/search',
   imageGenerator: '/ai-agent/image-generator',
+  imageGeneratorDetail: '/ai-agent/image-generator/:id',
   video: '/ai-agent/video',
   slide: '/ai-agent/slide',
+  slideDetail: '/ai-agent/slide/:id',
 };
 
 export const AUTH_ROUTES = {

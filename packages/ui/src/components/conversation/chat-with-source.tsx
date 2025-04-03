@@ -11,7 +11,7 @@ import { useIsDesktop } from './utils';
 
 const AnimatedDiv = animated('div');
 
-export function ChatWithSource({ id, initData, agent = 'ai_search' }: IChatWindowProps) {
+export function ChatWithSource({ id, initData, agent }: IChatWindowProps) {
   const { openWebSource, width } = useConversationStore();
 
   const isDesktop = useIsDesktop();

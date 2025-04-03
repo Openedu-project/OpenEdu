@@ -14,7 +14,7 @@ import { Link, useRouter } from '#common/navigation';
 import { toast } from '#shadcn/sonner';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
-import { INPUT_BUTTON } from '../constants';
+import { AI_SIDEBAR } from '../constants';
 import MessageInput from '../message-input/message-input';
 import type { ISendMessageParams } from '../type';
 import ActionDropdown from './history-actions-dropdown';
@@ -64,7 +64,7 @@ export default function AIHistoryItem({ className, item, mutate, pageIndex, acti
   const { setIsNewChat, resetStatus } = useConversationStore();
   const router = useRouter();
 
-  const agentData = INPUT_BUTTON.find(data => data.type === item.ai_agent_type);
+  const agentData = AI_SIDEBAR().find(data => data.agent === item.ai_agent_type);
 
   const handleEdit = async ({ messageInput }: ISendMessageParams) => {
     await updateConversationTitle(undefined, item.id, {
@@ -147,7 +147,7 @@ export default function AIHistoryItem({ className, item, mutate, pageIndex, acti
         <Link
           className="mcaption-regular14 md:mcaption-regular16 block h-auto w-[calc(100%-20px)] truncate px-2 text-start text-foreground hover:no-underline"
           href={createAPIUrl({
-            endpoint: AI_ROUTES.chatDetail,
+            endpoint: agentData?.detailHref ?? AI_ROUTES.chatDetail,
             params: { id: item.id },
           })}
           onClick={() => {

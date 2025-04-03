@@ -13,6 +13,8 @@ export interface AISidebarItem {
   isComming?: boolean;
   bgColor: string;
   agent?: TAgentType;
+  detailHref?: string;
+  image?: string;
 }
 
 export interface ISendMessageParams {
@@ -62,6 +64,7 @@ export type InputFieldProps<TFormValues extends FieldValues> = {
   canChangeType?: boolean;
   className?: string;
   handleInputChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  placeholder?: string;
 };
 
 export interface MessageFormValues {
@@ -96,7 +99,7 @@ export interface IChatWindowProps {
   id?: string;
   aiModels?: IAIModel[];
   initData?: IConversationDetails;
-  agent?: TAgentType;
+  agent: TAgentType;
   className?: string;
   inputRef?: Ref<HTMLDivElement>;
 }

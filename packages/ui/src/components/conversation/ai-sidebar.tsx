@@ -5,8 +5,6 @@ import { AI_ROUTES } from '@oe/core/utils/routes';
 import { Image } from '@oe/ui/components/image';
 import { LayoutGrid } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
-import { useMemo } from 'react';
 import { Link, usePathname } from '#common/navigation';
 import { Badge } from '#shadcn/badge';
 import { Separator } from '#shadcn/separator';
@@ -17,13 +15,6 @@ import { AI_SIDEBAR } from './constants';
 export function AISidebar({ className }: { className?: string }) {
   const tAI = useTranslations('aiAssistant');
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <remove after have other agent page>
-  const activeAgent = useMemo(
-    () => (searchParams.get('agent') ? searchParams.get('agent') : pathname.includes('chat') ? 'chat' : ''),
-    [searchParams]
-  );
 
   return (
     <div className={cn('overflow-hidden p-1 lg:p-5', className)}>
@@ -43,14 +34,17 @@ export function AISidebar({ className }: { className?: string }) {
         <Separator className="h-0.5 w-full bg-primary/10" />
 
         <div className="flex flex-col items-center gap-2">
-          {AI_SIDEBAR().map(item => (
+          {AI_SIDEBAR('white').map(item => (
             <div key={item.value}>
               <Tooltip
                 content={tAI(item.lableKey)}
-                contentProps={{ side: 'right', className: 'text-primary mbutton-bold10 rounded-full' }}
+                contentProps={{
+                  side: 'right',
+                  className: 'text-primary mbutton-bold10 rounded-full',
+                }}
                 className={cn(
                   '!border-0 rounded-full p-1',
-                  activeAgent?.includes(item.value) && 'outline outline-primary outline-offset-1'
+                  pathname.includes(item.value) && 'outline outline-primary outline-offset-1'
                 )}
               >
                 <Link
