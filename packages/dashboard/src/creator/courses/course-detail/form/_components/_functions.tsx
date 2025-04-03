@@ -120,7 +120,9 @@ export const generateExportConfig = (detailFormData: IFormResponse, t: TFunction
 
         // Handle different answer data structures
         if (Array.isArray(row.answers)) {
-          return getAnswer(row.answers[index]);
+          const mergerdAnswers = mergeAnswersByQuestionId(row.answers as IFormUserResponseAnswerItem[]);
+
+          return getAnswer(mergerdAnswers[index]);
         }
 
         // Object structure with question IDs as keys
