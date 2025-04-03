@@ -46,7 +46,7 @@ export default function CreatorInfor({
       <div className="mcaption-regular16 flex flex-wrap gap-x-4 gap-y-2">
         {Object.entries(props).map(([key, value]) => {
           const hasHttp = HTTP_REGEX.test(value);
-          if (value) {
+          if (value && typeof value === 'string') {
             const url = hasHttp ? value : `${HTTP_PREFIX}${value}`;
             return (
               <Link
