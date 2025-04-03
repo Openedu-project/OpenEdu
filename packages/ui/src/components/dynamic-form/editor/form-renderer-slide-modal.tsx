@@ -58,6 +58,7 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
       description=""
       validationSchema={formSchema}
       onSubmit={handleFormSubmit}
+      className="shadow-[0_4px_22px_0px_#F4F5F6]"
       formClassName="overflow-y-auto"
       buttons={
         [
