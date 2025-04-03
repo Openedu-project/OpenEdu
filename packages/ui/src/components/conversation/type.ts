@@ -53,6 +53,7 @@ export interface MessageInputProps {
   messageType?: TAgentType[];
   files?: IFileResponse[];
   resetOnSuccess?: boolean;
+  autoSend?: boolean;
 }
 
 export type InputFieldProps<TFormValues extends FieldValues> = {

@@ -131,6 +131,7 @@ export default function AIHistoryItem({ className, item, mutate, pageIndex, acti
           hiddenBtn
           className="!rounded-lg min-h-6 w-full md:p-2"
           type="ai_search"
+          autoSend
         />
       </div>
     );

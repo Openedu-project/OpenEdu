@@ -14,7 +14,7 @@ export const aiAssistantMessages = {
     messageImage: 'Generate text from this screenshot',
     aiChatDesc: 'You can find ideation for your content by OpenEdu Chat Agent',
     aiSearchDesc: 'You can find latest research from OpenEdu AI Deep Research',
-    aiSlideDesc: 'You can create slide with the help fromtOpenEdu AI Slide Agent ',
+    aiSlideDesc: 'You can create slide with the help from OpenEdu AI Slide Agent ',
     aiImageDesc: 'You can create image with the help from OpenEdu AI Image Generator',
     aiVideoDesc: 'Prompt to generate a video',
     aiAssitantStrongText: 'AI Agent - Easy Peasy',
