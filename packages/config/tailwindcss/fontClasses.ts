@@ -43,6 +43,12 @@ export const fontClasses = {
     fontWeight: 700,
     lineHeight: '140%' /* 80px */,
   },
+  '.giant-iDisplay-bold16': {
+    fontFamily: 'var(--font-primary), sans-serif',
+    fontSize: '16px',
+    fontWeight: 700,
+    lineHeight: '140%' /* 80px */,
+  },
 
   /**
    * HEADING

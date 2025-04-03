@@ -1,4 +1,4 @@
-import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from 'react';
+import { type CSSProperties, type ReactNode, useRef, useState } from 'react';
 import { Checkbox } from '#shadcn/checkbox';
 import { Input } from '#shadcn/input';
 import { Label } from '#shadcn/label';
@@ -19,22 +19,19 @@ export interface MultipleSelectionProps {
   className?: string;
   disabled?: boolean;
   hasOtherOption?: boolean;
-  // onAddOtherOption?: (value: string) => void;
 }
 
 export function MultipleSelection({
   options,
   value,
   onChange,
-  // onAddOtherOption,
   className,
   disabled = false,
   hasOtherOption = false,
 }: MultipleSelectionProps) {
-  // const tGeneral = useTranslations("general");
   const inputRef = useRef<HTMLInputElement>(null);
   const [otherValue, setOtherValue] = useState<string>('');
-  const [previousOtherValue, setPreviousOtherValue] = useState<string>('');
+  const [isOtherChecked, setIsOtherChecked] = useState<boolean>(false);
 
   const handleValueChange = (checked: boolean, optionValue: string) => {
     if (checked) {
@@ -46,45 +43,35 @@ export function MultipleSelection({
     }
   };
 
-  const handleOtherValueChange = (checked: boolean, newValue: string) => {
-    if (checked) {
-      // If we had a previous other value, remove it first
-      const filteredValues = previousOtherValue ? value?.filter(val => val !== previousOtherValue) || [] : value || [];
+  const handleOtherCheckboxChange = (checked: boolean) => {
+    setIsOtherChecked(checked);
 
-      // Set the new value as the previous other value for future reference
-      setPreviousOtherValue(newValue);
-
-      // Add the new value
-      onChange([...filteredValues, newValue]);
-    } else {
-      // Remove the other value from the array if unchecked
-      onChange(value ? value.filter(val => val !== newValue) : []);
-      // We keep track of previous value even when unchecked
+    if (!checked) {
+      // If unchecked, remove the other value from the selection
+      onChange(value ? value.filter(val => val !== otherValue) : []);
+    } else if (otherValue.trim()) {
+      // If checked and there's a value, add it to selection
+      onChange(value ? [...value, otherValue] : [otherValue]);
     }
   };
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    if (inputRef?.current) {
-      // Add blur event listener to handle when user loses focus
-      const handleBlur = () => {
-        if (otherValue.trim() && otherValue !== previousOtherValue) {
-          handleOtherValueChange(true, otherValue.trim());
-        }
-      };
+  const handleOtherInputChange = (newValue: string) => {
+    const oldValue = otherValue;
+    setOtherValue(newValue);
 
-      const inputElement = inputRef.current;
-      inputElement.addEventListener('blur', handleBlur);
+    // Only update the selection if the checkbox is checked
+    if (isOtherChecked) {
+      // Remove old value if it exists
+      const filteredValues = value ? value.filter(val => val !== oldValue) : [];
 
-      // Clean up the event listener on component unmount
-      return () => {
-        inputElement.removeEventListener('blur', handleBlur);
-      };
+      // Add new value if it's not empty
+      if (newValue.trim()) {
+        onChange([...filteredValues, newValue]);
+      } else {
+        onChange(filteredValues);
+      }
     }
-  }, [otherValue, previousOtherValue, value]);
-
-  // Check if the current otherValue is in the value array
-  const isOtherValueChecked = otherValue && value?.includes(otherValue);
+  };
 
   return (
     <div className={cn('space-y-2', className)}>
@@ -105,13 +92,9 @@ export function MultipleSelection({
         <div className="flex items-center space-x-2">
           <Checkbox
             id="other-option"
-            checked={isOtherValueChecked || !!(previousOtherValue && value?.includes(previousOtherValue))}
-            onCheckedChange={checked => {
-              if (otherValue.trim()) {
-                handleOtherValueChange(checked as boolean, otherValue.trim());
-              }
-            }}
-            disabled={disabled || !otherValue.trim()}
+            checked={isOtherChecked}
+            onCheckedChange={checked => handleOtherCheckboxChange(checked as boolean)}
+            disabled={disabled}
           />
           <Label htmlFor="other-option" className="!opacity-100 font-normal text-sm">
             Khác:
@@ -120,14 +103,14 @@ export function MultipleSelection({
             placeholder=""
             ref={inputRef}
             value={otherValue}
-            onChange={e => setOtherValue(e.target.value)}
+            onChange={e => handleOtherInputChange(e.target.value)}
             onKeyDown={e => {
-              if (e.key === 'Enter' && otherValue.trim()) {
+              if (e.key === 'Enter' && otherValue.trim() && isOtherChecked) {
                 e.preventDefault(); // Prevent form submission
-                handleOtherValueChange(true, otherValue.trim());
+                // The value is already being updated via handleOtherInputChange
               }
             }}
-            disabled={disabled}
+            disabled={disabled || !isOtherChecked}
           />
         </div>
       )}
