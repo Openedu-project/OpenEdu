@@ -105,5 +105,5 @@ export interface IChatWindowProps {
   className?: string;
   inputRef?: Ref<HTMLDivElement>;
 }
-export type TFileStatus = 'error' | 'finished' | 'loading';
+export type TFileStatus = 'error' | 'finished' | 'generating';
 export type TFileResponse = IFileResponse & { status?: TFileStatus; fileId?: string };

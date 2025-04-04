@@ -83,7 +83,7 @@ export const InputFile = <TFormValues extends FieldValues>() => {
                     if (f.mime?.includes("image") || f.status !== "finished") {
                       return f;
                     }
-                    return { ...f, status: "loading" };
+                    return { ...f, status: "generating" };
                   });
                   field.onChange(customFiles);
                   setOpen(false);

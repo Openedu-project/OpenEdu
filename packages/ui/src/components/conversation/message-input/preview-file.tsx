@@ -1,5 +1,8 @@
 "use client";
-import { postEmbedDocument } from "@oe/api/services/conversation";
+import {
+  cancelEmbedDocument,
+  postEmbedDocument,
+} from "@oe/api/services/conversation";
 import type { z } from "@oe/api/utils/zod";
 import { CircleX, Image as ImageIcon, Paperclip } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -110,8 +113,9 @@ export const PreviewDocument = ({
   updateFile,
   chatId,
 }: IPreviewFileProps) => {
-  const onRemove = () => {
+  const onRemove = async () => {
     remove?.(filePosition);
+    await cancelEmbedDocument(undefined, { task_id: file.id });
   };
   const updateFileStatus = (status: TFileStatus) => {
     updateFile?.(filePosition ?? 0, { ...file, status });
@@ -120,7 +124,7 @@ export const PreviewDocument = ({
   return (
     <div
       className={cn(
-        "relative flex h-[120px] w-[120px] shrink-0 items-center justify-center rounded-lg bg-foreground/10",
+        "relative flex h-[120px] w-[120px] shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary",
         viewOnly && "border bg-background"
       )}
     >
@@ -157,11 +161,11 @@ const HitboxLayer = ({
   const apiCalledRef = useRef(false);
   const { AIDocumentStatusData, resetSocketData } = useSocketStore();
 
-  const [status, setStatus] = useState<TFileStatus>("loading");
+  const [status, setStatus] = useState<TFileStatus>("generating");
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    if (file.status === "loading" && !apiCalledRef.current) {
+    if (file.status === "generating" && !apiCalledRef.current) {
       const res = postEmbedDocument(undefined, {
         attachment_id: file.id,
         ai_conversation_id: chatId,
@@ -182,7 +186,7 @@ const HitboxLayer = ({
   useEffect(() => {
     let interval: NodeJS.Timeout | undefined;
 
-    if (status === "loading") {
+    if (status === "generating") {
       interval = setInterval(() => {
         setProgress((prevProgress) => {
           const increment = 0.2 + Math.random() * 0.15;
@@ -231,8 +235,8 @@ const HitboxLayer = ({
   return (
     <div
       className={cn(
-        "absolute flex h-[120px] w-[120px] shrink-0 items-center justify-center rounded-lg bg-foreground/10",
-        status === "error" && "border border-destructive bg-background/30"
+        "absolute flex h-[120px] w-[120px] shrink-0 items-center justify-center rounded-lg border border-primary",
+        status === "error" && "border-destructive bg-background/30"
       )}
     >
       <Button
@@ -244,10 +248,10 @@ const HitboxLayer = ({
       >
         <CircleX width={16} height={16} color="hsl(var(--background))" />
       </Button>
-      <div className="absolute right-0 bottom-0 flex w-full items-end justify-end gap-1">
-        {status === "loading" || progress < 100 ? (
-          <div className="grow">
-            <Progress value={progress} className="h-3 transition-all" />
+      <div className="absolute right-0 bottom-0 flex w-full items-end justify-end gap-1 rounded-lg">
+        {status === "generating" || progress < 100 ? (
+          <div className="grow rounded-full bg-background p-1.5">
+            <Progress value={progress} className="h-1 transition-all" />
           </div>
         ) : (
           <p
