@@ -1,6 +1,7 @@
 export const aiAssistantMessages = {
   aiAssistant: {
     title: 'AI Agent',
+    agent: 'Agent',
     generalChat: 'General Chat',
     deepResearch: 'Deep Research',
     slideToVideo: 'Slide To Video',
@@ -48,5 +49,6 @@ export const aiAssistantMessages = {
     chatDesc: 'You can find ideation for your content by OpenEdu Chat Agent',
     thinking: 'Thinking',
     allPromptingWithName: '{name} - All Prompting',
+    workspace: 'Workspace',
   },
 };

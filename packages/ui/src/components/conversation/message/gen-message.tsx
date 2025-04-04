@@ -53,14 +53,6 @@ export const GenMessage = memo(
     // biome-ignore lint/correctness/useExhaustiveDependencies: <handle typing text>
     useEffect(() => {
       const handleGenText = setInterval(() => {
-        console.log(
-          'genMessage: ',
-          genMessage?.id,
-          'position: >>> ',
-          TypewriterState.position,
-          'content: >>> ',
-          genMessage?.content
-        );
         if (!genMessage) {
           clearInterval(handleGenText);
           TypewriterState.reset();

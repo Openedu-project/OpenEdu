@@ -70,7 +70,6 @@ export function ChatWindow({ id, initData, agent, className }: IChatWindowProps)
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setResetPage(false);
-    console.log('isNewChat :>> ', isNewChat, 'data: >> ', messageData);
     if (messageData?.results && !isNewChat) {
       const genMsgData = messageData.results.messages.find(msg => GENERATING_STATUS.includes(msg.status ?? ''));
       if (genMsgData) {
