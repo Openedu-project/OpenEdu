@@ -12,7 +12,13 @@ import { cn } from '#utils/cn';
 import { AIHistoryModal } from '../history/ai-history';
 import { AgentButton } from './agent-button';
 
-export function AISidebar({ className }: { className?: string }) {
+export function AISidebar({
+  className,
+  isLogin,
+}: {
+  className?: string;
+  isLogin?: boolean;
+}) {
   const tAI = useTranslations('aiAssistant');
 
   return (
@@ -58,7 +64,7 @@ export function AISidebar({ className }: { className?: string }) {
             </Link>
             <p className="mcaption-regular10 mt-1 text-center md:font-semibold">{tAI('workspace')}</p>
           </div>
-          <AIHistoryModal />
+          <AIHistoryModal isLogin={isLogin} />
         </div>
         <Separator className="h-0.5 w-full bg-primary/10" />
         <Link
