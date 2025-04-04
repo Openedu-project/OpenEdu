@@ -417,7 +417,7 @@ export const FontFamilyMenuItem: React.FC<{
   }, [editor]);
 
   return (
-    <Select value={fontFamily} onValueChange={value => editor.chain().focus().setFontFamily(value).run()}>
+    <Select value={fontFamily || 'Inter'} onValueChange={value => editor.chain().focus().setFontFamily(value).run()}>
       <SelectTrigger className="h-8 w-[120px]" title={t('fontFamily')}>
         <SelectValue placeholder="Font" />
       </SelectTrigger>

@@ -236,8 +236,10 @@ export interface ICertificateOrganization {
 export interface ICertificateData {
   id?: string;
   learner_name: string;
-  course_name: string;
+  course_name?: string;
   issue_date: number;
+  enable_project?: boolean;
+  project_name?: string;
   organizations?: ICertificateOrganization[];
   signatures?: ISignature[];
 }

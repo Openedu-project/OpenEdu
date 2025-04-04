@@ -109,7 +109,7 @@ export const ExportPDFButton = ({ fileName, template, data, onClick, ...props }:
       a.href = url;
       const name =
         data?.learner_name && data?.course_name && data?.issue_date
-          ? `${template.name}-${data.learner_name}-${
+          ? `${template.name ?? 'Certificate'}-${data.learner_name}-${
               data.course_name
             }-${formatDate(new Date(data.issue_date).getTime())}`
           : template.name;

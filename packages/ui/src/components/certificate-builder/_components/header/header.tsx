@@ -24,8 +24,11 @@ export const Header = () => {
       await updateCertHtmlTemplateService(undefined, {
         payload: {
           ...certificate,
-          name: template.name,
-          template,
+          name: template.name ?? certificate?.name ?? '',
+          template: {
+            ...template,
+            name: template.name ?? certificate?.name ?? '',
+          },
         },
       });
       await globalMutate((key: string) => !!key?.includes(`${API_ENDPOINT.HTML_TEMPLATES}?`), undefined, {
@@ -47,7 +50,7 @@ export const Header = () => {
           <ArrowLeft className="h-5 w-5" />
         </Link>
         <Input
-          value={template.name ?? ''}
+          value={template.name ?? certificate?.name ?? ''}
           onChange={e => updateTemplate({ ...template, name: e.target.value })}
           className="h-8 w-full"
           placeholder={tCertificate('builder.name.placeholder')}
