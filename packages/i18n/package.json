@@ -14,7 +14,6 @@
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "peerDependencies": {
-    "@oe/api": "workspace:*",
     "next": "^15.2.4",
     "next-intl": "4.0.2"
   },

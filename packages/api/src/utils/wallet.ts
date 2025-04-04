@@ -8,7 +8,6 @@ import { UsdtIcon } from '@oe/assets/icons/currencies/usdt';
 import { VndIcon } from '@oe/assets/icons/currencies/vnd';
 import { DEFAULT_CURRENCY } from '@oe/core/utils/currency';
 import { languageWithCurrency } from '@oe/i18n/languages-currency';
-import type { SelectboxOption } from '@oe/ui/components/selectbox';
 import type { IExchangeRates } from '#types/exchange-rates';
 import type { TTokenContracts } from '#types/wallet';
 
@@ -75,13 +74,13 @@ export const CRYPTO_CURRENCIES = {
   },
 };
 
-export const NETWORK_OPTIONS: SelectboxOption[] = [
+export const NETWORK_OPTIONS = [
   { value: 'NEAR', label: 'NEAR', id: 'NEAR' },
   { value: 'AVAIL', label: 'AVAIL', id: 'AVAIL' },
   { value: 'ETH', label: 'ETH', id: 'ETH' },
 ];
 
-export const TOKEN_OPTIONS: Record<string, SelectboxOption[]> = {
+export const TOKEN_OPTIONS: Record<string, { value: string; label: string; id: string }[]> = {
   NEAR: [
     { value: 'NEAR', label: 'NEAR', id: 'NEAR' },
     { value: 'USDT', label: 'USDT', id: 'USDT' },

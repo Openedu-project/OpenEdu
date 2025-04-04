@@ -132,7 +132,6 @@
     "@oe/api": "workspace:*",
     "@oe/assets": "workspace:*",
     "@oe/core": "workspace:*",
-    "@oe/dashboard": "workspace:*",
     "@oe/i18n": "workspace:*",
     "lucide-react": "0.487.0",
     "next": "^15.2.4",
