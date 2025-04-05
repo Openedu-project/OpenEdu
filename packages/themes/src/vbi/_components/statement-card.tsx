@@ -10,7 +10,7 @@ const StatementCard = ({ icon, title, content }: StatementCardProps) => {
   const Icon = icon === 'star' ? Star : Heart;
 
   return (
-    <div className="rounded-2xl bg-background p-8 shadow-sm">
+    <div className="rounded-2xl bg-background p-8 shadow-xs">
       {/* Icon */}
       <div className="mb-6 h-14 w-14 rounded-2xl bg-primary p-4">
         <Icon className="h-full w-full text-white" strokeWidth={2} />

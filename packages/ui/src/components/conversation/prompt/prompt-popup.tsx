@@ -20,7 +20,7 @@ export function PromptPopup({
   const tGeneral = useTranslations('general');
   return (
     <Modal
-      title={tAI('allPromptingWithName', { name: name })}
+      title={tAI('allPromptingWithName', { name: name ?? '' })}
       hasCancelButton={false}
       hasCloseIcon
       className="md:max-w-[80dvw] xl:max-w-[60dvw]"

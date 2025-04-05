@@ -112,7 +112,7 @@ export default function CourseDetailHistoryPage() {
         </div>
 
         {/* Content: history table */}
-        <div className="flex h-[calc(100%-76px)] w-full flex-1 justify-center overflow-hidden rounded">
+        <div className="flex h-[calc(100%-76px)] w-full flex-1 justify-center overflow-hidden rounded-sm">
           {/* <div className="relative mx-auto flex w-full gap-2"> */}
           <div
             className={cn(

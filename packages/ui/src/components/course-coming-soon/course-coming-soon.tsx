@@ -6,7 +6,7 @@ const CourseComingSoon = () => {
 
   return (
     <div className="flex flex-col items-center justify-center p-4">
-      <Card className="w-full max-w-md bg-white/90 backdrop-blur-sm">
+      <Card className="w-full max-w-md bg-white/90 backdrop-blur-xs">
         <CardHeader>
           <CardTitle className="text-center font-bold text-3xl text-gray-800">{tComing('title')}</CardTitle>
         </CardHeader>

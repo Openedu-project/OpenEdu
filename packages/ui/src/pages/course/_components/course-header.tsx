@@ -59,12 +59,12 @@ export default function CourseHeader() {
         {/* {courseOutline?.is_wishlist ? (
             <Heart
               className="h-3 w-3 md:h-4 md:w-4"
-              color="hsl(var(--primary))"
+              color="var(--primary)"
             />
           ) : (
             <HeartOutline
               className="h-3 w-3 md:h-4 md:w-4"
-              color="hsl(var(--foreground))"
+              color="var(--foreground)"
             />
           )} */}
         {/* </WishlistButton> */}

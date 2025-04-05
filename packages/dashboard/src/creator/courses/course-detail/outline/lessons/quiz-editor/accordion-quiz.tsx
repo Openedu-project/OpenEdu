@@ -71,7 +71,7 @@ export function AccordionQuiz({ quizzes, order }: AccordionQuizProps) {
                     <AccordionItem
                       key={quiz.id}
                       value={quiz.id}
-                      className="flex flex-col gap-2 rounded-lg border bg-background p-2 shadow-sm"
+                      className="flex flex-col gap-2 rounded-lg border bg-background p-2 shadow-xs"
                     >
                       <div className="flex items-center gap-2">
                         <DndSortableDragButton />

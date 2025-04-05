@@ -88,7 +88,7 @@ export default function CourseDetailCertificatePage() {
     >
       {({ loading, form }) => (
         <>
-          <div className="flex items-center justify-between rounded-lg bg-background px-4 py-2 shadow-sm">
+          <div className="flex items-center justify-between rounded-lg bg-background px-4 py-2 shadow-xs">
             <div className="flex items-center gap-2">
               <FormFieldWithLabel
                 name="has_certificate"
@@ -109,7 +109,7 @@ export default function CourseDetailCertificatePage() {
           <div className="scrollbar flex h-full flex-col gap-4 overflow-auto">
             {form.watch('has_certificate') && (
               <>
-                <div className="rounded-lg bg-background p-4 shadow-sm">
+                <div className="rounded-lg bg-background p-4 shadow-xs">
                   <div className="flex flex-col gap-4">
                     <div className="space-y-2">
                       <span className="font-medium text-lg">{tCertificate('selectTemplate.title')}</span>

@@ -63,7 +63,7 @@ const ActionDropdown: React.FC<ActionDropdownProps> = ({ className, actions, ite
             }) as string
           }
           variant="ghost"
-          className="h-auto w-full justify-start gap-2 rounded-md p-1 text-sm outline-none hover:bg-slate-50 focus:bg-accent focus:text-accent-foreground"
+          className="h-auto w-full justify-start gap-2 rounded-md p-1 text-sm outline-hidden hover:bg-slate-50 focus:bg-accent focus:text-accent-foreground"
         >
           <Trash2 className="h-4 w-4" />
           <span className="mcaption-regular14">{tGeneral('delete')}</span>
@@ -76,7 +76,7 @@ const ActionDropdown: React.FC<ActionDropdownProps> = ({ className, actions, ite
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
-      <DropdownMenuTrigger id={item.id} className={cn('outline-none', className)}>
+      <DropdownMenuTrigger id={item.id} className={cn('outline-hidden', className)}>
         <CircleEllipsis className={cn('h-4 w-4 text-slate-600', 'transition-transform duration-200')} />
       </DropdownMenuTrigger>
 

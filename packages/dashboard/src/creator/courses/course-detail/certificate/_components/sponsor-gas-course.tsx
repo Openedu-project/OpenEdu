@@ -33,7 +33,7 @@ export default function SponsorGasCourseModal({ open, currency, onClose, handleS
     >
       <div className="space-y-2">
         <span className="font-medium text-sm">Currency</span>
-        <div className="h-10 rounded border px-3 py-2">{currency}</div>
+        <div className="h-10 rounded-sm border px-3 py-2">{currency}</div>
       </div>
 
       <FormFieldWithLabel

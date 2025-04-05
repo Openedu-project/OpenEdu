@@ -4,7 +4,7 @@ export default function Collaborators({
   width = 16,
   height = 16,
   className = '',
-  color = 'hsl(var(--foreground))',
+  color = 'var(--foreground)',
 }: ISvgProps) {
   return (
     <svg

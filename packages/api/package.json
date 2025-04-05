@@ -28,10 +28,9 @@
   "peerDependencies": {
     "@oe/core": "workspace:*",
     "@oe/i18n": "workspace:*",
-    "@oe/ui": "workspace:*",
     "@oe/assets": "workspace:*",
-    "next": "15.1.4",
-    "zod": "^3.24.1"
+    "next": "^15.2.4",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@oe/config": "workspace:*",

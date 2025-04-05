@@ -32,7 +32,7 @@ export default function MintCertButton({ certificate, onClickMintCert, disabled,
     <>
       {certificate?.nft_network || certificate?.nft_token_id || certificate?.nft_tx_hash ? (
         <Button variant="outline" className="border-primary text-primary hover:text-primary" onClick={handleViewNFT}>
-          <Eye color="hsl(var(--primary))" className="mr-3" />
+          <Eye color="var(--primary)" className="mr-3" />
           {t('viewInWallet')}
         </Button>
       ) : (

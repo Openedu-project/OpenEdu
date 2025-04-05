@@ -73,11 +73,11 @@ export default function CertificateDetail({ certificate, children }: ICertDetail
 
         <div className="flex flex-col gap-3 sm:flex-row">
           <Button variant="default" className="!mbutton-bold16 w-full sm:w-1/2" onClick={handleOpenShareModal}>
-            <ShareSocial color="hsl(var(--primary-foreground))" className="mr-3" />
+            <ShareSocial color="var(--primary-foreground)" className="mr-3" />
             {tProfile('shareCertificate')}
           </Button>
           <Button variant="default" className="!mbutton-bold16 w-full sm:w-1/2" onClick={handleDownload}>
-            <ArrowDownCircle color="hsl(var(--primary-foreground))" className="mr-3" />
+            <ArrowDownCircle color="var(--primary-foreground)" className="mr-3" />
             {isLoading ? t('attachedDocs.downloading') : tProfile('downloadCertificate')}
           </Button>
         </div>

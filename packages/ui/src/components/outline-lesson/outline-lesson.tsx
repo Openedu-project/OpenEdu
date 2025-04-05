@@ -110,7 +110,7 @@ export const OutlineLesson = ({
             completedPercentage ? (
               <CircleProgressBar progress={completedPercentage} size="sm" />
             ) : (
-              <ArrowRight2 width={16} height={16} color="hsl(var(--foreground))" />
+              <ArrowRight2 width={16} height={16} color="var(--foreground)" />
             )
           ) : (
             <Lock size={16} />

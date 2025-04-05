@@ -38,7 +38,7 @@ const PriceCard: React.FC<PriceCardProps> = ({ banner, price, features, tag, but
         <div className="space-y-2 md:space-y-3">
           {features?.map((feature, index) => (
             <div key={index?.toString()} className="flex items-center text-foreground/60 text-xs md:text-md">
-              <CheckIcon className="mr-1.5 h-3 w-3 flex-shrink-0 text-primary/60 sm:mr-2 md:h-4 md:w-4" />
+              <CheckIcon className="mr-1.5 h-3 w-3 shrink-0 text-primary/60 sm:mr-2 md:h-4 md:w-4" />
               <span>{feature}</span>
             </div>
           ))}

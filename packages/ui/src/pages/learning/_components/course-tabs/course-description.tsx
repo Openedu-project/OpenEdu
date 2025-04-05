@@ -2,7 +2,7 @@
 
 import type { ICourseOutline } from '@oe/api/types/course/course';
 
-import CoursePrice from '@oe/dashboard/creator/courses/course-table/course-price';
+import { CoursePrice } from '#components/course-card';
 import { ExpandableText } from '#components/expandable-text';
 import { LastUpdated } from '../../../_components/last-updated';
 import { CourseCreator } from '../../../course/_components/course-creator';

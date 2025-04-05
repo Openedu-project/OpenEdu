@@ -4,7 +4,7 @@ export default function SentSquare({
   width = 24,
   height = 24,
   className = '',
-  color = 'hsl(var(--muted-foreground))',
+  color = 'var(--muted-foreground)',
 }: ISvgProps) {
   return (
     <svg

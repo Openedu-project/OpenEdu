@@ -27,7 +27,7 @@ export default function Category() {
           <span className="text-muted-foreground text-xs">{tCourse('information.sections.category.subtitle')}</span>
         </div>
       }
-      className="rounded-lg bg-background p-4 shadow-sm"
+      className="rounded-lg bg-background p-4 shadow-xs"
       labelClassName="mb-4 text-lg"
     >
       <SelectTree<ICategoryTree, NonNullable<IBlogFormType['category_ids']>[number]>

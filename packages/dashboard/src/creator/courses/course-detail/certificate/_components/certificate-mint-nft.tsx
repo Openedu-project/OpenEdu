@@ -32,7 +32,7 @@ export function CertificateMintNFT({
   const sponsor_balance = useMemo(() => dataEstimatedFee?.sponsor_balance ?? 0, [dataEstimatedFee]);
   const showWarning = useMemo(
     () => form?.watch('props.mint_cert_nft_settings.gas_fee_payer') === 'creator' && estimated_fee > sponsor_balance,
-    [form]
+    [form, estimated_fee, sponsor_balance]
   );
 
   const handleSubmitTransaction = async (data: IAmountSponsor) => {
@@ -62,7 +62,7 @@ export function CertificateMintNFT({
   };
 
   return (
-    <div className="rounded-lg bg-background p-4 shadow-sm">
+    <div className="rounded-lg bg-background p-4 shadow-xs">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="mb-0 font-medium text-lg">{tCertificate('mintNFT.title')}</h2>
         <FormFieldWithLabel
@@ -114,10 +114,12 @@ export function CertificateMintNFT({
             >
               <div className="flex flex-col gap-2">
                 <span className="mbutton-semibold14 text-foreground">
-                  {tCertificate('mintNFT.estimatedGasFee')}: {estimated_fee} {dataEstimatedFee?.currency}
+                  {tCertificate('mintNFT.estimatedGasFee')}: {estimated_fee}
+                  {dataEstimatedFee?.currency}
                 </span>
                 <span className="mbutton-semibold14 text-foreground">
-                  {tCertificate('mintNFT.sponsorBalance')}: {sponsor_balance} {dataEstimatedFee?.currency}
+                  {tCertificate('mintNFT.sponsorBalance')}: {sponsor_balance}
+                  {dataEstimatedFee?.currency}
                 </span>
 
                 {showWarning && tCertificate('mintNFT.insufficientBalance')}

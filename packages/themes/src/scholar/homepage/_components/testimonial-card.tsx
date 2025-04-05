@@ -39,7 +39,7 @@ const TestimonialCard = ({ quote, rating = 0, avatar, name, position }: Testimon
   };
 
   return (
-    <Card className="mx-auto max-w-md overflow-visible bg-card shadow-sm">
+    <Card className="mx-auto max-w-md overflow-visible bg-card shadow-xs">
       <CardContent className="relative p-8 text-center">
         {/* Quote Icon */}
         <div className="mt-4 flex w-full justify-center">

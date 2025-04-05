@@ -70,7 +70,7 @@ export function MessageInputAction({
     [form, status, loading]
   );
 
-  const deepResearch = AI_SIDEBAR('hsl(var(--foreground))', 16).find(agent => agent.lableKey === 'deepResearch');
+  const deepResearch = AI_SIDEBAR('var(--foreground)', 16).find(agent => agent.lableKey === 'deepResearch');
 
   return (
     <div className="mt-2 flex w-full flex-wrap justify-between gap-2">
@@ -78,7 +78,9 @@ export function MessageInputAction({
         <InputFile />
         <Button variant="outline" className="!p-2 h-auto rounded-full" disabled>
           {deepResearch?.icon}
-          <span className="mcaption-semibold12 ml-1 hidden md:inline-block">{tAI(deepResearch?.lableKey)}</span>
+          <span className="mcaption-semibold12 ml-1 hidden md:inline-block">
+            {tAI(deepResearch?.lableKey as string)}
+          </span>
         </Button>
         <Button
           variant="outline"
@@ -91,7 +93,7 @@ export function MessageInputAction({
             setThinking(!thinking);
           }}
         >
-          <LampCharge color={`hsl(var(${thinking ? '--primary' : '--foreground'}))`} />
+          <LampCharge color={`var(${thinking ? '--primary' : '--foreground'})`} />
           <span className="mcaption-semibold12 ml-1 hidden md:inline-block">{tAI('thinking')}</span>
         </Button>
       </div>
@@ -111,7 +113,7 @@ export function MessageInputAction({
               <LoaderCircle className="animate-spin text-primary-foreground" />
             ) : (
               <Pause
-                fill="hsl(var(--primary-foreground))"
+                fill="var(--primary-foreground)"
                 className="h-6 w-6 text-primary group-hover/btn:text-primary-foreground"
               />
             )}

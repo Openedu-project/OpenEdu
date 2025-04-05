@@ -35,7 +35,7 @@ export const CircleProgressBar = ({ progress = 0, size = 'md' }: ProgressBarProp
       <div
         className={cn('grid items-center justify-items-center rounded-full border-primary bg-white', container, border)}
       >
-        <Check color="hsl(var(--primary))" className={cn(checkIcon)} />
+        <Check color="var(--primary)" className={cn(checkIcon)} />
       </div>
     );
   }
@@ -52,7 +52,7 @@ export const CircleProgressBar = ({ progress = 0, size = 'md' }: ProgressBarProp
       )}
       style={{
         background: `conic-gradient(
-          hsl(var(--primary)) 0% ${progressPercent}%,
+          var(--primary) 0% ${progressPercent}%,
           #DBDBDB ${progressPercent}% 100%
         )`,
       }}

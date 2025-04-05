@@ -4,8 +4,8 @@ export default function StarHalf({
   width = 12,
   height = 13,
   className = '',
-  color = 'hsl(var(--warning))',
-  outlineColor = 'hsl(var(--warning-foreground))',
+  color = 'var(--warning)',
+  outlineColor = 'var(--warning-foreground)',
 }: ISvgProps) {
   return (
     <svg

@@ -59,7 +59,7 @@ export const UploadFileItem = (props: UploadFileItemProps) => {
             <input
               value={editName}
               onChange={e => setEditName(e.target.value)}
-              className="h-5 border-primary border-b text-base outline-none"
+              className="h-5 border-primary border-b text-base outline-hidden"
             />
             <Button type="button" variant="ghost" className="h-6 w-6 p-0" onClick={handleNameChange}>
               <Check className="h-4 w-4" />
@@ -210,7 +210,7 @@ export const UploadFileItem = (props: UploadFileItemProps) => {
           ? t('fileTooSmall', { size: formatSize(minSizeBytes) })
           : file.error === 'fileTooBig'
             ? t('fileTooBig', { size: formatSize(maxSizeBytes) })
-            : tErrors(file.error);
+            : tErrors(file.error as string);
       return (
         <div
           className={cn(
@@ -263,7 +263,7 @@ export const UploadFileItem = (props: UploadFileItemProps) => {
       return null;
     }
 
-    const containerClasses = cn('absolute inset-0 hidden group-hover:block', 'bg-foreground/30 backdrop-blur-sm');
+    const containerClasses = cn('absolute inset-0 hidden group-hover:block', 'bg-foreground/30 backdrop-blur-xs');
 
     const buttonClasses = cn(
       'flex items-center justify-center gap-1',

@@ -1,7 +1,6 @@
-import type { FileType } from '@oe/ui/components/uploader';
+import type { IFileResponse } from './file';
 import type { TQuestionType } from './form';
 import type { IUser } from './user';
-
 export interface IFormUserResponseAnswerItem {
   id: string;
   create_at: number;
@@ -13,7 +12,7 @@ export interface IFormUserResponseAnswerItem {
   question_uid: string;
   sub_question_id: null;
   answer_text: string;
-  files?: FileType[];
+  files?: IFileResponse[];
   key: string;
   question_type: TQuestionType;
   // New field

@@ -16,7 +16,7 @@ export function CourseThumbnail({ courseData }: CourseThumbnailProps) {
   const visibleCategories = categories.slice(0, 2);
 
   return (
-    <div className="relative w-full shrink-0 rounded-sm bg-background/50">
+    <div className="relative w-full shrink-0 rounded-xs bg-background/50">
       <Image
         src={
           courseData?.thumbnail?.url && courseData?.thumbnail?.mime?.includes('image')

@@ -20,7 +20,7 @@ interface CourseTimelineProps {
 
 export function CourseTimelineItem({ number, sections, description, isActive, isCompleted }: CourseTimelineItemProps) {
   return (
-    <div className="flex w-full flex-shrink-0 flex-col items-center sm:w-auto">
+    <div className="flex w-full shrink-0 flex-col items-center sm:w-auto">
       <div className="relative h-8 w-8">
         <div
           className={`flex h-8 w-8 items-center justify-center rounded-full border ${
@@ -50,7 +50,7 @@ export function CourseTimelineItem({ number, sections, description, isActive, is
 
 export function CourseTimeline({ items, currentStep }: CourseTimelineProps) {
   return (
-    <div className="mx-auto w-full rounded-lg border bg-white p-4 shadow-sm sm:p-6">
+    <div className="mx-auto w-full rounded-lg border bg-white p-4 shadow-xs sm:p-6">
       <div className="flex flex-col items-center gap-8 sm:flex-row sm:items-start sm:justify-between sm:gap-0">
         {items.map((item, index) => (
           <React.Fragment key={item.description}>

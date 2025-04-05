@@ -227,7 +227,7 @@ export function AutocompeteMultiple<T extends OptionType | string>({
             <Input
               ref={inputRef}
               wrapperClassName="w-auto"
-              className="h-auto w-auto min-w-20 flex-1 border-none p-0 outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+              className="h-auto w-auto min-w-20 flex-1 border-none p-0 outline-hidden focus-visible:ring-0 focus-visible:ring-offset-0"
               placeholder={placeholder ?? `${t('search')}...`}
               onChange={e => handleSearch(e.target.value)}
               value={searchValue}

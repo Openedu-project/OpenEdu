@@ -48,7 +48,7 @@ const DiscussItem = ({
         {isShowTime && <p className="text-foreground/80 text-xs">{formatTimeHourMinute(discuss.send_date)}</p>}
       </div>
 
-      <p className="rounded-sm bg-muted/80 p-4 text-sm">{discuss.content}</p>
+      <p className="rounded-xs bg-muted/80 p-4 text-sm">{discuss.content}</p>
     </Card>
   );
 };

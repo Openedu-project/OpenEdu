@@ -8,6 +8,6 @@
     },
     "types": ["node", "@oe/types/global.d.ts", "next/image-types/global"]
   },
-  "include": ["next-env.d.ts", "src", ".next/types/**/*.ts", "tailwind.config.ts"],
+  "include": ["next-env.d.ts", "src", ".next/types/**/*.ts"],
   "exclude": ["node_modules", ".next"]
 }

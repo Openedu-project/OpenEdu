@@ -86,7 +86,7 @@ interface WishlistButtonProps extends ButtonProps {
 
 // const WishlistIcon = ({ isBookmark }: { isBookmark: boolean }) =>
 //   isBookmark ? (
-//     <Heart width={18} height={18} color="hsl(var(--primary))" />
+//     <Heart width={18} height={18} color="var(--primary)" />
 //   ) : (
 //     <HeartOutline width={18} height={18} />
 //   );
@@ -167,11 +167,7 @@ export default function WishlistButton({
       disabled={isBookmarking}
       {...props}
     >
-      {isWishlist ? (
-        <Heart width={18} height={18} color="hsl(var(--primary))" />
-      ) : (
-        <HeartOutline width={18} height={18} />
-      )}
+      {isWishlist ? <Heart width={18} height={18} color="var(--primary)" /> : <HeartOutline width={18} height={18} />}
     </Button>
   );
 }

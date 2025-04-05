@@ -39,10 +39,6 @@ export function Editor({ children, containerProps, onSelect, ref, ...rest }: Edi
     editorState.update({ $selection: getSelectedNode() });
   }
 
-  function setContentEditableRef($el: HTMLElement) {
-    editorState.update({ $el });
-  }
-
   // if (editorState.htmlMode) {
   //   return (
   //     <div className="rsw-editor" {...containerProps}>
@@ -57,9 +53,8 @@ export function Editor({ children, containerProps, onSelect, ref, ...rest }: Edi
       {children}
       <ContentEditable
         {...rest}
-        ref={setContentEditableRef}
         onSelect={onTextSelect}
-        className={cn('flex-1 p-2 focus:outline-none', rest.className)}
+        className={cn('flex-1 p-2 focus:outline-hidden', rest.className)}
       />
     </div>
   );

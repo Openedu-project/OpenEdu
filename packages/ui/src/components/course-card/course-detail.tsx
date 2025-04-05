@@ -2,11 +2,11 @@
 
 import type { ICourse } from '@oe/api/types/course/course';
 import SendSquare from '@oe/assets/icons/send-square';
-import CoursePrice from '@oe/dashboard/creator/courses/course-table/course-price';
 import { RatingStars } from '@oe/ui/components/rating-stars';
 import { Separator } from '@oe/ui/shadcn/separator';
 import { Layers, UsersRound } from 'lucide-react';
 import type { ReactNode } from 'react';
+import CoursePrice from './course-price';
 
 interface CourseDetailsProps {
   courseData: ICourse;

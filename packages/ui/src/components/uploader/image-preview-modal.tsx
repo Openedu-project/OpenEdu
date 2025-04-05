@@ -42,7 +42,7 @@ export const ImagePreviewModal = ({ images, initialIndex = 0, isOpen, onClose }:
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogOverlay className="bg-background/80 backdrop-blur-sm" />
+      <DialogOverlay className="bg-background/80 backdrop-blur-xs" />
       <DialogContent
         className="max-w-[90vw] border-none bg-transparent p-0 shadow-none md:max-w-3xl"
         onPointerDownOutside={onClose}

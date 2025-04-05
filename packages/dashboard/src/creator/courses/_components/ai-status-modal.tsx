@@ -33,7 +33,7 @@ export default function AIStatusModal({
     if (['success', 'generated', 'completed'].includes(status)) {
       return (
         <>
-          <CircleCheckBig className="h-[80px] w-[80px]" color="hsl(var(--positive-500))" />
+          <CircleCheckBig className="h-[80px] w-[80px]" color="var(--positive-500)" />
           {content?.success ?? <p className="mcaption-regular16 text-foreground">{t('success')}</p>}
         </>
       );
@@ -41,7 +41,7 @@ export default function AIStatusModal({
     if (status === 'failed') {
       return (
         <>
-          <TriangleAlert size={80} color="hsl(var(--negative-600))" />
+          <TriangleAlert size={80} color="var(--negative-600)" />
           {content?.failed ?? <p className="mcaption-regular16 text-foreground">{t('failLoading')}</p>}
         </>
       );
@@ -49,7 +49,7 @@ export default function AIStatusModal({
 
     return (
       <>
-        <Loader2 className="h-[80px] w-[80px] animate-spin" color="hsl(var(--primary))" />
+        <Loader2 className="h-[80px] w-[80px] animate-spin" color="var(--primary)" />
         {content?.loading ?? <p className="mcaption-regular16 text-foreground">{t('generating')}</p>}
       </>
     );

@@ -236,7 +236,7 @@ export default function KanbanDemo() {
               </>
             ),
             renderChildItem: ({ item }) => (
-              <div className="group/field flex items-center justify-between rounded-lg shadow-sm">
+              <div className="group/field flex items-center justify-between rounded-lg shadow-xs">
                 <div className="flex items-center gap-2">
                   <input type="checkbox" checked={item.original.completed} readOnly />
                   <span>{item.original.title}</span>
@@ -267,7 +267,7 @@ export default function KanbanDemo() {
           renderConfig={{
             renderItem: ({ item, descendants, dragOverlay, onAddChild, onRemoveItem, onUpdateItem }) => {
               return (
-                <div className={cn('w-full gap-2 bg-background p-2', dragOverlay && 'bg-background shadow')}>
+                <div className={cn('w-full gap-2 bg-background p-2', dragOverlay && 'bg-background shadow-sm')}>
                   <DndSortableDragButton className="group-hover/field:opacity-100" />
                   <DndSortableCollapseButton />
                   <span>{item?.original.label}</span>
@@ -319,7 +319,7 @@ export default function KanbanDemo() {
               renderItem: ({ item }) => (
                 <AccordionItem value={item?.original.id}>
                   <AccordionTrigger asChild>
-                    <div className="flex items-center gap-2 rounded bg-background p-4 shadow">
+                    <div className="flex items-center gap-2 rounded bg-background p-4 shadow-sm">
                       <DndSortableDragButton />
                       <span>{item?.original.label}</span>
                     </div>
@@ -381,7 +381,7 @@ export default function KanbanDemo() {
               </div>
             ),
             renderChildItem: ({ item, onRemoveItem }) => (
-              <div className="group/field mb-2 flex items-center justify-between rounded bg-white p-3 shadow-sm">
+              <div className="group/field mb-2 flex items-center justify-between rounded bg-white p-3 shadow-xs">
                 <span>{item.original.title}</span>
                 <DndSortableDragButtonChildItem className="opacity-0" />
                 <DeleteButton

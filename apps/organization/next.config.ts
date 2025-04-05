@@ -1,5 +1,15 @@
+import withBundleAnalyzer from '@next/bundle-analyzer';
 import { getNextConfig } from '@oe/config/next';
+import createNextIntlPlugin from 'next-intl/plugin';
 import type { NextConfig } from 'next/types';
+
+const bundleAnalyzer = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+export const withNextIntl = createNextIntlPlugin('./src/config/i18n-request-config.ts');
+
+// const { NEXT_PUBLIC_APP_ADMIN_ORIGIN } = process.env;
 
 const nextConfig: NextConfig = {
   // async rewrites() {
@@ -20,4 +30,4 @@ const nextConfig: NextConfig = {
   // },
 };
 
-export default getNextConfig(nextConfig);
+export default bundleAnalyzer(withNextIntl(getNextConfig(nextConfig)));

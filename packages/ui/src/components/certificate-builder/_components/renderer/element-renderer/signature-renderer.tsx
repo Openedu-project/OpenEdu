@@ -75,7 +75,7 @@ export const SignatureRenderer = ({
         {signatureContent?.position ??
           (showPlaceholder &&
             tCertificate('builder.elements.signature.placeholder', {
-              organizationName: window.location.hostname?.split('.')[0],
+              organizationName: window.location.hostname?.split('.')[0] as string,
             }))}
       </p>
     </div>

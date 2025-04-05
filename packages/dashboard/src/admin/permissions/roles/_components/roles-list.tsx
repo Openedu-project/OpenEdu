@@ -303,7 +303,7 @@ export default function RolesList() {
       </div>
       <div className="scrollbar overflow-auto">
         <Table>
-          <TableHeader className="sticky top-0 z-10 shadow">
+          <TableHeader className="sticky top-0 z-10 shadow-sm">
             <TableRow>
               <TableHead className="min-w-[250px] bg-muted">
                 <div className="flex items-center">

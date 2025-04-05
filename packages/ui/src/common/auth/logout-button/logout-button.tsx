@@ -50,7 +50,7 @@ export function LogoutButton() {
     <Button
       type="submit"
       variant="ghost"
-      className="h-8 w-full justify-start rounded-sm px-2 py-1.5"
+      className="h-8 w-full justify-start rounded-xs px-2 py-1.5"
       onClick={handleLogout}
     >
       <LogOut className="mr-2 h-4 w-4" />

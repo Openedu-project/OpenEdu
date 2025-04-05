@@ -21,8 +21,8 @@ StatItem.displayName = 'StatItem';
 
 const FeatureItem = ({ title, description }: FeatureItemProps) => (
   <div className="flex gap-4">
-    <div className="mt-1 flex-shrink-0">
-      <div className="flex h-6 w-6 items-center justify-center rounded-sm bg-primary text-background">
+    <div className="mt-1 shrink-0">
+      <div className="flex h-6 w-6 items-center justify-center rounded-xs bg-primary text-background">
         <Plus className="h-4 w-4" />
       </div>
     </div>

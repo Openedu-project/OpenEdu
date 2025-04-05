@@ -12,6 +12,7 @@ export type CalendarProps = ComponentProps<typeof DayPicker>;
 function Calendar({ className, classNames, showOutsideDays = true, ...props }: CalendarProps) {
   return (
     <DayPicker
+      data-slot="calendar"
       showOutsideDays={showOutsideDays}
       className={cn('p-3', className)}
       classNames={{
@@ -61,6 +62,5 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
     />
   );
 }
-Calendar.displayName = 'Calendar';
 
 export { Calendar };
