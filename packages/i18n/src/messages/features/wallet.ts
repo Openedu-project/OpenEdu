@@ -173,9 +173,20 @@ export const walletMessages = {
       addNewBankAccount: 'Add New Bank Account',
       form: {
         errors: {
-          bankNameRequired: 'Bank name is required and must be less than 100 characters',
-          accountNameRequired: 'Account name is required and must be less than 100 characters',
-          accountNumberRequired: 'Account number is required, must contain only numbers, and be between 5 to 20 digits',
+          bankName: {
+            required: 'Bank name is required',
+            invalid: 'Please enter a valid bank name (less than 100 characters)',
+          },
+          accountName: {
+            required: 'Account name is required',
+            invalid: 'Please enter a valid account name (less than 100 characters)',
+          },
+          accountNumber: {
+            required: 'Account number is required',
+            invalid: 'Account number must be between 5-20 digits',
+            pattern: 'Account number must contain only numbers',
+            duplicate: 'This account number already exists',
+          },
         },
         formLabels: {
           bankName: 'Bank Name',
