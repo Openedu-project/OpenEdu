@@ -5,6 +5,7 @@ import { blogFormMessages } from './blog-form';
 import { certificateMessages } from './certificate';
 import { courseComingSoonMessages } from './course-coming-soon';
 import { courseTimelineMessages } from './course-timeline';
+import { courseTriggerModalMessages } from './course-trigger-modal';
 import { dateTimePickerMessages } from './date-time-picker';
 import { dialogMessages } from './dialog';
 import { footerMessages } from './footer';
@@ -46,4 +47,5 @@ export const componentMessages = {
   ...AIStatusMessages,
   ...confirmApproveMessages,
   ...setupCategoryTreeMessages,
+  ...courseTriggerModalMessages,
 };

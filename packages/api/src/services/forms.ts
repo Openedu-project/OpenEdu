@@ -150,10 +150,12 @@ export const getFormUserResponsesService = async (
 export const postSubmitForm = async (
   endpoint: string | null | undefined,
   {
+    formId,
     queryParams,
     payload,
     init,
   }: {
+    formId: string;
     queryParams?: Record<string, string | boolean | number>;
     payload: IRegisterOrgRequest;
     init?: RequestInit;
@@ -163,7 +165,7 @@ export const postSubmitForm = async (
     endpoint ??
       buildUrl({
         endpoint: API_ENDPOINT.FORMS_ID_SUBMIT,
-        params: { id: payload?.form_relation_id },
+        params: { id: formId },
         queryParams,
       }),
     payload,

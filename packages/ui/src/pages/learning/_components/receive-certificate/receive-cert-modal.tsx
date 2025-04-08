@@ -26,6 +26,7 @@ const ReceiveCertificateModal = ({ certificate }: IProps) => {
   const { dataMe } = useGetMe();
 
   const [learnerName, setLearnerName] = useState<string | undefined>();
+  const [projectName, setProjectName] = useState<string | undefined>();
   const [certificateState, setCertificateState] = useState<ICertificate>(certificate);
   const [step, setStep] = useState<number>(1);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -49,6 +50,14 @@ const ReceiveCertificateModal = ({ certificate }: IProps) => {
     setCertificateState(prev => ({
       ...prev,
       learner_name: value,
+    }));
+  };
+
+  const handleProjectNameChange = (value: string) => {
+    setProjectName(value);
+    setCertificateState(prev => ({
+      ...prev,
+      project_name: value,
     }));
   };
 
@@ -101,7 +110,23 @@ const ReceiveCertificateModal = ({ certificate }: IProps) => {
         onChange={e => handleLearnerNameChange(e.currentTarget.value)}
         className="mb-4"
       />
-      <Label className="mb-2 block text-gray-600 text-sm">{tReceiveCertModal('reviewYourName')}</Label>
+      {/* <Label className="mb-2 block text-gray-600 text-sm">
+        {tReceiveCertModal("reviewYourName")}
+      </Label> */}
+
+      {certificate?.enable_project && (
+        <>
+          <Label htmlFor="projectName" className="mb-2 block">
+            {tReceiveCertModal('projectName')}
+          </Label>
+          <Input
+            id="projectName"
+            value={projectName}
+            onChange={e => handleProjectNameChange(e.currentTarget.value)}
+            className="mb-4"
+          />
+        </>
+      )}
     </div>
   );
 

@@ -39,6 +39,7 @@ export interface ICertificate extends ICertificateData {
   course_cuid: string;
   org_id: string;
   enable: boolean;
+  enable_project?: boolean;
   root_layer: IFounder;
   org_layer?: IFounder;
   template: ICertificateTemplate;
