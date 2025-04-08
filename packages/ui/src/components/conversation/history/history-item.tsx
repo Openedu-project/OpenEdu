@@ -124,12 +124,12 @@ export default function AIHistoryItem({ className, item, mutate, pageIndex, acti
   if (isEdit) {
     return (
       <div ref={editTitleRef} className={cn('flex items-center gap-2 rounded-lg px-2', className)}>
-        {agentData?.icon ?? <MessageCircle size={16} color="hsl(var(--warning-500))" />}
+        {agentData?.icon ?? <MessageCircle size={16} color="var(--warning-500)" />}
         <MessageInput
           initialMessage={item.context?.title}
           sendMessage={handleEdit}
           hiddenBtn
-          className="!rounded-lg min-h-6 w-full md:p-2"
+          className="!rounded-lg w-full md:min-h-6 md:p-2"
           type="ai_search"
           autoSend
         />
@@ -139,7 +139,7 @@ export default function AIHistoryItem({ className, item, mutate, pageIndex, acti
 
   return (
     <div className={cn('group/history flex items-center rounded-lg pl-2 hover:bg-primary/10', className)}>
-      {agentData?.icon ?? <MessageCircle size={16} color="hsl(var(--warning-500))" />}
+      {agentData?.icon ?? <MessageCircle size={16} color="var(--warning-500)" />}
       {activeId === item.id ? (
         <p className="mcaption-regular14 md:mcaption-regular16 !font-bold w-[calc(100%-20px)] truncate p-2 opacity-50">
           {item.context?.title}

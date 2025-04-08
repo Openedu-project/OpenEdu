@@ -112,8 +112,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
     if (e.key === 'Enter' && !e.shiftKey && (!isGenerating || autoSend)) {
       e.preventDefault();
       void form.trigger();
-      if (form.formState?.isValid) {
-        inputRef.current?.blur();
+      if (form.formState?.isValid || autoSend) {
         void form.handleSubmit(handleSubmit)();
         resetOnSuccess && form.reset();
       }
@@ -185,7 +184,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
         schema={chatSchema}
         onSubmit={handleSubmit}
         useFormProps={{ defaultValues }}
-        className="w-full"
+        className="w-full space-y-1"
       >
         {({ loading, form }) => {
           const filesData = form.watch('files');
