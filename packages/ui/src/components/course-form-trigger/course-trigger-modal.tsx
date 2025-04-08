@@ -9,6 +9,7 @@ import type { IAnswerParams } from '@oe/api/types/form';
 import { getCookieClient } from '@oe/core/utils/cookie';
 import { buildUrl } from '@oe/core/utils/url';
 import type { VariantProps } from 'class-variance-authority';
+import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 import { Link } from '#common/navigation';
 import { Modal } from '#components/modal';
@@ -36,10 +37,12 @@ type ButtonVariant = ButtonVariantProps['variant'];
 
 const CourseFormTriggerModal = ({ mutate }: IProps) => {
   // const CourseFormTriggerModal = ({ type = 'page', mutate }: IProps) => {
+  const t = useTranslations('courseTriggerModal');
   const { slug } = useParams();
 
   const { setOpenTriggerModal, modals } = useTriggerModalStore();
-  const { formData, currentConfirmationSettings, triggerType, currentFormId } = useLearnerFormTriggerStore();
+  const { formData, currentConfirmationSettings, triggerType, activedTriggerId, currentFormId } =
+    useLearnerFormTriggerStore();
 
   const accessTokenKey = process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY;
   const accessToken = getCookieClient(accessTokenKey);
@@ -96,30 +99,35 @@ const CourseFormTriggerModal = ({ mutate }: IProps) => {
 
   const handleSubmit = useCallback(
     async (values: IAnswerParams[]) => {
-      try {
-        const res = await postSubmitForm(undefined, {
-          payload: {
-            form_relation_id: currentFormId,
-            answers: values,
-          },
-          queryParams: { source },
-        });
+      if (currentFormId) {
+        try {
+          const res = await postSubmitForm(undefined, {
+            formId: currentFormId,
+            payload: {
+              form_relation_id: activedTriggerId,
+              answers: values,
+            },
+            queryParams: { source },
+          });
 
-        if (!res) {
-          toast.success('Failed to submit your answer!');
-          return;
+          if (!res) {
+            toast.success(t('submitError'));
+            return;
+          }
+
+          toast.success(t('submitSuccess'));
+
+          handleShowFormAfterSubmission(currentConfirmationSettings);
+
+          mutate?.();
+        } catch (error) {
+          console.error(error);
         }
-
-        toast.success('Submit your answers successfully!');
-
-        handleShowFormAfterSubmission(currentConfirmationSettings);
-
-        mutate?.();
-      } catch (error) {
-        console.error(error);
+      } else {
+        toast.error(t('formNotFound'));
       }
     },
-    [currentConfirmationSettings, currentFormId, mutate, source, handleShowFormAfterSubmission]
+    [currentConfirmationSettings, activedTriggerId, currentFormId, mutate, source, handleShowFormAfterSubmission]
     // [activedTriggerId, currentConfirmationSettings, handleShowFormAfterSubmission, mutate, submitForm, tError, toast]
   );
 

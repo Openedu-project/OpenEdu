@@ -26,8 +26,8 @@ export const NewUserSignInTriggerModal = () => {
     async (values: IAnswerParams[]) => {
       try {
         const res = await postSubmitForm(undefined, {
+          formId: dataNewUserSignIn?.id ?? '',
           payload: {
-            form_relation_id: dataNewUserSignIn?.id,
             answers: values,
           },
         });

@@ -25,7 +25,7 @@ export default function MyCoursesContent({
 
   return (
     <div className="space-y-6 py-6">
-      <h3 className="giant-iheading-semibold20 mb-0 border-primary border-l-[3px] pl-[12px] text-primary uppercase">
+      <h3 className="giant-iheading-semibold20 border-primary border-l-[3px] pl-[12px] text-primary uppercase">
         {t('title')} ({coursesCompleted + coursesInProgress + coursesNotStarted})
       </h3>
 

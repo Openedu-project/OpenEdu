@@ -70,9 +70,10 @@ const ThumbnailImage = ({
   <Image
     src={url}
     alt={name}
-    height={222}
-    width={390}
-    className={cn('h-full w-full bg-transparent object-cover', hasOverlay && 'opacity-75')}
+    aspectRatio="16:9"
+    fill
+    containerHeight="auto"
+    className={cn('w-full rounded-lg bg-transparent', hasOverlay && 'opacity-75')}
     rounded="lg"
     priority
   />
@@ -80,7 +81,6 @@ const ThumbnailImage = ({
 
 const CourseThumbnail = ({ className, courseOutline }: CourseThumbnailProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  // const { getPreviewLessonVideo } = useCourseOutlineDetailStore();
 
   const thumbnail = courseOutline?.thumbnail;
 
