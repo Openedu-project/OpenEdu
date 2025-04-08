@@ -36,7 +36,7 @@ export const GenMessage = memo(
       return unsubscribe;
     }, []);
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+    // biome-ignore lint/correctness/useExhaustiveDependencies: <handle update content when page become visible>
     useEffect(() => {
       const handleVisibilityChange = () => {
         if (document.visibilityState === 'visible') {
@@ -50,7 +50,7 @@ export const GenMessage = memo(
       document.addEventListener('visibilitychange', handleVisibilityChange);
     }, [document.visibilityState]);
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+    // biome-ignore lint/correctness/useExhaustiveDependencies: <handle typing text>
     useEffect(() => {
       const handleGenText = setInterval(() => {
         if (!genMessage) {

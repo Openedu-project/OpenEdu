@@ -1,20 +1,25 @@
 'use client';
-
+import Direct from '@oe/assets/icons/direct';
 import AIMascot from '@oe/assets/images/ai/ai-mascot-2.png';
 import { AI_ROUTES } from '@oe/core/utils/routes';
 import { Image } from '@oe/ui/components/image';
-import { LayoutGrid } from 'lucide-react';
+import { CirclePlus, LayoutGrid } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { Link, usePathname } from '#common/navigation';
+import { Link } from '#common/navigation';
 import { Badge } from '#shadcn/badge';
 import { Separator } from '#shadcn/separator';
-import { Tooltip } from '#shadcn/tooltip';
 import { cn } from '#utils/cn';
-import { AI_SIDEBAR } from './constants';
+import { AIHistoryModal } from '../history/ai-history';
+import { AgentButton } from './agent-button';
 
-export function AISidebar({ className }: { className?: string }) {
+export function AISidebar({
+  className,
+  isLogin,
+}: {
+  className?: string;
+  isLogin?: boolean;
+}) {
   const tAI = useTranslations('aiAssistant');
-  const pathname = usePathname();
 
   return (
     <div className={cn('overflow-hidden p-1 lg:p-5', className)}>
@@ -34,31 +39,32 @@ export function AISidebar({ className }: { className?: string }) {
         <Separator className="h-0.5 w-full bg-primary/10" />
 
         <div className="flex flex-col items-center gap-2">
-          {AI_SIDEBAR('white').map(item => (
-            <div key={item.value}>
-              <Tooltip
-                content={tAI(item.lableKey)}
-                contentProps={{
-                  side: 'right',
-                  className: 'text-primary mbutton-bold10 rounded-full',
-                }}
-                className={cn(
-                  '!border-0 rounded-full p-1',
-                  pathname.includes(item.value) && 'outline outline-primary outline-offset-1'
-                )}
-              >
-                <Link
-                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full md:h-8 md:w-8"
-                  style={{ background: item.bgColor }}
-                  href={item.href}
-                  disabled={item.isComming}
-                >
-                  {item.icon}
-                </Link>
-              </Tooltip>
-              <p className="mbutton-bold10 mt-2 w-full text-center">{tAI(item.shortLableKey)}</p>
-            </div>
-          ))}
+          <div>
+            <Link
+              size="icon"
+              variant="default"
+              className="m-auto flex rounded-full border border-2 bg-gradient-to-b from-turquoise-500 to-violet-500 hover:border-primary"
+              activeClassName=""
+              href={AI_ROUTES.chat}
+            >
+              <CirclePlus size={16} />
+            </Link>
+            <p className="mcaption-regular10 mt-1 text-center md:font-semibold">{tAI('newChat')}</p>
+          </div>
+          <AgentButton />
+          <div>
+            <Link
+              size="icon"
+              variant="default"
+              className="m-auto flex rounded-full border border-2 bg-ai-more-feature-gradient hover:border-primary hover:bg-ai-more-feature-gradient"
+              activeClassName=""
+              href="#"
+            >
+              <Direct width={16} height={16} />
+            </Link>
+            <p className="mcaption-regular10 mt-1 text-center md:font-semibold">{tAI('workspace')}</p>
+          </div>
+          <AIHistoryModal isLogin={isLogin} />
         </div>
         <Separator className="h-0.5 w-full bg-primary/10" />
         <Link

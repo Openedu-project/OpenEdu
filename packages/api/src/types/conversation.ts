@@ -208,3 +208,11 @@ export interface IPrompt {
 }
 
 export type IPromptsResponse = HTTPPagination<IPrompt>;
+export interface IDocumentRequest {
+  ai_conversation_id?: string;
+  attachment_id: string;
+}
+
+export interface IDocumentCanelRequest {
+  task_id: string;
+}

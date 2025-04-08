@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 import { Link, usePathname } from '#common/navigation';
 import { Badge } from '#shadcn/badge';
 import { cn } from '#utils/cn';
-import { AI_SIDEBAR } from './constants';
+import { AI_SIDEBAR } from '../constants';
 
 export function AIModule({
   className,

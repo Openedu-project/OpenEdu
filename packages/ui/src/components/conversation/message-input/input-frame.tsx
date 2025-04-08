@@ -71,6 +71,7 @@ export function InputFrame({
         showInputOption
         className="w-full"
         resetOnSuccess
+        chatId={id}
       />
     </div>
   );

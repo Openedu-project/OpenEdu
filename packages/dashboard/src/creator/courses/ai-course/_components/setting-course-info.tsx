@@ -46,11 +46,7 @@ export function SettingCourseInfomation({
     if (AICourseStatusData && AICourseStatusData.data?.course_id === course?.id) {
       setStatus(AICourseStatusData.data?.status as IAICourseStatus);
 
-      globalMutate(
-        (key: string) => !!key?.includes(API_ENDPOINT.COURSES) && !key?.includes(`${API_ENDPOINT.COURSES}/`),
-        undefined,
-        { revalidate: false }
-      );
+      globalMutate((key: string) => !!key?.includes(`${API_ENDPOINT.COURSES}?`), undefined, { revalidate: false });
 
       if (AICourseStatusData.data?.status === 'completed') {
         router.push(

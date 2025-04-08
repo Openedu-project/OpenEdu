@@ -2,11 +2,11 @@
 import { useTranslations } from 'next-intl';
 import { type ReactNode, useState } from 'react';
 import { Link } from '#common/navigation';
-import { Image } from '#components/image';
 import { Button } from '#shadcn/button';
 import { cn } from '#utils/cn';
 import EditButton from '../message-actions/edit';
 import MessageInput from '../message-input/message-input';
+import { PreviewDocument, PreviewImage } from '../message-input/preview-file';
 import type { IMessageBoxProps } from '../type';
 
 export const convertTextWithLink = (text: string): ReactNode[] => {
@@ -112,26 +112,21 @@ export const UserMessage = ({ message, loading, sendMessage, messageType }: IMes
         >
           {convertTextWithLink(message.content)}
           {message.attachments && (
-            <div className="flex justify-center gap-2">
-              {message.attachments.map(image => (
-                <Link
-                  key={image.id}
-                  className="relative mt-2 block aspect-video h-auto w-[150px] rounded-lg border bg-background md:w-[200px]"
-                  href={image?.url}
-                  target="_blank"
-                >
-                  <Image
-                    className="absolute rounded-lg"
-                    alt="screen-shot"
-                    sizes="160px"
-                    fill
-                    noContainer
-                    objectFit="contain"
-                    style={{ objectPosition: 'center' }}
-                    src={image?.url}
-                  />
-                </Link>
-              ))}
+            <div className="mt-2 flex flex-wrap gap-2">
+              {message.attachments.map((image, index) =>
+                image.mime?.includes('image') ? (
+                  <Link
+                    key={image.id}
+                    className="relative block h-[120px] w-[120px] rounded-lg bg-background p-0"
+                    href={image?.url}
+                    target="_blank"
+                  >
+                    <PreviewImage key={image.id} file={image} viewOnly filePosition={index} />
+                  </Link>
+                ) : (
+                  <PreviewDocument key={image.id} file={image} viewOnly filePosition={index} />
+                )
+              )}
             </div>
           )}
         </div>

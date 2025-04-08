@@ -45,10 +45,8 @@ export function ChatWindow({ id, initData, agent, className }: IChatWindowProps)
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     resetOpenWebSource();
-
     if (!isNewChat) {
       setSelectedAgent(agent);
-      resetGenMessage();
     }
 
     if (id && prevId.current === id) {
@@ -69,9 +67,9 @@ export function ChatWindow({ id, initData, agent, className }: IChatWindowProps)
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    setResetPage(false);
     if (messageData?.results && !isNewChat) {
       const genMsgData = messageData.results.messages.find(msg => GENERATING_STATUS.includes(msg.status ?? ''));
+
       if (genMsgData) {
         setGenMessage(
           genMsgData,
@@ -81,6 +79,10 @@ export function ChatWindow({ id, initData, agent, className }: IChatWindowProps)
           },
           true
         );
+      } else {
+        setStatus('completed');
+        setResetPage(false);
+        resetGenMessage();
       }
       setMessages(
         [...messageData.results.messages.filter(msg => !GENERATING_STATUS.includes(msg.status ?? ''))].reverse()

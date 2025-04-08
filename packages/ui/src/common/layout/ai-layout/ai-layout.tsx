@@ -1,3 +1,4 @@
+import { isLogin } from '@oe/api/utils/auth';
 import type { ReactNode } from 'react';
 import { AISidebar } from '#components/conversation';
 import { cn } from '#utils/cn';
@@ -7,7 +8,8 @@ type Props = {
   className?: string;
 };
 
-export default function AILayout({ children, className }: Props) {
+export default async function AILayout({ children, className }: Props) {
+  const login = await isLogin();
   return (
     <main
       className={cn(
@@ -15,7 +17,7 @@ export default function AILayout({ children, className }: Props) {
         className
       )}
     >
-      <AISidebar />
+      <AISidebar isLogin={login} />
       <div className="flex-1 overflow-hidden">{children}</div>
     </main>
   );

@@ -40,7 +40,7 @@ export const createFile = (file: IFileResponse | FileType): FileType => {
   return {
     ...file,
     fileId: (file as FileType)?.fileId ?? (file as IFileResponse)?.id ?? uniqueID(),
-    status: 'finished',
+    status: (file as FileType).status ?? 'finished',
   };
 };
 

@@ -27,6 +27,9 @@ export function useGetConversationDetails({
     (endpoint: string) => getConversationDetail(endpoint, id ?? '', params),
     {
       fallbackData: fallback,
+      revalidateOnMount: true,
+      revalidateOnFocus: true,
+      revalidateIfStale: true,
     }
   );
 
