@@ -1,21 +1,21 @@
-"use client";
-import { useGetListConversation } from "@oe/api/hooks/useConversation";
-import MessageTime from "@oe/assets/icons/message-time";
-import { Search } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
-import { useCallback, useMemo, useRef, useState } from "react";
-import type { KeyboardEvent } from "react";
-import { Virtuoso } from "react-virtuoso";
-import { useSWRConfig } from "swr";
-import { useDebouncedCallback } from "use-debounce";
-import { Modal } from "#components/modal";
-import { Button } from "#shadcn/button";
-import { Input } from "#shadcn/input";
-import { cn } from "#utils/cn";
-import { HISTORY_DEFAULT_PARAMS } from "../constants";
-import { formatDate } from "../utils";
-import AIHistoryItem from "./history-item";
+'use client';
+import { useGetListConversation } from '@oe/api/hooks/useConversation';
+import MessageTime from '@oe/assets/icons/message-time';
+import { Search } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import type { KeyboardEvent } from 'react';
+import { Virtuoso } from 'react-virtuoso';
+import { useSWRConfig } from 'swr';
+import { useDebouncedCallback } from 'use-debounce';
+import { Modal } from '#components/modal';
+import { Button } from '#shadcn/button';
+import { Input } from '#shadcn/input';
+import { cn } from '#utils/cn';
+import { HISTORY_DEFAULT_PARAMS } from '../constants';
+import { formatDate } from '../utils';
+import AIHistoryItem from './history-item';
 
 interface SearchHistoryProps {
   className?: string;
@@ -23,13 +23,9 @@ interface SearchHistoryProps {
   callbackFn?: () => void;
 }
 
-const SearchHistory = ({
-  className,
-  isLogin,
-  callbackFn,
-}: SearchHistoryProps) => {
-  const tGeneral = useTranslations("general");
-  const tAI = useTranslations("aiAssistant");
+const SearchHistory = ({ className, isLogin, callbackFn }: SearchHistoryProps) => {
+  const tGeneral = useTranslations('general');
+  const tAI = useTranslations('aiAssistant');
   const { id } = useParams();
 
   const searchRef = useRef<HTMLInputElement | null>(null);
@@ -38,13 +34,12 @@ const SearchHistory = ({
 
   const [searchParams, setSearchParams] = useState(HISTORY_DEFAULT_PARAMS);
 
-  const { data, mutate, size, setSize, isLoading, getKey } =
-    useGetListConversation(searchParams, isLogin);
+  const { data, mutate, size, setSize, isLoading, getKey } = useGetListConversation(searchParams, isLogin);
 
   const historyData = useMemo(
     () =>
-      data?.flatMap((item) =>
-        item?.results?.map((history) => ({
+      data?.flatMap(item =>
+        item?.results?.map(history => ({
           ...history,
           page: item.pagination.page ?? 1,
         }))
@@ -55,10 +50,7 @@ const SearchHistory = ({
   const handleSearch = async (title?: string, isNextPage?: boolean) => {
     const pagination = data?.at(-1)?.pagination;
 
-    if (
-      isLoading ||
-      (title === undefined && size === pagination?.total_pages)
-    ) {
+    if (isLoading || (title === undefined && size === pagination?.total_pages)) {
       return;
     }
 
@@ -75,10 +67,10 @@ const SearchHistory = ({
       void setSize(size + 1);
     } else {
       void setSize(1);
-      await new Promise((resolve) => {
-        setSearchParams((prev) => {
+      await new Promise(resolve => {
+        setSearchParams(prev => {
           resolve(null);
-          return { ...prev, search_term: title ?? "", page: 1 };
+          return { ...prev, search_term: title ?? '', page: 1 };
         });
       });
     }
@@ -87,7 +79,7 @@ const SearchHistory = ({
   const getItemsByDate = useCallback(
     (targetDate: number) =>
       historyData
-        ?.filter((item) => {
+        ?.filter(item => {
           const itemDate = new Date(item.create_at).setHours(0, 0, 0, 0);
 
           return itemDate === targetDate;
@@ -97,13 +89,7 @@ const SearchHistory = ({
   ); // Sort items within same create_at descending
 
   const datesData = useMemo(() => {
-    const uniqueDates = [
-      ...new Set(
-        historyData?.map((item) =>
-          new Date(item.create_at).setHours(0, 0, 0, 0)
-        )
-      ),
-    ];
+    const uniqueDates = [...new Set(historyData?.map(item => new Date(item.create_at).setHours(0, 0, 0, 0)))];
 
     return uniqueDates.sort((a, b) => b - a); // Sort dates descending
   }, [historyData]);
@@ -113,39 +99,32 @@ const SearchHistory = ({
       return;
     }
 
-    if (e.key === "Enter" && searchRef.current) {
+    if (e.key === 'Enter' && searchRef.current) {
       e.preventDefault();
-      handleSearch?.(searchRef.current.value ?? "");
+      handleSearch?.(searchRef.current.value ?? '');
     }
   };
 
   const debouncedSetSearch = useDebouncedCallback(
-    () => searchRef.current && handleSearch?.(searchRef.current.value ?? ""),
+    () => searchRef.current && handleSearch?.(searchRef.current.value ?? ''),
     300
   );
 
   return (
-    <div
-      className={cn(
-        "mx-auto flex flex-col gap-2 p-4 text-foreground",
-        className
-      )}
-    >
+    <div className={cn('mx-auto flex flex-col gap-2 p-4 text-foreground', className)}>
       <Input
         ref={searchRef}
         prefixIcon={<Search color="#000" width={16} height={16} />}
         className="!rounded-3xl mcaption-regular16 !border-1 w-full bg-gray-50 pl-8"
-        placeholder={tGeneral("search")}
+        placeholder={tGeneral('search')}
         onKeyDown={handleKeyDown}
         onChange={debouncedSetSearch}
       />
       {!isLoading && historyData?.length === 0 ? (
-        <div className="m-auto p-4 text-center text-foreground">
-          {tAI("noHistory")}
-        </div>
+        <div className="m-auto p-4 text-center text-foreground">{tAI('noHistory')}</div>
       ) : (
         <Virtuoso
-          style={{ display: "flex", flexGrow: 1 }}
+          style={{ display: 'flex', flexGrow: 1 }}
           data={datesData}
           firstItemIndex={0}
           initialTopMostItemIndex={0}
@@ -158,7 +137,7 @@ const SearchHistory = ({
             <div key={date} className="mt-2 space-y-2">
               <h5 className="mcaption-semibold14">{formatDate(date)}</h5>
               <div className="pl-2">
-                {getItemsByDate(date)?.map((item) => {
+                {getItemsByDate(date)?.map(item => {
                   const { page, ...baseData } = item;
                   return (
                     <AIHistoryItem
@@ -176,11 +155,7 @@ const SearchHistory = ({
           )}
           components={{
             Footer: () =>
-              isLoading ? (
-                <div className="p-4 text-center text-foreground">
-                  {tAI("loadingHistory")}
-                </div>
-              ) : null,
+              isLoading ? <div className="p-4 text-center text-foreground">{tAI('loadingHistory')}</div> : null,
           }}
         />
       )}
@@ -188,12 +163,9 @@ const SearchHistory = ({
   );
 };
 
-export function AIHistoryModal({
-  isLogin = false,
-  ...props
-}: SearchHistoryProps) {
+export function AIHistoryModal({ isLogin = false, ...props }: SearchHistoryProps) {
   const [open, setOpen] = useState(false);
-  const tAI = useTranslations("aiAssistant");
+  const tAI = useTranslations('aiAssistant');
   const handleOpenModal = () => {
     setOpen(true);
   };
@@ -207,17 +179,15 @@ export function AIHistoryModal({
           <Button
             {...props}
             className={cn(
-              "m-auto flex rounded-full border border-2 bg-ai-more-feature-gradient hover:border-primary hover:bg-ai-more-feature-gradient",
+              'm-auto flex rounded-full border border-2 bg-ai-more-feature-gradient hover:border-primary hover:bg-ai-more-feature-gradient',
               props.className
             )}
             onClick={handleOpenModal}
             size="icon"
           >
-            <MessageTime color="hsl(var(--primary))" width={16} height={16} />
+            <MessageTime color="var(--primary)" width={16} height={16} />
           </Button>
-          <p className="mcaption-regular10 mt-1 text-center md:font-semibold">
-            {tAI("history")}
-          </p>
+          <p className="mcaption-regular10 mt-1 text-center md:font-semibold">{tAI('history')}</p>
         </div>
       }
       hasCloseIcon
@@ -226,7 +196,7 @@ export function AIHistoryModal({
       contentClassName="p-2 pt-0 md:pb-4"
     >
       <SearchHistory
-        className={cn("h-[70dvh]")}
+        className={cn('h-[70dvh]')}
         isLogin={isLogin}
         callbackFn={() => {
           setOpen(false);
