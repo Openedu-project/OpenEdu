@@ -78,7 +78,7 @@ function StatItem({
   value: string | number;
 }) {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-1">
       {icon}
       <span className="mcaption-regular14">{value}</span>
     </div>

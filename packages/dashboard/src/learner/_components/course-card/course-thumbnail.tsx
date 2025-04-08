@@ -24,7 +24,7 @@ export function CourseThumbnail({ courseData }: CourseThumbnailProps) {
             : undefined
         }
         alt={courseData?.name}
-        className="w-full flex-0 rounded"
+        className="w-full rounded"
         fill
         aspectRatio="16:9"
         containerHeight="auto"
