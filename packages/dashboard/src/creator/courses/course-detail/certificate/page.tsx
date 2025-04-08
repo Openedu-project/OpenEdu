@@ -99,12 +99,12 @@ export default function CourseDetailCertificatePage() {
                 render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} />}
               />
             </div>
-            {form.watch('has_certificate') && (
-              <Button size="sm" type="submit" disabled={loading} loading={loading}>
-                {tCourse('common.actions.save')}
-                <CheckIcon className="ml-2 h-4 w-4" />
-              </Button>
-            )}
+            {/* {form.watch('has_certificate') && ( */}
+            <Button size="sm" type="submit" disabled={loading} loading={loading}>
+              {tCourse('common.actions.save')}
+              <CheckIcon className="ml-2 h-4 w-4" />
+            </Button>
+            {/* )} */}
           </div>
           <div className="scrollbar flex h-full flex-col gap-4 overflow-auto">
             {form.watch('has_certificate') && (

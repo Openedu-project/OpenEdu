@@ -1,4 +1,9 @@
 import { updateCertHtmlTemplateService } from '@oe/api/services/certificate';
+import type {
+  ICertificateElement,
+  ICertificateRichTextElement,
+  ICertificateTextElement,
+} from '@oe/api/types/certificate';
 import { API_ENDPOINT } from '@oe/api/utils/endpoints';
 import { ADMIN_ROUTES } from '@oe/core/utils/routes';
 import { ArrowLeft, Eye, Save } from 'lucide-react';
@@ -20,10 +25,16 @@ export const Header = () => {
 
   const handleSave = async () => {
     setIsSaving(true);
+
+    const enableProject = template?.elements?.some((element: ICertificateElement) =>
+      (element as ICertificateRichTextElement | ICertificateTextElement)?.content?.includes('{{project_name}}')
+    );
+
     try {
       await updateCertHtmlTemplateService(undefined, {
         payload: {
           ...certificate,
+          enable_project: enableProject,
           name: template.name ?? certificate?.name ?? '',
           template: {
             ...template,
