@@ -58,8 +58,8 @@ const CustomTabs = ({ defaultValue, items, className }: CustomTabsProps) => {
             value={item.value}
             className={cn(
               'mbutton-semibold14 md:mbutton-semibold16 !pb-3 h-auto rounded-none bg-transparent p-0',
-              'data-[state=active]:border-primary data-[state=active]:border-b data-[state=active]:bg-transparent data-[state=active]:text-primary data-[state=active]:shadow-none [&>div>svg>path]:data-[state=active]:fill-primary',
-              '[&>div]:data-[state=active]:rounded-lg [&>div]:data-[state=active]:border [&>div]:data-[state=active]:border-primary',
+              'data-[state=active]:border-primary data-[state=active]:border-b data-[state=active]:bg-transparent data-[state=active]:text-primary data-[state=active]:shadow-none data-[state=active]:[&>div>svg>path]:fill-primary',
+              'data-[state=active]:[&>div]:rounded-lg data-[state=active]:[&>div]:border data-[state=active]:[&>div]:border-primary',
               item.className
             )}
           >
