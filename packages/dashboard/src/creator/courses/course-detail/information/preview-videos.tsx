@@ -47,7 +47,7 @@ export default function PreviewVideos() {
               );
             }}
             accept="video/*"
-            maxSizeBytes={10 * 1024 * 1024}
+            maxSizeBytes={100 * 1024 * 1024}
             multiple
             renderTrigger={props => (
               <div className="flex justify-between">
