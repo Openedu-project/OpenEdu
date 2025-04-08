@@ -9,7 +9,6 @@ import type { ReactNode } from 'react';
 
 import { getThemeConfigServer } from '@oe/api/services/theme';
 import { ThemeProvider } from '@oe/themes/common/provider/theme-provider';
-import { LogRocketHandler } from '@oe/ui/components/logrocket-handler';
 import { WebViewHandler } from '@oe/ui/components/webview-handler';
 import Script from 'next/script';
 // const geistSans = localFont({
@@ -50,8 +49,6 @@ export default async function RootLayout({
       </head>
       <body className="scrollbar font-primary antialiased">
         <Provider messages={messages ?? {}} locale={locale}>
-          <LogRocketHandler />
-
           <WebViewHandler />
 
           <ThemeProvider theme={themeSystem?.[0]?.value?.availableThemes?.[themeName]}>{children}</ThemeProvider>
