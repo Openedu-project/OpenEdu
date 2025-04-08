@@ -47,7 +47,7 @@ const PreviewOverlay = ({ totalMedias }: PreviewOverlayProps) => {
   return (
     <div className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 flex w-full flex-col items-center">
       <div className="mb-2 grid h-8 w-8 items-center justify-center rounded-full bg-primary-foreground shadow-shadow-2">
-        {/* <PlayFilled color="hsl(var(--primary))" /> */}
+        {/* <PlayFilled color="var(--primary)" /> */}
         <CirclePlayIcon className="h-6 w-6 text-primary" />
       </div>
       <div className="flex items-center gap-2 rounded-[32px] bg-primary-foreground px-2 py-1 lg:rounded-[40px] lg:px-3 lg:py-2">

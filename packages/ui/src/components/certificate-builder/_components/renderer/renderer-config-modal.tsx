@@ -75,6 +75,10 @@ export const RendererConfigModal = ({
     setData(data);
   };
 
+  const handleClose = () => {
+    setData(defaultValues as ICertificateDataSchema);
+  };
+
   return (
     <Modal
       title={isPreview ? tCertificate('builder.preview.title') : tCertificate('builder.preview.config')}
@@ -84,6 +88,7 @@ export const RendererConfigModal = ({
       onChange={handleChange}
       onSubmit={onSubmit}
       onError={onError}
+      onClose={handleClose}
       className="flex max-h-[80vh] flex-col md:w-[90vw] md:max-w-[800px]"
       contentClassName="px-4 flex flex-1 overflow-hidden"
       formClassName="flex flex-col md:flex-row space-y-0 gap-4"
@@ -127,11 +132,24 @@ export const RendererConfigModal = ({
       <div className="scrollbar flex flex-1 flex-col gap-4 overflow-y-auto">
         {isPreview ? (
           <>
-            <FormFieldWithLabel name="learner_name" label="Learner Name" render={({ field }) => <Input {...field} />} />
-            <FormFieldWithLabel name="course_name" label="Course Name" render={({ field }) => <Input {...field} />} />
+            <FormFieldWithLabel
+              name="learner_name"
+              label={tCertificate('builder.preview.learnerName')}
+              render={({ field }) => <Input {...field} />}
+            />
+            <FormFieldWithLabel
+              name="course_name"
+              label={tCertificate('builder.preview.courseName')}
+              render={({ field }) => <Input {...field} />}
+            />
+            <FormFieldWithLabel
+              name="project_name"
+              label={tCertificate('builder.preview.projectName')}
+              render={({ field }) => <Input {...field} />}
+            />
             <FormFieldWithLabel
               name="issue_date"
-              label="Issue Date"
+              label={tCertificate('builder.preview.issueDate')}
               render={({ field }) => (
                 <DatePicker
                   value={field.value ? new Date(field.value) : undefined}

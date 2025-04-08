@@ -34,7 +34,7 @@ export function Header({
           ))}
       </div>
 
-      <div className="flex h-14 w-full flex-shrink-0 items-center gap-1 border-border/40 bg-primary px-3 py-3 shadow md:px-6">
+      <div className="flex h-14 w-full shrink-0 items-center gap-1 border-border/40 bg-primary px-3 py-3 shadow md:px-6">
         {sidebarItems && (
           <Sidebar
             items={sidebarItems}

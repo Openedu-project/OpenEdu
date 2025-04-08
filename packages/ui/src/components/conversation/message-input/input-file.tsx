@@ -38,8 +38,8 @@ export const InputFile = <TFormValues extends FieldValues>() => {
           className="relative flex"
           name={'files' as Path<TFormValues>}
           render={({ field }) => (
-            <div className="flex cursor-pointer select-none items-center gap-2 gap-2 overflow-hidden rounded-sm px-2 py-1.5 text-sm outline-none transition-colors">
-              <DocumentUploadIcon width={16} height={16} color="hsl(var(--foreground))" />
+            <div className="flex cursor-pointer select-none items-center gap-2 gap-2 overflow-hidden rounded-xs px-2 py-1.5 text-sm outline-hidden transition-colors">
+              <DocumentUploadIcon width={16} height={16} color="var(--foreground)" />
               <span className="mcaption-regular14 whitespace-nowrap">{tAI('uploadFromComputer')}</span>
               <Uploader
                 multiple

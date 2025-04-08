@@ -16,7 +16,7 @@ export function TextBlockContent({ order }: { order: number }) {
     <div className="space-y-4 rounded-lg bg-muted/50 p-2">
       <FormFieldWithLabel name={`contents.${order}.content`} showErrorMessage>
         <RichTextEditor
-          className="h-full bg-background shadow-sm"
+          className="h-full bg-background shadow-xs"
           menuBarClassName="bg-background rounded-t-md"
           maxHeight="100%"
           placeholder={tCourseLesson('content.textEditor.placeholder')}

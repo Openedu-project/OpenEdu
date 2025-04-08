@@ -24,7 +24,7 @@ export const InputDefault = <TFormValues extends FieldValues>({
         onChange={handleInputChange}
         placeholder={placeholder ?? tAI('inputPlaceholder')}
         className={cn(
-          'mcaption-regular16 no-scrollbar block h-[22px] w-full resize-none bg-transparent focus-within:outline-none'
+          'mcaption-regular16 no-scrollbar block h-[22px] w-full resize-none bg-transparent focus-within:outline-hidden'
         )}
         maxRows={5}
         ref={inputRef}

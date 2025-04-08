@@ -168,7 +168,7 @@ export default function PagesList() {
       </div>
       <div className="scrollbar overflow-auto">
         <Table>
-          <TableHeader className="sticky top-0 z-10 bg-background shadow">
+          <TableHeader className="sticky top-0 z-10 bg-background shadow-sm">
             <TableHeaderActions
               selectedActions={selectedActions}
               groupedRoutes={groupedRoutes}

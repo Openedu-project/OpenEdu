@@ -11,7 +11,11 @@ export function AIModule({
   className,
   labelClassName,
   showDesc = false,
-}: { className?: string; labelClassName?: string; showDesc?: boolean }) {
+}: {
+  className?: string;
+  labelClassName?: string;
+  showDesc?: boolean;
+}) {
   const tAI = useTranslations('aiAssistant');
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -24,7 +28,7 @@ export function AIModule({
 
   return (
     <>
-      {AI_SIDEBAR('hsl(var(--primary))', 24)
+      {AI_SIDEBAR('var(--primary)', 24)
         .slice(1)
         .map(item => (
           <Link

@@ -12,7 +12,7 @@ export default function WithdrawRequest() {
         <h1 className="mb-4 text-2xl">{t('withdrawalRequest')}</h1>
       </DashboardHeaderCard>
 
-      <div className="rounded bg-background p-4">
+      <div className="rounded-sm bg-background p-4">
         <WithdrawRequestList />
       </div>
     </>

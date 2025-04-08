@@ -64,7 +64,7 @@ export default function PriceForm({ loading }: { loading: boolean }) {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex items-center gap-4 border-b p-4 shadow-sm">
+      <div className="flex items-center gap-4 border-b p-4 shadow-xs">
         <h2 className="mb-0 font-medium text-lg">{tCourse('price.title')}</h2>
         <FormFieldWithLabel
           name="is_pay"

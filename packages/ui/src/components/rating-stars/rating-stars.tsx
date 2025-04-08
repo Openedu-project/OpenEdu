@@ -39,7 +39,7 @@ export default function RatingStars({ rating, color, variant = 'no-number', size
 
   if (variant === 'number-shorten') {
     return (
-      <div className={cn('flex items-center rounded-sm px-2', className)}>
+      <div className={cn('flex items-center rounded-xs px-2', className)}>
         <span className="mr-1">{formattedRating}</span>
         <Star color={color} width={size} height={size} />
       </div>
@@ -51,7 +51,7 @@ export default function RatingStars({ rating, color, variant = 'no-number', size
   if (variant === 'with-number') {
     return (
       <div className={cn('rating flex items-center gap-1', className)}>
-        <span className="mbutton-medium14 flex items-center rounded-sm px-1 text-foreground">{formattedRating}</span>
+        <span className="mbutton-medium14 flex items-center rounded-xs px-1 text-foreground">{formattedRating}</span>
         {stars}
       </div>
     );

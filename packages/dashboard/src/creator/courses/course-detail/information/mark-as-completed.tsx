@@ -6,7 +6,7 @@ export default function MarkAsCompleted() {
   const tCourse = useTranslations('course');
 
   return (
-    <div className="bg-background p-4 shadow-sm">
+    <div className="bg-background p-4 shadow-xs">
       <div className="flex items-center justify-between">
         <span className="font-medium text-lg">{tCourse('information.sections.markAsCompleted.title')}</span>
 

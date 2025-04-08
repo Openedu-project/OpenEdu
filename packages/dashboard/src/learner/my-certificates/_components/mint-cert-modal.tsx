@@ -66,7 +66,7 @@ export default function MintCertModal({ certificate, onClose, mutate }: IMintCer
         <div className="flex flex-col gap-2 rounded-lg bg-foreground/5 p-3">
           <span className="mbutton-semibold16">
             {tMintCert('totalGasFee', {
-              total_fee: dataCertNftFees?.estimated_fee,
+              total_fee: dataCertNftFees?.estimated_fee ?? 0,
               nft_network: 'NEAR',
             })}
           </span>

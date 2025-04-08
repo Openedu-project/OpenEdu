@@ -30,7 +30,11 @@ export const URLGenerateModal = ({ onSuccess }: { onSuccess?: () => void }) => {
 
     try {
       const res = await postBlogAI(null, {
-        payload: { ai_blog_request_type: 'generate_blog', ...baseParams, blogs: links },
+        payload: {
+          ai_blog_request_type: 'generate_blog',
+          ...baseParams,
+          blogs: links,
+        },
       });
 
       if (res) {
@@ -47,7 +51,7 @@ export const URLGenerateModal = ({ onSuccess }: { onSuccess?: () => void }) => {
     <Modal
       trigger={
         <Button variant="outline" className="border-primary text-primary">
-          <MagicStar color="hsl(var(--primary))" />
+          <MagicStar color="var(--primary)" />
           <span className="ml-2 hidden lg:block">{t('AIGenerate')}</span>
         </Button>
       }

@@ -5,62 +5,132 @@ export const fonts = [
   {
     name: 'Inter',
     family: 'Inter',
-    weights: ['400', '700'],
+    weights: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   },
   {
     name: 'Open Sans',
     family: 'Open Sans',
-    weights: ['400', '700'],
+    weights: ['300', '400', '500', '600', '700', '800'],
   },
   {
     name: 'Montserrat',
     family: 'Montserrat',
-    weights: ['400', '700'],
+    weights: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   },
   {
     name: 'Nunito',
     family: 'Nunito',
-    weights: ['400', '700'],
-  },
-  {
-    name: 'Assistant',
-    family: 'Assistant',
-    weights: ['400', '700'],
-  },
-  {
-    name: 'Oswald',
-    family: 'Oswald',
-    weights: ['400', '700'],
+    weights: ['200', '300', '400', '500', '600', '700', '800', '900'],
   },
   {
     name: 'Bitter',
     family: 'Bitter',
-    weights: ['400', '700'],
+    weights: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   },
   {
     name: 'Roboto Condensed',
     family: 'Roboto Condensed',
-    weights: ['400', '700'],
+    weights: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   },
   {
     name: 'Roboto Mono',
     family: 'Roboto Mono',
-    weights: ['400', '700'],
+    weights: ['100', '200', '300', '400', '500', '600', '700'],
   },
   {
     name: 'Alex Brush',
     family: 'Alex Brush',
-    weights: ['400', '700'],
+    weights: ['400'],
   },
   {
     name: 'Great Vibes',
     family: 'Great Vibes',
-    weights: ['400', '700'],
+    weights: ['400'],
   },
   {
-    name: 'Rouge Script',
-    family: 'Rouge Script',
-    weights: ['400', '700'],
+    name: 'Pinyon Script',
+    family: 'Pinyon Script',
+    weights: ['400'],
+  },
+  {
+    name: 'Aleo',
+    family: 'Aleo',
+    weights: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  },
+  {
+    name: 'Be Vietnam Pro',
+    family: 'Be Vietnam Pro',
+    weights: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  },
+  {
+    name: 'Comfortaa',
+    family: 'Comfortaa',
+    weights: ['300', '400', '500', '600', '700'],
+  },
+  {
+    name: 'Cormorant Garamond',
+    family: 'Cormorant Garamond',
+    weights: ['300', '400', '500', '600', '700'],
+  },
+  {
+    name: 'Dancing Script',
+    family: 'Dancing Script',
+    weights: ['400', '500', '600', '700'],
+  },
+  {
+    name: 'EB Garamond',
+    family: 'EB Garamond',
+    weights: ['400', '500', '600', '700', '800'],
+  },
+  {
+    name: 'Hanken Grotesk',
+    family: 'Hanken Grotesk',
+    weights: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  },
+  {
+    name: 'Imperial Script',
+    family: 'Imperial Script',
+    weights: ['400'],
+  },
+  {
+    name: 'Lobster',
+    family: 'Lobster',
+    weights: ['400'],
+  },
+  {
+    name: 'Lora',
+    family: 'Lora',
+    weights: ['400', '500', '600', '700'],
+  },
+  {
+    name: 'Mulish',
+    family: 'Mulish',
+    weights: ['200', '300', '400', '500', '600', '700', '800', '900'],
+  },
+  {
+    name: 'Noto Sans',
+    family: 'Noto Sans',
+    weights: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  },
+  {
+    name: 'Playfair Display',
+    family: 'Playfair Display',
+    weights: ['400', '500', '600', '700', '800', '900'],
+  },
+  {
+    name: 'Raleway',
+    family: 'Raleway',
+    weights: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  },
+  {
+    name: 'Roboto Slab',
+    family: 'Roboto Slab',
+    weights: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  },
+  {
+    name: 'Space Grotesk',
+    family: 'Space Grotesk',
+    weights: ['300', '400', '500', '600', '700'],
   },
 ];
 
@@ -70,7 +140,7 @@ export function interpolateContent(content: string, data?: ICertificateData) {
   }
 
   return content.replace(/\{\{(.*?)\}\}/g, (match, key: keyof ICertificateData) => {
-    if ((key === 'learner_name' || key === 'course_name') && data[key]) {
+    if ((key === 'learner_name' || key === 'course_name' || key === 'project_name') && data[key]) {
       return data[key];
     }
     if (key === 'issue_date' && data[key]) {

@@ -3,27 +3,31 @@
 // import * as React from "react"
 import { Content, Root, Trigger } from '@radix-ui/react-hover-card';
 
-import { type ComponentPropsWithoutRef, type ComponentRef, forwardRef } from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
 import { cn } from '#utils/cn';
 
 const HoverCard = Root;
 
 const HoverCardTrigger = Trigger;
 
-const HoverCardContent = forwardRef<ComponentRef<typeof Content>, ComponentPropsWithoutRef<typeof Content>>(
-  ({ className, align = 'center', sideOffset = 4, ...props }, ref) => (
+function HoverCardContent({
+  className,
+  align = 'center',
+  sideOffset = 4,
+  ...props
+}: ComponentPropsWithoutRef<typeof Content>) {
+  return (
     <Content
-      ref={ref}
+      data-slot="content"
       align={align}
       sideOffset={sideOffset}
       className={cn(
-        'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-64 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none data-[state=closed]:animate-out data-[state=open]:animate-in',
+        'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-64 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-hidden data-[state=closed]:animate-out data-[state=open]:animate-in',
         className
       )}
       {...props}
     />
-  )
-);
-HoverCardContent.displayName = Content.displayName;
+  );
+}
 
 export { HoverCard, HoverCardTrigger, HoverCardContent };

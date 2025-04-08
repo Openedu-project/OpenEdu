@@ -96,7 +96,7 @@ const AdminFeedbackCourseModal = ({ open, onClose, mutate, readOnly = false }: I
           <p className="mcaption-regular14 text-neutral-600">{formatTimeHourMinute(discuss.send_date)}</p>
         </div>
 
-        <p className="rounded-sm bg-bg-bg-gray-50 p-4">{discuss.content}</p>
+        <p className="rounded-xs bg-bg-bg-gray-50 p-4">{discuss.content}</p>
       </div>
     );
   }, []);

@@ -84,7 +84,7 @@ const QuizHeader = ({
                 <span className="grid items-center pt-2 text-center text-destructive">Time's up</span>
               )}
             </span>
-            <Clock color="hsl(var(--primary))" />
+            <Clock color="var(--primary)" />
           </div>
         )}
       </div>

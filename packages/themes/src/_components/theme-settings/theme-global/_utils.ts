@@ -27,7 +27,7 @@ export const setRadiusVariable = (value: number): void => {
 // Color scheme variables
 export const setColorScheme = (variables: Record<string, string>): void => {
   for (const [name, value] of Object.entries(variables)) {
-    setRootCSSVariable(name, value);
+    setRootCSSVariable(name, `hsl(${value})`);
   }
 };
 

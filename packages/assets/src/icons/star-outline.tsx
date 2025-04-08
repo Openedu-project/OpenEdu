@@ -4,7 +4,7 @@ export default function StarOutline({
   width = 12,
   height = 13,
   className = '',
-  color = 'hsl(var(--warning-foreground))',
+  color = 'var(--warning-foreground)',
 }: ISvgProps) {
   return (
     <svg

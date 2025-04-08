@@ -2,36 +2,31 @@
 
 import { Fallback, Image, Root } from '@radix-ui/react-avatar';
 
-import { type ComponentPropsWithoutRef, type ComponentRef, forwardRef } from 'react';
+import type { ComponentProps } from 'react';
 import { cn } from '#utils/cn';
 
-const Avatar = forwardRef<ComponentRef<typeof Root>, ComponentPropsWithoutRef<typeof Root>>(
-  ({ className, ...props }, ref) => (
+function Avatar({ className, ...props }: ComponentProps<typeof Root>) {
+  return (
     <Root
-      ref={ref}
+      data-slot="avatar"
       className={cn('relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full', className)}
       {...props}
     />
-  )
-);
-Avatar.displayName = Root.displayName;
+  );
+}
 
-const AvatarImage = forwardRef<ComponentRef<typeof Image>, ComponentPropsWithoutRef<typeof Image>>(
-  ({ className, ...props }, ref) => (
-    <Image ref={ref} className={cn('aspect-square h-full w-full', className)} {...props} />
-  )
-);
-AvatarImage.displayName = Image.displayName;
+function AvatarImage({ className, ...props }: ComponentProps<typeof Image>) {
+  return <Image data-slot="avatar-image" className={cn('aspect-square h-full w-full', className)} {...props} />;
+}
 
-const AvatarFallback = forwardRef<ComponentRef<typeof Fallback>, ComponentPropsWithoutRef<typeof Fallback>>(
-  ({ className, ...props }, ref) => (
+function AvatarFallback({ className, ...props }: ComponentProps<typeof Fallback>) {
+  return (
     <Fallback
-      ref={ref}
+      data-slot="avatar-fallback"
       className={cn('flex h-full w-full items-center justify-center rounded-full bg-muted', className)}
       {...props}
     />
-  )
-);
-AvatarFallback.displayName = Fallback.displayName;
+  );
+}
 
 export { Avatar, AvatarImage, AvatarFallback };

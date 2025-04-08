@@ -21,7 +21,7 @@ export function OptionBadge({ label, onRemove, disabled, isFixed }: OptionBadgeP
       {label}
       {!(disabled || isFixed) && (
         <button
-          className="ml-2 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2"
+          className="ml-2 rounded-full outline-hidden ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2"
           type="button"
           onClick={e => {
             e.stopPropagation();

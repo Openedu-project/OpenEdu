@@ -11,7 +11,7 @@ import type { UseFormReturn } from 'react-hook-form';
 import { toast } from 'sonner';
 import { InputNumber } from '#components/input-number';
 import { Modal } from '#components/modal';
-import { Selectbox } from '#components/selectbox';
+import { Selectbox, type SelectboxOption } from '#components/selectbox';
 import { Button } from '#shadcn/button';
 import { FormFieldWithLabel } from '#shadcn/form';
 import { Input } from '#shadcn/input';
@@ -106,7 +106,7 @@ export const WithdrawTokenForm = () => {
                     field.onChange(value);
                     form.setValue('amount', '');
                   }}
-                  options={tokenOptions}
+                  options={tokenOptions as SelectboxOption[]}
                 />
               )}
             />

@@ -25,14 +25,6 @@ export const fonts: TRichTextFont[] = [
     value: 'Nunito',
   },
   {
-    name: 'Anek Devanagari',
-    value: 'Anek Devanagari',
-  },
-  {
-    name: 'Assistant',
-    value: 'Assistant',
-  },
-  {
     name: 'Open Sans',
     value: 'Open Sans',
   },
@@ -65,8 +57,64 @@ export const fonts: TRichTextFont[] = [
     value: 'Great Vibes',
   },
   {
-    name: 'Rouge Script',
-    value: 'Rouge Script',
+    name: 'Space Grotesk',
+    value: 'Space Grotesk',
+  },
+  {
+    name: 'Hanken Grotesk',
+    value: 'Hanken Grotesk',
+  },
+  {
+    name: 'Pinyon Script',
+    value: 'Pinyon Script',
+  },
+  {
+    name: 'Be Vietnam Pro',
+    value: 'Be Vietnam Pro',
+  },
+  {
+    name: 'Playfair Display',
+    value: 'Playfair Display',
+  },
+  {
+    name: 'Lora',
+    value: 'Lora',
+  },
+  {
+    name: 'Raleway',
+    value: 'Raleway',
+  },
+  {
+    name: 'Anton',
+    value: 'Anton',
+  },
+  {
+    name: 'Lobster',
+    value: 'Lobster',
+  },
+  {
+    name: 'Comfortaa',
+    value: 'Comfortaa',
+  },
+  {
+    name: 'Dancing Script',
+    value: 'Dancing Script',
+  },
+  {
+    name: 'Roboto Slab',
+    value: 'Roboto Slab',
+  },
+  {
+    name: 'EB Garamond',
+    value: 'EB Garamond',
+  },
+  {
+    name: 'Cormorant Garamond',
+    value: 'Cormorant Garamond',
+  },
+  {
+    name: 'Imperial Script',
+    value: 'Imperial Script',
   },
   {
     name: 'Helvetica',
@@ -111,41 +159,5 @@ export const fonts: TRichTextFont[] = [
   {
     name: 'Palatino',
     value: 'Palatino, serif',
-  },
-  {
-    name: 'Baskerville',
-    value: 'Baskerville, serif',
-  },
-  {
-    name: 'Andalé Mono',
-    value: 'Andalé Mono, monospace',
-  },
-  {
-    name: 'Courier',
-    value: 'Courier, monospace',
-  },
-  {
-    name: 'Lucida',
-    value: 'Lucida, monospace',
-  },
-  {
-    name: 'Monaco',
-    value: 'Monaco, monospace',
-  },
-  {
-    name: 'Bradley Hand',
-    value: 'Bradley Hand, cursive',
-  },
-  {
-    name: 'Brush Script MT',
-    value: 'Brush Script MT, cursive',
-  },
-  {
-    name: 'Luminari',
-    value: 'Luminari, fantasy',
-  },
-  {
-    name: 'Comic Sans',
-    value: 'Comic Sans MS, cursive',
   },
 ];

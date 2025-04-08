@@ -22,6 +22,7 @@ export const RichTextSetting = ({
           learner_name: '{{learner_name}}',
           course_name: '{{course_name}}',
           issue_date: '{{issue_date}}',
+          project_name: '{{project_name}}',
         })}
       >
         <RichTextEditor

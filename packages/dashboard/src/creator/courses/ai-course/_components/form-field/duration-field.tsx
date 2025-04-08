@@ -35,7 +35,7 @@ export function DurationField({
       </div>
       {form.formState.errors.duration && (
         <p className="mcaption-regular16 !mt-3 text-negative">
-          {tAICourseForm(form.formState.errors.duration?.message)}
+          {tAICourseForm(form.formState.errors.duration?.message as string)}
         </p>
       )}
     </>

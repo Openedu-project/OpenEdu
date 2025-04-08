@@ -59,9 +59,9 @@ export function SelectStatusBadge({
         className={cn(
           value && badgeVariants({ variant: statusColorMap[value] }),
           'h-auto w-auto justify-normal gap-1 border py-0.5 pr-1.5 pl-2',
-          'focus:border focus:ring-0 focus:ring-offset-0 focus-visible:outline-none',
+          'focus:border focus:ring-0 focus:ring-offset-0 focus-visible:outline-hidden',
           'focus-visible:ring-transparent focus-visible:ring-offset-0',
-          'focus-within:ring-0 focus:outline-none',
+          'focus-within:ring-0 focus:outline-hidden',
           className
         )}
         {...props}

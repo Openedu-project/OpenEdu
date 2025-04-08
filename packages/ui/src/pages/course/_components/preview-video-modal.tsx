@@ -101,11 +101,11 @@ export default function CoursePreviewModal({ medias, courseOutline, open = false
                 key={item?.id}
                 onClick={() => handleVideoClick(item)}
                 className={cn(
-                  'w-full justify-between gap-2 shadow',
+                  'w-full justify-between gap-2 shadow-sm',
                   videoStatus?.video?.id === item?.id && 'bg-primary/15'
                 )}
               >
-                <VideoSquare color="hsl(var(--muted-foreground))" />
+                <VideoSquare color="var(--muted-foreground)" />
                 <span className="line-clamp-1 w-full flex-1 text-left">{item.title}</span>
                 <span>{convertSecondsToTimeString(item?.duration)}</span>
               </Button>

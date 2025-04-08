@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export function VideoSquare({ width = 24, height = 24, className = '', color = 'hsl(var(--muted))' }: ISvgProps) {
+export function VideoSquare({ width = 24, height = 24, className = '', color = 'var(--muted)' }: ISvgProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

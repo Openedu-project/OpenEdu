@@ -1,6 +1,6 @@
 import { getAllTranslations } from '@oe/api/services/i18n';
+import type { LanguageCode } from '@oe/i18n/languages';
 import { getRequestConfig } from 'next-intl/server';
-import type { LanguageCode } from './languages';
 
 export default getRequestConfig(async ({ requestLocale }) => {
   const locale = await requestLocale;

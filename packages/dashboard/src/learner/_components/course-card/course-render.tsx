@@ -4,11 +4,12 @@ import type { ICourseOutline } from '@oe/api/types/course/course';
 import type { IMyCourseResponse, TMyCourseStatus } from '@oe/api/types/my-learning-space';
 import NotStarted from '@oe/assets/icons/not-started';
 import { CircleProgressBar } from '@oe/ui/components/circle-progress-bar';
+import { CoursePrice } from '@oe/ui/components/course-card';
 import { WishlistButton } from '@oe/ui/components/wishlist-button';
 import { Check } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { KeyedMutator } from 'swr';
-import CoursePrice from '../../../creator/courses/course-table/course-price';
+// import CoursePrice from '../../../creator/courses/course-table/course-price';
 
 export default function CourseRender({
   courseData,

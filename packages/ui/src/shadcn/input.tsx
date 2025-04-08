@@ -1,25 +1,5 @@
-// import { type InputHTMLAttributes, forwardRef } from 'react';
-// import { cn } from '#utils/cn';
-
-// export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {}
-
-// const Input = forwardRef<HTMLInputElement, InputProps>(({ className, type, ...props }, ref) => {
-//   return (
-//     <input
-//       type={type}
-//       className={cn(
-//         'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background [appearance:textfield] file:border-0 file:bg-transparent file:font-medium file:text-foreground file:text-sm placeholder:text-muted-foreground focus:border-0 focus:ring-inset focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none',
-//         className
-//       )}
-//       ref={ref}
-//       {...props}
-//     />
-//   );
-// });
-// Input.displayName = 'Input';
-
 import { Loader2, XCircle } from 'lucide-react';
-import React from 'react';
+import type React from 'react';
 import { cn } from '#utils/cn';
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -28,57 +8,66 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   suffixIcon?: React.ReactNode;
   loading?: boolean;
   wrapperClassName?: string;
+  ref?: React.RefObject<HTMLInputElement | null> | React.Ref<HTMLInputElement>;
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, error, prefixIcon, suffixIcon, loading, wrapperClassName, ...props }, ref) => {
-    return (
-      <div className={cn('relative w-full', wrapperClassName)}>
-        {/* Prefix Icon */}
-        {prefixIcon && (
-          <div className="-translate-y-1/2 absolute top-1/2 left-3 text-muted-foreground">{prefixIcon}</div>
+function Input({
+  className,
+  type,
+  error,
+  prefixIcon,
+  suffixIcon,
+  loading,
+  wrapperClassName,
+  ref,
+  ...props
+}: InputProps) {
+  return (
+    <div className={cn('relative w-full', wrapperClassName)}>
+      {/* Prefix Icon */}
+      {prefixIcon && <div className="-translate-y-1/2 absolute top-1/2 left-3 text-muted-foreground">{prefixIcon}</div>}
+
+      <input
+        type={type}
+        ref={ref}
+        data-slot="input"
+        className={cn(
+          'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background [appearance:textfield] file:border-0 file:bg-transparent file:font-medium file:text-foreground file:text-sm placeholder:text-muted-foreground autofill:shadow-[0_0_0px_1000px_hsl(var(--background))_inset] focus:border-0 focus:ring-inset focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none',
+          'aria-[invalid=true]:border-destructive aria-[invalid=true]:focus-visible:ring-destructive',
+          // Ngăn chặn zoom trên iOS khi focus
+          // biome-ignore lint/nursery/useSortedClasses: <explanation>
+          '@supports (-webkit-touch-callout: none) { font-size: 16px }',
+          // Add padding when icons are present
+          prefixIcon && 'pl-10',
+          suffixIcon && 'pr-10',
+          error && 'border-destructive focus-visible:ring-destructive',
+          // Additional padding for error icon
+          error && !suffixIcon && 'pr-10',
+          className
         )}
+        {...props}
+      />
 
-        <input
-          type={type}
-          className={cn(
-            'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background [appearance:textfield] file:border-0 file:bg-transparent file:font-medium file:text-foreground file:text-sm placeholder:text-muted-foreground autofill:shadow-[0_0_0px_1000px_hsl(var(--background))_inset] focus:border-0 focus:ring-inset focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none',
-            'aria-[invalid=true]:border-destructive aria-[invalid=true]:focus-visible:ring-destructive',
-            // Add padding when icons are present
-            prefixIcon && 'pl-10',
-            suffixIcon && 'pr-10',
-            error && 'border-destructive focus-visible:ring-destructive',
-            // Additional padding for error icon
-            error && !suffixIcon && 'pr-10',
-            className
-          )}
-          ref={ref}
-          {...props}
-        />
+      {/* Suffix Icon */}
+      {suffixIcon && (
+        <div className="-translate-y-1/2 absolute top-1/2 right-3 text-muted-foreground">{suffixIcon}</div>
+      )}
 
-        {/* Suffix Icon */}
-        {suffixIcon && (
-          <div className="-translate-y-1/2 absolute top-1/2 right-3 text-muted-foreground">{suffixIcon}</div>
-        )}
+      {/* Error Icon */}
+      {error && !loading && (
+        <div className="-translate-y-1/2 absolute top-1/2 right-3 text-destructive">
+          <XCircle className="h-4 w-4" />
+        </div>
+      )}
 
-        {/* Error Icon */}
-        {error && !loading && (
-          <div className="-translate-y-1/2 absolute top-1/2 right-3 text-destructive">
-            <XCircle className="h-4 w-4" />
-          </div>
-        )}
-
-        {/* Loading Spinner */}
-        {loading && (
-          <div className="-translate-y-1/2 absolute top-1/2 right-3 text-muted-foreground">
-            <Loader2 className="h-4 w-4 animate-spin" />
-          </div>
-        )}
-      </div>
-    );
-  }
-);
-
-Input.displayName = 'Input';
+      {/* Loading Spinner */}
+      {loading && (
+        <div className="-translate-y-1/2 absolute top-1/2 right-3 text-muted-foreground">
+          <Loader2 className="h-4 w-4 animate-spin" />
+        </div>
+      )}
+    </div>
+  );
+}
 
 export { Input };

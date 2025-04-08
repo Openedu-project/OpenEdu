@@ -63,7 +63,7 @@ export function TreeItem<TreeItem>({
   }, [value]);
 
   return (
-    <div className={cn('flex w-full items-center gap-2 bg-background p-2', dragOverlay && 'bg-background shadow')}>
+    <div className={cn('flex w-full items-center gap-2 bg-background p-2', dragOverlay && 'bg-background shadow-sm')}>
       {dragable && <DndSortableDragButton className="group-hover/field:opacity-100" />}
       {collapsible && <DndSortableCollapseButton />}
       {editable && (isEditing || isInvalid) ? (
@@ -108,7 +108,12 @@ export function TreeItem<TreeItem>({
           variant="ghost"
           size="icon"
           className="h-6 w-6"
-          onClick={() => onAddChild?.({ id: Math.random().toString(), label: `New item ${Math.random().toString()}` })}
+          onClick={() =>
+            onAddChild?.({
+              id: Math.random().toString(),
+              label: `New item ${Math.random().toString()}`,
+            })
+          }
         >
           <PlusIcon className="h-4 w-4" />
         </Button>

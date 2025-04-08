@@ -5,11 +5,8 @@ import { Slot } from '@radix-ui/react-slot';
 import {
   type ComponentProps,
   type ComponentPropsWithoutRef,
-  type ComponentRef,
-  type HTMLAttributes,
   type ReactNode,
   createContext,
-  forwardRef,
   useContext,
   useId,
 } from 'react';
@@ -30,7 +27,7 @@ import { useFormStatus } from 'react-dom';
 import { Label, LabelWithInfo } from '#shadcn/label';
 import { cn } from '#utils/cn';
 import { getFormErrorMessage, parseFormMessage } from '#utils/form-message';
-import { Button, type ButtonProps } from './button';
+import { Button } from './button';
 
 const Form = FormProvider;
 
@@ -85,104 +82,113 @@ type FormItemContextValue = {
 
 const FormItemContext = createContext<FormItemContextValue>({} as FormItemContextValue);
 
-const FormItem = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => {
+function FormItem({ className, ...props }: ComponentProps<'div'>) {
   const id = useId();
 
   return (
     <FormItemContext.Provider value={{ id }}>
-      <div ref={ref} className={cn('space-y-2', className)} {...props} />
+      <div className={cn('space-y-2', className)} data-slot="form-item" {...props} />
     </FormItemContext.Provider>
   );
-});
-FormItem.displayName = 'FormItem';
+}
 
-const FormLabel = forwardRef<ComponentRef<typeof Root>, ComponentPropsWithoutRef<typeof Root>>(
-  ({ className, ...props }, ref) => {
-    const { error, formItemId } = useFormField();
+function FormLabel({ className, ...props }: ComponentProps<typeof Root>) {
+  const { error, formItemId } = useFormField();
 
-    return <Label ref={ref} className={cn(error && 'text-destructive', className)} htmlFor={formItemId} {...props} />;
+  return (
+    <Label
+      className={cn(error && 'text-destructive', className)}
+      htmlFor={formItemId}
+      data-slot="form-label"
+      {...props}
+    />
+  );
+}
+
+function FormControl({ ...props }: ComponentProps<typeof Slot>) {
+  const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
+
+  return (
+    <Slot
+      id={formItemId}
+      aria-describedby={error ? `${formDescriptionId} ${formMessageId}` : `${formDescriptionId}`}
+      aria-invalid={!!error}
+      data-slot="form-control"
+      {...props}
+    />
+  );
+}
+
+function FormDescription({ className, ...props }: ComponentProps<'p'>) {
+  const { formDescriptionId } = useFormField();
+
+  return (
+    <p
+      id={formDescriptionId}
+      className={cn('text-muted-foreground text-sm', className)}
+      data-slot="form-description"
+      {...props}
+    />
+  );
+}
+
+function FormMessage({ className, children, ...props }: ComponentProps<'p'>) {
+  const { error, formMessageId } = useFormField();
+  const t = useTranslations();
+  const messageObject = getFormErrorMessage(error);
+  const message = messageObject?.message ? parseFormMessage(messageObject.message) : undefined;
+  const body = message
+    ? messageObject?.count
+      ? `${t(message.key as string, message)} (${messageObject?.count})`
+      : t(message.key as string, message)
+    : children;
+
+  if (!body) {
+    return null;
   }
-);
-FormLabel.displayName = 'FormLabel';
 
-const FormControl = forwardRef<ComponentRef<typeof Slot>, ComponentPropsWithoutRef<typeof Slot>>(
-  ({ ...props }, ref) => {
-    const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
+  return (
+    <p
+      id={formMessageId}
+      className={cn('font-medium text-destructive text-sm', className)}
+      data-slot="form-message"
+      {...props}
+    >
+      {body}
+    </p>
+  );
+}
 
-    return (
-      <Slot
-        ref={ref}
-        id={formItemId}
-        aria-describedby={error ? `${formDescriptionId} ${formMessageId}` : `${formDescriptionId}`}
-        aria-invalid={!!error}
-        {...props}
-      />
-    );
-  }
-);
-FormControl.displayName = 'FormControl';
-
-const FormDescription = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagraphElement>>(
-  ({ className, ...props }, ref) => {
-    const { formDescriptionId } = useFormField();
-
-    return <p ref={ref} id={formDescriptionId} className={cn('text-muted-foreground text-sm', className)} {...props} />;
-  }
-);
-FormDescription.displayName = 'FormDescription';
-
-const FormMessage = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagraphElement>>(
-  ({ className, children, ...props }, ref) => {
-    const { error, formMessageId } = useFormField();
-    const t = useTranslations();
-    const messageObject = getFormErrorMessage(error);
-    const message = messageObject?.message ? parseFormMessage(messageObject.message) : undefined;
-    const body = message
-      ? messageObject?.count
-        ? `${t(message.key, message)} (${messageObject?.count})`
-        : t(message.key, message)
-      : children;
-
-    if (!body) {
-      return null;
-    }
-
-    return (
-      <p ref={ref} id={formMessageId} className={cn('font-medium text-destructive text-sm', className)} {...props}>
-        {body}
-      </p>
-    );
-  }
-);
-FormMessage.displayName = 'FormMessage';
-
-const FormControlSlot = forwardRef<
-  ComponentRef<typeof Slot>,
-  ComponentPropsWithoutRef<typeof Slot> & {
-    field: ControllerRenderProps<FieldValues, string>;
-  }
->(({ field, ...props }, ref) => {
+function FormControlSlot({
+  field,
+  ...props
+}: ComponentProps<typeof Slot> & {
+  field: ControllerRenderProps<FieldValues, string>;
+}) {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
 
   return (
     <Slot
       {...field}
-      ref={ref}
       id={formItemId}
       aria-describedby={error ? `${formDescriptionId} ${formMessageId}` : `${formDescriptionId}`}
       aria-invalid={!!error}
+      data-slot="form-control"
       {...props}
     />
   );
-});
+}
 
-FormControlSlot.displayName = 'FormControlSlot';
-
-const FormLabelInfo = ({ className, children, ref, ...props }: ComponentProps<typeof LabelWithInfo>) => {
+const FormLabelInfo = ({ className, children, ...props }: ComponentProps<typeof LabelWithInfo>) => {
   const { error, formItemId } = useFormField();
 
   return (
-    <LabelWithInfo ref={ref} className={cn(error && 'text-destructive', className)} htmlFor={formItemId} {...props}>
+    <LabelWithInfo
+      className={cn(error && 'text-destructive', className)}
+      htmlFor={formItemId}
+      data-slot="form-label-info"
+      {...props}
+    >
       {children}
     </LabelWithInfo>
   );
@@ -205,88 +211,81 @@ export type FormFieldWithLabelProps = ComponentPropsWithoutRef<typeof Slot> &
     }) => ReactNode;
   };
 
-const FormFieldWithLabel = forwardRef<ComponentRef<typeof Slot>, FormFieldWithLabelProps>(
-  (
-    {
-      name,
-      label,
-      form,
-      infoText,
-      description,
-      className,
-      labelClassName,
-      required,
-      isToggleField,
-      render,
-      formMessageClassName,
-      showErrorMessage = true,
-      ...props
-    },
-    ref
-  ) => {
-    const formContext = useFormContext();
+function FormFieldWithLabel({
+  name,
+  label,
+  form,
+  infoText,
+  description,
+  className,
+  labelClassName,
+  required,
+  isToggleField,
+  render,
+  formMessageClassName,
+  showErrorMessage = true,
+  ...props
+}: FormFieldWithLabelProps) {
+  const formContext = useFormContext();
 
-    const renderLabel = () => (
-      <FormLabelInfo
-        infoText={infoText}
-        className={cn(labelClassName, isToggleField && 'cursor-pointer')}
-        data-field={name}
-      >
-        {label}
-        {required && <span className="ml-1 text-destructive">*</span>}
-      </FormLabelInfo>
-    );
+  const renderLabel = () => (
+    <FormLabelInfo
+      infoText={infoText}
+      className={cn(labelClassName, isToggleField && 'cursor-pointer')}
+      data-field={name}
+    >
+      {label}
+      {required && <span className="ml-1 text-destructive">*</span>}
+    </FormLabelInfo>
+  );
 
-    const renderControl = (field: ControllerRenderProps<FieldValues, string>) => (
-      <FormControlSlot field={field} ref={ref} {...props}>
-        {typeof render === 'function' ? render({ field }) : props.children}
-      </FormControlSlot>
-    );
+  const renderControl = (field: ControllerRenderProps<FieldValues, string>) => (
+    <FormControlSlot field={field} {...props} data-slot="form-field-with-label">
+      {typeof render === 'function' ? render({ field }) : props.children}
+    </FormControlSlot>
+  );
 
-    return (
-      <FormField
-        control={form?.control ?? formContext.control}
-        name={name}
-        render={({ field }) => {
-          return (
-            <FormItem
-              className={cn(isToggleField && 'flex flex-row items-center space-x-3 space-y-0 rounded-md', className)}
-            >
-              {isToggleField ? (
-                <>
-                  {renderControl(field)}
-                  <div className="space-y-1 leading-none">
-                    {label && renderLabel()}
-                    {description && <FormDescription>{description}</FormDescription>}
-                  </div>
-                </>
-              ) : (
-                <>
+  return (
+    <FormField
+      control={form?.control ?? formContext.control}
+      name={name}
+      render={({ field }) => {
+        return (
+          <FormItem
+            className={cn(isToggleField && 'flex flex-row items-center space-x-3 space-y-0 rounded-md', className)}
+          >
+            {isToggleField ? (
+              <>
+                {renderControl(field)}
+                <div className="space-y-1 leading-none">
                   {label && renderLabel()}
-                  {renderControl(field)}
                   {description && <FormDescription>{description}</FormDescription>}
-                </>
-              )}
-              {showErrorMessage && <FormMessage className={formMessageClassName} />}
-            </FormItem>
-          );
-        }}
-      />
-    );
-  }
-);
+                </div>
+              </>
+            ) : (
+              <>
+                {label && renderLabel()}
+                {renderControl(field)}
+                {description && <FormDescription>{description}</FormDescription>}
+              </>
+            )}
+            {showErrorMessage && <FormMessage className={formMessageClassName} />}
+          </FormItem>
+        );
+      }}
+    />
+  );
+}
 
-const FormSubmitButton = forwardRef<HTMLButtonElement, ButtonProps & { label: string }>(({ label, ...props }, ref) => {
+function FormSubmitButton({ label, ...props }: ComponentProps<typeof Button> & { label: string }) {
   const { pending } = useFormStatus();
 
   return (
-    <Button type="submit" disabled={pending} loading={pending} ref={ref} {...props}>
+    <Button type="submit" disabled={pending} loading={pending} data-slot="submit" {...props}>
       {label}
     </Button>
   );
-});
-
-FormSubmitButton.displayName = 'FormSubmitButton';
+}
 
 /** */
 
@@ -317,85 +316,78 @@ export type GenericFormFieldWithLabelProps<TFieldValue = any> = Omit<
   };
 
 // Create a generic version of FormFieldWithLabel
-const GenericFormFieldWithLabel = forwardRef<ComponentRef<typeof Slot>, GenericFormFieldWithLabelProps>(
-  (
-    {
-      name,
-      label,
-      form,
-      infoText,
-      description,
-      className,
-      labelClassName,
-      required,
-      isToggleField,
-      render,
-      formMessageClassName,
-      showErrorMessage = true,
-      children,
-      ...props
-    },
-    ref
-  ) => {
-    const formContext = useFormContext();
+function GenericFormFieldWithLabel({
+  name,
+  label,
+  form,
+  infoText,
+  description,
+  className,
+  labelClassName,
+  required,
+  isToggleField,
+  render,
+  formMessageClassName,
+  showErrorMessage = true,
+  children,
+  ...props
+}: GenericFormFieldWithLabelProps) {
+  const formContext = useFormContext();
 
-    const renderLabel = () => (
-      <FormLabelInfo
-        infoText={infoText}
-        className={cn(labelClassName, isToggleField && 'cursor-pointer')}
-        data-field={name}
-      >
-        {label}
-        {required && <span className="ml-1 text-destructive">*</span>}
-      </FormLabelInfo>
-    );
+  const renderLabel = () => (
+    <FormLabelInfo
+      infoText={infoText}
+      className={cn(labelClassName, isToggleField && 'cursor-pointer')}
+      data-field={name}
+    >
+      {label}
+      {required && <span className="ml-1 text-destructive">*</span>}
+    </FormLabelInfo>
+  );
 
-    const renderControl = (field: ControllerRenderProps<FieldValues, string>) => (
-      <Slot
-        {...field}
-        ref={ref}
-        id={`${name}-form-item`}
-        aria-describedby={`${name}-form-item-description ${name}-form-item-message`}
-        {...props}
-      >
-        {typeof render === 'function' ? render({ field }) : children}
-      </Slot>
-    );
+  const renderControl = (field: ControllerRenderProps<FieldValues, string>) => (
+    <Slot
+      {...field}
+      id={`${name}-form-item`}
+      aria-describedby={`${name}-form-item-description ${name}-form-item-message`}
+      data-slot="generic-form-field"
+      {...props}
+    >
+      {typeof render === 'function' ? render({ field }) : children}
+    </Slot>
+  );
 
-    return (
-      <FormField
-        control={form?.control ?? formContext.control}
-        name={name}
-        render={({ field }) => {
-          return (
-            <FormItem
-              className={cn(isToggleField && 'flex flex-row items-center space-x-3 space-y-0 rounded-md', className)}
-            >
-              {isToggleField ? (
-                <>
-                  {renderControl(field)}
-                  <div className="space-y-1 leading-none">
-                    {label && renderLabel()}
-                    {description && <FormDescription>{description}</FormDescription>}
-                  </div>
-                </>
-              ) : (
-                <>
+  return (
+    <FormField
+      control={form?.control ?? formContext.control}
+      name={name}
+      render={({ field }) => {
+        return (
+          <FormItem
+            className={cn(isToggleField && 'flex flex-row items-center space-x-3 space-y-0 rounded-md', className)}
+          >
+            {isToggleField ? (
+              <>
+                {renderControl(field)}
+                <div className="space-y-1 leading-none">
                   {label && renderLabel()}
-                  {renderControl(field)}
                   {description && <FormDescription>{description}</FormDescription>}
-                </>
-              )}
-              {showErrorMessage && <FormMessage className={formMessageClassName} />}
-            </FormItem>
-          );
-        }}
-      />
-    );
-  }
-);
-
-GenericFormFieldWithLabel.displayName = 'GenericFormFieldWithLabel';
+                </div>
+              </>
+            ) : (
+              <>
+                {label && renderLabel()}
+                {renderControl(field)}
+                {description && <FormDescription>{description}</FormDescription>}
+              </>
+            )}
+            {showErrorMessage && <FormMessage className={formMessageClassName} />}
+          </FormItem>
+        );
+      }}
+    />
+  );
+}
 
 export function createTypedFormField<T>() {
   return function TypedFormField(props: GenericFormFieldWithLabelProps<T>) {

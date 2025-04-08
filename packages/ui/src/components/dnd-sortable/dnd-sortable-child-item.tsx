@@ -27,7 +27,7 @@ export function DndSortableChildItem<ChildItemType>({
   return (
     <DndSortableChildItemContext.Provider value={{ attributes, listeners, setNodeRef }}>
       <Slot
-        className={cn(className, isDragging && 'relative z-50', dragOverlay && 'bg-background shadow')}
+        className={cn(className, isDragging && 'relative z-50', dragOverlay && 'bg-background shadow-sm')}
         style={itemStyle}
         ref={dragOverlay ? undefined : setNodeRef}
       >

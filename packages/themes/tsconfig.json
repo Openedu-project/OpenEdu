@@ -4,6 +4,6 @@
     "baseUrl": ".",
     "types": ["node", "@oe/types/global.d.ts", "@types/wicg-file-system-access", "next/image-types/global"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", ".next/types/**/*.ts", "tailwind.config.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

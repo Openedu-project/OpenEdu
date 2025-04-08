@@ -6,7 +6,7 @@ import { SaveButton } from './_components/save-button';
 export default function LanguagesSettingsPage() {
   return (
     <>
-      <div className="space-y-4 rounded bg-background p-4">
+      <div className="space-y-4 rounded-sm bg-background p-4">
         <LanguageSelector />
         <DefaultLanguage />
         <SaveButton />

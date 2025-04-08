@@ -250,7 +250,7 @@ export default function Translations({ className }: TranslationsProps) {
   };
 
   return (
-    <div className="flex-1 space-y-4 rounded bg-background p-4">
+    <div className="flex-1 space-y-4 rounded-sm bg-background p-4">
       <Table
         columns={columns}
         data={translations ?? []}
