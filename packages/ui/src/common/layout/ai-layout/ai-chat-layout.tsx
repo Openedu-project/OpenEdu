@@ -1,13 +1,9 @@
 import { getAIModels } from '@oe/api/services/conversation';
 import type { TAgentType } from '@oe/api/types/conversation';
 import { isLogin } from '@oe/api/utils/auth';
-import { AI_ROUTES } from '@oe/core/utils/routes';
-import { MessageSquareDiff } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
-import { Link } from '#common/navigation';
-import { AIHistoryModal, AIModelDropdown, AI_SIDEBAR } from '#components/conversation';
-import { Tooltip } from '#shadcn/tooltip';
+import { AIModelDropdown } from '#components/conversation';
 import { cn } from '#utils/cn';
 
 type Props = {
@@ -16,35 +12,12 @@ type Props = {
   agent: TAgentType;
 };
 
-const ActionTooltip = ({
-  children,
-  label,
-  className,
-}: {
-  children: ReactNode;
-  label: string;
-  className?: string;
-}) => (
-  <Tooltip
-    content={label}
-    contentProps={{
-      side: 'left',
-      className: 'mbutton-bold10 rounded-full text-primary',
-    }}
-    className={cn('!border-0 rounded-full p-1', className)}
-  >
-    {children}
-  </Tooltip>
-);
-
-export default async function AIChatLayout({ children, className, agent }: Props) {
-  const [AIChatModels, login, tAI] = await Promise.all([
+export default async function AIChatLayout({ children, className }: Props) {
+  const [AIChatModels, login] = await Promise.all([
     getAIModels(undefined, { next: { tags: ['get_ai_models'] } }),
     isLogin(),
     getTranslations('aiAssistant'),
   ]);
-
-  const agentLink = AI_SIDEBAR().find(data => data.agent === agent)?.href;
 
   return (
     <div
@@ -58,22 +31,6 @@ export default async function AIChatLayout({ children, className, agent }: Props
           <AIModelDropdown AIModels={AIChatModels} isLogin={login} className="shrink-0 lg:mx-auto" />
         )}
         <div className="flex grow flex-col overflow-hidden">{children}</div>
-      </div>
-      <div className="fixed right-2 flex gap-2 rounded-xl bg-background p-2 shadow-shadow-8 lg:flex-col">
-        <ActionTooltip label={tAI('newChat')}>
-          <Link
-            size="icon"
-            variant="default"
-            className="rounded-full hover:no-underline"
-            activeClassName=""
-            href={agentLink ?? AI_ROUTES.chat}
-          >
-            <MessageSquareDiff size={20} />
-          </Link>
-        </ActionTooltip>
-        <ActionTooltip label={tAI('history')}>
-          <AIHistoryModal isLogin={login} />
-        </ActionTooltip>
       </div>
     </div>
   );

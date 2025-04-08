@@ -1,6 +1,5 @@
 'use client';
 import type { TAgentType } from '@oe/api/types/conversation';
-import type { IFileResponse } from '@oe/api/types/file';
 import { isLogin } from '@oe/api/utils/auth';
 import type { z } from '@oe/api/utils/zod';
 import { GENERATING_STATUS } from '@oe/core/utils/constants';
@@ -13,9 +12,9 @@ import { useLoginRequiredStore } from '#components/login-required-modal';
 import { Card } from '#shadcn/card';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
-import { DESKTOP_BREAKPOINT, INPUT_BUTTON } from '../constants';
-import type { MessageFormValues, MessageInputProps } from '../type';
-import { chatSchema } from '../utils';
+import { INPUT_BUTTON } from '../constants';
+import type { MessageFormValues, MessageInputProps, TFileResponse } from '../type';
+import { chatSchema, useIsDesktop } from '../utils';
 import { MessageInputAction } from './message-input-action';
 import { InputField } from './message-input-field';
 import { InputOption } from './message-input-option';
@@ -32,6 +31,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
   resetOnSuccess = false,
   type,
   autoSend,
+  chatId,
 }) => {
   const tAI = useTranslations('aiAssistant');
   const { selectedModel, selectedAgent, setSelectedAgent, status } = useConversationStore();
@@ -40,15 +40,8 @@ const MessageInput: React.FC<MessageInputProps> = ({
 
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const { setLoginRequiredModal } = useLoginRequiredStore();
-  const [isDesktop, setIsDesktop] = useState(false);
+  const isDesktop = useIsDesktop();
   const isGenerating = useMemo(() => GENERATING_STATUS.includes(status ?? ''), [status]);
-
-  useEffect(() => {
-    const checkDesktop = () => setIsDesktop(window?.innerWidth >= DESKTOP_BREAKPOINT);
-    checkDesktop();
-    window.addEventListener('resize', checkDesktop);
-    return () => window.removeEventListener('resize', checkDesktop);
-  }, []);
 
   useEffect(() => {
     if (!(inputRef.current && isDesktop) || document.activeElement === inputRef.current) {
@@ -57,7 +50,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
     inputRef.current.focus();
     inputRef.current.selectionStart = inputRef.current.value.length;
     inputRef.current.selectionEnd = inputRef.current.value.length;
-  });
+  }, [isDesktop]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -119,7 +112,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
     if (e.key === 'Enter' && !e.shiftKey && (!isGenerating || autoSend)) {
       e.preventDefault();
       void form.trigger();
-      if (Object.keys(form.formState.errors)?.length === 0) {
+      if (form.formState?.isValid || autoSend) {
         void form.handleSubmit(handleSubmit)();
         resetOnSuccess && form.reset();
       }
@@ -158,7 +151,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
       await sendMessage({
         messageInput: values.message,
         type: selectedAgent,
-        files: (values as unknown as { files: IFileResponse[] }).files,
+        files: (values as unknown as { files: TFileResponse[] }).files,
         message_id: messageId,
       });
       inputRef.current?.focus();
@@ -191,14 +184,14 @@ const MessageInput: React.FC<MessageInputProps> = ({
         schema={chatSchema}
         onSubmit={handleSubmit}
         useFormProps={{ defaultValues }}
-        className="w-full"
+        className="w-full space-y-1"
       >
         {({ loading, form }) => {
           const filesData = form.watch('files');
           return (
             <Card
               className={cn(
-                'relative flex min-h-40 flex-col gap-1 rounded-3xl bg-background p-2 pt-2 shadow-sm md:p-4',
+                'relative flex flex-col gap-1 rounded-3xl bg-background p-2 pt-2 shadow md:min-h-40 md:p-4',
                 className
               )}
               onClick={() => {
@@ -206,8 +199,9 @@ const MessageInput: React.FC<MessageInputProps> = ({
               }}
             >
               {Array.isArray(filesData) && (filesData?.length ?? 0) > 0 && (
-                <PreviewFile form={form} filesData={filesData} />
+                <PreviewFile form={form} filesData={filesData as unknown as TFileResponse[]} chatId={chatId} />
               )}
+
               <InputField
                 type={type ?? selectedAgent}
                 form={form}

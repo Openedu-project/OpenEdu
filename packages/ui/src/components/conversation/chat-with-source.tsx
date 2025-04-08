@@ -58,7 +58,7 @@ export function ChatWithSource({ id, initData, agent }: IChatWindowProps) {
       {isDesktop ? (
         <div
           className={cn(
-            'relative mt-8 ml-2 hidden shrink-0 overflow-visible lg:w-[300px] xl:w-[400px]',
+            'relative ml-2 hidden shrink-0 overflow-visible lg:w-[300px] xl:w-[400px]',
             openWebSource.isOpen && 'block'
           )}
         >

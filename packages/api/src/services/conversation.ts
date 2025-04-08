@@ -4,6 +4,8 @@ import type {
   IConversation,
   IConversationDetails,
   IConversationRequest,
+  IDocumentCanelRequest,
+  IDocumentRequest,
   IMessage,
   IPromptsResponse,
   IUpdateConversationPayload,
@@ -120,4 +122,26 @@ export const getPrompts = async (
   } catch {
     return undefined;
   }
+};
+
+export const postEmbedDocument = async (url: string | undefined, payload: IDocumentRequest) => {
+  try {
+    const response = await postAPI<{ message: string }, IDocumentRequest | undefined>(
+      url ?? API_ENDPOINT.COM_CHANNELS_DOCUMENTS,
+      payload
+    );
+
+    return response.data;
+  } catch {
+    return undefined;
+  }
+};
+
+export const cancelEmbedDocument = async (url: string | undefined, payload: IDocumentCanelRequest) => {
+  const response = await postAPI<{ message: string }, IDocumentCanelRequest | undefined>(
+    url ?? API_ENDPOINT.COM_CHANNELS_DOCUMENTS_CANCEL,
+    payload
+  );
+
+  return response.data;
 };

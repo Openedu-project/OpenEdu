@@ -17,10 +17,15 @@ const getChatMessages = async (id?: string) => {
   }
 
   try {
-    const res = await getConversationDetail(undefined, id, {
-      per_page: 10,
-      sort: 'create_at desc',
-    });
+    const res = await getConversationDetail(
+      undefined,
+      id,
+      {
+        per_page: 10,
+        sort: 'create_at desc',
+      },
+      { cache: 'no-store', next: { revalidate: 0 } }
+    );
     return res;
   } catch (error) {
     console.error(error);

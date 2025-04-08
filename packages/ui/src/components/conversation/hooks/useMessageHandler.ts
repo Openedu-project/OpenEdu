@@ -44,7 +44,7 @@ export const useSendMessageHandler = (
       const prevMessage = messages;
       const newMessage: IMessage = {
         content: messageInput,
-        attachments: files,
+        attachments: files?.filter(f => f.status === 'finished'),
         id: messageID,
         conversation_id: (id as string) ?? 'new-chat',
         create_at: Date.now(),
@@ -85,7 +85,7 @@ export const useSendMessageHandler = (
           ai_model_id: currentSelectedModel?.id,
           content: messageInput,
           content_type: 'text',
-          attachment_ids: files?.map(image => image.id),
+          attachment_ids: files?.filter(f => f.status === 'finished').map(f => f.id),
           ai_conversation_id: id as string,
           message_id,
           extended_thinking: thinking,

@@ -1,5 +1,5 @@
-import type { IMessageData } from '@oe/api/types/conversation';
 import type { IAICourseStatus } from '@oe/api/types/course/ai-course';
+import type { IMessageData } from './conversation';
 import type { INotificationItem } from './notification';
 import type { IUser } from './user';
 
@@ -80,6 +80,12 @@ export interface IPaymentSocket {
   order_status: string;
 }
 
+export interface IAIDocumentStatusData {
+  file_id: string;
+  conversation_id: string;
+  status: 'completed' | 'failed' | 'generating';
+}
+
 export type EventData =
   | ICourseEventData
   | IBadgeEventData
@@ -88,7 +94,8 @@ export type EventData =
   | IAIBlogStatusData
   | IAICourseStatusData
   | IPaymentSocket
-  | IMessageData;
+  | IMessageData
+  | IAIDocumentStatusData;
 
 export interface Broadcast {
   omit_user_ids: string[];
@@ -116,8 +123,17 @@ export interface ISocketStore {
   certificateData: ISocketRes<ICertificateEventData> | null;
   AIBlogStatusData: ISocketRes<IAIBlogStatusData> | null;
   AICourseStatusData: ISocketRes<IAICourseStatusData> | null;
+  AIDocumentStatusData: ISocketRes<IAIDocumentStatusData> | null;
   setSocketData: <T extends EventData>(data: ISocketRes<T>) => void;
   resetSocketData: (
-    key: 'badge' | 'course' | 'payment' | 'notification' | 'certificate' | 'ai_blog_status' | 'ai_course_status'
+    key:
+      | 'badge'
+      | 'course'
+      | 'payment'
+      | 'notification'
+      | 'certificate'
+      | 'ai_blog_status'
+      | 'ai_course_status'
+      | 'ai_chat_document_status'
   ) => void;
 }

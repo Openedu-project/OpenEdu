@@ -57,10 +57,18 @@ export function BlogCard({
       e.preventDefault();
       if (typeof window !== 'undefined') {
         if (!blog?.org || blog?.org?.domain === window.location.hostname) {
-          router.push(buildUrl({ endpoint: BLOG_ROUTES.authorBlog, params: { username: blog?.author?.username } }));
+          router.push(
+            buildUrl({
+              endpoint: BLOG_ROUTES.authorBlog,
+              params: { username: blog?.author?.username },
+            })
+          );
         } else {
           window.open(
-            `https://${blog?.org?.domain}/${blog?.locale}${buildUrl({ endpoint: BLOG_ROUTES.authorBlog, params: { username: blog?.author?.username } })}`,
+            `https://${blog?.org?.domain}/${blog?.locale}${buildUrl({
+              endpoint: BLOG_ROUTES.authorBlog,
+              params: { username: blog?.author?.username },
+            })}`,
             '_blank'
           );
         }
@@ -96,7 +104,7 @@ export function BlogCard({
         <Image
           src={blog?.banner?.url}
           alt={blog?.title ?? 'blog-thumbnail'}
-          className="w-full flex-0 rounded"
+          className="w-full shrink-0 rounded"
           fill
           aspectRatio="16:9"
           containerHeight="auto"

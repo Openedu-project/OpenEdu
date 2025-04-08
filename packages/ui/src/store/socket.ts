@@ -2,6 +2,7 @@ import type {
   EventData,
   IAIBlogStatusData,
   IAICourseStatusData,
+  IAIDocumentStatusData,
   IBadgeEventData,
   ICertificateEventData,
   ICourseEventData,
@@ -18,7 +19,8 @@ type ISocketKey =
   | 'notification'
   | 'certificate'
   | 'ai_blog_status'
-  | 'ai_course_status';
+  | 'ai_course_status'
+  | 'ai_chat_document_status';
 
 export const useSocketStore = create<ISocketStore>(set => {
   return {
@@ -30,6 +32,7 @@ export const useSocketStore = create<ISocketStore>(set => {
     AIBlogStatusData: null,
     AICourseStatusData: null,
     messageData: [],
+    AIDocumentStatusData: null,
     setSocketData: <T extends EventData>(data: ISocketRes<T>) =>
       set(state => {
         switch (data.event) {
@@ -53,6 +56,9 @@ export const useSocketStore = create<ISocketStore>(set => {
           }
           case 'ai_course_status': {
             return { ...state, AICourseStatusData: data as ISocketRes<IAICourseStatusData> };
+          }
+          case 'ai_chat_document_status': {
+            return { ...state, AIDocumentStatusData: data as ISocketRes<IAIDocumentStatusData> };
           }
 
           default: {
@@ -84,6 +90,9 @@ export const useSocketStore = create<ISocketStore>(set => {
           }
           case 'ai_course_status': {
             return { ...state, AICourseStatusData: null };
+          }
+          case 'ai_chat_document_status': {
+            return { ...state, AIDocumentStatusData: null };
           }
 
           default: {
