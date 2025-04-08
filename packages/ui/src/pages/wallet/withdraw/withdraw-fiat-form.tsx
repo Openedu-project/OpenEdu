@@ -98,14 +98,14 @@ export const WithdrawFiatForm = () => {
                     placeholder={t('withdrawPage.form.selectBankAccount')}
                     options={
                       bankAccounts?.results?.map(bankAccount => ({
-                        label: `${bankAccount.value.bank_name} - ${bankAccount.value.account_number}`,
+                        label: `${bankAccount.value.bank_name} - ${bankAccount.value.account_number} - ${bankAccount.value.account_name}`,
                         value: bankAccount.id,
                         id: bankAccount.id,
                       })) ?? []
                     }
                     displayValue={value => {
                       const bankAccount = bankAccounts?.results?.find(bankAccount => bankAccount.id === value);
-                      return `${bankAccount?.value.bank_name} - ${bankAccount?.value.account_number}`;
+                      return `${bankAccount?.value.bank_name} - ${bankAccount?.value.account_number} - ${bankAccount?.value.account_name}`;
                     }}
                   />
                 )}
@@ -133,7 +133,7 @@ export const WithdrawFiatForm = () => {
                       type="button"
                       variant="ghost"
                       className="mcaption-semibold12 mr-[2px] h-9 bg-muted text-primary uppercase hover:text-primary"
-                      onClick={() => field.onChange(availableBalance)}
+                      onClick={() => field.onChange(availableBalance.toString())}
                     >
                       {t('withdrawPage.button.max')}
                     </Button>
@@ -166,7 +166,9 @@ export const WithdrawFiatForm = () => {
             <Modal
               title={t('withdrawPage.modal.fiatTitle')}
               description={t('withdrawPage.modal.fiatDesc', {
-                amount: formatCurrency(Number(watch('amount'))),
+                amount: formatCurrency(Number(watch('amount')), {
+                  currency,
+                }),
               })}
               open={isOpen}
               onClose={() => setIsOpen(false)}
