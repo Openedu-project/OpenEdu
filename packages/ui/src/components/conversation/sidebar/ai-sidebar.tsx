@@ -58,7 +58,7 @@ export function AISidebar({
               variant="default"
               className="m-auto flex rounded-full border border-2 bg-ai-more-feature-gradient hover:border-primary hover:bg-ai-more-feature-gradient"
               activeClassName=""
-              href={AI_ROUTES.chat}
+              href="#"
             >
               <Direct width={16} height={16} />
             </Link>

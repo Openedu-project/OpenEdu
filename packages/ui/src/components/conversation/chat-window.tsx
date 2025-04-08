@@ -45,7 +45,7 @@ export function ChatWindow({ id, initData, agent, className }: IChatWindowProps)
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     resetOpenWebSource();
-
+    console.log('initData :>> ', initData);
     if (!isNewChat) {
       setSelectedAgent(agent);
       resetGenMessage();

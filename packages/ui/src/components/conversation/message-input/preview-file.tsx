@@ -223,9 +223,9 @@ const HitboxLayer = ({
       AIDocumentStatusData.data?.status !== "generating"
     ) {
       const fileStatus =
-        AIDocumentStatusData.data?.status === "completed"
-          ? "finished"
-          : "error";
+        AIDocumentStatusData.data?.status === "failed"
+          ? "error"
+          : AIDocumentStatusData.data?.status;
       updateStatus?.(fileStatus);
       setStatus(fileStatus);
       resetSocketData("ai_chat_document_status");

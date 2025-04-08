@@ -3,7 +3,7 @@ import type { Dispatch, InputHTMLAttributes, MouseEvent, RefObject, SetStateActi
 import type { ReactNode } from 'react';
 import type { ReactCropProps } from 'react-image-crop';
 
-export type FileStatusType = 'inited' | 'uploading' | 'error' | 'finished' | 'generating';
+export type FileStatusType = 'inited' | 'uploading' | 'error' | 'finished' | 'generating' | 'completed';
 export type ListType = 'text' | 'picture-text' | 'picture';
 
 export interface FileType extends Partial<IFileResponse> {
