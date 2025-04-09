@@ -94,7 +94,7 @@ export default function SmartPreview({ children, containerPadding = 48, themeGlo
 
         const setColorScheme = (variables) => {
           for (const [name, value] of Object.entries(variables)) {
-            setRootCSSVariable(name, value);
+            setRootCSSVariable(name, \`hsl(\${value})\`);
           }
         };
 

@@ -6,7 +6,6 @@
     "#types": "./src/types.ts"
   },
   "exports": {
-    "./*": "./src/*.tsx",
     ".": "./src/index.ts",
     "./package.json": "./package.json",
     "./store/*": "./src/_store/*.ts",
@@ -14,7 +13,27 @@
     "./components/*": "./src/_components/*.tsx",
     "./common/*": "./src/_common/*.tsx",
     "./types": "./src/_types/index.ts",
-    "./utils/*": "./src/_utils/*.ts"
+    "./utils/*": "./src/_utils/*.ts",
+    "./theme-web-page": "./src/theme-web-page.tsx",
+
+    "./academia": "./src/academia/index.ts",
+    "./academia/*": "./src/academia/*.tsx",
+
+    "./scholar/homepage/index": "./src/scholar/homepage/index.tsx",
+    "./scholar/homepage/*": "./src/scholar/homepage/*.tsx",
+
+    "./vbi/homepage/index": "./src/vbi/homepage/index.tsx",
+    "./vbi/homepage/*": "./src/vbi/homepage/*.tsx",
+    "./vbi/about-us/index": "./src/vbi/about-us/index.tsx",
+    "./vbi/about-us/*": "./src/vbi/about-us/*.tsx",
+    "./vbi/partners/index": "./src/vbi/partners/index.tsx",
+    "./vbi/partners/*": "./src/vbi/partners/*.tsx",
+
+    "./avail/homepage/index": "./src/avail/homepage/index.tsx",
+    "./avail/homepage/*": "./src/avail/homepage/*.tsx",
+
+    "./fenet/homepage/index": "./src/fenet/homepage/index.tsx",
+    "./fenet/homepage/*": "./src/fenet/homepage/*.tsx"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

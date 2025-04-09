@@ -1,5 +1,5 @@
 'use client';
-import ThemeSidebar from '@oe/themes/_components/theme-sidebar/theme-sidebar-content';
+import ThemeSidebar from '@oe/themes/components/theme-sidebar/theme-sidebar-content';
 import type { ThemeConfigKey, ThemeName, ThemeSystem } from '@oe/themes/types';
 import { parseThemePath } from '@oe/themes/utils/function';
 import { usePathname } from 'next/navigation';
