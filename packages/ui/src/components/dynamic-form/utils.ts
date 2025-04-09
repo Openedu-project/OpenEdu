@@ -410,7 +410,11 @@ export function convertFormValueToAnswers(
   // Process each field in form value
   for (const [fieldName, fieldValue] of Object.entries(formValue)) {
     // Skip fields not in mapping or with null values
-    if (!nameToIdMap[fieldName] || fieldValue === null || fieldValue === undefined) {
+    if (
+      !nameToIdMap[fieldName] ||
+      fieldValue === null ||
+      (fieldValue === undefined && !fieldName?.includes('checkbox'))
+    ) {
       continue;
     }
 

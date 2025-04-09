@@ -139,7 +139,7 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
                           // },
                         })}
                         {...((fieldType === 'checkbox' || fieldType === 'switch') && {
-                          checked: field.value,
+                          checked: field.value ?? false,
                           onCheckedChange: field.onChange,
                         })}
                       />
