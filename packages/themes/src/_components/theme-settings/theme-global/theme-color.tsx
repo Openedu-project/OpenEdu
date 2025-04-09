@@ -7,7 +7,7 @@ import { Separator } from '@oe/ui/shadcn/separator';
 import { Switch } from '@oe/ui/shadcn/switch';
 import { Moon, RotateCcw, Save, Sun } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { initialThemeGlobalColors } from '../../../_config/theme-global-initial';
 import type { ThemeGlobalColorConfig, ThemeMode } from '../../../_types/index';
 import { getHSLPreview } from '../../../_utils/function';
@@ -24,7 +24,7 @@ const ThemeSettingColors = ({ onSubmitColor, isLoading, colorData }: ThemeSettin
   const t = useTranslations('themeUI.color');
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [activeTheme, setActiveTheme] = useState<ThemeMode>('light');
-  const [themeConfig, setThemeConfig] = useState<ThemeGlobalColorConfig>(colorData || initialThemeGlobalColors);
+  const [themeConfig, setThemeConfig] = useState<ThemeGlobalColorConfig>(initialThemeGlobalColors);
 
   const handleVariableChange = (variable: string, value: string) => {
     setThemeConfig(prev => ({
@@ -34,7 +34,7 @@ const ThemeSettingColors = ({ onSubmitColor, isLoading, colorData }: ThemeSettin
         [variable]: value,
       },
     }));
-    setRootCSSVariable(variable, value);
+    setRootCSSVariable(variable, `hsl(${value})`);
   };
 
   const toggleTheme = () => {
@@ -75,6 +75,10 @@ const ThemeSettingColors = ({ onSubmitColor, isLoading, colorData }: ThemeSettin
     [t('groups.uiElements')]: ['--muted', '--muted-foreground', '--border', '--input', '--ring'],
   };
 
+  useEffect(() => {
+    setThemeConfig(colorData || initialThemeGlobalColors);
+  }, [colorData]);
+
   return (
     <Card className="w-full rounded-none border-none shadow-none">
       <CardHeader className="flex flex-row items-center justify-between">
@@ -101,7 +105,7 @@ const ThemeSettingColors = ({ onSubmitColor, isLoading, colorData }: ThemeSettin
               <h3 className="mb-4 font-semibold text-lg">{groupName}</h3>
               <div className="grid grid-cols-2 gap-4">
                 {variables.map(variable => {
-                  const value = themeConfig[activeTheme][variable] || '';
+                  const value = themeConfig?.[activeTheme][variable] || '';
                   const variableName = variable.replace('--', '');
                   return (
                     <div key={variable} className="flex items-center gap-4">
