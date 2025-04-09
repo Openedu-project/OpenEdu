@@ -74,7 +74,7 @@ const useActivedTrigger = () => {
       if (currentTrigger) {
         setActivedTriggerId(currentTrigger.id);
         setTriggerType(currentTrigger.type);
-        if (currentTrigger.confirmation_settings?.enabled) {
+        if (currentTrigger.confirmation_settings) {
           setCurrentConfirmationSettings(currentTrigger.confirmation_settings);
         }
 
