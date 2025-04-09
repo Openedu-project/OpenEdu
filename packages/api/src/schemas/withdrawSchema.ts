@@ -7,7 +7,9 @@ export const approveWithdrawSchema = z.object({
     .union([z.string(), z.number()])
     .optional()
     .transform(val => (val === '' ? undefined : val))
-    .refine(val => val === undefined || !Number.isNaN(Number(val)), { message: 'errors.isValidNumber' }),
+    .refine(val => val === undefined || !Number.isNaN(Number(val)), {
+      message: 'errors.isValidNumber',
+    }),
   files: z.array(fileResponseSchema.optional()).min(1, 'errors.requiredAtLeastOneFile'),
   note: z.string().optional(),
 });
@@ -36,12 +38,18 @@ export type ICryptoWithdrawPayload = z.infer<typeof cryptoWithdrawSchema>;
 export const fiatWithdrawSchema = z
   .object({
     currency: z.enum(Object.keys(FIAT_CURRENCIES) as [string, ...string[]]),
-    bank_account_id: z.string().min(1, { message: 'wallets.withdrawPage.form.errors.requiredBankAccount' }),
+    bank_account_id: z.string().min(1, {
+      message: 'wallets.withdrawPage.form.errors.requiredBankAccount',
+    }),
     amount: z
-      .string({ required_error: 'wallets.withdrawPage.form.errors.requiredAmount' })
-      .min(1, { message: 'wallets.withdrawPage.form.errors.requiredAmount' })
+      .string({
+        required_error: 'wallets.withdrawPage.form.errors.requiredAmount',
+      })
+      .min(0, { message: 'wallets.withdrawPage.form.errors.requiredAmount' })
       .transform(val => val.trim())
-      .refine(val => val.length > 0, { message: 'wallets.withdrawPage.form.errors.invalidAmount' }),
+      .refine(val => val.length > 0, {
+        message: 'wallets.withdrawPage.form.errors.invalidAmount',
+      }),
     note: z
       .string()
       .optional()

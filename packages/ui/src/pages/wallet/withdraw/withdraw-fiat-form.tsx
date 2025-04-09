@@ -17,7 +17,7 @@ import { InputCurrency } from '#components/input-currency';
 import { Modal } from '#components/modal';
 import { Selectbox } from '#components/selectbox';
 import { Button } from '#shadcn/button';
-import { FormFieldWithLabel } from '#shadcn/form';
+import { FormControl, FormField, FormFieldWithLabel, FormItem, FormLabel, FormMessage } from '#shadcn/form';
 
 export const WithdrawFiatForm = () => {
   const t = useTranslations('wallets');
@@ -115,29 +115,36 @@ export const WithdrawFiatForm = () => {
               </Link>
             </div>
             <div className="flex flex-col gap-2">
-              <FormFieldWithLabel
+              <FormField
+                control={form.control}
                 name="amount"
-                label={t('withdrawPage.form.amount')}
                 render={({ field }) => (
-                  <div className="relative flex w-full items-center rounded-md border border-input">
-                    <InputCurrency
-                      id={field.name}
-                      {...field}
-                      className="w-full border-none focus-visible:ring-0"
-                      placeholder={t('withdrawPage.form.enterAmount')}
-                      decimalsLimit={0}
-                      allowNegativeValue={false}
-                      locale={locale}
-                    />
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      className="mcaption-semibold12 mr-[2px] h-9 bg-muted text-primary uppercase hover:text-primary"
-                      onClick={() => field.onChange(availableBalance.toString())}
-                    >
-                      {t('withdrawPage.button.max')}
-                    </Button>
-                  </div>
+                  <FormItem>
+                    <FormLabel>{t('withdrawPage.form.amount')}</FormLabel>
+                    <FormControl>
+                      <div className="relative flex w-full items-center rounded-md border border-input">
+                        <InputCurrency
+                          id={field.name}
+                          {...field}
+                          className="w-full border-none focus-visible:ring-0"
+                          placeholder={t('withdrawPage.form.enterAmount')}
+                          decimalsLimit={0}
+                          allowNegativeValue={false}
+                          locale={locale}
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          className="mcaption-semibold12 mr-[2px] h-9 bg-muted text-primary uppercase hover:text-primary"
+                          onClick={() => field.onChange(availableBalance.toString())}
+                        >
+                          {t('withdrawPage.button.max')}
+                        </Button>
+                      </div>
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
                 )}
               />
               <FormFieldWithLabel
