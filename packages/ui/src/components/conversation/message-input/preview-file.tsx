@@ -156,32 +156,27 @@ const HitboxLayer = ({
   useEffect(() => {
     let interval: NodeJS.Timeout | undefined;
 
-    if (file.mime?.includes('image')) {
-      setProgress(90);
-    }
-
     if (status === 'generating') {
+      if (apiCalledRef.current) {
+        updateStatus?.('generating', 50);
+      }
       interval = setInterval(() => {
         setProgress(prevProgress => {
           const increment = 0.2 + Math.random() * 0.15;
           const newProgress = Math.min(prevProgress + increment, 90);
-          if (apiCalledRef.current) {
-            updateStatus?.('generating', newProgress);
-          }
+
           return newProgress;
         });
       }, 100);
-    } else if (status === 'finished') {
+    } else if (status === 'completed') {
+      updateStatus?.('completed', 100);
       interval = setInterval(() => {
         setProgress(prevProgress => {
           if (prevProgress >= 100) {
             clearInterval(interval);
             return 100;
           }
-          const newProgress = Math.min(prevProgress + 2, 100);
-          if (apiCalledRef.current) {
-            updateStatus?.('generating', newProgress);
-          }
+          const newProgress = Math.min(prevProgress + 4, 100);
           return newProgress;
         });
       }, 30);
@@ -195,7 +190,7 @@ const HitboxLayer = ({
         clearInterval(interval);
       }
     };
-  }, [status, file.mime, updateStatus]);
+  }, [status, updateStatus]);
 
   useEffect(() => {
     if (

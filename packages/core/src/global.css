@@ -4,6 +4,7 @@
 @import "../../../packages/core/src/styles/font-classes";
 @import "../../../packages/core/src/styles/utils";
 @import "../../../packages/core/src/styles/rich-text";
+@import "../../../packages/core/src/styles/hljs";
 
 @source "../../../apps/platform/**/*.{ts,tsx}";
 @source "../../../apps/organization/**/*.{ts,tsx}";
