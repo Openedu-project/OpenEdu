@@ -12,6 +12,7 @@ import LikeButton from '../message-actions/like';
 import Rewrite from '../message-actions/rewrite';
 import { SourcesButton } from '../sources/sources-button';
 import type { IAIMessageProps } from '../type';
+import { CodeDownloadHydration } from './code-download-button';
 import { ImageAction } from './image-action';
 import { LinkPreviewHydration } from './preview-link';
 import { ThinkingMessage } from './thinking-message';
@@ -121,6 +122,7 @@ export const AIMessage = ({
               />
               <LinkPreviewHydration id={message?.id} />
               <ImageAction id={message?.id} />
+              <CodeDownloadHydration id={message?.id} />
             </div>
           )}
           {sources && (sources?.length ?? 0) > 0 && !hiddenSourceBtn && (
