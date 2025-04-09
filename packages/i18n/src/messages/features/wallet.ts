@@ -105,6 +105,7 @@ export const walletMessages = {
           requiredToken: 'Token is required',
           requiredBankAccount: 'Bank account is required',
           isRequired: 'This field is required',
+          minVNDAmount: 'Minimum withdrawal amount is 20,000 VND',
         },
       },
       button: {

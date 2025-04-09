@@ -59,6 +59,7 @@ export const fiatWithdrawSchema = z
   .superRefine((data, ctx: z.RefinementCtx & { contextualData?: { availableBalance: number } }) => {
     const amount = Number(data.amount);
     const availableBalance = Number(data.availableBalance);
+    const isVNDfiat = data.currency === FIAT_CURRENCIES.VND.value;
     // const availableBalance = Number(ctx?.contextualData?.availableBalance ?? 0);
     if (Number.isNaN(amount) || amount <= 0) {
       ctx.addIssue({
@@ -76,6 +77,14 @@ export const fiatWithdrawSchema = z
         path: ['amount'],
       });
       return;
+    }
+
+    if (isVNDfiat && amount < 20000) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'wallets.withdrawPage.form.errors.minVNDAmount',
+        path: ['amount'],
+      });
     }
   });
 
