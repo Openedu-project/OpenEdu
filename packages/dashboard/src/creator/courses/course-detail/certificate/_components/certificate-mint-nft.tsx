@@ -53,8 +53,8 @@ export function CertificateMintNFT({
       console.error(error as Error);
       const code = (error as HTTPError).metadata?.code;
 
-      if (code === 712) {
-        toast.error(tError('712'));
+      if (code) {
+        toast.error(tError(code.toString()));
       } else {
         toast.error(tCertificate('mintNFT.depositError'));
       }
