@@ -437,6 +437,7 @@
   --font-family-primary: var(--font-primary), ui-sans-serif, system-ui, sans-serif;
   --font-family-secondary: var(--font-secondary), ui-sans-serif, system-ui, sans-serif;
   --font-family-sub: var(--font-sub), ui-sans-serif, system-ui, sans-serif;
+  --default-font-family: var(--font-primary), ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {

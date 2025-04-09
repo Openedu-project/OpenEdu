@@ -1,10 +1,7 @@
-"use client";
-import {
-  useCreateOrUpdateThemeConfig,
-  useGetTheme,
-} from "@oe/api/hooks/useTheme";
-import { defaultThemeSystemConfig } from "@oe/themes";
-import { ThemeSettingPages } from "@oe/themes/_components/theme-settings/index";
+'use client';
+import { useCreateOrUpdateThemeConfig, useGetTheme } from '@oe/api/hooks/useTheme';
+import { defaultThemeSystemConfig } from '@oe/themes';
+import { ThemeSettingPages } from '@oe/themes/components/theme-settings/index';
 import type {
   ThemeCollection,
   ThemeDefinition,
@@ -12,30 +9,25 @@ import type {
   ThemePageKey,
   ThemeSidebarPageKey,
   ThemeSystem,
-} from "@oe/themes/types";
-import { toast } from "@oe/ui/shadcn/sonner";
-import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
-import { useCallback } from "react";
+} from '@oe/themes/types';
+import { toast } from '@oe/ui/shadcn/sonner';
+import { useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
+import { useCallback } from 'react';
 
 interface OutlineThemeSettingPagesProps {
   selectedSidebarPageKey: ThemeSidebarPageKey;
 }
 
-const OutlineThemeSettingPages = ({
-  selectedSidebarPageKey,
-}: OutlineThemeSettingPagesProps) => {
+const OutlineThemeSettingPages = ({ selectedSidebarPageKey }: OutlineThemeSettingPagesProps) => {
   const { themeName, themePageKey } = useParams();
   const { theme, mutateTheme } = useGetTheme();
-  const t = useTranslations("themePageSettings");
-  const tThemeConfig = useTranslations("themePage");
-  const { createOrUpdateThemeConfig, isLoadingCreateOrUpdateThemeConfig } =
-    useCreateOrUpdateThemeConfig();
+  const t = useTranslations('themePageSettings');
+  const tThemeConfig = useTranslations('themePage');
+  const { createOrUpdateThemeConfig, isLoadingCreateOrUpdateThemeConfig } = useCreateOrUpdateThemeConfig();
   const themeConfig =
     theme?.[0]?.value?.availableThemes?.[themeName as ThemeName] ||
-    defaultThemeSystemConfig(tThemeConfig)?.availableThemes?.[
-      themeName as ThemeName
-    ];
+    defaultThemeSystemConfig(tThemeConfig)?.availableThemes?.[themeName as ThemeName];
 
   const handleSubmit = useCallback(
     async (specificTheme: ThemeDefinition) => {
@@ -57,30 +49,22 @@ const OutlineThemeSettingPages = ({
         });
         if (res) {
           await mutateTheme();
-          toast.success(t("updateSuccess"));
+          toast.success(t('updateSuccess'));
         }
       } catch (error) {
         console.error(error);
-        toast.error(t("updateFail"));
+        toast.error(t('updateFail'));
       }
     },
     [mutateTheme, t, themeName, theme, createOrUpdateThemeConfig]
   );
 
   if (!themeConfig) {
-    return (
-      <div className="flex h-full items-center justify-center text-muted-foreground">
-        No data
-      </div>
-    );
+    return <div className="flex h-full items-center justify-center text-muted-foreground">No data</div>;
   }
 
   if (!(themeName && themePageKey)) {
-    return (
-      <div className="flex h-full items-center justify-center text-muted-foreground">
-        No data
-      </div>
-    );
+    return <div className="flex h-full items-center justify-center text-muted-foreground">No data</div>;
   }
 
   return (

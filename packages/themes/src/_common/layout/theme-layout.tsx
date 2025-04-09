@@ -1,7 +1,8 @@
-import ThemeHeaderContent from '@oe/themes/_components/theme-header/theme-header-content';
 import { Header } from '@oe/ui/common/layout/header';
 import { SidebarProvider, SidebarTrigger } from '@oe/ui/shadcn/sidebar';
 import type { ReactNode } from 'react';
+import ThemeHeaderContent from '../../_components/theme-header/theme-header-content';
+
 import ThemeLayoutSidebar from './sidebar';
 
 export default function ThemeLayout({ children }: { children: ReactNode }) {
