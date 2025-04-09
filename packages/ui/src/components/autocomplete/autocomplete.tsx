@@ -110,7 +110,7 @@ export function Autocomplete<T extends OptionType | string>({
       </PopoverTrigger>
       <PopoverContent
         className={cn(
-          'max-h-[--radix-popover-content-available-height] w-[--radix-popover-trigger-width] p-0',
+          'max-h-[var(--radix-popover-content-available-height)] w-[var(--radix-popover-trigger-width)] p-0',
           className
         )}
       >

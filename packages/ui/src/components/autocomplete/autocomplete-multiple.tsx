@@ -254,7 +254,7 @@ export function AutocompeteMultiple<T extends OptionType | string>({
       </PopoverTrigger>
       <PopoverContent
         onOpenAutoFocus={e => e.preventDefault()}
-        className="max-h-[--radix-popover-content-available-height] w-[--radix-popover-trigger-width] p-0"
+        className="max-h-[var(--radix-popover-content-available-height)] w-[var(--radix-popover-trigger-width)] p-0"
       >
         <VirtualizedCommandBase
           height={height}

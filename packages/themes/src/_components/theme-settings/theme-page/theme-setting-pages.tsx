@@ -23,6 +23,8 @@ import ThemePreviewLayout from './theme-preview-layout';
 import { PreviewPanel } from './theme-preview-panel';
 import { SettingsPanel } from './theme-setting-panel';
 
+import { fonts } from '../../../fonts';
+
 export interface ThemeContentProps {
   isLoading: boolean;
   themeConfig?: ThemeDefinition;
@@ -54,6 +56,10 @@ export default function ThemeSettingPages({
   const [loadingStates, setLoadingStates] = useState<Partial<Record<SectionsByPage[typeof selectedPage], boolean>>>({});
 
   const [selectedSectionKey, setSelectedSectionKey] = useState<AllSectionKeys>();
+
+  const fontVariables = Object.values(fonts)
+    .map(font => font.variable)
+    .join(' ');
 
   const handleApplyPreview = useCallback(
     async (val: PageSectionConfig<typeof selectedPage>, sectionKey: SectionsByPage[typeof selectedPage]) => {
@@ -144,7 +150,7 @@ export default function ThemeSettingPages({
         </ResizablePanel>
         <ResizableHandle />
         <ResizablePanel defaultSize={75}>
-          <SmartPreview themeGlobal={themeConfig?.globals ?? initialThemeGlobal}>
+          <SmartPreview themeGlobal={themeConfig?.globals ?? initialThemeGlobal} fontVariables={fontVariables}>
             <ThemePreviewLayout themeDefinition={themeConfig} themeName={themeName}>
               <PreviewPanel
                 themeName={themeName}

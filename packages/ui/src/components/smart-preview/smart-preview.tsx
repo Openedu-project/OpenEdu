@@ -12,6 +12,7 @@ interface PreviewFrameProps {
   containerPadding?: number;
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   themeGlobal?: Record<string, any>;
+  fontVariables?: string;
 }
 
 interface ViewportButtonProps {
@@ -26,7 +27,12 @@ const ViewportButton = ({ isActive, onClick, children }: ViewportButtonProps) =>
   </Button>
 );
 
-export default function SmartPreview({ children, containerPadding = 48, themeGlobal }: PreviewFrameProps) {
+export default function SmartPreview({
+  children,
+  containerPadding = 48,
+  themeGlobal,
+  fontVariables,
+}: PreviewFrameProps) {
   const [viewport, setViewport] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const [zoom, setZoom] = useState(100);
   const [isAutoZoom, setIsAutoZoom] = useState(true);
@@ -72,14 +78,24 @@ export default function SmartPreview({ children, containerPadding = 48, themeGlo
     calculateZoom();
   };
 
-  // Update iframe theme
-  const updateIframeTheme = () => {
-    if (!(iframeRef.current?.contentWindow && themeGlobal)) {
+  // Update iframe theme and font variables
+  const updateIframeThemeAndFonts = () => {
+    if (!iframeRef.current?.contentWindow) {
       return;
     }
 
     const iframeDoc = iframeRef.current.contentDocument;
     if (!iframeDoc) {
+      return;
+    }
+
+    // Apply font variables to HTML element if provided
+    if (fontVariables) {
+      iframeDoc.documentElement.className = fontVariables;
+    }
+
+    // Only proceed with theme application if themeGlobal is provided
+    if (!themeGlobal) {
       return;
     }
 
@@ -160,10 +176,10 @@ export default function SmartPreview({ children, containerPadding = 48, themeGlo
       })
       .join('\n');
 
-    // Create the iframe content
+    // Create the iframe content - now with fontVariables class applied to HTML element
     const html = `
       <!DOCTYPE html>
-      <html>
+      <html${fontVariables ? ` class="${fontVariables}"` : ''}>
         <head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <style>${styles}</style>
@@ -187,11 +203,9 @@ export default function SmartPreview({ children, containerPadding = 48, themeGlo
 
     setIframeBody(iframeDoc.body);
 
-    // Apply theme after iframe is loaded
-    if (themeGlobal) {
-      updateIframeTheme();
-    }
-  }, [themeGlobal]);
+    // Apply theme and font variables after iframe is loaded
+    updateIframeThemeAndFonts();
+  }, [themeGlobal, fontVariables]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
