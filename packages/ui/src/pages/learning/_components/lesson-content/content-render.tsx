@@ -117,18 +117,14 @@ export const CONTENT_RENDERERS: Record<TLessonContent, ContentRenderer> = {
   },
 
   pdf: {
-    render: ({ data, onCompleteContent, lessonMetadataHeight = 0 }) => {
+    render: ({ data, onCompleteContent }) => {
       const url = data?.files?.[0]?.url || "";
 
       return (
-        <ContentWrapper
-          maxHeight={calculateMaxHeight(lessonMetadataHeight, "pdf")}
-        >
-          <ContentPdf
-            url={url}
-            onComplete={() => onCompleteContent?.({ uid: data?.uid })}
-          />
-        </ContentWrapper>
+        <ContentPdf
+          url={url}
+          onComplete={() => onCompleteContent?.({ uid: data?.uid })}
+        />
       );
     },
     getClassName: (isOnlyContent) => getContentClassName(isOnlyContent),

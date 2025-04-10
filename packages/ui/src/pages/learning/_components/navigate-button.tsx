@@ -16,7 +16,7 @@ interface NavigationButtonsProps {
 }
 
 const baseStyles = {
-  quiz: '!rounded-full h-10 w-10 px-0 shadow-shadow-5 hover:bg-primary hover:opacity-75 disabled:border disabled:border-neutral-900 disabled:bg-white disabled:opacity-100 [&>svg>path]:fill-primary-foreground [&>svg>path]:disabled:fill-neutral-900',
+  quiz: '!rounded-full h-10 w-10 px-0 shadow-shadow-5 hover:bg-primary hover:opacity-75 disabled:border disabled:border-neutral-900 disabled:bg-white disabled:opacity-100',
   lesson: 'w-full mbutton-bold12 !text-sm border border-primary bg-transparent text-primary hover:bg-inherit',
 };
 
@@ -55,7 +55,7 @@ export const NavigationButtons = ({
     if (mode === 'quiz') {
       return (
         <Button disabled={disabled} className={cn(baseStyles.quiz, className)} onClick={() => onNavigate?.(direction)}>
-          <Icon width={24} height={24} />
+          <Icon width={24} height={24} color={disabled ? 'var(--foreground)' : 'white'} />
         </Button>
       );
     }

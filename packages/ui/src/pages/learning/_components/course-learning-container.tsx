@@ -4,17 +4,11 @@ import type { ICourseOutline } from "@oe/api";
 import type { ILesson } from "@oe/api";
 import { useMediaQuery } from "@oe/core";
 import { ArrowLeft, ChevronDown, X } from "lucide-react";
-import {
-  type CSSProperties,
-  memo,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { CourseFormTriggerModal } from "#components/course-form-trigger";
 import { Button } from "#shadcn/button";
 import { Sheet, SheetContent, SheetTitle } from "#shadcn/sheet";
+import { cn } from "#utils/cn";
 import { useCurrentLesson } from "../_context";
 import { ContentSection } from "./content-section";
 import { CourseOutline } from "./course-sidebar-section";
@@ -38,15 +32,13 @@ function CourseLearningInternal({
 }: ICourseLearning) {
   const { currentSection, currentLesson } = useCurrentLesson();
   const containerRef = useRef<HTMLDivElement>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [sheetOpen, setSheetOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
+  const [sheetOpen, setSheetOpen] = useState<boolean>(false);
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
-  // Get actual section and lesson UIDs
   const activeSectionUid = currentSection || section_uid;
   const activeLessonUid = currentLesson || lesson_uid;
 
-  // Toggle functions with useCallback to prevent unnecessary re-renders
   const toggleSidebar = useCallback(() => {
     setSidebarOpen((prev) => !prev);
   }, []);
@@ -55,26 +47,6 @@ function CourseLearningInternal({
     setSheetOpen((prev) => !prev);
   }, []);
 
-  // Memoized styles to avoid recalculation on every render
-  const containerStyle: CSSProperties = {
-    display: "flex",
-    flexDirection: isDesktop ? "row" : "column",
-    gap: "0.25rem",
-    height: "100%",
-    width: "100%",
-    position: "relative",
-  };
-
-  const contentContainerStyle: CSSProperties = {
-    height: "100%",
-    margin: "0 auto",
-  };
-
-  const sidebarStyle: CSSProperties = {
-    transition: "width 0.3s ease",
-  };
-
-  // Rendering optimizations
   const renderDesktopTabs = isDesktop && (
     <CourseTabs
       course_data={course}
@@ -83,21 +55,19 @@ function CourseLearningInternal({
     />
   );
 
-  const renderSidebar = isDesktop && sidebarOpen && (
+  const renderSidebar = isDesktop && (
     <div
-      className="sticky top-[var(--header-with-sub-item-height)] py-4 lg:w-1/3"
-      style={{
-        ...sidebarStyle,
-        height: "calc(100dvh - var(--header-with-sub-item-height))",
-        maxHeight: "calc(100dvh - var(--header-with-sub-item-height))",
-        overflowY: "auto",
-      }}
+      className={cn(
+        "sticky top-[var(--header-with-sub-item-height)] right-0 z-30 h-[calc(100dvh-var(--header-with-sub-item-height))] overflow-y-auto py-4 transition-all duration-300 ease-in-out lg:w-1/3",
+        sidebarOpen ? "translate-x-0" : "hidden translate-x-full"
+      )}
     >
       <CourseOutline className="scrollbar h-full w-full overflow-y-auto pr-4 pl-3 lg:block" />
       <Button
         variant="ghost"
-        className="absolute top-0 right-0 h-fit p-0"
+        className="absolute top-2 right-2 flex h-8 w-8 items-center justify-center rounded-full p-0"
         onClick={toggleSidebar}
+        aria-label="Close sidebar"
       >
         <X size={16} />
       </Button>
@@ -108,9 +78,6 @@ function CourseLearningInternal({
     <Button
       onClick={toggleSidebar}
       className="group fixed right-0 z-10 mt-4 items-center transition-all duration-300 ease-in-out"
-      style={{
-        transition: "right 0.3s ease",
-      }}
     >
       <ArrowLeft size={16} />
       <span className="max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-all duration-300 group-hover:ml-1 group-hover:max-w-xs group-hover:opacity-100">
@@ -144,10 +111,18 @@ function CourseLearningInternal({
 
   return (
     <>
-      <div ref={containerRef} style={containerStyle}>
+      <div
+        ref={containerRef}
+        className={cn(
+          "flex h-full w-full gap-1",
+          isDesktop ? "flex-row" : "flex-col"
+        )}
+      >
         <div
-          className="relative w-full max-w-[900px] lg:w-2/3"
-          style={contentContainerStyle}
+          className={cn(
+            "relative mx-auto my-0 h-full w-full max-w-[900px]",
+            isDesktop && sidebarOpen && "lg:w-2/3"
+          )}
         >
           <ContentSection
             className="pt-4"

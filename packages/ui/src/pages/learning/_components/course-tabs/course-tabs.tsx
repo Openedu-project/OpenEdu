@@ -30,7 +30,7 @@ const CourseTabs = ({ course_data }: ICourseTabsProps) => {
     },
   ];
 
-  return course_data && tabItems && <CustomTabs items={tabItems} className="mt-4 h-full px-3" />;
+  return course_data && tabItems && <CustomTabs items={tabItems} className="mt-4 h-full px-3 pb-4" />;
 };
 
 export { CourseTabs };
