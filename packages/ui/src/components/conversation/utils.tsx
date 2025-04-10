@@ -1,4 +1,3 @@
-"use client";
 import { z } from "@oe/api";
 import React from "react";
 import { DESKTOP_BREAKPOINT } from "./constants";
@@ -15,7 +14,10 @@ const filesSchema = z
       })
       .superRefine((val, ctx) => {
         if (
-          !(val.status && ["finished", "error"].includes(String(val.status)))
+          !(
+            val.status &&
+            ["finished", "error", "completed"].includes(String(val.status))
+          )
         ) {
           ctx.addIssue({
             code: "custom",

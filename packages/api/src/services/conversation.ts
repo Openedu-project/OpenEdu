@@ -4,7 +4,7 @@ import type {
   IConversation,
   IConversationDetails,
   IConversationRequest,
-  IDocumentCanelRequest,
+  IDocumentCancelRequest,
   IDocumentRequest,
   IMessage,
   IPromptsResponse,
@@ -137,8 +137,8 @@ export const postEmbedDocument = async (url: string | undefined, payload: IDocum
   }
 };
 
-export const cancelEmbedDocument = async (url: string | undefined, payload: IDocumentCanelRequest) => {
-  const response = await postAPI<{ message: string }, IDocumentCanelRequest | undefined>(
+export const cancelEmbedDocument = async (url: string | undefined, payload: IDocumentCancelRequest) => {
+  const response = await postAPI<{ message: string }, IDocumentCancelRequest | undefined>(
     url ?? API_ENDPOINT.COM_CHANNELS_DOCUMENTS_CANCEL,
     payload
   );
