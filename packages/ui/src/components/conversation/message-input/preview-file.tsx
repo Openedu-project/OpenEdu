@@ -1,14 +1,10 @@
-import { cancelEmbedDocument, postEmbedDocument, type z } from "@oe/api";
-import { CircleX, ImageIcon, Paperclip } from "lucide-react";
+"use client";
+import { cancelEmbedDocument, postEmbedDocument } from "@oe/api";
+import type { z } from "@oe/api";
+import { CircleX, Image as ImageIcon, Paperclip } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useRef } from "react";
-import {
-  type UseFieldArrayRemove,
-  type UseFormReturn,
-  useFieldArray,
-} from "react-hook-form";
+import { useEffect, useRef, useState } from "react";
+import { type UseFormReturn, useFieldArray } from "react-hook-form";
 import { Image } from "#components/image";
 import { Button } from "#shadcn/button";
 import { Progress } from "#shadcn/progress";
@@ -19,7 +15,7 @@ import type { chatSchema } from "../utils";
 
 interface IPreviewFileProps {
   file: TFileResponse;
-  remove?: UseFieldArrayRemove;
+  remove?: (index: number) => void;
   filePosition?: number;
   viewOnly?: boolean;
   updateFile?: (index: number, newValue: TFileResponse) => void;
@@ -41,7 +37,13 @@ export const PreviewFile = ({
   });
 
   const updateFile = (index: number, newValue: TFileResponse) => {
-    form.setValue(`files.${index}`, newValue);
+    form.setValue(`files.${index}`, newValue, {
+      shouldValidate: true,
+    });
+  };
+  const handleRemove = (index: number) => {
+    remove(index);
+    form.trigger();
   };
 
   return (
@@ -51,14 +53,14 @@ export const PreviewFile = ({
           <PreviewImage
             key={file.id ?? crypto.randomUUID()}
             file={file}
-            remove={remove}
+            remove={handleRemove}
             filePosition={index}
           />
         ) : (
           <PreviewDocument
             key={file.id ?? crypto.randomUUID()}
             file={file}
-            remove={remove}
+            remove={handleRemove}
             filePosition={index}
             updateFile={updateFile}
             chatId={chatId}
@@ -76,7 +78,7 @@ export const PreviewImage = ({
   viewOnly,
 }: IPreviewFileProps) => {
   const onRemove = () => {
-    remove?.(filePosition);
+    remove?.(filePosition ?? -1);
   };
 
   return (
@@ -112,7 +114,7 @@ export const PreviewDocument = ({
   chatId,
 }: IPreviewFileProps) => {
   const onRemove = async () => {
-    remove?.(filePosition);
+    remove?.(filePosition ?? -1);
     await cancelEmbedDocument(undefined, {
       attachment_id: file.id,
       conversation_id: chatId,
@@ -140,7 +142,7 @@ export const PreviewDocument = ({
       <div className={cn("flex items-center gap-1 p-2")}>
         <Paperclip className="h-3 w-3 shrink-0" />
         <p className={cn("mcaption-regular12 line-clamp-3 break-all")}>
-          {file.name}
+          {file.name.split("_")[1] ?? file.name}
         </p>
       </div>
     </div>
