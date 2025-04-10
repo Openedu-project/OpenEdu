@@ -15,10 +15,8 @@ import {
 import { FormFieldWithLabel } from "#shadcn/form";
 import { Separator } from "#shadcn/separator";
 import { cn } from "#utils/cn";
+import { MAX_FILES, MAX_SIZE_BYTES } from "../constants";
 import type { TFileResponse } from "../type";
-
-const MAX_SIZE_BYTES = 200 * 1024 * 1024;
-const MAX_FILES = 10;
 
 export const InputFile = <TFormValues extends FieldValues>() => {
   const tAI = useTranslations("aiAssistant");
@@ -88,8 +86,7 @@ export const InputFile = <TFormValues extends FieldValues>() => {
                 }}
                 maxSizeBytes={MAX_SIZE_BYTES}
                 fileListVisible={false}
-                // accept=".md, .markdown, image/*, application/pdf, application/vnd.ms-excel, text/*, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                accept="image/*"
+                accept=".md, .markdown, image/*, application/pdf, application/vnd.ms-excel, text/*, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                 className={cn(
                   "absolute top-0 left-0 overflow-hidden opacity-0"
                 )}

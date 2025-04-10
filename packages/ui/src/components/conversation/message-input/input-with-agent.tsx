@@ -1,19 +1,21 @@
+import type { z } from '@oe/api/utils/zod';
 import { CircleX } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import type { FieldValues } from 'react-hook-form';
 import { Button } from '#shadcn/button';
 import { INPUT_BUTTON } from '../constants';
 import type { InputFieldProps } from '../type';
+import type { chatSchema } from '../utils';
 import { InputDefault } from './input-default';
 
-export const InputWithAgent = <TFormValues extends FieldValues>({
+export const InputWithAgent = ({
   handleKeyDown,
   setInputType,
   inputRef,
   canChangeType,
   type,
   handleInputChange,
-}: InputFieldProps<TFormValues>) => {
+  form,
+}: InputFieldProps<z.infer<typeof chatSchema>>) => {
   const buttonData = INPUT_BUTTON.find(button => button.type === type);
   const tAI = useTranslations('aiAssistant');
 
@@ -35,7 +37,12 @@ export const InputWithAgent = <TFormValues extends FieldValues>({
           </Button>
         )}
       </div>
-      <InputDefault inputRef={inputRef} handleKeyDown={handleKeyDown} handleInputChange={handleInputChange} />
+      <InputDefault
+        inputRef={inputRef}
+        handleKeyDown={handleKeyDown}
+        handleInputChange={handleInputChange}
+        form={form}
+      />
     </>
   );
 };
