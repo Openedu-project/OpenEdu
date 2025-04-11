@@ -16,22 +16,46 @@ export const approveWithdrawSchema = z.object({
 
 export type IApproveWithdrawType = z.infer<typeof approveWithdrawSchema>;
 
-export const cryptoWithdrawSchema = z.object({
-  withdraw_type: z.literal('crypto').optional(),
-  network: z.enum(Object.keys(CRYPTO_CURRENCIES) as [string, ...string[]]),
-  to_address: z.string().min(1, { message: 'wallets.withdrawPage.form.errors.requiredAddress' }),
-  token: z.string().min(1, { message: 'wallets.withdrawPage.form.errors.requiredToken' }),
-  amount: z
-    .string()
-    .min(1, { message: 'wallets.withdrawPage.form.errors.requiredAmount' })
-    .transform(val => val.trim()),
-  note: z
-    .string()
-    .optional()
-    .transform(val => val?.trim() || undefined),
-  is_mainnet: z.boolean().optional(),
-  currency: z.enum(Object.keys(CRYPTO_CURRENCIES) as [string, ...string[]]).optional(),
-});
+export const cryptoWithdrawSchema = z
+  .object({
+    withdraw_type: z.literal('crypto').optional(),
+    network: z.enum(Object.keys(CRYPTO_CURRENCIES) as [string, ...string[]]),
+    to_address: z.string().min(1, { message: 'wallets.withdrawPage.form.errors.requiredAddress' }),
+    token: z.string().min(1, { message: 'wallets.withdrawPage.form.errors.requiredToken' }),
+    amount: z
+      .string()
+      .min(1, { message: 'wallets.withdrawPage.form.errors.requiredAmount' })
+      .transform(val => val.trim()),
+    note: z
+      .string()
+      .optional()
+      .transform(val => val?.trim() || undefined),
+    is_mainnet: z.boolean().optional(),
+    currency: z.enum(Object.keys(CRYPTO_CURRENCIES) as [string, ...string[]]).optional(),
+    availableBalance: z.number().optional(),
+  })
+  .superRefine((data, ctx: z.RefinementCtx & { contextualData?: { availableBalance: number } }) => {
+    const amount = Number(data.amount);
+    const availableBalance = Number(data.availableBalance);
+    // const availableBalance = Number(ctx?.contextualData?.availableBalance ?? 0);
+    if (Number.isNaN(amount) || amount <= 0) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'wallets.withdrawPage.form.errors.positiveAmount',
+        path: ['amount'],
+      });
+      return;
+    }
+
+    if (amount > availableBalance) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'wallets.withdrawPage.form.errors.amountExceedsBalance',
+        path: ['amount'],
+      });
+      return;
+    }
+  });
 
 export type ICryptoWithdrawPayload = z.infer<typeof cryptoWithdrawSchema>;
 

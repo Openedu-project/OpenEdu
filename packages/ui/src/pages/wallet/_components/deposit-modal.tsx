@@ -24,7 +24,7 @@ export function DepositModal({ network, address, currency }: IWallet) {
       <div className="flex flex-col gap-4">
         <Label className="flex flex-col gap-2">
           {t('network')}
-          <Input type="text" placeholder="Enter amount" readOnly disabled value={network} />
+          <Input type="text" placeholder="Enter amount" readOnly disabled value={network} className="uppercase" />
         </Label>
         <Label className="flex flex-col gap-2">
           {t('address')}
