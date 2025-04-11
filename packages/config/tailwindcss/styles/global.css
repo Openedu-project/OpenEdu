@@ -439,7 +439,7 @@
   --color-pink-500: var(--pink-500);
   --color-turquoise-500: var(--turquoise-500);
   --color-violet-500: var(--violet-500);
-  --color-base-cool: var(--var(--base-cool));
+  --color-base-cool: var(--base-cool);
   --shadow-1: var(--shadow-1);
   --shadow-2: var(--shadow-2);
   --shadow-3: var(--shadow-3);
