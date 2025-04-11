@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import Translations from '@oe/dashboard/admin/site-settings/languages/_components/translations';
-import { useRouter } from '@oe/ui/common/navigation';
-import { Modal } from '@oe/ui/components/modal';
-import { useSearchParams } from 'next/navigation';
+import { Translations } from "@oe/dashboard";
+import { useRouter } from "@oe/ui";
+import { Modal } from "@oe/ui";
+import { useSearchParams } from "next/navigation";
 
 export default function TranslationsModal() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const showModal = searchParams.get('modal') === 'true';
+  const showModal = searchParams.get("modal") === "true";
 
   return (
     <Modal
@@ -18,9 +18,9 @@ export default function TranslationsModal() {
       hasCloseIcon={false}
       buttons={[
         {
-          type: 'button',
-          label: 'Back',
-          variant: 'outline',
+          type: "button",
+          label: "Back",
+          variant: "outline",
           onClick: () => {
             router.back();
           },

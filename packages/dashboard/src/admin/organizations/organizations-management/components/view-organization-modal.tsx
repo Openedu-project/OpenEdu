@@ -1,9 +1,9 @@
-import { type ICreateOrganizationSchemaType, createOrganizationSchema } from '@oe/api/schemas/organization';
-import type { IOrganization } from '@oe/api/types/organizations';
-import { Modal } from '@oe/ui/components/modal';
-import { Uploader } from '@oe/ui/components/uploader';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
+import type { IOrganization } from '@oe/api';
+import { type ICreateOrganizationSchemaType, createOrganizationSchema } from '@oe/api';
+import { Uploader } from '@oe/ui';
+import { Modal } from '@oe/ui';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';
+import { Input } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 

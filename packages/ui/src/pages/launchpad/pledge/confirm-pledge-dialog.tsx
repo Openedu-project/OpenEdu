@@ -67,4 +67,4 @@ const ConfirmPledgeDialog = ({
   );
 };
 
-export default ConfirmPledgeDialog;
+export { ConfirmPledgeDialog };

@@ -1,11 +1,6 @@
-import type {
-  IPermissionAction,
-  IPermissionRouteInfo,
-  IPermissionRouteKey,
-  IPermissionSelectedActions,
-} from '@oe/api/types/permissions';
-import { Checkbox } from '@oe/ui/shadcn/checkbox';
-import { TableCell, TableRow } from '@oe/ui/shadcn/table';
+import type { IPermissionAction, IPermissionRouteInfo, IPermissionRouteKey, IPermissionSelectedActions } from '@oe/api';
+import { Checkbox } from '@oe/ui';
+import { TableCell, TableRow } from '@oe/ui';
 import { DEFAULT_ACTIONS_PERMISSION } from '../../permission-constant';
 
 export const RouteRow = ({

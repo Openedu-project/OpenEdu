@@ -1,3 +1,3 @@
-import { NotFoundPage } from '@oe/ui/common/pages';
+import { NotFoundPage } from "@oe/ui";
 
 export default NotFoundPage;

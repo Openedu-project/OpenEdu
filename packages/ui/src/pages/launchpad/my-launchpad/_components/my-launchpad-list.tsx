@@ -1,9 +1,9 @@
-import { getMyLaunchpadService } from '@oe/api/services/launchpad';
+import { getMyLaunchpadService } from '@oe/api';
 import { getTranslations } from 'next-intl/server';
-import MyLaunchpadCard from './my-launchpad-card';
-import MyLaunchpadPagination from './my-launchpad-pagination';
+import { MyLaunchpadCard } from './my-launchpad-card';
+import { MyLaunchpadPagination } from './my-launchpad-pagination';
 
-export default async function LaunchpadList({
+export async function LaunchpadList({
   type,
   currentPage,
 }: {

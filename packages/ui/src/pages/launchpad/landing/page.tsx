@@ -1,13 +1,13 @@
-import { getLaunchpadsService } from '@oe/api/services/launchpad';
+import { getLaunchpadsService } from '@oe/api';
 import Icon from '@oe/assets/images/launchpad/icons/launchpad-list-icon.svg';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { PLATFORM_ROUTES } from '@oe/core';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '#common/navigation';
 import { Image } from '#components/image';
 import { LaunchpadBackground } from './components';
 import { FeaturingSection, HowToSection, LaunchpadListSection, StepSection } from './sections';
 
-export default async function LaunchpadPage() {
+export async function LaunchpadPage() {
   const [featuringCampaign, successCampaign, publishCampaigns, t] = await Promise.all([
     getLaunchpadsService(undefined, {
       params: {

@@ -1,14 +1,14 @@
-import type { Metadata } from 'next';
+// import type { Metadata } from "next";
 
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import { DashboardMainPageLayout } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import ReportAffiliateCampaignList from './_component/campaign-report-list';
+import { ReportAffiliateCampaignList } from './_component/campaign-report-list';
 
-export const metadata: Metadata = {
-  title: 'Report',
-};
+// export const metadata: Metadata = {
+//   title: "Report",
+// };
 
-export default function CreatorAffiliateReport() {
+export function CreatorAffiliateReport() {
   const tDashboard = useTranslations('dashboard.affiliateCampaign');
 
   return (

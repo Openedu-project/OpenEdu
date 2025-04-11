@@ -1,11 +1,11 @@
-// import { UnderMaintainImage } from "@oe/assets/icons/maintain";
+// import { UnderMaintainImage } from "@oe/assets";
 // import { AlertCircleIcon } from "lucide-react";
 // import { useTranslations } from "next-intl";
 // import { ErrorException } from "#components/error-handler";
 // import { Button } from "#shadcn/button";
 
 // type Props = { error: Error & { digest?: string }; reset: () => void };
-// export default function ErrorBoundary({ error, reset }: Props) {
+// export function ErrorBoundary({ error, reset }: Props) {
 //   const tErrors = useTranslations("errors");
 
 //   return (
@@ -25,7 +25,7 @@
 //   );
 // }
 'use client';
-import { UnderMaintainImage } from '@oe/assets/icons/maintain';
+import { UnderMaintainImage } from '@oe/assets';
 import { AlertCircleIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Link } from '#common/navigation';
@@ -64,7 +64,7 @@ function getErrorDetails(error: Error & { digest?: string }) {
   };
 }
 
-export default function ErrorBoundary({ error, reset }: Props) {
+export function ErrorPage({ error, reset }: Props) {
   const tErrors = useTranslations('errors');
   const tGeneral = useTranslations('general');
   const { errorKey, isServerError, isKnownError, digestValue } = getErrorDetails(error);

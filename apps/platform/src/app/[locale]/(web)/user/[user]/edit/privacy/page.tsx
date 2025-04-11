@@ -1,4 +1,4 @@
-import ProfilePrivacy from '@oe/ui/pages/user/edit/profile-privacy';
+import { ProfilePrivacy } from "@oe/ui";
 
 export default function ProfilePrivacyPage() {
   return <ProfilePrivacy />;

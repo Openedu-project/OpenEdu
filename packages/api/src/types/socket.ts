@@ -1,5 +1,5 @@
-import type { IAICourseStatus } from '@oe/api/types/course/ai-course';
-import type { IMessageData } from './conversation';
+import type { IMessageData } from '#types/conversation';
+import type { IAICourseStatus } from '#types/course/ai-course';
 import type { INotificationItem } from './notification';
 import type { IUser } from './user';
 

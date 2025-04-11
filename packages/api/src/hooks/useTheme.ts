@@ -5,7 +5,7 @@ import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
 import { createThemeSystemConfigKeyClient } from '#utils/system-config';
 
-import type { ThemeSystem } from '../../../themes/src/_types';
+// import type { ThemeSystem } from '../../../themes/src/_types';
 
 import useSWRMutation from 'swr/mutation';
 import type { IThemeSystemConfigPayload } from '#types/theme';
@@ -25,7 +25,8 @@ import { useGetOrganizationByDomain } from './useOrganization';
 //   };
 // }
 
-export function useGetTheme(fallback: ISystemConfigRes<ThemeSystem>[] | undefined = undefined) {
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export function useGetTheme(fallback: ISystemConfigRes<any>[] | undefined = undefined) {
   const { organizationByDomain } = useGetOrganizationByDomain();
 
   const endpoint = createAPIUrl({
@@ -41,7 +42,8 @@ export function useGetTheme(fallback: ISystemConfigRes<ThemeSystem>[] | undefine
   });
 
   return {
-    theme: data as ISystemConfigRes<ThemeSystem>[],
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    theme: data as ISystemConfigRes<any>[],
     themeError: error,
     mutateTheme: mutate,
     themeLoading: isLoading,

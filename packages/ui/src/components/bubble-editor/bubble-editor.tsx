@@ -1,5 +1,5 @@
-import { cn } from '@oe/ui/utils/cn';
 import { useCallback, useEffect } from 'react';
+import { cn } from '#utils/cn';
 
 import type { ComponentProps, Ref, SyntheticEvent } from 'react';
 import type { ContentEditableProps } from './content-editable';

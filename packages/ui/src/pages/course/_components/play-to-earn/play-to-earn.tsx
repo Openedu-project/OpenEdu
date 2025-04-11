@@ -1,13 +1,13 @@
 'use client';
 
-import { useGetLearningProgress } from '@oe/api/hooks/useLearningProgress';
-import { useGetMe } from '@oe/api/hooks/useMe';
+import { useGetMe } from '@oe/api';
+import { useGetLearningProgress } from '@oe/api';
 import { getCookie } from 'cookies-next';
 import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import { createAPIUrl } from '@oe/api/utils/fetch';
+import type { ICourseOutline } from '@oe/api';
+import { createAPIUrl } from '@oe/api';
 import availBot from '@oe/assets/images/avail_bot.png';
 import { Image } from '#components/image';
 import { Button } from '#shadcn/button';
@@ -24,7 +24,9 @@ const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
   const [learningRequiredModal, setLearningRequiredModal] = useState<boolean>(false);
 
   const { dataMe } = useGetMe();
-  const { dataLearningProgress } = useGetLearningProgress({ id: dataMe && courseOutline ? courseOutline?.slug : '' });
+  const { dataLearningProgress } = useGetLearningProgress({
+    id: dataMe && courseOutline ? courseOutline?.slug : '',
+  });
 
   const formResults = useMemo(() => {
     if (!courseOutline?.form_relations) {
@@ -137,4 +139,4 @@ const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
   );
 };
 
-export default PlayToEarn;
+export { PlayToEarn };

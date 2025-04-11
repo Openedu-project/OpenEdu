@@ -1,6 +1,6 @@
 'use client';
-import { Button } from '@oe/ui/shadcn/button';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { toast } from '@oe/ui';
+import { Button } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useLanguageStore } from '../_store/useLanguageStore';
@@ -16,7 +16,14 @@ export function SaveButton() {
   const handleSave = async () => {
     setIsLoading(true);
     try {
-      await handleSaveI18nConfig({ locales, locale, languageStats, id, files, setId });
+      await handleSaveI18nConfig({
+        locales,
+        locale,
+        languageStats,
+        id,
+        files,
+        setId,
+      });
       // mutate(createSystemConfigSWRKey({ key: systemConfigKeys.i18nConfig }));
       toast.success(tLanguages('saveSuccess'));
     } catch {

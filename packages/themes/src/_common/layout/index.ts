@@ -1,3 +1,3 @@
-import ThemeLayout from './theme-layout';
+import { ThemeLayout } from './theme-layout';
 
 export { ThemeLayout };

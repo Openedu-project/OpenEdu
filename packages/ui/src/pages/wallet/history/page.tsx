@@ -1,12 +1,12 @@
 'use client';
-import { WALLET_ROUTES } from '@oe/core/utils/routes';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@oe/ui/shadcn/tabs';
+import { WALLET_ROUTES } from '@oe/core';
 import { ChevronLeft } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Link } from '#common/navigation';
-import FiatHistory from './fiat-history';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '#shadcn/tabs';
+import { FiatHistory } from './fiat-history';
 import { FiatRequestWithdrawHistory } from './fiat-request-withdraw-history';
-import TokenHistory from './token-history';
+import { TokenHistory } from './token-history';
 
 export function WalletHistoryPage() {
   const t = useTranslations('wallets.historyPage');

@@ -1,13 +1,13 @@
 'use client';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
+import { FormFieldWithLabel } from '#shadcn/form';
+import { Input } from '#shadcn/input';
 
-import { type ForgotPasswordSchemaType, forgotPasswordSchema } from '@oe/api/schemas/authSchema';
-import { forgotPasswordService } from '@oe/api/services/auth';
-import type { HTTPError } from '@oe/api/utils/http-error';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import type { HTTPError } from '@oe/api';
+import { forgotPasswordService } from '@oe/api';
+import { type ForgotPasswordSchemaType, forgotPasswordSchema } from '@oe/api';
+import { PLATFORM_ROUTES } from '@oe/core';
 import { Mail } from 'lucide-react';
 import { Link } from '#common/navigation';
 import { FormWrapper } from '#components/form-wrapper';

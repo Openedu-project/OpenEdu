@@ -1,10 +1,10 @@
 'use client';
 
-import { useCreateOrUpdateThemeConfig, useGetTheme } from '@oe/api/hooks/useTheme';
-import type { ISystemConfigRes } from '@oe/api/types/system-config';
-import { toast } from '@oe/ui/shadcn/sonner';
-import { Switch } from '@oe/ui/shadcn/switch';
-import { Tooltip } from '@oe/ui/shadcn/tooltip';
+import { useCreateOrUpdateThemeConfig, useGetTheme } from '@oe/api';
+import type { ISystemConfigRes } from '@oe/api';
+import { toast } from '@oe/ui';
+import { Switch } from '@oe/ui';
+import { Tooltip } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';

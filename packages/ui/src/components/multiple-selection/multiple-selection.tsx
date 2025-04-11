@@ -1,3 +1,4 @@
+'use client';
 import { type CSSProperties, type ReactNode, useRef, useState } from 'react';
 import { Checkbox } from '#shadcn/checkbox';
 import { Input } from '#shadcn/input';

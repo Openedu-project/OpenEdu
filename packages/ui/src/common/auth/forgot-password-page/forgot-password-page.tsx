@@ -4,8 +4,6 @@ import type { FileType } from '#components/uploader';
 import { AuthLayout } from '../auth-layout';
 import { ForgotPasswordForm } from './forgot-password-form';
 
-// import type { ThemeName } from '@oe/themes/types';
-
 interface ForgotPasswordProps {
   themeName?: string;
   banner?: FileType;

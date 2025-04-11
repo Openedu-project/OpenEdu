@@ -1,12 +1,12 @@
-import type { TLessonContent } from '@oe/api/types/course/basic';
-import type { IQuizItemResponse } from '@oe/api/types/course/quiz';
+import type { TLessonContent } from '@oe/api';
+import type { IQuizItemResponse } from '@oe/api';
 import { cn } from '#utils/cn';
 import type { ContentRenderer } from './_types/types';
-import ContentPdf from './content-pdf';
-import ContentEmbedded from './content-player/content-embedded';
-import ContentVideo from './content-player/content-video';
-import ContentQuiz from './content-quiz/content-quiz';
-import ContentText from './content-text';
+import { ContentPdf } from './content-pdf';
+import { ContentEmbedded } from './content-player/content-embedded';
+import { ContentVideo } from './content-player/content-video';
+import { ContentQuiz } from './content-quiz/content-quiz';
+import { ContentText } from './content-text';
 
 const CONTENT_STYLES = {
   common: {

@@ -1,6 +1,6 @@
-import { getThemeConfigServer } from '@oe/api/services/theme';
-import { SignUpPage } from '@oe/ui/common/auth/signup';
-import { getBannerByPageKey } from '../_utils/functions';
+import { getThemeConfigServer } from "@oe/api";
+import { SignUpPage } from "@oe/ui";
+import { getBannerByPageKey } from "../_utils/functions";
 
 export default async function SignUp() {
   const [themeSystem] = await Promise.all([getThemeConfigServer()]);
@@ -10,5 +10,10 @@ export default async function SignUp() {
     return <SignUpPage />;
   }
 
-  return <SignUpPage themeName={themeName} banner={getBannerByPageKey('signUp', themeSystem?.[0]?.value)} />;
+  return (
+    <SignUpPage
+      themeName={themeName}
+      banner={getBannerByPageKey("signUp", themeSystem?.[0]?.value)}
+    />
+  );
 }

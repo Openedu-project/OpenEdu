@@ -1,10 +1,10 @@
-import { DashboardHeaderCard } from '@oe/ui/common/layout';
-import { Link } from '@oe/ui/common/navigation';
+import { DashboardHeaderCard } from '@oe/ui';
+import { Link } from '@oe/ui';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
 import { InitLanguageState } from './_components/init-language-state';
 
-export default async function LanguagesLayout({ children }: { children: ReactNode }) {
+export async function LanguagesLayout({ children }: { children: ReactNode }) {
   const [tSiteSettings, tLanguages] = await Promise.all([
     getTranslations('dashboard.siteSettings'),
     getTranslations('languages'),

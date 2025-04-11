@@ -1,8 +1,8 @@
-import { getMeServiceWithoutError } from '@oe/api/services/auth';
-import { getCoursesCountingService } from '@oe/api/services/my-learning-space';
-import DashboardContent from './_components/dashboard';
+import { getMeServiceWithoutError } from '@oe/api';
+import { getCoursesCountingService } from '@oe/api';
+import { DashboardContent } from './_components/dashboard';
 
-export default async function LearnerDashboard() {
+export async function LearnerDashboard() {
   const me = await getMeServiceWithoutError();
   const courseCountData = await getCoursesCountingService(undefined, {});
 

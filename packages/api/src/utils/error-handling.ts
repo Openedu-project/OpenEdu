@@ -80,7 +80,7 @@ const errorMessages: Set<string> = new Set([
   'terminated', // Undici (Node.js)
 ]);
 
-export default function isNetworkError(error: unknown): boolean {
+export function isNetworkError(error: unknown): boolean {
   const isValid =
     error !== null &&
     error !== undefined &&

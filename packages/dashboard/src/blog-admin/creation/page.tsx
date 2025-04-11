@@ -1,10 +1,10 @@
-import { getBlogDraftContent } from '@oe/api/services/blog';
+import { getBlogDraftContent } from '@oe/api';
 import WhaleError from '@oe/assets/images/whale/whale-error.png';
-import { BLOG_ADMIN_ROUTES } from '@oe/core/utils/routes';
-import { BlogForm, type IFormAction } from '@oe/ui/components/blog';
-import { Breadcrumb } from '@oe/ui/components/breadcrumb';
-import { Image } from '@oe/ui/components/image';
-import { cn } from '@oe/ui/utils/cn';
+import { BLOG_ADMIN_ROUTES } from '@oe/core';
+import { BlogForm, type IFormAction } from '@oe/ui';
+import { Breadcrumb } from '@oe/ui';
+import { Image } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { getTranslations } from 'next-intl/server';
 import { OrgAvatar } from '../_components/org-avatar';
 
@@ -30,7 +30,7 @@ const getBlogContent = async (id?: string) => {
   }
 };
 
-export default async function OrgBlogCreation({ className, aiButton, id, action, prevUrl }: ICreationProps) {
+export async function OrgBlogCreation({ className, aiButton, id, action, prevUrl }: ICreationProps) {
   const [tError, tBlogNavigation, blogData] = await Promise.all([
     getTranslations('errors'),
     getTranslations('blogNavigation'),

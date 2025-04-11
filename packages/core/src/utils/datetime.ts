@@ -1,4 +1,4 @@
-import { getLocaleFromPathname } from '@oe/i18n/utils';
+import { getLocaleFromPathname } from '@oe/i18n';
 import { type Locale, differenceInDays, format, formatRelative, fromUnixTime } from 'date-fns';
 import { enUS } from 'date-fns/locale';
 

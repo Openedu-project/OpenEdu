@@ -1,5 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@oe/ui/shadcn/card';
 import { useTranslations } from 'next-intl';
+import { Card, CardContent, CardHeader, CardTitle } from '#shadcn/card';
 
 const CourseComingSoon = () => {
   const tComing = useTranslations('courseComingSoon');
@@ -18,4 +18,4 @@ const CourseComingSoon = () => {
   );
 };
 
-export default CourseComingSoon;
+export { CourseComingSoon };

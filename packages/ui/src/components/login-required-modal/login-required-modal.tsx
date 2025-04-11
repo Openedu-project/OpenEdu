@@ -4,7 +4,7 @@ import { AlertTriangle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 
-import { AUTH_ROUTES } from '@oe/core/utils/routes';
+import { AUTH_ROUTES } from '@oe/core';
 import { Link, usePathname } from '#common/navigation';
 import {
   AlertDialog,

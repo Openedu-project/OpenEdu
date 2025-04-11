@@ -1,8 +1,8 @@
 'use client';
-import type { ILesson } from '@oe/api/types/course/segment';
-import { DndSortable, DndSortableDragButton } from '@oe/ui/components/dnd-sortable';
-import { Button } from '@oe/ui/shadcn/button';
-import { cn } from '@oe/ui/utils/cn';
+import type { ILesson } from '@oe/api';
+import { Button } from '@oe/ui';
+import { DndSortable, DndSortableDragButton } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';

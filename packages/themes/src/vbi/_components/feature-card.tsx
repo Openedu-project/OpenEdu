@@ -1,5 +1,5 @@
-import { Card } from '@oe/ui/shadcn/card';
-import { cn } from '@oe/ui/utils/cn';
+import { Card } from '@oe/ui';
+import { cn } from '@oe/ui';
 
 interface FeatureCardProps {
   title: string;

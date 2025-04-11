@@ -1,10 +1,10 @@
 import type { MultipleSelectionOption } from '#components/multiple-selection';
-import FormDescriptionConfig from '../../form-config/form-description-config';
+import { FormDescriptionConfig } from '../../form-config/form-description-config';
 import { FormLabelConfig } from '../../form-config/form-label-config';
-import FormOptionsConfig from '../../form-config/form-options-config';
-import FormOtherOptionConfig from '../../form-config/form-other-option-config copy';
-import FormPlaceholderConfig from '../../form-config/form-placeholder-config';
-import FormTooltipConfig from '../../form-config/form-tooltip-config';
+import { FormOptionsConfig } from '../../form-config/form-options-config';
+import { FormOtherOptionConfig } from '../../form-config/form-other-option-config';
+import { FormPlaceholderConfig } from '../../form-config/form-placeholder-config';
+import { FormTooltipConfig } from '../../form-config/form-tooltip-config';
 import type { FormFieldType } from '../../types';
 
 export function MultipleSelectionFieldConfig({

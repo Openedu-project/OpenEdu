@@ -1,6 +1,6 @@
 'use client';
 
-import type { IBlog } from '@oe/api/types/blog';
+import type { IBlog } from '@oe/api';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Link } from '#common/navigation';

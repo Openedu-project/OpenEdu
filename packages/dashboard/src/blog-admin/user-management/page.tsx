@@ -1,10 +1,10 @@
-import { USER_ROLE_EVENT } from '@oe/core/utils/constants';
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import { USER_ROLE_EVENT } from '@oe/core';
+import { DashboardMainPageLayout } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import InviteUserModal from '../_components/invite-user-modal';
+import { InviteUserModal } from '../_components/invite-user-modal';
 import { type IBlogUserRole, UserTable } from '../_components/user-table';
 
-export default function UserManagementPage({ userRole }: { userRole: IBlogUserRole }) {
+export function UserManagementPage({ userRole }: { userRole: IBlogUserRole }) {
   const tDashboard = useTranslations('dashboard.blog');
   const t = useTranslations('blogManagement.inviteUser');
   const label = tDashboard(userRole === 'org_writer' ? 'writerMgt' : 'editorMgt');

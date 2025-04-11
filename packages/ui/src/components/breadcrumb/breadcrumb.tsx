@@ -1,6 +1,6 @@
 'use client';
 
-import type { IProtectedRoutes } from '@oe/core/utils/routes';
+import type { IProtectedRoutes } from '@oe/core';
 import { HomeIcon } from 'lucide-react';
 import { Fragment, useEffect, useState } from 'react';
 import { Link, usePathname } from '#common/navigation';
@@ -11,7 +11,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-  Breadcrumb as UIBreadcrumb,
+  ShadcnBreadcrumb,
 } from '#shadcn/breadcrumb';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '#shadcn/dropdown-menu';
 import { cn } from '#utils/cn';
@@ -162,8 +162,8 @@ export function Breadcrumb({ items = [], dashboard, className }: BreadcrumbProps
   };
 
   return (
-    <UIBreadcrumb>
+    <ShadcnBreadcrumb>
       <BreadcrumbList className={cn('flex-nowrap', className)}>{renderBreadcrumbItems()}</BreadcrumbList>
-    </UIBreadcrumb>
+    </ShadcnBreadcrumb>
   );
 }

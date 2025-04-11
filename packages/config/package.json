@@ -3,11 +3,16 @@
   "version": "0.0.1",
   "private": true,
   "license": "MIT",
+  "type": "module",
   "exports": {
     "./next": "./next/index.ts",
     "./tsconfig/base.json": "./tsconfig/base.json",
     "./tsconfig/react.json": "./tsconfig/react.json",
     "./tsconfig/nextjs.json": "./tsconfig/nextjs.json",
+    "./tsconfig/ts-build.json": "./tsconfig/ts-build.json",
+    "./tsconfig/react-build.json": "./tsconfig/react-build.json",
+    "./tailwindcss/postcss.config": "./tailwindcss/postcss.config.js",
+    "./tailwindcss/global.css": "./tailwindcss/styles/global.css",
     "./package.json": "./package.json"
   },
   "publishConfig": {
@@ -15,14 +20,18 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "clean": "rm -rf .turbo && rm -rf node_modules"
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "clean:build": "rm -rf .turbo && rm -rf dist"
   },
-  "peerDependencies": {
-    "next": "^15.2.4"
+  "dependencies": {
+    "tailwindcss": "^4.1.3",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^15.2.4",
+    "next": "^15.3.1-canary.4",
+    "@next/bundle-analyzer": "15.3.1-canary.4",
     "@oe/types": "workspace:*",
+    "@tailwindcss/postcss": "^4.1.3",
     "@types/node": "^22.14.0"
   }
 }

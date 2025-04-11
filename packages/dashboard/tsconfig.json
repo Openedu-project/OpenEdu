@@ -2,7 +2,15 @@
   "extends": "@oe/config/tsconfig/react.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "types": ["node", "@oe/types/global.d.ts", "@types/wicg-file-system-access", "next/image-types/global"]
+    "types": ["node", "@oe/types/global.d.ts", "next/image-types/global"],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@oe/ui": ["../../packages/ui/src"],
+      "@oe/core": ["../../packages/core/src"],
+      "@oe/api": ["../../packages/api/src"],
+      "@oe/assets": ["../../packages/assets/src"],
+      "@oe/i18n": ["../../packages/i18n/src"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules"]

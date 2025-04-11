@@ -1,4 +1,4 @@
-import CourseDetailLearnersPage from "@oe/dashboard/creator/courses/course-detail/learnners/page";
+import { CourseDetailLearnersPage } from "@oe/dashboard";
 
 export default function LearnersPage() {
   return <CourseDetailLearnersPage />;

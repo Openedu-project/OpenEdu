@@ -1,12 +1,12 @@
-import { getCoursesPublishService } from '@oe/api/services/course';
+import { getCoursesPublishService } from '@oe/api';
 import WhaleNoData from '@oe/assets/images/whale-no-data.png';
 import { getTranslations } from 'next-intl/server';
 import { Image } from '#components/image';
-import CourseList from './_components/course-list';
-import CourseListHeader from './_components/course-list-header';
-import CourseListSearch from './_components/course-list-search';
+import { CourseList } from './_components/course-list';
+import { CourseListHeader } from './_components/course-list-header';
+import { CourseListSearch } from './_components/course-list-search';
 
-export default async function CoursesListPage({
+export async function CoursesListPage({
   isOpenEdu = true,
   searchParams,
 }: {

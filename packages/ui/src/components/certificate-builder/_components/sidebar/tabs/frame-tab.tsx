@@ -1,6 +1,6 @@
+import type { IFileResponse } from '@oe/api';
 // ... existing code ...
-import type { ICertificateElement } from '@oe/api/types/certificate';
-import type { IFileResponse } from '@oe/api/types/file';
+import type { ICertificateElement } from '@oe/api';
 import { ChevronsLeftRightEllipsis, ImageIcon, Network, Signature, TriangleAlert, Type } from 'lucide-react';
 import { nanoid } from 'nanoid';
 import { useTranslations } from 'next-intl';

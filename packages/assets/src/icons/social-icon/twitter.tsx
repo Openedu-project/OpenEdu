@@ -1,6 +1,6 @@
 import type { ISvgProps } from '../types';
 
-export default function Twitter({ width = 24, height = 24, className = '', color = '#1A1A1A' }: ISvgProps) {
+export function Twitter({ width = 24, height = 24, className = '', color = '#1A1A1A' }: ISvgProps) {
   return (
     <svg
       className={className}

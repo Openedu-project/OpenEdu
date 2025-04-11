@@ -1,6 +1,6 @@
 'use client';
 
-import type { ILesson, ISection } from '@oe/api/types/course/segment';
+import type { ILesson, ISection } from '@oe/api';
 import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
 import { useState } from 'react';
 
@@ -28,7 +28,8 @@ const CollapsibleCourseSection = ({ outline }: { outline: ISection }) => {
           </button>
         </div>
       </div>
-      {isExpanded && outline.lessons?.map((lession, index) => (
+      {isExpanded &&
+        outline.lessons?.map((lession, index) => (
           <CollapsibleCourseLession key={lession.lesson_count} lession={lession} index={index + 1} />
         ))}
     </div>
@@ -50,4 +51,4 @@ const CollapsibleCourseLession = ({
   );
 };
 
-export default CollapsibleCourseContent;
+export { CollapsibleCourseContent };

@@ -81,7 +81,7 @@
 
 // InputCurrency.displayName = 'InputCurrency';
 
-import { languageWithCurrency } from '@oe/i18n/languages-currency';
+import { languageWithCurrency } from '@oe/i18n';
 import { useLocale } from 'next-intl';
 import CurrencyInput, { type CurrencyInputProps } from 'react-currency-input-field';
 import { cn } from '#utils/cn';

@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function Bookmark({ width = 15, height = 15, className = '', color = '#2C2C2C' }: ISvgProps) {
+export function Bookmark({ width = 15, height = 15, className = '', color = '#2C2C2C' }: ISvgProps) {
   return (
     <svg
       className={className}

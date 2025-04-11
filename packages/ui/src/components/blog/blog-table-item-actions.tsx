@@ -1,6 +1,6 @@
 'use client';
 
-import type { IBlog } from '@oe/api/types/blog';
+import type { IBlog } from '@oe/api';
 import { BookOpenCheck, ChevronDown, Eye, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
@@ -41,7 +41,10 @@ export const BlogTableItemActions = ({ blogData, handlePublish, previewUrl, hand
             onlyText
             onClose={() => setOpen(false)}
             desc={tBlogMgt('publishBlogDes')}
-            triggerProps={{ leftSection: <BookOpenCheck className="h-4 w-4" />, variant: 'ghost' }}
+            triggerProps={{
+              leftSection: <BookOpenCheck className="h-4 w-4" />,
+              variant: 'ghost',
+            }}
             onConfirm={(param: { note?: string }) => handlePublish(param, blogData, 'publish')}
           />
 

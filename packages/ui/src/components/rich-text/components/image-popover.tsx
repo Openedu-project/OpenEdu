@@ -1,5 +1,5 @@
 'use client';
-import type { IFileResponse } from '@oe/api/types/file';
+import type { IFileResponse } from '@oe/api';
 import type { Editor } from '@tiptap/core';
 import { ImageIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';

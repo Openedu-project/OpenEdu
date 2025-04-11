@@ -1,11 +1,11 @@
 import BannerJouney from "@oe/assets/images/openedu-homepage/banner-journey.png";
-import { PLATFORM_ROUTES } from "@oe/core/utils/routes";
-import { Link } from "@oe/ui/common/navigation";
-import { Image } from "@oe/ui/components/image";
-import { Button } from "@oe/ui/shadcn/button";
+import { PLATFORM_ROUTES } from "@oe/core";
+import { Button } from "@oe/ui";
+import { Link } from "@oe/ui";
+import { Image } from "@oe/ui";
 import { useTranslations } from "next-intl";
 
-export default function CTASection() {
+export function CTASection() {
   const t = useTranslations("homePageLayout.ctaSection");
 
   return (

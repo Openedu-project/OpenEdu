@@ -1,13 +1,13 @@
 'use client';
-import type { IFileResponse } from '@oe/api/types/file';
-import { Uploader } from '@oe/ui/components/uploader';
-import { Button } from '@oe/ui/shadcn/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@oe/ui/shadcn/card';
-import { Input } from '@oe/ui/shadcn/input';
-import { Label } from '@oe/ui/shadcn/label';
-import { Switch } from '@oe/ui/shadcn/switch';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@oe/ui/shadcn/tabs';
-import { Textarea } from '@oe/ui/shadcn/textarea';
+import type { IFileResponse } from '@oe/api';
+import { Uploader } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { Card, CardContent, CardHeader, CardTitle } from '@oe/ui';
+import { Input } from '@oe/ui';
+import { Label } from '@oe/ui';
+import { Switch } from '@oe/ui';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@oe/ui';
+import { Textarea } from '@oe/ui';
 import { Save } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
@@ -298,4 +298,4 @@ const ThemeConfigMetadata = ({ data, isRoot = false, isSubmitting, onSubmit }: T
   );
 };
 
-export default ThemeConfigMetadata;
+export { ThemeConfigMetadata };

@@ -1,5 +1,5 @@
-import type { IFileResponse } from '@oe/api/types/file';
-import type { Dispatch, InputHTMLAttributes, MouseEvent, RefObject, SetStateAction } from 'react';
+import type { IFileResponse } from '@oe/api';
+import type { InputHTMLAttributes, MouseEvent, RefObject } from 'react';
 import type { ReactNode } from 'react';
 import type { ReactCropProps } from 'react-image-crop';
 

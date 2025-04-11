@@ -1,6 +1,6 @@
-import { z } from '@oe/api/utils/zod';
-import { createStore } from '@oe/core/store';
-import { uniqueID } from '@oe/core/utils/unique';
+import { z } from '@oe/api';
+import { createStore } from '@oe/core';
+import { uniqueID } from '@oe/core';
 import type { FormEditorStore, FormFieldOrGroup } from './types';
 
 const initialState = {

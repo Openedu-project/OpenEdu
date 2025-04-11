@@ -1,5 +1,3 @@
-import type { VbiHomepageHeroProps } from './vbi-hero';
-import VbiHomepageHeroClient from './vbi-hero-client';
-import VbiHomepageHeroServer from './vbi-hero-server';
-
-export { VbiHomepageHeroClient, VbiHomepageHeroServer, type VbiHomepageHeroProps };
+export * from './vbi-hero';
+export * from './vbi-hero-client';
+export * from './vbi-hero-server';

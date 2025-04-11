@@ -1,3 +1,4 @@
+'use client';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { useEffect, useMemo } from 'react';
 import { Link } from '#common/navigation';

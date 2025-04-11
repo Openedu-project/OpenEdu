@@ -1,8 +1,8 @@
 import { Modal } from '#components/modal';
-import LessonContentBlocks from '../../pages/learning/_components/lesson-content/lesson-content-blocks';
+import { LessonContentBlocks } from '../../pages/learning/_components/lesson-content/lesson-content-blocks';
 
-import { useGetLessonLearn } from '@oe/api/hooks/useLessonLearn';
-import type { ICourseOutline } from '@oe/api/types/course/course';
+import type { ICourseOutline } from '@oe/api';
+import { useGetLessonLearn } from '@oe/api';
 import { NoDataAvailable } from '#components/no-data-available';
 import { Spinner } from '#components/spinner';
 
@@ -48,4 +48,4 @@ const PreviewLessonModal = ({ lessonUid, sectionUid, courseData, isOpen, onClose
   );
 };
 
-export default PreviewLessonModal;
+export { PreviewLessonModal, type PreviewLessonProps };

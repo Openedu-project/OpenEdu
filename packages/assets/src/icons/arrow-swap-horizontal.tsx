@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function ArrowSwapHorizontal({ className, color = 'white', width = 24, height = 24 }: ISvgProps) {
+export function ArrowSwapHorizontal({ className, color = 'white', width = 24, height = 24 }: ISvgProps) {
   return (
     <svg
       className={className}

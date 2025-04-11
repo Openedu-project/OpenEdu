@@ -1,3 +1,4 @@
+'use client';
 import {
   DndContext,
   type DragEndEvent,

@@ -1,17 +1,11 @@
-import type {
-  AllSectionKeys,
-  PageSectionConfig,
-  PageSectionConfigs,
-  SectionsByPage,
-  ThemePageKey,
-} from '@oe/themes/types';
-import { DndSortable, DndSortableDragButton } from '@oe/ui/components/dnd-sortable';
-import { Button } from '@oe/ui/shadcn/button';
-import { ScrollArea } from '@oe/ui/shadcn/scroll-area';
+import { Button } from '@oe/ui';
+import { DndSortable, DndSortableDragButton } from '@oe/ui';
+import { ScrollArea } from '@oe/ui';
 import { Save } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { memo, useState } from 'react';
-import ConfirmSubmitModal from './confirm-submit-modal';
+import type { AllSectionKeys, PageSectionConfig, PageSectionConfigs, SectionsByPage, ThemePageKey } from '#types';
+import { ConfirmSubmitModal } from './confirm-submit-modal';
 import { ConfigSection } from './theme-section-config';
 import { ThemeSectionUpdateKeys } from './theme-section-update-key';
 

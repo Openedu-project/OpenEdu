@@ -1,5 +1,5 @@
-import { LoginPage } from '@oe/ui/common/auth/login-page';
-import type { FileType } from '@oe/ui/components/uploader';
+import type { FileType } from '@oe/ui';
+import { LoginPage } from '@oe/ui';
 import type { SectionComponent } from '../_types/theme-page';
 
 export interface AuthLayoutLoginProps {
@@ -13,4 +13,4 @@ const AuthLayoutLogin: SectionComponent<'auth', 'login'> = ({ props }) => {
   return <LoginPage banner={props?.banner} />;
 };
 
-export default AuthLayoutLogin;
+export { AuthLayoutLogin };

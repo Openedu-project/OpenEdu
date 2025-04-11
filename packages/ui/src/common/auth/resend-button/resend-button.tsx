@@ -1,11 +1,11 @@
 'use client';
-import { Button } from '@oe/ui/shadcn/button';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import { Button } from '#shadcn/button';
 
-import { resendEmailService } from '@oe/api/services/auth';
-import type { AuthEventName } from '@oe/api/utils/auth';
-import type { HTTPError } from '@oe/api/utils/http-error';
+import type { HTTPError } from '@oe/api';
+import { resendEmailService } from '@oe/api';
+import type { AuthEventName } from '@oe/api';
 import { useSearchParams } from 'next/navigation';
 
 export type ResendButtonProps = {
@@ -33,7 +33,9 @@ export const ResendButton = ({ email, event, onError }: ResendButtonProps) => {
     if (email) {
       try {
         const nextPath = searchParams.get('next');
-        await resendEmailService(null, { payload: { email, event, next_path: nextPath } });
+        await resendEmailService(null, {
+          payload: { email, event, next_path: nextPath },
+        });
         setSeconds(COUNT_DOWN);
       } catch (error) {
         onError?.(error as HTTPError);

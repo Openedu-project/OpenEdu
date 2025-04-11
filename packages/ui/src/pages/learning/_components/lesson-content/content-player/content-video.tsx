@@ -1,17 +1,17 @@
 'use client';
 
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import type { IQuizItemResponse } from '@oe/api/types/course/quiz';
-import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
-import { convertTimeStringToSeconds } from '@oe/core/utils/datetime';
+import type { ICourseOutline } from '@oe/api';
+import type { IQuizItemResponse } from '@oe/api';
+import type { IQuizSubmissionResponse } from '@oe/api';
+import { convertTimeStringToSeconds } from '@oe/core';
 import { type IframeHTMLAttributes, useEffect, useRef, useState } from 'react';
 import { Spinner } from '#components/spinner';
 import { useQuizSubmissionStore } from '../../../_store/learning-store';
 import { usePlayerProgress } from './_hooks';
-import NextLessonAlert from './next-lesson-alert';
+import { NextLessonAlert } from './next-lesson-alert';
 import { EVENTS, usePlayer } from './player';
-import VideoQuizInfo from './video-quiz-infor';
-import VideoQuizModal from './video-quiz-modal';
+import { VideoQuizInfo } from './video-quiz-infor';
+import { VideoQuizModal } from './video-quiz-modal';
 
 interface IContentVideoProps extends IframeHTMLAttributes<HTMLIFrameElement> {
   disableSeeking?: boolean;
@@ -152,4 +152,4 @@ const ContentVideo = ({
   );
 };
 
-export default ContentVideo;
+export { ContentVideo };

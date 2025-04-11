@@ -1,4 +1,4 @@
-import { getCookie } from '@oe/core/utils/cookie';
+import { getCookie } from '@oe/core';
 import { useEffect, useState } from 'react';
 
 export const useSocketAuth = (isAuthenticated: boolean) => {

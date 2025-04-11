@@ -4,7 +4,7 @@ import { Heart } from 'lucide-react';
 import { useState } from 'react';
 
 // Client component just for the interactive favorite button
-export default function MyLaunchpadFavoriteButton({
+export function MyLaunchpadFavoriteButton({
   initialFavorite,
 }: {
   initialFavorite: boolean;

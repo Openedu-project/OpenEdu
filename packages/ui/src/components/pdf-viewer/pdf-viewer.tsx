@@ -2,11 +2,12 @@ import type { PDFDocumentProxy } from 'pdfjs-dist';
 import { type ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import { cn } from '#utils/cn';
-import useResizeObserver from './_hooks';
-import PdfToolbar from './pdf-toolbar';
+import { useResizeObserver } from './_hooks';
+import { PdfToolbar } from './pdf-toolbar';
 
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
+import { ZOOM_LEVELS } from './constants';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -17,12 +18,6 @@ const options = {
 
 const resizeObserverOptions = {};
 const maxWidth = 800;
-
-export const ZOOM_LEVELS = {
-  MIN: 0.5,
-  MAX: 2.0,
-  STEP: 0.1,
-};
 
 type PDFFile = string | File | null;
 
@@ -38,7 +33,7 @@ export interface IPdfViewerProps {
   onLoadSuccess?: (pdf: PDFDocumentProxy) => void;
 }
 
-export default function PdfViewer({
+export function PdfViewer({
   files,
   uploadFile,
   className,

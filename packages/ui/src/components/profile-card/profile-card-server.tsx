@@ -1,8 +1,8 @@
-import type { IUserProfile } from '@oe/api/types/user-profile';
-import { Card } from '@oe/ui/shadcn/card';
+import type { IUserProfile } from '@oe/api';
 import type React from 'react';
 import type { HTMLAttributes } from 'react';
 import { UserAvatar } from '#components/user-avatar';
+import { Card } from '#shadcn/card';
 import { cn } from '#utils/cn';
 interface IProfileCardProps extends HTMLAttributes<HTMLDivElement> {
   profileData: IUserProfile;
@@ -13,7 +13,7 @@ interface IProfileCardProps extends HTMLAttributes<HTMLDivElement> {
   infoClassName?: string;
   handleClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
-export default function ProfileCard({
+export function ProfileCardServer({
   profileData,
   align = false,
   handleClick,

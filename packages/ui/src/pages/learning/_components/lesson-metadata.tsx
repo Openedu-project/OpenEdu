@@ -81,4 +81,4 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, lessonUid, ...props
   );
 };
 
-export default LessonMetadata;
+export { LessonMetadata };

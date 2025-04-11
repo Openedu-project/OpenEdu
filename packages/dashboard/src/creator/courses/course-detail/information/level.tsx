@@ -1,12 +1,12 @@
 'use client';
-import { useCategoriesTree } from '@oe/api/hooks/useCategories';
-import { useGetOrganizationByDomain } from '@oe/api/hooks/useOrganization';
-import type { ICourseCategory } from '@oe/api/types/course/category';
-import { AutocompeteMultiple } from '@oe/ui/components/autocomplete';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
+import { useGetOrganizationByDomain } from '@oe/api';
+import { useCategoriesTree } from '@oe/api';
+import type { ICourseCategory } from '@oe/api';
+import { AutocompeteMultiple } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
-export default function Category() {
+export function Level() {
   const tCourse = useTranslations('course');
   const { organizationByDomain } = useGetOrganizationByDomain();
 

@@ -1,7 +1,7 @@
-import type { TCourseStatus } from '@oe/api/types/course/basic';
-import type { ILesson, ILessonContent, ISection } from '@oe/api/types/course/segment';
-import { SelectStatusBadge, StatusBadge, type TStatus } from '@oe/ui/components/status-badge';
-import { cn } from '@oe/ui/utils/cn';
+import type { TCourseStatus } from '@oe/api';
+import type { ILesson, ILessonContent, ISection } from '@oe/api';
+import { SelectStatusBadge, StatusBadge, type TStatus } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useOptimistic, useTransition } from 'react';
 import { useStatusUpdate } from '../_hooks/useStatusUpdate';

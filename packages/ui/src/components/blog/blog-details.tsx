@@ -1,6 +1,6 @@
-import type { IBlog } from '@oe/api/types/blog';
-import { BLOG_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
+import type { IBlog } from '@oe/api';
+import { BLOG_ROUTES } from '@oe/core';
+import { buildUrl } from '@oe/core';
 import { Link } from '#common/navigation';
 import { Image } from '#components/image';
 import { Badge } from '#shadcn/badge';

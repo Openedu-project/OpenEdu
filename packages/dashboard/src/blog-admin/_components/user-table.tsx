@@ -1,11 +1,11 @@
 'use client';
-import { postUserRolesService } from '@oe/api/services/user';
-import type { IUser } from '@oe/api/types/user';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { DeleteButton } from '@oe/ui/components/delete-button';
-import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
-import { Separator } from '@oe/ui/shadcn/separator';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { API_ENDPOINT } from '@oe/api';
+import type { IUser } from '@oe/api';
+import { postUserRolesService } from '@oe/api';
+import { toast } from '@oe/ui';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
+import { DeleteButton } from '@oe/ui';
+import { Separator } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useRef } from 'react';
 

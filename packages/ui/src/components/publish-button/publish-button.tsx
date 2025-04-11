@@ -1,4 +1,4 @@
-import { z } from '@oe/api/utils/zod';
+import { z } from '@oe/api';
 import { BookOpenCheck, EyeOff } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Modal } from '#components/modal';
@@ -34,7 +34,11 @@ export function PublishButton({
 
   const buttonProps: ButtonProps =
     action === 'publish'
-      ? { variant: 'default', ...triggerProps, className: `text-wrap ${triggerProps?.className}` }
+      ? {
+          variant: 'default',
+          ...triggerProps,
+          className: `text-wrap ${triggerProps?.className}`,
+        }
       : {
           variant: 'outline',
           ...triggerProps,

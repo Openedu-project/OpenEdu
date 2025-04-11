@@ -1,4 +1,4 @@
-import type { HTTPError } from '@oe/api/utils/http-error';
+import type { HTTPError } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { Button } from '#shadcn/button';
 import { TableCell } from '#shadcn/table';

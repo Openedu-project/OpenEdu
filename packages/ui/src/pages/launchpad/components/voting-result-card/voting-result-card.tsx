@@ -1,6 +1,6 @@
 'use client';
 
-import type { ILaunchpadVotingMilestone } from '@oe/api/types/launchpad';
+import type { ILaunchpadVotingMilestone } from '@oe/api';
 import { Check, MinusCircle, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -77,4 +77,4 @@ const VotingResultCard = ({
   );
 };
 
-export default VotingResultCard;
+export { VotingResultCard };

@@ -1,3 +1,4 @@
+'use client';
 import { Check, Copy } from 'lucide-react';
 import { type RefObject, useState } from 'react';
 import { Button } from '#shadcn/button';
@@ -52,4 +53,4 @@ const CopyButton = ({
   );
 };
 
-export default CopyButton;
+export { CopyButton };

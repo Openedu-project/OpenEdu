@@ -13,4 +13,4 @@ const Withdraw = () => {
   );
 };
 
-export default Withdraw;
+export { Withdraw };

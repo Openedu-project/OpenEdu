@@ -1,15 +1,15 @@
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
-import type { Metadata } from 'next';
+import { DashboardMainPageLayout } from '@oe/ui';
+// import type { Metadata } from "next";
 import { useTranslations } from 'next-intl';
 import { UserAffiliateReportFilter } from './_component/user-campaign-report-filter';
-import ReportUserAffiliateCampaignList from './_component/user-campaign-report-list';
+import { AffiliateManagementContent } from './_component/user-campaign-report-list';
 import { UserAffiliateReportProvider } from './_component/user-campaign-report-provider';
 
-export const metadata: Metadata = {
-  title: 'Affiliate Report',
-};
+// export const metadata: Metadata = {
+//   title: "Affiliate Report",
+// };
 
-export default function UserAffiliateCampaignReport() {
+export function UserAffiliateCampaignReport() {
   const tDashboard = useTranslations('dashboard.userAffiliateDashboard');
 
   return (
@@ -29,7 +29,7 @@ export default function UserAffiliateCampaignReport() {
           </div>
         }
       >
-        <ReportUserAffiliateCampaignList />
+        <AffiliateManagementContent />
       </DashboardMainPageLayout>
     </UserAffiliateReportProvider>
   );

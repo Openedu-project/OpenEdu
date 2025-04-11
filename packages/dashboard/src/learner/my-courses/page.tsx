@@ -1,7 +1,7 @@
-import { getCoursesCountingService, getMyCourseLearningService } from '@oe/api/services/my-learning-space';
-import MyCoursesContent from './_components/my-courses-content';
+import { getCoursesCountingService, getMyCourseLearningService } from '@oe/api';
+import { MyCoursesContent } from './_components/my-courses-content';
 
-export default async function MyCourses() {
+export async function MyCourses() {
   const courseCountData = await getCoursesCountingService(undefined, {});
 
   const inProgressCourses = await getMyCourseLearningService(undefined, {

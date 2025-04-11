@@ -1,10 +1,16 @@
-import { getBlogsByHashtagService } from '@oe/api/services/blog';
+import { getBlogsByHashtagService } from '@oe/api';
 import { getTranslations } from 'next-intl/server';
 import { BlogHeader } from '../_components/blog-header';
 import { BlogList } from '../_components/blog-list';
 import { NoBlogData } from '../_components/no-blog-data';
 
-export default async function HashtagBlogPage({ name, id }: { name?: string; id: string }) {
+export async function HashtagBlogPage({
+  name,
+  id,
+}: {
+  name?: string;
+  id: string;
+}) {
   const [blogsData, t] = await Promise.all([
     getBlogsByHashtagService(undefined, {
       params: {

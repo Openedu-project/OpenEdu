@@ -1,11 +1,11 @@
-import AIBotImage from '@oe/assets/images/openedu-homepage/ai-assistant.png';
-import AIBackground from '@oe/assets/images/openedu-homepage/bg-ai-assistant.png';
-import { Image } from '@oe/ui/components/image';
-import { Button } from '@oe/ui/shadcn/button';
-import { useTranslations } from 'next-intl';
+import AIBotImage from "@oe/assets/images/openedu-homepage/ai-assistant.png";
+import AIBackground from "@oe/assets/images/openedu-homepage/bg-ai-assistant.png";
+import { Button } from "@oe/ui";
+import { Image } from "@oe/ui";
+import { useTranslations } from "next-intl";
 
-export default function AIAssistantSection() {
-  const t = useTranslations('homePageLayout.aiAssistantSection');
+export function AIAssistantSection() {
+  const t = useTranslations("homePageLayout.aiAssistantSection");
 
   return (
     <div className="relative w-full overflow-hidden">
@@ -24,14 +24,16 @@ export default function AIAssistantSection() {
         <div className="flex flex-col items-center gap-12 lg:flex-row">
           <div className="w-full lg:w-1/2">
             <h2 className="giant-iheading-bold20 md:giant-iheading-bold24 lg:giant-iheading-bold32 font-bold leading-tight">
-              {t('title')}
+              {t("title")}
             </h2>
 
-            <p className="mcaption-regular16 lg:mcaption-regular24">{t('description')}</p>
+            <p className="mcaption-regular16 lg:mcaption-regular24">
+              {t("description")}
+            </p>
 
             <div className="flex flex-col gap-4 pt-4 sm:flex-row">
-              <Button className="px-8 py-3">{t('buttons.explore')}</Button>
-              <Button variant="secondary">{t('buttons.invite')}</Button>
+              <Button className="px-8 py-3">{t("buttons.explore")}</Button>
+              <Button variant="secondary">{t("buttons.invite")}</Button>
             </div>
           </div>
 

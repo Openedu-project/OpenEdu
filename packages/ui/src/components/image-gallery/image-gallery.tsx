@@ -1,16 +1,10 @@
-import { AspectRatio } from '@oe/ui/shadcn/aspect-ratio';
-import { Button } from '@oe/ui/shadcn/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@oe/ui/shadcn/dialog';
+'use client';
 import { ChevronLeft, ChevronRight, RotateCw, X, ZoomIn, ZoomOut } from 'lucide-react';
 import type React from 'react';
 import { memo, useCallback, useRef, useState } from 'react';
+import { AspectRatio } from '#shadcn/aspect-ratio';
+import { Button } from '#shadcn/button';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '#shadcn/dialog';
 import { cn } from '#utils/cn';
 import type { ImageGalleryProps, ImageType } from './image-gallery-type';
 import { useImageTransform } from './useImageTransform';

@@ -1,11 +1,11 @@
 import type React from 'react';
 
-import { Link } from '@oe/ui/common/navigation';
-import { Image } from '@oe/ui/components/image';
-import type { FileType } from '@oe/ui/components/uploader';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { Button } from '@oe/ui/shadcn/button';
-import { Card, CardContent, CardFooter, CardHeader } from '@oe/ui/shadcn/card';
+import type { FileType } from '@oe/ui';
+import { Badge } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { Link } from '@oe/ui';
+import { Image } from '@oe/ui';
+import { Card, CardContent, CardFooter, CardHeader } from '@oe/ui';
 import { CheckIcon } from 'lucide-react';
 
 interface PriceCardProps {

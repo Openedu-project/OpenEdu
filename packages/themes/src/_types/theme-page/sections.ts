@@ -1,4 +1,6 @@
-import type { ThemePageKey } from '.';
+// import type { ThemePageKey } from '.';
+
+import type { ThemePageKey } from './core';
 
 /* HOMEPAGE */
 type VbiHomepageSection =

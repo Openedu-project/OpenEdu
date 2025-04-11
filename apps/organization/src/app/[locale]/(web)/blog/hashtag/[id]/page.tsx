@@ -1,4 +1,4 @@
-import HashtagBlogPage from '@oe/ui/pages/blog/hashtag';
+import { HashtagBlogPage } from "@oe/ui";
 
 export default async function HashtagBlog({
   params,
@@ -7,5 +7,10 @@ export default async function HashtagBlog({
 }) {
   const { id } = await params;
 
-  return <HashtagBlogPage id={id.split('%20')[0] ?? ''} name={id.split('%20').slice(1).join(' ')} />;
+  return (
+    <HashtagBlogPage
+      id={id.split("%20")[0] ?? ""}
+      name={id.split("%20").slice(1).join(" ")}
+    />
+  );
 }

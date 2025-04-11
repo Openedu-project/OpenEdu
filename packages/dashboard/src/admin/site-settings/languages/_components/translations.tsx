@@ -1,19 +1,12 @@
 'use client';
-import { createOrUpdateTranslations } from '@oe/api/services/i18n';
-import { type RankingInfo, rankItem } from '@oe/core/utils/match-sorter';
-import { DEFAULT_LOCALE } from '@oe/i18n/constants';
-import type { CustomFilterPayload, FilterOption } from '@oe/ui/components/filter-search';
-import {
-  type ColumnDef,
-  type FilterFn,
-  type Row,
-  Table,
-  TableEditableCell,
-  type TableRef,
-} from '@oe/ui/components/table';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { Button } from '@oe/ui/shadcn/button';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { createOrUpdateTranslations } from '@oe/api';
+import { type RankingInfo, rankItem } from '@oe/core';
+import { DEFAULT_LOCALE } from '@oe/i18n';
+import { toast } from '@oe/ui';
+import type { CustomFilterPayload, FilterOption } from '@oe/ui';
+import { type ColumnDef, type FilterFn, type Row, Table, TableEditableCell, type TableRef } from '@oe/ui';
+import { Badge } from '@oe/ui';
+import { Button } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useI18nTranslations } from '../_hooks';
@@ -83,7 +76,7 @@ const customFilter = (columnId: string, { filter, value, prev }: CustomFilterPay
   return [...(prev ?? []), newFilter];
 };
 
-export default function Translations({ className }: TranslationsProps) {
+export function Translations({ className }: TranslationsProps) {
   const t = useTranslations('languages');
   const tGeneral = useTranslations('general');
   const { translations, locales, locale, languageStats, updateTranslations, updateTableData, id, setId } =

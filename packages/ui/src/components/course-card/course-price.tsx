@@ -1,5 +1,5 @@
-import type { ICourse } from '@oe/api/types/course/course';
-import { formatCurrency } from '@oe/core/utils/currency';
+import type { ICourse } from '@oe/api';
+import { formatCurrency } from '@oe/core';
 import { useTranslations } from 'next-intl';
 
 // const findLocaleForCurrency = (currencyCode: string): LanguageCode => {
@@ -9,7 +9,7 @@ import { useTranslations } from 'next-intl';
 //   return (entry?.[0] || "en") as LanguageCode;
 // };
 
-export default function CoursePrice({
+export function CoursePrice({
   priceSettings,
   variant = 'block',
 }: {

@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function PlayFilled({ width = 24, height = 24, className = '', color = '#5055D7' }: ISvgProps) {
+export function PlayFilled({ width = 24, height = 24, className = '', color = '#5055D7' }: ISvgProps) {
   return (
     <svg
       className={className}

@@ -1,10 +1,10 @@
 'use client';
-import { useGetPopularBlogsAtWebsite } from '@oe/api/hooks/useFeaturedContent';
-import { useGetOrganizationByDomain } from '@oe/api/hooks/useOrganization';
-import type { IBlog } from '@oe/api/types/blog';
-import type { IFeaturedContent } from '@oe/api/types/featured-contents';
-import { BlogCardServer } from '@oe/ui/components/blog-card';
-import { cn } from '@oe/ui/utils/cn';
+import type { IBlog } from '@oe/api';
+import { useGetPopularBlogsAtWebsite } from '@oe/api';
+import type { IFeaturedContent } from '@oe/api';
+import { useGetOrganizationByDomain } from '@oe/api';
+import { BlogCardServer } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import type { SectionComponent } from '../../../_types/theme-page';
 import { InfoSection, type InfoSectionProps } from '../../../vbi/_components/info-section';
@@ -41,4 +41,4 @@ const AvailHomepageBlogsClient: SectionComponent<'homepage', 'availBlogs'> = ({ 
   );
 };
 
-export default AvailHomepageBlogsClient;
+export { AvailHomepageBlogsClient };

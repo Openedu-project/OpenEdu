@@ -1,3 +1,3 @@
-import CreatorCard from './creator-card';
+import { CreatorCard } from './creator-card';
 
 export { CreatorCard };

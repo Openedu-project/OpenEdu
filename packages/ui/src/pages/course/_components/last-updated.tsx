@@ -1,5 +1,5 @@
 // "use client";
-import { formatDate } from '@oe/core/utils/datetime';
+import { formatDate } from '@oe/core';
 import { Calendar1 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 

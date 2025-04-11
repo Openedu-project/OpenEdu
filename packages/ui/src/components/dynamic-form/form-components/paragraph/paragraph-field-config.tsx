@@ -1,4 +1,4 @@
-import FormAlignConfig from '../../form-config/form-align-config';
+import { FormAlignConfig } from '../../form-config/form-align-config';
 import { FormLabelConfig } from '../../form-config/form-label-config';
 import type { FormFieldType } from '../../types';
 

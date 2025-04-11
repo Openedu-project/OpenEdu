@@ -1,8 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { type IInviteCreatorSchemaType, inviteCreatorSchema } from '@oe/api/schemas/creators';
-import { InputTags } from '@oe/ui/components/input-tags';
-import { Modal } from '@oe/ui/components/modal';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
+import { type IInviteCreatorSchemaType, inviteCreatorSchema } from '@oe/api';
+import { InputTags } from '@oe/ui';
+import { Modal } from '@oe/ui';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -12,7 +12,7 @@ interface IInviteCreator {
   onClose: () => void;
 }
 
-export default function InviteCreatorModal({ onSubmit, onClose }: IInviteCreator) {
+export function InviteCreatorModal({ onSubmit, onClose }: IInviteCreator) {
   const t = useTranslations('creatorManagement.inviteCreator');
 
   const [emails, setEmails] = useState<string[]>([]);
@@ -32,7 +32,9 @@ export default function InviteCreatorModal({ onSubmit, onClose }: IInviteCreator
 
     try {
       // Validate all emails using Zod
-      const validatedEmails = await inviteCreatorSchema.parseAsync({ creator_emails: allEmails });
+      const validatedEmails = await inviteCreatorSchema.parseAsync({
+        creator_emails: allEmails,
+      });
 
       await onSubmit(validatedEmails);
       setEmails([]);

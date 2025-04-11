@@ -1,14 +1,11 @@
-import type { IUserProfile } from '@oe/api/types/user-profile';
-
+import type { IUserProfile } from '@oe/api';
+import { Global, Mail } from '@oe/assets';
+import { abbreviateNumber } from '@oe/core';
 import { useTranslations } from 'next-intl';
-
-import Global from '@oe/assets/icons/global';
-import Mail from '@oe/assets/icons/mail';
-import { abbreviateNumber } from '@oe/core/utils/helpers';
 import { Link } from '#common/navigation';
 import { SocialIcon, getFilteredSocialProps } from '#components/social-icon';
 
-export default function AboutMe({ data }: { data: IUserProfile }) {
+export function AboutMe({ data }: { data: IUserProfile }) {
   const tProfile = useTranslations('userProfile.profile');
 
   const { followers, email, props, total_courses, total_blogs, headline, about } = data;

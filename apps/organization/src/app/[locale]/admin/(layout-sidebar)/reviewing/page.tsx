@@ -1,4 +1,4 @@
-import CourseRequestManagement from '@oe/dashboard/admin/course-management/reviewing/page';
+import { CourseRequestManagement } from "@oe/dashboard";
 
 export default function CourseRequestManagementPage() {
   return <CourseRequestManagement />;

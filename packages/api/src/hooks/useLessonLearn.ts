@@ -1,3 +1,4 @@
+'use client';
 import useSWR from 'swr';
 import { getLessonLearnService } from '#services/lesson-learn';
 import { API_ENDPOINT } from '#utils/endpoints';

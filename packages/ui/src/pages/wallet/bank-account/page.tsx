@@ -1,8 +1,8 @@
 'use client';
-import { createBankAccount, deleteBankAccount, updateBankAccount } from '@oe/api/services/wallet';
-import type { IBankAccount } from '@oe/api/types/wallet';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { WALLET_ROUTES } from '@oe/core/utils/routes';
+import { API_ENDPOINT } from '@oe/api';
+import type { IBankAccount } from '@oe/api';
+import { createBankAccount, deleteBankAccount, updateBankAccount } from '@oe/api';
+import { WALLET_ROUTES } from '@oe/core';
 import { ChevronLeft, Edit, Plus, Trash } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRef } from 'react';

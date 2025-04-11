@@ -1,3 +1,3 @@
-import CustomTabs from './custom-tabs';
+import { CustomTabs, type CustomTabsProps } from './custom-tabs';
 
-export { CustomTabs };
+export { CustomTabs, type CustomTabsProps };

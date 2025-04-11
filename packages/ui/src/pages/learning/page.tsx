@@ -1,13 +1,13 @@
-import { getMeServiceWithoutError } from '@oe/api/services/auth';
-import { getCertLayerByCourseIdService } from '@oe/api/services/certificate';
-import { getCourseOutlineService } from '@oe/api/services/course';
-import { getLearningProgressesService, latestLessonProgressService } from '@oe/api/services/learning-progress';
-import type { ILatestLessonProgressPayload, ISectionLearningProgress } from '@oe/api/types/course/learning-progress';
+import { getCourseOutlineService } from '@oe/api';
+import { getCertLayerByCourseIdService } from '@oe/api';
+import type { ILatestLessonProgressPayload, ISectionLearningProgress } from '@oe/api';
+import { getMeServiceWithoutError } from '@oe/api';
+import { getLearningProgressesService, latestLessonProgressService } from '@oe/api';
 import { AuthCheck } from './_components/auth-check-learning';
-import CourseLearning from './_components/course-learning-container';
+import { CourseLearning } from './_components/course-learning-container';
 import { mergeSectionWithProgress } from './_utils/utils';
 
-export default async function LearningPage({
+export async function LearningPage({
   slug,
   section,
   lesson,
@@ -27,7 +27,10 @@ export default async function LearningPage({
       : undefined;
 
   const certLayerData =
-    course && (await getCertLayerByCourseIdService(undefined, { params: { courseId: course?.id ?? '' } }));
+    course &&
+    (await getCertLayerByCourseIdService(undefined, {
+      params: { courseId: course?.id ?? '' },
+    }));
 
   const latestLessonPayload = {
     course_cuid: course?.cuid ?? '',

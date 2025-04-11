@@ -1,3 +1,4 @@
+'use client';
 import { type AnimateLayoutChanges, defaultAnimateLayoutChanges, useSortable } from '@dnd-kit/sortable';
 import type { CSSProperties } from 'react';
 import { DndSortableItemContext } from './dnd-sortable-context';
@@ -42,7 +43,15 @@ export function DndSortableItem<ItemType, ChildItemType>({
 
   return (
     <DndSortableItemContext.Provider
-      value={{ attributes, listeners, isOverContainer, activeItem: item, descendants, setNodeRef, toggleCollapse }}
+      value={{
+        attributes,
+        listeners,
+        isOverContainer,
+        activeItem: item,
+        descendants,
+        setNodeRef,
+        toggleCollapse,
+      }}
     >
       <div {...props} className={className} style={itemStyle} ref={setNodeRef}>
         {content}

@@ -2,7 +2,15 @@
   "extends": "@oe/config/tsconfig/base.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "types": ["node", "@oe/types/global.d.ts", "@types/wicg-file-system-access"]
+    "types": ["node", "@oe/types/global.d.ts"],
+    "paths": {
+      "#utils/*": ["./src/utils/*.ts"],
+      "#types/*": ["./src/types/*.ts"],
+      "#store": ["./src/store/index.ts"],
+      "#hooks/*": ["./src/hooks/*.ts"],
+      "@/*": ["./src/*"],
+      "@oe/i18n": ["../../packages/i18n/src"]
+    }
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]

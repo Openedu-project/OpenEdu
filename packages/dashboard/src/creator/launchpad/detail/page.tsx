@@ -1,12 +1,8 @@
-import type {
-  CreatorLaunchpadStatusType,
-  IAdminLaunchpadDetailRes,
-  IAdminLaunchpadInvestmentRes,
-} from '@oe/api/types/admin-launchpad';
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import type { CreatorLaunchpadStatusType, IAdminLaunchpadDetailRes, IAdminLaunchpadInvestmentRes } from '@oe/api';
+import { DashboardMainPageLayout } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import CreatorLaunchpadDetailStatus from './_components/creator-launchpad-detail-status';
-import CreatorLaunchpadDetail from './_components/launchpad-approved-detail';
+import { CreatorLaunchpadDetailStatus } from './_components/creator-launchpad-detail-status';
+import { CreatorLaunchpadDetail } from './_components/launchpad-approved-detail';
 
 interface LayoutProps {
   id: string;
@@ -14,7 +10,7 @@ interface LayoutProps {
   backerData: IAdminLaunchpadInvestmentRes | null;
 }
 
-export default function CreatorLaunchpadDetailMgm({ id, data, backerData }: LayoutProps) {
+export function CreatorLaunchpadDetailMgm({ id, data, backerData }: LayoutProps) {
   const t = useTranslations('creatorLaunchpad');
 
   return (

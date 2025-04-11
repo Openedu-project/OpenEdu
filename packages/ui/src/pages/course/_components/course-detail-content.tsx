@@ -1,18 +1,18 @@
 'use client';
-import { useGetForm } from '@oe/api/hooks/useForms';
-import { getCourseOutlineService } from '@oe/api/services/course';
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import type { IUserProfile } from '@oe/api/types/user-profile';
+import { getCourseOutlineService } from '@oe/api';
+import type { ICourseOutline } from '@oe/api';
+import { useGetForm } from '@oe/api';
+import type { IUserProfile } from '@oe/api';
 import { useCallback, useEffect, useState } from 'react';
 import { CourseFormTriggerModal, useLearnerFormTriggerStore } from '#components/course-form-trigger';
 import { CourseContext } from './course-context';
 // import { useRef } from "react";
 import { CourseInfo } from './course-info';
 import { CourseOutlineDetails } from './course-outline-detail';
-import CourseThumbnail from './course-thumbnail';
-import StickyCourseSidebar from './sticky-course-sidebar';
+import { CourseThumbnail } from './course-thumbnail';
+import { StickyCourseSidebar } from './sticky-course-sidebar';
 
-export default function CourseDetailContent({
+export function CourseDetailContent({
   courseData: initialCourseData,
   creatorData,
 }: {
@@ -36,7 +36,9 @@ export default function CourseDetailContent({
   }, []);
 
   const updateFormRelationStatus = useCallback(async () => {
-    const newCourseData = await getCourseOutlineService(undefined, { id: initialCourseData?.slug });
+    const newCourseData = await getCourseOutlineService(undefined, {
+      id: initialCourseData?.slug,
+    });
 
     if (newCourseData) {
       setCourseData(newCourseData);

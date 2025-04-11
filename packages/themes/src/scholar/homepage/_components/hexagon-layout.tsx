@@ -1,5 +1,5 @@
-import { Image } from '@oe/ui/components/image';
-import type { FileType } from '@oe/ui/components/uploader';
+import type { FileType } from '@oe/ui';
+import { Image } from '@oe/ui';
 import { HexagonShape } from './hexagon-shape';
 interface HexagonLayoutProps {
   bannerMain?: FileType;
@@ -34,4 +34,4 @@ const HexagonLayout = ({ bannerMain, bannerTop, bannerBottom }: HexagonLayoutPro
   );
 };
 
-export default HexagonLayout;
+export { HexagonLayout };

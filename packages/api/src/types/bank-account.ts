@@ -1,4 +1,4 @@
-export interface IBankAccount {
+export interface IBankWithdrawalAccount {
   setting_id?: string;
   id?: string;
   bank_name: string;

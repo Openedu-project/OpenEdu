@@ -1,7 +1,7 @@
-import { MainLayoutClient } from '@oe/ui/common/layout';
-import type { NavigationLink } from '@oe/ui/common/layout/footer';
-import type { ISidebarItem } from '@oe/ui/common/layout/sidebar';
-import type { FileType } from '@oe/ui/components/uploader';
+import type { FileType } from '@oe/ui';
+import { MainLayoutClient } from '@oe/ui';
+import type { NavigationLink } from '@oe/ui';
+import type { ISidebarItem } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import type { ThemeDefinition, ThemeName } from '../../../_types';
@@ -54,4 +54,4 @@ const ThemePreviewLayout = ({ themeDefinition, themeName, children }: ThemeLayou
   );
 };
 
-export default ThemePreviewLayout;
+export { ThemePreviewLayout };

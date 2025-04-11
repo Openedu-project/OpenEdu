@@ -1,9 +1,9 @@
-import { getMeService } from '@oe/api/services/auth';
-import { getCoursesService } from '@oe/api/services/course';
-import type { ICourseResponse } from '@oe/api/types/course/course';
+import { getCoursesService } from '@oe/api';
+import type { ICourseResponse } from '@oe/api';
+import { getMeService } from '@oe/api';
 import { getTranslations } from 'next-intl/server';
 import { Dialog, DialogTrigger } from '#shadcn/dialog';
-import LaunchpadDialogContent from './dialog-content';
+import { LaunchpadDialogContent } from './dialog-content';
 
 async function LaunchpadDialog() {
   const [t, dataMe] = await Promise.all([getTranslations('launchpadHomepage.buttons'), getMeService()]);
@@ -36,4 +36,4 @@ async function LaunchpadDialog() {
   );
 }
 
-export default LaunchpadDialog;
+export { LaunchpadDialog };

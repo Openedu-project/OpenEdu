@@ -1,20 +1,20 @@
 'use client';
-import { useGetCourseById, useGetSegments } from '@oe/api/hooks/useCourse';
-import { CREATOR_ROUTES } from '@oe/core/utils/routes';
-import { DashboardHeaderCard } from '@oe/ui/common/layout';
-import { ButtonDropdown } from '@oe/ui/components/button-dropdown';
-import { StatusBadge, type TStatus } from '@oe/ui/components/status-badge';
-import { Badge } from '@oe/ui/shadcn/badge';
+import { useGetCourseById, useGetSegments } from '@oe/api';
+import { CREATOR_ROUTES } from '@oe/core';
+import { DashboardHeaderCard } from '@oe/ui';
+import { Badge } from '@oe/ui';
+import { ButtonDropdown } from '@oe/ui';
+import { StatusBadge, type TStatus } from '@oe/ui';
 import { FileDown, FileUp } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { isCourseValid } from '../_utils/validation';
-import CourseNameForm from './course-name-form';
+import { CourseNameForm } from './course-name-form';
 import { CourseRequestPublishModal } from './course-request-publish-modal';
-import CourseTabs from './course-tabs';
+import { CourseTabs } from './course-tabs';
 import { CourseUnpublishModal } from './course-unpublish-modal';
-import CourseValidateModal from './course-validate-modal';
+import { CourseValidateModal } from './course-validate-modal';
 
 export function CourseDetailHeader() {
   const tCourse = useTranslations('course');

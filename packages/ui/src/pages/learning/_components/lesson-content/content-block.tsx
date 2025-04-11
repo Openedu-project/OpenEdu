@@ -1,6 +1,6 @@
 'use client';
 
-import type { TLessonContent } from '@oe/api/types/course/basic';
+import type { TLessonContent } from '@oe/api';
 import type { ContentRendererProps } from './_types/types';
 import { CONTENT_RENDERERS } from './content-render';
 

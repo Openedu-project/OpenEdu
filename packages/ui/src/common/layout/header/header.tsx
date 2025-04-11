@@ -4,7 +4,7 @@ import { Link } from '#common/navigation';
 import { Skeleton } from '#shadcn/skeleton';
 import { cn } from '#utils/cn';
 import { AuthMenu } from '../auth-menu';
-import { type ISidebarItem, Sidebar } from '../sidebar';
+import { type ISidebarItem, LayoutSidebar } from '../sidebar';
 
 export function Header({
   sidebarItems,
@@ -36,7 +36,7 @@ export function Header({
 
       <div className="flex h-14 w-full shrink-0 items-center gap-1 border-border/40 bg-primary px-3 py-3 shadow md:px-6">
         {sidebarItems && (
-          <Sidebar
+          <LayoutSidebar
             items={sidebarItems}
             maxDepth={2}
             pathnamesNoSidebar={pathnamesNoSidebar}

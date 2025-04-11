@@ -1,8 +1,8 @@
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import { DashboardMainPageLayout } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import AffiliateCampaignList from './_components/affiliate-campaign-list';
+import { AffiliateManagementContent } from './_components/affiliate-campaign-list';
 
-export default function UserAffiliateCampaignsManagement() {
+export function UserAffiliateCampaignsManagement() {
   const tDashboard = useTranslations('dashboard.userAffiliateDashboard');
 
   return (
@@ -11,7 +11,7 @@ export default function UserAffiliateCampaignsManagement() {
       dashboard="admin"
       title={tDashboard('campaigns')}
     >
-      <AffiliateCampaignList />
+      <AffiliateManagementContent />
     </DashboardMainPageLayout>
   );
 }

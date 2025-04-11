@@ -1,10 +1,10 @@
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
-import { TableProvider } from '@oe/ui/components/table';
+import { DashboardMainPageLayout } from '@oe/ui';
+import { TableProvider } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import ActionsList from './_components/actions-list';
-import CreateActionButton from './_components/create-action-button';
+import { ActionsList } from './_components/actions-list';
+import { CreateActionButton } from './_components/create-action-button';
 
-export default function ActionSettings() {
+export function ActionSettings() {
   const tDashboard = useTranslations('dashboard.permissionSettings');
   const tPermissionActionList = useTranslations('permissionActionList');
 

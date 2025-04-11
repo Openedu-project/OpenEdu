@@ -1,4 +1,4 @@
-import Coupon from '@oe/dashboard/creator/coupon/page';
+import { Coupon } from "@oe/dashboard";
 
 export default function CouponPage() {
   return <Coupon />;

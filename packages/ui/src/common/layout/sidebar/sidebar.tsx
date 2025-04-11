@@ -10,7 +10,7 @@ import { cn } from '#utils/cn';
 import { SidebarItem } from './sidebar-item';
 import type { ISidebarProps } from './types';
 
-export const Sidebar: FC<ISidebarProps> = ({
+export const LayoutSidebar: FC<ISidebarProps> = ({
   items,
   maxDepth = 2,
   pathnamesNoSidebar = [],

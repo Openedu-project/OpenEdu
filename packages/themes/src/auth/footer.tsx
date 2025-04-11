@@ -1,5 +1,5 @@
 'use client';
-import { Footer, type FooterProps } from '@oe/ui/common/layout/footer';
+import { Footer, type FooterProps } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import type { SectionComponent } from '../_types/theme-page';
@@ -41,4 +41,4 @@ const ThemeFooter: SectionComponent<'auth', 'footer'> = ({ props }) => {
   );
 };
 
-export default ThemeFooter;
+export { ThemeFooter };

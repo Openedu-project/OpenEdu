@@ -1,6 +1,7 @@
-import type { IFileResponse } from '@oe/api/types/file';
-import { type ErrorStatus, ajaxUpload } from '@oe/api/utils/ajax-upload';
-import { uniqueID } from '@oe/core/utils/unique';
+'use client';
+import type { IFileResponse } from '@oe/api';
+import { type ErrorStatus, ajaxUpload } from '@oe/api';
+import { uniqueID } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { type RefObject, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { toast } from '#shadcn/sonner';

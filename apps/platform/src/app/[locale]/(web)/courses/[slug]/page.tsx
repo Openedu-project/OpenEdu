@@ -1,7 +1,7 @@
-// import { getCourseOutlineService } from '@oe/api/services/course';
-// import { getThemeConfigServer } from '@oe/api/services/theme';
+// import { getCourseOutlineService } from '@oe/api';
+// import { getThemeConfigServer } from '@oe/api';
 // import { getMetadata } from '@oe/themes';
-import CourseDetailPage from "@oe/ui/pages/course";
+import { CourseDetailPage } from "@oe/ui";
 // import type { Metadata } from 'next';
 
 // const extractText = (htmlString: string): string => {

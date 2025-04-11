@@ -1,11 +1,11 @@
 'use client';
-import { useGetForm } from '@oe/api/hooks/useForms';
-import { createFormService, updateFormService } from '@oe/api/services/forms';
-import type { IQuestionParam, TFormEvent, TFormType } from '@oe/api/types/form';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { z } from '@oe/api/utils/zod';
-import { CREATOR_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
+import { API_ENDPOINT } from '@oe/api';
+import type { IQuestionParam, TFormEvent, TFormType } from '@oe/api';
+import { z } from '@oe/api';
+import { createFormService, updateFormService } from '@oe/api';
+import { useGetForm } from '@oe/api';
+import { CREATOR_ROUTES } from '@oe/core';
+import { buildUrl } from '@oe/core';
 import { ChevronLeft, Eye, SaveIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams, useRouter } from 'next/navigation';

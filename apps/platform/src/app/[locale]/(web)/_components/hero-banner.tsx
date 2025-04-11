@@ -1,15 +1,15 @@
 import HeroBanner from "@oe/assets/images/openedu-homepage/hero-banner/hero-banner.png";
 import LogoOpenEdu from "@oe/assets/images/openedu-homepage/hero-banner/logo-openedu-blue.png";
-import { PLATFORM_ROUTES } from "@oe/core/utils/routes";
-import { Link } from "@oe/ui/common/navigation";
-import { Image } from "@oe/ui/components/image";
-import { Button } from "@oe/ui/shadcn/button";
+import { PLATFORM_ROUTES } from "@oe/core";
+import { Button } from "@oe/ui";
+import { Link } from "@oe/ui";
+import { Image } from "@oe/ui";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
-import PartnerSection from "./partners";
+import { PartnerSection } from "./partners";
 
 // Mark as server component
-export default async function HeroSection() {
+export async function HeroSection() {
   // Move this to server-side
   const t = await getTranslations("homePageLayout.heroBannerSection");
 

@@ -1,6 +1,13 @@
 'use client';
 
-import { useCreateOrUpdateThemeConfig, useGetTheme } from '@oe/api/hooks/useTheme';
+import { useCreateOrUpdateThemeConfig, useGetTheme } from '@oe/api';
+import { toast } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { Label } from '@oe/ui';
+import { Switch } from '@oe/ui';
+import { useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
+import { type ReactNode, useEffect, useState } from 'react';
 import type {
   PageSectionConfig,
   SectionProps,
@@ -9,14 +16,7 @@ import type {
   ThemeFieldValue,
   ThemeName,
   ThemePageKey,
-} from '@oe/themes/types';
-import { Button } from '@oe/ui/shadcn/button';
-import { Label } from '@oe/ui/shadcn/label';
-import { toast } from '@oe/ui/shadcn/sonner';
-import { Switch } from '@oe/ui/shadcn/switch';
-import { useTranslations } from 'next-intl';
-import { useParams } from 'next/navigation';
-import { type ReactNode, useEffect, useState } from 'react';
+} from '#types';
 import type { ThemeCollection, ThemeDefinition, ThemeSystem } from '../../../_types';
 import { convertValueAndPathToConfig, deepMergeByPath } from '../../../_utils/function';
 import {

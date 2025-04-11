@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function LampCharge({ className, color = '#1A1A1A', width = 16, height = 16 }: ISvgProps) {
+export function LampCharge({ className, color = '#1A1A1A', width = 16, height = 16 }: ISvgProps) {
   return (
     <svg
       className={className}

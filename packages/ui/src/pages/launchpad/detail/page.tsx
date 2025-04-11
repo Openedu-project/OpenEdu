@@ -1,4 +1,4 @@
-import { getLaunchpadService } from '@oe/api/services/launchpad';
+import { getLaunchpadService } from '@oe/api';
 import { CampaignDetailsSection, CampaignProgressSection } from './components';
 
 const LaunchpadDetailPage = async ({ id }: { id: string }) => {
@@ -15,4 +15,4 @@ const LaunchpadDetailPage = async ({ id }: { id: string }) => {
   );
 };
 
-export default LaunchpadDetailPage;
+export { LaunchpadDetailPage };

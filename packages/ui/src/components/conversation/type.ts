@@ -1,5 +1,5 @@
-import type { IAIModel, IConversationDetails, IMessage, IRole, TAgentType } from '@oe/api/types/conversation';
-import type { IFileResponse } from '@oe/api/types/file';
+import type { IFileResponse } from '@oe/api';
+import type { IAIModel, IConversationDetails, IMessage, IRole, TAgentType } from '@oe/api';
 import type { ChangeEvent, KeyboardEventHandler, ReactNode, Ref, RefObject } from 'react';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
 

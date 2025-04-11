@@ -3,11 +3,10 @@ import type { ReactNode } from 'react';
 
 import type { SWRConfiguration } from 'swr';
 import { AuthProvider } from './auth-provider';
-// import { AuthProvider } from './auth-provider';
-import IntlProvider from './intl-provider';
-import SWRProvider from './swr-provider';
+import { IntlProvider } from './intl-provider';
+import { SWRProvider } from './swr-provider';
 
-export default function Provider({
+export function Provider({
   messages,
   locale,
   children,

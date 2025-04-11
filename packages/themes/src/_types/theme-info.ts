@@ -1,4 +1,4 @@
-import type { FileType } from '@oe/ui/components/uploader';
+import type { FileType } from '@oe/ui';
 
 export interface ThemeInfo {
   name: string;

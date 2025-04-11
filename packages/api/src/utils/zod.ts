@@ -1,4 +1,4 @@
-import type { TFunction } from '@oe/i18n/types';
+import type { TFunction } from '@oe/i18n';
 // biome-ignore lint/nursery/noRestrictedImports: <explanation>
 import { type TypeOf, ZodError, type ZodIssue, type ZodTooBigIssue, type ZodTooSmallIssue, z } from 'zod';
 

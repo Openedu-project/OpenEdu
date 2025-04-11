@@ -1,0 +1,20 @@
+{
+  "extends": "@oe/config/tsconfig/react-build.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "dist/types",
+    "types": ["@oe/types/global.d.ts", "next/image-types/global"],
+    "paths": {
+      "#shadcn/*": ["./src/shadcn/*.tsx"],
+      "#components/*": ["./src/components/*/index.ts"],
+      "#utils/*": ["./src/utils/*.ts"],
+      "#common/*": ["./src/common/*/index.ts"],
+      "#hooks/*": ["./src/hooks/*.ts"],
+      "#pages/*": ["./src/pages/*/page.tsx"],
+      "#hooks/socket": ["./src/hooks/socket/index.ts"],
+      "#store/*": ["./src/store/*.ts"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

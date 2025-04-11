@@ -1,4 +1,4 @@
-import { z } from '@oe/api/utils/zod';
+import { z } from '@oe/api';
 
 export const scrollToError = (element: HTMLElement | null, options?: ScrollOptions) => {
   if (!element) {

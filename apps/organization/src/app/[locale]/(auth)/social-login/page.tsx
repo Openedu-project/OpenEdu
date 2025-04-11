@@ -1,4 +1,4 @@
-import { SocialLoginPage } from '@oe/ui/common/auth/social-login-page';
+import { SocialLoginPage } from "@oe/ui";
 
 export default function SocialLogin() {
   return <SocialLoginPage />;

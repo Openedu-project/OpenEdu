@@ -1,3 +1,4 @@
+'use client';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { Button, type ButtonProps } from '#shadcn/button';
 import { cn } from '#utils/cn';

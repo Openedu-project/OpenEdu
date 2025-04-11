@@ -1,4 +1,4 @@
-import NotificationProfile from '@oe/ui/pages/user/edit/profile-notifications';
+import { NotificationProfile } from "@oe/ui";
 
 export default function NotificationProfilePage() {
   return <NotificationProfile />;

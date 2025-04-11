@@ -1,7 +1,7 @@
-'use client';
-import { useEffect, useRef } from 'react';
+"use client";
+import { useEffect, useRef } from "react";
 
-export default function ExternalWebComponent() {
+export function ExternalWebComponent() {
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
@@ -5343,5 +5343,11 @@ export default function ExternalWebComponent() {
     }
   }, []);
 
-  return <iframe title="external" ref={iframeRef} style={{ width: '100%', height: '100vh', border: 'none' }} />;
+  return (
+    <iframe
+      title="external"
+      ref={iframeRef}
+      style={{ width: "100%", height: "100vh", border: "none" }}
+    />
+  );
 }

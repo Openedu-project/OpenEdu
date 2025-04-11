@@ -1,5 +1,5 @@
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { buildUrl } from '@oe/core/utils/url';
+import { API_ENDPOINT } from '@oe/api';
+import { buildUrl } from '@oe/core';
 
 export const useWebSocketEndpoint = (token: string, referrer: string) => {
   if (!(token && referrer)) {

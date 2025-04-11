@@ -1,4 +1,4 @@
-import CourseListPagge from '@oe/dashboard/creator/courses/course-list';
+import { CourseListPagge } from "@oe/dashboard";
 
 export default function CoursesPage() {
   return <CourseListPagge />;

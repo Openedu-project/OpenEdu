@@ -1,4 +1,4 @@
-import type { CookieOptions } from '@oe/core/utils/cookie';
+import type { CookieOptions } from '@oe/core';
 import { API_ENDPOINT } from '#utils/endpoints';
 
 type CookieData = {

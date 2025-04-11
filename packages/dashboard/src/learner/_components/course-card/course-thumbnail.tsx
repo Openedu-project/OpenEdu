@@ -1,9 +1,9 @@
 'use client';
 
-import type { ICourse } from '@oe/api/types/course/course';
-import { Image } from '@oe/ui/components/image';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { cn } from '@oe/ui/utils/cn';
+import type { ICourse } from '@oe/api';
+import { Badge } from '@oe/ui';
+import { Image } from '@oe/ui';
+import { cn } from '@oe/ui';
 
 interface CourseThumbnailProps {
   courseData: ICourse;

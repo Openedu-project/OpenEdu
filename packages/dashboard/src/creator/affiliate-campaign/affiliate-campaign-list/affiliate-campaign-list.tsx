@@ -1,30 +1,26 @@
 'use client';
 
-import {
-  useDeleteAffiliateCampaign,
-  usePostAffiliateCampaign,
-  usePutAffiliateCampaign,
-} from '@oe/api/hooks/useAffiliateCampaign';
-import type { IAffiliateCampaignItem, IAffiliateCampaignPayload } from '@oe/api/types/affiliate-campaign';
-import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
+import type { IAffiliateCampaignItem, IAffiliateCampaignPayload } from '@oe/api';
+import { useDeleteAffiliateCampaign, usePostAffiliateCampaign, usePutAffiliateCampaign } from '@oe/api';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
 
-import { Badge } from '@oe/ui/shadcn/badge';
+import { Badge } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { formatDateTime } from '@oe/core/utils/datetime';
-import { CREATOR_ROUTES } from '@oe/core/utils/routes';
-import { Link } from '@oe/ui/common/navigation';
-import type { FilterOption } from '@oe/ui/components/filter-search';
-import { RoleButton } from '@oe/ui/components/role-button';
-import { toast } from '@oe/ui/shadcn/sonner';
-import DeleteAffiliateCampaignModal from './affiliate-campaign-detele-modal';
-import FormAffiliateCampaignModal from './affiliate-campaign-form-modal';
+import { API_ENDPOINT } from '@oe/api';
+import { createAPIUrl } from '@oe/api';
+import type { HTTPErrorMetadata } from '@oe/api';
+import { CREATOR_ROUTES } from '@oe/core';
+import { formatDateTime } from '@oe/core';
+import { toast } from '@oe/ui';
+import type { FilterOption } from '@oe/ui';
+import { Link } from '@oe/ui';
+import { RoleButton } from '@oe/ui';
+import { DeleteAffiliateCampaignModal } from './affiliate-campaign-detele-modal';
+import { FormAffiliateCampaignModal } from './affiliate-campaign-form-modal';
 
-export default function AffiliateCampaignList() {
+export function AffiliateCampaignList() {
   const t = useTranslations('affiliateCampaign');
   const tError = useTranslations('errors');
 

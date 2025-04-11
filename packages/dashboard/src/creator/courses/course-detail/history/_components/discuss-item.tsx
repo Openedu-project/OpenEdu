@@ -1,8 +1,8 @@
-import type { IDiscussion } from '@oe/api/types/course/discuss';
-import CheckFilledCircle from '@oe/assets/icons/check-filled-circle';
-import { formatTimeHourMinute } from '@oe/core/utils/datetime';
-import { Card } from '@oe/ui/shadcn/card';
-import { cn } from '@oe/ui/utils/cn';
+import type { IDiscussion } from '@oe/api';
+import { CheckFilledCircle } from '@oe/assets';
+import { formatTimeHourMinute } from '@oe/core';
+import { Card } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { CircleX } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';

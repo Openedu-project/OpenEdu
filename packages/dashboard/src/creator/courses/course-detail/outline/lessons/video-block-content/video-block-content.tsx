@@ -1,8 +1,8 @@
 import { AccordionQuiz } from '../quiz-editor';
 
-import type { IQuizItemResponse } from '@oe/api/types/course/quiz';
-import { Uploader } from '@oe/ui/components/uploader';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
+import type { IQuizItemResponse } from '@oe/api';
+import { Uploader } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
 import { useWatch } from 'react-hook-form';
 
 export function VideoBlockContent({ order }: { order: number }) {

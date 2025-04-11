@@ -1,4 +1,4 @@
-import { setCookie } from '@oe/core/utils/cookie';
+import { setCookie } from '@oe/core';
 import type { NextRequest } from 'next/server';
 
 function getCorsHeaders(origin: string | null) {

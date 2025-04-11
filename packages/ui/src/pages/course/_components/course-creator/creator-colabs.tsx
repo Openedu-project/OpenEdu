@@ -4,10 +4,10 @@ import { UserAvatar } from '#components/user-avatar';
 import { useCourseContext } from '../course-context';
 import { CourseSection } from '../course-section';
 import { userProfileUrl } from './_helper';
-import CreatorInfor from './creator-info';
-import CreatorRole from './creator-role';
+import { CreatorInfor } from './creator-info';
+import { CreatorRole } from './creator-role';
 
-export default function CreatorColabs() {
+export function CreatorColabs() {
   const tCourse = useTranslations('courseOutline.creatorAndColabs');
   const { creatorData } = useCourseContext();
 

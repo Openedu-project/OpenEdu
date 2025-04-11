@@ -22,4 +22,4 @@ const QuizLayout = ({ background, children, className, ...props }: IQuizLayoutPr
   );
 };
 
-export default QuizLayout;
+export { QuizLayout };

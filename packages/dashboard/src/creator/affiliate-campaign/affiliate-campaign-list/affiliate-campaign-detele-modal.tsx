@@ -1,4 +1,4 @@
-import { Modal } from '@oe/ui/components/modal';
+import { Modal } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
 interface IDeleteAffiliateCampaignModal {
@@ -8,7 +8,7 @@ interface IDeleteAffiliateCampaignModal {
   onClose: () => void;
 }
 
-export default function DeleteAffiliateCampaignModal({ id, onClose, onSubmit, open }: IDeleteAffiliateCampaignModal) {
+export function DeleteAffiliateCampaignModal({ id, onClose, onSubmit, open }: IDeleteAffiliateCampaignModal) {
   const t = useTranslations('affiliateCampaignDeleteModal');
 
   return (

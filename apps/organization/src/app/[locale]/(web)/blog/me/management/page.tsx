@@ -1,4 +1,4 @@
-import PersonalBlogMgtPage from '@oe/ui/pages/blog/management';
+import { PersonalBlogMgtPage } from "@oe/ui";
 
 export default function MyPersonBlogManagement() {
   return <PersonalBlogMgtPage />;

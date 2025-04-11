@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function ArrowLeft2({ width = 12, height = 12, className = '', color = 'white' }: ISvgProps) {
+export function ArrowLeft2({ width = 12, height = 12, className = '', color = 'white' }: ISvgProps) {
   return (
     <svg
       className={className}

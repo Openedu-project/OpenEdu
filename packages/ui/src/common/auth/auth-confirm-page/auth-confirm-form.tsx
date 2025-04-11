@@ -1,9 +1,9 @@
 'use client';
 
-import { type SetPasswordSchemaType, setPasswordSchema } from '@oe/api/schemas/authSchema';
-import { loginService, setPasswordService } from '@oe/api/services/auth';
-import type { AuthEventName } from '@oe/api/utils/auth';
-import type { HTTPError } from '@oe/api/utils/http-error';
+import type { HTTPError } from '@oe/api';
+import { loginService, setPasswordService } from '@oe/api';
+import { type SetPasswordSchemaType, setPasswordSchema } from '@oe/api';
+import type { AuthEventName } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';

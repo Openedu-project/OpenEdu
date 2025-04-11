@@ -1,4 +1,4 @@
-import type { LanguageCode } from '@oe/i18n/languages';
+import type { LanguageCode } from '@oe/i18n';
 import type { HTTPPagination } from './fetch';
 import type { IFileResponse } from './file';
 import type { IHashtag } from './hashtag';

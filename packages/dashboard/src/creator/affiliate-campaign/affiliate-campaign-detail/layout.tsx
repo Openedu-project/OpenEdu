@@ -1,16 +1,16 @@
-import type { Metadata } from 'next';
+// import type { Metadata } from "next";
 import type React from 'react';
 
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import { DashboardMainPageLayout } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { AffiliateCampaignNavMenu } from './campaign-nav-menu';
 
-export const metadata: Metadata = {
-  title: 'Affiliate Campaign',
-  description: 'Manage your affiliate campaign details',
-};
+// export const metadata: Metadata = {
+//   title: "Affiliate Campaign",
+//   description: "Manage your affiliate campaign details",
+// };
 
-export default function AffiliateCampaignDetailLayout({
+export function AffiliateCampaignDetailLayout({
   children,
   campaignId,
 }: {

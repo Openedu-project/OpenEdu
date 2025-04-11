@@ -1,14 +1,14 @@
-import type { IFileResponse } from '@oe/api/types/file';
-import { CREATE_LAUNCHPAD_MODAL_ID } from '@oe/core/utils/constants';
-import { Modal } from '@oe/ui/components/modal';
-import { Uploader } from '@oe/ui/components/uploader';
-import { Button } from '@oe/ui/shadcn/button';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
+import type { IFileResponse } from '@oe/api';
+import { CREATE_LAUNCHPAD_MODAL_ID } from '@oe/core';
+import { Uploader } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { Modal } from '@oe/ui';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';
 import { Trash2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 import { useWatch } from 'react-hook-form';
 import type { FieldPath, FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form';
-import { useTranslations } from 'use-intl';
 import { useLaunchpadModalStore } from '../_store/useLaunchpadModalStore';
 
 type ManageVideoProps<TFormValues extends FieldValues> = {
@@ -127,4 +127,5 @@ const PreviewVideo = <TFormValues extends FieldValues>({ form }: PreviewVideoPro
 };
 
 PreviewVideo.displayName = 'PreviewVideo';
-export default PreviewVideo;
+
+export { PreviewVideo };

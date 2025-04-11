@@ -10,7 +10,7 @@ import { useEffect } from 'react';
  *   the function in component body, make sure to memoize it.
  * @returns {void}
  */
-export default function useResizeObserver(
+export function useResizeObserver(
   element: Element | null,
   options: ResizeObserverOptions | undefined,
   observerCallback: ResizeObserverCallback

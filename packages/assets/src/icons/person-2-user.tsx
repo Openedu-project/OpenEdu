@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function Person2User({ width = 16, height = 17, color = '#2C2C2C', className = '' }: ISvgProps) {
+export function Person2User({ width = 16, height = 17, color = '#2C2C2C', className = '' }: ISvgProps) {
   return (
     <svg
       width={width}

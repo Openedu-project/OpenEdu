@@ -1,5 +1,5 @@
-import type { IFileResponse } from '@oe/api/types/file';
-import { uniqueID } from '@oe/core/utils/unique';
+import type { IFileResponse } from '@oe/api';
+import { uniqueID } from '@oe/core';
 import type { FileType } from './types';
 
 export const MAX_PREVIEW_FILE_SIZE = 1024 * 1024 * 5; // 5MB

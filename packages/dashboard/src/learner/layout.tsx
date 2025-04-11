@@ -1,21 +1,11 @@
-import Bookmark from '@oe/assets/icons/bookmark';
-import DocumentDownload from '@oe/assets/icons/document-download';
-import DocumentFill from '@oe/assets/icons/document-fill';
-import Edit from '@oe/assets/icons/edit';
-import Note2 from '@oe/assets/icons/note-2';
-import School from '@oe/assets/icons/school';
-import TaskSquare from '@oe/assets/icons/task-square';
-import { LEARNER_ROUTES } from '@oe/core/utils/routes';
-import { DashboardLayout } from '@oe/ui/common/layout';
+import { Bookmark, DocumentDownload, DocumentFill, Edit, Note2, School, TaskSquare } from '@oe/assets';
+import { LEARNER_ROUTES } from '@oe/core';
+import { DashboardLayout } from '@oe/ui';
 import { House } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
 
-export default async function LearnerLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export async function LearnerLayout({ children }: { children: ReactNode }) {
   const [tDashboard] = await Promise.all([getTranslations('dashboard')]);
 
   const filteredMenu = [

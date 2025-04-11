@@ -1,19 +1,19 @@
 'use client';
 
-import { useGetMyCoursesLearning } from '@oe/api/hooks/useMyLearningSpace';
-import type { TMyCourseStatus } from '@oe/api/types/my-learning-space';
-import { NoDataAvailable } from '@oe/ui/components/no-data-available';
-import { PaginationCustom } from '@oe/ui/components/pagination-custom';
-import { Spinner } from '@oe/ui/components/spinner';
+import type { TMyCourseStatus } from '@oe/api';
+import { useGetMyCoursesLearning } from '@oe/api';
+import { NoDataAvailable } from '@oe/ui';
+import { PaginationCustom } from '@oe/ui';
+import { Spinner } from '@oe/ui';
 import { useState } from 'react';
-import CourseCard from '../../_components/course-card';
+import { CourseCard } from '../../_components/course-card';
 
 interface ICourseLearningListProps {
   title: string;
   group: TMyCourseStatus;
   preload?: string | string[];
 }
-export default function CourseLearningList({ title, group, preload }: ICourseLearningListProps) {
+export function CourseLearningList({ title, group, preload }: ICourseLearningListProps) {
   const [page, setPage] = useState<number>(1);
 
   const params = {

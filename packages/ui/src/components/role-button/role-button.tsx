@@ -1,8 +1,8 @@
 'use client';
-import type { IPermissionAction } from '@oe/api/types/permissions';
-import { Button } from '@oe/ui/shadcn/button';
-import type { ButtonProps } from '@oe/ui/shadcn/button';
+import type { IPermissionAction } from '@oe/api';
 import type React from 'react';
+import { Button } from '#shadcn/button';
+import type { ButtonProps } from '#shadcn/button';
 import { useButtonPermission, useCurrentPermissionRoute } from './use-role-button';
 
 /*==============HOW TO USE==================

@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function SearchZoomIn({ className, color = 'black', width = 16, height = 16 }: ISvgProps) {
+export function SearchZoomIn({ className, color = 'black', width = 16, height = 16 }: ISvgProps) {
   return (
     <svg
       className={className}

@@ -1,6 +1,6 @@
-import { Link } from '@oe/ui/common/navigation';
-import { Button } from '@oe/ui/shadcn/button';
-import { cn } from '@oe/ui/utils/cn';
+import { Button } from '@oe/ui';
+import { Link } from '@oe/ui';
+import { cn } from '@oe/ui';
 
 interface SidebarItemProps {
   label: string;

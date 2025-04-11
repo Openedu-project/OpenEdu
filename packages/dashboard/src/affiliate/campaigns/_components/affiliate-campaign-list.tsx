@@ -1,20 +1,20 @@
 'use client';
-import type { IUserAffiliateCampaignItem } from '@oe/api/types/affiliate-campaign';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import { AFFILIATE_ROUTES } from '@oe/core/utils/routes';
-import { formatNumber } from '@oe/core/utils/utils';
-import { Link } from '@oe/ui/common/navigation';
-import type { FilterOption } from '@oe/ui/components/filter-search';
-import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
-import { Button, buttonVariants } from '@oe/ui/shadcn/button';
-import { Tooltip } from '@oe/ui/shadcn/tooltip';
-import { cn } from '@oe/ui/utils/cn';
+import { API_ENDPOINT } from '@oe/api';
+import { createAPIUrl } from '@oe/api';
+import type { IUserAffiliateCampaignItem } from '@oe/api';
+import { AFFILIATE_ROUTES } from '@oe/core';
+import { formatNumber } from '@oe/core';
+import type { FilterOption } from '@oe/ui';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
+import { Button, buttonVariants } from '@oe/ui';
+import { Link } from '@oe/ui';
+import { Tooltip } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useRef, useState } from 'react';
-import CampaignCommissionDetailModal from './campaign-commission-detail-modal';
+import { CampaignCommissionDetailModal } from './campaign-commission-detail-modal';
 
-export default function AffiliateManagementContent() {
+export function AffiliateManagementContent() {
   const t = useTranslations('userAffiliateCampaigns');
 
   const tableRef = useRef<TableRef<IUserAffiliateCampaignItem>>(null);

@@ -1,8 +1,5 @@
-import Collaborators from '@oe/assets/icons/collaborators';
-import MedalStar from '@oe/assets/icons/medal-star';
-import Trigger from '@oe/assets/icons/trigger';
-import type { ISvgProps } from '@oe/assets/icons/types';
-import { CREATOR_ROUTES } from '@oe/core/utils/routes';
+import { Collaborators, type ISvgProps, MedalStar, Trigger } from '@oe/assets';
+import { CREATOR_ROUTES } from '@oe/core';
 import { BookOpen, DollarSign, History, Settings, SquareUserRound } from 'lucide-react';
 import type { ComponentType } from 'react';
 

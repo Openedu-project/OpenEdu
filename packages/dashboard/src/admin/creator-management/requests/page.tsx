@@ -1,8 +1,8 @@
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import { DashboardMainPageLayout } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import CreatorRequestMngmList from './_components/creator-request-management';
+import { CreatorRequestMngmList } from './_components/creator-request-management';
 
-export default function CreatorRequestManagement() {
+export function CreatorRequestManagement() {
   const tDashboard = useTranslations('dashboard.creators');
   const t = useTranslations('creatorManagement.requestCreator');
 

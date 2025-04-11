@@ -1,13 +1,13 @@
 'use client';
-import { usePostAdminPublishLaunchpads } from '@oe/api/hooks/useAdminLaunchpad';
-import type { CreatorLaunchpadStatusType } from '@oe/api/types/admin-launchpad';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { CREATOR_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
-import { Link } from '@oe/ui/common/navigation';
-import { Button } from '@oe/ui/shadcn/button';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { API_ENDPOINT } from '@oe/api';
+import type { HTTPErrorMetadata } from '@oe/api';
+import type { CreatorLaunchpadStatusType } from '@oe/api';
+import { usePostAdminPublishLaunchpads } from '@oe/api';
+import { CREATOR_ROUTES } from '@oe/core';
+import { buildUrl } from '@oe/core';
+import { toast } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { Link } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo } from 'react';
 import { useSWRConfig } from 'swr';
@@ -87,7 +87,7 @@ const Badge = ({
   );
 };
 
-export default function CreatorLaunchpadDetailStatus({
+export function CreatorLaunchpadDetailStatus({
   status,
   id,
 }: {

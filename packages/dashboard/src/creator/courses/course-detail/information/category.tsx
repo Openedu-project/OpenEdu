@@ -1,13 +1,13 @@
 'use client';
-import { useCategoriesTree } from '@oe/api/hooks/useCategories';
-import { useGetOrganizationByDomain } from '@oe/api/hooks/useOrganization';
-import type { IBlogFormType } from '@oe/api/schemas/blogSchema';
-import type { ICategoryTree } from '@oe/api/types/categories';
-import { SelectTree } from '@oe/ui/components/select-tree';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
+import { useGetOrganizationByDomain } from '@oe/api';
+import { useCategoriesTree } from '@oe/api';
+import type { IBlogFormType } from '@oe/api';
+import type { ICategoryTree } from '@oe/api';
+import { SelectTree } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
-export default function Category() {
+export function Category() {
   const tCourse = useTranslations('course');
   const { organizationByDomain } = useGetOrganizationByDomain();
   const { categoriesTree } = useCategoriesTree({

@@ -1,21 +1,21 @@
-import { type IRejectWithdrawType, rejectWithdrawSchema } from '@oe/api/schemas/withdrawSchema';
-import type { IApproval, IRejectPayload } from '@oe/api/types/approvals';
-import type { IBankAccount, IBankAccountSettingValue } from '@oe/api/types/bank-account';
-import type { IWalletItem } from '@oe/api/types/wallet';
-import { Modal } from '@oe/ui/components/modal';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
-import { Textarea } from '@oe/ui/shadcn/textarea';
+import type { IApproval, IRejectPayload } from '@oe/api';
+import { type IRejectWithdrawType, rejectWithdrawSchema } from '@oe/api';
+import type { IBankAccountSettingValue, IBankWithdrawalAccount } from '@oe/api';
+import type { IWalletItem } from '@oe/api';
+import { Modal } from '@oe/ui';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';
+import { Input } from '@oe/ui';
+import { Textarea } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 
 interface IFormAffiliateCampaignCourseModal {
-  data: IApproval<IWalletItem, IBankAccountSettingValue<IBankAccount>> | null;
+  data: IApproval<IWalletItem, IBankAccountSettingValue<IBankWithdrawalAccount>> | null;
   onClose: () => void;
   onSubmit: (value: IRejectPayload) => void;
 }
 
-export default function RejectWithdrawModal({ data, onSubmit, onClose }: IFormAffiliateCampaignCourseModal) {
+export function RejectWithdrawModal({ data, onSubmit, onClose }: IFormAffiliateCampaignCourseModal) {
   const t = useTranslations('rejectWithdrawModal');
 
   const handleSubmit = useCallback(

@@ -40,12 +40,52 @@ pre-commit:
     typecheck:
       glob: "*.{ts,tsx}"
       run: pnpm run typecheck
-    check-ts:
-      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}"
+    check-api-package-ts:
+      glob: "packages/api/src/**/*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}"
+      run: pnpm dlx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true
+    check-ui-package-ts:
+      glob: "packages/ui/src/**/*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}"
+      run: pnpm dlx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true
+    check-core-package-ts:
+      glob: "packages/core/src/**/*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}"
+      run: pnpm dlx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true
+    check-types-package-ts:
+      glob: "packages/types/src/**/*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}"
+      run: pnpm dlx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true
+    check-config-package-ts:
+      glob: "packages/config/src/**/*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}"
+      run: pnpm dlx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true
+    check-i18n-package-ts:
+      glob: "packages/i18n/src/**/*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}"
+      run: pnpm dlx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true
+    check-themes-package-ts:
+      glob: "packages/themes/src/**/*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}"
+      run: pnpm dlx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true
+    check-assets-package-ts:
+      glob: "packages/assets/src/**/*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}"
+      run: pnpm dlx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true
+    check-dashboard-package-ts:
+      glob: "packages/dashboard/src/**/*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}"
+      run: pnpm dlx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true
+    check-organization-package-ts:
+      glob: "packages/organization/src/**/*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}"
+      run: pnpm dlx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true
+    check-platform-package-ts:
+      glob: "packages/platform/src/**/*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}"
       run: pnpm dlx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
       stage_fixed: true
     check:
-      glob: "*.{json,jsonc}"
+      glob: "*.{json}"
       run: pnpm dlx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
       stage_fixed: true
 

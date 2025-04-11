@@ -16,8 +16,8 @@ export async function create() {
 // schemas.ts
 'use client';
 // import { personalSchema, accountSchema, addressSchema, preferencesSchema } from './schemas';
-// import { toast } from '@oe/ui/shadcn/use-toast';
-import { z } from '@oe/api/utils/zod';
+// import { toast } from '#shadcn/use-toast';
+import { z } from '@oe/api';
 import {
   FormNavigation,
   FormNestedProvider,
@@ -29,12 +29,12 @@ import {
   FormWrapper,
   type INestedFormsValues,
   SubmitFormsButton,
-} from '@oe/ui/components/form';
-import { Selectbox } from '@oe/ui/components/selectbox';
-import { Button } from '@oe/ui/shadcn/button';
-import { Checkbox } from '@oe/ui/shadcn/checkbox';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
+} from '#components/form';
+import { Selectbox } from '#components/selectbox';
+import { Button } from '#shadcn/button';
+import { Checkbox } from '#shadcn/checkbox';
+import { FormFieldWithLabel } from '#shadcn/form';
+import { Input } from '#shadcn/input';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { create } from './action';

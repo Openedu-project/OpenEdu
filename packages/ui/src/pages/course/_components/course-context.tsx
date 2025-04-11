@@ -1,6 +1,6 @@
 'use client';
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import type { IUserProfile } from '@oe/api/types/user-profile';
+import type { ICourseOutline } from '@oe/api';
+import type { IUserProfile } from '@oe/api';
 import { createContext, useContext } from 'react';
 
 interface CourseContextType {

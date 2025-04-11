@@ -1,11 +1,12 @@
 'use client';
-import { useCategories } from '@oe/api/hooks/useCategories';
-import type { ICategory } from '@oe/api/types/categories';
+import { useCategories } from '@oe/api';
+import type { ICategory } from '@oe/api';
 import { useEffect, useState } from 'react';
 import { Button } from '#shadcn/button';
 import { ScrollArea, ScrollBar } from '#shadcn/scroll-area';
 import { cn } from '#utils/cn';
 import { PromptGrid } from './prompt-grid';
+import { PromptPopup } from './prompt-popup';
 
 export const PromptCategory = () => {
   const [selectedCategory, setSelectedCategory] = useState<ICategory>();
@@ -47,7 +48,13 @@ export const PromptCategory = () => {
         </div>
       )}
       <div className="min-h-44">
-        <PromptGrid categoryId={selectedCategory?.id} name={selectedCategory?.name} litmited={8} agent="ai_search" />
+        <PromptGrid
+          categoryId={selectedCategory?.id}
+          name={selectedCategory?.name}
+          litmited={8}
+          agent="ai_search"
+          PromptPopup={PromptPopup}
+        />
       </div>
     </div>
   );

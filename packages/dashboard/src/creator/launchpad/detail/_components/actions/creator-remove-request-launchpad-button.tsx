@@ -1,15 +1,15 @@
 'use client';
 
-import { usePutAdminCancelPublishLaunchpads } from '@oe/api/hooks/useAdminLaunchpad';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { Button } from '@oe/ui/shadcn/button';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { API_ENDPOINT } from '@oe/api';
+import type { HTTPErrorMetadata } from '@oe/api';
+import { usePutAdminCancelPublishLaunchpads } from '@oe/api';
+import { toast } from '@oe/ui';
+import { Button } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
 import { useSWRConfig } from 'swr';
 import { revalidateAdminLaunchpadDetail } from '../../_action';
-import CreatorRemoveRequestLaunchpadModal from '../modals/creator-remove-request-launchpad-modal';
+import { CreatorRemoveRequestLaunchpadModal } from '../modals/creator-remove-request-launchpad-modal';
 
 interface CreatorRemoveRequestLaunchpadButtonProps {
   id: string;

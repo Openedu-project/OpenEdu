@@ -1,4 +1,4 @@
-import CategoryBlogPage from '@oe/ui/pages/blog/category';
+import { CategoryBlogPage } from "@oe/ui";
 
 export default async function CategoryBlog({
   params,
@@ -7,5 +7,10 @@ export default async function CategoryBlog({
 }) {
   const { id } = await params;
 
-  return <CategoryBlogPage id={id.split('%20')[0] ?? ''} name={id.split('%20').slice(1).join(' ')} />;
+  return (
+    <CategoryBlogPage
+      id={id.split("%20")[0] ?? ""}
+      name={id.split("%20").slice(1).join(" ")}
+    />
+  );
 }

@@ -1,4 +1,4 @@
-import { DEFAULT_CURRENCY, type FormatCurrencyOptions, formatCurrency } from '@oe/core/utils/currency';
+import { DEFAULT_CURRENCY, type FormatCurrencyOptions, formatCurrency } from '@oe/core';
 import useSWR from 'swr';
 import type { IExchangeRates } from '#types/exchange-rates';
 import type { HTTPResponse } from '#types/fetch';

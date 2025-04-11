@@ -1,15 +1,15 @@
 'use client';
 import AIMascot from '@oe/assets/images/ai/ai-mascot.png';
 import Openedu from '@oe/assets/images/openedu.png';
-import { GENERATING_STATUS } from '@oe/core/utils/constants';
-import { marked } from '@oe/core/utils/marker';
+import { GENERATING_STATUS } from '@oe/core';
 import { useEffect, useMemo, useRef } from 'react';
 import { Image } from '#components/image';
 import { cn } from '#utils/cn';
-import Copy from '../message-actions/copy';
-import DisLikeButton from '../message-actions/dislike';
-import LikeButton from '../message-actions/like';
-import Rewrite from '../message-actions/rewrite';
+import { marked } from '#utils/marker';
+import { CopyButton } from '../message-actions/copy';
+import { DisLikeButton } from '../message-actions/dislike';
+import { LikeButton } from '../message-actions/like';
+import { Rewrite } from '../message-actions/rewrite';
 import { SourcesButton } from '../sources/sources-button';
 import type { IAIMessageProps } from '../type';
 import { CodeDownloadHydration } from './code-download-button';
@@ -130,7 +130,7 @@ export const AIMessage = ({
           )}
           {actionsButton && !GENERATING_STATUS.includes(message.status ?? '') && (
             <div className="flex w-fit items-center rounded-[20px] border-2 px-2">
-              <Copy disabled={loading} initialMessage={message.content} contentRef={contentRef} />
+              <CopyButton disabled={loading} initialMessage={message.content} contentRef={contentRef} />
               <LikeButton messageId={message.id} disabled />
               <DisLikeButton messageId={message.id} disabled />
               <Rewrite disabled={!rewrite || loading} rewrite={rewrite} messageId={message.id} />

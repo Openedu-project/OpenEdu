@@ -1,6 +1,6 @@
-import type { ICertificateData } from '@oe/api/types/certificate';
+import type { ICertificateData } from '@oe/api';
 
-import type { ICertificateRichTextElement } from '@oe/api/types/certificate';
+import type { ICertificateRichTextElement } from '@oe/api';
 import { RichTextRenderer } from '#components/rich-text';
 import { interpolateContent } from '../../../utils';
 

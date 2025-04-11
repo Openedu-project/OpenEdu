@@ -1,4 +1,4 @@
-import SectionsLayout from "@oe/dashboard/creator/courses/course-detail/outline/sections/layout";
+import { SectionsLayout } from "@oe/dashboard";
 import type { ReactNode } from "react";
 
 export default function SectionPageLayout({

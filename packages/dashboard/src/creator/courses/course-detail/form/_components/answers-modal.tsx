@@ -1,4 +1,4 @@
-import { Modal, type ModalProps } from '@oe/ui/components/modal';
+import { Modal, type ModalProps } from '@oe/ui';
 import { AnswersModalContent } from './answers-modal-content';
 
 export function AnswersModal({

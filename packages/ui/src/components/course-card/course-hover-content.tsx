@@ -1,16 +1,14 @@
 // "use client";
 
-import type { ICourse, ICourseOutline, ICourseResponse } from '@oe/api/types/course/course';
-import type { IFeaturedContent } from '@oe/api/types/featured-contents';
-import MedalStar from '@oe/assets/icons/medal-star';
-import SendSquare from '@oe/assets/icons/send-square';
-import { VideoSquare } from '@oe/assets/icons/video-square';
-import { WishlistButton } from '@oe/ui/components/wishlist-button';
+import type { ICourse, ICourseOutline, ICourseResponse } from '@oe/api';
+import type { IFeaturedContent } from '@oe/api';
+import { MedalStar, SendSquare, VideoSquare } from '@oe/assets';
 import { Book, UsersRound } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { KeyedMutator } from 'swr';
 import { Link } from '#common/navigation';
 import { PaymentButton } from '#components/payment-button';
+import { WishlistButton } from '#components/wishlist-button';
 import { Card } from '#shadcn/card';
 
 interface CourseHoverContentProps {

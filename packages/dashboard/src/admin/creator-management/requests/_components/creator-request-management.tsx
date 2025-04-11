@@ -1,21 +1,21 @@
 'use client';
-import { useCreateCreator } from '@oe/api/hooks/useCreator';
-import { useGetFormRegisterCreator, useRejectRegisterCreator } from '@oe/api/hooks/useRegisterCreator';
-import type { ICreatorAnswerItem, ICreatorRequest } from '@oe/api/types/creator-request';
-import type { ICreatorPayload } from '@oe/api/types/creators';
-import type { IRejectFormRegisterCreatorPayload } from '@oe/api/types/form';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { formatDate } from '@oe/core/utils/datetime';
-import type { FilterOption } from '@oe/ui/components/filter-search';
-import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { Button } from '@oe/ui/shadcn/button';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { API_ENDPOINT } from '@oe/api';
+import { createAPIUrl } from '@oe/api';
+import type { HTTPErrorMetadata } from '@oe/api';
+import type { IRejectFormRegisterCreatorPayload } from '@oe/api';
+import type { ICreatorPayload } from '@oe/api';
+import { useCreateCreator } from '@oe/api';
+import { useGetFormRegisterCreator, useRejectRegisterCreator } from '@oe/api';
+import type { ICreatorAnswerItem, ICreatorRequest } from '@oe/api';
+import { formatDate } from '@oe/core';
+import { toast } from '@oe/ui';
+import type { FilterOption } from '@oe/ui';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
+import { Badge } from '@oe/ui';
+import { Button } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useRef, useState } from 'react';
-import RejectCreatorModal from './reject-request-modal';
+import { RejectCreatorModal } from './reject-request-modal';
 
 type BadgeVariant = 'success' | 'destructive' | 'secondary' | 'default' | 'outline' | null | undefined;
 type StatusType = 'approved' | 'rejected' | 'reviewing';
@@ -33,7 +33,7 @@ const generateVariantBadge = (status: string): BadgeVariant => {
 const getAnswerText = (key: string, answers: ICreatorAnswerItem[]): string =>
   answers?.find(a => a.key === key)?.answer_text ?? '';
 
-export default function CreatorRequestMngmList() {
+export function CreatorRequestMngmList() {
   const t = useTranslations('creatorManagement.requestCreator');
   const tError = useTranslations('errors');
 

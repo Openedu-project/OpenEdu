@@ -1,5 +1,5 @@
-import { Image } from '@oe/ui/components/image';
 import type { ReactNode } from 'react';
+import { Image } from '#components/image';
 import { cn } from '#utils/cn';
 import { AuthSocialButtons } from './auth-social-buttons';
 

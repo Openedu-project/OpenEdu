@@ -1,4 +1,4 @@
-import CreatorRequestManagement from '@oe/dashboard/admin/creator-management/requests/page';
+import { CreatorRequestManagement } from "@oe/dashboard";
 
 export default function CreatorRequestManagementPage() {
   return <CreatorRequestManagement />;

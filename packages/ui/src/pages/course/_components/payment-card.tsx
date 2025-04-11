@@ -1,7 +1,8 @@
 'use client';
-import type { ICoursePriceSettings } from '@oe/api/types/course/basic';
+import type { ICoursePriceSettings } from '@oe/api';
+import { formatCurrency } from '@oe/core';
 import { useTranslations } from 'next-intl';
-import { formatCurrency } from '#components/input-currency';
+// import { formatCurrency } from '#components/input-currency';
 import { PaymentButton } from '#components/payment-button';
 import { WishlistButton } from '#components/wishlist-button';
 import { Card, CardContent, CardFooter } from '#shadcn/card';
@@ -34,11 +35,13 @@ const PriceDisplay = ({ value, currency = 'VND', discount, isBold }: PriceDispla
     <div className="flex flex-wrap items-center justify-between gap-1">
       <span className={textStyle}>
         <span className="mr-1 text-foreground">{currency}</span>
-        {formatCurrency(String(value ?? 0), false)}
+        {formatCurrency(Number(value ?? 0), {
+          showSymbol: false,
+        })}
       </span>
       {Number(discount) > 0 && (
         <span className="mcaption-regular16 line-through">
-          {currency} {formatCurrency(String(unitPrice), false)}
+          {currency} {formatCurrency(unitPrice, { showSymbol: false })}
         </span>
       )}
     </div>

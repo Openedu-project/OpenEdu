@@ -1,9 +1,8 @@
 import signupBanner from '@oe/assets/images/signup-banner.png';
-// import type { ThemeName } from '@oe/themes/types';
-import type { FileType } from '@oe/ui/components/uploader';
 import { useTranslations } from 'next-intl';
+import type { FileType } from '#components/uploader';
 import { AuthLayout } from '../auth-layout';
-import SignUpForm from './signup-form';
+import { SignUpForm } from './signup-form';
 
 interface SignUpPageProps {
   themeName?: string;

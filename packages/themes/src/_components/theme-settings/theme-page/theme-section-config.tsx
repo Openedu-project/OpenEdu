@@ -1,9 +1,9 @@
-import type { PageSectionConfig, SectionsByPage, ThemePageKey } from '@oe/themes/types';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@oe/ui/shadcn/collapsible';
-import { cn } from '@oe/ui/utils/cn';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { ChevronDown } from 'lucide-react';
 import { memo } from 'react';
 import type React from 'react';
+import type { PageSectionConfig, SectionsByPage, ThemePageKey } from '#types';
 import { camelToNormal } from '../../../_utils/function';
 import { SettingsForm } from './theme-section-setting-form';
 

@@ -1,9 +1,9 @@
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import CourseIncludes from './course-includes';
-import CourseThumbnail from './course-thumbnail';
+import type { ICourseOutline } from '@oe/api';
+import { CourseIncludes } from './course-includes';
+import { CourseThumbnail } from './course-thumbnail';
 import { PaymentCard } from './payment-card';
-import PlayToEarn from './play-to-earn/play-to-earn';
-import ShareToEarn from './share-to-earn';
+import { PlayToEarn } from './play-to-earn/play-to-earn';
+import { ShareToEarn } from './share-to-earn';
 
 const CourseSidebar = ({ courseData }: { courseData: ICourseOutline }) => (
   <div className="rounded-lg md:border md:border-foreground/20 md:p-4">
@@ -17,4 +17,4 @@ const CourseSidebar = ({ courseData }: { courseData: ICourseOutline }) => (
   </div>
 );
 
-export default CourseSidebar;
+export { CourseSidebar };

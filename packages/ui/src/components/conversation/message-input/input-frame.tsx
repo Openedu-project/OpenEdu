@@ -1,12 +1,12 @@
 'use client';
 
-import type { IAgenConfigs, TAgentType } from '@oe/api/types/conversation';
+import type { IAgenConfigs, TAgentType } from '@oe/api';
 import { type RefObject, useEffect, useMemo, useRef } from 'react';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { AGENT_OPTIONS } from '../constants';
 import { useSendMessageHandler } from '../hooks/useMessageHandler';
-import MessageInput from './message-input';
+import { MessageInput } from './message-input';
 
 export function InputFrame({
   className,

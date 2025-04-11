@@ -1,4 +1,4 @@
-import type { HTTPPagination } from '@oe/api/types/fetch';
+import type { HTTPPagination } from '@oe/api';
 import type { ColumnDef as ColumnDefTanstack, Row, Table, TableOptions } from '@tanstack/react-table';
 import type { ReactNode, Ref } from 'react';
 import type { KeyedMutator } from 'swr';

@@ -1,7 +1,7 @@
-import { TabsTrigger } from "@oe/ui/shadcn/tabs";
-import { cn } from "@oe/ui/utils/cn";
-import { memo } from "react";
-import type React from "react";
+import { TabsTrigger } from '@oe/ui';
+import { cn } from '@oe/ui';
+import { memo } from 'react';
+import type React from 'react';
 
 interface TLaunchpadNavMenuItem {
   value: string;
@@ -12,8 +12,7 @@ interface ClientNavMenuItemProps {
   nav: TLaunchpadNavMenuItem;
 }
 
-const iconStyle =
-  "text-neutral-600 group-data-[state=active]:text-primary group-hover:text-primary";
+const iconStyle = 'text-neutral-600 group-data-[state=active]:text-primary group-hover:text-primary';
 
 const navLinkStyles = {
   base: `
@@ -66,15 +65,12 @@ const navLinkStyles = {
 
 const ClientNavMenuItem = memo(({ nav }: ClientNavMenuItemProps) => {
   return (
-    <TabsTrigger
-      disabled
-      className={cn(navLinkStyles.base, navLinkStyles.hover)}
-      value={nav.value}
-    >
+    <TabsTrigger disabled className={cn(navLinkStyles.base, navLinkStyles.hover)} value={nav.value}>
       {nav.label(iconStyle)}
     </TabsTrigger>
   );
 });
 
-ClientNavMenuItem.displayName = "ClientNavMenuItem";
-export default ClientNavMenuItem;
+ClientNavMenuItem.displayName = 'ClientNavMenuItem';
+
+export { ClientNavMenuItem };

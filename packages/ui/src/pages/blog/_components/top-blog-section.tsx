@@ -1,4 +1,4 @@
-import type { IBlog } from '@oe/api/types/blog';
+import type { IBlog } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { ScrollArea, ScrollBar } from '#shadcn/scroll-area';
 import { cn } from '#utils/cn';

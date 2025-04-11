@@ -1,17 +1,16 @@
-import Layer from '@oe/assets/icons/layer';
-import Person2User from '@oe/assets/icons/person-2-user';
+import { Layer, Person2User } from '@oe/assets';
 import { useTranslations } from 'next-intl';
 
-import type { ICourse } from '@oe/api/types/course/course';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import type { ICourse } from '@oe/api';
+import { createAPIUrl } from '@oe/api';
+import { PLATFORM_ROUTES } from '@oe/core';
 import { useMemo } from 'react';
 import { Link } from '#common/navigation';
 import { RatingStars } from '#components/rating-stars';
 import { UserAvatar } from '#components/user-avatar';
 import { Separator } from '#shadcn/separator';
 
-export default function CourseInfo({ courseData }: { courseData: ICourse }) {
+export function CourseInfo({ courseData }: { courseData: ICourse }) {
   const t = useTranslations('courseOutline.certificate');
 
   const displayName =

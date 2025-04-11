@@ -1,11 +1,11 @@
-import type { ICourseOutline } from '@oe/api/types/course/course';
+import type { ICourseOutline } from '@oe/api';
 
-import { getLessonLearnService } from '@oe/api/services/lesson-learn';
+import { getLessonLearnService } from '@oe/api';
 import type { HTMLAttributes } from 'react';
 import { cn } from '#utils/cn';
 import { sortByOrder } from '../_utils/utils';
-import LessonContentBlocks from './lesson-content/lesson-content-blocks';
-import LessonMetadata from './lesson-metadata';
+import { LessonContentBlocks } from './lesson-content/lesson-content-blocks';
+import { LessonMetadata } from './lesson-metadata';
 
 interface IContentSectionProps extends HTMLAttributes<HTMLDivElement> {
   courseData?: ICourseOutline;
@@ -47,4 +47,4 @@ const ContentSection = async ({ courseData, lesson, className, section, ...props
   );
 };
 
-export default ContentSection;
+export { ContentSection };

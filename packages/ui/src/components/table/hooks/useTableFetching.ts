@@ -1,6 +1,6 @@
-import type { HTTPPagination } from '@oe/api/types/fetch';
-import { fetchAPI } from '@oe/api/utils/fetch';
-import { buildUrl } from '@oe/core/utils/url';
+import type { HTTPPagination } from '@oe/api';
+import { fetchAPI } from '@oe/api';
+import { buildUrl } from '@oe/core';
 import type { SortingState } from '@tanstack/react-table';
 import type { PaginationState } from '@tanstack/react-table';
 import type { ColumnFiltersState } from '@tanstack/react-table';

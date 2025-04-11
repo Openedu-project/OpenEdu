@@ -1,16 +1,16 @@
 'use client';
 
-import { useGetMe } from '@oe/api/hooks/useMe';
-import type { IUserAffiliateReportDetailItem } from '@oe/api/types/report-user-affiliate-campaign';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { formatDateTime } from '@oe/core/utils/datetime';
-import { formatNumber } from '@oe/core/utils/utils';
-import { type ColumnDef, Table } from '@oe/ui/components/table';
+import { API_ENDPOINT } from '@oe/api';
+import { useGetMe } from '@oe/api';
+import type { IUserAffiliateReportDetailItem } from '@oe/api';
+import { formatDateTime } from '@oe/core';
+import { formatNumber } from '@oe/core';
+import { type ColumnDef, Table } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 
-export default function UserAffiliateReportDetailList() {
+export function UserAffiliateReportDetailList() {
   const t = useTranslations('userAffiliateReport');
   const tNotation = useTranslations('userAffiliateReport.notations');
 

@@ -1,23 +1,23 @@
 'use client';
 
-import { useApprove, useReject } from '@oe/api/hooks/useApprovals';
-import type { IApproval, IApprovalPayload, IRejectPayload } from '@oe/api/types/approvals';
-import type { IBankAccount, IBankAccountSettingValue } from '@oe/api/types/bank-account';
-import type { IWalletItem } from '@oe/api/types/wallet';
-import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
-import { Button } from '@oe/ui/shadcn/button';
+import { useApprove, useReject } from '@oe/api';
+import type { IApproval, IApprovalPayload, IRejectPayload } from '@oe/api';
+import type { IBankAccountSettingValue, IBankWithdrawalAccount } from '@oe/api';
+import type { IWalletItem } from '@oe/api';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
+import { Button } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { formatCurrency } from '@oe/core/utils/currency';
-import { formatDate } from '@oe/core/utils/datetime';
-import { ImageGallery, type ImageType } from '@oe/ui/components/image-gallery';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { toast } from '@oe/ui/shadcn/sonner';
-import ApprovalWithdrawModal from './approval-withdraw-request-modal';
-import RejectWithdrawModal from './reject-withdraw-request-modal';
+import { API_ENDPOINT } from '@oe/api';
+import type { HTTPErrorMetadata } from '@oe/api';
+import { formatDate } from '@oe/core';
+import { formatCurrency } from '@oe/core';
+import { toast } from '@oe/ui';
+import { Badge } from '@oe/ui';
+import { ImageGallery, type ImageType } from '@oe/ui';
+import { ApprovalWithdrawModal } from './approval-withdraw-request-modal';
+import { RejectWithdrawModal } from './reject-withdraw-request-modal';
 
 type BadgeVariant = 'success' | 'destructive' | 'secondary' | 'default' | 'outline' | null | undefined;
 type StatusType = 'approved' | 'rejected' | 'cancelled' | 'new';
@@ -33,43 +33,49 @@ const generateTransactionStatusColor = (status: string): BadgeVariant => {
   return obj[status as StatusType];
 };
 
-export default function WithdrawRequestList() {
+export function WithdrawRequestList() {
   const t = useTranslations('withdrawal');
   const tError = useTranslations('errors');
 
-  const tableRef = useRef<TableRef<IApproval<IWalletItem, IBankAccountSettingValue<IBankAccount>>>>(null);
+  const tableRef = useRef<TableRef<IApproval<IWalletItem, IBankAccountSettingValue<IBankWithdrawalAccount>>>>(null);
 
   const [isOpenApproveModal, setOpenApproveModal] = useState<boolean>(false);
   const [isOpenRejectModal, setOpenRejectModal] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<IApproval<
     IWalletItem,
-    IBankAccountSettingValue<IBankAccount>
+    IBankAccountSettingValue<IBankWithdrawalAccount>
   > | null>(null);
 
   const { triggerApprove } = useApprove(selectedItem?.id ?? '');
   const { triggerReject } = useReject(selectedItem?.id ?? '');
 
-  const handleOpenApproveModal = useCallback((item: IApproval<IWalletItem, IBankAccountSettingValue<IBankAccount>>) => {
-    setSelectedItem({ ...item });
-    setOpenApproveModal(true);
-  }, []);
+  const handleOpenApproveModal = useCallback(
+    (item: IApproval<IWalletItem, IBankAccountSettingValue<IBankWithdrawalAccount>>) => {
+      setSelectedItem({ ...item });
+      setOpenApproveModal(true);
+    },
+    []
+  );
 
   const handleCloseApproveModal = useCallback(() => {
     setSelectedItem(null);
     setOpenApproveModal(false);
   }, []);
 
-  const handleOpenRejectModal = useCallback((item: IApproval<IWalletItem, IBankAccountSettingValue<IBankAccount>>) => {
-    setSelectedItem({ ...item });
-    setOpenRejectModal(true);
-  }, []);
+  const handleOpenRejectModal = useCallback(
+    (item: IApproval<IWalletItem, IBankAccountSettingValue<IBankWithdrawalAccount>>) => {
+      setSelectedItem({ ...item });
+      setOpenRejectModal(true);
+    },
+    []
+  );
 
   const handleCloseRejectModal = useCallback(() => {
     setSelectedItem(null);
     setOpenRejectModal(false);
   }, []);
 
-  const columns: ColumnDef<IApproval<IWalletItem, IBankAccountSettingValue<IBankAccount>>>[] = useMemo(
+  const columns: ColumnDef<IApproval<IWalletItem, IBankAccountSettingValue<IBankWithdrawalAccount>>>[] = useMemo(
     () => [
       {
         header: t('requester'),

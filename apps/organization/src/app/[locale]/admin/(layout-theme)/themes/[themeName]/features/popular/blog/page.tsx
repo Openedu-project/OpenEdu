@@ -1,5 +1,5 @@
-import { getOrgByDomainService } from "@oe/api/services/organizations";
-import { getCookie } from "@oe/core/utils/cookie";
+import { getOrgByDomainService } from "@oe/api";
+import { getCookie } from "@oe/core";
 import { ListBlogs } from "../../_components/list-blogs";
 
 export default async function FeaturedContentsPage() {

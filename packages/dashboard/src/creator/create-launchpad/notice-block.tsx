@@ -1,11 +1,11 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 
 type Props = {
   title?: string;
   content: string | ReactNode;
 };
 
-const NoticeBlock = ({ title = "", content }: Props) => {
+const NoticeBlock = ({ title = '', content }: Props) => {
   return (
     <div>
       <h1 className="font-semibold text-base">{title}</h1>
@@ -16,4 +16,4 @@ const NoticeBlock = ({ title = "", content }: Props) => {
   );
 };
 
-export default NoticeBlock;
+export { NoticeBlock };

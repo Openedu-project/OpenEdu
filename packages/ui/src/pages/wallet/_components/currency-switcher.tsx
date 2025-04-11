@@ -1,8 +1,8 @@
 'use client';
-import { FIAT_CURRENCIES } from '@oe/api/utils/wallet';
-// import { FIAT_CURRENCIES } from "@oe/api/hooks/useWallet";
-import { findCurrencyFromLocale } from '@oe/core/utils/currency';
-import type { LanguageCode } from '@oe/i18n/languages';
+import { FIAT_CURRENCIES } from '@oe/api';
+// import { FIAT_CURRENCIES } from "@oe/api";
+import { findCurrencyFromLocale } from '@oe/core';
+import type { LanguageCode } from '@oe/i18n';
 import { useLocale } from 'next-intl';
 import { useEffect } from 'react';
 import { Selectbox } from '#components/selectbox';

@@ -1,2 +1,3 @@
-import WebViewHandler from './webview-handler';
+import { WebViewHandler } from './webview-handler';
+
 export { WebViewHandler };

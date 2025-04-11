@@ -1,10 +1,10 @@
-import type { ReactNode } from 'react';
-import '@oe/core/global.css';
-import Favicon from '@oe/assets/images/favicon.png';
-import type { Metadata } from 'next';
+import type { ReactNode } from "react";
+import "@oe/config/tailwindcss/global.css";
+import Favicon from "@oe/assets/images/favicon.png";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'OpenEdu',
+  title: "OpenEdu",
   icons: {
     icon: Favicon.src,
   },

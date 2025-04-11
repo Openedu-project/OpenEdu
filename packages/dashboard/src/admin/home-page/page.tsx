@@ -1,7 +1,7 @@
-import { PROTECTED_ROUTES } from '@oe/core/utils/routes';
-import { Link } from '@oe/ui/common/navigation';
+import { PROTECTED_ROUTES } from '@oe/core';
+import { Link } from '@oe/ui';
 
-export default function Home() {
+export function AdminHomePage() {
   return (
     <>
       <nav>

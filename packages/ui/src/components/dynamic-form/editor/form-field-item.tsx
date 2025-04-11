@@ -9,7 +9,7 @@ import { formComponents } from '../form-components';
 import { MultipleChoiceGridFormField } from '../form-components/multiple-choice-grid/multiple-choice-grid-form-field';
 import type { FormFieldType } from '../types';
 
-export default function FormFieldItem({
+export function FormFieldItem({
   field,
   form,
 }: {

@@ -1,14 +1,11 @@
-import {
-  type CreateAffiliateCampaignSchemaType,
-  createAffiliateCampaignSchema,
-} from '@oe/api/schemas/affiliateCampaignSchema';
-import type { IAffiliateCampaignItem, IAffiliateCampaignPayload } from '@oe/api/types/affiliate-campaign';
-import { convertToTimeStamp } from '@oe/core/utils/datetime';
-import { DateTimePicker } from '@oe/ui/components/date-time-picker';
-import { Modal } from '@oe/ui/components/modal';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
-import { Switch } from '@oe/ui/shadcn/switch';
+import type { IAffiliateCampaignItem, IAffiliateCampaignPayload } from '@oe/api';
+import { type CreateAffiliateCampaignSchemaType, createAffiliateCampaignSchema } from '@oe/api';
+import { convertToTimeStamp } from '@oe/core';
+import { DateTimePicker } from '@oe/ui';
+import { Modal } from '@oe/ui';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';
+import { Input } from '@oe/ui';
+import { Switch } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { Suspense, useCallback } from 'react';
 
@@ -20,12 +17,7 @@ interface IFormAffiliateCampaignModal {
   data?: IAffiliateCampaignItem | null;
 }
 
-export default function FormAffiliateCampaignModal({
-  onSubmit,
-  onClose,
-  isCreate = true,
-  data,
-}: IFormAffiliateCampaignModal) {
+export function FormAffiliateCampaignModal({ onSubmit, onClose, isCreate = true, data }: IFormAffiliateCampaignModal) {
   const t = useTranslations('affiliateCampaignFormModal');
 
   const handleFormSubmit = useCallback(

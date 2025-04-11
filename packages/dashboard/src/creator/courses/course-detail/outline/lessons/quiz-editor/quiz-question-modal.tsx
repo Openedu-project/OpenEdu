@@ -1,32 +1,24 @@
-import { type TQuizQuestion, quizQuestionSchema } from '@oe/api/schemas/courses/quizSchema';
-import type { IQuizAns, IQuizQuestion } from '@oe/api/types/course/quiz';
-import { uniqueID } from '@oe/core/utils/unique';
-import { DndSortable, DndSortableDragButton, type IDndSortableRef } from '@oe/ui/components/dnd-sortable';
-import { InputNumber } from '@oe/ui/components/input-number';
-import { InputTimeDuration } from '@oe/ui/components/input-time-duration';
-import { Modal } from '@oe/ui/components/modal';
-import { RichTextEditor } from '@oe/ui/components/rich-text';
-import { Selectbox } from '@oe/ui/components/selectbox';
-import { Button } from '@oe/ui/shadcn/button';
-import { Checkbox } from '@oe/ui/shadcn/checkbox';
-import {
-  FormControl,
-  FormField,
-  FormFieldWithLabel,
-  FormItem,
-  FormLabel,
-  FormLabelInfo,
-  FormMessage,
-} from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
-import { RadioGroup, RadioGroupItem } from '@oe/ui/shadcn/radio-group';
+import type { IQuizAns, IQuizQuestion } from '@oe/api';
+import { type TQuizQuestion, quizQuestionSchema } from '@oe/api';
+import { uniqueID } from '@oe/core';
+import { Button } from '@oe/ui';
+import { DndSortable, DndSortableDragButton, type IDndSortableRef } from '@oe/ui';
+import { InputNumber } from '@oe/ui';
+import { InputTimeDuration } from '@oe/ui';
+import { Modal } from '@oe/ui';
+import { RichTextEditor } from '@oe/ui';
+import { Selectbox } from '@oe/ui';
+import { Checkbox } from '@oe/ui';
+import { FormControl, FormField, FormFieldWithLabel, FormItem, FormLabel, FormLabelInfo, FormMessage } from '@oe/ui';
+import { Input } from '@oe/ui';
+import { RadioGroup, RadioGroupItem } from '@oe/ui';
 import { PencilLine, Plus, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRef } from 'react';
 // import { useWatch } from "react-hook-form";
 import { QUESTION_TYPES } from './utils';
 
-export default function QuizQuestionModal({
+export function QuizQuestionModal({
   question,
   handleSubmit,
 }: {

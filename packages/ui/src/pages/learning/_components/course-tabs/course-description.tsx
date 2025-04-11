@@ -1,13 +1,13 @@
 'use client';
 
-import type { ICourseOutline } from '@oe/api/types/course/course';
+import type { ICourseOutline } from '@oe/api';
 
 import { CoursePrice } from '#components/course-card';
 import { ExpandableText } from '#components/expandable-text';
 import { LastUpdated } from '../../../_components/last-updated';
 import { CourseCreator } from '../../../course/_components/course-creator';
-import CourseIncludes from '../../../course/_components/course-includes';
-import CourseStats from '../../../course/_components/course-stats';
+import { CourseIncludes } from '../../../course/_components/course-includes';
+import { CourseStats } from '../../../course/_components/course-stats';
 
 const CourseDescription = ({ courseData }: { courseData: ICourseOutline }) => {
   const { owner, description, update_at, mark_as_completed, learner_count, levels } = courseData;
@@ -42,4 +42,4 @@ const CourseDescription = ({ courseData }: { courseData: ICourseOutline }) => {
   );
 };
 
-export default CourseDescription;
+export { CourseDescription };

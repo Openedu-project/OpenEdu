@@ -1,8 +1,8 @@
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import { CREATOR_ROUTES } from '@oe/core/utils/routes';
-import { Link } from '@oe/ui/common/navigation';
-import { Image } from '@oe/ui/components/image';
-import { Card, CardContent } from '@oe/ui/shadcn/card';
+import { createAPIUrl } from '@oe/api';
+import { CREATOR_ROUTES } from '@oe/core';
+import { Link } from '@oe/ui';
+import { Image } from '@oe/ui';
+import { Card, CardContent } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
 interface CreatorLaunchpadCardProps {

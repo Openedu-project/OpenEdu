@@ -1,4 +1,7 @@
-import type { AllGroupSidebarKeys, AllSidebarKeys, ThemeName } from '.';
+// import type { AllGroupSidebarKeys, AllSidebarKeys, ThemeName } from '.';
+import type { AllGroupSidebarKeys } from './sidebar';
+import type { AllSidebarKeys } from './sidebar';
+import type { ThemeName } from './theme-page';
 
 export type ThemeConfigKey = 'pages' | 'globals' | 'components' | 'metadata' | 'features';
 // Featured-contents's data was saved at API /api/featured-contents (not system-config)

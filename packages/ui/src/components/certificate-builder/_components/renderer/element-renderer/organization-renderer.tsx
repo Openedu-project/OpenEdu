@@ -1,4 +1,4 @@
-import type { ICertificateData, ICertificateOrganizationElement } from '@oe/api/types/certificate';
+import type { ICertificateData, ICertificateOrganizationElement } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { cn } from '#utils/cn';
 import { getJustifyClass } from '../../../utils';

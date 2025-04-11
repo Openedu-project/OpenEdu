@@ -1,6 +1,6 @@
 'use client';
 
-import type { IOrganization } from '@oe/api/types/organizations';
+import type { IOrganization } from '@oe/api';
 import { ChevronDown } from 'lucide-react';
 import { Button } from '#shadcn/button';
 import { Checkbox } from '#shadcn/checkbox';
@@ -66,4 +66,4 @@ const CourseListFilterOrganizations = ({
   );
 };
 
-export default CourseListFilterOrganizations;
+export { CourseListFilterOrganizations };

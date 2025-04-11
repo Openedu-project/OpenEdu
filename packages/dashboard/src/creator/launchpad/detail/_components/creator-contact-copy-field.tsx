@@ -1,7 +1,7 @@
 'use client';
 
-import { copyToClipboard } from '@oe/core/utils/utils';
-import { Button } from '@oe/ui/shadcn/button';
+import { copyToClipboard } from '@oe/core';
+import { Button } from '@oe/ui';
 import { ClipboardCopy } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 

@@ -1,4 +1,4 @@
-import type { ICertificateElement, ICertificateImageElement } from '@oe/api/types/certificate';
+import type { ICertificateElement, ICertificateImageElement } from '@oe/api';
 import { Image, View } from '@react-pdf/renderer';
 import { getElementPosition } from '../../utils';
 

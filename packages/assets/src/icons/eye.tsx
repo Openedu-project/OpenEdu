@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function Eye({ width = 20, height = 20, className = '', color = '#6E6E6E' }: ISvgProps) {
+export function Eye({ width = 20, height = 20, className = '', color = '#6E6E6E' }: ISvgProps) {
   return (
     <svg
       width={width}

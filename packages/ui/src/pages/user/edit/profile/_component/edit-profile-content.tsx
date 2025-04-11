@@ -1,19 +1,19 @@
 'use client';
 
-import { useGetUserProfile, useUpdateMyProfile } from '@oe/api/hooks/useUserProfile';
-import type { IMyProfilePayload, IUserProfile } from '@oe/api/types/user-profile';
+import type { IMyProfilePayload, IUserProfile } from '@oe/api';
+import { useGetUserProfile, useUpdateMyProfile } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
+import type { HTTPErrorMetadata } from '@oe/api';
 import { toast } from 'sonner';
-import Section from '../../../_components/user-section';
+import { Section } from '../../../_components/user-section';
 import { revalidateProfile } from './_action';
-import EditAvatar from './edit-avatar';
-import UserFormInfo from './user-form-info';
+import { EditAvatar } from './edit-avatar';
+import { UserFormInfo } from './user-form-info';
 
-export default function EditProfileContent() {
+export function EditProfileContent() {
   const tProfileForm = useTranslations('userProfile.profileForm');
   const tError = useTranslations('errors');
 

@@ -1,11 +1,10 @@
-import { Header } from '@oe/ui/common/layout/header';
-import { SidebarProvider, SidebarTrigger } from '@oe/ui/shadcn/sidebar';
-import type { ReactNode } from 'react';
-import ThemeHeaderContent from '../../_components/theme-header/theme-header-content';
+import { Header } from "@oe/ui";
+import { SidebarProvider, SidebarTrigger } from "@oe/ui";
+import type { ReactNode } from "react";
+import { ThemeHeaderContent } from "../../_components/theme-header/theme-header-content";
+import { ThemeLayoutSidebar } from "./sidebar";
 
-import ThemeLayoutSidebar from './sidebar';
-
-export default function ThemeLayout({ children }: { children: ReactNode }) {
+export function ThemeLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex h-screen flex-col bg-mute">
       <Header

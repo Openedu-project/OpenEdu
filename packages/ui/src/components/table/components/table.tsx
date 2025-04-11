@@ -20,7 +20,7 @@ import { useTable } from './table-provider';
 import { TableUnvirtualized } from './table-unvirtualized';
 import { TableVirtualized } from './table-virtualized';
 
-export default function Table<TData>({
+export function Table<TData>({
   api,
   apiParams,
   apiQueryParams,

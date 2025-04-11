@@ -1,16 +1,16 @@
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import type { TMyCourseStatus } from '@oe/api/types/my-learning-space';
-import { Link } from '@oe/ui/common/navigation';
-import { CourseComingSoon } from '@oe/ui/components/course-coming-soon';
-import { Spinner } from '@oe/ui/components/spinner';
-import { buttonVariants } from '@oe/ui/shadcn/button';
-import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from '@oe/ui/shadcn/carousel';
-import { cn } from '@oe/ui/utils/cn';
+import type { ICourseOutline } from '@oe/api';
+import type { TMyCourseStatus } from '@oe/api';
+import { buttonVariants } from '@oe/ui';
+import { Link } from '@oe/ui';
+import { CourseComingSoon } from '@oe/ui';
+import { Spinner } from '@oe/ui';
+import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import CourseCard from '../../_components/course-card';
+import { CourseCard } from '../../_components/course-card';
 
-export default function CourseSection({
+export function CourseSection({
   title,
   courseList,
   courseStatus,

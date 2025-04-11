@@ -41,14 +41,14 @@ export function useGetAdminLaunchpads(id: string, queryParams: IFilter) {
   };
 }
 
-export function useGetAdminLaunchpadDetail(id: string) {
+export function useGetAdminLaunchpadDetail(id: string, queryParams: IFilter = {}) {
   const endpointKey = createAPIUrl({
     endpoint: API_ENDPOINT.LAUNCHPADS_ID,
     params: { id },
   });
 
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
-    getAdminLaunchpadDetailService(endpoint, { params: { id } })
+    getAdminLaunchpadDetailService(endpoint, { params: { id }, queryParams })
   );
 
   return {

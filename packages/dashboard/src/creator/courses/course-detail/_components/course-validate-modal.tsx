@@ -1,6 +1,6 @@
-import type { ICourse } from '@oe/api/types/course/course';
-import type { ISegment } from '@oe/api/types/course/segment';
-import { Modal } from '@oe/ui/components/modal';
+import type { ICourse } from '@oe/api';
+import type { ISegment } from '@oe/api';
+import { Modal } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { validateCourse } from '../_utils/validation';
@@ -12,7 +12,7 @@ interface CourseValidateModalProps {
   onClose: () => void;
 }
 
-export default function CourseValidateModal({ course, segments, open, onClose }: CourseValidateModalProps) {
+export function CourseValidateModal({ course, segments, open, onClose }: CourseValidateModalProps) {
   const tCourse = useTranslations('course');
 
   const validationState = useMemo(() => validateCourse({ course, segments, tCourse }), [course, segments, tCourse]);

@@ -1,5 +1,5 @@
-import { InputNumber } from '@oe/ui/components/input-number';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
+import { InputNumber } from '@oe/ui';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import type { FieldValues, Path, UseFormReturn } from 'react-hook-form';
 
@@ -35,4 +35,4 @@ const NumberDayRunFunding = <TFormValues extends FieldValues>({ form }: NumberDa
   );
 };
 
-export default NumberDayRunFunding;
+export { NumberDayRunFunding };

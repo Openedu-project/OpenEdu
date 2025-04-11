@@ -1,16 +1,16 @@
-import { type ICreateYoutubeCourse, createYoutubeCourseSchema } from '@oe/api/schemas/courses/createCourseSchema';
-import { getCookieClient } from '@oe/core/utils/cookie';
-import { InputNumber } from '@oe/ui/components/input-number';
-import { Modal } from '@oe/ui/components/modal';
-import { SelectLanguage } from '@oe/ui/components/select-language';
-import { Selectbox, type SelectboxOption } from '@oe/ui/components/selectbox';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
-import { toast } from '@oe/ui/shadcn/sonner';
-import { Switch } from '@oe/ui/shadcn/switch';
+import { type ICreateYoutubeCourse, createYoutubeCourseSchema } from '@oe/api';
+import { getCookieClient } from '@oe/core';
+import { toast } from '@oe/ui';
+import { InputNumber } from '@oe/ui';
+import { Modal } from '@oe/ui';
+import { SelectLanguage } from '@oe/ui';
+import { Selectbox, type SelectboxOption } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
+import { Input } from '@oe/ui';
+import { Switch } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
-export default function CreateCourseYoutubeModal({
+export function CreateCourseYoutubeModal({
   open,
   onClose,
   onSubmit,

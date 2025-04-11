@@ -1,11 +1,8 @@
-import {
-  getPreviewCourseByIdService,
-  getSectionsHaveLessonsByCourseIdService,
-} from "@oe/api/services/course";
-import type { ICourseOutline } from "@oe/api/types/course/course";
-import CourseDetailContent from "../_components/course-detail-content";
+import { getPreviewCourseByIdService, getSectionsHaveLessonsByCourseIdService } from '@oe/api';
+import type { ICourseOutline } from '@oe/api';
+import { CourseDetailContent } from '../_components/course-detail-content';
 
-export default async function CoursePreviewDetail({
+export async function CoursePreviewDetail({
   orgId,
   courseId,
 }: {
@@ -18,7 +15,7 @@ export default async function CoursePreviewDetail({
       init: undefined,
     }),
     getSectionsHaveLessonsByCourseIdService(null, {
-      params: { course_id: courseId, status: "publish" },
+      params: { course_id: courseId, status: 'publish' },
       init: undefined,
     }),
   ]);
@@ -28,9 +25,5 @@ export default async function CoursePreviewDetail({
     learning_progress_overview: null,
   };
 
-  return course ? (
-    <CourseDetailContent courseData={courseData} />
-  ) : (
-    <p>There's no data available</p>
-  );
+  return course ? <CourseDetailContent courseData={courseData} /> : <p>There's no data available</p>;
 }

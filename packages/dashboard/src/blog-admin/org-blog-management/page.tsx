@@ -1,8 +1,8 @@
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import { DashboardMainPageLayout } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import BlogTable from '../_components/blog-table';
+import { BlogTable } from '../_components/blog-table';
 
-export default function OrgBlogManagement() {
+export function OrgBlogManagement() {
   const tBlogs = useTranslations('blogManagement');
   const tDashboard = useTranslations('dashboard.blog');
   return (

@@ -1,17 +1,13 @@
-import { getCertByUserIdService } from '@oe/api/services/certificate';
-import type { IUser } from '@oe/api/types/user';
-import { LEARNER_ROUTES } from '@oe/core/utils/routes';
-import { CertificateCard } from '@oe/ui/components/certificate';
-import { NoDataAvailable } from '@oe/ui/components/no-data-available';
-import { ScrollArea, ScrollBar } from '@oe/ui/shadcn/scroll-area';
+import { getCertByUserIdService } from '@oe/api';
+import type { IUser } from '@oe/api';
+import { LEARNER_ROUTES } from '@oe/core';
+import { CertificateCard } from '@oe/ui';
+import { NoDataAvailable } from '@oe/ui';
+import { ScrollArea, ScrollBar } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import SectionCard from './section-card';
+import { SectionCard } from './section-card';
 
-export default async function DashboardMyCertificates({
-  me,
-}: {
-  me: IUser | null;
-}) {
+export async function DashboardMyCertificates({ me }: { me: IUser | null }) {
   const tLearnerDashboard = useTranslations('myLearningSpace.dashboard');
 
   const myCertificates = await getCertByUserIdService(undefined, {

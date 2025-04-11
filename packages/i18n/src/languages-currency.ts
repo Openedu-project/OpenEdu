@@ -1590,5 +1590,5 @@ export const languageWithCurrency: LanguageMap = {
   },
 } as const;
 
-export type LanguageCode = keyof typeof languageWithCurrency;
-export type LanguageWithCurrency = (typeof languageWithCurrency)[LanguageCode];
+export type LanguageCodeWithCurrency = keyof typeof languageWithCurrency;
+export type LanguageWithCurrency = (typeof languageWithCurrency)[LanguageCodeWithCurrency];

@@ -1,11 +1,11 @@
 'use client';
 
-import { usePostCreateLaunchpad } from '@oe/api/hooks/useLaunchpad';
-import type { ICourse } from '@oe/api/types/course/course';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { LAUNCHPAD_STATUS } from '@oe/api/utils/launchpad';
-import { CREATOR_ROUTES } from '@oe/core/utils/routes';
+import type { ICourse } from '@oe/api';
+import { createAPIUrl } from '@oe/api';
+import type { HTTPErrorMetadata } from '@oe/api';
+import { LAUNCHPAD_STATUS } from '@oe/api';
+import { usePostCreateLaunchpad } from '@oe/api';
+import { CREATOR_ROUTES } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
 import { toast } from 'sonner';
@@ -14,7 +14,7 @@ import { Button } from '#shadcn/button';
 import { DialogContent, DialogTitle } from '#shadcn/dialog';
 import { ScrollArea } from '#shadcn/scroll-area';
 import { cn } from '#utils/cn';
-import CourseCardCompact from '../../components/course-card/course-card-compact';
+import { CourseCardCompact } from '../../components/course-card';
 
 const SelectCreateCourse = ({
   dataCouses,
@@ -86,4 +86,4 @@ const SelectCreateCourse = ({
   );
 };
 
-export default SelectCreateCourse;
+export { SelectCreateCourse };

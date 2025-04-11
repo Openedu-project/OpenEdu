@@ -1,5 +1,5 @@
-import type { ThemeFieldConfig, ThemeFieldValue } from '@oe/themes/types';
-import { type FileType, isFileType } from '@oe/ui/components/uploader';
+import { type FileType, isFileType } from '@oe/ui';
+import type { ThemeFieldConfig, ThemeFieldValue } from '#types';
 import type { SettingsFieldType } from './_type';
 
 const isValidUrl = (value: string): boolean => {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useNearNFTAssets } from '@oe/api/hooks/useWallet';
+import { useNearNFTAssets } from '@oe/api';
 import { NFTItem } from './nft-item';
 import { NftLoadingSkeleton } from './nft-loading-skeleton';
 

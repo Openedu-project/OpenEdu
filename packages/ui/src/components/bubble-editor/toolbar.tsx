@@ -1,9 +1,9 @@
 // import React from 'react';
 
+import { Bold, Italic, Link, List, ListOrdered, Redo, Strikethrough, Underline, Undo } from 'lucide-react';
 // import OrderedListIcon from './icons/OrderedListIcon';
 // import UnorderedListIcon from './icons/UnorderedListIcon';
-import { cn } from '@oe/ui/utils/cn';
-import { Bold, Italic, Link, List, ListOrdered, Redo, Strikethrough, Underline, Undo } from 'lucide-react';
+import { cn } from '#utils/cn';
 
 import type { HTMLAttributes, MouseEvent, ReactNode } from 'react';
 import type { EditorState } from './editor-context';

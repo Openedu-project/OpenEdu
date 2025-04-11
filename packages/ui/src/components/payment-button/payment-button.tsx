@@ -1,16 +1,10 @@
-import Cart from '@oe/assets/icons/cart';
+import { Cart } from '@oe/assets';
 import { Button } from '#shadcn/button';
 import { TRIGGER_CLICKED_ON_ID } from '../course-form-trigger/_utils';
 import { usePaymentButton } from './_hooks';
 import type { IPaymentButton } from './types';
 
-export default function PaymentButton({
-  rightSection,
-  courseData,
-  isCourseDetail = false,
-  onClick,
-  ...props
-}: IPaymentButton) {
+export function PaymentButton({ rightSection, courseData, isCourseDetail = false, onClick, ...props }: IPaymentButton) {
   const { buttonText, showCart, handleClick, currentAction, isLoading } = usePaymentButton({
     courseData,
     isCourseDetail,

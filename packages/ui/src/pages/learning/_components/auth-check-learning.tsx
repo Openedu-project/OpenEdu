@@ -1,8 +1,8 @@
 'use client';
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import type { ISectionLearningProgress } from '@oe/api/types/course/learning-progress';
-import type { IUser } from '@oe/api/types/user';
-import { AUTH_ROUTES } from '@oe/core/utils/routes';
+import type { ICourseOutline } from '@oe/api';
+import type { IUser } from '@oe/api';
+import type { ISectionLearningProgress } from '@oe/api';
+import { AUTH_ROUTES } from '@oe/core';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { usePathname } from '#common/navigation';

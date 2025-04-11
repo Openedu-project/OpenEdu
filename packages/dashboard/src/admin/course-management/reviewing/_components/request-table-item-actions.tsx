@@ -1,10 +1,10 @@
 'use client';
 
-import type { IApproval } from '@oe/api/types/approvals';
-import type { ICourse } from '@oe/api/types/course/course';
-import type { ICourseOrganizationRequestProps } from '@oe/api/types/course/org-request';
-import { Button } from '@oe/ui/shadcn/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@oe/ui/shadcn/dropdown-menu';
+import type { ICourse } from '@oe/api';
+import type { IApproval } from '@oe/api';
+import type { ICourseOrganizationRequestProps } from '@oe/api';
+import { Button } from '@oe/ui';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@oe/ui';
 import { Check, ChevronDown, NotebookPenIcon, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useCourseRequestStore } from '../_store/useAdminCourseManagement';

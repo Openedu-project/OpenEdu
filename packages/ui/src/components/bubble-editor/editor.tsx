@@ -7,7 +7,7 @@ import { Editor } from './bubble-editor';
 import { EditorProvider } from './editor-context';
 import { Toolbar } from './toolbar';
 
-export default function BubbleEditor({ value, isShowToolbar, portalEl, toolbarProps, onChange, ...rest }: EditorProps) {
+export function BubbleEditor({ value, isShowToolbar, portalEl, toolbarProps, onChange, ...rest }: EditorProps) {
   return (
     <EditorProvider>
       {/* {isShowToolbar ? <Toolbar {...toolbarProps} /> : null} */}

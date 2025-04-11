@@ -1,15 +1,15 @@
 'use client';
-import { useCreatePermissionConfig } from '@oe/api/hooks/usePermission';
-import type { IPermissionConfigPayload } from '@oe/api/types/permissions';
-import { useTable } from '@oe/ui/components/table';
-import { Button } from '@oe/ui/shadcn/button';
-import { toast } from '@oe/ui/shadcn/sonner';
+import type { IPermissionConfigPayload } from '@oe/api';
+import { useCreatePermissionConfig } from '@oe/api';
+import { toast } from '@oe/ui';
+import { useTable } from '@oe/ui';
+import { Button } from '@oe/ui';
 import { Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
-import ActionsFormModal from './actions-form';
+import { ActionsFormModal } from './actions-form';
 
-export default function CreateActionButton() {
+export function CreateActionButton() {
   const t = useTranslations('permissionActionList');
   const [isOpenAddActionModal, setIsOpenAddActionModal] = useState(false);
   const { mutateAndClearCache } = useTable();

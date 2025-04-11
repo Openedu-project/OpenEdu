@@ -1,4 +1,4 @@
-import { ADMIN_ROUTES, BLOG_ADMIN_ROUTES, CREATOR_ROUTES } from '@oe/core/utils/routes';
+import { ADMIN_ROUTES, BLOG_ADMIN_ROUTES, CREATOR_ROUTES } from '@oe/core';
 import { useMemo } from 'react';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';

@@ -1,8 +1,8 @@
-import { useGetCourseById } from '@oe/api/hooks/useCourse';
-import { useGetForm, useGetFormSummary, useGetFormUserResponses } from '@oe/api/hooks/useForms';
-import type { IFormUserResponse } from '@oe/api/types/form-user-response';
-import { ExportXLSXButton, Table, TableProvider, type TableRef } from '@oe/ui/components/table';
-import { Badge } from '@oe/ui/shadcn/badge';
+import { useGetCourseById } from '@oe/api';
+import { useGetForm, useGetFormSummary, useGetFormUserResponses } from '@oe/api';
+import type { IFormUserResponse } from '@oe/api';
+import { ExportXLSXButton, Table, TableProvider, type TableRef } from '@oe/ui';
+import { Badge } from '@oe/ui';
 import type { Table as TableTanstack } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';

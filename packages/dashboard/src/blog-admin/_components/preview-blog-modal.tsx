@@ -1,6 +1,6 @@
-import type { IBlog } from '@oe/api/types/blog';
-import { BlogDetails } from '@oe/ui/components/blog';
-import { Modal } from '@oe/ui/components/modal';
+import type { IBlog } from '@oe/api';
+import { BlogDetails } from '@oe/ui';
+import { Modal } from '@oe/ui';
 
 interface IPreviewBlogModalProps {
   blogData?: IBlog;

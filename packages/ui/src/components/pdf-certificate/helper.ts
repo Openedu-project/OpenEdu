@@ -1,9 +1,9 @@
 'use client';
-import type { HTTPResponse } from '@oe/api/types/fetch';
-import type { IFileResponse } from '@oe/api/types/file';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { getAPIReferrerAndOrigin } from '@oe/api/utils/referrer-origin';
-import { getCookie } from '@oe/core/utils/cookie';
+import { API_ENDPOINT } from '@oe/api';
+import type { IFileResponse } from '@oe/api';
+import type { HTTPResponse } from '@oe/api';
+import { getAPIReferrerAndOrigin } from '@oe/api';
+import { getCookie } from '@oe/core';
 import { ERROR_MESSAGES } from './constant';
 
 export const handleBlobUpload = async (file: Blob, fileName: string): Promise<IFileResponse> => {

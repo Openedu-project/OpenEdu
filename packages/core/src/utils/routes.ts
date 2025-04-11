@@ -1,4 +1,4 @@
-import { getUnlocalizedPathname } from '@oe/i18n/utils';
+import { getUnlocalizedPathname } from '@oe/i18n';
 
 export const DYNAMIC_FORMS_ROUTES = {
   formList: '/forms',

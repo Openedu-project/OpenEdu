@@ -1,4 +1,4 @@
-import CourseDetailCollaboratorsPage from "@oe/dashboard/creator/courses/course-detail/collaborators/page";
+import { CourseDetailCollaboratorsPage } from "@oe/dashboard";
 
 export default function CollaboratorsPage() {
   return <CourseDetailCollaboratorsPage />;

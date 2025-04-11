@@ -1,14 +1,14 @@
 'use client';
 
-import type { ICourse, ICourseResponse } from '@oe/api/types/course/course';
-import type { IFeaturedContent } from '@oe/api/types/featured-contents';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import { Card, CardContent } from '@oe/ui/shadcn/card';
-import { cn } from '@oe/ui/utils/cn';
+import type { ICourse, ICourseResponse } from '@oe/api';
+import type { IFeaturedContent } from '@oe/api';
+import { PLATFORM_ROUTES } from '@oe/core';
 import type React from 'react';
 import { useEffect, useState } from 'react';
 import type { KeyedMutator } from 'swr';
 import { Link } from '#common/navigation';
+import { Card, CardContent } from '#shadcn/card';
+import { cn } from '#utils/cn';
 import { CourseDetails } from './course-detail';
 import { CourseHoverContent } from './course-hover-content';
 import { CourseThumbnail } from './course-thumbnail';

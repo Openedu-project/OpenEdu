@@ -1,7 +1,7 @@
-import { getPermissionMyAccessService } from '@oe/api/services/permissions';
-import { ADMIN_ROUTES } from '@oe/core/utils/routes';
-import { checkSidebarPermissions } from '@oe/core/utils/sidebar-menu';
-import { DashboardLayout } from '@oe/ui/common/layout';
+import { getPermissionMyAccessService } from '@oe/api';
+import { ADMIN_ROUTES } from '@oe/core';
+import { checkSidebarPermissions } from '@oe/core';
+import { DashboardLayout } from '@oe/ui';
 import {
   Book,
   BookOpen,
@@ -36,7 +36,7 @@ import {
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
 
-export default async function Layout({ children }: { children: ReactNode }) {
+export async function AdminLayout({ children }: { children: ReactNode }) {
   const [permissions, tDashboard] = await Promise.all([
     getPermissionMyAccessService('', { params: undefined }),
     getTranslations('dashboard'),

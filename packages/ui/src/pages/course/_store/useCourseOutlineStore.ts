@@ -1,7 +1,7 @@
-import type { ICoursePreviewVideo } from '@oe/api/types/course/basic';
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import type { IFileResponse } from '@oe/api/types/file';
-import { create } from 'zustand';
+import type { ICourseOutline } from '@oe/api';
+import type { IFileResponse } from '@oe/api';
+import type { ICoursePreviewVideo } from '@oe/api';
+import { createStore } from '@oe/core';
 
 export interface PreviewVideo extends IFileResponse {
   title: string;
@@ -40,7 +40,7 @@ const mapMediaToPreviewVideo = (media: IFileResponse, previewLessons?: ICoursePr
 };
 
 // Store
-export const useCourseOutlineDetailStore = create<CourseOutlineDetailState>()((set, get) => ({
+export const useCourseOutlineDetailStore = createStore<CourseOutlineDetailState>()((set, get) => ({
   courseOutline: {} as ICourseOutline,
 
   setCourseOutline(newOutline?: ICourseOutline) {

@@ -1,16 +1,16 @@
-import { useGetLaunchpadVotingPhaseRule } from '@oe/api/hooks/useLaunchpad';
-import { type IVotingPlanLaunchpadSchemaType, votingPlanLaunchpadSchema } from '@oe/api/schemas/launchpadSchema';
-import { CREATE_LAUNCHPAD_FORM_ID } from '@oe/core/utils/constants';
-import { FormNestedProvider, FormNestedWrapper, type INestedFormsValues } from '@oe/ui/components/form-wrapper';
-import { TabsList, TabsTrigger } from '@oe/ui/shadcn/tabs';
+import { type IVotingPlanLaunchpadSchemaType, votingPlanLaunchpadSchema } from '@oe/api';
+import { useGetLaunchpadVotingPhaseRule } from '@oe/api';
+import { CREATE_LAUNCHPAD_FORM_ID } from '@oe/core';
+import { FormNestedProvider, FormNestedWrapper, type INestedFormsValues } from '@oe/ui';
+import { TabsList, TabsTrigger } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useState } from 'react';
 import { LaunchpadNavigationButtons } from '../_components/launchpad-navigation-buttons';
 import { useChangeLaunchpadTab } from '../_hooks/useChangeLaunchpadTab';
-import useLaunchpadDetail from '../_hooks/useLaunchpadDetail';
-import useTargetAmountStore from '../_store/useTargetAmountStore';
-import NoticeBlock from '../notice-block';
-import VotingMilestones from './voting-milestones';
+import { useLaunchpadDetail } from '../_hooks/useLaunchpadDetail';
+import { useTargetAmountStore } from '../_store/useTargetAmountStore';
+import { NoticeBlock } from '../notice-block';
+import { VotingMilestones } from './voting-milestones';
 import { VotingNoticeContent } from './voting-notice-content';
 
 interface IVotingPlanBlockProps {
@@ -156,4 +156,4 @@ const VotingPlanBlock = ({ onSubmit }: IVotingPlanBlockProps) => {
 
 VotingPlanBlock.displayName = 'VotingPlanBlock';
 
-export default VotingPlanBlock;
+export { VotingPlanBlock };

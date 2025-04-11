@@ -47,4 +47,4 @@ const SuccessDialog = ({
   );
 };
 
-export default SuccessDialog;
+export { SuccessDialog };

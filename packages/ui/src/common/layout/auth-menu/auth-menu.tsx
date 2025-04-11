@@ -1,4 +1,4 @@
-import { getMeServiceWithoutError } from '@oe/api/services/auth';
+import { getMeServiceWithoutError } from '@oe/api';
 import { AuthButtons } from './auth-buttons';
 import { NotificationButton } from './notifications/notification-button';
 import { UserMenu } from './user-menu';

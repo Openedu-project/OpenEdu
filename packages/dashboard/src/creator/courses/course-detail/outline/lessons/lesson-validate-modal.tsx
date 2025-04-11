@@ -1,10 +1,10 @@
-import type { ILessonSchema } from '@oe/api/schemas/courses/segmentSchema';
-import { Modal } from '@oe/ui/components/modal';
+import type { ILessonSchema } from '@oe/api';
+import { Modal } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo } from 'react';
 import { validateForm } from './utils';
 
-export default function LessonValidateModal({
+export function LessonValidateModal({
   lesson,
   open,
   onClose,

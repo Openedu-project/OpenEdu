@@ -1,8 +1,8 @@
-import { InputNumber } from '@oe/ui/components/input-number';
-import { InputSelectForm } from '@oe/ui/components/input-select';
-import { InputTimeDuration } from '@oe/ui/components/input-time-duration';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Switch } from '@oe/ui/shadcn/switch';
+import { InputNumber } from '@oe/ui';
+import { InputSelectForm } from '@oe/ui';
+import { InputTimeDuration } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
+import { Switch } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { useWatch } from 'react-hook-form';

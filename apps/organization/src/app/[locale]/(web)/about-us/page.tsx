@@ -1,7 +1,7 @@
-import { getThemeConfigServer } from "@oe/api/services/theme";
+import { getThemeConfigServer } from "@oe/api";
 import { getMetadata } from "@oe/themes";
-import ThemeWebPage from "@oe/themes/components/web/theme-web-page";
-import { NotFoundPage } from "@oe/ui/common/pages";
+import { ThemeWebPage } from "@oe/themes";
+import { NotFoundPage } from "@oe/ui";
 
 import type { Metadata } from "next";
 

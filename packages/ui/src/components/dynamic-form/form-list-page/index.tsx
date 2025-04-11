@@ -1,9 +1,9 @@
-import type { IProtectedRoutes } from '@oe/core/utils/routes';
+import type { IProtectedRoutes } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { DashboardMainPageLayout } from '#common/layout/dashboard-layout';
 import { TableProvider } from '#components/table';
 import { CreateFormButton } from './create-form-button';
-import Forms from './forms';
+import { Forms } from './forms';
 
 export function FormsListPage({ dashboard }: { dashboard: IProtectedRoutes }) {
   const tDynamicForms = useTranslations('dynamicForms');

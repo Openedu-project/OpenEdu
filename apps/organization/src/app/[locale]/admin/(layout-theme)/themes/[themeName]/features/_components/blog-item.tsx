@@ -1,8 +1,8 @@
-import type { IBlog } from '@oe/api/types/blog';
-import { BlogCardServer } from '@oe/ui/components/blog-card';
-import { DndSortableDragButton } from '@oe/ui/components/dnd-sortable';
+import type { IBlog } from "@oe/api";
+import { BlogCardServer } from "@oe/ui";
+import { DndSortableDragButton } from "@oe/ui";
 
-import { Checkbox } from '@oe/ui/shadcn/checkbox';
+import { Checkbox } from "@oe/ui";
 
 const BlogItem = ({
   blog,
@@ -16,7 +16,7 @@ const BlogItem = ({
   <div className="group relative">
     <Checkbox
       checked={isSelected}
-      onCheckedChange={checked => onCheckboxChange(!!checked, blog)}
+      onCheckedChange={(checked) => onCheckboxChange(!!checked, blog)}
       className="absolute top-4 left-4 z-10 bg-background"
     />
     <DndSortableDragButton className="absolute top-4 right-4 z-10 rounded-md bg-background p-1 opacity-0 transition-opacity group-hover:opacity-100" />
@@ -24,5 +24,5 @@ const BlogItem = ({
   </div>
 );
 
-BlogItem.displayName = 'BlogItem';
+BlogItem.displayName = "BlogItem";
 export { BlogItem };

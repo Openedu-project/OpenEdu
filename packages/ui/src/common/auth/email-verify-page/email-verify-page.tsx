@@ -1,8 +1,7 @@
-import { verifyEmailService } from '@oe/api/services/auth';
+import { verifyEmailService } from '@oe/api';
 import loginBanner from '@oe/assets/images/login-banner.png';
-import { base64ToJson } from '@oe/core/utils/decoded-token';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-// import type { ThemeName } from '@oe/themes/types';
+import { PLATFORM_ROUTES } from '@oe/core';
+import { base64ToJson } from '@oe/core';
 import { getTranslations } from 'next-intl/server';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';

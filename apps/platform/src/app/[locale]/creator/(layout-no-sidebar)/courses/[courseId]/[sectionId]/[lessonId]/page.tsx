@@ -1,4 +1,4 @@
-import LessonPage from "@oe/dashboard/creator/courses/course-detail/outline/lessons/page";
+import { LessonPage } from "@oe/dashboard";
 
 export default function LessonDetailPage() {
   return <LessonPage />;

@@ -1,4 +1,4 @@
-import CoursePreviewDetail from "@oe/ui/pages/course/preview-page";
+import { CoursePreviewDetail } from "@oe/ui";
 
 export default async function CourseDetailPreviePage({
   params,

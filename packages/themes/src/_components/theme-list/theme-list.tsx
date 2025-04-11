@@ -1,11 +1,11 @@
 'use client';
-import { useCreateOrUpdateThemeConfig, useGetTheme } from '@oe/api/hooks/useTheme';
-import type { ISystemConfigRes } from '@oe/api/types/system-config';
-import type { ThemeName } from '@oe/themes/types';
-import { ScrollArea } from '@oe/ui/shadcn/scroll-area';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { useCreateOrUpdateThemeConfig, useGetTheme } from '@oe/api';
+import type { ISystemConfigRes } from '@oe/api';
+import { toast } from '@oe/ui';
+import { ScrollArea } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo } from 'react';
+import type { ThemeName } from '#types';
 import type { ThemeSystem } from '../../_types';
 import { ThemeCard } from './theme-card';
 
@@ -13,7 +13,7 @@ interface ThemeListProps {
   themeSystemRes?: ISystemConfigRes<ThemeSystem>[];
 }
 
-export default function ThemeList({ themeSystemRes }: ThemeListProps) {
+export function ThemeList({ themeSystemRes }: ThemeListProps) {
   const { theme, mutateTheme } = useGetTheme(themeSystemRes);
   const t = useTranslations('themeList');
   const { createOrUpdateThemeConfig } = useCreateOrUpdateThemeConfig();
@@ -87,7 +87,7 @@ export default function ThemeList({ themeSystemRes }: ThemeListProps) {
             <ThemeCard
               key={key}
               name={key as ThemeName}
-              theme={value?.info || { name: key }}
+              theme={(value as { info: { name: string } })?.info || { name: key }}
               isActived={theme?.[0]?.value?.activedTheme === key}
               variant="my-theme"
               onRemove={handleRemove}

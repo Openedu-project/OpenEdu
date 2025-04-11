@@ -1,9 +1,9 @@
-import { getOrgByDomainService } from '@oe/api/services/organizations';
+import { getOrgByDomainService } from '@oe/api';
 import BannerBg from '@oe/assets/images/blog-creation-bg.png';
 import OpenEdu from '@oe/assets/images/openedu.png';
-import { getCookie } from '@oe/core/utils/cookie';
-import { Image } from '@oe/ui/components/image';
-import { cn } from '@oe/ui/utils/cn';
+import { getCookie } from '@oe/core';
+import { Image } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { getTranslations } from 'next-intl/server';
 
 export async function OrgAvatar({ className }: { className?: string }) {

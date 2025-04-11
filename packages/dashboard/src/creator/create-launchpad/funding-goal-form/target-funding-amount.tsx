@@ -1,10 +1,10 @@
-import type { ILaunchpad } from '@oe/api/types/launchpad';
-import { InputNumber } from '@oe/ui/components/input-number';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
+import type { ILaunchpad } from '@oe/api';
+import { InputNumber } from '@oe/ui';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 import type { FieldValues, Path, UseFormReturn } from 'react-hook-form';
-import useTargetAmountStore from '../_store/useTargetAmountStore';
+import { useTargetAmountStore } from '../_store/useTargetAmountStore';
 
 type TargetFundingAmountProps<TFormValues extends FieldValues> = {
   form: UseFormReturn<TFormValues>;
@@ -49,4 +49,4 @@ const TargetFundingAmount = <TFormValues extends FieldValues>({
   );
 };
 
-export default TargetFundingAmount;
+export { TargetFundingAmount };

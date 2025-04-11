@@ -1,6 +1,6 @@
 'use client';
 
-import type { IQuizSubmissionAnswer, IQuizSubmissionQuestions } from '@oe/api/types/quiz';
+import type { IQuizSubmissionAnswer, IQuizSubmissionQuestions } from '@oe/api';
 import { CircleCheck, Info } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { type ReactNode, useState } from 'react';
@@ -111,4 +111,4 @@ const DetailAnswerResult = ({ onFinish, answers }: AnswerResultProps) => {
   );
 };
 
-export default DetailAnswerResult;
+export { DetailAnswerResult };

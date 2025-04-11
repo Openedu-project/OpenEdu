@@ -1,3 +1,4 @@
+'use client';
 import { Check, Eye, Loader2, Paperclip, Pencil, RotateCw, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type React from 'react';

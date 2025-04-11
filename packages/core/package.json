@@ -3,6 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "main": "dist/cjs/index.cjs",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "files": ["dist"],
   "imports": {
     "#utils/*": "./src/utils/*.ts",
     "#types/*": "./src/types/*.ts",
@@ -10,29 +16,38 @@
     "#hooks/*": "./src/hooks/*.ts"
   },
   "exports": {
-    "./utils/*": "./src/utils/*.ts",
-    "./types/*": "./src/types/*.ts",
-    "./store": "./src/store/index.ts",
-    "./hooks/*": "./src/hooks/*.ts",
-    "./package.json": "./package.json",
-    "./global.css": "./src/global.css"
+    ".": {
+      "development": "./src/index.ts",
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/cjs/index.cjs"
+      }
+    },
+    "./global.css": "./dist/esm/global.css",
+    "./package.json": "./package.json"
   },
   "scripts": {
+    "build": "tsx ../../scripts/build/main.ts --dts --clean",
     "typecheck": "tsc --noEmit",
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "clean:build": "rm -rf .turbo && rm -rf dist"
   },
-  "peerDependencies": {
+  "devDependencies": {
     "@oe/config": "workspace:*",
-    "@oe/i18n": "workspace:*",
     "@oe/types": "workspace:*",
-    "@types/node": "^22.14.0",
-    "@types/wicg-file-system-access": "^2023.10.6",
-    "next": "^15.2.4",
+    "@types/node": "^22.14.0"
+  },
+  "dependencies": {
+    "@oe/i18n": "workspace:*",
+    "cookies-next": "^5.1.0",
+    "date-fns": "^4.1.0",
+    "next": "15.3.1-canary.4",
     "next-intl": "4.0.2",
     "react": "19.1.0",
     "zustand": "^5.0.3"
-  },
-  "dependencies": {
-    "cookies-next": "^5.1.0"
   }
 }

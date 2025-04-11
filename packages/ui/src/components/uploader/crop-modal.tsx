@@ -1,3 +1,4 @@
+'use client';
 import type React from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import ReactCrop, { makeAspectCrop, centerCrop } from 'react-image-crop';
@@ -98,7 +99,9 @@ export const CropModal: React.FC<CropModalProps> = ({ file, aspectRatio = 4 / 3,
         if (!(blob && file?.originFile)) {
           return;
         }
-        const croppedFile = new File([blob], file.originFile.name, { type: file.originFile.type });
+        const croppedFile = new File([blob], file.originFile.name, {
+          type: file.originFile.type,
+        });
         const updatedFile = {
           ...file,
           originFile: croppedFile,

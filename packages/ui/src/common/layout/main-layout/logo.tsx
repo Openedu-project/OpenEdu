@@ -1,12 +1,12 @@
-"use client";
-import OpeneduLogo from "@oe/assets/images/logo-openedu.png";
-import OpeneduLogoMobile from "@oe/assets/images/openedu-homepage/logo-openedu-mobile.png";
-import { PLATFORM_ROUTES } from "@oe/core/utils/routes";
-import { Image } from "#components/image";
-import type { FileType } from "#components/uploader";
+'use client';
+import OpeneduLogo from '@oe/assets/images/logo-openedu.png';
+import OpeneduLogoMobile from '@oe/assets/images/openedu-homepage/logo-openedu-mobile.png';
+import { PLATFORM_ROUTES } from '@oe/core';
+import { Image } from '#components/image';
+import type { FileType } from '#components/uploader';
 
-import { Link } from "#common/navigation";
-import { useIsMobile } from "#shadcn/use-mobile";
+import { Link } from '#common/navigation';
+import { useIsMobile } from '#shadcn/use-mobile';
 
 const Logo = ({ logo }: { logo?: FileType }) => {
   const mobile = useIsMobile();
@@ -19,9 +19,9 @@ const Logo = ({ logo }: { logo?: FileType }) => {
       activeClassName="border-0"
     >
       <Image
-        src={logo?.url ? logo?.url : (mobile ? OpeneduLogoMobile?.src : OpeneduLogo?.src)}
+        src={logo?.url ? logo?.url : mobile ? OpeneduLogoMobile?.src : OpeneduLogo?.src}
         alt="OpenEdu"
-        width={logo?.width ?? mobile ? 57 : 172}
+        width={(logo?.width ?? mobile) ? 57 : 172}
         height={logo?.height ?? 40}
         className="!h-8 object-contain"
         priority
@@ -30,5 +30,5 @@ const Logo = ({ logo }: { logo?: FileType }) => {
   );
 };
 
-Logo.displayName = "Logo";
+Logo.displayName = 'Logo';
 export { Logo };

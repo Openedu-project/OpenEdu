@@ -1,4 +1,4 @@
-import { cn } from '@oe/ui/utils/cn';
+import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import type { SectionComponent } from '../../../_types/theme-page';
 
@@ -36,4 +36,4 @@ const ScholarHomepageTestimonials: SectionComponent<'homepage', 'scholarTestimon
   );
 };
 
-export default ScholarHomepageTestimonials;
+export { ScholarHomepageTestimonials };

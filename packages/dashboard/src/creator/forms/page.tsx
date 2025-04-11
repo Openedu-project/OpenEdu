@@ -1,5 +1,5 @@
-import { FormsListPage } from '@oe/ui/components/dynamic-form';
+import { FormsListPage } from '@oe/ui';
 
-export default function FormsPage() {
+export function CreatorFormsPage() {
   return <FormsListPage dashboard="creator" />;
 }

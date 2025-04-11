@@ -1,5 +1,5 @@
-import LanguagesSettings from '@oe/dashboard/admin/site-settings/languages/page';
+import { LanguagesSettingsPage } from "@oe/dashboard";
 
-export default function LanguagesSettingsPage() {
-  return <LanguagesSettings />;
+export default function LanguagesSiteSettingsPage() {
+  return <LanguagesSettingsPage />;
 }

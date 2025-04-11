@@ -1,4 +1,4 @@
-import { UnauthorizedPage } from '@oe/ui/common/pages';
+import { UnauthorizedPage } from "@oe/ui";
 
 export default function Unauthorized() {
   return <UnauthorizedPage />;

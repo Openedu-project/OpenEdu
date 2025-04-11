@@ -1,4 +1,4 @@
-import PriceSettingsForm from "@oe/dashboard/creator/courses/course-detail/price/page";
+import { PriceSettingsForm } from "@oe/dashboard";
 
 export default function CourseDetailPricePage() {
   return <PriceSettingsForm />;

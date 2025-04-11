@@ -1,11 +1,11 @@
 'use client';
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
-import { Tabs, TabsList, TabsTrigger } from '@oe/ui/shadcn/tabs';
+import { DashboardMainPageLayout } from '@oe/ui';
+import { Tabs, TabsList, TabsTrigger } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useState } from 'react';
-import CreatorLaunchpadList from './_components/creator-launchpad-list';
+import { CreatorLaunchpadList } from './_components/creator-launchpad-list';
 
-export default function CreateLaunchpadManagement() {
+export function CreateLaunchpadManagement() {
   const tDashboard = useTranslations('dashboard.launchpad');
   const t = useTranslations('creatorLaunchpad');
   const [tab, setTab] = useState<string>('draft');

@@ -1,8 +1,8 @@
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import { DashboardMainPageLayout } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import LaunchpadRequestsList from './_components/launchpad-request-list';
+import { LaunchpadRequestsList } from './_components/launchpad-request-list';
 
-export default function LaunchpadRequestsManagement() {
+export function LaunchpadRequestsManagement() {
   const tDashboard = useTranslations('dashboard.launchpad');
   const t = useTranslations('adminLaunchpadRequest');
 

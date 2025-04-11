@@ -1,6 +1,6 @@
 'use client';
 
-import type { ICategoryTree } from '@oe/api/types/categories';
+import type { ICategoryTree } from '@oe/api';
 import { ChevronDown } from 'lucide-react';
 import { Button } from '#shadcn/button';
 import { Checkbox } from '#shadcn/checkbox';
@@ -64,4 +64,4 @@ const CourseListFilterLevel = ({
   );
 };
 
-export default CourseListFilterLevel;
+export { CourseListFilterLevel };

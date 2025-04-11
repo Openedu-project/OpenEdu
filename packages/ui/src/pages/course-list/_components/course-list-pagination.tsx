@@ -1,12 +1,12 @@
 'use client';
-import type { ICourseResponse } from '@oe/api/types/course/course';
-import { buildQueryParam } from '@oe/core/utils/url';
+import type { ICourseResponse } from '@oe/api';
+import { buildQueryParam } from '@oe/core';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { usePathname, useRouter } from '#common/navigation';
 import { PaginationCustom } from '#components/pagination-custom';
 
-export default function CourseListPagination({
+export function CourseListPagination({
   pageValue = 1,
   courses,
 }: {

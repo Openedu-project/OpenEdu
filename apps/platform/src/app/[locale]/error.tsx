@@ -1,4 +1,4 @@
-'use client';
-import { ErrorPage } from '@oe/ui/common/pages';
+"use client";
+import { ErrorPage } from "@oe/ui";
 
 export default ErrorPage;

@@ -1,6 +1,6 @@
 'use no memo';
 import { TableVirtuoso } from 'react-virtuoso';
-import { Table, TableBody, TableHeader } from '#shadcn/table';
+import { ShadcnTable, TableBody, TableHeader } from '#shadcn/table';
 import { cn } from '#utils/cn';
 import type { TableProps } from '../types';
 import { TableException } from './table-exception';
@@ -25,7 +25,7 @@ export function TableVirtualized<TData>({
       className={cn('scrollbar', className)}
       totalCount={rows.length}
       components={{
-        Table: ({ style, ...props }) => <Table {...props} style={style} />,
+        Table: ({ style, ...props }) => <ShadcnTable {...props} style={style} />,
         TableHead: props => <TableHeader {...props} />,
         TableBody: ({ children, ...props }) => (
           <TableBody {...props}>

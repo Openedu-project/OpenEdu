@@ -2,12 +2,12 @@ import Ref1 from "@oe/assets/images/openedu-homepage/referral/ref-1.png";
 import Ref2 from "@oe/assets/images/openedu-homepage/referral/ref-2.png";
 import Ref3 from "@oe/assets/images/openedu-homepage/referral/ref-3.png";
 
-// import { Link } from '@oe/ui/common/navigation';
-import { Image } from "@oe/ui/components/image";
+// import { Link } from '@oe/ui';
+import { Image } from "@oe/ui";
 // import { MoveRight } from 'lucide-react';
 import { useTranslations } from "next-intl";
 
-export default function ReferralProgramSection() {
+export function ReferralProgramSection() {
   const t = useTranslations("homePageLayout.referralSection");
 
   return (

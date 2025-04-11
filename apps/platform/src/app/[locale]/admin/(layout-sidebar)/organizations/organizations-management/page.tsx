@@ -1,4 +1,4 @@
-import OrganizationsManagementList from '@oe/dashboard/admin/organizations/organizations-management/page';
+import { OrganizationsManagementList } from "@oe/dashboard";
 
 export default function OrganizationsManagementPage() {
   return <OrganizationsManagementList />;

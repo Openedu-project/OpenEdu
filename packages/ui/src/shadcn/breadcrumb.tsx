@@ -4,7 +4,7 @@ import { ChevronRight, MoreHorizontal } from 'lucide-react';
 import type { ComponentProps, ComponentPropsWithoutRef, ReactNode } from 'react';
 import { cn } from '#utils/cn';
 
-function Breadcrumb({
+function ShadcnBreadcrumb({
   ...props
 }: ComponentPropsWithoutRef<'nav'> & {
   separator?: ReactNode;
@@ -80,7 +80,7 @@ function BreadcrumbEllipsis({ className, ...props }: ComponentProps<'span'>) {
 }
 
 export {
-  Breadcrumb,
+  ShadcnBreadcrumb,
   BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,

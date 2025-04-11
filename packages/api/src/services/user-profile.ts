@@ -10,28 +10,27 @@ import type {
   IMeSettings,
   IMyProfilePayload,
   IMyProfileResponse,
-  IUserProfile,
 } from '../types/user-profile';
 
-export async function getUserProfileService(
-  url: string,
-  { params, init }: { params: { id: string }; init?: RequestInit }
-): Promise<IUserProfile | null> {
-  let endpointKey = url;
-  if (!endpointKey) {
-    endpointKey = createAPIUrl({
-      endpoint: API_ENDPOINT.USERS_ID,
-      params: { ...params },
-    });
-  }
+// export async function getUserProfileService(
+//   url: string,
+//   { params, init }: { params: { id: string }; init?: RequestInit }
+// ): Promise<IUserProfile | null> {
+//   let endpointKey = url;
+//   if (!endpointKey) {
+//     endpointKey = createAPIUrl({
+//       endpoint: API_ENDPOINT.USERS_ID,
+//       params: { ...params },
+//     });
+//   }
 
-  try {
-    const response = await fetchAPI<IUserProfile>(endpointKey, init);
-    return response.data;
-  } catch {
-    return null;
-  }
-}
+//   try {
+//     const response = await fetchAPI<IUserProfile>(endpointKey, init);
+//     return response.data;
+//   } catch {
+//     return null;
+//   }
+// }
 
 export async function getMeSettingsService<T>(
   url: string,
@@ -139,7 +138,7 @@ export async function unblockUserService(
   return response.data;
 }
 
-export async function followUserService(
+export async function followUserProfileService(
   endpoint: string | null | undefined,
   { params, init }: { params: { id: string }; init?: RequestInit }
 ) {

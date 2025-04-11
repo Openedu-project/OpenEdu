@@ -1,25 +1,21 @@
 'use client';
 
-import { useGetUserProfile } from '@oe/api/hooks/useUser';
-import type {
-  IBlogMyProfile,
-  ICertificateMyProfile,
-  ICourseMyProfile,
-  TSettingsType,
-} from '@oe/api/types/user-profile';
-import { Button } from '@oe/ui/shadcn/button';
-import { Switch } from '@oe/ui/shadcn/switch';
+// import { useGetUserProfile } from '@oe/api';
+import type { IBlogMyProfile, ICertificateMyProfile, ICourseMyProfile, TSettingsType } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
+import { Button } from '#shadcn/button';
+import { Switch } from '#shadcn/switch';
 
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
+import type { HTTPErrorMetadata } from '@oe/api';
+import { useGetUserProfile } from '@oe/api';
 import image from '@oe/assets/images/whale-no-data.png';
 import { toast } from 'sonner';
 import { CertificateCard } from '#components/certificate';
 import { Image } from '#components/image';
-import BlogCardProfile from '../../../_components/blog-profile';
-import CourseProfile from '../../../_components/course-profile';
+import { BlogCardProfile } from '../../../_components/blog-profile';
+import { CourseProfile } from '../../../_components/course-profile';
 import { useShowProfileItemsStore } from '../../../_store/userProfileStore';
 
 interface SettingProps<T> {
@@ -34,7 +30,7 @@ interface SettingProps<T> {
   mutateData?: () => void;
 }
 
-export default function SettingWrapper<T>({
+export function SettingWrapper<T>({
   isShow,
   settingsType,
   data,
@@ -51,7 +47,7 @@ export default function SettingWrapper<T>({
 
   const { initialData, setInitialData } = useShowProfileItemsStore();
 
-  const { mutateProfile } = useGetUserProfile(user as string);
+  const { mutateUserProfile } = useGetUserProfile(user as string);
 
   const renderData = (data: T[]) => {
     switch (settingsType) {
@@ -106,7 +102,7 @@ export default function SettingWrapper<T>({
     onSaveChanges?.();
 
     try {
-      await mutateProfile();
+      await mutateUserProfile();
 
       mutateData?.();
     } catch (error) {

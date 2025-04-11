@@ -1,8 +1,8 @@
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import { DashboardMainPageLayout } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import CouponList from './_components/coupon-list';
+import { CouponList } from './_components/coupon-list';
 
-export default function Coupon() {
+export function Coupon() {
   const tDashboard = useTranslations('dashboard');
 
   return (

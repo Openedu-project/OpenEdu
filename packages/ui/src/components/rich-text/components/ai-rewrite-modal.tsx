@@ -1,4 +1,4 @@
-import { usePostAIBlog } from '@oe/api/hooks/useBlog';
+import { usePostAIBlog } from '@oe/api';
 import { type Editor, getHTMLFromFragment } from '@tiptap/core';
 import { useTranslations } from 'next-intl';
 import type React from 'react';
@@ -67,7 +67,10 @@ export const AIRewriteModal: React.FC<{
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = htmlText;
     const contentLength = tempDiv.textContent?.length || 0;
-    editor.commands.setTextSelection({ from, to: from + contentLength + htmlText.split('\n').length - 1 });
+    editor.commands.setTextSelection({
+      from,
+      to: from + contentLength + htmlText.split('\n').length - 1,
+    });
     editor.chain().focus();
 
     handleAIApply?.();

@@ -1,4 +1,4 @@
-import CourseCategories from '@oe/dashboard/admin/course-management/categories';
+import { CourseCategories } from "@oe/dashboard";
 
 export default function CourseCategoriesPage() {
   return <CourseCategories />;

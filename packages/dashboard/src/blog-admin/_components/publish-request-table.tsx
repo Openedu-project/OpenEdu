@@ -1,20 +1,20 @@
 'use client';
-import type { IApproval } from '@oe/api/types/approvals';
-import type { IBlog } from '@oe/api/types/blog';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { formatDateHourMinute } from '@oe/core/utils/datetime';
-import { StatusBadge, type TStatus } from '@oe/ui/components/status-badge';
-import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { Button } from '@oe/ui/shadcn/button';
-import { Separator } from '@oe/ui/shadcn/separator';
-import { Tooltip } from '@oe/ui/shadcn/tooltip';
+import { API_ENDPOINT } from '@oe/api';
+import type { IBlog } from '@oe/api';
+import type { IApproval } from '@oe/api';
+import { formatDateHourMinute } from '@oe/core';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
+import { Badge } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { StatusBadge, type TStatus } from '@oe/ui';
+import { Separator } from '@oe/ui';
+import { Tooltip } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useRef, useState } from 'react';
 import { ApproveButton } from './approve-button';
 import { PreviewBlogModal } from './preview-blog-modal';
 
-export default function PublishRequestTable() {
+export function PublishRequestTable() {
   const tBlogs = useTranslations('blogManagement');
   const tGeneral = useTranslations('general');
   const tableRef = useRef<TableRef<IApproval<IBlog, null>>>(null);

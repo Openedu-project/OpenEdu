@@ -1,4 +1,4 @@
-import UserAffiliateCampaignsDetailManagement from '@oe/dashboard/affiliate/campaigns/compaign-detail/page';
+import { UserAffiliateCampaignsDetailManagement } from "@oe/dashboard";
 
 export default async function UserAffiliateCampaignsDetailPage({
   searchParams,

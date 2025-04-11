@@ -1,12 +1,12 @@
 import { useTranslations } from 'next-intl';
 
-import type { ICourseOutline } from '@oe/api/types/course/course';
+import type { ICourseOutline } from '@oe/api';
 import certificateImg from '@oe/assets/images/certificate.png';
 import { Image } from '#components/image';
 import { Card, CardContent } from '#shadcn/card';
 import { CourseSection } from './course-section';
 
-export default function CourseCertificate({
+export function CourseCertificate({
   courseOutline,
 }: {
   courseOutline: ICourseOutline;

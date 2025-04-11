@@ -1,4 +1,4 @@
-import type { IWallet } from '@oe/api/types/wallet';
+import type { IWallet } from '@oe/api';
 import { ArrowDown, Copy } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { QRCodeSVG } from 'qrcode.react';
@@ -8,7 +8,7 @@ import { Input } from '#shadcn/input';
 import { Label } from '#shadcn/label';
 import { copyToClipboard } from '#utils/copy';
 
-export default function DepositModal({ network, address, currency }: IWallet) {
+export function DepositModal({ network, address, currency }: IWallet) {
   const t = useTranslations('wallets');
 
   return (

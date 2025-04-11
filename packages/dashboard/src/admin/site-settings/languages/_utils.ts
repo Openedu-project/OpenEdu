@@ -1,12 +1,12 @@
-import { createOrUpdateI18nConfig } from '@oe/api/services/i18n';
-import type { IFileResponse } from '@oe/api/types/file';
-import type { LanguageStats } from '@oe/api/types/i18n';
-import type { ISystemConfigRes } from '@oe/api/types/system-config';
-import { systemConfigKeys } from '@oe/api/utils/system-config';
-import { setCookie } from '@oe/core/utils/cookie';
-import { DEFAULT_LOCALE } from '@oe/i18n/constants';
-import type { LanguageCode } from '@oe/i18n/languages';
-import type { I18nMessage } from '@oe/i18n/types';
+import { createOrUpdateI18nConfig } from '@oe/api';
+import type { IFileResponse } from '@oe/api';
+import { systemConfigKeys } from '@oe/api';
+import type { LanguageStats } from '@oe/api';
+import type { ISystemConfigRes } from '@oe/api';
+import { setCookie } from '@oe/core';
+import type { LanguageCode } from '@oe/i18n';
+import type { I18nMessage } from '@oe/i18n';
+import { DEFAULT_LOCALE } from '@oe/i18n';
 import type { LanguageOption, TranslationItem } from './_store/useLanguageStore';
 
 export const convertTranslation = (translations: TranslationItem[]) => {

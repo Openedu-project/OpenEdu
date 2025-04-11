@@ -1,22 +1,22 @@
 'use client';
-import { useDeleteReferrer, usePostReferrer } from '@oe/api/hooks/useReferrer';
-import type { ICreateReferrersPayload, IReferrerItem } from '@oe/api/types/referrer';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
+import type { HTTPErrorMetadata } from '@oe/api';
+import { useDeleteReferrer, usePostReferrer } from '@oe/api';
+import type { ICreateReferrersPayload, IReferrerItem } from '@oe/api';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
 
-import { Badge } from '@oe/ui/shadcn/badge';
+import { Badge } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import { RoleButton } from '@oe/ui/components/role-button';
-import { toast } from '@oe/ui/shadcn/sonner';
-import AffiliateDeleteReferrerModal from './referrers-detele-modal';
-import AffiliateReferrerFormModal from './referrers-form-modal';
+import { API_ENDPOINT } from '@oe/api';
+import { createAPIUrl } from '@oe/api';
+import { toast } from '@oe/ui';
+import { RoleButton } from '@oe/ui';
+import { AffiliateDeleteReferrerModal } from './referrers-detele-modal';
+import { AffiliateReferrerFormModal } from './referrers-form-modal';
 
-export default function ReferrerList() {
+export function ReferrerList() {
   const t = useTranslations('affiliateDetailReferrers');
   const tError = useTranslations('errors');
 

@@ -8,8 +8,12 @@ type Props = {
   className?: string;
 };
 
+<<<<<<< HEAD
 export default async function AILayout({ children, className }: Props) {
   const login = await isLogin();
+=======
+export function AILayout({ children, className }: Props) {
+>>>>>>> 92014567 (feat: optimize)
   return (
     <main
       className={cn(

@@ -1,21 +1,21 @@
 'use client';
-import { useGetMe } from '@oe/api/hooks/useMe';
-import { useGetUserAffiliateSummariesReport } from '@oe/api/hooks/useUserAffiliateReport';
-import type { IUserAffiliateReportItem } from '@oe/api/types/report-user-affiliate-campaign';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { AFFILIATE_ROUTES } from '@oe/core/utils/routes';
-import { formatNumber } from '@oe/core/utils/utils';
-import { Link } from '@oe/ui/common/navigation';
-import type { FilterOption } from '@oe/ui/components/filter-search';
-import { type ColumnDef, Table } from '@oe/ui/components/table';
-import { buttonVariants } from '@oe/ui/shadcn/button';
-import { Tooltip } from '@oe/ui/shadcn/tooltip';
-import { cn } from '@oe/ui/utils/cn';
+import { API_ENDPOINT } from '@oe/api';
+import { useGetMe } from '@oe/api';
+import { useGetUserAffiliateSummariesReport } from '@oe/api';
+import type { IUserAffiliateReportItem } from '@oe/api';
+import { AFFILIATE_ROUTES } from '@oe/core';
+import { formatNumber } from '@oe/core';
+import type { FilterOption } from '@oe/ui';
+import { type ColumnDef, Table } from '@oe/ui';
+import { buttonVariants } from '@oe/ui';
+import { Link } from '@oe/ui';
+import { Tooltip } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { useUserAffiliateReport } from './user-campaign-report-provider';
 
-export default function AffiliateManagementContent() {
+export function AffiliateManagementContent() {
   const t = useTranslations('userAffiliateReport');
   const { dataMe: me } = useGetMe();
   const { selectedOption } = useUserAffiliateReport();

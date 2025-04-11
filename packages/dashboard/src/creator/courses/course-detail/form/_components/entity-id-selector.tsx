@@ -1,5 +1,5 @@
-import { Selectbox, type SelectboxOption } from '@oe/ui/components/selectbox';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
+import { Selectbox, type SelectboxOption } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';

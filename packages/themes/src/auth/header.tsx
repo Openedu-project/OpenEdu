@@ -1,13 +1,13 @@
 'use client';
 
-import { HeaderLogo } from '@oe/assets/icons/header-logo';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import { HeaderClient } from '@oe/ui/common/layout/header';
-import type { ISidebarItem } from '@oe/ui/common/layout/sidebar';
-import { Link } from '@oe/ui/common/navigation';
-import { Image } from '@oe/ui/components/image';
-import type { FileType } from '@oe/ui/components/uploader';
-import { cn } from '@oe/ui/utils/cn';
+import { HeaderLogo } from '@oe/assets';
+import { PLATFORM_ROUTES } from '@oe/core';
+import type { FileType } from '@oe/ui';
+import type { ISidebarItem } from '@oe/ui';
+import { Link } from '@oe/ui';
+import { Image } from '@oe/ui';
+import { HeaderClient } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import type { SectionComponent } from '../_types/theme-page';
@@ -54,4 +54,5 @@ const ThemeHeader: SectionComponent<'auth', 'header'> = ({ props }) => {
     </HeaderClient>
   );
 };
-export default ThemeHeader;
+
+export { ThemeHeader };

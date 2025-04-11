@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 
-import type { ICourseOutline } from '@oe/api/types/course/course';
+import type { ICourseOutline } from '@oe/api';
 import whaleWarning from '@oe/assets/images/whale/whale-warning.png';
 import { Image } from '#components/image';
 import { PaymentButton } from '#components/payment-button';
@@ -60,7 +60,9 @@ export const PlayToEarnWarningModal = ({
             {t('modalTitle')}
           </AlertDialogTitle>
           <AlertDialogDescription className="mbutton-regular16 mt-4 text-center">
-            {t('complete')} <span className="mbutton-semibold16 text-foreground">{segment_name}</span> {t('desc')}
+            {t('complete')}
+            <span className="mbutton-semibold16 text-foreground">{segment_name}</span>
+            {t('desc')}
           </AlertDialogDescription>
         </AlertDialogHeader>
 

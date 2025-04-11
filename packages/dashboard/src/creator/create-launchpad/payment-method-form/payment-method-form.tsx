@@ -1,12 +1,12 @@
-import { useNFTTotalAssets } from '@oe/api/hooks/useWallet';
-import { CREATE_LAUNCHPAD_FORM_ID } from '@oe/core/utils/constants';
-import { formatNumber } from '@oe/core/utils/utils';
-import { Link } from '@oe/ui/common/navigation';
+import { useNFTTotalAssets } from '@oe/api';
+import { formatNumber } from '@oe/core';
+import { CREATE_LAUNCHPAD_FORM_ID } from '@oe/core';
+import { Link } from '@oe/ui';
 import { CircleAlert, Mail } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import useLaunchpadDetail from '../_hooks/useLaunchpadDetail';
-import NoticeBlock from '../notice-block';
-import DepositModal from './deposit-modal';
+import { useLaunchpadDetail } from '../_hooks/useLaunchpadDetail';
+import { NoticeBlock } from '../notice-block';
+import { DepositModal } from './deposit-modal';
 
 const PaymentMethodBlock = () => {
   const tLaunchpad = useTranslations('creatorSettingLaunchpad.paymentMethod');
@@ -69,4 +69,4 @@ const PaymentMethodBlock = () => {
 
 PaymentMethodBlock.displayName = 'PaymentMethodBlock';
 
-export default PaymentMethodBlock;
+export { PaymentMethodBlock };

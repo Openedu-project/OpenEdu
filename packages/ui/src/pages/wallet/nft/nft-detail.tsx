@@ -1,5 +1,5 @@
-import type { TNFTItem } from '@oe/api/types/wallet';
-import { CRYPTO_CURRENCIES } from '@oe/api/utils/wallet';
+import type { TNFTItem } from '@oe/api';
+import { CRYPTO_CURRENCIES } from '@oe/api';
 
 export const NFTDetail = ({ nft }: { nft: TNFTItem }) => {
   return (

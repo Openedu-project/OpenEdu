@@ -1,4 +1,4 @@
-import type { TAgentType } from "@oe/api/types/conversation";
+import type { TAgentType } from "@oe/api";
 import { useTranslations } from "next-intl";
 import { Modal } from "#components/modal";
 import { Button } from "#shadcn/button";

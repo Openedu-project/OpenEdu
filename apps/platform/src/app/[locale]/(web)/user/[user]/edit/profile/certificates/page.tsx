@@ -1,4 +1,4 @@
-import EditCertificate from '@oe/ui/pages/user/edit/profile/certificates';
+import { EditCertificate } from "@oe/ui";
 
 export default function EditCertificatePaage() {
   return <EditCertificate />;

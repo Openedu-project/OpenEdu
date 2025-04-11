@@ -1,4 +1,4 @@
-import { Modal } from '@oe/ui/components/modal';
+import { Modal } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 
@@ -8,11 +8,7 @@ interface ICreatorStartVotingLaunchpadModal {
   isLoading: boolean;
 }
 
-export default function CreatorStartVotingLaunchpadModal({
-  onSubmit,
-  onClose,
-  isLoading,
-}: ICreatorStartVotingLaunchpadModal) {
+export function CreatorStartVotingLaunchpadModal({ onSubmit, onClose, isLoading }: ICreatorStartVotingLaunchpadModal) {
   const t = useTranslations('creatorLaunchpad.startVotingModal');
 
   const handleSubmit = useCallback(() => {

@@ -1,8 +1,8 @@
 'use client';
-import { useSystemConfig } from '@oe/api/hooks/useSystemConfig';
-import type { I18nConfig } from '@oe/api/types/i18n';
-import { systemConfigKeys } from '@oe/api/utils/system-config';
-import { languages } from '@oe/i18n/languages';
+import { systemConfigKeys } from '@oe/api';
+import { useSystemConfig } from '@oe/api';
+import type { I18nConfig } from '@oe/api';
+import { languages } from '@oe/i18n';
 import { useEffect } from 'react';
 import { useLanguageStore } from '../_store/useLanguageStore';
 

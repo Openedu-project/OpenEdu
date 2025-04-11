@@ -1,4 +1,4 @@
-import { isLogin } from '@oe/api/utils/auth';
+import { isLogin } from '@oe/api';
 import type { ReactNode } from 'react';
 import { Link } from '#common/navigation';
 import { LoginWarningModal } from '#components/login-required-modal';

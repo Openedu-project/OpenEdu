@@ -35,5 +35,3 @@ export function InputPassword({ className, color, size, error, ...props }: Input
     </div>
   );
 }
-
-export default InputPassword;

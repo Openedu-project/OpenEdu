@@ -1,5 +1,5 @@
-import GeneralSettings from '@oe/dashboard/admin/site-settings/general/page';
+import { GeneralSettingsPage } from "@oe/dashboard";
 
-export default function GeneralSettingsPage() {
-  return <GeneralSettings />;
+export default function GeneralSettingsSiteSettingsPage() {
+  return <GeneralSettingsPage />;
 }

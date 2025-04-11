@@ -1,9 +1,9 @@
-"use client";
-import type { IBlog } from "@oe/api/types/blog";
-import { BLOG_ROUTES } from "@oe/core/utils/routes";
-import { buildUrl } from "@oe/core/utils/url";
-import { useRouter } from "#common/navigation";
-import { ProfileCard } from "#components/profile-card";
+'use client';
+import type { IBlog } from '@oe/api';
+import { BLOG_ROUTES } from '@oe/core';
+import { buildUrl } from '@oe/core';
+import { useRouter } from '#common/navigation';
+import { ProfileCard } from '#components/profile-card';
 
 const ProfileCardWrapper = ({ data }: { data: IBlog }) => {
   const router = useRouter();

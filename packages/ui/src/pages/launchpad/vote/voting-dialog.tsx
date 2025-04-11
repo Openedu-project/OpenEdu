@@ -1,12 +1,12 @@
 'use client';
 
-import { postLaunchpadVote } from '@oe/api/services/launchpad';
+import { postLaunchpadVote } from '@oe/api';
 import { useRouter } from '#common/navigation';
 import { Button } from '#shadcn/button';
 import { Checkbox } from '#shadcn/checkbox';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '#shadcn/dialog';
 
-import type { ILaunchpadVotingMilestone } from '@oe/api/types/launchpad';
+import type { ILaunchpadVotingMilestone } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -87,4 +87,4 @@ const VotingDialog = ({
   );
 };
 
-export default VotingDialog;
+export { VotingDialog };

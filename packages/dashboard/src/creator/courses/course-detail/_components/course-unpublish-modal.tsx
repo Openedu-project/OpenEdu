@@ -1,8 +1,8 @@
-import { useGetCourseById } from '@oe/api/hooks/useCourse';
-import { unpublishCourseService } from '@oe/api/services/course';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { Modal } from '@oe/ui/components/modal';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { API_ENDPOINT } from '@oe/api';
+import { unpublishCourseService } from '@oe/api';
+import { useGetCourseById } from '@oe/api';
+import { toast } from '@oe/ui';
+import { Modal } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';

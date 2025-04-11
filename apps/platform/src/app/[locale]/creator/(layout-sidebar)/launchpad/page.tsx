@@ -1,4 +1,4 @@
-import CreateLaunchpadManagement from '@oe/dashboard/creator/launchpad/page';
+import { CreateLaunchpadManagement } from "@oe/dashboard";
 
 export default function CreateLaunchpadManagementPage() {
   return <CreateLaunchpadManagement />;

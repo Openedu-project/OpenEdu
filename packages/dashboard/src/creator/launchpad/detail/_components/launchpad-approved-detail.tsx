@@ -1,14 +1,9 @@
-import type {
-  IAdminLaunchpadDetailRes,
-  IAdminLaunchpadInvestmentRes,
-  IVotingmilestone,
-} from '@oe/api/types/admin-launchpad';
-import Telegram from '@oe/assets/icons/social-icon/telegram';
-import { formatDateHourMinute } from '@oe/core/utils/datetime';
-import { formatNumber } from '@oe/core/utils/utils';
-import { CourseTimeline } from '@oe/ui/components/course-time-line';
-import { Image } from '@oe/ui/components/image';
-import { Card, CardContent } from '@oe/ui/shadcn/card';
+import type { IAdminLaunchpadDetailRes, IAdminLaunchpadInvestmentRes, IVotingmilestone } from '@oe/api';
+import { Telegram } from '@oe/assets';
+import { formatDateHourMinute, formatNumber } from '@oe/core';
+import { CourseTimeline } from '@oe/ui';
+import { Image } from '@oe/ui';
+import { Card, CardContent } from '@oe/ui';
 import { Mail } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import type React from 'react';
@@ -18,7 +13,7 @@ import { CreatorRemoveRequestLaunchpadButton } from './actions/creator-remove-re
 import { CreatorStartFundingLaunchpadButton } from './actions/creator-start-funding-button';
 import { CreatorStartVotingLaunchpadButton } from './actions/creator-start-voting-button';
 import { ContactCopyButton } from './creator-contact-copy-field';
-import FundingStats from './creator-funding-chart';
+import { FundingStats } from './creator-funding-chart';
 
 interface LaunchpadInfoProps {
   data: IAdminLaunchpadDetailRes;
@@ -170,7 +165,7 @@ function generateButton({ data, id }: IGenerateButtonProps) {
   }
 }
 
-export default async function CreatorLaunchpadDetail({
+export async function CreatorLaunchpadDetail({
   id,
   data,
   backerData,

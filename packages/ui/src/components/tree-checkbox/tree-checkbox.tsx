@@ -262,4 +262,4 @@ const TreeCheckbox = <T extends TreeNode>({
   );
 };
 
-export default TreeCheckbox;
+export { TreeCheckbox };

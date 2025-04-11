@@ -1,20 +1,15 @@
 'use client';
 
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from '@oe/ui/shadcn/navigation-menu';
-import { ScrollArea, ScrollBar } from '@oe/ui/shadcn/scroll-area';
+import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from '@oe/ui';
+import { ScrollArea, ScrollBar } from '@oe/ui';
 import { BookOpen, DollarSign, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import React from 'react';
 
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import { CREATOR_ROUTES } from '@oe/core/utils/routes';
-import { Link } from '@oe/ui/common/navigation';
+import { createAPIUrl } from '@oe/api';
+import { CREATOR_ROUTES } from '@oe/core';
+import { Link } from '@oe/ui';
 
 export type TAffiliateNavMenu = 'information' | 'course' | 'commission' | 'referrers';
 

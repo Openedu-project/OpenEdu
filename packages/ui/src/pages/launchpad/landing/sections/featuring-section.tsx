@@ -1,4 +1,4 @@
-import type { ILaunchpad } from '@oe/api/types/launchpad';
+import type { ILaunchpad } from '@oe/api';
 import { Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { CampainCardFull, CampainCardHorizontal } from '../../components/campaign-card';
@@ -64,4 +64,4 @@ const FeaturingSection = ({
   );
 };
 
-export default FeaturingSection;
+export { FeaturingSection };

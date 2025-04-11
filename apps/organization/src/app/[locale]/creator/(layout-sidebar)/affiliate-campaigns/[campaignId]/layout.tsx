@@ -1,10 +1,10 @@
-import AffiliateCampaignDetailLayout from '@oe/dashboard/creator/affiliate-campaign/affiliate-campaign-detail/layout';
-import type { Metadata } from 'next';
-import type React from 'react';
+import { AffiliateCampaignDetailLayout } from "@oe/dashboard";
+import type { Metadata } from "next";
+import type React from "react";
 
 export const metadata: Metadata = {
-  title: 'Affiliate Campaign',
-  description: 'Manage your affiliate campaign details',
+  title: "Affiliate Campaign",
+  description: "Manage your affiliate campaign details",
 };
 
 interface LayoutProps {
@@ -14,7 +14,14 @@ interface LayoutProps {
   };
 }
 
-export default async function AffiliateCampaignLayout({ children, params }: LayoutProps) {
+export default async function AffiliateCampaignLayout({
+  children,
+  params,
+}: LayoutProps) {
   const { campaignId } = await params;
-  return <AffiliateCampaignDetailLayout campaignId={campaignId}>{children}</AffiliateCampaignDetailLayout>;
+  return (
+    <AffiliateCampaignDetailLayout campaignId={campaignId}>
+      {children}
+    </AffiliateCampaignDetailLayout>
+  );
 }

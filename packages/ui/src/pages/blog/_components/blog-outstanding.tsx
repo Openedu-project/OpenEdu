@@ -1,4 +1,4 @@
-import type { IBlog } from '@oe/api/types/blog';
+import type { IBlog } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { cn } from '#utils/cn';
 import { BlogCard } from './blog-card';

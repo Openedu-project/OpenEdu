@@ -1,18 +1,18 @@
-import DocumentDownload from '@oe/assets/icons/document-download';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { DocumentDownload } from '@oe/assets';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { toast } from '#shadcn/sonner';
 
-import { useGetMe } from '@oe/api/hooks/useMe';
-import type { IFileResponse } from '@oe/api/types/file';
-import { type DownloadFileProps, downloadAllFiles, processFileName } from '@oe/core/utils/download-file';
+import type { IFileResponse } from '@oe/api';
+import { useGetMe } from '@oe/api';
+import { type DownloadFileProps, downloadAllFiles, processFileName } from '@oe/core';
 import { CircleChevronDown, CircleChevronUp } from 'lucide-react';
 import { useLoginRequiredStore } from '#components/login-required-modal';
 import { Button } from '#shadcn/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '#shadcn/collapsible';
 import { FileDownloader } from './attached-file';
 
-export default function CourseResources({ docs }: { docs: IFileResponse[] }) {
+export function CourseResources({ docs }: { docs: IFileResponse[] }) {
   const t = useTranslations('courseOutline.attachedDocs');
 
   const [isOpen, setIsOpen] = useState<boolean>(false);

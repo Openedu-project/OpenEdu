@@ -1,3 +1,3 @@
-import { CircleProgressBar } from './circle-progress-bar';
+import { CircleProgressBar, type ProgressBarProps } from './circle-progress-bar';
 
-export { CircleProgressBar };
+export { CircleProgressBar, type ProgressBarProps };

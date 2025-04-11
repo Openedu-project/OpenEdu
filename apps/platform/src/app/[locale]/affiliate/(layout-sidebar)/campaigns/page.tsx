@@ -1,4 +1,4 @@
-import UserAffiliateCampaignsManagement from '@oe/dashboard/affiliate/campaigns/page';
+import { UserAffiliateCampaignsManagement } from "@oe/dashboard";
 
 export default function UserAffiliateManagement() {
   return <UserAffiliateCampaignsManagement />;

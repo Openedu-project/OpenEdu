@@ -1,28 +1,23 @@
 'use client';
 
-import type { ICertificateDetail } from '@oe/api/types/certificate';
-import ArrowDownCircle from '@oe/assets/icons/arrow-down-circle';
-import ShareSocial from '@oe/assets/icons/share-social';
-import { Button } from '@oe/ui/shadcn/button';
+import type { ICertificateDetail } from '@oe/api';
+import { ArrowDownCircle, ShareSocial } from '@oe/assets';
 import { useTranslations } from 'next-intl';
-import dynamic from 'next/dynamic';
 import { type HTMLAttributes, useCallback, useState } from 'react';
+import { Button } from '#shadcn/button';
 
-import { formatDate } from '@oe/core/utils/datetime';
-import { downloadFile } from '@oe/core/utils/download-file';
+import { formatDate } from '@oe/core';
+import { downloadFile } from '@oe/core';
+import { PdfViewer } from '#components/pdf-viewer';
 import { UserAvatar } from '../user-avatar/user-avatar';
-import CourseInfo from './course-info';
-import ShareCertModal from './share-cert-modal';
-
-const PdfViewer = dynamic(() => import('../pdf-viewer/pdf-viewer'), {
-  ssr: false,
-});
+import { CourseInfo } from './course-info';
+import { ShareCertModal } from './share-cert-modal';
 
 interface ICertDetailProp extends HTMLAttributes<HTMLDivElement> {
   certificate: ICertificateDetail;
 }
 
-export default function CertificateDetail({ certificate, children }: ICertDetailProp) {
+export function CertificateDetail({ certificate, children }: ICertDetailProp) {
   const tProfile = useTranslations('userProfile.certificate');
   const t = useTranslations('courseOutline');
 
@@ -61,7 +56,7 @@ export default function CertificateDetail({ certificate, children }: ICertDetail
       <div className="flex w-full flex-col gap-3 xl:w-1/2">
         <CourseInfo courseData={course} />
 
-        <div className="flex items-center rounded-[12px] bg-[#fff0fe] px-6 py-3">
+        <div className="flex items-center rounded-[12px] bg-muted px-6 py-3">
           <UserAvatar src={user?.avatar} name={displayName} className="h-7 w-7" />
           <span className="mbutton-semibold16 ml-2">
             {displayName}&nbsp;

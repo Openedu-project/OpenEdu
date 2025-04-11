@@ -1,9 +1,8 @@
-import { cancelConversation } from '@oe/api/services/conversation';
-import type { IMessage } from '@oe/api/types/conversation';
-import type { z } from '@oe/api/utils/zod';
-import LampCharge from '@oe/assets/icons/lamp-charge';
-import Microphone from '@oe/assets/icons/microphone';
-import { GENERATING_STATUS } from '@oe/core/utils/constants';
+import { cancelConversation } from '@oe/api';
+import type { z } from '@oe/api';
+import type { IMessage } from '@oe/api';
+import { LampCharge, Microphone } from '@oe/assets';
+import { GENERATING_STATUS } from '@oe/core';
 import { LoaderCircle, MoveRight, Pause } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useRef, useState } from 'react';

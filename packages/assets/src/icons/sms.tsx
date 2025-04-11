@@ -1,4 +1,4 @@
-export default function SmsIcon({ width = 24, height = 24, className = '', color = '#6E6E6E' }) {
+export function SmsIcon({ width = 24, height = 24, className = '', color = '#6E6E6E' }) {
   return (
     <svg
       className={className}

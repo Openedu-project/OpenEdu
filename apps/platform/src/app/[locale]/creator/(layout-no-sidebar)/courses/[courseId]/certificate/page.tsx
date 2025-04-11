@@ -1,4 +1,4 @@
-import CourseDetailCertificatePage from "@oe/dashboard/creator/courses/course-detail/certificate/page";
+import { CourseDetailCertificatePage } from "@oe/dashboard";
 
 export default function CourseCertificatePage() {
   return <CourseDetailCertificatePage />;

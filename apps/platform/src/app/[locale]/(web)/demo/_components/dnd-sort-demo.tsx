@@ -1,6 +1,8 @@
-'use client';
+"use client";
 
-import { DeleteButton } from '@oe/ui/components/delete-button';
+import { Badge } from "@oe/ui";
+import { Button } from "@oe/ui";
+import { DeleteButton } from "@oe/ui";
 import {
   DndSortable,
   DndSortableCollapseButton,
@@ -10,13 +12,16 @@ import {
   restrictToHorizontalAxis,
   restrictToParentElement,
   restrictToVerticalAxis,
-} from '@oe/ui/components/dnd-sortable';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@oe/ui/shadcn/accordion';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { Button } from '@oe/ui/shadcn/button';
-import { cn } from '@oe/ui/utils/cn';
-import { PencilIcon, PlusIcon, Trash2Icon } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+} from "@oe/ui";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@oe/ui";
+import { cn } from "@oe/ui";
+import { PencilIcon, PlusIcon, Trash2Icon } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 interface Task {
   id: string;
@@ -38,128 +43,128 @@ interface TreeItem {
 
 const initialData: Column[] = [
   {
-    id: 'todo',
-    title: 'Todo',
+    id: "todo",
+    title: "Todo",
     tasks: [
-      { id: 'task-1', title: 'Learn React', completed: false },
-      { id: 'task-2', title: 'Learn TypeScript', completed: false },
+      { id: "task-1", title: "Learn React", completed: false },
+      { id: "task-2", title: "Learn TypeScript", completed: false },
     ],
   },
   {
-    id: 'in-progress',
-    title: 'In Progress',
-    tasks: [{ id: 'task-3', title: 'Make demo project', completed: false }],
+    id: "in-progress",
+    title: "In Progress",
+    tasks: [{ id: "task-3", title: "Make demo project", completed: false }],
   },
   {
-    id: 'done',
-    title: 'Done',
-    tasks: [{ id: 'task-4', title: 'Setup environment', completed: false }],
+    id: "done",
+    title: "Done",
+    tasks: [{ id: "task-4", title: "Setup environment", completed: false }],
   },
 ];
 
 const nestedArrayData: (Task | Task[])[] = [
-  { id: '1', title: 'Task 1', completed: false },
+  { id: "1", title: "Task 1", completed: false },
   [
-    { id: '2', title: 'Subtask 1', completed: false },
-    { id: '3', title: 'Subtask 2', completed: true },
+    { id: "2", title: "Subtask 1", completed: false },
+    { id: "3", title: "Subtask 2", completed: true },
   ],
-  { id: '4', title: 'Task 2', completed: false },
+  { id: "4", title: "Task 2", completed: false },
 ];
 
 const treeData: TreeItem[] = [
   {
-    id: '1',
-    label: 'Quản lý dự án',
+    id: "1",
+    label: "Quản lý dự án",
     children: [
       {
-        id: '1.1',
-        label: 'Dự án A',
+        id: "1.1",
+        label: "Dự án A",
         children: [
           {
-            id: '1.1.1',
-            label: 'Phân tích yêu cầu',
+            id: "1.1.1",
+            label: "Phân tích yêu cầu",
             children: [
               {
-                id: '1.1.1.1',
-                label: 'Thu thập thông tin',
+                id: "1.1.1.1",
+                label: "Thu thập thông tin",
               },
               {
-                id: '1.1.1.2',
-                label: 'Phỏng vấn khách hàng',
+                id: "1.1.1.2",
+                label: "Phỏng vấn khách hàng",
               },
             ],
           },
           {
-            id: '1.1.2',
-            label: 'Thiết kế hệ thống',
+            id: "1.1.2",
+            label: "Thiết kế hệ thống",
             children: [
               {
-                id: '1.1.2.1',
-                label: 'Thiết kế database',
+                id: "1.1.2.1",
+                label: "Thiết kế database",
               },
               {
-                id: '1.1.2.2',
-                label: 'Thiết kế giao diện',
+                id: "1.1.2.2",
+                label: "Thiết kế giao diện",
               },
             ],
           },
         ],
       },
       {
-        id: '1.2',
-        label: 'Dự án B',
+        id: "1.2",
+        label: "Dự án B",
         children: [
           {
-            id: '1.2.1',
-            label: 'Lập trình',
+            id: "1.2.1",
+            label: "Lập trình",
             children: [
               {
-                id: '1.2.1.1',
-                label: 'Frontend',
+                id: "1.2.1.1",
+                label: "Frontend",
               },
               {
-                id: '1.2.1.2',
-                label: 'Backend',
+                id: "1.2.1.2",
+                label: "Backend",
               },
             ],
           },
           {
-            id: '1.2.2',
-            label: 'Kiểm thử',
+            id: "1.2.2",
+            label: "Kiểm thử",
           },
         ],
       },
     ],
   },
   {
-    id: '2',
-    label: 'Quản lý nhân sự',
+    id: "2",
+    label: "Quản lý nhân sự",
     children: [
       {
-        id: '2.1',
-        label: 'Tuyển dụng',
+        id: "2.1",
+        label: "Tuyển dụng",
         children: [
           {
-            id: '2.1.1',
-            label: 'Phỏng vấn',
+            id: "2.1.1",
+            label: "Phỏng vấn",
           },
           {
-            id: '2.1.2',
-            label: 'Đánh giá',
+            id: "2.1.2",
+            label: "Đánh giá",
           },
         ],
       },
       {
-        id: '2.2',
-        label: 'Đào tạo',
+        id: "2.2",
+        label: "Đào tạo",
         children: [
           {
-            id: '2.2.1',
-            label: 'Nhân viên mới',
+            id: "2.2.1",
+            label: "Nhân viên mới",
           },
           {
-            id: '2.2.2',
-            label: 'Phát triển kỹ năng',
+            id: "2.2.2",
+            label: "Phát triển kỹ năng",
           },
         ],
       },
@@ -172,19 +177,20 @@ interface SimpleItem {
   label: string;
 }
 
-export default function KanbanDemo() {
+export function KanbanDemo() {
   const [count, setCount] = useState(0);
   useEffect(() => {
     setTimeout(() => setCount(count + 1), 1000);
   }, [count]);
   const [data, setData] = useState<Column[]>(initialData);
   const [items, setItems] = useState<SimpleItem[]>([
-    { id: '1', label: 'Item 1' },
-    { id: '2', label: 'Item 2' },
-    { id: '3', label: 'Item 3' },
+    { id: "1", label: "Item 1" },
+    { id: "2", label: "Item 2" },
+    { id: "3", label: "Item 3" },
   ]);
   const [treeItems, setTreeItems] = useState<TreeItem[]>(treeData);
-  const [nestedArrayItems, setNestedArrayItems] = useState<(Task | Task[])[]>(nestedArrayData);
+  const [nestedArrayItems, setNestedArrayItems] =
+    useState<(Task | Task[])[]>(nestedArrayData);
   const kanbanBoardRef = useRef<IDndSortableRef<Column, Task>>(null);
 
   const handleSort = (newData: Column[]) => {
@@ -203,10 +209,10 @@ export default function KanbanDemo() {
         <DndSortable<Task | Task[], Task>
           data={nestedArrayItems}
           dataConfig={{
-            idItemProp: 'id',
-            type: 'nested-array',
-            direction: 'vertical',
-            itemDirection: 'horizontal',
+            idItemProp: "id",
+            type: "nested-array",
+            direction: "vertical",
+            itemDirection: "horizontal",
             childDnDContextProps: {
               modifiers: [restrictToHorizontalAxis, restrictToParentElement],
             },
@@ -216,11 +222,15 @@ export default function KanbanDemo() {
           }}
           className="flex flex-col gap-2"
           renderConfig={{
-            className: 'flex flex-row gap-2 items-center',
+            className: "flex flex-row gap-2 items-center",
             renderItem: ({ item, onAddChild }) => (
               <>
                 <DndSortableDragButton />
-                {item?.items ? null : <span className="font-medium">{(item?.original as Task).title}</span>}
+                {item?.items ? null : (
+                  <span className="font-medium">
+                    {(item?.original as Task).title}
+                  </span>
+                )}
                 <Button
                   variant="ghost"
                   size="icon"
@@ -240,7 +250,11 @@ export default function KanbanDemo() {
             renderChildItem: ({ item }) => (
               <div className="group/field flex items-center justify-between rounded-lg shadow-xs">
                 <div className="flex items-center gap-2">
-                  <input type="checkbox" checked={item.original.completed} readOnly />
+                  <input
+                    type="checkbox"
+                    checked={item.original.completed}
+                    readOnly
+                  />
                   <span>{item.original.title}</span>
                 </div>
                 <DndSortableDragButtonChildItem className="opacity-0" />
@@ -259,30 +273,46 @@ export default function KanbanDemo() {
         <DndSortable<TreeItem, unknown>
           data={treeItems}
           dataConfig={{
-            idProp: 'id',
-            childrenProp: 'children',
-            type: 'tree',
+            idProp: "id",
+            childrenProp: "children",
+            type: "tree",
             indent: 24,
-            direction: 'vertical',
+            direction: "vertical",
           }}
           className="flex flex-col gap-4"
           renderConfig={{
-            renderItem: ({ item, descendants, dragOverlay, onAddChild, onRemoveItem, onUpdateItem }) => {
+            renderItem: ({
+              item,
+              descendants,
+              dragOverlay,
+              onAddChild,
+              onRemoveItem,
+              onUpdateItem,
+            }) => {
               return (
-                <div className={cn('w-full gap-2 bg-background p-2', dragOverlay && 'bg-background shadow-sm')}>
+                <div
+                  className={cn(
+                    "w-full gap-2 bg-background p-2",
+                    dragOverlay && "bg-background shadow-sm"
+                  )}
+                >
                   <DndSortableDragButton className="group-hover/field:opacity-100" />
                   <DndSortableCollapseButton />
                   <span>{item?.original.label}</span>
                   {(descendants?.length ?? 0) > 0 && item.collapsed ? (
                     <Badge variant="outline">{descendants?.length}</Badge>
                   ) : null}
-                  <Button variant="ghost" size="icon" onClick={() => onUpdateItem?.('new label', 'label', item)}>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => onUpdateItem?.("new label", "label", item)}
+                  >
                     <PencilIcon className="h-4 w-4" />
                   </Button>
                   <DeleteButton
                     title="Delete item"
                     description="Are you sure you want to delete this item?"
-                    onDelete={async onClose => {
+                    onDelete={async (onClose) => {
                       await onRemoveItem?.();
                       onClose?.();
                     }}
@@ -315,9 +345,9 @@ export default function KanbanDemo() {
           <DndSortable<SimpleItem, unknown>
             data={items}
             dataConfig={{
-              idProp: 'id',
-              type: 'array',
-              direction: 'vertical',
+              idProp: "id",
+              type: "array",
+              direction: "vertical",
             }}
             className="flex flex-col gap-4"
             renderConfig={{
@@ -329,7 +359,9 @@ export default function KanbanDemo() {
                       <span>{item?.original.label}</span>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent>Yes. It adheres to the WAI-ARIA design pattern.</AccordionContent>
+                  <AccordionContent>
+                    Yes. It adheres to the WAI-ARIA design pattern.
+                  </AccordionContent>
                 </AccordionItem>
               ),
             }}
@@ -342,8 +374,8 @@ export default function KanbanDemo() {
         <Button
           onClick={() =>
             kanbanBoardRef.current?.addItem({
-              id: '1',
-              title: 'New item',
+              id: "1",
+              title: "New item",
               completed: false,
             })
           }
@@ -355,15 +387,16 @@ export default function KanbanDemo() {
           data={data}
           ref={kanbanBoardRef}
           dataConfig={{
-            idProp: 'id',
-            childrenProp: 'tasks',
-            idItemProp: 'id',
-            type: 'multiple-container',
-            direction: 'horizontal',
-            itemDirection: 'vertical',
+            idProp: "id",
+            childrenProp: "tasks",
+            idItemProp: "id",
+            type: "multiple-container",
+            direction: "horizontal",
+            itemDirection: "vertical",
           }}
           renderConfig={{
-            className: 'bg-neutral-100 p-4 rounded-lg min-w-[300px] min-h-[400px]',
+            className:
+              "bg-neutral-100 p-4 rounded-lg min-w-[300px] min-h-[400px]",
             renderItem: ({ item, onAddChild, onRemoveItem }) => (
               <div className="mb-4 flex items-center justify-between">
                 <h2 className="font-semibold">{item?.original.title}</h2>
@@ -383,7 +416,7 @@ export default function KanbanDemo() {
                 <DeleteButton
                   title="Delete item"
                   description="Are you sure you want to delete this item?"
-                  onDelete={async onClose => {
+                  onDelete={async (onClose) => {
                     await onRemoveItem?.();
                     onClose?.();
                   }}
@@ -400,7 +433,7 @@ export default function KanbanDemo() {
                 <DeleteButton
                   title="Delete item"
                   description="Are you sure you want to delete this item?"
-                  onDelete={async onClose => {
+                  onDelete={async (onClose) => {
                     await onRemoveItem?.();
                     onClose?.();
                   }}

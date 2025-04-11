@@ -1,3 +1,3 @@
-export default function PagesSettingsPage() {
+export function PagesSettingsPage() {
   return <div>PagesSettingsPage</div>;
 }

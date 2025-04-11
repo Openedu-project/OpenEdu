@@ -1,20 +1,20 @@
-import { useGetCourseById } from '@oe/api/hooks/useCourse';
-import { courseNameSchema } from '@oe/api/schemas/courses/createCourseSchema';
-import type { ICourseNameSchema } from '@oe/api/schemas/courses/createCourseSchema';
-import { updateCourseService } from '@oe/api/services/course';
-import type { ICourse } from '@oe/api/types/course/course';
-import { DashboardHeaderCard } from '@oe/ui/common/layout';
-import { FormWrapper } from '@oe/ui/components/form-wrapper';
-import { Button } from '@oe/ui/shadcn/button';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
+import { updateCourseService } from '@oe/api';
+import type { ICourse } from '@oe/api';
+import { useGetCourseById } from '@oe/api';
+import { courseNameSchema } from '@oe/api';
+import type { ICourseNameSchema } from '@oe/api';
+import { DashboardHeaderCard } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { FormWrapper } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
+import { Input } from '@oe/ui';
 import { Check, PencilLine } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import { COURSE_DETAIL_FORM_IDS } from '../_utils/constants';
 
-export default function CourseNameForm() {
+export function CourseNameForm() {
   const tCourse = useTranslations('course');
   const { courseId } = useParams<{ courseId: string }>();
   const { course, mutateCourse } = useGetCourseById(courseId);

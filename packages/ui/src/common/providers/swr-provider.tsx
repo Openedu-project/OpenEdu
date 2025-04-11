@@ -4,15 +4,15 @@ import { useTranslations } from 'next-intl';
 import { SWRConfig, type SWRConfiguration } from 'swr';
 import { toast } from '#shadcn/sonner';
 
-import type { HTTPError } from '@oe/api/utils/http-error';
-import { registerCustomZodErrorMap } from '@oe/api/utils/zod';
+import type { HTTPError } from '@oe/api';
+import { registerCustomZodErrorMap } from '@oe/api';
 import { type ReactNode, useEffect } from 'react';
 
 interface Props extends SWRConfiguration {
   children: ReactNode;
 }
 
-export default function SWRProvider({ children, ...rest }: Props) {
+export function SWRProvider({ children, ...rest }: Props) {
   const t = useTranslations('errors');
   const tForms = useTranslations('formValidation');
 

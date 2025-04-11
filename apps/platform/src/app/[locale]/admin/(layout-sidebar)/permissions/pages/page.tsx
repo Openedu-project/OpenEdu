@@ -1,4 +1,4 @@
-import PageSettings from '@oe/dashboard/admin/permissions/pages/page';
+import { PageSettings } from "@oe/dashboard";
 
 export default function PageSettingsPage() {
   return <PageSettings />;

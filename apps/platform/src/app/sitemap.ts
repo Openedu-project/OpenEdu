@@ -1,7 +1,7 @@
-import { getI18nConfigServer } from '@oe/api/services/i18n';
-import { organizationsService } from '@oe/api/services/organizations';
-import { SITEMAP_ROUTES } from '@oe/core/utils/routes';
-import { DEFAULT_LOCALES } from '@oe/i18n/constants';
+import { getI18nConfigServer } from '@oe/api';
+import { organizationsService } from '@oe/api';
+import { SITEMAP_ROUTES } from '@oe/core';
+import { DEFAULT_LOCALES } from '@oe/i18n';
 import type { MetadataRoute } from 'next';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

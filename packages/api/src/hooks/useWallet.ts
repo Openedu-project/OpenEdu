@@ -1,6 +1,5 @@
 // TODO: Optimize
-import { DEFAULT_CURRENCY, formatCurrency } from '@oe/core/utils/currency';
-import { buildUrl } from '@oe/core/utils/url';
+import { DEFAULT_CURRENCY, buildUrl, formatCurrency } from '@oe/core';
 import { useMemo } from 'react';
 import useSWR from 'swr';
 import { useExchangeRates } from '#hooks/useExchangeRates';

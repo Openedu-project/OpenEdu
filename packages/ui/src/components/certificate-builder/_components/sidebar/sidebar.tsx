@@ -1,3 +1,4 @@
+'use client';
 import { Frame, Layers, Settings } from 'lucide-react';
 import { Button } from '#shadcn/button';
 

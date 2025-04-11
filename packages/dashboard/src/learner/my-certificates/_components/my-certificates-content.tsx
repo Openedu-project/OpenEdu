@@ -1,24 +1,20 @@
 'use client';
 
-import { useGetCertById, useGetCertByUserId } from '@oe/api/hooks/useCertificate';
-import type { ICertificateDetail, ICertificateUser } from '@oe/api/types/certificate';
-import type { IUser } from '@oe/api/types/user';
-import { CertificateCard } from '@oe/ui/components/certificate';
-import { NoDataAvailable } from '@oe/ui/components/no-data-available';
-import { PaginationCustom } from '@oe/ui/components/pagination-custom';
-import { Spinner } from '@oe/ui/components/spinner';
+import type { ICertificateDetail, ICertificateUser } from '@oe/api';
+import type { IUser } from '@oe/api';
+import { useGetCertById, useGetCertByUserId } from '@oe/api';
+import { CertificateCard } from '@oe/ui';
+import { NoDataAvailable } from '@oe/ui';
+import { PaginationCustom } from '@oe/ui';
+import { Spinner } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
-import MintCertButton from './mint-cert-button';
-import MintCertModal from './mint-cert-modal';
-import MyCertDetail from './my-cert-detail';
+import { MintCertButton } from './mint-cert-button';
+import { MintCertModal } from './mint-cert-modal';
+import { MyCertDetail } from './my-cert-detail';
 
-export default function MyCertificatesContent({
-  meData,
-}: {
-  meData?: IUser | null;
-}) {
+export function MyCertificatesContent({ meData }: { meData?: IUser | null }) {
   const t = useTranslations('myLearningSpace.myCertificates');
 
   const searchParams = useSearchParams();

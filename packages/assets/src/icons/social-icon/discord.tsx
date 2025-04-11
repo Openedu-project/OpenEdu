@@ -1,6 +1,6 @@
 import type { ISvgProps } from '../types';
 
-export default function Discord({ width = 24, height = 24, className = '', color = '#5865F2' }: ISvgProps) {
+export function Discord({ width = 24, height = 24, className = '', color = '#5865F2' }: ISvgProps) {
   return (
     <svg
       className={className}

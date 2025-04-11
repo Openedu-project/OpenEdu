@@ -1,3 +1,3 @@
-import DescriptionCard from './description-card';
+import { DescriptionCard } from './description-card';
 
 export { DescriptionCard };

@@ -1,5 +1,5 @@
-import { Image } from '@oe/ui/components/image';
-import type { FileType } from '@oe/ui/components/uploader';
+import type { FileType } from '@oe/ui';
+import { Image } from '@oe/ui';
 interface CreatorCardProps {
   name: string;
   role: string;

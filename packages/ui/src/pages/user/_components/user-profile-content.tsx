@@ -1,25 +1,25 @@
 'use client';
-import { useGetMe } from '@oe/api/hooks/useMe';
-import { useFollowUser, useGetUserProfile, useUnfollowUser } from '@oe/api/hooks/useUserProfile';
-import type { IUserProfile } from '@oe/api/types/user-profile';
+import { useGetMe } from '@oe/api';
+import type { IUserProfile } from '@oe/api';
+import { useFollowUser, useGetUserProfile, useUnfollowUser } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import { BLOG_ROUTES } from '@oe/core/utils/routes';
+import { createAPIUrl } from '@oe/api';
+import { BLOG_ROUTES } from '@oe/core';
 import { CertificateCard } from '#components/certificate';
 import { useLoginRequiredStore } from '#components/login-required-modal';
 import { NoDataAvailable } from '#components/no-data-available';
 import { Spinner } from '#components/spinner';
 import { useUserRoleStore } from '../_store/userProfileStore';
-import AboutMe from './about-me';
-import BlogCardProfile from './blog-profile';
-import CourseProfile from './course-profile';
-import UserBio from './user-bio';
-import Section from './user-section';
+import { AboutMe } from './about-me';
+import { BlogCardProfile } from './blog-profile';
+import { CourseProfile } from './course-profile';
+import { UserBio } from './user-bio';
+import { Section } from './user-section';
 
-export default function UserProfileContent() {
+export function UserProfileContent() {
   const tProfile = useTranslations('userProfile.profile');
 
   const { user } = useParams();

@@ -1,7 +1,7 @@
-import { Image } from '@oe/ui/components/image';
-import type { FileType } from '@oe/ui/components/uploader';
-import { Card } from '@oe/ui/shadcn/card';
-import { cn } from '@oe/ui/utils/cn';
+import type { FileType } from '@oe/ui';
+import { Image } from '@oe/ui';
+import { Card } from '@oe/ui';
+import { cn } from '@oe/ui';
 
 interface FeatureCardProps {
   image?: FileType;
@@ -27,4 +27,3 @@ const FeatureCard = ({ image, textImg, description, className }: FeatureCardProp
 };
 
 export { FeatureCard, type FeatureCardProps };
-export default FeatureCard;

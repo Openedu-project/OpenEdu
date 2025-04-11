@@ -1,10 +1,10 @@
 'use client';
 
-import type { SocialProvider } from '@oe/api/types/auth';
-import { GoogleIcon } from '@oe/assets/icons/google-icon';
-import { getCookie } from '@oe/core/utils/cookie';
-import { isWebview } from '@oe/core/utils/isWebview';
-import { AUTH_ROUTES } from '@oe/core/utils/routes';
+import type { SocialProvider } from '@oe/api';
+import { GoogleIcon } from '@oe/assets';
+import { getCookie } from '@oe/core';
+import { isWebview } from '@oe/core';
+import { AUTH_ROUTES } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';

@@ -1,4 +1,4 @@
-import CourseDetailFormPage from "@oe/dashboard/creator/courses/course-detail/form/page";
+import { CourseDetailFormPage } from "@oe/dashboard";
 
 export default function CourseDetailTriggerFormPage() {
   return <CourseDetailFormPage />;

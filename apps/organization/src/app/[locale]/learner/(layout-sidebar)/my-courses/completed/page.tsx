@@ -1,4 +1,4 @@
-import CompletedCoursePage from '@oe/dashboard/learner/my-courses/completed/page';
+import { CompletedCoursePage } from "@oe/dashboard";
 
 export default function MyCoursesPage() {
   return <CompletedCoursePage />;

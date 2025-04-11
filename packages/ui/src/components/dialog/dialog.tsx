@@ -19,7 +19,7 @@ export interface IDialogProps {
   setOpen: (open: boolean) => void;
 }
 
-export function Dialog({ title, description, open, className, icon, setOpen, renderActions }: IDialogProps) {
+export function BaseDialog({ title, description, open, className, icon, setOpen, renderActions }: IDialogProps) {
   return (
     <DialogShadcn open={open} onOpenChange={setOpen}>
       <DialogContent className={cn('flex min-w-sm flex-col items-center justify-center gap-4', className)}>

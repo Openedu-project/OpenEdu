@@ -1,6 +1,6 @@
-import { Image } from '@oe/ui/components/image';
-import type { FileType } from '@oe/ui/components/uploader';
-import { cn } from '@oe/ui/utils/cn';
+import type { FileType } from '@oe/ui';
+import { Image } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import type { SectionComponent } from '../../_types/theme-page';
 
@@ -37,4 +37,4 @@ const AcademiaHomepageOrganizations: SectionComponent<'homepage', 'organizations
   );
 };
 
-export default AcademiaHomepageOrganizations;
+export { AcademiaHomepageOrganizations };

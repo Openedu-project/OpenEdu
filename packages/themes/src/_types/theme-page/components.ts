@@ -1,5 +1,8 @@
 import type { ComponentType } from 'react';
-import type { BaseSectionProps, SectionPropsMap, SectionsByPage, ThemePageKey } from '.';
+import type { ThemePageKey } from './core';
+import type { BaseSectionProps } from './props';
+import type { SectionPropsMap } from './props';
+import type { SectionsByPage } from './sections';
 
 export type SectionProps<
   Page extends ThemePageKey,

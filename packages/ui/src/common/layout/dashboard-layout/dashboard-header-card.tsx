@@ -1,6 +1,6 @@
 'use client';
 
-import type { IProtectedRoutes } from '@oe/core/utils/routes';
+import type { IProtectedRoutes } from '@oe/core';
 import type { Dispatch, ReactNode, SetStateAction } from 'react';
 import { Breadcrumb } from '#components/breadcrumb';
 import type { IBreadcrumbItem } from '#components/breadcrumb';

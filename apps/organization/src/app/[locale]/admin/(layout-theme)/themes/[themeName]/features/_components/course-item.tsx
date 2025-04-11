@@ -1,8 +1,8 @@
-import type { ICourse } from "@oe/api/types/course/course";
-import { CourseCard } from "@oe/ui/components/course-card";
-import { DndSortableDragButton } from "@oe/ui/components/dnd-sortable";
+import type { ICourse } from "@oe/api";
+import { CourseCard } from "@oe/ui";
+import { DndSortableDragButton } from "@oe/ui";
 
-import { Checkbox } from "@oe/ui/shadcn/checkbox";
+import { Checkbox } from "@oe/ui";
 
 const CourseItem = ({
   course,

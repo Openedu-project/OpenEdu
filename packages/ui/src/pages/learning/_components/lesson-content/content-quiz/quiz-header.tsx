@@ -1,8 +1,8 @@
 'use client';
 
-import type { TimeLimitType } from '@oe/api/types/course/quiz';
-import Clock from '@oe/assets/icons/clock';
-import { calculateRemainingTime, convertSecondsToTimeString } from '@oe/core/utils/datetime';
+import type { TimeLimitType } from '@oe/api';
+import { Clock } from '@oe/assets';
+import { calculateRemainingTime, convertSecondsToTimeString } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -92,4 +92,4 @@ const QuizHeader = ({
   );
 };
 
-export default QuizHeader;
+export { QuizHeader };

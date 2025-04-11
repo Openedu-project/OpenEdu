@@ -1,4 +1,4 @@
-import { getCookie } from '@oe/core/utils/cookie';
+import { getCookie } from '@oe/core';
 import type { HTTPResponse } from '../types/fetch';
 import type { IFileResponse } from '../types/file';
 import { API_ENDPOINT } from './endpoints';

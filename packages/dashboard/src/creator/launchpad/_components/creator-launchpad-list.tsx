@@ -1,13 +1,13 @@
 'use client';
-import { useGetAdminLaunchpads } from '@oe/api/hooks/useAdminLaunchpad';
-import { useGetMe } from '@oe/api/hooks/useMe';
-import { formatDate } from '@oe/core/utils/datetime';
-import { PaginationCustom } from '@oe/ui/components/pagination-custom';
-import { Spinner } from '@oe/ui/components/spinner';
+import { useGetMe } from '@oe/api';
+import { useGetAdminLaunchpads } from '@oe/api';
+import { formatDate } from '@oe/core';
+import { PaginationCustom } from '@oe/ui';
+import { Spinner } from '@oe/ui';
 import { useCallback, useState } from 'react';
 import { CreatorLaunchpadCard } from './creator-launchpad-card';
 
-export default function CreatorLaunchpadList({ status }: { status: string }) {
+export function CreatorLaunchpadList({ status }: { status: string }) {
   const [page, setPage] = useState<number>(1);
   const { dataMe: me } = useGetMe();
   const { dataAdminLaunchpads, isLoadingAdminLaunchpads } = useGetAdminLaunchpads(me?.id ?? '', {

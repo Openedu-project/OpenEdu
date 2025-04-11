@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function DocumentUploadIcon({ className = '', width = 24, height = 24, color = 'white' }: ISvgProps) {
+export function DocumentUploadIcon({ className = '', width = 24, height = 24, color = 'white' }: ISvgProps) {
   return (
     <svg
       className={className}

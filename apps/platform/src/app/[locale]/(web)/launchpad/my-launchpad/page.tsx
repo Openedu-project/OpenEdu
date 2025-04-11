@@ -1,4 +1,4 @@
-import MyLaunchpadList from '@oe/ui/pages/launchpad/my-launchpad';
+import { MyLaunchpadList } from "@oe/ui";
 
 export default function MyLaunchpadPage({
   searchParams,

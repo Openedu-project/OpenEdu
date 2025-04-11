@@ -1,4 +1,4 @@
-import type { ICourseOutline } from '@oe/api/types/course/course';
+import type { ICourseOutline } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { OutlineLesson } from '#components/outline-lesson';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '#shadcn/accordion';
@@ -53,4 +53,4 @@ const CourseContent = ({
   ) : null;
 };
 
-export default CourseContent;
+export { CourseContent };

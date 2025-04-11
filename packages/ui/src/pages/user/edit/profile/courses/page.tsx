@@ -1,7 +1,7 @@
-import ProfileHeader from '../_component/profile-header';
-import MyCourseSettings from './_components/my-courses-setting';
+import { ProfileHeader } from '../_component/profile-header';
+import { MyCourseSettings } from './_components/my-courses-setting';
 
-export default function EditCourses() {
+export function EditCourses() {
   return (
     <div className="mx-auto mb-20 max-w-[1080px]">
       <ProfileHeader />

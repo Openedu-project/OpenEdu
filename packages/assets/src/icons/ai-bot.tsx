@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function AIBot({ width = 170, height = 169, className = '' }: ISvgProps) {
+export function AIBot({ width = 170, height = 169, className = '' }: ISvgProps) {
   return (
     <svg
       width={width}

@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function NotStarted({ width = 32, height = 32, className = '', color = '#838383' }: ISvgProps) {
+export function NotStarted({ width = 32, height = 32, className = '', color = '#838383' }: ISvgProps) {
   return (
     <svg
       className={className}

@@ -44,4 +44,4 @@ const TransformWrapper = ({ children }: TransformWrapperProps) => {
   );
 };
 
-export default TransformWrapper;
+export { TransformWrapper };

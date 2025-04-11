@@ -1,21 +1,21 @@
 'use client';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
+import { FormFieldWithLabel } from '#shadcn/form';
+import { Input } from '#shadcn/input';
 
-import { type LoginSchemaType, loginSchema } from '@oe/api/schemas/authSchema';
-import { loginService } from '@oe/api/services/auth';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import type { HTTPError } from '@oe/api/utils/http-error';
-import { AUTH_ROUTES, PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import { InputPassword } from '@oe/ui/components/input-password';
+import { API_ENDPOINT } from '@oe/api';
+import type { HTTPError } from '@oe/api';
+import { loginService } from '@oe/api';
+import { type LoginSchemaType, loginSchema } from '@oe/api';
+import { AUTH_ROUTES, PLATFORM_ROUTES } from '@oe/core';
 import { Mail } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
 import { mutate } from 'swr';
 import { Link } from '#common/navigation';
 import { FormWrapper } from '#components/form-wrapper';
+import { InputPassword } from '#components/input-password';
 import { Alert, AlertDescription } from '#shadcn/alert';
 import { Button } from '#shadcn/button';
 

@@ -1,5 +1,5 @@
-import type { IFormQuestion, IFormResponse } from '@oe/api/types/form';
-import type { z } from '@oe/api/utils/zod';
+import type { IFormQuestion, IFormResponse } from '@oe/api';
+import type { z } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { type MouseEvent, Suspense, useState } from 'react';
 import { toast } from 'sonner';

@@ -1,11 +1,6 @@
-import type {
-  ILessonLearningProgress,
-  ILessonProgress,
-  ISectionLearningProgress,
-  ISectionProgress,
-} from '@oe/api/types/course/learning-progress';
-import type { ILesson, ISection } from '@oe/api/types/course/segment';
-import type { IAnswerItemSet } from '@oe/api/types/quiz';
+import type { ILesson, ISection } from '@oe/api';
+import type { ILessonLearningProgress, ILessonProgress, ISectionLearningProgress, ISectionProgress } from '@oe/api';
+import type { IAnswerItemSet } from '@oe/api';
 import type { TAnswerInput } from '../_components/lesson-content/_types/types';
 
 export const transformAnswers = (input: TAnswerInput): IAnswerItemSet[][] => {

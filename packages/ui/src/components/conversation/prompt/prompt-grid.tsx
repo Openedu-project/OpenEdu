@@ -1,14 +1,14 @@
 'use client';
-import { useGetPromps } from '@oe/api/hooks/useConversation';
-import type { IPrompt, TAgentType } from '@oe/api/types/conversation';
+import type { IPrompt, TAgentType } from '@oe/api';
+import { useGetPromps } from '@oe/api';
 import { LoaderCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { type ElementType, useEffect, useState } from 'react';
 import { Button } from '#shadcn/button';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { ExpandPromptCard } from './prompt-card';
-import { PromptPopup } from './prompt-popup';
+// import { PromptPopup } from './prompt-popup';
 
 export const PromptGrid = ({
   categoryId,
@@ -17,6 +17,7 @@ export const PromptGrid = ({
   litmited,
   name,
   className,
+  PromptPopup,
 }: {
   name?: string;
   categoryId?: string;
@@ -24,6 +25,7 @@ export const PromptGrid = ({
   perPage?: number;
   litmited?: number;
   className?: string;
+  PromptPopup?: ElementType;
 }) => {
   const tGeneral = useTranslations('general');
   const [promptData, setPromptData] = useState<IPrompt[]>([]);
@@ -107,9 +109,8 @@ export const PromptGrid = ({
             {tGeneral('viewMore')}
           </Button>
         ) : (
-          prompts.pagination?.page < prompts.pagination?.total_pages && (
-            <PromptPopup categoryId={categoryId} name={name} agent={agent} />
-          )
+          prompts.pagination?.page < prompts.pagination?.total_pages &&
+          PromptPopup && <PromptPopup categoryId={categoryId} name={name} agent={agent} />
         )}
       </div>
     </div>

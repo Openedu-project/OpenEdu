@@ -1,6 +1,6 @@
 'use client';
 
-import { buildQueryParam } from '@oe/core/utils/url';
+import { buildQueryParam } from '@oe/core';
 import { MoveRight, Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
@@ -9,7 +9,7 @@ import { usePathname, useRouter } from '#common/navigation';
 import { Button } from '#shadcn/button';
 import { Input } from '#shadcn/input';
 
-export default function CourseListSearch({
+export function CourseListSearch({
   searchValue = '',
 }: {
   searchValue: string;

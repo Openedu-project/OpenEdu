@@ -1,4 +1,4 @@
-import type { IUser } from '@oe/api/types/user';
+import type { IUser } from '@oe/api';
 import DefaultImg from '@oe/assets/images/defaultimage.png';
 import { Image } from '#components/image';
 
@@ -32,4 +32,4 @@ const CreatorCard = ({ educator }: { educator: IUser | undefined }) => {
   );
 };
 
-export default CreatorCard;
+export { CreatorCard };
