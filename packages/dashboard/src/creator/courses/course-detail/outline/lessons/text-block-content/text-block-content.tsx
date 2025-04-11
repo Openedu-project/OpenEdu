@@ -1,3 +1,4 @@
+'use client';
 import { AccordionQuiz } from '../quiz-editor';
 
 import type { IQuizItemResponse } from '@oe/api';

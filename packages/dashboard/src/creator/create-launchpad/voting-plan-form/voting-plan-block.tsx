@@ -1,3 +1,4 @@
+'use client';
 import { type IVotingPlanLaunchpadSchemaType, votingPlanLaunchpadSchema } from '@oe/api';
 import { useGetLaunchpadVotingPhaseRule } from '@oe/api';
 import { CREATE_LAUNCHPAD_FORM_ID } from '@oe/core';

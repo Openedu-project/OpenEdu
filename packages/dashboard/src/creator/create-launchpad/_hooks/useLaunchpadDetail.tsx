@@ -1,3 +1,4 @@
+'use client';
 import type { ILaunchpad } from '@oe/api';
 import { usePatchLaunchpadDetail } from '@oe/api';
 import { useGetAdminLaunchpadDetail } from '@oe/api';

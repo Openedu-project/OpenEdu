@@ -1,3 +1,4 @@
+'use client';
 import type { IFileResponse } from '@oe/api';
 import { CREATE_LAUNCHPAD_MODAL_ID } from '@oe/core';
 import { Uploader } from '@oe/ui';

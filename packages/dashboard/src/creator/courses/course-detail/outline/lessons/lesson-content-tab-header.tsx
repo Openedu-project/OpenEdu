@@ -1,3 +1,4 @@
+'use client';
 import type { TLessonContent } from '@oe/api';
 import type { ILesson } from '@oe/api';
 import { Button } from '@oe/ui';

@@ -1,3 +1,4 @@
+'use client';
 import type { ILaunchpad } from '@oe/api';
 import { InputNumber } from '@oe/ui';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';

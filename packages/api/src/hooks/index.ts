@@ -1,3 +1,4 @@
+'use client';
 export * from './useAdminLaunchpad';
 export * from './useAffiliateCampaign';
 export * from './useApprovals';

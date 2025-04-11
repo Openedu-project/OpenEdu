@@ -1,3 +1,4 @@
+'use client';
 import type { IQuizItemResponse } from '@oe/api';
 import { DeleteButton } from '@oe/ui';
 import { DndSortable, DndSortableDragButton, type IDndSortableRef } from '@oe/ui';

@@ -1,3 +1,4 @@
+'use client';
 import { useGetSegmentById, useGetSegments } from '@oe/api';
 import type { ILesson } from '@oe/api';
 import { useParams } from 'next/navigation';

@@ -1,3 +1,4 @@
+'use client';
 import type { IFileResponse } from '@oe/api';
 import { Uploader } from '@oe/ui';
 import { Button } from '@oe/ui';

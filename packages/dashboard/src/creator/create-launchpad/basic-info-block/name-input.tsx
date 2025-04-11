@@ -1,3 +1,4 @@
+'use client';
 import type { HTTPErrorMetadata } from '@oe/api';
 import type { ICreateLaunchpadRequest, ILaunchpad } from '@oe/api';
 import { usePatchLaunchpadDetail } from '@oe/api';
