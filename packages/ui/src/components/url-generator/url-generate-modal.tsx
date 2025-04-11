@@ -1,7 +1,7 @@
 'use client';
-import { postBlogAI } from '@oe/api/services/blog';
-import { MagicStar } from '@oe/assets/icons/magic-star';
-import { CHARACTERS_REGEX } from '@oe/core/utils/helpers';
+import { postBlogAI } from '@oe/api';
+import { MagicStar } from '@oe/assets';
+import { CHARACTERS_REGEX } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Modal } from '#components/modal';

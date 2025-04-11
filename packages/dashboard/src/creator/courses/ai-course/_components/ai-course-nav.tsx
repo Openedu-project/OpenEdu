@@ -1,13 +1,13 @@
 'use client';
 
-import { useGetCourseById } from '@oe/api/hooks/useCourse';
-import { CREATOR_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
-import { Link, usePathname } from '@oe/ui/common/navigation';
-import { NavigationMenu, NavigationMenuList } from '@oe/ui/shadcn/navigation-menu';
-import { ScrollArea, ScrollBar } from '@oe/ui/shadcn/scroll-area';
-import { useSocketStore } from '@oe/ui/store/socket';
-import { cn } from '@oe/ui/utils/cn';
+import { useGetCourseById } from '@oe/api';
+import { CREATOR_ROUTES } from '@oe/core';
+import { buildUrl } from '@oe/core';
+import { Link, usePathname } from '@oe/ui';
+import { NavigationMenu, NavigationMenuList } from '@oe/ui';
+import { ScrollArea, ScrollBar } from '@oe/ui';
+import { useSocketStore } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';

@@ -15,4 +15,4 @@ const Rewrite = ({
   </Button>
 );
 
-export default Rewrite;
+export { Rewrite };

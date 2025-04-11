@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function Mail({ className, color, width, height }: ISvgProps) {
+export function Mail({ className, color, width, height }: ISvgProps) {
   return (
     <svg
       width={width ?? '24'}

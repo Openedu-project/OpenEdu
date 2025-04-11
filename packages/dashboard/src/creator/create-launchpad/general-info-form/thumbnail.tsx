@@ -1,9 +1,10 @@
-import type { IFileResponse } from '@oe/api/types/file';
-import { Image } from '@oe/ui/components/image';
-import { Uploader } from '@oe/ui/components/uploader';
-import { Button } from '@oe/ui/shadcn/button';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
+import type { IFileResponse } from '@oe/api';
+import { Uploader } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { Image } from '@oe/ui';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';
 import { Trash2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import {
   type FieldPath,
   type FieldValues,
@@ -12,7 +13,6 @@ import {
   type UseFormReturn,
   useWatch,
 } from 'react-hook-form';
-import { useTranslations } from 'use-intl';
 
 type ThumbnailProps<TFormValues extends FieldValues> = {
   form: UseFormReturn<TFormValues>;
@@ -98,4 +98,4 @@ const Thumbnail = <TFormValues extends FieldValues>({ form }: ThumbnailProps<TFo
   );
 };
 
-export default Thumbnail;
+export { Thumbnail };

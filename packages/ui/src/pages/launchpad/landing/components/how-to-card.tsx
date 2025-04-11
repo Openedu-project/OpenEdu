@@ -20,4 +20,4 @@ const HowToCard = ({ data }: { data: THowToGetMoney }) => {
   );
 };
 
-export default HowToCard;
+export { HowToCard };

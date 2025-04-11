@@ -1,18 +1,17 @@
 'use client';
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import type { ILesson } from '@oe/api/types/course/segment';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import ArrowRight2 from '@oe/assets/icons/arrow-right-2';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import type { TFunction } from '@oe/i18n/types';
-import { Lock } from 'lucide-react';
+import type { ICourseOutline } from '@oe/api';
+import { createAPIUrl } from '@oe/api';
+import type { ILesson } from '@oe/api';
+import { PLATFORM_ROUTES } from '@oe/core';
+import type { TFunction } from '@oe/i18n';
+import { ArrowRight, Lock } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { type Ref, useState } from 'react';
 import { useRouter } from '#common/navigation';
 import { CircleProgressBar } from '#components/circle-progress-bar';
 import { Button } from '#shadcn/button';
 import { cn } from '#utils/cn';
-import PreviewLessonModal from './preview-lesson-modal';
+import { PreviewLessonModal } from './preview-lesson-modal';
 
 interface IOutlineLessonProps {
   index: number;
@@ -110,7 +109,7 @@ export const OutlineLesson = ({
             completedPercentage ? (
               <CircleProgressBar progress={completedPercentage} size="sm" />
             ) : (
-              <ArrowRight2 width={16} height={16} color="var(--foreground)" />
+              <ArrowRight width={16} height={16} color="var(--foreground)" />
             )
           ) : (
             <Lock size={16} />

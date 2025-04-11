@@ -1,8 +1,8 @@
 'use client';
 
-import type { ICourseOutline } from '@oe/api/types/course/course';
+import type { ICourseOutline } from '@oe/api';
 import { useCallback, useEffect, useRef } from 'react';
-import CourseSidebar from './course-sidebar';
+import { CourseSidebar } from './course-sidebar';
 
 interface Position {
   position: 'static' | 'fixed';
@@ -106,4 +106,4 @@ const StickyCourseSidebar = ({
   );
 };
 
-export default StickyCourseSidebar;
+export { StickyCourseSidebar };

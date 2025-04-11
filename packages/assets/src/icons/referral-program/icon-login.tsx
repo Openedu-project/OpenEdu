@@ -1,6 +1,6 @@
 import type { ISvgProps } from '../types';
 
-export default function IconLogin({ width = 40, height = 40, className = '', color = '#484AE7' }: ISvgProps) {
+export function IconLogin({ width = 40, height = 40, className = '', color = '#484AE7' }: ISvgProps) {
   return (
     <svg
       width={width}

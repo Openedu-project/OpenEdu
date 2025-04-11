@@ -1,6 +1,6 @@
-import type { CourseTriggerType, TFormTriggerConfirmationSettings } from '@oe/api/schemas/courseTrigger';
-import type { IFormResponse } from '@oe/api/types/form';
-import { create } from 'zustand';
+import type { IFormResponse } from '@oe/api';
+import type { CourseTriggerType, TFormTriggerConfirmationSettings } from '@oe/api';
+import { createStore } from '@oe/core';
 
 type LearnerFormTriggerStore = {
   activedTriggerId?: string;
@@ -16,7 +16,7 @@ type LearnerFormTriggerStore = {
   resetLearnerFormTrigger: () => void;
 };
 
-export const useLearnerFormTriggerStore = create<LearnerFormTriggerStore>(set => {
+export const useLearnerFormTriggerStore = createStore<LearnerFormTriggerStore>(set => {
   return {
     activedTriggerId: undefined,
     formData: undefined,
@@ -44,7 +44,7 @@ interface TriggerModalState {
   setOpenTriggerModal: (id: string, isOpen: boolean) => void;
 }
 
-export const useTriggerModalStore = create<TriggerModalState>(set => {
+export const useTriggerModalStore = createStore<TriggerModalState>(set => {
   return {
     modals: {},
     setOpenTriggerModal: (id: string, isOpen: boolean) =>

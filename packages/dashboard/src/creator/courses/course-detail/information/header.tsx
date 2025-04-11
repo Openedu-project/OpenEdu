@@ -1,8 +1,8 @@
-import { Button } from '@oe/ui/shadcn/button';
+import { Button } from '@oe/ui';
 import { CheckIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-export default function Header({ loading }: { loading: boolean }) {
+export function Header({ loading }: { loading: boolean }) {
   const tCourse = useTranslations('course');
   return (
     <div className="flex items-center justify-between rounded-lg bg-background p-4 shadow-xs">

@@ -1,10 +1,15 @@
-import type { ISvgProps } from './types';
+import type { ISvgProps } from "./types";
 
-export default function Direct({ className, color = '#484AE7', width, height }: ISvgProps) {
+export function Direct({
+  className,
+  color = "#484AE7",
+  width,
+  height,
+}: ISvgProps) {
   return (
     <svg
-      width={width ?? '16'}
-      height={height ?? '16'}
+      width={width ?? "16"}
+      height={height ?? "16"}
       className={className}
       viewBox="0 0 16 16"
       fill="none"

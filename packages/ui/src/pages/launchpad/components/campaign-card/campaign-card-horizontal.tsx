@@ -1,13 +1,13 @@
 'use client';
 
-import type { ILaunchpad } from '@oe/api/types/launchpad';
+import type { ILaunchpad } from '@oe/api';
 import DefaultImg from '@oe/assets/images/defaultimage.png';
-import { formatDate } from '@oe/core/utils/datetime';
+import { formatCurrency, formatDate } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '#common/navigation';
 import { Image } from '#components/image';
 import { Progress } from '#shadcn/progress';
-import { formatCurrency } from '#utils/format-currency';
+// import { formatCurrency } from '#utils/format-currency';
 import { calculateProgress, getTimeStatus } from '#utils/launchpad-utils';
 
 const CampainCardHorizontal = ({ campaign }: { campaign: ILaunchpad }) => {
@@ -59,7 +59,9 @@ const CampainCardHorizontal = ({ campaign }: { campaign: ILaunchpad }) => {
       <div className="flex items-center justify-between gap-2 text-base">
         <p>
           <span className="font-semibold text-base">
-            {formatCurrency(Number(campaign.total_amount))} {campaign.funding_goal.currency}
+            {formatCurrency(Number(campaign.total_amount), {
+              currency: campaign.funding_goal.currency,
+            })}
           </span>
           {t('common.funded')}
         </p>
@@ -69,4 +71,4 @@ const CampainCardHorizontal = ({ campaign }: { campaign: ILaunchpad }) => {
   );
 };
 
-export default CampainCardHorizontal;
+export { CampainCardHorizontal };

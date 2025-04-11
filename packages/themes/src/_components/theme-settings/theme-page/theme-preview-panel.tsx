@@ -1,8 +1,8 @@
-import { THEMES, THEMES_SERVER } from '@oe/themes';
-import { getThemeComponent } from '@oe/themes/utils/function';
-import { ScrollArea } from '@oe/ui/shadcn/scroll-area';
+import { ScrollArea } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { memo } from 'react';
+import { getThemeComponent } from '#utils/function';
+import { THEMES, THEMES_SERVER } from '../../../index';
 
 import type {
   PageSectionConfig,
@@ -11,7 +11,7 @@ import type {
   SectionsByPage,
   ThemeName,
   ThemePageKey,
-} from '@oe/themes/types';
+} from '#types';
 
 export interface PreviewPanelProps {
   themeName: ThemeName;

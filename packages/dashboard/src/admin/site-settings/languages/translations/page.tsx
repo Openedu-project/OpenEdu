@@ -1,5 +1,5 @@
-import Translations from '../_components/translations';
+import { Translations } from '../_components/translations';
 
-export default function TranslationsPage() {
+export function TranslationsPage() {
   return <Translations />;
 }

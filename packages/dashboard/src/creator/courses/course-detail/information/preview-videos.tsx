@@ -1,15 +1,15 @@
-// import type { ICoursePreviewVideo } from "@oe/api/types/course/basic";
-import type { ICoursePreviewVideo } from '@oe/api/types/course/basic';
-import type { IFileResponse } from '@oe/api/types/file';
-import { UploadTrigger, Uploader } from '@oe/ui/components/uploader';
-import { Button } from '@oe/ui/shadcn/button';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
+import type { IFileResponse } from '@oe/api';
+// import type { ICoursePreviewVideo } from "@oe/api";
+import type { ICoursePreviewVideo } from '@oe/api';
+import { UploadTrigger, Uploader } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
 import { UploadIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useFormContext, useWatch } from 'react-hook-form';
 // import { useWatch } from "react-hook-form";
 
-export default function PreviewVideos() {
+export function PreviewVideos() {
   const tCourse = useTranslations('course');
 
   const { setValue } = useFormContext();

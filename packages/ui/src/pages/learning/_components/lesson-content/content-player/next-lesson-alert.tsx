@@ -108,4 +108,4 @@ const NextLessonAlert = ({
   );
 };
 
-export default NextLessonAlert;
+export { NextLessonAlert };

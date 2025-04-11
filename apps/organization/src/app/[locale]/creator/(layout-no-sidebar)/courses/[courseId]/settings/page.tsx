@@ -1,4 +1,4 @@
-import CourseDetailInformationPage from '@oe/dashboard/creator/courses/course-detail/information/page';
+import { CourseDetailInformationPage } from "@oe/dashboard";
 
 export default function CourseSettingsPage() {
   return <CourseDetailInformationPage />;

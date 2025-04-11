@@ -1,7 +1,7 @@
-import { getBlogsPublishService } from '@oe/api/services/blog';
-import { getCategoriesTreeService } from '@oe/api/services/categories';
-import { getOrgByDomainService } from '@oe/api/services/organizations';
-import { getCookie } from '@oe/core/utils/cookie';
+import { getBlogsPublishService } from '@oe/api';
+import { getCategoriesTreeService } from '@oe/api';
+import { getOrgByDomainService } from '@oe/api';
+import { getCookie } from '@oe/core';
 import { BlogBanner } from './_components/blog-banner';
 import { BlogCateCarousel } from './_components/blog-cate-carousel';
 import { BlogHeader } from './_components/blog-header';
@@ -31,11 +31,7 @@ const getOtherOrgBlog = async (isOpenEdu?: boolean) => {
   }
 };
 
-export default async function BlogDefaultPage({
-  isOpenEdu,
-}: {
-  isOpenEdu?: boolean;
-}) {
+export async function BlogDefaultPage({ isOpenEdu }: { isOpenEdu?: boolean }) {
   const [blogsData, categories, orgBlogData] = await Promise.all([
     getBlogsPublishService(undefined, {
       params: {

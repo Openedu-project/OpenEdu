@@ -1,6 +1,6 @@
-import type { ILevel } from '@oe/api/types/categories';
-import SendSquare from '@oe/assets/icons/send-square';
-import { abbreviateNumber } from '@oe/core/utils/helpers';
+import type { ILevel } from '@oe/api';
+import { SendSquare } from '@oe/assets';
+import { abbreviateNumber } from '@oe/core';
 import { Layers, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -10,7 +10,7 @@ interface ICourseStats {
   mark_as_completed: boolean;
 }
 
-export default function CourseStats({ learner_count, levels, mark_as_completed }: ICourseStats) {
+export function CourseStats({ learner_count, levels, mark_as_completed }: ICourseStats) {
   const tCourse = useTranslations('courseOutline.courseStats');
 
   return (

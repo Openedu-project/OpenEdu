@@ -16,7 +16,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { useGetForm } from '@oe/api/hooks/useForms';
+import { useGetForm } from '@oe/api';
 import { useParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { FormWrapper } from '#components/form-wrapper';

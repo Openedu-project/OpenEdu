@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetNotification } from '@oe/api/hooks/useNotification';
+import { useGetNotification } from '@oe/api';
 import { Bell } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Button } from '#shadcn/button';

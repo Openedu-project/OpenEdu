@@ -1,7 +1,7 @@
 'use client';
 
-import { useGetCertTemplateById } from '@oe/api/hooks/useCertificate';
-import type { ICertificateElement, ICertificateTemplate } from '@oe/api/types/certificate';
+import type { ICertificateElement, ICertificateTemplate } from '@oe/api';
+import { useGetCertTemplateById } from '@oe/api';
 import { nanoid } from 'nanoid';
 import { useParams } from 'next/navigation';
 import { type ReactNode, createContext, useContext, useEffect, useState } from 'react';

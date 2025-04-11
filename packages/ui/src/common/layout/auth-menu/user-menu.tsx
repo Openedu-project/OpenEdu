@@ -1,9 +1,9 @@
-import { getOrgByDomainService } from '@oe/api/services/organizations';
-import type { IUser } from '@oe/api/types/user';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import ProfileCircle from '@oe/assets/icons/profile-circle';
-import { getCookie } from '@oe/core/utils/cookie';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { getOrgByDomainService } from '@oe/api';
+import { createAPIUrl } from '@oe/api';
+import type { IUser } from '@oe/api';
+import { ProfileCircle } from '@oe/assets';
+import { getCookie } from '@oe/core';
+import { PLATFORM_ROUTES } from '@oe/core';
 import { DropdownMenuSeparator } from '@radix-ui/react-dropdown-menu';
 import { ChevronDown } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';

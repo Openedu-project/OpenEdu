@@ -1,4 +1,4 @@
-export default function DocumentAttach({ width = 37, height = 36, className = '', color = '#6E6E6E' }) {
+export function DocumentAttach({ width = 37, height = 36, className = '', color = '#6E6E6E' }) {
   return (
     <svg
       className={className}

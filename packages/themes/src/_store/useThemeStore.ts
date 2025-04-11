@@ -1,5 +1,5 @@
 // import type { TThemeTypeConfig } from 'src/_types/header';
-// import type { AllPageSectionKeys, AllSidebarKeys, ThemeName, ThemePageKey } from '@oe/themes/types/theme-page';
+// import type { AllPageSectionKeys, AllSidebarKeys, ThemeName, ThemePageKey } from '#types/theme-page';
 // import { create } from 'zustand';
 
 // const INITIAL_SETTING_KEYS: Record<TThemeTypeConfig, AllSidebarKeys> = {

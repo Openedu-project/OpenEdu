@@ -1,9 +1,9 @@
-import { cn } from '@oe/ui/utils/cn';
+import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import type { SectionComponent } from '../../../_types/theme-page';
 
-import { Image } from '@oe/ui/components/image';
-import type { FileType } from '@oe/ui/components/uploader';
+import type { FileType } from '@oe/ui';
+import { Image } from '@oe/ui';
 import { FeatureStat, type FeatureStatProps } from '../_components/feature-stat';
 import { SectionTitle, type SectionTitleProps } from '../_components/section-title';
 
@@ -55,4 +55,4 @@ const FenetHomepageFeature: SectionComponent<'homepage', 'fenetFeature'> = ({ cl
   );
 };
 
-export default FenetHomepageFeature;
+export { FenetHomepageFeature };

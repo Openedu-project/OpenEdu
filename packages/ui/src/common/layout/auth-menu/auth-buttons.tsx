@@ -1,5 +1,5 @@
 'use client';
-import { AUTH_ROUTES } from '@oe/core/utils/routes';
+import { AUTH_ROUTES } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Link } from '#common/navigation';

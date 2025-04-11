@@ -1,9 +1,3 @@
-import VbiPartnerFeaturesClient from "./client";
-import VbiPartnerFeaturesServer from "./server";
-import type { VbiPartnersFeaturesProps } from "./vbi-features";
-
-export {
-  VbiPartnerFeaturesClient,
-  type VbiPartnersFeaturesProps,
-  VbiPartnerFeaturesServer,
-};
+export * from './client';
+export * from './server';
+export * from './vbi-features';

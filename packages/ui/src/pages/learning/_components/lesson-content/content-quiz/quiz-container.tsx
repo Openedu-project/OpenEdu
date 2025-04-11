@@ -1,12 +1,12 @@
-import type { IQuizSettings } from '@oe/api/types/course/quiz';
-import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
+import type { IQuizSettings } from '@oe/api';
+import type { IQuizSubmissionResponse } from '@oe/api';
 import background from '@oe/assets/images/learning-page/quiz.png';
 import { useTranslations } from 'next-intl';
 import { Button } from '#shadcn/button';
 import type { IQuizzSubmissionState, TAnswerInput } from '../_types/types';
-import QuizAssessment from './quiz-assessment';
-import QuizLayout from './quiz-layout';
-import QuizResult from './quiz-result';
+import { QuizAssessment } from './quiz-assessment';
+import { QuizLayout } from './quiz-layout';
+import { QuizResult } from './quiz-result';
 
 const QUIZ_STATES = {
   RESULT: 'RESULT',
@@ -92,4 +92,4 @@ const QuizContainer = ({
   );
 };
 
-export default QuizContainer;
+export { QuizContainer };

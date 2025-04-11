@@ -1,13 +1,13 @@
-import { Button } from '@oe/ui/shadcn/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@oe/ui/shadcn/card';
-import { Label } from '@oe/ui/shadcn/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@oe/ui/shadcn/select';
+import { fonts } from '@oe/core';
+import { Button } from '@oe/ui';
+import { Card, CardContent, CardHeader, CardTitle } from '@oe/ui';
+import { Label } from '@oe/ui';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@oe/ui';
 import { RotateCcw, Save } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { initialThemeGlobalFonts } from '../../../_config/theme-global-initial';
 import type { ThemeGlobalFontConfig } from '../../../_types';
-import { fonts } from '../../../fonts';
 import { camelToKebab, getFontDisplayName, setFontVariable } from './_utils';
 
 interface ThemeFontsProps {
@@ -119,4 +119,4 @@ const ThemeFonts = ({ fontData, isLoading, onSubmitFonts }: ThemeFontsProps) => 
   );
 };
 
-export default ThemeFonts;
+export { ThemeFonts };

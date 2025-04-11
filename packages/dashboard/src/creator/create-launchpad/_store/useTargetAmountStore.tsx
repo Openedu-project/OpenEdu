@@ -1,15 +1,15 @@
-import { create } from 'zustand';
+import { createStore } from '@oe/core';
 
 interface TargetAmountStore {
   targetAmount: number;
   setTargetAmount: (targetAmount: number) => void;
 }
 
-const useTargetAmountStore = create<TargetAmountStore>(set => {
+const useTargetAmountStore = createStore<TargetAmountStore>(set => {
   return {
     targetAmount: 0,
     setTargetAmount: (targetAmount: number) => set({ targetAmount }),
   };
 });
 
-export default useTargetAmountStore;
+export { useTargetAmountStore };

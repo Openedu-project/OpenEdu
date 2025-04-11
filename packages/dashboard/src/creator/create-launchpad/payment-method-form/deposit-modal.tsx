@@ -1,14 +1,14 @@
-import { usePostInitPool } from '@oe/api/hooks/useLaunchpad';
-import { useNFTTotalAssets, useWallet } from '@oe/api/hooks/useWallet';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { ASSET_TYPES, CHAIN } from '@oe/api/utils/wallet';
-import { Button } from '@oe/ui/shadcn/button';
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@oe/ui/shadcn/dialog';
+import type { HTTPErrorMetadata } from '@oe/api';
+import { usePostInitPool } from '@oe/api';
+import { useNFTTotalAssets, useWallet } from '@oe/api';
+import { ASSET_TYPES, CHAIN } from '@oe/api';
+import { Button } from '@oe/ui';
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@oe/ui';
+import { toast } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo } from 'react';
-import { toast } from 'sonner';
-import useLaunchpadDetail from '../_hooks/useLaunchpadDetail';
-import NoticeBlock from '../notice-block';
+import { useLaunchpadDetail } from '../_hooks/useLaunchpadDetail';
+import { NoticeBlock } from '../notice-block';
 
 const DepositModal = () => {
   const tLaunchpad = useTranslations('creatorSettingLaunchpad');
@@ -82,4 +82,4 @@ const DepositModal = () => {
   );
 };
 
-export default DepositModal;
+export { DepositModal };

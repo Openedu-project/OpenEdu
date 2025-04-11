@@ -2,12 +2,12 @@
 // app/components/WebViewHandler.tsx
 'use client';
 
-import { Button } from '@oe/ui/shadcn/button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@oe/ui/shadcn/dialog';
 import { ExternalLink } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { Button } from '#shadcn/button';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '#shadcn/dialog';
 
 const webViewPattern = /webview|wv|ip((?!.*safari)|(?=.*like safari))/i;
 const telegramPattern = /telegram|tgweb/i;
@@ -98,4 +98,4 @@ const WebViewHandler = () => {
   );
 };
 
-export default WebViewHandler;
+export { WebViewHandler };

@@ -1,4 +1,4 @@
-export default function Options({ width = 24, height = 24, className = '', color = '#6E6E6E' }) {
+export function Options({ width = 24, height = 24, className = '', color = '#6E6E6E' }) {
   return (
     <svg
       width={width}

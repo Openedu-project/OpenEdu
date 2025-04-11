@@ -1,15 +1,15 @@
 'use client';
 
-import { useGetMeSettings, useUpdateMeSettings } from '@oe/api/hooks/useUserProfile';
-import type { IBlogMyProfile, IMyBlogSetting } from '@oe/api/types/user-profile';
+import type { IBlogMyProfile, IMyBlogSetting } from '@oe/api';
+import { useGetMeSettings, useUpdateMeSettings } from '@oe/api';
 import { useEffect, useState } from 'react';
 
 import { toast } from 'sonner';
 import { Spinner } from '#components/spinner';
 import { useShowProfileItemsStore } from '../../../../_store/userProfileStore';
-import SettingWrapper from '../../_component/setting-wrapper';
+import { SettingWrapper } from '../../_component/setting-wrapper';
 
-export default function MyBlogSettings() {
+export function MyBlogSettings() {
   const [isShow, setIsShow] = useState<boolean>();
 
   const { setInitialData, showItemList } = useShowProfileItemsStore();

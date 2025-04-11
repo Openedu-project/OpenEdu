@@ -1,5 +1,5 @@
-import { organizationsService } from '@oe/api/services/organizations';
-import { AUTH_ROUTES, PROTECTED_ROUTES } from '@oe/core/utils/routes';
+import { organizationsService } from '@oe/api';
+import { AUTH_ROUTES, PROTECTED_ROUTES } from '@oe/core';
 import type { MetadataRoute } from 'next';
 
 export default async function robots(): Promise<MetadataRoute.Robots> {

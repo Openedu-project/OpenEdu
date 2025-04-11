@@ -1,7 +1,7 @@
-import type { TLessonContent } from '@oe/api/types/course/basic';
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import type { ILessonContent } from '@oe/api/types/course/segment';
-import type { ICurrentQuestion } from '@oe/api/types/quiz';
+import type { ICourseOutline } from '@oe/api';
+import type { TLessonContent } from '@oe/api';
+import type { ILessonContent } from '@oe/api';
+import type { ICurrentQuestion } from '@oe/api';
 import type React from 'react';
 
 export interface ContentRendererProps {

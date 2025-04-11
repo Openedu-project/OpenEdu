@@ -1,22 +1,17 @@
 'use client';
 
-import {
-  useGetCurrentQuestion,
-  useGetQuizSubmissionById,
-  usePostQuizSubmission,
-  useSubmitAnswer,
-} from '@oe/api/hooks/useQuiz';
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import type { IQuizItemResponse, IQuizSettings } from '@oe/api/types/course/quiz';
-import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
-import type { HTTPError } from '@oe/api/utils/http-error';
+import type { ICourseOutline } from '@oe/api';
+import type { HTTPError } from '@oe/api';
+import type { IQuizItemResponse, IQuizSettings } from '@oe/api';
+import type { IQuizSubmissionResponse } from '@oe/api';
+import { useGetCurrentQuestion, useGetQuizSubmissionById, usePostQuizSubmission, useSubmitAnswer } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { useQuizSubmissionStore } from '../../../_store/learning-store';
 import { transformAnswers } from '../../../_utils/utils';
 import type { IQuizzSubmissionState, TAnswerInput } from '../_types/types';
-import QuizContainer from './quiz-container';
+import { QuizContainer } from './quiz-container';
 
 interface IContentQuizProps {
   quiz?: IQuizItemResponse;
@@ -27,7 +22,7 @@ interface IContentQuizProps {
   triggerFunction?: (quizResult: IQuizSubmissionResponse) => void;
 }
 
-export default function ContentQuiz({
+export function ContentQuiz({
   quiz,
   course_data,
   settings,

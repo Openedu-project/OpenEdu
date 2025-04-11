@@ -1,15 +1,15 @@
 'use client';
 
-import { useGetCertById } from '@oe/api/hooks/useCertificate';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { createAPIUrl } from '@oe/api';
+import { useGetCertById } from '@oe/api';
+import { PLATFORM_ROUTES } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { CertificateDetail } from '#components/certificate';
 import { NoDataAvailable } from '#components/no-data-available';
 import { Spinner } from '#components/spinner';
 
-export default function Certificate() {
+export function Certificate() {
   const t = useTranslations('certificate');
   const { certificateId, user } = useParams();
 

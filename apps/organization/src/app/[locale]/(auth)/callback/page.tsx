@@ -1,4 +1,4 @@
-import { AuthCallbackPage } from '@oe/ui/common/auth/auth-callback-page';
+import { AuthCallbackPage } from "@oe/ui";
 
 export default function Page() {
   return <AuthCallbackPage />;

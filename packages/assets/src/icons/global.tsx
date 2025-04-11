@@ -1,4 +1,4 @@
-export default function Global({ width = 24, height = 24, className = '', color = '#2C2C2C' }) {
+export function Global({ width = 24, height = 24, className = '', color = '#2C2C2C' }) {
   return (
     <svg
       className={className}

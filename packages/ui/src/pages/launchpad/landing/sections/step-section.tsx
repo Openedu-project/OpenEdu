@@ -1,8 +1,8 @@
-import { isLogin } from '@oe/api/utils/auth';
+import { isLogin } from '@oe/api';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '#common/navigation';
 import { DescText, H2Text, LaunchpadDialog } from '../components';
-import StepCard from '../components/step-card';
+import { StepCard } from '../components/step-card';
 import { launchpadStepData } from '../lib/render-data';
 
 const StepSection = async () => {
@@ -34,4 +34,4 @@ const StepSection = async () => {
   );
 };
 
-export default StepSection;
+export { StepSection };

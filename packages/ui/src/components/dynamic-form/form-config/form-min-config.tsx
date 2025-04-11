@@ -3,7 +3,7 @@ import { InputNumber } from '#components/input-number';
 import type { FormFieldType } from '../types';
 import { FormFieldWrapper } from './form-field-wrapper';
 
-export default function FormMinConfig({
+export function FormMinConfig({
   field,
   handleConfigChange,
 }: {

@@ -1,21 +1,21 @@
 'use client';
-import { useCreateOrganization } from '@oe/api/hooks/useOrganization';
-import { useGetFormRegisterOrg, useRejectRegisterOrg } from '@oe/api/hooks/useRegisterOrg';
-import type { IRejectFormRegisterOrgPayload } from '@oe/api/types/form';
-import type { IFormUserResponse, IFormUserResponseAnswerItem } from '@oe/api/types/form-user-response';
-import type { IOrganizationPayload } from '@oe/api/types/organizations';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { formatDate } from '@oe/core/utils/datetime';
-import type { FilterOption } from '@oe/ui/components/filter-search';
-import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { Button } from '@oe/ui/shadcn/button';
-import { toast } from '@oe/ui/shadcn/sonner';
+import type { IOrganizationPayload } from '@oe/api';
+import { API_ENDPOINT } from '@oe/api';
+import { useCreateOrganization } from '@oe/api';
+import { createAPIUrl } from '@oe/api';
+import type { HTTPErrorMetadata } from '@oe/api';
+import type { IRejectFormRegisterOrgPayload } from '@oe/api';
+import { useGetFormRegisterOrg, useRejectRegisterOrg } from '@oe/api';
+import type { IFormUserResponse, IFormUserResponseAnswerItem } from '@oe/api';
+import { formatDate } from '@oe/core';
+import { toast } from '@oe/ui';
+import type { FilterOption } from '@oe/ui';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
+import { Badge } from '@oe/ui';
+import { Button } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useRef, useState } from 'react';
-import RejectOrgModal from './reject-request-modal';
+import { RejectOrgModal } from './reject-request-modal';
 
 const DOMAIN_NAME = process.env.NEXT_PUBLIC_APP_ROOT_DOMAIN_NAME;
 type BadgeVariant = 'success' | 'destructive' | 'secondary' | 'default' | 'outline' | null | undefined;
@@ -34,7 +34,7 @@ const generateVariantBadge = (status: string): BadgeVariant => {
 const getAnswerText = (key: string, answers: IFormUserResponseAnswerItem[]): string =>
   answers?.find(a => a.key === key)?.answer_text ?? '';
 
-export default function OrganizationRequest() {
+export function OrganizationRequest() {
   const t = useTranslations('organizationRequests');
   const tError = useTranslations('errors');
 

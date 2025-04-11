@@ -1,6 +1,6 @@
-import { Image } from '@oe/ui/components/image';
-import type { FileType } from '@oe/ui/components/uploader';
-import { Card, CardContent, CardHeader } from '@oe/ui/shadcn/card';
+import type { FileType } from '@oe/ui';
+import { Image } from '@oe/ui';
+import { Card, CardContent, CardHeader } from '@oe/ui';
 import type React from 'react';
 
 interface BlogCardProps {

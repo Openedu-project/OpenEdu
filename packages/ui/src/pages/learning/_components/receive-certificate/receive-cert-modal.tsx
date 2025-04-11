@@ -1,8 +1,8 @@
 'use client';
 
-import { useReceiveCertificate } from '@oe/api/hooks/useCertificate';
-import { useGetMe } from '@oe/api/hooks/useMe';
-import type { ICertificate, ICertificateData } from '@oe/api/types/certificate';
+import type { ICertificate, ICertificateData } from '@oe/api';
+import { useGetMe } from '@oe/api';
+import { useReceiveCertificate } from '@oe/api';
 import { Trophy } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useState } from 'react';
@@ -212,4 +212,4 @@ const ReceiveCertificateModal = ({ certificate }: IProps) => {
   );
 };
 
-export default ReceiveCertificateModal;
+export { ReceiveCertificateModal };

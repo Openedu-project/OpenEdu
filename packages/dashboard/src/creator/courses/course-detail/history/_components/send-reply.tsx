@@ -1,11 +1,11 @@
 'use client';
 
-import { useGetCourseById } from '@oe/api/hooks/useCourse';
-import { Button } from '@oe/ui/shadcn/button';
-import { Checkbox } from '@oe/ui/shadcn/checkbox';
-import { Label } from '@oe/ui/shadcn/label';
-import { Textarea } from '@oe/ui/shadcn/textarea';
-import { cn } from '@oe/ui/utils/cn';
+import { useGetCourseById } from '@oe/api';
+import { Button } from '@oe/ui';
+import { Checkbox } from '@oe/ui';
+import { Label } from '@oe/ui';
+import { Textarea } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { Send } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';

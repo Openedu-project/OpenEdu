@@ -1,19 +1,19 @@
 'use client';
 
-import { useApplyCouponOrder, useOrderDeleteCoupon, useOrderPaymentWithWallet } from '@oe/api/hooks/useOrder';
-import type { ICourse } from '@oe/api/types/course/course';
-import type { IOrderRes } from '@oe/api/types/order';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import { formatNumber } from '@oe/core/utils/utils';
-import { Button } from '@oe/ui/shadcn/button';
-import { Input } from '@oe/ui/shadcn/input';
+import type { ICourse } from '@oe/api';
+import { createAPIUrl } from '@oe/api';
+import type { HTTPErrorMetadata } from '@oe/api';
+import type { IOrderRes } from '@oe/api';
+import { useApplyCouponOrder, useOrderDeleteCoupon, useOrderPaymentWithWallet } from '@oe/api';
+import { PLATFORM_ROUTES } from '@oe/core';
+import { formatNumber } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { Link } from '#common/navigation';
+import { Button } from '#shadcn/button';
+import { Input } from '#shadcn/input';
 import type { IPaymentCryptoWallet } from './payment';
 
 const NumberedCircle = ({ number }: { number: number }) => (
@@ -304,4 +304,4 @@ const PaymentCrypto = ({
   );
 };
 
-export default PaymentCrypto;
+export { PaymentCrypto };

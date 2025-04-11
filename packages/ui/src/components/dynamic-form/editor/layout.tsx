@@ -1,6 +1,6 @@
 'use client';
 
-import type { IProtectedRoutes } from '@oe/core/utils/routes';
+import type { IProtectedRoutes } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { DashboardHeaderCard } from '#common/layout';

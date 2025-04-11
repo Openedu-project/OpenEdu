@@ -1,7 +1,7 @@
 import { AccordionQuiz } from '../quiz-editor';
 
-import type { IQuizItemResponse } from '@oe/api/types/course/quiz';
-import { Alert, AlertDescription, AlertTitle } from '@oe/ui/shadcn/alert';
+import type { IQuizItemResponse } from '@oe/api';
+import { Alert, AlertDescription, AlertTitle } from '@oe/ui';
 import { CircleAlert } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useWatch } from 'react-hook-form';

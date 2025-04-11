@@ -1,20 +1,12 @@
 'use client';
-import type { ISection } from '@oe/api/types/course/segment';
-import { CREATOR_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
-import { useRouter } from '@oe/ui/common/navigation';
-import { DndSortable, DndSortableDragButton } from '@oe/ui/components/dnd-sortable';
-import { Button } from '@oe/ui/shadcn/button';
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@oe/ui/shadcn/sheet';
-import { cn } from '@oe/ui/utils/cn';
+import type { ISection } from '@oe/api';
+import { CREATOR_ROUTES } from '@oe/core';
+import { buildUrl } from '@oe/core';
+import { Button } from '@oe/ui';
+import { useRouter } from '@oe/ui';
+import { DndSortable, DndSortableDragButton } from '@oe/ui';
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { XCircle } from 'lucide-react';
 import { PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';

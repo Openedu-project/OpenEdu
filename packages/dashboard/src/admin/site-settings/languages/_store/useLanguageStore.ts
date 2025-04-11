@@ -1,11 +1,11 @@
-import type { IFileResponse } from '@oe/api/types/file';
-import type { LanguageStats } from '@oe/api/types/i18n';
-import { deepMerge } from '@oe/core/utils/object';
-import { DEFAULT_LOCALE, DEFAULT_LOCALES } from '@oe/i18n/constants';
-import { type LanguageCode, languages } from '@oe/i18n/languages';
-import { messages } from '@oe/i18n/messages';
-import type { I18nMessage } from '@oe/i18n/types';
-import { create } from 'zustand';
+import type { IFileResponse } from '@oe/api';
+import type { LanguageStats } from '@oe/api';
+import { deepMerge } from '@oe/core';
+import { createStore } from '@oe/core';
+import { DEFAULT_LOCALE, DEFAULT_LOCALES } from '@oe/i18n';
+import { type LanguageCode, languages } from '@oe/i18n';
+import { messages } from '@oe/i18n';
+import type { I18nMessage } from '@oe/i18n';
 // import { deepMergeWithCleanup } from '../_utils';
 
 export type LanguageOption = {
@@ -193,7 +193,7 @@ const calculateLanguageStats = (translations: TranslationItem[], locales: Langua
 
 const defaultLocales = DEFAULT_LOCALES.map(locale => ({ value: locale, label: languages[locale] }));
 
-export const useLanguageStore = create<LanguageState & LanguageActions>()((set, get) => ({
+export const useLanguageStore = createStore<LanguageState & LanguageActions>()((set, get) => ({
   id: undefined,
   locales: undefined,
   locale: DEFAULT_LOCALE,

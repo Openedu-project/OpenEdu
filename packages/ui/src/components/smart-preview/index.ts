@@ -1,3 +1,3 @@
-import SmartPreview from './smart-preview';
+import { SmartPreview } from './smart-preview';
 
 export { SmartPreview };

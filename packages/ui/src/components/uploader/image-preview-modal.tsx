@@ -12,7 +12,7 @@ import {
 } from '#shadcn/carousel';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogOverlay, DialogTitle } from '#shadcn/dialog';
 import { cn } from '#utils/cn';
-import TransformWrapper from './transform-wrapper';
+import { TransformWrapper } from './transform-wrapper';
 import type { FileType } from './types';
 
 interface ImagePreviewModalProps {

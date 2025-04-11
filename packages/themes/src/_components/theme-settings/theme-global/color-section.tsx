@@ -1,5 +1,5 @@
-import { Button } from '@oe/ui/shadcn/button';
-import { Label } from '@oe/ui/shadcn/label';
+import { Button } from '@oe/ui';
+import { Label } from '@oe/ui';
 import { memo } from 'react';
 
 interface ColorSectionProps {

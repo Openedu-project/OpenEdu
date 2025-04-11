@@ -1,6 +1,6 @@
-import { Card, CardContent } from '@oe/ui/shadcn/card';
-import { cn } from '@oe/ui/utils/cn';
 import type { ReactNode } from 'react';
+import { Card, CardContent } from '#shadcn/card';
+import { cn } from '#utils/cn';
 
 interface AssetCardProps {
   highlighted?: boolean;
@@ -27,4 +27,4 @@ const AssetCard = ({ highlighted, icon, label, value, actionBtns, cardContent, c
   </Card>
 );
 
-export default AssetCard;
+export { AssetCard };

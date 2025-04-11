@@ -1,10 +1,10 @@
-import { AFFILIATE_ROUTES } from '@oe/core/utils/routes';
-import { DashboardLayout } from '@oe/ui/common/layout';
+import { AFFILIATE_ROUTES } from '@oe/core';
+import { DashboardLayout } from '@oe/ui';
 import { Newspaper, Shapes } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
 
-export default async function Layout({ children }: { children: ReactNode }) {
+export async function AffiliateLayout({ children }: { children: ReactNode }) {
   const [tDashboard] = await Promise.all([getTranslations('dashboard')]);
 
   const filteredMenu = [

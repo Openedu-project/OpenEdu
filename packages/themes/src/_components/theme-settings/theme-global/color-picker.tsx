@@ -1,6 +1,6 @@
-import { Input } from '@oe/ui/shadcn/input';
-import { Label } from '@oe/ui/shadcn/label';
-import { ScrollArea } from '@oe/ui/shadcn/scroll-area';
+import { Input } from '@oe/ui';
+import { Label } from '@oe/ui';
+import { ScrollArea } from '@oe/ui';
 // biome-ignore lint/style/useImportType: <explanation>
 import React from 'react';
 import { useCallback, useMemo, useState } from 'react';
@@ -79,5 +79,3 @@ export const ColorPicker = ({ onColorSelect, defaultColor = '#ffffff' }: ColorPi
     </div>
   );
 };
-
-export default ColorPicker;

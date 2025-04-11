@@ -1,8 +1,8 @@
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import { DashboardMainPageLayout } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import PagesList from './_components/pages-list';
+import { PagesList } from './_components/pages-list';
 
-export default function PageSettings() {
+export function PageSettings() {
   const tDashboard = useTranslations('dashboard.permissionSettings');
 
   return (

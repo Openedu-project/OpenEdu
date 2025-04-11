@@ -2,7 +2,7 @@ import type { IQuizPayload } from './course/quiz';
 import type { IFileResponse } from './file';
 
 export type TQuestion = 'single_choice' | 'multiple_choice';
-export type TQuizAnswer = 'choice_item';
+export type TQuizAnswerType = 'choice_item';
 export type TQuizSubmissionStatus = 'in-progress' | 'done';
 
 export interface ILessonContentQuiz extends IQuizPayload {
@@ -35,7 +35,7 @@ export interface IQuizFile extends IFileResponse {}
 
 export interface IQuizAnswer {
   id: string;
-  type: TQuizAnswer;
+  type: TQuizAnswerType;
   text: string;
   order: number;
   file_id: string;

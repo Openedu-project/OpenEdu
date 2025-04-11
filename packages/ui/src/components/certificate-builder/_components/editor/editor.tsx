@@ -1,6 +1,5 @@
 import { DndContext, type DragEndEvent, useDraggable } from '@dnd-kit/core';
-import type { ICertificateElement } from '@oe/api/types/certificate';
-import { cn } from '@oe/ui/utils/cn';
+import type { ICertificateElement } from '@oe/api';
 import { GripVerticalIcon, TrashIcon } from 'lucide-react';
 import { nanoid } from 'nanoid';
 import { useTranslations } from 'next-intl';
@@ -8,6 +7,7 @@ import { Resizable } from 're-resizable';
 import { useRef } from 'react';
 import { useGradientColorPicker } from '#components/color-picker';
 import { Button } from '#shadcn/button';
+import { cn } from '#utils/cn';
 import { getElementPosition } from '../../utils';
 import { useCertificateBuilder } from '../provider/builder-context';
 import { ElementRenderer } from '../renderer';

@@ -2,8 +2,8 @@ import { getTranslations } from 'next-intl/server';
 import { Suspense } from 'react';
 import { Card } from '#shadcn/card';
 import { Tabs, TabsContent } from '#shadcn/tabs';
-import LaunchpadList from './_components/my-launchpad-list';
-import MyLaunchpadTab from './_components/my-launchpad-tab';
+import { LaunchpadList } from './_components/my-launchpad-list';
+import { MyLaunchpadTab } from './_components/my-launchpad-tab';
 
 // Loading skeleton component
 function LoadingSkeleton() {
@@ -31,7 +31,7 @@ function LoadingSkeleton() {
 }
 
 // Main page component
-export default async function Page({
+export async function MyLaunchpadList({
   searchParams,
 }: {
   searchParams: { [key: string]: string | undefined };

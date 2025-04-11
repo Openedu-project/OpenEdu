@@ -1,11 +1,11 @@
-import { getMeServiceWithoutError } from '@oe/api/services/auth';
-import { postCreatorAcceptInvitationService } from '@oe/api/services/creator';
-import { postAcceptUserInvitationService } from '@oe/api/services/user';
-import type { ICreatorAcceptResponse } from '@oe/api/types/creators';
-import { type AuthEventName, authEvents } from '@oe/api/utils/auth';
+import type { ICreatorAcceptResponse } from '@oe/api';
+import { postAcceptUserInvitationService } from '@oe/api';
+import { getMeServiceWithoutError } from '@oe/api';
+import { type AuthEventName, authEvents } from '@oe/api';
+import { postCreatorAcceptInvitationService } from '@oe/api';
 import loginBanner from '@oe/assets/images/login-banner.png';
-import { base64ToJson } from '@oe/core/utils/decoded-token';
-import { AUTH_ROUTES, PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { AUTH_ROUTES, PLATFORM_ROUTES } from '@oe/core';
+import { base64ToJson } from '@oe/core';
 import { getTranslations } from 'next-intl/server';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';

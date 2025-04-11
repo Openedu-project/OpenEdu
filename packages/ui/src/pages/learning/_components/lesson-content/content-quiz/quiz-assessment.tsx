@@ -1,15 +1,15 @@
 import { useTranslations } from 'next-intl';
 
-import type { IQuizSettings } from '@oe/api/types/course/quiz';
-import type { ICurrentQuestion } from '@oe/api/types/quiz';
+import type { IQuizSettings } from '@oe/api';
+import type { ICurrentQuestion } from '@oe/api';
 import { FormWrapper } from '#components/form-wrapper';
 import { Image } from '#components/image';
 import { Button } from '#shadcn/button';
 import { Progress } from '#shadcn/progress';
 import { ScrollArea } from '#shadcn/scroll-area';
 import type { TAnswerInput } from '../_types/types';
-import QuizAnswers, { quizAnswerSchema } from './quiz-answers';
-import QuizHeader from './quiz-header';
+import { QuizAnswers, quizAnswerSchema } from './quiz-answers';
+import { QuizHeader } from './quiz-header';
 
 interface IQuestionProps {
   data: ICurrentQuestion;
@@ -101,4 +101,4 @@ const QuizAssessment = ({ numQuestion, data, settings, quizStartAt, onSubmitAnsw
   );
 };
 
-export default QuizAssessment;
+export { QuizAssessment };

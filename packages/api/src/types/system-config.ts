@@ -1,4 +1,4 @@
-import type { LanguageCode } from '@oe/i18n/languages';
+import type { LanguageCode } from '@oe/i18n';
 import type { systemConfigKeys } from '#utils/system-config';
 import type { IFileResponse } from './file';
 

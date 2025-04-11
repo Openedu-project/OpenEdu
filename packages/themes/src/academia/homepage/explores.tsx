@@ -1,5 +1,5 @@
-import { Button } from '@oe/ui/shadcn/button';
-import { cn } from '@oe/ui/utils/cn';
+import { Button } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
 import type { SectionComponent } from '../../_types/theme-page';
@@ -22,4 +22,4 @@ const AcademiaHomepageExplores: SectionComponent<'homepage', 'explores'> = ({ cl
   );
 };
 
-export default AcademiaHomepageExplores;
+export { AcademiaHomepageExplores };

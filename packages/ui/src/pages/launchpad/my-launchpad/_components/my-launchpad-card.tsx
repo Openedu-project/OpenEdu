@@ -1,14 +1,14 @@
 'use client';
 
-import type { ILaunchpad } from '@oe/api/types/launchpad';
+import type { ILaunchpad } from '@oe/api';
 import DefaultImg from '@oe/assets/images/defaultimage.png';
-import { formatDate } from '@oe/core/utils/datetime';
+import { formatDate } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '#common/navigation';
 import { Image } from '#components/image';
 import { getTimeStatus } from '#utils/launchpad-utils';
 
-const CampaignCardCompact = ({ campaign }: { campaign: ILaunchpad }) => {
+const MyLaunchpadCard = ({ campaign }: { campaign: ILaunchpad }) => {
   const router = useRouter();
   const t = useTranslations('myLaunchpadList');
 
@@ -81,4 +81,4 @@ const CampaignCardCompact = ({ campaign }: { campaign: ILaunchpad }) => {
   );
 };
 
-export default CampaignCardCompact;
+export { MyLaunchpadCard };

@@ -1,17 +1,17 @@
-import { usePutShareRate } from '@oe/api/hooks/useShareRate';
-import type { ICanApplicableComm } from '@oe/api/types/affiliate-campaign';
-import type { ICommissionBonusRes } from '@oe/api/types/commission';
-import { Button } from '@oe/ui/shadcn/button';
-import { Tooltip } from '@oe/ui/shadcn/tooltip';
+import type { ICanApplicableComm } from '@oe/api';
+import { usePutShareRate } from '@oe/api';
+import type { ICommissionBonusRes } from '@oe/api';
+import { Button } from '@oe/ui';
+import { Tooltip } from '@oe/ui';
 import { CirclePercent, Copy, Link as IconLink } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { type ChangeEvent, useCallback, useMemo, useState } from 'react';
 
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import { getAlphabetLabel } from '@oe/core/utils/utils';
-import { Link } from '@oe/ui/common/navigation';
-import { toast } from '@oe/ui/shadcn/sonner';
+import type { HTTPErrorMetadata } from '@oe/api';
+import { PLATFORM_ROUTES } from '@oe/core';
+import { getAlphabetLabel } from '@oe/core';
+import { toast } from '@oe/ui';
+import { Link } from '@oe/ui';
 
 const processRates = (bonuses: ICommissionBonusRes[]): ICommissionBonusRes[] =>
   bonuses?.map((bonus, index) => {
@@ -339,5 +339,3 @@ export const ReferralSection = ({
     </div>
   );
 };
-
-export default ReferralSection;

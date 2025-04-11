@@ -1,19 +1,16 @@
-import {
-  type CreateBaseRateCommissionSchemaType,
-  createBaseRateCommissionSchema,
-} from '@oe/api/schemas/affiliateCampaignSchema';
-import type { ICommissionItem, ICommissionPayload, RefType } from '@oe/api/types/commission';
-import { Modal } from '@oe/ui/components/modal';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
-import { Switch } from '@oe/ui/shadcn/switch';
+import type { ICommissionItem, ICommissionPayload, RefType } from '@oe/api';
+import { type CreateBaseRateCommissionSchemaType, createBaseRateCommissionSchema } from '@oe/api';
+import { Modal } from '@oe/ui';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';
+import { Input } from '@oe/ui';
+import { Switch } from '@oe/ui';
 import { CirclePercent } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import type React from 'react';
 import { useCallback } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
-import FormBonusesCommission, { type IBaseCommissionForm } from './commissions-bonuses-form';
+import { FormBonusesCommission, type IBaseCommissionForm } from './commissions-bonuses-form';
 
 interface IFormBaseRateCommissionModal {
   onSubmit: (value: ICommissionPayload) => void;
@@ -32,7 +29,7 @@ const handleInputChange = (
   field.onChange(value === '' ? '' : Number(value));
 };
 
-export default function FormBaseRateCommissionModal({
+export function FormBaseRateCommissionModal({
   onSubmit,
   onClose,
   selectedType,

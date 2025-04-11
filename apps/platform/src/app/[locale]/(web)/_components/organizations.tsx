@@ -1,9 +1,9 @@
-import { getFeaturedOrgs } from "@oe/api/services/featured-contents";
-import { Link } from "@oe/ui/common/navigation";
-import { Image } from "@oe/ui/components/image";
+import { getFeaturedOrgs } from "@oe/api";
+import { Link } from "@oe/ui";
+import { Image } from "@oe/ui";
 import { getTranslations } from "next-intl/server";
 
-export default async function OrganizationSection() {
+export async function OrganizationSection() {
   const [t, organizations] = await Promise.all([
     getTranslations("homePageLayout.organizationSection"),
     getFeaturedOrgs(),
@@ -19,7 +19,9 @@ export default async function OrganizationSection() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {organizations?.map((org) => (
             <Link
-              href={`https://${org?.alt_domain?.length > 0 ? org?.alt_domain : org?.domain}`}
+              href={`https://${
+                org?.alt_domain?.length > 0 ? org?.alt_domain : org?.domain
+              }`}
               key={org.name}
               target="_blank"
               className="block h-auto space-y-4 bg-gradient-to-b from-25% from-white via-60% via-primary-20 to-100% to-primary-20/30 p-4 text-black hover:no-underline"

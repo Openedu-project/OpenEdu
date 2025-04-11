@@ -2,7 +2,7 @@ import type { HTMLAttributes } from 'react';
 
 import { cn } from '#utils/cn';
 
-function Table({ className, ...props }: HTMLAttributes<HTMLTableElement>) {
+function ShadcnTable({ className, ...props }: HTMLAttributes<HTMLTableElement>) {
   return <table data-slot="table" className={cn('w-full caption-bottom text-sm', className)} {...props} />;
 }
 
@@ -54,4 +54,4 @@ function TableCaption({ className, ...props }: HTMLAttributes<HTMLTableCaptionEl
   );
 }
 
-export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption };
+export { ShadcnTable, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption };

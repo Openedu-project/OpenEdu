@@ -48,7 +48,7 @@ export function CourseTimelineItem({ number, sections, description, isActive, is
   );
 }
 
-export function CourseTimeline({ items, currentStep }: CourseTimelineProps) {
+function CourseTimeline({ items, currentStep }: CourseTimelineProps) {
   return (
     <div className="mx-auto w-full rounded-lg border bg-white p-4 shadow-xs sm:p-6">
       <div className="flex flex-col items-center gap-8 sm:flex-row sm:items-start sm:justify-between sm:gap-0">
@@ -69,4 +69,4 @@ export function CourseTimeline({ items, currentStep }: CourseTimelineProps) {
   );
 }
 
-export default CourseTimeline;
+export { CourseTimeline, type CourseTimelineProps, type CourseTimelineItemProps };

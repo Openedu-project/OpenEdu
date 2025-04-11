@@ -1,8 +1,8 @@
-import { type IRejectLaunchpadSchemaType, rejectLaunchpadSchema } from '@oe/api/schemas/launchpadSchema';
-import type { IRejectPayload } from '@oe/api/types/approvals';
-import { Modal } from '@oe/ui/components/modal';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
-import { Textarea } from '@oe/ui/shadcn/textarea';
+import type { IRejectPayload } from '@oe/api';
+import { type IRejectLaunchpadSchemaType, rejectLaunchpadSchema } from '@oe/api';
+import { Modal } from '@oe/ui';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';
+import { Textarea } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 
@@ -11,7 +11,7 @@ interface IDeleteCreatorModal {
   onClose: () => void;
 }
 
-export default function RejectLaunchpadModal({ onSubmit, onClose }: IDeleteCreatorModal) {
+export function RejectLaunchpadModal({ onSubmit, onClose }: IDeleteCreatorModal) {
   const t = useTranslations('adminLaunchpadRequest.rejectModal');
 
   const handleSubmit = useCallback(

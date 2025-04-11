@@ -6,7 +6,6 @@ import {
   getListUserService,
   getTopAuthorService,
   getUserInvitationsListService,
-  getUserProfileService,
   postAcceptUserInvitationService,
   postInviteUserService,
   postUserEmailService,
@@ -25,19 +24,19 @@ import type {
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
 
-export function useGetUserProfile(id: string, shouldFetch = true) {
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.USERS_ID, params: { id } });
-  const { data, isLoading, error, mutate } = useSWR(shouldFetch ? endpointKey : null, (endpoint: string) =>
-    getUserProfileService(endpoint, { id })
-  );
+// export function useGetUserProfile(id: string, shouldFetch = true) {
+//   const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.USERS_ID, params: { id } });
+//   const { data, isLoading, error, mutate } = useSWR(shouldFetch ? endpointKey : null, (endpoint: string) =>
+//     getUserProfileService(endpoint, { id })
+//   );
 
-  return {
-    profile: data,
-    profileError: error,
-    mutateProfile: mutate,
-    profileLoading: isLoading,
-  };
-}
+//   return {
+//     profile: data,
+//     profileError: error,
+//     mutateProfile: mutate,
+//     profileLoading: isLoading,
+//   };
+// }
 
 export const useGetListUser = (params: IFilter) => {
   const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.USERS, queryParams: { ...params } });

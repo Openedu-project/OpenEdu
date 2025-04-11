@@ -1,21 +1,16 @@
-import { useExchangeRates } from '@oe/api/hooks/useExchangeRates';
-import { findLocaleFromCurrency } from '@oe/core/utils/currency';
-import { formatDateTime } from '@oe/core/utils/datetime';
-import {
-  FiatSelectCurrency,
-  InputCurrency,
-  TokenInputCurrency,
-  TokenSelectCurrency,
-} from '@oe/ui/components/input-currency';
-import { Button } from '@oe/ui/shadcn/button';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Switch } from '@oe/ui/shadcn/switch';
+import { useExchangeRates } from '@oe/api';
+import { formatDateTime } from '@oe/core';
+import { findLocaleFromCurrency } from '@oe/core';
+import { Button } from '@oe/ui';
+import { FiatSelectCurrency, InputCurrency, TokenInputCurrency, TokenSelectCurrency } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
+import { Switch } from '@oe/ui';
 import { ArrowDownIcon, ArrowUpIcon, CheckIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 
-export default function PriceForm({ loading }: { loading: boolean }) {
+export function PriceForm({ loading }: { loading: boolean }) {
   const tCourse = useTranslations('course');
   const { exchangeRates, convertCurrency } = useExchangeRates();
 

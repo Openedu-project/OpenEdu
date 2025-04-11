@@ -1,5 +1,5 @@
-import { FormEditorLayout } from "@oe/ui/components/dynamic-form";
+import { FormEditorLayout } from '@oe/ui';
 
-export default function FormDetail() {
+export function FormDetail() {
   return <FormEditorLayout dashboard="creator" action="edit" />;
 }

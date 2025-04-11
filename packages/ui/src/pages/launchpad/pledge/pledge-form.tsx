@@ -1,7 +1,8 @@
 'use client';
 
-import { pledgeLaunchpadSchema } from '@oe/api/schemas/launchpadSchema';
-import type { IWallet } from '@oe/api/types/wallet';
+import { pledgeLaunchpadSchema } from '@oe/api';
+import type { IWallet } from '@oe/api';
+import { formatCurrency } from '@oe/core';
 import { CircleAlert } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '#common/navigation';
@@ -11,11 +12,11 @@ import { Spinner } from '#components/spinner';
 import { Button } from '#shadcn/button';
 import { FormFieldWithLabel } from '#shadcn/form';
 import { cn } from '#utils/cn';
-import { formatCurrency } from '#utils/format-currency';
-import ConfirmPledgeDialog from './confirm-pledge-dialog';
-import DepositModal from './deposit-modal';
-import SuccessDialog from './success-pledge-dialog';
-import usePledgeForm from './usePledgeForm';
+// import { formatCurrency } from '#utils/format-currency';
+import { ConfirmPledgeDialog } from './confirm-pledge-dialog';
+import { DepositDialog } from './deposit-modal';
+import { SuccessDialog } from './success-pledge-dialog';
+import { usePledgeForm } from './usePledgeForm';
 
 const PledgeForm = ({
   launchpadId,
@@ -88,14 +89,15 @@ const PledgeForm = ({
                     )}
                   </div>
                   {tokenInvestBalance === 0 && walletInvest ? (
-                    <DepositModal
+                    <DepositDialog
                       network={walletInvest.network}
                       address={walletInvest.address}
                       currency={walletInvest.currency}
                     />
                   ) : (
                     <p>
-                      {formatCurrency(tokenInvestBalance, 'en-US', {
+                      {formatCurrency(tokenInvestBalance ?? 0, {
+                        currency: walletInvest?.currency,
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       })}
@@ -140,4 +142,4 @@ const PledgeForm = ({
   );
 };
 
-export default PledgeForm;
+export { PledgeForm };

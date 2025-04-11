@@ -1,12 +1,9 @@
-import type { IAgenConfigs, TAgentType } from '@oe/api/types/conversation';
-import Gallery from '@oe/assets/icons/gallery';
-import Grid3 from '@oe/assets/icons/grid-3';
-import SearchZoomIn from '@oe/assets/icons/search-zoom-in';
-import { VideoSquare } from '@oe/assets/icons/video-square';
+import type { IAgenConfigs, TAgentType } from '@oe/api';
+import { Gallery, Grid3, SearchZoomIn, VideoSquare } from '@oe/assets';
 import AIChat from '@oe/assets/images/ai/ai-chat.png';
 import AIImage from '@oe/assets/images/ai/ai-image.png';
 import AISlide from '@oe/assets/images/ai/ai-slide.png';
-import { AI_ROUTES } from '@oe/core/utils/routes';
+import { AI_ROUTES } from '@oe/core';
 import { MessageCircle } from 'lucide-react';
 import type { AISidebarItem, IInputButton } from './type';
 

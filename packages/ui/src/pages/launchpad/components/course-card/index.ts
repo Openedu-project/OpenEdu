@@ -1,3 +1,4 @@
-import CourseCardHorizontal from './course-card-horizontal';
+import { CourseCardCompact } from './course-card-compact';
+import { CourseCardHorizontal } from './course-card-horizontal';
 
-export { CourseCardHorizontal };
+export { CourseCardCompact, CourseCardHorizontal };

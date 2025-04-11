@@ -1,3 +1,3 @@
-import ButtonDropdown from './button-dropdown';
+import { ButtonDropdown } from './button-dropdown';
 
 export { ButtonDropdown };

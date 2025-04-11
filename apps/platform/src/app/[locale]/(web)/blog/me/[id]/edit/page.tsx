@@ -1,4 +1,4 @@
-import BlogCreationPage from '@oe/ui/pages/blog/creation';
+import { BlogCreationPage } from "@oe/ui";
 
 export default async function CreationPage({
   params,

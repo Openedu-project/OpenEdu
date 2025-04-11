@@ -1,6 +1,6 @@
-import type { ILessonSchema } from '@oe/api/schemas/courses/segmentSchema';
-import type { ILessonContent } from '@oe/api/types/course/segment';
-import type { TFunction } from '@oe/i18n/types';
+import type { ILessonContent } from '@oe/api';
+import type { ILessonSchema } from '@oe/api';
+import type { TFunction } from '@oe/i18n';
 
 export const hasContent = (lessonContent: ILessonContent | null) => {
   if (!lessonContent) {

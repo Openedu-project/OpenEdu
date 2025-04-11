@@ -1,7 +1,7 @@
-import { Badge, badgeVariants } from '@oe/ui/shadcn/badge';
 import type { SelectProps } from '@radix-ui/react-select';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
+import { Badge, badgeVariants } from '#shadcn/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '#shadcn/select';
 import { cn } from '#utils/cn';
 import { type TStatus, statusColorMap } from './status-badge';

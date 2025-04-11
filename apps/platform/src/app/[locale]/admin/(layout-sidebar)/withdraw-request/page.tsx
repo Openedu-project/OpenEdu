@@ -1,4 +1,4 @@
-import WithdrawRequest from '@oe/dashboard/admin/withdraw-request/page';
+import { WithdrawRequest } from "@oe/dashboard";
 
 export default function WidthdrawRequestPage() {
   return (

@@ -1,14 +1,14 @@
 'use client';
 
-import type { ILaunchpad } from '@oe/api/types/launchpad';
-import { VOTING_STATUS } from '@oe/api/utils/launchpad';
-import { formatDate } from '@oe/core/utils/datetime';
+import type { ILaunchpad } from '@oe/api';
+import { VOTING_STATUS } from '@oe/api';
+import { formatDate } from '@oe/core';
 import { Check, type LucideIcon, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Separator } from '#shadcn/separator';
 import { cn } from '#utils/cn';
-import VotingDialog from './voting-dialog';
+import { VotingDialog } from './voting-dialog';
 
 const VotingCard = ({ campaign }: { campaign: ILaunchpad | null }) => {
   const t = useTranslations('launchpadDetailPage');
@@ -110,4 +110,4 @@ const VoteButton = ({
   );
 };
 
-export default VotingCard;
+export { VotingCard, VoteButton };

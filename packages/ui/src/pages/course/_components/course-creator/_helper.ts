@@ -1,10 +1,10 @@
-import type { IUserRoleInOrg } from '@oe/api/types/user';
-import type { IUserRole } from '@oe/api/types/user-profile';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { createAPIUrl } from '@oe/api';
+import type { IUserRoleInOrg } from '@oe/api';
+import type { IUserProfileRole } from '@oe/api';
+import { PLATFORM_ROUTES } from '@oe/core';
 
 export const filterUserData = (roles: IUserRoleInOrg[]) => {
-  const orgMap: { [key: string]: IUserRole } = {};
+  const orgMap: { [key: string]: IUserProfileRole } = {};
 
   for (const role of roles) {
     if (role.role_id !== 'learner' && role.role_id !== 'guest') {

@@ -1,12 +1,12 @@
 'use client';
 
-import { useNFTTotalAssets } from '@oe/api/hooks/useWallet';
-import { NFTAssetsIcon } from '@oe/assets/icons/wallets/nft-assets';
-import { WALLET_ROUTES } from '@oe/core/utils/routes';
+import { useNFTTotalAssets } from '@oe/api';
+import { NFTAssetsIcon } from '@oe/assets';
+import { WALLET_ROUTES } from '@oe/core';
 import { ChevronRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Link } from '#common/navigation';
-import AssetCard from './asset-card';
+import { AssetCard } from './asset-card';
 
 export const NFTAssets = () => {
   const { nftData } = useNFTTotalAssets();

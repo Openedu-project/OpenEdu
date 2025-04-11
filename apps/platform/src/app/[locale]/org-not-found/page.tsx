@@ -1,4 +1,4 @@
-import { OrgNotFoundPage } from '@oe/ui/common/pages';
+import { OrgNotFoundPage } from "@oe/ui";
 
 export default function OrgNotFound() {
   return <OrgNotFoundPage />;

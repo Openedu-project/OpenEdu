@@ -1,13 +1,16 @@
-import { useCategoriesTree } from '@oe/api/hooks/useCategories';
-import type { IBlogFormType } from '@oe/api/schemas/blogSchema';
-import type { ICategoryTree } from '@oe/api/types/categories';
+import { useCategoriesTree } from '@oe/api';
+import type { IBlogFormType } from '@oe/api';
+import type { ICategoryTree } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { SelectTree } from '#components/select-tree';
 import { BlogField, BlogFieldSkeleton } from './blog-field';
 
 export function CategoryField() {
   const tBlogs = useTranslations('blogForm');
-  const { categoriesTree, categoriesTreeIsLoading } = useCategoriesTree({ active: true, type: 'blog' });
+  const { categoriesTree, categoriesTreeIsLoading } = useCategoriesTree({
+    active: true,
+    type: 'blog',
+  });
 
   if (categoriesTreeIsLoading) {
     return <BlogFieldSkeleton title={tBlogs('category')} />;

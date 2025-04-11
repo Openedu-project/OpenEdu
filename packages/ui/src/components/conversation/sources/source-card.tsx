@@ -1,4 +1,4 @@
-import type { ISourceProps } from '@oe/api/types/conversation';
+import type { ISourceProps } from '@oe/api';
 import { Link } from '#common/navigation';
 import { Image } from '#components/image';
 import { Card } from '#shadcn/card';

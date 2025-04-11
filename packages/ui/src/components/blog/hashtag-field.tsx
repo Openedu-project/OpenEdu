@@ -1,4 +1,4 @@
-import { useGetHashtags } from '@oe/api/hooks/useHashtag';
+import { useGetHashtags } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import type { KeyboardEvent } from 'react';

@@ -1,7 +1,7 @@
 'use client';
-import { DEFAULT_LOCALE } from '@oe/i18n/constants';
-import { languages } from '@oe/i18n/languages';
-import { AutocompeteMultiple } from '@oe/ui/components/autocomplete';
+import { languages } from '@oe/i18n';
+import { DEFAULT_LOCALE } from '@oe/i18n';
+import { AutocompeteMultiple } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { type LanguageOption, useLanguageStore } from '../_store/useLanguageStore';
 

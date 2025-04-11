@@ -1,6 +1,6 @@
-import { cn } from '@oe/ui/utils/cn';
+import { cn } from '@oe/ui';
 import { getTranslations } from 'next-intl/server';
-import PopularCourseList from '../../../_components/web/popular-course-list';
+import { PopularCourseList } from '../../../_components/web/popular-course-list';
 import type { SectionComponent } from '../../../_types/theme-page';
 import { InfoSection } from '../../../vbi/_components/info-section';
 import { getPopularCourses } from '../../_actions/popular-course';
@@ -30,4 +30,4 @@ const VbiHomepageCoursesServer: SectionComponent<'homepage', 'vbiCourses'> = asy
   );
 };
 
-export default VbiHomepageCoursesServer;
+export { VbiHomepageCoursesServer };

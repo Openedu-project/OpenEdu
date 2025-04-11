@@ -1,23 +1,23 @@
 'use client';
-import type { ICourseFormTrigger } from '@oe/api/schemas/courses/forms';
-import { courseFormTriggerSchema } from '@oe/api/schemas/courses/forms';
-import { createFormTriggerService, deleteFormTriggerService, updateFormTriggerService } from '@oe/api/services/forms';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
+import { API_ENDPOINT } from '@oe/api';
+import type { ICourseFormTrigger, IFormResponse } from '@oe/api';
+import { courseFormTriggerSchema } from '@oe/api';
+import { createFormTriggerService, deleteFormTriggerService, updateFormTriggerService } from '@oe/api';
 import { Eye, Plus, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
-import { formatDate } from '@oe/core/utils/datetime';
-import { toCamelCase } from '@oe/core/utils/string';
-import { DeleteButton } from '@oe/ui/components/delete-button';
-import type { FilterOption } from '@oe/ui/components/filter-search';
-import { Modal } from '@oe/ui/components/modal';
-import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { Button } from '@oe/ui/shadcn/button';
-import { toast } from '@oe/ui/shadcn/sonner';
-import { Switch } from '@oe/ui/shadcn/switch';
+import { formatDate } from '@oe/core';
+import { toCamelCase } from '@oe/core';
+import { toast } from '@oe/ui';
+import type { FilterOption } from '@oe/ui';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
+import { Badge } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { DeleteButton } from '@oe/ui';
+import { Modal } from '@oe/ui';
+import { Switch } from '@oe/ui';
 import { AnswersModal } from './_components/answers-modal';
 import { FormTriggerForm } from './_components/form-trigger-form';
 
@@ -44,7 +44,7 @@ const defaultValues: ICourseFormTrigger = {
   type: 'form',
 };
 
-export default function CourseDetailFormPage() {
+export function CourseDetailFormPage() {
   const t = useTranslations('course');
   const tGeneral = useTranslations('general');
   const params = useParams<{ courseId: string }>();
@@ -79,7 +79,7 @@ export default function CourseDetailFormPage() {
 
   const renderedName = useCallback((course: ICourseFormTrigger) => {
     if (course?.type === 'form') {
-      return course?.form?.title || course?.name || '-';
+      return (course?.form as Partial<IFormResponse>)?.title || course?.name || '-';
     }
 
     return course?.confirmation_settings?.title || '-';
@@ -87,7 +87,7 @@ export default function CourseDetailFormPage() {
 
   const renderedDescription = useCallback((course: ICourseFormTrigger) => {
     if (course?.type === 'form') {
-      return course?.form?.description || '-';
+      return (course?.form as Partial<IFormResponse>)?.description || '-';
     }
 
     return course?.confirmation_settings?.description || '-';
@@ -152,7 +152,7 @@ export default function CourseDetailFormPage() {
         enableSorting: false,
         align: 'center',
         cell: ({ row }) => {
-          const questions = row.original.form?.questions || [];
+          const questions = (row.original.form as Partial<IFormResponse>)?.questions || [];
           return questions.length;
         },
         size: 100,
@@ -190,8 +190,8 @@ export default function CourseDetailFormPage() {
             <div className="flex w-full items-center justify-end gap-2">
               {formTrigger?.type === 'form' && (
                 <AnswersModal
-                  id={formTrigger.form?.id ?? ''}
-                  formUID={formTrigger.form?.uid ?? ''}
+                  id={(formTrigger.form as Partial<IFormResponse>)?.id ?? ''}
+                  formUID={(formTrigger.form as Partial<IFormResponse>)?.uid ?? ''}
                   triggerType={formTrigger.start_when.type}
                   title={t('form.viewAnswers')}
                   trigger={

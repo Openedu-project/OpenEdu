@@ -1,11 +1,8 @@
-import {
-  type INestedFormsValues,
-  SubmitFormsButton,
-} from "@oe/ui/components/form-wrapper";
-import { Button } from "@oe/ui/shadcn/button";
-import { cn } from "@oe/ui/utils/cn";
-import { useTranslations } from "next-intl";
-import type { FC, ReactNode } from "react";
+import { Button } from '@oe/ui';
+import { type INestedFormsValues, SubmitFormsButton } from '@oe/ui';
+import { cn } from '@oe/ui';
+import { useTranslations } from 'next-intl';
+import type { FC, ReactNode } from 'react';
 
 export interface ILaunchpadNavigationButtonsProps {
   className?: string;
@@ -19,9 +16,7 @@ export interface ILaunchpadNavigationButtonsProps {
   isNextIconStart?: boolean;
 }
 
-export const LaunchpadNavigationButtons: FC<
-  ILaunchpadNavigationButtonsProps
-> = ({
+export const LaunchpadNavigationButtons: FC<ILaunchpadNavigationButtonsProps> = ({
   className,
   onPrevClick,
   prevButtonClassName,
@@ -30,24 +25,19 @@ export const LaunchpadNavigationButtons: FC<
   isPrevIconStart = true,
   isNextIconStart = true,
 }) => {
-  const tGeneral = useTranslations("general");
+  const tGeneral = useTranslations('general');
 
   return (
-    <div className={cn("mt-4 flex justify-end gap-5", className)}>
-      <Button
-        type="button"
-        variant="outline"
-        onClick={onPrevClick}
-        className={cn(prevButtonClassName)}
-      >
+    <div className={cn('mt-4 flex justify-end gap-5', className)}>
+      <Button type="button" variant="outline" onClick={onPrevClick} className={cn(prevButtonClassName)}>
         {isPrevIconStart && prevIcon}
-        {tGeneral("previous")}
+        {tGeneral('previous')}
         {!isPrevIconStart && prevIcon}
       </Button>
 
       <SubmitFormsButton>
         {isNextIconStart && nextIcon}
-        {tGeneral("next")}
+        {tGeneral('next')}
         {!isNextIconStart && nextIcon}
       </SubmitFormsButton>
     </div>

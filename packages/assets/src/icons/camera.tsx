@@ -1,4 +1,4 @@
-export default function Camera({ width = 16, height = 16, className = '', color = 'white' }) {
+export function Camera({ width = 16, height = 16, className = '', color = 'white' }) {
   return (
     <svg
       className={className}

@@ -2,7 +2,7 @@
 import Openedu from '@oe/assets/images/openedu.png';
 import { Check, ChevronDown } from 'lucide-react';
 
-import type { IAIModel } from '@oe/api/types/conversation';
+import type { IAIModel } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 import { Image } from '#components/image';

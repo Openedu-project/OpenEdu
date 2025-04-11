@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function TaskSquare({ width = 29, height = 28, className = '', color = '#2C2C2C' }: ISvgProps) {
+export function TaskSquare({ width = 29, height = 28, className = '', color = '#2C2C2C' }: ISvgProps) {
   return (
     <svg
       className={className}

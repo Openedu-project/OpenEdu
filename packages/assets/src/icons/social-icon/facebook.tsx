@@ -1,6 +1,6 @@
 import type { ISvgProps } from '../types';
 
-export default function Facebook({ className, color = '#0866FF', width = 24, height = 24 }: ISvgProps) {
+export function Facebook({ className, color = '#0866FF', width = 24, height = 24 }: ISvgProps) {
   return (
     <svg
       className={className}

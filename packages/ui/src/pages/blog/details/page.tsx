@@ -1,8 +1,8 @@
-import { getBlogContent } from '@oe/api/services/blog';
+import { getBlogContent } from '@oe/api';
 import { BlogDetails } from '#components/blog';
 import { BlogCateCarousel } from '../_components/blog-cate-carousel';
 
-export default async function BlogDetailsPage({
+export async function BlogDetailsPage({
   slug,
   type,
 }: {

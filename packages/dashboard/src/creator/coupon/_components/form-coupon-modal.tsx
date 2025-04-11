@@ -1,12 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useGetCourses } from '@oe/api/hooks/useCourse';
-import { useGetMe } from '@oe/api/hooks/useMe';
-import { useGetListUser } from '@oe/api/hooks/useUser';
-import type { ICouponItem, ICouponPayload } from '@oe/api/types/coupon';
-import { Checkbox } from '@oe/ui/shadcn/checkbox';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
-import { Switch } from '@oe/ui/shadcn/switch';
+import { useGetCourses } from '@oe/api';
+import { useGetMe } from '@oe/api';
+import { useGetListUser } from '@oe/api';
+import type { ICouponItem, ICouponPayload } from '@oe/api';
+import { Checkbox } from '@oe/ui';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';
+import { Input } from '@oe/ui';
+import { Switch } from '@oe/ui';
 import { PercentCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type React from 'react';
@@ -14,15 +14,15 @@ import { Suspense, useCallback, useEffect, useMemo } from 'react';
 import type { ControllerRenderProps } from 'react-hook-form';
 import { useForm, useWatch } from 'react-hook-form';
 
-import { type ICouponType, couponSchema } from '@oe/api/schemas/couponSchema';
+import { type ICouponType, couponSchema } from '@oe/api';
 
-import { AutocompeteMultiple } from '@oe/ui/components/autocomplete';
-import { DateTimePicker } from '@oe/ui/components/date-time-picker';
-import { InputCurrency } from '@oe/ui/components/input-currency';
-import { Button } from '@oe/ui/shadcn/button';
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@oe/ui/shadcn/dialog';
-import { Label } from '@oe/ui/shadcn/label';
-import { Textarea } from '@oe/ui/shadcn/textarea';
+import { Button } from '@oe/ui';
+import { AutocompeteMultiple } from '@oe/ui';
+import { DateTimePicker } from '@oe/ui';
+import { InputCurrency } from '@oe/ui';
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@oe/ui';
+import { Label } from '@oe/ui';
+import { Textarea } from '@oe/ui';
 
 interface IFormCouponModalProps {
   isCreate?: boolean;
@@ -40,7 +40,7 @@ const DEFAULT_USER_PER_PAGE = 9999;
 
 const REGEX_DISCOUNT = /^\d*\.?\d*$/;
 
-export default function FormCouponModal({
+export function FormCouponModal({
   onSubmit,
   onClose,
   loading = false,

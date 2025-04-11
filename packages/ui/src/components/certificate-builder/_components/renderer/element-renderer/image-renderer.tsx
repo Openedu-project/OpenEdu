@@ -1,4 +1,4 @@
-import type { ICertificateImageElement } from '@oe/api/types/certificate';
+import type { ICertificateImageElement } from '@oe/api';
 import { useTranslations } from 'next-intl';
 
 export const ImageRenderer = ({

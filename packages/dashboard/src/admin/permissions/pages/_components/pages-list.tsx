@@ -1,9 +1,4 @@
 'use client';
-import {
-  useCreatePermissionConfig,
-  useGetPermissionPageConfig,
-  usePermissionRoutes,
-} from '@oe/api/hooks/usePermission';
 import type {
   IPermissionAction,
   IPermissionConfigEntityItem,
@@ -11,11 +6,12 @@ import type {
   IPermissionRouteInfo,
   IPermissionRouteKey,
   IPermissionSelectedActions,
-} from '@oe/api/types/permissions';
-import { Button } from '@oe/ui/shadcn/button';
-import { Input } from '@oe/ui/shadcn/input';
-import { toast } from '@oe/ui/shadcn/sonner';
-import { Table, TableBody, TableCell, TableHeader, TableRow } from '@oe/ui/shadcn/table';
+} from '@oe/api';
+import { useCreatePermissionConfig, useGetPermissionPageConfig, usePermissionRoutes } from '@oe/api';
+import { toast } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { Input } from '@oe/ui';
+import { ShadcnTable, TableBody, TableCell, TableHeader, TableRow } from '@oe/ui';
 import { Save, Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
@@ -23,7 +19,7 @@ import { DEFAULT_ACTIONS_PERMISSION } from '../../permission-constant';
 import { TableHeaderActions } from './pages-list-header';
 import { RouteRow } from './pages-list-row';
 
-export default function PagesList() {
+export function PagesList() {
   const t = useTranslations('permissionPagesList');
   const groupedRoutes = usePermissionRoutes();
 
@@ -167,7 +163,7 @@ export default function PagesList() {
         </div>
       </div>
       <div className="scrollbar overflow-auto">
-        <Table>
+        <ShadcnTable>
           <TableHeader className="sticky top-0 z-10 bg-background shadow-sm">
             <TableHeaderActions
               selectedActions={selectedActions}
@@ -198,7 +194,7 @@ export default function PagesList() {
               </React.Fragment>
             ))}
           </TableBody>
-        </Table>
+        </ShadcnTable>
       </div>
       {/* <Card className="w-full overflow-hidden">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">

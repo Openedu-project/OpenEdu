@@ -1,4 +1,4 @@
-import type { IFileResponse } from '@oe/api/types/file';
+import type { IFileResponse } from '#types/file';
 
 export type IAICourseStatus = 'failed' | 'manual' | 'completed' | 'generating' | 'pending' | 'waiting';
 

@@ -1,22 +1,19 @@
-import { useGetReferrerList } from '@oe/api/hooks/useReferrer';
-import type { ICommissionItem, ICommissionPayload } from '@oe/api/types/commission';
-import { Modal } from '@oe/ui/components/modal';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
-import { Switch } from '@oe/ui/shadcn/switch';
+import type { ICommissionItem, ICommissionPayload } from '@oe/api';
+import { useGetReferrerList } from '@oe/api';
+import { Modal } from '@oe/ui';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';
+import { Input } from '@oe/ui';
+import { Switch } from '@oe/ui';
 import { CirclePercent } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import type React from 'react';
 import { Suspense, useCallback, useMemo } from 'react';
 
-import {
-  type CreateSpecialReferrerCommissionSchemaType,
-  createSpecialReferrerCommissionSchema,
-} from '@oe/api/schemas/affiliateCampaignSchema';
-import { AutocompeteMultiple } from '@oe/ui/components/autocomplete';
+import { type CreateSpecialReferrerCommissionSchemaType, createSpecialReferrerCommissionSchema } from '@oe/api';
+import { AutocompeteMultiple } from '@oe/ui';
 import type { UseFormReturn } from 'react-hook-form';
-import FormBonusesCommission, { type IBaseCommissionForm } from './commissions-bonuses-form';
+import { FormBonusesCommission, type IBaseCommissionForm } from './commissions-bonuses-form';
 
 interface IFormSpecificRefCommissionModal {
   data?: ICommissionItem | null;
@@ -34,7 +31,7 @@ const handleInputChange = (
   field.onChange(value === '' ? '' : Number(value));
 };
 
-export default function FormSpecificRefCommissionModal({
+export function FormSpecificRefCommissionModal({
   data,
   onSubmit,
   onClose,

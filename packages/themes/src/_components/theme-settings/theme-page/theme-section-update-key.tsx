@@ -1,5 +1,5 @@
 'use client';
-import { AutocompeteMultiple } from '@oe/ui/components/autocomplete';
+import { AutocompeteMultiple } from '@oe/ui';
 import type { AllSectionKeys } from '../../../_types';
 
 import { useEffect, useState } from 'react';

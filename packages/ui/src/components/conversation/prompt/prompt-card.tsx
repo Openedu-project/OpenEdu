@@ -1,6 +1,6 @@
 'use client';
-import type { TAgentType } from '@oe/api/types/conversation';
-import { isLogin } from '@oe/api/utils/auth';
+import { isLogin } from '@oe/api';
+import type { TAgentType } from '@oe/api';
 import { animated, useSpring } from '@react-spring/web';
 import { LoaderCircle, MoveRight } from 'lucide-react';
 import { useRef, useState } from 'react';

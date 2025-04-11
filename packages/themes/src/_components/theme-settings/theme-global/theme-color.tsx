@@ -1,10 +1,10 @@
-import { Button } from '@oe/ui/shadcn/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@oe/ui/shadcn/card';
-import { Label } from '@oe/ui/shadcn/label';
-import { Popover, PopoverContent, PopoverTrigger } from '@oe/ui/shadcn/popover';
-import { ScrollArea } from '@oe/ui/shadcn/scroll-area';
-import { Separator } from '@oe/ui/shadcn/separator';
-import { Switch } from '@oe/ui/shadcn/switch';
+import { Button } from '@oe/ui';
+import { Card, CardContent, CardHeader, CardTitle } from '@oe/ui';
+import { Label } from '@oe/ui';
+import { Popover, PopoverContent, PopoverTrigger } from '@oe/ui';
+import { ScrollArea } from '@oe/ui';
+import { Separator } from '@oe/ui';
+import { Switch } from '@oe/ui';
 import { Moon, RotateCcw, Save, Sun } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
@@ -12,7 +12,7 @@ import { initialThemeGlobalColors } from '../../../_config/theme-global-initial'
 import type { ThemeGlobalColorConfig, ThemeMode } from '../../../_types/index';
 import { getHSLPreview } from '../../../_utils/function';
 import { hslStringToHex, setColorScheme, setRootCSSVariable } from './_utils';
-import ColorPicker from './color-picker';
+import { ColorPicker } from './color-picker';
 
 interface ThemeSettingColorsProps {
   isLoading: boolean;
@@ -137,4 +137,4 @@ const ThemeSettingColors = ({ onSubmitColor, isLoading, colorData }: ThemeSettin
   );
 };
 
-export default ThemeSettingColors;
+export { ThemeSettingColors };

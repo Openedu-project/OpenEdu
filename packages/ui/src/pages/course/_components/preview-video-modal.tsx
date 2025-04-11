@@ -1,8 +1,8 @@
 'use client';
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import type { IFileResponse } from '@oe/api/types/file';
-import { VideoSquare } from '@oe/assets/icons/video-square';
-import { convertSecondsToTimeString } from '@oe/core/utils/datetime';
+import type { ICourseOutline } from '@oe/api';
+import type { IFileResponse } from '@oe/api';
+import { VideoSquare } from '@oe/assets';
+import { convertSecondsToTimeString } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useRef, useState } from 'react';
 import { Modal } from '#components/modal';
@@ -29,7 +29,7 @@ interface IVideo {
   video?: PreviewVideo;
 }
 
-export default function CoursePreviewModal({ medias, courseOutline, open = false, onClose }: ICoursePreview) {
+export function CoursePreviewModal({ medias, courseOutline, open = false, onClose }: ICoursePreview) {
   const t = useTranslations('courseOutline.coursePreview');
 
   const [videoStatus, setVideoStatus] = useState<IVideo>({

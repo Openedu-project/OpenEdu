@@ -1,10 +1,10 @@
 import { Trash2 } from 'lucide-react';
 
-import { Selectbox } from '@oe/ui/components/selectbox';
-import { Button } from '@oe/ui/shadcn/button';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
-import { Label } from '@oe/ui/shadcn/label';
+import { Button } from '@oe/ui';
+import { Selectbox } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
+import { Input } from '@oe/ui';
+import { Label } from '@oe/ui';
 import { Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef } from 'react';

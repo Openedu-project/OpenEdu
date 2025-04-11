@@ -1,4 +1,4 @@
-import { PASSWORD_REGEX, USERNAME_REGEX } from '@oe/core/utils/constants';
+import { PASSWORD_REGEX, USERNAME_REGEX } from '@oe/core';
 import { z } from '#utils/zod';
 
 export const editProfileFormSchema = z.object({

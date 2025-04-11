@@ -1,5 +1,4 @@
-import type { ICourseOwner } from './course/basic';
-import type { ICourse } from './course/course';
+import type { ICourse, ICourseOwner } from './course';
 import type { HTTPPagination } from './fetch';
 import type { IFileResponse } from './file';
 import type { IUser } from './user';

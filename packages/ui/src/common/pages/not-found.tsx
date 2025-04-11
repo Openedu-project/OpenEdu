@@ -1,9 +1,9 @@
-import { NotfoundImage } from '@oe/assets/icons/notfound';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { NotfoundImage } from '@oe/assets';
+import { PLATFORM_ROUTES } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { ErrorException } from '#components/error-handler';
 
-export default function NotFound() {
+export function NotFoundPage() {
   const tErrors = useTranslations('errors');
   const tGeneral = useTranslations('general');
 

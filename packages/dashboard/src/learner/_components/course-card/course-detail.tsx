@@ -1,9 +1,9 @@
 'use client';
 
-import type { ICourse } from '@oe/api/types/course/course';
-import SendSquare from '@oe/assets/icons/send-square';
-import { RatingStars } from '@oe/ui/components/rating-stars';
-import { Separator } from '@oe/ui/shadcn/separator';
+import type { ICourse } from '@oe/api';
+import { SendSquare } from '@oe/assets';
+import { RatingStars } from '@oe/ui';
+import { Separator } from '@oe/ui';
 import { Layers, UsersRound } from 'lucide-react';
 import type { ReactNode } from 'react';
 

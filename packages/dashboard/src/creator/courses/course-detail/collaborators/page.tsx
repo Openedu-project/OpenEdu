@@ -1,43 +1,35 @@
-"use client";
-import {
-  addCoursePartnerService,
-  deleteCoursePartnerService,
-} from "@oe/api/services/course";
-import type { ICoursePartner } from "@oe/api/types/course/partners";
-import { API_ENDPOINT } from "@oe/api/utils/endpoints";
-import { Pencil, Plus, Trash2 } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
-import { useMemo, useRef, useState } from "react";
+'use client';
+import { API_ENDPOINT } from '@oe/api';
+import { addCoursePartnerService, deleteCoursePartnerService } from '@oe/api';
+import type { ICoursePartner } from '@oe/api';
+import { Pencil, Plus, Trash2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
+import { useMemo, useRef, useState } from 'react';
 
-import { addPartnerSchema } from "@oe/api/schemas/courses/partners";
-import type {
-  IAddPartnerSchema,
-  IPartnerSchema,
-} from "@oe/api/schemas/courses/partners";
-import type { FilterOption } from "@oe/ui/components/filter-search";
-import { Modal } from "@oe/ui/components/modal";
-import { type ColumnDef, Table, type TableRef } from "@oe/ui/components/table";
-import { Badge } from "@oe/ui/shadcn/badge";
-import { Button } from "@oe/ui/shadcn/button";
-import { toast } from "@oe/ui/shadcn/sonner";
-import { PartnerForm } from "./_components/partner-form";
+import { addPartnerSchema } from '@oe/api';
+import type { IAddPartnerSchema, IPartnerSchema } from '@oe/api';
+import { toast } from '@oe/ui';
+import type { FilterOption } from '@oe/ui';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
+import { Badge } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { Modal } from '@oe/ui';
+import { PartnerForm } from './_components/partner-form';
 
 // Form cho thêm partner
 const defaultValues = {
-  partners: [{ email: "", roles: [], enable: true }],
+  partners: [{ email: '', roles: [], enable: true }],
 };
 
-export default function CourseDetailCollaboratorsPage() {
-  const t = useTranslations("course");
-  const tGeneral = useTranslations("general");
+export function CourseDetailCollaboratorsPage() {
+  const t = useTranslations('course');
+  const tGeneral = useTranslations('general');
   const params = useParams<{ courseId: string }>();
   const courseId = params.courseId;
   const tableRef = useRef<TableRef<ICoursePartner>>(null);
-  const [modalType, setModalType] = useState<"add" | "edit" | null>(null);
-  const [selectedPartner, setSelectedPartner] = useState<IPartnerSchema | null>(
-    null
-  );
+  const [modalType, setModalType] = useState<'add' | 'edit' | null>(null);
+  const [selectedPartner, setSelectedPartner] = useState<IPartnerSchema | null>(null);
 
   // Định nghĩa cột cho bảng
   const columns: ColumnDef<ICoursePartner>[] = useMemo(
@@ -48,26 +40,26 @@ export default function CourseDetailCollaboratorsPage() {
       //   enableSorting: false,
       // },
       {
-        accessorKey: "username",
-        header: t("partner.username"),
+        accessorKey: 'username',
+        header: t('partner.username'),
         enableSorting: false,
         size: 180,
       },
       {
-        accessorKey: "email",
-        header: t("partner.email"),
+        accessorKey: 'email',
+        header: t('partner.email'),
         enableSorting: false,
         size: 220,
       },
       {
-        accessorKey: "roles",
-        header: t("partner.roles"),
+        accessorKey: 'roles',
+        header: t('partner.roles'),
         enableSorting: false,
         cell: ({ row }) => {
           const roles = row.original.roles || [];
           return (
             <div className="flex flex-wrap gap-1">
-              {roles.map((role) => (
+              {roles.map(role => (
                 <Badge key={role} variant="outline">
                   {role}
                 </Badge>
@@ -77,8 +69,8 @@ export default function CourseDetailCollaboratorsPage() {
         },
       },
       {
-        id: "actions",
-        header: tGeneral("actions"),
+        id: 'actions',
+        header: tGeneral('actions'),
         size: 250,
         // sticky: "right",
         cell: ({ row }) => {
@@ -89,25 +81,25 @@ export default function CourseDetailCollaboratorsPage() {
                 className="h-8 gap-2"
                 onClick={() => {
                   setSelectedPartner({
-                    roles: partner.roles as IPartnerSchema["roles"],
-                    email: partner?.email ?? "",
+                    roles: partner.roles as IPartnerSchema['roles'],
+                    email: partner?.email ?? '',
                     enable: partner.enable,
                   });
-                  setModalType("edit");
+                  setModalType('edit');
                 }}
-                disabled={partner.roles?.includes("owner")}
+                disabled={partner.roles?.includes('owner')}
               >
                 <Pencil className="h-4 w-4" />
-                {tGeneral("edit")}
+                {tGeneral('edit')}
               </Button>
               <Button
                 variant="destructive"
                 onClick={() => handleDeletePartner(partner.id)}
                 className="h-8 gap-2"
-                disabled={partner.roles?.includes("owner")}
+                disabled={partner.roles?.includes('owner')}
               >
                 <Trash2 className="h-4 w-4" />
-                {tGeneral("delete")}
+                {tGeneral('delete')}
               </Button>
             </div>
           );
@@ -121,18 +113,18 @@ export default function CourseDetailCollaboratorsPage() {
   const filterOptions: FilterOption[] = useMemo(
     () => [
       {
-        label: t("partner.username"),
-        value: "username",
-        placeholder: t("partner.searchUsername"),
-        type: "search",
-        id: "username",
+        label: t('partner.username'),
+        value: 'username',
+        placeholder: t('partner.searchUsername'),
+        type: 'search',
+        id: 'username',
       },
       {
-        label: t("partner.email"),
-        value: "email",
-        placeholder: t("partner.searchEmail"),
-        type: "search",
-        id: "email",
+        label: t('partner.email'),
+        value: 'email',
+        placeholder: t('partner.searchEmail'),
+        type: 'search',
+        id: 'email',
       },
     ],
     [t]
@@ -151,10 +143,10 @@ export default function CourseDetailCollaboratorsPage() {
       });
 
       await tableRef.current?.mutateAndClearCache?.();
-      toast.success(t("partner.deleteSuccess"));
+      toast.success(t('partner.deleteSuccess'));
     } catch (error) {
-      console.error("Error deleting partner:", error);
-      toast.error(t("partner.deleteError"));
+      console.error('Error deleting partner:', error);
+      toast.error(t('partner.deleteError'));
     }
   };
 
@@ -164,7 +156,7 @@ export default function CourseDetailCollaboratorsPage() {
       return;
     }
     const payload = {
-      partners: data.partners?.map((p) => ({
+      partners: data.partners?.map(p => ({
         id: p.id,
         enable: p.enable,
         roles: p.roles,
@@ -179,10 +171,10 @@ export default function CourseDetailCollaboratorsPage() {
 
       await tableRef.current?.mutateAndClearCache?.();
       setSelectedPartner(null);
-      toast.success(t("partner.addSuccess"));
+      toast.success(t('partner.addSuccess'));
     } catch (error) {
-      console.error("Error adding partners:", error);
-      toast.error(t("partner.addError"));
+      console.error('Error adding partners:', error);
+      toast.error(t('partner.addError'));
     }
   };
 
@@ -203,37 +195,27 @@ export default function CourseDetailCollaboratorsPage() {
             variant="default"
             className="h-8 gap-2"
             onClick={() => {
-              setModalType("add");
+              setModalType('add');
               setSelectedPartner(null);
             }}
           >
             <Plus className="h-4 w-4" />
-            {t("partner.addPartners")}
+            {t('partner.addPartners')}
           </Button>
         </Table>
         <Modal
-          title={
-            modalType === "add"
-              ? t("partner.addPartners")
-              : t("partner.editPartners")
-          }
-          description={
-            modalType === "add"
-              ? t("partner.addPartnersDescription")
-              : t("partner.editPartnersDescription")
-          }
+          title={modalType === 'add' ? t('partner.addPartners') : t('partner.editPartners')}
+          description={modalType === 'add' ? t('partner.addPartnersDescription') : t('partner.editPartnersDescription')}
           validationSchema={addPartnerSchema}
           onSubmit={handleAddPartners}
           showSubmit
-          open={modalType === "add" || modalType === "edit"}
-          defaultValues={
-            selectedPartner ? { partners: [selectedPartner] } : defaultValues
-          }
+          open={modalType === 'add' || modalType === 'edit'}
+          defaultValues={selectedPartner ? { partners: [selectedPartner] } : defaultValues}
           onClose={() => {
             setModalType(null);
           }}
         >
-          {(form) => <PartnerForm form={form} type={modalType} />}
+          {form => <PartnerForm form={form} type={modalType} />}
         </Modal>
       </div>
     </div>

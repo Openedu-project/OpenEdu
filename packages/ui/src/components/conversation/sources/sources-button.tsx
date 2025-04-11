@@ -1,10 +1,16 @@
-import type { ISourceProps } from '@oe/api/types/conversation';
+import type { ISourceProps } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { Image } from '#components/image';
 import { Button } from '#shadcn/button';
 import { useConversationStore } from '#store/conversation-store';
 
-export function SourcesButton({ sources, messageId }: { sources: ISourceProps[]; messageId: string }) {
+export function SourcesButton({
+  sources,
+  messageId,
+}: {
+  sources: ISourceProps[];
+  messageId: string;
+}) {
   const { openWebSource, setOpenWebSource } = useConversationStore();
   const tAI = useTranslations('aiAssistant');
 

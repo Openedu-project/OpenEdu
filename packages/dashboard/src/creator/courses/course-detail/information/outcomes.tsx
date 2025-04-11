@@ -1,13 +1,13 @@
 'use client';
-import { Button } from '@oe/ui/shadcn/button';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
+import { Button } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
+import { Input } from '@oe/ui';
 import { PlusIcon } from 'lucide-react';
 import { TrashIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
-export default function Outcomes() {
+export function Outcomes() {
   const tCourse = useTranslations('course');
 
   const { control } = useFormContext();

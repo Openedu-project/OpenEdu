@@ -1,6 +1,6 @@
-import type { ISectionLearningProgress } from '@oe/api/types/course/learning-progress';
-import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
-import { create } from 'zustand';
+import type { ISectionLearningProgress } from '@oe/api';
+import type { IQuizSubmissionResponse } from '@oe/api';
+import { createStore } from '@oe/core';
 
 interface LessonLearningState {
   sectionsProgressData: ISectionLearningProgress[];
@@ -14,7 +14,7 @@ interface LessonLearningState {
   setIsNavigatingLesson: (isNavigating: boolean) => void;
 }
 
-export const useLessonLearningStore = create<LessonLearningState>((set, get) => {
+export const useLessonLearningStore = createStore<LessonLearningState>((set, get) => {
   return {
     sectionsProgressData: [],
     isNavigating: false,
@@ -81,7 +81,7 @@ type QuizSubmissionStore = {
   setQuizResult: (quizResult?: IQuizSubmissionResponse) => void;
 };
 
-export const useQuizSubmissionStore = create<QuizSubmissionStore>(set => {
+export const useQuizSubmissionStore = createStore<QuizSubmissionStore>(set => {
   return {
     quizResult: undefined,
     setQuizResult(quizResult) {

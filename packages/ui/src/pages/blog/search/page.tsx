@@ -1,4 +1,4 @@
-import { getBlogsPublishService } from '@oe/api/services/blog';
+import { getBlogsPublishService } from '@oe/api';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
 import { Separator } from '#shadcn/separator';
@@ -6,7 +6,7 @@ import { BlogHeader } from '../_components/blog-header';
 import { BlogList } from '../_components/blog-list';
 import { NoBlogData } from '../_components/no-blog-data';
 
-export default async function SearchBlogPage({ name }: { name?: string }) {
+export async function SearchBlogPage({ name }: { name?: string }) {
   const [blogsData, t] = await Promise.all([
     getBlogsPublishService(undefined, {
       params: {

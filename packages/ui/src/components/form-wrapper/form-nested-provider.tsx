@@ -1,6 +1,6 @@
 import { useCallback, useContext, useRef, useState } from 'react';
 
-import type { z } from '@oe/api/utils/zod';
+import type { z } from '@oe/api';
 import { createContext } from 'react';
 import type { IFormContextValue, IFormMetadata, IFormNestedProviderProps, ITabMetadata } from './types';
 import { scrollToError } from './utils';
@@ -162,7 +162,7 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
       scrollToError(errorElement, scrollOptions);
     }
     return isValid;
-  }, [scrollOptions, activeFormId, validateSingleForm]);
+  }, [scrollOptions, activeFormId, validateSingleForm, hasScroll]);
 
   const validateForms = useCallback(
     async (formIds?: string[]) => {
@@ -185,7 +185,7 @@ export function FormNestedProvider<TFormSchema extends z.ZodType>({
 
       return results.every(Boolean);
     },
-    [getForms, scrollOptions, validateSingleForm]
+    [getForms, scrollOptions, validateSingleForm, hasScroll]
   );
 
   const submitForm = useCallback(

@@ -1,5 +1,5 @@
-import EmailSettings from '@oe/dashboard/admin/site-settings/emails/page';
+import { EmailSettingsPage } from "@oe/dashboard";
 
-export default function EmailSettingsPage() {
-  return <EmailSettings />;
+export default function EmailSettingsSiteSettingsPage() {
+  return <EmailSettingsPage />;
 }

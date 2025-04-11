@@ -1,10 +1,10 @@
 'use client';
 
-import type { ICertificateData, ICertificateTemplate } from '@oe/api/types/certificate';
+import type { ICertificateData, ICertificateTemplate } from '@oe/api';
 import { Document, Image, Page, pdf } from '@react-pdf/renderer';
 import type { FC, MouseEvent } from 'react';
 import './pdf-fonts';
-import { formatDate } from '@oe/core/utils/datetime';
+import { formatDate } from '@oe/core';
 import { Download } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';

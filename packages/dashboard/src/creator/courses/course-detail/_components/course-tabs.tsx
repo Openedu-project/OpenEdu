@@ -1,13 +1,13 @@
-import type { ISegment } from '@oe/api/types/course/segment';
-import { buildUrl } from '@oe/core/utils/url';
-import { Link, usePathname } from '@oe/ui/common/navigation';
-import { cn } from '@oe/ui/utils/cn';
+import type { ISegment } from '@oe/api';
+import { buildUrl } from '@oe/core';
+import { Link, usePathname } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useMemo } from 'react';
 import { COURSE_DETAIL_TABS } from '../_utils/constants';
 
-export default function CourseTabs({ segments }: { segments?: ISegment[] }) {
+export function CourseTabs({ segments }: { segments?: ISegment[] }) {
   const tCourse = useTranslations('course');
   const pathname = usePathname();
   const { courseId, sectionId, lessonId } = useParams<{

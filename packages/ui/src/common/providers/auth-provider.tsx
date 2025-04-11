@@ -1,8 +1,8 @@
 'use client';
 
-import { useGetMe } from '@oe/api/hooks/useMe';
-import type { IUser } from '@oe/api/types/user';
-import type { HTTPError } from '@oe/api/utils/http-error';
+import type { HTTPError } from '@oe/api';
+import { useGetMe } from '@oe/api';
+import type { IUser } from '@oe/api';
 import type React from 'react';
 import { createContext, useContext, useMemo } from 'react';
 import { useSocket } from '#hooks/socket';

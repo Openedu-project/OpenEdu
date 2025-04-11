@@ -1,6 +1,6 @@
 import type { ISvgProps } from '../types';
 
-export default function IconMedal({ width = 40, height = 40, className = '', color = '#FFBD04' }: ISvgProps) {
+export function IconMedal({ width = 40, height = 40, className = '', color = '#FFBD04' }: ISvgProps) {
   return (
     <svg
       width={width}

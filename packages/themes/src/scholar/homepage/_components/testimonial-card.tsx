@@ -1,6 +1,6 @@
-import { Image } from '@oe/ui/components/image';
-import type { FileType } from '@oe/ui/components/uploader';
-import { Card, CardContent } from '@oe/ui/shadcn/card';
+import type { FileType } from '@oe/ui';
+import { Image } from '@oe/ui';
+import { Card, CardContent } from '@oe/ui';
 import { Quote, Star, StarHalf } from 'lucide-react';
 
 interface TestimonialCardProps {

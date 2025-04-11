@@ -9,7 +9,7 @@ import {
   TemplateXLSXButton,
   type ColumnExportConfig,
   type ColumnImportConfig
-} from '@oe/ui/src/components/table';
+} from '#src/components/table';
 import { useRef } from 'react';
 
 function MyTablePage() {

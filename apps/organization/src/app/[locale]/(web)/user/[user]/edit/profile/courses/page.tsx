@@ -1,4 +1,4 @@
-import EditCourses from '@oe/ui/pages/user/edit/profile/courses';
+import { EditCourses } from "@oe/ui";
 
 export default function EditCoursesPage() {
   return <EditCourses />;

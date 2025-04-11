@@ -1,6 +1,6 @@
 'use client';
-import { useCategoriesTree } from '@oe/api/hooks/useCategories';
-import type { ICategoryTree } from '@oe/api/types/categories';
+import { useCategoriesTree } from '@oe/api';
+import type { ICategoryTree } from '@oe/api';
 import { CategoryAllMenu, CategoryNavMenu } from './category-nav';
 import { SearchBlog } from './search';
 

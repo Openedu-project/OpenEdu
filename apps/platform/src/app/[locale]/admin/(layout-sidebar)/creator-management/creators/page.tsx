@@ -1,4 +1,4 @@
-import CreatorsManagement from '@oe/dashboard/admin/creator-management/creators/page';
+import { CreatorsManagement } from "@oe/dashboard";
 
 export default function CreatorsManagementPage() {
   return <CreatorsManagement />;

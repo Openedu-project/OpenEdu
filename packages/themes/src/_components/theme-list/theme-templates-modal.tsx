@@ -1,8 +1,8 @@
 'use client';
 
-import { Modal } from '@oe/ui/components/modal';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@oe/ui/shadcn/carousel';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { toast } from '@oe/ui';
+import { Modal } from '@oe/ui';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { themeInfo } from '../../_config/theme-info';

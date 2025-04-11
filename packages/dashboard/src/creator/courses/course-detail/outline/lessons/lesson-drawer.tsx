@@ -1,13 +1,5 @@
 'use client';
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@oe/ui/shadcn/sheet';
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@oe/ui';
 import { XCircle } from 'lucide-react';
 import { type ReactNode, useEffect, useState } from 'react';
 import { LessonsPanel } from './lessons-panel';

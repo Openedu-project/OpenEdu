@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { z } from '@oe/api/utils/zod';
+import type { z } from '@oe/api';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { type DefaultValues, FormProvider as RHFFormProvider, useForm } from 'react-hook-form';
 import { cn } from '#utils/cn';

@@ -1,4 +1,4 @@
-import { PAGE_SIZE } from '@oe/core/utils/constants';
+import { PAGE_SIZE } from '@oe/core';
 import { getUserBlogService } from '#services/blog';
 import { getTopAuthorService } from '#services/user';
 import type { HTTPError } from '#utils/http-error';

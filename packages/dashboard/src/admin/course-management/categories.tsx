@@ -1,8 +1,8 @@
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
-import { SetupCategoryTree } from '@oe/ui/components/setup-category-tree';
+import { DashboardMainPageLayout } from '@oe/ui';
+import { SetupCategoryTree } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
-export default function CourseCategories() {
+export function CourseCategories() {
   const tDashboard = useTranslations('dashboard.courses');
   const tCourse = useTranslations('course');
 

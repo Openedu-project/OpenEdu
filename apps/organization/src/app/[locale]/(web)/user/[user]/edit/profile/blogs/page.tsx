@@ -1,4 +1,4 @@
-import EditBlogs from '@oe/ui/pages/user/edit/profile/blog';
+import { EditBlogs } from "@oe/ui";
 
 export default function EditBlogsPage() {
   return <EditBlogs />;

@@ -1,4 +1,4 @@
-import { Modal } from '@oe/ui/components/modal';
+import { Modal } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 
@@ -8,7 +8,7 @@ interface ICreatorDeleteLaunchpadModal {
   isLoading: boolean;
 }
 
-export default function CreatorDeleteLaunchpadModal({ onSubmit, onClose, isLoading }: ICreatorDeleteLaunchpadModal) {
+export function CreatorDeleteLaunchpadModal({ onSubmit, onClose, isLoading }: ICreatorDeleteLaunchpadModal) {
   const t = useTranslations('creatorLaunchpad.deleteLaunchpadModal');
 
   const handleSubmit = useCallback(() => {

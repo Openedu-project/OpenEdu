@@ -1,12 +1,9 @@
-import {
-  type AddReferrersCampaignSchemaType,
-  addReferrersCampaignSchema,
-} from '@oe/api/schemas/affiliateCampaignSchema';
-import type { ICreateReferrersPayload } from '@oe/api/types/referrer';
-import { InputTags } from '@oe/ui/components/input-tags';
-import { Modal } from '@oe/ui/components/modal';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@oe/ui/shadcn/select';
+import { type AddReferrersCampaignSchemaType, addReferrersCampaignSchema } from '@oe/api';
+import type { ICreateReferrersPayload } from '@oe/api';
+import { InputTags } from '@oe/ui';
+import { Modal } from '@oe/ui';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
 
@@ -15,7 +12,7 @@ interface IFormReferrerModal {
   onClose: () => void;
 }
 
-export default function AffiliateReferrerFormModal({ onSubmit, onClose }: IFormReferrerModal) {
+export function AffiliateReferrerFormModal({ onSubmit, onClose }: IFormReferrerModal) {
   const t = useTranslations('affiliateDetailReferrerFormModal');
 
   const [emails, setEmails] = useState<string[]>([]);

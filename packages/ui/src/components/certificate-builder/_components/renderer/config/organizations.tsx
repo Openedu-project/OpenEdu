@@ -1,4 +1,4 @@
-import type { IFileResponse } from '@oe/api/types/file';
+import type { IFileResponse } from '@oe/api';
 import { PlusIcon, XIcon } from 'lucide-react';
 import { nanoid } from 'nanoid';
 import { useTranslations } from 'next-intl';

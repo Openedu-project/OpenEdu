@@ -3,8 +3,8 @@
 import { LogOut } from 'lucide-react';
 import { mutate } from 'swr';
 
-import { setCookiesService } from '@oe/api/services/cookies';
-import { resetAllStores } from '@oe/core/store';
+import { setCookiesService } from '@oe/api';
+import { resetAllStores } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '#shadcn/button';

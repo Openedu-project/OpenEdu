@@ -1,5 +1,5 @@
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import type { IFormTriggerResponse } from '@oe/api/types/course/course-trigger';
+import type { ICourseOutline } from '@oe/api';
+import type { IFormTriggerResponse } from '@oe/api';
 import type { ButtonProps } from '#shadcn/button';
 
 export interface IPaymentButton extends ButtonProps {

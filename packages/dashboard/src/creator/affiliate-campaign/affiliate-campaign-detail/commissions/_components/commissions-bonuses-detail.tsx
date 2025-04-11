@@ -1,6 +1,6 @@
-import type { ICommissionItem } from '@oe/api/types/commission';
-import { formatNumber, getAlphabetLabel } from '@oe/core/utils/utils';
-import { Modal } from '@oe/ui/components/modal';
+import type { ICommissionItem } from '@oe/api';
+import { formatNumber, getAlphabetLabel } from '@oe/core';
+import { Modal } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
 interface ICommissionBonusesModal {
@@ -48,4 +48,4 @@ const CommissionBonusesModal = ({ onClose, data }: ICommissionBonusesModal) => {
   );
 };
 
-export default CommissionBonusesModal;
+export { CommissionBonusesModal };

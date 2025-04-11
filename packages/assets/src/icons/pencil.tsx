@@ -1,4 +1,4 @@
-export default function Pencil({ width = 36, height = 36, className = '', color = '#6E6E6E' }) {
+export function Pencil({ width = 36, height = 36, className = '', color = '#6E6E6E' }) {
   return (
     <svg
       className={className}

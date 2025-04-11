@@ -1,7 +1,7 @@
-import { z } from '@oe/api/utils/zod';
-import { InputCurrency } from '@oe/ui/components/input-currency';
-import { Modal } from '@oe/ui/components/modal';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
+import { z } from '@oe/api';
+import { InputCurrency } from '@oe/ui';
+import { Modal } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
 
 interface ISponsorGasProps {
   open: boolean;
@@ -16,7 +16,7 @@ const amountSponsorSchema = z.object({
 
 export type IAmountSponsor = z.infer<typeof amountSponsorSchema>;
 
-export default function SponsorGasCourseModal({ open, currency, onClose, handleSubmitTransaction }: ISponsorGasProps) {
+export function SponsorGasCourseModal({ open, currency, onClose, handleSubmitTransaction }: ISponsorGasProps) {
   const handleSubmitSponsor = (value: IAmountSponsor) => {
     handleSubmitTransaction(value);
   };

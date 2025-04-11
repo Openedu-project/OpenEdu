@@ -1,4 +1,4 @@
-import { Modal } from '@oe/ui/components/modal';
+import { Modal } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
 interface IDeleteCreatorModal {
@@ -6,7 +6,7 @@ interface IDeleteCreatorModal {
   onClose: () => void;
 }
 
-export default function ConfirmDeleteCreatorModal({ onSubmit, onClose }: IDeleteCreatorModal) {
+export function ConfirmDeleteCreatorModal({ onSubmit, onClose }: IDeleteCreatorModal) {
   const t = useTranslations('creatorManagement.deleteCreatorModal');
 
   return (

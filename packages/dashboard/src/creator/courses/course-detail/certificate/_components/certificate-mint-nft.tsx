@@ -1,18 +1,18 @@
-import { useGetEstimatedFee } from '@oe/api/hooks/useCertificateNft';
-import type { ICreateCourseCertificate } from '@oe/api/schemas/courses/createCourseSchema';
-import { postDepositSponsorGasService } from '@oe/api/services/certificate-nft';
-import type { HTTPError } from '@oe/api/utils/http-error';
-import { Button } from '@oe/ui/shadcn/button';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { RadioGroup, RadioGroupItem } from '@oe/ui/shadcn/radio-group';
-import { toast } from '@oe/ui/shadcn/sonner';
-import { Switch } from '@oe/ui/shadcn/switch';
-import { cn } from '@oe/ui/utils/cn';
+import type { HTTPError } from '@oe/api';
+import type { ICreateCourseCertificate } from '@oe/api';
+import { useGetEstimatedFee } from '@oe/api';
+import { postDepositSponsorGasService } from '@oe/api';
+import { toast } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
+import { RadioGroup, RadioGroupItem } from '@oe/ui';
+import { Switch } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
-import SponsorGasCourseModal, { type IAmountSponsor } from './sponsor-gas-course';
+import { type IAmountSponsor, SponsorGasCourseModal } from './sponsor-gas-course';
 
 export function CertificateMintNFT({
   form,

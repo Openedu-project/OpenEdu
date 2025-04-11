@@ -1,5 +1,5 @@
-import CreatorsManagementPage from './creators/page';
+import { CreatorsManagement } from "@oe/dashboard";
 
-export default function CreatorManagement() {
-  return <CreatorsManagementPage />;
+export default function CreatorManagementPage() {
+  return <CreatorsManagement />;
 }

@@ -1,7 +1,7 @@
-import TreeStar from '@oe/assets/icons/tree-star';
+import { TreeStar } from '@oe/assets';
 import BannerBg from '@oe/assets/images/blog-banner-bg.png';
 import Banner from '@oe/assets/images/blog-banner.png';
-import { BLOG_ROUTES } from '@oe/core/utils/routes';
+import { BLOG_ROUTES } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { Link } from '#common/navigation';
 import { Image } from '#components/image';

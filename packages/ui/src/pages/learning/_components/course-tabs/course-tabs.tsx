@@ -1,11 +1,10 @@
 'use client';
 
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import { InfoCircle } from '@oe/assets/icons/info-circle';
-import { Note } from '@oe/assets/icons/note';
+import type { ICourseOutline } from '@oe/api';
+import { InfoCircle, Note } from '@oe/assets';
 import { CustomTabs } from '#components/custom-tabs';
-import CourseOutline from '../course-sidebar-section';
-import CourseDescription from './course-description';
+import { CourseOutline } from '../course-sidebar-section';
+import { CourseDescription } from './course-description';
 
 interface ICourseTabsProps {
   courseData: ICourseOutline;
@@ -33,4 +32,4 @@ const CourseTabs = ({ courseData, activeSection, activeLesson }: ICourseTabsProp
   return courseData && tabItems && <CustomTabs items={tabItems} className="mt-4 h-full px-3" />;
 };
 
-export default CourseTabs;
+export { CourseTabs };

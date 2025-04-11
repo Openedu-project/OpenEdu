@@ -1,5 +1,5 @@
-import { SignUpPage } from '@oe/ui/common/auth/signup';
-import type { FileType } from '@oe/ui/components/uploader';
+import type { FileType } from '@oe/ui';
+import { SignUpPage } from '@oe/ui';
 import type { SectionComponent } from '../_types/theme-page';
 
 export interface AuthLayoutSignUpProps {
@@ -13,4 +13,4 @@ const AuthLayoutSignUp: SectionComponent<'auth', 'signUp'> = ({ props }) => {
   return <SignUpPage banner={props?.banner} />;
 };
 
-export default AuthLayoutSignUp;
+export { AuthLayoutSignUp };

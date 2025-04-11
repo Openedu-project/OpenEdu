@@ -1,11 +1,11 @@
 'use client';
-import type { ISectionSchema } from '@oe/api/schemas/courses/segmentSchema';
-import { sectionSchema } from '@oe/api/schemas/courses/segmentSchema';
-import { DeleteButton } from '@oe/ui/components/delete-button';
-import { FormWrapper } from '@oe/ui/components/form-wrapper';
-import { Button } from '@oe/ui/shadcn/button';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
+import type { ISectionSchema } from '@oe/api';
+import { sectionSchema } from '@oe/api';
+import { Button } from '@oe/ui';
+import { DeleteButton } from '@oe/ui';
+import { FormWrapper } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
+import { Input } from '@oe/ui';
 import { Check, CopyIcon, PencilLine, Trash2 } from 'lucide-react';
 import { MenuIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -15,7 +15,7 @@ import { useSectionActions } from '../../_hooks/useSectionActions';
 import { COURSE_DETAIL_FORM_IDS } from '../../_utils/constants';
 import { SectionsDrawer } from './sections-drawer';
 
-export default function SectionHeader() {
+export function SectionHeader() {
   const tCourse = useTranslations('course');
   const tOutline = useTranslations('course.outline');
   const { sections, activeSection, handleDeleteSection, handleUpdateSection, handleDuplicateSection } =

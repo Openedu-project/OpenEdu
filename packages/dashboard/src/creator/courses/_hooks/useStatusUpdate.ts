@@ -1,8 +1,8 @@
-import { useGetSegmentById, useGetSegments } from '@oe/api/hooks/useCourse';
-import { updateSegmentService } from '@oe/api/services/course';
-import type { ILesson, ISection, ISegment } from '@oe/api/types/course/segment';
-import type { TStatus } from '@oe/ui/components/status-badge';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { updateSegmentService } from '@oe/api';
+import { useGetSegmentById, useGetSegments } from '@oe/api';
+import type { ILesson, ISection, ISegment } from '@oe/api';
+import { toast } from '@oe/ui';
+import type { TStatus } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
 export function useStatusUpdate(type: string, data?: ISection | ILesson) {

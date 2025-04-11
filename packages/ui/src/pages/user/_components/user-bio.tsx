@@ -1,21 +1,21 @@
 'use client';
 
-import type { IUserProfile } from '@oe/api/types/user-profile';
-// import Newletter from '@oe/icons/newletter';
-// import ShareSocial from '@oe/icons/share-social';
-// import { Avatar, AvatarFallback, AvatarImage } from "@oe/ui/shadcn/avatar";
-import { Button } from '@oe/ui/shadcn/button';
+import type { IUserProfile } from '@oe/api';
 // import { Flag } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 import { Link } from '#common/navigation';
+// import Newletter from '@oe/icons/newletter';
+// import ShareSocial from '@oe/icons/share-social';
+// import { Avatar, AvatarFallback, AvatarImage } from "#shadcn/avatar";
+import { Button } from '#shadcn/button';
 import { cn } from '#utils/cn';
 
-import { createAPIUrl } from '@oe/api/utils/fetch';
+import { createAPIUrl } from '@oe/api';
 // import orgAvatarDark from '@/assets/images/org-ava-dark.png';
 import background from '@oe/assets/images/user-background.png';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-// import { pickCharacters } from "@oe/core/utils/string";
+import { PLATFORM_ROUTES } from '@oe/core';
+// import { pickCharacters } from "@oe/core";
 import { Image } from '#components/image';
 import { UserAvatar } from '#components/user-avatar';
 import { useUserRoleStore } from '../_store/userProfileStore';
@@ -31,7 +31,7 @@ interface RoleMapping {
   displayName: string;
 }
 
-export default function UserBio({ data, isMe, handleFollowUser }: IUserBioProps) {
+export function UserBio({ data, isMe, handleFollowUser }: IUserBioProps) {
   const tProfile = useTranslations('userProfile.profile');
 
   const [showAll, setShowAll] = useState<boolean>(false);

@@ -1,4 +1,5 @@
-import { z } from "@oe/api/utils/zod";
+"use client";
+import { z } from "@oe/api";
 import React from "react";
 import { DESKTOP_BREAKPOINT } from "./constants";
 

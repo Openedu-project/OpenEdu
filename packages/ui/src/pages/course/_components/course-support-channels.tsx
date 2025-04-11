@@ -1,4 +1,4 @@
-import type { ICourseOutline } from '@oe/api/types/course/course';
+import type { ICourseOutline } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { SocialIcon } from '#components/social-icon';
 import { CourseSection } from './course-section';
@@ -34,4 +34,4 @@ const SupportingChannels = ({
   );
 };
 
-export default SupportingChannels;
+export { SupportingChannels };

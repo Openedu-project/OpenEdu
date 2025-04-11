@@ -1,18 +1,18 @@
 'use client';
 
-import type { IBlogMyProfile } from '@oe/api/types/user-profile';
+import type { IBlogMyProfile } from '@oe/api';
 
-import { Card, CardContent } from '@oe/ui/shadcn/card';
-import { Checkbox } from '@oe/ui/shadcn/checkbox';
 import { useRouter } from 'next/navigation';
 import type React from 'react';
 import { type HTMLAttributes, useCallback, useState } from 'react';
+import { Card, CardContent } from '#shadcn/card';
+import { Checkbox } from '#shadcn/checkbox';
 
 import BlogImage from '@oe/assets/images/blog.png';
-import { formatDateHourMinute } from '@oe/core/utils/datetime';
-import { BLOG_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
-import { getLocaleFromPathname } from '@oe/i18n/utils';
+import { BLOG_ROUTES } from '@oe/core';
+import { formatDateHourMinute } from '@oe/core';
+import { buildUrl } from '@oe/core';
+import { getLocaleFromPathname } from '@oe/i18n';
 import { formatDistanceToNow } from 'date-fns';
 import { Image } from '#components/image';
 import { ProfileCard } from '#components/profile-card';
@@ -29,7 +29,7 @@ interface IBlogCardProps extends HTMLAttributes<HTMLDivElement> {
   isSetting?: boolean;
 }
 
-export default function BlogCardProfile({
+export function BlogCardProfile({
   blog,
   contentRight = false,
   className,

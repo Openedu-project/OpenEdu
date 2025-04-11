@@ -1,7 +1,7 @@
-import { getConversationDetail } from '@oe/api/services/conversation';
-import type { TAgentType } from '@oe/api/types/conversation';
-import { isLogin } from '@oe/api/utils/auth';
-import { AI_ROUTES, AUTH_ROUTES } from '@oe/core/utils/routes';
+import { isLogin } from '@oe/api';
+import { getConversationDetail } from '@oe/api';
+import type { TAgentType } from '@oe/api';
+import { AI_ROUTES, AUTH_ROUTES } from '@oe/core';
 import { redirect } from 'next/navigation';
 import { ChatWithSource } from '#components/conversation';
 
@@ -33,7 +33,7 @@ const getChatMessages = async (id?: string) => {
   }
 };
 
-export default async function AIChatPage({
+export async function AIChatPage({
   id,
   agent,
 }: {

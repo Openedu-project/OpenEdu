@@ -1,7 +1,7 @@
-import { formatDate } from "@oe/core/utils/datetime";
-import { Link } from "@oe/ui/common/navigation";
-import { Image } from "@oe/ui/components/image";
-import { getPopularBlogs } from "../_actions/blogs";
+import { formatDate } from '@oe/core';
+import { Link } from '@oe/ui';
+import { Image } from '@oe/ui';
+import { getPopularBlogs } from '../_actions/blogs';
 const BlogGridServer = async () => {
   const blogsData = await getPopularBlogs();
 
@@ -17,16 +17,14 @@ const BlogGridServer = async () => {
             <div className="w-full overflow-hidden rounded-3xl">
               <Image
                 src={blogsData?.featuredPost?.banner?.url}
-                alt={blogsData?.featuredPost?.title ?? "title"}
+                alt={blogsData?.featuredPost?.title ?? 'title'}
                 width={600}
                 height={350}
                 className="h-[270px] w-full object-cover"
               />
             </div>
             <div className="flex flex-col">
-              <div className="mcaption-regular14">
-                {formatDate(blogsData?.featuredPost?.create_at ?? 0)}
-              </div>
+              <div className="mcaption-regular14">{formatDate(blogsData?.featuredPost?.create_at ?? 0)}</div>
 
               <h3 className="giant-iheading-semibold20 md:giant-iheading-semibold24 hover:text-primary">
                 {blogsData?.featuredPost?.title}
@@ -36,22 +34,20 @@ const BlogGridServer = async () => {
                 <div className="flex items-center justify-center rounded-full">
                   <Image
                     src={blogsData?.featuredPost?.author?.avatar}
-                    alt={blogsData?.featuredPost?.author?.display_name ?? ""}
+                    alt={blogsData?.featuredPost?.author?.display_name ?? ''}
                     width={24}
                     height={24}
                     className="h-[28px] w-[28px] rounded-full"
                   />
                 </div>
-                <span className="mbutton-semibold16">
-                  {blogsData?.featuredPost?.author?.display_name}
-                </span>
+                <span className="mbutton-semibold16">{blogsData?.featuredPost?.author?.display_name}</span>
               </div>
 
               <div
                 className="mcaption-regular14 line-clamp-5"
                 // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
                 dangerouslySetInnerHTML={{
-                  __html: blogsData?.featuredPost?.content ?? "",
+                  __html: blogsData?.featuredPost?.content ?? '',
                 }}
               />
             </div>
@@ -60,11 +56,8 @@ const BlogGridServer = async () => {
       )}
       {/* Other Posts */}
       <div className="space-y-8 lg:w-full">
-        {blogsData?.restPost?.map((post) => (
-          <div
-            key={post.id}
-            className="group rounded-3xl bg-white shadow-[0px_4px_30px_0px_rgba(175,175,175,0.20)] "
-          >
+        {blogsData?.restPost?.map(post => (
+          <div key={post.id} className="group rounded-3xl bg-white shadow-[0px_4px_30px_0px_rgba(175,175,175,0.20)] ">
             <Link
               href={`/blog/${post?.id}`}
               className="flex h-auto flex-col items-start gap-6 whitespace-break-spaces text-black no-underline hover:no-underline md:flex-row md:items-center"
@@ -80,12 +73,8 @@ const BlogGridServer = async () => {
               </div>
 
               <div className="min-w-0 flex-1">
-                <div className="mcaption-regular14 mb-2">
-                  {formatDate(post?.create_at)}
-                </div>
-                <h3 className="giant-iheading-semibold20 mb-3 line-clamp-2">
-                  {post?.title}
-                </h3>
+                <div className="mcaption-regular14 mb-2">{formatDate(post?.create_at)}</div>
+                <h3 className="giant-iheading-semibold20 mb-3 line-clamp-2">{post?.title}</h3>
                 <div className="flex items-center gap-3">
                   <div className="flex items-center justify-center rounded-full">
                     <Image
@@ -96,9 +85,7 @@ const BlogGridServer = async () => {
                       className="h-[28px] w-[28px] rounded-full"
                     />
                   </div>
-                  <span className="mbutton-semibold16">
-                    {post?.author?.display_name}
-                  </span>
+                  <span className="mbutton-semibold16">{post?.author?.display_name}</span>
                 </div>
               </div>
             </Link>
@@ -109,5 +96,5 @@ const BlogGridServer = async () => {
   );
 };
 
-BlogGridServer.displayName = "BlogGridServer";
+BlogGridServer.displayName = 'BlogGridServer';
 export { BlogGridServer };

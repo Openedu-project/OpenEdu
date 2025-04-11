@@ -1,5 +1,5 @@
-import PagesSettings from '@oe/dashboard/admin/site-settings/pages/page';
+import { PagesSettingsPage } from "@oe/dashboard";
 
-export default function PagesSettingsPage() {
-  return <PagesSettings />;
+export default function PagesSiteSettingsPage() {
+  return <PagesSettingsPage />;
 }

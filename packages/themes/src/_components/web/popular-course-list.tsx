@@ -1,16 +1,16 @@
 'use client';
 
-import { useGetPopularCoursesAtWebsite } from '@oe/api/hooks/useFeaturedContent';
-import type { ICourse } from '@oe/api/types/course/course';
-import type { IFeaturedContent } from '@oe/api/types/featured-contents';
-import { getAPIReferrerAndOriginClient } from '@oe/api/utils/referrer-origin';
-import { CourseCard } from '@oe/ui/components/course-card';
+import type { ICourse } from '@oe/api';
+import { useGetPopularCoursesAtWebsite } from '@oe/api';
+import type { IFeaturedContent } from '@oe/api';
+import { getAPIReferrerAndOriginClient } from '@oe/api';
+import { CourseCard } from '@oe/ui';
 import type { KeyedMutator } from 'swr';
 
 interface IProps {
   fallback: IFeaturedContent<ICourse>[] | undefined;
 }
-export default function PopularCourseList({ fallback }: IProps) {
+export function PopularCourseList({ fallback }: IProps) {
   const { host } = getAPIReferrerAndOriginClient();
 
   const { dataPopularCourses: dataCoursesPopular, mutatePopularCourses } = useGetPopularCoursesAtWebsite({

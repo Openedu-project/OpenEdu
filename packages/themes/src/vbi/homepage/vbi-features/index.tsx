@@ -1,5 +1,3 @@
-import VbiHomepageFeaturesClient from './client';
-import VbiHomepageFeaturesServer from './server';
-import type { VbiHomepageFeaturesProps } from './vbi-features';
-
-export { VbiHomepageFeaturesClient, type VbiHomepageFeaturesProps, VbiHomepageFeaturesServer };
+export * from './client';
+export * from './server';
+export * from './vbi-features';

@@ -1,4 +1,4 @@
-import { cn } from '@oe/ui/utils/cn';
+import { cn } from '@oe/ui';
 import { Key, Send, Sun, Zap } from 'lucide-react';
 import type { SectionComponent } from '../../../_types/theme-page';
 
@@ -84,4 +84,4 @@ const VbiHomepageFeatures: SectionComponent<'homepage', 'vbiFeatures'> = ({ clas
   );
 };
 
-export default VbiHomepageFeatures;
+export { VbiHomepageFeatures };

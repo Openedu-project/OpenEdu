@@ -1,12 +1,13 @@
 'use client';
-import { buildQueryParam } from '@oe/core/utils/url';
+import { buildQueryParam } from '@oe/core';
 import { ArrowDownUp } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { usePathname, useRouter } from '#common/navigation';
 import { Button } from '#shadcn/button';
-import CourseListFilter from './course-list-filter';
+import { CourseListFilter } from './course-list-filter';
+
 interface ICourseListHeader {
   categoryIdsSelected: string[];
   levelIdsSelected: string[];
@@ -16,7 +17,7 @@ interface ICourseListHeader {
   totalResult: number;
 }
 
-export default function CourseListHeader({
+export function CourseListHeader({
   sortValue = 'desc',
   totalResult = 0,
   categoryIdsSelected,

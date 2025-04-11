@@ -1,10 +1,10 @@
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
-import { TableProvider } from '@oe/ui/components/table';
+import { DashboardMainPageLayout } from '@oe/ui';
+import { TableProvider } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import CreateCourseButton from './_components/create-course-button';
-import Courses from './course-table/course-table';
+import { CreateCourseButton } from './_components/create-course-button';
+import { Courses } from './course-table/course-table';
 
-export default function CourseListPagge() {
+export function CourseListPagge() {
   const tDashboard = useTranslations('dashboard');
   const tCourse = useTranslations('course');
 

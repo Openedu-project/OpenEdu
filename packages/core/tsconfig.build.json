@@ -1,0 +1,15 @@
+{
+  "extends": "@oe/config/tsconfig/ts-build.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "dist/types",
+    "paths": {
+      "#utils/*": ["./src/utils/*.ts"],
+      "#types/*": ["./src/types/*.ts"],
+      "#store": ["./src/store/index.ts"],
+      "#hooks/*": ["./src/hooks/*.ts"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

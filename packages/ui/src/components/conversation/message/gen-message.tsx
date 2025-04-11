@@ -1,7 +1,7 @@
 'use client';
 
-import type { IConversationDetails } from '@oe/api/types/conversation';
-import { GENERATING_STATUS } from '@oe/core/utils/constants';
+import type { IConversationDetails } from '@oe/api';
+import { GENERATING_STATUS } from '@oe/core';
 import { type RefObject, memo, useEffect, useState } from 'react';
 import type { KeyedMutator } from 'swr';
 import { useConversationStore } from '#store/conversation-store';

@@ -1,6 +1,6 @@
-import type { IStartWhen } from '@oe/api/types/course/course-trigger';
-import type { ISectionProgress } from '@oe/api/types/course/learning-progress';
-import type { ILesson, ISection } from '@oe/api/types/course/segment';
+import type { ILesson, ISection } from '@oe/api';
+import type { IStartWhen } from '@oe/api';
+import type { ISectionProgress } from '@oe/api';
 
 export const cleanUrl = (url: string): string => url?.replaceAll(/^["\\]+|["\\]+$/g, '');
 

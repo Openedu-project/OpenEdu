@@ -1,5 +1,10 @@
-import type { SectionProps, SectionsByPage, ThemeFieldConfig, ThemePageKey } from '.';
+// import type { SectionProps, SectionsByPage, ThemeFieldConfig, ThemePageKey } from '.';
 import type { ThemeMetadata } from '../theme-metadata';
+import type { SectionProps } from './components';
+import type { ThemePageKey } from './core';
+import type { ThemeFieldConfig } from './field';
+import type { SectionsByPage } from './sections';
+
 export interface BaseSectionConfig<K extends ThemePageKey, S extends SectionsByPage[K]> {
   enable?: boolean;
   content?: ThemeFieldConfig | ThemeFieldConfig[];

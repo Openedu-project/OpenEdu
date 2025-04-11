@@ -1,7 +1,7 @@
-import { baseMiddleware } from '@oe/api/utils/base-middleware';
-import { ZONE_ROUTES } from '@oe/core/utils/routes';
-import { getUnlocalizedPathname } from '@oe/i18n/utils';
-// import { orgMiddleware } from '@oe/api/utils/org-middleware';
+import { baseMiddleware } from '@oe/api';
+import { ZONE_ROUTES } from '@oe/core';
+import { getUnlocalizedPathname } from '@oe/i18n';
+// import { orgMiddleware } from '@oe/api';
 import { type NextRequest, NextResponse } from 'next/server';
 
 export async function middleware(request: NextRequest) {

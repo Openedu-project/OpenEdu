@@ -1,4 +1,4 @@
-import InviteRequestManagementPage from '@oe/dashboard/blog-admin/invite-request-management/page';
+import { InviteRequestManagementPage } from "@oe/dashboard";
 
 export default function InviteUserManagement() {
   return <InviteRequestManagementPage userRole="org_editor" />;

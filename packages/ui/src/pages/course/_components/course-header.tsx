@@ -3,7 +3,7 @@ import { ShareButton } from '#components/share-button';
 import { WishlistButton } from '#components/wishlist-button';
 import { useCourseContext } from './course-context';
 
-export default function CourseHeader() {
+export function CourseHeader() {
   const { courseData, updateWishlistStatus } = useCourseContext();
   // const { dataMe } = useGetMe();
 

@@ -1,17 +1,17 @@
 'use client';
 
-import { useGetCertLayers } from '@oe/api/hooks/useCertificate';
-import { useGetCourseById } from '@oe/api/hooks/useCourse';
-import { type ICreateCourseCertificate, courseCertificateSchema } from '@oe/api/schemas/courses/createCourseSchema';
-import { updateCourseService } from '@oe/api/services/course';
-import type { ICourse } from '@oe/api/types/course/course';
-import { FormWrapper } from '@oe/ui/components/form-wrapper';
-import { Button } from '@oe/ui/shadcn/button';
-import { CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@oe/ui/shadcn/carousel';
-import { Carousel } from '@oe/ui/shadcn/carousel';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { toast } from '@oe/ui/shadcn/sonner';
-import { Switch } from '@oe/ui/shadcn/switch';
+import { updateCourseService } from '@oe/api';
+import type { ICourse } from '@oe/api';
+import { useGetCourseById } from '@oe/api';
+import { type ICreateCourseCertificate, courseCertificateSchema } from '@oe/api';
+import { useGetCertLayers } from '@oe/api';
+import { toast } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { FormWrapper } from '@oe/ui';
+import { CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@oe/ui';
+import { Carousel } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
+import { Switch } from '@oe/ui';
 import { CheckIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
@@ -21,7 +21,7 @@ import { CertificateCondition } from './_components/certificate-condition';
 import { CertificateMintNFT } from './_components/certificate-mint-nft';
 import { CertificateTemplate } from './_components/certificate-template';
 
-export default function CourseDetailCertificatePage() {
+export function CourseDetailCertificatePage() {
   const tCourse = useTranslations('course');
   const tCertificate = useTranslations('certificate');
   const { courseId } = useParams<{ courseId: string }>();

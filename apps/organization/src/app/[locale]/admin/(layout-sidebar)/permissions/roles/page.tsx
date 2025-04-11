@@ -1,4 +1,4 @@
-import RoleSettings from '@oe/dashboard/admin/permissions/roles/page';
+import { RoleSettings } from "@oe/dashboard";
 
 export default function RoleSettingsPage() {
   return <RoleSettings />;

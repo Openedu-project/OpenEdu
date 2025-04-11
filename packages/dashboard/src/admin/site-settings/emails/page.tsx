@@ -1,3 +1,3 @@
-export default function EmailSettingsPage() {
+export function EmailSettingsPage() {
   return <div>EmailSettingsPage</div>;
 }

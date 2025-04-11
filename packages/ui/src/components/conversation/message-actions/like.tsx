@@ -1,5 +1,4 @@
-import { Like } from '@oe/assets/icons/like';
-import { LikeOutline } from '@oe/assets/icons/like-outline';
+import { Like, LikeOutline } from '@oe/assets';
 import { Button } from '#shadcn/button';
 
 const LikeButton = ({
@@ -18,4 +17,4 @@ const LikeButton = ({
   </Button>
 );
 
-export default LikeButton;
+export { LikeButton };

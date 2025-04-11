@@ -1,12 +1,12 @@
-import { cn } from '@oe/ui/utils/cn';
+import { cn } from '@oe/ui';
 
 import { useTranslations } from 'next-intl';
 import type { SectionComponent } from '../../../_types/theme-page';
 
-import { Link } from '@oe/ui/common/navigation';
-import { Image } from '@oe/ui/components/image';
-import type { FileType } from '@oe/ui/components/uploader';
-import { Button } from '@oe/ui/shadcn/button';
+import type { FileType } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { Link } from '@oe/ui';
+import { Image } from '@oe/ui';
 import { SectionTitle, type SectionTitleProps } from '../_components/section-title';
 
 import { MoveUpRight } from 'lucide-react';
@@ -48,4 +48,4 @@ const FenetHomepageExperience: SectionComponent<'homepage', 'fenetExperience'> =
   );
 };
 
-export default FenetHomepageExperience;
+export { FenetHomepageExperience };

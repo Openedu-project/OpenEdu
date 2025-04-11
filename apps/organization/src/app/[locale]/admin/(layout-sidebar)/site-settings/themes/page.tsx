@@ -1,7 +1,6 @@
-import { getThemeConfigServer } from "@oe/api/services/theme";
-import { CloneNewTheme } from "@oe/themes/components/theme-list/clone-new-theme";
-import ThemeList from "@oe/themes/components/theme-list/theme-list";
-import { DashboardHeaderCard } from "@oe/ui/common/layout";
+import { getThemeConfigServer } from "@oe/api";
+import { CloneNewTheme, ThemeList } from "@oe/themes";
+import { DashboardHeaderCard } from "@oe/ui";
 import { getTranslations } from "next-intl/server";
 
 export default async function ThemePage() {

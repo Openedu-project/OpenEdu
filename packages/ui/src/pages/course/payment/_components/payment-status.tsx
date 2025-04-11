@@ -24,4 +24,4 @@ const PaymentStatus = ({ imageSrc, title }: IPaymentStatus) => {
   );
 };
 
-export default PaymentStatus;
+export { PaymentStatus };

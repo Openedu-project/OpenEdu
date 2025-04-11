@@ -1,4 +1,4 @@
-import { Skeleton } from "@oe/ui/shadcn/skeleton";
+import { Skeleton } from "@oe/ui";
 
 export default function Loading() {
   return (

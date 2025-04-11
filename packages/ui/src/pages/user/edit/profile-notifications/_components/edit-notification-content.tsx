@@ -1,8 +1,8 @@
 'use client';
 import { CourseComingSoon } from '#components/course-coming-soon';
-import Section from '../../../_components/user-section';
+import { Section } from '../../../_components/user-section';
 
-export default function NotificationContent() {
+export function NotificationContent() {
   return (
     <Section
       title="notifications"

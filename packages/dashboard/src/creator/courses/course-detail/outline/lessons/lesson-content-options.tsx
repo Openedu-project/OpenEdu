@@ -1,13 +1,13 @@
+import type { TLessonContent } from '@oe/api';
+import type { z } from '@oe/api';
 import {
   embeddedContentSchema,
   pdfContentSchema,
   quizContentSchema,
   textContentSchema,
   videoContentSchema,
-} from '@oe/api/schemas/courses/segmentSchema';
-import type { TLessonContent } from '@oe/api/types/course/basic';
-import type { z } from '@oe/api/utils/zod';
-import type { SelectboxOption } from '@oe/ui/components/selectbox';
+} from '@oe/api';
+import type { SelectboxOption } from '@oe/ui';
 import { Code2Icon, FileIcon, FileVideoIcon, MessageCircleQuestion, ScrollText } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { EmbeddedBlockContent } from './embedded-block-content';

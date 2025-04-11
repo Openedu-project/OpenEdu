@@ -1,19 +1,19 @@
 'use client';
-import { useGetOrganization } from '@oe/api/hooks/useOrganization';
+import { useGetOrganization } from '@oe/api';
+import type { IPermissionAccessItemPayload, IPermissionRouteInfo } from '@oe/api';
 import {
   useCreatePermissionAccess,
   useGetPermissionPageAccess,
   useGetPermissionPageConfig,
   usePermissionRoutes,
-} from '@oe/api/hooks/usePermission';
-import type { IPermissionAccessItemPayload, IPermissionRouteInfo } from '@oe/api/types/permissions';
-import { ROLE_LIST } from '@oe/core/utils/constants';
-import { Button } from '@oe/ui/shadcn/button';
-import { Checkbox } from '@oe/ui/shadcn/checkbox';
-import { Input } from '@oe/ui/shadcn/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@oe/ui/shadcn/select';
-import { toast } from '@oe/ui/shadcn/sonner';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@oe/ui/shadcn/table';
+} from '@oe/api';
+import { ROLE_LIST } from '@oe/core';
+import { toast } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { Checkbox } from '@oe/ui';
+import { Input } from '@oe/ui';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@oe/ui';
+import { ShadcnTable, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@oe/ui';
 import { Save, Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
@@ -21,7 +21,7 @@ import { mutate } from 'swr';
 import { useDebouncedCallback } from 'use-debounce';
 import { DEFAULT_ACTIONS_PERMISSION } from '../../permission-constant';
 
-export default function RolesList() {
+export function RolesList() {
   const t = useTranslations('permissionRoleList');
 
   const groupedRoutes = usePermissionRoutes();
@@ -302,7 +302,7 @@ export default function RolesList() {
         </div>
       </div>
       <div className="scrollbar overflow-auto">
-        <Table>
+        <ShadcnTable>
           <TableHeader className="sticky top-0 z-10 shadow-sm">
             <TableRow>
               <TableHead className="min-w-[250px] bg-muted">
@@ -382,7 +382,7 @@ export default function RolesList() {
               </React.Fragment>
             ))}
           </TableBody>
-        </Table>
+        </ShadcnTable>
       </div>
     </div>
   );

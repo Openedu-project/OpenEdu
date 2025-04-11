@@ -37,4 +37,4 @@ const MessageBox = memo(PureMessageBox, (prevProps, nextProps) => {
   return true;
 });
 
-export default MessageBox;
+export { MessageBox };

@@ -1,12 +1,12 @@
-import { SocialInput } from '@oe/ui/components/social-input';
-import { Button } from '@oe/ui/shadcn/button';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
+import { Button } from '@oe/ui';
+import { SocialInput } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
 import { PlusIcon, TrashIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useFormContext } from 'react-hook-form';
 import { useFieldArray } from 'react-hook-form';
 
-export default function SupportChannels() {
+export function SupportChannels() {
   const tCourse = useTranslations('course');
   const { control } = useFormContext();
   const { fields, append, remove } = useFieldArray({

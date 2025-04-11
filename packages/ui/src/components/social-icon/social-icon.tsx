@@ -1,13 +1,5 @@
-import LinkIcon from '@oe/assets/icons/link';
-import Mail from '@oe/assets/icons/mail';
-import Discord from '@oe/assets/icons/social-icon/discord';
-import Facebook from '@oe/assets/icons/social-icon/facebook';
-import Github from '@oe/assets/icons/social-icon/github';
-import Linkedin from '@oe/assets/icons/social-icon/linkedin';
-import Telegram from '@oe/assets/icons/social-icon/telegram';
-import Twitter from '@oe/assets/icons/social-icon/twitter';
-import Zalo from '@oe/assets/icons/social-icon/zalo';
-import { EMAIL_REGEX } from '@oe/core/utils/constants';
+import { Discord, Facebook, Github, LinkIcon, Linkedin, Mail, Telegram, Twitter, Zalo } from '@oe/assets';
+import { EMAIL_REGEX } from '@oe/core';
 import type React from 'react';
 import { Link } from '#common/navigation';
 import { cn } from '#utils/cn';

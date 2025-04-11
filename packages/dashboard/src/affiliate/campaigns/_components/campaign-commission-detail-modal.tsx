@@ -1,19 +1,19 @@
-import { usePostExtendReferralLink, usePostReferralLink } from '@oe/api/hooks/useReferralLink';
-import { usePutShareRateById } from '@oe/api/hooks/useShareRate';
-import type { ICanApplicableComm } from '@oe/api/types/affiliate-campaign';
-import { Modal } from '@oe/ui/components/modal';
-import { Button } from '@oe/ui/shadcn/button';
-import { Tooltip } from '@oe/ui/shadcn/tooltip';
+import type { ICanApplicableComm } from '@oe/api';
+import { usePutShareRateById } from '@oe/api';
+import { usePostExtendReferralLink, usePostReferralLink } from '@oe/api';
+import { Button } from '@oe/ui';
+import { Modal } from '@oe/ui';
+import { Tooltip } from '@oe/ui';
 import { Copy } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useState } from 'react';
 
-import { useGetAffiliateCampaignDetail } from '@oe/api/hooks/useAffiliateCampaign';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import { copyToClipboard } from '@oe/core/utils/utils';
-import { Link } from '@oe/ui/common/navigation';
-import { toast } from '@oe/ui/shadcn/sonner';
+import type { HTTPErrorMetadata } from '@oe/api';
+import { useGetAffiliateCampaignDetail } from '@oe/api';
+import { PLATFORM_ROUTES } from '@oe/core';
+import { copyToClipboard } from '@oe/core';
+import { toast } from '@oe/ui';
+import { Link } from '@oe/ui';
 
 const getBaseRateItem = (items: ICanApplicableComm[]) => items.find(item => item.is_base_rate === true);
 
@@ -85,7 +85,7 @@ const AffiliateLink = ({
   );
 };
 
-export default function CampaignCommissionDetailModal({
+export function CampaignCommissionDetailModal({
   campaignId,
   title = '',
   courseSlug,

@@ -1,7 +1,8 @@
-import { useGetConversationDetails } from '@oe/api/hooks/useConversation';
-import type { IConversationDetails, IMessage, TAgentType } from '@oe/api/types/conversation';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { GENERATING_STATUS } from '@oe/core/utils/constants';
+'use client';
+import { API_ENDPOINT } from '@oe/api';
+import type { IConversationDetails, IMessage, TAgentType } from '@oe/api';
+import { useGetConversationDetails } from '@oe/api';
+import { GENERATING_STATUS } from '@oe/core';
 import { ChevronsDown } from 'lucide-react';
 import { type RefObject, useEffect, useRef, useState } from 'react';
 import { type KeyedMutator, useSWRConfig } from 'swr';
@@ -11,7 +12,7 @@ import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import type { ISendMessageParams } from '../type';
 import { GenMessage } from './gen-message';
-import MessageBox from './message-box';
+import { MessageBox } from './message-box';
 
 interface IContainerProps {
   id: string;
@@ -66,9 +67,9 @@ export const MessageContainer = ({
     if (!data) {
       return;
     }
-    nextKeyRef.current = data?.pagination.next_cursor ?? '';
+    nextKeyRef.current = data?.pagination?.next_cursor ?? '';
 
-    if (data.results.messages) {
+    if (data.results?.messages) {
       setMessages([...data.results.messages.reverse(), ...messages]);
     }
     requestAnimationFrame(() => {

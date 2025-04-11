@@ -1,6 +1,4 @@
-import Star from '@oe/assets/icons/star';
-import StarHalf from '@oe/assets/icons/star-half';
-import StarOutline from '@oe/assets/icons/star-outline';
+import { Star, StarHalf, StarOutline } from '@oe/assets';
 import { cn } from '#utils/cn';
 
 type RatingVariant = 'with-number' | 'number-shorten' | 'no-number';
@@ -15,7 +13,7 @@ interface RatingStarProps {
 
 const MAX_STARS = 5;
 
-export default function RatingStars({ rating, color, variant = 'no-number', size, className }: RatingStarProps) {
+export function RatingStars({ rating, color, variant = 'no-number', size, className }: RatingStarProps) {
   const normalizedRating = Math.min(rating, MAX_STARS);
   const formattedRating = normalizedRating % 1 > 0 ? normalizedRating : `${normalizedRating}.0`;
 

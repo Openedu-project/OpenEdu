@@ -1,10 +1,10 @@
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
-import { TableProvider } from '@oe/ui/components/table';
+import { DashboardMainPageLayout } from '@oe/ui';
+import { TableProvider } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import CertificatesList from './_components/certificate-list';
-import CreateCertificateButton from './_components/create-certificate-button';
+import { CertificatesList } from './_components/certificate-list';
+import { CreateCertificateButton } from './_components/create-certificate-button';
 
-export default function Certificates() {
+export function Certificates() {
   const tCertificate = useTranslations('certificate');
 
   return (

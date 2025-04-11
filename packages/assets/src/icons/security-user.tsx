@@ -1,4 +1,4 @@
-export default function SecurityUser({ width = 24, height = 24, className = '', color = '#6E6E6E' }) {
+export function SecurityUser({ width = 24, height = 24, className = '', color = '#6E6E6E' }) {
   return (
     <svg
       className={className}

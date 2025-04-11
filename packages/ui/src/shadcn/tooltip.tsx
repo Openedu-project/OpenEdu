@@ -56,7 +56,7 @@ interface IProps extends Omit<ComponentPropsWithoutRef<typeof Link>, 'children'>
   href: string;
 }
 
-export default function TooltipLink({ name, href, ...props }: IProps) {
+function TooltipLink({ name, href, ...props }: IProps) {
   return (
     <Tooltip content={name}>
       <Link {...props} className={cn('w-full justify-start truncate p-0 underline', props.className)} href={href}>

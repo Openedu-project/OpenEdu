@@ -1,8 +1,8 @@
-import type { IPagination } from '#types/fetch';
+import type { IPagination, TSort } from '#types/fetch';
 import type { IFileResponse } from '#types/file';
 import type { IOrganization } from '#types/organizations';
 
-export type TSort = 'create_at desc' | 'create_at asc' | 'order asc' | 'order desc';
+// export type TSort = 'create_at desc' | 'create_at asc' | 'order asc' | 'order desc';
 
 export type TCourseDefaultLang = 'vi';
 

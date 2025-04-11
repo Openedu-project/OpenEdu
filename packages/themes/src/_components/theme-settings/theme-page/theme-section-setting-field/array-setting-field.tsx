@@ -1,10 +1,10 @@
-import { CRUDTranslationByKey } from '@oe/api/services/i18n';
-import type { ThemeFieldConfig, ThemeFieldValue } from '@oe/themes/types';
-import { Button } from '@oe/ui/shadcn/button';
-import { Label } from '@oe/ui/shadcn/label';
-import { cn } from '@oe/ui/utils/cn';
+import { CRUDTranslationByKey } from '@oe/api';
+import { Button } from '@oe/ui';
+import { Label } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { Plus, Trash2 } from 'lucide-react';
 import type React from 'react';
+import type { ThemeFieldConfig, ThemeFieldValue } from '#types';
 import {
   type ThemePageSettingArrayFieldProps,
   ThemePageSettingField,

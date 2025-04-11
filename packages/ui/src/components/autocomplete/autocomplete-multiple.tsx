@@ -1,3 +1,4 @@
+'use client';
 import { Plus, X } from 'lucide-react';
 import { Check } from 'lucide-react';
 import { useTranslations } from 'next-intl';

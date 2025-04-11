@@ -1,17 +1,17 @@
-import type { IFileResponse } from '@oe/api/types/file';
+import type { IFileResponse } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Uploader } from '#components/uploader';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '#shadcn/tabs';
-import FormAlignConfig from '../../form-config/form-align-config';
-import FormAspectRatioConfig from '../../form-config/form-aspect-ratio-config';
-import FormBorderRadiusConfig from '../../form-config/form-border-radius-config';
-import FormImageAltConfig from '../../form-config/form-image-alt-config';
-import FormImageContainerHeightConfig from '../../form-config/form-image-container-height-config';
-import FormImageExternalSrcConfig from '../../form-config/form-image-external-src-config';
-import FormImageObjectFitConfig from '../../form-config/form-image-object-fit-config';
-import FormPriorityConfig from '../../form-config/form-priority-config';
-import FormQualityConfig from '../../form-config/form-quality-config';
+import { FormAlignConfig } from '../../form-config/form-align-config';
+import { FormAspectRatioConfig } from '../../form-config/form-aspect-ratio-config';
+import { FormBorderRadiusConfig } from '../../form-config/form-border-radius-config';
+import { FormImageAltConfig } from '../../form-config/form-image-alt-config';
+import { FormImageContainerHeightConfig } from '../../form-config/form-image-container-height-config';
+import { FormImageExternalSrcConfig } from '../../form-config/form-image-external-src-config';
+import { FormImageObjectFitConfig } from '../../form-config/form-image-object-fit-config';
+import { FormPriorityConfig } from '../../form-config/form-priority-config';
+import { FormQualityConfig } from '../../form-config/form-quality-config';
 import type { FormFieldType } from '../../types';
 
 export function ImageFieldConfig({

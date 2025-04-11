@@ -1,15 +1,15 @@
-import type { IAdminLaunchpadDetailRes } from '@oe/api/types/admin-launchpad';
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import type { IAdminLaunchpadDetailRes } from '@oe/api';
+import { DashboardMainPageLayout } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { LaunchpadDetailActionButton } from './_components/action-button';
-import LaunchpadRequestsDetail from './_components/launchpad-request-detail';
+import { LaunchpadRequestsDetail } from './_components/launchpad-request-detail';
 
 interface LayoutProps {
   orderId: string;
   data: IAdminLaunchpadDetailRes | null;
 }
 
-export default function LaunchpadRequestsDetailMgm({ orderId, data }: LayoutProps) {
+export function LaunchpadRequestsDetailMgm({ orderId, data }: LayoutProps) {
   const tDashboard = useTranslations('dashboard.launchpad');
 
   return (

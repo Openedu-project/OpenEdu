@@ -1,4 +1,4 @@
-// import type { IOrganization } from '@oe/api/types/organizations';
+// import type { IOrganization } from '@oe/api';
 import createMiddleware from 'next-intl/middleware';
 import type { NextRequest } from 'next/server';
 import { DEFAULT_LOCALE, DEFAULT_LOCALES } from './constants';

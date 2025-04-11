@@ -1,4 +1,4 @@
-import PublishRequestPage from '@oe/dashboard/blog-admin/publish-request-management/page';
+import { PublishRequestPage } from "@oe/dashboard";
 
 export default function BlogRequestPage() {
   return <PublishRequestPage />;

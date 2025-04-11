@@ -1,7 +1,7 @@
 'use client';
 import ReactPlayer from 'react-player';
 import { usePlayerProgress } from './_hooks';
-import NextLessonAlert from './next-lesson-alert';
+import { NextLessonAlert } from './next-lesson-alert';
 
 const ContentEmbedded = ({
   url,
@@ -43,4 +43,4 @@ const ContentEmbedded = ({
   );
 };
 
-export default ContentEmbedded;
+export { ContentEmbedded };

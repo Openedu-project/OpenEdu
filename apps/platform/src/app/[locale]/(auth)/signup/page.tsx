@@ -1,4 +1,4 @@
-import { SignUpPage } from '@oe/ui/common/auth/signup';
+import { SignUpPage } from "@oe/ui";
 
 export default function SignUp() {
   return <SignUpPage />;

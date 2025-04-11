@@ -1,7 +1,7 @@
 'use client';
 
-import type { LanguageCode } from '@oe/i18n/languages';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@oe/ui/shadcn/select';
+import type { LanguageCode } from '@oe/i18n';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useLanguageStore } from '../_store/useLanguageStore';
 

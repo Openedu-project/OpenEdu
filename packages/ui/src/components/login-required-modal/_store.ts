@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { createStore } from '@oe/core';
 
 type LoginRequiredStore = {
   isOpen: boolean;
@@ -6,7 +6,7 @@ type LoginRequiredStore = {
   setLoginRequiredModal: (isOpen: boolean, hasCancel?: boolean) => void;
 };
 
-export const useLoginRequiredStore = create<LoginRequiredStore>(set => {
+export const useLoginRequiredStore = createStore<LoginRequiredStore>(set => {
   return {
     isOpen: false,
     hasCancel: true,

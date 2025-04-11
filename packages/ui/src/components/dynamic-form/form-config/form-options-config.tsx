@@ -1,4 +1,4 @@
-import { uniqueID } from '@oe/core/utils/unique';
+import { uniqueID } from '@oe/core';
 import { Trash2Icon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { type ChangeEvent, useRef } from 'react';
@@ -52,7 +52,7 @@ const OptionsInput = ({
   );
 };
 
-export default function FormOptionsConfig({
+export function FormOptionsConfig({
   field,
   handleConfigChange,
 }: {

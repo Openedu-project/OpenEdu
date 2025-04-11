@@ -3,7 +3,7 @@
 ```jsx
 'use client';
 
-import { DeleteButton } from '@oe/ui/components/delete-button';
+import { DeleteButton } from '#components/delete-button';
 import {
   DndSortable,
   DndSortableCollapseButton,
@@ -13,11 +13,11 @@ import {
   restrictToHorizontalAxis,
   restrictToParentElement,
   restrictToVerticalAxis,
-} from '@oe/ui/components/dnd-sortable';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@oe/ui/shadcn/accordion';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { Button } from '@oe/ui/shadcn/button';
-import { cn } from '@oe/ui/utils/cn';
+} from '#components/dnd-sortable';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '#shadcn/accordion';
+import { Badge } from '#shadcn/badge';
+import { Button } from '#shadcn/button';
+import { cn } from '#utils/cn';
 import { PencilIcon, PlusIcon, Trash2Icon } from 'lucide-react';
 import { useRef, useState } from 'react';
 

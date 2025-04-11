@@ -1,4 +1,5 @@
 import { z } from '#utils/zod';
+import { courseTriggerTypeSchema } from './courses/forms';
 
 export const formTriggerConditionSchema = z.enum([
   // 'enrolled_course',
@@ -35,7 +36,7 @@ export const formTriggerConfirmSchema = z.object({
   display_on_detail: z.boolean().default(false),
 });
 
-export const courseTriggerTypeSchema = z.enum(['form', 'notification']);
+// export const courseTriggerTypeSchema = z.enum(['form', 'notification']);
 
 export const formTriggerResquestSchema = z.object({
   form_id: z.string().optional(),

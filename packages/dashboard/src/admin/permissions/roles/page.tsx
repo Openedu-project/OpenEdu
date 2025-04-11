@@ -1,8 +1,8 @@
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import { DashboardMainPageLayout } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import RolesList from './_components/roles-list';
+import { RolesList } from './_components/roles-list';
 
-export default function RoleSettings() {
+export function RoleSettings() {
   const tDashboard = useTranslations('dashboard.permissionSettings');
 
   return (

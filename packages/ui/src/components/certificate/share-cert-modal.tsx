@@ -1,10 +1,10 @@
-import { Modal } from '@oe/ui/components/modal';
 import { Copy } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { Modal } from '#components/modal';
 
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import { copyToClipboard } from '@oe/core/utils/utils';
+import { createAPIUrl } from '@oe/api';
+import { PLATFORM_ROUTES } from '@oe/core';
+import { copyToClipboard } from '@oe/core';
 import { useMemo } from 'react';
 import { toast } from 'sonner';
 
@@ -14,7 +14,7 @@ interface IShareCertProps {
   onClose: () => void;
 }
 
-export default function ShareCertModal({ onClose, username, certId }: IShareCertProps) {
+export function ShareCertModal({ onClose, username, certId }: IShareCertProps) {
   const t = useTranslations('certificate');
   const tGeneral = useTranslations('general');
 

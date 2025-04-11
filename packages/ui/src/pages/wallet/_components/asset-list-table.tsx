@@ -1,8 +1,7 @@
 'use client';
-import { useExchangeRates } from '@oe/api/hooks/useExchangeRates';
-import { useNFTTotalAssets, useWallet } from '@oe/api/hooks/useWallet';
-import type { IExchangeRates } from '@oe/api/types/exchange-rates';
-import type { IWallet } from '@oe/api/types/wallet';
+import type { IWallet } from '@oe/api';
+import { useExchangeRates } from '@oe/api';
+import { useNFTTotalAssets, useWallet } from '@oe/api';
 import {
   ASSET_TYPES,
   CHAIN,
@@ -10,19 +9,20 @@ import {
   SUPPORTED_EXCHANGE_RATES,
   WITHDRAW_TYPE,
   currencyConverter,
-} from '@oe/api/utils/wallet';
-import type { ISvgProps } from '@oe/assets/icons/types';
-import { DEFAULT_CURRENCY, formatCurrency } from '@oe/core/utils/currency';
-import { WALLET_ROUTES } from '@oe/core/utils/routes';
-import { type ColumnDef, Table } from '@oe/ui/components/table';
+} from '@oe/api';
+import type { IExchangeRates } from '@oe/api';
+import type { ISvgProps } from '@oe/assets';
+import { DEFAULT_CURRENCY, formatCurrency } from '@oe/core';
+import { WALLET_ROUTES } from '@oe/core';
 import { ArrowUp } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { type ReactNode, useMemo } from 'react';
 import { Link } from '#common/navigation';
+import { type ColumnDef, Table } from '#components/table';
 import { Switch } from '#shadcn/switch';
 import { cn } from '#utils/cn';
 import { useWalletStore } from '../_store/useWalletStore';
-import DepositModal from './deposit-modal';
+import { DepositModal } from './deposit-modal';
 type AssetData = {
   type: string;
   icon: (props: ISvgProps) => ReactNode;

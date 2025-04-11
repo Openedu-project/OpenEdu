@@ -1,4 +1,4 @@
-import Referrers from '@oe/dashboard/creator/affiliate-campaign/affiliate-campaign-detail/referrers/page';
+import { Referrers } from "@oe/dashboard";
 
 export default function ReferrersPage() {
   return (

@@ -1,5 +1,5 @@
 'use client';
-import { isLogin } from '@oe/api/utils/auth';
+import { isLogin } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Button, type ButtonProps } from '#shadcn/button';
@@ -13,7 +13,7 @@ interface IFollowButtonProps extends ButtonProps {
   validateTags?: string[];
 }
 
-export default function FollowButton({
+export function FollowButton({
   className,
   isFollowed,
   handleFollow,

@@ -1,5 +1,5 @@
-import { getCookie } from '@oe/core/utils/cookie';
-import type { LanguageCode } from '@oe/i18n/languages';
+import { getCookie } from '@oe/core';
+import type { LanguageCode } from '@oe/i18n';
 import { createAPIUrl, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 import {
   getAPIReferrerAndOrigin,

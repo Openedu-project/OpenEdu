@@ -1,8 +1,8 @@
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import type { ICoursesCounting } from '@oe/api/types/my-learning-space';
-import { LEARNER_ROUTES } from '@oe/core/utils/routes';
+import type { ICourseOutline } from '@oe/api';
+import type { ICoursesCounting } from '@oe/api';
+import { LEARNER_ROUTES } from '@oe/core';
 import { useTranslations } from 'next-intl';
-import CourseSection from './courses-section';
+import { CourseSection } from './courses-section';
 
 interface IMyCourseContentProps {
   coursesCountingData: ICoursesCounting;
@@ -11,7 +11,7 @@ interface IMyCourseContentProps {
   completedCourses?: ICourseOutline[];
 }
 
-export default function MyCoursesContent({
+export function MyCoursesContent({
   coursesCountingData,
   inProgressCourses,
   notStartedCourses,

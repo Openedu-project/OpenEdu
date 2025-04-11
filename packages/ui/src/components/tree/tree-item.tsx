@@ -1,3 +1,4 @@
+'use client';
 import { CheckIcon, PencilIcon, PlusIcon, Trash2Icon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { type ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';

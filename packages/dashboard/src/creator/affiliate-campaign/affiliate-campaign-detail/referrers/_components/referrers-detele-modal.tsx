@@ -1,4 +1,4 @@
-import { Modal } from '@oe/ui/components/modal';
+import { Modal } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
 interface IDeleteReferrerModal {
@@ -10,7 +10,7 @@ interface IDeleteReferrerModal {
 
 export const MODAL_DEL_ID = 'referrer-delete-modal';
 
-export default function AffiliateDeleteReferrerModal({ id, onClose, onSubmit, open }: IDeleteReferrerModal) {
+export function AffiliateDeleteReferrerModal({ id, onClose, onSubmit, open }: IDeleteReferrerModal) {
   const t = useTranslations('affiliateDetailDeleteReferrerModal');
 
   return (

@@ -1,16 +1,16 @@
-import type { IQuizItemResponse } from '@oe/api/types/course/quiz';
-import { DeleteButton } from '@oe/ui/components/delete-button';
-import { DndSortable, DndSortableDragButton, type IDndSortableRef } from '@oe/ui/components/dnd-sortable';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@oe/ui/shadcn/accordion';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
+import type { IQuizItemResponse } from '@oe/api';
+import { DeleteButton } from '@oe/ui';
+import { DndSortable, DndSortableDragButton, type IDndSortableRef } from '@oe/ui';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
+import { Input } from '@oe/ui';
 import { ChevronDown, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useLessonActions } from '../../../_hooks/useLessonActions';
 import { useOutlineStore } from '../../../_store/useOutlineStore';
-import { QuizEditor } from '../quiz-editor';
+import { QuizEditor } from './quiz-editor';
 
 interface AccordionQuizProps {
   quizzes: IQuizItemResponse[];

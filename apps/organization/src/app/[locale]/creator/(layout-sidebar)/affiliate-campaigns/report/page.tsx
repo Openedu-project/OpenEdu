@@ -1,8 +1,8 @@
-import CreatorAffiliateReport from '@oe/dashboard/creator/affiliate-campaign/report/page';
-import type { Metadata } from 'next';
+import { CreatorAffiliateReport } from "@oe/dashboard";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Report',
+  title: "Report",
 };
 
 export default function ReportPage() {

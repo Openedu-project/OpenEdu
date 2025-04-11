@@ -1,13 +1,14 @@
-import type { ILaunchpad } from '@oe/api/types/launchpad';
-import { isLogin } from '@oe/api/utils/auth';
-import { LAUNCHPAD_STATUS } from '@oe/api/utils/launchpad';
+import type { ILaunchpad } from '@oe/api';
+import { LAUNCHPAD_STATUS } from '@oe/api';
+import { isLogin } from '@oe/api';
 import { CircularProgress } from '#components/circular-progress';
 import { Image } from '#components/image';
 import { Button } from '#shadcn/button';
-import { formatCurrency } from '#utils/format-currency';
+// import { formatCurrency } from '#utils/format-currency';
 import { calculateProgress, getTimeStatus } from '#utils/launchpad-utils';
 
 import DefaultImg from '@oe/assets/images/defaultimage.png';
+import { formatCurrency } from '@oe/core';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '#common/navigation';
 
@@ -63,7 +64,9 @@ const CampaignProgressSection = async ({
           <div className="space-y-2">
             <p className="text-base">
               <span className="font-semibold text-2xl">
-                {formatCurrency(Number(campaign?.total_amount))} {campaign?.funding_goal.currency}
+                {formatCurrency(Number(campaign?.total_amount), {
+                  currency: campaign?.funding_goal.currency,
+                })}
               </span>
               {t('common.funded')}
             </p>
@@ -98,4 +101,4 @@ const CampaignProgressSection = async ({
   );
 };
 
-export default CampaignProgressSection;
+export { CampaignProgressSection };

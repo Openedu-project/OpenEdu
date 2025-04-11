@@ -1,24 +1,23 @@
 'use client';
-import type { ICreateBaseCourse, ICreateYoutubeCourse } from '@oe/api/schemas/courses/createCourseSchema';
-import { createAICourseService, createCourseService } from '@oe/api/services/course';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import YoutubeIcon from '@oe/assets/icons/social-icon/youtube';
-import { CREATOR_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
-import { useRouter } from '@oe/ui/common/navigation';
-import { ButtonDropdown } from '@oe/ui/components/button-dropdown';
-import { useTable } from '@oe/ui/components/table';
-import { toast } from '@oe/ui/shadcn/sonner';
-import { useSocketStore } from '@oe/ui/store/socket';
+import { API_ENDPOINT } from '@oe/api';
+import { createAICourseService, createCourseService } from '@oe/api';
+import type { ICreateBaseCourse, ICreateYoutubeCourse } from '@oe/api';
+import { YoutubeIcon } from '@oe/assets';
+import { CREATOR_ROUTES, buildUrl } from '@oe/core';
+import { toast } from '@oe/ui';
+import { useTable } from '@oe/ui';
+import { useRouter } from '@oe/ui';
+import { ButtonDropdown } from '@oe/ui';
+import { useSocketStore } from '@oe/ui';
 import { PlusIcon, SparklesIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { useSWRConfig } from 'swr';
-import AIStatusModal, { type IAIStatus } from './ai-status-modal';
-import CreateCourseModal from './create-course-modal';
-import CreateCourseYoutubeModal from './create-course-youtube';
+import { AIStatusModal, type IAIStatus } from './ai-status-modal';
+import { CreateCourseModal } from './create-course-modal';
+import { CreateCourseYoutubeModal } from './create-course-youtube';
 
-export default function CreateCourseButton() {
+export function CreateCourseButton() {
   const tCourse = useTranslations('course');
   const tAIStatus = useTranslations('aiStatusModal');
   const router = useRouter();

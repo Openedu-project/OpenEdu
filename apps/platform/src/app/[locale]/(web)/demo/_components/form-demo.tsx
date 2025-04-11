@@ -1,9 +1,11 @@
 // schemas.ts
 "use client";
-import { fileResponseSchema } from "@oe/api/types/file";
 // import { personalSchema, accountSchema, addressSchema, preferencesSchema } from './schemas';
-// import { toast } from '@oe/ui/shadcn/use-toast';
-import { z } from "@oe/api/utils/zod";
+// import { toast } from '@oe/ui';
+import { z } from "@oe/api";
+import { fileResponseSchema } from "@oe/api";
+import { Uploader } from "@oe/ui";
+import { Button } from "@oe/ui";
 import {
   FormNestedProvider,
   FormNestedWrapper,
@@ -14,13 +16,11 @@ import {
   FormWrapper,
   type INestedFormsValues,
   SubmitFormsButton,
-} from "@oe/ui/components/form-wrapper";
-import { Selectbox } from "@oe/ui/components/selectbox";
-import { Uploader } from "@oe/ui/components/uploader";
-import { Button } from "@oe/ui/shadcn/button";
-import { Checkbox } from "@oe/ui/shadcn/checkbox";
-import { FormFieldWithLabel } from "@oe/ui/shadcn/form";
-import { Input } from "@oe/ui/shadcn/input";
+} from "@oe/ui";
+import { Selectbox } from "@oe/ui";
+import { Checkbox } from "@oe/ui";
+import { FormFieldWithLabel } from "@oe/ui";
+import { Input } from "@oe/ui";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { create } from "./action";

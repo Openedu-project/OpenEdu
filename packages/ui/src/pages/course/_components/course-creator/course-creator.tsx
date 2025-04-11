@@ -1,10 +1,10 @@
-import type { ICourseOwner } from '@oe/api/types/course/basic';
+import type { ICourseOwner } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { Link } from '#common/navigation';
 import { UserAvatar } from '#components/user-avatar';
 import { userProfileUrl } from './_helper';
 
-export default function CourseCreator({ owner }: { owner: ICourseOwner }) {
+export function CourseCreator({ owner }: { owner: ICourseOwner }) {
   const tCourse = useTranslations('courseOutline');
 
   return (

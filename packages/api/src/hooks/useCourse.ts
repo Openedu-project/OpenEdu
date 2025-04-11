@@ -1,4 +1,4 @@
-import { buildUrl } from '@oe/core/utils/url';
+import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import {

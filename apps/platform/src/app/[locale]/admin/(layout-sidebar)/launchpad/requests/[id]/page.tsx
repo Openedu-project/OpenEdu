@@ -1,5 +1,5 @@
-import { getAdminLaunchpadDetailService } from '@oe/api/services/admin-launchpad';
-import LaunchpadRequestsDetailMgm from '@oe/dashboard/admin/launchpad/request/detail/page';
+import { getAdminLaunchpadDetailService } from "@oe/api";
+import { LaunchpadRequestsDetailMgm } from "@oe/dashboard";
 
 interface LayoutProps {
   params: {
@@ -7,13 +7,16 @@ interface LayoutProps {
   };
   searchParams: { orderId?: string };
 }
-export default async function LaunchpadRequestsDetailPage({ params, searchParams }: LayoutProps) {
+export default async function LaunchpadRequestsDetailPage({
+  params,
+  searchParams,
+}: LayoutProps) {
   const [{ id }, { orderId }] = await Promise.all([params, searchParams]);
 
   const data = await getAdminLaunchpadDetailService(null, {
     params: { id },
-    queryParams: { preloads: ['VotingMilestones', 'Owner', 'User'] },
+    queryParams: { preloads: ["VotingMilestones", "Owner", "User"] },
   });
 
-  return <LaunchpadRequestsDetailMgm orderId={orderId ?? ''} data={data} />;
+  return <LaunchpadRequestsDetailMgm orderId={orderId ?? ""} data={data} />;
 }

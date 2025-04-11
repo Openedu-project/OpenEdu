@@ -1,16 +1,16 @@
 'use client';
 
-import { getUserBlog } from '@oe/api/actions/blog';
-import type { IBlog } from '@oe/api/types/blog';
-import type { IUserProfile } from '@oe/api/types/user-profile';
-import { PAGE_SIZE } from '@oe/core/utils/constants';
-import { abbreviateNumber } from '@oe/core/utils/helpers';
-import { BLOG_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
-import { useRouter } from '@oe/ui/common/navigation';
+import type { IBlog } from '@oe/api';
+import type { IUserProfile } from '@oe/api';
+import { getUserBlog } from '@oe/api';
+import { BLOG_ROUTES } from '@oe/core';
+import { buildUrl } from '@oe/core';
+import { PAGE_SIZE } from '@oe/core';
+import { abbreviateNumber } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { Fragment, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useRouter } from '#common/navigation';
 import { ProfileCard } from '#components/profile-card';
 import { ScrollArea, ScrollBar } from '#shadcn/scroll-area';
 import { Skeleton } from '#shadcn/skeleton';
@@ -37,8 +37,12 @@ export const TopAuthor = ({ topAuthor }: { topAuthor: IUserProfile[] }) => {
             avatarSize={120}
             desc={
               (profile.followers ?? 0 > 1)
-                ? `${t.rich('numberFollowers', { number: abbreviateNumber(profile.followers) })}`
-                : `${t.rich('numberFollower', { number: abbreviateNumber(profile.followers ?? 0) })}`
+                ? `${t.rich('numberFollowers', {
+                    number: abbreviateNumber(profile.followers),
+                  })}`
+                : `${t.rich('numberFollower', {
+                    number: abbreviateNumber(profile.followers ?? 0),
+                  })}`
             }
             handleClick={() => handleClickTopAuthor(profile.username)}
           />
@@ -69,7 +73,12 @@ export function PersonalBlogSection({
   const tPersonalBlogs = useTranslations('personalBlogSection');
 
   const loadMoreBlog = async () => {
-    const data = await getUserBlog({ type: 'personal', id, page: nextPage, noCache: true });
+    const data = await getUserBlog({
+      type: 'personal',
+      id,
+      page: nextPage,
+      noCache: true,
+    });
     if (data instanceof Error) {
       return;
     }

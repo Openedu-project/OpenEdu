@@ -1,7 +1,7 @@
-import { Image } from '@oe/ui/components/image';
+import { Image } from '@oe/ui';
 
-import type { FileType } from '@oe/ui/components/uploader';
-import { cn } from '@oe/ui/utils/cn';
+import type { FileType } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import type { SectionComponent } from '../../../_types/theme-page';
 import { AchievementStat, type AchievementStatProps } from '../_components/achievement-stat';
@@ -49,4 +49,4 @@ const ScholarHomepageAchievements: SectionComponent<'homepage', 'scholarAchievem
   );
 };
 
-export default ScholarHomepageAchievements;
+export { ScholarHomepageAchievements };

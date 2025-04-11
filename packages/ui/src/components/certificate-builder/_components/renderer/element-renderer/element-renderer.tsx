@@ -1,4 +1,4 @@
-import type { ICertificateData, ICertificateElement } from '@oe/api/types/certificate';
+import type { ICertificateData, ICertificateElement } from '@oe/api';
 import { ImageRenderer } from './image-renderer';
 import { OrganizationRenderer } from './organization-renderer';
 import { RichTextCertificateRenderer } from './rich-text-renderer';

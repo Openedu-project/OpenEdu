@@ -1,25 +1,22 @@
 'use client';
 
-import { useGetUserProfile } from '@oe/api/hooks/useUserProfile';
-import type { IUserRole } from '@oe/api/types/user-profile';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import DocumentAttach from '@oe/assets/icons/document-attach';
-import Pencil from '@oe/assets/icons/pencil';
-import PersonCircle from '@oe/assets/icons/person-circle';
-import School from '@oe/assets/icons/school';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { createAPIUrl } from '@oe/api';
+import type { IUserProfileRole } from '@oe/api';
+import { useGetUserProfile } from '@oe/api';
+import { DocumentAttach, Pencil, PersonCircle, School } from '@oe/assets';
+import { PLATFORM_ROUTES } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { Navigation } from '#components/navigation';
-import EditProfileHeader from '../../_components/edit-profile-header';
+import { EditProfileHeader } from '../../_components/edit-profile-header';
 
-export default function ProfileHeader() {
+export function ProfileHeader() {
   const tProfile = useTranslations('userProfile.profile');
 
   const { user } = useParams();
 
-  const [roles, setMyRoles] = useState<IUserRole[]>([]);
+  const [roles, setMyRoles] = useState<IUserProfileRole[]>([]);
 
   const { dataUserProfile } = useGetUserProfile(user as string);
 

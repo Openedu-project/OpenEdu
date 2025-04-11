@@ -1,6 +1,10 @@
 import { defaultThemeSystemConfig } from './_config/initial';
+import { initialThemeGlobal } from './_config/theme-global-initial';
 import { getMetadata } from './_config/theme-metadata';
 import type { ThemeRender } from './_types/theme-page';
+// import { fonts } from './fonts';
+
+// Academia theme
 import {
   AcademiaAboutUs,
   AcademiaHomePage,
@@ -10,6 +14,8 @@ import {
   AcademiaHomepageOrganizations,
   AcademiaHomepagePartners,
 } from './academia';
+
+// Auth components
 import {
   AuthLayout,
   AuthLayoutForgotPassword,
@@ -17,63 +23,79 @@ import {
   AuthLayoutSignUp,
   ThemeFooter,
   ThemeHeader,
-} from './auth/type';
+} from './auth';
 
-import { updateGlobalTheme } from './_components/theme-settings/theme-global/_utils';
-import { initialThemeGlobal } from './_config/theme-global-initial';
-import { AvailHomepageBlogsClient, AvailHomepageBlogsServer } from './avail/homepage/avail-blogs';
-import { AvailHomepageCoursesClient, AvailHomepageCoursesServer } from './avail/homepage/avail-courses';
-import { AvailHomepageEco } from './avail/homepage/avail-eco';
-import { AvailHomepageFeature } from './avail/homepage/avail-feature';
-import { AvailHomepageHero } from './avail/homepage/avail-hero';
-import { AvailHomepageSolution } from './avail/homepage/avail-solution';
-import AvailHomepage from './avail/homepage/index';
+// Avail theme
+import {
+  AvailHomepage,
+  AvailHomepageBlogsClient,
+  AvailHomepageBlogsServer,
+  AvailHomepageCoursesClient,
+  AvailHomepageCoursesServer,
+  AvailHomepageEco,
+  AvailHomepageFeature,
+  AvailHomepageHero,
+  AvailHomepageSolution,
+} from './avail';
 
-import { fonts } from './fonts';
+// Fenet theme
+import {
+  FenetHomepage,
+  FenetHomepageBlog,
+  FenetHomepageCustomer,
+  FenetHomepageExperience,
+  FenetHomepageExpert,
+  FenetHomepageFeature,
+  FenetHomepageHero,
+  FenetHomepagePrice,
+  FenetHomepageService,
+} from './fenet';
 
-import { ScholarHomepageAchievements } from './scholar/homepage/achievements';
+// Scholar theme
+import {
+  ScholarHomepage,
+  ScholarHomepageAboutUs,
+  ScholarHomepageAchievements,
+  ScholarHomepageContact,
+  ScholarHomepageHero,
+  ScholarHomepageProjects,
+  ScholarHomepageService,
+  ScholarHomepageTeam,
+  ScholarHomepageTestimonials,
+} from './scholar';
 
-import { ScholarHomepageTeam } from './scholar/homepage/team';
+// VBI theme
+import {
+  VbiAboutUs,
+  VbiAboutUsCore,
+  VbiAboutUsGoal,
+  VbiAboutUsIntro,
+  VbiHomepage,
+  VbiHomepageAchievementsClient,
+  VbiHomepageAchievementsServer,
+  VbiHomepageBlogsServer,
+  VbiHomepageCertClient,
+  VbiHomepageCertServer,
+  VbiHomepageCoursesClient,
+  VbiHomepageCoursesServer,
+  VbiHomepageCreatorsClient,
+  VbiHomepageCreatorsServer,
+  VbiHomepageEventsClient,
+  VbiHomepageEventsServer,
+  VbiHomepageFeaturesClient,
+  VbiHomepageFeaturesServer,
+  VbiHomepageHeroClient,
+  VbiHomepageHeroServer,
+  VbiHomepageMapClient,
+  VbiHomepageMapServer,
+  VbiPartnerFeaturesClient,
+  VbiPartners,
+  VbiPartnersCta,
+  VbiPartnersList,
+  VbiPartnersShowcase,
+  VbiPartnersTesti,
+} from './vbi';
 
-import { ScholarHomepageProjects } from './scholar/homepage/projects';
-
-import { ScholarHomepageTestimonials } from './scholar/homepage/testimonials';
-
-import ScholarHomepage from './scholar/homepage/index';
-
-import { FenetHomepageBlog } from './fenet/homepage/blog';
-import { FenetHomepageCustomer } from './fenet/homepage/customer';
-import { FenetHomepageExperience } from './fenet/homepage/experience';
-import { FenetHomepageExpert } from './fenet/homepage/expert';
-import { FenetHomepageFeature } from './fenet/homepage/feature';
-import { FenetHomepageHero } from './fenet/homepage/hero';
-import FenetHomepage from './fenet/homepage/index';
-import { FenetHomepagePrice } from './fenet/homepage/price';
-import { FenetHomepageService } from './fenet/homepage/service';
-import { ScholarHomepageAboutUs } from './scholar/homepage/about-us';
-import { ScholarHomepageContact } from './scholar/homepage/contact';
-import ScholarHomepageHero from './scholar/homepage/hero/hero';
-import { ScholarHomepageService } from './scholar/homepage/service';
-import { VbiAboutUsCore } from './vbi/about-us/core';
-import { VbiAboutUsGoal } from './vbi/about-us/goal';
-import VbiAboutUs from './vbi/about-us/index';
-import { VbiAboutUsIntro } from './vbi/about-us/intro';
-import VbiHomepage from './vbi/homepage/index';
-import { VbiHomepageAchievementsClient, VbiHomepageAchievementsServer } from './vbi/homepage/vbi-achievements';
-import { VbiHomepageBlogsClient, VbiHomepageBlogsServer } from './vbi/homepage/vbi-blogs';
-import { VbiHomepageCertClient, VbiHomepageCertServer } from './vbi/homepage/vbi-cert';
-import { VbiHomepageCoursesClient, VbiHomepageCoursesServer } from './vbi/homepage/vbi-courses';
-import { VbiHomepageCreatorsClient, VbiHomepageCreatorsServer } from './vbi/homepage/vbi-creators';
-import { VbiHomepageEventsClient, VbiHomepageEventsServer } from './vbi/homepage/vbi-events';
-import { VbiHomepageFeaturesClient, VbiHomepageFeaturesServer } from './vbi/homepage/vbi-features';
-import { VbiHomepageHeroClient, VbiHomepageHeroServer } from './vbi/homepage/vbi-hero/index';
-import { VbiHomepageMapClient, VbiHomepageMapServer } from './vbi/homepage/vbi-map';
-import { VbiPartnersCta } from './vbi/partners/cta';
-import { VbiPartnerFeaturesClient, VbiPartnerFeaturesServer } from './vbi/partners/features';
-import VbiPartners from './vbi/partners/index';
-import { VbiPartnersList } from './vbi/partners/partner-list';
-import { VbiPartnersShowcase } from './vbi/partners/showcase';
-import { VbiPartnersTesti } from './vbi/partners/testimonials';
 const auth = {
   theme: AuthLayout,
   header: ThemeHeader,
@@ -119,7 +141,7 @@ export const THEMES: ThemeRender = {
       vbiCourses: VbiHomepageCoursesClient,
       vbiCert: VbiHomepageCertClient,
       vbiFeatures: VbiHomepageFeaturesClient,
-      vbiBlogs: VbiHomepageBlogsClient,
+      // vbiBlogs: VbiHomepageBlogsClient,
       vbiEvents: VbiHomepageEventsClient,
       vbiCreators: VbiHomepageCreatorsClient,
       vbiMap: VbiHomepageMapClient,
@@ -225,7 +247,7 @@ export const THEMES_SERVER: ThemeRender = {
       vbiPartnerList: VbiPartnersList,
       vbiShowcase: VbiPartnersShowcase,
       vbiTesti: VbiPartnersTesti,
-      vbiPartnerFeatures: VbiPartnerFeaturesServer,
+      // vbiPartnerFeatures: VbiPartnerFeaturesServer,
       vbiCta: VbiPartnersCta,
     },
     auth: {
@@ -260,4 +282,16 @@ export const THEMES_SERVER: ThemeRender = {
   },
 } as const;
 
-export { fonts, defaultThemeSystemConfig, getMetadata, initialThemeGlobal, updateGlobalTheme };
+export { defaultThemeSystemConfig, getMetadata, initialThemeGlobal };
+export * from './_components/theme-settings';
+export * from './academia';
+export * from './auth';
+export * from './avail';
+export * from './fenet';
+export * from './layout';
+export * from './scholar';
+export * from './vbi';
+export * from './_common';
+export * from './_types';
+export * from './_components/theme-list';
+export * from './_components/web/theme-web-page';

@@ -1,5 +1,5 @@
-import Translations from '@oe/dashboard/admin/site-settings/languages/translations/page';
+import { TranslationsPage } from "@oe/dashboard";
 
-export default function TranslationsPage() {
-  return <Translations />;
+export default function TranslationsSiteSettingsPage() {
+  return <TranslationsPage />;
 }

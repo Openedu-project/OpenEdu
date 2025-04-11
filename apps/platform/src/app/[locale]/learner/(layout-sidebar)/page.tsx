@@ -1,4 +1,4 @@
-import LearnerDashboard from '@oe/dashboard/learner/dashboard/page';
+import { LearnerDashboard } from "@oe/dashboard";
 
 export default function Home() {
   return <LearnerDashboard />;

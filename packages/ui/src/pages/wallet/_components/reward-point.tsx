@@ -1,13 +1,13 @@
 'use client';
 
-import { useWallet } from '@oe/api/hooks/useWallet';
-import { ASSET_TYPES } from '@oe/api/utils/wallet';
-import { RewardPointIcon } from '@oe/assets/icons/wallets/reward-point';
-// import { WALLET_ROUTES } from "@oe/core/utils/routes";
+import { useWallet } from '@oe/api';
+import { ASSET_TYPES } from '@oe/api';
+import { RewardPointIcon } from '@oe/assets';
+// import { WALLET_ROUTES } from "@oe/core";
 // import { ChevronRight } from "lucide-react";
 import { useTranslations } from 'next-intl';
 // import { Link } from "#common/navigation";
-import AssetCard from './asset-card';
+import { AssetCard } from './asset-card';
 
 export const RewardPoint = () => {
   const { wallets } = useWallet();

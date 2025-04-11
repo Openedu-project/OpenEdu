@@ -1,3 +1,3 @@
-import { CourseTimeline } from './course-time-line';
+import { CourseTimeline, type CourseTimelineItemProps, type CourseTimelineProps } from './course-time-line';
 
-export { CourseTimeline };
+export { CourseTimeline, type CourseTimelineProps, type CourseTimelineItemProps };

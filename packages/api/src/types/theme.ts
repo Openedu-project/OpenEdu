@@ -1,8 +1,9 @@
-import type { LanguageCode } from '@oe/i18n/languages';
-import type { ThemeSystem } from '../../../themes/src/_types';
+import type { LanguageCode } from '@oe/i18n';
+// import type { ThemeSystem } from '../../../themes/src/_types';
 
 export interface IThemeSystemConfigPayload {
-  config: ThemeSystem;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  config: any;
   id?: string;
   locale?: LanguageCode;
   domain?: string;

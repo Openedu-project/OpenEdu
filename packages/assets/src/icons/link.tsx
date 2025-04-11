@@ -1,4 +1,4 @@
-export default function LinkIcon({ width = 20, height = 20, className = '', color = '#2C2C2C' }) {
+export function LinkIcon({ width = 20, height = 20, className = '', color = '#2C2C2C' }) {
   return (
     <svg
       className={className}

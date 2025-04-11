@@ -1,8 +1,8 @@
-import { useGetMessageData } from '@oe/api/hooks/useConversation';
-import type { IAIStatus, IRole } from '@oe/api/types/conversation';
+import type { IAIStatus, IRole } from '@oe/api';
+import { useGetMessageData } from '@oe/api';
 
-import type { IMessageData } from '@oe/api/types/conversation';
-import { GENERATING_STATUS } from '@oe/core/utils/constants';
+import type { IMessageData } from '@oe/api';
+import { GENERATING_STATUS } from '@oe/core';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSWRConfig } from 'swr';
 

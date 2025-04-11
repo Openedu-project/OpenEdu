@@ -1,17 +1,17 @@
 'use client';
-import { useGetAffiliateCampaignDetail } from '@oe/api/hooks/useAffiliateCampaign';
+import { useGetAffiliateCampaignDetail } from '@oe/api';
 
-import { usePostExtendReferralLink, usePostReferralLink } from '@oe/api/hooks/useReferralLink';
-import type { ICanApplicableComm } from '@oe/api/types/affiliate-campaign';
-import type { ICommissionBonusRes } from '@oe/api/types/commission';
+import type { ICanApplicableComm } from '@oe/api';
+import { usePostExtendReferralLink, usePostReferralLink } from '@oe/api';
+import type { ICommissionBonusRes } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { useParams, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import { copyToClipboard } from '@oe/core/utils/utils';
-import { toast } from '@oe/ui/shadcn/sonner';
+import type { HTTPErrorMetadata } from '@oe/api';
+import { PLATFORM_ROUTES } from '@oe/core';
+import { copyToClipboard } from '@oe/core';
+import { toast } from '@oe/ui';
 import { ReferralSection } from './referral-section';
 
 interface IMinMaxRates {
@@ -240,4 +240,4 @@ const CampaignDetail = () => {
   );
 };
 
-export default CampaignDetail;
+export { CampaignDetail };

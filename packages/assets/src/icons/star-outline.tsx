@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function StarOutline({
+export function StarOutline({
   width = 12,
   height = 13,
   className = '',

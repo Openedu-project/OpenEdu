@@ -1,15 +1,16 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
+import { getUserProfileService } from '#services/user';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
 import {
   addUserToBlockService,
   changeMyPasswordService,
-  followUserService,
+  followUserProfileService,
   getListUserActionService,
   getMeSettingsService,
-  getUserProfileService,
+  // getUserProfileService,
   unblockUserService,
   unfollowUserService,
   updateMeSettingsService,
@@ -22,14 +23,14 @@ import type {
   IMyProfilePayload,
 } from '../types/user-profile';
 
-export function useGetUserProfile(userId: string) {
+export function useGetUserProfile(userId?: string) {
   const endpointKey = createAPIUrl({
     endpoint: API_ENDPOINT.USERS_ID,
     params: { id: userId },
   });
 
-  const { data, isLoading, error, mutate } = useSWR(endpointKey, (url: string) =>
-    getUserProfileService(url, { params: { id: userId } })
+  const { data, isLoading, error, mutate } = useSWR(userId ? endpointKey : null, (url: string) =>
+    getUserProfileService(url, { id: userId as string })
   );
 
   return {
@@ -152,7 +153,7 @@ export function useFollowUser(id: string) {
   });
 
   const { trigger, isMutating, error } = useSWRMutation(endpointKey, async (url: string) =>
-    followUserService(url, { params: { id } })
+    followUserProfileService(url, { params: { id } })
   );
 
   return {

@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 
 import backgroundCongrat from '@oe/assets/images/learning-page/congratulation.png';
 import backgroundStaytuned from '@oe/assets/images/learning-page/stay-tuned.png';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { PLATFORM_ROUTES } from '@oe/core';
 import { Link } from '#common/navigation';
 import { Image } from '#components/image';
 import { Modal } from '#components/modal';
@@ -53,7 +53,7 @@ const MODAL_CONFIGS: Record<NotiType, ModalConfig> = {
   },
 } as const;
 
-export default function CompleteCourseNotiModal({
+export function CompleteCourseNotiModal({
   open,
   currentLessonIndex,
   totalItems,

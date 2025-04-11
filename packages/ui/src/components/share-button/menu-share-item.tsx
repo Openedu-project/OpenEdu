@@ -1,14 +1,14 @@
 'use client';
-import { useGetMe } from '@oe/api/hooks/useMe';
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
-import { copyToClipboard } from '@oe/core/utils/utils';
-import { toast } from '@oe/ui/shadcn/sonner';
+import type { ICourseOutline } from '@oe/api';
+import { useGetMe } from '@oe/api';
+import { PLATFORM_ROUTES } from '@oe/core';
+import { buildUrl } from '@oe/core';
+import { copyToClipboard } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { SocialIcon } from '#components/social-icon';
 import { DropdownMenuContent, DropdownMenuItem } from '#shadcn/dropdown-menu';
+import { toast } from '#shadcn/sonner';
 import { cn } from '#utils/cn';
 import { SOCIAL_MEDIA_CONFIG, type ShareButtonComponent, type ShareConfig } from './types';
 

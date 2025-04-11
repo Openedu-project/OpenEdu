@@ -1,15 +1,16 @@
-import type { ILaunchpad } from '@oe/api/types/launchpad';
-import { isLogin } from '@oe/api/utils/auth';
-import { VOTING_STATUS } from '@oe/api/utils/launchpad';
+import type { ILaunchpad } from '@oe/api';
+import { VOTING_STATUS } from '@oe/api';
+import { isLogin } from '@oe/api';
+import { formatCurrency } from '@oe/core';
 import { getTranslations } from 'next-intl/server';
 import { CircularProgress } from '#components/circular-progress';
 import { CourseTimeline } from '#components/course-time-line';
 import { Separator } from '#shadcn/separator';
-import { formatCurrency } from '#utils/format-currency';
+// import { formatCurrency } from '#utils/format-currency';
 import { calculateProgress } from '#utils/launchpad-utils';
 import { CollapsibleCourseContent } from '../components/collapsible-course-content';
 import { CourseCardHorizontal } from '../components/course-card';
-import VotingResultCard from '../components/voting-result-card/voting-result-card';
+import { VotingResultCard } from '../components/voting-result-card';
 
 const CourseInformation = async ({
   campaign,
@@ -46,19 +47,25 @@ const CourseInformation = async ({
         <div className="space-y-2">
           <p className="text-base">
             <span className="font-semibold text-2xl">
-              {formatCurrency(Number(campaign?.funding_goal.target_funding))} {campaign?.funding_goal.currency}
+              {formatCurrency(Number(campaign?.funding_goal.target_funding), {
+                currency: campaign?.funding_goal.currency,
+              })}
             </span>
             {t('common.targetFunding')}
           </p>
           <p className="text-base">
             <span className="font-semibold text-2xl">
-              {formatCurrency(Number(campaign?.total_amount))} {campaign?.funding_goal.currency}
+              {formatCurrency(Number(campaign?.total_amount), {
+                currency: campaign?.funding_goal.currency,
+              })}
             </span>
             {t('common.funded')}
           </p>
           <p className="text-base">
             <span className="font-semibold text-2xl">
-              {formatCurrency(Number(campaign?.investment?.amount))} {campaign?.funding_goal.currency}
+              {formatCurrency(Number(campaign?.investment?.amount), {
+                currency: campaign?.funding_goal.currency,
+              })}
             </span>
             {t('common.pledgedFromYou')}
           </p>
@@ -76,4 +83,4 @@ const CourseInformation = async ({
   );
 };
 
-export default CourseInformation;
+export { CourseInformation };

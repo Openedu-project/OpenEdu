@@ -1,4 +1,5 @@
-import type { IChatHistory } from '@oe/api/types/conversation';
+'use client';
+import type { IChatHistory } from '@oe/api';
 import { CircleEllipsis, Pencil, Share, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React, { useState, type ReactNode } from 'react';
@@ -117,4 +118,4 @@ const ActionDropdown: React.FC<ActionDropdownProps> = ({ className, actions, ite
   );
 };
 
-export default ActionDropdown;
+export { ActionDropdown };

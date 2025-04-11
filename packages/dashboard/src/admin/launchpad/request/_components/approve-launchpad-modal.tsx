@@ -1,5 +1,5 @@
-import type { IApprovalPayload } from '@oe/api/types/approvals';
-import { Modal } from '@oe/ui/components/modal';
+import type { IApprovalPayload } from '@oe/api';
+import { Modal } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 
@@ -9,7 +9,7 @@ interface IApproveLaunchpadModal {
   isLoading: boolean;
 }
 
-export default function ApproveLaunchpadModal({ onSubmit, onClose, isLoading }: IApproveLaunchpadModal) {
+export function ApproveLaunchpadModal({ onSubmit, onClose, isLoading }: IApproveLaunchpadModal) {
   const t = useTranslations('adminLaunchpadRequest.approveModal');
 
   const handleSubmit = useCallback(() => {

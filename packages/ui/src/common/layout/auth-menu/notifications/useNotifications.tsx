@@ -1,15 +1,9 @@
-import { useGetNotification, useUpdateNotification } from '@oe/api/hooks/useNotification';
-import type { INotificationItem } from '@oe/api/types/notification';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import {
-  ADMIN_ROUTES,
-  BLOG_ADMIN_ROUTES,
-  BLOG_ROUTES,
-  CREATOR_ROUTES,
-  PLATFORM_ROUTES,
-  WALLET_ROUTES,
-} from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
+'use client';
+import type { HTTPErrorMetadata } from '@oe/api';
+import { useGetNotification, useUpdateNotification } from '@oe/api';
+import type { INotificationItem } from '@oe/api';
+import { ADMIN_ROUTES, BLOG_ADMIN_ROUTES, BLOG_ROUTES, CREATOR_ROUTES, PLATFORM_ROUTES, WALLET_ROUTES } from '@oe/core';
+import { buildUrl } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';

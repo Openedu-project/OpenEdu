@@ -1,16 +1,16 @@
 "use client";
 
-import type { IOrganization } from "@oe/api/types/organizations";
-import { API_ENDPOINT } from "@oe/api/utils/endpoints";
-import type { FilterOption } from "@oe/ui/components/filter-search";
+import type { IOrganization } from "@oe/api";
+import { API_ENDPOINT } from "@oe/api";
+import type { FilterOption } from "@oe/ui";
 import {
   type ColumnDef,
   Table,
   TableEditableCell,
   type TableRef,
-} from "@oe/ui/components/table";
-import { Badge } from "@oe/ui/shadcn/badge";
-import { Button } from "@oe/ui/shadcn/button";
+} from "@oe/ui";
+import { Badge } from "@oe/ui";
+import { Button } from "@oe/ui";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 const filterOptions: FilterOption[] = [
@@ -27,7 +27,7 @@ const filterOptions: FilterOption[] = [
   },
 ];
 
-export default function TableDemo() {
+export function TableDemo() {
   const [count, setCount] = useState(0);
   useEffect(() => {
     setTimeout(() => setCount(count + 1), 1000);

@@ -1,10 +1,10 @@
-import { cn } from "@oe/ui/utils/cn";
+import { cn } from '@oe/ui';
 
 interface StatCardProps {
   value?: number;
   label?: string;
   className?: string;
-  variant?: "default" | "primary";
+  variant?: 'default' | 'primary';
 }
 
 /**
@@ -14,14 +14,10 @@ interface StatCardProps {
  * @param addPlus - Whether to add '+' for values over 1000 (default: true)
  * @returns Formatted string
  */
-const formatCompactNumber = (
-  value: number,
-  decimals?: number,
-  addPlus?: boolean
-): string => {
+const formatCompactNumber = (value: number, decimals?: number, addPlus?: boolean): string => {
   // Handle invalid input
   if (Number.isNaN(value) || !Number.isFinite(value)) {
-    return "0";
+    return '0';
   }
 
   // Handle negative numbers
@@ -39,7 +35,7 @@ const formatCompactNumber = (
 
     // Add plus sign for values over 1000 if requested
     if (addPlus && absoluteValue >= 1000) {
-      formattedValue += "+";
+      formattedValue += '+';
     }
   }
 
@@ -47,25 +43,20 @@ const formatCompactNumber = (
   return isNegative ? `-${formattedValue}` : formattedValue;
 };
 
-const StatCard = ({
-  value,
-  label,
-  className,
-  variant = "default",
-}: StatCardProps) => (
-  <div className={cn("text-center", className)}>
+const StatCard = ({ value, label, className, variant = 'default' }: StatCardProps) => (
+  <div className={cn('text-center', className)}>
     <div
       className={cn(
-        "mb-2 font-bold text-primary text-sm md:text-lg lg:text-3xl",
-        variant === "primary" && "text-accent"
+        'mb-2 font-bold text-primary text-sm md:text-lg lg:text-3xl',
+        variant === 'primary' && 'text-accent'
       )}
     >
       {value ? formatCompactNumber(value) : 0}
     </div>
     <div
       className={cn(
-        "max-w-[80px] text-primary text-xs tracking-wider sm:max-w-[100px] lg:max-w-[200px]",
-        variant === "primary" && "text-accent"
+        'max-w-[80px] text-primary text-xs tracking-wider sm:max-w-[100px] lg:max-w-[200px]',
+        variant === 'primary' && 'text-accent'
       )}
     >
       {label}
@@ -73,6 +64,6 @@ const StatCard = ({
   </div>
 );
 
-StatCard.displayName = "StatCard";
+StatCard.displayName = 'StatCard';
 
 export { StatCard, type StatCardProps };

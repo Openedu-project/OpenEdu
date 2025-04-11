@@ -1,4 +1,3 @@
-import { createHash, randomBytes } from 'node:crypto';
 import type { SocialProvider } from '#types/auth';
 
 export const PROVIDERS: Record<SocialProvider, SocialProvider> = {
@@ -17,12 +16,32 @@ export const AUTHORIZE_ENDPOINT: Record<Exclude<SocialProvider, 'custom'>, strin
 
 const BASE64_PADDING_REGEX = /=+$/;
 
-function generatePKCEPair() {
+// Chuyển đổi từ ArrayBuffer sang hex string
+function bufferToHex(buffer: ArrayBuffer): string {
+  return Array.from(new Uint8Array(buffer))
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
+}
+
+// Chuyển đổi từ ArrayBuffer sang base64 URL-safe
+function bufferToBase64UrlSafe(buffer: ArrayBuffer): string {
+  const base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
+  return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(BASE64_PADDING_REGEX, '');
+}
+
+async function generatePKCEPair() {
   const NUM_OF_BYTES = 22; // Total of 44 characters (1 Bytes = 2 char) (standard states that: 43 chars <= verifier <= 128 chars)
-  const HASH_ALG = 'sha256';
-  const randomVerifier = randomBytes(NUM_OF_BYTES).toString('hex');
-  const hash = createHash(HASH_ALG).update(randomVerifier).digest('base64');
-  const challenge = hash.replace(/\+/g, '-').replace(/\//g, '_').replace(BASE64_PADDING_REGEX, ''); // Clean base64 to make it URL safe
+
+  // Tạo verifier sử dụng Web Crypto API
+  const randomArray = new Uint8Array(NUM_OF_BYTES);
+  crypto.getRandomValues(randomArray);
+  const randomVerifier = bufferToHex(randomArray.buffer);
+
+  // Tạo challenge sử dụng Web Crypto API
+  const encodedVerifier = new TextEncoder().encode(randomVerifier);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', encodedVerifier);
+  const challenge = bufferToBase64UrlSafe(hashBuffer);
+
   return { verifier: randomVerifier, challenge };
 }
 
@@ -65,8 +84,8 @@ export const createGoogleAuthorizeUrl = (referrer: string, originUrl: string) =>
   });
 };
 
-export const createFacebookAuthorizeUrl = (referrer: string, originUrl: string) => {
-  const { verifier, challenge } = generatePKCEPair();
+export const createFacebookAuthorizeUrl = async (referrer: string, originUrl: string) => {
+  const { verifier, challenge } = await generatePKCEPair();
   return createSocialAuthorizeUrl({
     provider: 'facebook',
     referrer,

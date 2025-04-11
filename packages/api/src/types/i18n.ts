@@ -1,4 +1,4 @@
-import type { LanguageCode } from '@oe/i18n/languages';
+import type { LanguageCode } from '@oe/i18n';
 
 export interface LanguageStats {
   language: string;

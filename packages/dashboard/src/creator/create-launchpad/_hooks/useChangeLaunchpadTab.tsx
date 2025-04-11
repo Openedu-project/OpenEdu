@@ -1,12 +1,8 @@
-import {
-  CREATE_LAUNCHPAD_TABS,
-  CREATE_LAUNCHPAD_TABS_ORDER,
-} from "@oe/api/utils/launchpad";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo } from "react";
+import { CREATE_LAUNCHPAD_TABS, CREATE_LAUNCHPAD_TABS_ORDER } from '@oe/api';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useCallback, useEffect, useMemo } from 'react';
 
-type TabType =
-  (typeof CREATE_LAUNCHPAD_TABS)[keyof typeof CREATE_LAUNCHPAD_TABS];
+type TabType = (typeof CREATE_LAUNCHPAD_TABS)[keyof typeof CREATE_LAUNCHPAD_TABS];
 
 interface TabChangeState {
   currentTab: string;
@@ -31,17 +27,17 @@ export function useChangeLaunchpadTab(): TabChangeState {
 
   // Get current tab with validation
   const currentTab = useMemo((): string => {
-    const tabParam = searchParams.get("tab");
+    const tabParam = searchParams.get('tab');
     return isValidTab(tabParam) ? tabParam : DEFAULT_TAB;
   }, [searchParams]);
 
   // Initialize tab on first load or handle invalid tab
   useEffect(() => {
-    const tabParam = searchParams.get("tab");
+    const tabParam = searchParams.get('tab');
 
     if (!isValidTab(tabParam)) {
       const params = new URLSearchParams(searchParams);
-      params.set("tab", DEFAULT_TAB);
+      params.set('tab', DEFAULT_TAB);
 
       router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     }
@@ -49,19 +45,14 @@ export function useChangeLaunchpadTab(): TabChangeState {
 
   // Calculate tab navigation state
   const { nextTab, prevTab, isLatestTab } = useMemo(() => {
-    const currentTabIndex = CREATE_LAUNCHPAD_TABS_ORDER.findIndex(
-      (tab) => tab.value === currentTab
-    );
+    const currentTabIndex = CREATE_LAUNCHPAD_TABS_ORDER.findIndex(tab => tab.value === currentTab);
 
     return {
       nextTab:
         currentTabIndex < CREATE_LAUNCHPAD_TABS_ORDER.length - 1
           ? CREATE_LAUNCHPAD_TABS_ORDER[currentTabIndex + 1]?.value
           : undefined,
-      prevTab:
-        currentTabIndex > 0
-          ? CREATE_LAUNCHPAD_TABS_ORDER[currentTabIndex - 1]?.value
-          : undefined,
+      prevTab: currentTabIndex > 0 ? CREATE_LAUNCHPAD_TABS_ORDER[currentTabIndex - 1]?.value : undefined,
       isLatestTab: currentTabIndex === CREATE_LAUNCHPAD_TABS_ORDER.length - 1,
     };
   }, [currentTab]);
@@ -71,7 +62,7 @@ export function useChangeLaunchpadTab(): TabChangeState {
     (value: string) => {
       if (isValidTab(value)) {
         const params = new URLSearchParams(searchParams);
-        params.set("tab", value);
+        params.set('tab', value);
         router.push(`${pathname}?${params.toString()}`, { scroll: false });
       }
     },

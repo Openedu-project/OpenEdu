@@ -1,21 +1,14 @@
 'use client';
-import { useWallet } from '@oe/api/hooks/useWallet';
-import type { ICryptoWithdrawPayload } from '@oe/api/schemas/withdrawSchema';
-import { tokenSubmitWithdrawService } from '@oe/api/services/wallet';
-import { ASSET_TYPES, CHAIN, CRYPTO_CURRENCIES } from '@oe/api/utils/wallet';
-import { WALLET_ROUTES } from '@oe/core/utils/routes';
-import { Button } from '@oe/ui/shadcn/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@oe/ui/shadcn/dialog';
+import type { ICryptoWithdrawPayload } from '@oe/api';
+import { useWallet } from '@oe/api';
+import { ASSET_TYPES, CHAIN, CRYPTO_CURRENCIES } from '@oe/api';
+import { tokenSubmitWithdrawService } from '@oe/api';
+import { WALLET_ROUTES } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 import { Link } from '#common/navigation';
+import { Button } from '#shadcn/button';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '#shadcn/dialog';
 import { EarnCryptoCard } from './earning-crypto-card';
 
 export const EarningAssets = () => {

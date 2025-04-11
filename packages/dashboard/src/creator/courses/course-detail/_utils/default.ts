@@ -1,4 +1,4 @@
-import type { ILesson, ILessonContent, ISection } from '@oe/api/types/course/segment';
+import type { ILesson, ILessonContent, ISection } from '@oe/api';
 
 export const createDefaultLesson = (courseId: string, lesson?: Partial<ILesson>) => {
   const lessonOrder = lesson?.order || 0;

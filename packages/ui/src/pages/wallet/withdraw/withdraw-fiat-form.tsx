@@ -1,12 +1,12 @@
 'use client';
 
-import { useGetBankAccounts, useWallet } from '@oe/api/hooks/useWallet';
-import { type IFiatWithdrawPayload, fiatWithdrawSchema } from '@oe/api/schemas/withdrawSchema';
-import { fiatSubmitWithdrawService } from '@oe/api/services/wallet';
-import type { HTTPError } from '@oe/api/utils/http-error';
-import { FIAT_CURRENCIES } from '@oe/api/utils/wallet';
-import { findLocaleFromCurrency, formatCurrency } from '@oe/core/utils/currency';
-import { WALLET_ROUTES } from '@oe/core/utils/routes';
+import type { HTTPError } from '@oe/api';
+import { type IFiatWithdrawPayload, fiatWithdrawSchema } from '@oe/api';
+import { useGetBankAccounts, useWallet } from '@oe/api';
+import { FIAT_CURRENCIES } from '@oe/api';
+import { fiatSubmitWithdrawService } from '@oe/api';
+import { WALLET_ROUTES } from '@oe/core';
+import { findLocaleFromCurrency, formatCurrency } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import type { UseFormReturn } from 'react-hook-form';

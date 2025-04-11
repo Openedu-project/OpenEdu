@@ -1,6 +1,6 @@
-import { getThemeConfigServer } from '@oe/api/services/theme';
-import { LoginPage } from '@oe/ui/common/auth/login-page';
-import { getBannerByPageKey } from '../_utils/functions';
+import { getThemeConfigServer } from "@oe/api";
+import { LoginPage } from "@oe/ui";
+import { getBannerByPageKey } from "../_utils/functions";
 
 export default async function Login() {
   const [themeSystem] = await Promise.all([getThemeConfigServer()]);
@@ -10,5 +10,10 @@ export default async function Login() {
     return <LoginPage />;
   }
 
-  return <LoginPage themeName={themeName} banner={getBannerByPageKey('login', themeSystem?.[0]?.value)} />;
+  return (
+    <LoginPage
+      themeName={themeName}
+      banner={getBannerByPageKey("login", themeSystem?.[0]?.value)}
+    />
+  );
 }

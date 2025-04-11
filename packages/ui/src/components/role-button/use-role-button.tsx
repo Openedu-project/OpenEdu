@@ -1,7 +1,7 @@
 'use client';
 
-import { useGetPermissionMyPageAccess, usePermissionRoutes } from '@oe/api/hooks/usePermission';
-import type { IPermissionAction, IPermissionRouteInfo } from '@oe/api/types/permissions';
+import type { IPermissionAction, IPermissionRouteInfo } from '@oe/api';
+import { useGetPermissionMyPageAccess, usePermissionRoutes } from '@oe/api';
 import { useCallback, useEffect, useState } from 'react';
 import { usePathname } from '#common/navigation';
 

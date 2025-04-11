@@ -1,6 +1,6 @@
 'use server';
 
-import { followUserService } from '@oe/api/services/user';
+import { followUserService } from '@oe/api';
 import { revalidateTag } from 'next/cache';
 
 export const triggerFollow = async ({

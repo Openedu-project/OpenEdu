@@ -1,8 +1,9 @@
-import { useSystemConfig } from '@oe/api/hooks/useSystemConfig';
-import type { I18nConfig } from '@oe/api/types/i18n';
-import { systemConfigKeys } from '@oe/api/utils/system-config';
-import { TONE } from '@oe/core/utils/constants';
-import { type LanguageCode, languages } from '@oe/i18n/languages';
+'use client';
+import { systemConfigKeys } from '@oe/api';
+import { useSystemConfig } from '@oe/api';
+import type { I18nConfig } from '@oe/api';
+import { TONE } from '@oe/core';
+import { type LanguageCode, languages } from '@oe/i18n';
 import { useTranslations } from 'next-intl';
 import type React from 'react';
 import { type Dispatch, type SetStateAction, useState } from 'react';
@@ -30,7 +31,9 @@ export const defaultURLValue = { urls: '', locale: 'en', tone: 'normal' };
 export const URLGenerator = ({ multiple = false, onChange, value, showNote = false }: UrlGeneratorProps) => {
   const t = useTranslations('formValidation');
   const tGeneral = useTranslations('general');
-  const { systemConfig } = useSystemConfig<I18nConfig>({ key: systemConfigKeys.i18nConfig });
+  const { systemConfig } = useSystemConfig<I18nConfig>({
+    key: systemConfigKeys.i18nConfig,
+  });
 
   const [isValid, setIsValid] = useState(true);
 

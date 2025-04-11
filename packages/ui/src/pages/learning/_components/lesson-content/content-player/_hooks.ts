@@ -1,5 +1,5 @@
-import type { IQuizItemResponse } from '@oe/api/types/course/quiz';
-import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
+import type { IQuizItemResponse } from '@oe/api';
+import type { IQuizSubmissionResponse } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';

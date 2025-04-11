@@ -1,7 +1,7 @@
-import { DashboardLayout } from '@oe/ui/common/layout';
+import { DashboardLayout } from '@oe/ui';
 import type { ReactNode } from 'react';
 
-export default function AffiliateLayoutNoSidebar({
+export function AffiliateLayoutNoSidebar({
   children,
 }: {
   children: ReactNode;

@@ -7,7 +7,7 @@ export interface SidebarLinks {
   label: string;
 }
 
-export default function Sidebar({ links }: { links: SidebarLinks[] }) {
+export function Sidebar({ links }: { links: SidebarLinks[] }) {
   return (
     <nav className="p-2">
       <ul className="flex flex-col gap-2 font-medium md:flex-row">

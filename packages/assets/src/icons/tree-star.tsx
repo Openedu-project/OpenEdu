@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function TreeStar({ width = 40, height = 40, className = '', color = 'var(--primary)' }: ISvgProps) {
+export function TreeStar({ width = 40, height = 40, className = '', color = 'var(--primary)' }: ISvgProps) {
   return (
     <svg
       className={className}

@@ -1,4 +1,4 @@
-import ReferralProgram from '@oe/ui/pages/referral-program';
+import { ReferralProgram } from "@oe/ui";
 
 export default function ReferralProgramPage() {
   return <ReferralProgram />;

@@ -1,9 +1,9 @@
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
-import { TableProvider } from '@oe/ui/components/table';
+import { DashboardMainPageLayout } from '@oe/ui';
+import { TableProvider } from '@oe/ui';
 import { getTranslations } from 'next-intl/server';
-import PublishRequestTable from '../_components/publish-request-table';
+import { PublishRequestTable } from '../_components/publish-request-table';
 
-export default async function PublishRequestPage() {
+export async function PublishRequestPage() {
   const [tBlogs, tDashboard] = await Promise.all([getTranslations('blogManagement'), getTranslations('dashboard')]);
 
   return (

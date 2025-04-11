@@ -1,6 +1,6 @@
-import type { TLessonContent } from '@oe/api/types/course/basic';
-import type { ISectionLearningProgress } from '@oe/api/types/course/learning-progress';
-import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
+import type { TLessonContent } from '@oe/api';
+import type { ISectionLearningProgress } from '@oe/api';
+import type { IQuizSubmissionResponse } from '@oe/api';
 
 const CONSTANTS = {
   MIN_WATCHED_PERCENTAGE: 0.8,

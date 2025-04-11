@@ -1,22 +1,29 @@
-'use client';
+"use client";
 
-import { useCreateOrUpdateThemeConfig, useGetTheme } from '@oe/api/hooks/useTheme';
-import { initialThemeGlobal } from '@oe/themes';
-import { ThemeSettingGlobal } from '@oe/themes/components/theme-settings/index';
-import type { ThemeCollection, ThemeGlobal, ThemeName, ThemeSidebarGlobalKey, ThemeSystem } from '@oe/themes/types';
-import { toast } from '@oe/ui/shadcn/sonner';
-import { useTranslations } from 'next-intl';
-import { useParams } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import { useCreateOrUpdateThemeConfig, useGetTheme } from "@oe/api";
+import { initialThemeGlobal } from "@oe/themes";
+import { ThemeSettingGlobal } from "@oe/themes";
+import type {
+  ThemeCollection,
+  ThemeGlobal,
+  ThemeName,
+  ThemeSidebarGlobalKey,
+  ThemeSystem,
+} from "@oe/themes";
+import { toast } from "@oe/ui";
+import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
+import { useCallback, useState } from "react";
 
 export default function GlobalThemeSetting() {
-  const translate = useTranslations('themeNoti');
+  const translate = useTranslations("themeNoti");
   const { settingKey, themeName } = useParams();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { theme, mutateTheme } = useGetTheme();
   const { createOrUpdateThemeConfig } = useCreateOrUpdateThemeConfig();
   const currentTheme = theme?.[0]?.value;
-  const themeDefinition = currentTheme?.availableThemes?.[themeName as ThemeName];
+  const themeDefinition =
+    currentTheme?.availableThemes?.[themeName as ThemeName];
 
   const updateThemeSystem = useCallback(
     (themeGlobal: ThemeGlobal): ThemeSystem => ({
@@ -43,19 +50,25 @@ export default function GlobalThemeSetting() {
         });
 
         if (!response) {
-          throw new Error('Failed to update theme config');
+          throw new Error("Failed to update theme config");
         }
 
-        toast.success(translate('global.success'));
+        toast.success(translate("global.success"));
         mutateTheme();
       } catch (error) {
-        toast.error(translate('global.error'));
-        console.error('Theme update error:', error);
+        toast.error(translate("global.error"));
+        console.error("Theme update error:", error);
       } finally {
         setIsSubmitting(false);
       }
     },
-    [theme, updateThemeSystem, translate, mutateTheme, createOrUpdateThemeConfig]
+    [
+      theme,
+      updateThemeSystem,
+      translate,
+      mutateTheme,
+      createOrUpdateThemeConfig,
+    ]
   );
 
   return (

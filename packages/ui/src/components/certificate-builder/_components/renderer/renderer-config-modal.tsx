@@ -1,8 +1,8 @@
 'use client';
 
-import type { ICertificateData, ICertificateTemplate } from '@oe/api/types/certificate';
-import { fileResponseSchema } from '@oe/api/types/file';
-import { z } from '@oe/api/utils/zod';
+import { fileResponseSchema } from '@oe/api';
+import { z } from '@oe/api';
+import type { ICertificateData, ICertificateTemplate } from '@oe/api';
 import type { DialogProps } from '@radix-ui/react-dialog';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';

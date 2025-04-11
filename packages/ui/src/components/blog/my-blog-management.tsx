@@ -1,16 +1,16 @@
 'use client';
-import { deleteBlog, publishBlog, unpublishBlog } from '@oe/api/services/blog';
-import type { IBlog } from '@oe/api/types/blog';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { formatDateHourMinute } from '@oe/core/utils/datetime';
-import { BLOG_ADMIN_ROUTES, BLOG_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import { API_ENDPOINT } from '@oe/api';
+import type { IBlog } from '@oe/api';
+import { deleteBlog, publishBlog, unpublishBlog } from '@oe/api';
+import type { HTTPErrorMetadata } from '@oe/api';
+import { formatDateHourMinute } from '@oe/core';
+import { BLOG_ADMIN_ROUTES, BLOG_ROUTES } from '@oe/core';
+import { buildUrl } from '@oe/core';
 import { EditIcon, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSWRConfig } from 'swr';
+import { DashboardMainPageLayout } from '#common/layout';
 import { Link, usePathname } from '#common/navigation';
 import { DeleteButton } from '#components/delete-button';
 import type { FilterOption } from '#components/filter-search';
@@ -22,7 +22,7 @@ import { Badge } from '#shadcn/badge';
 import { buttonVariants } from '#shadcn/button';
 import { Separator } from '#shadcn/separator';
 import { toast } from '#shadcn/sonner';
-import TooltipLink, { Tooltip } from '#shadcn/tooltip';
+import { Tooltip, TooltipLink } from '#shadcn/tooltip';
 import { useSocketStore } from '#store/socket';
 import { cn } from '#utils/cn';
 import { BlogTableItemActions } from './blog-table-item-actions';
@@ -37,7 +37,7 @@ export interface IMyBlogProps {
   }[];
 }
 
-export default function MyBlogManagement({ type, canUnpublish = false, AIButton = false, breadcrumbs }: IMyBlogProps) {
+export function MyBlogManagement({ type, canUnpublish = false, AIButton = false, breadcrumbs }: IMyBlogProps) {
   const tBlogs = useTranslations('blogManagement');
   const tGeneral = useTranslations('general');
   const tPublish = useTranslations('publishButton');

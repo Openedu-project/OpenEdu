@@ -1,4 +1,4 @@
-import type { ICourse } from '@oe/api/types/course/course';
+import type { ICourse } from '@oe/api';
 
 //Function get the newest published version
 // If root === org => get root version

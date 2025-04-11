@@ -1,4 +1,4 @@
-import type { ICertificateElement, ICertificateSignatureElement } from '@oe/api/types/certificate';
+import type { ICertificateElement, ICertificateSignatureElement } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { Input } from '#shadcn/input';
 import {

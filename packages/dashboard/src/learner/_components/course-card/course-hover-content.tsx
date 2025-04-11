@@ -1,14 +1,12 @@
 'use client';
 
-import type { ICourse, ICourseOutline, ICourseResponse } from '@oe/api/types/course/course';
-import MedalStar from '@oe/assets/icons/medal-star';
-import SendSquare from '@oe/assets/icons/send-square';
-import { VideoSquare } from '@oe/assets/icons/video-square';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import { Link } from '@oe/ui/common/navigation';
-import { PaymentButton } from '@oe/ui/components/payment-button';
-import { WishlistButton } from '@oe/ui/components/wishlist-button';
-import { Card } from '@oe/ui/shadcn/card';
+import type { ICourse, ICourseOutline, ICourseResponse } from '@oe/api';
+import { MedalStar, SendSquare, VideoSquare } from '@oe/assets';
+import { PLATFORM_ROUTES } from '@oe/core';
+import { Link } from '@oe/ui';
+import { PaymentButton } from '@oe/ui';
+import { WishlistButton } from '@oe/ui';
+import { Card } from '@oe/ui';
 import { Book } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { KeyedMutator } from 'swr';

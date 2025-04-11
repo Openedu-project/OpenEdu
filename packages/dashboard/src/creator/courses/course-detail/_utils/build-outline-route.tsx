@@ -1,5 +1,5 @@
-import { CREATOR_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
+import { CREATOR_ROUTES } from '@oe/core';
+import { buildUrl } from '@oe/core';
 
 export type BuildOutlineRouteProps = {
   courseId?: string;

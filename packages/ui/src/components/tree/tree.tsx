@@ -1,3 +1,4 @@
+'use client';
 import { useTranslations } from 'next-intl';
 import { useMemo, useRef, useState } from 'react';
 import { DndSortable, type IDndSortableProps, type IDndSortableRef } from '#components/dnd-sortable';

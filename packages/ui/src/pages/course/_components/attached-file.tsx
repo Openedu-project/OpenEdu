@@ -1,13 +1,13 @@
 'use client';
 
-import Import from '@oe/assets/icons/import';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { Import } from '@oe/assets';
 import { useTranslations } from 'next-intl';
 import type React from 'react';
 import { useState } from 'react';
+import { toast } from '#shadcn/sonner';
 
-import type { IUser } from '@oe/api/types/user';
-import { type DownloadFileProps, downloadFile, processFileName } from '@oe/core/utils/download-file';
+import type { IUser } from '@oe/api';
+import { type DownloadFileProps, downloadFile, processFileName } from '@oe/core';
 import { useLoginRequiredStore } from '#components/login-required-modal';
 import { Button } from '#shadcn/button';
 

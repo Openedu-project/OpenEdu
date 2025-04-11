@@ -1,4 +1,4 @@
-import CreateForm from '@oe/dashboard/creator/forms/create/page';
+import { CreateForm } from "@oe/dashboard";
 
 export default function CreateFormPage() {
   return <CreateForm />;

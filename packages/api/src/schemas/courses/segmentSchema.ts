@@ -1,5 +1,5 @@
-import { z } from '@oe/api/utils/zod';
 import { fileResponseSchema } from '#types/file';
+import { z } from '#utils/zod';
 import { quizSchema } from './quizSchema';
 
 export const validationMessages = {

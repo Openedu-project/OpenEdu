@@ -1,4 +1,4 @@
-import LaunchpadRequestsManagement from '@oe/dashboard/admin/launchpad/request/page';
+import { LaunchpadRequestsManagement } from "@oe/dashboard";
 
 export default function LaunchpadRequestsManagementPage() {
   return <LaunchpadRequestsManagement />;

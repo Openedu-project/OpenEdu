@@ -1,12 +1,12 @@
-import { formatDateTime } from '@oe/core/utils/datetime';
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import { formatDateTime } from '@oe/core';
+import { DashboardMainPageLayout } from '@oe/ui';
 
-import { formatNumber } from '@oe/core/utils/utils';
+import { formatNumber } from '@oe/core';
 import { Calendar } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import CampaignDetail from './_components/campaign-detail';
+import { CampaignDetail } from './_components/campaign-detail';
 
-export default function UserAffiliateCampaignsDetailManagement({
+export function UserAffiliateCampaignsDetailManagement({
   campaignName,
   courseName,
   coursePrice,

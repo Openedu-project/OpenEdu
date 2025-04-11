@@ -1,6 +1,5 @@
-import type { IUser } from '@oe/api/types/user';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import { ROLE_LIST } from '@oe/core/utils/constants';
+import { createAPIUrl } from '@oe/api';
+import type { IUser } from '@oe/api';
 import {
   ADMIN_ROUTES,
   AFFILIATE_ROUTES,
@@ -9,7 +8,8 @@ import {
   CREATOR_ROUTES,
   LEARNER_ROUTES,
   PROTECTED_ROUTES,
-} from '@oe/core/utils/routes';
+} from '@oe/core';
+import { ROLE_LIST } from '@oe/core';
 import {
   BadgePercent,
   Bolt,

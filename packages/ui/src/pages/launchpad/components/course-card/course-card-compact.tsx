@@ -1,4 +1,4 @@
-import type { ICourse } from '@oe/api/types/course/course';
+import type { ICourse } from '@oe/api';
 import DefaultImg from '@oe/assets/images/defaultimage.png';
 import { Image } from '#components/image';
 import { cn } from '#utils/cn';
@@ -35,4 +35,4 @@ const CourseCardCompact = ({
   );
 };
 
-export default CourseCardCompact;
+export { CourseCardCompact };

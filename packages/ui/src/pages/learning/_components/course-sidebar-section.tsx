@@ -1,7 +1,7 @@
 'use client';
 
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import type { ISectionLearningProgress } from '@oe/api/types/course/learning-progress';
+import type { ICourseOutline } from '@oe/api';
+import type { ISectionLearningProgress } from '@oe/api';
 import { type HTMLAttributes, useEffect, useRef } from 'react';
 import { CircleProgressBar } from '#components/circle-progress-bar';
 import { OutlineLesson } from '#components/outline-lesson';
@@ -121,4 +121,4 @@ const CourseOutline = ({ courseData, activeSection, activeLesson, ...props }: IC
   );
 };
 
-export default CourseOutline;
+export { CourseOutline };

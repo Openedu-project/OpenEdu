@@ -1,9 +1,9 @@
-import { type IPermissionActionConfigSchema, permissionActionConfigSchema } from '@oe/api/schemas/permission';
-import type { IPermissionConfigPayload } from '@oe/api/types/permissions';
-import { Modal } from '@oe/ui/components/modal';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
-import { Textarea } from '@oe/ui/shadcn/textarea';
+import { type IPermissionActionConfigSchema, permissionActionConfigSchema } from '@oe/api';
+import type { IPermissionConfigPayload } from '@oe/api';
+import { Modal } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
+import { Input } from '@oe/ui';
+import { Textarea } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 interface IActionsFormModal {
   open: boolean;
@@ -11,7 +11,7 @@ interface IActionsFormModal {
   onClose: () => void;
 }
 
-export default function ActionsFormModal({ open = true, onClose, onSubmit }: IActionsFormModal) {
+export function ActionsFormModal({ open = true, onClose, onSubmit }: IActionsFormModal) {
   const t = useTranslations('permissionActionFormModal');
 
   const handleSubmit = async (values: IPermissionActionConfigSchema) => {

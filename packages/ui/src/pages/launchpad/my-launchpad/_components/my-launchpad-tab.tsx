@@ -1,6 +1,6 @@
 'use client';
 
-import { buildQueryParam } from '@oe/core/utils/url';
+import { buildQueryParam } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
@@ -55,7 +55,7 @@ const navLinkStyles = {
   `,
 } as const;
 
-export default function MyLaunchpadTab() {
+export function MyLaunchpadTab() {
   const t = useTranslations('myLaunchpadList');
   const router = useRouter();
   const pathname = usePathname();

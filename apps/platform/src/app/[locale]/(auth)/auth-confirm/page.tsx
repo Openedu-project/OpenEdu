@@ -1,4 +1,4 @@
-import { AuthConfirmPage } from '@oe/ui/common/auth/auth-confirm-page';
+import { AuthConfirmPage } from "@oe/ui";
 
 export default function AuthConfirm() {
   return <AuthConfirmPage />;

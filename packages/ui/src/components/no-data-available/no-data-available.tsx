@@ -20,7 +20,7 @@ const sizeConfig: Record<Size, { width: number; height: number; containerWidth: 
   lg: { width: 280, height: 280, containerWidth: 'w-[280px]' },
 };
 
-export default function NoDataAvailable({ className, message, navigateLink, navigateTitle, size = 'lg' }: NoDataProps) {
+export function NoDataAvailable({ className, message, navigateLink, navigateTitle, size = 'lg' }: NoDataProps) {
   const t = useTranslations('noDataAvailable');
   const { width, height, containerWidth } = sizeConfig[size];
 

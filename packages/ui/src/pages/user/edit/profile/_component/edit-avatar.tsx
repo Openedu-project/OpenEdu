@@ -1,20 +1,20 @@
 'use client';
 
-import type { IFileResponse } from '@oe/api/types/file';
-import ImageIcon from '@oe/assets/icons/image';
-import { Avatar, AvatarFallback, AvatarImage } from '@oe/ui/shadcn/avatar';
-// import { Button } from '@oe/ui/button';
-// import { useToast } from '@oe/ui/use-toast';
+import type { IFileResponse } from '@oe/api';
+import { ImageIcon } from '@oe/assets';
+// import { Button } from '#button';
+// import { useToast } from '#use-toast';
 // import { Plus } from 'lucide-react';
 import { useState } from 'react';
 import { Uploader } from '#components/uploader';
+import { Avatar, AvatarFallback, AvatarImage } from '#shadcn/avatar';
 
 interface IProps {
   onSetAvaUrl: (url: string) => void;
   avatar: string;
 }
 
-export default function EditAvatar({ onSetAvaUrl, avatar }: IProps) {
+export function EditAvatar({ onSetAvaUrl, avatar }: IProps) {
   const [file] = useState<IFileResponse[]>([]);
 
   const handleEditAvatar = (file: IFileResponse) => {

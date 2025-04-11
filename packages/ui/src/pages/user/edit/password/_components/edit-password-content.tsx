@@ -1,19 +1,19 @@
 'use client';
-import { useChangeMyPassword } from '@oe/api/hooks/useUserProfile';
-import { type IChangePaswordFormSchemaType, changePaswordFormSchema } from '@oe/api/schemas/profileSchema';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { resetAllStores } from '@oe/core/store';
-import { InputPassword } from '@oe/ui/components/input-password';
-import { Button } from '@oe/ui/shadcn/button';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
+import type { HTTPErrorMetadata } from '@oe/api';
+import { useChangeMyPassword } from '@oe/api';
+import { type IChangePaswordFormSchemaType, changePaswordFormSchema } from '@oe/api';
+import { resetAllStores } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 import { toast } from 'sonner';
 import { mutate } from 'swr';
 import { FormWrapper } from '#components/form-wrapper';
+import { InputPassword } from '#components/input-password';
+import { Button } from '#shadcn/button';
+import { FormFieldWithLabel } from '#shadcn/form';
 import { logoutProfileAction } from './_action';
 
-export default function EditPasswordContent() {
+export function EditPasswordContent() {
   const tMyPwd = useTranslations('userProfile.myPassword');
   const tError = useTranslations('errors');
   const { triggerChangePassword } = useChangeMyPassword();

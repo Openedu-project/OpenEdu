@@ -1,7 +1,7 @@
 'use client';
 
-import { BLOG_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
+import { BLOG_ROUTES } from '@oe/core';
+import { buildUrl } from '@oe/core';
 import { Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';

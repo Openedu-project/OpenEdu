@@ -1,5 +1,5 @@
-import type { IUserRole } from '@oe/api/types/user-profile';
-import { create } from 'zustand';
+import type { IUserProfileRole } from '@oe/api';
+import { createStore } from '@oe/core';
 
 interface ShowItem {
   id: string;
@@ -15,7 +15,7 @@ interface IShowItemsStore<T extends ShowItem> {
   setInitialData: (data: T[]) => void;
 }
 
-export const useShowProfileItemsStore = create<IShowItemsStore<ShowItem>>(set => {
+export const useShowProfileItemsStore = createStore<IShowItemsStore<ShowItem>>(set => {
   return {
     showItemList: [],
     initialData: [],
@@ -45,13 +45,13 @@ export const useShowProfileItemsStore = create<IShowItemsStore<ShowItem>>(set =>
 });
 
 interface UserRoleState {
-  roles: IUserRole[];
-  setRoles: (roles: IUserRole[]) => void;
-  filterUserData: () => IUserRole[];
+  roles: IUserProfileRole[];
+  setRoles: (roles: IUserProfileRole[]) => void;
+  filterUserData: () => IUserProfileRole[];
   isCreator: () => boolean;
 }
 
-export const useUserRoleStore = create<UserRoleState>((set, get) => {
+export const useUserRoleStore = createStore<UserRoleState>((set, get) => {
   return {
     roles: [],
 
@@ -59,7 +59,7 @@ export const useUserRoleStore = create<UserRoleState>((set, get) => {
 
     filterUserData() {
       const { roles } = get();
-      const orgMap: { [key: string]: IUserRole } = {};
+      const orgMap: { [key: string]: IUserProfileRole } = {};
 
       for (const role of roles) {
         if (role.role_id !== 'learner' && role.role_id !== 'guest') {

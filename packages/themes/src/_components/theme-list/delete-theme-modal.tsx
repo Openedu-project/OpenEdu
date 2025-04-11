@@ -1,4 +1,4 @@
-import { Modal } from '@oe/ui/components/modal';
+import { Modal } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
 interface DeleteThemeModalProps {
@@ -36,4 +36,4 @@ const DeleteThemeModal = ({ setOpen, onRemove }: DeleteThemeModalProps) => {
   );
 };
 
-export default DeleteThemeModal;
+export { DeleteThemeModal };

@@ -1,10 +1,10 @@
 'use client';
-import type { ILaunchpad } from '@oe/api/types/launchpad';
-import { CREATE_LAUNCHPAD_TABS_ORDER } from '@oe/api/utils/launchpad';
-import PublishLaunchpadButton from '../_components/publish-launchpad-button';
+import type { ILaunchpad } from '@oe/api';
+import { CREATE_LAUNCHPAD_TABS_ORDER } from '@oe/api';
+import { PublishLaunchpadButton } from '../_components/publish-launchpad-button';
 import { useChangeLaunchpadTab } from '../_hooks/useChangeLaunchpadTab';
-import useLaunchpadDetail from '../_hooks/useLaunchpadDetail';
-import NameInput from './name-input';
+import { useLaunchpadDetail } from '../_hooks/useLaunchpadDetail';
+import { NameInput } from './name-input';
 
 const BasicInfoBlock = ({ launchpad }: { launchpad: ILaunchpad }) => {
   const { mutateAdminLaunchpadDetail } = useLaunchpadDetail();
@@ -24,4 +24,4 @@ const BasicInfoBlock = ({ launchpad }: { launchpad: ILaunchpad }) => {
   );
 };
 
-export default BasicInfoBlock;
+export { BasicInfoBlock };

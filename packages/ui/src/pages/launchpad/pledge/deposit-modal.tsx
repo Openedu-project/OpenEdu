@@ -7,7 +7,7 @@ import { Input } from '#shadcn/input';
 import { Label } from '#shadcn/label';
 import { copyToClipboard } from '#utils/copy';
 
-export default function DepositDialog({
+export function DepositDialog({
   network,
   address,
   currency,

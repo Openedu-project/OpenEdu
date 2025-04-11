@@ -1,8 +1,8 @@
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import { DashboardMainPageLayout } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import InviteRequestMngmList from './_components/invite-request-list';
+import { InviteRequestMngmList } from './_components/invite-request-list';
 
-export default function InviteRequestManagement() {
+export function InviteRequestManagement() {
   const tDashboard = useTranslations('dashboard.creators');
   const t = useTranslations('creatorManagement.inviteRequestCreator');
 

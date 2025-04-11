@@ -1,18 +1,18 @@
 'use client';
 
-import { cookieOptions, getCookieClient, setCookieClient } from '@oe/core/utils/cookie';
-import { DEFAULT_LOCALES } from '@oe/i18n/constants';
-import { type LanguageCode, languages } from '@oe/i18n/languages';
-import { Selectbox } from '@oe/ui/components/selectbox';
+import { cookieOptions, getCookieClient, setCookieClient } from '@oe/core';
+import { type LanguageCode, languages } from '@oe/i18n';
+import { DEFAULT_LOCALES } from '@oe/i18n';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { Selectbox } from '#components/selectbox';
 import { cn } from '#utils/cn';
 
 type LanguageSwitcherProps = {
   className?: string;
 };
 
-export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
+export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
   const router = useRouter();
   const localesCookie = getCookieClient(process.env.NEXT_PUBLIC_COOKIE_LOCALES_KEY);
   const locales = localesCookie ? JSON.parse(localesCookie as string) : DEFAULT_LOCALES;

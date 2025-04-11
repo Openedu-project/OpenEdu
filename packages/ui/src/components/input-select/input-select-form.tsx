@@ -1,3 +1,4 @@
+'use client';
 import type { SelectProps } from '@radix-ui/react-select';
 import type { ElementType } from 'react';
 import { get, useFormContext } from 'react-hook-form';

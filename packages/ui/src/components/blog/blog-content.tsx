@@ -1,8 +1,8 @@
 'use client';
 
-import { marked } from '@oe/core/utils/marker';
 import { createRoot } from 'react-dom/client';
 import ReactPlayer from 'react-player';
+import { marked } from '#utils/marker';
 
 export function BlogContent({
   content,

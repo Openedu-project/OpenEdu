@@ -1,12 +1,12 @@
 'use client';
-import { useGetConversationDetails } from '@oe/api/hooks/useConversation';
-import type { IAgenConfigs } from '@oe/api/types/conversation';
-import { GENERATING_STATUS } from '@oe/core/utils/constants';
+import type { IAgenConfigs } from '@oe/api';
+import { useGetConversationDetails } from '@oe/api';
+import { GENERATING_STATUS } from '@oe/core';
 import { useEffect, useMemo, useRef } from 'react';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { AGENT_OPTIONS } from './constants';
-import EmptyChat from './empty-chat';
+import { EmptyChat } from './empty-chat';
 import { useSendMessageHandler } from './hooks/useMessageHandler';
 import { InputFrame } from './message-input/input-frame';
 import { MessageContainer } from './message/message-container';

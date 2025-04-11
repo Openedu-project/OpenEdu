@@ -1,29 +1,23 @@
 'use client';
 
-import { useGetUserProfile, useUpdateMyProfile } from '@oe/api/hooks/useUserProfile';
-import Camera from '@oe/assets/icons/camera';
-import { Lock } from '@oe/assets/icons/lock';
-import Notification from '@oe/assets/icons/notification';
-import ProfileCircle from '@oe/assets/icons/profile-circle';
-import Setting2 from '@oe/assets/icons/setting-2';
-import User from '@oe/assets/icons/user';
-import { Button } from '@oe/ui/shadcn/button';
+import type { IFileResponse } from '@oe/api';
+import { createAPIUrl } from '@oe/api';
+import type { HTTPErrorMetadata } from '@oe/api';
+import { useGetUserProfile, useUpdateMyProfile } from '@oe/api';
+import { Camera, Lock, Notification, ProfileCircle, Setting2, User } from '@oe/assets';
+import background from '@oe/assets/images/user-background.png';
+import { PLATFORM_ROUTES } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
-
-import type { IFileResponse } from '@oe/api/types/file';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import background from '@oe/assets/images/user-background.png';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
 import { toast } from 'sonner';
 import { Link } from '#common/navigation';
 import { Image } from '#components/image';
 import { Navigation } from '#components/navigation';
 import { Uploader } from '#components/uploader';
+import { Button } from '#shadcn/button';
 
-export default function EditProfileHeader() {
+export function EditProfileHeader() {
   const tProfile = useTranslations('userProfile.profile');
   const tError = useTranslations('errors');
 

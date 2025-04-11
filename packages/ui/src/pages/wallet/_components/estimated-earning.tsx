@@ -1,13 +1,13 @@
 'use client';
 
-import { useTotalEarnings } from '@oe/api/hooks/useWallet';
-import { EstimatedEarningIcon } from '@oe/assets/icons/wallets/estimated-earning';
-import { WALLET_ROUTES } from '@oe/core/utils/routes';
+import { useTotalEarnings } from '@oe/api';
+import { EstimatedEarningIcon } from '@oe/assets';
+import { WALLET_ROUTES } from '@oe/core';
 import { ChevronRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Link } from '#common/navigation';
 import { useWalletStore } from '../_store/useWalletStore';
-import AssetCard from './asset-card';
+import { AssetCard } from './asset-card';
 
 export const EstimatedEarning = () => {
   const { selectedCurrency } = useWalletStore();

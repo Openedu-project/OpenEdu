@@ -1,3 +1,3 @@
-import NoDataAvailable from './no-data-available';
+import { NoDataAvailable } from './no-data-available';
 
 export { NoDataAvailable };

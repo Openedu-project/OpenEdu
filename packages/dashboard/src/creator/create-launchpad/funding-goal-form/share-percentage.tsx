@@ -1,5 +1,5 @@
-import { InputNumber } from '@oe/ui/components/input-number';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
+import { InputNumber } from '@oe/ui';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';
 import { CirclePercent } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { FieldValues, Path, UseFormReturn } from 'react-hook-form';
@@ -36,4 +36,4 @@ const SharePercentage = <TFormValues extends FieldValues>({ form }: SharePercent
   );
 };
 
-export default SharePercentage;
+export { SharePercentage };

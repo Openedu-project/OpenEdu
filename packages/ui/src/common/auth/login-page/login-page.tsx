@@ -1,7 +1,6 @@
 import loginBanner from '@oe/assets/images/login-banner.png';
-// import type { ThemeName } from '@oe/themes/types';
-import type { FileType } from '@oe/ui/components/uploader';
 import { useTranslations } from 'next-intl';
+import type { FileType } from '#components/uploader';
 import { AuthLayout } from '../auth-layout';
 import { LoginForm } from './login-form';
 

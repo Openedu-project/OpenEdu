@@ -1,10 +1,10 @@
-import { useWallet } from '@oe/api/hooks/useWallet';
-import type { IWallet } from '@oe/api/types/wallet';
+import type { IWallet } from '@oe/api';
+import { useWallet } from '@oe/api';
 // import { copyToClipboard, shortenAddress } from "#utils/utils";
 // import { getExplorerLink } from "#utils/wallet";
-// import { CRYPTO_CURRENCIES } from "@oe/api/hooks/useWallet";
-// import useWalletBase, { type IWalletBase } from "@oe/api/hooks/useWalletBase";
-import { ASSET_TYPES, CRYPTO_CURRENCIES } from '@oe/api/utils/wallet';
+// import { CRYPTO_CURRENCIES } from "@oe/api";
+// import useWalletBase, { type IWalletBase } from "@oe/api";
+import { ASSET_TYPES, CRYPTO_CURRENCIES } from '@oe/api';
 // import { TokenIcon } from "@web3icons/react";
 import { Copy, Network } from 'lucide-react';
 import { useTranslations } from 'next-intl';

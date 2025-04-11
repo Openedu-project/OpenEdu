@@ -1,10 +1,10 @@
-import { UploadTrigger, Uploader } from '@oe/ui/components/uploader';
-import { Button } from '@oe/ui/shadcn/button';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
+import { UploadTrigger, Uploader } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
 import { UploadIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-export default function References() {
+export function References() {
   const tCourse = useTranslations('course');
   return (
     <FormFieldWithLabel

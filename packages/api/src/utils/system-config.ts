@@ -1,8 +1,6 @@
-import { buildUrl } from '@oe/core/utils/url';
-import type { ISystemConfigKey } from '#types/system-config';
-
-import { getCookie } from '@oe/core/utils/cookie';
+import { buildUrl, getCookie } from '@oe/core';
 import { getOrgByDomainService } from '#services/organizations';
+import type { ISystemConfigKey } from '#types/system-config';
 import { getAPIReferrerAndOriginClient } from './referrer-origin';
 
 export const systemConfigKeys = {

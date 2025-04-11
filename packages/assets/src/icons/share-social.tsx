@@ -1,4 +1,4 @@
-export default function ShareSocial({ className = '', color = '#6E6E6E', width = 24, height = 24 }) {
+export function ShareSocial({ className = '', color = '#6E6E6E', width = 24, height = 24 }) {
   return (
     <svg
       className={className}

@@ -1,5 +1,5 @@
-import { type IZoneRoutes, type IZoneRoutesValues, ZONE_ROUTES } from '@oe/core/utils/routes';
-import type { LanguageCode } from '@oe/i18n/languages';
+import { type IZoneRoutes, type IZoneRoutesValues, ZONE_ROUTES } from '@oe/core';
+import type { LanguageCode } from '@oe/i18n';
 import { useLocale } from 'next-intl';
 import { useCallback } from 'react';
 import { usePathname } from './usePathname';

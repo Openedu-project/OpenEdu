@@ -1,12 +1,12 @@
 'use client';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { DashboardHeaderCard } from '@oe/ui/common/layout';
-import { ButtonDropdown } from '@oe/ui/components/button-dropdown';
-import { Table } from '@oe/ui/components/table';
+import { API_ENDPOINT } from '@oe/api';
+import { DashboardHeaderCard } from '@oe/ui';
+import { Table } from '@oe/ui';
+import { ButtonDropdown } from '@oe/ui';
 import { PlusIcon, SparklesIcon, YoutubeIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-export default function Courses() {
+export function CreatorCourses() {
   const tDashboard = useTranslations('dashboard');
   const tCourse = useTranslations('course');
 

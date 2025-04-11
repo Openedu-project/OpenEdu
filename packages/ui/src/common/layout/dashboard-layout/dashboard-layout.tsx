@@ -1,11 +1,11 @@
 import OpeneduLogo from '@oe/assets/images/logo-openedu.png';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { PLATFORM_ROUTES } from '@oe/core';
 import type { ReactNode } from 'react';
 import { Link } from '#common/navigation';
 import { Image } from '#components/image';
 import { cn } from '#utils/cn';
 import { Header } from '../header';
-import { type ISidebarItem, Sidebar } from '../sidebar';
+import { type ISidebarItem, LayoutSidebar } from '../sidebar';
 
 export function DashboardLayout({
   children,
@@ -31,7 +31,7 @@ export function DashboardLayout({
         </Link>
       </Header>
       <main className="flex flex-1 overflow-hidden bg-muted">
-        {sidebarItems && <Sidebar items={sidebarItems} maxDepth={2} className="hidden md:flex" />}
+        {sidebarItems && <LayoutSidebar items={sidebarItems} maxDepth={2} className="hidden md:flex" />}
         <div className={cn('scrollbar flex w-full flex-col overflow-y-auto', className)}>{children}</div>
       </main>
     </div>

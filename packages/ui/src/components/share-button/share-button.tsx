@@ -9,7 +9,7 @@ import { cn } from '#utils/cn';
 import { MenuContent } from './menu-share-item';
 import type { ShareButtonComponentProps } from './types';
 
-export default function ShareButton({ className, courseData, ...props }: ShareButtonComponentProps) {
+export function ShareButton({ className, courseData, ...props }: ShareButtonComponentProps) {
   const tCourse = useTranslations('course');
 
   const AffiliatedBadge = courseData?.props?.is_affiliate && (

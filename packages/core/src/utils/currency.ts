@@ -29,9 +29,9 @@
 // // Không hiển thị ký hiệu tiền tệ
 // console.log(formatCurrency(1234.56, { showSymbol: false }));
 // // "1,234.56"
-import { DEFAULT_LOCALE } from '@oe/i18n/constants';
-import type { LanguageCode } from '@oe/i18n/languages';
-import { languageWithCurrency } from '@oe/i18n/languages-currency';
+import { DEFAULT_LOCALE } from '@oe/i18n';
+import type { LanguageCode } from '@oe/i18n';
+import { languageWithCurrency } from '@oe/i18n';
 
 export const DEFAULT_CURRENCY = 'USD';
 

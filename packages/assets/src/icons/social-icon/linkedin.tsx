@@ -1,6 +1,6 @@
 import type { ISvgProps } from '../types';
 
-export default function Linkedin({ className = '', width = 24, height = 24, color = '#2C2C2C' }: ISvgProps) {
+export function Linkedin({ className = '', width = 24, height = 24, color = '#2C2C2C' }: ISvgProps) {
   return (
     <svg
       className={className}

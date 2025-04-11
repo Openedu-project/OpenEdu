@@ -1,4 +1,4 @@
-import { Link } from '@oe/ui/common/navigation';
+import { Link } from '@oe/ui';
 import type { ReactNode } from 'react';
 
 interface IStatusCardProps {
@@ -8,7 +8,7 @@ interface IStatusCardProps {
   icon?: ReactNode;
   color?: string;
 }
-export default function StatusCard({ label, amount, href, icon, color }: IStatusCardProps) {
+export function StatusCard({ label, amount, href, icon, color }: IStatusCardProps) {
   return (
     <div className="flex-1 rounded-[12px] bg-white p-2 md:p-6">
       <Link href={href} className="flex items-center justify-between gap-4 text-foreground hover:no-underline">

@@ -1,9 +1,9 @@
-import { revalidateData } from '@oe/api/actions/revalidate';
-import { postConversation } from '@oe/api/services/conversation';
-import type { IAIModel, IAIStatus, IMessage, TAgentType } from '@oe/api/types/conversation';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import type { HTTPError } from '@oe/api/utils/http-error';
-import { AI_ROUTES } from '@oe/core/utils/routes';
+import { createAPIUrl } from '@oe/api';
+import type { HTTPError } from '@oe/api';
+import { postConversation } from '@oe/api';
+import type { IAIModel, IAIStatus, IMessage, TAgentType } from '@oe/api';
+import { revalidateData } from '@oe/api';
+import { AI_ROUTES } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { type RefObject, useCallback } from 'react';
 import { useRouter } from '#common/navigation';

@@ -1,4 +1,4 @@
-import LaunchpadDetailPage from '@oe/ui/pages/launchpad/detail';
+import { LaunchpadDetailPage } from "@oe/ui";
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;

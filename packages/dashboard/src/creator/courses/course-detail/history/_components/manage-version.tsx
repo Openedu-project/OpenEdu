@@ -1,13 +1,13 @@
 'use client';
 
-import { useGetCourseById, usePutCancelRequestCourse } from '@oe/api/hooks/useCourse';
-import { useGetOrganizationById } from '@oe/api/hooks/useOrganization';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import { Link } from '@oe/ui/common/navigation';
-import { Modal } from '@oe/ui/components/modal';
-import { Button } from '@oe/ui/shadcn/button';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { useGetCourseById, usePutCancelRequestCourse } from '@oe/api';
+import { useGetOrganizationById } from '@oe/api';
+import { createAPIUrl } from '@oe/api';
+import { PLATFORM_ROUTES } from '@oe/core';
+import { toast } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { Link } from '@oe/ui';
+import { Modal } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useCallback, useMemo, useState } from 'react';

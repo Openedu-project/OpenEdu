@@ -1,11 +1,11 @@
 'use client';
-import { useDeleteCommission } from '@oe/api/hooks/useCommission';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { getAlphabetLabel } from '@oe/core/utils/utils';
-import { Button } from '@oe/ui/shadcn/button';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
-import { toast } from '@oe/ui/shadcn/sonner';
+import type { HTTPErrorMetadata } from '@oe/api';
+import { useDeleteCommission } from '@oe/api';
+import { getAlphabetLabel } from '@oe/core';
+import { toast } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';
+import { Input } from '@oe/ui';
 import { CircleMinus, CirclePercent, Hash, Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type React from 'react';
@@ -62,7 +62,7 @@ const handleInputChange = (
   field.onChange(value === '' ? '' : Number(value));
 };
 
-export default function FormBonusesCommission({
+export function FormBonusesCommission({
   campaignId,
   form,
 

@@ -1,6 +1,6 @@
-import { InputNumber } from '@oe/ui/components/input-number';
-import { Checkbox } from '@oe/ui/shadcn/checkbox';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
+import { InputNumber } from '@oe/ui';
+import { Checkbox } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
 export const CertificateCondition = () => {

@@ -5,7 +5,7 @@ import { Sparkles } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Button } from '#shadcn/button';
 
-import { usePostAIBlog } from '@oe/api/hooks/useBlog';
+import { usePostAIBlog } from '@oe/api';
 
 import type { Editor } from '@tiptap/react';
 import { URLGenerator, defaultURLValue } from '#components/url-generator';
@@ -69,7 +69,10 @@ export const AIGeneratePopover: React.FC<{
     tempDiv.innerHTML = htmlText;
     const contentLength = tempDiv.textContent?.length || 0;
     setTimeout(() => {
-      editor.commands.setTextSelection({ from, to: from + contentLength + htmlText.split('\n').length - 1 });
+      editor.commands.setTextSelection({
+        from,
+        to: from + contentLength + htmlText.split('\n').length - 1,
+      });
       editor.chain().focus();
     });
 

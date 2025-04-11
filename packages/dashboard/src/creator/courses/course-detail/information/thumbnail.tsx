@@ -1,8 +1,8 @@
-import { Uploader } from '@oe/ui/components/uploader';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
+import { Uploader } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
-export default function Thumbnail() {
+export function Thumbnail() {
   const tCourse = useTranslations('course');
 
   return (

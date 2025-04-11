@@ -1,6 +1,6 @@
-import type { IQuizItemResponse } from '@oe/api/types/course/quiz';
-import MessageQuestion from '@oe/assets/icons/message-question';
-import { convertSecondsToTimeString, convertTimeStringToSeconds } from '@oe/core/utils/datetime';
+import type { IQuizItemResponse } from '@oe/api';
+import { MessageQuestion } from '@oe/assets';
+import { convertSecondsToTimeString, convertTimeStringToSeconds } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { Button } from '#shadcn/button';
 import type { Player } from './player';
@@ -37,7 +37,13 @@ const VideoQuizInfo = ({ player, quizzes }: IVieoQuizInforProp) => {
     }
   };
 
-  const ButtonTiming = ({ id, timestamp }: { id: string; timestamp: number | null }) => {
+  const ButtonTiming = ({
+    id,
+    timestamp,
+  }: {
+    id: string;
+    timestamp: number | null;
+  }) => {
     return (
       <Button
         variant="link"
@@ -70,4 +76,4 @@ const VideoQuizInfo = ({ player, quizzes }: IVieoQuizInforProp) => {
   );
 };
 
-export default VideoQuizInfo;
+export { VideoQuizInfo };

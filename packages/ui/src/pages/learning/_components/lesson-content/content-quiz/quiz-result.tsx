@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
-import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
+import type { IQuizSubmissionResponse } from '@oe/api';
 import backgroundFail from '@oe/assets/images/learning-page/bg-good-luck.png';
 import background from '@oe/assets/images/learning-page/bg-whale-done.png';
 import { useParams } from 'next/navigation';
@@ -12,10 +12,10 @@ import { Button } from '#shadcn/button';
 import { createCourseUrl } from '#utils/course-url';
 import { useLessonLearningStore } from '../../../_store/learning-store';
 import { getLessonGlobalIndex, getTotalLessons, getUidByLessonIndex } from '../../../_utils/utils';
-import CompleteCourseNotiModal from '../../course-noti-modal';
-import QuizAnsResult from './quiz-ans-result';
-import QuizResultGrid from './quiz-detail-score';
-import QuizLayout from './quiz-layout';
+import { CompleteCourseNotiModal } from '../../course-noti-modal';
+import { QuizAnsResult } from './quiz-ans-result';
+import { QuizResultGrid } from './quiz-detail-score';
+import { QuizLayout } from './quiz-layout';
 
 interface IQuizResultProps {
   result: IQuizSubmissionResponse;
@@ -131,4 +131,4 @@ const QuizResult = ({
   );
 };
 
-export default QuizResult;
+export { QuizResult };

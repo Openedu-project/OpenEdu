@@ -1,20 +1,20 @@
 import HeroBanner from "@oe/assets/images/openedu-homepage/hero-banner/hero-banner.png";
 import LogoOpenEdu from "@oe/assets/images/openedu-homepage/hero-banner/logo-openedu-blue.png";
-import { PLATFORM_ROUTES } from "@oe/core/utils/routes";
-import { Link } from "@oe/ui/common/navigation";
-import { Image } from "@oe/ui/components/image";
-import { Button } from "@oe/ui/shadcn/button";
+import { PLATFORM_ROUTES } from "@oe/core";
+import { Button } from "@oe/ui";
+import { Link } from "@oe/ui";
+import { Image } from "@oe/ui";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
-import PartnerSection from "./partners";
+import { PartnerSection } from "./partners";
 
 // Mark as server component
-export default async function HeroSection() {
+export async function HeroSection() {
   // Move this to server-side
   const t = await getTranslations("homePageLayout.heroBannerSection");
 
   return (
-    <section className="container mx-auto flex h-[calc(100vh-var(--header-small-height))] flex-col justify-center space-y-20 px-0 py-4 pb-10 md:h-[calc(100vh-var(--header-height))] md:px-4 lg:py-10">
+    <section className="container mx-auto flex h-[calc(100vh-var(--header-small-height))] flex-col space-y-20 px-0 py-4 pb-10 md:h-[calc(100vh-var(--header-height))] md:px-4 lg:py-10">
       <div className="flex flex-col items-center justify-center gap-4 md:gap-8 lg:flex-row">
         <div className="relative w-full rounded-lg px-2 lg:w-1/3 lg:px-4">
           <div className="relative z-10 ">

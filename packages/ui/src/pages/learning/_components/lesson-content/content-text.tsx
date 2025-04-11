@@ -1,6 +1,6 @@
 'use client';
 
-import type { ILessonContent } from '@oe/api/types/course/segment';
+import type { ILessonContent } from '@oe/api';
 import { useEffect, useRef } from 'react';
 
 interface ITextProps {
@@ -8,7 +8,7 @@ interface ITextProps {
   onComplete?: () => void;
 }
 
-export default function ContentText({ data, onComplete }: ITextProps) {
+export function ContentText({ data, onComplete }: ITextProps) {
   const content = data?.content;
   const uid = data?.uid;
   const contentRef = useRef<HTMLDivElement>(null);

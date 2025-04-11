@@ -1,4 +1,4 @@
-export default function Grid3({ width = 24, height = 24, className = '', color = '#3A3A3A' }) {
+export function Grid3({ width = 24, height = 24, className = '', color = '#3A3A3A' }) {
   return (
     <svg
       className={className}

@@ -1,4 +1,4 @@
-import FormDetail from "@oe/dashboard/creator/forms/[id]/page";
+import { FormDetail } from "@oe/dashboard";
 
 export default function FormDetailPage() {
   return <FormDetail />;

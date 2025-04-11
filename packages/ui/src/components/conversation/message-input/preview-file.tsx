@@ -1,9 +1,9 @@
-'use client';
-import { postEmbedDocument } from '@oe/api/services/conversation';
-import type { z } from '@oe/api/utils/zod';
-import { CircleX, Image as ImageIcon, Paperclip } from 'lucide-react';
+import { postEmbedDocument, type z } from '@oe/api';
+import { CircleX, ImageIcon, Paperclip } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { useRef } from 'react';
 import { type UseFieldArrayRemove, type UseFormReturn, useFieldArray } from 'react-hook-form';
 import { Image } from '#components/image';
 import { Button } from '#shadcn/button';

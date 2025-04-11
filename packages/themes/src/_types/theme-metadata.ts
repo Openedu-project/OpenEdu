@@ -1,4 +1,4 @@
-import type { IFileResponse } from '@oe/api/types/file';
+import type { IFileResponse } from '@oe/api';
 
 export interface ThemeMetadataIcons {
   icon?: IFileResponse;

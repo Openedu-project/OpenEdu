@@ -1,8 +1,8 @@
-import { Link } from '@oe/ui/common/navigation';
-import { Image } from '@oe/ui/components/image';
-import type { FileType } from '@oe/ui/components/uploader';
-import { Button } from '@oe/ui/shadcn/button';
-import { cn } from '@oe/ui/utils/cn';
+import type { FileType } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { Link } from '@oe/ui';
+import { Image } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import type { SectionComponent } from '../../../_types/theme-page';
 import { SectionTitle, type SectionTitleProps } from '../_components/section-title';
@@ -71,4 +71,4 @@ const FenetHomepageHero: SectionComponent<'homepage', 'fenetHero'> = ({ props, c
   );
 };
 
-export default FenetHomepageHero;
+export { FenetHomepageHero };

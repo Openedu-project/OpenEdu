@@ -1,18 +1,18 @@
 'use client';
 
-import type { IAICourseStatus } from '@oe/api/types/course/ai-course';
-import type { ICourse } from '@oe/api/types/course/course';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { GENERATING_STATUS } from '@oe/core/utils/constants';
-import { CREATOR_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
-import { Link, useRouter } from '@oe/ui/common/navigation';
-import { useSocketStore } from '@oe/ui/store/socket';
+import { API_ENDPOINT } from '@oe/api';
+import type { ICourse } from '@oe/api';
+import type { IAICourseStatus } from '@oe/api';
+import { CREATOR_ROUTES } from '@oe/core';
+import { buildUrl } from '@oe/core';
+import { GENERATING_STATUS } from '@oe/core';
+import { Link, useRouter } from '@oe/ui';
+import { useSocketStore } from '@oe/ui';
 import { ChevronLeft } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { useSWRConfig } from 'swr';
-import AIStatusModal from '../../_components/ai-status-modal';
+import { AIStatusModal } from '../../_components/ai-status-modal';
 import { CourseInfoForm } from './course-info-form';
 
 export function SettingCourseInfomation({

@@ -1,5 +1,5 @@
-import type { ICourse } from '@oe/api/types/course/course';
+import type { ICourse } from '@oe/api';
 
-export default function CourseCreatedBy({ course }: { course: ICourse }) {
+export function CourseCreatedBy({ course }: { course: ICourse }) {
   return <>{course.owner.username}</>;
 }

@@ -1,4 +1,4 @@
-import AdminHomePage from '@oe/dashboard/admin/home-page/page';
+import { AdminHomePage } from "@oe/dashboard";
 
 export default function Home() {
   return <AdminHomePage />;

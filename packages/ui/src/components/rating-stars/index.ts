@@ -1,3 +1,3 @@
-import RatingStars from './rating-stars';
+import { RatingStars } from './rating-stars';
 
 export { RatingStars };

@@ -1,4 +1,4 @@
-import { CertificateBuilder } from "@oe/ui/components/certificate-builder";
+import { CertificateBuilder } from "@oe/ui";
 
 export default function CertificateBuilderPage() {
   return <CertificateBuilder />;

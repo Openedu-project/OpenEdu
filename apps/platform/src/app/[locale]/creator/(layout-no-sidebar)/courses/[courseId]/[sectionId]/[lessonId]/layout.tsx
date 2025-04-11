@@ -1,4 +1,4 @@
-import { LessonsLayout } from "@oe/dashboard/creator/courses/course-detail/outline/lessons/layout";
+import { LessonsLayout } from "@oe/dashboard";
 import type { ReactNode } from "react";
 
 export default function LessonPageLayout({

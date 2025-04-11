@@ -1,9 +1,8 @@
-import ArrowLeft2 from '@oe/assets/icons/arrow-left-2';
-import ArrowRight2 from '@oe/assets/icons/arrow-right-2';
+import { ArrowLeft2, ArrowRight2 } from '@oe/assets';
 import { ZoomIn, ZoomOut } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { Button } from '#shadcn/button';
-import { ZOOM_LEVELS } from './pdf-viewer';
+import { ZOOM_LEVELS } from './constants';
 
 interface PdfToolbarProps {
   page: number;
@@ -83,4 +82,4 @@ const PdfToolbar = ({ page, numPages, scale, onPageChange, onZoom, showPerPage }
   );
 };
 
-export default PdfToolbar;
+export { PdfToolbar, type PdfToolbarProps };

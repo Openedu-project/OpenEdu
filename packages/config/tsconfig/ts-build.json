@@ -1,0 +1,10 @@
+{
+  "extends": "@oe/config/tsconfig/base.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true
+  }
+}

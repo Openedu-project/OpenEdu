@@ -1,4 +1,4 @@
-export default function FileTrayFull({ width = 24, height = 24, className = '', color = '#6E6E6E' }) {
+export function FileTrayFull({ width = 24, height = 24, className = '', color = '#6E6E6E' }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
