@@ -8,7 +8,7 @@ import { MessageCircle } from 'lucide-react';
 import type { AISidebarItem, IInputButton } from './type';
 
 export const MAX_SIZE_BYTES = 200 * 1024 * 1024;
-export const MAX_FILES = 2;
+export const MAX_FILES = 10;
 
 export const AI_SIDEBAR: (color?: string, size?: number) => AISidebarItem[] = (color, size = 12) => [
   {

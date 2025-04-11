@@ -31,8 +31,6 @@ export function useGetConversationDetails({
     }
   );
 
-  console.log('fallback:>>>', fallback, 'data: >>>>>', data);
-
   return {
     data,
     error,
