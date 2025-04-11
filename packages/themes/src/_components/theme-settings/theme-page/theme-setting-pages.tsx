@@ -1,9 +1,10 @@
-"use client";
+'use client';
 
-import { SmartPreview } from "@oe/ui";
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@oe/ui";
-import { useTranslations } from "next-intl";
-import { useCallback, useState } from "react";
+import { fonts } from '@oe/core';
+import { SmartPreview } from '@oe/ui';
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@oe/ui';
+import { useTranslations } from 'next-intl';
+import { useCallback, useState } from 'react';
 import type {
   AllSectionKeys,
   PageSectionConfig,
@@ -15,14 +16,13 @@ import type {
   ThemeName,
   ThemePageKey,
   ThemeSidebarPageKey,
-} from "#types";
-import { defaultThemeSystemConfig } from "../../../_config/initial";
-import { initialThemeGlobal } from "../../../_config/theme-global-initial";
-import { fonts } from "../../../fonts";
-import { ThemeConfigMetadata } from "../theme-metadata";
-import { ThemePreviewLayout } from "./theme-preview-layout";
-import { PreviewPanel } from "./theme-preview-panel";
-import { SettingsPanel } from "./theme-setting-panel";
+} from '#types';
+import { defaultThemeSystemConfig } from '../../../_config/initial';
+import { initialThemeGlobal } from '../../../_config/theme-global-initial';
+import { ThemeConfigMetadata } from '../theme-metadata';
+import { ThemePreviewLayout } from './theme-preview-layout';
+import { PreviewPanel } from './theme-preview-panel';
+import { SettingsPanel } from './theme-setting-panel';
 
 export interface ThemeContentProps {
   isLoading: boolean;
@@ -44,42 +44,30 @@ export function ThemeSettingPages({
   themeConfig,
   onSubmit,
 }: ThemeContentProps) {
-  const tThemeConfig = useTranslations("themePage");
-  const currentPath = ["themePage", themeName, selectedPage];
-  const pageConfig =
-    themeConfig?.pages ||
-    defaultThemeSystemConfig(tThemeConfig)?.availableThemes?.[themeName]?.pages;
+  const tThemeConfig = useTranslations('themePage');
+  const currentPath = ['themePage', themeName, selectedPage];
+  const pageConfig = themeConfig?.pages || defaultThemeSystemConfig(tThemeConfig)?.availableThemes?.[themeName]?.pages;
   const defaultConfigSections =
-    defaultThemeSystemConfig(tThemeConfig)?.availableThemes?.[themeName]
-      ?.pages?.[selectedPage]?.config;
+    defaultThemeSystemConfig(tThemeConfig)?.availableThemes?.[themeName]?.pages?.[selectedPage]?.config;
   const currentPages = themeConfig?.pages?.[selectedPage];
 
-  const [stateConfigSections, setStateConfigSections] =
-    useState<PageSectionConfigs<typeof selectedPage>>();
-  const [loadingStates, setLoadingStates] = useState<
-    Partial<Record<SectionsByPage[typeof selectedPage], boolean>>
-  >({});
+  const [stateConfigSections, setStateConfigSections] = useState<PageSectionConfigs<typeof selectedPage>>();
+  const [loadingStates, setLoadingStates] = useState<Partial<Record<SectionsByPage[typeof selectedPage], boolean>>>({});
 
-  const [selectedSectionKey, setSelectedSectionKey] =
-    useState<AllSectionKeys>();
+  const [selectedSectionKey, setSelectedSectionKey] = useState<AllSectionKeys>();
 
   const fontVariables = Object.values(fonts)
-    .map((font) => font.variable)
-    .join(" ");
+    .map(font => font.variable)
+    .join(' ');
 
   const handleApplyPreview = useCallback(
-    async (
-      val: PageSectionConfig<typeof selectedPage>,
-      sectionKey: SectionsByPage[typeof selectedPage]
-    ) => {
-      setLoadingStates((prev) => ({ ...prev, [sectionKey]: true }));
+    async (val: PageSectionConfig<typeof selectedPage>, sectionKey: SectionsByPage[typeof selectedPage]) => {
+      setLoadingStates(prev => ({ ...prev, [sectionKey]: true }));
       try {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        setStateConfigSections((prev) =>
-          prev ? { ...prev, ...val } : { ...currentPages?.config, ...val }
-        );
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setStateConfigSections(prev => (prev ? { ...prev, ...val } : { ...currentPages?.config, ...val }));
       } finally {
-        setLoadingStates((prev) => ({ ...prev, [sectionKey]: false }));
+        setLoadingStates(prev => ({ ...prev, [sectionKey]: false }));
       }
     },
     [currentPages]
@@ -88,11 +76,9 @@ export function ThemeSettingPages({
   const handleReset = useCallback(
     (sectionKey: SectionsByPage[typeof selectedPage]) => {
       // Get the original default configuration for the section
-      const defaultSectionConfig = deepClone(
-        currentPages?.config?.[sectionKey]
-      );
+      const defaultSectionConfig = deepClone(currentPages?.config?.[sectionKey]);
 
-      setStateConfigSections((prev) => {
+      setStateConfigSections(prev => {
         if (!prev) {
           return prev;
         }
@@ -137,21 +123,13 @@ export function ThemeSettingPages({
     [themeConfig, selectedPage, pageConfig, onSubmit]
   );
 
-  if (selectedSidebarPageKey !== "theme") {
-    return (
-      <ThemeConfigMetadata
-        data={pageConfig?.[selectedPage]?.metadata}
-        onSubmit={handleSubmitMetadata}
-      />
-    );
+  if (selectedSidebarPageKey !== 'theme') {
+    return <ThemeConfigMetadata data={pageConfig?.[selectedPage]?.metadata} onSubmit={handleSubmitMetadata} />;
   }
 
   return (
     <>
-      <ResizablePanelGroup
-        direction="horizontal"
-        className="flex h-full w-full"
-      >
+      <ResizablePanelGroup direction="horizontal" className="flex h-full w-full">
         <ResizablePanel defaultSize={25}>
           <SettingsPanel
             currentPath={currentPath}
@@ -171,14 +149,8 @@ export function ThemeSettingPages({
         </ResizablePanel>
         <ResizableHandle />
         <ResizablePanel defaultSize={75}>
-          <SmartPreview
-            themeGlobal={themeConfig?.globals ?? initialThemeGlobal}
-            fontVariables={fontVariables}
-          >
-            <ThemePreviewLayout
-              themeDefinition={themeConfig}
-              themeName={themeName}
-            >
+          <SmartPreview themeGlobal={themeConfig?.globals ?? initialThemeGlobal} fontVariables={fontVariables}>
+            <ThemePreviewLayout themeDefinition={themeConfig} themeName={themeName}>
               <PreviewPanel
                 themeName={themeName}
                 selectedPage={selectedPage}

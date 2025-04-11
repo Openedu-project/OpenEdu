@@ -1,7 +1,7 @@
 // import type { Metadata } from "next";
 // import localFont from 'next/font/local';
 
-// import { fonts } from "@oe/themes";
+// import { fonts } from "@oe/core";
 import { Provider, Toaster, WebViewHandler } from "@oe/ui";
 // import { Toaster } from "@oe/ui";
 import { getLocale, getMessages } from "next-intl/server";
