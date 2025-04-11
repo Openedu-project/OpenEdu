@@ -1,7 +1,7 @@
-import type { TFormTriggerConfirmationSettings } from '@oe/api/schemas/courseTrigger';
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import { getCookieClient } from '@oe/core/utils/cookie';
-import { buildUrl } from '@oe/core/utils/url';
+import type { TFormTriggerConfirmationSettings } from '@oe/api';
+import type { ICourseOutline } from '@oe/api';
+import { getCookieClient } from '@oe/core';
+import { buildUrl } from '@oe/core';
 import type { VariantProps } from 'class-variance-authority';
 import { Link } from '#common/navigation';
 import { Modal } from '#components/modal';

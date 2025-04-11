@@ -4,14 +4,10 @@ import { type ReactNode, useState } from 'react';
 import { Link } from '#common/navigation';
 import { Button } from '#shadcn/button';
 import { cn } from '#utils/cn';
-<<<<<<< HEAD
-import EditButton from '../message-actions/edit';
-import MessageInput from '../message-input/message-input';
-import { PreviewDocument, PreviewImage } from '../message-input/preview-file';
-=======
 import { EditButton } from '../message-actions/edit';
 import { MessageInput } from '../message-input/message-input';
->>>>>>> 92014567 (feat: optimize)
+import { PreviewDocument } from '../message-input/preview-file';
+import { PreviewImage } from '../message-input/preview-file';
 import type { IMessageBoxProps } from '../type';
 
 export const convertTextWithLink = (text: string): ReactNode[] => {

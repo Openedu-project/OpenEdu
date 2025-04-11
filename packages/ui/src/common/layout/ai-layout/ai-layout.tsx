@@ -1,4 +1,4 @@
-import { isLogin } from '@oe/api/utils/auth';
+import { isLogin } from '@oe/api';
 import type { ReactNode } from 'react';
 import { AISidebar } from '#components/conversation';
 import { cn } from '#utils/cn';
@@ -8,12 +8,8 @@ type Props = {
   className?: string;
 };
 
-<<<<<<< HEAD
-export default async function AILayout({ children, className }: Props) {
+export async function AILayout({ children, className }: Props) {
   const login = await isLogin();
-=======
-export function AILayout({ children, className }: Props) {
->>>>>>> 92014567 (feat: optimize)
   return (
     <main
       className={cn(

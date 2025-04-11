@@ -47,6 +47,7 @@ export * from './like-outline';
 export * from './link';
 export * from './lock';
 export * from './magic-star';
+export * from './magic-pen';
 export * from './mail';
 export * from './maintain';
 export * from './medal-star';
