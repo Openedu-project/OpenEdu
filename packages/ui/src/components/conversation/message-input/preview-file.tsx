@@ -97,6 +97,9 @@ export const PreviewImage = ({ file, remove, filePosition, viewOnly }: IPreviewF
 export const PreviewDocument = ({ file, remove, filePosition, viewOnly, updateFile, chatId }: IPreviewFileProps) => {
   const onRemove = async () => {
     remove?.(filePosition ?? -1);
+    if (file.status === 'error') {
+      return;
+    }
     await cancelEmbedDocument(undefined, {
       attachment_id: file.id,
       conversation_id: chatId,
@@ -154,16 +157,16 @@ const HitboxLayer = ({
     }
 
     if (file.status === 'generating' && !apiCalledRef.current && file.progress === 0) {
-      const res = postEmbedDocument(undefined, {
+      postEmbedDocument(undefined, {
         attachment_id: file.id,
         ai_conversation_id: chatId,
+      }).then(res => {
+        apiCalledRef.current = true;
+        if (!res) {
+          updateStatus?.('error');
+          setStatus('error');
+        }
       });
-      apiCalledRef.current = true;
-
-      if (!res) {
-        updateStatus?.('error');
-        setStatus('error');
-      }
     }
 
     if (file.status) {

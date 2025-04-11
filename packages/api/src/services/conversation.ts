@@ -126,6 +126,11 @@ export const getPrompts = async (
 
 export const postEmbedDocument = async (url: string | undefined, payload: IDocumentRequest) => {
   try {
+    const login = await isLogin();
+
+    if (!login) {
+      return null;
+    }
     const response = await postAPI<{ message: string }, IDocumentRequest | undefined>(
       url ?? API_ENDPOINT.COM_CHANNELS_DOCUMENTS,
       payload
@@ -133,7 +138,7 @@ export const postEmbedDocument = async (url: string | undefined, payload: IDocum
 
     return response.data;
   } catch {
-    return undefined;
+    return null;
   }
 };
 
