@@ -139,6 +139,19 @@ export default async function Layout({ children }: { children: ReactNode }) {
         ],
       },
       {
+        id: 'referral-program',
+        label: tDashboard('referralProgram.title'),
+        icon: <UserPenIcon className="h-5 w-5" />,
+        items: [
+          {
+            id: 'creators',
+            label: tDashboard('referralProgram.programManagement'),
+            icon: <Users2Icon className="h-5 w-5" />,
+            href: ADMIN_ROUTES.referralProgramManagement,
+          },
+        ],
+      },
+      {
         id: 'users',
         label: tDashboard('userManagement'),
         icon: <UserCog className="h-5 w-5" />,

@@ -40,6 +40,7 @@ export const PLATFORM_ROUTES = {
   previewCourse: '/courses/preview/:courseId/:orgId',
   launchpadDetail: '/launchpad/:id',
   myLaunchpad: '/launchpad/my-launchpad',
+  referralProgram: '/referral-program',
 } as const;
 
 export const BLOG_ROUTES = {
@@ -134,6 +135,7 @@ export const ADMIN_ROUTES = {
   launchpadRequestsDetail: '/admin/launchpad/requests/:id',
   certificates: '/admin/certificates',
   certificateDetail: '/admin/certificates/:id',
+  referralProgramManagement: '/admin/referral-program/program-management',
 } as const;
 
 export const CREATOR_ROUTES = {

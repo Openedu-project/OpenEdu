@@ -123,6 +123,9 @@ const config: Omit<Config, 'content'> = {
           500: 'hsl(var(--info-500))',
           600: 'hsl(var(--info-600))',
         },
+        base: {
+          cool: 'hsl(var(--base-cool))',
+        },
         sidebar: {
           DEFAULT: 'hsl(var(--sidebar-background))',
           foreground: 'hsl(var(--sidebar-foreground))',
@@ -144,6 +147,9 @@ const config: Omit<Config, 'content'> = {
         'course-search-gradient': 'var(--course-search-background)',
         'ai-more-feature-gradient': 'var(--ai-more-feature-background)',
         'ai-gradient': 'var(--ai-assistant-background)',
+        'gradient-1': 'var(--gradient-1)',
+        'gradient-3': 'var(--gradient-3)',
+        'gradient-4': 'var(--gradient-4)',
       },
       borderRadius: {
         default: 'var(--radius)',

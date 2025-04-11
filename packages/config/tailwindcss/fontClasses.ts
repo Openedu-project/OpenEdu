@@ -402,10 +402,24 @@ export const fontClasses = {
     lineHeight: '140%' /* 11.25px */,
   },
 
+  '.mbutton-semibold10': {
+    fontFamily: 'var(--font-secondary), sans-serif',
+    fontSize: '10px',
+    fontWeight: 600,
+    lineHeight: '140%' /* 11.25px */,
+  },
+
   '.mbutton-bold8': {
     fontFamily: 'var(--font-secondary), sans-serif',
     fontSize: '8px',
     fontWeight: 500,
+    lineHeight: '140%' /* 10px */,
+  },
+
+  '.mbutton-semibold8': {
+    fontFamily: 'var(--font-secondary), sans-serif',
+    fontSize: '8px',
+    fontWeight: 600,
     lineHeight: '140%' /* 10px */,
   },
 };
