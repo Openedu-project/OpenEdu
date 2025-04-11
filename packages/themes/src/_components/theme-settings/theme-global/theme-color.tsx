@@ -1,3 +1,4 @@
+'use client';
 import { Button } from '@oe/ui';
 import { Card, CardContent, CardHeader, CardTitle } from '@oe/ui';
 import { Label } from '@oe/ui';
