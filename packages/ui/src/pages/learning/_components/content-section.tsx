@@ -77,7 +77,7 @@ const ContentSection = ({
         className
       )}
     >
-      <div ref={contentRef} className="flex flex-grow flex-col md:pl-4">
+      <div ref={contentRef} className="flex flex-grow flex-col md:px-4">
         <LessonContentBlocks
           contents={sortedContents}
           section_uid={currentSection}
@@ -89,8 +89,8 @@ const ContentSection = ({
       <div
         ref={lessonMetadataRef}
         className={cn(
-          "relative z-10 w-full transition-all duration-200",
-          reachedEnd ? "block" : "sticky bottom-0 bg-white",
+          "relative z-10 w-full bg-white transition-all duration-200",
+          reachedEnd ? "block" : "sticky bottom-0",
           showButtonDrawer && "rounded-t-[20px]"
         )}
       >
@@ -108,7 +108,7 @@ const ContentSection = ({
           slug={course?.slug ?? ""}
           updateAt={course?.update_at ?? 0}
           className={cn(
-            "p-2 pt-4 md:pl-4",
+            "p-2 pt-4 md:px-4",
             showButtonDrawer &&
               "rounded-t-[20px] shadow-[10px_0_30px_rgba(196,198,242,0.50)]"
           )}

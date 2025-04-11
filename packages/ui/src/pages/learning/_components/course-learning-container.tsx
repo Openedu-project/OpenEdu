@@ -48,29 +48,29 @@ function CourseLearningInternal({
   }, []);
 
   const renderDesktopTabs = isDesktop && (
-    <CourseTabs
-      course_data={course}
-      active_section={activeSectionUid}
-      activeLesson={activeLessonUid}
-    />
+    <CourseTabs course_data={course} className="px-3 pb-4" />
   );
 
   const renderSidebar = isDesktop && (
     <div
       className={cn(
-        "sticky top-[var(--header-with-sub-item-height)] right-0 z-30 h-[calc(100dvh-var(--header-with-sub-item-height))] overflow-y-auto py-4 transition-all duration-300 ease-in-out lg:w-1/3",
+        "sticky top-[var(--header-with-sub-item-height)] right-0 z-30",
+        "flex h-[calc(100dvh-var(--header-with-sub-item-height))] flex-col gap-2 overflow-y-auto bg-white py-2 pr-4 pl-3 transition-all duration-300 ease-in-out lg:w-1/3",
         sidebarOpen ? "translate-x-0" : "hidden translate-x-full"
       )}
     >
-      <CourseOutline className="scrollbar h-full w-full overflow-y-auto pr-4 pl-3 lg:block" />
-      <Button
-        variant="ghost"
-        className="absolute top-2 right-2 flex h-8 w-8 items-center justify-center rounded-full p-0"
-        onClick={toggleSidebar}
-        aria-label="Close sidebar"
-      >
-        <X size={16} />
-      </Button>
+      <div className="flex items-center justify-between shadow-2xs">
+        <h3 className="mbutton-semibold16 mb-0">Course content</h3>
+        <Button
+          variant="ghost"
+          className="flex h-8 w-8 items-center justify-center rounded-full p-0"
+          onClick={toggleSidebar}
+          aria-label="Close sidebar"
+        >
+          <X size={16} />
+        </Button>
+      </div>
+      <CourseOutline className="scrollbar h-full w-full flex-1 overflow-y-auto lg:block" />
     </div>
   );
 
@@ -91,7 +91,7 @@ function CourseLearningInternal({
       <SheetContent
         hasCloseButton={false}
         side="bottom"
-        className="h-[96dvh] rounded-t-[20px]"
+        className="h-[96dvh] rounded-t-[20px] p-4 pr-2"
       >
         <SheetTitle hidden />
         <Button
@@ -104,6 +104,7 @@ function CourseLearningInternal({
           course_data={course}
           active_section={activeSectionUid}
           activeLesson={activeLessonUid}
+          className="pt-3"
         />
       </SheetContent>
     </Sheet>
@@ -114,18 +115,18 @@ function CourseLearningInternal({
       <div
         ref={containerRef}
         className={cn(
-          "flex h-full w-full gap-1",
+          "flex h-full w-full gap-1 bg-muted",
           isDesktop ? "flex-row" : "flex-col"
         )}
       >
         <div
           className={cn(
-            "relative mx-auto my-0 h-full w-full max-w-[900px]",
+            "relative mx-auto my-0 h-full w-full max-w-[900px] shadow-xs",
             isDesktop && sidebarOpen && "lg:w-2/3"
           )}
         >
           <ContentSection
-            className="pt-4"
+            className="bg-white pt-4"
             lessonData={lessonData}
             showButtonDrawer={!isDesktop}
             onOpenDrawer={toggleSheet}

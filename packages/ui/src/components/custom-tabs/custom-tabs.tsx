@@ -51,7 +51,7 @@ const CustomTabs = ({ defaultValue, items, className }: CustomTabsProps) => {
 
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab} className={cn(className)}>
-      <TabsList className="no-scrollbar !pb-3 relative h-auto max-w-full justify-normal overflow-auto rounded-none bg-transparent p-0">
+      <TabsList className="no-scrollbar !pb-3 relative h-auto max-w-full justify-normal rounded-none bg-transparent p-0">
         {items.map(item => (
           <TabsTrigger
             key={item.value}
@@ -71,7 +71,11 @@ const CustomTabs = ({ defaultValue, items, className }: CustomTabsProps) => {
         ))}
       </TabsList>
       {items.map(item => (
-        <TabsContent key={item.value} value={item.value} className={item.className}>
+        <TabsContent
+          key={item.value}
+          value={item.value}
+          className={cn('h-full max-h-full overflow-y-auto pr-2', item.className)}
+        >
           {item.content}
         </TabsContent>
       ))}
