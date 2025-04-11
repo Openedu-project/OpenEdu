@@ -1,5 +1,5 @@
-import { OutlineThemeSettingPages } from "../_components/outline-theme-setting-pages";
+import { OutlineThemeSettingPages } from "../_components/outline";
 
-export default function ThemePageContent() {
+export function ThemePageContent() {
   return <OutlineThemeSettingPages selectedSidebarPageKey="theme" />;
 }
