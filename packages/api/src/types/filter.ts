@@ -32,4 +32,6 @@ export interface IFilter {
   has_launchpad?: boolean;
   section_count_gte?: number;
   version?: number;
+  progam?: string;
+  scope?: string;
 }

@@ -11,6 +11,8 @@ export const authMessages = {
     alreadyAccount: 'Alreay have account?',
     sendYourEmail: 'Send Your Email',
     termsAndConditions: 'terms and conditions',
+    referralCode: 'Referral Code',
+    referralCodePlaceholder: 'Enter your referral code',
     login: {
       title: 'Login', // MOVE TO themepage.${themeName}.auth...
       slogan: 'LEARN FROM THE BEST. MASTER LATEST SKILLS - Anytime, Anywhere.',
