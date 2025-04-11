@@ -1,6 +1,6 @@
 import type { ISvgProps } from '../types';
 
-export default function IconOpeneduBalance({ width = 40, height = 40, className = '', color = 'white' }: ISvgProps) {
+export function IconOpeneduBalance({ width = 40, height = 40, className = '', color = 'white' }: ISvgProps) {
   return (
     <svg
       width={width}

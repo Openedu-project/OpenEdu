@@ -8,5 +8,6 @@ export * from './layout-no-sidebar';
 export * from './org-layout';
 export * from './organizations';
 export * from './permissions';
+export * from './referral-program';
 export * from './site-settings';
 export * from './withdraw-request';

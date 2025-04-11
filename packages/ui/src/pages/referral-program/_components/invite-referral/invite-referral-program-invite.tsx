@@ -1,11 +1,11 @@
-import IconInfoCircle from '@oe/assets/icons/referral-program/icon-info-circle';
-import StarBgImage from '@oe/assets/images/star-background.png';
-import { getTranslations } from 'next-intl/server';
-import { Button } from '#shadcn/button';
-import { Input } from '#shadcn/input';
+import { IconInfoCircle } from "@oe/assets";
+import StarBgImage from "@oe/assets/images/star-background.png";
+import { getTranslations } from "next-intl/server";
+import { Button } from "#shadcn/button";
+import { Input } from "#shadcn/input";
 
-export default async function InviteReferralProgramInvite() {
-  const t = await getTranslations('referralProgram.invite');
+export async function InviteReferralProgramInvite() {
+  const t = await getTranslations("referralProgram.invite");
 
   return (
     <section className="mb-6 flex flex-col gap-4 rounded-[16px] bg-white p-2 md:p-6 lg:flex-row">
@@ -17,15 +17,17 @@ export default async function InviteReferralProgramInvite() {
           }}
         />
         <div className="relative z-10 block">
-          <h3 className="giant-iheading-bold24 md:giant-iheading-bold40 mb-2">{t('getPoints', { points: 10 })}</h3>
-          <p className="mcaption-regular16 mb-4">{t('dropEmailMessage')}</p>
+          <h3 className="giant-iheading-bold24 md:giant-iheading-bold40 mb-2">
+            {t("getPoints", { points: 10 })}
+          </h3>
+          <p className="mcaption-regular16 mb-4">{t("dropEmailMessage")}</p>
 
           <div className="flex gap-2">
             <Input
-              placeholder={t('friendEmailPlaceholder')}
+              placeholder={t("friendEmailPlaceholder")}
               className="flex-1 rounded-lg border border-gray-200 bg-white px-4 py-2 text-gray-700"
             />
-            <Button>{t('sendButton')}</Button>
+            <Button>{t("sendButton")}</Button>
           </div>
         </div>
       </div>
@@ -33,9 +35,11 @@ export default async function InviteReferralProgramInvite() {
       {/* Requirements Section */}
       <div className="w-full rounded-xl p-2 md:p-6 lg:w-1/2">
         <div className="mb-4 flex flex-col items-center justify-between lg:flex-row">
-          <h3 className="mcaption-semibold16 md:mcaption-semibold20">{t('requirementsTitle')}</h3>
+          <h3 className="mcaption-semibold16 md:mcaption-semibold20">
+            {t("requirementsTitle")}
+          </h3>
           <Button className="mbutton-semibold16 rounded-[40px] bg-gradient-1 text-primary">
-            {t('inviteFriendsButton')}
+            {t("inviteFriendsButton")}
           </Button>
         </div>
         <div className="mb-4 space-y-3">
@@ -46,40 +50,59 @@ export default async function InviteReferralProgramInvite() {
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                aria-label={t('checkmarkAriaLabel')}
+                aria-label={t("checkmarkAriaLabel")}
               >
-                <title>{t('checkmarkAriaLabel')}</title>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                <title>{t("checkmarkAriaLabel")}</title>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
               </svg>
             </div>
-            <span className="mbutton-regular16">{t('requirementRegistration')}</span>
+            <span className="mbutton-regular16">
+              {t("requirementRegistration")}
+            </span>
           </div>
 
           <div className="flex items-center">
             <div className="mr-2 rounded-full bg-positive-600 p-1">
-              <svg className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <title>{t('checkmarkAriaLabel')}</title>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <svg
+                className="h-4 w-4 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <title>{t("checkmarkAriaLabel")}</title>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
               </svg>
             </div>
-            <span className="mbutton-regular16">{t('requirementCourse')}</span>
+            <span className="mbutton-regular16">{t("requirementCourse")}</span>
           </div>
         </div>
         <div className="mbutton-regular16 mb-6">
-          {t('eachRefereeReceives')}&nbsp;
-          <span className="mcaption-semibold20 text-primary">{t('pointsAmount', { count: 10 })}</span>
+          {t("eachRefereeReceives")}&nbsp;
+          <span className="mcaption-semibold20 text-primary">
+            {t("pointsAmount", { count: 10 })}
+          </span>
           &nbsp;
-          {t('whenCompleteRequirements')}
+          {t("whenCompleteRequirements")}
         </div>
 
         <div className="mcaption-regular14 rounded-[12px] bg-base-cool px-8 py-3">
           <div className="flex items-start gap-2 md:items-center">
             <IconInfoCircle />
-            <p>{t('referralCodeUsageWarning')}</p>
+            <p>{t("referralCodeUsageWarning")}</p>
           </div>
           <div className="flex items-start gap-2 md:items-center">
             <IconInfoCircle />
-            <p>{t('bothReceiveReward')}</p>
+            <p>{t("bothReceiveReward")}</p>
           </div>
         </div>
       </div>

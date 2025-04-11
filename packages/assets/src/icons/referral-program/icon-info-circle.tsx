@@ -1,6 +1,6 @@
 import type { ISvgProps } from '../types';
 
-export default function IconInfoCircle({ width = 16, height = 17, className = '', color = '#1A1A1A' }: ISvgProps) {
+export function IconInfoCircle({ width = 16, height = 17, className = '', color = '#1A1A1A' }: ISvgProps) {
   return (
     <svg
       width={width}

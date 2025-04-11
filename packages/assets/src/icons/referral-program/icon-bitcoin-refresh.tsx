@@ -1,6 +1,6 @@
 import type { ISvgProps } from '../types';
 
-export default function IconBitcoinRefresh({ width = 40, height = 40, className = '', color = '#0A8AFF' }: ISvgProps) {
+export function IconBitcoinRefresh({ width = 40, height = 40, className = '', color = '#0A8AFF' }: ISvgProps) {
   return (
     <svg
       width={width}

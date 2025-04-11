@@ -1,14 +1,25 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from '@oe/api/utils/zod';
-import { Button } from '@oe/ui/shadcn/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@oe/ui/shadcn/card';
-import { Form, FormFieldWithLabel, FormSubmitButton } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@oe/ui/shadcn/select';
-import { Separator } from '@oe/ui/shadcn/separator';
-import { toast } from '@oe/ui/shadcn/sonner';
-import { Switch } from '@oe/ui/shadcn/switch';
+import { z } from '@oe/api';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Form,
+  FormFieldWithLabel,
+  FormSubmitButton,
+  Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Separator,
+  Switch,
+  toast,
+} from '@oe/ui';
 import { Plus, Trash2 } from 'lucide-react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 
@@ -67,7 +78,7 @@ const ReferralFormSchema = z.object({
 // Infer TypeScript type from the schema
 type ReferralFormValues = z.infer<typeof ReferralFormSchema>;
 
-export default function ReferralFormWithZod() {
+export function ProgramManagementSetting() {
   // Default form values
   const defaultValues: ReferralFormValues = {
     isProgramEnabled: true,

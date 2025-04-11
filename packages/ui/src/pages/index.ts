@@ -6,3 +6,4 @@ export * from './launchpad';
 export * from './learning';
 export * from './user';
 export * from './wallet';
+export * from './referral-program';

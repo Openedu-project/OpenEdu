@@ -1,6 +1,6 @@
 import type { ISvgProps } from '../types';
 
-export default function IconSmsEdit({ width = 64, height = 64, className = '', color = '#FFBD04' }: ISvgProps) {
+export function IconSmsEdit({ width = 64, height = 64, className = '', color = '#FFBD04' }: ISvgProps) {
   return (
     <svg
       width={width}

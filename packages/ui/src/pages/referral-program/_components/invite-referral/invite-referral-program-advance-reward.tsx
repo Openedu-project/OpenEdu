@@ -1,12 +1,14 @@
-import IconBitCoinRefresh from '@oe/assets/icons/referral-program/icon-bitcoin-refresh';
-import IconDollarCircle from '@oe/assets/icons/referral-program/icon-dollar-circle';
-import IconNote2 from '@oe/assets/icons/referral-program/icon-note-2';
-import IconNote3 from '@oe/assets/icons/referral-program/icon-note-3';
-import { getTranslations } from 'next-intl/server';
-import type { ElementType, ReactNode } from 'react';
-import type { JSX } from 'react';
-import { Badge } from '#shadcn/badge';
-import { Card, CardContent } from '#shadcn/card';
+import {
+  IconBitcoinRefresh,
+  IconDollarCircle,
+  IconNote2,
+  IconNote3,
+} from "@oe/assets";
+import { getTranslations } from "next-intl/server";
+import type { ElementType, ReactNode } from "react";
+import type { JSX } from "react";
+import { Badge } from "#shadcn/badge";
+import { Card, CardContent } from "#shadcn/card";
 
 interface IconProps {
   className?: string;
@@ -58,7 +60,12 @@ const RewardBadge = ({ children }: { children: ReactNode }): JSX.Element => (
   </Badge>
 );
 
-const ActivityBonusCard = ({ icon: Icon, title, badgeContent, description }: RewardCardProps): JSX.Element => (
+const ActivityBonusCard = ({
+  icon: Icon,
+  title,
+  badgeContent,
+  description,
+}: RewardCardProps): JSX.Element => (
   <Card className="rounded-[12px] border-none bg-base-cool">
     <CardContent className="p-3 sm:p-4">
       <div className="mb-1 flex flex-col items-center justify-between gap-2 sm:mb-2 md:flex-row md:items-start">
@@ -66,7 +73,9 @@ const ActivityBonusCard = ({ icon: Icon, title, badgeContent, description }: Rew
           <div className="mr-2 rounded-full sm:mr-3">
             <Icon className="h-10 w-10" />
           </div>
-          <span className="mcaption-semibold14 md:mcaption-semibold16 lg:mcaption-semibold20">{title}</span>
+          <span className="mcaption-semibold14 md:mcaption-semibold16 lg:mcaption-semibold20">
+            {title}
+          </span>
         </div>
         <RewardBadge>{badgeContent}</RewardBadge>
       </div>
@@ -90,14 +99,19 @@ const StreakCard = ({
           <div className="mr-2 rounded-full sm:mr-3">
             <Icon className="h-10 w-10" />
           </div>
-          <span className="mcaption-semibold14 md:mcaption-semibold16 lg:mcaption-semibold20">{title}</span>
+          <span className="mcaption-semibold14 md:mcaption-semibold16 lg:mcaption-semibold20">
+            {title}
+          </span>
         </div>
         <RewardBadge>{badgeContent}</RewardBadge>
       </div>
 
       <div className="mt-1.5 mb-1 sm:mt-2">
         <div className="h-1.5 w-full overflow-hidden rounded-full bg-gray-200 sm:h-2">
-          <div className="h-full rounded-full bg-primary" style={{ width: `${progressPercentage}%` }} />
+          <div
+            className="h-full rounded-full bg-primary"
+            style={{ width: `${progressPercentage}%` }}
+          />
         </div>
       </div>
 
@@ -109,7 +123,13 @@ const StreakCard = ({
   </Card>
 );
 
-const TimeBasedCard = ({ icon: Icon, title, badgeContent, description, daysLeft }: TimeBasedCardProps): JSX.Element => (
+const TimeBasedCard = ({
+  icon: Icon,
+  title,
+  badgeContent,
+  description,
+  daysLeft,
+}: TimeBasedCardProps): JSX.Element => (
   <Card className="rounded-[12px] border-none bg-base-cool">
     <CardContent className="p-3 sm:p-4">
       <div className="mb-1 flex flex-col items-center justify-between sm:mb-2 md:flex-row">
@@ -117,56 +137,60 @@ const TimeBasedCard = ({ icon: Icon, title, badgeContent, description, daysLeft 
           <div className="mr-2 rounded-full sm:mr-3">
             <Icon className="h-10 w-10" />
           </div>
-          <span className="mcaption-semibold14 md:mcaption-semibold16 lg:mcaption-semibold20">{title}</span>
+          <span className="mcaption-semibold14 md:mcaption-semibold16 lg:mcaption-semibold20">
+            {title}
+          </span>
         </div>
         <RewardBadge>{badgeContent}</RewardBadge>
       </div>
 
       <p className="mcaption-regular14 mt-1.5 mb-4 sm:mt-2">{description}</p>
 
-      <p className="mcaption-semibold16 md:mcaption-semibold20 rounded-[8px] bg-white p-4">{daysLeft}</p>
+      <p className="mcaption-semibold16 md:mcaption-semibold20 rounded-[8px] bg-white p-4">
+        {daysLeft}
+      </p>
     </CardContent>
   </Card>
 );
 
-export default async function InviteReferralProgramAdvanceReward(): Promise<JSX.Element> {
-  const t = await getTranslations('referralProgram.advancedReward');
+export async function InviteReferralProgramAdvanceReward(): Promise<JSX.Element> {
+  const t = await getTranslations("referralProgram.advancedReward");
 
   const activityBonusData: ActivityBonusData[] = [
     {
-      icon: IconBitCoinRefresh,
-      title: t('activityBonus.tokenDeposit.title'),
-      badgeContent: t('activityBonus.tokenDeposit.pointsPerDeposit', {
+      icon: IconBitcoinRefresh,
+      title: t("activityBonus.tokenDeposit.title"),
+      badgeContent: t("activityBonus.tokenDeposit.pointsPerDeposit", {
         points: 5,
       }),
-      description: t('activityBonus.tokenDeposit.description'),
+      description: t("activityBonus.tokenDeposit.description"),
     },
     {
       icon: IconDollarCircle,
-      title: t('activityBonus.fiatDeposit.title'),
-      badgeContent: t('activityBonus.fiatDeposit.pointsPerDeposit', {
+      title: t("activityBonus.fiatDeposit.title"),
+      badgeContent: t("activityBonus.fiatDeposit.pointsPerDeposit", {
         points: 2,
       }),
-      description: t('activityBonus.fiatDeposit.description'),
+      description: t("activityBonus.fiatDeposit.description"),
     },
     {
       icon: IconNote2,
-      title: t('activityBonus.courseCompletion.title'),
-      badgeContent: t('activityBonus.courseCompletion.percentPerCompletion', {
+      title: t("activityBonus.courseCompletion.title"),
+      badgeContent: t("activityBonus.courseCompletion.percentPerCompletion", {
         percent: 10,
       }),
-      description: t('activityBonus.courseCompletion.description'),
+      description: t("activityBonus.courseCompletion.description"),
     },
   ];
 
   const streakData: StreakData[] = [
     {
       icon: IconNote2,
-      title: t('consistencyRewards.weeklyStreak.title'),
-      badgeContent: t('consistencyRewards.weeklyStreak.points', { points: 3 }),
-      description: '',
+      title: t("consistencyRewards.weeklyStreak.title"),
+      badgeContent: t("consistencyRewards.weeklyStreak.points", { points: 3 }),
+      description: "",
       progressPercentage: 60,
-      daysRemaining: t('consistencyRewards.weeklyStreak.daysRemaining', {
+      daysRemaining: t("consistencyRewards.weeklyStreak.daysRemaining", {
         days: 2,
       }),
       progress: {
@@ -176,11 +200,11 @@ export default async function InviteReferralProgramAdvanceReward(): Promise<JSX.
     },
     {
       icon: IconNote3,
-      title: t('consistencyRewards.monthlyStreak.title'),
-      badgeContent: t('consistencyRewards.monthlyStreak.points', { points: 3 }),
-      description: '',
+      title: t("consistencyRewards.monthlyStreak.title"),
+      badgeContent: t("consistencyRewards.monthlyStreak.points", { points: 3 }),
+      description: "",
       progressPercentage: 60,
-      daysRemaining: t('consistencyRewards.monthlyStreak.daysRemaining', {
+      daysRemaining: t("consistencyRewards.monthlyStreak.daysRemaining", {
         days: 2,
       }),
       progress: {
@@ -192,17 +216,19 @@ export default async function InviteReferralProgramAdvanceReward(): Promise<JSX.
 
   const timeBasedData: TimeBasedData = {
     icon: IconNote2,
-    title: t('timeBasedRewards.limitedTimeOffer.title'),
-    badgeContent: t('timeBasedRewards.limitedTimeOffer.points', {
+    title: t("timeBasedRewards.limitedTimeOffer.title"),
+    badgeContent: t("timeBasedRewards.limitedTimeOffer.points", {
       points: 3,
     }),
-    description: t.rich('timeBasedRewards.limitedTimeOffer.description', {
-      highlight: chunks => <span className="mcaption-semibold14 text-primary">{chunks}</span>,
+    description: t.rich("timeBasedRewards.limitedTimeOffer.description", {
+      highlight: (chunks) => (
+        <span className="mcaption-semibold14 text-primary">{chunks}</span>
+      ),
       x: 2,
-      fromDate: '11/11/2023',
-      toDate: '11/12/2023',
+      fromDate: "11/11/2023",
+      toDate: "11/12/2023",
     }),
-    daysLeft: t('timeBasedRewards.limitedTimeOffer.daysLeft', {
+    daysLeft: t("timeBasedRewards.limitedTimeOffer.daysLeft", {
       days: 3,
     }),
   };
@@ -211,17 +237,21 @@ export default async function InviteReferralProgramAdvanceReward(): Promise<JSX.
     <section className="block rounded-[16px] bg-white p-2 md:p-6">
       {/* Advanced Rewards Section */}
       <div>
-        <h2 className="mcaption-semibold18 md:mcaption-semibold24 mb-1 text-center md:text-left">{t('title')}</h2>
-        <p className="mbutton-regular16 mb-4 text-center sm:mb-6 md:text-left">{t('subtitle')}</p>
+        <h2 className="mcaption-semibold18 md:mcaption-semibold24 mb-1 text-center md:text-left">
+          {t("title")}
+        </h2>
+        <p className="mbutton-regular16 mb-4 text-center sm:mb-6 md:text-left">
+          {t("subtitle")}
+        </p>
 
         {/* Activity Bonus Rewards */}
         <div className="mb-6 sm:mb-8">
           <h3 className="mcaption-semibold14 md:mcaption-semibold16 lg:mcaption-semibold20 mb-3 sm:mb-4">
-            {t('activityBonus.title')}
+            {t("activityBonus.title")}
           </h3>
 
           <div className="mb-4 grid grid-cols-1 gap-3 sm:mb-6 sm:grid-cols-2 sm:gap-4">
-            {activityBonusData.map(activity => (
+            {activityBonusData.map((activity) => (
               <ActivityBonusCard
                 key={activity.title}
                 icon={activity.icon}
@@ -236,11 +266,11 @@ export default async function InviteReferralProgramAdvanceReward(): Promise<JSX.
         {/* Consistency Rewards */}
         <div>
           <h3 className="mcaption-semibold14 md:mcaption-semibold16 lg:mcaption-semibold20 mb-3 sm:mb-4">
-            {t('consistencyRewards.title')}
+            {t("consistencyRewards.title")}
           </h3>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
-            {streakData.map(streak => (
+            {streakData.map((streak) => (
               <StreakCard
                 key={streak.title}
                 icon={streak.icon}
@@ -258,7 +288,7 @@ export default async function InviteReferralProgramAdvanceReward(): Promise<JSX.
         {/* Time-based Rewards */}
         <div>
           <h3 className="mcaption-semibold14 md:mcaption-semibold16 lg:mcaption-semibold20 mb-3 sm:mb-4">
-            {t('timeBasedRewards.title')}
+            {t("timeBasedRewards.title")}
           </h3>
 
           <div className="grid grid-cols-1 gap-3">

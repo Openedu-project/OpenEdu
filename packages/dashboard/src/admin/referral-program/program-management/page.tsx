@@ -1,8 +1,8 @@
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import { DashboardMainPageLayout } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import ProgramManagementSetting from './_components/program-management-setting';
+import { ProgramManagementSetting } from './_components/program-management-setting';
 
-export default function ProgramManagement() {
+export function ProgramManagement() {
   const tDashboard = useTranslations('dashboard.referralProgram');
 
   return (

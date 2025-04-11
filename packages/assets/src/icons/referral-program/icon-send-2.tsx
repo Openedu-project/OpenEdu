@@ -1,6 +1,6 @@
 import type { ISvgProps } from '../types';
 
-export default function IconSend2({ width = 64, height = 64, className = '', color = '#0A8AFF' }: ISvgProps) {
+export function IconSend2({ width = 64, height = 64, className = '', color = '#0A8AFF' }: ISvgProps) {
   return (
     <svg
       width={width}

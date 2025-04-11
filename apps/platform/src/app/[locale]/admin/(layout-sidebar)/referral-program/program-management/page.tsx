@@ -1,4 +1,4 @@
-import ProgramManagement from '@oe/dashboard/admin/referral-program/program-management/page';
+import { ProgramManagement } from "@oe/dashboard";
 
 export default function ProgramManagementPage() {
   return <ProgramManagement />;
