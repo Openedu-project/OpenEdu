@@ -1,4 +1,4 @@
-import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
+import type { IQuizSubmissionResponse } from '@oe/api';
 import { type ReactNode, createContext, useContext, useMemo, useState } from 'react';
 
 type QuizContextType = {
