@@ -1,7 +1,7 @@
-import type { ITransaction } from '@oe/api/types/wallet';
-import { CRYPTO_CURRENCIES } from '@oe/api/utils/wallet';
-import { formatCurrency } from '@oe/core/utils/currency';
-import { formatDateTime } from '@oe/core/utils/datetime';
+import type { ITransaction } from '@oe/api';
+import { CRYPTO_CURRENCIES } from '@oe/api';
+import { formatCurrency } from '@oe/core';
+import { formatDateTime } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { Modal } from '#components/modal';
 import { shortenAddress } from '#utils/crypto';

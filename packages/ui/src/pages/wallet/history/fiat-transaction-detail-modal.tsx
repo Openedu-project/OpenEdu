@@ -1,9 +1,9 @@
-import type { ITransaction } from '@oe/api/types/wallet';
-import { FIAT_CURRENCIES } from '@oe/api/utils/wallet';
-import { formatCurrency } from '@oe/core/utils/currency';
-import { formatDateTime } from '@oe/core/utils/datetime';
-import { Image } from '@oe/ui/components/image';
+import type { ITransaction } from '@oe/api';
+import { FIAT_CURRENCIES } from '@oe/api';
+import { formatCurrency } from '@oe/core';
+import { formatDateTime } from '@oe/core';
 import { useTranslations } from 'next-intl';
+import { Image } from '#components/image';
 import { Modal } from '#components/modal';
 import { StatusTableCell } from '../_components/status-table-cell';
 
