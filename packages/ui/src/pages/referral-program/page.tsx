@@ -1,9 +1,9 @@
-import ReferralProgramList from './_components/invite-referral/referral-program-list';
+import InviteReferralProgramList from './_components/invite-referral/invite-referral-program-list';
 
 export default function ReferralProgram() {
   return (
     <div className="bg-gray-50">
-      <ReferralProgramList />
+      <InviteReferralProgramList />
     </div>
   );
 }
