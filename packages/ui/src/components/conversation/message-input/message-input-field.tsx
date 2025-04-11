@@ -1,4 +1,4 @@
-import type { z } from '@oe/api/utils/zod';
+import type { z } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 import type { InputFieldProps } from '../type';

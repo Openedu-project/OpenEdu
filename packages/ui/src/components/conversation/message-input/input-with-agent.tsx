@@ -1,4 +1,4 @@
-import type { z } from '@oe/api/utils/zod';
+import type { z } from '@oe/api';
 import { CircleX } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Button } from '#shadcn/button';

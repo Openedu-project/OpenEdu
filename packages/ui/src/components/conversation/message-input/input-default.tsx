@@ -1,7 +1,7 @@
-import type { IFileResponse } from '@oe/api/types/file';
-import { ajaxUpload } from '@oe/api/utils/ajax-upload';
-import type { z } from '@oe/api/utils/zod';
-import { uniqueID } from '@oe/core/utils/unique';
+import type { IFileResponse } from '@oe/api';
+import { ajaxUpload } from '@oe/api';
+import type { z } from '@oe/api';
+import { uniqueID } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { type ClipboardEvent, useCallback, useRef } from 'react';
 import { useFieldArray } from 'react-hook-form';
