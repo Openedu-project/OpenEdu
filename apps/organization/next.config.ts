@@ -27,6 +27,12 @@ const nextConfig: NextConfig = getNextConfig({
       'next-intl/config': './src/config/i18n-request-config.ts',
     },
   },
+  ...(!process.env.TURBOPACK && {
+    webpack: (config) => {
+      config.resolve.alias['next-intl/config'] = './src/config/i18n-request-config.ts';
+      return config;
+    },
+  }),
   // async rewrites() {
   //   return [
   //     // {
