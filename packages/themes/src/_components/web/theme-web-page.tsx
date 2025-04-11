@@ -1,13 +1,7 @@
-import type {
-  PageSectionConfigs,
-  PagesConfig,
-  SectionsByPage,
-  ThemeName,
-  ThemePageKey,
-} from "#types";
 // theme-web-page.tsx
-import { NotFoundPage } from "@oe/ui";
-import { useTranslations } from "next-intl";
+import { NotFoundPage } from '@oe/ui';
+import { getTranslations } from 'next-intl/server';
+import type { PageSectionConfigs, PagesConfig, SectionsByPage, ThemeName, ThemePageKey } from '#types';
 
 interface ThemePageProps {
   pageConfig?: PagesConfig<ThemePageKey>;
@@ -27,25 +21,46 @@ type ThemeImportMap = {
 //TODO: define type
 const THEME_IMPORTS: ThemeImportMap = {
   scholar: {
-    homepage: () => import("../../scholar/homepage/index"),
+    homepage: () =>
+      import('../../scholar/homepage/index').then(mod => ({
+        default: mod.ScholarHomepage,
+      })),
   },
   vbi: {
-    homepage: () => import("../../vbi/homepage/index"),
-    "about-us": () => import("../../vbi/about-us/index"),
-    partners: () => import("../../vbi/partners/index"),
+    homepage: () =>
+      import('../../vbi/homepage/index').then(mod => ({
+        default: mod.VbiHomepage,
+      })),
+    'about-us': () =>
+      import('../../vbi/about-us/index').then(mod => ({
+        default: mod.VbiAboutUs,
+      })),
+    partners: () =>
+      import('../../vbi/partners/index').then(mod => ({
+        default: mod.VbiPartners,
+      })),
   },
   academia: {
-    homepage: () => import("../../academia/homepage/index"),
+    homepage: () =>
+      import('../../academia/homepage/index').then(mod => ({
+        default: mod.AcademiaHomepage,
+      })),
   },
   avail: {
-    homepage: () => import("../../avail/homepage/index"),
+    homepage: () =>
+      import('../../avail/homepage/index').then(mod => ({
+        default: mod.AvailHomepage,
+      })),
   },
   fenet: {
-    homepage: () => import("../../fenet/homepage/index"),
+    homepage: () =>
+      import('../../fenet/homepage/index').then(mod => ({
+        default: mod.FenetHomepage,
+      })),
   },
 };
 
-export default async function ThemeWebPage({
+export async function ThemeWebPage({
   themeName,
   selectedPage,
   pageConfig,
@@ -69,13 +84,11 @@ ThemePageProps) {
 
   // Get the correct path from the SERVER_THEME_PATHS
   // const importPath = SERVER_THEME_PATHS[themeName]?.[pageKey]?.theme;
-  const t = useTranslations("themeWebPage");
+  const t = await getTranslations('themeWebPage');
   const importFunction = THEME_IMPORTS?.[themeName]?.[selectedPage];
 
   if (!importFunction) {
-    console.error(
-      `No theme component path found for ${themeName}/${selectedPage}`
-    );
+    console.error(`No theme component path found for ${themeName}/${selectedPage}`);
     return <NotFoundPage />;
   }
 
@@ -99,13 +112,10 @@ ThemePageProps) {
       )
     );
   } catch (error) {
-    console.error(
-      `Failed to load theme component for ${themeName}/${selectedPage}:`,
-      error
-    );
+    console.error(`Failed to load theme component for ${themeName}/${selectedPage}:`, error);
     return (
       <div className="rounded bg-red-100 p-4 text-red-800">
-        <h2 className="font-bold text-lg">{t("error")}</h2>
+        <h2 className="font-bold text-lg">{t('error')}</h2>
         <p>{(error as Error).message}</p>
       </div>
     );

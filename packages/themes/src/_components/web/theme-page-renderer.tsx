@@ -1,6 +1,6 @@
-import type { PageRender, PageSectionConfig, PageSectionConfigs, SectionsByPage, ThemePageKey } from '@oe/themes/types';
-import { getThemeComponentByPagesConfig } from '@oe/themes/utils/function';
 import { useTranslations } from 'next-intl';
+import type { PageRender, PageSectionConfig, PageSectionConfigs, SectionsByPage, ThemePageKey } from '#types';
+import { getThemeComponentByPagesConfig } from '#utils/function';
 import type { PreviewPanelProps } from '../theme-settings/theme-page/theme-preview-panel';
 
 interface ThemePageRendererProps {

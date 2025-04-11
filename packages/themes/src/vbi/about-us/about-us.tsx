@@ -9,17 +9,17 @@ import type {
   ThemePageKey,
 } from '../../_types';
 
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 
 const pageRender: PageRender = {
   homepage: {
     theme: undefined,
-    availBlogs: dynamic(() => import('./avail-blogs/blog-server')),
-    availCourses: dynamic(() => import('./avail-courses/avail-courses-server')),
-    availEco: dynamic(() => import('./avail-eco/avail-eco')),
-    availFeature: dynamic(() => import('./avail-feature/avail-feature')),
-    availHero: dynamic(() => import('./avail-hero/avail-hero')),
-    availSolution: dynamic(() => import('./avail-solution/avail-solution')),
+    // availBlogs: dynamic(() => import('./avail-blogs/blog-server')),
+    // availCourses: dynamic(() => import('./avail-courses/avail-courses-server')),
+    // availEco: dynamic(() => import('./avail-eco/avail-eco')),
+    // availFeature: dynamic(() => import('./avail-feature/avail-feature')),
+    // availHero: dynamic(() => import('./avail-hero/avail-hero')),
+    // availSolution: dynamic(() => import('./avail-solution/avail-solution')),
   },
 };
 

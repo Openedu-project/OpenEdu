@@ -14,14 +14,14 @@ import dynamic from 'next/dynamic';
 const THEMES: PageRender = {
   homepage: {
     theme: undefined,
-    scholarHero: dynamic(() => import('./hero/hero')),
-    scholarAchievements: dynamic(() => import('./achievements/achievements')),
-    scholarAboutUs: dynamic(() => import('./about-us/about-us')),
-    scholarContact: dynamic(() => import('./contact/contact')),
-    scholarProjects: dynamic(() => import('./projects/projects')),
-    scholarService: dynamic(() => import('./service/service')),
-    scholarTeam: dynamic(() => import('./team/team')),
-    scholarTestimonials: dynamic(() => import('./testimonials/testimonials')),
+    fenetHero: dynamic(() => import('./hero').then(mod => mod.FenetHomepageHero)),
+    // fenetAchievements: dynamic(() => import('./achievements').then(mod => mod.FenetHomepageAchievements)),
+    // fenetAboutUs: dynamic(() => import('./about-us').then(mod => mod.FenetHomepageAboutUs)),
+    // fenetContact: dynamic(() => import('./contact').then(mod => mod.FenetHomepageContact)),
+    // fenetProjects: dynamic(() => import('./projects').then(mod => mod.FenetHomepageProjects)),
+    fenetService: dynamic(() => import('./service').then(mod => mod.FenetHomepageService)),
+    // fenetTeam: dynamic(() => import('./team').then(mod => mod.FenetHomepageTeam)),
+    // fenetTestimonials: dynamic(() => import('./testimonials').then(mod => mod.FenetHomepageTestimonials)),
   },
 };
 

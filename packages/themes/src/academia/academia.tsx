@@ -6,7 +6,7 @@ import type { AcademiaHomepageHeroProps } from './homepage/hero';
 import type { AcademiaHomepageOrganizationsProps } from './homepage/organizations';
 import type { AcademiaHomepagePartnersProps } from './homepage/partners';
 
-export const AcademiaHomePage = dynamic(() => import('./homepage').then(mod => mod.Homepage));
+export const AcademiaHomePage = dynamic(() => import('./homepage').then(mod => mod.AcademiaHomepage));
 export const AcademiaHomepageHero = dynamic(() => import('./homepage/hero').then(mod => mod.AcademiaHomepageHero));
 export const AcademiaHomepageFeatures = dynamic(() =>
   import('./homepage/features').then(mod => mod.AcademiaHomepageFeatures)

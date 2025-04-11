@@ -1,9 +1,9 @@
 // import dynamic from 'next/dynamic';
-import { ThemePageRenderer } from "../../_components/web/theme-page-renderer";
-import type { PageRender, SectionComponent } from "../../_types";
+import { ThemePageRenderer } from '../../_components/web/theme-page-renderer';
+import type { PageRender, SectionComponent } from '../../_types';
 
 const pageRender: PageRender = {
-  "about-us": {
+  'about-us': {
     theme: undefined,
     // vbiCore: dynamic(() => import('./core/core')),
     // vbiGoal: dynamic(() => import('./goal/goal')),
@@ -11,14 +11,6 @@ const pageRender: PageRender = {
   },
 };
 
-const AboutUsPage: SectionComponent<"about-us", "theme"> = ({ props }) => {
-  return (
-    <ThemePageRenderer
-      pageKey="about-us"
-      pageRenderData={pageRender}
-      props={props}
-    />
-  );
+export const AvailHomepage: SectionComponent<'homepage', 'theme'> = ({ props }) => {
+  return <ThemePageRenderer pageKey="homepage" pageRenderData={pageRender} props={props} />;
 };
-
-export default AboutUsPage;
