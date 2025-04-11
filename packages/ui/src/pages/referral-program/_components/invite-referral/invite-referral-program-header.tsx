@@ -1,10 +1,10 @@
-import { IconMedal, IconOpeneduBalance, IconUser2 } from "@oe/assets";
-import { getTranslations } from "next-intl/server";
-import { Button } from "#shadcn/button";
-import { Card, CardContent } from "#shadcn/card";
+import { IconMedal, IconOpeneduBalance, IconUser2 } from '@oe/assets';
+import { getTranslations } from 'next-intl/server';
+import { Button } from '#shadcn/button';
+import { Card, CardContent } from '#shadcn/card';
 
 export async function InviteReferralProgramHeader() {
-  const t = await getTranslations("referralProgram.header");
+  const t = await getTranslations('referralProgram.header');
 
   return (
     <section className="block">
@@ -14,43 +14,27 @@ export async function InviteReferralProgramHeader() {
           <div className=" relative mt-7 w-full ">
             <div className="-translate-y-1/2 absolute top-1/2 left-0 z-10 mb-2 flex w-full justify-between ">
               <div className="flex w-[70px] flex-col items-center rounded-[24px] bg-gradient-4 py-1 text-center text-white md:w-[80px]">
-                <p className="mbutton-semibold10 text-black">
-                  {t("refCount", { count: 0 })}
-                </p>
-                <p className="mbutton-semibold8 text-positive-500">
-                  {t("pointsEarned", { points: 0 })}
-                </p>
+                <p className="mbutton-semibold10 text-black">{t('refCount', { count: 0 })}</p>
+                <p className="mbutton-semibold8 text-positive-500">{t('pointsEarned', { points: 0 })}</p>
               </div>
               <div className="flex w-[70px] flex-col items-center rounded-[24px] bg-gradient-4 py-1 text-center text-white md:w-[80px]">
-                <p className="mbutton-semibold10 text-black">
-                  {t("refCount", { count: 0 })}
-                </p>
-                <p className="mbutton-semibold8 text-positive-500">
-                  {t("pointsEarned", { points: 0 })}
-                </p>
+                <p className="mbutton-semibold10 text-black">{t('refCount', { count: 0 })}</p>
+                <p className="mbutton-semibold8 text-positive-500">{t('pointsEarned', { points: 0 })}</p>
               </div>
               <div className="flex w-[70px] flex-col items-center rounded-[24px] bg-gradient-3 py-1 text-center text-white md:w-[80px]">
-                <p className="mbutton-semibold10 text-black">
-                  {t("refCount", { count: 0 })}
-                </p>
-                <p className="mbutton-semibold8 text-neutral-300">
-                  {t("pointsEarned", { points: 0 })}
-                </p>
+                <p className="mbutton-semibold10 text-black">{t('refCount', { count: 0 })}</p>
+                <p className="mbutton-semibold8 text-neutral-300">{t('pointsEarned', { points: 0 })}</p>
               </div>
               <div className="flex w-[70px] flex-col items-center rounded-[24px] bg-gradient-3 py-1 text-center text-white md:w-[80px]">
-                <p className="mbutton-semibold10 text-black">
-                  {t("refCount", { count: 0 })}
-                </p>
-                <p className="mbutton-semibold8 text-neutral-300">
-                  {t("pointsEarned", { points: 0 })}
-                </p>
+                <p className="mbutton-semibold10 text-black">{t('refCount', { count: 0 })}</p>
+                <p className="mbutton-semibold8 text-neutral-300">{t('pointsEarned', { points: 0 })}</p>
               </div>
             </div>
             <div className="h-2 rounded-[40px] bg-gradient-3">
               <div
                 className="h-2 rounded-xl bg-positive-500 transition-all duration-300 ease-in-out"
                 style={{
-                  width: "40%",
+                  width: '40%',
                 }}
               />
             </div>
@@ -65,9 +49,7 @@ export async function InviteReferralProgramHeader() {
               <div className="mr-3 rounded-full bg-pink-50">
                 <IconOpeneduBalance className="h-10 w-10" />
               </div>
-              <span className="mcaption-semibold18 lg:mcaption-semibold24">
-                {t("balancePoints", { points: 2000 })}
-              </span>
+              <span className="mcaption-semibold18 lg:mcaption-semibold24">{t('balancePoints', { points: 2000 })}</span>
             </div>
           </div>
         </CardContent>
@@ -82,19 +64,15 @@ export async function InviteReferralProgramHeader() {
                 <div className="mr-3 rounded-full bg-pink-50">
                   <IconUser2 className="h-10 w-10" />
                 </div>
-                <span className="mcaption-semibold18 lg:mcaption-semibold24">
-                  {t("totalReferrals")}
-                </span>
+                <span className="mcaption-semibold18 lg:mcaption-semibold24">{t('totalReferrals')}</span>
               </div>
               <div>
                 <Button variant="outline" className="ml-2">
-                  {t("viewAll")}
+                  {t('viewAll')}
                 </Button>
               </div>
             </div>
-            <div className="mcaption-semibold18 lg:mcaption-semibold24 text-center md:text-right">
-              10
-            </div>
+            <div className="mcaption-semibold18 lg:mcaption-semibold24 text-center md:text-right">10</div>
           </CardContent>
         </Card>
 
@@ -105,13 +83,9 @@ export async function InviteReferralProgramHeader() {
               <div className="mr-3 rounded-full bg-yellow-50 ">
                 <IconMedal className="h-10 w-10" />
               </div>
-              <span className="mcaption-semibold18 lg:mcaption-semibold24">
-                {t("totalEarnedPoints")}
-              </span>
+              <span className="mcaption-semibold18 lg:mcaption-semibold24">{t('totalEarnedPoints')}</span>
             </div>
-            <div className="mcaption-semibold18 lg:mcaption-semibold24 text-center md:text-right">
-              1000
-            </div>
+            <div className="mcaption-semibold18 lg:mcaption-semibold24 text-center md:text-right">1000</div>
           </CardContent>
         </Card>
       </div>

@@ -1,4 +1,4 @@
-import InviteReferralProgramList from "./_components/invite-referral/invite-referral-program-list";
+import InviteReferralProgramList from './_components/invite-referral/invite-referral-program-list';
 
 export function ReferralProgram() {
   return (
