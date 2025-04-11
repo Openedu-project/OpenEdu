@@ -22,6 +22,7 @@ export function useGetConversationDetails({
     params: { id },
     queryParams: { ...params },
   });
+
   const { data, isLoading, error, mutate } = useSWR(
     shouldFetch && id ? endpointKey : null,
     (endpoint: string) => getConversationDetail(endpoint, id ?? '', params),
@@ -29,6 +30,8 @@ export function useGetConversationDetails({
       fallbackData: fallback,
     }
   );
+
+  console.log('fallback:>>>', fallback, 'data: >>>>>', data);
 
   return {
     data,

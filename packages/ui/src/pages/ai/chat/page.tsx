@@ -26,6 +26,8 @@ const getChatMessages = async (id?: string) => {
       },
       { cache: 'no-store', next: { revalidate: 0 } }
     );
+    console.log(id, 'get data: ', res);
+
     return res;
   } catch (error) {
     console.error(error);
