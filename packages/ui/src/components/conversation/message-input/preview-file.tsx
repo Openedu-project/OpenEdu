@@ -120,8 +120,8 @@ export const PreviewDocument = ({
       conversation_id: chatId,
     });
   };
-  const updateFileStatus = (status?: TFileStatus, process?: number) => {
-    updateFile?.(filePosition ?? 0, { ...file, status, process });
+  const updateFileStatus = (status?: TFileStatus, progress?: number) => {
+    updateFile?.(filePosition ?? 0, { ...file, status, progress });
   };
 
   return (
@@ -142,7 +142,7 @@ export const PreviewDocument = ({
       <div className={cn("flex items-center gap-1 p-2")}>
         <Paperclip className="h-3 w-3 shrink-0" />
         <p className={cn("mcaption-regular12 line-clamp-3 break-all")}>
-          {file.name.split("_")[1] ?? file.name}
+          {file.name?.split("_")?.[1] ?? file.name}
         </p>
       </div>
     </div>
@@ -165,7 +165,7 @@ const HitboxLayer = ({
   const { AIDocumentStatusData, resetSocketData } = useSocketStore();
 
   const [status, setStatus] = useState<TFileStatus>("generating");
-  const [progress, setProgress] = useState(file.process ?? 0);
+  const [progress, setProgress] = useState(file.progress ?? 0);
 
   useEffect(() => {
     if (!updateStatus) {
@@ -176,7 +176,7 @@ const HitboxLayer = ({
     if (
       file.status === "generating" &&
       !apiCalledRef.current &&
-      file.process === 0
+      file.progress === 0
     ) {
       const res = postEmbedDocument(undefined, {
         attachment_id: file.id,
