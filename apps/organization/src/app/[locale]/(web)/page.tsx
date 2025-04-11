@@ -1,24 +1,28 @@
-// import { getThemeConfigServer } from "@oe/api";
-// import { getMetadata } from "@oe/themes";
-// import ThemeWebPage from "@oe/themes";
+import { getThemeConfigServer } from "@oe/api";
+import { getMetadata } from "@oe/themes";
+import { ThemeWebPage } from "@oe/themes";
+import { NotFoundPage } from "@oe/ui";
 
-// import type { Metadata } from "next";
+import type { Metadata } from "next";
 
-// export async function generateMetadata(): Promise<Metadata> {
-//   const [themeSystem] = await Promise.all([getThemeConfigServer()]);
+export async function generateMetadata(): Promise<Metadata> {
+  const [themeSystem] = await Promise.all([getThemeConfigServer()]);
 
-//   return getMetadata(themeSystem?.[0]?.value);
-// }
+  return getMetadata(themeSystem?.[0]?.value);
+}
 
-export default function Home() {
-  // const [themeSystem] = await Promise.all([getThemeConfigServer()]);
+export default async function Home() {
+  const [themeSystem] = await Promise.all([getThemeConfigServer()]);
+  const themeName = themeSystem?.[0]?.value?.activedTheme;
+  if (!(themeSystem?.[0]?.value && themeName)) {
+    return <NotFoundPage />;
+  }
 
-  // if (!themeSystem?.[0]?.value) {
-  //   return null;
-  // }
-
-  // return (
-  //   <ThemeWebPage pageKey="homepage" themeSystem={themeSystem?.[0]?.value} />
-  // );
-  return <div>Hello 111 222</div>;
+  return (
+    <ThemeWebPage
+      selectedPage="homepage"
+      themeName={themeName}
+      pageConfig={themeSystem?.[0]?.value?.availableThemes?.[themeName]?.pages}
+    />
+  );
 }

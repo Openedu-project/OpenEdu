@@ -11,7 +11,7 @@ export type PageRender = {
   [K in ThemePageKey]?: {
     [S in SectionsByPage[K]]?: ComponentType<SectionProps<K, S>>;
   } & {
-    theme: ComponentType<BaseSectionProps<K>>;
+    theme?: ComponentType<BaseSectionProps<K>>;
   };
 };
 

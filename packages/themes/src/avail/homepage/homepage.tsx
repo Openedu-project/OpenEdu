@@ -1,17 +1,24 @@
-import { PreviewPanel } from '../../_components/theme-settings/theme-page/theme-preview-panel';
-import type { SectionComponent } from '../../_types';
+// import dynamic from 'next/dynamic';
+import { ThemePageRenderer } from "../../_components/web/theme-page-renderer";
+import type { PageRender, SectionComponent } from "../../_types";
 
-export const AvailHomepage: SectionComponent<'homepage', 'theme'> = ({ props }) => {
-  if (!props) {
-    return;
-  }
+const pageRender: PageRender = {
+  "about-us": {
+    theme: undefined,
+    // vbiCore: dynamic(() => import('./core/core')),
+    // vbiGoal: dynamic(() => import('./goal/goal')),
+    // vbiIntro: dynamic(() => import('./intro/intro')),
+  },
+};
+
+const AboutUsPage: SectionComponent<"about-us", "theme"> = ({ props }) => {
   return (
-    <PreviewPanel
-      themeName={props?.themeName}
-      selectedPage={props?.selectedPage}
-      pageConfig={props?.pageConfig}
-      currentConfigSections={props?.currentConfigSections}
-      renderByServer
+    <ThemePageRenderer
+      pageKey="about-us"
+      pageRenderData={pageRender}
+      props={props}
     />
   );
 };
+
+export default AboutUsPage;

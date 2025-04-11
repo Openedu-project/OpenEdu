@@ -1,17 +1,36 @@
-import { PreviewPanel } from '../../_components/theme-settings/theme-page/theme-preview-panel';
-import type { SectionComponent } from '../../_types';
+import dynamic from "next/dynamic";
+import { ThemePageRenderer } from "../../_components/web/theme-page-renderer";
+import type { PageRender, SectionComponent } from "../../_types";
 
-export const VbiPartners: SectionComponent<'partners', 'theme'> = ({ props }) => {
-  if (!props) {
-    return;
-  }
+const pageRender: PageRender = {
+  partners: {
+    theme: undefined,
+    vbiCta: dynamic(() =>
+      import("./cta/cta").then((mod) => mod.VbiPartnersCta)
+    ),
+    vbiPartnerFeatures: dynamic(() =>
+      import("./features/vbi-features").then((mod) => mod.VbiPartnersFeatures)
+    ),
+    vbiPartnerList: dynamic(() =>
+      import("./partner-list/partner-list").then((mod) => mod.VbiPartnersList)
+    ),
+    vbiShowcase: dynamic(() =>
+      import("./showcase/showcase").then((mod) => mod.VbiPartnersShowcase)
+    ),
+    vbiTesti: dynamic(() =>
+      import("./testimonials/testi").then((mod) => mod.VbiPartnersTesti)
+    ),
+  },
+};
+
+const PartnersPage: SectionComponent<"partners", "theme"> = ({ props }) => {
   return (
-    <PreviewPanel
-      themeName={props?.themeName}
-      selectedPage={props?.selectedPage}
-      pageConfig={props?.pageConfig}
-      currentConfigSections={props?.currentConfigSections}
-      renderByServer
+    <ThemePageRenderer
+      pageKey="partners"
+      pageRenderData={pageRender}
+      props={props}
     />
   );
 };
+
+export default PartnersPage;

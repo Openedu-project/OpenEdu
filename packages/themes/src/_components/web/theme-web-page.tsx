@@ -1,48 +1,113 @@
-import { NotFoundPage } from '@oe/ui';
-import type { SectionsByPage, ThemePageKey, ThemeSystem } from '#types';
-import { getThemeComponent } from '../../_utils/function';
-import { THEMES_SERVER } from '../../index';
+import type {
+  PageSectionConfigs,
+  PagesConfig,
+  SectionsByPage,
+  ThemeName,
+  ThemePageKey,
+} from "#types";
+// theme-web-page.tsx
+import { NotFoundPage } from "@oe/ui";
+import { useTranslations } from "next-intl";
 
 interface ThemePageProps {
-  pageKey: ThemePageKey;
-  themeSystem: ThemeSystem;
+  pageConfig?: PagesConfig<ThemePageKey>;
+  themeName: ThemeName;
+  selectedPage: ThemePageKey;
+  stateConfigSections?: PageSectionConfigs<ThemePageKey>;
+  currentConfigSections?: PageSectionConfigs<ThemePageKey>;
 }
 
-export function ThemeWebPage({ pageKey, themeSystem }: ThemePageProps) {
-  if (!themeSystem) {
+type ThemeImportMap = {
+  [Name in ThemeName]?: {
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    [P in keyof SectionsByPage]?: () => Promise<any>;
+  };
+};
+
+//TODO: define type
+const THEME_IMPORTS: ThemeImportMap = {
+  scholar: {
+    homepage: () => import("../../scholar/homepage/index"),
+  },
+  vbi: {
+    homepage: () => import("../../vbi/homepage/index"),
+    "about-us": () => import("../../vbi/about-us/index"),
+    partners: () => import("../../vbi/partners/index"),
+  },
+  academia: {
+    homepage: () => import("../../academia/homepage/index"),
+  },
+  avail: {
+    homepage: () => import("../../avail/homepage/index"),
+  },
+  fenet: {
+    homepage: () => import("../../fenet/homepage/index"),
+  },
+};
+
+export default async function ThemeWebPage({
+  themeName,
+  selectedPage,
+  pageConfig,
+}: // currentConfigSections,
+// stateConfigSections,
+ThemePageProps) {
+  // if (!themeSystem) {
+  //   return <NotFoundPage />;
+  // }
+
+  // if (!themeSystem?.activedTheme) {
+  //   return <div>Please select theme at admin</div>;
+  // }
+
+  // const themeName = themeSystem.activedTheme;
+  // const themeData = themeSystem.availableThemes?.[themeName];
+
+  // if (!themeData) {
+  //   return <div>No data</div>;
+  // }
+
+  // Get the correct path from the SERVER_THEME_PATHS
+  // const importPath = SERVER_THEME_PATHS[themeName]?.[pageKey]?.theme;
+  const t = useTranslations("themeWebPage");
+  const importFunction = THEME_IMPORTS?.[themeName]?.[selectedPage];
+
+  if (!importFunction) {
+    console.error(
+      `No theme component path found for ${themeName}/${selectedPage}`
+    );
     return <NotFoundPage />;
   }
 
-  if (!themeSystem?.activedTheme) {
-    return <div>Please select theme at admin</div>;
+  try {
+    const { default: PageComponent } = await importFunction();
+
+    if (!PageComponent) {
+      return <NotFoundPage />;
+    }
+
+    return (
+      pageConfig && (
+        <PageComponent
+          props={{
+            themeName,
+            selectedPage: selectedPage,
+            pageConfig: pageConfig,
+            currentConfigSections: pageConfig?.[selectedPage]?.config,
+          }}
+        />
+      )
+    );
+  } catch (error) {
+    console.error(
+      `Failed to load theme component for ${themeName}/${selectedPage}:`,
+      error
+    );
+    return (
+      <div className="rounded bg-red-100 p-4 text-red-800">
+        <h2 className="font-bold text-lg">{t("error")}</h2>
+        <p>{(error as Error).message}</p>
+      </div>
+    );
   }
-
-  const themeName = themeSystem.activedTheme;
-  const themeData = themeSystem.availableThemes?.[themeName];
-
-  if (!themeData) {
-    return <div>No data</div>;
-  }
-
-  const PageComponent = getThemeComponent<ThemePageKey, SectionsByPage[typeof pageKey]>(
-    THEMES_SERVER,
-    themeName,
-    pageKey,
-    'theme'
-  );
-
-  if (!PageComponent) {
-    return <NotFoundPage />;
-  }
-
-  return (
-    <PageComponent
-      props={{
-        themeName,
-        selectedPage: pageKey,
-        pageConfig: themeData.pages?.[pageKey],
-        currentConfigSections: themeData.pages?.[pageKey]?.config,
-      }}
-    />
-  );
 }
