@@ -2,9 +2,10 @@
 import type { ICourseOutline } from '@oe/api';
 import { createAPIUrl } from '@oe/api';
 import type { ILesson } from '@oe/api';
+import { ArrowRight2 } from '@oe/assets';
 import { PLATFORM_ROUTES } from '@oe/core';
 import type { TFunction } from '@oe/i18n';
-import { ArrowRight, Lock } from 'lucide-react';
+import { Lock } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { type Ref, useState } from 'react';
 import { useRouter } from '#common/navigation';
@@ -109,7 +110,7 @@ export const OutlineLesson = ({
             completedPercentage ? (
               <CircleProgressBar progress={completedPercentage} size="sm" />
             ) : (
-              <ArrowRight width={16} height={16} color="var(--foreground)" />
+              <ArrowRight2 width={16} height={16} color="var(--foreground)" />
             )
           ) : (
             <Lock size={16} />

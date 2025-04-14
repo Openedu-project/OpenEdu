@@ -1,6 +1,7 @@
 export const courseLearningMessages = {
   learningPage: {
     course: 'Course: {courseName}',
+    courseContent: 'Course content',
     navigation: {
       next: 'Next',
       prev: 'Previous',
