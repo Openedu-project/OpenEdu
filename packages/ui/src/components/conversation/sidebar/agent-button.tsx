@@ -1,14 +1,23 @@
+'use client';
+
 import { MagicPen } from '@oe/assets';
 import { useTranslations } from 'next-intl';
+import { type MouseEvent, useState } from 'react';
 import { Link } from '#common/navigation';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '#shadcn/hover-card';
 import { AI_SIDEBAR } from '../constants';
 
 export function AgentButton() {
   const tAI = useTranslations('aiAssistant');
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleTriggerClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setIsOpen(prev => !prev);
+  };
   return (
-    <HoverCard openDelay={100} closeDelay={100}>
-      <HoverCardTrigger asChild className="group cursor-pointer">
+    <HoverCard openDelay={100} closeDelay={100} open={isOpen} onOpenChange={setIsOpen}>
+      <HoverCardTrigger asChild className="group cursor-pointer" onClick={handleTriggerClick}>
         <div>
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-2 bg-ai-more-feature-gradient group-hover:border-primary">
             <MagicPen width={16} height={16} />
