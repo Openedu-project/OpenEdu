@@ -131,7 +131,7 @@ export const postEmbedDocument = async (url: string | undefined, payload: IDocum
     if (!login) {
       return null;
     }
-    const response = await postAPI<{ message: string }, IDocumentRequest | undefined>(
+    const response = await postAPI<{ ai_conversation_id: string }, IDocumentRequest | undefined>(
       url ?? API_ENDPOINT.COM_CHANNELS_DOCUMENTS,
       payload
     );

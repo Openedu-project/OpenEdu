@@ -38,6 +38,7 @@ export const useSendMessageHandler = (
       const currentSelectedModel = useConversationStore.getState().selectedModel;
       const messages = useConversationStore.getState().messages;
       const thinking = useConversationStore.getState().thinking;
+      const newId = useConversationStore.getState().newConversationId;
 
       const messageID = message_id ?? `id_${Date.now()}`;
       resetOpenWebSource();
@@ -86,7 +87,7 @@ export const useSendMessageHandler = (
           content: messageInput,
           content_type: 'text',
           attachment_ids: files?.filter(f => ['finished', 'completed'].includes(f.status ?? '')).map(f => f.id),
-          ai_conversation_id: id as string,
+          ai_conversation_id: (id as string) ?? newId,
           message_id,
           extended_thinking: thinking,
         });
