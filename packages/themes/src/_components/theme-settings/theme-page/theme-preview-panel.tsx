@@ -1,6 +1,6 @@
-import { ScrollArea } from "@oe/ui";
-import { useTranslations } from "next-intl";
-import { memo } from "react";
+import { ScrollArea } from '@oe/ui';
+import { useTranslations } from 'next-intl';
+import { memo } from 'react';
 
 import type {
   PageSectionConfig,
@@ -9,9 +9,8 @@ import type {
   SectionsByPage,
   ThemeName,
   ThemePageKey,
-} from "#types";
-import { THEMES_RENDER_CLIENT } from "#utils/theme-import";
-import { getThemeComponent } from "#utils/function";
+} from '#types';
+import { THEMES_RENDER_CLIENT, getThemeComponent } from '#utils';
 
 export interface PreviewPanelProps {
   themeName: ThemeName;
@@ -27,17 +26,18 @@ export const PreviewPanel = memo(function PreviewPanel({
   currentConfigSections,
   stateConfigSections,
 }: PreviewPanelProps) {
-  const t = useTranslations("themePageSettings");
+  const t = useTranslations('themePageSettings');
 
   const renderPreviewSection = (key: SectionsByPage[typeof selectedPage]) => {
-    const PageComponent = getThemeComponent<
-      ThemePageKey,
-      SectionsByPage[typeof selectedPage]
-    >(THEMES_RENDER_CLIENT, themeName, selectedPage, key);
+    const PageComponent = getThemeComponent<ThemePageKey, SectionsByPage[typeof selectedPage]>(
+      THEMES_RENDER_CLIENT,
+      themeName,
+      selectedPage,
+      key
+    );
 
     const sectionConfig =
-      (stateConfigSections || currentConfigSections)?.[key] ||
-      pageConfig?.[selectedPage]?.config?.[key];
+      (stateConfigSections || currentConfigSections)?.[key] || pageConfig?.[selectedPage]?.config?.[key];
 
     if (!sectionConfig?.enable) {
       return undefined;
@@ -71,9 +71,7 @@ export const PreviewPanel = memo(function PreviewPanel({
       {sortedSections()?.length > 0 ? (
         sortedSections().map(renderPreviewSection)
       ) : (
-        <div className="flex h-full items-center justify-center text-muted-foreground">
-          {t("noPreview")}
-        </div>
+        <div className="flex h-full items-center justify-center text-muted-foreground">{t('noPreview')}</div>
       )}
     </ScrollArea>
   );

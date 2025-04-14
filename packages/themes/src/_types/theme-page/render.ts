@@ -5,7 +5,6 @@ import type { ThemeName } from './core';
 import type { ThemePageKey } from './core';
 import type { BaseSectionProps } from './props';
 import type { SectionsByPage } from './sections';
-// import type { BaseSectionProps, SectionComponent, SectionProps, SectionsByPage, ThemeName, ThemePageKey } from '.';
 
 export type PageRender = {
   [K in ThemePageKey]?: {

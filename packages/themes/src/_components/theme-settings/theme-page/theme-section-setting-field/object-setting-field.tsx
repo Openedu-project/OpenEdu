@@ -7,19 +7,16 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 import type React from 'react';
 import { useState } from 'react';
 import { camelToNormal } from '../../../../_utils/function';
+import type { ThemePageSettingObjectFieldProps } from './_type';
+import { getFieldType } from './_utils';
 import {
   ThemePageSettingArrayField,
   ThemePageSettingField,
-  type ThemePageSettingObjectFieldProps,
-  getFieldType,
-} from './index';
+  ThemePageSettingObjectField,
+  registerObjectField,
+} from './component-registry';
 
-export const ThemePageSettingObjectField: React.FC<ThemePageSettingObjectFieldProps> = ({
-  label,
-  value,
-  onChange,
-  path,
-}) => {
+export const ObjectFieldComponent: React.FC<ThemePageSettingObjectFieldProps> = ({ label, value, onChange, path }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleFieldChange = (key: string, newValue: ThemeFieldValue | ThemeFieldConfig | ThemeFieldConfig[]) => {
@@ -95,3 +92,4 @@ export const ThemePageSettingObjectField: React.FC<ThemePageSettingObjectFieldPr
     </div>
   );
 };
+registerObjectField(ObjectFieldComponent);

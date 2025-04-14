@@ -1,8 +1,7 @@
 "use client";
 
 import { useCreateOrUpdateThemeConfig, useGetTheme } from "@oe/api";
-import { initialThemeGlobal } from "@oe/themes";
-import { ThemeSettingGlobal } from "@oe/themes";
+import { ThemeSettingGlobal, initialThemeGlobal } from "@oe/themes";
 import type {
   ThemeCollection,
   ThemeGlobal,

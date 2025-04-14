@@ -1,11 +1,5 @@
 import { Sidebar, SidebarContent, SidebarGroupContent, SidebarMenu } from '@oe/ui';
-import {
-  getComponentsMenu,
-  getFeaturesMenu,
-  getGlobalThemeMenu,
-  getMetadataMenu,
-  getPagesMenu,
-} from '#config/theme-sidebar-config';
+import { getComponentsMenu, getFeaturesMenu, getGlobalThemeMenu, getMetadataMenu, getPagesMenu } from '#config';
 import type {
   AllGroupSidebarKeys,
   AllSidebarKeys,

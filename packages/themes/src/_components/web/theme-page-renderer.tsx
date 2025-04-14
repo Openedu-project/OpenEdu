@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl';
 import type { PageRender, PageSectionConfig, PageSectionConfigs, SectionsByPage, ThemePageKey } from '#types';
-import { getThemeComponentByPagesConfig } from '#utils/function';
+import { getThemeComponentByPagesConfig } from '#utils';
 import type { PreviewPanelProps } from '../theme-settings/theme-page/theme-preview-panel';
 
 interface ThemePageRendererProps {

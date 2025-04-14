@@ -1,10 +1,17 @@
 'use server';
 
-import type { IBlog } from '@oe/api';
+// import type { IBlog } from '@oe/api';
 import { getOrgByDomainService } from '@oe/api';
 import { getPopularBlogsServicesAtWebsite } from '@oe/api';
 import { getCookie } from '@oe/core';
-export const getPopularBlogs = async () => {
+import type { IBlogResult } from './type';
+
+interface PopularBlogsResult {
+  featuredPost: IBlogResult;
+  restPost: IBlogResult[];
+}
+
+export const getPopularBlogs = async (): Promise<PopularBlogsResult | undefined> => {
   const domain = (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? '';
   const [orgData] = await Promise.all([
     getOrgByDomainService(undefined, {
@@ -16,13 +23,13 @@ export const getPopularBlogs = async () => {
       params: { org_id: orgData?.domain ?? orgData?.alt_domain ?? '' },
     });
 
-    if (dataPopularBlogs?.length === 0) {
+    if (!dataPopularBlogs || dataPopularBlogs?.length === 0) {
       return undefined;
     }
 
     return {
-      featuredPost: dataPopularBlogs?.[0]?.entity as IBlog,
-      restPost: dataPopularBlogs?.slice(1, 4)?.map(v => v?.entity) as IBlog[],
+      featuredPost: dataPopularBlogs[0]?.entity as IBlogResult,
+      restPost: dataPopularBlogs.slice(1, 4)?.map(v => v?.entity) as IBlogResult[],
     };
   } catch (error) {
     console.error(error);

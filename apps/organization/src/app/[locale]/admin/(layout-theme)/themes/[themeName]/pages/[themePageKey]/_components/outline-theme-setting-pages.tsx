@@ -1,7 +1,6 @@
 "use client";
 import { useCreateOrUpdateThemeConfig, useGetTheme } from "@oe/api";
-import { defaultThemeSystemConfig } from "@oe/themes";
-import { ThemeSettingPages } from "@oe/themes";
+import { ThemeSettingPages, defaultThemeSystemConfig } from "@oe/themes";
 import type {
   ThemeCollection,
   ThemeDefinition,

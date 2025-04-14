@@ -5,15 +5,11 @@ import { cn } from '@oe/ui';
 import { Plus, Trash2 } from 'lucide-react';
 import type React from 'react';
 import type { ThemeFieldConfig, ThemeFieldValue } from '#types';
-import {
-  type ThemePageSettingArrayFieldProps,
-  ThemePageSettingField,
-  ThemePageSettingObjectField,
-  getFieldType,
-  getInitialValue,
-} from './index';
+import type { ThemePageSettingArrayFieldProps } from './_type';
+import { getFieldType, getInitialValue } from './_utils';
+import { ThemePageSettingField, ThemePageSettingObjectField, registerArrayField } from './component-registry';
 
-export const ThemePageSettingArrayField: React.FC<ThemePageSettingArrayFieldProps> = ({
+export const ArrayFieldComponent: React.FC<ThemePageSettingArrayFieldProps> = ({
   label,
   value,
   onChange,
@@ -137,3 +133,4 @@ export const ThemePageSettingArrayField: React.FC<ThemePageSettingArrayFieldProp
     </div>
   );
 };
+registerArrayField(ArrayFieldComponent);
