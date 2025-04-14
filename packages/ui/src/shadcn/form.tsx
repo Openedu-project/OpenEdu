@@ -6,6 +6,7 @@ import {
   type ComponentProps,
   type ComponentPropsWithoutRef,
   type ReactNode,
+  type Ref,
   createContext,
   useContext,
   useId,
@@ -21,13 +22,16 @@ import {
   useFormContext,
 } from 'react-hook-form';
 
-import type { TypeOf, z } from '@oe/api/utils/zod';
+import type { TypeOf, z } from '@oe/api';
+import type { VariantProps } from 'class-variance-authority';
+import { Info } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useFormStatus } from 'react-dom';
-import { Label, LabelWithInfo } from '#shadcn/label';
+import { Label, type labelVariants } from '#shadcn/label';
 import { cn } from '#utils/cn';
 import { getFormErrorMessage, parseFormMessage } from '#utils/form-message';
 import { Button } from './button';
+import { Tooltip } from './tooltip';
 
 const Form = FormProvider;
 
@@ -178,6 +182,27 @@ function FormControlSlot({
     />
   );
 }
+
+const LabelWithInfo = ({
+  children,
+  infoText,
+  className,
+  ...rest
+}: {
+  children: ReactNode;
+  infoText?: ReactNode;
+  ref?: Ref<HTMLLabelElement>;
+} & ComponentPropsWithoutRef<typeof Root> &
+  VariantProps<typeof labelVariants>) => (
+  <FormLabel {...rest} className={cn('flex items-center space-x-2', className)}>
+    {children}
+    {infoText ? (
+      <Tooltip content={infoText} className="ml-1">
+        <Info className="h-4 w-4 cursor-help text-muted-foreground" />
+      </Tooltip>
+    ) : null}
+  </FormLabel>
+);
 
 const FormLabelInfo = ({ className, children, ...props }: ComponentProps<typeof LabelWithInfo>) => {
   const { error, formItemId } = useFormField();

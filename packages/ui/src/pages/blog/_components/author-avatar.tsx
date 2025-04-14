@@ -1,8 +1,8 @@
 import BannerBg from '@oe/assets/images/blog-creation-bg.png';
-import { Image } from '@oe/ui/components/image';
-import { cn } from '@oe/ui/utils/cn';
 import { getTranslations } from 'next-intl/server';
+import { Image } from '#components/image';
 import { UserAvatar } from '#components/user-avatar';
+import { cn } from '#utils/cn';
 
 export async function AuthorAvatar({
   className,

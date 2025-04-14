@@ -1,16 +1,14 @@
-import type { Metadata } from "next";
+// import type { Metadata } from "next";
 // import localFont from 'next/font/local';
 
-import { fonts, getMetadata } from "@oe/themes";
-import { Provider } from "@oe/ui/common/providers";
-import { Toaster } from "@oe/ui/shadcn/sonner";
+// import { fonts } from "@oe/themes";
+import { Provider, Toaster, WebViewHandler } from "@oe/ui";
+// import { Toaster } from "@oe/ui";
 import { getLocale, getMessages } from "next-intl/server";
-import type { ReactNode } from "react";
-
-import { getThemeConfigServer } from "@oe/api/services/theme";
-import { ThemeProvider } from "@oe/themes/common/provider/theme-provider";
-import { WebViewHandler } from "@oe/ui/components/webview-handler";
+// import { ThemeProvider } from "@oe/themes";
+// import { WebViewHandler } from "@oe/ui";
 import Script from "next/script";
+import type { ReactNode } from "react";
 // const geistSans = localFont({
 //   src: './fonts/GeistVF.woff',
 //   variable: '--font-geist-sans',
@@ -22,33 +20,31 @@ import Script from "next/script";
 //   weight: '100 900',
 // });
 
-export async function generateMetadata(): Promise<Metadata> {
-  const [themeSystem] = await Promise.all([getThemeConfigServer()]);
+// export async function generateMetadata(): Promise<Metadata> {
+//   const [themeSystem] = await Promise.all([getThemeConfigServer()]);
 
-  return getMetadata(themeSystem?.[0]?.value);
-}
+//   return getMetadata(themeSystem?.[0]?.value);
+// }
 
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: ReactNode;
 }>) {
-  const [locale, messages, themeSystem] = await Promise.all([
-    getLocale(),
-    getMessages(),
-    getThemeConfigServer(),
-  ]);
-  const themeName = themeSystem?.[0]?.value?.activedTheme ?? "vbi";
+  const [locale, messages] = await Promise.all([getLocale(), getMessages()]);
+  // const themeName = themeSystem?.[0]?.value?.activedTheme ?? "vbi";
 
-  const fontVariables = Object.values(fonts)
-    .map((font) => font.variable)
-    .join(" ");
+  // console.log("-------------------messages", messages, locale, themeSystem);
+
+  // const fontVariables = Object.values(fonts)
+  //   .map((font) => font.variable)
+  //   .join(" ");
 
   return (
     <html
       lang={locale ?? "en"}
       suppressHydrationWarning
-      className={fontVariables}
+      // className={fontVariables}
     >
       <head>
         <Script id="microsoft-clarity">
@@ -59,11 +55,11 @@ export default async function RootLayout({
         <Provider messages={messages ?? {}} locale={locale}>
           <WebViewHandler />
 
-          <ThemeProvider
+          {/* <ThemeProvider
             theme={themeSystem?.[0]?.value?.availableThemes?.[themeName]}
-          >
-            {children}
-          </ThemeProvider>
+          > */}
+          {children}
+          {/* </ThemeProvider> */}
           <Toaster />
         </Provider>
       </body>

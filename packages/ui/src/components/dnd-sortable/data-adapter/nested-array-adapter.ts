@@ -1,5 +1,6 @@
+'use client';
 import type { UniqueIdentifier } from '@dnd-kit/core';
-import { uniqueID } from '@oe/core/utils/unique';
+import { uniqueID } from '@oe/core';
 import type { IDndSortableItem } from '../types';
 import { MultipleAdapter } from './mulitple-adapter';
 

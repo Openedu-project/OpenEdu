@@ -1,7 +1,7 @@
-import type { ICertificateData } from '@oe/api/types/certificate';
+import type { ICertificateData } from '@oe/api';
 import { cn } from '#utils/cn';
 
-import type { ICertificateSignatureElement } from '@oe/api/types/certificate';
+import type { ICertificateSignatureElement } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { getItemsClass } from '../../../utils';
 

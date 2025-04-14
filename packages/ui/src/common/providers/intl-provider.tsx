@@ -1,6 +1,6 @@
 'use client';
 
-import { TIME_ZONE } from '@oe/core/utils/datetime';
+import { TIME_ZONE } from '@oe/core';
 import { IntlErrorCode, NextIntlClientProvider } from 'next-intl';
 
 import type { AbstractIntlMessages } from 'next-intl';
@@ -12,7 +12,7 @@ type Props = {
   children: ReactNode;
 };
 
-export default function IntlProvider({ messages, locale, children }: Props) {
+export function IntlProvider({ messages, locale, children }: Props) {
   return (
     <NextIntlClientProvider
       messages={messages}

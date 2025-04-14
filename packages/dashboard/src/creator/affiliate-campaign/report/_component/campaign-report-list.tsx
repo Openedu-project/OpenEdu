@@ -1,18 +1,18 @@
 'use client';
-import { useGetMe } from '@oe/api/hooks/useMe';
-import type { IReportAffiliateCampaign } from '@oe/api/types/report-affiliate-campaign';
-import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
+import { useGetMe } from '@oe/api';
+import type { IReportAffiliateCampaign } from '@oe/api';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
 
-import { Button } from '@oe/ui/shadcn/button';
+import { Button } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { formatNumber } from '@oe/core/utils/utils';
-import { cn } from '@oe/ui/utils/cn';
-import CampaignReportDetailModal from './campaign-report-detail';
+import { API_ENDPOINT } from '@oe/api';
+import { formatNumber } from '@oe/core';
+import { cn } from '@oe/ui';
+import { CampaignReportDetailModal } from './campaign-report-detail';
 
-export default function ReportAffiliateCampaignList() {
+export function ReportAffiliateCampaignList() {
   const t = useTranslations('affiliateCampaignReport');
   const tableRef = useRef<TableRef<IReportAffiliateCampaign>>(null);
   const [selectedItem, setSelectedItem] = useState<IReportAffiliateCampaign | null>(null);

@@ -1,14 +1,14 @@
 import type { CheckboxGridOption } from '#components/checkbox-grid';
-import FormDescriptionConfig from '../../form-config/form-description-config';
-import FormDisabledConfig from '../../form-config/form-disabled-config';
+import { FormDescriptionConfig } from '../../form-config/form-description-config';
+import { FormDisabledConfig } from '../../form-config/form-disabled-config';
 // import {
 //   FormGridColumnConfig,
 //   FormGridRowConfig,
 // } from "../../form-config/form-grid-config";
 import { FormLabelConfig } from '../../form-config/form-label-config';
-import FormPlaceholderConfig from '../../form-config/form-placeholder-config';
-import FormRequiredConfig from '../../form-config/form-required-config';
-import FormTooltipConfig from '../../form-config/form-tooltip-config';
+import { FormPlaceholderConfig } from '../../form-config/form-placeholder-config';
+import { FormRequiredConfig } from '../../form-config/form-required-config';
+import { FormTooltipConfig } from '../../form-config/form-tooltip-config';
 import type { FormFieldType } from '../../types';
 
 export function CheckboxGridFieldConfig({

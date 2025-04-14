@@ -1,8 +1,7 @@
-import type { ICertificateDetail, ICertificateUser } from '@oe/api/types/certificate';
-import ArrowSwapHorizontal from '@oe/assets/icons/arrow-swap-horizontal';
-import Eye from '@oe/assets/icons/eye';
-import { Button, type ButtonProps } from '@oe/ui/shadcn/button';
-import { toast } from '@oe/ui/shadcn/sonner';
+import type { ICertificateDetail, ICertificateUser } from '@oe/api';
+import { ArrowSwapHorizontal, Eye } from '@oe/assets';
+import { toast } from '@oe/ui';
+import { Button, type ButtonProps } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import type { MouseEvent } from 'react';
 
@@ -11,7 +10,7 @@ interface IMintCertButtonProps extends ButtonProps {
   onClickMintCert?: () => void;
 }
 
-export default function MintCertButton({ certificate, onClickMintCert, disabled, loading }: IMintCertButtonProps) {
+export function MintCertButton({ certificate, onClickMintCert, disabled, loading }: IMintCertButtonProps) {
   const t = useTranslations('myLearningSpace.myCertificates');
 
   const handleMintCert = (e: MouseEvent<HTMLButtonElement>) => {

@@ -1,13 +1,13 @@
-import { cn } from '@oe/ui/utils/cn';
+import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import type { SectionComponent } from '../../../_types/theme-page';
 
-import { Link } from '@oe/ui/common/navigation';
-import { Button } from '@oe/ui/shadcn/button';
+import { Button } from '@oe/ui';
+import { Link } from '@oe/ui';
 
-import { Image } from '@oe/ui/components/image';
+import { Image } from '@oe/ui';
 
-import type { FileType } from '@oe/ui/components/uploader';
+import type { FileType } from '@oe/ui';
 import { SectionHeader, type SectionHeaderProps } from '../_components/section-header';
 
 export interface ScholarHomepageProjectsProps extends SectionHeaderProps {
@@ -60,4 +60,4 @@ const ScholarHomepageProjects: SectionComponent<'homepage', 'scholarProjects'> =
   );
 };
 
-export default ScholarHomepageProjects;
+export { ScholarHomepageProjects };

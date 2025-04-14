@@ -1,4 +1,4 @@
-import OrgBlogCreation from '@oe/dashboard/blog-admin/creation/page';
+import { OrgBlogCreation } from "@oe/dashboard";
 
 export default function CreationPage() {
   return <OrgBlogCreation action="create" />;

@@ -1,4 +1,4 @@
-import { isValidUrl, validateMultipleUrls } from '@oe/core/utils/url';
+import { isValidUrl, validateMultipleUrls } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import type React from 'react';
 import { Input } from '#shadcn/input';

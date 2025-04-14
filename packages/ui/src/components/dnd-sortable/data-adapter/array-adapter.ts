@@ -1,5 +1,6 @@
+'use client';
 import { arrayMove } from '@dnd-kit/sortable';
-import { uniqueID } from '@oe/core/utils/unique';
+import { uniqueID } from '@oe/core';
 import type { IDndSortableItem, IHandleDragEndProps } from '../types';
 import { DataAdapter } from './base-adapter';
 

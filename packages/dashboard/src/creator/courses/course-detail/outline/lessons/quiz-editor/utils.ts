@@ -7,8 +7,8 @@ import type {
   QuizPassCriteriaType,
   QuizQuestionType,
   TimeLimitType,
-} from '@oe/api/types/course/quiz';
-import { uniqueID } from '@oe/core/utils/unique';
+} from '@oe/api';
+import { uniqueID } from '@oe/core';
 
 export const QUESTION_TYPES: { value: QuizQuestionType; label: string; id: string }[] = [
   { value: 'single_choice', label: 'types.singleChoice', id: 'single_choice' },

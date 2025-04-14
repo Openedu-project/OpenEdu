@@ -1,3 +1,4 @@
+'use client';
 import type { DraggableAttributes, DraggableSyntheticListeners } from '@dnd-kit/core';
 import { GripVertical } from 'lucide-react';
 import { Button, type ButtonProps } from '#shadcn/button';
@@ -9,7 +10,10 @@ const DndSortableDragButtonInternal = ({
   attributes,
   listeners,
   ...props
-}: ButtonProps & { attributes?: Partial<DraggableAttributes>; listeners?: Partial<DraggableSyntheticListeners> }) => {
+}: ButtonProps & {
+  attributes?: Partial<DraggableAttributes>;
+  listeners?: Partial<DraggableSyntheticListeners>;
+}) => {
   return (
     <Button
       variant="ghost"

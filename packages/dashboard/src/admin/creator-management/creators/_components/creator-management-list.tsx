@@ -1,26 +1,26 @@
 'use client';
 
-import { useCreateCreator, useDeleteCreator, useInviteCreators } from '@oe/api/hooks/useCreator';
-import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
-import { Button } from '@oe/ui/shadcn/button';
+import { useCreateCreator, useDeleteCreator, useInviteCreators } from '@oe/api';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
+import { Button } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
-import { useGetUserInvitationsList } from '@oe/api/hooks/useUser';
-import type { ICreator, ICreatorPayload, IInviteCreatorPayload } from '@oe/api/types/creators';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { formatDate } from '@oe/core/utils/datetime';
-import type { FilterOption } from '@oe/ui/components/filter-search';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { API_ENDPOINT } from '@oe/api';
+import type { HTTPErrorMetadata } from '@oe/api';
+import type { ICreator, ICreatorPayload, IInviteCreatorPayload } from '@oe/api';
+import { useGetUserInvitationsList } from '@oe/api';
+import { formatDate } from '@oe/core';
+import { toast } from '@oe/ui';
+import type { FilterOption } from '@oe/ui';
+import { Badge } from '@oe/ui';
 import { Plus, Trash2, UserRoundPlus } from 'lucide-react';
-import ConfirmDeleteCreatorModal from './confirm-detele-modal';
+import { ConfirmDeleteCreatorModal } from './confirm-detele-modal';
 import { USER_ROLE_EVENT } from './contants';
-import CreateCreatorModal from './create-creator-modal';
-import InviteCreatorModal from './invite-creator-modal';
+import { CreateCreatorModal } from './create-creator-modal';
+import { InviteCreatorModal } from './invite-creator-modal';
 
-export default function CreatorsManagementList() {
+export function CreatorsManagementList() {
   const t = useTranslations('creatorManagement');
   const tError = useTranslations('errors');
 

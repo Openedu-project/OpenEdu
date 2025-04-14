@@ -1,4 +1,4 @@
-import { cn } from '@oe/ui/utils/cn';
+import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import type { SectionComponent } from '../../_types/theme-page';
 
@@ -18,4 +18,4 @@ const AcademiaHomepageFeatures: SectionComponent<'homepage', 'features'> = ({ cl
   );
 };
 
-export default AcademiaHomepageFeatures;
+export { AcademiaHomepageFeatures };

@@ -1,4 +1,4 @@
-import AdminLayoutNoSidebar from "@oe/dashboard/admin/layout-no-sidebar";
+import { AdminLayoutNoSidebar } from "@oe/dashboard";
 import type { ReactNode } from "react";
 
 export default function Layout({ children }: { children: ReactNode }) {

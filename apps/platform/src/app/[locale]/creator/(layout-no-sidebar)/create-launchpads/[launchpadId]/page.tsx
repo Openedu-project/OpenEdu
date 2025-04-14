@@ -1,4 +1,4 @@
-import CreateLaunchpadLayout from '@oe/dashboard/creator/create-launchpad/create-launchpad';
+import { CreateLaunchpadLayout } from "@oe/dashboard";
 
 export default function CreateLaunchpadPage() {
   return <CreateLaunchpadLayout />;

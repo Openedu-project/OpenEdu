@@ -1,17 +1,16 @@
 'use client';
 
-import { type IEditProfileFormSchemaType, editProfileFormSchema } from '@oe/api/schemas/profileSchema';
-import type { IMyProfilePayload, IUserProfile, TProfilePlatform } from '@oe/api/types/user-profile';
-import SecurityUser from '@oe/assets/icons/security-user';
-import User from '@oe/assets/icons/user';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
-import { Textarea } from '@oe/ui/shadcn/textarea';
+import type { IMyProfilePayload, IUserProfile, TProfilePlatform } from '@oe/api';
+import { type IEditProfileFormSchemaType, editProfileFormSchema } from '@oe/api';
+import { SecurityUser, User } from '@oe/assets';
 import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 import { FormWrapper } from '#components/form-wrapper';
 import { SocialIcon, type SocialType, getSocialType } from '#components/social-icon';
 import { Button } from '#shadcn/button';
+import { FormFieldWithLabel } from '#shadcn/form';
+import { Input } from '#shadcn/input';
+import { Textarea } from '#shadcn/textarea';
 
 interface IUserFormInfo {
   onSubmit: (value: IMyProfilePayload) => void;
@@ -30,7 +29,7 @@ const convertData = (urls: string[]): Record<TProfilePlatform, string | undefine
     {} as Record<SocialType, string | undefined>
   );
 
-export default function UserFormInfo({ onSubmit, data }: IUserFormInfo) {
+export function UserFormInfo({ onSubmit, data }: IUserFormInfo) {
   const t = useTranslations('userProfile.profileForm');
   const tProfileForm = useTranslations('userProfile.profileForm');
 

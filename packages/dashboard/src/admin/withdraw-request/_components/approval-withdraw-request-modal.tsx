@@ -1,39 +1,33 @@
-import { type IApproveWithdrawType, approveWithdrawSchema } from '@oe/api/schemas/withdrawSchema';
-import type { IApproval, IApprovalPayload } from '@oe/api/types/approvals';
-import type { IBankAccount, IBankAccountSettingValue } from '@oe/api/types/bank-account';
-import type { IWalletItem } from '@oe/api/types/wallet';
-import { InputCurrency } from '@oe/ui/components/input-currency';
-import { Modal } from '@oe/ui/components/modal';
-import { Uploader } from '@oe/ui/components/uploader';
-import { Button } from '@oe/ui/shadcn/button';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
-import { Textarea } from '@oe/ui/shadcn/textarea';
+import type { IApproval, IApprovalPayload } from '@oe/api';
+import { type IApproveWithdrawType, approveWithdrawSchema } from '@oe/api';
+import type { IBankAccountSettingValue, IBankWithdrawalAccount } from '@oe/api';
+import type { IWalletItem } from '@oe/api';
+import { Uploader } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { InputCurrency } from '@oe/ui';
+import { Modal } from '@oe/ui';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';
+import { Textarea } from '@oe/ui';
 import { Camera } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useCallback } from 'react';
 
 interface IFormAffiliateCampaignCourseModal {
-  selectedItem: IApproval<IWalletItem, IBankAccountSettingValue<IBankAccount>> | null;
+  selectedItem: IApproval<IWalletItem, IBankAccountSettingValue<IBankWithdrawalAccount>> | null;
   onSubmit: (value: IApprovalPayload) => void;
   onClose: () => void;
 }
 
-export default function ApprovalWithdrawModal({ selectedItem, onSubmit, onClose }: IFormAffiliateCampaignCourseModal) {
+export function ApprovalWithdrawModal({ selectedItem, onSubmit, onClose }: IFormAffiliateCampaignCourseModal) {
   const t = useTranslations('approvalWithdrawModal');
 
-  // TODO handle image upload
-
-  const handleFormSubmit = useCallback(async () => {
-    (values: IApproveWithdrawType) => {
-      const newValues = {
-        note: values.note,
-        files: values.files,
-        value: values.value?.toString(),
-      } as IApprovalPayload;
-
-      onSubmit(newValues);
-    };
-  }, [onSubmit]);
+  const handleFormSubmit = (values: IApproveWithdrawType) => {
+    const newValues = {
+      note: values.note,
+      files: values.files,
+      value: values.value?.toString(),
+    } as IApprovalPayload;
+    onSubmit(newValues);
+  };
 
   return (
     <Modal

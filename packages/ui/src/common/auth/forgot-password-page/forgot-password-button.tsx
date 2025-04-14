@@ -1,7 +1,7 @@
-import type { forgotPasswordSchema } from '@oe/api/schemas/authSchema';
-import { authEvents } from '@oe/api/utils/auth';
-import type { HTTPError } from '@oe/api/utils/http-error';
-import type { z } from '@oe/api/utils/zod';
+import type { HTTPError } from '@oe/api';
+import type { z } from '@oe/api';
+import type { forgotPasswordSchema } from '@oe/api';
+import { authEvents } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { type UseFormReturn, useWatch } from 'react-hook-form';
 import { Button } from '#shadcn/button';

@@ -1,8 +1,8 @@
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import { DashboardMainPageLayout } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import UserAffiliateReportDetailList from './_component/campaign-report-detail';
+import { UserAffiliateReportDetailList } from './_component/campaign-report-detail';
 
-export default function UserAffiliateCampaignsReportDetail({
+export function UserAffiliateCampaignsReportDetail({
   campaignName,
   courseName,
 }: {

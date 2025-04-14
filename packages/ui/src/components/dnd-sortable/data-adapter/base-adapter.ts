@@ -1,8 +1,9 @@
+'use client';
 import { closestCenter } from '@dnd-kit/core';
 
 import type { CollisionDetection, KeyboardCoordinateGetter, UniqueIdentifier } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
-import { uniqueID } from '@oe/core/utils/unique';
+import { uniqueID } from '@oe/core';
 import type {
   ICollisionDetectionStrategyProps,
   IDndSortableChildItem,

@@ -1,8 +1,8 @@
-import { CourseComingSoon } from '@oe/ui/components/course-coming-soon';
+import { CourseComingSoon } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import SectionCard from './section-card';
+import { SectionCard } from './section-card';
 
-export default function MyLearningHistory() {
+export function MyLearningHistory() {
   const tLearnerDashboard = useTranslations('myLearningSpace.dashboard');
 
   return (

@@ -1,4 +1,4 @@
-import AICreationPage from '@oe/dashboard/creator/courses/ai-course/page';
+import { AICreationPage } from "@oe/dashboard";
 export default function AICreation() {
   return <AICreationPage />;
 }

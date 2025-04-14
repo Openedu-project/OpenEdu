@@ -1,3 +1,3 @@
-export default function FormTemplatesPage() {
+export function FormTemplatesPage() {
   return <div>FormTemplatesPage</div>;
 }

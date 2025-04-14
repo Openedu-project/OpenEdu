@@ -1,6 +1,6 @@
 'use client';
-import type { IAdminLaunchpadDetailRes } from '@oe/api/types/admin-launchpad';
-import { formatNumber } from '@oe/core/utils/utils';
+import type { IAdminLaunchpadDetailRes } from '@oe/api';
+import { formatNumber } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { Cell, Pie, PieChart } from 'recharts';
@@ -134,4 +134,4 @@ const FundingStats = ({ data }: FundingStatsProps) => {
   );
 };
 
-export default FundingStats;
+export { FundingStats };

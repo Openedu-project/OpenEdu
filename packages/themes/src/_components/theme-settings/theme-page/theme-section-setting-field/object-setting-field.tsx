@@ -1,7 +1,7 @@
-import type { ThemeFieldConfig, ThemeFieldValue } from '@oe/themes/types';
+import type { ThemeFieldConfig, ThemeFieldValue } from '#types';
 
-import { Card } from '@oe/ui/shadcn/card';
-import { Label } from '@oe/ui/shadcn/label';
+import { Card } from '@oe/ui';
+import { Label } from '@oe/ui';
 
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import type React from 'react';

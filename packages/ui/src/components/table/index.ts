@@ -5,7 +5,7 @@ import { ExportXLSXButton } from './components/export-xlsx-button';
 import type { ColumnExportConfig } from './components/export-xlsx-button';
 import { ImportXLSXButton } from './components/import-xlsx-button';
 import type { ColumnImportConfig } from './components/import-xlsx-button';
-import Table from './components/table';
+import { Table } from './components/table';
 import { TableEditableCell } from './components/table-editable-cell';
 import { TableProvider, useTable } from './components/table-provider';
 import { TemplateXLSXButton } from './components/template-xlsx-button';

@@ -1,24 +1,24 @@
 'use client';
-import { useApprove, useReject } from '@oe/api/hooks/useApprovals';
-import type { IApproval, IApprovalPayload, IRejectPayload } from '@oe/api/types/approvals';
-import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
-import { Badge } from '@oe/ui/shadcn/badge';
+import { useApprove, useReject } from '@oe/api';
+import type { IApproval, IApprovalPayload, IRejectPayload } from '@oe/api';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
+import { Badge } from '@oe/ui';
 
-import type { ICourse } from '@oe/api/types/course/course';
-import type { ICourseOrganizationRequestProps } from '@oe/api/types/course/org-request';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { formatDate } from '@oe/core/utils/datetime';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import { Link } from '@oe/ui/common/navigation';
-import { BadgeCourseVerion } from '@oe/ui/components/badge-course-version';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { API_ENDPOINT } from '@oe/api';
+import type { ICourse } from '@oe/api';
+import { createAPIUrl } from '@oe/api';
+import type { HTTPErrorMetadata } from '@oe/api';
+import type { ICourseOrganizationRequestProps } from '@oe/api';
+import { PLATFORM_ROUTES } from '@oe/core';
+import { formatDate } from '@oe/core';
+import { toast } from '@oe/ui';
+import { Link } from '@oe/ui';
+import { BadgeCourseVerion } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { AdminFeedbackCourseModal } from './admin-feedback-modal';
-import ApproveCourseReviewingModal from './approve-course-reviewing-modal';
-import RejectCourseReviewingModal from './reject-course-reviewing-modal';
+import { ApproveCourseReviewingModal } from './approve-course-reviewing-modal';
+import { RejectCourseReviewingModal } from './reject-course-reviewing-modal';
 import { CourseRequestItemActions } from './request-table-item-actions';
 
 type BadgeVariant = 'success' | 'destructive' | 'secondary' | 'default' | 'outline' | null | undefined;
@@ -40,7 +40,7 @@ interface ISelectItem extends IApprovalCourseRequest {
   action: 'reject' | 'approve';
 }
 
-export default function CourseRequests() {
+export function CourseRequests() {
   const t = useTranslations('coursesManagement');
   const tError = useTranslations('errors');
 

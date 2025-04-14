@@ -1,4 +1,4 @@
-import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
+import type { IQuizSubmissionResponse } from '@oe/api';
 import { useTranslations } from 'next-intl';
 
 const DetailScore = ({
@@ -51,4 +51,4 @@ const QuizResultGrid = ({ data }: { data: IQuizSubmissionResponse }) => {
   );
 };
 
-export default QuizResultGrid;
+export { QuizResultGrid };

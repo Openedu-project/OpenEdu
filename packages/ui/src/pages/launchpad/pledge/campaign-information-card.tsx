@@ -1,9 +1,10 @@
-import type { ILaunchpad } from '@oe/api/types/launchpad';
+import type { ILaunchpad } from '@oe/api';
 import DefaultImg from '@oe/assets/images/defaultimage.png';
+import { formatCurrency } from '@oe/core';
 import { getTranslations } from 'next-intl/server';
 import { CircularProgress } from '#components/circular-progress';
 import { Image } from '#components/image';
-import { formatCurrency } from '#utils/format-currency';
+// import { formatCurrency } from '#utils/format-currency';
 import { calculateProgress, getTimeStatus } from '#utils/launchpad-utils';
 
 const CampaignInformationCard = async ({
@@ -40,7 +41,9 @@ const CampaignInformationCard = async ({
           <div className="space-y-2">
             <p className="text-base">
               <span className="font-semibold text-2xl">
-                {formatCurrency(Number(campaign?.total_amount))} {campaign?.funding_goal.currency}
+                {formatCurrency(Number(campaign?.total_amount), {
+                  currency: campaign?.funding_goal.currency,
+                })}
               </span>
               {t('common.funded')}
             </p>
@@ -59,4 +62,4 @@ const CampaignInformationCard = async ({
   );
 };
 
-export default CampaignInformationCard;
+export { CampaignInformationCard };

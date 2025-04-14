@@ -1,7 +1,7 @@
 'use server';
 
-import { setCookie } from '@oe/core/utils/cookie';
-import { AUTH_ROUTES } from '@oe/core/utils/routes';
+import { AUTH_ROUTES } from '@oe/core';
+import { setCookie } from '@oe/core';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 

@@ -1,8 +1,8 @@
 'use client';
 
-import type { ICategoryTree } from '@oe/api/types/categories';
-import { BLOG_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
+import type { ICategoryTree } from '@oe/api';
+import { BLOG_ROUTES } from '@oe/core';
+import { buildUrl } from '@oe/core';
 import { Menu } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Link } from '#common/navigation';

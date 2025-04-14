@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { z } from '@oe/api/utils/zod';
+import type { z } from '@oe/api';
 import { useForm } from 'react-hook-form';
 import { useFormEditorStore } from './store';
 import { generateDefaultValues, generateZodSchema } from './utils';

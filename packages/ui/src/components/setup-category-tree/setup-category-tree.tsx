@@ -1,12 +1,12 @@
 'use client';
 
-import { useCategoriesTree } from '@oe/api/hooks/useCategories';
-import { bulkDeleteCategoryService, createUpdateCategoriesTreeService } from '@oe/api/services/categories';
-import type { ICategoryBulkUpsert, ICategoryTree } from '@oe/api/types/categories';
-import { Tree } from '@oe/ui/components/tree';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { useCategoriesTree } from '@oe/api';
+import type { ICategoryBulkUpsert, ICategoryTree } from '@oe/api';
+import { bulkDeleteCategoryService, createUpdateCategoriesTreeService } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import { Tree } from '#components/tree';
+import { toast } from '#shadcn/sonner';
 
 export function SetupCategoryTree({ type }: { type: 'blog' | 'course' }) {
   const tCategories = useTranslations('setupCategoryTree');

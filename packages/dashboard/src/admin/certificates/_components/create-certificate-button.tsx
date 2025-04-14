@@ -1,15 +1,15 @@
 'use client';
-import { createCertHtmlTemplateService } from '@oe/api/services/certificate';
-import { z } from '@oe/api/utils/zod';
-import { ADMIN_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
-import { useRouter } from '@oe/ui/common/navigation';
-import { Modal } from '@oe/ui/components/modal';
-import { useTable } from '@oe/ui/components/table';
-import { Button } from '@oe/ui/shadcn/button';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { createCertHtmlTemplateService } from '@oe/api';
+import { z } from '@oe/api';
+import { ADMIN_ROUTES } from '@oe/core';
+import { buildUrl } from '@oe/core';
+import { toast } from '@oe/ui';
+import { useTable } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { useRouter } from '@oe/ui';
+import { Modal } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
+import { Input } from '@oe/ui';
 import { PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -17,7 +17,7 @@ const createCertificateSchema = z.object({
   name: z.string().min(1, { message: 'certificate.validation.name' }),
 });
 
-export default function CreateCertificateButton() {
+export function CreateCertificateButton() {
   const tCertificate = useTranslations('certificate');
   const router = useRouter();
   const { mutateAndClearCache } = useTable();

@@ -1,19 +1,19 @@
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import { ADMIN_ROUTES } from '@oe/core/utils/routes';
-import type { ThemeName } from '@oe/themes/types';
-import { Link } from '@oe/ui/common/navigation';
-import { Image } from '@oe/ui/components/image';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { Button } from '@oe/ui/shadcn/button';
-import { Card, CardContent, CardDescription, CardFooter, CardTitle } from '@oe/ui/shadcn/card';
-import { Checkbox } from '@oe/ui/shadcn/checkbox';
-import { cn } from '@oe/ui/utils/cn';
+import { createAPIUrl } from '@oe/api';
+import { ADMIN_ROUTES } from '@oe/core';
+import { Badge } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { Link } from '@oe/ui';
+import { Image } from '@oe/ui';
+import { Card, CardContent, CardDescription, CardFooter, CardTitle } from '@oe/ui';
+import { Checkbox } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import type { ThemeName } from '#types';
 import { themeInfoThumbnail } from '../../_config/theme-info';
 import type { ThemeInfo } from '../../_types/theme-info';
-import DeleteThemeModal from './delete-theme-modal';
+import { DeleteThemeModal } from './delete-theme-modal';
 
 interface ThemeCardProps {
   name: ThemeName;

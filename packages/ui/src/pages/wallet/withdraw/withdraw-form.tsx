@@ -1,6 +1,6 @@
 'use client';
 
-import { WITHDRAW_TYPE } from '@oe/api/utils/wallet';
+import { WITHDRAW_TYPE } from '@oe/api';
 import { useWalletStore } from '../_store/useWalletStore';
 import { WithdrawFiatForm } from './withdraw-fiat-form';
 import { WithdrawTokenForm } from './withdraw-token-form';

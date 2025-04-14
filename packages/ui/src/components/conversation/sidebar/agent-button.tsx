@@ -1,4 +1,4 @@
-import MagicPen from '@oe/assets/icons/magic-pen';
+import { MagicPen } from '@oe/assets';
 import { useTranslations } from 'next-intl';
 import { Link } from '#common/navigation';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '#shadcn/hover-card';

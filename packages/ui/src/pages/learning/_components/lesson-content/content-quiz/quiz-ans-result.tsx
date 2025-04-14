@@ -1,7 +1,7 @@
-import type { IQuizSubmissionAnswer } from '@oe/api/types/quiz';
+import type { IQuizSubmissionAnswer } from '@oe/api';
 import background from '@oe/assets/images/learning-page/quiz-ans.png';
-import DetailAnswerResult from './detail-answer-result';
-import QuizLayout from './quiz-layout';
+import { DetailAnswerResult } from './detail-answer-result';
+import { QuizLayout } from './quiz-layout';
 
 interface QuizCorrectAnswerProps {
   answer: IQuizSubmissionAnswer[];
@@ -16,4 +16,4 @@ const QuizAnsResult = ({ answer, onFinishQuiz }: QuizCorrectAnswerProps) => {
   );
 };
 
-export default QuizAnsResult;
+export { QuizAnsResult };

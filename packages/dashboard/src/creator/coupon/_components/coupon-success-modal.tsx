@@ -1,8 +1,8 @@
 import whaleSuccess from '@oe/assets/images/whale-success.png';
-import { formatDateTime } from '@oe/core/utils/datetime';
-import { Image } from '@oe/ui/components/image';
-import { Modal } from '@oe/ui/components/modal';
-import { Button } from '@oe/ui/shadcn/button';
+import { formatDateTime } from '@oe/core';
+import { Button } from '@oe/ui';
+import { Image } from '@oe/ui';
+import { Modal } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
 interface IActionsFormModal {
@@ -12,7 +12,7 @@ interface IActionsFormModal {
   onClose: () => void;
 }
 
-export default function CouponSuccessModal({ open = true, onClose, startDate, endDate }: IActionsFormModal) {
+export function CouponSuccessModal({ open = true, onClose, startDate, endDate }: IActionsFormModal) {
   const t = useTranslations('coupon.successModal');
 
   return (

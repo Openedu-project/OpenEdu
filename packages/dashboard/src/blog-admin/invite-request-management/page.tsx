@@ -1,11 +1,15 @@
-import { BLOG_ADMIN_ROUTES } from '@oe/core/utils/routes';
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import { BLOG_ADMIN_ROUTES } from '@oe/core';
+import { DashboardMainPageLayout } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { BlogNavigateLink } from '../_components/blog-navigate-link';
 import { InviteRequestTable } from '../_components/invite-request-table';
 import type { IBlogUserRole } from '../_components/user-table';
 
-export default function InviteRequestManagementPage({ userRole }: { userRole: IBlogUserRole }) {
+export function InviteRequestManagementPage({
+  userRole,
+}: {
+  userRole: IBlogUserRole;
+}) {
   const tDashboard = useTranslations('dashboard.blog');
   const tBlogs = useTranslations('blogManagement.inviteRequest');
   return (

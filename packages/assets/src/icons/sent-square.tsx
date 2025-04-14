@@ -1,11 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function SentSquare({
-  width = 24,
-  height = 24,
-  className = '',
-  color = 'var(--muted-foreground)',
-}: ISvgProps) {
+export function SentSquare({ width = 24, height = 24, className = '', color = 'var(--muted-foreground)' }: ISvgProps) {
   return (
     <svg
       width={width}

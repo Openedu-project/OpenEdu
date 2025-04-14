@@ -1,4 +1,4 @@
-import CourseDetailHistoryPage from "@oe/dashboard/creator/courses/course-detail/history/page";
+import { CourseDetailHistoryPage } from "@oe/dashboard";
 
 export default function CourseHistoryPage() {
   return <CourseDetailHistoryPage />;

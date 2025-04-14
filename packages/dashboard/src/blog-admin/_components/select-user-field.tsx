@@ -1,8 +1,8 @@
-import { useGetListUser } from '@oe/api/hooks/useUser';
-import { AutocompeteMultiple } from '@oe/ui/components/autocomplete';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
+import { useGetListUser } from '@oe/api';
+import { AutocompeteMultiple } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-// import type { FormValues } from 'node_modules/@oe/ui/src/components/dynamic-form/types';
+// import type { FormValues } from 'node_modules/@oe/ui';
 import { useMemo } from 'react';
 import type { KeyboardEvent } from 'react';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';

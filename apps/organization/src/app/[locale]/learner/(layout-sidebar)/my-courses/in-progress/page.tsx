@@ -1,4 +1,4 @@
-import InProgressCoursePage from '@oe/dashboard/learner/my-courses/in-progresses/page';
+import { InProgressCoursePage } from "@oe/dashboard";
 
 export default function MyCoursesPage() {
   return <InProgressCoursePage />;

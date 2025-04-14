@@ -1,25 +1,25 @@
 'use client';
-import { publishBlog, unpublishBlog } from '@oe/api/services/blog';
-import type { IBlog } from '@oe/api/types/blog';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { formatDateHourMinute } from '@oe/core/utils/datetime';
-import { BLOG_ADMIN_ROUTES, BLOG_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
-import { Link, usePathname } from '@oe/ui/common/navigation';
-import type { FilterOption } from '@oe/ui/components/filter-search';
-import { PublishButton } from '@oe/ui/components/publish-button';
-import { StatusBadge, type TStatus } from '@oe/ui/components/status-badge';
-import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { Separator } from '@oe/ui/shadcn/separator';
-import { toast } from '@oe/ui/shadcn/sonner';
-import TooltipLink, { Tooltip } from '@oe/ui/shadcn/tooltip';
-import { cn } from '@oe/ui/utils/cn';
+import { API_ENDPOINT } from '@oe/api';
+import type { IBlog } from '@oe/api';
+import { publishBlog, unpublishBlog } from '@oe/api';
+import type { HTTPErrorMetadata } from '@oe/api';
+import { formatDateHourMinute } from '@oe/core';
+import { BLOG_ADMIN_ROUTES, BLOG_ROUTES } from '@oe/core';
+import { buildUrl } from '@oe/core';
+import { toast } from '@oe/ui';
+import type { FilterOption } from '@oe/ui';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
+import { Badge } from '@oe/ui';
+import { Link, usePathname } from '@oe/ui';
+import { PublishButton } from '@oe/ui';
+import { StatusBadge, type TStatus } from '@oe/ui';
+import { Separator } from '@oe/ui';
+import { Tooltip, TooltipLink } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useMemo, useRef } from 'react';
 
-export default function BlogTable({ type }: { type: 'personal' | 'org' }) {
+export function BlogTable({ type }: { type: 'personal' | 'org' }) {
   const tBlogs = useTranslations('blogManagement');
   const tGeneral = useTranslations('general');
   const tPublish = useTranslations('publishButton');

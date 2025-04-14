@@ -1,6 +1,5 @@
-import ArrowLeft2 from '@oe/assets/icons/arrow-left-2';
-import ArrowRight2 from '@oe/assets/icons/arrow-right-2';
-import type { TFunction } from '@oe/i18n/types';
+import { ArrowLeft2, ArrowRight2 } from '@oe/assets';
+import type { TFunction } from '@oe/i18n';
 import type { ReactNode } from 'react';
 import { Button } from '#shadcn/button';
 import { cn } from '#utils/cn';

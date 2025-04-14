@@ -1,0 +1,18 @@
+{
+  "extends": "@oe/config/tsconfig/react-build.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "dist/types",
+    "types": ["@oe/types/global.d.ts", "next/image-types/global"],
+    "paths": {
+      "#actions/*": ["./src/actions/*"],
+      "#services/*": ["./src/services/*"],
+      "#types/*": ["./src/types/*"],
+      "#utils/*": ["./src/utils/*"],
+      "#schemas/*": ["./src/schemas/*"],
+      "#hooks/*": ["./src/hooks/*"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

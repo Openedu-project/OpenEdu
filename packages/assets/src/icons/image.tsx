@@ -1,4 +1,4 @@
-export default function ImageIcon({ width = 61, height = 60, className = '', color = '#3A3A3A' }) {
+export function ImageIcon({ width = 61, height = 60, className = '', color = '#3A3A3A' }) {
   return (
     <svg
       className={className}

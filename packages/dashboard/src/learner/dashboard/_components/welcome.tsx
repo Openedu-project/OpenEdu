@@ -1,9 +1,15 @@
-import { Image } from '@oe/ui/components/image';
+import { Image } from '@oe/ui';
 
 import BannerBg from '@oe/assets/images/learner-dashboard-banner.png';
-import { UserAvatar } from '@oe/ui/components/user-avatar';
+import { UserAvatar } from '@oe/ui';
 
-export default function WelcomeBanner({ username, avatar }: { username: string; avatar: string }) {
+export function WelcomeBanner({
+  username,
+  avatar,
+}: {
+  username: string;
+  avatar: string;
+}) {
   return (
     <div className="relative z-10 rounded-[12px] p-6">
       <div className="flex w-full items-center justify-between">

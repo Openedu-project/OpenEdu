@@ -1,12 +1,9 @@
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import Book from '@oe/assets/icons/book';
-import MedalStar from '@oe/assets/icons/medal-star';
-import MessageQuestion from '@oe/assets/icons/message-question';
-import { VideoSquare } from '@oe/assets/icons/video-square';
+import type { ICourseOutline } from '@oe/api';
+import { Book, MedalStar, MessageQuestion, VideoSquare } from '@oe/assets';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import { cn } from '#utils/cn';
-import CourseResources from './course-resources';
+import { CourseResources } from './course-resources';
 import { CourseSection } from './course-section';
 
 interface CourseFeature {
@@ -16,7 +13,7 @@ interface CourseFeature {
   content: ReactNode;
 }
 
-export default function CourseIncludes({
+export function CourseIncludes({
   className,
   courseOutline,
 }: {

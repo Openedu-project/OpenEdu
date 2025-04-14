@@ -1,6 +1,6 @@
 import { HTTPError, type HTTPErrorCode, HTTPErrorCodeMessages } from './http-error';
 
-import isNetworkError, { isHTTPError } from './error-handling';
+import { isHTTPError, isNetworkError } from './error-handling';
 
 interface RetryOptions {
   maxRetries: number;

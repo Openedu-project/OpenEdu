@@ -1,4 +1,4 @@
-export default function ArrowDownCircle({ width = 24, height = 24, className = '', color = 'white' }) {
+export function ArrowDownCircle({ width = 24, height = 24, className = '', color = 'white' }) {
   return (
     <svg
       className={className}

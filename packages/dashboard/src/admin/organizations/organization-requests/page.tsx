@@ -1,8 +1,8 @@
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import { DashboardMainPageLayout } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import OrganizationRequest from './_components/organization-requests';
+import { OrganizationRequest } from './_components/organization-requests';
 
-export default function OrganizationRequests() {
+export function OrganizationRequests() {
   const tDashboard = useTranslations('dashboard.organizations');
   const t = useTranslations('organizationRequests');
 

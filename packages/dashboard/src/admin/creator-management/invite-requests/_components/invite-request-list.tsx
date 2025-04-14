@@ -1,19 +1,19 @@
 'use client';
 
-import { useResendInvitationsUser } from '@oe/api/hooks/useUser';
-import type { IUserInvitationItem } from '@oe/api/types/user';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { USER_ROLE_EVENT } from '@oe/core/utils/constants';
-import { formatDate } from '@oe/core/utils/datetime';
-import { CountdownButton } from '@oe/ui/components/countdown-button';
-import type { FilterOption } from '@oe/ui/components/filter-search';
-import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { API_ENDPOINT } from '@oe/api';
+import type { HTTPErrorMetadata } from '@oe/api';
+import { useResendInvitationsUser } from '@oe/api';
+import type { IUserInvitationItem } from '@oe/api';
+import { formatDate } from '@oe/core';
+import { USER_ROLE_EVENT } from '@oe/core';
+import { toast } from '@oe/ui';
+import type { FilterOption } from '@oe/ui';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
+import { CountdownButton } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useRef } from 'react';
 
-export default function InviteRequestMngmList() {
+export function InviteRequestMngmList() {
   const t = useTranslations('creatorManagement.inviteRequestCreator');
   const tError = useTranslations('errors');
 

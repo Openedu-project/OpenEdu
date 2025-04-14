@@ -1,5 +1,5 @@
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import { ADMIN_ROUTES } from '@oe/core/utils/routes';
+import { createAPIUrl } from '@oe/api';
+import { ADMIN_ROUTES } from '@oe/core';
 
 import type {
   AllGroupSidebarKeys,

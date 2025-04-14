@@ -1,5 +1,5 @@
-import { Link } from '@oe/ui/common/navigation';
-import { cn } from '@oe/ui/utils/cn';
+import { Link } from '@oe/ui';
+import { cn } from '@oe/ui';
 
 export function BlogNavigateLink({
   active = false,

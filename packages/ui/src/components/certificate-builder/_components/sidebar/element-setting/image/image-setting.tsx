@@ -1,5 +1,5 @@
-import type { ICertificateElement, ICertificateImageElement } from '@oe/api/types/certificate';
-import type { IFileResponse } from '@oe/api/types/file';
+import type { IFileResponse } from '@oe/api';
+import type { ICertificateElement, ICertificateImageElement } from '@oe/api';
 import { Uploader } from '#components/uploader';
 import { ElementAlignmentSetting, SettingSection } from '../common';
 

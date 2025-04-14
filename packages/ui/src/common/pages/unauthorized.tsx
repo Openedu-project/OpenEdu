@@ -1,9 +1,9 @@
-import { OrgNotfoundImage } from '@oe/assets/icons/org-notfound';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { OrgNotfoundImage } from '@oe/assets';
+import { PLATFORM_ROUTES } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { ErrorException } from '#components/error-handler';
 
-export default function UnauthorizedPage() {
+export function UnauthorizedPage() {
   const tErrors = useTranslations('errors');
   const tGeneral = useTranslations('general');
 

@@ -1,11 +1,11 @@
-import type { TApprovalStatus } from '@oe/api/types/approvals';
-import type { IAICourseStatus } from '@oe/api/types/course/ai-course';
-import type { TCourseStatus } from '@oe/api/types/course/basic';
-import type { TFormStatus } from '@oe/api/types/form';
-import { Badge, type BadgeProps } from '@oe/ui/shadcn/badge';
+import type { TApprovalStatus } from '@oe/api';
+import type { TFormStatus } from '@oe/api';
+import type { IAICourseStatus } from '@oe/api';
+import type { TCourseStatus } from '@oe/api';
 import { Loader } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
+import { Badge, type BadgeProps } from '#shadcn/badge';
 import { Tooltip, TooltipProvider } from '#shadcn/tooltip';
 
 export type TStatus = TCourseStatus | IAICourseStatus | TApprovalStatus | 'preview' | TFormStatus;

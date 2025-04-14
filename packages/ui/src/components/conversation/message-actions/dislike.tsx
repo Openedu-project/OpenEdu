@@ -1,5 +1,4 @@
-import { DisLike } from '@oe/assets/icons/dislike';
-import { DisLikeOutline } from '@oe/assets/icons/dislike-outline';
+import { DisLike, DisLikeOutline } from '@oe/assets';
 import { Button } from '#shadcn/button';
 
 const DisLikeButton = ({
@@ -24,4 +23,4 @@ const DisLikeButton = ({
   </Button>
 );
 
-export default DisLikeButton;
+export { DisLikeButton };

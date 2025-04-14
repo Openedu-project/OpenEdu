@@ -1,6 +1,6 @@
 'use client';
-import { useGetBlogsPublish } from '@oe/api/hooks/useBlog';
-import type { IBlogsResponse, IPublishBlogType } from '@oe/api/types/blog';
+import type { IBlogsResponse, IPublishBlogType } from '@oe/api';
+import { useGetBlogsPublish } from '@oe/api';
 import { useEffect, useState } from 'react';
 import { PaginationCustom } from '#components/pagination-custom';
 import { BlogCard } from './blog-card';

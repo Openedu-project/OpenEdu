@@ -1,6 +1,6 @@
 'use client';
-import { useGetListConversation } from '@oe/api/hooks/useConversation';
-import MessageTime from '@oe/assets/icons/message-time';
+import { useGetListConversation } from '@oe/api';
+import { MessageTime } from '@oe/assets';
 import { Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
@@ -15,7 +15,7 @@ import { Input } from '#shadcn/input';
 import { cn } from '#utils/cn';
 import { HISTORY_DEFAULT_PARAMS } from '../constants';
 import { formatDate } from '../utils';
-import AIHistoryItem from './history-item';
+import { AIHistoryItem } from './history-item';
 
 interface SearchHistoryProps {
   className?: string;

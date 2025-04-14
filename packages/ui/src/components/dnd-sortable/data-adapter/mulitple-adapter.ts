@@ -1,3 +1,4 @@
+'use client';
 import {
   type CollisionDetection,
   type DroppableContainer,
@@ -11,7 +12,7 @@ import {
   rectIntersection,
 } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
-import { uniqueID } from '@oe/core/utils/unique';
+import { uniqueID } from '@oe/core';
 import type {
   ICollisionDetectionStrategyProps,
   IDndSortableItem,

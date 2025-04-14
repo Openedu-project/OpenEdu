@@ -1,10 +1,6 @@
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import PaymentPage from './_components/payment';
+import type { ICourseOutline } from '@oe/api';
+import { PaymentPage } from './_components/payment';
 
-export default function Payment({
-  courseData,
-}: {
-  courseData: ICourseOutline;
-}) {
+export function Payment({ courseData }: { courseData: ICourseOutline }) {
   return <PaymentPage courseData={courseData} />;
 }

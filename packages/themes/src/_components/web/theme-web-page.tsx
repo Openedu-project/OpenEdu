@@ -1,14 +1,14 @@
-import { THEMES_SERVER } from '@oe/themes';
-import type { SectionsByPage, ThemePageKey, ThemeSystem } from '@oe/themes/types';
-import { NotFoundPage } from '@oe/ui/common/pages';
+import { NotFoundPage } from '@oe/ui';
+import type { SectionsByPage, ThemePageKey, ThemeSystem } from '#types';
 import { getThemeComponent } from '../../_utils/function';
+import { THEMES_SERVER } from '../../index';
 
 interface ThemePageProps {
   pageKey: ThemePageKey;
   themeSystem: ThemeSystem;
 }
 
-export default function ThemeWebPage({ pageKey, themeSystem }: ThemePageProps) {
+export function ThemeWebPage({ pageKey, themeSystem }: ThemePageProps) {
   if (!themeSystem) {
     return <NotFoundPage />;
   }

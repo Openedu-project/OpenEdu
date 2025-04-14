@@ -57,16 +57,6 @@
       },
       "nursery": {
         "noCommonJs": "error",
-        "noRestrictedImports": {
-          "level": "error",
-          "options": {
-            "paths": {
-              "next/link": "Please use @oe/ui/components/link instead.",
-              "next/image": "Please use @oe/ui/components/image instead.",
-              "zod": "Please use @oe/api/utils/zod instead."
-            }
-          }
-        },
         "noDuplicateCustomProperties": "error",
         "noDuplicateElseIf": "error",
         "noEnum": "error",
@@ -82,8 +72,6 @@
         "useTrimStartEnd": "error"
       },
       "performance": {
-        "noBarrelFile": "error",
-        "noReExportAll": "error",
         "useTopLevelRegex": "error"
       },
       "style": {

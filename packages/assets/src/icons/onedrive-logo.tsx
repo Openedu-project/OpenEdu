@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function OneDriveLogo({ width = 16, height = 16 }: ISvgProps) {
+export function OneDriveLogo({ width = 16, height = 16 }: ISvgProps) {
   return (
     <svg
       width={width}

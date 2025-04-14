@@ -1,5 +1,5 @@
 import type { Style } from '@react-pdf/types';
-import type { ICourse } from './course/course';
+import type { ICourse } from './course';
 import type { IFileResponse } from './file';
 
 export interface Styles {

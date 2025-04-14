@@ -1,6 +1,6 @@
-import { DashboardHeaderCard } from '@oe/ui/common/layout';
+import { DashboardHeaderCard } from '@oe/ui';
 
-export default function GeneralSettingsPage() {
+export function GeneralSettingsPage() {
   return (
     <>
       <DashboardHeaderCard

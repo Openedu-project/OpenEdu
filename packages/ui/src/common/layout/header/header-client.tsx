@@ -2,7 +2,7 @@ import { type ReactNode, Suspense } from 'react';
 import { Skeleton } from '#shadcn/skeleton';
 import { cn } from '#utils/cn';
 import { AuthButtons } from '../auth-menu';
-import { type ISidebarItem, Sidebar } from '../sidebar';
+import { type ISidebarItem, LayoutSidebar } from '../sidebar';
 
 export function HeaderClient({
   sidebarItems,
@@ -26,7 +26,7 @@ export function HeaderClient({
     >
       <div className="flex h-14 w-full shrink-0 items-center border-border/40 bg-primary px-3 py-3 shadow md:px-6">
         {sidebarItems && (
-          <Sidebar
+          <LayoutSidebar
             items={sidebarItems}
             maxDepth={2}
             pathnamesNoSidebar={pathnamesNoSidebar}

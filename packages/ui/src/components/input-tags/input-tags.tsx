@@ -1,7 +1,7 @@
-import { Badge } from '@oe/ui/shadcn/badge';
-import { Button } from '@oe/ui/shadcn/button';
 import { X } from 'lucide-react';
 import type { KeyboardEvent } from 'react';
+import { Badge } from '#shadcn/badge';
+import { Button } from '#shadcn/button';
 import { cn } from '#utils/cn';
 
 interface InputTagsProps {

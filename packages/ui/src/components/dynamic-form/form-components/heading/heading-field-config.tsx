@@ -1,5 +1,5 @@
-import FormAlignConfig from '../../form-config/form-align-config';
-import FormHeadingTypeConfig from '../../form-config/form-heading-type-config';
+import { FormAlignConfig } from '../../form-config/form-align-config';
+import { FormHeadingTypeConfig } from '../../form-config/form-heading-type-config';
 import { FormLabelConfig } from '../../form-config/form-label-config';
 import type { FormFieldType } from '../../types';
 

@@ -1,4 +1,4 @@
-import { buildUrl } from '@oe/core/utils/url';
+import { buildUrl } from '@oe/core';
 import type { ICreateBaseCourse, ICreateYoutubeCourse } from '#schemas/courses/createCourseSchema';
 import type { IAddPartnerSchema } from '#schemas/courses/partners';
 import type { IAICourseRequest } from '#types/course/ai-course';
@@ -18,7 +18,6 @@ import type { ICoursePartner } from '#types/course/partners';
 import type { IBulkSegments, ILessonContent, ISegment, ISegmentParams } from '#types/course/segment';
 import type { HTTPPagination } from '#types/fetch';
 import type { IFilter } from '#types/filter';
-import type { IDataPagination } from '#types/pagination';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { type FetchOptions, createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 
@@ -440,7 +439,7 @@ export const getPartnersByEmailService = async (
   url: string | undefined,
   { queryParams, init }: { queryParams?: ICoursePartnersParams; init?: RequestInit }
 ) => {
-  const response = await fetchAPI<IDataPagination<ICoursePartner[]>>(
+  const response = await fetchAPI<HTTPPagination<ICoursePartner>>(
     url ?? buildUrl({ endpoint: API_ENDPOINT.USERS, params: undefined, queryParams }),
     init
   );

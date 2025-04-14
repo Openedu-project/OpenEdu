@@ -1,13 +1,13 @@
 'use client';
-import type { ThemeConfigKey, ThemeName } from '@oe/themes/types';
-import { Link, usePathname } from '@oe/ui/common/navigation';
-import { ToggleGroup, ToggleGroupItem } from '@oe/ui/shadcn/toggle-group';
+import { Link, usePathname } from '@oe/ui';
+import { ToggleGroup, ToggleGroupItem } from '@oe/ui';
 import { PanelTop } from 'lucide-react';
 import { ComponentIcon, PaletteIcon, Settings, Sparkles } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import type React from 'react';
+import type { ThemeConfigKey, ThemeName } from '#types';
 import { parseThemePath } from '../../_utils/function';
 
 interface MenuToggleGroupProps {

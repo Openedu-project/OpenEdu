@@ -1,4 +1,4 @@
-import type { NestedObject } from '@oe/core/utils/object';
+import type { NestedObject } from '@oe/core';
 import type { ComponentType } from 'react';
 import type {
   AllGroupSidebarKeys,

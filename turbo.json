@@ -1,5 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local"],
   "tasks": {
     "//#lint": {},
     "//#lint:fix": {
@@ -7,8 +8,58 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "inputs": ["src/**", "public/**", "package.json", "next.config.js", "tsconfig.json", ".env*"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**", ".open-next/**"],
+      "cache": true
+    },
+    "@oe/assets#build": {
+      "dependsOn": [],
+      "outputs": ["dist/**"],
+      "inputs": ["src/**", "package.json", "tsconfig.json"],
+      "cache": true
+    },
+    "@oe/i18n#build": {
+      "dependsOn": [],
+      "outputs": ["dist/**"],
+      "inputs": ["src/**", "package.json", "tsconfig.json"],
+      "cache": true
+    },
+    "@oe/core#build": {
+      "dependsOn": ["@oe/i18n#build"],
+      "outputs": ["dist/**"],
+      "inputs": ["src/**", "package.json", "tsconfig.json"],
+      "cache": true
+    },
+    "@oe/api#build": {
+      "dependsOn": ["@oe/core#build", "@oe/assets#build", "@oe/i18n#build"],
+      "outputs": ["dist/**"],
+      "inputs": ["src/**", "package.json", "tsconfig.json"],
+      "cache": true
+    },
+    "@oe/ui#build": {
+      "dependsOn": ["@oe/core#build", "@oe/assets#build", "@oe/api#build"],
+      "outputs": ["dist/**"],
+      "inputs": ["src/**", "package.json", "tsconfig.json"],
+      "cache": true
+    },
+    "@oe/dashboard#build": {
+      "dependsOn": ["@oe/ui#build", "@oe/api#build", "@oe/i18n#build"],
+      "outputs": ["dist/**"],
+      "inputs": ["src/**", "package.json", "tsconfig.json"],
+      "cache": true
+    },
+    "platform#build": {
+      "dependsOn": [
+        "@oe/dashboard#build",
+        "@oe/ui#build",
+        "@oe/api#build",
+        "@oe/core#build",
+        "@oe/i18n#build",
+        "@oe/assets#build"
+      ],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**", ".open-next/**"],
+      "inputs": ["src/**", "public/**", "package.json", "next.config.js", "tsconfig.json", ".env*"],
+      "cache": true
     },
     "dev": {
       "cache": false,
@@ -26,6 +77,9 @@
       "dependsOn": ["topo"]
     },
     "clean": {
+      "cache": false
+    },
+    "clean:build": {
       "cache": false
     }
   }

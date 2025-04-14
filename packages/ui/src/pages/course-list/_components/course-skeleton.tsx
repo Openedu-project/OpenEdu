@@ -1,4 +1,4 @@
-import { Card } from '@oe/ui/shadcn/card';
+import { Card } from '#shadcn/card';
 
 const CourseCardSkeleton = () => {
   return (

@@ -1,21 +1,21 @@
 'use client';
 
-import { deleteFormService } from '@oe/api/services/forms';
-import type { IFormResponse } from '@oe/api/types/form';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { formatDate } from '@oe/core/utils/datetime';
-import { CREATOR_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
-import { StatusBadge } from '@oe/ui/components/status-badge';
-import { type ColumnDef, Table, useTable } from '@oe/ui/components/table';
+import { API_ENDPOINT } from '@oe/api';
+import type { IFormResponse } from '@oe/api';
+import { deleteFormService } from '@oe/api';
+import { CREATOR_ROUTES } from '@oe/core';
+import { formatDate } from '@oe/core';
+import { buildUrl } from '@oe/core';
 import { Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 import { Link } from '#common/navigation';
 import { DeleteButton } from '#components/delete-button';
 import type { FilterOption } from '#components/filter-search';
+import { StatusBadge } from '#components/status-badge';
+import { type ColumnDef, Table, useTable } from '#components/table';
 
-export default function Forms() {
+export function Forms() {
   const t = useTranslations('dynamicForms');
   const { mutateAndClearCache } = useTable();
 

@@ -1,3 +1,4 @@
+'use client';
 import { Upload } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React, { useCallback, useRef, useState, useImperativeHandle } from 'react';

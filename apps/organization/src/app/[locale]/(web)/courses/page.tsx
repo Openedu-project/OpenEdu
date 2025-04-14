@@ -1,4 +1,4 @@
-import CoursesListPage from '@oe/ui/pages/course-list';
+import { CoursesListPage } from "@oe/ui";
 
 export default function CoursesPage({
   searchParams,

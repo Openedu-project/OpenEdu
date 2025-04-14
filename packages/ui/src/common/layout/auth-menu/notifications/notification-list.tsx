@@ -1,12 +1,12 @@
 'use client';
 
-import type { INotificationItem } from '@oe/api/types/notification';
-import { formatDate } from '@oe/core/utils/datetime';
+import type { INotificationItem } from '@oe/api';
+import { formatCurrency, formatDate } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import { Link } from '#common/navigation';
-import { formatCurrency } from '#components/input-currency';
+// import { formatCurrency } from '#components/input-currency';
 import { Button } from '#shadcn/button';
 import { cn } from '#utils/cn';
 import { NotificationSkeleton } from './notification-skeleton';
@@ -107,7 +107,7 @@ function NotificationRow({ notification, onMarkAsRead }: NotificationRowProps) {
             blog_name: notification?.props?.blog_title ?? '',
             display_name: notification?.props?.display_name ?? '',
             launchpad_name: notification?.props?.launchpad_name ?? '',
-            amount: formatCurrency(String(Number.parseFloat(notification?.props?.amount ?? '') ?? 0)) ?? '',
+            amount: formatCurrency(Number.parseFloat(notification?.props?.amount ?? '') ?? 0) ?? '',
             currency: notification?.props?.currency ?? '',
             collaborator: notification?.props?.course_roles?.join(', ') ?? '',
             course_ai_tool: t?.(notification?.props?.provider ?? 'ai_tool'),

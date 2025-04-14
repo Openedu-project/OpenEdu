@@ -1,4 +1,4 @@
-export default function Mobile({
+export function Mobile({
   className,
   color = '#6E6E6E',
   width = 24,

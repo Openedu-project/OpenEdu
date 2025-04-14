@@ -1,26 +1,23 @@
 'use client';
-import {
-  useDeleteCoursesFromAffiliateCampaign,
-  usePostCoursesToAffiliateCampaign,
-} from '@oe/api/hooks/useCampaignCourse';
-import type { IAffiliateCampaignCourse } from '@oe/api/types/campaign-course';
-import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
+import { useDeleteCoursesFromAffiliateCampaign, usePostCoursesToAffiliateCampaign } from '@oe/api';
+import type { IAffiliateCampaignCourse } from '@oe/api';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
 
-import { Button } from '@oe/ui/shadcn/button';
+import { Button } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { formatPrice } from '@oe/core/utils/utils';
-import { RoleButton } from '@oe/ui/components/role-button';
-import { toast } from '@oe/ui/shadcn/sonner';
-import DeleteAffiliateCampaignCourseModal from './campaign-course-detele-modal';
-import FormAffiliateCampaignCourseModal from './campaign-course-form-modal';
+import { API_ENDPOINT } from '@oe/api';
+import { createAPIUrl } from '@oe/api';
+import type { HTTPErrorMetadata } from '@oe/api';
+import { formatPrice } from '@oe/core';
+import { toast } from '@oe/ui';
+import { RoleButton } from '@oe/ui';
+import { DeleteAffiliateCampaignCourseModal } from './campaign-course-detele-modal';
+import { FormAffiliateCampaignCourseModal } from './campaign-course-form-modal';
 
-export default function AffiliateCampaignCoursesList() {
+export function AffiliateCampaignCoursesList() {
   const t = useTranslations('affiliateCampaignDetailAddCourse');
   const tError = useTranslations('errors');
 

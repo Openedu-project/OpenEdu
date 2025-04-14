@@ -1,6 +1,4 @@
-import Facebook from '@oe/assets/icons/social-icon/facebook';
-import Linkedin from '@oe/assets/icons/social-icon/linkedin';
-import Twitter from '@oe/assets/icons/social-icon/twitter';
+import { Facebook, Linkedin, Twitter } from '@oe/assets';
 import OpeneduLogo from '@oe/assets/images/logo-openedu-2.png';
 import { YoutubeIcon } from 'lucide-react';
 

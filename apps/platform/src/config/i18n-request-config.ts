@@ -1,5 +1,5 @@
-import { getAllTranslations } from '@oe/api/services/i18n';
-import type { LanguageCode } from '@oe/i18n/languages';
+import { getAllTranslations } from '@oe/api';
+import type { LanguageCode } from '@oe/i18n';
 import { getRequestConfig } from 'next-intl/server';
 
 export default getRequestConfig(async ({ requestLocale }) => {

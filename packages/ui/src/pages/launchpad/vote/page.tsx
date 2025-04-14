@@ -1,10 +1,10 @@
-import { getLaunchpadService } from '@oe/api/services/launchpad';
+import { getLaunchpadService } from '@oe/api';
 import { ChevronLeft } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '#common/navigation';
 import { Button } from '#shadcn/button';
-import CourseInformation from './course-informations';
-import VotingCard from './voting-card';
+import { CourseInformation } from './course-informations';
+import { VotingCard } from './voting-card';
 
 const LaunchpadVotePage = async ({ id }: { id: string }) => {
   const [campaign, t] = await Promise.all([
@@ -35,4 +35,4 @@ const LaunchpadVotePage = async ({ id }: { id: string }) => {
   );
 };
 
-export default LaunchpadVotePage;
+export { LaunchpadVotePage };

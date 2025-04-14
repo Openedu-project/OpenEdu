@@ -1,10 +1,25 @@
 {
   "extends": "@oe/config/tsconfig/react.json",
   "compilerOptions": {
-    "rootDir": ".",
     "baseUrl": ".",
-    "types": ["@oe/types/global.d.ts", "next/image-types/global"]
+    "types": ["@oe/types/global.d.ts", "next/image-types/global"],
+    "paths": {
+      "#shadcn/*": ["./src/shadcn/*.tsx"],
+      "#components/*": ["./src/components/*/index.ts"],
+      "#utils/*": ["./src/utils/*.ts"],
+      "#common/*": ["./src/common/*/index.ts"],
+      "#hooks/*": ["./src/hooks/*.ts"],
+      "#pages/*": ["./src/pages/*/page.tsx"],
+      "#hooks/socket": ["./src/hooks/socket/index.ts"],
+      "#store/*": ["./src/store/*.ts"],
+      "@/*": ["./src/*"],
+      "@oe/api": ["../../packages/api/src"],
+      "@oe/assets": ["../../packages/assets/src/icons/index.ts"],
+      "@oe/assets/images/*": ["../../packages/assets/src/images/*"],
+      "@oe/core": ["../../packages/core/src"],
+      "@oe/i18n": ["../../packages/i18n/src"]
+    }
   },
-  "include": ["src", "src/common/providers/intl-provider.tsx"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }

@@ -1,11 +1,11 @@
-import { cn } from '@oe/ui/utils/cn';
+import { cn } from '@oe/ui';
 
 import { useTranslations } from 'next-intl';
 import type { SectionComponent } from '../../../_types/theme-page';
 
-import { Link } from '@oe/ui/common/navigation';
+import { Link } from '@oe/ui';
 
-import { Button } from '@oe/ui/shadcn/button';
+import { Button } from '@oe/ui';
 import { SectionTitle, type SectionTitleProps } from '../_components/section-title';
 
 import { MoveUpRight } from 'lucide-react';
@@ -53,4 +53,4 @@ const FenetHomepageCustomer: SectionComponent<'homepage', 'fenetCustomer'> = ({ 
   );
 };
 
-export default FenetHomepageCustomer;
+export { FenetHomepageCustomer };

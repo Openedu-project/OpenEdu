@@ -1,2 +1,3 @@
-import TreeCheckbox from './tree-checkbox';
+import { TreeCheckbox } from './tree-checkbox';
+
 export { TreeCheckbox };

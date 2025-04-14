@@ -1,8 +1,8 @@
-import type { ILaunchpad } from '@oe/api/types/launchpad';
-import { isLogin } from '@oe/api/utils/auth';
-import { LAUNCHPAD_STATUS, VOTING_STATUS } from '@oe/api/utils/launchpad';
+import type { ILaunchpad } from '@oe/api';
+import { LAUNCHPAD_STATUS, VOTING_STATUS } from '@oe/api';
+import { isLogin } from '@oe/api';
 import DefaultImg from '@oe/assets/images/defaultimage.png';
-import { formatDate } from '@oe/core/utils/datetime';
+import { formatCurrency, formatDate } from '@oe/core';
 import { Calendar } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '#common/navigation';
@@ -10,13 +10,13 @@ import { CircularProgress } from '#components/circular-progress';
 import { CourseTimeline } from '#components/course-time-line';
 import { Image } from '#components/image';
 import { Button } from '#shadcn/button';
-import { formatCurrency } from '#utils/format-currency';
+// import { formatCurrency } from '#utils/format-currency';
 import { calculateProgress, getTimeStatus } from '#utils/launchpad-utils';
 import { CollapsibleCourseContent } from '../../components/collapsible-course-content';
 import { CourseCardHorizontal } from '../../components/course-card';
 import { CreatorCard } from '../../components/creator-card';
 import { DescriptionCard } from '../../components/description-card';
-import VotingResultCard from '../../components/voting-result-card/voting-result-card';
+import { VotingResultCard } from '../../components/voting-result-card';
 
 const CampaignDetailsSection = async ({
   campaign,
@@ -133,4 +133,4 @@ const CampaignDetailsSection = async ({
   );
 };
 
-export default CampaignDetailsSection;
+export { CampaignDetailsSection };

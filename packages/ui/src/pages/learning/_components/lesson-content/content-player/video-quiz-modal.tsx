@@ -1,8 +1,8 @@
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import type { IQuizItemResponse } from '@oe/api/types/course/quiz';
-import type { IQuizSubmissionResponse } from '@oe/api/types/quiz';
+import type { ICourseOutline } from '@oe/api';
+import type { IQuizItemResponse } from '@oe/api';
+import type { IQuizSubmissionResponse } from '@oe/api';
 import { Modal } from '#components/modal';
-import ContentQuiz from '../content-quiz/content-quiz';
+import { ContentQuiz } from '../content-quiz/content-quiz';
 
 interface IVideoQuizModalProps {
   duration: number;
@@ -45,4 +45,4 @@ const VideoQuizModal = ({ quizzes, shownQuizzes, course_data, triggerFunction }:
   );
 };
 
-export default VideoQuizModal;
+export { VideoQuizModal };

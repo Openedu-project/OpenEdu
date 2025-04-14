@@ -1,4 +1,4 @@
-import { getCookie } from '@oe/core/utils/cookie';
+import { getCookie } from '@oe/core';
 import type { IBlog } from '#types/blog';
 import type { ICourse } from '#types/course/course';
 import type {

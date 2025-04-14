@@ -1,7 +1,7 @@
-import { cn } from '@oe/ui/utils/cn';
 import type { Editor } from '@tiptap/core';
 import { BubbleMenu as TiptapBubbleMenu } from '@tiptap/react';
 import type React from 'react';
+import { cn } from '#utils/cn';
 import type { TRichTextFont } from '../fonts';
 import type { MenuItem } from './menu-items';
 import { useSharedMenu } from './useSharedMenu';

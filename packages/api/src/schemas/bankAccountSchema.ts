@@ -1,4 +1,4 @@
-import { z } from '@oe/api/utils/zod';
+import { z } from '#utils/zod';
 
 export const bankAccountSchema = z.object({
   bank_name: z

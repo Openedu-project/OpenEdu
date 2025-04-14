@@ -1,4 +1,4 @@
-import { cn } from '@oe/ui/utils/cn';
+import { cn } from '@oe/ui';
 
 import { useTranslations } from 'next-intl';
 import type { SectionComponent } from '../../../_types/theme-page';
@@ -39,4 +39,4 @@ const FenetHomepagePrice: SectionComponent<'homepage', 'fenetPrice'> = ({ props,
   );
 };
 
-export default FenetHomepagePrice;
+export { FenetHomepagePrice };

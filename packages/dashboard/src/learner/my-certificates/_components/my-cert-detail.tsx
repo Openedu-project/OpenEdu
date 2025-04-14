@@ -1,18 +1,18 @@
-import type { ICertificateDetail, ICertificateUser } from '@oe/api/types/certificate';
-import { LEARNER_ROUTES } from '@oe/core/utils/routes';
-import { Link } from '@oe/ui/common/navigation';
-import { CertificateDetail } from '@oe/ui/components/certificate';
-import { NoDataAvailable } from '@oe/ui/components/no-data-available';
-import { Spinner } from '@oe/ui/components/spinner';
+import type { ICertificateDetail, ICertificateUser } from '@oe/api';
+import { LEARNER_ROUTES } from '@oe/core';
+import { Link } from '@oe/ui';
+import { CertificateDetail } from '@oe/ui';
+import { NoDataAvailable } from '@oe/ui';
+import { Spinner } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import MintCertButton from './mint-cert-button';
+import { MintCertButton } from './mint-cert-button';
 
 interface IMyCertDetail {
   isLoading: boolean;
   data?: ICertificateDetail;
   onClickMintCert?: () => void;
 }
-export default function MyCertDetail({ isLoading, data, onClickMintCert }: IMyCertDetail) {
+export function MyCertDetail({ isLoading, data, onClickMintCert }: IMyCertDetail) {
   const t = useTranslations('myLearningSpace.myCertificates');
 
   return (

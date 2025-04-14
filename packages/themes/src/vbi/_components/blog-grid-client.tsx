@@ -1,10 +1,10 @@
 'use client';
-import { useGetPopularContentsAtWebsite } from '@oe/api/hooks/useFeaturedContent';
-import { useGetOrganizationByDomain } from '@oe/api/hooks/useOrganization';
-import type { IBlog } from '@oe/api/types/blog';
-import { formatDate } from '@oe/core/utils/datetime';
-import { Link } from '@oe/ui/common/navigation';
-import { Image } from '@oe/ui/components/image';
+import type { IBlog } from '@oe/api';
+import { useGetPopularContentsAtWebsite } from '@oe/api';
+import { useGetOrganizationByDomain } from '@oe/api';
+import { formatDate } from '@oe/core';
+import { Link } from '@oe/ui';
+import { Image } from '@oe/ui';
 const BlogGridClient = () => {
   const { organizationByDomain } = useGetOrganizationByDomain();
   const { dataPopularContents } = useGetPopularContentsAtWebsite<IBlog>({

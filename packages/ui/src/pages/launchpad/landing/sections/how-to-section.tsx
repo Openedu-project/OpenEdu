@@ -27,4 +27,4 @@ const HowToSection = async () => {
   );
 };
 
-export default HowToSection;
+export { HowToSection };

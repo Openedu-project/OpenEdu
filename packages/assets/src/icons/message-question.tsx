@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function MessageQuestion({ width = 24, height = 24, className = '', color = '#2C2C2C' }: ISvgProps) {
+export function MessageQuestion({ width = 24, height = 24, className = '', color = '#2C2C2C' }: ISvgProps) {
   return (
     <svg
       className={className}

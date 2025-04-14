@@ -1,4 +1,4 @@
-import type { ICertificateData, ICertificateElement, ICertificateTextElement } from '@oe/api/types/certificate';
+import type { ICertificateData, ICertificateElement, ICertificateTextElement } from '@oe/api';
 import { Text } from '@react-pdf/renderer';
 import { getElementPosition, interpolateContent } from '../../utils';
 

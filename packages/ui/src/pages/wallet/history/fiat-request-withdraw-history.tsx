@@ -1,8 +1,8 @@
-import type { TRequestWithdrawHistory } from '@oe/api/types/wallet';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { FIAT_CURRENCIES } from '@oe/api/utils/wallet';
-import { formatCurrency } from '@oe/core/utils/currency';
-import { formatDateTime } from '@oe/core/utils/datetime';
+import { API_ENDPOINT } from '@oe/api';
+import type { TRequestWithdrawHistory } from '@oe/api';
+import { FIAT_CURRENCIES } from '@oe/api';
+import { formatDateTime } from '@oe/core';
+import { formatCurrency } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import type { FilterOption } from '#components/filter-search';
 import { type ColumnDef, Table } from '#components/table';

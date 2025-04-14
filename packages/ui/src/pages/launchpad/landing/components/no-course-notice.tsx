@@ -33,4 +33,4 @@ const NoCourseNotice = () => {
   );
 };
 
-export default NoCourseNotice;
+export { NoCourseNotice };

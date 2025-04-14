@@ -1,5 +1,5 @@
-import { getCookieClient } from '@oe/core/utils/cookie';
-import { type LanguageCode, languages } from '@oe/i18n/languages';
+import { getCookieClient } from '@oe/core';
+import { type LanguageCode, languages } from '@oe/i18n';
 import { Autocomplete } from '#components/autocomplete';
 import type { ButtonProps } from '#shadcn/button';
 

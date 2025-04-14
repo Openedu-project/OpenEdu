@@ -1,12 +1,12 @@
-import { useGetRewriteData } from '@oe/api/hooks/useBlog';
-import { GENERATING_STATUS } from '@oe/core/utils/constants';
-import { marked } from '@oe/core/utils/marker';
+import { useGetRewriteData } from '@oe/api';
+import { GENERATING_STATUS } from '@oe/core';
 import { Loader2, TriangleAlert } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type React from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Modal } from '#components/modal';
 import { useSocketStore } from '#store/socket';
+import { marked } from '#utils/marker';
 
 export type IAIStatus = 'pending' | 'generating' | 'completed' | 'failed';
 

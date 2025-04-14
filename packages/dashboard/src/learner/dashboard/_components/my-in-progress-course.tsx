@@ -1,12 +1,12 @@
-import { getMyCourseLearningService } from '@oe/api/services/my-learning-space';
-import { LEARNER_ROUTES } from '@oe/core/utils/routes';
-import { NoDataAvailable } from '@oe/ui/components/no-data-available';
-import { ScrollArea, ScrollBar } from '@oe/ui/shadcn/scroll-area';
+import { getMyCourseLearningService } from '@oe/api';
+import { LEARNER_ROUTES } from '@oe/core';
+import { NoDataAvailable } from '@oe/ui';
+import { ScrollArea, ScrollBar } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import CourseCard from '../../_components/course-card';
-import SectionCard from './section-card';
+import { CourseCard } from '../../_components/course-card';
+import { SectionCard } from './section-card';
 
-export default async function MyInProgressCourse() {
+export async function MyInProgressCourse() {
   const tLearnerDashboard = useTranslations('myLearningSpace.dashboard');
 
   const coursesInProgress = await getMyCourseLearningService(undefined, {

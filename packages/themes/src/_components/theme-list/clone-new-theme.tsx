@@ -1,8 +1,8 @@
 'use client';
-import { useCreateOrUpdateThemeConfig, useGetTheme } from '@oe/api/hooks/useTheme';
-import type { ISystemConfigRes } from '@oe/api/types/system-config';
-import { Button } from '@oe/ui/shadcn/button';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { useCreateOrUpdateThemeConfig, useGetTheme } from '@oe/api';
+import type { ISystemConfigRes } from '@oe/api';
+import { toast } from '@oe/ui';
+import { Button } from '@oe/ui';
 import { Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';

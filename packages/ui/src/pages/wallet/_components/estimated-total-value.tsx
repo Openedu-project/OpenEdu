@@ -1,15 +1,15 @@
 'use client';
-import { useEstimatedTotalValue } from '@oe/api/hooks/useWallet';
-import { WITHDRAW_TYPE } from '@oe/api/utils/wallet';
-import { EstimatedAssetsIcon } from '@oe/assets/icons/wallets/estimated-assets';
-import { WALLET_ROUTES } from '@oe/core/utils/routes';
+import { useEstimatedTotalValue } from '@oe/api';
+import { WITHDRAW_TYPE } from '@oe/api';
+import { EstimatedAssetsIcon } from '@oe/assets';
+import { WALLET_ROUTES } from '@oe/core';
 import { ArrowUp, Clock4, CreditCard, MoreHorizontal } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Link } from '#common/navigation';
 import { Button } from '#shadcn/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '#shadcn/dropdown-menu';
 import { useWalletStore } from '../_store/useWalletStore';
-import AssetCard from './asset-card';
+import { AssetCard } from './asset-card';
 import { NetworkListModal } from './network-dialog';
 
 export const EstimatedTotalValue = () => {

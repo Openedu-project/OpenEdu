@@ -1,7 +1,7 @@
 'use client';
-import type { IUserProfile } from '@oe/api/types/user-profile';
-import { BLOG_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
+import type { IUserProfile } from '@oe/api';
+import { BLOG_ROUTES } from '@oe/core';
+import { buildUrl } from '@oe/core';
 import { useRouter } from '#common/navigation';
 import { ProfileCard } from '#components/profile-card';
 

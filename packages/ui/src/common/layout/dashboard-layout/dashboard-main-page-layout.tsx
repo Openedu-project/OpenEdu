@@ -1,7 +1,7 @@
-import type { IProtectedRoutes } from '@oe/core/utils/routes';
-import { DashboardHeaderCard } from '@oe/ui/common/layout';
+import type { IProtectedRoutes } from '@oe/core';
 import type { ReactNode } from 'react';
 import { cn } from '#utils/cn';
+import { DashboardHeaderCard } from './dashboard-header-card';
 
 export function DashboardMainPageLayout({
   children,

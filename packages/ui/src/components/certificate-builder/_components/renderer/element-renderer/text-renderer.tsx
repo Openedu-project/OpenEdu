@@ -1,4 +1,4 @@
-import type { ICertificateData, ICertificateTextElement } from '@oe/api/types/certificate';
+import type { ICertificateData, ICertificateTextElement } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { interpolateContent } from '../../../utils';
 

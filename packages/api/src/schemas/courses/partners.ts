@@ -1,4 +1,4 @@
-import { z } from '@oe/api/utils/zod';
+import { z } from '#utils/zod';
 
 export const partnerSchema = z.object({
   email: z.string().email(),

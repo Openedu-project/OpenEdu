@@ -1,4 +1,4 @@
-import { Modal } from '@oe/ui/components/modal';
+import { Modal } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 
@@ -8,7 +8,7 @@ interface ICreatorDecideVotingLaunchpadModal {
   isLoading: boolean;
 }
 
-export default function CreatorDecideVotingLaunchpadModal({
+export function CreatorDecideVotingLaunchpadModal({
   onSubmit,
   onClose,
   isLoading,

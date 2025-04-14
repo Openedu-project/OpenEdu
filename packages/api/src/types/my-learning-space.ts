@@ -1,4 +1,4 @@
-import type { ICourseOutline } from './course/course';
+import type { ICourseOutline } from './course';
 import type { HTTPPagination } from './fetch';
 
 export type TMyCourseStatus = 'completed' | 'in_progress' | 'not_started' | 'wishlist';

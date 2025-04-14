@@ -1,9 +1,9 @@
 'use client';
-import { type IStartFundingSchemaType, startFundingSchema } from '@oe/api/schemas/launchpadSchema';
-import type { IStartFundingTimeLaunchpadPayload } from '@oe/api/types/admin-launchpad';
-import { DateTimePicker } from '@oe/ui/components/date-time-picker';
-import { Modal } from '@oe/ui/components/modal';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
+import type { IStartFundingTimeLaunchpadPayload } from '@oe/api';
+import { type IStartFundingSchemaType, startFundingSchema } from '@oe/api';
+import { DateTimePicker } from '@oe/ui';
+import { Modal } from '@oe/ui';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 
@@ -13,7 +13,7 @@ interface ICreatorStartFundingLaunchpadModal {
   isLoading: boolean;
 }
 
-export default function CreatorStartFundingLaunchpadModal({
+export function CreatorStartFundingLaunchpadModal({
   onSubmit,
   onClose,
   isLoading,

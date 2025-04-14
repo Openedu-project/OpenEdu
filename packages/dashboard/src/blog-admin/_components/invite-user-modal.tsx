@@ -1,11 +1,11 @@
 'use client';
-import { postInviteUserService } from '@oe/api/services/user';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import type { HTTPError } from '@oe/api/utils/http-error';
-import { z } from '@oe/api/utils/zod';
-import { Modal } from '@oe/ui/components/modal';
-import { Button, type ButtonProps } from '@oe/ui/shadcn/button';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { API_ENDPOINT } from '@oe/api';
+import type { HTTPError } from '@oe/api';
+import { z } from '@oe/api';
+import { postInviteUserService } from '@oe/api';
+import { toast } from '@oe/ui';
+import { Button, type ButtonProps } from '@oe/ui';
+import { Modal } from '@oe/ui';
 import { SendHorizonalIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useSWRConfig } from 'swr';
@@ -29,7 +29,7 @@ const inviteUserSchema = z.object({
 
 export type IInviteUserSchemaType = z.infer<typeof inviteUserSchema>;
 
-export default function InviteUserModal({ title, desc, role_event, buttonProps }: IInviteUser) {
+export function InviteUserModal({ title, desc, role_event, buttonProps }: IInviteUser) {
   const t = useTranslations('blogManagement.inviteUser');
   const tError = useTranslations('errors');
   const { mutate: globalMutate } = useSWRConfig();

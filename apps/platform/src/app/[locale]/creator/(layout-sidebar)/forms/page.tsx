@@ -1,5 +1,5 @@
-import FormsListPage from '@oe/dashboard/creator/forms/page';
+import { CreatorFormsPage } from "@oe/dashboard";
 
 export default function FormsPage() {
-  return <FormsListPage />;
+  return <CreatorFormsPage />;
 }

@@ -1,30 +1,18 @@
-import {
-  type IRejectCreatorSchemaType,
-  rejectCreatorSchema,
-} from "@oe/api/schemas/creators";
-import type { IRejectFormRegisterCreatorPayload } from "@oe/api/types/form";
-import { Modal } from "@oe/ui/components/modal";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@oe/ui/shadcn/form";
-import { Textarea } from "@oe/ui/shadcn/textarea";
-import { useTranslations } from "next-intl";
-import { useCallback } from "react";
+import { type IRejectCreatorSchemaType, rejectCreatorSchema } from '@oe/api';
+import type { IRejectFormRegisterCreatorPayload } from '@oe/api';
+import { Modal } from '@oe/ui';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';
+import { Textarea } from '@oe/ui';
+import { useTranslations } from 'next-intl';
+import { useCallback } from 'react';
 
 interface IModalReject {
   onSubmit: (value: IRejectFormRegisterCreatorPayload) => void;
   onClose: () => void;
 }
 
-export default function ApproveCourseReviewingModal({
-  onSubmit,
-  onClose,
-}: IModalReject) {
-  const t = useTranslations("coursesManagement");
+export function ApproveCourseReviewingModal({ onSubmit, onClose }: IModalReject) {
+  const t = useTranslations('coursesManagement');
 
   const handleSubmit = useCallback(
     async (value: IRejectCreatorSchemaType) => {
@@ -36,33 +24,33 @@ export default function ApproveCourseReviewingModal({
   return (
     <Modal
       open={true}
-      title={t("approveTitle")}
+      title={t('approveTitle')}
       onClose={onClose}
       buttons={[
         {
-          type: "button",
-          label: t("cancel"),
-          variant: "outline",
+          type: 'button',
+          label: t('cancel'),
+          variant: 'outline',
           onClick: () => onClose(),
         },
         {
-          type: "submit",
-          label: t("submit"),
-          variant: "default",
+          type: 'submit',
+          label: t('submit'),
+          variant: 'default',
         },
       ]}
       validationSchema={rejectCreatorSchema}
       onSubmit={handleSubmit}
     >
-      {(form) => (
+      {form => (
         <FormField
           control={form.control}
           name="note"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("note")}</FormLabel>
+              <FormLabel>{t('note')}</FormLabel>
               <FormControl>
-                <Textarea placeholder={t("placeholderNote")} {...field} />
+                <Textarea placeholder={t('placeholderNote')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

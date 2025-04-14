@@ -1,4 +1,4 @@
-import Certificate from '@oe/ui/pages/user/certificate';
+import { Certificate } from "@oe/ui";
 
 export default function ProfileCertificatePage() {
   return <Certificate />;

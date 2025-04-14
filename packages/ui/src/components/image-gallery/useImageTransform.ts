@@ -1,3 +1,4 @@
+'use client';
 import type React from 'react';
 import { type RefObject, useCallback, useState } from 'react';
 import type { DragState, TransformState } from './image-gallery-type';

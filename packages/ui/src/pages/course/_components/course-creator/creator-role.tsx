@@ -1,10 +1,10 @@
-import type { IUserRoleInOrg } from '@oe/api/types/user';
+import type { IUserRoleInOrg } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { Link } from '#common/navigation';
 import { filterUserData, roleMappings } from './_helper';
 
-export default function CreatorRole({ roles }: { roles: IUserRoleInOrg[] }) {
+export function CreatorRole({ roles }: { roles: IUserRoleInOrg[] }) {
   const tProfile = useTranslations('userProfile.profile');
 
   const filteredOrgs = filterUserData(roles);

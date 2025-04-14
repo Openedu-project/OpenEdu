@@ -1,8 +1,8 @@
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import { DashboardMainPageLayout } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import LaunchpadRequestsList from './_components/launchpad-request-list';
+import { LaunchpadApprovedList } from './_components/launchpad-request-list';
 
-export default function LaunchpadApprovedManagement() {
+export function LaunchpadApprovedManagement() {
   const tDashboard = useTranslations('dashboard.launchpad');
   const t = useTranslations('adminLaunchpadApproved');
 
@@ -17,7 +17,7 @@ export default function LaunchpadApprovedManagement() {
         </div>
       }
     >
-      <LaunchpadRequestsList />
+      <LaunchpadApprovedList />
     </DashboardMainPageLayout>
   );
 }

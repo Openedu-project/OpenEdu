@@ -1,17 +1,17 @@
 'use client';
 
-import { useGetMeSettings, useUpdateMeSettings } from '@oe/api/hooks/useUserProfile';
-import type { ICourseMyProfile, IMyCourseSetting } from '@oe/api/types/user-profile';
+import type { ICourseMyProfile, IMyCourseSetting } from '@oe/api';
+import { useGetMeSettings, useUpdateMeSettings } from '@oe/api';
 import { useCallback, useEffect, useState } from 'react';
 
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
+import type { HTTPErrorMetadata } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 import { Spinner } from '#components/spinner';
 import { useShowProfileItemsStore } from '../../../../_store/userProfileStore';
-import SettingWrapper from '../../_component/setting-wrapper';
+import { SettingWrapper } from '../../_component/setting-wrapper';
 
-export default function MyCourseSettings() {
+export function MyCourseSettings() {
   const t = useTranslations('userProfile.profileCourse');
   const tError = useTranslations('errors');
 

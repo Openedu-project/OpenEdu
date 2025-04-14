@@ -1,10 +1,10 @@
-import type { ICourseOutline } from '@oe/api/types/course/course';
+import type { ICourseOutline } from '@oe/api';
 import { cn } from '#utils/cn';
-import CourseAchievements from './course-achievement';
-import CourseCertificate from './course-certificate';
-import CourseContent from './course-content';
+import { CourseAchievements } from './course-achievement';
+import { CourseCertificate } from './course-certificate';
+import { CourseContent } from './course-content';
 import { CreatorColabs } from './course-creator';
-import SupportingChannels from './course-support-channels';
+import { SupportingChannels } from './course-support-channels';
 
 export function CourseOutlineDetails({
   className,

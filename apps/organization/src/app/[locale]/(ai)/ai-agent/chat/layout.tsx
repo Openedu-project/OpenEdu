@@ -1,4 +1,4 @@
-import { AIChatLayout } from "@oe/ui/common/layout/ai-layout";
+import { AIChatLayout } from "@oe/ui";
 
 import type { ReactNode } from "react";
 

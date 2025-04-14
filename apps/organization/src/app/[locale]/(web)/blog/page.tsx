@@ -1,4 +1,4 @@
-import BlogDefaultPage from '@oe/ui/pages/blog';
+import { BlogDefaultPage } from "@oe/ui";
 
 export default function BlogPage() {
   return <BlogDefaultPage isOpenEdu={false} />;

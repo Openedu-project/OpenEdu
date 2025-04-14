@@ -1,7 +1,7 @@
-import { Button } from '@oe/ui/shadcn/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@oe/ui/shadcn/card';
-import { Input } from '@oe/ui/shadcn/input';
-import { Label } from '@oe/ui/shadcn/label';
+import { Button } from '@oe/ui';
+import { Card, CardContent, CardHeader, CardTitle } from '@oe/ui';
+import { Input } from '@oe/ui';
+import { Label } from '@oe/ui';
 import { RotateCcw, Save } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
@@ -104,4 +104,4 @@ const ThemeBorderRadius = ({ radiusData, isLoading, onSubmitRadius }: ThemeBorde
   );
 };
 
-export default ThemeBorderRadius;
+export { ThemeBorderRadius };

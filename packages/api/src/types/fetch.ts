@@ -1,3 +1,5 @@
+export type TSort = 'create_at desc' | 'create_at asc' | '"order" asc';
+
 export interface HTTPResponse<T> {
   code: number;
   data: T;
@@ -9,6 +11,7 @@ export interface IPagination {
   per_page: number;
   total_pages: number;
   total_items: number;
+  next_cursor: string;
 }
 
 export interface HTTPPagination<T> {

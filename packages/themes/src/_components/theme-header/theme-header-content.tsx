@@ -1,13 +1,13 @@
-import { getThemeConfigServer } from '@oe/api/services/theme';
-import { ADMIN_ROUTES } from '@oe/core/utils/routes';
-import { Link } from '@oe/ui/common/navigation';
-import { Button } from '@oe/ui/shadcn/button';
+import { getThemeConfigServer } from '@oe/api';
+import { ADMIN_ROUTES } from '@oe/core';
+import { Button } from '@oe/ui';
+import { Link } from '@oe/ui';
 import { CircleArrowLeft } from 'lucide-react';
 import type { ThemeConfigKey } from '../../_types';
 import { MenuToggleGroup } from './menu-toggle-group';
 import { ToggleDefaultTheme } from './toggle-default-theme';
 
-export default async function ThemeHeaderContent({
+export async function ThemeHeaderContent({
   configKey,
 }: {
   configKey?: ThemeConfigKey;

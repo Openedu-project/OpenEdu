@@ -1,4 +1,4 @@
-import EditProfile from '@oe/ui/pages/user/edit/profile';
+import { EditProfile } from "@oe/ui";
 
 export default function EditProfilePage() {
   return <EditProfile />;

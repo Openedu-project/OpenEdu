@@ -1,7 +1,7 @@
-import { useGetMe } from '@oe/api/hooks/useMe';
-import type { IReportAffiliateCampaign } from '@oe/api/types/report-affiliate-campaign';
-import { formatNumber } from '@oe/core/utils/utils';
-import { Modal } from '@oe/ui/components/modal';
+import { useGetMe } from '@oe/api';
+import type { IReportAffiliateCampaign } from '@oe/api';
+import { formatNumber } from '@oe/core';
+import { Modal } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 
@@ -124,4 +124,4 @@ const CampaignReportDetailModal = ({ onClose, data }: ICampaignReportDetailModal
   );
 };
 
-export default CampaignReportDetailModal;
+export { CampaignReportDetailModal };

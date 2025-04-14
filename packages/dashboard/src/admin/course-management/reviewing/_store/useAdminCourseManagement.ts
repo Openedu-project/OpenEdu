@@ -1,7 +1,7 @@
-import type { IApproval } from '@oe/api/types/approvals';
-import type { ICourse } from '@oe/api/types/course/course';
-import type { ICourseOrganizationRequestProps } from '@oe/api/types/course/org-request';
-import { create } from 'zustand';
+import type { ICourse } from '@oe/api';
+import type { IApproval } from '@oe/api';
+import type { ICourseOrganizationRequestProps } from '@oe/api';
+import { createStore } from '@oe/core';
 
 type CourseRequestStore = {
   selectedCourseRequest?: IApproval<ICourse, ICourseOrganizationRequestProps>;
@@ -11,7 +11,7 @@ type CourseRequestStore = {
   reset: () => void;
 };
 
-export const useCourseRequestStore = create<CourseRequestStore>(set => {
+export const useCourseRequestStore = createStore<CourseRequestStore>(set => {
   return {
     selectedCourseRequest: undefined,
 

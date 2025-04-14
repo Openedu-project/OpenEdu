@@ -1,27 +1,23 @@
-import { fundingGoalLaunchpadSchema } from "@oe/api/schemas/launchpadSchema";
-import { CREATE_LAUNCHPAD_FORM_ID } from "@oe/core/utils/constants";
-import {
-  FormNestedProvider,
-  FormNestedWrapper,
-  type INestedFormsValues,
-} from "@oe/ui/components/form-wrapper";
-import { useTranslations } from "next-intl";
-import { useCallback } from "react";
-import { LaunchpadNavigationButtons } from "../_components/launchpad-navigation-buttons";
-import { useChangeLaunchpadTab } from "../_hooks/useChangeLaunchpadTab";
-import useLaunchpadDetail from "../_hooks/useLaunchpadDetail";
-import CurrencySelection from "./currency-selection";
-import MinPledge from "./min-pledge";
-import NumberDayRunFunding from "./number-day-run-funding";
-import SharePercentage from "./share-percentage";
-import TargetFundingAmount from "./target-funding-amount";
+import { fundingGoalLaunchpadSchema } from '@oe/api';
+import { CREATE_LAUNCHPAD_FORM_ID } from '@oe/core';
+import { FormNestedProvider, FormNestedWrapper, type INestedFormsValues } from '@oe/ui';
+import { useTranslations } from 'next-intl';
+import { useCallback } from 'react';
+import { LaunchpadNavigationButtons } from '../_components/launchpad-navigation-buttons';
+import { useChangeLaunchpadTab } from '../_hooks/useChangeLaunchpadTab';
+import { useLaunchpadDetail } from '../_hooks/useLaunchpadDetail';
+import { CurrencySelection } from './currency-selection';
+import { MinPledge } from './min-pledge';
+import { NumberDayRunFunding } from './number-day-run-funding';
+import { SharePercentage } from './share-percentage';
+import { TargetFundingAmount } from './target-funding-amount';
 
 interface IFundingGoalBlockProps {
   onSubmit: (data: INestedFormsValues, nextTab: string | undefined) => void;
 }
 
 const FundingGoalBlock = ({ onSubmit }: IFundingGoalBlockProps) => {
-  const tLaunchpad = useTranslations("creatorSettingLaunchpad.fundingGoal");
+  const tLaunchpad = useTranslations('creatorSettingLaunchpad.fundingGoal');
   const { nextTab, handleGoToPrevTab } = useChangeLaunchpadTab();
   const { launchpad } = useLaunchpadDetail();
 
@@ -36,7 +32,7 @@ const FundingGoalBlock = ({ onSubmit }: IFundingGoalBlockProps) => {
     <div className="mx-auto flex max-w-5xl gap-spacing-m rounded-lg bg-white px-6 py-5">
       <FormNestedProvider onSubmit={handleOnSubmit}>
         <FormNestedWrapper
-          id={CREATE_LAUNCHPAD_FORM_ID.fundingGoal ?? ""}
+          id={CREATE_LAUNCHPAD_FORM_ID.fundingGoal ?? ''}
           tabId="funding-goal"
           className="grid w-full gap-[10px]"
           schema={fundingGoalLaunchpadSchema}
@@ -54,9 +50,7 @@ const FundingGoalBlock = ({ onSubmit }: IFundingGoalBlockProps) => {
             <>
               <div className="grid w-full gap-[20px] lg:grid-cols-2">
                 <div className="flex items-center justify-between lg:col-span-2">
-                  <h1 className="font-semibold text-xl">
-                    {tLaunchpad("title")}
-                  </h1>
+                  <h1 className="font-semibold text-xl">{tLaunchpad('title')}</h1>
                   <CurrencySelection form={form} />
                 </div>
 
@@ -75,10 +69,7 @@ const FundingGoalBlock = ({ onSubmit }: IFundingGoalBlockProps) => {
                 </div>
               </div>
               <div className="flex justify-end">
-                <LaunchpadNavigationButtons
-                  onNextClick={handleOnSubmit}
-                  onPrevClick={handleGoToPrevTab}
-                />
+                <LaunchpadNavigationButtons onNextClick={handleOnSubmit} onPrevClick={handleGoToPrevTab} />
               </div>
             </>
           )}
@@ -88,6 +79,6 @@ const FundingGoalBlock = ({ onSubmit }: IFundingGoalBlockProps) => {
   ) : null;
 };
 
-FundingGoalBlock.displayName = "FundingGoalBlock";
+FundingGoalBlock.displayName = 'FundingGoalBlock';
 
-export default FundingGoalBlock;
+export { FundingGoalBlock };

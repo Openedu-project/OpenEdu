@@ -1,11 +1,8 @@
-import { Link } from '@oe/ui/common/navigation';
-import { Image } from '@oe/ui/components/image';
-import type { FileType } from '@oe/ui/components/uploader';
-import { Card, CardContent, CardFooter } from '@oe/ui/shadcn/card';
-
-import Facebook from '@oe/assets/icons/social-icon/facebook';
-import Linkedin from '@oe/assets/icons/social-icon/linkedin';
-import Twitter from '@oe/assets/icons/social-icon/twitter';
+import { Facebook, Linkedin, Twitter } from '@oe/assets';
+import type { FileType } from '@oe/ui';
+import { Link } from '@oe/ui';
+import { Image } from '@oe/ui';
+import { Card, CardContent, CardFooter } from '@oe/ui';
 
 interface ExpertProps {
   name?: string;

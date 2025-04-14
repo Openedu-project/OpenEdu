@@ -1,6 +1,6 @@
 'use client';
-import { Link } from '@oe/ui/common/navigation';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@oe/ui/shadcn/card';
+import { Link } from '@oe/ui';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useLanguageStore } from '../_store/useLanguageStore';
 

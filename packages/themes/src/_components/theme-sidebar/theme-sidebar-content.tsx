@@ -1,10 +1,11 @@
+import { Sidebar, SidebarContent, SidebarGroupContent, SidebarMenu } from '@oe/ui';
 import {
   getComponentsMenu,
   getFeaturesMenu,
   getGlobalThemeMenu,
   getMetadataMenu,
   getPagesMenu,
-} from '@oe/themes/config/theme-sidebar-config';
+} from '#config/theme-sidebar-config';
 import type {
   AllGroupSidebarKeys,
   AllSidebarKeys,
@@ -14,8 +15,7 @@ import type {
   ThemeName,
   ThemePageKey,
   ThemeSystem,
-} from '@oe/themes/types';
-import { Sidebar, SidebarContent, SidebarGroupContent, SidebarMenu } from '@oe/ui/shadcn/sidebar';
+} from '#types';
 import { SidebarGroup } from './sidebar-group';
 import { SidebarItem } from './sidebar-item';
 
@@ -27,13 +27,7 @@ interface ThemeSidebarProps {
   groupKey?: AllSidebarKeys | AllGroupSidebarKeys;
 }
 
-export default function ThemeSidebar({
-  themeSystem,
-  themeName,
-  configKey,
-  activedSidbarKey,
-  groupKey,
-}: ThemeSidebarProps) {
+export function ThemeSidebar({ themeSystem, themeName, configKey, activedSidbarKey, groupKey }: ThemeSidebarProps) {
   const pagesMenu = themeSystem?.availableThemes?.[themeName]?.pages
     ? Object.entries(themeSystem?.availableThemes?.[themeName]?.pages)?.map(([key, page]) => ({
         key: key as ThemePageKey,

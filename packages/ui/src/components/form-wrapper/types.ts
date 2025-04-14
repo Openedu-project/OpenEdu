@@ -1,4 +1,4 @@
-import type { z } from '@oe/api/utils/zod';
+import type { z } from '@oe/api';
 import type { TabsTriggerProps } from '@radix-ui/react-tabs';
 import type { HTMLAttributes, MouseEvent, ReactNode, RefObject } from 'react';
 import type {

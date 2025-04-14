@@ -1,19 +1,19 @@
 'use client';
 
-import { useGetCourseById } from '@oe/api/hooks/useCourse';
-import type { ILearningProgressOverview } from '@oe/api/types/course/learning-progress';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-// import { formatDate } from "@oe/core/utils/date";
+import { API_ENDPOINT } from '@oe/api';
+import { useGetCourseById } from '@oe/api';
+import type { ILearningProgressOverview } from '@oe/api';
+// import { formatDate } from "@oe/core";
 // import { Progress } from "lucide-react";
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useMemo } from 'react';
 
-import { formatDate } from '@oe/core/utils/datetime';
-import type { FilterOption } from '@oe/ui/components/filter-search';
-import { type ColumnDef, Table } from '@oe/ui/components/table';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { Skeleton } from '@oe/ui/shadcn/skeleton';
+import { formatDate } from '@oe/core';
+import { Skeleton } from '@oe/ui';
+import type { FilterOption } from '@oe/ui';
+import { type ColumnDef, Table } from '@oe/ui';
+import { Badge } from '@oe/ui';
 
 interface ILearnerData {
   id: string;
@@ -23,7 +23,7 @@ interface ILearnerData {
   learning_progress_overview?: ILearningProgressOverview;
 }
 
-export default function CourseDetailLearnersPage() {
+export function CourseDetailLearnersPage() {
   const t = useTranslations('course');
   const params = useParams<{ courseId: string }>();
   const courseId = params.courseId;

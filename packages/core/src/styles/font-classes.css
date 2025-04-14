@@ -1,408 +1,419 @@
-
 @utility giant-iDisplay-bold144 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 144px;
-    font-weight: 700;
-    line-height: 140%; /* 180px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 144px;
+  font-weight: 700;
+  line-height: 140%; /* 180px */
+}
 
 @utility giant-iDisplay-bold96 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 96px;
-    font-weight: 700;
-    line-height: 140%; /* 120px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 96px;
+  font-weight: 700;
+  line-height: 140%; /* 120px */
+}
 
 @utility giant-iDisplay-bold64 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 64px;
-    font-weight: 700;
-    line-height: 140%; /* 80px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 140%; /* 80px */
+}
 
 @utility giant-iDisplay-bold48 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 48px;
-    font-weight: 700;
-    line-height: 140%; /* 80px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 140%; /* 80px */
+}
 
 @utility giant-iDisplay-bold36 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 36px;
-    font-weight: 700;
-    line-height: 140%; /* 80px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 140%; /* 80px */
+}
 
 @utility giant-iDisplay-bold24 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 140%; /* 80px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 140%; /* 80px */
+}
 
-  /**
-   * HEADING
-   */
+/**
+ * HEADING
+ */
 @utility giant-iheading-bold56 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 56px;
-    font-weight: 700;
-    line-height: 140%; /* 70px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 140%; /* 70px */
+}
 
 @utility giant-iheading-bold48 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 48px;
-    font-weight: 700;
-    line-height: 140%; /* 60px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 140%; /* 60px */
+}
 
 @utility giant-iheading-bold44 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 44px;
-    font-weight: 700;
-    line-height: 140%; /* 60px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 140%; /* 60px */
+}
 
 @utility giant-iheading-bold40 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 40px;
-    font-weight: 700;
-    line-height: 140%; /* 50px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 140%; /* 50px */
+}
 
 @utility giant-iheading-bold32 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 140%; /* 50px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 140%; /* 50px */
+}
 
 @utility giant-iheading-bold24 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 140%; /* 50px */
-  }
-  
+  font-family: var(--font-primary), sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 140%; /* 50px */
+}
+
 @utility giant-iheading-bold20 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 140%; /* 50px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 140%; /* 50px */
+}
 
 @utility giant-iheading-bold18 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 125%; /* 50px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 125%; /* 50px */
+}
 
 @utility giant-iheading-bold16 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 140%; /* 50px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 140%; /* 50px */
+}
 
 @utility giant-iheading-semibold32 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 32px;
-    font-weight: 600;
-    line-height: 140%; /* 40px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 140%; /* 40px */
+}
 
 @utility giant-iheading-semibold28 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 28px;
-    font-weight: 600;
-    line-height: 140%; /* 35px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 140%; /* 35px */
+}
 
 @utility giant-iheading-semibold24 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 140%; /* 30px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 140%; /* 30px */
+}
 
 @utility giant-iheading-semibold20 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 140%; /* 25px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 140%; /* 25px */
+}
 
 @utility giant-iheading-semibold18 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 125%; /* 25px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 125%; /* 25px */
+}
 
 @utility giant-iheading-semibold16 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 140%; /* 20px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 140%; /* 20px */
+}
 
 @utility giant-iheading-semibold14 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 140%;
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 140%;
+}
 
 @utility giant-iheading-semibold12 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 140%; /* 16px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 140%; /* 16px */
+}
 
 @utility giant-iheading-regular16 {
-    font-family: var(--font-primary), sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 140%; /* 16px */
-  }
+  font-family: var(--font-primary), sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 140%; /* 16px */
+}
 
-  /**
-   * CAPTION
-   */
+/**
+ * CAPTION
+ */
 @utility mcaption-bold24 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 140%; /* 30px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 140%; /* 30px */
+}
 
 @utility mcaption-semibold36 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 36px;
-    font-weight: 600;
-    line-height: 140%; /* 30px */
-  }
-  
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 140%; /* 30px */
+}
+
 @utility mcaption-semibold24 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 140%; /* 30px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 140%; /* 30px */
+}
 
 @utility mcaption-regular24 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 140%; /* 30px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 140%; /* 30px */
+}
 
 @utility mcaption-bold20 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 140%; /* 25px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 140%; /* 25px */
+}
 
 @utility mcaption-semibold20 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 140%; /* 25px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 140%; /* 25px */
+}
 
 @utility mcaption-regular20 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 140%; /* 25px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 140%; /* 25px */
+}
 
 @utility mcaption-bold18 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 125%; /* 25px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 125%; /* 25px */
+}
 
 @utility mcaption-semibold18 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 125%; /* 25px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 125%; /* 25px */
+}
 
 @utility mcaption-regular18 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 125%; /* 25px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 125%; /* 25px */
+}
 
 @utility mcaption-bold16 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 140%; /* 20px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 140%; /* 20px */
+}
 
 @utility mcaption-semibold16 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 140%; /* 20px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 140%; /* 20px */
+}
 
 @utility mcaption-bold14 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 140%; /* 20px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 140%; /* 20px */
+}
 
 @utility mcaption-semibold14 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 140%; /* 17.5px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 140%; /* 17.5px */
+}
 
 @utility mcaption-semibold12 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 140%; /* 20px */
-  }
-  
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 140%; /* 20px */
+}
+
 @utility mcaption-medium14 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 140%; /* 17.5px */
-  }
-  
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 140%; /* 17.5px */
+}
+
 @utility mcaption-medium16 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 140%; /* 20px */
-  }
-  
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 140%; /* 20px */
+}
+
 @utility mcaption-regular16 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 140%; /* 20px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 140%; /* 20px */
+}
 
 @utility mcaption-regular14 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 140%; /* 17.5px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 140%; /* 17.5px */
+}
 
 @utility mcaption-regular12 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 140%; /* 16px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 140%; /* 16px */
+}
 
 @utility mcaption-regular10 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 10px;
-    font-weight: 400;
-    line-height: 140%; /* 16px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 140%; /* 16px */
+}
 
 @utility mcaption-regular9 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 9px;
-    font-weight: 400;
-    line-height: 140%; /* 11.25px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 9px;
+  font-weight: 400;
+  line-height: 140%; /* 11.25px */
+}
 
 @utility mcaption-regular8 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 8px;
-    font-weight: 400;
-    line-height: 140%; /* 10px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 8px;
+  font-weight: 400;
+  line-height: 140%; /* 10px */
+}
 
-  /**
-   * BUTTON
-   */
+/**
+ * BUTTON
+ */
 @utility mbutton-bold16 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 140%; /* 20px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 140%; /* 20px */
+}
 
 @utility mbutton-semibold16 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 140%; /* 20px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 140%; /* 20px */
+}
 
 @utility mbutton-regular16 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 140%; /* 20px */
-  }
-  
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 140%; /* 20px */
+}
+
 @utility mbutton-bold14 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 140%; /* 20px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 140%; /* 20px */
+}
 
 @utility mbutton-semibold14 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 140%; /* 20px */
-  }
-  
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 140%; /* 20px */
+}
+
 @utility mbutton-medium14 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 140%; /* 20px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 140%; /* 20px */
+}
 
 @utility mbutton-regular14 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 140%; /* 20px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 140%; /* 20px */
+}
 
 @utility mbutton-bold12 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 140%; /* 16px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 140%; /* 16px */
+}
 
 @utility mbutton-bold10 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 10px;
-    font-weight: 500;
-    line-height: 140%; /* 11.25px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 140%; /* 11.25px */
+}
+@utility mbutton-semibold10 {
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 140%; /* 11.25px */
+}
 
 @utility mbutton-bold8 {
-    font-family: var(--font-secondary), sans-serif;
-    font-size: 8px;
-    font-weight: 500;
-    line-height: 140%; /* 10px */
-  }
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 8px;
+  font-weight: 500;
+  line-height: 140%; /* 10px */
+}
+@utility mbutton-semibold8 {
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 8px;
+  font-weight: 600;
+  line-height: 140%; /* 10px */
+}

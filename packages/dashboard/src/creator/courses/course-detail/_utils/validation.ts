@@ -1,6 +1,6 @@
-import type { ICourse } from '@oe/api/types/course/course';
-import type { ISegment } from '@oe/api/types/course/segment';
-import type { TFunction } from '@oe/i18n/types';
+import type { ICourse } from '@oe/api';
+import type { ISegment } from '@oe/api';
+import type { TFunction } from '@oe/i18n';
 
 interface CourseValidationState {
   informationErrors: string[];

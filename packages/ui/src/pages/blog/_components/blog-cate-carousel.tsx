@@ -1,11 +1,19 @@
 'use server';
 
-import { getBlogsByCategoryService } from '@oe/api/services/blog';
-import { BLOG_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
+import { getBlogsByCategoryService } from '@oe/api';
+import { BLOG_ROUTES } from '@oe/core';
+import { buildUrl } from '@oe/core';
 import { BlogCarousel } from './blog-carousel';
 
-export async function BlogCateCarousel({ id, name, className }: { id: string; name: string; className?: string }) {
+export async function BlogCateCarousel({
+  id,
+  name,
+  className,
+}: {
+  id: string;
+  name: string;
+  className?: string;
+}) {
   const blogData = await getBlogsByCategoryService(undefined, {
     params: { id, page: 1, per_page: 10, sort: 'update_at desc' },
   });
@@ -20,7 +28,10 @@ export async function BlogCateCarousel({ id, name, className }: { id: string; na
       title={name}
       className={className}
       viewAllProps={{
-        href: buildUrl({ endpoint: BLOG_ROUTES.blogCategory, params: { id: `${id} ${name}` } }),
+        href: buildUrl({
+          endpoint: BLOG_ROUTES.blogCategory,
+          params: { id: `${id} ${name}` },
+        }),
       }}
     />
   );

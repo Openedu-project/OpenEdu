@@ -1,4 +1,4 @@
-import PaymentSuccess from '@oe/ui/pages/course/payment/payment-success';
+import { PaymentSuccess } from "@oe/ui";
 
 export default function PaymentSuccessPage() {
   return <PaymentSuccess />;

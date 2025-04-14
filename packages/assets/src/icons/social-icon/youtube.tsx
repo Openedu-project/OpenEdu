@@ -1,6 +1,6 @@
 import type { ISvgProps } from '../types';
 
-export default function YoutubeIcon({ width = 24, height = 24, className = '' }: ISvgProps) {
+export function YoutubeIcon({ width = 24, height = 24, className = '' }: ISvgProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

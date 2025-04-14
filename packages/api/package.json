@@ -3,6 +3,11 @@
   "private": true,
   "version": "0.0.1",
   "description": "",
+  "sideEffects": false,
+  "main": "dist/cjs/index.cjs",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "files": ["dist"],
   "imports": {
     "#actions/*": "./src/actions/*.ts",
     "#services/*": "./src/services/*.ts",
@@ -12,29 +17,40 @@
     "#hooks/*": "./src/hooks/*.ts"
   },
   "exports": {
-    "./actions/*": "./src/actions/*.ts",
-    "./services/*": "./src/services/*.ts",
-    "./types/*": "./src/types/*.ts",
-    "./utils/*": "./src/utils/*.ts",
-    "./schemas/*": "./src/schemas/*.ts",
-    "./hooks/*": "./src/hooks/*.ts",
+    ".": {
+      "development": "./src/index.ts",
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/cjs/index.cjs"
+      }
+    },
     "./package.json": "./package.json"
   },
   "type": "module",
   "scripts": {
+    "build": "tsx ../../scripts/build/main.ts --dts --clean",
     "typecheck": "tsc --noEmit",
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "clean:build": "rm -rf .turbo && rm -rf dist"
   },
-  "peerDependencies": {
+  "dependencies": {
+    "@oe/assets": "workspace:*",
     "@oe/core": "workspace:*",
     "@oe/i18n": "workspace:*",
-    "@oe/assets": "workspace:*",
-    "next": "^15.2.4",
+    "date-fns": "^4.1.0",
+    "near-api-js": "^5.1.1",
+    "next": "15.3.1-canary.4",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "swr": "^2.3.3",
     "zod": "^3.24.2"
   },
   "devDependencies": {
     "@oe/config": "workspace:*",
-    "@oe/types": "workspace:*",
-    "js-sha256": "^0.11.0"
+    "@oe/types": "workspace:*"
   }
 }

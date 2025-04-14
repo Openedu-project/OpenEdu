@@ -1,4 +1,4 @@
-import type { ICertificateElement, ICertificateRichTextElement } from '@oe/api/types/certificate';
+import type { ICertificateElement, ICertificateRichTextElement } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { RichTextEditor } from '#components/rich-text';
 import { fonts } from '../../../../utils';

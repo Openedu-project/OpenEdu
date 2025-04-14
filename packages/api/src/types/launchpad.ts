@@ -3,7 +3,6 @@ import type { ICourse } from './course/course';
 import type { ISection } from './course/segment';
 import type { HTTPPagination } from './fetch';
 import type { IFileResponse } from './file';
-import type { IDataPagination } from './pagination';
 import type { IUser } from './user';
 
 export interface ICreateLaunchpadRequest
@@ -183,7 +182,7 @@ export interface ILaunchpadFundingGoal {
 
 export interface ILaunchpadCategoryRequest extends Pick<ICategory, 'id'> {}
 
-export interface ILaunchpadResponse extends IDataPagination<ILaunchpad[]> {}
+export interface ILaunchpadResponse extends HTTPPagination<ILaunchpad> {}
 
 export interface ILaunchpadMinPledgeOptionsResponse {
   id: string;
@@ -301,6 +300,5 @@ export type ILaunchpadTabsType =
   | 'voting-plan'
   | 'owner-and-collaborators'
   | 'payment-method';
-
 
 export type VotingStatus = 'pending' | 'completed' | 'running';

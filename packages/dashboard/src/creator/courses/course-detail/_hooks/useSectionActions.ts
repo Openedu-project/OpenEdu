@@ -1,13 +1,13 @@
-import { useGetCourseById } from '@oe/api/hooks/useCourse';
 import {
   type ICreateLessonPayload,
   createSegmentService,
   deleteSegmentService,
   updateBulkSegmentsService,
   updateSegmentService,
-} from '@oe/api/services/course';
-import type { ISection, ISegment } from '@oe/api/types/course/segment';
-import { toast } from '@oe/ui/shadcn/sonner';
+} from '@oe/api';
+import { useGetCourseById } from '@oe/api';
+import type { ISection, ISegment } from '@oe/api';
+import { toast } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { buildOutlineRoute } from '../_utils/build-outline-route';

@@ -1,31 +1,26 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
-import { usePostValidateRefCode } from '@oe/api/hooks/useAffiliateCampaign';
-import { useExchangeRates } from '@oe/api/hooks/useExchangeRates';
-import { useGetMe } from '@oe/api/hooks/useMe';
-import {
-  useCreateOrder,
-  useOrderChangeMethod,
-  useOrderPaymentStatus,
-  useOrderPaymentSuccess,
-} from '@oe/api/hooks/useOrder';
-import { useGetPaymentMethodList } from '@oe/api/hooks/usePayment';
-import { useGetShareRateByCode } from '@oe/api/hooks/useShareRate';
-import { useNFTTotalAssets, useWallet } from '@oe/api/hooks/useWallet';
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import type { IOrderRes } from '@oe/api/types/order';
-import type { IWallet } from '@oe/api/types/wallet';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import { ASSET_TYPES, CHAIN, FIAT_CURRENCIES, SUPPORTED_EXCHANGE_RATES } from '@oe/api/utils/wallet';
-import { getCookieClient } from '@oe/core/utils/cookie';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import { useSocketStore } from '@oe/ui/store/socket';
+import type { ICourseOutline } from '@oe/api';
+import { createAPIUrl } from '@oe/api';
+import { useGetMe } from '@oe/api';
+import type { IWallet } from '@oe/api';
+import { useGetShareRateByCode } from '@oe/api';
+import { usePostValidateRefCode } from '@oe/api';
+import { useExchangeRates } from '@oe/api';
+import { useNFTTotalAssets, useWallet } from '@oe/api';
+import { ASSET_TYPES, CHAIN, FIAT_CURRENCIES, SUPPORTED_EXCHANGE_RATES } from '@oe/api';
+import type { IOrderRes } from '@oe/api';
+import { useCreateOrder, useOrderChangeMethod, useOrderPaymentStatus, useOrderPaymentSuccess } from '@oe/api';
+import { useGetPaymentMethodList } from '@oe/api';
+import { PLATFORM_ROUTES } from '@oe/core';
+import { getCookieClient } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useParams, useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { toast } from 'sonner';
-import PaymentConfirmation from './payment-confirmation';
-import PaymentStatus from './payment-status';
+import { useSocketStore } from '#store/socket';
+import { PaymentConfirm } from './payment-confirmation';
+import { PaymentStatus } from './payment-status';
 
 export type IPaymentOption = 'fiat' | 'crypto';
 export interface IPaymentCryptoWallet {
@@ -346,7 +341,7 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
     switch (currentStep) {
       case 0: {
         return (
-          <PaymentConfirmation
+          <PaymentConfirm
             courseData={courseData}
             orderId={orderId}
             paymentMethodSelected={paymentMethodSelected}
@@ -389,4 +384,4 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
   );
 };
 
-export default PaymentPage;
+export { PaymentPage };

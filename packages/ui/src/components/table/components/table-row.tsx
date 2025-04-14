@@ -1,10 +1,9 @@
 import { flexRender } from '@tanstack/react-table';
 
-import { TableCell } from '#shadcn/table';
+import { TableCell, TableRow } from '#shadcn/table';
 
 import type { Row } from '@tanstack/react-table';
 import type { HTMLAttributes, ReactNode } from 'react';
-import { TableRow } from '#shadcn/table';
 import type { ColumnDef, TableBorder } from '../types';
 import { getCellClassName } from '../utils';
 
@@ -38,7 +37,10 @@ export const TableRowComponent = <TData,>({
         <TableCell
           key={cell.id}
           className={getCellClassName(cell, border, (cell.column.columnDef as ColumnDef<TData>).className)}
-          style={{ minWidth: cell.column.getSize(), width: cell.column.getSize() }}
+          style={{
+            minWidth: cell.column.getSize(),
+            width: cell.column.getSize(),
+          }}
         >
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
         </TableCell>

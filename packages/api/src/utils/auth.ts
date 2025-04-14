@@ -1,4 +1,4 @@
-import { type CookieOptions, getCookie } from '@oe/core/utils/cookie';
+import { type CookieOptions, getCookie } from '@oe/core';
 
 export const authEvents = {
   resetPassword: 'RESET_PASSWORD',

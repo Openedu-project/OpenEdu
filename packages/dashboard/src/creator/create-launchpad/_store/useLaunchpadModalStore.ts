@@ -1,11 +1,11 @@
-import { create } from 'zustand';
+import { createStore } from '@oe/core';
 
 interface ModalState {
   modals: Record<string, boolean>;
   setOpenModal: (id: string, isOpen: boolean) => void;
 }
 
-export const useLaunchpadModalStore = create<ModalState>(set => {
+export const useLaunchpadModalStore = createStore<ModalState>(set => {
   return {
     modals: {},
     setOpenModal: (id: string, isOpen: boolean) =>

@@ -1,8 +1,7 @@
 'use client';
-import { useGetMe } from '@oe/api/hooks/useMe';
-import { postBookmarkService, removeBookmarkService } from '@oe/api/services/bookmark';
-import Heart from '@oe/assets/icons/heart';
-import HeartOutline from '@oe/assets/icons/heart-outline';
+import { useGetMe } from '@oe/api';
+import { postBookmarkService, removeBookmarkService } from '@oe/api';
+import { Heart, HeartOutline } from '@oe/assets';
 import { type MouseEvent, useCallback, useState } from 'react';
 import { useLoginRequiredStore } from '#components/login-required-modal';
 import { Button, type ButtonProps } from '#shadcn/button';
@@ -91,7 +90,7 @@ interface WishlistButtonProps extends ButtonProps {
 //     <HeartOutline width={18} height={18} />
 //   );
 
-export default function WishlistButton({
+export function WishlistButton({
   className,
   // children,
   bookmarkId,

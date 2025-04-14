@@ -1,4 +1,5 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@oe/ui/shadcn/tabs';
+'use client';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { QuizQuestions } from './quiz-questions';

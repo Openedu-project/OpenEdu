@@ -1,10 +1,10 @@
-import type { ICourse } from '@oe/api/types/course/course';
-import { CREATOR_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
-import TooltipLink from '@oe/ui/shadcn/tooltip';
+import type { ICourse } from '@oe/api';
+import { CREATOR_ROUTES } from '@oe/core';
+import { buildUrl } from '@oe/core';
+import { TooltipLink } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
-export default function CourseName({ data }: { data: ICourse }) {
+export function CourseName({ data }: { data: ICourse }) {
   const tCourse = useTranslations('course');
   const isAiGenerated = data.is_ai_generated;
   const aiCourse = data.ai_course;

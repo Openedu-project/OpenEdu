@@ -1,7 +1,7 @@
 'use client';
 
-import type { TFormTriggerConfirmationSettings } from '@oe/api/schemas/courseTrigger';
-import type { FormTriggerCondition, IFormTrigger } from '@oe/api/types/course/course-trigger';
+import type { FormTriggerCondition, IFormTrigger } from '@oe/api';
+import type { TFormTriggerConfirmationSettings } from '@oe/api';
 import { useCallback } from 'react';
 import { useLearnerFormTriggerStore, useTriggerModalStore } from './_store';
 import { MODAL_ID, findFormRelationByEntityId } from './_utils';

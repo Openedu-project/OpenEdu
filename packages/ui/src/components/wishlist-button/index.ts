@@ -1,2 +1,2 @@
-import WishlistButton from './wishlist-button';
+import { WishlistButton } from './wishlist-button';
 export { WishlistButton };

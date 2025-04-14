@@ -1,3 +1,3 @@
-import PaginationCustom from './pagination-custom';
+import { type ICustomPagination, PaginationCustom } from './pagination-custom';
 
-export { PaginationCustom };
+export { PaginationCustom, type ICustomPagination };

@@ -1,10 +1,10 @@
-import { Breadcrumb } from '@oe/ui/components/breadcrumb';
-import { cn } from '@oe/ui/utils/cn';
+import { Breadcrumb } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import { AICourseNavMenu } from './_components/ai-course-nav';
 
-export default function AICourseLayout({ children }: { children: ReactNode }) {
+export function AICourseLayout({ children }: { children: ReactNode }) {
   const tCourse = useTranslations('course');
 
   const breadcrumbs = [

@@ -79,4 +79,4 @@ const CustomTabs = ({ defaultValue, items, className }: CustomTabsProps) => {
   );
 };
 
-export default CustomTabs;
+export { CustomTabs };

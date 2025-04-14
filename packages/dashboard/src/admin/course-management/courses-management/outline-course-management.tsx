@@ -1,31 +1,28 @@
 'use client';
 
-import { usePutEnableCourse } from '@oe/api/hooks/useCourse';
-import { useGetOrganizationByDomain } from '@oe/api/hooks/useOrganization';
-import type { ICoursePublished, IEnableCourseRequest } from '@oe/api/types/course/course';
-import type { IPagination } from '@oe/api/types/pagination';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { formatDateHourMinute } from '@oe/core/utils/datetime';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import { formatPrice } from '@oe/core/utils/utils';
-import { Link } from '@oe/ui/common/navigation';
-import { BadgeCourseVerion } from '@oe/ui/components/badge-course-version';
-import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
-import { Button } from '@oe/ui/shadcn/button';
-import { toast } from '@oe/ui/shadcn/sonner';
-import { Tabs, TabsList, TabsTrigger } from '@oe/ui/shadcn/tabs';
+// import type { IPagination } from '@oe/api';
+import { API_ENDPOINT } from '@oe/api';
+import type { ICoursePublished, IEnableCourseRequest } from '@oe/api';
+import { usePutEnableCourse } from '@oe/api';
+import { useGetOrganizationByDomain } from '@oe/api';
+import type { IPagination } from '@oe/api';
+import { createAPIUrl } from '@oe/api';
+import type { HTTPErrorMetadata } from '@oe/api';
+import { formatDateHourMinute } from '@oe/core';
+import { PLATFORM_ROUTES } from '@oe/core';
+import { formatPrice } from '@oe/core';
+import { toast } from '@oe/ui';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { Link } from '@oe/ui';
+import { BadgeCourseVerion } from '@oe/ui';
+import { Tabs, TabsList, TabsTrigger } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
 type TypeOrg = 'org' | 'root';
 
-export default function OutlineCourseManagement({
-  isOpenEdu,
-}: {
-  isOpenEdu: boolean;
-}) {
+export function OutlineCourseManagement({ isOpenEdu }: { isOpenEdu: boolean }) {
   const t = useTranslations('coursesManagement');
   const tError = useTranslations('errors');
 
@@ -34,7 +31,7 @@ export default function OutlineCourseManagement({
   const { organizationByDomain } = useGetOrganizationByDomain();
 
   const orgId = organizationByDomain?.id;
-  const [pagination, setPagination] = useState<IPagination>({
+  const [pagination, setPagination] = useState<Partial<IPagination>>({
     page: 1,
     per_page: 10,
   });

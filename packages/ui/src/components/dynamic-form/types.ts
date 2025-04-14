@@ -1,5 +1,5 @@
-import type { z } from '@oe/api/utils/zod';
-import type { LanguageCode } from '@oe/i18n/languages';
+import type { z } from '@oe/api';
+import type { LanguageCode } from '@oe/i18n';
 import type { ComponentType, FC, SVGProps } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
 import type { FieldValues } from 'react-hook-form';

@@ -1,8 +1,8 @@
-import type { HTTPResponse } from '@oe/api/types/fetch';
 import useSWR from 'swr';
 import useSWRInfinite from 'swr/infinite';
 import { getConversationDetail, getMessageData, getPrompts } from '#services/conversation';
 import type { IChatHistoryResponse, IConversationDetails, IPrompSearchParams } from '#types/conversation';
+import type { HTTPResponse } from '#types/fetch';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl, fetchAPI } from '#utils/fetch';
 

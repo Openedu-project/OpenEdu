@@ -1,15 +1,16 @@
-import { useGetCourseById } from '@oe/api/hooks/useCourse';
+'use client';
 import {
   type ICreateLessonPayload,
   createSegmentService,
   deleteLessonContentService,
   deleteSegmentService,
   updateSegmentService,
-} from '@oe/api/services/course';
-import type { TLessonContent } from '@oe/api/types/course/basic';
-import type { IQuizItemResponse } from '@oe/api/types/course/quiz';
-import type { ILesson, ILessonContent, ISegment } from '@oe/api/types/course/segment';
-import { toast } from '@oe/ui/shadcn/sonner';
+} from '@oe/api';
+import { useGetCourseById } from '@oe/api';
+import type { TLessonContent } from '@oe/api';
+import type { ILesson, ILessonContent, ISegment } from '@oe/api';
+import type { IQuizItemResponse } from '@oe/api';
+import { toast } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useOutlineStore } from '../_store/useOutlineStore';

@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function QuoteRight({ width = 43, height = 43, color = '#624DE7', className = '' }: ISvgProps) {
+export function QuoteRight({ width = 43, height = 43, color = '#624DE7', className = '' }: ISvgProps) {
   return (
     <svg
       width={width}

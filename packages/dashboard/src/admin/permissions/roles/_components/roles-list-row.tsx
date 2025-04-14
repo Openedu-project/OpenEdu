@@ -1,6 +1,6 @@
 'use client';
-import type { IPermissionRouteInfo } from '@oe/api/types/permissions';
-import { Checkbox } from '@oe/ui/shadcn/checkbox';
+import type { IPermissionRouteInfo } from '@oe/api';
+import { Checkbox } from '@oe/ui';
 import { memo, useMemo } from 'react';
 import { DEFAULT_ACTIONS_PERMISSION } from '../../permission-constant';
 import type { IRoleHeader } from './roles-list-header';

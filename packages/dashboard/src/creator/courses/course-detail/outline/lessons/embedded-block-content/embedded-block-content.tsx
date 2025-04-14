@@ -1,9 +1,10 @@
-import { Alert, AlertDescription, AlertTitle } from '@oe/ui/shadcn/alert';
+'use client';
+import { Alert, AlertDescription, AlertTitle } from '@oe/ui';
 import { AccordionQuiz } from '../quiz-editor';
 
-import type { IQuizItemResponse } from '@oe/api/types/course/quiz';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
+import type { IQuizItemResponse } from '@oe/api';
+import { FormFieldWithLabel } from '@oe/ui';
+import { Input } from '@oe/ui';
 import { CircleAlert } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useWatch } from 'react-hook-form';

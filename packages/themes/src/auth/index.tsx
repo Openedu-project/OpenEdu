@@ -1,19 +1,9 @@
-import { PreviewPanel } from '../_components/theme-settings/theme-page/theme-preview-panel';
-import type { SectionComponent } from '../_types';
-
-const AuthLayout: SectionComponent<'auth', 'theme'> = ({ props }) => {
-  if (!props) {
-    return;
-  }
-  return (
-    <>
-      <PreviewPanel
-        themeName={props?.themeName}
-        selectedPage={props?.selectedPage}
-        pageConfig={props?.pageConfig}
-        currentConfigSections={props?.currentConfigSections}
-      />
-    </>
-  );
-};
-export default AuthLayout;
+export * from './auth';
+export * from './auth-confirm';
+export * from './email-verify';
+export * from './footer';
+export * from './forgot-password';
+export * from './header';
+export * from './login';
+export * from './sign-up';
+export * from './type';

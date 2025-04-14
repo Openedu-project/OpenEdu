@@ -1,4 +1,4 @@
-export default function ProfileCircle({ width = 17, height = 16, className = '', color = '#6E6E6E' }) {
+export function ProfileCircle({ width = 17, height = 16, className = '', color = '#6E6E6E' }) {
   return (
     <svg
       className={className}

@@ -1,11 +1,11 @@
 'use client';
-import type { IPermissionConfigActionItem } from '@oe/api/types/permissions';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
+import { API_ENDPOINT } from '@oe/api';
+import type { IPermissionConfigActionItem } from '@oe/api';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useRef } from 'react';
 
-export default function ActionsList() {
+export function ActionsList() {
   const t = useTranslations('permissionActionList');
   const tableRef = useRef<TableRef<IPermissionConfigActionItem>>(null);
 

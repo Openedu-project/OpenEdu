@@ -3,9 +3,9 @@ import { type Editor, EditorContent, type JSONContent } from '@tiptap/react';
 
 // import './styles.css';
 
-import { cn } from '@oe/ui/utils/cn';
 import { useTranslations } from 'next-intl';
 import { type Ref, useEffect, useImperativeHandle } from 'react';
+import { cn } from '#utils/cn';
 import { BubbleMenu } from './components/bubble-menu';
 import { FloatingMenu } from './components/floating-menu';
 import { MenuBar } from './components/menu-bar';

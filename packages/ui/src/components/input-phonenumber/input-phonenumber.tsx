@@ -1,3 +1,4 @@
+'use client';
 import { ChevronsUpDown } from 'lucide-react';
 import type React from 'react';
 import { type ComponentProps, forwardRef, useMemo } from 'react';

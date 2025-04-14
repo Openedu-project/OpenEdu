@@ -1,4 +1,4 @@
-import ActionSettings from '@oe/dashboard/admin/permissions/actions/page';
+import { ActionSettings } from "@oe/dashboard";
 
 export default function Permissions() {
   return <ActionSettings />;

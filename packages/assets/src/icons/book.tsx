@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function Book({ width = 15, height = 15, className = '', color = '#5055D7' }: ISvgProps) {
+export function Book({ width = 15, height = 15, className = '', color = '#5055D7' }: ISvgProps) {
   return (
     <svg
       width={width}

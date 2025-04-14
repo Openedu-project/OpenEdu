@@ -1,4 +1,4 @@
-import { MyBlogManagement } from '@oe/ui/components/blog';
+import { MyBlogManagement } from "@oe/ui";
 
 export default function MyOrgBlogManagement() {
   return <MyBlogManagement type="org" AIButton />;

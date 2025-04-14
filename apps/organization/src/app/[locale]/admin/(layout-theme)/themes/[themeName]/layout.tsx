@@ -1,4 +1,4 @@
-import ThemeLayout from "@oe/themes/common/layout/theme-layout";
+import { ThemeLayout } from "@oe/themes";
 import type { ReactNode } from "react";
 
 export default function Layout({

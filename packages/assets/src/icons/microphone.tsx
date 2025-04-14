@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function Microphone({ className, color = '#1A1A1A', width = 24, height = 24 }: ISvgProps) {
+export function Microphone({ className, color = '#1A1A1A', width = 24, height = 24 }: ISvgProps) {
   return (
     <svg
       className={className}

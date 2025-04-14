@@ -1,4 +1,4 @@
-import { PAGE_SIZE } from '@oe/core/utils/constants';
+import { PAGE_SIZE } from '@oe/core';
 import {
   PaginationContent,
   PaginationItem,
@@ -6,9 +6,9 @@ import {
   PaginationNext,
   PaginationPrevious,
   Pagination as ShadPagination,
-} from '@oe/ui/shadcn/pagination';
+} from '#shadcn/pagination';
 
-interface IPagination {
+interface ICustomPagination {
   currentPage: number;
   totalCount: number;
   pageSize?: number;
@@ -18,7 +18,13 @@ interface IPagination {
 
 const DOTS = '...';
 
-const PaginationCustom = ({ currentPage, totalCount, onPageChange, className, pageSize = PAGE_SIZE }: IPagination) => {
+const PaginationCustom = ({
+  currentPage,
+  totalCount,
+  onPageChange,
+  className,
+  pageSize = PAGE_SIZE,
+}: ICustomPagination) => {
   const pageCount = Math.ceil(totalCount / pageSize);
 
   const generatePageNumbers = () => {
@@ -84,4 +90,4 @@ const PaginationCustom = ({ currentPage, totalCount, onPageChange, className, pa
   );
 };
 
-export default PaginationCustom;
+export { PaginationCustom, type ICustomPagination };

@@ -1,8 +1,9 @@
+'use client';
 import { AccordionQuiz } from '../quiz-editor';
 
-import type { IQuizItemResponse } from '@oe/api/types/course/quiz';
-import { RichTextEditor } from '@oe/ui/components/rich-text';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
+import type { IQuizItemResponse } from '@oe/api';
+import { RichTextEditor } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useWatch } from 'react-hook-form';
 

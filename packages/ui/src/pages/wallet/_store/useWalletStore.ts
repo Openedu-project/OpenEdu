@@ -1,5 +1,5 @@
-import { type TWithdrawType, WITHDRAW_TYPE } from '@oe/api/utils/wallet';
-import { createStore } from '@oe/core/store';
+import { type TWithdrawType, WITHDRAW_TYPE } from '@oe/api';
+import { createStore } from '@oe/core';
 
 interface WalletState {
   selectedCurrency?: string;

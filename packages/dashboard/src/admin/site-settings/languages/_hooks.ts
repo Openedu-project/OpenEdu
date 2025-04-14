@@ -1,8 +1,8 @@
-import { useSystemConfig } from '@oe/api/hooks/useSystemConfig';
-import { fetchTranslationFile } from '@oe/api/services/i18n';
-import { systemConfigKeys } from '@oe/api/utils/system-config';
-import type { LanguageCode } from '@oe/i18n/languages';
-import type { I18nMessage } from '@oe/i18n/types';
+import { fetchTranslationFile } from '@oe/api';
+import { systemConfigKeys } from '@oe/api';
+import { useSystemConfig } from '@oe/api';
+import type { LanguageCode } from '@oe/i18n';
+import type { I18nMessage } from '@oe/i18n';
 import { useEffect } from 'react';
 import useSWR from 'swr';
 import { useLanguageStore } from './_store/useLanguageStore';

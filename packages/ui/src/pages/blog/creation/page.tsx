@@ -1,14 +1,14 @@
-import { getMeServiceWithoutError } from '@oe/api/services/auth';
-import { getBlogDraftContent } from '@oe/api/services/blog';
+import { getBlogDraftContent } from '@oe/api';
+import { getMeServiceWithoutError } from '@oe/api';
 import WhaleError from '@oe/assets/images/whale/whale-error.png';
-import { getCookies } from '@oe/core/utils/cookie';
-import { AUTH_ROUTES, BLOG_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
-import { Image } from '@oe/ui/components/image';
+import { AUTH_ROUTES, BLOG_ROUTES } from '@oe/core';
+import { getCookies } from '@oe/core';
+import { buildUrl } from '@oe/core';
 import { getTranslations } from 'next-intl/server';
 import { redirect } from 'next/navigation';
 import { BlogForm, type IFormAction } from '#components/blog';
 import { Breadcrumb } from '#components/breadcrumb';
+import { Image } from '#components/image';
 import { cn } from '#utils/cn';
 import { AuthorAvatar } from '../_components/author-avatar';
 
@@ -33,7 +33,7 @@ const getBlogContent = async (id?: string) => {
   }
 };
 
-export default async function BlogCreationPage({ className, aiButton, id, action }: ICreationProps) {
+export async function BlogCreationPage({ className, aiButton, id, action }: ICreationProps) {
   const [tError, tBlogNavigation, blogData, me, cookies] = await Promise.all([
     getTranslations('errors'),
     getTranslations('blogNavigation'),
@@ -44,7 +44,9 @@ export default async function BlogCreationPage({ className, aiButton, id, action
 
   if (!me) {
     redirect(
-      `${AUTH_ROUTES.login}?next=/${cookies?.[process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY] ?? 'en'}${BLOG_ROUTES.createBlog}`
+      `${AUTH_ROUTES.login}?next=/${
+        cookies?.[process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY] ?? 'en'
+      }${BLOG_ROUTES.createBlog}`
     );
   }
   if (blogData instanceof Error) {
@@ -60,7 +62,10 @@ export default async function BlogCreationPage({ className, aiButton, id, action
   const breakcrumbItems = [
     {
       label: tBlogNavigation('myBlog'),
-      path: buildUrl({ endpoint: BLOG_ROUTES.authorBlog, params: { username: me.username } }),
+      path: buildUrl({
+        endpoint: BLOG_ROUTES.authorBlog,
+        params: { username: me.username },
+      }),
     },
     {
       label: tBlogNavigation('blogManagement'),

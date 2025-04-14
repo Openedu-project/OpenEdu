@@ -1,23 +1,19 @@
 'use client';
-import type { ICertificateMyProfile } from '@oe/api/types/user-profile';
-import { Card, CardContent, CardHeader } from '@oe/ui/shadcn/card';
-import { Checkbox } from '@oe/ui/shadcn/checkbox';
-import dynamic from 'next/dynamic';
+import type { ICertificateMyProfile } from '@oe/api';
 import { useRouter } from 'next/navigation';
 import { type HTMLAttributes, useState } from 'react';
+import { Card, CardContent, CardHeader } from '#shadcn/card';
+import { Checkbox } from '#shadcn/checkbox';
 
-import { createAPIUrl } from '@oe/api/utils/fetch';
+import { createAPIUrl } from '@oe/api';
 import image from '@oe/assets/images/blog.png';
-import { formatDate } from '@oe/core/utils/datetime';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { PLATFORM_ROUTES } from '@oe/core';
+import { formatDate } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { Image } from '#components/image';
+import { PdfViewer } from '#components/pdf-viewer';
 import { cn } from '#utils/cn';
 import { useShowProfileItemsStore } from '../../pages/user/_store/userProfileStore';
-
-const PdfViewer = dynamic(() => import('../pdf-viewer/pdf-viewer'), {
-  ssr: false,
-});
 
 interface ICertCardProps extends HTMLAttributes<HTMLDivElement> {
   certificate: ICertificateMyProfile;
@@ -27,7 +23,7 @@ interface ICertCardProps extends HTMLAttributes<HTMLDivElement> {
   hasCompletedOn?: boolean;
 }
 
-export default function CertificateCard({
+export function CertificateCard({
   certificate,
   className,
   username,
@@ -106,7 +102,8 @@ export default function CertificateCard({
         <h2 className="giant-iheading-semibold16 mb-0 line-clamp-2 max-h-10 text-primary">{certificate.course_name}</h2>
         {hasCompletedOn && (
           <span className="mcaption-regular12 text-foreground/90">
-            {t('completedOn')} {formatDate(certificate?.completed_at ?? certificate.create_at)}
+            {t('completedOn')}
+            {formatDate(certificate?.completed_at ?? certificate.create_at)}
           </span>
         )}
         {children}

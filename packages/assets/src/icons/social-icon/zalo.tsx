@@ -1,6 +1,6 @@
 import type { ISvgProps } from '../types';
 
-export default function Zalo({ width = 24, height = 24, className = '', color = '#0068FF' }: ISvgProps) {
+export function Zalo({ width = 24, height = 24, className = '', color = '#0068FF' }: ISvgProps) {
   return (
     <svg
       className={className}

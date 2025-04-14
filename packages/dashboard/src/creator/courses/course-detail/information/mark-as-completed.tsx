@@ -1,8 +1,8 @@
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Switch } from '@oe/ui/shadcn/switch';
+import { FormFieldWithLabel } from '@oe/ui';
+import { Switch } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
-export default function MarkAsCompleted() {
+export function MarkAsCompleted() {
   const tCourse = useTranslations('course');
 
   return (

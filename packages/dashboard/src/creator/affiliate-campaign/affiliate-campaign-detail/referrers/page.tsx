@@ -1,6 +1,6 @@
-import ReferrerList from './_components/referrers-list';
+import { ReferrerList } from './_components/referrers-list';
 
-export default function Referrers() {
+export function Referrers() {
   return (
     <div className="w-full">
       <ReferrerList />

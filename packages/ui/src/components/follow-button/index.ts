@@ -1,2 +1,2 @@
-import FollowButton from './follow-button';
+import { FollowButton } from './follow-button';
 export { FollowButton };

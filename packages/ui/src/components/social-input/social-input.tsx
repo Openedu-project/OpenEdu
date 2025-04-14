@@ -1,4 +1,5 @@
-import Zalo from '@oe/assets/icons/social-icon/zalo';
+'use client';
+import { Zalo } from '@oe/assets';
 import { Link } from 'lucide-react';
 import { type ChangeEvent, type FC, useState } from 'react';
 import { SocialIcon } from 'react-social-icons';

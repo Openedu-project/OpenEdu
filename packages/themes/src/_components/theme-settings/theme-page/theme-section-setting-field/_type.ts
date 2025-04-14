@@ -1,5 +1,5 @@
-import type { ThemeFieldConfig, ThemeFieldValue } from '@oe/themes/types';
 import type React from 'react';
+import type { ThemeFieldConfig, ThemeFieldValue } from '#types';
 
 export type SettingsFieldType = 'text' | 'number' | 'boolean' | 'file' | 'object' | 'array' | 'link' | 'id';
 

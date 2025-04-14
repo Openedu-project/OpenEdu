@@ -1,9 +1,9 @@
 'use client';
 
-import { useGetMe } from '@oe/api/hooks/useMe';
-import { useGetNewUserSignIn } from '@oe/api/hooks/useNewUserSignIn';
-import { postSubmitForm } from '@oe/api/services/forms';
-import type { IAnswerParams, IFormResponse } from '@oe/api/types/form';
+import { useGetMe } from '@oe/api';
+import type { IAnswerParams, IFormResponse } from '@oe/api';
+import { postSubmitForm } from '@oe/api';
+import { useGetNewUserSignIn } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect } from 'react';
 import { toast } from 'sonner';

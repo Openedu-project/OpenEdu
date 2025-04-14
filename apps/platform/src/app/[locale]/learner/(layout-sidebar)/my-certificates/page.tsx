@@ -1,4 +1,4 @@
-import LearnerMyCertificates from '@oe/dashboard/learner/my-certificates/page';
+import { LearnerMyCertificates } from "@oe/dashboard";
 
 export default function MyCertificatesPage() {
   return <LearnerMyCertificates />;

@@ -1,16 +1,15 @@
 'use client';
-import { type IBlogFormType, blogSchema } from '@oe/api/schemas/blogSchema';
-import { postBlog, updateBlog } from '@oe/api/services/blog';
-import type { IBlog, IBlogRequest } from '@oe/api/types/blog';
-import type { ICategoryTree } from '@oe/api/types/categories';
-import type { IFileResponse } from '@oe/api/types/file';
-import type { IHashtag } from '@oe/api/types/hashtag';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import type { HTTPError } from '@oe/api/utils/http-error';
-import { getCookieClient } from '@oe/core/utils/cookie';
-import { marked } from '@oe/core/utils/marker';
-import { BLOG_ADMIN_ROUTES, BLOG_ROUTES } from '@oe/core/utils/routes';
-import type { LanguageCode } from '@oe/i18n/languages';
+import { API_ENDPOINT } from '@oe/api';
+import type { IBlog, IBlogRequest } from '@oe/api';
+import { postBlog, updateBlog } from '@oe/api';
+import type { IFileResponse } from '@oe/api';
+import type { HTTPError } from '@oe/api';
+import { type IBlogFormType, blogSchema } from '@oe/api';
+import type { ICategoryTree } from '@oe/api';
+import type { IHashtag } from '@oe/api';
+import { BLOG_ADMIN_ROUTES, BLOG_ROUTES } from '@oe/core';
+import { getCookieClient } from '@oe/core';
+import type { LanguageCode } from '@oe/i18n';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { mutate } from 'swr';
@@ -25,6 +24,7 @@ import { Input } from '#shadcn/input';
 import { toast } from '#shadcn/sonner';
 import { Textarea } from '#shadcn/textarea';
 import { cn } from '#utils/cn';
+import { marked } from '#utils/marker';
 import { CategoryField } from './category-field';
 import { HashtagField } from './hashtag-field';
 
@@ -88,14 +88,7 @@ const blogFormAction = async ({
   }
 };
 
-export default function BlogForm({
-  blogType,
-  action = 'create',
-  data,
-  onSuccess,
-  onError,
-  className,
-}: IBlogCreationFormProps) {
+export function BlogForm({ blogType, action = 'create', data, onSuccess, onError, className }: IBlogCreationFormProps) {
   const tBlogs = useTranslations('blogForm');
   const tGeneral = useTranslations('general');
   const tErrors = useTranslations('errors');

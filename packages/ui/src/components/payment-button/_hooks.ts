@@ -1,9 +1,10 @@
-import { usePostEnrollCourse } from '@oe/api/hooks/useCourse';
-import { useGetMe } from '@oe/api/hooks/useMe';
-import type { IEnrollCoursePayload } from '@oe/api/types/course/course';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import { getCookieClient, setCookieClient } from '@oe/core/utils/cookie';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+'use client';
+import type { IEnrollCoursePayload } from '@oe/api';
+import { usePostEnrollCourse } from '@oe/api';
+import { createAPIUrl } from '@oe/api';
+import { useGetMe } from '@oe/api';
+import { PLATFORM_ROUTES } from '@oe/core';
+import { getCookieClient, setCookieClient } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useParams, useSearchParams } from 'next/navigation';
 import { type MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';

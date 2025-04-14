@@ -1,4 +1,4 @@
-import type { ADMIN_ROUTES, CREATOR_ROUTES } from '@oe/core/utils/routes';
+import type { ADMIN_ROUTES, CREATOR_ROUTES } from '@oe/core';
 import type { HTTPPagination } from './fetch';
 
 // Permission Page Config

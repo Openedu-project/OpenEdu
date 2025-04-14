@@ -1,4 +1,4 @@
-import SetupBlogCategoryPage from '@oe/dashboard/blog-admin/blog-category/page';
+import { SetupBlogCategoryPage } from "@oe/dashboard";
 
 export default function BlogCategory() {
   return <SetupBlogCategoryPage />;

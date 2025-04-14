@@ -3,7 +3,7 @@ import { GripVertical, Trash2 } from 'lucide-react';
 import type { MouseEvent } from 'react';
 import { Button } from '#shadcn/button';
 import type { SortableItemProps } from '../types';
-import FormFieldItem from './form-field-item';
+import { FormFieldItem } from './form-field-item';
 
 export function FormFieldSortItem({ field, form, shouldSort = true, onSelect, onRemove }: SortableItemProps) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: field.name });

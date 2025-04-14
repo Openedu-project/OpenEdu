@@ -1,7 +1,7 @@
 import headerBanner from '@oe/assets/images/header-banner.png';
-import { Image } from '@oe/ui/components/image';
-import { SubTitle, Title } from '@oe/ui/components/title';
-import { cn } from '@oe/ui/utils/cn';
+import { Image } from '@oe/ui';
+import { SubTitle, Title } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import type { SectionComponent } from '../../_types/theme-page';
 import { StatsCard } from './_components/hero-stats-card';
@@ -41,4 +41,4 @@ const AcademiaHomepageHero: SectionComponent<'homepage', 'hero'> = ({ className 
   );
 };
 
-export default AcademiaHomepageHero;
+export { AcademiaHomepageHero };

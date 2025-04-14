@@ -1,6 +1,6 @@
-import { bankAccountSchema } from '@oe/api/schemas/bankAccountSchema';
-import type { IBankAccountValue } from '@oe/api/schemas/wallet';
-import type { z } from '@oe/api/utils/zod';
+import type { z } from '@oe/api';
+import { bankAccountSchema } from '@oe/api';
+import type { IBankAccountValue } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { Input } from '#components/dynamic-form/form-components/input';
 import { Modal, type ModalProps } from '#components/modal';

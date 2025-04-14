@@ -1,17 +1,13 @@
-import type { IUserProfile } from '@oe/api/types/user-profile';
-import Global from '@oe/assets/icons/global';
-import { abbreviateNumber } from '@oe/core/utils/helpers';
+import type { IUserProfile } from '@oe/api';
+import { Global } from '@oe/assets';
+import { abbreviateNumber } from '@oe/core';
 import { Link } from '#common/navigation';
 import { SocialIcon, getFilteredSocialProps } from '#components/social-icon';
 
 const HTTP_REGEX = /^(https?:\/\/)/;
 const HTTP_PREFIX = 'https://';
 
-export default function CreatorInfor({
-  creatorData,
-}: {
-  creatorData: IUserProfile;
-}) {
+export function CreatorInfor({ creatorData }: { creatorData: IUserProfile }) {
   const props = getFilteredSocialProps(creatorData?.props as unknown as Record<string, string>);
 
   const stats = [

@@ -1,7 +1,13 @@
-import { BlinkIcon } from '@oe/assets/icons/blink';
-import { cn } from '@oe/ui/utils/cn';
+import { BlinkIcon } from '@oe/assets';
+import { cn } from '#utils/cn';
 
-const SubTitle = ({ children, className }: { children: string; className?: string }) => {
+const SubTitle = ({
+  children,
+  className,
+}: {
+  children: string;
+  className?: string;
+}) => {
   return (
     <div className="flex items-center gap-2">
       <BlinkIcon height={40} width={40} />

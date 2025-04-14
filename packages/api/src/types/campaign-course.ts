@@ -1,4 +1,4 @@
-import type { ICourse, IThumbnail } from './course/course';
+import type { ICourse, IThumbnail } from './course';
 import type { HTTPPagination } from './fetch';
 
 export interface IAffiliateCampaignCourse {

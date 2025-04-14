@@ -1,20 +1,27 @@
-'use client';
-import { useCreateOrUpdateThemeConfig, useGetTheme } from '@oe/api/hooks/useTheme';
-import { ThemeConfigMetadata } from '@oe/themes/components/theme-settings/index';
-import type { ThemeCollection, ThemeMetadata, ThemeName, ThemeSystem } from '@oe/themes/types';
-import { toast } from '@oe/ui/shadcn/sonner';
-import { useTranslations } from 'next-intl';
-import { useParams } from 'next/navigation';
-import ComingSoon from '../../_components/coming-soon';
+"use client";
+import { useCreateOrUpdateThemeConfig, useGetTheme } from "@oe/api";
+import { ThemeConfigMetadata } from "@oe/themes";
+import type {
+  ThemeCollection,
+  ThemeMetadata,
+  ThemeName,
+  ThemeSystem,
+} from "@oe/themes";
+import { toast } from "@oe/ui";
+import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
+import { ComingSoon } from "../../_components/coming-soon";
 
 export default function MetadataPage() {
-  const translate = useTranslations('themeNoti');
+  const translate = useTranslations("themeNoti");
   const { settingKey, themeName } = useParams();
   const { theme } = useGetTheme();
-  const { createOrUpdateThemeConfig, isLoadingCreateOrUpdateThemeConfig } = useCreateOrUpdateThemeConfig();
+  const { createOrUpdateThemeConfig, isLoadingCreateOrUpdateThemeConfig } =
+    useCreateOrUpdateThemeConfig();
 
   const currentTheme = theme?.[0]?.value;
-  const themeDefinition = currentTheme?.availableThemes?.[themeName as ThemeName];
+  const themeDefinition =
+    currentTheme?.availableThemes?.[themeName as ThemeName];
   const updateThemeSystem = (themeMetadata: ThemeMetadata): ThemeSystem => ({
     activedTheme: themeName as ThemeName,
     availableThemes: {
@@ -39,17 +46,17 @@ export default function MetadataPage() {
       });
 
       if (!response) {
-        throw new Error('Failed to update theme metadata');
+        throw new Error("Failed to update theme metadata");
       }
 
-      toast.success(translate('metadata.success'));
+      toast.success(translate("metadata.success"));
     } catch (error) {
-      toast.error(translate('metadata.error'));
-      console.error('Theme update error:', error);
+      toast.error(translate("metadata.error"));
+      console.error("Theme update error:", error);
     }
   };
 
-  if (settingKey === 'metadata') {
+  if (settingKey === "metadata") {
     return (
       <ThemeConfigMetadata
         isSubmitting={isLoadingCreateOrUpdateThemeConfig}

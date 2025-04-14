@@ -1,16 +1,13 @@
 "use client";
-import { useGetBlogsPublish } from "@oe/api/hooks/useBlog";
-import {
-  useGetPopularBlogs,
-  useUpdateFeaturedContent,
-} from "@oe/api/hooks/useFeaturedContent";
-import type { IBlog } from "@oe/api/types/blog";
-import type { IFeaturedContent } from "@oe/api/types/featured-contents";
-import { DndSortable } from "@oe/ui/components/dnd-sortable";
-import { PaginationCustom } from "@oe/ui/components/pagination-custom";
-import { Button } from "@oe/ui/shadcn/button";
-import { Input } from "@oe/ui/shadcn/input";
-import { toast } from "@oe/ui/shadcn/sonner";
+import type { IBlog } from "@oe/api";
+import { useGetBlogsPublish } from "@oe/api";
+import { useGetPopularBlogs, useUpdateFeaturedContent } from "@oe/api";
+import type { IFeaturedContent } from "@oe/api";
+import { toast } from "@oe/ui";
+import { Button } from "@oe/ui";
+import { DndSortable } from "@oe/ui";
+import { PaginationCustom } from "@oe/ui";
+import { Input } from "@oe/ui";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type React from "react";

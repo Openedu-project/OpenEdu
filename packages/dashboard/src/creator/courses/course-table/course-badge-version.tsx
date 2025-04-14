@@ -1,5 +1,5 @@
-import { Link } from '@oe/ui/common/navigation';
-import { Badge, type BadgeProps } from '@oe/ui/shadcn/badge';
+import { Badge, type BadgeProps } from '@oe/ui';
+import { Link } from '@oe/ui';
 
 interface ICourseBadgeVersion {
   variant?: BadgeProps['variant'];

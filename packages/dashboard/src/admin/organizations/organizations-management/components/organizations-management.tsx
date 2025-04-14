@@ -1,23 +1,23 @@
 'use client';
 
-import { useCreateOrganization, useUpdateOrganization } from '@oe/api/hooks/useOrganization';
-import type { ICreateOrganizationSchemaType } from '@oe/api/schemas/organization';
-import type { IOrganization, IOrganizationPayload } from '@oe/api/types/organizations';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { formatDate } from '@oe/core/utils/datetime';
-import type { FilterOption } from '@oe/ui/components/filter-search';
-import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { Button } from '@oe/ui/shadcn/button';
-import { toast } from '@oe/ui/shadcn/sonner';
+import type { IOrganization, IOrganizationPayload } from '@oe/api';
+import { API_ENDPOINT } from '@oe/api';
+import { useCreateOrganization, useUpdateOrganization } from '@oe/api';
+import type { HTTPErrorMetadata } from '@oe/api';
+import type { ICreateOrganizationSchemaType } from '@oe/api';
+import { formatDate } from '@oe/core';
+import { toast } from '@oe/ui';
+import type { FilterOption } from '@oe/ui';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
+import { Badge } from '@oe/ui';
+import { Button } from '@oe/ui';
 import { Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useRef, useState } from 'react';
-import ChangeStatusOrgModal from './change-status-modal';
+import { ChangeStatusOrgModal } from './change-status-modal';
 import { ViewOrganizationModal } from './view-organization-modal';
 
-export default function OrganizationsManagement() {
+export function OrganizationsManagement() {
   const t = useTranslations('organizationsManagement');
   const tError = useTranslations('errors');
 

@@ -1,3 +1,4 @@
+'use client';
 import { CircleX } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';

@@ -7,17 +7,17 @@ import { Button } from '#shadcn/button';
 import { Separator } from '#shadcn/separator';
 import { Sheet, SheetClose, SheetContent, SheetTitle, SheetTrigger } from '#shadcn/sheet';
 
-import { useCategoriesTree } from '@oe/api/hooks/useCategories';
-import { useGetOrganization, useGetOrganizationByDomain } from '@oe/api/hooks/useOrganization';
-import type { ICategoryTree } from '@oe/api/types/categories';
-import type { IOrganization } from '@oe/api/types/organizations';
-import { buildQueryParam } from '@oe/core/utils/url';
+import type { IOrganization } from '@oe/api';
+import { useGetOrganization, useGetOrganizationByDomain } from '@oe/api';
+import { useCategoriesTree } from '@oe/api';
+import type { ICategoryTree } from '@oe/api';
+import { buildQueryParam } from '@oe/core';
 import { useSearchParams } from 'next/navigation';
 import { usePathname, useRouter } from '#common/navigation';
-import CourseListFilterCategories from './course-list-filter-categories';
-import CourseListFilterCompletedCourses from './course-list-filter-completed-courses';
-import CourseListFilterLevel from './course-list-filter-level';
-import CourseListFilterOrganizations from './course-list-filter-organizations';
+import { CourseListFilterCategories } from './course-list-filter-categories';
+import { CourseListFilterCompletedCourses } from './course-list-filter-completed-courses';
+import { CourseListFilterLevel } from './course-list-filter-level';
+import { CourseListFilterOrganizations } from './course-list-filter-organizations';
 
 interface ICourseListFilter {
   categoryIdsSelected: string[];
@@ -26,7 +26,7 @@ interface ICourseListFilter {
   completeCourseSelected: string[];
 }
 
-export default function CourseListFilter({
+export function CourseListFilter({
   categoryIdsSelected,
   levelIdsSelected,
   orgIdsSelected,

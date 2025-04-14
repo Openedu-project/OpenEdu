@@ -52,4 +52,4 @@ const NotCreator = () => {
   );
 };
 
-export default NotCreator;
+export { NotCreator };

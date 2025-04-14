@@ -1,13 +1,13 @@
 'use client';
-import { useExchangeRates } from '@oe/api/hooks/useExchangeRates';
-import { currencyConverter } from '@oe/api/utils/wallet';
-import type { ISvgProps } from '@oe/assets/icons/types';
-import { DEFAULT_CURRENCY, formatCurrency } from '@oe/core/utils/currency';
-import { Button } from '@oe/ui/shadcn/button';
-import { Card, CardContent } from '@oe/ui/shadcn/card';
-import { cn } from '@oe/ui/utils/cn';
+import { useExchangeRates } from '@oe/api';
+import { currencyConverter } from '@oe/api';
+import type { ISvgProps } from '@oe/assets';
+import { DEFAULT_CURRENCY, formatCurrency } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { type ReactNode, useMemo } from 'react';
+import { Button } from '#shadcn/button';
+import { Card, CardContent } from '#shadcn/card';
+import { cn } from '#utils/cn';
 import { useWalletStore } from '../_store/useWalletStore';
 
 interface EarnCryptoCardProps {

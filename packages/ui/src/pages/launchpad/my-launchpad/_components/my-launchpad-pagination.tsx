@@ -1,12 +1,12 @@
 'use client';
 
-import { buildQueryParam } from '@oe/core/utils/url';
+import { buildQueryParam } from '@oe/core';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { usePathname, useRouter } from '#common/navigation';
 import { PaginationCustom } from '#components/pagination-custom';
 
-export default function MyLaunchpadPagination({
+export function MyLaunchpadPagination({
   currentPage = 1,
   totalCount = 1,
 }: {

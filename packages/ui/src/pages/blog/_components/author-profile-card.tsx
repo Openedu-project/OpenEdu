@@ -1,8 +1,8 @@
-import type { IUserProfile } from '@oe/api/types/user-profile';
+import type { IUserProfile } from '@oe/api';
 import avatar from '@oe/assets/images/org-avatar.png';
-import { abbreviateNumber } from '@oe/core/utils/helpers';
-import { BLOG_ROUTES, PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
+import { BLOG_ROUTES, PLATFORM_ROUTES } from '@oe/core';
+import { buildUrl } from '@oe/core';
+import { abbreviateNumber } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { Link } from '#common/navigation';
 import { FollowButton } from '#components/follow-button';
@@ -30,7 +30,10 @@ export function AuthorProfileCard({ profile, className, isMe = false, validateTa
       )}
     >
       <Link
-        href={buildUrl({ endpoint: PLATFORM_ROUTES.userProfile, params: { username: profile?.username } })}
+        href={buildUrl({
+          endpoint: PLATFORM_ROUTES.userProfile,
+          params: { username: profile?.username },
+        })}
         className="h-auto"
         target="_blank"
       >
@@ -44,14 +47,22 @@ export function AuthorProfileCard({ profile, className, isMe = false, validateTa
       <div className="mcaption-semibold16 flex flex-wrap gap-3 text-foreground">
         <span>
           {(profile.followers ?? 0) > 1
-            ? t.rich('numberFollowers', { number: abbreviateNumber(profile.followers) })
-            : t.rich('numberFollower', { number: abbreviateNumber(profile.followers ?? 0) })}
+            ? t.rich('numberFollowers', {
+                number: abbreviateNumber(profile.followers),
+              })
+            : t.rich('numberFollower', {
+                number: abbreviateNumber(profile.followers ?? 0),
+              })}
         </span>
         <span>&#x2022;</span>
         <span>
           {(profile.total_blogs ?? 0) > 1
-            ? t.rich('numberArticles', { number: abbreviateNumber(profile.total_blogs) })
-            : t.rich('numberArticle', { number: abbreviateNumber(profile.total_blogs ?? 0) })}
+            ? t.rich('numberArticles', {
+                number: abbreviateNumber(profile.total_blogs),
+              })
+            : t.rich('numberArticle', {
+                number: abbreviateNumber(profile.total_blogs ?? 0),
+              })}
         </span>
       </div>
 

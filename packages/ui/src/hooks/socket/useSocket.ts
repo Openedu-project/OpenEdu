@@ -1,6 +1,6 @@
 'use client';
-import type { IMessageData } from '@oe/api/types/conversation';
-import type { EventData, ISocketRes } from '@oe/api/types/socket';
+import type { IMessageData } from '@oe/api';
+import type { EventData, ISocketRes } from '@oe/api';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 import useWebSocket from 'react-use-websocket';

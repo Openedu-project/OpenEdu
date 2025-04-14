@@ -1,7 +1,7 @@
-import type { TLessonContent } from '@oe/api/types/course/basic';
-import { InputNumber } from '@oe/ui/components/input-number';
-import { InputTimeDuration } from '@oe/ui/components/input-time-duration';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
+import type { TLessonContent } from '@oe/api';
+import { InputNumber } from '@oe/ui';
+import { InputTimeDuration } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useWatch } from 'react-hook-form';
 import type { IQuizProps } from './types';

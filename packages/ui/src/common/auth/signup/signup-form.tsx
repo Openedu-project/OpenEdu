@@ -1,23 +1,23 @@
 'use client';
 
-import { type SignUpSchemaType, signUpSchema } from '@oe/api/schemas/authSchema';
-import { signUpService } from '@oe/api/services/auth';
-import { authEvents } from '@oe/api/utils/auth';
-import type { HTTPError } from '@oe/api/utils/http-error';
-import { AUTH_ROUTES, PLATFORM_ROUTES } from '@oe/core/utils/routes';
-import { Link } from '@oe/ui/common/navigation';
-import { InputPassword } from '@oe/ui/components/input-password';
-import { Button } from '@oe/ui/shadcn/button';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
+import type { HTTPError } from '@oe/api';
+import { signUpService } from '@oe/api';
+import { type SignUpSchemaType, signUpSchema } from '@oe/api';
+import { authEvents } from '@oe/api';
+import { AUTH_ROUTES, PLATFORM_ROUTES } from '@oe/core';
 import { MailIcon, UserIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 import { useState } from 'react';
+import { Link } from '#common/navigation';
 import { SuccessDialog } from '#components/dialog';
 import { FormWrapper } from '#components/form-wrapper';
+import { InputPassword } from '#components/input-password';
 import { Alert, AlertDescription } from '#shadcn/alert';
+import { Button } from '#shadcn/button';
+import { FormFieldWithLabel } from '#shadcn/form';
+import { Input } from '#shadcn/input';
 import { ResendButton } from '../resend-button';
 
 interface SignUpFormProps {
@@ -25,7 +25,7 @@ interface SignUpFormProps {
   tSignupTitle: string;
 }
 
-export default function SignUpForm({ tLoginTitle, tSignupTitle }: SignUpFormProps) {
+export function SignUpForm({ tLoginTitle, tSignupTitle }: SignUpFormProps) {
   const tAuth = useTranslations('auth');
   const tErrors = useTranslations('errors');
   const tGeneral = useTranslations('general');

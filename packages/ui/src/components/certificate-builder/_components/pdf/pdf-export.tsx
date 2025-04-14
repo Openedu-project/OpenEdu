@@ -1,15 +1,15 @@
 'use client';
 
-import type { ICertificateData, ICertificateTemplate } from '@oe/api/types/certificate';
+import type { ICertificateData, ICertificateTemplate } from '@oe/api';
+import { formatDate } from '@oe/core';
 import { Document, Image, Page, pdf } from '@react-pdf/renderer';
-import type { FC, MouseEvent } from 'react';
-import './pdf-fonts';
-import { formatDate } from '@oe/core/utils/datetime';
 import { Download } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import type { FC, MouseEvent } from 'react';
 import { toast } from 'sonner';
 import { Button, type ButtonProps } from '#shadcn/button';
 import { defaultFrame } from '../sidebar/constants';
+import { registerFonts } from './pdf-fonts';
 import { PDFImageRenderer } from './pdf-image-renderer';
 import { PDFOrganizationRenderer } from './pdf-organization-renderer';
 import { PDFRichTextRenderer } from './pdf-rich-text-renderer';
@@ -20,6 +20,7 @@ export const CertificatePDF: FC<{
   template: ICertificateTemplate;
   data?: ICertificateData;
 }> = ({ template, data }) => {
+  registerFonts();
   return (
     <Document style={{ fontFamily: 'Inter' }}>
       <Page
@@ -100,7 +101,6 @@ interface ExportPDFButtonProps extends ButtonProps {
 
 export const ExportPDFButton = ({ fileName, template, data, onClick, ...props }: ExportPDFButtonProps) => {
   const tCertificate = useTranslations('certificate');
-
   const handleExportPDF = async (e: MouseEvent<HTMLButtonElement>) => {
     try {
       const blob = await generatePDF(template, data);

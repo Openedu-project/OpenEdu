@@ -1,4 +1,4 @@
-import type { ILaunchpad } from '@oe/api/types/launchpad';
+import type { ILaunchpad } from '@oe/api';
 import { Loader2 } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import { CampainCardCompact } from '../../components/campaign-card';
@@ -54,4 +54,4 @@ const LaunchpadListSection = async ({
   );
 };
 
-export default LaunchpadListSection;
+export { LaunchpadListSection };

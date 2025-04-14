@@ -1,14 +1,14 @@
-import { deleteCourseService } from '@oe/api/services/course';
-import { duplicateCourseService } from '@oe/api/services/course';
-import type { ICourse } from '@oe/api/types/course/course';
-import { DeleteButton } from '@oe/ui/components/delete-button';
-import { useTable } from '@oe/ui/components/table';
-import { Button } from '@oe/ui/shadcn/button';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { deleteCourseService } from '@oe/api';
+import { duplicateCourseService } from '@oe/api';
+import type { ICourse } from '@oe/api';
+import { toast } from '@oe/ui';
+import { useTable } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { DeleteButton } from '@oe/ui';
 import { CopyIcon, TrashIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-export default function CourseActions({ data }: { data: ICourse }) {
+export function CourseActions({ data }: { data: ICourse }) {
   const tCourse = useTranslations('course');
   const { mutateAndClearCache } = useTable();
 

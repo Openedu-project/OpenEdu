@@ -1,10 +1,6 @@
-import { DashboardLayout } from '@oe/ui/common/layout';
+import { DashboardLayout } from '@oe/ui';
 import type { ReactNode } from 'react';
 
-export default function AdminLayoutNoSidebar({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export function AdminLayoutNoSidebar({ children }: { children: ReactNode }) {
   return <DashboardLayout className="overflow-hidden">{children}</DashboardLayout>;
 }

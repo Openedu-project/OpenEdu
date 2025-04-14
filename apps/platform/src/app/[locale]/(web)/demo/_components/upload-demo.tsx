@@ -1,12 +1,12 @@
 "use client";
-import type { IFileResponse } from "@oe/api/types/file";
-import { Image } from "@oe/ui/components/image";
-import { Uploader } from "@oe/ui/components/uploader";
-import { Button } from "@oe/ui/shadcn/button";
+import type { IFileResponse } from "@oe/api";
+import { Uploader } from "@oe/ui";
+import { Button } from "@oe/ui";
+import { Image } from "@oe/ui";
 import { Camera, User2 } from "lucide-react";
 import { useState } from "react";
 
-export default function UploadDemo() {
+export function UploadDemo() {
   const [fileList, setFileList] = useState<IFileResponse[]>([]);
   return (
     <div>

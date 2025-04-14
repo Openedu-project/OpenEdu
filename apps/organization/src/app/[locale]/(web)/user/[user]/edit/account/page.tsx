@@ -1,4 +1,4 @@
-import EditAccount from '@oe/ui/pages/user/edit/account';
+import { EditAccount } from "@oe/ui";
 
 export default function EditAccountPage() {
   return <EditAccount />;

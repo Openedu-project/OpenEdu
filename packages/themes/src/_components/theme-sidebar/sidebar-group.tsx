@@ -1,7 +1,7 @@
 'use client';
-import type { AllSidebarKeys, MenuItem } from '@oe/themes/types';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@oe/ui/shadcn/collapsible';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@oe/ui';
 import { ChevronDown } from 'lucide-react';
+import type { AllSidebarKeys, MenuItem } from '#types';
 import { SidebarItem } from './sidebar-item';
 
 interface SidebarGroupProps {

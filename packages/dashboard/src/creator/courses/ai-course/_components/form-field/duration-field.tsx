@@ -1,9 +1,9 @@
 'use client';
 
-import type { ICreateAICourseOutline } from '@oe/api/schemas/courses/createCourseSchema';
-import { Autocomplete } from '@oe/ui/components/autocomplete';
-import { InputNumber } from '@oe/ui/components/input-number';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
+import type { ICreateAICourseOutline } from '@oe/api';
+import { Autocomplete } from '@oe/ui';
+import { InputNumber } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import type { UseFormReturn } from 'react-hook-form';
 

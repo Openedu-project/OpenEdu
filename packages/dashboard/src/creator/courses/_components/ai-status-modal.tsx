@@ -1,5 +1,5 @@
-import type { IAICourseStatus } from '@oe/api/types/course/ai-course';
-import { Modal } from '@oe/ui/components/modal';
+import type { IAICourseStatus } from '@oe/api';
+import { Modal } from '@oe/ui';
 import { CircleCheckBig, Loader2, TriangleAlert } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
@@ -20,7 +20,7 @@ interface IAIStatusModal {
 
 export type IAIStatus = IAICourseStatus;
 
-export default function AIStatusModal({
+export function AIStatusModal({
   open = false,
   status = 'pending',
   title,

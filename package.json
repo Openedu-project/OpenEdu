@@ -4,6 +4,15 @@
   "type": "module",
   "scripts": {
     "build": "turbo run build",
+    "build-all": "pnpm run build-packages && pnpm run build",
+    "build-packages": "pnpm run build-core && pnpm run build-api && pnpm run build-assets && pnpm run build-i18n && pnpm run build-ui && pnpm run build-dashboard",
+    "build-core": "turbo run build --filter=@oe/core",
+    "build-api": "turbo run build --filter=@oe/api",
+    "build-assets": "turbo run build --filter=@oe/assets",
+    "build-i18n": "turbo run build --filter=@oe/i18n",
+    "build-ui": "turbo run build --filter=@oe/ui",
+    "build-dashboard": "turbo run build --filter=@oe/dashboard",
+    "build-deploy": "turbo run build --filter=platform...",
     "dev": "turbo run dev",
     "dev:builder": "turbo run dev:builder",
     "start": "turbo run start",
@@ -13,18 +22,31 @@
     "deps": "sherif",
     "deps:fix": "sherif --fix --no-install",
     "ui": "pnpm run --filter @oe/ui ui",
-    "clean": "turbo run clean && rm -rf .turbo && rm -rf node_modules && rm pnpm-lock.yaml"
+    "clean": "turbo run clean && rm -rf .turbo && rm -rf node_modules && rm -rf dist && rm pnpm-lock.yaml",
+    "clean:build": "turbo run clean && rm -rf .turbo && turbo run clean:build"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@commitlint/config-conventional": "^19.8.0",
-    "dotenv": "^16.4.7",
-    "lefthook": "^1.11.6",
-    "sherif": "^1.4.0",
-    "turbo": "^2.4.4",
-    "typescript": "^5.8.2"
+    "@rollup/plugin-alias": "^5.1.1",
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-replace": "^6.0.2",
+    "dotenv": "^16.5.0",
+    "execa": "^9.5.2",
+    "fast-glob": "^3.3.3",
+    "lefthook": "^1.11.8",
+    "rollup": "^4.39.0",
+    "rollup-plugin-esbuild": "^6.2.1",
+    "rollup-plugin-import-css": "^3.5.8",
+    "rollup-plugin-preserve-directives": "^0.4.0",
+    "sherif": "^1.5.0",
+    "tsx": "^4.19.3",
+    "turbo": "^2.5.0",
+    "typescript": "^5.8.3"
   },
-  "packageManager": "pnpm@10.7.1",
+  "packageManager": "pnpm@10.8.0",
   "engines": {
     "node": ">=20"
   }

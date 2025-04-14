@@ -1,8 +1,8 @@
-import { DashboardHeaderCard } from '@oe/ui/common/layout';
+import { DashboardHeaderCard } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import WithdrawRequestList from './_components/withdraw-request-list';
+import { WithdrawRequestList } from './_components/withdraw-request-list';
 
-export default function WithdrawRequest() {
+export function WithdrawRequest() {
   const tDashboard = useTranslations('dashboard');
   const t = useTranslations('withdrawal');
 

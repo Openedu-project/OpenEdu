@@ -1,12 +1,12 @@
-import { type ICreateBaseCourse, createBaseCourseSchema } from '@oe/api/schemas/courses/createCourseSchema';
-import { Modal } from '@oe/ui/components/modal';
-import { RichTextEditor } from '@oe/ui/components/rich-text';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { type ICreateBaseCourse, createBaseCourseSchema } from '@oe/api';
+import { toast } from '@oe/ui';
+import { Modal } from '@oe/ui';
+import { RichTextEditor } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
+import { Input } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
-export default function CreateCourseModal({
+export function CreateCourseModal({
   open,
   onClose,
   onSubmit,

@@ -1,15 +1,15 @@
 'use client';
-
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import type { IMyCourseResponse, TMyCourseStatus } from '@oe/api/types/my-learning-space';
-import { Link } from '@oe/ui/common/navigation';
-import { Card, CardContent } from '@oe/ui/shadcn/card';
-import { cn } from '@oe/ui/utils/cn';
-import { createCourseUrl } from '@oe/ui/utils/course-url';
-import { useEffect, useState } from 'react';
+import type { ICourseOutline } from '@oe/api';
+import type { IMyCourseResponse, TMyCourseStatus } from '@oe/api';
+import { Link } from '@oe/ui';
+import { Card, CardContent } from '@oe/ui';
+import { cn } from '@oe/ui';
+import { createCourseUrl } from '@oe/ui';
+import { useEffect } from 'react';
+import { useState } from 'react';
 import type { KeyedMutator } from 'swr';
 import { CourseDetails } from './course-detail';
-import CourseRender from './course-render';
+import { CourseRender } from './course-render';
 import { CourseThumbnail } from './course-thumbnail';
 
 interface ICourseCard {
@@ -35,7 +35,7 @@ const getCoursePath = (courseData: ICourseOutline, courseStatus: TMyCourseStatus
     : createCourseUrl('detail', { slug });
 };
 
-export default function CourseCard({
+export function CourseCard({
   courseData,
   className,
   contentClassName = '',
@@ -66,7 +66,7 @@ export default function CourseCard({
     } else {
       setDomain('');
     }
-  }, [org, courseData?.slug]);
+  }, [org]);
 
   return (
     <div className={cn('group relative w-full', className)}>

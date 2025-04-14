@@ -1,13 +1,13 @@
-import AIFeatureSection from "./_components/ai-features";
-import BlogsSection from "./_components/blogs-section";
-import CTASection from "./_components/call-to-action";
-import CourseLaunchpadSection from "./_components/course-launchpad";
-import CreatorsSection from "./_components/creators";
-import HeroSection from "./_components/hero-banner";
-import LearningPathSection from "./_components/learning-path";
-import OrganizationSection from "./_components/organizations";
-import PopularCoursesSection from "./_components/polular-courses";
-import ReferralProgramSection from "./_components/referral";
+import { AIFeatureSection } from "./_components/ai-features";
+import { BlogsSection } from "./_components/blogs-section";
+import { CTASection } from "./_components/call-to-action";
+import { LaunchpadSection } from "./_components/course-launchpad";
+import { CreatorsSection } from "./_components/creators";
+import { HeroSection } from "./_components/hero-banner";
+import { LearningPathSection } from "./_components/learning-path";
+import { OrganizationSection } from "./_components/organizations";
+import { PopularCoursesSection } from "./_components/polular-courses";
+import { ReferralProgramSection } from "./_components/referral";
 
 export default function Home() {
   return (
@@ -18,7 +18,7 @@ export default function Home() {
       {/* <AIAssistantSection /> */}
       <ReferralProgramSection />
       <AIFeatureSection />
-      <CourseLaunchpadSection />
+      <LaunchpadSection />
       {/* <TestimonialsSection /> */}
       <CreatorsSection />
       <BlogsSection />

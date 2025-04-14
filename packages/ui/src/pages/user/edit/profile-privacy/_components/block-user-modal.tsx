@@ -1,7 +1,7 @@
-import type { IBlockingUser } from '@oe/api/types/user-profile';
-import { Modal } from '@oe/ui/components/modal';
+import type { IBlockingUser } from '@oe/api';
 import { useTranslations } from 'next-intl';
-import UserListForm from './user-list-form';
+import { Modal } from '#components/modal';
+import { UserListForm } from './user-list-form';
 
 interface IProps {
   data?: IBlockingUser[];
@@ -17,7 +17,7 @@ interface IProps {
 
 export const BLOCK_USER_MODAL = 'modal_block_user';
 
-export default function BlockUserModal({
+export function BlockUserModal({
   data,
   page,
   totalItems,

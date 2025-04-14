@@ -1,29 +1,24 @@
 'use client';
-import {
-  useDeleteCommission,
-  useGetCommissionList,
-  usePostCommission,
-  usePutCommission,
-} from '@oe/api/hooks/useCommission';
-import type { ICommissionItem, ICommissionPayload, RefType } from '@oe/api/types/commission';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { RoleButton } from '@oe/ui/components/role-button';
-import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { buttonVariants } from '@oe/ui/shadcn/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@oe/ui/shadcn/dropdown-menu';
-import { toast } from '@oe/ui/shadcn/sonner';
-import { cn } from '@oe/ui/utils/cn';
+import { API_ENDPOINT } from '@oe/api';
+import type { HTTPErrorMetadata } from '@oe/api';
+import type { ICommissionItem, ICommissionPayload, RefType } from '@oe/api';
+import { useDeleteCommission, useGetCommissionList, usePostCommission, usePutCommission } from '@oe/api';
+import { toast } from '@oe/ui';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
+import { Badge } from '@oe/ui';
+import { buttonVariants } from '@oe/ui';
+import { RoleButton } from '@oe/ui';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { ChevronDown, Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import CommissionBonusesModal from './commissions-bonuses-detail';
-import DeleteCommissionModal from './commissions-detele-modal';
-import FormBaseRateCommissionModal from './commissions-form-base-rate-modal';
-import FormPartnerCommissionModal from './commissions-form-partner-modal';
-import FormSpecificRefCommissionModal from './commissions-form-specific-ref-modal';
+import { CommissionBonusesModal } from './commissions-bonuses-detail';
+import { DeleteCommissionModal } from './commissions-detele-modal';
+import { FormBaseRateCommissionModal } from './commissions-form-base-rate-modal';
+import { FormPartnerCommissionModal } from './commissions-form-partner-modal';
+import { FormSpecificRefCommissionModal } from './commissions-form-specific-ref-modal';
 
 type BadgeVariant = 'success' | 'destructive' | 'secondary' | 'default' | 'outline' | null | undefined;
 type StatusType = 'user' | 'kol' | 'purchased_user' | 'agency';
@@ -39,7 +34,7 @@ const generateVariantBadge = (status: string): BadgeVariant => {
   return obj[status as StatusType] ?? 'secondary';
 };
 
-export default function CommissionList() {
+export function CommissionList() {
   const t = useTranslations('affiliateDetailCommission');
   const tError = useTranslations('errors');
 

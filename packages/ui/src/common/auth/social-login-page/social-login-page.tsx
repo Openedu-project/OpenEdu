@@ -1,5 +1,5 @@
-import { PROVIDERS, createFacebookAuthorizeUrl, createGoogleAuthorizeUrl } from '@oe/api/utils/social-auth';
-import { PLATFORM_ROUTES } from '@oe/core/utils/routes';
+import { PROVIDERS, createFacebookAuthorizeUrl, createGoogleAuthorizeUrl } from '@oe/api';
+import { PLATFORM_ROUTES } from '@oe/core';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
@@ -16,10 +16,10 @@ export async function SocialLoginPage() {
   }
 
   if (provider === PROVIDERS.facebook) {
-    const url = createFacebookAuthorizeUrl(referrer, originUrl);
+    const url = await createFacebookAuthorizeUrl(referrer, originUrl);
     redirect(url);
   } else if (provider === PROVIDERS.google) {
-    const url = createGoogleAuthorizeUrl(referrer, originUrl);
+    const url = await createGoogleAuthorizeUrl(referrer, originUrl);
     redirect(url);
   }
 

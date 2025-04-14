@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function MagicPen({ className, color = '#484AE7', width, height }: ISvgProps) {
+export function MagicPen({ className, color = '#484AE7', width, height }: ISvgProps) {
   return (
     <svg
       width={width ?? '16'}

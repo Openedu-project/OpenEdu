@@ -1,5 +1,5 @@
-import AffiliateCampaignCoursePage from './campaign-courses/page';
+import { AffiliateCampaignDetailCourse } from "@oe/dashboard";
 
 export default function CoursesItemPage() {
-  return <AffiliateCampaignCoursePage />;
+  return <AffiliateCampaignDetailCourse />;
 }

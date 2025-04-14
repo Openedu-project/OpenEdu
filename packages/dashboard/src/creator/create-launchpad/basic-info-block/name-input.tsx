@@ -1,13 +1,14 @@
-import { usePatchLaunchpadDetail } from '@oe/api/hooks/useAdminLaunchpad';
-import type { ICreateLaunchpadRequest, ILaunchpad } from '@oe/api/types/launchpad';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { Button } from '@oe/ui/shadcn/button';
-import { Input } from '@oe/ui/shadcn/input';
+'use client';
+import type { HTTPErrorMetadata } from '@oe/api';
+import type { ICreateLaunchpadRequest, ILaunchpad } from '@oe/api';
+import { usePatchLaunchpadDetail } from '@oe/api';
+import { Button } from '@oe/ui';
+import { Input } from '@oe/ui';
+import { toast } from '@oe/ui';
 import { Loader2 } from 'lucide-react';
 import { Check, PencilLine, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useCallback, useRef, useState } from 'react';
-import { toast } from 'sonner';
 
 interface Props {
   launchpad: ILaunchpad;
@@ -92,4 +93,4 @@ const NameInput = ({ launchpad, mutateLaunchpad }: Props) => {
   );
 };
 
-export default NameInput;
+export { NameInput };

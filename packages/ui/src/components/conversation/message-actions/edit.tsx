@@ -16,4 +16,4 @@ const EditButton = ({
   </Button>
 );
 
-export default EditButton;
+export { EditButton };

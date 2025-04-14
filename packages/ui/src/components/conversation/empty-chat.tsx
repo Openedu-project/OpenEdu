@@ -1,15 +1,12 @@
-import type { TAgentType } from '@oe/api/types/conversation';
+import type { TAgentType } from '@oe/api';
 import AIChat from '@oe/assets/images/ai/ai-chat.png';
 import { useTranslations } from 'next-intl';
 import { Image } from '#components/image';
 import { AI_SIDEBAR, TRANSLATE_AGENT_KEY } from './constants';
 import { PromptGrid } from './prompt/prompt-grid';
+import { PromptPopup } from './prompt/prompt-popup';
 
-export default function EmptyChat({
-  agent = 'ai_search',
-}: {
-  agent: TAgentType;
-}) {
+export function EmptyChat({ agent = 'ai_search' }: { agent: TAgentType }) {
   const tAI = useTranslations('aiAssistant');
   const agentData = AI_SIDEBAR()?.find(data => data.agent === agent);
   return (
@@ -21,7 +18,13 @@ export default function EmptyChat({
         {tAI(agentData?.lableKey ?? 'generalChat')}
       </h2>
       <p className="md:mcaption-regular20">{tAI(agentData?.descKey ?? 'chatDesc')}</p>
-      <PromptGrid className="mt-4 px-2 md:mt-8" name={tAI(TRANSLATE_AGENT_KEY[agent])} agent={agent} litmited={8} />
+      <PromptGrid
+        className="mt-4 px-2 md:mt-8"
+        name={tAI(TRANSLATE_AGENT_KEY[agent])}
+        agent={agent}
+        litmited={8}
+        PromptPopup={PromptPopup}
+      />
     </div>
   );
 }

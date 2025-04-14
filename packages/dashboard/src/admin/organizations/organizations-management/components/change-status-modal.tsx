@@ -1,4 +1,4 @@
-import { Modal } from '@oe/ui/components/modal';
+import { Modal } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
 interface IChangeStatusOrgModal {
@@ -6,7 +6,7 @@ interface IChangeStatusOrgModal {
   onClose: () => void;
 }
 
-export default function ChangeStatusOrgModal({ onSubmit, onClose }: IChangeStatusOrgModal) {
+export function ChangeStatusOrgModal({ onSubmit, onClose }: IChangeStatusOrgModal) {
   const t = useTranslations('organizationsManagement.changeStatusOrgModal');
 
   return (

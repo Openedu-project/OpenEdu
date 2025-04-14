@@ -1,9 +1,4 @@
-export default function CloseCircle({
-  width = 24,
-  height = 24,
-  className = "",
-  color = "#1A1A1A",
-}) {
+export function CloseCircle({ width = 24, height = 24, className = '', color = '#1A1A1A' }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -1,12 +1,12 @@
 'use client';
 
-import { useUnblockUser } from '@oe/api/hooks/useUserProfile';
-import { pickCharacters } from '@oe/core/utils/string';
-import { Modal } from '@oe/ui/components/modal';
-import { Avatar, AvatarFallback, AvatarImage } from '@oe/ui/shadcn/avatar';
-import { Button } from '@oe/ui/shadcn/button';
+import { useUnblockUser } from '@oe/api';
+import { pickCharacters } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
+import { Modal } from '#components/modal';
+import { Avatar, AvatarFallback, AvatarImage } from '#shadcn/avatar';
+import { Button } from '#shadcn/button';
 
 interface Props {
   id: string;
@@ -15,7 +15,7 @@ interface Props {
   onUnbBlockUser: (userId: string) => Promise<void>;
 }
 
-export default function UserBlocking({ id, avatar, name, onUnbBlockUser }: Props) {
+export function UserBlocking({ id, avatar, name, onUnbBlockUser }: Props) {
   const tBlocking = useTranslations('userProfile.privacy');
 
   const [isOpenModalUnblock, setIsOpenModalUnblock] = useState<boolean>(false);

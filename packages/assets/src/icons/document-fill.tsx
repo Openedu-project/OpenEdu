@@ -1,6 +1,6 @@
 import type { ISvgProps } from './types';
 
-export default function DocumentFill({ className, color = '#6E6E6E', width = 24, height = 24 }: ISvgProps) {
+export function DocumentFill({ className, color = '#6E6E6E', width = 24, height = 24 }: ISvgProps) {
   return (
     <svg
       className={className}

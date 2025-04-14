@@ -1,4 +1,4 @@
-import type { ICertificate, ICertificateElement, ICertificateTemplate } from '@oe/api/types/certificate';
+import type { ICertificate, ICertificateElement, ICertificateTemplate } from '@oe/api';
 
 export interface ICertificateHistoryState {
   past: ICertificateTemplate[];

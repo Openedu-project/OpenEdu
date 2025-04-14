@@ -1,4 +1,4 @@
-import { WalletHistoryPage } from '@oe/ui/pages/wallet/history';
+import { WalletHistoryPage } from "@oe/ui";
 const WalletHistory = () => <WalletHistoryPage />;
 
 export default WalletHistory;

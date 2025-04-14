@@ -1,5 +1,5 @@
-import type { ILessonContent } from '@oe/api/types/course/segment';
-import { createStore } from '@oe/core/store';
+import type { ILessonContent } from '@oe/api';
+import { createStore } from '@oe/core';
 
 interface AccordionState {
   [contentId: string]: string[]; // contentId -> quizIds[]

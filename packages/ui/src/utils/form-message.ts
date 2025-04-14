@@ -1,4 +1,4 @@
-import { toTitleCase } from '@oe/core/utils/string';
+import { toTitleCase } from '@oe/core';
 import type { FieldError } from 'react-hook-form';
 
 export function parseFormMessage(message: string) {

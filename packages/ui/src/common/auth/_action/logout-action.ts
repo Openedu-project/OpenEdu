@@ -1,7 +1,7 @@
 'use server';
 
-import { setCookie } from '@oe/core/utils/cookie';
-import { PLATFORM_ROUTES, isProtectedRoute } from '@oe/core/utils/routes';
+import { PLATFORM_ROUTES, isProtectedRoute } from '@oe/core';
+import { setCookie } from '@oe/core';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 

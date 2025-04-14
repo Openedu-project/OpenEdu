@@ -1,4 +1,4 @@
-import UserBlogManagement from '@oe/dashboard/blog-admin/user-blog-management/page';
+import { UserBlogManagement } from "@oe/dashboard";
 
 export default function UserBlogManagementPage() {
   return <UserBlogManagement />;

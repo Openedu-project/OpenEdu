@@ -1,6 +1,6 @@
 'use client';
 
-import { uniqueID } from '@oe/core/utils/unique';
+import { uniqueID } from '@oe/core';
 import { Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Combobox } from '#components/combobox';
@@ -41,7 +41,12 @@ export function Components() {
           return (
             <Button
               key={component.fieldType}
-              onClick={() => addField({ ...component, name: `${component.name}-${uniqueID()}` })}
+              onClick={() =>
+                addField({
+                  ...component,
+                  name: `${component.name}-${uniqueID()}`,
+                })
+              }
               className="justify-start gap-2"
             >
               {Icon && <Icon className="h-4 w-4" />}

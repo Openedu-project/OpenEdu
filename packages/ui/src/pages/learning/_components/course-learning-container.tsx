@@ -1,11 +1,11 @@
-import type { ICertificate } from '@oe/api/types/certificate';
-import type { ICourseOutline } from '@oe/api/types/course/course';
+import type { ICourseOutline } from '@oe/api';
+import type { ICertificate } from '@oe/api';
 import { CourseFormTriggerModal } from '#components/course-form-trigger';
 import { ScrollArea } from '#shadcn/scroll-area';
-import ContentSection from './content-section';
-import CourseOutline from './course-sidebar-section';
-import CourseTabs from './course-tabs/course-tabs';
-import ReceiveCertificateModal from './receive-certificate/receive-cert-modal';
+import { ContentSection } from './content-section';
+import { CourseOutline } from './course-sidebar-section';
+import { CourseTabs } from './course-tabs/course-tabs';
+import { ReceiveCertificateModal } from './receive-certificate/receive-cert-modal';
 
 interface ICourseLearning {
   course: ICourseOutline;
@@ -14,7 +14,7 @@ interface ICourseLearning {
   certificate?: ICertificate | null;
 }
 
-export default function CourseLearning({ course, section_uid, lesson_uid, certificate }: ICourseLearning) {
+export function CourseLearning({ course, section_uid, lesson_uid, certificate }: ICourseLearning) {
   return (
     <>
       <div className="flex h-full flex-col gap-1 bg-muted/50 py-4 lg:flex-row">

@@ -1,7 +1,7 @@
-import { socialLoginService } from '@oe/api/services/auth';
-import type { ISocialCallbackStateData } from '@oe/api/types/auth';
-import { jsonToBase64 } from '@oe/core/utils/decoded-token';
-import { AUTH_ROUTES } from '@oe/core/utils/routes';
+import { socialLoginService } from '@oe/api';
+import type { ISocialCallbackStateData } from '@oe/api';
+import { AUTH_ROUTES } from '@oe/core';
+import { jsonToBase64 } from '@oe/core';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 

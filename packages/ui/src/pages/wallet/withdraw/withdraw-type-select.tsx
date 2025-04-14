@@ -1,7 +1,7 @@
 'use client';
 
-import { type TWithdrawType, WITHDRAW_TYPE } from '@oe/api/utils/wallet';
-import { WALLET_ROUTES } from '@oe/core/utils/routes';
+import { type TWithdrawType, WITHDRAW_TYPE } from '@oe/api';
+import { WALLET_ROUTES } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';

@@ -1,4 +1,4 @@
-import type { IBlog } from '@oe/api/types/blog';
+import type { IBlog } from '@oe/api';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '#shadcn/tabs';
 import { cn } from '#utils/cn';
 import { TopBlogs } from './top-blog-section';

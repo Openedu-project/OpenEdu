@@ -1,5 +1,5 @@
-import type { ICertificateData, ICertificateElement } from '@oe/api/types/certificate';
-import { formatDate } from '@oe/core/utils/datetime';
+import type { ICertificateData, ICertificateElement } from '@oe/api';
+import { formatDate } from '@oe/core';
 
 export const fonts = [
   {

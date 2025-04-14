@@ -1,7 +1,7 @@
 import type { ThemeGlobal, ThemeSidebarGlobalKey } from '../../../_types/index';
-import ThemeBorderRadius from './theme-border-radius';
-import ThemeSettingColors from './theme-color';
-import ThemeFonts from './theme-font';
+import { ThemeBorderRadius } from './theme-border-radius';
+import { ThemeSettingColors } from './theme-color';
+import { ThemeFonts } from './theme-font';
 
 interface ThemeSettingGlobalProps {
   isLoading: boolean;
@@ -43,4 +43,4 @@ const ThemeSettingGlobal = ({ isLoading, settingKey, themeGlobalData, onSubmit }
   return <div>{renderContentSettingUIs()}</div>;
 };
 
-export default ThemeSettingGlobal;
+export { ThemeSettingGlobal };

@@ -1,9 +1,9 @@
 'use client';
 
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@oe/ui/shadcn/hover-card';
 import type React from 'react';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '#shadcn/hover-card';
 import { useConversationStore } from '#store/conversation-store';
 import { SourceCard } from '../sources/source-card';
 

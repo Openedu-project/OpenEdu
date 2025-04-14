@@ -39,4 +39,4 @@ const ContentPdf = ({
   );
 };
 
-export default ContentPdf;
+export { ContentPdf };

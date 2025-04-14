@@ -1,4 +1,4 @@
-export default function PersonCircle({ width = 37, height = 36, className = '', color = '#6E6E6E' }) {
+export function PersonCircle({ width = 37, height = 36, className = '', color = '#6E6E6E' }) {
   return (
     <svg
       className={className}

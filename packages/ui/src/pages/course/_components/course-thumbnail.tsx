@@ -1,7 +1,7 @@
 'use client';
-import type { ICoursePreviewVideo } from '@oe/api/types/course/basic';
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import type { IFileResponse } from '@oe/api/types/file';
+import type { ICourseOutline } from '@oe/api';
+import type { IFileResponse } from '@oe/api';
+import type { ICoursePreviewVideo } from '@oe/api';
 import { CirclePlayIcon, EyeIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
@@ -9,7 +9,7 @@ import { Image } from '#components/image';
 import { AspectRatio } from '#shadcn/aspect-ratio';
 import { cn } from '#utils/cn';
 import type { PreviewVideo } from '../_store/useCourseOutlineStore';
-import CoursePreviewModal from './preview-video-modal';
+import { CoursePreviewModal } from './preview-video-modal';
 
 const mapMediaToPreviewVideo = (media: IFileResponse, previewLessons?: ICoursePreviewVideo[]): PreviewVideo => {
   const matchingLesson = previewLessons?.find(lesson => lesson?.file_id === media.id);
@@ -117,4 +117,4 @@ const CourseThumbnail = ({ className, courseOutline }: CourseThumbnailProps) => 
   );
 };
 
-export default CourseThumbnail;
+export { CourseThumbnail };

@@ -1,4 +1,4 @@
-import type { ICourseOutline } from '@oe/api/types/course/course';
+import type { ICourseOutline } from '@oe/api';
 import type { MouseEvent, ReactNode } from 'react';
 import {
   EmailShareButton,

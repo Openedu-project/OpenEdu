@@ -1,4 +1,4 @@
-import type { LanguageCode } from '@oe/i18n/languages';
+import type { LanguageCode } from '@oe/i18n';
 import useSWR from 'swr';
 import { createSystemConfigSWRKey, getSystemConfigClient } from '#services/system-config';
 import type { ISystemConfigKey } from '#types/system-config';

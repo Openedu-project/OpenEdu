@@ -1,8 +1,8 @@
-import { DashboardMainPageLayout } from '@oe/ui/common/layout';
+import { DashboardMainPageLayout } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import OrganizationsManagement from './components/organizations-management';
+import { OrganizationsManagement } from './components/organizations-management';
 
-export default function OrganizationsManagementList() {
+export function OrganizationsManagementList() {
   const tDashboard = useTranslations('dashboard.organizations');
   const t = useTranslations('organizationsManagement');
 

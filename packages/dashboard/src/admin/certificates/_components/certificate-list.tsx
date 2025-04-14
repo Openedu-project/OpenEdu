@@ -1,24 +1,24 @@
 'use client';
 
-import { removeCertLayerService, updateCertEnableService } from '@oe/api/services/certificate';
-import type { ICertificate } from '@oe/api/types/certificate';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { formatDate } from '@oe/core/utils/datetime';
-import { ADMIN_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
-import { Link } from '@oe/ui/common/navigation';
-import { TemplateScalePreview } from '@oe/ui/components/certificate-builder';
-import { DeleteButton } from '@oe/ui/components/delete-button';
-import type { FilterOption } from '@oe/ui/components/filter-search';
-import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
-import { toast } from '@oe/ui/shadcn/sonner';
-import { Switch } from '@oe/ui/shadcn/switch';
-import { Tooltip } from '@oe/ui/shadcn/tooltip';
+import { API_ENDPOINT } from '@oe/api';
+import type { ICertificate } from '@oe/api';
+import { removeCertLayerService, updateCertEnableService } from '@oe/api';
+import { ADMIN_ROUTES } from '@oe/core';
+import { formatDate } from '@oe/core';
+import { buildUrl } from '@oe/core';
+import { toast } from '@oe/ui';
+import type { FilterOption } from '@oe/ui';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
+import { Link } from '@oe/ui';
+import { TemplateScalePreview } from '@oe/ui';
+import { DeleteButton } from '@oe/ui';
+import { Switch } from '@oe/ui';
+import { Tooltip } from '@oe/ui';
 import { Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
-export default function CertificatesList() {
+export function CertificatesList() {
   const tCertificate = useTranslations('certificate');
   const tableRef = useRef<TableRef<ICertificate>>(null);
   const [loading, setLoading] = useState(false);

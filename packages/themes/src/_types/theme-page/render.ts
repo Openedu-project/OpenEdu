@@ -1,5 +1,11 @@
 import type { ComponentType } from 'react';
-import type { BaseSectionProps, SectionComponent, SectionProps, SectionsByPage, ThemeName, ThemePageKey } from '.';
+import type { SectionComponent } from './components';
+import type { SectionProps } from './components';
+import type { ThemeName } from './core';
+import type { ThemePageKey } from './core';
+import type { BaseSectionProps } from './props';
+import type { SectionsByPage } from './sections';
+// import type { BaseSectionProps, SectionComponent, SectionProps, SectionsByPage, ThemeName, ThemePageKey } from '.';
 
 export type PageRender = {
   [K in ThemePageKey]?: {

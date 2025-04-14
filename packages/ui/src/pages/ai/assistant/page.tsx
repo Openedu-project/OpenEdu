@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { InputFrame, PromptCategory } from "#components/conversation";
 import { Image } from "#components/image";
 
-export default function AIAssistantPage() {
+export function AIAssistantPage() {
   const tAI = useTranslations("aiAssistant");
 
   return (

@@ -1,6 +1,6 @@
-import { Link } from '@oe/ui/common/navigation';
-import { buttonVariants } from '@oe/ui/shadcn/button';
-import { cn } from '@oe/ui/utils/cn';
+import { buttonVariants } from '@oe/ui';
+import { Link } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import type { HTMLAttributes } from 'react';
 
@@ -9,7 +9,7 @@ interface ISectionCard extends HTMLAttributes<HTMLDivElement> {
   //   children: ReactNode;
   viewAllButtonLink?: string;
 }
-export default function SectionCard({ title, children, viewAllButtonLink, className, ...props }: ISectionCard) {
+export function SectionCard({ title, children, viewAllButtonLink, className, ...props }: ISectionCard) {
   const t = useTranslations('general');
 
   return (

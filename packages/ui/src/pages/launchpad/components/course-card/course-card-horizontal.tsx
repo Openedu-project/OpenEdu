@@ -1,6 +1,6 @@
-import type { ILaunchpad } from '@oe/api/types/launchpad';
+import type { ILaunchpad } from '@oe/api';
 import DefaultImg from '@oe/assets/images/defaultimage.png';
-import { formatDate } from '@oe/core/utils/datetime';
+import { formatDate } from '@oe/core';
 import { getTranslations } from 'next-intl/server';
 import { Image } from '#components/image';
 import { cn } from '#utils/cn';
@@ -51,4 +51,4 @@ const CourseCardHorizontal = async ({
   );
 };
 
-export default CourseCardHorizontal;
+export { CourseCardHorizontal };

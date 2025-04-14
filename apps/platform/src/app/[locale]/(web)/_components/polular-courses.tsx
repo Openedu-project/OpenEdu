@@ -1,9 +1,9 @@
-import { getCoursesPublishService } from "@oe/api/services/course";
-import { Carousel } from "@oe/ui/shadcn/carousel";
+import { getCoursesPublishService } from "@oe/api";
+import { Carousel } from "@oe/ui";
 import { getTranslations } from "next-intl/server";
 import { CarouselWrapper } from "./popular-course-carousel";
 
-export default async function PopularCoursesSection() {
+export async function PopularCoursesSection() {
   const params = {
     page: 1,
     per_page: 16,

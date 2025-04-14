@@ -1,8 +1,8 @@
 'use client';
-import { useGetForm } from '@oe/api/hooks/useForms';
-import { getLearningProgressesService, updateLearningProgressService } from '@oe/api/services/learning-progress';
-import type { TLessonContent } from '@oe/api/types/course/basic';
-import type { ILessonContent } from '@oe/api/types/course/segment';
+import type { TLessonContent } from '@oe/api';
+import type { ILessonContent } from '@oe/api';
+import { useGetForm } from '@oe/api';
+import { getLearningProgressesService, updateLearningProgressService } from '@oe/api';
 import type React from 'react';
 import { useCallback, useEffect } from 'react';
 import { toast } from 'sonner';
@@ -200,4 +200,4 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps> = ({
   );
 };
 
-export default LessonContentBlocks;
+export { LessonContentBlocks, type LessonContentBlockProps };

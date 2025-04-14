@@ -1,8 +1,8 @@
-import { useGetUserAffiliateCampaignListWithoutAuth } from '@oe/api/hooks/useAffiliateCampaign';
-import { useGetMe } from '@oe/api/hooks/useMe';
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import { AFFILIATE_ROUTES } from '@oe/core/utils/routes';
-import { buildUrl } from '@oe/core/utils/url';
+import type { ICourseOutline } from '@oe/api';
+import { useGetMe } from '@oe/api';
+import { useGetUserAffiliateCampaignListWithoutAuth } from '@oe/api';
+import { AFFILIATE_ROUTES } from '@oe/core';
+import { buildUrl } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { Link } from '#common/navigation';
 import { buttonVariants } from '#shadcn/button';
@@ -41,4 +41,4 @@ const ShareToEarn = ({ courseData }: { courseData: ICourseOutline }) => {
   ) : null;
 };
 
-export default ShareToEarn;
+export { ShareToEarn };

@@ -1,7 +1,7 @@
 import { DndContext, type DragEndEvent, closestCenter } from '@dnd-kit/core';
 import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import type { ICertificateElement } from '@oe/api/types/certificate';
+import type { ICertificateElement } from '@oe/api';
 import { EyeIcon, EyeOffIcon, GripVertical } from 'lucide-react';
 import { Button } from '#shadcn/button';
 import { useCertificateBuilder } from '../../provider';

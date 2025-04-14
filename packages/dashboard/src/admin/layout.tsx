@@ -1,7 +1,7 @@
-import { getPermissionMyAccessService } from '@oe/api/services/permissions';
-import { ADMIN_ROUTES } from '@oe/core/utils/routes';
-import { checkSidebarPermissions } from '@oe/core/utils/sidebar-menu';
-import { DashboardLayout } from '@oe/ui/common/layout';
+import { getPermissionMyAccessService } from '@oe/api';
+import { ADMIN_ROUTES } from '@oe/core';
+import { checkSidebarPermissions } from '@oe/core';
+import { DashboardLayout } from '@oe/ui';
 import {
   Book,
   BookOpen,
@@ -36,7 +36,7 @@ import {
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
 
-export default async function Layout({ children }: { children: ReactNode }) {
+export async function AdminLayout({ children }: { children: ReactNode }) {
   const [permissions, tDashboard] = await Promise.all([
     getPermissionMyAccessService('', { params: undefined }),
     getTranslations('dashboard'),
@@ -135,6 +135,19 @@ export default async function Layout({ children }: { children: ReactNode }) {
             label: tDashboard('creators.invitations'),
             icon: <UserRoundPlusIcon className="h-5 w-5" />,
             href: ADMIN_ROUTES.creatorManagementInvitations,
+          },
+        ],
+      },
+      {
+        id: 'referral-program',
+        label: tDashboard('referralProgram.title'),
+        icon: <UserPenIcon className="h-5 w-5" />,
+        items: [
+          {
+            id: 'creators',
+            label: tDashboard('referralProgram.programManagement'),
+            icon: <Users2Icon className="h-5 w-5" />,
+            href: ADMIN_ROUTES.referralProgramManagement,
           },
         ],
       },

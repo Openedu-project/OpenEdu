@@ -1,4 +1,4 @@
-import FormHeightConfig from '../../form-config/form-height-config';
+import { FormHeightConfig } from '../../form-config/form-height-config';
 import type { FormFieldType } from '../../types';
 
 export function SpaceFieldConfig({

@@ -1,6 +1,6 @@
-import { Link } from '@oe/ui/common/navigation';
-import { Button } from '@oe/ui/shadcn/button';
-import { Card, CardContent } from '@oe/ui/shadcn/card';
+import { Button } from '@oe/ui';
+import { Link } from '@oe/ui';
+import { Card, CardContent } from '@oe/ui';
 import { ChevronRight } from 'lucide-react';
 
 interface ServiceCardProps {

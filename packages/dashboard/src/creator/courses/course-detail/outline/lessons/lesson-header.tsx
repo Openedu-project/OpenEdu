@@ -1,8 +1,8 @@
 'use client';
-import { DeleteButton } from '@oe/ui/components/delete-button';
-import { Button } from '@oe/ui/shadcn/button';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
+import { Button } from '@oe/ui';
+import { DeleteButton } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
+import { Input } from '@oe/ui';
 import { Check, Copy, Menu, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';

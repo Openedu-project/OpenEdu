@@ -1,11 +1,12 @@
+'use client';
 import { useEffect, useRef, useState } from 'react';
 
-import { deleteConversation, updateConversationTitle } from '@oe/api/services/conversation';
-import type { IChatHistory, IChatHistoryResponse } from '@oe/api/types/conversation';
-import type { HTTPResponse } from '@oe/api/types/fetch';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import type { HTTPError } from '@oe/api/utils/http-error';
-import { AI_ROUTES } from '@oe/core/utils/routes';
+import type { HTTPResponse } from '@oe/api';
+import { createAPIUrl } from '@oe/api';
+import type { HTTPError } from '@oe/api';
+import { deleteConversation, updateConversationTitle } from '@oe/api';
+import type { IChatHistory, IChatHistoryResponse } from '@oe/api';
+import { AI_ROUTES } from '@oe/core';
 import { MessageCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { RefObject } from 'react';
@@ -15,9 +16,9 @@ import { toast } from '#shadcn/sonner';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { AI_SIDEBAR } from '../constants';
-import MessageInput from '../message-input/message-input';
+import { MessageInput } from '../message-input/message-input';
 import type { ISendMessageParams } from '../type';
-import ActionDropdown from './history-actions-dropdown';
+import { ActionDropdown } from './history-actions-dropdown';
 
 interface IHistoryItem {
   className?: string;
@@ -57,7 +58,7 @@ export function useClickOutside<T extends HTMLElement>(
   return ref;
 }
 
-export default function AIHistoryItem({ className, item, mutate, pageIndex, activeId, callbackFn }: IHistoryItem) {
+export function AIHistoryItem({ className, item, mutate, pageIndex, activeId, callbackFn }: IHistoryItem) {
   const tError = useTranslations('errors');
 
   const [isEdit, setIsEdit] = useState(false);

@@ -1,15 +1,15 @@
 'use client';
 
-import { useGetCourseById } from '@oe/api/hooks/useCourse';
-import { type IPriceSettings, priceSettingsSchema } from '@oe/api/schemas/courses/createCourseSchema';
-import { updateCourseService } from '@oe/api/services/course';
-import type { ICourse } from '@oe/api/types/course/course';
-import { FormWrapper } from '@oe/ui/components/form-wrapper';
-import { Skeleton } from '@oe/ui/shadcn/skeleton';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { updateCourseService } from '@oe/api';
+import type { ICourse } from '@oe/api';
+import { useGetCourseById } from '@oe/api';
+import { type IPriceSettings, priceSettingsSchema } from '@oe/api';
+import { toast } from '@oe/ui';
+import { Skeleton } from '@oe/ui';
+import { FormWrapper } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
-import PriceForm from './price-form';
+import { PriceForm } from './price-form';
 
 function PriceSettingsForm() {
   const tCourse = useTranslations('course');
@@ -83,4 +83,4 @@ function PriceSettingsForm() {
   );
 }
 
-export default PriceSettingsForm;
+export { PriceSettingsForm };

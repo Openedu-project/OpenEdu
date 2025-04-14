@@ -1,4 +1,4 @@
-import { WALLET_ROUTES } from '@oe/core/utils/routes';
+import { WALLET_ROUTES } from '@oe/core';
 import { ChevronLeft } from 'lucide-react';
 import type { FC, ReactNode } from 'react';
 import { Link } from '#common/navigation';

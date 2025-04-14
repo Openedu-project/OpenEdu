@@ -1,4 +1,5 @@
-import type { TypeOf, z } from '@oe/api/utils/zod';
+'use client';
+import type { TypeOf, z } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { Fragment, useEffect, useState } from 'react';
 import type { MouseEvent, ReactNode } from 'react';

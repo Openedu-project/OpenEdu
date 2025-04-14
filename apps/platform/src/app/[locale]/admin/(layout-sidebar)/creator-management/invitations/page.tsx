@@ -1,4 +1,4 @@
-import InviteRequestManagement from '@oe/dashboard/admin/creator-management/invite-requests/page';
+import { InviteRequestManagement } from "@oe/dashboard";
 
 export default function InviteRequestPage() {
   return <InviteRequestManagement />;

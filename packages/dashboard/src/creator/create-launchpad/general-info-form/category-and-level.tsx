@@ -1,12 +1,7 @@
-import { useCategories } from '@oe/api/hooks/useCategories';
-import { Button } from '@oe/ui/shadcn/button';
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@oe/ui/shadcn/dropdown-menu';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
+import { useCategories } from '@oe/api';
+import { Button } from '@oe/ui';
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@oe/ui';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';
 import { ChevronDownIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { FieldValues, Path, UseFormReturn } from 'react-hook-form';
@@ -141,4 +136,4 @@ const CategoryAndLevel = <TFormValues extends FieldValues>({ form }: CategoryAnd
   );
 };
 
-export default CategoryAndLevel;
+export { CategoryAndLevel };

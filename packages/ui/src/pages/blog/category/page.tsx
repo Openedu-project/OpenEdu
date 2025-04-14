@@ -1,10 +1,16 @@
-import { getBlogsByCategoryService } from '@oe/api/services/blog';
+import { getBlogsByCategoryService } from '@oe/api';
 import { getTranslations } from 'next-intl/server';
 import { BlogHeader } from '../_components/blog-header';
 import { BlogList } from '../_components/blog-list';
 import { NoBlogData } from '../_components/no-blog-data';
 
-export default async function CategoryBlogPage({ name, id }: { name?: string; id: string }) {
+export async function CategoryBlogPage({
+  name,
+  id,
+}: {
+  name?: string;
+  id: string;
+}) {
   const [blogsData, t] = await Promise.all([
     getBlogsByCategoryService(undefined, {
       params: {

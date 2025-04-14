@@ -1,20 +1,20 @@
 'use client';
 
-import { useAddUserToBlock, useGetListUserAction } from '@oe/api/hooks/useUserProfile';
-import type { IBlockingUser } from '@oe/api/types/user-profile';
-import { Button } from '@oe/ui/shadcn/button';
+import type { IBlockingUser } from '@oe/api';
+import { useAddUserToBlock, useGetListUserAction } from '@oe/api';
 import { Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { Button } from '#shadcn/button';
 
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
+import type { HTTPErrorMetadata } from '@oe/api';
 import { toast } from 'sonner';
 import { Spinner } from '#components/spinner';
-import BlockUserModal from './block-user-modal';
-import UserBlocking from './user-blocking';
+import { BlockUserModal } from './block-user-modal';
+import { UserBlocking } from './user-blocking';
 
-export default function PrivacyContent() {
+export function PrivacyContent() {
   const tBlocking = useTranslations('userProfile.privacy');
   const tError = useTranslations('errors');
 

@@ -9,8 +9,8 @@ import type {
   IPaymentEventData,
   ISocketRes,
   ISocketStore,
-} from '@oe/api/types/socket';
-import { create } from 'zustand';
+} from '@oe/api';
+import { createStore } from '@oe/core';
 
 type ISocketKey =
   | 'badge'
@@ -22,7 +22,7 @@ type ISocketKey =
   | 'ai_course_status'
   | 'ai_chat_document_status';
 
-export const useSocketStore = create<ISocketStore>(set => {
+export const useSocketStore = createStore<ISocketStore>(set => {
   return {
     badgeData: null,
     courseData: null,

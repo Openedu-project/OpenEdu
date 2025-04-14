@@ -1,4 +1,4 @@
-import { buildUrl } from '@oe/core/utils/url';
+import { buildUrl } from '@oe/core';
 import type { IBankAccountPayload } from '#schemas/wallet';
 import type { ICryptoWithdrawPayload, IFiatWithdrawPayload } from '#schemas/withdrawSchema';
 import type { HTTPPagination } from '#types/fetch';

@@ -1,5 +1,5 @@
-import { type IReferrerRoutes, REFERRER_ROUTES } from '@oe/core/utils/routes';
-import { getUnlocalizedPathname } from '@oe/i18n/utils';
+import { type IReferrerRoutes, REFERRER_ROUTES } from '@oe/core';
+import { getUnlocalizedPathname } from '@oe/i18n';
 
 const localhostPattern = /localhost(:\d+)?/g;
 export function getReferrerAndOriginForAPIByUserUrl(userUrl: string) {

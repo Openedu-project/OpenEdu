@@ -1,6 +1,6 @@
 'use client';
 
-import type { ICertificateData, ICertificateTemplate } from '@oe/api/types/certificate';
+import type { ICertificateData, ICertificateTemplate } from '@oe/api';
 import { getElementPosition } from '../../utils';
 import { ElementRenderer } from './element-renderer';
 

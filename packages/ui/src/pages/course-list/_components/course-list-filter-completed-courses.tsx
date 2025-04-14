@@ -15,7 +15,7 @@ export interface OrganizationsSectionProps {
   handleCheckboxChange: (id: string) => void;
 }
 
-const CourseListFilterOrganizations = ({
+const CourseListFilterCompletedCourses = ({
   title,
   isOpen,
   toggleSection,
@@ -73,4 +73,4 @@ const CourseListFilterOrganizations = ({
   );
 };
 
-export default CourseListFilterOrganizations;
+export { CourseListFilterCompletedCourses };

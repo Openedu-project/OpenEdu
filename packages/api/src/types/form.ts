@@ -1,6 +1,6 @@
-import type { QUESTION_TYPE } from '@oe/core/utils/constants';
-import type { IPagination } from './fetch';
-export type TSort = 'create_at desc' | 'create_at asc' | '"order" asc';
+import type { QUESTION_TYPE } from '@oe/core';
+import type { IPagination, TSort } from './fetch';
+// export type TSort = 'create_at desc' | 'create_at asc' | '"order" asc';
 
 type Timestamp = number;
 

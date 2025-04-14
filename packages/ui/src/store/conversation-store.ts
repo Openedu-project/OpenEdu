@@ -1,5 +1,5 @@
-import type { IAIModel, IAIStatus, IAgenConfigs, IMessage, ISourceProps, TAgentType } from '@oe/api/types/conversation';
-import { create } from 'zustand';
+import type { IAIModel, IAIStatus, IAgenConfigs, IMessage, ISourceProps, TAgentType } from '@oe/api';
+import { createStore } from '@oe/core';
 
 export const AGENT_CONFIG: Record<TAgentType, keyof IAgenConfigs> = {
   ai_slide: 'present_creator_enabled',
@@ -38,7 +38,7 @@ interface IConversationStore {
   resetStore: () => void;
 }
 
-export const useConversationStore = create<IConversationStore>(set => {
+export const useConversationStore = createStore<IConversationStore>(set => {
   return {
     messages: [],
     isNewChat: false,

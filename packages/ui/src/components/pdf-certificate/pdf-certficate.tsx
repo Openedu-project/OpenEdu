@@ -1,7 +1,7 @@
 'use client';
 
-import type { ICertificate } from '@oe/api/types/certificate';
-import type { IFileResponse } from '@oe/api/types/file';
+import type { IFileResponse } from '@oe/api';
+import type { ICertificate } from '@oe/api';
 import { useCallback, useState } from 'react';
 import { handleBlobUpload } from './helper';
 
@@ -29,6 +29,8 @@ const useUploadCertificate = ({
   /**
    * Handle PDF upload process
    */
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleUploadPDF = useCallback(
     async (blob: Blob): Promise<IFileResponse | undefined> => {
       try {

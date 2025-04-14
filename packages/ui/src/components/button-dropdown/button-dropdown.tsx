@@ -23,7 +23,7 @@ interface ButtonDropdownProps {
   }[];
 }
 
-export default function ButtonDropdown({
+export function ButtonDropdown({
   type = 'default',
   label,
   icon,

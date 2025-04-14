@@ -1,33 +1,34 @@
 'use client';
 
-import { useDeleteCoupon, usePostCoupon, usePutCoupon } from '@oe/api/hooks/useCoupon';
-import { Table } from '@oe/ui/components/table';
+import { useDeleteCoupon, useGetMe, usePostCoupon, usePutCoupon } from '@oe/api';
+import { Table } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
-import { useGetOrganizationByDomain } from '@oe/api/hooks/useOrganization';
-import type { ICouponItemRes, ICouponPayload } from '@oe/api/types/coupon';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { formatDateTime } from '@oe/core/utils/datetime';
-import type { FilterOption } from '@oe/ui/components/filter-search';
+import { API_ENDPOINT } from '@oe/api';
+import { useGetOrganizationByDomain } from '@oe/api';
+import type { HTTPErrorMetadata } from '@oe/api';
+import type { ICouponItemRes, ICouponPayload } from '@oe/api';
+import { formatDateTime } from '@oe/core';
+import type { FilterOption } from '@oe/ui';
 
-import { formatNumber } from '@oe/core/utils/utils';
-import type { ColumnDef, TableRef } from '@oe/ui/components/table';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { Button } from '@oe/ui/shadcn/button';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { formatNumber } from '@oe/core';
+import { toast } from '@oe/ui';
+import type { ColumnDef, TableRef } from '@oe/ui';
+import { Badge } from '@oe/ui';
+import { Button } from '@oe/ui';
 import { Pencil, Trash2 } from 'lucide-react';
-import ConfirmDeleteCouponModal from './confirm-detele-coupon-modal';
-import CouponSuccessModal from './coupon-success-modal';
-import FormCouponModal from './form-coupon-modal';
+import { ConfirmDeleteCouponModal } from './confirm-detele-coupon-modal';
+import { CouponSuccessModal } from './coupon-success-modal';
+import { FormCouponModal } from './form-coupon-modal';
 
-export default function CouponList() {
+export function CouponList() {
   const t = useTranslations('coupon');
   const tError = useTranslations('errors');
 
   const tableRef = useRef<TableRef<ICouponItemRes>>(null);
   const tCouponForm = useTranslations('coupon.couponForm');
+  const { dataMe: me } = useGetMe();
 
   const [selectedItem, setSelectedItem] = useState<ICouponItemRes | null>(null);
   const [isFormModalOpen, setIsFormModalOpen] = useState<boolean>(false);
@@ -230,6 +231,7 @@ export default function CouponList() {
           page: 1,
           per_page: 10,
           sort: 'create_at desc',
+          user_id: me?.id,
         }}
         columns={columns}
         ref={tableRef}

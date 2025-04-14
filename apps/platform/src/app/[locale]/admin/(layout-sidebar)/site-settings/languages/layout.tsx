@@ -1,7 +1,11 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
-import LanguagesSettingsLayout from '@oe/dashboard/admin/site-settings/languages/layout';
+import { LanguagesLayout } from "@oe/dashboard";
 
-export default function LanguagesLayout({ children }: { children: ReactNode }) {
-  return <LanguagesSettingsLayout>{children}</LanguagesSettingsLayout>;
+export default function LanguagesSiteSettingsLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  return <LanguagesLayout>{children}</LanguagesLayout>;
 }

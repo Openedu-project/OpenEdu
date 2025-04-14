@@ -1,3 +1,3 @@
-import PaymentButton from './payment-button';
+import { PaymentButton } from './payment-button';
 
 export { PaymentButton };

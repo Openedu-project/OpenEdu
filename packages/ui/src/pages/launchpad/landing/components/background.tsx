@@ -18,4 +18,4 @@ const LaunchpadBackground = () => {
   );
 };
 
-export default LaunchpadBackground;
+export { LaunchpadBackground };

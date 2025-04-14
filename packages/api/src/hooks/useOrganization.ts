@@ -1,4 +1,4 @@
-import { getCookieClient } from '@oe/core/utils/cookie';
+import { getCookieClient } from '@oe/core';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import {
@@ -12,7 +12,6 @@ import type { IFilter } from '#types/filter';
 import type { IOrganization, IOrganizationPayload } from '#types/organizations';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
-// import { getCookie } from '@oe/core/utils/cookie';
 
 export function useGetOrganization({ params }: { params: IFilter }) {
   const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.ADMIN_ORGANIZATIONS, queryParams: { ...params } });

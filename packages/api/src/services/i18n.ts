@@ -1,10 +1,7 @@
-import { cookieOptions, getCookies } from '@oe/core/utils/cookie';
-import { deepMerge, deleteNestedValue, setNestedValue } from '@oe/core/utils/object';
-import { DEFAULT_LOCALE } from '@oe/i18n/constants';
-import { DEFAULT_LOCALES } from '@oe/i18n/constants';
-import type { LanguageCode } from '@oe/i18n/languages';
-import { messages } from '@oe/i18n/messages';
-import type { I18nMessage } from '@oe/i18n/types';
+import { cookieOptions, deepMerge, deleteNestedValue, getCookies, setNestedValue } from '@oe/core';
+import { DEFAULT_LOCALE, DEFAULT_LOCALES } from '@oe/i18n';
+import type { I18nMessage, LanguageCode } from '@oe/i18n';
+import { messages } from '@oe/i18n';
 import createMiddleware from 'next-intl/middleware';
 import type { NextRequest } from 'next/server';
 import type { HTTPResponse } from '#types/fetch';

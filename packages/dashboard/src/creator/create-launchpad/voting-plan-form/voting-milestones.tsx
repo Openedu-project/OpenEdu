@@ -1,12 +1,14 @@
-import { useGetLaunchpadMinSections } from '@oe/api/hooks/useLaunchpad';
-import { InputNumber } from '@oe/ui/components/input-number';
-import { Button } from '@oe/ui/shadcn/button';
-import { Calendar } from '@oe/ui/shadcn/calendar';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
-import { Popover, PopoverContent, PopoverTrigger } from '@oe/ui/shadcn/popover';
-import { Separator } from '@oe/ui/shadcn/separator';
-import { cn } from '@oe/ui/utils/cn';
-import { format } from 'date-fns';
+'use client';
+import { useGetLaunchpadMinSections } from '@oe/api';
+import { formatDate } from '@oe/core';
+import { Button } from '@oe/ui';
+import { InputNumber } from '@oe/ui';
+import { Calendar } from '@oe/ui';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';
+import { Popover, PopoverContent, PopoverTrigger } from '@oe/ui';
+import { Separator } from '@oe/ui';
+import { cn } from '@oe/ui';
+// import { format } from "date-fns";n
 import { CalendarIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { FieldValues, Path, UseFormReturn } from 'react-hook-form';
@@ -85,7 +87,7 @@ const VotingMilestone = <TFormValues extends FieldValues>({
                         className={cn('text-left font-normal', !field.value && 'text-muted-foreground')}
                         disabled={previousMilestone && previousMilestone?.estimated_open_vote_date === 0}
                       >
-                        {field.value ? format(field.value, 'dd/MM/yyyy') : <span>DD/MM/YYYY</span>}
+                        {field.value ? formatDate(field.value) : <span>DD/MM/YYYY</span>}
                         <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                       </Button>
                     </FormControl>
@@ -172,4 +174,4 @@ const VotingMilestones = <TFormValues extends FieldValues>({
   );
 };
 
-export default VotingMilestones;
+export { VotingMilestones };

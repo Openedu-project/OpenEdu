@@ -1,8 +1,8 @@
-import { RichTextEditor } from '@oe/ui/components/rich-text';
-import { FormFieldWithLabel } from '@oe/ui/shadcn/form';
+import { RichTextEditor } from '@oe/ui';
+import { FormFieldWithLabel } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
-export default function Description() {
+export function Description() {
   const tCourse = useTranslations('course');
 
   return (

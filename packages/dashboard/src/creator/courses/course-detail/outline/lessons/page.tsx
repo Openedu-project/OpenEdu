@@ -1,16 +1,16 @@
 'use client';
-import { type ILessonSchema, lessonSchema } from '@oe/api/schemas/courses/segmentSchema';
-import type { ISegment } from '@oe/api/types/course/segment';
-import { FormWrapper } from '@oe/ui/components/form-wrapper';
+import type { ISegment } from '@oe/api';
+import { type ILessonSchema, lessonSchema } from '@oe/api';
+import { FormWrapper } from '@oe/ui';
 import { useEffect, useState } from 'react';
 import { useLessonActions } from '../../_hooks/useLessonActions';
 import { useOutlineStore } from '../../_store/useOutlineStore';
 import { COURSE_DETAIL_FORM_IDS } from '../../_utils/constants';
 import { LessonContents } from './lesson-contents';
 import { LessonHeader } from './lesson-header';
-import LessonValidateModal from './lesson-validate-modal';
+import { LessonValidateModal } from './lesson-validate-modal';
 
-export default function LessonPage() {
+export function LessonPage() {
   const { activeLesson, lessonId, handleUpdateLesson } = useLessonActions();
   const { setActiveLessonContent } = useOutlineStore();
   const [hasErrors, setHasErrors] = useState(false);

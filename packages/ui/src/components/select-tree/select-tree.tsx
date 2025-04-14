@@ -1,3 +1,4 @@
+'use client';
 import { Check, ChevronDown, ChevronRight, ChevronsUpDown, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Fragment, useEffect, useRef, useState } from 'react';

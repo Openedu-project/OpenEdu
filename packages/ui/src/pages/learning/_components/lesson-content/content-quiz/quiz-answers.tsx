@@ -1,9 +1,9 @@
-import type { IQuizAnswer } from '@oe/api/types/quiz';
-import { z } from '@oe/api/utils/zod';
-import { Checkbox } from '@oe/ui/shadcn/checkbox';
-import { RadioGroup, RadioGroupItem } from '@oe/ui/shadcn/radio-group';
+import { z } from '@oe/api';
+import type { IQuizAnswer } from '@oe/api';
 import { useFormContext } from 'react-hook-form';
+import { Checkbox } from '#shadcn/checkbox';
 import { FormField, FormItem } from '#shadcn/form';
+import { RadioGroup, RadioGroupItem } from '#shadcn/radio-group';
 import { cn } from '#utils/cn';
 
 export const quizAnswerSchema = z.object({
@@ -103,4 +103,4 @@ const QuizAnswers = ({
   }
 };
 
-export default QuizAnswers;
+export { QuizAnswers };

@@ -1,16 +1,16 @@
 'use client';
 
-import type { ILaunchpad } from '@oe/api/types/launchpad';
+import type { ILaunchpad } from '@oe/api';
 import DefaultImg from '@oe/assets/images/defaultimage.png';
-import { formatDate } from '@oe/core/utils/datetime';
+import { formatCurrency, formatDate } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '#common/navigation';
 import { Image } from '#components/image';
 import { Progress } from '#shadcn/progress';
-import { formatCurrency } from '#utils/format-currency';
+// import { formatCurrency } from '#utils/format-currency';
 import { calculateProgress, getTimeStatus } from '#utils/launchpad-utils';
 
-const CampaignCardCompact = ({ campaign }: { campaign: ILaunchpad }) => {
+const CampainCardCompact = ({ campaign }: { campaign: ILaunchpad }) => {
   const router = useRouter();
   const t = useTranslations('launchpadHomepage');
   const timeLeft = getTimeStatus(campaign.funding_end_date);
@@ -36,7 +36,7 @@ const CampaignCardCompact = ({ campaign }: { campaign: ILaunchpad }) => {
           src={campaign.thumbnail?.url || DefaultImg.src}
           alt="campaign card compact"
           fill
-          className="h-full w-full aspect-video"
+          className="aspect-video h-full w-full"
           containerHeight={124}
         />
       </button>
@@ -72,7 +72,8 @@ const CampaignCardCompact = ({ campaign }: { campaign: ILaunchpad }) => {
             <Progress value={progress.percentage} className="h-1" />
             <div className="flex items-start justify-between gap-2">
               <p className="text-base">
-                <span className="font-semibold">{formatCurrency(Number(campaign.total_amount))} USDT</span> funded
+                <span className="font-semibold">{formatCurrency(Number(campaign.total_amount))}</span>
+                funded
               </p>
 
               <span className="font-semibold text-base text-primary">{progress.displayText}</span>
@@ -96,4 +97,4 @@ const CampaignCardCompact = ({ campaign }: { campaign: ILaunchpad }) => {
   );
 };
 
-export default CampaignCardCompact;
+export { CampainCardCompact };

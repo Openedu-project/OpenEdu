@@ -1,9 +1,9 @@
-import type { ICourseOutline } from '@oe/api/types/course/course';
+import type { ICourseOutline } from '@oe/api';
 import { CircleCheckBig } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { CourseSection } from './course-section';
 
-export default function CourseAchievements({
+export function CourseAchievements({
   courseOutline,
 }: {
   courseOutline: ICourseOutline;

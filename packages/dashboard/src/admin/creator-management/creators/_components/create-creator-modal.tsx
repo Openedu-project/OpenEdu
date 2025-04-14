@@ -1,9 +1,9 @@
-import { type ICreateCreatorSchemaType, createCreatorSchema } from '@oe/api/schemas/creators';
-import type { ICreatorPayload } from '@oe/api/types/creators';
+import { type ICreateCreatorSchemaType, createCreatorSchema } from '@oe/api';
+import type { ICreatorPayload } from '@oe/api';
 
-import { Modal } from '@oe/ui/components/modal';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui/shadcn/form';
-import { Input } from '@oe/ui/shadcn/input';
+import { Modal } from '@oe/ui';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui';
+import { Input } from '@oe/ui';
 import { Mail, TabletSmartphone, User } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -12,7 +12,7 @@ interface ICreateCreator {
   onClose: () => void;
 }
 
-export default function CreateCreatorModal({ onSubmit, onClose }: ICreateCreator) {
+export function CreateCreatorModal({ onSubmit, onClose }: ICreateCreator) {
   const t = useTranslations('creatorManagement.createCreatorModal');
   const handleSubmit = async (values: ICreateCreatorSchemaType) => {
     await onSubmit?.(values as ICreatorPayload);

@@ -1,10 +1,10 @@
 import CertificateImage from "@oe/assets/images/openedu-homepage/certificate.png";
 import HienImage from "@oe/assets/images/openedu-homepage/testimonials/hien.png";
 import TuongImage from "@oe/assets/images/openedu-homepage/testimonials/tuong.png";
-import { Image } from "@oe/ui/components/image";
+import { Image } from "@oe/ui";
 import { getTranslations } from "next-intl/server";
 
-export default async function LearningPathSection() {
+export async function LearningPathSection() {
   const t = await getTranslations("homePageLayout.learningPathSection");
   const TESTIMONIALS = [
     {

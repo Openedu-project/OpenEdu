@@ -1,6 +1,6 @@
 'use client';
-import type { IZoneRoutes } from '@oe/core/utils/routes';
-import type { LanguageCode } from '@oe/i18n/languages';
+import type { IZoneRoutes } from '@oe/core';
+import type { LanguageCode } from '@oe/i18n';
 import { useRouter as useRouterNext } from 'next/navigation';
 import { useCallback } from 'react';
 import { useHref } from './useHref';

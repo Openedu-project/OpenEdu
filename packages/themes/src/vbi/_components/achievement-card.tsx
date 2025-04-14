@@ -1,10 +1,10 @@
-import { Image } from "@oe/ui/components/image";
-import type { FileType } from "@oe/ui/components/uploader";
-import { Card } from "@oe/ui/shadcn/card";
-import { Separator } from "@oe/ui/shadcn/separator";
-import { cn } from "@oe/ui/utils/cn";
-import { ContentSection, type ContentSectionProps } from "./content-section";
-import { StatCard, type StatCardProps } from "./stat-card";
+import type { FileType } from '@oe/ui';
+import { Image } from '@oe/ui';
+import { Card } from '@oe/ui';
+import { Separator } from '@oe/ui';
+import { cn } from '@oe/ui';
+import { ContentSection, type ContentSectionProps } from './content-section';
+import { StatCard, type StatCardProps } from './stat-card';
 
 interface AchievementCardProps extends ContentSectionProps {
   stats?: {
@@ -13,7 +13,7 @@ interface AchievementCardProps extends ContentSectionProps {
     stat3?: StatCardProps;
   };
   image?: FileType;
-  contentVariant?: "left" | "right" | string;
+  contentVariant?: 'left' | 'right' | string;
   className?: string;
 }
 
@@ -23,10 +23,10 @@ const AchievementCard = ({
   description,
   image,
   className,
-  contentVariant = "right",
+  contentVariant = 'right',
 }: AchievementCardProps) => {
   return (
-    <Card className={cn("border-none p-0", className)}>
+    <Card className={cn('border-none p-0', className)}>
       <div className="flex flex-col gap-6 md:flex-row md:items-center lg:gap-12">
         {/* Left Column - Images */}
         <div className="basis-1/2">
@@ -41,8 +41,8 @@ const AchievementCard = ({
         {/* Right Column - Content */}
         <div
           className={cn(
-            "flex basis-1/2 flex-col justify-between space-y-6 md:space-y-8",
-            contentVariant === "left" && "md:order-first"
+            'flex basis-1/2 flex-col justify-between space-y-6 md:space-y-8',
+            contentVariant === 'left' && 'md:order-first'
           )}
         >
           {/* Content Sections */}
@@ -50,23 +50,11 @@ const AchievementCard = ({
 
           {/* Stats Section */}
           <div className="flex justify-between gap-2 md:gap-4">
-            <StatCard
-              value={stats?.stat1?.value}
-              label={stats?.stat1?.label}
-              className={stats?.stat1?.className}
-            />
+            <StatCard value={stats?.stat1?.value} label={stats?.stat1?.label} className={stats?.stat1?.className} />
             <Separator className="h-8 w-[1px] self-center" />
-            <StatCard
-              value={stats?.stat2?.value}
-              label={stats?.stat2?.label}
-              className={stats?.stat2?.className}
-            />
+            <StatCard value={stats?.stat2?.value} label={stats?.stat2?.label} className={stats?.stat2?.className} />
             <Separator className="h-8 w-[1px] self-center" />
-            <StatCard
-              value={stats?.stat3?.value}
-              label={stats?.stat3?.label}
-              className={stats?.stat3?.className}
-            />
+            <StatCard value={stats?.stat3?.value} label={stats?.stat3?.label} className={stats?.stat3?.className} />
           </div>
         </div>
       </div>
@@ -75,4 +63,3 @@ const AchievementCard = ({
 };
 
 export { AchievementCard, type AchievementCardProps };
-export default AchievementCard;

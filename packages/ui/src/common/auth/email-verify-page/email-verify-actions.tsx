@@ -1,6 +1,6 @@
 'use client';
 
-import { setCookiesService } from '@oe/api/services/cookies';
+import { setCookiesService } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { Button } from '#shadcn/button';

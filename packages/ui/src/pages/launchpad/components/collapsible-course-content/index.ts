@@ -1,3 +1,3 @@
-import CollapsibleCourseContent from './collapsible-course-content';
+import { CollapsibleCourseContent } from './collapsible-course-content';
 
 export { CollapsibleCourseContent };

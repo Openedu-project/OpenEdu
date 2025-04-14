@@ -1,6 +1,6 @@
-import type { ICourseOutline } from '@oe/api/types/course/course';
-import type { FormTriggerCondition, IFormTrigger } from '@oe/api/types/course/course-trigger';
-import type { ISection } from '@oe/api/types/course/segment';
+import type { ICourseOutline } from '@oe/api';
+import type { ISection } from '@oe/api';
+import type { FormTriggerCondition, IFormTrigger } from '@oe/api';
 import { ACTION_TYPES, type ActionType, type CourseActionProps } from './types';
 
 // Helper functions

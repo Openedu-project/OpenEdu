@@ -20,4 +20,4 @@ const StepCard = ({ data }: StepCardProps) => {
   );
 };
 
-export default StepCard;
+export { StepCard };

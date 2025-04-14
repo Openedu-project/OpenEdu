@@ -1,21 +1,19 @@
-import type { ICoursesCounting } from '@oe/api/types/my-learning-space';
-import type { IUser } from '@oe/api/types/user';
-import DocumentDownload from '@oe/assets/icons/document-download';
-import Edit from '@oe/assets/icons/edit';
-import TaskSquare from '@oe/assets/icons/task-square';
-import { LEARNER_ROUTES } from '@oe/core/utils/routes';
+import type { IUser } from '@oe/api';
+import type { ICoursesCounting } from '@oe/api';
+import { DocumentDownload, Edit, TaskSquare } from '@oe/assets';
+import { LEARNER_ROUTES } from '@oe/core';
 import { useTranslations } from 'next-intl';
-import DashboardMyCertificates from './my-certificates';
-import MyInProgressCourse from './my-in-progress-course';
-import MyLearningHistory from './my-learning-history';
-import StatusCard from './status-card';
-import WelcomeBanner from './welcome';
+import { DashboardMyCertificates } from './my-certificates';
+import { MyInProgressCourse } from './my-in-progress-course';
+import { MyLearningHistory } from './my-learning-history';
+import { StatusCard } from './status-card';
+import { WelcomeBanner } from './welcome';
 
 interface IDashboardContentProps {
   coursesCountingData: ICoursesCounting;
   userData: IUser | null;
 }
-export default function DashboardContent({ coursesCountingData, userData }: IDashboardContentProps) {
+export function DashboardContent({ coursesCountingData, userData }: IDashboardContentProps) {
   const tLearnerDashboard = useTranslations('myLearningSpace.dashboard');
 
   const courseStatus = [

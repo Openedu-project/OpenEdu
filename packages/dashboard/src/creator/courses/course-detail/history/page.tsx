@@ -1,25 +1,25 @@
 'use client';
 
-// import { getCourseHistoryService } from "@oe/api/services/course";
-import type { ICourse } from '@oe/api/types/course/course';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
+import { API_ENDPOINT } from '@oe/api';
+// import { getCourseHistoryService } from "@oe/api";
+import type { ICourse } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { useParams, useSearchParams } from 'next/navigation';
 import { useMemo, useRef, useState } from 'react';
 
-import { useGetCourseById } from '@oe/api/hooks/useCourse';
-import { formatDate } from '@oe/core/utils/datetime';
-import { type ColumnDef, Table, type TableRef } from '@oe/ui/components/table';
+import { useGetCourseById } from '@oe/api';
+import { formatDate } from '@oe/core';
+import { type ColumnDef, Table, type TableRef } from '@oe/ui';
 
-import { Button } from '@oe/ui/shadcn/button';
-import { cn } from '@oe/ui/utils/cn';
-import CourseStatus from '../../_components/course-status';
+import { Button } from '@oe/ui';
+import { cn } from '@oe/ui';
+import { CourseStatus } from '../../_components/course-status';
 import { CourseBadgeVersion } from '../../course-table/course-badge-version';
 import { FeedbackSection } from './_components/feedback-section';
 import { ManageVersion } from './_components/manage-version';
 import { getPublishedVersionFromCourseData, getReviewingVersionFromCourseData } from './_utils/function';
 
-export default function CourseDetailHistoryPage() {
+export function CourseDetailHistoryPage() {
   const t = useTranslations('course');
   const params = useParams<{ courseId: string }>();
   const courseId = params.courseId;

@@ -1,4 +1,4 @@
-import { Modal } from '@oe/ui/components/modal';
+import { Modal } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
 interface IActionsFormModal {
@@ -8,7 +8,7 @@ interface IActionsFormModal {
   onClose: () => void;
 }
 
-export default function ConfirmDeleteCouponModal({ open = true, id, onClose, onSubmit }: IActionsFormModal) {
+export function ConfirmDeleteCouponModal({ open = true, id, onClose, onSubmit }: IActionsFormModal) {
   const t = useTranslations('coupon.deleteForm');
 
   return (

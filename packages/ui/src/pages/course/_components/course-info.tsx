@@ -1,9 +1,9 @@
-import type { ICourseOutline } from '@oe/api/types/course/course';
+import type { ICourseOutline } from '@oe/api';
 import { ExpandableText } from '#components/expandable-text';
 import { LastUpdated } from '../../_components/last-updated';
 import { CourseCreator } from './course-creator';
-import CourseHeader from './course-header';
-import CourseStats from './course-stats';
+import { CourseHeader } from './course-header';
+import { CourseStats } from './course-stats';
 
 export const CourseInfo = ({ courseData }: { courseData: ICourseOutline }) => {
   // console.log("courseData - CourseInfo", courseData);

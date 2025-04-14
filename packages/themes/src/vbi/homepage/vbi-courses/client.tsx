@@ -1,10 +1,10 @@
 'use client';
-import { useGetPopularCoursesAtWebsite } from '@oe/api/hooks/useFeaturedContent';
-import { useGetOrganizationByDomain } from '@oe/api/hooks/useOrganization';
-import type { ICourse } from '@oe/api/types/course/course';
-import type { IFeaturedContent } from '@oe/api/types/featured-contents';
-import { CourseCard } from '@oe/ui/components/course-card';
-import { cn } from '@oe/ui/utils/cn';
+import type { ICourse } from '@oe/api';
+import { useGetPopularCoursesAtWebsite } from '@oe/api';
+import type { IFeaturedContent } from '@oe/api';
+import { useGetOrganizationByDomain } from '@oe/api';
+import { CourseCard } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import type { SectionComponent } from '../../../_types/theme-page';
 import { InfoSection, type InfoSectionProps } from '../../_components/info-section';
@@ -39,4 +39,4 @@ const VbiHomepageCoursesClient: SectionComponent<'homepage', 'vbiCourses'> = ({ 
   );
 };
 
-export default VbiHomepageCoursesClient;
+export { VbiHomepageCoursesClient };

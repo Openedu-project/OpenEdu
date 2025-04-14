@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { createStore } from '@oe/core';
 
 interface IAICourseInfo {
   courseId?: string;
@@ -13,7 +13,7 @@ interface IEditAICourseInfo {
   setCourseInfo: (courseInfo: IAICourseInfo) => void;
 }
 
-export const useEditAICourseInfo = create<IEditAICourseInfo>(set => {
+export const useEditAICourseInfo = createStore<IEditAICourseInfo>(set => {
   return {
     courseInfo: {
       title: '',

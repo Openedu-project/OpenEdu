@@ -3,7 +3,7 @@ import { InputSelect, type InputValue } from '#components/input-select';
 import type { FormFieldType } from '../types';
 import { FormFieldWrapper } from './form-field-wrapper';
 
-export default function FormQualityConfig({
+export function FormQualityConfig({
   field,
   handleConfigChange,
 }: {

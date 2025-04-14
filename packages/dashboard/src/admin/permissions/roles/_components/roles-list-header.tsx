@@ -1,6 +1,6 @@
 'use client';
-import type { IPermissionGroupedRoutes } from '@oe/api/types/permissions';
-import { Checkbox } from '@oe/ui/shadcn/checkbox';
+import type { IPermissionGroupedRoutes } from '@oe/api';
+import { Checkbox } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { memo, useMemo } from 'react';
 import { DEFAULT_ACTIONS_PERMISSION } from '../../permission-constant';

@@ -1,5 +1,9 @@
 'use client';
 
+import { SmartPreview } from '@oe/ui';
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@oe/ui';
+import { useTranslations } from 'next-intl';
+import { useCallback, useState } from 'react';
 import type {
   AllSectionKeys,
   PageSectionConfig,
@@ -11,15 +15,11 @@ import type {
   ThemeName,
   ThemePageKey,
   ThemeSidebarPageKey,
-} from '@oe/themes/types';
-import { SmartPreview } from '@oe/ui/components/smart-preview';
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@oe/ui/shadcn/resizable';
-import { useTranslations } from 'next-intl';
-import { useCallback, useState } from 'react';
+} from '#types';
 import { defaultThemeSystemConfig } from '../../../_config/initial';
 import { initialThemeGlobal } from '../../../_config/theme-global-initial';
-import ThemeConfigMetadata from '../theme-metadata';
-import ThemePreviewLayout from './theme-preview-layout';
+import { ThemeConfigMetadata } from '../theme-metadata';
+import { ThemePreviewLayout } from './theme-preview-layout';
 import { PreviewPanel } from './theme-preview-panel';
 import { SettingsPanel } from './theme-setting-panel';
 
@@ -37,7 +37,7 @@ export interface ThemeContentProps {
 // Helper function to perform deep clone
 const deepClone = <T,>(obj: T): T => JSON.parse(JSON.stringify(obj));
 
-export default function ThemeSettingPages({
+export function ThemeSettingPages({
   isLoading,
   themeName,
   selectedPage,

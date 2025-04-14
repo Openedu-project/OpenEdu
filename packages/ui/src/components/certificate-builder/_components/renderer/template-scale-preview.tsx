@@ -1,6 +1,6 @@
 'use client';
 
-import type { ICertificateData, ICertificateTemplate } from '@oe/api/types/certificate';
+import type { ICertificateData, ICertificateTemplate } from '@oe/api';
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '#utils/cn';
 import { CertificateRenderer } from './certificate-renderer';

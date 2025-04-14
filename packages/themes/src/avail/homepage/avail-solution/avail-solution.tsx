@@ -1,14 +1,14 @@
 import line from '@oe/assets/images/theme/line.avif';
-import { Image } from '@oe/ui/components/image';
-import { cn } from '@oe/ui/utils/cn';
+import { Image } from '@oe/ui';
+import { cn } from '@oe/ui';
 import type { SectionComponent } from '../../../_types/theme-page';
 
-import { Link } from '@oe/ui/common/navigation';
-import type { FileType } from '@oe/ui/components/uploader';
-import { Button } from '@oe/ui/shadcn/button';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@oe/ui/shadcn/carousel';
+import type { FileType } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { Link } from '@oe/ui';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import SolutionCard, { type SolutionCardProps } from '../_components/solution-card';
+import { SolutionCard, type SolutionCardProps } from '../_components/solution-card';
 
 export interface AvailHomepageSolutionProps {
   banner?: FileType;
@@ -112,4 +112,4 @@ const AvailHomepageSolution: SectionComponent<'homepage', 'availSolution'> = ({
   );
 };
 
-export default AvailHomepageSolution;
+export { AvailHomepageSolution };

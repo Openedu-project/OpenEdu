@@ -1,6 +1,5 @@
-import type { HTTPPagination } from './fetch';
+import type { HTTPPagination, IPagination } from './fetch';
 import type { IFileResponse } from './file';
-import type { IDataPagination } from './pagination';
 
 export type IRole = 'user' | 'assistant';
 
@@ -92,7 +91,10 @@ export type IContextType = 'text';
 
 export type IChatHistoryResponse = HTTPPagination<IChatHistory>;
 
-export type IConversationDetails = IDataPagination<IConversation>;
+export type IConversationDetails = {
+  results?: IConversation;
+  pagination?: IPagination;
+};
 
 export interface IConversation {
   id: string;

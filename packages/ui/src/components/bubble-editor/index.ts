@@ -1,3 +1,3 @@
-import BubbleEditor from './editor';
+import { BubbleEditor } from './editor';
 
 export { BubbleEditor };

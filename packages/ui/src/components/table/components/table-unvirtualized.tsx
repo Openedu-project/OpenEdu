@@ -1,6 +1,6 @@
 'use no memo';
 
-import { TableBody, TableHeader, Table as TableUI } from '#shadcn/table';
+import { ShadcnTable, TableBody, TableHeader } from '#shadcn/table';
 import { cn } from '#utils/cn';
 import type { TableProps } from '../types';
 import { TableException } from './table-exception';
@@ -22,7 +22,7 @@ export function TableUnvirtualized<TData>({
 }: Partial<TableProps<TData>>) {
   return (
     <div className={cn('scrollbar relative w-full overflow-auto [overflow-anchor:none]', className)} style={{ height }}>
-      <TableUI className="h-full border-separate border-spacing-0">
+      <ShadcnTable className="h-full border-separate border-spacing-0">
         <TableHeader className={cn(stickyHeader ? 'sticky top-0 z-30' : '')}>
           <TableHeaderRows headerGroups={table?.getHeaderGroups() ?? []} border={border} />
         </TableHeader>
@@ -34,7 +34,7 @@ export function TableUnvirtualized<TData>({
             <TableRows table={table} border={border} renderSubComponent={renderSubComponent} />
           )}
         </TableBody>
-      </TableUI>
+      </ShadcnTable>
     </div>
   );
 }

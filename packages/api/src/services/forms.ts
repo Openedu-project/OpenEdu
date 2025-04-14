@@ -1,9 +1,10 @@
-import { buildUrl } from '@oe/core/utils/url';
+import { buildUrl } from '@oe/core';
 import type { ICourseFormTrigger } from '#schemas/courses/forms';
 import type { HTTPPagination } from '#types/fetch';
 import type { IFormParams, IFormResponse, IRegisterOrgRequest } from '#types/form';
 import type { IFormSummary, IFormUserResponse, IFormUserResponseAnswerStatsItem } from '#types/form-user-response';
 import { API_ENDPOINT } from '#utils/endpoints';
+// import { buildUrl } from '#utils/url';
 import { createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 
 export const getFormsService = async (

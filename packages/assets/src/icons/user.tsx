@@ -1,4 +1,4 @@
-export default function User({
+export function User({
   className,
   color = '#6E6E6E',
   width = 24,

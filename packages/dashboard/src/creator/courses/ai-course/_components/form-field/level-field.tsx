@@ -1,7 +1,7 @@
 'use client';
-import { useCategoriesTree } from '@oe/api/hooks/useCategories';
-import { useGetOrganizationByDomain } from '@oe/api/hooks/useOrganization';
-import { Autocomplete } from '@oe/ui/components/autocomplete';
+import { useGetOrganizationByDomain } from '@oe/api';
+import { useCategoriesTree } from '@oe/api';
+import { Autocomplete } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { CourseFormField } from './form-field';
 

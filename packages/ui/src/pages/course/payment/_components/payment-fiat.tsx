@@ -1,18 +1,18 @@
 'use client';
 
-import { useApplyCouponOrder, useOrderDeleteCoupon } from '@oe/api/hooks/useOrder';
-import type { ICourse } from '@oe/api/types/course/course';
-import type { IOrderRes } from '@oe/api/types/order';
-import type { IPaymentMethodItem } from '@oe/api/types/payment';
-import { Button } from '@oe/ui/shadcn/button';
-import { Input } from '@oe/ui/shadcn/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@oe/ui/shadcn/select';
+import type { ICourse } from '@oe/api';
+import type { IOrderRes } from '@oe/api';
+import type { IPaymentMethodItem } from '@oe/api';
+import { useApplyCouponOrder, useOrderDeleteCoupon } from '@oe/api';
 import { Copy, QrCode } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { type ReactNode, useEffect, useState } from 'react';
+import { Button } from '#shadcn/button';
+import { Input } from '#shadcn/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '#shadcn/select';
 
-import type { HTTPErrorMetadata } from '@oe/api/utils/http-error';
-import { copyToClipboard, formatNumber } from '@oe/core/utils/utils';
+import type { HTTPErrorMetadata } from '@oe/api';
+import { copyToClipboard, formatNumber } from '@oe/core';
 import { toast } from 'sonner';
 import { Image } from '#components/image';
 
@@ -352,4 +352,4 @@ const PaymentFiat = ({
   );
 };
 
-export default PaymentFiat;
+export { PaymentFiat };

@@ -1,15 +1,12 @@
-import { cookieOptions } from '@oe/core/utils/cookie';
-import { PLATFORM_ROUTES, isProtectedRoute } from '@oe/core/utils/routes';
-import { DEFAULT_LOCALE } from '@oe/i18n/constants';
+import { PLATFORM_ROUTES, base64ToJson, cookieOptions, isProtectedRoute } from '@oe/core';
+import { DEFAULT_LOCALE, getLocaleFromPathname } from '@oe/i18n';
 import { NextRequest, NextResponse } from 'next/server';
-import { meMiddlewareService, refreshTokenMiddlewareService } from '#services/auth';
+import { meMiddlewareService } from '#services/auth';
 import { getI18nResponseMiddleware } from '#services/i18n';
 import { getOrganizationByHostMiddleware } from '#services/organizations';
-import { isTokenExpired } from './jwt';
-
-import { base64ToJson } from '@oe/core/utils/decoded-token';
-import { getLocaleFromPathname } from '@oe/i18n/utils';
+import { refreshTokenMiddlewareService } from '#services/refresh-token';
 import type { IToken } from '#types/auth';
+import { isTokenExpired } from './jwt';
 import { getReferrerAndOriginForAPIByUserUrl } from './referrer-origin';
 
 export async function baseMiddleware(request: NextRequest, host?: string | null) {

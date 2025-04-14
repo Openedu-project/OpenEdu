@@ -1,4 +1,4 @@
-import { ForgotPasswordPage } from '@oe/ui/common/auth/forgot-password-page';
+import { ForgotPasswordPage } from "@oe/ui";
 
 export default function ForgotPassword() {
   return <ForgotPasswordPage />;

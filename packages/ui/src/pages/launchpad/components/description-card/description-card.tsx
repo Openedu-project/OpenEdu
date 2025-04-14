@@ -48,4 +48,4 @@ const DescriptionCard = ({
   );
 };
 
-export default DescriptionCard;
+export { DescriptionCard };

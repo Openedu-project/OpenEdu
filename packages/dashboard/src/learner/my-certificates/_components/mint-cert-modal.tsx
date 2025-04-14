@@ -1,11 +1,11 @@
-import { useGetCertNFTFees, useMintCertNft } from '@oe/api/hooks/useCertificateNft';
-import type { ICertificateDetail, ICertificateUser } from '@oe/api/types/certificate';
-import { Modal } from '@oe/ui/components/modal';
-import { PdfViewer } from '@oe/ui/components/pdf-viewer';
-import { Badge } from '@oe/ui/shadcn/badge';
-import { toast } from '@oe/ui/shadcn/sonner';
+import type { ICertificateDetail, ICertificateUser } from '@oe/api';
+import { useGetCertNFTFees, useMintCertNft } from '@oe/api';
+import { toast } from '@oe/ui';
+import { Badge } from '@oe/ui';
+import { Modal } from '@oe/ui';
+import { PdfViewer } from '@oe/ui';
 import { useTranslations } from 'next-intl';
-import MintCertButton from './mint-cert-button';
+import { MintCertButton } from './mint-cert-button';
 
 interface IMintCertModal {
   certificate: ICertificateUser | ICertificateDetail;
@@ -13,7 +13,7 @@ interface IMintCertModal {
   mutate?: () => void;
 }
 
-export default function MintCertModal({ certificate, onClose, mutate }: IMintCertModal) {
+export function MintCertModal({ certificate, onClose, mutate }: IMintCertModal) {
   const tMintCert = useTranslations('mintCertificate');
 
   const { dataCertNftFees } = useGetCertNFTFees(certificate?.id);

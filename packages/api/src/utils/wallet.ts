@@ -1,13 +1,6 @@
-import { AvailIcon } from '@oe/assets/icons/currencies/avail';
-import { EthIcon } from '@oe/assets/icons/currencies/eth';
-import { NearIcon } from '@oe/assets/icons/currencies/near';
-import { OpeneduIcon } from '@oe/assets/icons/currencies/openedu';
-import { UsdIcon } from '@oe/assets/icons/currencies/usd';
-import { UsdcIcon } from '@oe/assets/icons/currencies/usdc';
-import { UsdtIcon } from '@oe/assets/icons/currencies/usdt';
-import { VndIcon } from '@oe/assets/icons/currencies/vnd';
-import { DEFAULT_CURRENCY } from '@oe/core/utils/currency';
-import { languageWithCurrency } from '@oe/i18n/languages-currency';
+import { AvailIcon, EthIcon, NearIcon, OpeneduIcon, UsdIcon, UsdcIcon, UsdtIcon, VndIcon } from '@oe/assets';
+import { DEFAULT_CURRENCY } from '@oe/core';
+import { languageWithCurrency } from '@oe/i18n';
 import type { IExchangeRates } from '#types/exchange-rates';
 import type { TTokenContracts } from '#types/wallet';
 

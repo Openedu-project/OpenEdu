@@ -1,20 +1,20 @@
 'use client';
-import type { ICourse } from '@oe/api/types/course/course';
-import { API_ENDPOINT } from '@oe/api/utils/endpoints';
-import { formatDateTime } from '@oe/core/utils/datetime';
-import { CoursePrice } from '@oe/ui/components/course-card';
-import type { FilterOption } from '@oe/ui/components/filter-search';
-import { type ColumnDef, Table } from '@oe/ui/components/table';
-import { Badge } from '@oe/ui/shadcn/badge';
+import { API_ENDPOINT } from '@oe/api';
+import type { ICourse } from '@oe/api';
+import { formatDateTime } from '@oe/core';
+import type { FilterOption } from '@oe/ui';
+import { type ColumnDef, Table } from '@oe/ui';
+import { Badge } from '@oe/ui';
+import { CoursePrice } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
-import CourseStatus from '../_components/course-status';
-import CourseActions from './course-actions';
+import { CourseStatus } from '../_components/course-status';
+import { CourseActions } from './course-actions';
 import { CourseBadgeVersion } from './course-badge-version';
-import CourseName from './course-name';
+import { CourseName } from './course-name';
 // import CoursePrice from './course-price';
 
-export default function Courses() {
+export function Courses() {
   const tCourse = useTranslations('course');
 
   const columns: ColumnDef<ICourse>[] = useMemo(() => {

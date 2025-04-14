@@ -1,13 +1,12 @@
-import { getPermissionMyAccessService } from '@oe/api/services/permissions';
-import { Affiliate } from '@oe/assets/icons/affliliate';
-import { CREATOR_ROUTES } from '@oe/core/utils/routes';
-import { checkSidebarPermissions } from '@oe/core/utils/sidebar-menu';
-import { DashboardLayout } from '@oe/ui/common/layout';
+import { getPermissionMyAccessService } from '@oe/api';
+import { Affiliate } from '@oe/assets';
+import { CREATOR_ROUTES, checkSidebarPermissions } from '@oe/core';
+import { DashboardLayout } from '@oe/ui';
 import { BookOpen, CirclePercent, House, LayoutTemplate, NotebookText, Receipt } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
 
-export default async function Layout({ children }: { children: ReactNode }) {
+export async function CreatorLayout({ children }: { children: ReactNode }) {
   const [permissions, tDashboard] = await Promise.all([
     getPermissionMyAccessService('', { params: undefined }),
     getTranslations('dashboard'),

@@ -1,5 +1,6 @@
-import { useGetSegmentById, useGetSegments } from '@oe/api/hooks/useCourse';
-import type { ILesson } from '@oe/api/types/course/segment';
+'use client';
+import { useGetSegmentById, useGetSegments } from '@oe/api';
+import type { ILesson } from '@oe/api';
 import { useParams } from 'next/navigation';
 import { useMemo } from 'react';
 

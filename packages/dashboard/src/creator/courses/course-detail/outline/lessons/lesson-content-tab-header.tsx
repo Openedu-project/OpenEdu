@@ -1,10 +1,11 @@
-import type { TLessonContent } from '@oe/api/types/course/basic';
-import type { ILesson } from '@oe/api/types/course/segment';
-import { DeleteButton } from '@oe/ui/components/delete-button';
-import { Modal } from '@oe/ui/components/modal';
-import { Selectbox } from '@oe/ui/components/selectbox';
-import { Button } from '@oe/ui/shadcn/button';
-import { cn } from '@oe/ui/utils/cn';
+'use client';
+import type { TLessonContent } from '@oe/api';
+import type { ILesson } from '@oe/api';
+import { Button } from '@oe/ui';
+import { DeleteButton } from '@oe/ui';
+import { Modal } from '@oe/ui';
+import { Selectbox } from '@oe/ui';
+import { cn } from '@oe/ui';
 import { Copy, PlusIcon, Trash2Icon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';

@@ -1,10 +1,10 @@
 'use client';
 
-import { useGetCourseById, usePutRelyFeedback } from '@oe/api/hooks/useCourse';
-import { useGetMe } from '@oe/api/hooks/useMe';
-import { createAPIUrl } from '@oe/api/utils/fetch';
-import { usePathname, useRouter } from '@oe/ui/common/navigation';
-import { toast } from '@oe/ui/shadcn/sonner';
+import { useGetCourseById, usePutRelyFeedback } from '@oe/api';
+import { createAPIUrl } from '@oe/api';
+import { useGetMe } from '@oe/api';
+import { toast } from '@oe/ui';
+import { usePathname, useRouter } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useCallback, useMemo, useRef } from 'react';
