@@ -1,6 +1,6 @@
 'use client';
 
-import { useDeleteCoupon, usePostCoupon, usePutCoupon } from '@oe/api';
+import { useDeleteCoupon, useGetMe, usePostCoupon, usePutCoupon } from '@oe/api';
 import { Table } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useRef, useState } from 'react';
@@ -28,6 +28,7 @@ export function CouponList() {
 
   const tableRef = useRef<TableRef<ICouponItemRes>>(null);
   const tCouponForm = useTranslations('coupon.couponForm');
+  const { dataMe: me } = useGetMe();
 
   const [selectedItem, setSelectedItem] = useState<ICouponItemRes | null>(null);
   const [isFormModalOpen, setIsFormModalOpen] = useState<boolean>(false);
@@ -230,6 +231,7 @@ export function CouponList() {
           page: 1,
           per_page: 10,
           sort: 'create_at desc',
+          user_id: me?.id,
         }}
         columns={columns}
         ref={tableRef}

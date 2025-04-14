@@ -39,7 +39,7 @@ export function UserAffiliateCampaignsDetailManagement({
                 {formatNumber(Number(coursePrice))} {currency}
               </span>
             </h3>
-            <div className="mbutton-regular16 flex items-start gap-1 text-muted">
+            <div className="mbutton-regular16 flex items-start gap-1 text-muted-foreground">
               <Calendar />
               {formatDateTime(Number(startDate ?? '') || 0)} -&nbsp;
               {formatDateTime(Number(endDate ?? '') || 0)}

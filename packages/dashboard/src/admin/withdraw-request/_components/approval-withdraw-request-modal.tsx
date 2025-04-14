@@ -10,7 +10,6 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@oe/ui
 import { Textarea } from '@oe/ui';
 import { Camera } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useCallback } from 'react';
 
 interface IFormAffiliateCampaignCourseModal {
   selectedItem: IApproval<IWalletItem, IBankAccountSettingValue<IBankWithdrawalAccount>> | null;
@@ -21,19 +20,14 @@ interface IFormAffiliateCampaignCourseModal {
 export function ApprovalWithdrawModal({ selectedItem, onSubmit, onClose }: IFormAffiliateCampaignCourseModal) {
   const t = useTranslations('approvalWithdrawModal');
 
-  // TODO handle image upload
-
-  const handleFormSubmit = useCallback(async () => {
-    (values: IApproveWithdrawType) => {
-      const newValues = {
-        note: values.note,
-        files: values.files,
-        value: values.value?.toString(),
-      } as IApprovalPayload;
-
-      onSubmit(newValues);
-    };
-  }, [onSubmit]);
+  const handleFormSubmit = (values: IApproveWithdrawType) => {
+    const newValues = {
+      note: values.note,
+      files: values.files,
+      value: values.value?.toString(),
+    } as IApprovalPayload;
+    onSubmit(newValues);
+  };
 
   return (
     <Modal
