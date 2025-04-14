@@ -1,5 +1,8 @@
+'use client';
+
 import type { IFileResponse } from '@oe/api';
 import { DocumentUploadIcon, DriveLogo, OneDriveLogo } from '@oe/assets';
+import { getCookieClient } from '@oe/core';
 import { CirclePlus, Loader2Icon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
@@ -17,6 +20,7 @@ export const InputFile = <TFormValues extends FieldValues>() => {
   const tAI = useTranslations('aiAssistant');
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const accessToken = getCookieClient(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY);
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -44,7 +48,8 @@ export const InputFile = <TFormValues extends FieldValues>() => {
               className={cn(
                 'flex w-full cursor-pointer select-none items-center gap-2 overflow-hidden text-sm outline-none transition-colors',
                 loading && 'cursor-progress opacity-50',
-                field.value && Array.from(field.value).length >= MAX_FILES && 'cursor-not-allowed opacity-50'
+                ((field.value && Array.from(field.value).length >= MAX_FILES) || !accessToken) &&
+                  'cursor-not-allowed opacity-50'
               )}
             >
               <div className="pointer-events-none relative z-20 flex w-full items-center gap-2 rounded px-2 py-1.5 group-hover:bg-accent">
@@ -71,7 +76,7 @@ export const InputFile = <TFormValues extends FieldValues>() => {
                 className={cn('absolute top-0 left-0 overflow-hidden opacity-0')}
                 setIsLoading={setLoading}
                 maxFiles={MAX_FILES}
-                disabled={loading || (field.value && Array.from(field.value).length >= MAX_FILES)}
+                disabled={loading || (field.value && Array.from(field.value).length >= MAX_FILES) || !accessToken}
               />
             </div>
           )}
