@@ -157,11 +157,11 @@ const HitboxLayer = ({
     }
 
     if (file.status === 'generating' && !apiCalledRef.current && file.progress === 0) {
+      apiCalledRef.current = true;
       postEmbedDocument(undefined, {
         attachment_id: file.id,
         ai_conversation_id: chatId,
       }).then(res => {
-        apiCalledRef.current = true;
         if (!res) {
           updateStatus?.('error');
           setStatus('error');
