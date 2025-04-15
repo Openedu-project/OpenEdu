@@ -66,7 +66,7 @@ export function MessageInputAction({
 
   const disableButton = useMemo(() => {
     return !form.formState.isValid || loading || GENERATING_STATUS.includes(status ?? '');
-  }, [form, status, loading]);
+  }, [form.formState.isValid, status, loading]);
 
   const deepResearch = AI_SIDEBAR('var(--foreground)', 16).find(agent => agent.lableKey === 'deepResearch');
 
@@ -80,6 +80,7 @@ export function MessageInputAction({
             {tAI(deepResearch?.lableKey as string)}
           </span>
         </Button>
+
         <Button
           variant="outline"
           className={cn(
@@ -99,6 +100,7 @@ export function MessageInputAction({
         <Button size="icon" variant="outline" disabled className="rounded-full">
           <Microphone />
         </Button>
+
         {GENERATING_STATUS.includes(status ?? '') ? (
           <Button
             type="button"

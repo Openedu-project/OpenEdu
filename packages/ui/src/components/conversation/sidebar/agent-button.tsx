@@ -36,6 +36,9 @@ export function AgentButton() {
             href={item.href}
             disabled={item.isComming}
             className="!no-underline w-full justify-start rounded-2xl p-2 hover:cursor-pointer hover:bg-primary/10"
+            onClick={() => {
+              setIsOpen(false);
+            }}
           >
             <div
               className="mr-2 flex h-6 w-6 shrink-0 items-center justify-center rounded-full md:h-8 md:w-8"

@@ -190,7 +190,7 @@ const HitboxLayer = ({
 
       interval = setInterval(() => {
         setProgress(prevProgress => {
-          const increment = 0.2 + Math.random() * 0.5;
+          const increment = Math.floor(Math.random() * 9) + 1;
           const newProgress = Math.min(prevProgress + increment, 90);
           return newProgress;
         });

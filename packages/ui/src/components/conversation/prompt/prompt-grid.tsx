@@ -62,7 +62,7 @@ export const PromptGrid = ({
     if (!prompts) {
       return;
     }
-    setPromptData(prevData => [...prevData, ...prompts.results]);
+    setPromptData(prompts.results);
   }, [prompts]);
 
   const loadMore = () => {
