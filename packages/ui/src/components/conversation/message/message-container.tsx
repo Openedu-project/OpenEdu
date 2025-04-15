@@ -120,13 +120,11 @@ export const MessageContainer = ({
       if (!containerRef) {
         return;
       }
-      requestAnimationFrame(() => {
-        if (messagesEndRef.current) {
-          messagesEndRef.current?.scrollIntoView({
-            behavior: scrollBehavior ?? (isNewChat ? 'auto' : 'smooth'),
-          });
-        }
-      });
+      if (messagesEndRef.current) {
+        messagesEndRef.current?.scrollIntoView({
+          behavior: scrollBehavior ?? (isNewChat ? 'auto' : 'smooth'),
+        });
+      }
     },
     [messagesEndRef, containerRef, isNewChat]
   );

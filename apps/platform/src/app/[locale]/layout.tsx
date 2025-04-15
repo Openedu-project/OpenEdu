@@ -51,20 +51,6 @@ export default async function RootLayout({
         <Script id="microsoft-clarity">
           {` (function(c,l,a,r,i,t,y){ c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)}; t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i; y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y); })(window, document, "clarity", "script", "qpk1sozolu"); `}
         </Script>
-        <Script id="dify-chatbot-config" strategy="afterInteractive">
-          {`
-          window.difyChatbotConfig = {
-            token: '6EVXGMTwARKX33Gj',
-            systemVariables: {},
-          }
-        `}
-        </Script>
-
-        <Script
-          src="https://udify.app/embed.min.js"
-          id="6EVXGMTwARKX33Gj"
-          strategy="afterInteractive"
-        />
       </head>
       <body className="scrollbar font-primary antialiased">
         <Provider messages={messages ?? {}} locale={locale}>

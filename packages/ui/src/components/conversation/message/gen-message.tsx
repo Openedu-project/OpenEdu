@@ -32,7 +32,7 @@ export const GenMessage = memo(
       }
 
       if (containerRef.current) {
-        const { scrollHeight, scrollTop } = containerRef.current;
+        const { scrollHeight, scrollTop, clientHeight } = containerRef.current;
         const { position } = prevScrollPosition.current;
 
         if (scrollTop > position - 20) {
@@ -41,7 +41,7 @@ export const GenMessage = memo(
             position: scrollTop,
             height: scrollHeight,
           };
-        } else {
+        } else if (scrollTop + clientHeight < scrollHeight) {
           setShowScrollButton(true);
         }
       }
