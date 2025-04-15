@@ -21,7 +21,6 @@ export function ChatWindow({ id, agent, className }: IChatWindowProps) {
   const {
     isNewChat,
     setMessages,
-    setIsNewChat,
     resetMessages,
     resetStatus,
     selectedModel,
@@ -47,26 +46,21 @@ export function ChatWindow({ id, agent, className }: IChatWindowProps) {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    resetOpenWebSource();
     if (!isNewChat) {
       setSelectedAgent(agent);
+      resetMessages();
+      resetGenMessage();
+      resetStatus();
+      resetOpenWebSource();
     }
 
     const apiKey = createAPIUrl({
       endpoint: API_ENDPOINT.COM_CHANNELS_ID,
-      params: { id: id },
+      params: { id },
     });
     globalMutate((key: string) => !!key?.includes('/api/com-v1/channels/') && !key?.includes(apiKey), undefined, {
       revalidate: false,
     });
-
-    if (!id) {
-      resetMessages();
-      resetGenMessage();
-      resetStatus();
-      setIsNewChat(false);
-      return;
-    }
   }, [id, agent, setSelectedAgent]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
@@ -83,10 +77,6 @@ export function ChatWindow({ id, agent, className }: IChatWindowProps) {
           },
           true
         );
-      } else {
-        setStatus('completed');
-        setResetPage(false);
-        resetGenMessage();
       }
       setMessages(
         [...messageData.results.messages.filter(msg => !GENERATING_STATUS.includes(msg.status ?? ''))].reverse()

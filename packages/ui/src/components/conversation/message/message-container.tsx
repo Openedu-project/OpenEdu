@@ -63,6 +63,10 @@ export const MessageContainer = ({
     },
   });
 
+  useEffect(() => {
+    nextKeyRef.current = nextCursorPage;
+  }, [nextCursorPage]);
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setShouldGetData(false);
@@ -112,7 +116,7 @@ export const MessageContainer = ({
   ]);
 
   const handleScrollToBottom = useCallback(
-    (scrollBehavior: 'auto' | 'smooth' = 'smooth') => {
+    (scrollBehavior?: 'auto' | 'smooth') => {
       if (!containerRef) {
         return;
       }
@@ -199,7 +203,7 @@ export const MessageContainer = ({
         <div id="end_line" ref={messagesEndRef} />
       </div>
       <div className={cn('sticky bottom-0 hidden max-w-3xl translate-x-1/2 xl:max-w-4xl', showScrollButton && 'block')}>
-        <Button size="icon" variant="outline" className="rounded-full" onClick={() => handleScrollToBottom()}>
+        <Button size="icon" variant="outline" className="rounded-full" onClick={() => handleScrollToBottom('smooth')}>
           <ChevronsDown className="h-4 w-4" />
         </Button>
       </div>

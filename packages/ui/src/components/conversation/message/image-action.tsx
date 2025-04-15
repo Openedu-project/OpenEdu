@@ -65,7 +65,7 @@ export const ImageAction = ({ id }: { id: string }) => {
 
               <Button
                 variant="outline"
-                className="rounded-md bg-background/50 bg-transparent text-background hover:bg-background/70"
+                className="aspect-square rounded-md bg-background/50 bg-transparent p-1 text-background hover:bg-background/70"
                 onClick={e => handleDownload(e, src, text)}
               >
                 <Download className="h-4 w-4" />
