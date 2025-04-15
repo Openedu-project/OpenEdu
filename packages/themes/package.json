@@ -10,7 +10,6 @@
   "files": ["dist"],
   "imports": {
     "#components": "./src/_components/index.ts",
-    "#store/*": "./src/_store/*.ts",
     "#common": "./src/_common/index.ts",
     "#config": "./src/_config/index.ts",
     "#types": "./src/_types/index.ts",

@@ -8,6 +8,7 @@
     "build-packages": "pnpm run build-core && pnpm run build-api && pnpm run build-assets && pnpm run build-i18n && pnpm run build-ui && pnpm run build-dashboard",
     "build-core": "turbo run build --filter=@oe/core",
     "build-api": "turbo run build --filter=@oe/api",
+    "build-themes": "turbo run build --filter=@oe/themes",
     "build-assets": "turbo run build --filter=@oe/assets",
     "build-i18n": "turbo run build --filter=@oe/i18n",
     "build-ui": "turbo run build --filter=@oe/ui",
