@@ -106,9 +106,14 @@ export const useConversationStore = createStore<IConversationStore>(set => {
               reasoning: (state.genMessage?.reasoning ?? '') + data?.reasoning,
             };
         callback?.();
+        if (!shortenedIndex) {
+          return {
+            genMessage: newMessage,
+          };
+        }
         return {
           genMessage: newMessage,
-          messages: state.messages.slice(0, shortenedIndex ?? state.messages.length),
+          messages: state.messages.slice(0, shortenedIndex),
         };
       });
     },

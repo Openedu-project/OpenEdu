@@ -16,7 +16,7 @@ export const useSendMessageHandler = (
   agent: TAgentType,
   id?: string,
   model?: IAIModel,
-  containerRef?: RefObject<HTMLDivElement | null>
+  messagesEndRef?: RefObject<HTMLDivElement | null>
 ) => {
   const {
     setMessages,
@@ -110,13 +110,10 @@ export const useSendMessageHandler = (
           );
         }
 
-        if (containerRef?.current) {
+        if (messagesEndRef?.current) {
           requestAnimationFrame(() => {
-            if (containerRef.current) {
-              containerRef.current.scrollTo({
-                top: containerRef.current.scrollHeight,
-                behavior: 'smooth',
-              });
+            if (messagesEndRef.current) {
+              messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
             }
           });
         }
@@ -144,7 +141,7 @@ export const useSendMessageHandler = (
       setStatus,
       tError,
       updateMessages,
-      containerRef,
+      messagesEndRef,
       resetGenMessage,
       agentData,
     ]

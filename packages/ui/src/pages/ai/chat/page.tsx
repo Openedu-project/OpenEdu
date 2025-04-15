@@ -1,7 +1,6 @@
 import { isLogin } from '@oe/api';
-import { getConversationDetail } from '@oe/api';
 import type { TAgentType } from '@oe/api';
-import { AI_ROUTES, AUTH_ROUTES } from '@oe/core';
+import { AUTH_ROUTES } from '@oe/core';
 import { redirect } from 'next/navigation';
 import { ChatWithSource } from '#components/conversation';
 
@@ -15,24 +14,6 @@ const getChatMessages = async (id?: string) => {
   if (!login) {
     redirect(AUTH_ROUTES.login);
   }
-
-  try {
-    const res = await getConversationDetail(
-      undefined,
-      id,
-      {
-        per_page: 10,
-        sort: 'create_at desc',
-      },
-      { cache: 'no-store', next: { revalidate: 0 } }
-    );
-    console.log(id, 'get data: ', res);
-
-    return res;
-  } catch (error) {
-    console.error(error);
-    redirect(AI_ROUTES.chat);
-  }
 };
 
 export async function AIChatPage({
@@ -42,6 +23,6 @@ export async function AIChatPage({
   id?: string;
   agent: TAgentType;
 }) {
-  const chatData = await getChatMessages(id);
-  return <ChatWithSource id={id} initData={chatData} agent={agent} />;
+  await getChatMessages(id);
+  return <ChatWithSource id={id} agent={agent} />;
 }

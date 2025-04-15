@@ -63,6 +63,6 @@ export const useAIConversationHandler = (status?: IAIStatus, genMessageId?: stri
         reasoning: data?.reasoning,
       };
     },
-    [status, genMessageId, messageData, mutate, channelId]
+    [status, genMessageId, messageData?.props, mutate, channelId]
   );
 };

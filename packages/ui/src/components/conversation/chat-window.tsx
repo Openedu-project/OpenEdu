@@ -1,8 +1,9 @@
 'use client';
 import type { IAgenConfigs } from '@oe/api';
-import { useGetConversationDetails } from '@oe/api';
+import { API_ENDPOINT, createAPIUrl, useGetConversationDetails } from '@oe/api';
 import { GENERATING_STATUS } from '@oe/core';
 import { useEffect, useMemo, useRef } from 'react';
+import { useSWRConfig } from 'swr';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { AGENT_OPTIONS } from './constants';
@@ -12,8 +13,11 @@ import { InputFrame } from './message-input/input-frame';
 import { MessageContainer } from './message/message-container';
 import type { IChatWindowProps } from './type';
 
-export function ChatWindow({ id, initData, agent, className }: IChatWindowProps) {
+export function ChatWindow({ id, agent, className }: IChatWindowProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const { mutate: globalMutate } = useSWRConfig();
+
   const {
     isNewChat,
     setMessages,
@@ -30,16 +34,15 @@ export function ChatWindow({ id, initData, agent, className }: IChatWindowProps)
     setResetPage,
   } = useConversationStore();
 
-  const prevId = useRef<string>('');
   const sendMessage = useSendMessageHandler(agent, id);
-
+  const shouldFetch = useRef<boolean>(!isNewChat);
   const { data: messageData, mutate } = useGetConversationDetails({
+    shouldFetch: shouldFetch.current,
     id,
     params: {
       per_page: 10,
       sort: 'create_at desc',
     },
-    fallback: initData,
   });
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
@@ -49,26 +52,26 @@ export function ChatWindow({ id, initData, agent, className }: IChatWindowProps)
       setSelectedAgent(agent);
     }
 
-    if (id && prevId.current === id) {
-      return;
-    }
+    const apiKey = createAPIUrl({
+      endpoint: API_ENDPOINT.COM_CHANNELS_ID,
+      params: { id: id },
+    });
+    globalMutate((key: string) => !!key?.includes('/api/com-v1/channels/') && !key?.includes(apiKey), undefined, {
+      revalidate: false,
+    });
 
     if (!id) {
       resetMessages();
+      resetGenMessage();
       resetStatus();
       setIsNewChat(false);
       return;
     }
-
-    return () => {
-      prevId.current = id;
-    };
   }, [id, agent, setSelectedAgent]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (messageData?.results && !isNewChat) {
-      mutate();
       const genMsgData = messageData.results.messages.find(msg => GENERATING_STATUS.includes(msg.status ?? ''));
 
       if (genMsgData) {
@@ -109,12 +112,13 @@ export function ChatWindow({ id, initData, agent, className }: IChatWindowProps)
           id={id ?? ''}
           sendMessage={sendMessage}
           containerRef={containerRef}
+          messagesEndRef={messagesEndRef}
           mutate={mutate}
         />
       ) : (
         <EmptyChat agent={agent} />
       )}
-      <InputFrame id={id} containerRef={containerRef} updateWidth agent={agent} />
+      <InputFrame id={id} messagesEndRef={messagesEndRef} updateWidth agent={agent} />
     </div>
   );
 }

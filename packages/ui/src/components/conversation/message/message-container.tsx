@@ -4,7 +4,7 @@ import type { IConversationDetails, IMessage, TAgentType } from '@oe/api';
 import { useGetConversationDetails } from '@oe/api';
 import { GENERATING_STATUS } from '@oe/core';
 import { ChevronsDown } from 'lucide-react';
-import { type RefObject, useEffect, useRef, useState } from 'react';
+import { type RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { type KeyedMutator, useSWRConfig } from 'swr';
 import { Button } from '#shadcn/button';
 import { Skeleton } from '#shadcn/skeleton';
@@ -20,6 +20,7 @@ interface IContainerProps {
   messageType: TAgentType[];
   className?: string;
   containerRef: RefObject<HTMLDivElement | null>;
+  messagesEndRef: RefObject<HTMLDivElement | null>;
   scrollBehavior?: 'auto' | 'smooth';
   sendMessage: ({
     messageInput,
@@ -38,6 +39,7 @@ export const MessageContainer = ({
   nextCursorPage = '',
   messageType,
   containerRef,
+  messagesEndRef,
   className,
   scrollBehavior,
   mutate,
@@ -88,11 +90,12 @@ export const MessageContainer = ({
     handleScrollToBottom(scrollBehavior);
     if (isNewChat) {
       setIsNewChat(false);
+
+      // clear history of conversation
       const keysToReset = Array.from(cache.keys()).filter(
         key => typeof key === 'string' && key.includes(`${API_ENDPOINT.COM_CHANNELS}?`)
       );
 
-      // Then clear each one
       for (const key of keysToReset) {
         globalMutate(key, undefined, { revalidate: false });
       }
@@ -108,19 +111,21 @@ export const MessageContainer = ({
     cache.keys,
   ]);
 
-  const handleScrollToBottom = (scrollBehavior?: 'auto' | 'smooth') => {
-    if (!containerRef) {
-      return;
-    }
-    requestAnimationFrame(() => {
-      if (containerRef.current) {
-        containerRef.current.scrollTo({
-          top: containerRef.current.scrollHeight,
-          behavior: scrollBehavior ?? (isNewChat ? 'auto' : 'smooth'),
-        });
+  const handleScrollToBottom = useCallback(
+    (scrollBehavior: 'auto' | 'smooth' = 'smooth') => {
+      if (!containerRef) {
+        return;
       }
-    });
-  };
+      requestAnimationFrame(() => {
+        if (messagesEndRef.current) {
+          messagesEndRef.current?.scrollIntoView({
+            behavior: scrollBehavior ?? (isNewChat ? 'auto' : 'smooth'),
+          });
+        }
+      });
+    },
+    [messagesEndRef, containerRef, isNewChat]
+  );
 
   const handleScroll = () => {
     if (!containerRef.current) {
@@ -137,8 +142,10 @@ export const MessageContainer = ({
     }
 
     if (scrollTop + clientHeight < scrollHeight - 100) {
-      setShowScrollButton(true);
-    } else {
+      if (!showScrollButton) {
+        setShowScrollButton(true);
+      }
+    } else if (showScrollButton) {
       setShowScrollButton(false);
     }
   };
@@ -183,7 +190,13 @@ export const MessageContainer = ({
             />
           );
         })}
-        <GenMessage containerRef={containerRef} mutate={mutate} />
+        <GenMessage
+          containerRef={containerRef}
+          mutate={mutate}
+          scrollToBottom={handleScrollToBottom}
+          setShowScrollButton={setShowScrollButton}
+        />
+        <div id="end_line" ref={messagesEndRef} />
       </div>
       <div className={cn('sticky bottom-0 hidden max-w-3xl translate-x-1/2 xl:max-w-4xl', showScrollButton && 'block')}>
         <Button size="icon" variant="outline" className="rounded-full" onClick={() => handleScrollToBottom()}>

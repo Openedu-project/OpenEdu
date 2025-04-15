@@ -2,23 +2,28 @@
 
 import type { IConversationDetails } from '@oe/api';
 import { GENERATING_STATUS } from '@oe/core';
-import { type RefObject, memo, useEffect, useState } from 'react';
+import { type Dispatch, type RefObject, type SetStateAction, memo, useEffect, useRef } from 'react';
 import type { KeyedMutator } from 'swr';
 import { useConversationStore } from '#store/conversation-store';
-import { TypewriterState } from '../hooks/useTypingText';
 import { AIMessage } from './ai-message';
 
 export const GenMessage = memo(
   ({
     containerRef,
     mutate,
+    scrollToBottom,
+    setShowScrollButton,
   }: {
     containerRef: RefObject<HTMLDivElement | null>;
     mutate: KeyedMutator<IConversationDetails>;
+    scrollToBottom?: () => void;
+    setShowScrollButton: Dispatch<SetStateAction<boolean>>;
   }) => {
     const { genMessage, setOpenWebSource, addMessage, resetGenMessage, resetPage } = useConversationStore();
-    const [text, setText] = useState(TypewriterState.currentText);
-    const [prevScrollTop, setPrevScrollTop] = useState(0);
+    const prevScrollPosition = useRef<{ position: number; height: number }>({
+      position: 0,
+      height: 0,
+    });
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
     useEffect(() => {
@@ -31,35 +36,65 @@ export const GenMessage = memo(
       }
     }, [genMessage?.props?.source_results]);
 
-    useEffect(() => {
-      const unsubscribe = TypewriterState.addSubscriber(setText);
-      return unsubscribe;
-    }, []);
+    // useEffect(() => {
+    //   if (!genMessage) {
+    //     return;
+    //   }
+    //   if (!GENERATING_STATUS.includes(genMessage.status ?? "")) {
+    //     addMessage(genMessage, () => {
+    //       if (resetPage) {
+    //         mutate();
+    //       }
+    //       resetGenMessage();
+    //     });
+    //   }
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: <handle update content when page become visible>
+    //   if (containerRef.current) {
+    //     const { scrollHeight, scrollTop, clientHeight } = containerRef.current;
+    //     const { position, height } = prevScrollPosition.current;
+
+    //     const thresholdBottom = height - position - clientHeight;
+
+    //     if (scrollTop > position - 20 && thresholdBottom < 50) {
+    //       scrollToBottom?.();
+    //       prevScrollPosition.current = {
+    //         position: scrollTop,
+    //         height: scrollHeight,
+    //       };
+    //     }
+    //   }
+    // }, [
+    //   genMessage,
+    //   addMessage,
+    //   containerRef.current,
+    //   mutate,
+    //   resetGenMessage,
+    //   resetPage,
+    //   scrollToBottom,
+    // ]);
+
     useEffect(() => {
-      const handleVisibilityChange = () => {
-        if (document.visibilityState === 'visible') {
-          if (!genMessage) {
-            return;
+      if (!genMessage) {
+        return;
+      }
+      if (!GENERATING_STATUS.includes(genMessage.status ?? '')) {
+        addMessage(genMessage, () => {
+          if (resetPage) {
+            mutate();
           }
-          // Force update to latest content when becoming visible
-          TypewriterState.updateText(genMessage?.content ?? '');
-        }
-      };
-      document.addEventListener('visibilitychange', handleVisibilityChange);
-    }, [document.visibilityState]);
+          resetGenMessage();
+        });
+      }
+    }, [genMessage, addMessage, mutate, resetGenMessage, resetPage]);
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: <handle typing text>
+    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
     useEffect(() => {
       const handleGenText = setInterval(() => {
+        const genMessage = useConversationStore.getState().genMessage;
         if (!genMessage) {
-          clearInterval(handleGenText);
-          TypewriterState.reset();
           return;
         }
-        const nextChars = genMessage.content.substring(TypewriterState.position, TypewriterState.position + 2);
-        if (!(GENERATING_STATUS.includes(genMessage.status ?? '') || nextChars)) {
+        if (!GENERATING_STATUS.includes(genMessage.status ?? '')) {
           addMessage(genMessage, () => {
             if (resetPage) {
               mutate();
@@ -70,36 +105,33 @@ export const GenMessage = memo(
           clearInterval(handleGenText);
         }
 
-        if (nextChars) {
-          const newText = TypewriterState.currentText + nextChars;
-          TypewriterState.updateText(newText);
-          if (containerRef.current) {
-            const { scrollHeight, scrollTop, clientHeight } = containerRef.current;
-            const thresholdBottom = scrollHeight - scrollTop - clientHeight;
-            setPrevScrollTop(scrollTop);
-            if (scrollTop > prevScrollTop - 20 && thresholdBottom < 50) {
-              containerRef.current.scrollTop = containerRef.current.scrollHeight;
-            }
+        if (containerRef.current) {
+          const { scrollHeight, scrollTop, clientHeight } = containerRef.current;
+          const { position, height } = prevScrollPosition.current;
+
+          const thresholdBottom = height - position - clientHeight;
+
+          if (scrollTop > position - 20 && thresholdBottom < 50) {
+            scrollToBottom?.();
+            prevScrollPosition.current = {
+              position: scrollTop,
+              height: scrollHeight,
+            };
+          } else {
+            setShowScrollButton(true);
           }
         }
-      }, 10);
+      }, 20);
 
       return () => clearInterval(handleGenText);
-    }, [genMessage]);
+    }, []);
 
     if (!genMessage) {
       return null;
     }
 
     return (
-      <AIMessage
-        className="pt-2 pb-16"
-        message={genMessage}
-        content={text}
-        loading={true}
-        actionsButton={false}
-        hiddenSourceBtn
-      />
+      <AIMessage className="pt-2 pb-16" message={genMessage} loading={true} actionsButton={false} hiddenSourceBtn />
     );
   }
 );
