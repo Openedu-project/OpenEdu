@@ -105,6 +105,7 @@ export const walletMessages = {
           requiredToken: 'Token is required',
           requiredBankAccount: 'Bank account is required',
           isRequired: 'This field is required',
+          minVNDAmount: 'Minimum withdrawal amount is 20,000 VND',
         },
       },
       button: {
@@ -149,7 +150,10 @@ export const walletMessages = {
       fiat: 'Fiat',
       fiat_request_withdraw: 'Fiat Request Withdraw',
       transactions: 'Transactions',
+      note: 'Note',
       requestWithdraw: 'Request For Withdraw',
+      network: 'Network',
+      transactionDetails: 'Transaction Details',
       table: {
         date: 'Date',
         currency: 'Currency',
@@ -157,11 +161,12 @@ export const walletMessages = {
         amount: 'Amount',
         status: 'Status',
         image: 'Image',
-        note: 'Note',
-        network: 'Network',
         txHash: 'Transaction Hash',
         historyDetails: 'History Details',
         processing: 'Processing',
+        actions: 'Actions',
+        details: 'Details',
+        evidence: 'Evidence',
       },
     },
     bankAccountPage: {
@@ -169,9 +174,20 @@ export const walletMessages = {
       addNewBankAccount: 'Add New Bank Account',
       form: {
         errors: {
-          bankNameRequired: 'Bank name is required and must be less than 100 characters',
-          accountNameRequired: 'Account name is required and must be less than 100 characters',
-          accountNumberRequired: 'Account number is required, must contain only numbers, and be between 5 to 20 digits',
+          bankName: {
+            required: 'Bank name is required',
+            invalid: 'Please enter a valid bank name (less than 100 characters)',
+          },
+          accountName: {
+            required: 'Account name is required',
+            invalid: 'Please enter a valid account name (less than 100 characters)',
+          },
+          accountNumber: {
+            required: 'Account number is required',
+            invalid: 'Account number must be between 5-20 digits',
+            pattern: 'Account number must contain only numbers',
+            duplicate: 'This account number already exists',
+          },
         },
         formLabels: {
           bankName: 'Bank Name',

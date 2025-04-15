@@ -4,13 +4,28 @@ import { CRYPTO_CURRENCIES } from '@oe/api';
 import { formatDateTime } from '@oe/core';
 import { formatCurrency } from '@oe/core';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 import type { FilterOption } from '#components/filter-search';
 import { type ColumnDef, Table } from '#components/table';
+import { Button } from '#shadcn/button';
 import { shortenAddress } from '#utils/crypto';
 import { StatusTableCell } from '../_components/status-table-cell';
+import { TransactionDetailModal } from './transaction-detail-modal';
 
 export function TokenHistory() {
   const t = useTranslations('wallets');
+  const [selectedTransaction, setSelectedTransaction] = useState<ITransaction | null>(null);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+
+  const handleOpenDetailModal = (transaction: ITransaction) => {
+    setSelectedTransaction(transaction);
+    setIsDetailModalOpen(true);
+  };
+
+  const handleCloseDetailModal = () => {
+    setIsDetailModalOpen(false);
+    setSelectedTransaction(null);
+  };
 
   const tokenColumns: ColumnDef<ITransaction>[] = [
     {
@@ -94,6 +109,18 @@ export function TokenHistory() {
         return <StatusTableCell status={status} />;
       },
     },
+    {
+      id: 'actions',
+      header: t('historyPage.table.actions'),
+      headerClassName: 'bg-background',
+      cell: ({ row }) => {
+        return (
+          <Button variant="outline" size="sm" onClick={() => handleOpenDetailModal(row.original)}>
+            {t('historyPage.table.details')}
+          </Button>
+        );
+      },
+    },
   ];
 
   const tokenFilterOptions: FilterOption[] = [
@@ -124,22 +151,30 @@ export function TokenHistory() {
     },
   ];
   return (
-    <Table
-      api={API_ENDPOINT.USERS_ME_TRANSACTIONS}
-      tableOptions={{
-        manualPagination: true,
-        manualSorting: true,
-      }}
-      columns={tokenColumns}
-      filterOptions={tokenFilterOptions}
-      apiQueryParams={{
-        currency_type: 'crypto',
-        page: 1,
-        per_page: 10,
-        sort: 'create_at desc',
-      }}
-      wrapperClassName="bg-transparent"
-      className="bg-background"
-    />
+    <>
+      <Table
+        api={API_ENDPOINT.USERS_ME_TRANSACTIONS}
+        tableOptions={{
+          manualPagination: true,
+          manualSorting: true,
+        }}
+        columns={tokenColumns}
+        filterOptions={tokenFilterOptions}
+        apiQueryParams={{
+          currency_type: 'crypto',
+          page: 1,
+          per_page: 10,
+          sort: 'create_at desc',
+        }}
+        wrapperClassName="bg-transparent"
+        className="bg-background"
+      />
+
+      <TransactionDetailModal
+        transaction={selectedTransaction}
+        isOpen={isDetailModalOpen}
+        onClose={handleCloseDetailModal}
+      />
+    </>
   );
 }
