@@ -1,4 +1,4 @@
-import { getThemeComponentByPagesConfig } from '../../_utils/function';
+import { getThemeComponentByPagesConfig } from '#utils';
 
 import type {
   PageRender,
@@ -7,7 +7,7 @@ import type {
   SectionComponent,
   SectionsByPage,
   ThemePageKey,
-} from '../../_types';
+} from '#types';
 
 import dynamic from 'next/dynamic';
 
@@ -15,13 +15,13 @@ const THEMES: PageRender = {
   homepage: {
     theme: undefined,
     fenetHero: dynamic(() => import('./hero').then(mod => mod.FenetHomepageHero)),
-    // fenetAchievements: dynamic(() => import('./achievements').then(mod => mod.FenetHomepageAchievements)),
-    // fenetAboutUs: dynamic(() => import('./about-us').then(mod => mod.FenetHomepageAboutUs)),
-    // fenetContact: dynamic(() => import('./contact').then(mod => mod.FenetHomepageContact)),
-    // fenetProjects: dynamic(() => import('./projects').then(mod => mod.FenetHomepageProjects)),
+    fenetBlog: dynamic(() => import('./blog').then(mod => mod.FenetHomepageBlog)),
+    fenetCustomer: dynamic(() => import('./customer').then(mod => mod.FenetHomepageCustomer)),
+    fenetExperience: dynamic(() => import('./experience').then(mod => mod.FenetHomepageExperience)),
+    fenetExpert: dynamic(() => import('./expert').then(mod => mod.FenetHomepageExpert)),
+    fenetFeature: dynamic(() => import('./feature').then(mod => mod.FenetHomepageFeature)),
+    fenetPrice: dynamic(() => import('./price').then(mod => mod.FenetHomepagePrice)),
     fenetService: dynamic(() => import('./service').then(mod => mod.FenetHomepageService)),
-    // fenetTeam: dynamic(() => import('./team').then(mod => mod.FenetHomepageTeam)),
-    // fenetTestimonials: dynamic(() => import('./testimonials').then(mod => mod.FenetHomepageTestimonials)),
   },
 };
 

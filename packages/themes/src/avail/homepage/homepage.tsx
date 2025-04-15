@@ -1,13 +1,18 @@
-// import dynamic from 'next/dynamic';
+import dynamic from 'next/dynamic';
+import type { PageRender, SectionComponent } from '#types';
 import { ThemePageRenderer } from '../../_components/web/theme-page-renderer';
-import type { PageRender, SectionComponent } from '../../_types';
 
 const pageRender: PageRender = {
-  'about-us': {
+  homepage: {
     theme: undefined,
-    // vbiCore: dynamic(() => import('./core/core')),
-    // vbiGoal: dynamic(() => import('./goal/goal')),
-    // vbiIntro: dynamic(() => import('./intro/intro')),
+    availBlogs: dynamic(() => import('./avail-blogs/blog-server').then(mod => mod.AvailHomepageBlogsServer)),
+    availCourses: dynamic(() =>
+      import('./avail-courses/avail-courses-server').then(mod => mod.AvailHomepageCoursesServer)
+    ),
+    availEco: dynamic(() => import('./avail-eco').then(mod => mod.AvailHomepageEco)),
+    availFeature: dynamic(() => import('./avail-feature').then(mod => mod.AvailHomepageFeature)),
+    availHero: dynamic(() => import('./avail-hero').then(mod => mod.AvailHomepageHero)),
+    availSolution: dynamic(() => import('./avail-solution').then(mod => mod.AvailHomepageSolution)),
   },
 };
 

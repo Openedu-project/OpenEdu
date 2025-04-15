@@ -12,7 +12,8 @@
       "@oe/core": ["../../packages/core/src"],
       "@oe/i18n": ["../../packages/i18n/src"],
       "#types": ["./src/_types/index.ts"],
-      "#utils": ["./src/_utils/index.ts"]
+      "#utils": ["./src/_utils/index.ts"],
+      "#components": ["./src/_components/index.ts"]
     }
   },
   "include": ["src"],

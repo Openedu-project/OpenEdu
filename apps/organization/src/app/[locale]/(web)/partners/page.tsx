@@ -20,7 +20,7 @@ export default async function Partners() {
 
   return (
     <ThemeWebPage
-      selectedPage="about-us"
+      selectedPage="partners"
       themeName={themeName}
       pageConfig={themeSystem?.[0]?.value?.availableThemes?.[themeName]?.pages}
     />
