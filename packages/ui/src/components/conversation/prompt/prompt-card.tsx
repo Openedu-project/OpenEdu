@@ -103,13 +103,18 @@ export const ExpandPromptCard = ({
             </AnimatedDiv>
 
             {!loading && (
-              <div className="absolute right-0 bottom-0 left-0 h-10 bg-gradient-to-t from-white to-transparent group-hover:hidden" />
+              <div
+                className={cn(
+                  'absolute right-0 bottom-0 left-0 h-10 bg-gradient-to-t from-white to-transparent group-hover:hidden',
+                  isHovered && 'hidden'
+                )}
+              />
             )}
           </div>
           {loading ? (
             <LoaderCircle className={cn('mt-2 h-4 w-4 animate-spin text-primary')} />
           ) : (
-            <MoveRight className={cn('mt-2 hidden h-4 w-4 text-primary group-hover:block')} />
+            <MoveRight className={cn('mt-2 hidden h-4 w-4 text-primary group-hover:block', isHovered && 'block')} />
           )}
         </Button>
       </div>
