@@ -7,7 +7,9 @@
     "paths": {
       "#types": ["./src/_types/index.ts"],
       "#utils": ["./src/_utils/index.ts"],
-      "#components": ["./src/_components/index.ts"]
+      "#components": ["./src/_components/index.ts"],
+      "#common": ["./src/_common/index.ts"],
+      "#config": ["./src/_config/index.ts"]
     }
   },
   "include": ["src"],
