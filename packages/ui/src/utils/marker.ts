@@ -137,11 +137,6 @@ export const marked = new Marked({
       const originalCode = text;
       const language = hljs.getLanguage(lang ?? '') ? lang : 'plaintext';
 
-      // Check if this might be LaTeX code block
-      if (lang === 'latex' || lang === 'tex') {
-        return `<div class="latex-block">${renderLatex(text, true)}</div>`;
-      }
-
       const highlightedCode = hljs.highlight(originalCode, {
         language: language || 'plaintext',
       }).value;
