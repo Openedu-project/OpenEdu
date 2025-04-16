@@ -84,7 +84,7 @@ const PureGenMessage = memo(({ mutate }: { mutate: KeyedMutator<IConversationDet
 
   return (
     <div id={genMessage.id}>
-      <AIMessage className="py-2" message={genMessage} loading={true} actionsButton={false} hiddenSourceBtn />
+      <AIMessage className="pt-2 pb-8" message={genMessage} loading={true} actionsButton={false} hiddenSourceBtn />
     </div>
   );
 });

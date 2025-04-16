@@ -1,6 +1,6 @@
 'use client';
-import { type SpringValue, animated, useSpring, useTransition } from '@react-spring/web';
-import { useMemo } from 'react';
+
+import { animated, useSpring } from '@react-spring/web';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { ChatWindow } from './chat-window';
@@ -12,8 +12,7 @@ import { useIsDesktop } from './utils';
 const AnimatedDiv = animated('div');
 
 export function ChatWithSource({ id, initData, agent }: IChatWindowProps) {
-  const { openWebSource, width } = useConversationStore();
-
+  const { openWebSource } = useConversationStore();
   const isDesktop = useIsDesktop();
 
   const smoothSpring = {
@@ -25,61 +24,37 @@ export function ChatWithSource({ id, initData, agent }: IChatWindowProps) {
     velocity: 0,
   };
 
-  const transformX = useMemo(() => {
-    if (!width) {
-      return 0;
-    }
-    const containerWidth = window.innerWidth > 1440 ? 1440 : window.innerWidth;
-
-    const extendTransform =
-      window.innerWidth > 1440 ? (window.innerWidth < 1440 + 200 ? 200 - (window.innerWidth - 1440) / 2 : 70) : 200;
-
-    return (containerWidth - width - extendTransform) / 2;
-  }, [width]);
-
-  const chatProps = useSpring({
-    x: openWebSource.isOpen ? 0 : transformX,
-    config: smoothSpring,
-  });
-
-  const desktopTransition = useTransition(openWebSource.isOpen, {
-    from: { opacity: 0, transform: 'translateX(200px)' },
-    enter: { opacity: 1, transform: 'translateX(0px)' },
-    leave: { opacity: 0, transform: 'translateX(200px)' },
+  // Single spring to control both elements
+  const springs = useSpring({
+    sourcePanelWidth: openWebSource.isOpen ? 400 : 0,
+    sourceOpacity: openWebSource.isOpen ? 1 : 0,
     config: smoothSpring,
   });
 
   return (
-    <div className="flex grow gap-4 overflow-hidden md:container">
-      <AnimatedDiv className="grow" style={isDesktop ? chatProps : undefined}>
+    <div className="flex grow overflow-hidden">
+      {/* Chat window's width is calculated from the spring value */}
+      <AnimatedDiv
+        className="grow"
+        style={{
+          width: isDesktop ? springs.sourcePanelWidth.to(w => `calc(100% - ${w}px`) : '100%',
+        }}
+      >
         <ChatWindow id={id} initData={initData} agent={agent} />
       </AnimatedDiv>
 
       {isDesktop ? (
-        <div
-          className={cn(
-            'relative ml-2 hidden shrink-0 overflow-visible lg:w-[300px] xl:w-[400px]',
-            openWebSource.isOpen && 'block'
-          )}
+        <AnimatedDiv
+          className={cn('relative flex h-full shrink-0 overflow-visible', openWebSource.isOpen && 'pl-4')}
+          style={{
+            width: springs.sourcePanelWidth,
+            opacity: springs.sourceOpacity,
+          }}
         >
-          {desktopTransition(
-            (
-              style: {
-                opacity: SpringValue<number>;
-                transform: SpringValue<string>;
-              },
-              item: boolean
-            ) =>
-              item && (
-                <AnimatedDiv
-                  className="flex h-full flex-col gap-2 rounded-xl border bg-background p-4 pr-2"
-                  style={style}
-                >
-                  <SourceList />
-                </AnimatedDiv>
-              )
-          )}
-        </div>
+          <div className="flex h-full w-full flex-col gap-2 rounded-xl border bg-background p-4 pr-2">
+            <SourceList />
+          </div>
+        </AnimatedDiv>
       ) : (
         <SourcePopup />
       )}

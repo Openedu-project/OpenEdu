@@ -29,8 +29,6 @@ interface IConversationStore {
   openWebSource: { messageId: string; isOpen: boolean; sourceList?: ISourceProps[] };
   setOpenWebSource: (openWebSource: { messageId: string; isOpen: boolean; sourceList?: ISourceProps[] }) => void;
   resetOpenWebSource: () => void;
-  width: number;
-  setWidth: (width: number) => void;
   thinking: boolean;
   setThinking: (thinking: boolean) => void;
   resetPage: boolean;
@@ -129,11 +127,6 @@ export const useConversationStore = createStore<IConversationStore>(set => {
         return { openWebSource };
       }),
     resetOpenWebSource: () => set({ openWebSource: { messageId: '', isOpen: false, sourceList: [] } }),
-    width: 0,
-    setWidth: (width: number) =>
-      set(() => {
-        return { width };
-      }),
     thinking: false,
     setThinking: (thinking: boolean) => {
       set(() => {

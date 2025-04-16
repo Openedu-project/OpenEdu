@@ -13,17 +13,15 @@ export function InputFrame({
   id,
   agent = 'ai_search',
   messagesEndRef,
-  updateWidth = false,
   reset = false,
 }: {
   className?: string;
   id?: string;
   agent?: TAgentType;
   messagesEndRef?: RefObject<HTMLDivElement | null>;
-  updateWidth?: boolean;
   reset?: boolean;
 }) {
-  const { resetMessages, selectedModel, setWidth, setSelectedModel, resetStatus, setThinking, setNewConversationId } =
+  const { resetMessages, selectedModel, setSelectedModel, resetStatus, setThinking, setNewConversationId } =
     useConversationStore();
   const sendMessage = useSendMessageHandler(agent, id, undefined, messagesEndRef);
 
@@ -49,23 +47,11 @@ export function InputFrame({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    const getWidth = () => {
-      if (inputRef?.current && updateWidth) {
-        const width = inputRef.current.getBoundingClientRect().width;
-        if (width > 0) {
-          setWidth(width);
-        }
-      }
-    };
     setNewConversationId('');
-    getWidth();
-    window.addEventListener('resize', getWidth);
-
-    return () => window.removeEventListener('resize', getWidth);
   }, []);
 
   return (
-    <div className={cn('max-w-3xl bg-background pt-2 xl:max-w-4xl', className)} ref={inputRef}>
+    <div className={cn('mx-auto w-full max-w-3xl bg-background pt-2 xl:max-w-4xl', className)} ref={inputRef}>
       <MessageInput
         messageType={messageType}
         sendMessage={sendMessage}
