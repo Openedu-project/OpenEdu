@@ -88,7 +88,7 @@ export const useConversationStore = createStore<IConversationStore>(set => {
         const updatedAgent = selectedModel?.configs?.[AGENT_CONFIG[currentSelectedAgent]]
           ? currentSelectedAgent
           : 'ai_search';
-        return { selectedModel, selectedAgent: updatedAgent };
+        return { selectedModel, selectedAgent: updatedAgent, thinking: false };
       }),
 
     resetStatus: () => set({ status: undefined }),

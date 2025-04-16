@@ -1,9 +1,9 @@
 'use client';
 import type { IAgenConfigs } from '@oe/api';
 import { API_ENDPOINT, createAPIUrl, useGetConversationDetails } from '@oe/api';
-import { GENERATING_STATUS, uniqueID } from '@oe/core';
+import { GENERATING_STATUS } from '@oe/core';
 import dynamic from 'next/dynamic';
-import { Fragment, useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useSWRConfig } from 'swr';
 import { Skeleton } from '#shadcn/skeleton';
 import { useConversationStore } from '#store/conversation-store';
@@ -18,12 +18,8 @@ const MessageContainer = dynamic(() => import('./message/message-container').the
   loading: () => (
     <div className="mx-auto flex w-full max-w-3xl grow flex-col gap-4 xl:max-w-4xl">
       <div className="flex flex-col items-end gap-6">
-        {Array.from({ length: 3 }, _ => (
-          <Fragment key={uniqueID()}>
-            <Skeleton className="h-12 w-2/3 rounded-[20px]" />
-            <Skeleton className="h-24 w-full rounded-[20px]" />
-          </Fragment>
-        ))}
+        <Skeleton className="h-12 w-2/3 rounded-[20px]" />
+        <Skeleton className="h-24 w-full rounded-[20px]" />
       </div>
     </div>
   ),
