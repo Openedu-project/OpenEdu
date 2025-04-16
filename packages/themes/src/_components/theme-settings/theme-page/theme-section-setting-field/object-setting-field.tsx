@@ -9,14 +9,14 @@ import { useState } from 'react';
 import { camelToNormal } from '../../../../_utils/function';
 import type { ThemePageSettingObjectFieldProps } from './_type';
 import { getFieldType } from './_utils';
-import {
-  ThemePageSettingArrayField,
-  ThemePageSettingField,
-  ThemePageSettingObjectField,
-  registerObjectField,
-} from './component-registry';
+import { ThemePageSettingField } from './setting-field';
 
-export const ObjectFieldComponent: React.FC<ThemePageSettingObjectFieldProps> = ({ label, value, onChange, path }) => {
+export const ThemePageSettingObjectField: React.FC<ThemePageSettingObjectFieldProps> = ({
+  label,
+  value,
+  onChange,
+  path,
+}) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleFieldChange = (key: string, newValue: ThemeFieldValue | ThemeFieldConfig | ThemeFieldConfig[]) => {
@@ -53,19 +53,36 @@ export const ObjectFieldComponent: React.FC<ThemePageSettingObjectFieldProps> = 
               );
             }
 
-            if (fieldType === 'array') {
-              return (
-                <ThemePageSettingArrayField
-                  key={key}
-                  label={key}
-                  path={[...path, key]}
-                  value={fieldValue as Array<ThemeFieldValue | ThemeFieldConfig>}
-                  onChange={newValue => handleFieldChange(key, newValue as ThemeFieldConfig | ThemeFieldConfig[])}
-                  onAdd={newValue => handleFieldChange(key, newValue as ThemeFieldConfig | ThemeFieldConfig[])}
-                  onRemove={newValue => handleFieldChange(key, newValue as ThemeFieldConfig | ThemeFieldConfig[])}
-                />
-              );
-            }
+            // if (fieldType === "array") {
+            //   return (
+            //     <ThemePageSettingArrayField
+            //       key={key}
+            //       label={key}
+            //       path={[...path, key]}
+            //       value={
+            //         fieldValue as Array<ThemeFieldValue | ThemeFieldConfig>
+            //       }
+            //       onChange={(newValue) =>
+            //         handleFieldChange(
+            //           key,
+            //           newValue as ThemeFieldConfig | ThemeFieldConfig[]
+            //         )
+            //       }
+            //       onAdd={(newValue) =>
+            //         handleFieldChange(
+            //           key,
+            //           newValue as ThemeFieldConfig | ThemeFieldConfig[]
+            //         )
+            //       }
+            //       onRemove={(newValue) =>
+            //         handleFieldChange(
+            //           key,
+            //           newValue as ThemeFieldConfig | ThemeFieldConfig[]
+            //         )
+            //       }
+            //     />
+            //   );
+            // }
 
             return (
               <ThemePageSettingField
@@ -92,4 +109,3 @@ export const ObjectFieldComponent: React.FC<ThemePageSettingObjectFieldProps> = 
     </div>
   );
 };
-registerObjectField(ObjectFieldComponent);

@@ -7,9 +7,10 @@ import type React from 'react';
 import type { ThemeFieldConfig, ThemeFieldValue } from '#types';
 import type { ThemePageSettingArrayFieldProps } from './_type';
 import { getFieldType, getInitialValue } from './_utils';
-import { ThemePageSettingField, ThemePageSettingObjectField, registerArrayField } from './component-registry';
+import { ThemePageSettingObjectField } from './object-setting-field';
+import { ThemePageSettingField } from './setting-field';
 
-export const ArrayFieldComponent: React.FC<ThemePageSettingArrayFieldProps> = ({
+export const ThemePageSettingArrayField: React.FC<ThemePageSettingArrayFieldProps> = ({
   label,
   value,
   onChange,
@@ -133,4 +134,3 @@ export const ArrayFieldComponent: React.FC<ThemePageSettingArrayFieldProps> = ({
     </div>
   );
 };
-registerArrayField(ArrayFieldComponent);

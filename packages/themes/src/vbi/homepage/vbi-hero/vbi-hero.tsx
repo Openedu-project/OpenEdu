@@ -59,9 +59,9 @@ const VbiHomepageHero: SectionComponent<'homepage', 'vbiHero'> = ({ props, class
         {props?.partners?.map((file, index) => (
           <div className="mx-0 h-[44px] w-[50%] sm:w-[33%] md:mx-0 md:w-[18%]" key={index.toString()}>
             <Image
-              src={file.url}
-              height={file.height}
-              width={file.width}
+              src={file?.url}
+              height={file?.height}
+              width={file?.width}
               alt="partners"
               className="h-[40px] object-contain"
             />
