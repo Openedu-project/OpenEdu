@@ -200,7 +200,7 @@ export const MessageContainer = ({
         />
         <div id="end_line" ref={messagesEndRef} />
       </div>
-      <div className={cn('sticky bottom-0 hidden translate-x-1/2', showScrollButton && 'block')}>
+      <div className={cn('sticky bottom-0 z-50 hidden translate-x-1/2', showScrollButton && 'block')}>
         <Button size="icon" variant="outline" className="rounded-full" onClick={() => handleScrollToBottom('smooth')}>
           <ChevronsDown className="h-4 w-4" />
         </Button>
