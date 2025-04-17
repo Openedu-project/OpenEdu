@@ -15,7 +15,6 @@ import { COURSES_FIRST_PER_PAGE, COURSES_MAX_DISPLAY } from '../_constants';
 import { useFeaturedContentsStore } from '../_store';
 import { CourseItem } from './course-item';
 
-// Extend ICourse to include order property
 interface CourseWithOrder extends ICourse {
   order?: number;
 }
@@ -67,6 +66,7 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
   }, [dataCoursesPublish, dataPopularCourses]);
 
   // First effect: Check if we need to fetch all items
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     // Only run this once after the initial data load
     if (
@@ -76,7 +76,6 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
       dataCoursesPublish.pagination.total_items > totalCourses
     ) {
       const newTotalItems = dataCoursesPublish.pagination.total_items;
-      console.log(`First load complete. Fetching all ${newTotalItems} items...`);
 
       setTotalCourses(newTotalItems);
       setParams(prev => ({
@@ -87,7 +86,7 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
 
       // Clear selected courses so they can be rebuilt with complete data
       if (selectedCourses.length > 0) {
-        console.log('Clearing selected courses to rebuild with complete data');
+        // console.log('Clearing selected courses to rebuild with complete data');
         setSelectedCourses([]);
       }
     }
@@ -96,11 +95,10 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
   // Initialize available courses when data becomes available
   useEffect(() => {
     if (dataCoursesPublish?.results && Array.isArray(dataCoursesPublish.results)) {
-      console.log(`Updating available courses with ${dataCoursesPublish.results.length} items`);
       setAvailableCourses(dataCoursesPublish.results);
 
       // If we've loaded the full dataset, we should rebuild selected courses
-      if (initialLoadComplete && dataCoursesPublish.pagination.total_items > (totalCourses || COURSES_FIRST_PER_PAGE)) {
+      if (initialLoadComplete && dataCoursesPublish.pagination.total_items > COURSES_FIRST_PER_PAGE) {
         setNeedToRebuildSelected(true);
       }
     }
@@ -118,8 +116,6 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
       availableCourses.length > 0 &&
       (selectedCourses.length === 0 || needToRebuildSelected)
     ) {
-      console.log(`Rebuilding selected courses with ${availableCourses.length} available courses`);
-
       // Map featured content to actual course objects
       const featuredCourseIds = dataPopularCourses.results.map(item => item.entity_id);
 
@@ -138,8 +134,6 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
           return null;
         })
         .filter(Boolean) as CourseWithOrder[];
-
-      console.log(`Found ${sortedCourses.length} courses to display as selected`);
 
       setSelectedCourses(sortedCourses);
       setFeaturedContent(dataPopularCourses.results);

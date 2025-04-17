@@ -7,5 +7,8 @@ export const themeFeaturedContentMessages = {
     dragToReorder: 'Drag to re-order',
     selectedCourses: 'Selected Courses',
     availableCourses: 'Availabel Courses',
+    title: 'Featured Contents',
+    courses: 'Courses',
+    blog: 'Blog',
   },
 };
