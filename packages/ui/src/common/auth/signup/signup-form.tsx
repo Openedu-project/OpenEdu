@@ -4,11 +4,11 @@ import type { HTTPError } from '@oe/api';
 import { signUpService } from '@oe/api';
 import { type SignUpSchemaType, signUpSchema } from '@oe/api';
 import { authEvents } from '@oe/api';
-import { AUTH_ROUTES, PLATFORM_ROUTES } from '@oe/core';
+import { AUTH_ROUTES, PLATFORM_ROUTES, getCookieClient, setCookieClient } from '@oe/core';
 import { MailIcon, UserIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useState } from 'react';
 import { Link } from '#common/navigation';
 import { SuccessDialog } from '#components/dialog';
@@ -35,9 +35,17 @@ export function SignUpForm({ tLoginTitle, tSignupTitle }: SignUpFormProps) {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [resendEmailError, setResendEmailError] = useState<string | null>(null);
-
+  const refCode = searchParams.get('ref_code') ?? '';
   const fullSearchString = searchParams.toString();
   const nextPath = decodeURIComponent(fullSearchString.slice(fullSearchString.indexOf('next=') + 5) || '/');
+
+  useEffect(() => {
+    if (refCode) {
+      setCookieClient(process.env.NEXT_PUBLIC_COOKIE_INVITE_REF_CODE, refCode, {
+        maxAge: 365 * 86400,
+      });
+    }
+  }, [refCode]);
 
   const handleError = useCallback((error: unknown) => {
     setError((error as HTTPError).message);
@@ -60,7 +68,17 @@ export function SignUpForm({ tLoginTitle, tSignupTitle }: SignUpFormProps) {
 
   return (
     <>
-      <FormWrapper id="signup-form" schema={signUpSchema} onSubmit={onSubmit} onError={handleError}>
+      <FormWrapper
+        id="signup-form"
+        schema={signUpSchema}
+        onSubmit={onSubmit}
+        onError={handleError}
+        useFormProps={{
+          defaultValues: {
+            ref_code: getCookieClient(process.env.NEXT_PUBLIC_COOKIE_INVITE_REF_CODE) ?? refCode,
+          },
+        }}
+      >
         {({ loading }) => (
           <>
             <FormFieldWithLabel label={tAuth('signup.displayName')} name="display_name">
@@ -81,6 +99,9 @@ export function SignUpForm({ tLoginTitle, tSignupTitle }: SignUpFormProps) {
             </FormFieldWithLabel>
             <FormFieldWithLabel label={tAuth('confirmPassword')} name="confirmPassword">
               <InputPassword placeholder={tAuth('confirmPasswordPlaceholder')} autoComplete="confirmPassword" />
+            </FormFieldWithLabel>
+            <FormFieldWithLabel label={tAuth('referralCode')} name="ref_code">
+              <Input placeholder={tAuth('referralCodePlaceholder')} autoComplete="referralCode" />
             </FormFieldWithLabel>
             {error && (
               <Alert variant="destructive">

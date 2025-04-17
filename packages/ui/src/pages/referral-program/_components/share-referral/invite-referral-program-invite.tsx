@@ -1,16 +1,10 @@
 import { IconInfoCircle } from '@oe/assets';
 import StarBgImage from '@oe/assets/images/star-background.png';
 import { getTranslations } from 'next-intl/server';
-import { InviteReferralButton } from './invite-referral-button';
-import { InviteReferralProgramInviteForm } from './invite-referral-invite-friend-form';
+import { Button } from '#shadcn/button';
+import { Input } from '#shadcn/input';
 
-export async function InviteReferralProgramInvite({
-  points,
-  refCode,
-}: {
-  points: string;
-  refCode: string;
-}) {
+export async function InviteReferralProgramInvite() {
   const t = await getTranslations('referralProgram.invite');
 
   return (
@@ -23,10 +17,16 @@ export async function InviteReferralProgramInvite({
           }}
         />
         <div className="relative z-10 block">
-          <h3 className="giant-iheading-bold24 md:giant-iheading-bold40 mb-2">{t('getPoints', { points })}</h3>
+          <h3 className="giant-iheading-bold24 md:giant-iheading-bold40 mb-2">{t('getPoints', { points: 10 })}</h3>
           <p className="mcaption-regular16 mb-4">{t('dropEmailMessage')}</p>
 
-          <InviteReferralProgramInviteForm />
+          <div className="flex gap-2">
+            <Input
+              placeholder={t('friendEmailPlaceholder')}
+              className="flex-1 rounded-lg border border-gray-200 bg-white px-4 py-2 text-gray-700"
+            />
+            <Button>{t('sendButton')}</Button>
+          </div>
         </div>
       </div>
 
@@ -34,7 +34,9 @@ export async function InviteReferralProgramInvite({
       <div className="w-full rounded-xl p-2 md:p-6 lg:w-1/2">
         <div className="mb-4 flex flex-col items-center justify-between lg:flex-row">
           <h3 className="mcaption-semibold16 md:mcaption-semibold20">{t('requirementsTitle')}</h3>
-          <InviteReferralButton refCode={refCode} />
+          <Button className="mbutton-semibold16 rounded-[40px] bg-gradient-1 text-primary">
+            {t('inviteFriendsButton')}
+          </Button>
         </div>
         <div className="mb-4 space-y-3">
           <div className="flex items-center">
@@ -65,7 +67,7 @@ export async function InviteReferralProgramInvite({
         </div>
         <div className="mbutton-regular16 mb-6">
           {t('eachRefereeReceives')}&nbsp;
-          <span className="mcaption-semibold20 text-primary">{t('pointsAmount', { count: points })}</span>
+          <span className="mcaption-semibold20 text-primary">{t('pointsAmount', { count: 10 })}</span>
           &nbsp;
           {t('whenCompleteRequirements')}
         </div>

@@ -250,6 +250,10 @@ export const API_ENDPOINT = {
   LAUNCHPADS_INVESTMENTS: '/api/v1/investments',
   LAUNCHPADS_POOLS_ID: '/api/v1/launchpads/:id/pools',
   LAUNCHPADS_BOOKMARK_ID: '/api/v1/launchpads/:id/bookmarks',
+  POINT_CAMPAIGNS: '/api/v1/point-campaigns',
+  USER_ME_POINT: '/api/v1/users/me/points/:id',
+  USER_ME_CLAIM_POINT: '/api/v1/users/me/claim-points',
+  OE_REFERRAL_INVITE: '/api/v1/oe-referrals/invites',
 
   // WS
   WEBSOCKET: '/websocket',

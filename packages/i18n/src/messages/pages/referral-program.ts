@@ -24,6 +24,15 @@ export const referralProgramMessages = {
       referralCodeUsageWarning: 'Each user can only use referral code once. Choose carefully!',
       bothReceiveReward: 'Both you and your referee will receive reward when you complete this',
     },
+    inviteFriend: {
+      inviteSuccess: 'Invite Success',
+      modal: {
+        title: 'Invite Friend',
+        yourReferralCode: 'Your Referral Code',
+        referralLink: 'Referral Link',
+        copied: 'Copied',
+      },
+    },
     howItWorks: {
       title: 'How It Works',
       subtitle: 'Simple step to start earning rewards',
@@ -48,26 +57,31 @@ export const referralProgramMessages = {
       title: 'Available Reward To Claim',
       claimButton: 'Claim {points} Points',
       subtitle: 'One click to claim! Point will be added to your wallet after claiming.',
-      pointsEarned: '+ {points} Point',
-      baseReferral: {
+      pointsEarned: '+ {points} {suffix} ',
+      points: 'Points',
+      baseReferrals: {
         title: 'Base Referral Reward',
-        description: '10 successful referrals - First week multiplier active',
+        description: '10 successful referrals - {points} points',
       },
       milestone: {
         title: 'Milestone Achievements',
         description: 'Reach milestone: {count} Referrals',
       },
-      featureDiscovery: {
+      featuresDiscovery: {
         title: 'Feature Discovery',
-        description: 'Course: {course} · Flip: {flip} · Token: {token}',
+        description: 'Course: {course} · Fiat: {fiat} · Token: {token}',
+      },
+      timeBasedReward: {
+        title: 'Time-based Reward',
+        description: 'First Week Multiplier: {points} points',
       },
       streakBonus: {
         title: 'Streak Bonus',
         description: 'Weekly: {weekly} points · Monthly: {monthly} points',
       },
-      registrationReward: {
+      registrationRewards: {
         title: 'Registration Reward',
-        description: 'Complete all requirement: {points} point',
+        description: 'Complete all requirement: {points} points',
       },
     },
     advancedReward: {
@@ -77,36 +91,41 @@ export const referralProgramMessages = {
         title: 'Activity Bonus Rewards',
         tokenDeposit: {
           title: 'Token Deposit',
-          pointsPerDeposit: '+{points} Points / First Deposit',
+          pointsPerDeposit: '+{points} {suffix} / First Deposit',
           totalPoints: '{deposits} Deposits = {points} Points earned',
           description: "Reward for referee's first token deposit",
+          points: 'Points',
         },
         fiatDeposit: {
           title: 'Fiat Deposit',
-          pointsPerDeposit: '+{points} Points / First Deposit',
+          pointsPerDeposit: '+{points} {suffix} / First Deposit',
           totalPoints: '{deposits} Deposits = {points} points earned',
           description: "Reward for referee's first fiat deposit ",
+          points: 'Points',
         },
         courseCompletion: {
           title: 'Course Completion',
-          percentPerCompletion: '+{percent}% / First Completion',
+          pointsCompletion: '+{points} {suffix} / First Completion',
           totalPoints: '{completions} Completions = {points} Points earned',
           description: "Reward for referee's first completion",
+          points: 'Points',
         },
       },
       consistencyRewards: {
         title: 'Consistency Rewards',
         weeklyStreak: {
           title: 'Weekly Streak',
-          points: '+ {points} Point',
+          pointsReward: '+ {points}{suffix}',
           daysRemaining: '{days} days remaining',
           progress: '{current}/{total}',
+          points: 'Points',
         },
         monthlyStreak: {
           title: 'Monthly Streak',
-          points: '+ {points} Point',
+          pointsReward: '+ {points}{suffix}',
           daysRemaining: '{days} days remaining',
           progress: '{current}/{total}',
+          points: 'Points',
         },
       },
       timeBasedRewards: {

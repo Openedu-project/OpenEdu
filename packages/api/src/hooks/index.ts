@@ -42,3 +42,5 @@ export * from './useUser';
 export * from './useUserAffiliateReport';
 export * from './useUserProfile';
 export * from './useWallet';
+export * from './useReferralProgram';
+export * from './usePoint';
