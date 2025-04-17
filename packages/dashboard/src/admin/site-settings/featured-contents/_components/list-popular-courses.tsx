@@ -11,6 +11,8 @@ import { Input } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type React from 'react';
+import { COURSES_FIRST_PER_PAGE, COURSES_MAX_DISPLAY } from '../_constants';
+import { useFeaturedContentsStore } from '../_store';
 import { CourseItem } from './course-item';
 
 // Extend ICourse to include order property
@@ -18,12 +20,10 @@ interface CourseWithOrder extends ICourse {
   order?: number;
 }
 
-const PER_PAGE = 8;
-const MAX_DISPLAY = 16;
-
 const ListPopularCourses = ({ domain }: { domain?: string }) => {
   const t = useTranslations('themeFeaturedContent');
   const { triggerUpdateFeaturedContent } = useUpdateFeaturedContent();
+  const { totalCourses, setTotalCourses } = useFeaturedContentsStore();
 
   // All available courses
   const [availableCourses, setAvailableCourses] = useState<CourseWithOrder[]>([]);
@@ -34,15 +34,14 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
   // Keep track of featured content for API submission
   const [featuredContent, setFeaturedContent] = useState<IFeaturedContent<undefined>[]>([]);
 
-  const [maxDisplay, setMaxDisplay] = useState<number>(MAX_DISPLAY);
+  const [maxDisplay, setMaxDisplay] = useState<number>(COURSES_MAX_DISPLAY);
   const [isSaving, setIsSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
 
-  const [totalItems, setTotalItems] = useState(PER_PAGE);
   const [params, setParams] = useState({
     page: 1,
-    per_page: PER_PAGE, // Start with default per_page
+    per_page: totalCourses, // Start with default per_page
     sort: 'create_at desc',
     preloads: ['Categories', 'Owner', 'Levels'],
   });
@@ -73,12 +72,13 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
     if (
       !initialLoadComplete &&
       dataCoursesPublish?.pagination?.total_items &&
-      dataCoursesPublish.pagination.total_items > totalItems
+      totalCourses &&
+      dataCoursesPublish.pagination.total_items > totalCourses
     ) {
       const newTotalItems = dataCoursesPublish.pagination.total_items;
       console.log(`First load complete. Fetching all ${newTotalItems} items...`);
 
-      setTotalItems(newTotalItems);
+      setTotalCourses(newTotalItems);
       setParams(prev => ({
         ...prev,
         per_page: newTotalItems,
@@ -91,7 +91,7 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
         setSelectedCourses([]);
       }
     }
-  }, [dataCoursesPublish, totalItems, initialLoadComplete, selectedCourses.length]);
+  }, [dataCoursesPublish, totalCourses, initialLoadComplete, selectedCourses.length]);
 
   // Initialize available courses when data becomes available
   useEffect(() => {
@@ -100,7 +100,7 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
       setAvailableCourses(dataCoursesPublish.results);
 
       // If we've loaded the full dataset, we should rebuild selected courses
-      if (initialLoadComplete && dataCoursesPublish.results.length > PER_PAGE) {
+      if (initialLoadComplete && dataCoursesPublish.pagination.total_items > (totalCourses || COURSES_FIRST_PER_PAGE)) {
         setNeedToRebuildSelected(true);
       }
     }
@@ -317,10 +317,7 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
       {/* Header controls */}
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <div className="space-y-2">
-            <h2 className="text-xl font-semibold">{t('featuredCourses')}</h2>
-            <p className="text-foreground/80 text-sm">{t('dragToReorder')}</p>
-          </div>
+          <p className="text-foreground/80 text-sm">{t('dragToReorder')}</p>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <span className="whitespace-nowrap text-sm">{t('maxItems')}</span>
@@ -347,7 +344,7 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
               type: 'array',
               direction: 'horizontal',
             }}
-            className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4"
+            className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4"
             renderConfig={{
               renderItem: ({ item }) => (
                 <CourseItem
@@ -386,7 +383,7 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
           currentPage={dataCoursesPublish?.pagination?.page ?? 1}
           totalCount={dataCoursesPublish?.pagination?.total_items ?? 0}
           onPageChange={handlePageChange}
-          pageSize={totalItems}
+          pageSize={totalCourses}
           className="mt-6"
         />
       </div>
