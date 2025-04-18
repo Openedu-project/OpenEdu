@@ -335,6 +335,7 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false, onClick }
       void actionHandler.handle(params);
 
       onClick?.(event);
+      // setIsLoading(false)
     },
     [
       actionHandler,

@@ -10,7 +10,7 @@ import { useParams } from 'next/navigation';
 import { useRouter } from '#common/navigation';
 import { Button } from '#shadcn/button';
 import { createCourseUrl } from '#utils/course-url';
-import { useLessonLearningStore } from '../../../_store/learning-store';
+import { useCurrentLesson, useProgress } from '../../../_context';
 import { getLessonGlobalIndex, getTotalLessons, getUidByLessonIndex } from '../../../_utils/utils';
 import { CompleteCourseNotiModal } from '../../course-noti-modal';
 import { QuizAnsResult } from './quiz-ans-result';
@@ -42,8 +42,15 @@ const QuizResult = ({
 
   const { answers, passed } = result;
 
-  const { sectionsProgressData, getLessonStatus } = useLessonLearningStore();
-  const currentLessonIndex = getLessonGlobalIndex(sectionsProgressData, lesson as string);
+  const {
+    state: { sectionsProgressData },
+    getLessonStatus,
+  } = useProgress();
+  const { currentLesson } = useCurrentLesson();
+
+  const lessonUid = currentLesson || (lesson as string);
+
+  const currentLessonIndex = getLessonGlobalIndex(sectionsProgressData, lessonUid);
   const totalItems = getTotalLessons(sectionsProgressData);
   const checkNextLesson = getLessonStatus(currentLessonIndex + 1);
 

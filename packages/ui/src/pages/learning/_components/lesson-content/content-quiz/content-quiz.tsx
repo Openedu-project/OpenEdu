@@ -8,7 +8,7 @@ import { useGetCurrentQuestion, useGetQuizSubmissionById, usePostQuizSubmission,
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { useQuizSubmissionStore } from '../../../_store/learning-store';
+import { useCourse, useQuiz } from '../../../_context';
 import { transformAnswers } from '../../../_utils/utils';
 import type { IQuizzSubmissionState, TAnswerInput } from '../_types/types';
 import { QuizContainer } from './quiz-container';
@@ -38,8 +38,13 @@ export function ContentQuiz({
     data: null,
     start_at: 0,
   });
-  // const [quizResultState, setQuizResultState] = useState<IQuizSubmissionResponse>();
-  const { setQuizResult, quizResult } = useQuizSubmissionStore();
+
+  // Sử dụng Context API thay vì Zustand store
+  const { quizResult, setQuizResult } = useQuiz();
+  const { course } = useCourse();
+
+  // Sử dụng course từ context nếu không được truyền qua props
+  const courseData = course_data || course;
 
   const { triggerPostQuizSubmission } = usePostQuizSubmission();
   const { triggerCurrentQuestion } = useGetCurrentQuestion(quizSubmission?.id);
@@ -53,7 +58,6 @@ export function ContentQuiz({
       onComplete?.();
     }
 
-    // setQuizResultState(result);
     setQuizResult(result);
   };
 
@@ -86,7 +90,7 @@ export function ContentQuiz({
     } else if (quiz) {
       triggerPostQuizSubmission({
         quiz_id: quiz?.id,
-        course_id: course_data?.id,
+        course_id: courseData?.id,
       })
         .then(res => {
           const { id, num_questions, start_at } = res;
@@ -166,7 +170,7 @@ export function ContentQuiz({
       onStartQuiz={onStartQuiz}
       settings={settings}
       triggerFunction={triggerFunction}
-      courseIsCompleted={course_data?.mark_as_completed}
+      courseIsCompleted={courseData?.mark_as_completed}
     />
   );
 }

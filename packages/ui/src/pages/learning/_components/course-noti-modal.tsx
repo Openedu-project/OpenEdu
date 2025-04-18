@@ -2,15 +2,16 @@ import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 
 import backgroundCongrat from '@oe/assets/images/learning-page/congratulation.png';
+import backgroundKeepMoving from '@oe/assets/images/learning-page/keep_moving_forward.png';
 import backgroundStaytuned from '@oe/assets/images/learning-page/stay-tuned.png';
 import { PLATFORM_ROUTES } from '@oe/core';
 import { Link } from '#common/navigation';
 import { Image } from '#components/image';
 import { Modal } from '#components/modal';
 import { Button } from '#shadcn/button';
-import { useLessonLearningStore } from '../_store/learning-store';
+import { useProgress } from '../_context';
 
-type NotiType = 'completed_course' | 'completed_all_lessons' | 'not_completed_lessons_before';
+type NotiType = 'completed_course' | 'completed_all_lessons' | 'not_completed_lessons_before' | 'keep_moving_forward';
 
 interface CourseNotiProps {
   open: boolean;
@@ -26,7 +27,7 @@ interface ModalConfig {
   title: string;
   description: string;
   backgroundSrc: string;
-  buttonType: 'explore' | 'return';
+  buttonType: 'explore' | 'return' | 'continue';
 }
 
 const MODAL_CONFIGS: Record<NotiType, ModalConfig> = {
@@ -51,6 +52,13 @@ const MODAL_CONFIGS: Record<NotiType, ModalConfig> = {
     backgroundSrc: backgroundStaytuned?.src,
     buttonType: 'return',
   },
+  keep_moving_forward: {
+    type: 'not_completed_lessons_before',
+    title: 'keepMovingForward',
+    description: 'keepMovingForwardDesc',
+    backgroundSrc: backgroundKeepMoving?.src,
+    buttonType: 'continue',
+  },
 } as const;
 
 export function CompleteCourseNotiModal({
@@ -62,7 +70,7 @@ export function CompleteCourseNotiModal({
   onReturnToClass,
 }: CourseNotiProps) {
   const t = useTranslations('learningPage.courseNotiModal');
-  const { isAllLessonsCompleted } = useLessonLearningStore();
+  const { isAllLessonsCompleted } = useProgress();
 
   const notiType = useMemo((): NotiType => {
     const isLastLesson = currentLessonIndex === totalItems - 1;
@@ -77,7 +85,7 @@ export function CompleteCourseNotiModal({
     }
 
     if (!checkNextLesson) {
-      return 'not_completed_lessons_before';
+      return allLessonsCompleted ? 'completed_all_lessons' : 'not_completed_lessons_before';
     }
 
     return allLessonsCompleted ? 'completed_all_lessons' : 'not_completed_lessons_before';

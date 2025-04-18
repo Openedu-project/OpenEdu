@@ -63,7 +63,7 @@ const DetailAnswerResult = ({ onFinish, answers }: AnswerResultProps) => {
         <div className="flex h-full flex-col justify-center space-y-4">
           <ResultCard title={tQuizResult('questionNum', { questionNum: quesIndex + 1 })}>
             <div
-              className="rich-text mcaption-semibold16 text-content-basic-dark"
+              className="rich-text mcaption-semibold16 m-0 text-content-basic-dark"
               // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
               dangerouslySetInnerHTML={{
                 __html: title as string | TrustedHTML,

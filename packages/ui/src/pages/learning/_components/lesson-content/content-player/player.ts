@@ -3,7 +3,8 @@ import { type RefObject, useEffect, useState } from 'react';
 export const DEBUG = false;
 export const VERSION = '0.0.11';
 export const CONTEXT = 'player.js';
-export const POST_MESSAGE = !!window.postMessage;
+// export const POST_MESSAGE = !!window.postMessage;
+export const POST_MESSAGE = typeof window !== 'undefined' && !!window.postMessage;
 
 export const EVENTS = {
   READY: 'ready',

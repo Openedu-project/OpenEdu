@@ -1,7 +1,9 @@
 import { ArrowLeft2, ArrowRight2 } from '@oe/assets';
 import { ZoomIn, ZoomOut } from 'lucide-react';
 import type { ReactNode } from 'react';
+import type React from 'react';
 import { Button } from '#shadcn/button';
+import { Input } from '#shadcn/input';
 import { ZOOM_LEVELS } from './constants';
 
 interface PdfToolbarProps {
@@ -39,6 +41,17 @@ const ToolbarButton = ({
 );
 
 const PdfToolbar = ({ page, numPages, scale, onPageChange, onZoom, showPerPage }: PdfToolbarProps) => {
+  const onSetPage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    if (value >= 1 && value <= numPages) {
+      onPageChange(value);
+    } else if (value < 1) {
+      onPageChange(1);
+    } else {
+      onPageChange(numPages);
+    }
+  };
+
   return (
     <div className="w-full border-b bg-white/80 shadow-xs backdrop-blur-xs">
       <div className="mx-auto flex w-full max-w-full flex-row-reverse items-center justify-between gap-2 px-4 py-2">
@@ -52,8 +65,17 @@ const PdfToolbar = ({ page, numPages, scale, onPageChange, onZoom, showPerPage }
               <ArrowLeft2 color="var(--foreground)" width={16} height={16} />
             </ToolbarButton>
 
-            <div className="mcaption-regular14 min-w-[80px] text-center">
-              {page} of {numPages}
+            <div className="mcaption-regular14 flex min-w-[80px] items-center text-center">
+              <Input
+                min={1}
+                max={numPages}
+                type="number"
+                value={page}
+                onChange={onSetPage}
+                wrapperClassName="w-fit h-fit"
+                className="mcaption-regular14 h-fit w-full border-none bg-transparent p-0 text-center focus-visible:ring-0"
+              />
+              <span>of {numPages}</span>
             </div>
 
             <ToolbarButton
