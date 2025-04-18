@@ -10,16 +10,18 @@ export async function SocialLoginPage() {
   const referrer = queryParams?.get('referrer');
   const provider = queryParams?.get('provider');
   const originUrl = queryParams?.get('origin_url');
+  const inviteRefCode = queryParams?.get('inviteRefCode');
 
   if (!(provider && originUrl && referrer)) {
     redirect(originUrl ?? PLATFORM_ROUTES.homepage);
   }
 
   if (provider === PROVIDERS.facebook) {
-    const url = await createFacebookAuthorizeUrl(referrer, originUrl);
+    const url = await createFacebookAuthorizeUrl(referrer, originUrl, inviteRefCode ?? '');
     redirect(url);
   } else if (provider === PROVIDERS.google) {
-    const url = await createGoogleAuthorizeUrl(referrer, originUrl);
+    const url = await createGoogleAuthorizeUrl(referrer, originUrl, inviteRefCode ?? '');
+
     redirect(url);
   }
 

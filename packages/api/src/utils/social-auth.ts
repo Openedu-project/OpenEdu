@@ -49,18 +49,21 @@ const createSocialAuthorizeUrl = ({
   provider,
   referrer,
   originUrl,
+  inviteRefCode,
   verifier,
   socialOptions,
 }: {
   provider: SocialProvider;
   referrer: string;
   originUrl: string;
+  inviteRefCode: string;
   verifier?: string;
   socialOptions: Record<string, string>;
 }) => {
   const authorizeUrl = AUTHORIZE_ENDPOINT[provider];
   const url = new URL(authorizeUrl);
-  url.searchParams.set('state', JSON.stringify({ referrer, provider, originUrl, verifier }));
+
+  url.searchParams.set('state', JSON.stringify({ referrer, provider, originUrl, verifier, inviteRefCode }));
   url.searchParams.set('redirect_uri', `${process.env.NEXT_PUBLIC_APP_ORIGIN}/callback`);
   url.searchParams.set('response_type', 'code');
   for (const [key, value] of Object.entries(socialOptions)) {
@@ -71,11 +74,12 @@ const createSocialAuthorizeUrl = ({
   return url.toString();
 };
 
-export const createGoogleAuthorizeUrl = (referrer: string, originUrl: string) => {
+export const createGoogleAuthorizeUrl = (referrer: string, originUrl: string, inviteRefCode: string) => {
   return createSocialAuthorizeUrl({
     provider: 'google',
     referrer,
     originUrl,
+    inviteRefCode,
     socialOptions: {
       client_id: process.env.NEXT_PUBLIC_AUTH_GOOGLE_ID,
       prompt: 'select_account',
@@ -84,12 +88,13 @@ export const createGoogleAuthorizeUrl = (referrer: string, originUrl: string) =>
   });
 };
 
-export const createFacebookAuthorizeUrl = async (referrer: string, originUrl: string) => {
+export const createFacebookAuthorizeUrl = async (referrer: string, originUrl: string, inviteRefCode: string) => {
   const { verifier, challenge } = await generatePKCEPair();
   return createSocialAuthorizeUrl({
     provider: 'facebook',
     referrer,
     originUrl,
+    inviteRefCode,
     verifier,
     socialOptions: {
       client_id: process.env.NEXT_PUBLIC_AUTH_FACEBOOK_ID,

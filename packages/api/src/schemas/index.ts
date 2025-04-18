@@ -12,3 +12,4 @@ export * from './permission';
 export * from './profileSchema';
 export * from './wallet';
 export * from './withdrawSchema';
+export * from './referralProgramSchema';

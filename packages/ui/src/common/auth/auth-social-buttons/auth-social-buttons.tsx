@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 
 const createHref = async (provider: SocialProvider) => {
   const referrer = await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY);
+  const inviteRefCode = await getCookie(process.env.NEXT_PUBLIC_COOKIE_INVITE_REF_CODE);
   const url = new URL(process.env.NEXT_PUBLIC_APP_ORIGIN);
 
   url.pathname = AUTH_ROUTES.socialLogin;
@@ -20,7 +21,11 @@ const createHref = async (provider: SocialProvider) => {
   if (referrer) {
     url.searchParams.set('referrer', referrer);
   }
+  if (inviteRefCode) {
+    url.searchParams.set('inviteRefCode', inviteRefCode);
+  }
   url.searchParams.set('origin_url', window.location.href);
+
   return url.toString();
 };
 

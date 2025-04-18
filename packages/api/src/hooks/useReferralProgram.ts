@@ -1,8 +1,12 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
-import { getAllReferralProgramListService, postInviteReferrerService } from '#services/referral-program';
+import {
+  getAllReferralProgramListService,
+  postInviteReferrerService,
+  postReferralCampaignService,
+} from '#services/referral-program';
 import type { IFilter } from '#types/filter';
-import type { IInviteReferrerPayload, IReferralProgramRes } from '#types/referral-program';
+import type { IInviteReferrerPayload, IReferralProgramPayload, IReferralProgramRes } from '#types/referral-program';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
 
@@ -24,6 +28,19 @@ export function useGetAllReferralProgramList({ queryParams }: { queryParams: IFi
     isLoadingAllReferralProgramList: isLoading,
   };
 }
+export const usePostReferralCampaign = () => {
+  const { trigger, isMutating, error } = useSWRMutation(
+    API_ENDPOINT.POINT_CAMPAIGNS,
+    async (endpoint: string, { arg }: { arg: IReferralProgramPayload }): Promise<IReferralProgramRes> =>
+      postReferralCampaignService(endpoint, arg)
+  );
+
+  return {
+    triggerPostReferralCampaign: trigger,
+    isLoadingPostReferralCampaign: isMutating,
+    errorPostReferralCampaign: error,
+  };
+};
 
 export const usePostInviteReferrer = () => {
   const { trigger, isMutating, error } = useSWRMutation(

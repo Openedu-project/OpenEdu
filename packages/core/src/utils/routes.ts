@@ -189,6 +189,8 @@ export const PROTECTED_ROUTES = {
   learner: '/learner',
   blog: '/blog-admin',
   affiliate: '/affiliate',
+  referralProgram: '/referral-program',
+  referralProgramHistory: '/referral-program/history',
   wallet: '/wallet',
 } as const;
 

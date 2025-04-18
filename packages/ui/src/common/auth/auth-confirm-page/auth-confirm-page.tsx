@@ -63,7 +63,6 @@ export async function AuthConfirmPage({ banner, themeName = 'academia' }: AuthCo
         } catch {
           decodedToken = null;
         }
-
         return (
           <AuthLayout
             title={tThemeAuth('authConfirm.title')}

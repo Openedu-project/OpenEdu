@@ -47,7 +47,7 @@ export const homePageMessage = {
     referralSection: {
       title: 'Join Our Referral Program To Earn Rewards',
       description: 'Come and join our affiliate program now to enjoy our rewards!',
-      exploreMore: 'Explore More',
+      discoverReferralProgram: 'Discover Referral Program',
       reward: 'Explore Our <span>Rewards</span>',
       easy: 'Easy to Earn',
     },

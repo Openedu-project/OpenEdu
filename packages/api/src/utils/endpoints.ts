@@ -254,6 +254,7 @@ export const API_ENDPOINT = {
   USER_ME_POINT: '/api/v1/users/me/points/:id',
   USER_ME_CLAIM_POINT: '/api/v1/users/me/claim-points',
   OE_REFERRAL_INVITE: '/api/v1/oe-referrals/invites',
+  OE_MY_REFERRAL_HISTORY: '/api/v1/users/me/oe-referrals',
 
   // WS
   WEBSOCKET: '/websocket',

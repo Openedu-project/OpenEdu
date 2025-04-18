@@ -13,15 +13,19 @@ export default async function InviteReferralProgramList() {
     },
   });
   const data = allReferralProgramListRes?.results?.[0];
-
   const myPointProfileRes = await getMyPointProfileService(API_ENDPOINT.USER_ME_POINT, { id: data?.id ?? '' });
 
   return (
     <main className="container mx-auto max-w-[1440px] px-4 py-6">
       <InviteReferralProgramHeader
+        id={data?.id ?? ''}
         data={data?.setting?.ref_count_bonus ?? []}
+        milestones={myPointProfileRes?.new_points?.milestone?.milestones ?? []}
         totalReferrals={data?.total_reward ?? 0}
         totalEarnedPoints={Number(myPointProfileRes?.point?.amount) ?? 0}
+        totalBalance={myPointProfileRes?.point_wallets?.[0]?.available_balance ?? '0'}
+        startDate={data?.start_date ?? 0}
+        endDate={data?.end_date ?? 0}
       />
       <InviteReferralProgramInvite
         points={data?.setting?.referrer_reward?.amount ?? '0'}
@@ -29,7 +33,7 @@ export default async function InviteReferralProgramList() {
       />
       <InviteReferralProgramAvailableReward data={myPointProfileRes?.new_points} />
       <InviteReferralProgramHowItWork />
-      <InviteReferralProgramAdvanceReward dataSetting={data?.setting} />
+      <InviteReferralProgramAdvanceReward dataSetting={data?.setting} dateNewPoint={myPointProfileRes.new_points} />
     </main>
   );
 }

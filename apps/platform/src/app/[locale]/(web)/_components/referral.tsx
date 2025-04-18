@@ -1,15 +1,17 @@
+import { isLogin } from "@oe/api";
 import Ref1 from "@oe/assets/images/openedu-homepage/referral/ref-1.png";
 import Ref2 from "@oe/assets/images/openedu-homepage/referral/ref-2.png";
 import Ref3 from "@oe/assets/images/openedu-homepage/referral/ref-3.png";
+import { PROTECTED_ROUTES } from "@oe/core";
 
-// import { Link } from '@oe/ui';
+import { Link } from "@oe/ui";
 import { Image } from "@oe/ui";
-// import { MoveRight } from 'lucide-react';
-import { useTranslations } from "next-intl";
+import { MoveRight } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
-export function ReferralProgramSection() {
-  const t = useTranslations("homePageLayout.referralSection");
-
+export async function ReferralProgramSection() {
+  const t = await getTranslations("homePageLayout.referralSection");
+  const login = await isLogin();
   return (
     <section className="container relative mx-auto px-0 py-5 md:px-4 md:py-10">
       <div className="flex flex-col items-center justify-center">
@@ -19,13 +21,14 @@ export function ReferralProgramSection() {
         <div className="mcaption-regular16 lg:mcaption-regular24 flex items-center gap-1 text-center">
           <p>
             {t("description")}
-            {/* <Link
-              href="#"
+            <Link
+              href={PROTECTED_ROUTES.referralProgram}
               className="mcaption-regular16 lg:mcaption-regular24 mb-6 ml-1 inline-flex gap-1 p-0 lg:mb-10"
+              disabled={!login}
             >
-              {t('exploreMore')}
+              {t("discoverReferralProgram")}
               <MoveRight />
-            </Link> */}
+            </Link>
           </p>
         </div>
         <div className="mt-4 flex w-full flex-col gap-8 lg:mt-10 lg:flex-row">
