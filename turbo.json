@@ -61,6 +61,12 @@
       "inputs": ["src/**", "public/**", "package.json", "next.config.js", "tsconfig.json", ".env*"],
       "cache": true
     },
+    "@oe/themes#build": {
+      "dependsOn": ["@oe/ui#build", "@oe/api#build", "@oe/core#build", "@oe/assets#build"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**", ".open-next/**"],
+      "inputs": ["src/**", "public/**", "package.json", "next.config.js", "tsconfig.json", ".env*"],
+      "cache": true
+    },
     "dev": {
       "cache": false,
       "persistent": true

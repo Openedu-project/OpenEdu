@@ -1,5 +1,6 @@
 'use client';
 
+import { fonts } from '@oe/core';
 import { SmartPreview } from '@oe/ui';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@oe/ui';
 import { useTranslations } from 'next-intl';
@@ -22,8 +23,6 @@ import { ThemeConfigMetadata } from '../theme-metadata';
 import { ThemePreviewLayout } from './theme-preview-layout';
 import { PreviewPanel } from './theme-preview-panel';
 import { SettingsPanel } from './theme-setting-panel';
-
-import { fonts } from '../../../fonts';
 
 export interface ThemeContentProps {
   isLoading: boolean;

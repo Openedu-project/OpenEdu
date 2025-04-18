@@ -1,3 +1,4 @@
+'use client';
 import { fonts } from '@oe/core';
 import { Button } from '@oe/ui';
 import { Card, CardContent, CardHeader, CardTitle } from '@oe/ui';

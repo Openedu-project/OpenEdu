@@ -2,7 +2,15 @@
   "extends": "@oe/config/tsconfig/react-build.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "outDir": "dist/types"
+    "outDir": "dist/types",
+    "types": ["@oe/types/global.d.ts", "next/image-types/global"],
+    "paths": {
+      "#types": ["./src/_types/index.ts"],
+      "#utils": ["./src/_utils/index.ts"],
+      "#components": ["./src/_components/index.ts"],
+      "#common": ["./src/_common/index.ts"],
+      "#config": ["./src/_config/index.ts"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

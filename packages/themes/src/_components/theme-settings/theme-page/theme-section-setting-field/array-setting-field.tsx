@@ -5,13 +5,10 @@ import { cn } from '@oe/ui';
 import { Plus, Trash2 } from 'lucide-react';
 import type React from 'react';
 import type { ThemeFieldConfig, ThemeFieldValue } from '#types';
-import {
-  type ThemePageSettingArrayFieldProps,
-  ThemePageSettingField,
-  ThemePageSettingObjectField,
-  getFieldType,
-  getInitialValue,
-} from './index';
+import type { ThemePageSettingArrayFieldProps } from './_type';
+import { getFieldType, getInitialValue } from './_utils';
+import { ThemePageSettingObjectField } from './object-setting-field';
+import { ThemePageSettingField } from './setting-field';
 
 export const ThemePageSettingArrayField: React.FC<ThemePageSettingArrayFieldProps> = ({
   label,

@@ -1,3 +1,4 @@
+'use client';
 import { createAPIUrl } from '@oe/api';
 import { ADMIN_ROUTES } from '@oe/core';
 import { Badge } from '@oe/ui';

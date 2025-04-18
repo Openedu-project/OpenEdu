@@ -7,12 +7,9 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 import type React from 'react';
 import { useState } from 'react';
 import { camelToNormal } from '../../../../_utils/function';
-import {
-  ThemePageSettingArrayField,
-  ThemePageSettingField,
-  type ThemePageSettingObjectFieldProps,
-  getFieldType,
-} from './index';
+import type { ThemePageSettingObjectFieldProps } from './_type';
+import { getFieldType } from './_utils';
+import { ThemePageSettingField } from './setting-field';
 
 export const ThemePageSettingObjectField: React.FC<ThemePageSettingObjectFieldProps> = ({
   label,
@@ -56,19 +53,36 @@ export const ThemePageSettingObjectField: React.FC<ThemePageSettingObjectFieldPr
               );
             }
 
-            if (fieldType === 'array') {
-              return (
-                <ThemePageSettingArrayField
-                  key={key}
-                  label={key}
-                  path={[...path, key]}
-                  value={fieldValue as Array<ThemeFieldValue | ThemeFieldConfig>}
-                  onChange={newValue => handleFieldChange(key, newValue as ThemeFieldConfig | ThemeFieldConfig[])}
-                  onAdd={newValue => handleFieldChange(key, newValue as ThemeFieldConfig | ThemeFieldConfig[])}
-                  onRemove={newValue => handleFieldChange(key, newValue as ThemeFieldConfig | ThemeFieldConfig[])}
-                />
-              );
-            }
+            // if (fieldType === "array") {
+            //   return (
+            //     <ThemePageSettingArrayField
+            //       key={key}
+            //       label={key}
+            //       path={[...path, key]}
+            //       value={
+            //         fieldValue as Array<ThemeFieldValue | ThemeFieldConfig>
+            //       }
+            //       onChange={(newValue) =>
+            //         handleFieldChange(
+            //           key,
+            //           newValue as ThemeFieldConfig | ThemeFieldConfig[]
+            //         )
+            //       }
+            //       onAdd={(newValue) =>
+            //         handleFieldChange(
+            //           key,
+            //           newValue as ThemeFieldConfig | ThemeFieldConfig[]
+            //         )
+            //       }
+            //       onRemove={(newValue) =>
+            //         handleFieldChange(
+            //           key,
+            //           newValue as ThemeFieldConfig | ThemeFieldConfig[]
+            //         )
+            //       }
+            //     />
+            //   );
+            // }
 
             return (
               <ThemePageSettingField

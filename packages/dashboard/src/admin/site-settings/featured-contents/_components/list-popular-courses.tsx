@@ -1,37 +1,41 @@
-'use client';
-import type { ICourse } from '@oe/api';
-import { useGetPopularCourses, useUpdateFeaturedContent } from '@oe/api';
-import type { IFeaturedContent } from '@oe/api';
-import { useGetCoursesPublish } from '@oe/api';
-import { toast } from '@oe/ui';
-import { Button } from '@oe/ui';
-import { DndSortable } from '@oe/ui';
-import { PaginationCustom } from '@oe/ui';
-import { Input } from '@oe/ui';
-import { useTranslations } from 'next-intl';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import type React from 'react';
-import { COURSES_FIRST_PER_PAGE, COURSES_MAX_DISPLAY } from '../_constants';
-import { useFeaturedContentsStore } from '../_store';
-import { CourseItem } from './course-item';
+"use client";
+import type { ICourse } from "@oe/api";
+import { useGetPopularCourses, useUpdateFeaturedContent } from "@oe/api";
+import type { IFeaturedContent } from "@oe/api";
+import { useGetCoursesPublish } from "@oe/api";
+import { toast } from "@oe/ui";
+import { Button } from "@oe/ui";
+import { DndSortable } from "@oe/ui";
+import { PaginationCustom } from "@oe/ui";
+import { Input } from "@oe/ui";
+import { useTranslations } from "next-intl";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import type React from "react";
+import { COURSES_FIRST_PER_PAGE, COURSES_MAX_DISPLAY } from "../_constants";
+import { useFeaturedContentsStore } from "../_store";
+import { CourseItem } from "./course-item";
 
 interface CourseWithOrder extends ICourse {
   order?: number;
 }
 
 const ListPopularCourses = ({ domain }: { domain?: string }) => {
-  const t = useTranslations('themeFeaturedContent');
+  const t = useTranslations("themeFeaturedContent");
   const { triggerUpdateFeaturedContent } = useUpdateFeaturedContent();
   const { totalCourses, setTotalCourses } = useFeaturedContentsStore();
 
   // All available courses
-  const [availableCourses, setAvailableCourses] = useState<CourseWithOrder[]>([]);
+  const [availableCourses, setAvailableCourses] = useState<CourseWithOrder[]>(
+    []
+  );
 
   // Selected courses for display (these are the ones that will be shown as featured)
   const [selectedCourses, setSelectedCourses] = useState<CourseWithOrder[]>([]);
 
   // Keep track of featured content for API submission
-  const [featuredContent, setFeaturedContent] = useState<IFeaturedContent<undefined>[]>([]);
+  const [featuredContent, setFeaturedContent] = useState<
+    IFeaturedContent<undefined>[]
+  >([]);
 
   const [maxDisplay, setMaxDisplay] = useState<number>(COURSES_MAX_DISPLAY);
   const [isSaving, setIsSaving] = useState(false);
@@ -41,17 +45,19 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
   const [params, setParams] = useState({
     page: 1,
     per_page: totalCourses, // Start with default per_page
-    sort: 'create_at desc',
-    preloads: ['Categories', 'Owner', 'Levels'],
+    sort: "create_at desc",
+    preloads: ["Categories", "Owner", "Levels"],
   });
 
   // Fetch popular courses (current featured content)
-  const { dataPopularCourses, isLoadingCourses: isLoadingPopular } = useGetPopularCourses({
-    params: { org_id: domain ?? '' },
-  });
+  const { dataPopularCourses, isLoadingCourses: isLoadingPopular } =
+    useGetPopularCourses({
+      params: { org_id: domain ?? "" },
+    });
 
   // Fetch all publishable courses
-  const { dataListCourses: dataCoursesPublish, isLoadingCourses } = useGetCoursesPublish(params);
+  const { dataListCourses: dataCoursesPublish, isLoadingCourses } =
+    useGetCoursesPublish(params);
 
   // Process and combine data
   const processedData = useMemo(() => {
@@ -78,7 +84,7 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
       const newTotalItems = dataCoursesPublish.pagination.total_items;
 
       setTotalCourses(newTotalItems);
-      setParams(prev => ({
+      setParams((prev) => ({
         ...prev,
         per_page: newTotalItems,
       }));
@@ -90,15 +96,26 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
         setSelectedCourses([]);
       }
     }
-  }, [dataCoursesPublish, totalCourses, initialLoadComplete, selectedCourses.length]);
+  }, [
+    dataCoursesPublish,
+    totalCourses,
+    initialLoadComplete,
+    selectedCourses.length,
+  ]);
 
   // Initialize available courses when data becomes available
   useEffect(() => {
-    if (dataCoursesPublish?.results && Array.isArray(dataCoursesPublish.results)) {
+    if (
+      dataCoursesPublish?.results &&
+      Array.isArray(dataCoursesPublish.results)
+    ) {
       setAvailableCourses(dataCoursesPublish.results);
 
       // If we've loaded the full dataset, we should rebuild selected courses
-      if (initialLoadComplete && dataCoursesPublish.pagination.total_items > COURSES_FIRST_PER_PAGE) {
+      if (
+        initialLoadComplete &&
+        dataCoursesPublish.pagination.total_items > COURSES_FIRST_PER_PAGE
+      ) {
         setNeedToRebuildSelected(true);
       }
     }
@@ -117,18 +134,26 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
       (selectedCourses.length === 0 || needToRebuildSelected)
     ) {
       // Map featured content to actual course objects
-      const featuredCourseIds = dataPopularCourses.results.map(item => item.entity_id);
+      const featuredCourseIds = dataPopularCourses.results.map(
+        (item) => item.entity_id
+      );
 
       // Find the corresponding course objects from available courses
-      const popularCourseObjects = availableCourses.filter(course => featuredCourseIds.includes(course.cuid));
+      const popularCourseObjects = availableCourses.filter((course) =>
+        featuredCourseIds.includes(course.cuid)
+      );
 
       // Sort the courses based on the order from dataPopularCourses
       const sortedCourses = featuredCourseIds
-        .map(id => {
-          const course = popularCourseObjects.find(course => course.cuid === id);
+        .map((id) => {
+          const course = popularCourseObjects.find(
+            (course) => course.cuid === id
+          );
           if (course) {
             // Add order property for position display
-            const orderIndex = dataPopularCourses.results.findIndex(item => item.entity_id === id);
+            const orderIndex = dataPopularCourses.results.findIndex(
+              (item) => item.entity_id === id
+            );
             return { ...course, order: orderIndex };
           }
           return null;
@@ -140,7 +165,12 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
       setNeedToRebuildSelected(false);
       setHasChanges(false);
     }
-  }, [dataPopularCourses, availableCourses, selectedCourses.length, needToRebuildSelected]);
+  }, [
+    dataPopularCourses,
+    availableCourses,
+    selectedCourses.length,
+    needToRebuildSelected,
+  ]);
 
   // Handle reordering of selected courses
   const handleSortSelected = useCallback((newItems: CourseWithOrder[]) => {
@@ -153,20 +183,22 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
     setSelectedCourses(itemsWithUpdatedOrder);
 
     // Update featured content order based on new arrangement
-    setFeaturedContent(prev =>
+    setFeaturedContent((prev) =>
       itemsWithUpdatedOrder.map((course, index) => {
-        const existingContent = prev.find(item => item.entity_id === course.cuid);
+        const existingContent = prev.find(
+          (item) => item.entity_id === course.cuid
+        );
         if (existingContent) {
           return { ...existingContent, order: index };
         }
         return {
-          id: '',
-          org_id: '',
+          id: "",
+          org_id: "",
           entity_id: course.cuid,
-          entity_type: 'course',
+          entity_type: "course",
           enabled: true,
           order: index,
-          type: 'course',
+          type: "course",
           entity: undefined,
         };
       })
@@ -191,26 +223,26 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
           order: selectedCourses.length,
         };
 
-        setSelectedCourses(prev => [...prev, courseWithOrder]);
+        setSelectedCourses((prev) => [...prev, courseWithOrder]);
 
         // Add to featured content
         const newFeaturedContent: IFeaturedContent<undefined> = {
-          id: '',
-          org_id: '',
+          id: "",
+          org_id: "",
           entity_id: course.cuid,
-          entity_type: 'course',
+          entity_type: "course",
           enabled: true,
           order: selectedCourses.length,
-          type: 'course',
+          type: "course",
           entity: undefined,
         };
 
-        setFeaturedContent(prev => [...prev, newFeaturedContent]);
+        setFeaturedContent((prev) => [...prev, newFeaturedContent]);
         setHasChanges(true);
       } else {
         // Remove course from selected list
-        setSelectedCourses(prev => {
-          const filtered = prev.filter(item => item.cuid !== course.cuid);
+        setSelectedCourses((prev) => {
+          const filtered = prev.filter((item) => item.cuid !== course.cuid);
 
           // Reorder remaining items
           return filtered.map((item, index) => ({
@@ -220,8 +252,10 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
         });
 
         // Remove from featured content and update orders
-        setFeaturedContent(prev => {
-          const filtered = prev.filter(item => item.entity_id !== course.cuid);
+        setFeaturedContent((prev) => {
+          const filtered = prev.filter(
+            (item) => item.entity_id !== course.cuid
+          );
           return filtered.map((item, index) => ({
             ...item,
             order: index,
@@ -237,7 +271,7 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
   // Save changes to API
   const handleSave = useCallback(async () => {
     if (!domain) {
-      toast.error('Missing domain');
+      toast.error("Missing domain");
       return;
     }
 
@@ -252,20 +286,20 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
 
       const res = await triggerUpdateFeaturedContent({
         org_id: domain,
-        type: 'popular',
-        entity_type: 'course',
+        type: "popular",
+        entity_type: "course",
         entities,
       });
 
       if (!res) {
-        throw new Error('Update failed');
+        throw new Error("Update failed");
       }
 
-      toast.success('Featured courses updated successfully');
+      toast.success("Featured courses updated successfully");
       setHasChanges(false);
     } catch (error) {
-      console.error('Failed to update featured contents:', error);
-      toast.error('Failed to update featured contents');
+      console.error("Failed to update featured contents:", error);
+      toast.error("Failed to update featured contents");
     } finally {
       setIsSaving(false);
     }
@@ -273,7 +307,7 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
 
   // Handle pagination
   const handlePageChange = useCallback((page: number) => {
-    setParams(prev => ({ ...prev, page }));
+    setParams((prev) => ({ ...prev, page }));
   }, []);
 
   // Handle max display limit change
@@ -281,7 +315,9 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const newMax = Number(e.currentTarget.value);
       if (newMax < selectedCourses.length) {
-        toast.warning(`You currently have ${selectedCourses.length} items selected. Reduce selections first.`);
+        toast.warning(
+          `You currently have ${selectedCourses.length} items selected. Reduce selections first.`
+        );
         return;
       }
       setMaxDisplay(newMax);
@@ -292,7 +328,7 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
   // Check if a course is in the selected list
   const isCourseSelected = useCallback(
     (courseId: string) => {
-      return selectedCourses.some(course => course.cuid === courseId);
+      return selectedCourses.some((course) => course.cuid === courseId);
     },
     [selectedCourses]
   );
@@ -311,17 +347,26 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
       {/* Header controls */}
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <p className="text-foreground/80 text-sm">{t('dragToReorder')}</p>
+          <div className="space-y-2">
+            <h2 className="font-semibold text-xl">{t("popularCourses")}</h2>
+            <p className="text-foreground/80 text-sm">{t("dragToReorder")}</p>
+          </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
-              <span className="whitespace-nowrap text-sm">{t('maxItems')}</span>
-              <Input type="number" value={maxDisplay} onChange={handleMaxDisplayChange} className="w-20" min={1} />
+              <span className="whitespace-nowrap text-sm">{t("maxItems")}</span>
+              <Input
+                type="number"
+                value={maxDisplay}
+                onChange={handleMaxDisplayChange}
+                className="w-20"
+                min={1}
+              />
             </div>
             <p className="text-sm">
-              {t('showing')} {selectedCourses.length}/{maxDisplay}
+              {t("showing")} {selectedCourses.length}/{maxDisplay}
             </p>
             <Button onClick={handleSave} disabled={!hasChanges || isSaving}>
-              {isSaving ? t('saving') : t('saveChanges')}
+              {isSaving ? t("saving") : t("saveChanges")}
             </Button>
           </div>
         </div>
@@ -330,13 +375,13 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
       {/* Selected courses section (Drag and drop enabled) */}
       {selectedCourses.length > 0 && (
         <div className="rounded-lg border p-4">
-          <h3 className="mb-4 font-medium">{t('selectedCourses')}</h3>
+          <h3 className="mb-4 font-medium">{t("selectedCourses")}</h3>
           <DndSortable<CourseWithOrder, unknown>
             data={selectedCourses}
             dataConfig={{
-              idProp: 'cuid',
-              type: 'array',
-              direction: 'horizontal',
+              idProp: "cuid",
+              type: "array",
+              direction: "horizontal",
             }}
             className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4"
             renderConfig={{
@@ -358,17 +403,20 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
       {/* Available courses section */}
       <div className="rounded-lg border p-4">
         <h3 className="mb-4 font-medium">
-          {t('availableCourses')} ({availableCourses.length})
+          {t("availableCourses")} ({availableCourses.length})
         </h3>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {availableCourses.map(course => (
+          {availableCourses.map((course) => (
             <CourseItem
               key={course.cuid}
               course={course}
               isSelected={isCourseSelected(course.cuid)}
               onCheckboxChange={handleCourseSelection}
               isDraggable={false}
-              disabled={!isCourseSelected(course.cuid) && selectedCourses.length >= maxDisplay}
+              disabled={
+                !isCourseSelected(course.cuid) &&
+                selectedCourses.length >= maxDisplay
+              }
             />
           ))}
         </div>
