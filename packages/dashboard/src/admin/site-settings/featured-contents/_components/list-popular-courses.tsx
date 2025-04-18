@@ -347,7 +347,10 @@ const ListPopularCourses = ({ domain }: { domain?: string }) => {
       {/* Header controls */}
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <p className="text-foreground/80 text-sm">{t("dragToReorder")}</p>
+          <div className="space-y-2">
+            <h2 className="font-semibold text-xl">{t("popularCourses")}</h2>
+            <p className="text-foreground/80 text-sm">{t("dragToReorder")}</p>
+          </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <span className="whitespace-nowrap text-sm">{t("maxItems")}</span>

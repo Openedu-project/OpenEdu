@@ -13,15 +13,15 @@ export function FeaturedContentsPage() {
   const t = useTranslations("themeFeaturedContent");
 
   return (
-    <Tabs defaultValue="blog" className="w-full">
+    <Tabs defaultValue="courses" className="w-full">
       <DashboardHeaderCard
         dashboard="admin"
         breadcrumbs={[
-          { label: "Cài đặt", disabled: true },
-          { label: "Tổng quan" },
+          { label: t("title"), disabled: true },
+          { label: t("settings") },
         ]}
       >
-        <p>{t("title")}</p>
+        <h4>{t("title")}</h4>
         <TabsList className="grid w-fit grid-cols-2">
           <TabsTrigger value="courses">{t("courses")}</TabsTrigger>
           <TabsTrigger value="blog">{t("blog")}</TabsTrigger>
