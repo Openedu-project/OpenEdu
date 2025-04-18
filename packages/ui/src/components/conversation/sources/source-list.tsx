@@ -18,7 +18,12 @@ export function SourceList() {
       <div className="flex justify-between">
         <p className="mcaption-semibold20">{tSources('title')}</p>
         <Button
-          onClick={() => setOpenWebSource({ ...openWebSource, isOpen: !openWebSource.isOpen })}
+          onClick={() =>
+            setOpenWebSource({
+              ...openWebSource,
+              isOpen: !openWebSource.isOpen,
+            })
+          }
           variant="ghost"
           className="!p-1 h-auto"
         >

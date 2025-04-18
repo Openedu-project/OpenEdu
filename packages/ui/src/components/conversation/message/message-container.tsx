@@ -4,7 +4,7 @@ import type { IConversationDetails, IMessage, TAgentType } from '@oe/api';
 import { useGetConversationDetails } from '@oe/api';
 import { GENERATING_STATUS } from '@oe/core';
 import { ChevronsDown } from 'lucide-react';
-import { type RefObject, useEffect, useRef, useState } from 'react';
+import { type RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { type KeyedMutator, useSWRConfig } from 'swr';
 import { Button } from '#shadcn/button';
 import { Skeleton } from '#shadcn/skeleton';
@@ -20,6 +20,7 @@ interface IContainerProps {
   messageType: TAgentType[];
   className?: string;
   containerRef: RefObject<HTMLDivElement | null>;
+  messagesEndRef: RefObject<HTMLDivElement | null>;
   scrollBehavior?: 'auto' | 'smooth';
   sendMessage: ({
     messageInput,
@@ -38,6 +39,7 @@ export const MessageContainer = ({
   nextCursorPage = '',
   messageType,
   containerRef,
+  messagesEndRef,
   className,
   scrollBehavior,
   mutate,
@@ -60,6 +62,10 @@ export const MessageContainer = ({
       per_page: 10,
     },
   });
+
+  useEffect(() => {
+    nextKeyRef.current = nextCursorPage;
+  }, [nextCursorPage]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -88,11 +94,12 @@ export const MessageContainer = ({
     handleScrollToBottom(scrollBehavior);
     if (isNewChat) {
       setIsNewChat(false);
+
+      // clear history of conversation
       const keysToReset = Array.from(cache.keys()).filter(
         key => typeof key === 'string' && key.includes(`${API_ENDPOINT.COM_CHANNELS}?`)
       );
 
-      // Then clear each one
       for (const key of keysToReset) {
         globalMutate(key, undefined, { revalidate: false });
       }
@@ -108,19 +115,19 @@ export const MessageContainer = ({
     cache.keys,
   ]);
 
-  const handleScrollToBottom = (scrollBehavior?: 'auto' | 'smooth') => {
-    if (!containerRef) {
-      return;
-    }
-    requestAnimationFrame(() => {
-      if (containerRef.current) {
-        containerRef.current.scrollTo({
-          top: containerRef.current.scrollHeight,
+  const handleScrollToBottom = useCallback(
+    (scrollBehavior?: 'auto' | 'smooth') => {
+      if (!containerRef) {
+        return;
+      }
+      if (messagesEndRef.current) {
+        messagesEndRef.current?.scrollIntoView({
           behavior: scrollBehavior ?? (isNewChat ? 'auto' : 'smooth'),
         });
       }
-    });
-  };
+    },
+    [messagesEndRef, containerRef, isNewChat]
+  );
 
   const handleScroll = () => {
     if (!containerRef.current) {
@@ -137,8 +144,10 @@ export const MessageContainer = ({
     }
 
     if (scrollTop + clientHeight < scrollHeight - 100) {
-      setShowScrollButton(true);
-    } else {
+      if (!showScrollButton) {
+        setShowScrollButton(true);
+      }
+    } else if (showScrollButton) {
       setShowScrollButton(false);
     }
   };
@@ -157,10 +166,10 @@ export const MessageContainer = ({
   return (
     <div
       ref={containerRef}
-      className={cn('no-scrollbar relative flex grow flex-col gap-2 overflow-y-auto overflow-x-hidden', className)}
+      className={cn('scrollbar relative flex grow flex-col gap-2 overflow-y-auto overflow-x-hidden', className)}
       onScroll={handleScroll}
     >
-      <div className="flex max-w-3xl grow flex-col gap-4 xl:max-w-4xl">
+      <div className="mx-auto flex w-full max-w-3xl grow flex-col gap-4 xl:max-w-4xl">
         {isLoading && (
           <div className="flex flex-col items-end gap-4">
             <Skeleton className="h-10 w-2/3 rounded-[20px]" />
@@ -183,10 +192,16 @@ export const MessageContainer = ({
             />
           );
         })}
-        <GenMessage containerRef={containerRef} mutate={mutate} />
+        <GenMessage
+          containerRef={containerRef}
+          mutate={mutate}
+          scrollToBottom={handleScrollToBottom}
+          setShowScrollButton={setShowScrollButton}
+        />
+        <div id="end_line" ref={messagesEndRef} />
       </div>
-      <div className={cn('sticky bottom-0 hidden max-w-3xl translate-x-1/2 xl:max-w-4xl', showScrollButton && 'block')}>
-        <Button size="icon" variant="outline" className="rounded-full" onClick={() => handleScrollToBottom()}>
+      <div className={cn('sticky bottom-0 z-50 hidden translate-x-1/2', showScrollButton && 'block')}>
+        <Button size="icon" variant="outline" className="rounded-full" onClick={() => handleScrollToBottom('smooth')}>
           <ChevronsDown className="h-4 w-4" />
         </Button>
       </div>

@@ -1,13 +1,15 @@
-import { postEmbedDocument, type z } from '@oe/api';
-import { CircleX, ImageIcon, Paperclip } from 'lucide-react';
+'use client';
+import { cancelEmbedDocument, postEmbedDocument } from '@oe/api';
+import type { z } from '@oe/api';
+import { GENERATING_STATUS } from '@oe/core';
+import { CircleX, Image as ImageIcon, Paperclip } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { useRef } from 'react';
-import { type UseFieldArrayRemove, type UseFormReturn, useFieldArray } from 'react-hook-form';
+import { useEffect, useRef, useState } from 'react';
+import { type UseFormReturn, useFieldArray } from 'react-hook-form';
 import { Image } from '#components/image';
 import { Button } from '#shadcn/button';
 import { Progress } from '#shadcn/progress';
+import { useConversationStore } from '#store/conversation-store';
 import { useSocketStore } from '#store/socket';
 import { cn } from '#utils/cn';
 import type { TFileResponse, TFileStatus } from '../type';
@@ -15,7 +17,7 @@ import type { chatSchema } from '../utils';
 
 interface IPreviewFileProps {
   file: TFileResponse;
-  remove?: UseFieldArrayRemove;
+  remove?: (index: number) => void;
   filePosition?: number;
   viewOnly?: boolean;
   updateFile?: (index: number, newValue: TFileResponse) => void;
@@ -37,19 +39,25 @@ export const PreviewFile = ({
   });
 
   const updateFile = (index: number, newValue: TFileResponse) => {
-    form.setValue(`files.${index}`, newValue);
+    form.setValue(`files.${index}`, newValue, {
+      shouldValidate: true,
+    });
+  };
+  const handleRemove = (index: number) => {
+    remove(index);
+    form.trigger();
   };
 
   return (
     <div className="scrollbar mb-2 flex w-full gap-2 overflow-x-auto">
       {filesData?.map((file, index) =>
         file.mime?.includes('image') ? (
-          <PreviewImage key={file.id ?? crypto.randomUUID()} file={file} remove={remove} filePosition={index} />
+          <PreviewImage key={file.id ?? crypto.randomUUID()} file={file} remove={handleRemove} filePosition={index} />
         ) : (
           <PreviewDocument
             key={file.id ?? crypto.randomUUID()}
             file={file}
-            remove={remove}
+            remove={handleRemove}
             filePosition={index}
             updateFile={updateFile}
             chatId={chatId}
@@ -62,8 +70,9 @@ export const PreviewFile = ({
 
 export const PreviewImage = ({ file, remove, filePosition, viewOnly }: IPreviewFileProps) => {
   const onRemove = () => {
-    remove?.(filePosition);
+    remove?.(filePosition ?? -1);
   };
+
   return (
     <div className="relative flex h-[120px] w-[120px] shrink-0 items-center justify-center rounded-lg bg-foreground/10">
       {!viewOnly && <HitboxLayer file={file} handleRemove={onRemove} />}
@@ -87,12 +96,18 @@ export const PreviewImage = ({ file, remove, filePosition, viewOnly }: IPreviewF
 };
 
 export const PreviewDocument = ({ file, remove, filePosition, viewOnly, updateFile, chatId }: IPreviewFileProps) => {
-  const onRemove = () => {
-    remove?.(filePosition);
-    // await cancelEmbedDocument(undefined, { task_id: file.id });
+  const onRemove = async () => {
+    remove?.(filePosition ?? -1);
+    if (file.status === 'error') {
+      return;
+    }
+    await cancelEmbedDocument(undefined, {
+      attachment_id: file.id,
+      conversation_id: chatId,
+    });
   };
-  const updateFileStatus = (status?: TFileStatus, process?: number) => {
-    updateFile?.(filePosition ?? 0, { ...file, status, process });
+  const updateFileStatus = (status?: TFileStatus, progress?: number) => {
+    updateFile?.(filePosition ?? 0, { ...file, status, progress });
   };
 
   return (
@@ -105,7 +120,7 @@ export const PreviewDocument = ({ file, remove, filePosition, viewOnly, updateFi
       {!viewOnly && <HitboxLayer file={file} handleRemove={onRemove} updateStatus={updateFileStatus} chatId={chatId} />}
       <div className={cn('flex items-center gap-1 p-2')}>
         <Paperclip className="h-3 w-3 shrink-0" />
-        <p className={cn('mcaption-regular12 line-clamp-3 break-all')}>{file.name}</p>
+        <p className={cn('mcaption-regular12 line-clamp-3 break-all')}>{file.name?.split('_')?.[1] ?? file.name}</p>
       </div>
     </div>
   );
@@ -124,10 +139,18 @@ const HitboxLayer = ({
 }) => {
   const tStatus = useTranslations('general.statusVariants');
   const apiCalledRef = useRef(false);
+  const statusUpdatedRef = useRef(false);
   const { AIDocumentStatusData, resetSocketData } = useSocketStore();
+  const { setNewConversationId, newConversationId } = useConversationStore();
 
   const [status, setStatus] = useState<TFileStatus>('generating');
-  const [progress, setProgress] = useState(file.process ?? 0);
+  const [progress, setProgress] = useState(file.progress ?? 0);
+
+  const updateStatusRef = useRef(updateStatus);
+
+  useEffect(() => {
+    updateStatusRef.current = updateStatus;
+  }, [updateStatus]);
 
   useEffect(() => {
     if (!updateStatus) {
@@ -135,41 +158,46 @@ const HitboxLayer = ({
       return;
     }
 
-    if (file.status === 'generating' && !apiCalledRef.current && file.process === 0) {
-      const res = postEmbedDocument(undefined, {
-        attachment_id: file.id,
-        ai_conversation_id: chatId,
-      });
+    if (file.status === 'generating' && !apiCalledRef.current && file.progress === 0) {
       apiCalledRef.current = true;
-
-      if (!res) {
-        updateStatus?.('error');
-        setStatus('error');
-      }
+      postEmbedDocument(undefined, {
+        attachment_id: file.id,
+        ai_conversation_id: chatId ?? newConversationId,
+      }).then(res => {
+        if (res) {
+          setNewConversationId(res.ai_conversation_id);
+        } else {
+          updateStatus?.('error');
+          setStatus('error');
+        }
+      });
     }
 
     if (file.status) {
       setStatus(file.status);
     }
-  }, [file, chatId, updateStatus]);
+  }, [file, chatId, updateStatus, newConversationId, setNewConversationId]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     let interval: NodeJS.Timeout | undefined;
 
     if (status === 'generating') {
-      if (apiCalledRef.current) {
-        updateStatus?.('generating', 50);
+      if (apiCalledRef.current && !statusUpdatedRef.current) {
+        updateStatusRef.current?.('generating', 50);
+        statusUpdatedRef.current = true;
       }
+
       interval = setInterval(() => {
         setProgress(prevProgress => {
-          const increment = 0.2 + Math.random() * 0.15;
+          const increment = Math.floor(Math.random() * 9) + 1;
           const newProgress = Math.min(prevProgress + increment, 90);
-
           return newProgress;
         });
-      }, 100);
-    } else if (status === 'completed') {
-      updateStatus?.('completed', 100);
+      }, 200);
+    } else if (status === 'completed' && (file.progress ?? 0) < 100) {
+      updateStatusRef.current?.('completed', 100);
+
       interval = setInterval(() => {
         setProgress(prevProgress => {
           if (prevProgress >= 100) {
@@ -182,7 +210,6 @@ const HitboxLayer = ({
       }, 30);
     } else {
       setProgress(100);
-      clearInterval(interval);
     }
 
     return () => {
@@ -190,16 +217,21 @@ const HitboxLayer = ({
         clearInterval(interval);
       }
     };
-  }, [status, updateStatus]);
+  }, [status]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    statusUpdatedRef.current = false;
+  }, [status]);
 
   useEffect(() => {
     if (
       AIDocumentStatusData &&
       AIDocumentStatusData.data?.file_id === file.id &&
-      AIDocumentStatusData.data?.status !== 'generating'
+      !GENERATING_STATUS.includes(AIDocumentStatusData.data?.status)
     ) {
       const fileStatus = AIDocumentStatusData.data?.status === 'failed' ? 'error' : AIDocumentStatusData.data?.status;
-      updateStatus?.(fileStatus);
+      updateStatus?.(fileStatus, 100);
       setStatus(fileStatus);
       resetSocketData('ai_chat_document_status');
     }
@@ -221,7 +253,7 @@ const HitboxLayer = ({
       >
         <CircleX width={16} height={16} color="var(--background)" />
       </Button>
-      <div className="absolute right-0 bottom-0 flex w-full items-end justify-end gap-1 rounded-lg">
+      <div className="absolute right-0 bottom-0 z-10 flex w-full items-end justify-end gap-1 rounded-lg">
         {status === 'generating' || progress < 100 ? (
           <div className="grow rounded-full bg-background p-1.5">
             <Progress value={progress} className="h-1 transition-all" />

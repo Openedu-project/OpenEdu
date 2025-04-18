@@ -2,104 +2,89 @@
 
 import type { IConversationDetails } from '@oe/api';
 import { GENERATING_STATUS } from '@oe/core';
-import { type RefObject, memo, useEffect, useState } from 'react';
+import { type Dispatch, type RefObject, type SetStateAction, memo, useEffect, useRef } from 'react';
 import type { KeyedMutator } from 'swr';
 import { useConversationStore } from '#store/conversation-store';
-import { TypewriterState } from '../hooks/useTypingText';
 import { AIMessage } from './ai-message';
 
 export const GenMessage = memo(
   ({
     containerRef,
     mutate,
+    scrollToBottom,
+    setShowScrollButton,
   }: {
     containerRef: RefObject<HTMLDivElement | null>;
     mutate: KeyedMutator<IConversationDetails>;
+    scrollToBottom?: (behavior: 'auto' | 'smooth') => void;
+    setShowScrollButton: Dispatch<SetStateAction<boolean>>;
   }) => {
-    const { genMessage, setOpenWebSource, addMessage, resetGenMessage, resetPage } = useConversationStore();
-    const [text, setText] = useState(TypewriterState.currentText);
-    const [prevScrollTop, setPrevScrollTop] = useState(0);
+    const { genMessage } = useConversationStore();
+    const prevScrollPosition = useRef<{ position: number; height: number }>({
+      position: 0,
+      height: 0,
+    });
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
     useEffect(() => {
-      if (genMessage?.props?.source_results) {
-        setOpenWebSource({
-          messageId: genMessage?.id ?? '',
-          isOpen: true,
-          sourceList: genMessage?.props?.source_results,
-        });
+      if (!genMessage?.content) {
+        return;
       }
-    }, [genMessage?.props?.source_results]);
 
-    useEffect(() => {
-      const unsubscribe = TypewriterState.addSubscriber(setText);
-      return unsubscribe;
-    }, []);
+      if (containerRef.current) {
+        const { scrollHeight, scrollTop, clientHeight } = containerRef.current;
+        const { position } = prevScrollPosition.current;
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: <handle update content when page become visible>
-    useEffect(() => {
-      const handleVisibilityChange = () => {
-        if (document.visibilityState === 'visible') {
-          if (!genMessage) {
-            return;
-          }
-          // Force update to latest content when becoming visible
-          TypewriterState.updateText(genMessage?.content ?? '');
+        if (scrollTop > position - 20) {
+          scrollToBottom?.('auto');
+          prevScrollPosition.current = {
+            position: scrollTop,
+            height: scrollHeight,
+          };
+        } else if (scrollTop + clientHeight < scrollHeight) {
+          setShowScrollButton(true);
         }
-      };
-      document.addEventListener('visibilitychange', handleVisibilityChange);
-    }, [document.visibilityState]);
-
-    // biome-ignore lint/correctness/useExhaustiveDependencies: <handle typing text>
-    useEffect(() => {
-      const handleGenText = setInterval(() => {
-        if (!genMessage) {
-          clearInterval(handleGenText);
-          TypewriterState.reset();
-          return;
-        }
-        const nextChars = genMessage.content.substring(TypewriterState.position, TypewriterState.position + 2);
-        if (!(GENERATING_STATUS.includes(genMessage.status ?? '') || nextChars)) {
-          addMessage(genMessage, () => {
-            if (resetPage) {
-              mutate();
-            }
-            resetGenMessage();
-          });
-
-          clearInterval(handleGenText);
-        }
-
-        if (nextChars) {
-          const newText = TypewriterState.currentText + nextChars;
-          TypewriterState.updateText(newText);
-          if (containerRef.current) {
-            const { scrollHeight, scrollTop, clientHeight } = containerRef.current;
-            const thresholdBottom = scrollHeight - scrollTop - clientHeight;
-            setPrevScrollTop(scrollTop);
-            if (scrollTop > prevScrollTop - 20 && thresholdBottom < 50) {
-              containerRef.current.scrollTop = containerRef.current.scrollHeight;
-            }
-          }
-        }
-      }, 10);
-
-      return () => clearInterval(handleGenText);
+      }
     }, [genMessage]);
 
-    if (!genMessage) {
-      return null;
-    }
-
-    return (
-      <AIMessage
-        className="pt-2 pb-16"
-        message={genMessage}
-        content={text}
-        loading={true}
-        actionsButton={false}
-        hiddenSourceBtn
-      />
-    );
+    return <PureGenMessage mutate={mutate} />;
   }
 );
+
+const PureGenMessage = memo(({ mutate }: { mutate: KeyedMutator<IConversationDetails> }) => {
+  const { genMessage, addMessage, resetPage, resetGenMessage, setOpenWebSource } = useConversationStore();
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (genMessage?.props?.source_results) {
+      setOpenWebSource({
+        messageId: genMessage?.id ?? '',
+        isOpen: true,
+        sourceList: genMessage?.props?.source_results,
+      });
+    }
+  }, [genMessage?.props?.source_results]);
+
+  useEffect(() => {
+    if (!genMessage) {
+      return;
+    }
+    if (!GENERATING_STATUS.includes(genMessage.status ?? '')) {
+      addMessage(genMessage, () => {
+        if (resetPage) {
+          mutate();
+        }
+        resetGenMessage();
+      });
+    }
+  }, [genMessage, addMessage, mutate, resetGenMessage, resetPage]);
+  if (!genMessage) {
+    return null;
+  }
+
+  return (
+    <div id={genMessage.id}>
+      <AIMessage className="pt-2 pb-8" message={genMessage} loading={true} actionsButton={false} hiddenSourceBtn />
+    </div>
+  );
+});

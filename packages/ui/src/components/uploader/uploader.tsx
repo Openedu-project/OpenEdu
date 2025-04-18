@@ -181,9 +181,7 @@ export const Uploader = (props: UploaderProps) => {
       setFiles(filesRef.current);
 
       // Kiểm tra nếu tất cả files đã upload xong
-      const allFinished = filesRef.current.every(
-        f => f.status === 'finished' || f.status === 'error' || f.status === 'generating' || f.status === 'completed'
-      );
+      const allFinished = filesRef.current.every(f => !['inited', 'uploading'].includes(f.status));
 
       if (allFinished) {
         setIsLoading?.(false);
