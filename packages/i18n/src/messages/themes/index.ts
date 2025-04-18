@@ -12,6 +12,7 @@ import { themeInfoMessages } from './theme-info';
 import { themeListMessages } from './theme-list';
 import { themeMetadataMessages } from './theme-metadata';
 import { themeUIMessage } from './theme-ui';
+import { themeWebPageMessages } from './theme-web-page';
 import { vbiMessage } from './vbi';
 export const themeMessages = {
   ...headerMessages,
@@ -38,4 +39,5 @@ export const themeMessages = {
   ...themeNotiMessages,
   ...themeFeaturedContentMessages,
   ...themeMetadataMessages,
+  ...themeWebPageMessages,
 };

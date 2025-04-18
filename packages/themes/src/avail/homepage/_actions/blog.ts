@@ -1,7 +1,8 @@
 import { getOrgByDomainService } from '@oe/api';
 import { getPopularBlogsServicesAtWebsite } from '@oe/api';
 import { getCookie } from '@oe/core';
-export const getPopularBlogs = async () => {
+import type { IBlogResult } from './type';
+export const getPopularBlogs = async (): Promise<IBlogResult | undefined> => {
   const domain = (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? '';
   const [orgData] = await Promise.all([
     getOrgByDomainService(undefined, {
@@ -12,7 +13,7 @@ export const getPopularBlogs = async () => {
     const dataPopularBlogs = await getPopularBlogsServicesAtWebsite(undefined, {
       params: { org_id: orgData?.domain ?? orgData?.alt_domain ?? '' },
     });
-    return dataPopularBlogs;
+    return dataPopularBlogs as IBlogResult;
   } catch (error) {
     console.error(error);
     return undefined;

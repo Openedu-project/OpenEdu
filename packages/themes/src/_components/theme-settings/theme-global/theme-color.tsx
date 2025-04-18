@@ -1,3 +1,4 @@
+'use client';
 import { Button } from '@oe/ui';
 import { Card, CardContent, CardHeader, CardTitle } from '@oe/ui';
 import { Label } from '@oe/ui';
@@ -25,7 +26,6 @@ const ThemeSettingColors = ({ onSubmitColor, isLoading, colorData }: ThemeSettin
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [activeTheme, setActiveTheme] = useState<ThemeMode>('light');
   const [themeConfig, setThemeConfig] = useState<ThemeGlobalColorConfig>(initialThemeGlobalColors);
-
   const handleVariableChange = (variable: string, value: string) => {
     setThemeConfig(prev => ({
       ...prev,

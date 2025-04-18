@@ -26,7 +26,7 @@ const NetworkItem = ({ network, address, onCopyClick }: NetworkItemProps) => {
     <div className="flex items-center gap-4 py-4">
       {Icon && <Icon className="h-8 w-8" />}
       <div>
-        <h3 className="mb-0 font-medium text-base">{network}</h3>
+        <h3 className="mb-0 font-medium text-base uppercase">{network}</h3>
         <div className="flex items-center gap-2">
           {explorerLink ? (
             <a

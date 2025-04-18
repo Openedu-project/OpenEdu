@@ -22,14 +22,12 @@ export function useGetConversationDetails({
     params: { id },
     queryParams: { ...params },
   });
+
   const { data, isLoading, error, mutate } = useSWR(
     shouldFetch && id ? endpointKey : null,
     (endpoint: string) => getConversationDetail(endpoint, id ?? '', params),
     {
       fallbackData: fallback,
-      revalidateOnMount: true,
-      revalidateOnFocus: true,
-      revalidateIfStale: true,
     }
   );
 

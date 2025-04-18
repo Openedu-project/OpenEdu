@@ -181,9 +181,7 @@ export const Uploader = (props: UploaderProps) => {
       setFiles(filesRef.current);
 
       // Kiểm tra nếu tất cả files đã upload xong
-      const allFinished = filesRef.current.every(
-        f => f.status === 'finished' || f.status === 'error' || f.status === 'generating' || f.status === 'completed'
-      );
+      const allFinished = filesRef.current.every(f => !['inited', 'uploading'].includes(f.status));
 
       if (allFinished) {
         setIsLoading?.(false);
@@ -230,7 +228,7 @@ export const Uploader = (props: UploaderProps) => {
     (file: FileType) => {
       const updated = files.filter(f => f.fileId !== file.fileId);
       onChange?.(multiple ? (updated as IFileResponse[]) : (updated[0] as IFileResponse));
-      // setFiles(updated); // update files
+      setFiles(updated); // update files
 
       trigger.current?.clearInput();
     },

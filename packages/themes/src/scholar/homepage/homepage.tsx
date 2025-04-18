@@ -1,16 +1,21 @@
-import { PreviewPanel } from '../../_components/theme-settings/theme-page/theme-preview-panel';
-import type { SectionComponent } from '../../_types';
+import dynamic from 'next/dynamic';
+import { ThemePageRenderer } from '#components';
+import type { PageRender, SectionComponent } from '#types';
+
+const pageRender: PageRender = {
+  homepage: {
+    theme: undefined,
+    scholarAboutUs: dynamic(() => import('./about-us').then(mod => mod.ScholarHomepageAboutUs)),
+    scholarAchievements: dynamic(() => import('./achievements').then(mod => mod.ScholarHomepageAchievements)),
+    scholarContact: dynamic(() => import('./contact').then(mod => mod.ScholarHomepageContact)),
+    scholarHero: dynamic(() => import('./hero').then(mod => mod.ScholarHomepageHero)),
+    scholarProjects: dynamic(() => import('./projects').then(mod => mod.ScholarHomepageProjects)),
+    scholarService: dynamic(() => import('./service').then(mod => mod.ScholarHomepageService)),
+    scholarTeam: dynamic(() => import('./team').then(mod => mod.ScholarHomepageTeam)),
+    scholarTestimonials: dynamic(() => import('./testimonials').then(mod => mod.ScholarHomepageTestimonials)),
+  },
+};
 
 export const ScholarHomepage: SectionComponent<'homepage', 'theme'> = ({ props }) => {
-  if (!props) {
-    return;
-  }
-  return (
-    <PreviewPanel
-      themeName={props?.themeName}
-      selectedPage={props?.selectedPage}
-      pageConfig={props?.pageConfig}
-      currentConfigSections={props?.currentConfigSections}
-    />
-  );
+  return <ThemePageRenderer pageKey="homepage" pageRenderData={pageRender} props={props} />;
 };

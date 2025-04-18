@@ -29,13 +29,12 @@ interface IConversationStore {
   openWebSource: { messageId: string; isOpen: boolean; sourceList?: ISourceProps[] };
   setOpenWebSource: (openWebSource: { messageId: string; isOpen: boolean; sourceList?: ISourceProps[] }) => void;
   resetOpenWebSource: () => void;
-  width: number;
-  setWidth: (width: number) => void;
   thinking: boolean;
   setThinking: (thinking: boolean) => void;
   resetPage: boolean;
   setResetPage: (resetPage: boolean) => void;
-  resetStore: () => void;
+  newConversationId: string;
+  setNewConversationId: (id: string) => void;
 }
 
 export const useConversationStore = createStore<IConversationStore>(set => {
@@ -89,7 +88,7 @@ export const useConversationStore = createStore<IConversationStore>(set => {
         const updatedAgent = selectedModel?.configs?.[AGENT_CONFIG[currentSelectedAgent]]
           ? currentSelectedAgent
           : 'ai_search';
-        return { selectedModel, selectedAgent: updatedAgent };
+        return { selectedModel, selectedAgent: updatedAgent, thinking: false };
       }),
 
     resetStatus: () => set({ status: undefined }),
@@ -105,9 +104,14 @@ export const useConversationStore = createStore<IConversationStore>(set => {
               reasoning: (state.genMessage?.reasoning ?? '') + data?.reasoning,
             };
         callback?.();
+        if (!shortenedIndex) {
+          return {
+            genMessage: newMessage,
+          };
+        }
         return {
           genMessage: newMessage,
-          messages: state.messages.slice(0, shortenedIndex ?? state.messages.length),
+          messages: state.messages.slice(0, shortenedIndex),
         };
       });
     },
@@ -123,11 +127,6 @@ export const useConversationStore = createStore<IConversationStore>(set => {
         return { openWebSource };
       }),
     resetOpenWebSource: () => set({ openWebSource: { messageId: '', isOpen: false, sourceList: [] } }),
-    width: 0,
-    setWidth: (width: number) =>
-      set(() => {
-        return { width };
-      }),
     thinking: false,
     setThinking: (thinking: boolean) => {
       set(() => {
@@ -140,17 +139,10 @@ export const useConversationStore = createStore<IConversationStore>(set => {
         return { resetPage };
       });
     },
-    resetStore: () => {
+    newConversationId: '',
+    setNewConversationId: (newConversationId: string) => {
       set(() => {
-        return {
-          messages: [],
-          isNewChat: false,
-          status: undefined,
-          selectedModel: undefined,
-          genMessage: undefined,
-          openWebSource: undefined,
-          resetPage: false,
-        };
+        return { newConversationId };
       });
     },
   };

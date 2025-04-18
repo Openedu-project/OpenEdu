@@ -16,9 +16,14 @@ import { createAPIUrl } from '#utils/fetch';
 export function useGetPopularCourses({ params }: { params: Pick<FeaturedContentParams, 'org_id'> }) {
   const endpointKey = createAPIUrl({
     endpoint: API_ENDPOINT.FEATURED_CONTENT,
+    queryParams: {
+      ...params,
+      type: 'popular',
+      entity_type: 'course',
+    },
   });
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
-    getPopularCoursesServices(endpoint, { params })
+    getPopularCoursesServices(endpoint, {})
   );
 
   return {
@@ -81,9 +86,14 @@ export function useGetPopularCoursesAtWebsite({
 export function useGetPopularBlogs({ params }: { params: Pick<FeaturedContentParams, 'org_id'> }) {
   const endpointKey = createAPIUrl({
     endpoint: API_ENDPOINT.FEATURED_CONTENT,
+    queryParams: {
+      ...params,
+      type: 'popular',
+      entity_type: 'blog',
+    },
   });
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
-    getPopularBlogsServices(endpoint, { params })
+    getPopularBlogsServices(endpoint, {})
   );
 
   return {

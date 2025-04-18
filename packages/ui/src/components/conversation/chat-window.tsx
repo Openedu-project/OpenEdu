@@ -1,23 +1,38 @@
 'use client';
 import type { IAgenConfigs } from '@oe/api';
-import { useGetConversationDetails } from '@oe/api';
+import { API_ENDPOINT, createAPIUrl, useGetConversationDetails } from '@oe/api';
 import { GENERATING_STATUS } from '@oe/core';
+import dynamic from 'next/dynamic';
 import { useEffect, useMemo, useRef } from 'react';
+import { useSWRConfig } from 'swr';
+import { Skeleton } from '#shadcn/skeleton';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { AGENT_OPTIONS } from './constants';
 import { EmptyChat } from './empty-chat';
 import { useSendMessageHandler } from './hooks/useMessageHandler';
 import { InputFrame } from './message-input/input-frame';
-import { MessageContainer } from './message/message-container';
 import type { IChatWindowProps } from './type';
+const MessageContainer = dynamic(() => import('./message/message-container').then(mod => mod.MessageContainer), {
+  ssr: false,
+  loading: () => (
+    <div className="mx-auto flex w-full max-w-3xl grow flex-col gap-4 xl:max-w-4xl">
+      <div className="flex flex-col items-end gap-6">
+        <Skeleton className="h-12 w-2/3 rounded-[20px]" />
+        <Skeleton className="h-24 w-full rounded-[20px]" />
+      </div>
+    </div>
+  ),
+});
 
-export function ChatWindow({ id, initData, agent, className }: IChatWindowProps) {
+export function ChatWindow({ id, agent, className }: IChatWindowProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const { mutate: globalMutate } = useSWRConfig();
+
   const {
     isNewChat,
     setMessages,
-    setIsNewChat,
     resetMessages,
     resetStatus,
     selectedModel,
@@ -30,39 +45,34 @@ export function ChatWindow({ id, initData, agent, className }: IChatWindowProps)
     setResetPage,
   } = useConversationStore();
 
-  const prevId = useRef<string>('');
   const sendMessage = useSendMessageHandler(agent, id);
-
+  const shouldFetch = useRef<boolean>(!isNewChat);
   const { data: messageData, mutate } = useGetConversationDetails({
+    shouldFetch: shouldFetch.current,
     id,
     params: {
       per_page: 10,
       sort: 'create_at desc',
     },
-    fallback: initData,
   });
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    resetOpenWebSource();
     if (!isNewChat) {
       setSelectedAgent(agent);
-    }
-
-    if (id && prevId.current === id) {
-      return;
-    }
-
-    if (!id) {
       resetMessages();
+      resetGenMessage();
       resetStatus();
-      setIsNewChat(false);
-      return;
+      resetOpenWebSource();
     }
 
-    return () => {
-      prevId.current = id;
-    };
+    const apiKey = createAPIUrl({
+      endpoint: API_ENDPOINT.COM_CHANNELS_ID,
+      params: { id },
+    });
+    globalMutate((key: string) => !!key?.includes('/api/com-v1/channels/') && !key?.includes(apiKey), undefined, {
+      revalidate: false,
+    });
   }, [id, agent, setSelectedAgent]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
@@ -79,10 +89,6 @@ export function ChatWindow({ id, initData, agent, className }: IChatWindowProps)
           },
           true
         );
-      } else {
-        setStatus('completed');
-        setResetPage(false);
-        resetGenMessage();
       }
       setMessages(
         [...messageData.results.messages.filter(msg => !GENERATING_STATUS.includes(msg.status ?? ''))].reverse()
@@ -108,12 +114,13 @@ export function ChatWindow({ id, initData, agent, className }: IChatWindowProps)
           id={id ?? ''}
           sendMessage={sendMessage}
           containerRef={containerRef}
+          messagesEndRef={messagesEndRef}
           mutate={mutate}
         />
       ) : (
         <EmptyChat agent={agent} />
       )}
-      <InputFrame id={id} containerRef={containerRef} updateWidth agent={agent} />
+      <InputFrame id={id} messagesEndRef={messagesEndRef} agent={agent} />
     </div>
   );
 }

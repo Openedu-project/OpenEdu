@@ -4,12 +4,27 @@ import { FIAT_CURRENCIES } from '@oe/api';
 import { formatDateTime } from '@oe/core';
 import { formatCurrency } from '@oe/core';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 import type { FilterOption } from '#components/filter-search';
 import { type ColumnDef, Table } from '#components/table';
+import { Button } from '#shadcn/button';
 import { StatusTableCell } from '../_components/status-table-cell';
+import { FiatTransactionDetailModal } from './fiat-transaction-detail-modal';
 
 export function FiatHistory() {
   const t = useTranslations('wallets');
+  const [selectedTransaction, setSelectedTransaction] = useState<ITransaction | null>(null);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+
+  const handleOpenDetailModal = (transaction: ITransaction) => {
+    setSelectedTransaction(transaction);
+    setIsDetailModalOpen(true);
+  };
+
+  const handleCloseDetailModal = () => {
+    setIsDetailModalOpen(false);
+    setSelectedTransaction(null);
+  };
 
   const fiatColumns: ColumnDef<ITransaction>[] = [
     {
@@ -71,6 +86,18 @@ export function FiatHistory() {
         return <StatusTableCell status={status} />;
       },
     },
+    {
+      id: 'actions',
+      header: t('historyPage.table.actions'),
+      headerClassName: 'bg-background',
+      cell: ({ row }) => {
+        return (
+          <Button variant="outline" size="sm" onClick={() => handleOpenDetailModal(row.original)}>
+            {t('historyPage.table.details')}
+          </Button>
+        );
+      },
+    },
   ];
 
   const fiatFilterOptions: FilterOption[] = [
@@ -101,22 +128,30 @@ export function FiatHistory() {
     },
   ];
   return (
-    <Table
-      api={API_ENDPOINT.USERS_ME_TRANSACTIONS}
-      tableOptions={{
-        manualPagination: true,
-        manualSorting: true,
-      }}
-      columns={fiatColumns}
-      filterOptions={fiatFilterOptions}
-      apiQueryParams={{
-        currency_type: 'fiat',
-        page: 1,
-        per_page: 10,
-        sort: 'create_at desc',
-      }}
-      wrapperClassName="bg-transparent"
-      className="bg-background"
-    />
+    <>
+      <Table
+        api={API_ENDPOINT.USERS_ME_TRANSACTIONS}
+        tableOptions={{
+          manualPagination: true,
+          manualSorting: true,
+        }}
+        columns={fiatColumns}
+        filterOptions={fiatFilterOptions}
+        apiQueryParams={{
+          currency_type: 'fiat',
+          page: 1,
+          per_page: 10,
+          sort: 'create_at desc',
+        }}
+        wrapperClassName="bg-transparent"
+        className="bg-background"
+      />
+
+      <FiatTransactionDetailModal
+        transaction={selectedTransaction}
+        isOpen={isDetailModalOpen}
+        onClose={handleCloseDetailModal}
+      />
+    </>
   );
 }

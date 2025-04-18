@@ -1,11 +1,12 @@
+import type { z } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
-import type { FieldValues } from 'react-hook-form';
 import type { InputFieldProps } from '../type';
+import type { chatSchema } from '../utils';
 import { InputDefault } from './input-default';
 import { InputWithAgent } from './input-with-agent';
 
-export const InputField = <TFormValues extends FieldValues>({
+export const InputField = ({
   form,
   type,
   handleKeyDown,
@@ -14,7 +15,7 @@ export const InputField = <TFormValues extends FieldValues>({
   inputRef,
   canChangeType,
   className,
-}: InputFieldProps<TFormValues>) => {
+}: InputFieldProps<z.infer<typeof chatSchema>>) => {
   const tAI = useTranslations('aiAssistant');
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
@@ -31,6 +32,7 @@ export const InputField = <TFormValues extends FieldValues>({
           className={className}
           handleInputChange={handleInputChange}
           placeholder={tAI('inputPlaceholderWithTip')}
+          form={form}
         />
       );
     }
@@ -44,6 +46,7 @@ export const InputField = <TFormValues extends FieldValues>({
           type={type}
           handleInputChange={handleInputChange}
           className={className}
+          form={form}
         />
       );
     }

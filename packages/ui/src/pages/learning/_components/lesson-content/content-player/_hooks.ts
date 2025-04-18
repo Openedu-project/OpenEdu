@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from '#common/navigation';
 import { createCourseUrl } from '#utils/course-url';
-import { useLessonLearningStore } from '../../../_store/learning-store';
+import { useProgress } from '../../../_context';
 import { getLessonGlobalIndex, getTotalLessons, getUidByLessonIndex } from '../../../_utils/utils';
 
 const VIDEO_CONSTANTS = {
@@ -34,7 +34,11 @@ export const usePlayerProgress = (
   });
   const [showNextLessonAlert, setShowNextLessonAlert] = useState(false);
 
-  const { sectionsProgressData, getLessonStatus, setIsNavigatingLesson } = useLessonLearningStore();
+  const {
+    state: { sectionsProgressData },
+  } = useProgress();
+
+  const { getLessonStatus, setIsNavigatingLesson } = useProgress();
   const currentLessonIndex = getLessonGlobalIndex(sectionsProgressData, lesson as string);
   const totalItems = getTotalLessons(sectionsProgressData);
 

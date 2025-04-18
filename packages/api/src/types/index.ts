@@ -47,3 +47,5 @@ export * from './user';
 export * from './user-profile';
 export * from './user-settings';
 export * from './wallet';
+export * from './referral-program';
+export * from './point';

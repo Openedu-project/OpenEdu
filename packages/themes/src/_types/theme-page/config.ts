@@ -1,4 +1,3 @@
-// import type { SectionProps, SectionsByPage, ThemeFieldConfig, ThemePageKey } from '.';
 import type { ThemeMetadata } from '../theme-metadata';
 import type { SectionProps } from './components';
 import type { ThemePageKey } from './core';

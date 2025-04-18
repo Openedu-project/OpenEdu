@@ -69,13 +69,22 @@ export const isLessonContentComplete = ({
   lesson_content_uid,
   pause_at,
 }: ILessonContentComplete): boolean => {
-  const lessonContent = outline
-    ?.find(s => s.uid === section_uid)
-    ?.lessons?.find(l => l.uid === lesson_uid)
-    ?.lesson_contents.find(lc => lc.lesson_content_uid === lesson_content_uid);
+  const section = outline?.find(s => s.uid === section_uid);
+  if (!section?.lessons) {
+    return false;
+  }
 
-  return lessonContent
+  const lesson = section.lessons?.find(l => l.uid === lesson_uid);
+  if (!lesson) {
+    return false;
+  }
+
+  const lessonContent = lesson.lesson_contents?.find(lc => lc.lesson_content_uid === lesson_content_uid);
+
+  const isCompleted = lessonContent
     ? lessonContent.complete_at !== 0 ||
-        (lessonContent.content_type === 'video' && pause_at !== undefined && pause_at < lessonContent.pause_at)
+      (lessonContent.content_type === 'video' && pause_at !== undefined && pause_at < lessonContent.pause_at)
     : false;
+
+  return isCompleted;
 };

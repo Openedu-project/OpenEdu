@@ -4,6 +4,7 @@ import { Marked, type MarkedExtension, type Renderer, type Tokens } from 'marked
 import 'katex/dist/katex.min.css';
 
 const regexPreviewLink = /^\[(.*)\]$/;
+const regexImageMarkdown = /^!\[(.*?)\]\((.*?)\)$/;
 
 const blockLatexRule: RegExp[] = [
   /^\$\$([\s\S]+?)\$\$/,
@@ -114,6 +115,27 @@ export const marked = new Marked({
   renderer: {
     link(this: Renderer, { href, title, text }: Tokens.Link) {
       const isButton = regexPreviewLink.test(text ?? '');
+      const isImageRendering = regexImageMarkdown.test(text ?? '');
+      if (isImageRendering) {
+        // Extract image info from markdown format
+        const imageMatch = text.match(regexImageMarkdown);
+        if (imageMatch) {
+          const [, altText, imageUrl] = imageMatch;
+          return `
+        <div class="flex justify-center mt-2">
+          <div class="relative inline-block group image-preview">
+            <img 
+              src="${imageUrl}" 
+              alt="${altText}" 
+              ${title ? `title="${title}"` : ''} 
+              class="md:max-w-[400px] rounded-xl"
+            />
+          </div>
+        </div>
+      </div>
+          `;
+        }
+      }
       if (isButton) {
         return `
           <a href="${href}" 
@@ -136,11 +158,6 @@ export const marked = new Marked({
     code(this: Renderer, { text, lang }: Tokens.Code) {
       const originalCode = text;
       const language = hljs.getLanguage(lang ?? '') ? lang : 'plaintext';
-
-      // Check if this might be LaTeX code block
-      if (lang === 'latex' || lang === 'tex') {
-        return `<div class="latex-block">${renderLatex(text, true)}</div>`;
-      }
 
       const highlightedCode = hljs.highlight(originalCode, {
         language: language || 'plaintext',

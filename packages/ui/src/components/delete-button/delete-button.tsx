@@ -32,6 +32,7 @@ export function DeleteButton({
   const handleDelete = async (onClose?: () => void) => {
     setIsSubmitting(true);
     await onDelete(onClose);
+    onClose?.();
     setIsSubmitting(false);
   };
   return (

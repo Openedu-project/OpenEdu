@@ -1,11 +1,22 @@
-import { getCourseOutlineService } from '@oe/api';
-import { getCertLayerByCourseIdService } from '@oe/api';
-import type { ILatestLessonProgressPayload, ISectionLearningProgress } from '@oe/api';
-import { getMeServiceWithoutError } from '@oe/api';
-import { getLearningProgressesService, latestLessonProgressService } from '@oe/api';
-import { AuthCheck } from './_components/auth-check-learning';
-import { CourseLearning } from './_components/course-learning-container';
-import { mergeSectionWithProgress } from './_utils/utils';
+import { getMeServiceWithoutError } from "@oe/api";
+import { getCertLayerByCourseIdService } from "@oe/api";
+import { getCourseOutlineService } from "@oe/api";
+import {
+  getLearningProgressesService,
+  latestLessonProgressService,
+} from "@oe/api";
+import { getLessonLearnService } from "@oe/api";
+import type {
+  ILatestLessonProgressPayload,
+  ISectionLearningProgress,
+} from "@oe/api";
+import { Suspense } from "react";
+import { NoDataAvailable } from "#components/no-data-available";
+import { Spinner } from "#components/spinner";
+import { AuthCheck } from "./_components/auth-check-learning";
+import { CourseLearning } from "./_components/course-learning-container";
+import { LearningProviders } from "./_context/learning-context";
+import { mergeSectionWithProgress } from "./_utils/utils";
 
 export async function LearningPage({
   slug,
@@ -16,52 +27,87 @@ export async function LearningPage({
   section: string;
   lesson: string;
 }) {
-  const me = await getMeServiceWithoutError();
-  const course = await getCourseOutlineService(undefined, { id: slug });
+  const [me, course] = await Promise.all([
+    getMeServiceWithoutError(),
+    getCourseOutlineService(undefined, { id: slug }),
+  ]);
 
-  const dataLearningProgress =
+  if (!course) {
+    return <NoDataAvailable />;
+  }
+
+  const progressPromise =
     me && course
-      ? await getLearningProgressesService(undefined, {
-          id: course?.slug,
-        })
-      : undefined;
+      ? getLearningProgressesService(undefined, { id: course.slug })
+      : Promise.resolve(undefined);
 
-  const certLayerData =
-    course &&
-    (await getCertLayerByCourseIdService(undefined, {
-      params: { courseId: course?.id ?? '' },
-    }));
+  const certLayerPromise = course
+    ? getCertLayerByCourseIdService(undefined, {
+        params: { courseId: course.id ?? "" },
+      })
+    : Promise.resolve(undefined);
 
-  const latestLessonPayload = {
-    course_cuid: course?.cuid ?? '',
-    course_slug: slug,
-    user_id: me?.id,
-    section_uid: section,
-    lesson_uid: lesson,
-    event: 'latest_lesson_progress',
-  } as ILatestLessonProgressPayload;
+  const lessonLearnPromise =
+    me && course?.is_enrolled
+      ? getLessonLearnService(undefined, { id: lesson, cid: course?.id })
+      : Promise.resolve(undefined);
 
-  await latestLessonProgressService(undefined, {
-    payload: latestLessonPayload,
-    shouldFetch: !!(me && course?.is_enrolled),
-  });
+  const [dataLearningProgress, certLayerData, lessonData] = await Promise.all([
+    progressPromise,
+    certLayerPromise,
+    lessonLearnPromise,
+  ]);
+
+  if (me && course?.is_enrolled) {
+    const latestLessonPayload = {
+      course_cuid: course.cuid ?? "",
+      course_slug: slug,
+      user_id: me.id,
+      section_uid: section,
+      lesson_uid: lesson,
+      event: "latest_lesson_progress",
+    } as ILatestLessonProgressPayload;
+
+    Promise.allSettled([
+      latestLessonProgressService(undefined, {
+        payload: latestLessonPayload,
+        shouldFetch: true,
+      }),
+    ]);
+  }
 
   const learningData =
-    course && dataLearningProgress && mergeSectionWithProgress(course?.outline, dataLearningProgress?.sections);
+    course && dataLearningProgress
+      ? mergeSectionWithProgress(course.outline, dataLearningProgress.sections)
+      : undefined;
 
   return (
-    !!course && (
-      <>
-        <AuthCheck
-          me={me}
-          course={course}
-          learning_data={learningData as ISectionLearningProgress[]}
-          lesson_uid={lesson as string}
-        />
-        {course?.is_enrolled && (
-          <CourseLearning course={course} section_uid={section} lesson_uid={lesson} certificate={certLayerData} />
-        )}
-      </>
+    course && (
+      <LearningProviders
+        course={course}
+        initialProgressData={learningData as ISectionLearningProgress[]}
+        initialSection={section}
+        initialLesson={lesson}
+      >
+        <AuthCheck me={me} course={course} />
+        <Suspense
+          fallback={
+            <div className="h-[calc(100dvh-var(--header-with-sub-item-height))]">
+              <Spinner />
+            </div>
+          }
+        >
+          {course?.is_enrolled && (
+            <CourseLearning
+              course={course}
+              section_uid={section}
+              lesson_uid={lesson}
+              certificate={certLayerData}
+              lessonData={lessonData}
+            />
+          )}
+        </Suspense>
+      </LearningProviders>
     )
   );
 }

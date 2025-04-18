@@ -6,7 +6,7 @@ import type { IQuizSubmissionResponse } from '@oe/api';
 import { convertTimeStringToSeconds } from '@oe/core';
 import { type IframeHTMLAttributes, useEffect, useRef, useState } from 'react';
 import { Spinner } from '#components/spinner';
-import { useQuizSubmissionStore } from '../../../_store/learning-store';
+import { useQuiz } from '../../../_context';
 import { usePlayerProgress } from './_hooks';
 import { NextLessonAlert } from './next-lesson-alert';
 import { EVENTS, usePlayer } from './player';
@@ -19,6 +19,7 @@ interface IContentVideoProps extends IframeHTMLAttributes<HTMLIFrameElement> {
   quizzes: IQuizItemResponse[];
   isPreview?: boolean;
   onlyVideoContent?: boolean;
+  maxHeight?: string;
   onComplete?: (duration: number, time: number, quizzes?: string) => void;
 }
 
@@ -31,10 +32,12 @@ const ContentVideo = ({
   isPreview = false,
   courseData,
   onlyVideoContent,
+  maxHeight,
   ...props
 }: IContentVideoProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>({} as HTMLIFrameElement);
+  const quizInfoRef = useRef(null);
   const player = usePlayer(iframeRef);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [shownQuizzes, setShownQuizzes] = useState<string[]>([]);
@@ -44,7 +47,7 @@ const ContentVideo = ({
     duration: 0,
   });
 
-  const { quizResult } = useQuizSubmissionStore();
+  const { quizResult } = useQuiz();
 
   const triggerQuizConditions = () => {
     if (quizzes) {
@@ -105,7 +108,7 @@ const ContentVideo = ({
   }, [player, checkProgress, triggerConditions, shownQuizzes, isPreview]);
 
   return (
-    <div ref={containerRef} className="flex h-full max-h-full max-w-full flex-col">
+    <div ref={containerRef} className="flex h-full w-full flex-col">
       {isLoading ? <Spinner size="sm" /> : null}
 
       <iframe
@@ -117,10 +120,11 @@ const ContentVideo = ({
           border: 'none',
           borderRadius: '16px',
           height: '100%',
+          maxHeight: maxHeight,
           transition: 'opacity 0.3s ease-in-out',
         }}
         allow="accelerometer; gyroscope; encrypted-media; picture-in-picture; fullscreen"
-        className="mx-auto aspect-video h-auto w-full max-w-full flex-1 md:h-full md:w-auto"
+        className="aspect-video"
         allowFullScreen
         onLoad={() => {
           setIsLoading(false);
@@ -128,7 +132,11 @@ const ContentVideo = ({
         {...props}
       />
 
-      {quizzes?.length > 0 && player && !isPreview && <VideoQuizInfo quizzes={quizzes} player={player} />}
+      {quizzes?.length > 0 && player && !isPreview && (
+        <div ref={quizInfoRef} className="mt-2 w-full">
+          <VideoQuizInfo quizzes={quizzes} player={player} />
+        </div>
+      )}
 
       {!isPreview && showQuiz && quizzes?.length > 0 && (
         <VideoQuizModal

@@ -1,11 +1,11 @@
-import AIBg from "@oe/assets/images/ai/ai-bg.png";
-import AIMascot from "@oe/assets/images/ai/ai-mascot.png";
-import { useTranslations } from "next-intl";
-import { InputFrame, PromptCategory } from "#components/conversation";
-import { Image } from "#components/image";
+import AIBg from '@oe/assets/images/ai/ai-bg.png';
+import AIMascot from '@oe/assets/images/ai/ai-mascot.png';
+import { useTranslations } from 'next-intl';
+import { InputFrame, PromptCategory } from '#components/conversation';
+import { Image } from '#components/image';
 
 export function AIAssistantPage() {
-  const tAI = useTranslations("aiAssistant");
+  const tAI = useTranslations('aiAssistant');
 
   return (
     <div className="flex h-[calc(100dvh-var(--header-height))] flex-col items-center gap-4 px-2 md:container">
@@ -34,15 +34,13 @@ export function AIAssistantPage() {
           containerHeight={80}
         />
         <h2 className="mcaption-regular20 md:giant-iheading-semibold28 text-center md:mb-6">
-          <span className="mr-2 bg-ai-gradient bg-clip-text text-transparent">
-            {tAI("aiAssitantStrongText")}
-          </span>
-          {tAI("aiAssitantText")}
+          <span className="mr-2 bg-ai-gradient bg-clip-text text-transparent">{tAI('aiAssitantStrongText')}</span>
+          {tAI('aiAssitantText')}
         </h2>
 
         <PromptCategory />
       </div>
-      <InputFrame className="mb-4 w-full" updateWidth reset />
+      <InputFrame className="mb-4 w-full" reset />
     </div>
   );
 }

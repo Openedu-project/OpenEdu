@@ -58,14 +58,14 @@ export const ImageAction = ({ id }: { id: string }) => {
             href={src}
             target="_blank"
             rel="noopener noreferrer"
-            className="invisible absolute top-0 left-0 z-50 flex h-full w-full cursor-pointer justify-end rounded-xl bg-foreground/50 group-hover:visible"
+            className="invisible absolute top-0 left-0 z-10 flex h-full w-full cursor-pointer justify-end rounded-xl bg-foreground/50 group-hover:visible"
           >
             <div className="flex h-full flex-col items-end justify-between">
-              <Eye className="h-6 w-6 text-background" />
+              <Eye className="h-4 w-4 text-background" />
 
               <Button
                 variant="outline"
-                className="rounded-md bg-background/50 bg-transparent text-background hover:bg-background/70"
+                className="aspect-square rounded-md bg-background/50 bg-transparent p-1 text-background hover:bg-background/70"
                 onClick={e => handleDownload(e, src, text)}
               >
                 <Download className="h-4 w-4" />

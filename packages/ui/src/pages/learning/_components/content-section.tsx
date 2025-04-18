@@ -1,48 +1,120 @@
-import type { ICourseOutline } from '@oe/api';
+"use client";
 
-import { getLessonLearnService } from '@oe/api';
-import type { HTMLAttributes } from 'react';
-import { cn } from '#utils/cn';
-import { sortByOrder } from '../_utils/utils';
-import { LessonContentBlocks } from './lesson-content/lesson-content-blocks';
-import { LessonMetadata } from './lesson-metadata';
+import type { ILesson } from "@oe/api";
+import { ChevronUp } from "lucide-react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { Button } from "#shadcn/button";
+import { cn } from "#utils/cn";
+import { useCourse, useCurrentLesson } from "../_context";
+import { sortByOrder } from "../_utils/utils";
+import { LessonContentBlocks } from "./lesson-content/lesson-content-blocks";
+import { LessonMetadata } from "./lesson-metadata";
 
-interface IContentSectionProps extends HTMLAttributes<HTMLDivElement> {
-  courseData?: ICourseOutline;
-  lesson: string;
-  section: string;
+interface IContentSectionProps {
+  className?: string;
+  lessonData?: ILesson | null;
+  showButtonDrawer?: boolean;
+  onOpenDrawer?: () => void;
 }
 
-const ContentSection = async ({ courseData, lesson, className, section, ...props }: IContentSectionProps) => {
-  const lessonData = courseData?.is_enrolled
-    ? await getLessonLearnService(undefined, {
-        id: lesson,
-        cid: courseData?.id,
-      })
-    : undefined;
+const ContentSection = ({
+  className,
+  lessonData,
+  showButtonDrawer,
+  onOpenDrawer,
+}: IContentSectionProps) => {
+  const { course } = useCourse();
+  const { currentSection, currentLesson } = useCurrentLesson();
+  const contentRef = useRef<HTMLDivElement>(null);
+  const lessonMetadataRef = useRef<HTMLDivElement>(null);
+  const [reachedEnd, setReachedEnd] = useState(false);
+  const [lessonMetadataHeight, setLessonMetadataHeight] = useState(0);
 
-  const isQuizContent = lessonData?.contents?.length === 1 && lessonData.contents[0]?.type === 'quiz';
+  const sortedContents = useMemo(() => {
+    return lessonData?.contents?.sort(sortByOrder) ?? [];
+  }, [lessonData]);
+
+  // Update LessonMetadata's height to calculate max-height for content
+  useLayoutEffect(() => {
+    if (lessonMetadataRef.current) {
+      const updateMetadataHeight = () => {
+        const height = lessonMetadataRef.current?.offsetHeight || 0;
+        setLessonMetadataHeight(height);
+      };
+
+      updateMetadataHeight();
+      window.addEventListener("resize", updateMetadataHeight);
+
+      return () => {
+        window.removeEventListener("resize", updateMetadataHeight);
+      };
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (contentRef.current) {
+        const contentRect = contentRef.current.getBoundingClientRect();
+        const contentBottom = contentRect.bottom;
+
+        const threshold = 100;
+        setReachedEnd(contentBottom + threshold <= window.innerHeight);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <div
-      className={cn('flex flex-col gap-4', className, isQuizContent && 'h-[calc(100vh-var(--header-height)-16px)]')}
-      {...props}
+      className={cn(
+        "relative flex h-full min-h-[calc(100dvh-var(--header-with-sub-item-height))] flex-col",
+        className
+      )}
     >
-      <LessonContentBlocks
-        course_data={courseData as ICourseOutline}
-        contents={lessonData?.contents?.sort(sortByOrder) ?? []}
-        section_uid={section}
-        lesson_uid={lesson}
-      />
+      <div ref={contentRef} className="flex flex-grow flex-col md:px-4">
+        <LessonContentBlocks
+          contents={sortedContents}
+          section_uid={currentSection}
+          lesson_uid={currentLesson}
+          lessonMetadataHeight={lessonMetadataHeight}
+        />
+      </div>
 
-      <LessonMetadata
-        title={lessonData?.title ?? ''}
-        courseName={courseData?.name ?? ''}
-        slug={courseData?.slug ?? ''}
-        updateAt={courseData?.update_at ?? 0}
-        className="px-2 md:pl-4"
-        lessonUid={lesson}
-      />
+      <div
+        ref={lessonMetadataRef}
+        className={cn(
+          "relative z-10 w-full bg-white transition-all duration-200",
+          reachedEnd ? "block" : "sticky bottom-0",
+          showButtonDrawer && "rounded-t-[20px]"
+        )}
+      >
+        {showButtonDrawer && (
+          <Button
+            className="-translate-x-1/2 -translate-y-1/3 absolute top-0 left-1/2 h-fit w-16 rounded-3xl p-0 py-1"
+            onClick={onOpenDrawer}
+          >
+            <ChevronUp size={16} />
+          </Button>
+        )}
+        <LessonMetadata
+          title={lessonData?.title ?? ""}
+          courseName={course?.name ?? ""}
+          slug={course?.slug ?? ""}
+          updateAt={course?.update_at ?? 0}
+          className={cn(
+            "p-2 pt-4 md:px-4",
+            showButtonDrawer &&
+              "rounded-t-[20px] shadow-[10px_0_30px_rgba(196,198,242,0.50)]"
+          )}
+          lessonUid={currentLesson}
+        />
+      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import line from '@oe/assets/images/theme/line.avif';
+// import line from '@oe/assets/images/theme/line.avif';
 import { Image } from '@oe/ui';
 import { cn } from '@oe/ui';
 import type { SectionComponent } from '../../../_types/theme-page';
@@ -54,14 +54,14 @@ const AvailHomepageSolution: SectionComponent<'homepage', 'availSolution'> = ({
           </div>
         </div>
       </div>
-      <Image
+      {/* <Image
         src={line?.src}
         alt="line"
         className="h-full w-full object-cover"
         height="55"
         width={line?.width ?? 1000}
         wrapClassNames="border-none"
-      />
+      /> */}
 
       <div className="bg-accent/80 py-12 md:pb-16 lg:py-20">
         <div className="container flex flex-col items-center ">

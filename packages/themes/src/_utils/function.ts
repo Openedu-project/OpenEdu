@@ -5,6 +5,7 @@ import type {
   AllSectionKeys,
   AllSidebarKeys,
   GroupMenuItem,
+  PageRender,
   PageSectionConfig,
   SectionProps,
   SectionsByPage,
@@ -28,6 +29,25 @@ export function getThemeComponent<Page extends ThemePageKey, Section extends Sec
   sectionKey: Section
 ): ComponentType<SectionProps<Page, Section>> | undefined {
   const pageConfig = themeRenderData[themeName][pageKey];
+
+  if (!pageConfig) {
+    // throw new Error(`No configuration found for theme ${themeName} and page ${pageKey}`);
+    return undefined;
+  }
+
+  // Type assertion to handle the indexing
+  const sectionComponent = (pageConfig as Record<Section, ComponentType<SectionProps<Page, Section>>>)[sectionKey];
+  const defaultComponent = pageConfig.theme as ComponentType<SectionProps<Page, Section>>;
+
+  return sectionComponent || defaultComponent;
+}
+
+export function getThemeComponentByPagesConfig<Page extends ThemePageKey, Section extends SectionsByPage[Page]>(
+  pageRender: PageRender,
+  pageKey: Page,
+  sectionKey: Section
+): ComponentType<SectionProps<Page, Section>> | undefined {
+  const pageConfig = pageRender[pageKey];
 
   if (!pageConfig) {
     // throw new Error(`No configuration found for theme ${themeName} and page ${pageKey}`);

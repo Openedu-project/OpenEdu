@@ -1,3 +1,4 @@
+'use client';
 import { Input } from '@oe/ui';
 import { Label } from '@oe/ui';
 import { ScrollArea } from '@oe/ui';

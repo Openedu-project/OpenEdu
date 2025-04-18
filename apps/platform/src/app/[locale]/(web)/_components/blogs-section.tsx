@@ -1,28 +1,33 @@
 import type { IBlog } from "@oe/api";
-import { getBlogListService } from "@oe/api";
-import { formatDate } from "@oe/core";
+import {
+  getOrgByDomainService,
+  getPopularBlogsServicesAtWebsite,
+} from "@oe/api";
+import { formatDate, getCookie } from "@oe/core";
 import { Link } from "@oe/ui";
 import { Image } from "@oe/ui";
 import { ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
 export async function BlogsSection() {
+  const domain =
+    (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? "";
+  const [orgData] = await Promise.all([
+    getOrgByDomainService(undefined, {
+      domain: domain?.split("/")?.[0] ?? domain,
+    }),
+  ]);
   const [t, blogsData] = await Promise.all([
     await getTranslations("homePageLayout.blogsSection"),
-    getBlogListService(undefined, {
-      params: {
-        per_page: 4,
-        page: 1,
-        sort: "create_at desc",
-        is_active: true,
-      },
+    getPopularBlogsServicesAtWebsite(undefined, {
+      params: { org_id: orgData?.domain ?? orgData?.alt_domain ?? "" },
     }),
   ]);
 
-  const featuredPost = blogsData?.results?.[0] as unknown as IBlog;
-  const restPost = blogsData?.results?.slice(1) as unknown as IBlog[];
+  const featuredPost = blogsData?.[0]?.entity as IBlog;
+  const restPost = blogsData?.splice(1, 3)?.map((b) => b?.entity) as IBlog[];
 
-  return (blogsData?.results?.length ?? 0) > 0 ? (
+  return (blogsData?.length ?? 0) > 0 ? (
     <section className="container mx-auto px-0 md:px-4">
       {/* Header */}
       <div className="mb-4 text-center lg:mb-10">

@@ -1,8 +1,6 @@
 import { ScrollArea } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { memo } from 'react';
-import { getThemeComponent } from '#utils/function';
-import { THEMES, THEMES_SERVER } from '../../../index';
 
 import type {
   PageSectionConfig,
@@ -12,6 +10,7 @@ import type {
   ThemeName,
   ThemePageKey,
 } from '#types';
+import { THEMES_RENDER_CLIENT, getThemeComponent } from '#utils';
 
 export interface PreviewPanelProps {
   themeName: ThemeName;
@@ -19,7 +18,6 @@ export interface PreviewPanelProps {
   pageConfig: PagesConfig<ThemePageKey>;
   stateConfigSections?: PageSectionConfigs<ThemePageKey>;
   currentConfigSections?: PageSectionConfigs<ThemePageKey>;
-  renderByServer?: boolean;
 }
 export const PreviewPanel = memo(function PreviewPanel({
   themeName,
@@ -27,13 +25,12 @@ export const PreviewPanel = memo(function PreviewPanel({
   pageConfig,
   currentConfigSections,
   stateConfigSections,
-  renderByServer = false,
 }: PreviewPanelProps) {
   const t = useTranslations('themePageSettings');
 
   const renderPreviewSection = (key: SectionsByPage[typeof selectedPage]) => {
     const PageComponent = getThemeComponent<ThemePageKey, SectionsByPage[typeof selectedPage]>(
-      renderByServer ? THEMES_SERVER : THEMES,
+      THEMES_RENDER_CLIENT,
       themeName,
       selectedPage,
       key

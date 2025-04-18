@@ -1,8 +1,7 @@
 "use client";
 
 import { useCreateOrUpdateThemeConfig, useGetTheme } from "@oe/api";
-import { initialThemeGlobal } from "@oe/themes";
-import { ThemeSettingGlobal } from "@oe/themes";
+import { ThemeSettingGlobal, initialThemeGlobal } from "@oe/themes";
 import type {
   ThemeCollection,
   ThemeGlobal,
@@ -13,7 +12,7 @@ import type {
 import { toast } from "@oe/ui";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 export default function GlobalThemeSetting() {
   const translate = useTranslations("themeNoti");
@@ -22,8 +21,11 @@ export default function GlobalThemeSetting() {
   const { theme, mutateTheme } = useGetTheme();
   const { createOrUpdateThemeConfig } = useCreateOrUpdateThemeConfig();
   const currentTheme = theme?.[0]?.value;
-  const themeDefinition =
-    currentTheme?.availableThemes?.[themeName as ThemeName];
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  const themeDefinition = useMemo(
+    () => currentTheme?.availableThemes?.[themeName as ThemeName],
+    [theme, currentTheme, themeName]
+  );
 
   const updateThemeSystem = useCallback(
     (themeGlobal: ThemeGlobal): ThemeSystem => ({

@@ -1,14 +1,37 @@
 import { z } from '#utils/zod';
 
 export const bankAccountSchema = z.object({
-  id: z.string().optional(),
-  bank_name: z.string().min(1, 'wallets.bankAccountPage.form.errors.bankNameRequired'),
-  account_name: z.string().min(1, 'wallets.bankAccountPage.form.errors.accountNameRequired'),
+  bank_name: z
+    .string()
+    .min(1, {
+      message: 'wallets.bankAccountPage.form.errors.bankName.required',
+    })
+    .max(100, {
+      message: 'wallets.bankAccountPage.form.errors.bankName.invalid',
+    }),
+  account_name: z
+    .string()
+    .min(1, {
+      message: 'wallets.bankAccountPage.form.errors.accountName.required',
+    })
+    .max(100, {
+      message: 'wallets.bankAccountPage.form.errors.accountName.invalid',
+    }),
   account_number: z
     .string()
-    .min(5, 'wallets.bankAccountPage.form.errors.accountNumberRequired')
-    .max(20, 'wallets.bankAccountPage.form.errors.accountNumberRequired'),
-  is_default: z.boolean().optional(),
+    .min(1, {
+      message: 'wallets.bankAccountPage.form.errors.accountNumber.required',
+    })
+    .regex(/^\d+$/, {
+      message: 'wallets.bankAccountPage.form.errors.accountNumber.pattern',
+    })
+    .min(5, {
+      message: 'wallets.bankAccountPage.form.errors.accountNumber.invalid',
+    })
+    .max(20, {
+      message: 'wallets.bankAccountPage.form.errors.accountNumber.invalid',
+    }),
+  id: z.string().optional(),
 });
 
 export type IBankAccountValue = z.infer<typeof bankAccountSchema>;

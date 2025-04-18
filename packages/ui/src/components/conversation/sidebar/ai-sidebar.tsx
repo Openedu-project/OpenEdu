@@ -1,5 +1,4 @@
 "use client";
-import { Direct } from "@oe/assets";
 import AIMascot from "@oe/assets/images/ai/ai-mascot-2.png";
 import { AI_ROUTES } from "@oe/core";
 import { CirclePlus, LayoutGrid } from "lucide-react";
@@ -63,7 +62,7 @@ export function AISidebar({
             </p>
           </div>
           <AgentButton />
-          <div>
+          {/* <div>
             <Link
               size="icon"
               variant="default"
@@ -73,10 +72,8 @@ export function AISidebar({
             >
               <Direct width={16} height={16} />
             </Link>
-            <p className="mcaption-regular10 mt-1 text-center md:font-semibold">
-              {tAI("workspace")}
-            </p>
-          </div>
+            <p className="mcaption-regular10 mt-1 text-center md:font-semibold">{tAI('workspace')}</p>
+          </div> */}
           <AIHistoryModal isLogin={isLogin} />
         </div>
         <Separator className="h-0.5 w-full bg-primary/10" />

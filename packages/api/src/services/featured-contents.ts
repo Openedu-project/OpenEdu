@@ -13,15 +13,10 @@ import { createAPIUrl, fetchAPI, postAPI } from '#utils/fetch';
 
 export async function getPopularCoursesServices(
   url: string | undefined,
-  { params, init }: { params: Pick<FeaturedContentParams, 'org_id'>; init?: RequestInit }
+  { init }: { init?: RequestInit }
 ): Promise<IFeaturedContentResponse<undefined> | undefined> {
   const endpointKey = createAPIUrl({
     endpoint: url || API_ENDPOINT.FEATURED_CONTENT,
-    queryParams: {
-      ...params,
-      type: 'popular',
-      entity_type: 'course',
-    },
   });
 
   try {
@@ -57,15 +52,10 @@ export async function getPopularCoursesServicesAtWebsite(
 
 export async function getPopularBlogsServices(
   url: string | undefined,
-  { params, init }: { params: Pick<FeaturedContentParams, 'org_id'>; init?: RequestInit }
+  { init }: { init?: RequestInit }
 ): Promise<IFeaturedContentResponse<undefined> | undefined> {
   const endpointKey = createAPIUrl({
     endpoint: url || API_ENDPOINT.FEATURED_CONTENT,
-    queryParams: {
-      ...params,
-      type: 'popular',
-      entity_type: 'blog',
-    },
   });
 
   try {
