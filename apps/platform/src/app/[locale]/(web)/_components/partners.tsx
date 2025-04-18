@@ -71,7 +71,7 @@ const partners = [
 
 export function PartnerSection() {
   return (
-    <section className="py-2 lg:py-4">
+    <section className="py-2 lg:mb-20 lg:py-4">
       <Marquee>
         {partners.map((partner) => (
           <PartnerLogo

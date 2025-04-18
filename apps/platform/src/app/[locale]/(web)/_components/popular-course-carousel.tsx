@@ -1,6 +1,6 @@
 "use client";
-import type { ICourse, ICourseResponse } from "@oe/api";
-import { useGetCoursesPublish } from "@oe/api";
+import type { ICourse, IFeaturedContent } from "@oe/api";
+import { useGetPopularCoursesAtWebsite } from "@oe/api";
 import type { IFilter } from "@oe/api";
 import { PLATFORM_ROUTES } from "@oe/core";
 import { buttonVariants } from "@oe/ui";
@@ -15,17 +15,19 @@ import {
 import { cn } from "@oe/ui";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import type { KeyedMutator } from "swr";
 
 interface CarouselWrapperProps {
-  coursesData?: ICourseResponse;
+  dataPopularCourses?: IFeaturedContent<ICourse>[];
   // hasMultipleSlides: boolean;
   viewAllText: string;
   title: string;
-  params: IFilter;
+  params?: IFilter;
+  host?: string;
 }
 
 export function CarouselWrapper({
-  coursesData,
+  dataPopularCourses,
   // hasMultipleSlides,
   viewAllText,
   title,
@@ -36,16 +38,18 @@ export function CarouselWrapper({
     loop: false,
   });
 
-  const { dataListCourses, mutateListCourses } = useGetCoursesPublish(
-    params,
-    coursesData
-  );
+  const { dataPopularCourses: data, mutatePopularCourses } =
+    useGetPopularCoursesAtWebsite({
+      params: { org_id: params?.org_id ?? "" },
+      fallback: dataPopularCourses,
+    });
 
-  const courses = dataListCourses?.results || [];
+  const courses = data?.sort((a, b) => a.order - b.order) || [];
   const hasMultipleSlides = courses?.length > 8;
 
-  const slides: ICourse[][] = [];
-  for (let i = 0; i < courses.length; i += 8) {
+  // biome-ignore lint/suspicious/noEvolvingTypes: <explanation>
+  const slides = [];
+  for (let i = 0; i < courses?.length; i += 8) {
     slides.push(courses.slice(i, i + 8));
   }
 
@@ -94,18 +98,25 @@ export function CarouselWrapper({
           {slides?.map((slideItems) => (
             <CarouselItem key={slideItems[0]?.id}>
               <div className="grid grid-cols-1 gap-4 pb-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {slideItems?.map((course) => (
-                  <CourseCard
-                    key={course.id}
-                    courseData={course}
-                    className="h-full"
-                    showHover={true}
-                    showPrice={true}
-                    showThubnail={true}
-                    showOwner={false}
-                    mutate={mutateListCourses}
-                  />
-                ))}
+                {slideItems?.map(
+                  (course) =>
+                    course?.entity && (
+                      <CourseCard
+                        key={course.id}
+                        courseData={course?.entity}
+                        className="h-full"
+                        showHover={true}
+                        showPrice={true}
+                        showThubnail={true}
+                        showOwner={false}
+                        mutate={
+                          mutatePopularCourses as KeyedMutator<
+                            IFeaturedContent<ICourse>[]
+                          >
+                        }
+                      />
+                    )
+                )}
               </div>
             </CarouselItem>
           ))}

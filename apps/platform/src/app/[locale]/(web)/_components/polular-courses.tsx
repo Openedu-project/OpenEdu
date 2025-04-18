@@ -1,21 +1,24 @@
-import { getCoursesPublishService } from "@oe/api";
+import {
+  getOrgByDomainService,
+  getPopularCoursesServicesAtWebsite,
+} from "@oe/api";
+import { getCookie } from "@oe/core";
 import { Carousel } from "@oe/ui";
 import { getTranslations } from "next-intl/server";
 import { CarouselWrapper } from "./popular-course-carousel";
 
 export async function PopularCoursesSection() {
-  const params = {
-    page: 1,
-    per_page: 16,
-    enable_root: true,
-    sort: "create_at desc",
-    preloads: ["Categories", "Owner", "Levels"],
-  };
-
-  const [t, coursesData] = await Promise.all([
+  const domain =
+    (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? "";
+  const [orgData] = await Promise.all([
+    getOrgByDomainService(undefined, {
+      domain: domain?.split("/")?.[0] ?? domain,
+    }),
+  ]);
+  const [t, dataPopularCourses] = await Promise.all([
     getTranslations("homePageLayout.popularCoursesSection"),
-    getCoursesPublishService(undefined, {
-      params,
+    getPopularCoursesServicesAtWebsite(undefined, {
+      params: { org_id: orgData?.domain ?? orgData?.alt_domain ?? "" },
     }),
   ]);
 
@@ -37,11 +40,11 @@ export async function PopularCoursesSection() {
         className="w-full"
       >
         <CarouselWrapper
-          coursesData={coursesData}
+          dataPopularCourses={dataPopularCourses}
           // hasMultipleSlides={hasMultipleSlides}
           viewAllText={t("viewAll")}
           title={t("title")}
-          params={params}
+          params={{ org_id: orgData?.domain ?? orgData?.alt_domain ?? "" }}
         />
       </Carousel>
     </section>
