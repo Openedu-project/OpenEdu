@@ -28,6 +28,7 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, lessonUid, ...props
   const {
     state: { sectionsProgressData, isNavigating },
     getLessonStatus,
+    setIsNavigatingLesson,
   } = useProgress();
   // const { setCurrentLesson } = useCurrentLesson();
 
@@ -39,6 +40,8 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, lessonUid, ...props
 
   const handleNavigateLesson = (direction: 'prev' | 'next') => {
     let newIndex = currentLessonIndex;
+
+    setIsNavigatingLesson(true);
 
     if (direction === 'prev') {
       newIndex = currentLessonIndex > 0 ? currentLessonIndex - 1 : totalItems;

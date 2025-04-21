@@ -29,6 +29,8 @@ const LessonItem = memo(
   }) => {
     const ref = useRef<HTMLLIElement>(null);
 
+    const { setIsNavigatingLesson } = useProgress();
+
     const completedLesson = lesson?.completed_lesson_content ?? 0;
     const totalLesson = lesson?.total_lesson_content ?? 0;
     const isCompleted = totalLesson >= 1 ? completedLesson / totalLesson : 0;
@@ -52,6 +54,7 @@ const LessonItem = memo(
         lesson={lesson}
         type="learning"
         ref={isActive ? ref : null}
+        setIsNavigating={setIsNavigatingLesson}
       />
     );
   }
