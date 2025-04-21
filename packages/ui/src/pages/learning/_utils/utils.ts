@@ -1,5 +1,5 @@
 import type { ILesson, ISection } from '@oe/api';
-import type { ILessonLearningProgress, ILessonProgress, ISectionLearningProgress, ISectionProgress } from '@oe/api';
+import type { ILearningProgress, ILessonLearningProgress, ILessonProgress, ISectionLearningProgress } from '@oe/api';
 import type { IAnswerItemSet } from '@oe/api';
 import type { TAnswerInput } from '../_components/lesson-content/_types/types';
 
@@ -97,10 +97,11 @@ export const getLessonGlobalIndex = (
 
 export const mergeSectionWithProgress = (
   unsortedSections: ISection[],
-  sectionProgresses?: ISectionProgress[]
+  learningProgress?: ILearningProgress
 ): ISectionLearningProgress[] => {
   // Sort sections and lessons first
   const sections = sortSectionsAndLessons(unsortedSections);
+  const sectionByUid = learningProgress?.section_by_uid;
 
   // Flatten all lessons first to track global completion status
   const allLessons: Array<{
@@ -112,12 +113,12 @@ export const mergeSectionWithProgress = (
 
   // First pass: collect all lessons and their progress
   sections.forEach((section, sectionIndex) => {
-    const sectionProgress = sectionProgresses?.find(sp => sp.section_uid === section.uid);
+    const sectionProgress = sectionByUid?.[section.uid];
 
     section.lessons?.forEach((lesson, lessonIndex) => {
       allLessons.push({
         lesson,
-        progress: sectionProgress?.lessons.find(lp => lp.lesson_uid === lesson.uid),
+        progress: sectionProgress?.lesson_by_uid?.[lesson.uid],
         sectionIndex,
         lessonIndex,
       });
@@ -126,7 +127,7 @@ export const mergeSectionWithProgress = (
 
   // Second pass: process sections with correct availability checks
   const processedSections = sections.map((section, sectionIndex) => {
-    const sectionProgress = sectionProgresses?.find(sp => sp.section_uid === section.uid);
+    const sectionProgress = sectionByUid?.[section.uid];
 
     // Early return if no lessons
     if (section.lessons?.length === 0) {
@@ -148,7 +149,7 @@ export const mergeSectionWithProgress = (
         currentLessonIndex === 0 ||
         allLessons.slice(0, currentLessonIndex).every(item => item.progress?.complete_at !== 0);
 
-      const progress = sectionProgress?.lessons.find(lp => lp.lesson_uid === lesson.uid);
+      const progress = sectionProgress?.lesson_by_uid?.[lesson.uid];
 
       // Determine lesson availability
       const available =
@@ -157,13 +158,16 @@ export const mergeSectionWithProgress = (
         allPreviousCompleted || // all previous lessons completed
         progress?.complete_at !== 0; // current lesson already completed
 
+      // Convert lesson_content_by_uid to lesson_contents array for backward compatibility
+      const lessonContents = progress?.lesson_content_by_uid ? Object.values(progress.lesson_content_by_uid) : [];
+
       return {
         ...lesson,
         total_lesson_content: progress?.total_lesson_content ?? 0,
         completed_lesson_content: progress?.completed_lesson_content ?? 0,
         complete_at: progress?.complete_at ?? 0,
         completed_percent: progress?.completed_percent ?? 0,
-        lesson_contents: progress?.lesson_contents ?? [],
+        lesson_contents: lessonContents,
         available,
         sectionIndex,
         lessonIndex,

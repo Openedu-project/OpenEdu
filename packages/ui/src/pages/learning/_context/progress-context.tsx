@@ -243,8 +243,8 @@ export function ProgressProvider({
           const newLearningProgres = await getLearningProgressesService(undefined, { id: course.slug });
 
           // Cập nhật state với dữ liệu mới
-          if (newLearningProgres?.sections) {
-            const data = mergeSectionWithProgress(course.outline, newLearningProgres.sections);
+          if (newLearningProgres) {
+            const data = mergeSectionWithProgress(course.outline, newLearningProgres);
             setSectionsProgressData(data);
           }
 

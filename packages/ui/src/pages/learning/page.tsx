@@ -50,6 +50,8 @@ export async function LearningPage({
     lessonLearnPromise,
   ]);
 
+  console.log(lessonData, 'lessonData');
+
   if (me && course?.is_enrolled) {
     const latestLessonPayload = {
       course_cuid: course.cuid ?? '',
@@ -69,9 +71,7 @@ export async function LearningPage({
   }
 
   const learningData =
-    course && dataLearningProgress
-      ? mergeSectionWithProgress(course.outline, dataLearningProgress.sections)
-      : undefined;
+    course && dataLearningProgress ? mergeSectionWithProgress(course.outline, dataLearningProgress) : undefined;
 
   return (
     course && (
