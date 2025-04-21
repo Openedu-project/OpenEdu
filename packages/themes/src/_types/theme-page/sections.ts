@@ -31,13 +31,17 @@ type FenetHomepageSection =
   | 'fenetExpert'
   | 'fenetPrice'
   | 'fenetBlog';
+// Theme step 2: create the section key with syntax: `${themeName}${sectionName}
+type AieduHomepageSection = 'theme' | 'aieduHero';
 
+// Theme step 3 (optionals): if the type is new, add to the all HomeSection
 export type HomeSection =
   | AcademiaHomepageSection
   | ScholarHomepageSection
   | VbiHomepageSection
   | AvailHomepageSection
-  | FenetHomepageSection;
+  | FenetHomepageSection
+  | AieduHomepageSection;
 
 /*ABOUT*/
 export type AboutSection = 'theme' | 'team' | 'vbiIntro' | 'vbiGoal' | 'vbiCore';

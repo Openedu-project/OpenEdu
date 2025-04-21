@@ -58,6 +58,13 @@ const THEME_IMPORTS: ThemeImportMap = {
         default: mod.FenetHomepage,
       })),
   },
+  // Theme step 27: import path at website
+  aiedu: {
+    homepage: () =>
+      import('../../aiedu/homepage/index').then(mod => ({
+        default: mod.AieduHomepage,
+      })),
+  },
 };
 
 export async function ThemeWebPage({

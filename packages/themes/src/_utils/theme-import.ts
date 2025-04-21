@@ -392,4 +392,42 @@ export const THEMES_RENDER_CLIENT: ThemeRender = {
       ),
     },
   },
+  // Theme step 26 : add section at render_client that supports the preview feature
+  aiedu: {
+    homepage: {
+      theme: dynamic(() =>
+        import('../aiedu/homepage/index').then(mod => ({
+          default: mod.AieduHomepage,
+        }))
+      ),
+      aieduHero: dynamic(() =>
+        import('../aiedu/homepage/aiedu-hero/aiedu-hero').then(mod => ({
+          default: mod.AieduHomepageHero,
+        }))
+      ),
+    },
+    auth: {
+      theme: undefined,
+      header: dynamic(() =>
+        import('../auth/header').then(mod => ({
+          default: mod.ThemeHeader,
+        }))
+      ),
+      footer: dynamic(() =>
+        import('../auth/footer').then(mod => ({
+          default: mod.ThemeFooter,
+        }))
+      ),
+      login: dynamic(() =>
+        import('../auth/login').then(mod => ({
+          default: mod.AuthLayoutLogin,
+        }))
+      ),
+      signUp: dynamic(() =>
+        import('../auth/sign-up').then(mod => ({
+          default: mod.AuthLayoutSignUp,
+        }))
+      ),
+    },
+  },
 } as const;

@@ -58,6 +58,9 @@ import type {
   ScholarHomepageTeamProps,
   ScholarHomepageTestimonialsProps,
 } from '../../scholar/type';
+
+import type { AieduHomepageHeroProps } from '../../aiedu/type';
+
 import type { PageSectionConfig } from './config';
 
 export interface BaseSectionProps<K extends ThemePageKey> {
@@ -136,4 +139,8 @@ export interface SectionPropsMap<K extends ThemePageKey> {
   fenetExpert: DynamicProps<K, FenetHomepageExpertProps>;
   fenetPrice: DynamicProps<K, FenetHomepagePriceProps>;
   fenetBlog: DynamicProps<K, FenetHomepageBlogProps>;
+
+  //Aiedu
+  //Theme step 6: add the sectionProps to the sectionPropsMap with syntax: ${sectionKey}: DynamicProps<K, ${sectionProps}>
+  aieduHero: DynamicProps<K, AieduHomepageHeroProps>;
 }

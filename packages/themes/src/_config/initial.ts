@@ -44,6 +44,14 @@ export const defaultThemeSystemConfig = (t: (key: string) => string): ThemeSyste
         components: undefined,
         info: themeInfo(t).fenet,
       },
+      // Theme step 16 (optional): add to theme config
+      aiedu: {
+        pages: createThemePageConfig(t).aiedu,
+        metadata: getMetadata(),
+        globals: initialThemeGlobal,
+        components: undefined,
+        info: themeInfo(t).aiedu,
+      },
     },
   };
 };
