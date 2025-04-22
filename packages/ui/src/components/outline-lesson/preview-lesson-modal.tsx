@@ -1,5 +1,6 @@
 import { Modal } from '#components/modal';
 import { LessonContentBlocks } from '../../pages/learning/_components/lesson-content/lesson-content-blocks';
+import { LearningProviders } from '../../pages/learning/_context/learning-context';
 
 import type { ICourseOutline } from '@oe/api';
 import { useGetLessonLearn } from '@oe/api';
@@ -33,13 +34,20 @@ const PreviewLessonModal = ({ lessonUid, sectionUid, courseData, isOpen, onClose
         <Spinner />
       ) : dataLessonLearn?.contents ? (
         <div className="h-full w-full">
-          <LessonContentBlocks
-            course_data={courseData}
-            lesson_uid={lessonUid}
-            section_uid={sectionUid}
-            contents={dataLessonLearn?.contents}
-            isPreview
-          />
+          <LearningProviders
+            course={courseData}
+            initialProgressData={[]}
+            initialSection={sectionUid}
+            initialLesson={lessonUid}
+          >
+            <LessonContentBlocks
+              course_data={courseData}
+              lesson_uid={lessonUid}
+              section_uid={sectionUid}
+              contents={dataLessonLearn?.contents}
+              isPreview
+            />
+          </LearningProviders>
         </div>
       ) : (
         <NoDataAvailable />

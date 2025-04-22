@@ -1,4 +1,3 @@
-// import type { AllGroupSidebarKeys, AllSidebarKeys, ThemeName } from '.';
 import type { AllGroupSidebarKeys } from './sidebar';
 import type { AllSidebarKeys } from './sidebar';
 import type { ThemeName } from './theme-page';

@@ -16,7 +16,7 @@ export const useSendMessageHandler = (
   agent: TAgentType,
   id?: string,
   model?: IAIModel,
-  containerRef?: RefObject<HTMLDivElement | null>
+  messagesEndRef?: RefObject<HTMLDivElement | null>
 ) => {
   const {
     setMessages,
@@ -38,13 +38,14 @@ export const useSendMessageHandler = (
       const currentSelectedModel = useConversationStore.getState().selectedModel;
       const messages = useConversationStore.getState().messages;
       const thinking = useConversationStore.getState().thinking;
+      const newId = useConversationStore.getState().newConversationId;
 
       const messageID = message_id ?? `id_${Date.now()}`;
       resetOpenWebSource();
       const prevMessage = messages;
       const newMessage: IMessage = {
         content: messageInput,
-        attachments: files?.filter(f => f.status === 'finished'),
+        attachments: files?.filter(f => ['finished', 'completed'].includes(f.status ?? '')),
         id: messageID,
         conversation_id: (id as string) ?? 'new-chat',
         create_at: Date.now(),
@@ -85,8 +86,8 @@ export const useSendMessageHandler = (
           ai_model_id: currentSelectedModel?.id,
           content: messageInput,
           content_type: 'text',
-          attachment_ids: files?.filter(f => f.status === 'finished').map(f => f.id),
-          ai_conversation_id: id as string,
+          attachment_ids: files?.filter(f => ['finished', 'completed'].includes(f.status ?? '')).map(f => f.id),
+          ai_conversation_id: (id as string) ?? newId,
           message_id,
           extended_thinking: thinking,
         });
@@ -109,13 +110,10 @@ export const useSendMessageHandler = (
           );
         }
 
-        if (containerRef?.current) {
+        if (messagesEndRef?.current) {
           requestAnimationFrame(() => {
-            if (containerRef.current) {
-              containerRef.current.scrollTo({
-                top: containerRef.current.scrollHeight,
-                behavior: 'smooth',
-              });
+            if (messagesEndRef.current) {
+              messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
             }
           });
         }
@@ -143,7 +141,7 @@ export const useSendMessageHandler = (
       setStatus,
       tError,
       updateMessages,
-      containerRef,
+      messagesEndRef,
       resetGenMessage,
       agentData,
     ]

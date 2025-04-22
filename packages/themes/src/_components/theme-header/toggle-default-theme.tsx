@@ -10,6 +10,7 @@ import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import type { ThemeSystem } from '../../_types/index';
 import type { ThemeName } from '../../_types/theme-page';
+import { updateGlobalTheme } from '../theme-settings/theme-global/_utils';
 
 const ToggleDefaultTheme = ({
   selectedTheme,
@@ -42,9 +43,10 @@ const ToggleDefaultTheme = ({
       return;
     }
 
+    const activedTheme = (checked ? themeName : selectedTheme) as ThemeName;
     try {
       const currentThemeSystem: ThemeSystem = {
-        activedTheme: (checked ? themeName : selectedTheme) as ThemeName,
+        activedTheme: activedTheme,
         availableThemes: theme?.[0]?.value?.availableThemes,
       };
       const res = await createOrUpdateThemeConfig({
@@ -63,7 +65,10 @@ const ToggleDefaultTheme = ({
         toast.warning(translate('disableSuccess'));
       }
       setChecked(checked);
-      await mutateTheme();
+      const newTheme = (await mutateTheme()) as ISystemConfigRes<ThemeSystem>[];
+      // Apply the new theme globals
+      newTheme?.[0]?.value?.availableThemes?.[activedTheme]?.globals &&
+        updateGlobalTheme(newTheme?.[0]?.value?.availableThemes?.[activedTheme]?.globals);
     } catch {
       toast.error('error');
     }

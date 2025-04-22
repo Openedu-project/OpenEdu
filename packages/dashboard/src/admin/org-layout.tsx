@@ -9,7 +9,13 @@ import {
   Building,
   GitPullRequest,
   GitPullRequestCreateArrow,
+  Globe,
   House,
+  Mail,
+  Network,
+  Palette,
+  Settings,
+  Settings2,
   User,
   UserCheck2Icon,
   UserCog,
@@ -35,6 +41,7 @@ export async function AdminOrgLayout({ children }: { children: ReactNode }) {
         href: ADMIN_ROUTES.dashboard,
         isRoot: true,
       },
+
       {
         id: 'course-management',
         label: tDashboard('courses.courseManagement'),
@@ -47,6 +54,12 @@ export async function AdminOrgLayout({ children }: { children: ReactNode }) {
             href: ADMIN_ROUTES.coursesManagement,
           },
           {
+            id: 'course-categories',
+            label: tDashboard('courses.courseCategories'),
+            icon: <Network className="h-5 w-5" />,
+            href: ADMIN_ROUTES.courseCategories,
+          },
+          {
             id: 'courses-reviewing',
             label: tDashboard('courses.coursesReviewing'),
             icon: <BookUp className="h-5 w-5" />,
@@ -56,7 +69,7 @@ export async function AdminOrgLayout({ children }: { children: ReactNode }) {
       },
       {
         id: 'organization-management',
-        label: tDashboard('creators.title'),
+        label: tDashboard('organizations.title'),
         icon: <GitPullRequest className="h-5 w-5" />,
         items: [
           {
@@ -99,6 +112,19 @@ export async function AdminOrgLayout({ children }: { children: ReactNode }) {
         ],
       },
       {
+        id: 'referral-program',
+        label: tDashboard('referralProgram.title'),
+        icon: <UserPenIcon className="h-5 w-5" />,
+        items: [
+          {
+            id: 'creators',
+            label: tDashboard('referralProgram.programManagement'),
+            icon: <Users2Icon className="h-5 w-5" />,
+            href: ADMIN_ROUTES.referralProgramManagement,
+          },
+        ],
+      },
+      {
         id: 'users',
         label: tDashboard('userManagement'),
         icon: <UserCog className="h-5 w-5" />,
@@ -117,12 +143,38 @@ export async function AdminOrgLayout({ children }: { children: ReactNode }) {
           },
         ],
       },
-      // {
-      //   id: 'permission-setting',
-      //   label: tDashboard('permissionSettings.title'),
-      //   icon: <FileLock className="h-5 w-5" />,
-      //   href: ADMIN_ROUTES.permissionRoleSettings,
-      // },
+
+      {
+        id: 'site-settings',
+        label: tDashboard('siteSettings.siteSettings'),
+        icon: <Settings className="h-5 w-5" />,
+        items: [
+          {
+            id: 'general',
+            label: tDashboard('siteSettings.general'),
+            icon: <Settings2 className="h-5 w-5" />,
+            href: ADMIN_ROUTES.generalSettings,
+          },
+          {
+            id: 'emails',
+            label: tDashboard('siteSettings.email'),
+            icon: <Mail className="h-5 w-5" />,
+            href: ADMIN_ROUTES.emailSettings,
+          },
+          {
+            id: 'languages',
+            label: tDashboard('siteSettings.languages'),
+            icon: <Globe className="h-5 w-5" />,
+            href: ADMIN_ROUTES.languageSettings,
+          },
+          {
+            id: 'themes',
+            label: tDashboard('siteSettings.themes'),
+            icon: <Palette className="h-5 w-5" />,
+            href: ADMIN_ROUTES.themesSettings,
+          },
+        ],
+      },
     ],
     permissions ?? []
   );

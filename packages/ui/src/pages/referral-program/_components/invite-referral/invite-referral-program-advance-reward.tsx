@@ -1,4 +1,6 @@
+import type { ISettingReferralProgram } from '@oe/api';
 import { IconBitcoinRefresh, IconDollarCircle, IconNote2, IconNote3 } from '@oe/assets';
+import { calculateRemainingDays, formatDate } from '@oe/core';
 import { getTranslations } from 'next-intl/server';
 import type { ElementType, ReactNode } from 'react';
 import type { JSX } from 'react';
@@ -12,7 +14,7 @@ interface IconProps {
 interface RewardCardProps {
   icon: ElementType<IconProps>;
   title: string;
-  badgeContent: string;
+  badgeContent?: string;
   description: string | ReactNode;
 }
 
@@ -32,8 +34,9 @@ interface TimeBasedCardProps extends RewardCardProps {
 interface ActivityBonusData {
   icon: ElementType<IconProps>;
   title: string;
-  badgeContent: string;
+  badgeContent?: string;
   description: string | ReactNode;
+  isActive: boolean;
 }
 
 interface StreakData extends ActivityBonusData {
@@ -67,7 +70,7 @@ const ActivityBonusCard = ({ icon: Icon, title, badgeContent, description }: Rew
         </div>
         <RewardBadge>{badgeContent}</RewardBadge>
       </div>
-      <p className="mcaption-regular16">{description}</p>
+      <p className="mcaption-regular16 text-center md:text-left">{description}</p>
     </CardContent>
   </Card>
 );
@@ -106,7 +109,7 @@ const StreakCard = ({
   </Card>
 );
 
-const TimeBasedCard = ({ icon: Icon, title, badgeContent, description, daysLeft }: TimeBasedCardProps): JSX.Element => (
+const TimeBasedCard = ({ icon: Icon, title, description, daysLeft }: TimeBasedCardProps): JSX.Element => (
   <Card className="rounded-[12px] border-none bg-base-cool">
     <CardContent className="p-3 sm:p-4">
       <div className="mb-1 flex flex-col items-center justify-between sm:mb-2 md:flex-row">
@@ -116,7 +119,6 @@ const TimeBasedCard = ({ icon: Icon, title, badgeContent, description, daysLeft 
           </div>
           <span className="mcaption-semibold14 md:mcaption-semibold16 lg:mcaption-semibold20">{title}</span>
         </div>
-        <RewardBadge>{badgeContent}</RewardBadge>
       </div>
 
       <p className="mcaption-regular14 mt-1.5 mb-4 sm:mt-2">{description}</p>
@@ -126,7 +128,11 @@ const TimeBasedCard = ({ icon: Icon, title, badgeContent, description, daysLeft 
   </Card>
 );
 
-export async function InviteReferralProgramAdvanceReward(): Promise<JSX.Element> {
+export async function InviteReferralProgramAdvanceReward({
+  dataSetting,
+}: {
+  dataSetting: ISettingReferralProgram | undefined;
+}) {
   const t = await getTranslations('referralProgram.advancedReward');
 
   const activityBonusData: ActivityBonusData[] = [
@@ -134,25 +140,32 @@ export async function InviteReferralProgramAdvanceReward(): Promise<JSX.Element>
       icon: IconBitcoinRefresh,
       title: t('activityBonus.tokenDeposit.title'),
       badgeContent: t('activityBonus.tokenDeposit.pointsPerDeposit', {
-        points: 5,
+        points: String(dataSetting?.deposit_crypto_bonus?.amount),
+        suffix: dataSetting?.deposit_crypto_bonus?.type === 'percentage' ? '%' : t('activityBonus.tokenDeposit.points'),
       }),
       description: t('activityBonus.tokenDeposit.description'),
+      isActive: true,
     },
     {
       icon: IconDollarCircle,
       title: t('activityBonus.fiatDeposit.title'),
       badgeContent: t('activityBonus.fiatDeposit.pointsPerDeposit', {
-        points: 2,
+        points: String(dataSetting?.deposit_fiat_bonus?.amount),
+        suffix: dataSetting?.deposit_fiat_bonus?.type === 'percentage' ? '%' : t('activityBonus.fiatDeposit.points'),
       }),
       description: t('activityBonus.fiatDeposit.description'),
+      isActive: true,
     },
     {
       icon: IconNote2,
       title: t('activityBonus.courseCompletion.title'),
-      badgeContent: t('activityBonus.courseCompletion.percentPerCompletion', {
-        percent: 10,
+      badgeContent: t('activityBonus.courseCompletion.pointsCompletion', {
+        points: String(dataSetting?.complete_course_bonus?.amount),
+        suffix:
+          dataSetting?.complete_course_bonus?.type === 'percentage' ? '%' : t('activityBonus.courseCompletion.points'),
       }),
       description: t('activityBonus.courseCompletion.description'),
+      isActive: true,
     },
   ];
 
@@ -160,7 +173,13 @@ export async function InviteReferralProgramAdvanceReward(): Promise<JSX.Element>
     {
       icon: IconNote2,
       title: t('consistencyRewards.weeklyStreak.title'),
-      badgeContent: t('consistencyRewards.weeklyStreak.points', { points: 3 }),
+      badgeContent: t('consistencyRewards.weeklyStreak.pointsReward', {
+        points: String(dataSetting?.weekly_streak_bonus?.reward?.amount),
+        suffix:
+          dataSetting?.weekly_streak_bonus?.reward?.type === 'percentage'
+            ? '%'
+            : t('consistencyRewards.weeklyStreak.points'),
+      }),
       description: '',
       progressPercentage: 60,
       daysRemaining: t('consistencyRewards.weeklyStreak.daysRemaining', {
@@ -170,11 +189,18 @@ export async function InviteReferralProgramAdvanceReward(): Promise<JSX.Element>
         current: 6,
         total: 10,
       },
+      isActive: Boolean(dataSetting?.weekly_streak_bonus?.enable),
     },
     {
       icon: IconNote3,
       title: t('consistencyRewards.monthlyStreak.title'),
-      badgeContent: t('consistencyRewards.monthlyStreak.points', { points: 3 }),
+      badgeContent: t('consistencyRewards.monthlyStreak.pointsReward', {
+        points: String(dataSetting?.monthly_streak_bonus?.reward?.amount),
+        suffix:
+          dataSetting?.monthly_streak_bonus?.reward?.type === 'percentage'
+            ? '%'
+            : t('consistencyRewards.weeklyStreak.points'),
+      }),
       description: '',
       progressPercentage: 60,
       daysRemaining: t('consistencyRewards.monthlyStreak.daysRemaining', {
@@ -184,24 +210,23 @@ export async function InviteReferralProgramAdvanceReward(): Promise<JSX.Element>
         current: 6,
         total: 10,
       },
+      isActive: Boolean(dataSetting?.monthly_streak_bonus?.enable),
     },
-  ];
+  ].filter(streak => streak.isActive);
 
   const timeBasedData: TimeBasedData = {
     icon: IconNote2,
     title: t('timeBasedRewards.limitedTimeOffer.title'),
-    badgeContent: t('timeBasedRewards.limitedTimeOffer.points', {
-      points: 3,
-    }),
     description: t.rich('timeBasedRewards.limitedTimeOffer.description', {
       highlight: chunks => <span className="mcaption-semibold14 text-primary">{chunks}</span>,
-      x: 2,
-      fromDate: '11/11/2023',
-      toDate: '11/12/2023',
+      x: String(Number(dataSetting?.time_base_rewards?.reward?.amount) / 100),
+      fromDate: formatDate(dataSetting?.time_base_rewards?.start_date ?? 0),
+      toDate: formatDate(dataSetting?.time_base_rewards?.end_date ?? 0),
     }),
     daysLeft: t('timeBasedRewards.limitedTimeOffer.daysLeft', {
-      days: 3,
+      days: calculateRemainingDays(dataSetting?.time_base_rewards?.end_date ?? 0),
     }),
+    isActive: true,
   };
 
   return (
@@ -262,7 +287,6 @@ export async function InviteReferralProgramAdvanceReward(): Promise<JSX.Element>
             <TimeBasedCard
               icon={timeBasedData.icon}
               title={timeBasedData.title}
-              badgeContent={timeBasedData.badgeContent}
               description={timeBasedData.description}
               daysLeft={timeBasedData.daysLeft}
             />

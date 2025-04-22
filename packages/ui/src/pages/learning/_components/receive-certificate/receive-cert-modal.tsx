@@ -96,7 +96,15 @@ const ReceiveCertificateModal = ({ certificate }: IProps) => {
       console.error('Error in handleReceiveCert:', error);
       toast.error('Error receiving certificate');
     }
-  }, [certificate.course_cuid, triggerReceiveCert, uploadPDF, tReceiveCertModal, certificateState]);
+  }, [
+    certificate.course_cuid,
+    triggerReceiveCert,
+    uploadPDF,
+    tReceiveCertModal,
+    certificateState,
+    uploadPNG,
+    certificate?.template,
+  ]);
 
   const renderStep1 = () => (
     <div className="py-4">

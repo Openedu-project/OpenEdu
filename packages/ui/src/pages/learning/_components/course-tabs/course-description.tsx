@@ -1,8 +1,6 @@
 'use client';
 
 import type { ICourseOutline } from '@oe/api';
-
-import { CoursePrice } from '#components/course-card';
 import { ExpandableText } from '#components/expandable-text';
 import { LastUpdated } from '../../../_components/last-updated';
 import { CourseCreator } from '../../../course/_components/course-creator';
@@ -32,8 +30,8 @@ const CourseDescription = ({ courseData }: { courseData: ICourseOutline }) => {
             <CourseStats learner_count={learner_count} mark_as_completed={mark_as_completed} levels={levels} />
           </div>
           <CourseIncludes courseOutline={courseData} />
-          <hr className="my-4" />
-          <CoursePrice priceSettings={courseData?.price_settings} />
+          {/* <hr className="my-4" />
+          <CoursePrice priceSettings={courseData?.price_settings} /> */}
         </>
       ) : (
         <>NO data</>

@@ -1,4 +1,5 @@
 import type { FieldValues, Path, PathValue, UseFormSetValue } from 'react-hook-form';
+import { toast } from 'sonner';
 
 export function setFormValues<T extends FieldValues, U extends object>(data: U, setValue: UseFormSetValue<T>) {
   for (const key of Object.keys(data) as Array<keyof U>) {
@@ -26,6 +27,7 @@ export const copyToClipboard = (text: string, message: string, duration?: number
   void navigator.clipboard.writeText(text).then(
     () => console.log(message, duration) // TODO: add toast message
   );
+  toast.success(message);
 };
 
 export function formatPrice(price: number, currency = 'VND', isFree = false): string {

@@ -49,6 +49,7 @@ export const signUpSchema = z
     display_name: displayNameSchema,
     email: emailSchema,
     isAgree: z.boolean(),
+    ref_code: z.string().optional(),
   })
   .merge(passwordConfirmSchema)
   .refine(data => data.password === data.confirmPassword, {

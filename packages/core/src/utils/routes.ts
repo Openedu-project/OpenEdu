@@ -114,6 +114,7 @@ export const ADMIN_ROUTES = {
   languageSettings: '/admin/site-settings/languages',
   pagesSettings: '/admin/site-settings/pages',
   themesSettings: '/admin/site-settings/themes',
+  featuredContents: '/admin/site-settings/featured-contents',
   themeDetail: '/admin/themes/:themeName',
   themeConfig: '/admin/themes/:themeName/:themeConfig/:groupSettingKey/:itemSettingKey',
   permissionActionSettings: '/admin/permissions/actions',

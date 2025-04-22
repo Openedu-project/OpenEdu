@@ -1,3 +1,4 @@
+'use client';
 import type { IUserRoleInOrg } from '@oe/api';
 import type { IUserProfile } from '@oe/api';
 import { ROLES_USER_MAPPING } from '@oe/api';

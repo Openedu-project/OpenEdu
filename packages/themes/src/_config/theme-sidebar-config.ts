@@ -12,7 +12,7 @@ import type {
   ThemeName,
   ThemePageKey,
   ThemeSidebarGlobalKey,
-} from '../_types/index';
+} from '#types';
 
 const MENU_STRUCTURE = {
   THEME_SETTINGS: [

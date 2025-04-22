@@ -13,12 +13,16 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Partners() {
   const [themeSystem] = await Promise.all([getThemeConfigServer()]);
-
-  if (!themeSystem?.[0]?.value) {
+  const themeName = themeSystem?.[0]?.value?.activedTheme;
+  if (!(themeSystem?.[0]?.value && themeName)) {
     return <NotFoundPage />;
   }
 
   return (
-    <ThemeWebPage pageKey="partners" themeSystem={themeSystem?.[0]?.value} />
+    <ThemeWebPage
+      selectedPage="partners"
+      themeName={themeName}
+      pageConfig={themeSystem?.[0]?.value?.availableThemes?.[themeName]?.pages}
+    />
   );
 }

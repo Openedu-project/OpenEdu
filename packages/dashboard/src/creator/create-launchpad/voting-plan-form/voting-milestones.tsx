@@ -1,3 +1,4 @@
+'use client';
 import { useGetLaunchpadMinSections } from '@oe/api';
 import { formatDate } from '@oe/core';
 import { Button } from '@oe/ui';

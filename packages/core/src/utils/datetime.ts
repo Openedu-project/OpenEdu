@@ -235,3 +235,10 @@ export function convertToTimeStamp(dateString: string): number {
   }
   return date.getTime();
 }
+
+export const calculateRemainingDays = (endTimestamp: number) => {
+  const endDate = fromUnixTime(endTimestamp / 1000);
+  const currentDate = new Date();
+
+  return Math.max(differenceInDays(endDate, currentDate), 0);
+};

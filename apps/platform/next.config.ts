@@ -2,6 +2,7 @@ import withBundleAnalyzer from '@next/bundle-analyzer';
 import { getNextConfig } from '@oe/config/next';
 // import createNextIntlPlugin from 'next-intl/plugin';
 import type { NextConfig } from 'next/types';
+import path from 'path';
 
 const bundleAnalyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
@@ -27,6 +28,12 @@ const nextConfig: NextConfig = getNextConfig({
       'next-intl/config': './src/config/i18n-request-config.ts',
     },
   },
+  ...(!process.env.TURBOPACK && {
+    webpack: (config) => {
+      config.resolve.alias['next-intl/config'] = path.resolve(__dirname, './src/config/i18n-request-config.ts');
+      return config;
+    },
+  }),
   // async rewrites() {
   //   return [
   //     // {

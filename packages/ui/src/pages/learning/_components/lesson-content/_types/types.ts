@@ -10,6 +10,7 @@ export interface ContentRendererProps {
   data?: ILessonContent;
   isPreview?: boolean;
   isOnlyContent: boolean;
+  lessonMetadataHeight?: number;
   onCompleteContent?: (props?: Partial<ICompleteContentProps>) => void;
 }
 
@@ -28,12 +29,9 @@ export interface ICompleteContentProps {
 
 export interface LessonContentBlockProps {
   contents?: ILessonContent[];
-  // courseId: string;
-  // course_slug: string;
-  course_data: ICourseOutline;
+  course_data?: ICourseOutline;
   lesson_uid: string;
   section_uid: string;
-  // outline: ISectionLearningProgress[];
   isPreview?: boolean;
   onCompleteContent?: (props?: Partial<ICompleteContentProps>) => void;
 }

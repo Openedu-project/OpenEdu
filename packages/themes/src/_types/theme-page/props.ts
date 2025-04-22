@@ -9,7 +9,6 @@ import type {
 import type { ThemeFooterProps } from '../../auth/footer';
 import type { ThemeHeaderProps } from '../../auth/header';
 import type { AuthLayoutLoginProps } from '../../auth/login';
-// import type { ThemePageKey } from '.';
 import type { ThemePageKey } from './core';
 
 import type {

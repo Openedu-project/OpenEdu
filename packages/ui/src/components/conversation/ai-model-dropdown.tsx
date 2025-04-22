@@ -20,14 +20,11 @@ interface ModelDropdownProps {
 }
 
 export function AIModelDropdown({ onSelectSuccess, AIModels, isLogin, className }: ModelDropdownProps) {
-  const { selectedModel, setSelectedModel, setThinking, selectedAgent } = useConversationStore();
+  const { selectedModel, setSelectedModel, selectedAgent } = useConversationStore();
   const tAI = useTranslations('aiAssistant');
 
   const handleSelect = (value: IAIModel) => {
     setSelectedModel(value);
-    if (!value.configs.extended_thinking_enabled) {
-      setThinking(false);
-    }
     onSelectSuccess?.();
   };
 

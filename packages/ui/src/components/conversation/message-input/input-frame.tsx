@@ -12,19 +12,18 @@ export function InputFrame({
   className,
   id,
   agent = 'ai_search',
-  containerRef,
-  updateWidth = false,
+  messagesEndRef,
   reset = false,
 }: {
   className?: string;
   id?: string;
   agent?: TAgentType;
-  containerRef?: RefObject<HTMLDivElement | null>;
-  updateWidth?: boolean;
+  messagesEndRef?: RefObject<HTMLDivElement | null>;
   reset?: boolean;
 }) {
-  const { resetMessages, selectedModel, setWidth, setSelectedModel, resetStatus, setThinking } = useConversationStore();
-  const sendMessage = useSendMessageHandler(agent, id, undefined, containerRef);
+  const { resetMessages, selectedModel, setSelectedModel, resetStatus, setThinking, setNewConversationId } =
+    useConversationStore();
+  const sendMessage = useSendMessageHandler(agent, id, undefined, messagesEndRef);
 
   useEffect(() => {
     if (reset) {
@@ -48,23 +47,11 @@ export function InputFrame({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    const getWidth = () => {
-      if (inputRef?.current && updateWidth) {
-        const width = inputRef.current.getBoundingClientRect().width;
-        if (width > 0) {
-          setWidth(width);
-        }
-      }
-    };
-
-    getWidth();
-    window.addEventListener('resize', getWidth);
-
-    return () => window.removeEventListener('resize', getWidth);
+    setNewConversationId('');
   }, []);
 
   return (
-    <div className={cn('max-w-3xl bg-background pt-2 xl:max-w-4xl', className)} ref={inputRef}>
+    <div className={cn('mx-auto w-full max-w-3xl bg-background pt-2 xl:max-w-4xl', className)} ref={inputRef}>
       <MessageInput
         messageType={messageType}
         sendMessage={sendMessage}

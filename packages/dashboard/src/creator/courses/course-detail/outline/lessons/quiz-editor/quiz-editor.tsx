@@ -1,3 +1,4 @@
+'use client';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';

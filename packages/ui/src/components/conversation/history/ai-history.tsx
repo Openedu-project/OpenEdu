@@ -171,37 +171,37 @@ export function AIHistoryModal({ isLogin = false, ...props }: SearchHistoryProps
   };
 
   return (
-    <Modal
-      title="  "
-      open={open}
-      trigger={
-        <div>
-          <Button
-            {...props}
-            className={cn(
-              'm-auto flex rounded-full border border-2 bg-ai-more-feature-gradient hover:border-primary hover:bg-ai-more-feature-gradient',
-              props.className
-            )}
-            onClick={handleOpenModal}
-            size="icon"
-          >
-            <MessageTime color="var(--primary)" width={16} height={16} />
-          </Button>
-          <p className="mcaption-regular10 mt-1 text-center md:font-semibold">{tAI('history')}</p>
-        </div>
-      }
-      hasCloseIcon
-      className="md:max-w-3xl"
-      hasCancelButton={false}
-      contentClassName="p-2 pt-0 md:pb-4"
-    >
-      <SearchHistory
-        className={cn('h-[70dvh]')}
-        isLogin={isLogin}
-        callbackFn={() => {
-          setOpen(false);
-        }}
-      />
-    </Modal>
+    <div>
+      <Button
+        {...props}
+        className={cn(
+          'm-auto flex rounded-full border border-2 bg-ai-more-feature-gradient hover:border-primary hover:bg-ai-more-feature-gradient',
+          props.className
+        )}
+        onClick={handleOpenModal}
+        size="icon"
+      >
+        <MessageTime color="var(--primary)" width={16} height={16} />
+      </Button>
+      <p className="mcaption-regular10 mt-1 text-center md:font-semibold">{tAI('history')}</p>
+      {open && (
+        <Modal
+          title="  "
+          open={true}
+          hasCloseIcon
+          className="md:max-w-3xl"
+          hasCancelButton={false}
+          contentClassName="p-2 pt-0 md:pb-4"
+        >
+          <SearchHistory
+            className={cn('h-[70dvh]')}
+            isLogin={isLogin}
+            callbackFn={() => {
+              setOpen(false);
+            }}
+          />
+        </Modal>
+      )}
+    </div>
   );
 }

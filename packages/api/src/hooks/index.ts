@@ -1,3 +1,4 @@
+'use client';
 export * from './useAdminLaunchpad';
 export * from './useAffiliateCampaign';
 export * from './useApprovals';
@@ -41,3 +42,5 @@ export * from './useUser';
 export * from './useUserAffiliateReport';
 export * from './useUserProfile';
 export * from './useWallet';
+export * from './useReferralProgram';
+export * from './usePoint';

@@ -29,7 +29,7 @@ const ContentPdf = ({
 
   return (
     <PdfViewer
-      className="aspect-video pb-4"
+      className="pb-4"
       files={url}
       showPerPage
       hasToolbar

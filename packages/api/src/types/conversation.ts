@@ -215,6 +215,7 @@ export interface IDocumentRequest {
   attachment_id: string;
 }
 
-export interface IDocumentCanelRequest {
-  task_id: string;
+export interface IDocumentCancelRequest {
+  attachment_id: string;
+  conversation_id?: string;
 }

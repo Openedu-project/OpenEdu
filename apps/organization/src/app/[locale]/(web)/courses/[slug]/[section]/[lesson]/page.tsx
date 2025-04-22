@@ -9,9 +9,5 @@ export default async function CourseLearningPage({
   const section = (await params).section;
   const lesson = (await params).lesson;
 
-  return (
-    <div>
-      <LearningPage slug={slug} section={section} lesson={lesson} />
-    </div>
-  );
+  return <LearningPage slug={slug} section={section} lesson={lesson} />;
 }

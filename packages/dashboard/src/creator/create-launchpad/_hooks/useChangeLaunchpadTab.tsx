@@ -1,3 +1,4 @@
+'use client';
 import { CREATE_LAUNCHPAD_TABS, CREATE_LAUNCHPAD_TABS_ORDER } from '@oe/api';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo } from 'react';

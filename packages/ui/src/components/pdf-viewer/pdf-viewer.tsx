@@ -107,7 +107,7 @@ export function PdfViewer({
   return (
     <div className={cn('flex max-w-full flex-col items-center gap-4', className)}>
       {hasToolbar && (
-        <div className="sticky top-0 left-0 z-10 w-full">
+        <div className="sticky top-[calc(var(--header-height))] left-0 z-10 w-full md:top-[calc(var(--header-with-sub-item-height))]">
           <PdfToolbar
             page={page}
             numPages={numPages}

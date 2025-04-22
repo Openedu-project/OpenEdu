@@ -1,4 +1,13 @@
-import { IconAward, IconCategory2, IconGift, IconLogin, IconOpeneduBalance, IconTimer } from '@oe/assets';
+import type { INewPoints } from '@oe/api';
+import {
+  IconAward,
+  IconCategory2,
+  IconGift,
+  IconLogin,
+  IconOpeneduBalance,
+  IconStreakBonus,
+  IconTimer,
+} from '@oe/assets';
 import { getTranslations } from 'next-intl/server';
 import type { ElementType, ReactNode } from 'react';
 import type { JSX } from 'react';
@@ -51,46 +60,95 @@ const RewardCard = ({ icon: Icon, title, points, description }: RewardCardProps)
   </Card>
 );
 
-export async function InviteReferralProgramAvailableReward(): Promise<JSX.Element> {
+export async function InviteReferralProgramAvailableReward({
+  data,
+}: {
+  data: INewPoints | undefined;
+}) {
   const t = await getTranslations('referralProgram.availableReward');
+
+  if (!data) {
+    return null;
+  }
+
+  const totalClaim =
+    Number(data?.referral?.amount ?? 0) +
+    Number(data?.milestone?.amount ?? 0) +
+    Number(data?.featured?.amount ?? 0) +
+    Number(data?.timebase?.amount ?? 0) +
+    Number(data?.weekly_streak?.amount ?? 0) +
+    Number(data?.monthly_streak?.amount ?? 0) +
+    Number(data?.referee?.amount ?? 0);
 
   const rewardData: RewardData[] = [
     {
       icon: IconGift,
-      title: t('baseReferral.title'),
-      points: t('pointsEarned', { points: 200 }),
-      description: t('baseReferral.description'),
+      title: t('baseReferrals.title'),
+      points: t('pointsEarned', {
+        points: String(data?.referral?.amount ?? 0),
+        suffix: t('points'),
+      }),
+      description: t('baseReferrals.description', {
+        points: String(data?.referral?.count ?? 0),
+      }),
     },
     {
       icon: IconAward,
       title: t('milestone.title'),
-      points: t('pointsEarned', { points: 100 }),
-      description: t('milestone.description', { count: 10 }),
+      points: t('pointsEarned', {
+        points: String(data?.milestone?.amount ?? 0),
+        suffix: t('points'),
+      }),
+      description: t('milestone.description', {
+        count: String(data?.milestone?.count ?? 0),
+      }),
     },
     {
       icon: IconCategory2,
-      title: t('featureDiscovery.title'),
-      points: t('pointsEarned', { points: 10099 }),
-      description: t.rich('featureDiscovery.description', {
-        course: 30,
-        flip: 30,
-        token: 30,
+      title: t('featuresDiscovery.title'),
+      points: t('pointsEarned', {
+        points: String(data?.featured?.amount ?? 0),
+        suffix: t('points'),
+      }),
+      description: t.rich('featuresDiscovery.description', {
+        course: String(data?.featured?.course_count ?? 0),
+        fiat: String(data?.featured?.fiat_count ?? 0),
+        token: String(data?.featured?.crypto_count ?? 0),
       }),
     },
     {
       icon: IconTimer,
+      title: t('timeBasedReward.title'),
+      points: t('pointsEarned', {
+        points: String(data?.timebase?.amount ?? 0),
+        suffix: t('points'),
+      }),
+      description: t.rich('timeBasedReward.description', {
+        points: String(data?.timebase?.amount ?? 0),
+      }),
+    },
+    {
+      icon: IconStreakBonus,
       title: t('streakBonus.title'),
-      points: t('pointsEarned', { points: 100 }),
+      points: t('pointsEarned', {
+        points: String(Number(data?.weekly_streak?.amount + data?.monthly_streak?.amount) ?? 0),
+        suffix: t('points'),
+      }),
       description: t.rich('streakBonus.description', {
-        weekly: 15,
-        monthly: 15,
+        weekly: String(data?.weekly_streak?.amount ?? 0),
+        monthly: String(data?.monthly_streak?.amount ?? 0),
       }),
     },
     {
       icon: IconLogin,
-      title: t('registrationReward.title'),
-      points: t('pointsEarned', { points: 10 }),
-      description: t('registrationReward.description', { points: 10 }),
+      title: t('registrationRewards.title'),
+      points: t('pointsEarned', {
+        points: String(data?.referee?.amount ?? 0),
+        suffix: t('points'),
+      }),
+      description: t('registrationRewards.description', {
+        points: String(data?.referee?.amount),
+      }),
     },
   ];
 
@@ -100,8 +158,8 @@ export async function InviteReferralProgramAvailableReward(): Promise<JSX.Elemen
       <div className="mb-6">
         <div className="mb-2 flex flex-col items-center justify-between md:flex-row">
           <h3 className="mcaption-semibold18 md:mcaption-semibold24 text-center md:text-left">{t('title')}</h3>
-          <Button className="rounded-[24px]">
-            {t('claimButton', { points: 500 })}
+          <Button className="rounded-[24px]" disabled={totalClaim <= 0}>
+            {t('claimButton', { points: totalClaim })}
             <IconOpeneduBalance className="ml-4 h-7 w-7" />
           </Button>
         </div>
