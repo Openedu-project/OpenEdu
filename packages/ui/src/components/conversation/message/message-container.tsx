@@ -101,7 +101,7 @@ export const MessageContainer = ({
       );
 
       for (const key of keysToReset) {
-        globalMutate(key, undefined, { revalidate: false });
+        globalMutate(key, undefined, { revalidate: key.includes('page=1') });
       }
     }
   }, [

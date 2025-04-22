@@ -1,4 +1,3 @@
-"use client";
 import AIMascot from "@oe/assets/images/ai/ai-mascot-2.png";
 import { AI_ROUTES } from "@oe/core";
 import { CirclePlus } from "lucide-react";
@@ -8,8 +7,8 @@ import { Image } from "#components/image";
 import { Badge } from "#shadcn/badge";
 import { Separator } from "#shadcn/separator";
 import { cn } from "#utils/cn";
-import { AIHistoryModal } from "../history/ai-history";
-import { AgentButton } from "./agent-button";
+import { AI_SIDEBAR } from "../constants";
+import { AIHistoryModal, SearchHistory } from "../history/ai-history";
 
 export function AISidebar({
   className,
@@ -21,12 +20,12 @@ export function AISidebar({
   const tAI = useTranslations("aiAssistant");
 
   return (
-    <div className={cn("overflow-hidden bg-primary/5 p-1", className)}>
-      <div className="scrollbar flex h-full flex-col items-center gap-2 overflow-y-auto md:py-2">
+    <div className={cn("overflow-hidden bg-primary/5 p-1 px-2", className)}>
+      <div className="scrollbar flex h-full flex-col gap-2 overflow-y-auto md:p-2">
         <div className="flex items-center space-x-1 md:px-2">
           <Link
             href={AI_ROUTES.assistant}
-            className="!p-0 !border-0 relative h-12 w-12 rounded-full bg-background"
+            className="!p-0 !border-0 relative h-13 w-13 rounded-full bg-background"
           >
             <Image
               alt="ai-assistant"
@@ -50,40 +49,58 @@ export function AISidebar({
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
             <Link
-              size="icon"
-              variant="default"
-              className="m-auto flex h-8 w-8 rounded-full border border-2 bg-gradient-to-b from-turquoise-500 to-violet-500 hover:border-primary"
+              variant="ghost"
               activeClassName=""
+              className="!no-underline h-auto w-full justify-start rounded-3xl p-1 hover:cursor-pointer hover:bg-primary/10"
               href={AI_ROUTES.chat}
             >
-              <CirclePlus size={12} />
+              <div className="mr-2 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-b from-turquoise-500 to-violet-500">
+                <CirclePlus size={12} color="white" />
+              </div>
+
+              <p className="mcaption-regular12 md:giant-iheading-semibold14 mt-1 text-center">
+                {tAI("newChat")}
+              </p>
             </Link>
-            <p className="mcaption-regular12 md:giant-iheading-semibold14 mt-1 text-center">
-              {tAI("newChat")}
-            </p>
           </div>
-          <AgentButton />
-          {/* <div>
-            <Link
-              size="icon"
-              variant="default"
-              className="m-auto flex rounded-full border border-2 bg-ai-more-feature-gradient hover:border-primary hover:bg-ai-more-feature-gradient"
-              activeClassName=""
-              href="#"
-            >
-              <Direct width={16} height={16} />
-            </Link>
-            <p className="mcaption-regular10 mt-1 text-center md:font-semibold">{tAI('workspace')}</p>
-          </div> */}
-          <AIHistoryModal isLogin={isLogin} />
+          {AI_SIDEBAR("var(--primary)", 16)
+            .filter((i) => !i.hidden)
+            .map((item) => (
+              <Link
+                key={item.value}
+                href={item.href}
+                disabled={item.isComming}
+                className="!no-underline h-auto w-full justify-start rounded-3xl p-1 hover:cursor-pointer hover:bg-primary/10"
+              >
+                <div className="mr-2 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ai-more-feature-gradient">
+                  {item.icon}
+                </div>
+                <p className="mcaption-semibold14 text-center text-foreground">
+                  {tAI(item.lableKey)}
+                </p>
+                {item.isComming && (
+                  <Badge
+                    variant="outline"
+                    className="ml-2 border-primary text-primary"
+                  >
+                    {tAI("soon")}
+                  </Badge>
+                )}
+              </Link>
+            ))}
         </div>
-        {/* <Separator className="h-0.5 w-full bg-primary/10" />
-        <Link
-          href={AI_ROUTES.assistant}
-          className="!p-0 !border-0 relative h-10 w-10 shrink-0 rounded-full bg-ai-more-feature-gradient"
-        >
-          <LayoutGrid className="h-4 w-4 text-primary" />
-        </Link> */}
+        <Separator className="h-0.5 w-full bg-primary/10" />
+        <div className="flex grow flex-col gap-2">
+          <div className="flex w-full items-center justify-between pl-1">
+            <p className="mcaption-semibold14">{tAI("history")}</p>
+            <AIHistoryModal isLogin={isLogin} />
+          </div>
+          <SearchHistory
+            isLogin={isLogin}
+            className="w-full grow p-0"
+            hiddenSearch
+          />
+        </div>
       </div>
     </div>
   );

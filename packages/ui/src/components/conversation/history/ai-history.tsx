@@ -1,6 +1,5 @@
 'use client';
 import { useGetListConversation } from '@oe/api';
-import { MessageTime } from '@oe/assets';
 import { Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
@@ -21,14 +20,17 @@ interface SearchHistoryProps {
   className?: string;
   isLogin?: boolean;
   callbackFn?: () => void;
+  hiddenSearch?: boolean;
 }
 
-const SearchHistory = ({ className, isLogin, callbackFn }: SearchHistoryProps) => {
+export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = false }: SearchHistoryProps) => {
   const tGeneral = useTranslations('general');
   const tAI = useTranslations('aiAssistant');
   const { id } = useParams();
 
   const searchRef = useRef<HTMLInputElement | null>(null);
+  // Add a ref to track if we're already loading more data
+  const isLoadingMoreRef = useRef(false);
 
   const { mutate: globalMutate } = useSWRConfig();
 
@@ -54,6 +56,11 @@ const SearchHistory = ({ className, isLogin, callbackFn }: SearchHistoryProps) =
       return;
     }
 
+    // Set loading state when starting a search
+    if (isNextPage) {
+      isLoadingMoreRef.current = true;
+    }
+
     const apiKey = getKey(isNextPage ? size : 0, undefined, {
       ...searchParams,
       search_term: title ?? searchParams.search_term,
@@ -73,6 +80,11 @@ const SearchHistory = ({ className, isLogin, callbackFn }: SearchHistoryProps) =
           return { ...prev, search_term: title ?? '', page: 1 };
         });
       });
+    }
+
+    // Reset loading state after search completes
+    if (isNextPage) {
+      isLoadingMoreRef.current = false;
     }
   };
 
@@ -110,16 +122,42 @@ const SearchHistory = ({ className, isLogin, callbackFn }: SearchHistoryProps) =
     300
   );
 
+  // Create a debounced endReached handler
+  const handleEndReached = useDebouncedCallback(
+    () => {
+      const pagination = data?.at(-1)?.pagination;
+
+      // Don't load more if:
+      // 1. We're already loading
+      // 2. There's no data
+      // 3. We've reached the last page
+      if (
+        isLoading ||
+        isLoadingMoreRef.current ||
+        datesData.length === 0 ||
+        (pagination && size >= pagination.total_pages)
+      ) {
+        return;
+      }
+
+      handleSearch?.(undefined, true);
+    },
+    300,
+    { leading: true, trailing: false }
+  );
+
   return (
     <div className={cn('mx-auto flex flex-col gap-2 p-4 text-foreground', className)}>
-      <Input
-        ref={searchRef}
-        prefixIcon={<Search color="#000" width={16} height={16} />}
-        className="!rounded-3xl mcaption-regular16 !border-1 w-full bg-gray-50 pl-8"
-        placeholder={tGeneral('search')}
-        onKeyDown={handleKeyDown}
-        onChange={debouncedSetSearch}
-      />
+      {!hiddenSearch && (
+        <Input
+          ref={searchRef}
+          prefixIcon={<Search color="#000" width={16} height={16} />}
+          className="!rounded-3xl mcaption-regular16 !border-1 w-full bg-gray-50 pl-8"
+          placeholder={tGeneral('search')}
+          onKeyDown={handleKeyDown}
+          onChange={debouncedSetSearch}
+        />
+      )}
       {!isLoading && historyData?.length === 0 ? (
         <div className="m-auto p-4 text-center text-foreground">{tAI('noHistory')}</div>
       ) : (
@@ -130,9 +168,7 @@ const SearchHistory = ({ className, isLogin, callbackFn }: SearchHistoryProps) =
           initialTopMostItemIndex={0}
           increaseViewportBy={200}
           className="scrollbar"
-          endReached={() => {
-            handleSearch?.(undefined, true);
-          }}
+          endReached={handleEndReached}
           itemContent={(_, date: number) => (
             <div key={date} className="mt-2 space-y-2">
               <h5 className="mcaption-semibold14">{formatDate(date)}</h5>
@@ -163,27 +199,17 @@ const SearchHistory = ({ className, isLogin, callbackFn }: SearchHistoryProps) =
   );
 };
 
-export function AIHistoryModal({ isLogin = false, ...props }: SearchHistoryProps) {
+export function AIHistoryModal({ isLogin = false }: SearchHistoryProps) {
   const [open, setOpen] = useState(false);
-  const tAI = useTranslations('aiAssistant');
   const handleOpenModal = () => {
     setOpen(true);
   };
 
   return (
     <div>
-      <Button
-        {...props}
-        className={cn(
-          'm-auto flex rounded-full border border-2 bg-ai-more-feature-gradient hover:border-primary hover:bg-ai-more-feature-gradient',
-          props.className
-        )}
-        onClick={handleOpenModal}
-        size="icon"
-      >
-        <MessageTime color="var(--primary)" width={16} height={16} />
+      <Button onClick={handleOpenModal} size="icon" variant="ghost">
+        <Search width={16} height={16} />
       </Button>
-      <p className="mcaption-regular10 mt-1 text-center md:font-semibold">{tAI('history')}</p>
       {open && (
         <Modal
           title="  "
@@ -192,6 +218,9 @@ export function AIHistoryModal({ isLogin = false, ...props }: SearchHistoryProps
           className="md:max-w-3xl"
           hasCancelButton={false}
           contentClassName="p-2 pt-0 md:pb-4"
+          onClose={() => {
+            setOpen(false);
+          }}
         >
           <SearchHistory
             className={cn('h-[70dvh]')}

@@ -142,12 +142,12 @@ export function AIHistoryItem({ className, item, mutate, pageIndex, activeId, ca
     <div className={cn('group/history flex items-center rounded-lg pl-2 hover:bg-primary/10', className)}>
       {agentData?.icon ?? <MessageCircle size={16} color="var(--warning-500)" />}
       {activeId === item.id ? (
-        <p className="mcaption-regular14 md:mcaption-regular16 !font-bold w-[calc(100%-20px)] truncate p-2 opacity-50">
+        <p className="mcaption-regular14 !font-bold w-[calc(100%-20px)] truncate p-2 opacity-50">
           {item.context?.title}
         </p>
       ) : (
         <Link
-          className="mcaption-regular14 md:mcaption-regular16 block h-auto w-[calc(100%-20px)] truncate px-2 text-start text-foreground hover:no-underline"
+          className="mcaption-regular14 block h-auto w-[calc(100%-20px)] truncate px-2 text-start text-foreground hover:no-underline"
           href={createAPIUrl({
             endpoint: agentData?.detailHref ?? AI_ROUTES.chatDetail,
             params: { id: item.id },
