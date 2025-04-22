@@ -1,6 +1,6 @@
 'use client';
 
-import { getLearningProgressesService, updateLearningProgressService } from '@oe/api';
+import { updateLearningProgressService } from '@oe/api';
 import type { TLessonContent } from '@oe/api';
 import type { ISectionLearningProgress } from '@oe/api';
 import type { IQuizSubmissionResponse } from '@oe/api';
@@ -215,13 +215,15 @@ export function ProgressProvider({
       });
 
       // Kiểm tra xem content đã hoàn thành chưa
-      const hasUpdated = isLessonContentComplete({
-        outline: state.sectionsProgressData,
-        section_uid,
-        lesson_uid,
-        lesson_content_uid,
-        pause_at,
-      });
+      const hasUpdated =
+        complete_at &&
+        isLessonContentComplete({
+          outline: state.sectionsProgressData,
+          section_uid,
+          lesson_uid,
+          lesson_content_uid,
+          pause_at,
+        });
 
       // Nếu chưa hoàn thành và có thông tin đầy đủ, gửi API request
       if (!hasUpdated) {
@@ -237,19 +239,20 @@ export function ProgressProvider({
 
         try {
           // Gọi API cập nhật tiến độ
-          await updateLearningProgressService(undefined, { payload });
-
-          // Lấy dữ liệu tiến độ mới
-          const newLearningProgres = await getLearningProgressesService(undefined, { id: course.slug });
+          const res = await updateLearningProgressService(undefined, { payload });
 
           // Cập nhật state với dữ liệu mới
-          if (newLearningProgres) {
-            const data = mergeSectionWithProgress(course.outline, newLearningProgres);
+          if (res) {
+            const data = mergeSectionWithProgress(course.outline, res);
             setSectionsProgressData(data);
           }
 
           // Hiển thị thông báo nếu hoàn thành
-          if (complete_at > 0) {
+          const currentContentState =
+            res?.section_by_uid?.[section_uid]?.lesson_by_uid?.[lesson_uid]?.lesson_content_by_uid?.[lesson_content_uid]
+              ?.complete_at;
+
+          if (currentContentState && currentContentState > 0) {
             toast.success('Content completed');
           }
         } catch (error) {

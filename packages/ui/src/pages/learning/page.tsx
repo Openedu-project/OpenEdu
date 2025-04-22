@@ -50,8 +50,6 @@ export async function LearningPage({
     lessonLearnPromise,
   ]);
 
-  console.log(lessonData, 'lessonData');
-
   if (me && course?.is_enrolled) {
     const latestLessonPayload = {
       course_cuid: course.cuid ?? '',

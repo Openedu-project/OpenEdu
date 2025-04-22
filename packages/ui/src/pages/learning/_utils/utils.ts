@@ -102,7 +102,7 @@ export const mergeSectionWithProgress = (
   // Sort sections and lessons first
   const sections = sortSectionsAndLessons(unsortedSections);
   const sectionByUid = learningProgress?.section_by_uid;
-
+  
   // Flatten all lessons first to track global completion status
   const allLessons: Array<{
     lesson: ILesson;
@@ -147,7 +147,7 @@ export const mergeSectionWithProgress = (
       // Check if all previous lessons are completed
       const allPreviousCompleted =
         currentLessonIndex === 0 ||
-        allLessons.slice(0, currentLessonIndex).every(item => item.progress?.complete_at !== 0);
+        allLessons.slice(0, currentLessonIndex).every(item => item?.progress?.complete_at);
 
       const progress = sectionProgress?.lesson_by_uid?.[lesson.uid];
 
@@ -156,7 +156,7 @@ export const mergeSectionWithProgress = (
         currentLessonIndex === 0 || // first lesson in the course
         lesson.free || // free lesson
         allPreviousCompleted || // all previous lessons completed
-        progress?.complete_at !== 0; // current lesson already completed
+        progress?.complete_at; // current lesson already completed
 
       // Convert lesson_content_by_uid to lesson_contents array for backward compatibility
       const lessonContents = progress?.lesson_content_by_uid ? Object.values(progress.lesson_content_by_uid) : [];

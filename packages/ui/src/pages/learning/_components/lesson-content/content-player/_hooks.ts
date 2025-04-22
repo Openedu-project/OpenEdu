@@ -89,7 +89,7 @@ export const usePlayerProgress = (
           roundedPercentage === VIDEO_CONSTANTS.MAX_PERCENTAGE &&
           Boolean(options?.quizzes) === Boolean(options?.quizResult)
         ) {
-          setIsNavigatingLesson(true);
+          // setIsNavigatingLesson(true);
           setShowNextLessonAlert(true);
         }
 
