@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import useSWR from 'swr';
 import { useExchangeRates } from '#hooks/useExchangeRates';
 import { getAvailBalance } from '#services/avail';
+import { getBaseTokens } from '#services/eth';
 import { fetchNearNFTs, getNearTokens } from '#services/near';
 import { getBankAccountsService, getWalletRequestWithdraw } from '#services/wallet';
 import type { HTTPPagination, HTTPResponse } from '#types/fetch';
@@ -40,6 +41,17 @@ const useAvailBalance = (address: string | null) => {
   return {
     availBalance: availBalance ? Number(availBalance) : 0,
     isLoading: address && !availBalance,
+  };
+};
+
+const useBaseBalance = (address: string | null) => {
+  const { data: baseBalanceData } = useSWR(address ? SWR_WALLET_KEY.BASE_BALANCE(address) : null, () =>
+    getBaseTokens(address || '')
+  );
+
+  return {
+    baseTokens: baseBalanceData,
+    isLoading: address && !baseBalanceData,
   };
 };
 
@@ -180,8 +192,14 @@ export const useNFTTotalAssets = () => {
     [wallets]
   );
 
+  const baseWallet = useMemo(
+    () => wallets?.find(w => w.type === ASSET_TYPES.CRYPTO && w.network === CHAIN.BASE),
+    [wallets]
+  );
+
   const { nearTokens, isLoading: isNearLoading } = useNearTokens(nearWallet?.address || null);
   const { availBalance, isLoading: isAvailLoading } = useAvailBalance(availWallet?.address || null);
+  const { baseTokens, isLoading: isBaseLoading } = useBaseBalance(baseWallet?.address || null);
 
   const tokenBalances = useMemo(() => {
     if (!nearTokens) {
@@ -190,14 +208,21 @@ export const useNFTTotalAssets = () => {
 
     return {
       ...nearTokens,
+      ...baseTokens,
       tokens: {
         ...nearTokens.tokens,
         AVAIL: {
           balance: availBalance,
         },
+        ETH: {
+          balance: baseTokens?.tokens.ETH.balance,
+        },
+        USDC: {
+          balance: (baseTokens?.tokens?.USDC?.balance ?? 0) + (nearTokens?.tokens?.USDC?.balance ?? 0),
+        },
       },
     } as TTokenBalances;
-  }, [nearTokens, availBalance]);
+  }, [nearTokens, availBalance, baseTokens]);
 
   const nftData = useMemo(() => {
     if (!(wallets && tokenBalances)) {
@@ -210,12 +235,15 @@ export const useNFTTotalAssets = () => {
   return {
     nftData,
     tokenBalances: tokenBalances,
-    isLoading: walletsLoading || isNearLoading || isAvailLoading,
+    isLoading: walletsLoading || isNearLoading || isAvailLoading || isBaseLoading,
   };
 };
 
 export function useGetBankAccounts(params?: Record<string, unknown>) {
-  const url = createAPIUrl({ endpoint: API_ENDPOINT.USER_SETTINGS, queryParams: params });
+  const url = createAPIUrl({
+    endpoint: API_ENDPOINT.USER_SETTINGS,
+    queryParams: params,
+  });
 
   const { data, isLoading, error, mutate } = useSWR<HTTPPagination<IBankAccount>>(url, getBankAccountsService);
 
@@ -251,7 +279,10 @@ export const useNearNFTAssets = () => {
 };
 
 export const useWalletRequestWithdraw = (params?: Record<string, unknown>) => {
-  const apiUrl = buildUrl({ endpoint: API_ENDPOINT.USERS_ME_APPROVALS, queryParams: params });
+  const apiUrl = buildUrl({
+    endpoint: API_ENDPOINT.USERS_ME_APPROVALS,
+    queryParams: params,
+  });
 
   const { data, error, isLoading, mutate } = useSWR<HTTPPagination<TRequestWithdrawHistory>>(
     apiUrl,

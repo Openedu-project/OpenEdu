@@ -29,7 +29,7 @@ type AssetData = {
   assetType: string;
   amount: number;
   valueUSD: number;
-  original: IWallet;
+  original: IWallet[];
 };
 
 const ValueCell = ({
@@ -154,7 +154,7 @@ export const AssetListTable = () => {
                 </Link>
               ) : (
                 <>
-                  <DepositModal {...original} />
+                  <DepositModal wallets={original} />
                   <Link
                     variant="outline"
                     size="xs"
@@ -182,7 +182,7 @@ export const AssetListTable = () => {
     // const allCurrencies = [...FIAT_CURRENCIES, ...CRYPTO_CURRENCIES];
 
     const processedData = wallets
-      .map(wallet => {
+      .map((wallet, _, self) => {
         const currencyInfo = SUPPORTED_EXCHANGE_RATES[wallet.currency as keyof typeof SUPPORTED_EXCHANGE_RATES];
         if (!currencyInfo) {
           return null;
@@ -203,16 +203,19 @@ export const AssetListTable = () => {
             ? Number(wallet.balance)
             : Number(wallet.balance) * (exchangeRates[`${wallet.currency}_${DEFAULT_CURRENCY}`] || 0);
 
+        const duplicateWallets = self.filter(item => item?.currency === wallet?.currency);
+
         return {
           type: wallet.currency,
           icon: currencyInfo.icon,
           assetType: wallet.type.toLowerCase(),
           amount: Number(wallet.balance),
           valueUSD,
-          original: wallet,
+          original: [...duplicateWallets],
         };
       })
       .filter(Boolean)
+      .filter((item, index, self) => index === self.findIndex(t => t?.type === item?.type))
       .filter(item => !isHiddenZeroAmount || (item?.valueUSD ?? 0) >= 1) as AssetData[];
 
     return processedData.sort((a, b) => {

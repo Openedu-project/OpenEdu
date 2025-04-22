@@ -1,4 +1,4 @@
-import { AvailIcon, EthIcon, NearIcon, OpeneduIcon, UsdIcon, UsdcIcon, UsdtIcon, VndIcon } from '@oe/assets';
+import { AvailIcon, BaseIcon, EthIcon, NearIcon, OpeneduIcon, UsdIcon, UsdcIcon, UsdtIcon, VndIcon } from '@oe/assets';
 import { DEFAULT_CURRENCY } from '@oe/core';
 import { languageWithCurrency } from '@oe/i18n';
 import type { IExchangeRates } from '#types/exchange-rates';
@@ -25,6 +25,14 @@ export const CRYPTO_CURRENCIES = {
     explorerTx: 'https://nearblocks.io/txns',
     explorerAddr: 'https://nearblocks.io/address',
     explorerNFT: 'https://nearblocks.io/nft-token',
+  },
+  BASE: {
+    icon: BaseIcon,
+    value: 'BASE',
+    name: 'base',
+    explorerTx: 'https://basescan.org/txns',
+    explorerAddr: 'https://basescan.org/address',
+    explorerNFT: 'https://basescan.org/nft',
   },
   ETH: {
     icon: EthIcon,
@@ -70,7 +78,7 @@ export const CRYPTO_CURRENCIES = {
 export const NETWORK_OPTIONS = [
   { value: 'NEAR', label: 'NEAR', id: 'NEAR' },
   { value: 'AVAIL', label: 'AVAIL', id: 'AVAIL' },
-  { value: 'ETH', label: 'ETH', id: 'ETH' },
+  { value: 'BASE', label: 'BASE', id: 'BASE' },
 ];
 
 export const TOKEN_OPTIONS: Record<string, { value: string; label: string; id: string }[]> = {
@@ -80,7 +88,10 @@ export const TOKEN_OPTIONS: Record<string, { value: string; label: string; id: s
     { value: 'USDC', label: 'USDC', id: 'USDC' },
   ],
   AVAIL: [{ value: 'AVAIL', label: 'AVAIL', id: 'AVAIL' }],
-  ETHEREUM: [],
+  BASE: [
+    { value: 'ETH', label: 'ETH', id: 'ETH' },
+    { value: 'USDC', label: 'USDC', id: 'USDC' },
+  ],
 };
 
 export const WITHDRAW_TYPE = {
@@ -89,7 +100,10 @@ export const WITHDRAW_TYPE = {
 } as const;
 
 export type TWithdrawType = (typeof WITHDRAW_TYPE)[keyof typeof WITHDRAW_TYPE];
-export const SUPPORTED_EXCHANGE_RATES = { ...FIAT_CURRENCIES, ...CRYPTO_CURRENCIES };
+export const SUPPORTED_EXCHANGE_RATES = {
+  ...FIAT_CURRENCIES,
+  ...CRYPTO_CURRENCIES,
+};
 export type SupportedExchangeRate = (typeof SUPPORTED_EXCHANGE_RATES)[keyof typeof SUPPORTED_EXCHANGE_RATES];
 
 export const currencyConverter = Object.values(languageWithCurrency).reduce(
@@ -131,7 +145,7 @@ export const currencyConverter = Object.values(languageWithCurrency).reduce(
 
 export const CHAIN = {
   NEAR: 'near',
-  ETHEREUM: 'ethereum',
+  BASE: 'base',
   AVAIL: 'avail',
 } as const;
 
@@ -145,6 +159,7 @@ export const CURRENCY_SYMBOLS = {
   USDT: 'USDT',
   USDC: 'USDC',
   AVAIL: 'AVAIL',
+  ETH: 'ETH',
 } as const;
 
 export type TCurrencySymbol = (typeof CURRENCY_SYMBOLS)[keyof typeof CURRENCY_SYMBOLS];
@@ -170,6 +185,7 @@ export const SWR_WALLET_KEY = {
   EXCHANGE_RATES: 'exchange-rates',
   NEAR_TOKENS: (address?: string) => ['nearTokens', address],
   AVAIL_BALANCE: (address?: string) => ['availBalance', address],
+  BASE_BALANCE: (address?: string) => ['baseBalance', address],
 } as const;
 
 export const TransactionType = {
@@ -208,6 +224,10 @@ export const TOKEN_CONTRACTS: TTokenContracts = (() => {
     },
   };
 })();
+
+export const ETH_TOKEN_CONTRACTS = {
+  [CURRENCY_SYMBOLS.USDC]: process.env.NEXT_PUBLIC_ETH_USDC_CONTRACT,
+};
 
 export const NFT_CONTRACTS = {
   CERTIFICATES: process.env.NEXT_PUBLIC_NEAR_CERT_CONTRACT,

@@ -6,3 +6,4 @@ export * from './openedu';
 export * from './usdc';
 export * from './usdt';
 export * from './vnd';
+export * from './base';

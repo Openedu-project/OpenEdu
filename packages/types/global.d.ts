@@ -55,6 +55,8 @@ declare global {
       NEXT_PUBLIC_NEAR_USDT_CONTRACT: string;
       NEXT_PUBLIC_NEAR_USDC_CONTRACT: string;
       NEXT_PUBLIC_AVAIL_RPC: string;
+      NEXT_PUBLIC_ETH_RPC: string;
+      NEXT_PUBLIC_ETH_USDC_CONTRACT: string;
     }
   }
 }
