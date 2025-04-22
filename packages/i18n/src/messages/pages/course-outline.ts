@@ -47,6 +47,19 @@ export const courseOutlineMessages = {
       learner: 'learner',
       learners: 'learners',
       creator: 'Creator',
+
+      requirementsToEarn: 'Requirements to Earn This Certificate',
+      completeAtLeast: 'Complete at least {count}% of the course content',
+      completeAllAssignment: 'Complete all assignments',
+      completeAssignmentAtScore: 'Complete final assignment at {score}% score',
+      nftSponsoredBy: 'NFT Certificate sponsored by',
+      thisDigital: 'This digital credential provides verifiable proof of your achievement on the blockchain.',
+
+      badge: {
+        pdfCertificate: 'PDF Certificate',
+        nftCertificate: 'NFT Certificate',
+        sponsored: 'Sponsored',
+      },
     },
 
     courseStats: {

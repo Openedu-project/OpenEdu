@@ -1,3 +1,4 @@
+import type { TPayer } from '#types/certificate-nft';
 import type { IPagination, TSort } from '#types/fetch';
 import type { IFileResponse } from '#types/file';
 import type { IOrganization } from '#types/organizations';
@@ -81,6 +82,7 @@ export interface ICourseProps {
   request_version: number;
   pre_approval_uid: string;
   certificate_condition: ICourseCertCondition;
+  mint_cert_nft_settings: IMintCertNftSettings;
   achievements: string[];
   private_channels: string[];
   default_language: TCourseDefaultLang;
@@ -97,6 +99,11 @@ export interface ICourseCertCondition {
   final_quiz_completion_percentage: number;
   completed_required_lesson: boolean;
   required_lesson_uid: string;
+}
+
+export interface IMintCertNftSettings {
+  enabled: boolean;
+  gas_fee_payer: TPayer;
 }
 
 export interface ICourseVersion {
