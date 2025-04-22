@@ -1,28 +1,43 @@
-'use client';
+"use client";
 
-import { MagicPen } from '@oe/assets';
-import { useTranslations } from 'next-intl';
-import { type MouseEvent, useState } from 'react';
-import { Link } from '#common/navigation';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '#shadcn/hover-card';
-import { AI_SIDEBAR } from '../constants';
+import { MagicPen } from "@oe/assets";
+import { useTranslations } from "next-intl";
+import { type MouseEvent, useState } from "react";
+import { Link } from "#common/navigation";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "#shadcn/hover-card";
+import { AI_SIDEBAR } from "../constants";
 
 export function AgentButton() {
-  const tAI = useTranslations('aiAssistant');
+  const tAI = useTranslations("aiAssistant");
   const [isOpen, setIsOpen] = useState(false);
 
   const handleTriggerClick = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    setIsOpen(prev => !prev);
+    setIsOpen((prev) => !prev);
   };
   return (
-    <HoverCard openDelay={100} closeDelay={100} open={isOpen} onOpenChange={setIsOpen}>
-      <HoverCardTrigger asChild className="group cursor-pointer" onClick={handleTriggerClick}>
-        <div>
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-2 bg-ai-more-feature-gradient group-hover:border-primary">
-            <MagicPen width={16} height={16} />
+    <HoverCard
+      openDelay={100}
+      closeDelay={100}
+      open={isOpen}
+      onOpenChange={setIsOpen}
+    >
+      <HoverCardTrigger
+        asChild
+        className="group cursor-pointer"
+        onClick={handleTriggerClick}
+      >
+        <div className="flex items-center gap-2 rounded-3xl border border-2 p-1 group-hover:border-primary">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ai-more-feature-gradient">
+            <MagicPen width={12} height={12} />
           </div>
-          <p className="mcaption-regular10 mt-1 text-center md:font-semibold">{tAI('agent')}</p>
+          <p className="mcaption-regular10 md:giant-iheading-semibold14 mt-1 text-center">
+            {tAI("agent")}
+          </p>
         </div>
       </HoverCardTrigger>
       <HoverCardContent
@@ -30,7 +45,7 @@ export function AgentButton() {
         align="start"
         className="flex w-auto flex-col items-start gap-2 rounded-xl bg-background p-2 shadow-shadow-7"
       >
-        {AI_SIDEBAR('white').map(item => (
+        {AI_SIDEBAR("white").map((item) => (
           <Link
             key={item.value}
             href={item.href}
@@ -46,7 +61,9 @@ export function AgentButton() {
             >
               {item.icon}
             </div>
-            <p className="mcaption-regular10 text-center text-foreground md:font-semibold">{tAI(item.lableKey)}</p>
+            <p className="mcaption-regular10 text-center text-foreground md:font-semibold">
+              {tAI(item.lableKey)}
+            </p>
           </Link>
         ))}
       </HoverCardContent>
