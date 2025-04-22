@@ -44,6 +44,6 @@ export * from './user-affiliate-report';
 export * from './user-profile';
 export * from './user-settings';
 export * from './wallet';
-export * from './eth';
+export * from './base';
 export * from './point';
 export * from './referral-program';

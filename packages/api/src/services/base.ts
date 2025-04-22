@@ -2,7 +2,7 @@ import { http, createConfig, getBalance } from '@wagmi/core';
 import { baseSepolia } from '@wagmi/core/chains';
 import { CURRENCY_SYMBOLS, ETH_TOKEN_CONTRACTS, type TChain, type TCurrencySymbol } from '#utils/wallet';
 
-const ETH_RPC = process.env.NEXT_PUBLIC_ETH_RPC;
+const BASE_RPC = process.env.NEXT_PUBLIC_BASE_RPC;
 
 export interface BaseTokenBalances {
   address: string;
@@ -17,7 +17,7 @@ const config = createConfig({
   chains: [baseSepolia],
 
   transports: {
-    [baseSepolia.id]: http(ETH_RPC),
+    [baseSepolia.id]: http(BASE_RPC),
   },
 });
 

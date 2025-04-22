@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import useSWR from 'swr';
 import { useExchangeRates } from '#hooks/useExchangeRates';
 import { getAvailBalance } from '#services/avail';
-import { getBaseTokens } from '#services/eth';
+import { getBaseTokens } from '#services/base';
 import { fetchNearNFTs, getNearTokens } from '#services/near';
 import { getBankAccountsService, getWalletRequestWithdraw } from '#services/wallet';
 import type { HTTPPagination, HTTPResponse } from '#types/fetch';
