@@ -1,11 +1,46 @@
 "use client";
-import type { CSSProperties } from "react";
+import { CircleChevronLeft } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { type CSSProperties, useState } from "react";
+import { Button } from "#shadcn/button";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "#shadcn/sheet";
 import { Sidebar } from "#shadcn/sidebar";
+import { useIsMobile } from "#shadcn/use-mobile";
 import { cn } from "#utils/cn";
 import { AISidebarContent } from "./ai-sidebar-content";
 
 export const SIDEBAR_WIDTH = "14rem";
 export const SIDEBAR_WIDTH_ICON = "5rem";
+
+const MobileSideberSheet = ({ isLogin }: { isLogin?: boolean }) => {
+  const [openSheet, setOpenSheet] = useState(false);
+  const tAI = useTranslations("aiAssistant");
+
+  return (
+    <Sheet open={openSheet} onOpenChange={setOpenSheet}>
+      <SheetTrigger asChild>
+        <Button className="fixed left-0 z-50 h-14 flex-col rounded-none rounded-r-full border border-2 bg-gradient-to-b from-turquoise-500 to-violet-500 p-2">
+          <CircleChevronLeft size={16} />
+          <span className="mcaption-regular12">{tAI("menu")}</span>
+        </Button>
+      </SheetTrigger>
+      <SheetTitle hidden />
+      <SheetContent
+        side="left"
+        hasCloseButton={false}
+        className="rounded-r-lg p-0"
+      >
+        <AISidebarContent
+          open={true}
+          isLogin={isLogin}
+          onClick={() => {
+            setOpenSheet(false);
+          }}
+        />
+      </SheetContent>
+    </Sheet>
+  );
+};
 
 export function AISidebar({
   isLogin,
@@ -16,6 +51,12 @@ export function AISidebar({
   className?: string;
   open?: boolean;
 }) {
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return <MobileSideberSheet isLogin={isLogin} />;
+  }
+
   return (
     <Sidebar
       className={cn(

@@ -21,28 +21,33 @@ const TopLastestHistory = dynamic(() => import('../history/top-lastest-history')
 export function AISidebarContent({
   open,
   isLogin,
+  onClick,
 }: {
   open?: boolean;
   className?: string;
   isLogin?: boolean;
+  onClick?: () => void;
 }) {
   const tAI = useTranslations('aiAssistant');
 
   return (
     <SidebarContent className="scrollbar flex h-full flex-col gap-2 overflow-y-auto bg-primary/5 p-2">
       <div className={cn('flex items-center justify-center', open && 'justify-end')}>
-        <SidebarTrigger className="-mt-2 text-primary hover:text-primary">
-          <CircleChevronLeft size={16} />
+        <SidebarTrigger className="size-6 text-primary hover:text-primary" onClick={onClick}>
+          <CircleChevronLeft size={20} />
         </SidebarTrigger>
       </div>
-      <div className={cn('-mt-2 flex flex-wrap items-center justify-center', open && 'justify-start')}>
-        <Link href={AI_ROUTES.assistant} className="!p-0 !border-0 relative mr-1 h-13 w-13 rounded-full bg-background">
+      <div className={cn('-mt-2 flex flex-wrap items-center justify-center', open && '-mt-6 w-fit justify-start')}>
+        <Link
+          href={AI_ROUTES.assistant}
+          className="!p-0 !border-0 relative mr-1 h-10 w-10 rounded-full bg-background md:h-13 md:w-13"
+        >
           <Image alt="ai-assistant" src={AIMascot.src} width={48} height={48} className="object-contain" />
           <Badge variant="secondary" className="md:-right-1 mbutton-bold10 absolute right-0 bottom-0 px-1 md:bottom-7">
             β
           </Badge>
         </Link>
-        <span className={cn('giant-iheading-semibold12 ml-1 text-foreground', open && 'giant-iheading-semibold16')}>
+        <span className={cn('giant-iheading-semibold12 ml-1 text-foreground', open && 'giant-iheading-semibold14')}>
           {tAI('freePlan')}
         </span>
       </div>
@@ -60,14 +65,14 @@ export function AISidebarContent({
             )}
             href={AI_ROUTES.chat}
           >
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-b from-turquoise-500 to-violet-500">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-b from-turquoise-500 to-violet-500 md:h-10 md:w-10">
               <CirclePlus size={12} color="white" />
             </div>
 
             <p
               className={cn(
                 'giant-iheading-semibold12 mt-1 text-center text-foreground',
-                open && 'giant-iheading-semibold16 ml-2'
+                open && 'giant-iheading-semibold14 ml-2'
               )}
             >
               {tAI('newChat')}
@@ -86,13 +91,13 @@ export function AISidebarContent({
                 open && 'justify-start'
               )}
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ai-more-feature-gradient">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ai-more-feature-gradient md:h-10 md:w-10">
                 {item.icon}
               </div>
               <p
                 className={cn(
                   'giant-iheading-semibold12 mt-1 truncate text-center text-foreground',
-                  open && 'giant-iheading-semibold16 ml-2'
+                  open && 'giant-iheading-semibold14 ml-2'
                 )}
               >
                 {open ? tAI(item.lableKey) : tAI(item.shortLableKey)}

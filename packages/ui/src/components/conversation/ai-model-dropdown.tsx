@@ -62,7 +62,7 @@ export function AIModelDropdown({ onSelectSuccess, AIModels, isLogin, className 
         <Button
           variant="ghost"
           className={cn(
-            '!rounded-full relative w-[130px] justify-start gap-2 truncate border border-primary bg-background outline outline-4 outline-primary/5 md:w-[200px]',
+            '!rounded-full relative w-[150px] justify-start gap-2 truncate border border-primary bg-background outline outline-4 outline-primary/5 md:w-[200px]',
             className
           )}
         >

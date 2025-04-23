@@ -43,7 +43,7 @@ export function AISidebarLayout({ children, className, login, AIChatModels }: Pr
         )}
       >
         {AIChatModels && AIChatModels?.length > 0 && (
-          <AIModelDropdown AIModels={AIChatModels} isLogin={login} className="shrink-0 lg:mx-auto" />
+          <AIModelDropdown AIModels={AIChatModels} isLogin={login} className="mx-auto shrink-0" />
         )}
         <div className="flex grow flex-col overflow-hidden">{children}</div>
       </main>
