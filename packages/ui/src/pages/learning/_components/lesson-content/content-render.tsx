@@ -33,11 +33,18 @@ const CONTENT_STYLES = {
 /**
  * Maximum height calculation based on the height of LessonMetadata and Content type
  */
-const calculateMaxHeight = (lessonMetadataHeight = 0, contentType: TLessonContent = 'video', hasQuiz?: boolean) => {
+const calculateMaxHeight = (
+  lessonMetadataHeight = 0,
+  contentType: TLessonContent = 'video',
+  hasQuiz?: boolean,
+  headerHeight?: number
+) => {
   // Điều chỉnh padding dựa trên loại content
   const extraOffset = contentType === 'video' && hasQuiz ? QUIZ_INFO_HEIGHT : 0;
 
-  return `calc(100dvh - ${HEADER_HEIGHT_VAR} - ${lessonMetadataHeight}px - ${DEFAULT_PADDING}px - ${extraOffset}px)`;
+  const headerHeightVal = headerHeight ? `${headerHeight}px` : HEADER_HEIGHT_VAR;
+
+  return `calc(100dvh - ${headerHeightVal} - ${lessonMetadataHeight}px - ${DEFAULT_PADDING}px - ${extraOffset}px)`;
 };
 
 const getContentClassName = (isOnlyContent: boolean, additionalClasses = '') =>

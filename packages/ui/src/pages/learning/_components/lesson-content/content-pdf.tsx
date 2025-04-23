@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { PdfViewer } from '#components/pdf-viewer';
+import { useHeaderHeight } from '../../_hooks';
 
 const ContentPdf = ({
   url,
@@ -12,6 +13,8 @@ const ContentPdf = ({
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+
+  const headerHeight = useHeaderHeight('header');
 
   useEffect(() => {
     if (currentPage === totalPages && onComplete) {
@@ -33,6 +36,7 @@ const ContentPdf = ({
       files={url}
       showPerPage
       hasToolbar
+      toolbarStyle={{ top: `${headerHeight}px` }}
       onPageChange={handlePageChange}
       onLoadSuccess={handleDocumentLoadSuccess}
     />

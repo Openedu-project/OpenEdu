@@ -83,7 +83,10 @@ export const isLessonContentComplete = ({
 
   const isCompleted = lessonContent
     ? lessonContent.complete_at !== 0 ||
-      (lessonContent.content_type === 'video' && pause_at !== undefined && pause_at < lessonContent.pause_at)
+      (lessonContent.content_type === 'video' &&
+        pause_at !== undefined &&
+        pause_at < lessonContent.pause_at &&
+        lessonContent.complete_at !== 0)
     : false;
 
   return isCompleted;

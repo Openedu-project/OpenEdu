@@ -215,15 +215,13 @@ export function ProgressProvider({
       });
 
       // Kiểm tra xem content đã hoàn thành chưa
-      const hasUpdated =
-        complete_at &&
-        isLessonContentComplete({
-          outline: state.sectionsProgressData,
-          section_uid,
-          lesson_uid,
-          lesson_content_uid,
-          pause_at,
-        });
+      const hasUpdated = isLessonContentComplete({
+        outline: state.sectionsProgressData,
+        section_uid,
+        lesson_uid,
+        lesson_content_uid,
+        pause_at,
+      });
 
       // Nếu chưa hoàn thành và có thông tin đầy đủ, gửi API request
       if (!hasUpdated) {
