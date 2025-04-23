@@ -23,13 +23,20 @@ export function CourseCertificate({
     <CourseSection title={tCourse('title')}>
       <Card>
         <CardContent className="p-2 md:p-4">
-          <div className="flex flex-col items-center md:flex-row md:items-start">
-            <div className="mr-0 mb-3 md:mr-6 md:mb-0 md:w-1/4">
-              <div className="relative">
-                <Image src={certificateImg?.src} alt="Certificate Sample" width={166} height={117} rounded="lg" />
-              </div>
+          <div className="flex flex-col items-center sm:flex-row sm:items-start md:flex-col md:items-center lg:flex-row lg:items-start">
+            <div className="mr-0 mb-3 sm:mr-4 sm:w-1/4 md:mr-0 md:w-full lg:mr-6 lg:mb-0 lg:w-1/4">
+              {/* <div className="relative"> */}
+              <Image
+                src={certificateImg?.src}
+                alt="Certificate Sample"
+                width={166}
+                height={117}
+                rounded="lg"
+                className="max-w-[320px]"
+              />
+              {/* </div> */}
             </div>
-            <div className="w-full space-y-4 text-foreground/75 md:w-3/4">
+            <div className="w-full space-y-4 text-foreground/75 sm:w-3/4 md:w-full lg:w-3/4">
               {/* <h3 className="mcaption-semibold14 mb-3">{tCourse('subTitle')}</h3> */}
               <div className="flex flex-wrap gap-x-4 gap-y-2">
                 <CertificateBadge badgeType="default" />
