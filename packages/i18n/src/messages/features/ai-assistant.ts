@@ -54,5 +54,6 @@ export const aiAssistantMessages = {
     project: 'Project',
     prompt: 'Prompt',
     soon: 'Soon',
+    present: 'Present',
   },
 };

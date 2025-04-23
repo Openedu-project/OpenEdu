@@ -1,0 +1,144 @@
+import { MessageTime } from '@oe/assets';
+import AIMascot from '@oe/assets/images/ai/ai-mascot-2.png';
+import { AI_ROUTES } from '@oe/core';
+import { CirclePlus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import dynamic from 'next/dynamic';
+import { Link } from '#common/navigation';
+import { Image } from '#components/image';
+import { Badge } from '#shadcn/badge';
+import { Button } from '#shadcn/button';
+import { Separator } from '#shadcn/separator';
+import { SidebarContent, SidebarTrigger } from '#shadcn/sidebar';
+import { cn } from '#utils/cn';
+import { AI_SIDEBAR } from '../constants';
+import { AIHistoryModal } from '../history/ai-history';
+
+const TopLastestHistory = dynamic(() => import('../history/top-lastest-history').then(mod => mod.TopLastestHistory), {
+  ssr: false,
+});
+
+export function AISidebarContent({
+  open,
+  isLogin,
+}: {
+  open?: boolean;
+  className?: string;
+  isLogin?: boolean;
+}) {
+  const tAI = useTranslations('aiAssistant');
+
+  return (
+    <SidebarContent className="scrollbar flex h-full flex-col gap-2 overflow-y-auto bg-primary/5 md:p-2">
+      <div
+        className={cn('flex flex-wrap items-center justify-center gap-2', open && 'flex-row-reverse justify-between')}
+      >
+        <SidebarTrigger className="text-primary hover:text-primary" />
+
+        <div className={cn('flex flex-wrap items-center justify-center')}>
+          <Link
+            href={AI_ROUTES.assistant}
+            className="!p-0 !border-0 relative mr-1 h-13 w-13 rounded-full bg-background"
+          >
+            <Image alt="ai-assistant" src={AIMascot.src} width={48} height={48} className="object-contain" />
+            <Badge
+              variant="secondary"
+              className="md:-right-1 mbutton-bold10 absolute right-0 bottom-0 px-1 md:bottom-7"
+            >
+              β
+            </Badge>
+          </Link>
+          <span className={cn('giant-iheading-semibold12 ml-1 text-foreground', open && 'giant-iheading-semibold16')}>
+            {tAI('freePlan')}
+          </span>
+        </div>
+      </div>
+
+      <Separator className="h-0.5 w-full bg-primary/10" />
+
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-2">
+          <Link
+            variant="ghost"
+            activeClassName=""
+            className={cn(
+              '!no-underline h-auto w-full flex-wrap items-center justify-center rounded-3xl p-1 hover:cursor-pointer hover:bg-primary/10',
+              open && 'justify-start'
+            )}
+            href={AI_ROUTES.chat}
+          >
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-b from-turquoise-500 to-violet-500">
+              <CirclePlus size={12} color="white" />
+            </div>
+
+            <p
+              className={cn(
+                'giant-iheading-semibold12 mt-1 text-center text-foreground',
+                open && 'giant-iheading-semibold16 ml-2'
+              )}
+            >
+              {tAI('newChat')}
+            </p>
+          </Link>
+        </div>
+        {AI_SIDEBAR('var(--primary)', 16)
+          .filter(i => !i.hidden)
+          .map(item => (
+            <Link
+              key={item.value}
+              href={item.href}
+              disabled={item.isComming}
+              className={cn(
+                '!no-underline h-auto w-full flex-wrap justify-center rounded-3xl p-1 hover:cursor-pointer hover:bg-primary/10',
+                open && 'justify-start'
+              )}
+            >
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ai-more-feature-gradient">
+                {item.icon}
+              </div>
+              <p
+                className={cn(
+                  'giant-iheading-semibold12 mt-1 truncate text-center text-foreground',
+                  open && 'giant-iheading-semibold16 ml-2'
+                )}
+              >
+                {open ? tAI(item.lableKey) : tAI(item.shortLableKey)}
+              </p>
+              {open && item.isComming && (
+                <Badge variant="outline" className="ml-2 border-primary text-primary">
+                  {tAI('soon')}
+                </Badge>
+              )}
+            </Link>
+          ))}
+      </div>
+      <Separator className="h-0.5 w-full bg-primary/10" />
+      {open ? (
+        <div className="flex grow flex-col gap-2">
+          <div className="flex w-full items-center justify-between pl-1">
+            <p className="mcaption-semibold14 text-foreground">{tAI('history')}</p>
+            <AIHistoryModal isLogin={isLogin} />
+          </div>
+          <TopLastestHistory />
+        </div>
+      ) : (
+        <AIHistoryModal
+          isLogin={isLogin}
+          triggerButton={
+            <div>
+              <Button
+                className={cn(
+                  'm-auto flex rounded-full border border-2 bg-ai-more-feature-gradient hover:border-primary hover:bg-ai-more-feature-gradient'
+                )}
+                size="icon"
+              >
+                <MessageTime color="var(--primary)" width={16} height={16} />
+              </Button>
+              <p className="mcaption-semibold12 mt-1 text-center text-foreground">{tAI('history')}</p>
+            </div>
+          }
+        />
+      )}
+    </SidebarContent>
+  );
+}

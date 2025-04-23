@@ -3,8 +3,8 @@ import { useGetListConversation } from '@oe/api';
 import { Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
-import { useCallback, useMemo, useRef, useState } from 'react';
-import type { KeyboardEvent } from 'react';
+import { cloneElement, useMemo, useRef, useState } from 'react';
+import type { JSX, KeyboardEvent } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import { useSWRConfig } from 'swr';
 import { useDebouncedCallback } from 'use-debounce';
@@ -13,7 +13,7 @@ import { Button } from '#shadcn/button';
 import { Input } from '#shadcn/input';
 import { cn } from '#utils/cn';
 import { HISTORY_DEFAULT_PARAMS } from '../constants';
-import { formatDate } from '../utils';
+import { formatDate, getHistoryByDate, getHistoryDates } from '../utils';
 import { AIHistoryItem } from './history-item';
 
 interface SearchHistoryProps {
@@ -21,6 +21,7 @@ interface SearchHistoryProps {
   isLogin?: boolean;
   callbackFn?: () => void;
   hiddenSearch?: boolean;
+  triggerButton?: JSX.Element;
 }
 
 export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = false }: SearchHistoryProps) => {
@@ -88,22 +89,8 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
     }
   };
 
-  const getItemsByDate = useCallback(
-    (targetDate: number) =>
-      historyData
-        ?.filter(item => {
-          const itemDate = new Date(item.create_at).setHours(0, 0, 0, 0);
-
-          return itemDate === targetDate;
-        })
-        .sort((a, b) => b.create_at - a.create_at),
-    [historyData]
-  ); // Sort items within same create_at descending
-
   const datesData = useMemo(() => {
-    const uniqueDates = [...new Set(historyData?.map(item => new Date(item.create_at).setHours(0, 0, 0, 0)))];
-
-    return uniqueDates.sort((a, b) => b - a); // Sort dates descending
+    return getHistoryDates(historyData);
   }, [historyData]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -127,10 +114,6 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
     () => {
       const pagination = data?.at(-1)?.pagination;
 
-      // Don't load more if:
-      // 1. We're already loading
-      // 2. There's no data
-      // 3. We've reached the last page
       if (
         isLoading ||
         isLoadingMoreRef.current ||
@@ -162,18 +145,17 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
         <div className="m-auto p-4 text-center text-foreground">{tAI('noHistory')}</div>
       ) : (
         <Virtuoso
-          style={{ display: 'flex', flexGrow: 1 }}
           data={datesData}
           firstItemIndex={0}
           initialTopMostItemIndex={0}
           increaseViewportBy={200}
-          className="scrollbar"
+          className="scrollbar flex grow"
           endReached={handleEndReached}
           itemContent={(_, date: number) => (
             <div key={date} className="mt-2 space-y-2">
               <h5 className="mcaption-semibold14">{formatDate(date)}</h5>
               <div className="pl-2">
-                {getItemsByDate(date)?.map(item => {
+                {getHistoryByDate(date, historyData)?.map(item => {
                   const { page, ...baseData } = item;
                   return (
                     <AIHistoryItem
@@ -199,17 +181,26 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
   );
 };
 
-export function AIHistoryModal({ isLogin = false }: SearchHistoryProps) {
+export function AIHistoryModal({ isLogin = false, triggerButton }: SearchHistoryProps) {
   const [open, setOpen] = useState(false);
   const handleOpenModal = () => {
     setOpen(true);
   };
 
-  return (
-    <div>
-      <Button onClick={handleOpenModal} size="icon" variant="ghost">
+  const buttonWithClickHandler = cloneElement(
+    triggerButton ?? (
+      <Button size="icon" variant="ghost">
         <Search width={16} height={16} />
       </Button>
+    ),
+    {
+      onClick: handleOpenModal,
+    }
+  );
+
+  return (
+    <div>
+      {buttonWithClickHandler}
       {open && (
         <Modal
           title="  "

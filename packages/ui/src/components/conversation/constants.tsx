@@ -26,7 +26,7 @@ export const AI_SIDEBAR: (color?: string, size?: number) => AISidebarItem[] = (c
   },
   {
     lableKey: 'presentation',
-    shortLableKey: 'slide',
+    shortLableKey: 'present',
     descKey: 'aiSlideDesc',
     value: 'slide',
     agent: 'ai_slide',

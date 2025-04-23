@@ -26,7 +26,7 @@ interface IHistoryItem {
   setSelectItem?: (value: IChatHistory) => void;
   mutate?: SWRInfiniteResponse<HTTPResponse<IChatHistoryResponse>>['mutate'];
   pauseAddMessage?: () => void;
-  pageIndex: number;
+  pageIndex?: number;
   activeId?: string;
   callbackFn?: () => void;
 }
@@ -58,7 +58,7 @@ export function useClickOutside<T extends HTMLElement>(
   return ref;
 }
 
-export function AIHistoryItem({ className, item, mutate, pageIndex, activeId, callbackFn }: IHistoryItem) {
+export function AIHistoryItem({ className, item, mutate, pageIndex = 1, activeId, callbackFn }: IHistoryItem) {
   const tError = useTranslations('errors');
 
   const [isEdit, setIsEdit] = useState(false);
@@ -87,6 +87,7 @@ export function AIHistoryItem({ className, item, mutate, pageIndex, activeId, ca
         return page;
       });
     });
+    callbackFn?.();
   };
 
   const handleDelete = async (onClose?: () => void) => {

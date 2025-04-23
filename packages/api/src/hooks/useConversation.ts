@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import useSWRInfinite from 'swr/infinite';
-import { getConversationDetail, getMessageData, getPrompts } from '#services/conversation';
+import { getConversationDetail, getListConversation, getMessageData, getPrompts } from '#services/conversation';
 import type { IChatHistoryResponse, IConversationDetails, IPrompSearchParams } from '#types/conversation';
 import type { HTTPResponse } from '#types/fetch';
 import { API_ENDPOINT } from '#utils/endpoints';
@@ -111,6 +111,24 @@ export function useGetPromps({
 
   return {
     prompts: data,
+    error,
+    mutate,
+    isLoading,
+  };
+}
+
+export function useGetConversations(params: Record<string, string | number>, shouldFetch = true) {
+  const endpoint = shouldFetch
+    ? createAPIUrl({
+        endpoint: API_ENDPOINT.COM_CHANNELS,
+        queryParams: { ...params },
+      })
+    : null;
+
+  const { data, isLoading, error, mutate } = useSWR(endpoint, (endpoint: string) => getListConversation(endpoint));
+
+  return {
+    history: data,
     error,
     mutate,
     isLoading,

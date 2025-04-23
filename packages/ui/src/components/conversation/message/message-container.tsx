@@ -1,5 +1,5 @@
 'use client';
-import { API_ENDPOINT } from '@oe/api';
+import { API_ENDPOINT, createAPIUrl } from '@oe/api';
 import type { IConversationDetails, IMessage, TAgentType } from '@oe/api';
 import { useGetConversationDetails } from '@oe/api';
 import { GENERATING_STATUS } from '@oe/core';
@@ -10,6 +10,7 @@ import { Button } from '#shadcn/button';
 import { Skeleton } from '#shadcn/skeleton';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
+import { TopLastestHistoryParams } from '../history/top-lastest-history';
 import type { ISendMessageParams } from '../type';
 import { GenMessage } from './gen-message';
 import { MessageBox } from './message-box';
@@ -101,7 +102,14 @@ export const MessageContainer = ({
       );
 
       for (const key of keysToReset) {
-        globalMutate(key, undefined, { revalidate: key.includes('page=1') });
+        globalMutate(key, undefined, {
+          revalidate: !!key?.includes(
+            createAPIUrl({
+              endpoint: API_ENDPOINT.COM_CHANNELS,
+              queryParams: TopLastestHistoryParams,
+            })
+          ),
+        });
       }
     }
   }, [
