@@ -1,7 +1,7 @@
 import { MessageTime } from '@oe/assets';
 import AIMascot from '@oe/assets/images/ai/ai-mascot-2.png';
 import { AI_ROUTES } from '@oe/core';
-import { CirclePlus } from 'lucide-react';
+import { CircleChevronLeft, CirclePlus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
 import { Link } from '#common/navigation';
@@ -29,29 +29,22 @@ export function AISidebarContent({
   const tAI = useTranslations('aiAssistant');
 
   return (
-    <SidebarContent className="scrollbar flex h-full flex-col gap-2 overflow-y-auto bg-primary/5 md:p-2">
-      <div
-        className={cn('flex flex-wrap items-center justify-center gap-2', open && 'flex-row-reverse justify-between')}
-      >
-        <SidebarTrigger className="text-primary hover:text-primary" />
-
-        <div className={cn('flex flex-wrap items-center justify-center')}>
-          <Link
-            href={AI_ROUTES.assistant}
-            className="!p-0 !border-0 relative mr-1 h-13 w-13 rounded-full bg-background"
-          >
-            <Image alt="ai-assistant" src={AIMascot.src} width={48} height={48} className="object-contain" />
-            <Badge
-              variant="secondary"
-              className="md:-right-1 mbutton-bold10 absolute right-0 bottom-0 px-1 md:bottom-7"
-            >
-              β
-            </Badge>
-          </Link>
-          <span className={cn('giant-iheading-semibold12 ml-1 text-foreground', open && 'giant-iheading-semibold16')}>
-            {tAI('freePlan')}
-          </span>
-        </div>
+    <SidebarContent className="scrollbar flex h-full flex-col gap-2 overflow-y-auto bg-primary/5 p-2">
+      <div className={cn('flex items-center justify-center', open && 'justify-end')}>
+        <SidebarTrigger className="-mt-2 text-primary hover:text-primary">
+          <CircleChevronLeft size={16} />
+        </SidebarTrigger>
+      </div>
+      <div className={cn('-mt-2 flex flex-wrap items-center justify-center', open && 'justify-start')}>
+        <Link href={AI_ROUTES.assistant} className="!p-0 !border-0 relative mr-1 h-13 w-13 rounded-full bg-background">
+          <Image alt="ai-assistant" src={AIMascot.src} width={48} height={48} className="object-contain" />
+          <Badge variant="secondary" className="md:-right-1 mbutton-bold10 absolute right-0 bottom-0 px-1 md:bottom-7">
+            β
+          </Badge>
+        </Link>
+        <span className={cn('giant-iheading-semibold12 ml-1 text-foreground', open && 'giant-iheading-semibold16')}>
+          {tAI('freePlan')}
+        </span>
       </div>
 
       <Separator className="h-0.5 w-full bg-primary/10" />

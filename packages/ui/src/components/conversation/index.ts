@@ -6,7 +6,7 @@ import { AIHistoryModal } from './history/ai-history';
 import { InputFrame } from './message-input/input-frame';
 import { PromptCategory } from './prompt/prompt-category';
 import { AIModule } from './sidebar/ai-module';
-import { AISidebar } from './sidebar/ai-sidebar';
+import { AISidebar, SIDEBAR_WIDTH, SIDEBAR_WIDTH_ICON } from './sidebar/ai-sidebar';
 
 export {
   AISidebar,
@@ -19,4 +19,6 @@ export {
   AIHistoryModal,
   PromptCategory,
   AI_SIDEBAR,
+  SIDEBAR_WIDTH,
+  SIDEBAR_WIDTH_ICON,
 };

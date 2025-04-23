@@ -197,7 +197,7 @@ function Sidebar({
       {/* This is what handles the sidebar gap on desktop */}
       <div
         className={cn(
-          'relative h-svh w-[var(--sidebar-width)] bg-transparent transition-width duration-200 ease-linear',
+          'relative w-[var(--sidebar-width)] bg-transparent transition-width duration-200 ease-linear',
           'group-data-[collapsible=offcanvas]:w-0',
           'group-data-side=right:rotate-180',
           variant === 'floating' || variant === 'inset'
@@ -207,7 +207,7 @@ function Sidebar({
       />
       <div
         className={cn(
-          'fixed inset-y-0 z-10 hidden h-svh w-[var(--sidebar-width)] transition-all duration-200 ease-linear md:flex',
+          'fixed inset-y-0 z-10 hidden w-[var(--sidebar-width)] transition-all duration-200 ease-linear md:flex',
           side === 'left'
             ? 'left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]'
             : 'right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]',
@@ -230,7 +230,7 @@ function Sidebar({
   );
 }
 
-function SidebarTrigger({ className, onClick, ...props }: React.ComponentProps<typeof Button>) {
+function SidebarTrigger({ className, onClick, children, ...props }: React.ComponentProps<typeof Button>) {
   const { toggleSidebar } = useSidebar();
 
   return (
@@ -246,8 +246,12 @@ function SidebarTrigger({ className, onClick, ...props }: React.ComponentProps<t
       }}
       {...props}
     >
-      <PanelLeft />
-      <span className="sr-only">Toggle Sidebar</span>
+      {children ?? (
+        <>
+          <PanelLeft />
+          <span className="sr-only">Toggle Sidebar</span>
+        </>
+      )}
     </Button>
   );
 }
