@@ -98,6 +98,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
           if (filteredAgents[selectedIndex]) {
             setSelectedAgent(filteredAgents[selectedIndex]);
             setFilteredAgents([]);
+            return;
           }
           break;
         case 'Escape':
@@ -190,7 +191,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
           return (
             <Card
               className={cn(
-                'relative flex flex-col gap-1 rounded-3xl bg-background p-2 pt-2 shadow md:min-h-40 md:p-4',
+                'relative flex flex-col gap-1 rounded-3xl bg-background p-2 pt-2 shadow md:min-h-32 md:p-3',
                 className
               )}
               onClick={() => {

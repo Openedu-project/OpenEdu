@@ -38,14 +38,14 @@ export function AISidebarLayout({ children, className, login, AIChatModels }: Pr
       <AISidebar isLogin={login} open={open} />
       <main
         className={cn(
-          'flex h-[calc(100dvh-var(--header-small-height))] grow flex-col gap-4 p-2 md:h-[calc(100dvh-var(--header-height))] lg:p-4',
+          'flex h-[calc(100dvh-var(--header-small-height))] grow flex-col gap-4 overflow-hidden p-2 md:h-[calc(100dvh-var(--header-height))]',
           className
         )}
       >
         {AIChatModels && AIChatModels?.length > 0 && (
           <AIModelDropdown AIModels={AIChatModels} isLogin={login} className="mx-auto shrink-0" />
         )}
-        <div className="flex grow flex-col overflow-hidden">{children}</div>
+        {children}
       </main>
     </SidebarProvider>
   );

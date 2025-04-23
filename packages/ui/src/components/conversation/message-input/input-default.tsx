@@ -3,7 +3,7 @@ import { ajaxUpload } from '@oe/api';
 import type { z } from '@oe/api';
 import { uniqueID } from '@oe/core';
 import { useTranslations } from 'next-intl';
-import { type ClipboardEvent, useCallback, useRef } from 'react';
+import { type ClipboardEvent, useCallback, useEffect, useRef } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import TextareaAutosize from 'react-textarea-autosize';
 import type { FileStatusType, FileType } from '#components/uploader';
@@ -127,6 +127,10 @@ export const InputDefault = ({
     }
   };
 
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [inputRef]);
+
   return (
     <FormFieldWithLabel name="message" className={cn('w-full grow', className)} showErrorMessage={false}>
       <TextareaAutosize
@@ -136,7 +140,7 @@ export const InputDefault = ({
         className={cn(
           'mcaption-regular16 no-scrollbar block h-[22px] w-full resize-none bg-transparent focus-within:outline-hidden'
         )}
-        maxRows={5}
+        maxRows={3}
         ref={inputRef}
         onPaste={handlePaste}
       />
