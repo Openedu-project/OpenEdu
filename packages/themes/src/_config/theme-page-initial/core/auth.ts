@@ -453,12 +453,25 @@ export const createAieduAuthLayoutConfig = (getThemeTranslation: (path: string[]
       logo: { mime: 'image/png' },
       sidebarItems: [
         {
+          id: 'introduction',
+          label: 'Giới thiệu',
+          href: '/introduction',
+          isHighlight: false,
+        },
+        {
+          id: 'ranking',
+          label: 'Bảng xếp hạng',
+          href: '/ranking',
+          isHighlight: false,
+        },
+        {
           id: 'courses',
-          label: 'Courses',
+          label: 'Khoá học AI',
           href: '/courses',
           isHighlight: false,
         },
-        { id: 'blog', label: 'Blog', href: '/blog', isHighlight: false },
+        { id: 'blog', label: 'Tin tức', href: '/blog', isHighlight: false },
+        { id: 'schedule', label: 'Lịch trình', href: '/schedule', isHighlight: false },
       ],
     },
     order: 5,
@@ -473,7 +486,7 @@ export const createAieduAuthLayoutConfig = (getThemeTranslation: (path: string[]
           colSpan: 3,
           items: [
             {
-              href: '/courses/course-avail-36779',
+              href: '/introduction',
               label: getThemeTranslation([
                 'auth',
                 'footer',
@@ -485,7 +498,7 @@ export const createAieduAuthLayoutConfig = (getThemeTranslation: (path: string[]
               ]),
             },
             {
-              href: '/blog',
+              href: '/ranking',
               label: getThemeTranslation([
                 'auth',
                 'footer',
@@ -496,6 +509,42 @@ export const createAieduAuthLayoutConfig = (getThemeTranslation: (path: string[]
                 'label',
               ]),
             },
+            {
+              href: '/courses',
+              label: getThemeTranslation([
+                'auth',
+                'footer',
+                'navigationItems',
+                'registration',
+                'items',
+                'items-2',
+                'label',
+              ]),
+            },
+            {
+              href: '/schedule',
+              label: getThemeTranslation([
+                'auth',
+                'footer',
+                'navigationItems',
+                'registration',
+                'items',
+                'items-3',
+                'label',
+              ]),
+            },
+            {
+              href: '/blog',
+              label: getThemeTranslation([
+                'auth',
+                'footer',
+                'navigationItems',
+                'registration',
+                'items',
+                'items-4',
+                'label',
+              ]),
+            },
           ],
         },
         terms: {
@@ -503,24 +552,27 @@ export const createAieduAuthLayoutConfig = (getThemeTranslation: (path: string[]
           colSpan: 3,
           items: [
             {
-              href: 'https://www.availproject.org/',
+              href: '/',
               label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'items', 'items-0', 'label']),
+            },
+            {
+              href: '/',
+              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'items', 'items-1', 'label']),
+            },
+            {
+              href: '/',
+              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'items', 'items-2', 'label']),
+            },
+            {
+              href: '/',
+              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'items', 'items-3', 'label']),
             },
           ],
         },
         social: {
           label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'social', 'label']),
           colSpan: 2,
-          items: [
-            {
-              href: 'https://t.me/avail_vietnam',
-              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'social', 'items', 'items-0', 'label']),
-            },
-            {
-              href: 'https://x.com/avail_vietnam',
-              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'social', 'items', 'items-1', 'label']),
-            },
-          ],
+          items: [],
         },
       },
       className: 'bg-primary',

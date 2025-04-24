@@ -1,44 +1,86 @@
 import { authMessages } from '../auth';
 import { aieduHomepage } from './homepage';
+import { aieduIntroduction } from './introduction';
 // Theme step 19 (optional): add translate
 export const aieduMessage = {
   //Theme step 19.1 Syntax ${themeName}: translate
   aiedu: {
     ...aieduHomepage,
+    ...aieduIntroduction,
     auth: {
       ...authMessages.auth,
       footer: {
-        description: 'The essential base layer for modern blockchains.',
+        description:
+          'Chương trình phổ cập AI dành cho thanh thiếu niên Việt Nam Học miễn phí, ứng dụng thật, sẵn sàng cho tương lai. Đưa tri thức AI đến mọi bạn trẻ, xây nền tảng vững chắc cho thế hệ Việt Nam làm chủ công nghệ ',
         navigationItems: {
           registration: {
-            label: 'Information',
+            label: 'Danh Mục ',
             items: {
               'items-0': {
-                label: 'Avail Unlock',
+                label: 'Giới thiệu',
               },
               'items-1': {
-                label: 'Blog',
+                label: 'Bảng xếp hạng',
+              },
+              'items-2': {
+                label: 'Khoá học AI',
+              },
+              'items-3': {
+                label: 'Lịch trình',
+              },
+              'items-4': {
+                label: 'Tin tức',
               },
             },
           },
           terms: {
-            label: 'Partners',
+            label: 'Hỗ Trợ',
             items: {
               'items-0': {
-                label: 'Avail Project',
+                label: 'Facebook',
+              },
+              'items-1': {
+                label: 'Zalo Group',
+              },
+              'items-2': {
+                label: 'X',
+              },
+              'items-3': {
+                label: 'Email',
               },
             },
           },
           social: {
-            label: 'Policy & Support',
-            items: {
-              'items-0': {
-                label: 'Telegram',
-              },
-              'items-1': {
-                label: 'X',
-              },
-            },
+            label: 'QR Code',
+          },
+        },
+      },
+      header: {
+        sidebarItems: {
+          'sidebarItems-0': {
+            id: 'introduction',
+            href: '/introduction',
+            label: 'Giới thiệu',
+          },
+          'sidebarItems-1': {
+            id: 'ranking',
+            href: '/ranking',
+            label: 'Bảng xếp hạng',
+          },
+          'sidebarItems-2': {
+            id: 'courses',
+            href: '/courses',
+            label: 'Khoá học AI',
+          },
+          'sidebarItems-3': {
+            id: 'blog',
+            href: '/blog',
+            label: 'Tin tức',
+          },
+          'sidebarItems-4': {
+            id: 'schedule',
+            href: '/schedule',
+            label: 'Lịch trình',
           },
         },
       },

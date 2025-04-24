@@ -430,6 +430,34 @@ export const THEMES_RENDER_CLIENT: ThemeRender = {
         import('../aiedu/homepage/aiedu-gallery/gallery').then(mod => ({ default: mod.AieduHomepageGallery }))
       ),
     },
+    introduction: {
+      theme: dynamic(() =>
+        import('../aiedu/introduction/index').then(mod => ({
+          default: mod.AieduIntroductionPage,
+        }))
+      ),
+      aieduGoal: dynamic(() =>
+        import('../aiedu/introduction/aiedu-goal/goal').then(mod => ({
+          default: mod.AieduIntroductionGoal,
+        }))
+      ),
+      aieduVisionMission: dynamic(() =>
+        import('../aiedu/introduction/aiedu-vision-mission/vision-mission').then(mod => ({
+          default: mod.AieduIntroductionVisionMission,
+        }))
+      ),
+      aieduFeatures: dynamic(() =>
+        import('../aiedu/introduction/aiedu-features/features').then(mod => ({
+          default: mod.AieduIntroductionFeatures,
+        }))
+      ),
+      aieduExpert: dynamic(() =>
+        import('../aiedu/introduction/aiedu-expert/expert').then(mod => ({ default: mod.AieduIntroductionExpert }))
+      ),
+      aieduMap: dynamic(() =>
+        import('../aiedu/introduction/aiedu-map/map').then(mod => ({ default: mod.AieduIntroductionMap }))
+      ),
+    },
     auth: {
       theme: undefined,
       header: dynamic(() =>

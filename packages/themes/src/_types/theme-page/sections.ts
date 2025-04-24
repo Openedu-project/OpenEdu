@@ -70,12 +70,29 @@ export type AuthLayout =
 /*PARTNERS */
 export type PartnersSection = 'theme' | 'vbiPartnerList' | 'vbiShowcase' | 'vbiTesti' | 'vbiPartnerFeatures' | 'vbiCta';
 
+// INTRODUCTION
+export type IntroduceSection =
+  | 'theme'
+  | 'aieduGoal'
+  | 'aieduVisionMission'
+  | 'aieduExpert'
+  | 'aieduFeatures'
+  | 'aieduMap';
+
+// RANKING
+export type RankingSection = 'theme' | 'aieduDashboard';
+// SCHEDULE
+export type ScheduleSection = 'theme';
+
 /*SECTION */
 export type SectionsByPage = {
   homepage: HomeSection;
   'about-us': AboutSection;
   auth: AuthLayout;
   partners: PartnersSection;
+  introduction: IntroduceSection;
+  ranking: RankingSection;
+  schedule: ScheduleSection;
 };
 
 export type AllSectionKeys = {

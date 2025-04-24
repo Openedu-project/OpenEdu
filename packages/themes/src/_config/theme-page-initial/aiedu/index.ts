@@ -2,6 +2,7 @@ import type { PagesConfig, ThemePageKey } from '../../../_types';
 import { createAieduAuthLayoutConfig } from '../core/auth';
 import { defaultMetadataAtPage } from '../core/metadata';
 import { createAiEduHomepageConfig } from './homepage';
+import { createAiEduIntroductionConfig } from './introduction';
 
 // Theme step 11 (optionals): create the org config object
 export const createAieduConfig = (
@@ -19,5 +20,20 @@ export const createAieduConfig = (
     label: t('labels.authLayout'),
     config: createAieduAuthLayoutConfig(aieduT),
     metadata: undefined,
+  },
+  introduction: {
+    label: t('labels.introduction'),
+    config: createAiEduIntroductionConfig(aieduT),
+    metadata: defaultMetadataAtPage,
+  },
+  ranking: {
+    label: t('labels.ranking'),
+    config: undefined,
+    metadata: defaultMetadataAtPage,
+  },
+  schedule: {
+    label: t('labels.schedule'),
+    config: undefined,
+    metadata: defaultMetadataAtPage,
   },
 });
