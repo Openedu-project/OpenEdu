@@ -29,6 +29,7 @@ export const PromptGrid = ({
   callbackFn?: () => void;
 }) => {
   const tGeneral = useTranslations('general');
+  const tAI = useTranslations('aiAssistant');
   const [promptData, setPromptData] = useState<IPrompt[]>([]);
   const { selectedAgent } = useConversationStore();
   const [count, setCount] = useState(4);
@@ -82,7 +83,7 @@ export const PromptGrid = ({
   }
 
   if (!prompts || prompts?.results?.length === 0) {
-    return null;
+    return <p className="text-center">{tAI('noPromptWasFound')}</p>;
   }
 
   return (
