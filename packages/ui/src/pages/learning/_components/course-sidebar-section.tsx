@@ -114,17 +114,21 @@ SectionItem.displayName = 'SectionItem';
 
 const CourseOutline = (props: ICourseOutlineProps) => {
   const {
-    state: { sectionsProgressData },
+    state: { mergedProgress },
   } = useProgress();
   const { currentSection, currentLesson } = useCurrentLesson();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const sortedSections = useMemo(() => {
-    return [...sectionsProgressData].sort(sortByOrder);
-  }, [sectionsProgressData]);
+    if (!mergedProgress) {
+      return [];
+    }
+
+    return [...mergedProgress.sections].sort(sortByOrder);
+  }, [mergedProgress]);
 
   useEffect(() => {
-    if (sectionsProgressData?.length === 0) {
+    if (!mergedProgress || sortedSections.length === 0) {
       return;
     }
 
@@ -144,9 +148,9 @@ const CourseOutline = (props: ICourseOutlineProps) => {
 
     const timeoutId = setTimeout(scrollToActiveLesson, 100);
     return () => clearTimeout(timeoutId);
-  }, [sectionsProgressData, currentLesson, currentSection]);
+  }, [mergedProgress, sortedSections.length, currentLesson, currentSection]);
 
-  if (!sectionsProgressData || sectionsProgressData?.length === 0) {
+  if (!mergedProgress || sortedSections.length === 0) {
     return null;
   }
 

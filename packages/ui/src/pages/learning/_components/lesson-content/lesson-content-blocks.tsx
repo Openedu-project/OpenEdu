@@ -108,7 +108,7 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps & { lessonMetadataHe
 
     // Check form conditions on state change
     useEffect(() => {
-      if (!state?.sectionsProgressData) {
+      if (!state?.mergedProgress) {
         return;
       }
 

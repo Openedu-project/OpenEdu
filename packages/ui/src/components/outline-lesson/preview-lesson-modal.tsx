@@ -34,12 +34,7 @@ const PreviewLessonModal = ({ lessonUid, sectionUid, courseData, isOpen, onClose
         <Spinner />
       ) : dataLessonLearn?.contents ? (
         <div className="h-full w-full">
-          <LearningProviders
-            course={courseData}
-            initialProgressData={[]}
-            initialSection={sectionUid}
-            initialLesson={lessonUid}
-          >
+          <LearningProviders course={courseData} initialSection={sectionUid} initialLesson={lessonUid}>
             <LessonContentBlocks
               course_data={courseData}
               lesson_uid={lessonUid}

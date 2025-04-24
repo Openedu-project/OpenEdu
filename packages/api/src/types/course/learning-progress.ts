@@ -87,10 +87,13 @@ export interface ISectionLearningProgress
 
 export interface ILessonLearningProgress
   extends Omit<ILesson, 'contents'>,
-    Omit<ILessonProgress, 'lesson_uid' | 'lesson_contents'> {
+    Omit<ILessonProgress, 'lesson_uid' | 'lesson_content_by_uid'> {
   contents?: IContentLearningProgress[];
   lesson_contents: IContentProgress[];
+  lesson_content_by_uid?: ILessonContentByUid;
   available?: boolean;
+  section_index?: number;
+  lesson_index?: number;
 }
 
 export interface IContentLearningProgress extends Omit<ILessonContent, 'uid'>, IContentProgress {

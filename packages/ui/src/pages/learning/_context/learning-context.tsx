@@ -1,7 +1,7 @@
 'use client';
 import type { ICourseOutline } from '@oe/api';
-import type { ISectionLearningProgress } from '@oe/api';
 import type { ReactNode } from 'react';
+import type { IMergedLearningProgress } from '../_type';
 import { CourseProvider } from './course-context';
 import { LessonProvider } from './lesson-context';
 import { ProgressProvider } from './progress-context';
@@ -16,7 +16,7 @@ export function LearningProviders({
 }: {
   children: ReactNode;
   course: ICourseOutline | null;
-  initialProgressData?: ISectionLearningProgress[];
+  initialProgressData?: IMergedLearningProgress;
   initialSection: string;
   initialLesson: string;
 }) {
