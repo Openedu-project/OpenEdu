@@ -130,7 +130,13 @@ export const InputDefault = ({
   };
 
   useEffect(() => {
+    if (!inputRef?.current) {
+      return;
+    }
+
     inputRef.current?.focus();
+    inputRef.current.selectionStart = inputRef.current.value.length;
+    inputRef.current.selectionEnd = inputRef.current.value.length;
   }, [inputRef]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
@@ -153,7 +159,7 @@ export const InputDefault = ({
         className={cn(
           'mcaption-regular16 no-scrollbar block h-[22px] w-full resize-none bg-transparent focus-within:outline-hidden'
         )}
-        maxRows={3}
+        maxRows={5}
         ref={inputRef}
         onPaste={handlePaste}
       />

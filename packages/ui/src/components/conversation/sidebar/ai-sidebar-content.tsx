@@ -4,7 +4,7 @@ import { AI_ROUTES } from '@oe/core';
 import { CircleChevronLeft, CirclePlus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
-import { Link } from '#common/navigation';
+import { Link, usePathname } from '#common/navigation';
 import { Image } from '#components/image';
 import { Badge } from '#shadcn/badge';
 import { Button } from '#shadcn/button';
@@ -29,6 +29,7 @@ export function AISidebarContent({
   onClick?: () => void;
 }) {
   const tAI = useTranslations('aiAssistant');
+  const pathname = usePathname();
 
   return (
     <SidebarContent className="scrollbar flex h-full flex-col gap-2 overflow-y-auto bg-primary/5 p-2">
@@ -86,12 +87,18 @@ export function AISidebarContent({
               key={item.value}
               href={item.href}
               disabled={item.isComming}
+              activeClassName={open ? undefined : ''}
               className={cn(
                 '!no-underline h-auto w-full flex-wrap justify-center rounded-3xl p-1 hover:cursor-pointer hover:bg-primary/10',
                 open && 'justify-start'
               )}
             >
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ai-more-feature-gradient md:h-10 md:w-10">
+              <div
+                className={cn(
+                  'flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ai-more-feature-gradient md:h-10 md:w-10',
+                  pathname?.includes(item.value) && !open && 'border border-primary'
+                )}
+              >
                 {item.icon}
               </div>
               <p

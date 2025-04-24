@@ -64,7 +64,6 @@ export function ChatWindow({ id, agent, className }: IChatWindowProps) {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    console.log(isNewChat, id);
     if (!isNewChat) {
       setSelectedAgent(agent);
       resetMessages();
@@ -112,7 +111,7 @@ export function ChatWindow({ id, agent, className }: IChatWindowProps) {
   );
 
   return (
-    <div className={cn('flex h-full flex-col justify-center', className)}>
+    <div className={cn('scrollbar flex h-full flex-col overflow-y-auto', className)}>
       {messages.length > 0 || id ? (
         <MessageContainer
           className="overflow-x-hidden"

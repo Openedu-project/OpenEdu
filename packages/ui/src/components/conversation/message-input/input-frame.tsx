@@ -21,15 +21,16 @@ export function InputFrame({
   messagesEndRef?: RefObject<HTMLDivElement | null>;
   reset?: boolean;
 }) {
-  const { resetMessages, selectedModel, resetStatus, setNewConversationId } = useConversationStore();
+  const { resetMessages, selectedModel, resetStatus, setNewConversationId, setSelectedAgent } = useConversationStore();
   const sendMessage = useSendMessageHandler(agent, id, undefined, messagesEndRef);
 
   useEffect(() => {
     if (reset) {
       resetStatus();
       resetMessages();
+      setSelectedAgent(agent);
     }
-  }, [reset, resetStatus, resetMessages]);
+  }, [reset, resetStatus, resetMessages, setSelectedAgent, agent]);
 
   const messageType = useMemo(() => {
     if (agent !== 'ai_search') {
