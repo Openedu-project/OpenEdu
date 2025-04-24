@@ -64,6 +64,7 @@ export function ChatWindow({ id, agent, className }: IChatWindowProps) {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
+    console.log(isNewChat, id);
     if (!isNewChat) {
       setSelectedAgent(agent);
       resetMessages();

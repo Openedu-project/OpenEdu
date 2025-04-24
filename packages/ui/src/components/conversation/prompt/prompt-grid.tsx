@@ -8,7 +8,6 @@ import { Button } from '#shadcn/button';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { ExpandPromptCard } from './prompt-card';
-// import { PromptPopup } from './prompt-popup';
 
 export const PromptGrid = ({
   categoryId,
@@ -18,6 +17,7 @@ export const PromptGrid = ({
   name,
   className,
   PromptPopup,
+  callbackFn,
 }: {
   name?: string;
   categoryId?: string;
@@ -26,12 +26,12 @@ export const PromptGrid = ({
   litmited?: number;
   className?: string;
   PromptPopup?: ElementType;
+  callbackFn?: () => void;
 }) => {
   const tGeneral = useTranslations('general');
   const [promptData, setPromptData] = useState<IPrompt[]>([]);
   const { selectedAgent } = useConversationStore();
   const [count, setCount] = useState(4);
-  const [disabled, setDisabled] = useState(false);
   const [searchParams, setSearchParams] = useState({
     page: 1,
     per_page: perPage,
@@ -93,11 +93,8 @@ export const PromptGrid = ({
             key={prompt.id}
             text={prompt.text}
             side={i < 4 ? 'bottom' : 'top'}
-            disabled={disabled}
-            callbackFn={() => {
-              setDisabled(true);
-            }}
             agent={agent}
+            callbackFn={callbackFn}
           />
         ))}
       </div>

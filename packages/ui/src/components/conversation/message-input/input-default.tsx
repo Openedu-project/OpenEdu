@@ -9,6 +9,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import type { FileStatusType, FileType } from '#components/uploader';
 import { FormFieldWithLabel } from '#shadcn/form';
 import { toast } from '#shadcn/sonner';
+import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { MAX_FILES, MAX_SIZE_BYTES } from '../constants';
 import type { InputFieldProps } from '../type';
@@ -24,6 +25,7 @@ export const InputDefault = ({
 }: InputFieldProps<z.infer<typeof chatSchema>>) => {
   const tAI = useTranslations('aiAssistant');
   const t = useTranslations('uploader');
+  const { inputValue, setInputValue } = useConversationStore();
   const loadingFileRef = useRef<string | null>(null);
 
   const { append, update } = useFieldArray({
@@ -130,6 +132,17 @@ export const InputDefault = ({
   useEffect(() => {
     inputRef.current?.focus();
   }, [inputRef]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (inputValue) {
+      form?.setValue('message', inputValue, {
+        shouldValidate: true,
+      });
+      inputRef.current?.focus();
+      setInputValue('');
+    }
+  }, [inputValue]);
 
   return (
     <FormFieldWithLabel name="message" className={cn('w-full grow', className)} showErrorMessage={false}>
