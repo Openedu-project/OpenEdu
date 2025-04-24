@@ -64,7 +64,7 @@ export function CoursePrice({
           {hasCryptoDiscount ? (
             <>
               <span className="mcaption-bold14">
-                {formatCurrency(Number(priceSettings.crypto_discount_price), {
+                {formatCurrency(Number(priceSettings.crypto_price), {
                   currency: priceSettings.crypto_currency,
                   decimals: 2,
                 })}
