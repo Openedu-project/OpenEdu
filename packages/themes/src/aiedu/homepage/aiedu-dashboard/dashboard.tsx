@@ -56,18 +56,18 @@ const AieduHomepageDashboard: SectionComponent<'homepage', 'aieduDashboard'> = (
 
       {/* Total Stats Section */}
       <div className="mb-6 rounded-lg bg-primary p-6 text-background">
-        <div className="space-y-4 md:flex md:items-center md:justify-center">
+        <div className="space-y-4 md:flex md:items-center md:justify-center md:space-y-0">
           <div className="px-6 text-center">
-            <div className="mb-2 font-bold text-3xl text-secondary md:text-5xl">
+            <div className="mb-2 font-bold text-3xl text-secondary lg:text-5xl">
               {formatNumber(props?.totalStats?.registrations)}
             </div>
             <div className="text-sm">{t('registerCount')}</div>
           </div>
 
-          <Sparkle className="w-full md:w-fit" />
+          <Sparkle className="w-full lg:w-fit" />
 
           <div className="px-6 text-center">
-            <div className="mb-2 font-bold text-3xl text-warning md:text-5xl">
+            <div className="mb-2 font-bold text-3xl text-warning lg:text-5xl">
               {formatNumber(props?.totalStats?.certificates)}
             </div>
             <div className="text-sm">{t('certCount')}</div>
@@ -76,7 +76,7 @@ const AieduHomepageDashboard: SectionComponent<'homepage', 'aieduDashboard'> = (
       </div>
 
       {/* Top Cities Section */}
-      <div className="mb-6 space-y-2 md:flex md:gap-4 md:space-y-0">
+      <div className="mb-6 space-y-2 lg:flex lg:gap-4 lg:space-y-0">
         {topCitites?.map(city => (
           <TrophyCard
             key={city?.type}

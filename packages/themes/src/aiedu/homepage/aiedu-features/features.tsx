@@ -1,12 +1,14 @@
 import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 
+import AICourseBg from '@oe/assets/images/theme/aiedu/ai-course.png';
 import type { FileType } from '@oe/ui';
 import { Image } from '@oe/ui';
 import type { SectionComponent } from '../../../_types/theme-page';
 import { AieduButton, type AieduButtonProps } from '../../_components/button';
 import { AieduLayoutSection } from '../../_components/layout-section';
 import { Title, type TitleProps } from '../../_components/title';
+
 // Theme step 4: create sectionProps
 export interface AieduHomepageFeaturesProps extends TitleProps {
   image?: FileType;
@@ -19,7 +21,20 @@ export interface AieduHomepageFeaturesProps extends TitleProps {
 const AieduHomepageFeatures: SectionComponent<'homepage', 'aieduFeatures'> = ({ className, props }) => {
   const t = useTranslations('themePage.aiedu.homepage.aieduFeatures');
   return (
-    <AieduLayoutSection background="bg-gradient-to-b from-primary to-white" className={cn('space-y-6', className)}>
+    <AieduLayoutSection
+      background="bg-gradient-to-b from-primary from-50% to-white to-98%"
+      className={cn('space-y-6', className)}
+    >
+      <Image
+        src={AICourseBg.src}
+        alt="logo"
+        // containerHeight={80}
+        // fill
+        height={AICourseBg?.height ?? 80}
+        width={AICourseBg?.width ?? 400}
+        // quality={100}
+        className="h-full w-full object-contain"
+      />
       <div className="space-y-2 md:flex md:justify-between">
         {/* Left side - Title */}
         {/* biome-ignore lint/nursery/useSortedClasses: <explanation> */}
