@@ -36,12 +36,15 @@ const PriceDisplay = ({ value, currency = 'VND', discount, isBold }: PriceDispla
       <span className={textStyle}>
         <span className="mr-1 text-foreground">{currency}</span>
         {formatCurrency(Number(value ?? 0), {
+          currency,
+          style: 'decimal',
           showSymbol: false,
+          decimals: 2,
         })}
       </span>
       {Number(discount) > 0 && (
         <span className="mcaption-regular16 line-through">
-          {currency} {formatCurrency(unitPrice, { showSymbol: false })}
+          {currency} {formatCurrency(unitPrice, { currency, style: 'decimal', showSymbol: false, decimals: 2 })}
         </span>
       )}
     </div>
