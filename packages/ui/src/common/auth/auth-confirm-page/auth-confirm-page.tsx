@@ -58,6 +58,12 @@ export async function AuthConfirmPage({ banner, themeName = 'academia' }: AuthCo
       }
 
       if (response?.require_set_password) {
+        try {
+          decodedToken = base64ToJson(response?.token);
+        } catch {
+          decodedToken = null;
+        }
+
         return (
           <AuthLayout
             title={tThemeAuth('authConfirm.title')}
