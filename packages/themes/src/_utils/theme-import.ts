@@ -405,6 +405,30 @@ export const THEMES_RENDER_CLIENT: ThemeRender = {
           default: mod.AieduHomepageHero,
         }))
       ),
+      aieduFeatures: dynamic(() =>
+        import('../aiedu/homepage/aiedu-features/features').then(mod => ({ default: mod.AieduHomepageFeatures }))
+      ),
+      aieduExpert: dynamic(() =>
+        import('../aiedu/homepage/aiedu-expert/expert').then(mod => ({ default: mod.AieduHomepageExpert }))
+      ),
+      aieduDashboard: dynamic(() =>
+        import('../aiedu/homepage/aiedu-dashboard/dashboard').then(mod => ({ default: mod.AieduHomepageDashboard }))
+      ),
+      aieduBlog: dynamic(() =>
+        import('../aiedu/homepage/aiedu-blog/aiedu-blog-client').then(mod => ({ default: mod.AieduHomepageBlogClient }))
+      ),
+      aieduCert: dynamic(() =>
+        import('../aiedu/homepage/aiedu-cert/cert').then(mod => ({ default: mod.AieduHomepageCert }))
+      ),
+      aieduGuide: dynamic(() =>
+        import('../aiedu/homepage/aiedu-guide/guide').then(mod => ({ default: mod.AieduHomepageGuide }))
+      ),
+      aieduSponsors: dynamic(() =>
+        import('../aiedu/homepage/aiedu-sponsors/sponsors').then(mod => ({ default: mod.AieduHomepageSponsors }))
+      ),
+      aieduGallery: dynamic(() =>
+        import('../aiedu/homepage/aiedu-gallery/gallery').then(mod => ({ default: mod.AieduHomepageGallery }))
+      ),
     },
     auth: {
       theme: undefined,

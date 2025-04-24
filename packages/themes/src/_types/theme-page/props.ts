@@ -59,7 +59,17 @@ import type {
   ScholarHomepageTestimonialsProps,
 } from '../../scholar/type';
 
-import type { AieduHomepageHeroProps } from '../../aiedu/type';
+import type {
+  AieduHomepageBlogsProps,
+  AieduHomepageCertProps,
+  AieduHomepageDashboardProps,
+  AieduHomepageExpertProps,
+  AieduHomepageFeaturesProps,
+  AieduHomepageGalleryProps,
+  AieduHomepageGuideProps,
+  AieduHomepageHeroProps,
+  AieduHomepageSponsorsProps,
+} from '../../aiedu/type';
 
 import type { PageSectionConfig } from './config';
 
@@ -143,4 +153,12 @@ export interface SectionPropsMap<K extends ThemePageKey> {
   //Aiedu
   //Theme step 6: add the sectionProps to the sectionPropsMap with syntax: ${sectionKey}: DynamicProps<K, ${sectionProps}>
   aieduHero: DynamicProps<K, AieduHomepageHeroProps>;
+  aieduFeatures: DynamicProps<K, AieduHomepageFeaturesProps>;
+  aieduExpert: DynamicProps<K, AieduHomepageExpertProps>;
+  aieduDashboard: DynamicProps<K, AieduHomepageDashboardProps>;
+  aieduBlog: DynamicProps<K, AieduHomepageBlogsProps>;
+  aieduCert: DynamicProps<K, AieduHomepageCertProps>;
+  aieduGuide: DynamicProps<K, AieduHomepageGuideProps>;
+  aieduSponsors: DynamicProps<K, AieduHomepageSponsorsProps>;
+  aieduGallery: DynamicProps<K, AieduHomepageGalleryProps>;
 }

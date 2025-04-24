@@ -7,6 +7,14 @@ const pageRender: PageRender = {
     theme: undefined,
     // Theme step 23 : add section (use the server component)
     aieduHero: dynamic(() => import('./aiedu-hero').then(mod => mod.AieduHomepageHero)),
+    aieduFeatures: dynamic(() => import('./aiedu-features').then(mod => mod.AieduHomepageFeatures)),
+    aieduExpert: dynamic(() => import('./aiedu-expert').then(mod => mod.AieduHomepageExpert)),
+    aieduDashboard: dynamic(() => import('./aiedu-dashboard').then(mod => mod.AieduHomepageDashboard)),
+    aieduBlog: dynamic(() => import('./aiedu-blog/aiedu-blog-server').then(mod => mod.AieduHomepageBlogServer)),
+    aieduCert: dynamic(() => import('./aiedu-cert').then(mod => mod.AieduHomepageCert)),
+    aieduGuide: dynamic(() => import('./aiedu-guide').then(mod => mod.AieduHomepageGuide)),
+    aieduSponsors: dynamic(() => import('./aiedu-sponsors').then(mod => mod.AieduHomepageSponsors)),
+    aieduGallery: dynamic(() => import('./aiedu-gallery').then(mod => mod.AieduHomepageGallery)),
   },
 };
 

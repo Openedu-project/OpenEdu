@@ -1,4 +1,5 @@
 import AcademiaThumbnail from '@oe/assets/images/theme/thumbnail/academia.png';
+import AieduThumbnail from '@oe/assets/images/theme/thumbnail/aiedu.png';
 import AvailThumbnail from '@oe/assets/images/theme/thumbnail/avail.png';
 import FenetThumbnail from '@oe/assets/images/theme/thumbnail/fenet.png';
 import ScholarThumbnail from '@oe/assets/images/theme/thumbnail/scholar.png';
@@ -53,5 +54,5 @@ export const themeInfoThumbnail = {
   scholar: ScholarThumbnail,
   fenet: FenetThumbnail,
   // Theme step 15.2 (optional): add the thumbnail
-  aiedu: FenetThumbnail,
+  aiedu: AieduThumbnail,
 };
