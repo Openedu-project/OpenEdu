@@ -32,8 +32,6 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, lessonUid, ...props
   } = useProgress();
   // const { setCurrentLesson } = useCurrentLesson();
 
-  console.log(mergedProgress, 'mergedProgress');
-
   const currentLessonIndex = getLessonGlobalIndex(mergedProgress, lessonUid);
   const totalItems = getTotalLessons(mergedProgress);
 

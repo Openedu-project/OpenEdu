@@ -1,11 +1,12 @@
+'use client';
 import type { TLessonContent } from '@oe/api';
 import type { IQuizItemResponse } from '@oe/api';
+import dynamic from 'next/dynamic';
 import { type JSX, useMemo } from 'react';
 import { cn } from '#utils/cn';
 import type { ContentRenderer } from './_types/types';
-import { ContentPdf } from './content-pdf';
 import { ContentEmbedded } from './content-player/content-embedded';
-import { ContentVideo } from './content-player/content-video';
+// import { ContentVideo } from './content-player/content-video';
 import { ContentQuiz } from './content-quiz/content-quiz';
 import { ContentText } from './content-text';
 
@@ -19,6 +20,13 @@ interface IContentWrapperProps {
 const HEADER_HEIGHT_VAR = 'var(--header-with-sub-item-height)';
 const DEFAULT_PADDING = 16;
 const QUIZ_INFO_HEIGHT = 80; // Estimated height for VideoQuizInfo
+
+const ContentVideoLazy = dynamic(() => import('./content-player/content-video').then(mod => mod.ContentVideo), {
+  ssr: false,
+});
+const ContentPdfLazy = dynamic(() => import('./content-pdf').then(mod => mod.ContentPdf), {
+  ssr: false,
+});
 
 const CONTENT_STYLES = {
   common: {
@@ -79,7 +87,7 @@ export const CONTENT_RENDERERS: Record<TLessonContent, ContentRenderer> = {
       );
 
       return (
-        <ContentVideo
+        <ContentVideoLazy
           src={file?.url}
           title={file?.name}
           quizzes={quizzes as unknown as IQuizItemResponse[]}
@@ -105,7 +113,7 @@ export const CONTENT_RENDERERS: Record<TLessonContent, ContentRenderer> = {
     render: ({ data, onCompleteContent }) => {
       const url = data?.files?.[0]?.url || '';
 
-      return <ContentPdf url={url} onComplete={() => onCompleteContent?.({ uid: data?.uid })} />;
+      return <ContentPdfLazy url={url} onComplete={() => onCompleteContent?.({ uid: data?.uid })} />;
     },
     getClassName: isOnlyContent => getContentClassName(isOnlyContent),
   },
