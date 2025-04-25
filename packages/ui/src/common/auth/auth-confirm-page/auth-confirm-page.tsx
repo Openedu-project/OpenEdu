@@ -28,7 +28,7 @@ export async function AuthConfirmPage({ banner, themeName = 'academia' }: AuthCo
   const token = queryParams?.get('token');
   const event = queryParams?.get('event') as AuthEventName;
   const nextPath = queryParams?.get('next_path') ?? PLATFORM_ROUTES.homepage;
-  console.log('token', token);
+
   if (!(queryParams && token && event)) {
     redirect(nextPath);
   }
