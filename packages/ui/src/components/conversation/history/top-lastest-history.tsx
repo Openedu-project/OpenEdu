@@ -2,7 +2,7 @@
 import { type IChatHistory, useGetConversations } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { Button } from '#shadcn/button';
 import { formatDate, getHistoryByDate, getHistoryDates } from '../utils';
 import { AIHistoryModal } from './ai-history';
@@ -17,11 +17,12 @@ export const TopLastestHistory = memo(() => {
   const tAI = useTranslations('aiAssistant');
   const tGeneral = useTranslations('general');
   const [historyData, setHistoryData] = useState<IChatHistory[]>([]);
+  const initLoading = useRef(true);
   const { history, mutate, isLoading } = useGetConversations(TopLastestHistoryParams);
   const { id } = useParams();
   const datesData = useMemo(() => {
-    return getHistoryDates(history?.results ?? []);
-  }, [history?.results]);
+    return getHistoryDates(historyData ?? []);
+  }, [historyData]);
 
   useEffect(() => {
     if (!history || history?.results?.length === 0) {
@@ -35,13 +36,14 @@ export const TopLastestHistory = memo(() => {
         };
       })
     );
+    initLoading.current = false;
   }, [history]);
 
-  if (isLoading) {
+  if (isLoading && initLoading.current) {
     return <div className="mcaption-regular14 text-center">{tAI('loadingHistory')}</div>;
   }
 
-  if (!history || history?.results?.length === 0) {
+  if (!historyData || historyData.length === 0) {
     return <div className="mcaption-regular14 text-center">{tAI('noHistory')}</div>;
   }
 
@@ -57,14 +59,16 @@ export const TopLastestHistory = memo(() => {
           </div>
         </div>
       ))}
-      <AIHistoryModal
-        isLogin={true}
-        triggerButton={
-          <Button className="mx-auto flex" variant="link">
-            {tGeneral('viewAll')}
-          </Button>
-        }
-      />
+      {(history?.pagination?.total_items ?? 0) > 20 && (
+        <AIHistoryModal
+          isLogin={true}
+          triggerButton={
+            <Button className="mx-auto flex" variant="link">
+              {tGeneral('viewAll')}
+            </Button>
+          }
+        />
+      )}
     </div>
   );
 });
