@@ -28,7 +28,7 @@ export async function AuthConfirmPage({ banner, themeName = 'academia' }: AuthCo
   const token = queryParams?.get('token');
   const event = queryParams?.get('event') as AuthEventName;
   const nextPath = queryParams?.get('next_path') ?? PLATFORM_ROUTES.homepage;
-
+  console.log('token', token);
   if (!(queryParams && token && event)) {
     redirect(nextPath);
   }
@@ -59,10 +59,11 @@ export async function AuthConfirmPage({ banner, themeName = 'academia' }: AuthCo
 
       if (response?.require_set_password) {
         try {
-          decodedToken = base64ToJson(response?.token);
+          decodedToken = base64ToJson(decodeURIComponent(response?.token ?? ''));
         } catch {
           decodedToken = null;
         }
+
         return (
           <AuthLayout
             title={tThemeAuth('authConfirm.title')}
