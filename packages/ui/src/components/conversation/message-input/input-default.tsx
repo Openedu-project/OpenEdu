@@ -148,16 +148,23 @@ export const InputDefault = ({
       inputRef.current?.focus();
       setInputValue('');
 
-      // scroll into view input frame
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
+      const chatInput = document.getElementById('chat_input');
+      if (chatInput) {
+        chatInput.scrollIntoView({
+          behavior: 'auto',
+          block: 'start',
+        });
+      }
     }
   }, [inputValue]);
 
   return (
-    <FormFieldWithLabel name="message" className={cn('w-full grow', className)} showErrorMessage={false}>
+    <FormFieldWithLabel
+      name="message"
+      id="chat_input"
+      className={cn('w-full grow', className)}
+      showErrorMessage={false}
+    >
       <TextareaAutosize
         onKeyDown={handleKeyDown}
         onChange={handleInputChange}

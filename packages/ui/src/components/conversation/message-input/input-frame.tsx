@@ -49,7 +49,11 @@ export function InputFrame({
   }, []);
 
   return (
-    <div className={cn('mx-auto w-full max-w-3xl bg-background pt-2 xl:max-w-4xl', className)} ref={inputRef}>
+    <div
+      id="chat_input"
+      className={cn('mx-auto w-full max-w-3xl bg-background pt-2 xl:max-w-4xl', className)}
+      ref={inputRef}
+    >
       <MessageInput
         messageType={messageType}
         sendMessage={sendMessage}

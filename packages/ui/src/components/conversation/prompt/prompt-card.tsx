@@ -8,6 +8,7 @@ import { useLoginRequiredStore } from '#components/login-required-modal';
 import { Button } from '#shadcn/button';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
+import { useIsDesktop } from '../utils';
 
 const AnimatedDiv = animated('div');
 
@@ -25,6 +26,7 @@ export const ExpandPromptCard = ({
 }) => {
   const { setInputValue } = useConversationStore();
   const { setLoginRequiredModal } = useLoginRequiredStore();
+  const isDesktop = useIsDesktop();
 
   const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef(null);
@@ -36,10 +38,6 @@ export const ExpandPromptCard = ({
     config: { tension: 220, friction: 40 },
   });
   const openNewChatWithPrompt = async () => {
-    if (!isHovered) {
-      setIsHovered(true);
-      return;
-    }
     const login = await isLogin();
 
     if (!login) {
@@ -50,53 +48,79 @@ export const ExpandPromptCard = ({
     callbackFn?.();
   };
 
-  return (
-    <div className="relative px-2">
-      <div className={cn('invisible hidden lg:flex', 'flex-col items-end whitespace-normal rounded-3xl p-1.5 md:p-3')}>
-        <div className="relative w-full">
-          <div className="h-[60px]" />
-        </div>
-      </div>
-
-      <div
-        ref={cardRef}
-        className={cn(
-          'left-0 w-full lg:absolute',
-          side === 'top' && 'bottom-0',
-          side === 'bottom' && 'top-0',
-          'transition-all duration-300'
-        )}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        style={{
-          zIndex: isHovered ? 50 : 1,
-          transform: isHovered ? 'scale(1.05)' : 'scale(1)',
-        }}
-      >
-        <Button
-          variant="outline"
-          className={cn(
-            'mcaption-regular14 group relative h-auto w-full animate-fadeIn flex-col items-end whitespace-normal rounded-3xl bg-background p-3',
-            'before:absolute before:top-0 before:left-0 before:z-[-1]',
-            'before:rounded-3xl before:bg-white before:content-[""]',
-            'before:h-full before:w-full',
-            'hover:bg-primary/10',
-            isHovered && 'bg-primary/10'
-          )}
-          onClick={openNewChatWithPrompt}
-          disabled={disabled}
+  if (isDesktop) {
+    return (
+      <div className="relative px-2">
+        <div
+          className={cn('invisible hidden lg:flex', 'flex-col items-end whitespace-normal rounded-3xl p-1.5 md:p-3')}
         >
           <div className="relative w-full">
-            <AnimatedDiv style={textSpring} className="overflow-hidden">
-              <p ref={textRef} className="mcaption-regular14 text-start">
-                {text}
-              </p>
-            </AnimatedDiv>
+            <div className="h-[60px]" />
           </div>
+        </div>
 
-          <MoveRight className={cn('mt-2 hidden h-4 w-4 text-primary group-hover:block', isHovered && 'block')} />
-        </Button>
+        <div
+          ref={cardRef}
+          className={cn(
+            'left-0 w-full lg:absolute',
+            side === 'top' && 'bottom-0',
+            side === 'bottom' && 'top-0',
+            'transition-all duration-300'
+          )}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          style={{
+            zIndex: isHovered ? 50 : 1,
+            transform: isHovered ? 'scale(1.05)' : 'scale(1)',
+          }}
+        >
+          <Button
+            variant="outline"
+            className={cn(
+              'mcaption-regular14 group relative h-auto w-full animate-fadeIn flex-col items-end whitespace-normal rounded-3xl bg-background p-3',
+              'before:absolute before:top-0 before:left-0 before:z-[-1]',
+              'before:rounded-3xl before:bg-white before:content-[""]',
+              'before:h-full before:w-full',
+              'hover:bg-primary/10',
+              isHovered && 'bg-primary/10'
+            )}
+            onClick={openNewChatWithPrompt}
+            disabled={disabled}
+          >
+            <div className="relative w-full">
+              <AnimatedDiv style={textSpring} className="overflow-hidden">
+                <p ref={textRef} className="mcaption-regular14 text-start">
+                  {text}
+                </p>
+              </AnimatedDiv>
+            </div>
+
+            <MoveRight className={cn('mt-2 hidden h-4 w-4 text-primary group-hover:block', isHovered && 'block')} />
+          </Button>
+        </div>
       </div>
+    );
+  }
+
+  return (
+    <div className="relative px-2">
+      <Button
+        variant="outline"
+        className={cn(
+          'mcaption-regular14 group relative h-auto w-full animate-fadeIn flex-col items-end whitespace-normal rounded-3xl bg-background p-3',
+          'before:absolute before:top-0 before:left-0 before:z-[-1]',
+          'before:rounded-3xl before:bg-white before:content-[""]',
+          'before:h-full before:w-full',
+          'hover:bg-primary/10',
+          isHovered && 'bg-primary/10'
+        )}
+        onClick={openNewChatWithPrompt}
+        disabled={disabled}
+      >
+        <p className="mcaption-regular14 w-full text-start">{text}</p>
+
+        <MoveRight className={cn('mt-2 h-4 w-4 text-primary ')} />
+      </Button>
     </div>
   );
 };
