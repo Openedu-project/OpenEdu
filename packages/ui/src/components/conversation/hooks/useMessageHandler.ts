@@ -1,5 +1,5 @@
 import { createAPIUrl, postEmptyConversation } from '@oe/api';
-import type { HTTPError, IConversationRequest } from '@oe/api';
+import type { HTTPError } from '@oe/api';
 import { postConversation } from '@oe/api';
 import type { IAIModel, IAIStatus, IMessage, TAgentType } from '@oe/api';
 import { revalidateData } from '@oe/api';
@@ -60,17 +60,7 @@ export const useSendMessageHandler = (
         reasoning: '',
       };
 
-      const params: IConversationRequest = {
-        ai_agent_type: agent,
-        message_ai_agent_type: type,
-        ai_model_id: currentSelectedModel?.id,
-        content: messageInput,
-        content_type: 'text',
-        attachment_ids: files?.filter(f => ['finished', 'completed'].includes(f.status ?? '')).map(f => f.id),
-        ai_conversation_id: (id as string) ?? newId,
-        message_id,
-        extended_thinking: thinking,
-      };
+      const params: ISendMessageParams = { messageInput, type, files, message_id, role, status };
 
       const index = messages?.findIndex(msg => msg.id === message_id) ?? -1;
       if (index === -1) {
@@ -106,7 +96,17 @@ export const useSendMessageHandler = (
           return;
         }
 
-        const data = await postConversation(undefined, params);
+        const data = await postConversation(undefined, {
+          ai_agent_type: agent,
+          message_ai_agent_type: type,
+          ai_model_id: currentSelectedModel?.id,
+          content: messageInput,
+          content_type: 'text',
+          attachment_ids: files?.filter(f => ['finished', 'completed'].includes(f.status ?? '')).map(f => f.id),
+          ai_conversation_id: (id as string) ?? newId,
+          message_id,
+          extended_thinking: thinking,
+        });
 
         if (data) {
           setGenMessage(data.messages?.at(-1) as IMessage, undefined, true);

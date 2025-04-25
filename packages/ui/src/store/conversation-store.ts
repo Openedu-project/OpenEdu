@@ -1,12 +1,5 @@
-import type {
-  IAIModel,
-  IAIStatus,
-  IAgenConfigs,
-  IConversationRequest,
-  IMessage,
-  ISourceProps,
-  TAgentType,
-} from '@oe/api';
+import type { ISendMessageParams } from '@/components/conversation/type';
+import type { IAIModel, IAIStatus, IAgenConfigs, IMessage, ISourceProps, TAgentType } from '@oe/api';
 import { createStore } from '@oe/core';
 
 export const AGENT_CONFIG: Record<TAgentType, keyof IAgenConfigs> = {
@@ -45,8 +38,8 @@ interface IConversationStore {
   setNewConversationId: (id: string) => void;
   inputValue?: string;
   setInputValue: (value?: string) => void;
-  pendingParams?: IConversationRequest;
-  setPendingParams: (pendingParams?: IConversationRequest) => void;
+  pendingParams?: ISendMessageParams;
+  setPendingParams: (pendingParams?: ISendMessageParams) => void;
 }
 
 export const useConversationStore = createStore<IConversationStore>(set => {
@@ -164,7 +157,7 @@ export const useConversationStore = createStore<IConversationStore>(set => {
       });
     },
     pendingParams: undefined,
-    setPendingParams: (pendingParams?: IConversationRequest) =>
+    setPendingParams: (pendingParams?: ISendMessageParams) =>
       set(() => {
         return { pendingParams };
       }),

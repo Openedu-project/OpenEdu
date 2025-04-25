@@ -30,29 +30,30 @@ const MessageContainer = dynamic(() => import('./message/message-container').the
   ),
 });
 
-export function ChatWindow({ id, agent, className }: IChatWindowProps) {
+export const ChatWindow = ({ id, agent, className }: IChatWindowProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const { mutate: globalMutate } = useSWRConfig();
   const tAI = useTranslations('aiAssistant');
 
   const {
-    isNewChat,
     setMessages,
     resetMessages,
     resetStatus,
     selectedModel,
     messages,
     resetGenMessage,
-    setSelectedAgent,
     resetOpenWebSource,
     setGenMessage,
     setStatus,
     setResetPage,
+    pendingParams,
+    setPendingParams,
   } = useConversationStore();
 
   const sendMessage = useSendMessageHandler(agent, id);
-  const shouldFetch = useRef<boolean>(!isNewChat);
+  const shouldFetch = useRef<boolean>(!pendingParams);
+
   const { data: messageData, mutate } = useGetConversationDetails({
     shouldFetch: shouldFetch.current,
     id,
@@ -62,16 +63,7 @@ export function ChatWindow({ id, agent, className }: IChatWindowProps) {
     },
   });
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (!isNewChat) {
-      setSelectedAgent(agent);
-      resetMessages();
-      resetGenMessage();
-      resetStatus();
-      resetOpenWebSource();
-    }
-
     const apiKey = createAPIUrl({
       endpoint: API_ENDPOINT.COM_CHANNELS_ID,
       params: { id },
@@ -79,11 +71,19 @@ export function ChatWindow({ id, agent, className }: IChatWindowProps) {
     globalMutate((key: string) => !!key?.includes('/api/com-v1/channels/') && !key?.includes(apiKey), undefined, {
       revalidate: false,
     });
-  }, [id, agent, setSelectedAgent]);
+  }, [id, globalMutate]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (messageData?.results && !isNewChat) {
+    if (pendingParams) {
+      sendMessage(pendingParams);
+      setPendingParams(undefined);
+    }
+  }, []);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (messageData?.results) {
       const genMsgData = messageData.results.messages.find(msg => GENERATING_STATUS.includes(msg.status ?? ''));
 
       if (genMsgData) {
@@ -95,6 +95,11 @@ export function ChatWindow({ id, agent, className }: IChatWindowProps) {
           },
           true
         );
+      } else {
+        resetMessages();
+        resetGenMessage();
+        resetStatus();
+        resetOpenWebSource();
       }
       setMessages(
         [...messageData.results.messages.filter(msg => !GENERATING_STATUS.includes(msg.status ?? ''))].reverse()
@@ -138,4 +143,4 @@ export function ChatWindow({ id, agent, className }: IChatWindowProps) {
       )}
     </div>
   );
-}
+};
