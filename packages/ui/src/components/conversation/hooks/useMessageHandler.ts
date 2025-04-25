@@ -1,5 +1,5 @@
-import { createAPIUrl } from '@oe/api';
-import type { HTTPError } from '@oe/api';
+import { createAPIUrl, postEmptyConversation } from '@oe/api';
+import type { HTTPError, IConversationRequest } from '@oe/api';
 import { postConversation } from '@oe/api';
 import type { IAIModel, IAIStatus, IMessage, TAgentType } from '@oe/api';
 import { revalidateData } from '@oe/api';
@@ -27,6 +27,7 @@ export const useSendMessageHandler = (
     setGenMessage,
     resetOpenWebSource,
     resetGenMessage,
+    setPendingParams,
   } = useConversationStore();
   const router = useRouter();
   const tError = useTranslations('errors');
@@ -59,6 +60,18 @@ export const useSendMessageHandler = (
         reasoning: '',
       };
 
+      const params: IConversationRequest = {
+        ai_agent_type: agent,
+        message_ai_agent_type: type,
+        ai_model_id: currentSelectedModel?.id,
+        content: messageInput,
+        content_type: 'text',
+        attachment_ids: files?.filter(f => ['finished', 'completed'].includes(f.status ?? '')).map(f => f.id),
+        ai_conversation_id: (id as string) ?? newId,
+        message_id,
+        extended_thinking: thinking,
+      };
+
       const index = messages?.findIndex(msg => msg.id === message_id) ?? -1;
       if (index === -1) {
         addMessage(newMessage, () => {
@@ -80,27 +93,9 @@ export const useSendMessageHandler = (
       }
 
       try {
-        const data = await postConversation(undefined, {
-          ai_agent_type: agent,
-          message_ai_agent_type: type,
-          ai_model_id: currentSelectedModel?.id,
-          content: messageInput,
-          content_type: 'text',
-          attachment_ids: files?.filter(f => ['finished', 'completed'].includes(f.status ?? '')).map(f => f.id),
-          ai_conversation_id: (id as string) ?? newId,
-          message_id,
-          extended_thinking: thinking,
-        });
-
-        if (data) {
-          setGenMessage(data.messages?.at(-1) as IMessage, undefined, true);
-        }
-
-        if (messageID.includes('id_')) {
-          updateMessages(data.messages?.at(0) as IMessage, undefined, undefined, messageID);
-        }
-
         if (!id) {
+          const data = await postEmptyConversation(undefined, { ai_agent_type: agent });
+          setPendingParams(params);
           setIsNewChat(true);
           router.push(
             createAPIUrl({
@@ -108,6 +103,17 @@ export const useSendMessageHandler = (
               params: { id: data.id },
             })
           );
+          return;
+        }
+
+        const data = await postConversation(undefined, params);
+
+        if (data) {
+          setGenMessage(data.messages?.at(-1) as IMessage, undefined, true);
+        }
+
+        if (messageID.includes('id_')) {
+          updateMessages(data.messages?.at(0) as IMessage, undefined, undefined, messageID);
         }
 
         if (messagesEndRef?.current) {
@@ -144,6 +150,7 @@ export const useSendMessageHandler = (
       messagesEndRef,
       resetGenMessage,
       agentData,
+      setPendingParams,
     ]
   );
 };

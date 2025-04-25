@@ -11,9 +11,9 @@ import { useReconnection } from './useReconnection';
 import { useSocketAuth } from './useSocketAuth';
 import { useWebSocketEndpoint } from './useWebSocketEndpoint';
 
-export const useSocket = (isAuthenticated: boolean) => {
+export const useSocket = (isAuthenticated: boolean, conversation_id?: string) => {
   const { accessToken, referrer, error: authError } = useSocketAuth(isAuthenticated);
-  const endpoint = useWebSocketEndpoint(accessToken, referrer);
+  const endpoint = useWebSocketEndpoint(accessToken, referrer, conversation_id);
 
   const { setSocketData } = useSocketStore();
   const { genMessage, setGenMessage, status } = useConversationStore();
