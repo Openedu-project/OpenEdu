@@ -147,6 +147,12 @@ export const InputDefault = ({
       });
       inputRef.current?.focus();
       setInputValue('');
+
+      // scroll into view input frame
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
     }
   }, [inputValue]);
 

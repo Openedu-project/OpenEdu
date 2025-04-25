@@ -14,7 +14,7 @@ type Props = {
 };
 
 export function AISidebarLayout({ children, className, login, AIChatModels }: Props) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const { setSelectedModel, selectedModel } = useConversationStore();
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {

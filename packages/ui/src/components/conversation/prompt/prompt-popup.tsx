@@ -11,10 +11,12 @@ export function PromptPopup({
   categoryId,
   name,
   agent,
+  checkExpandSide,
 }: {
   categoryId?: string;
   name?: string;
   agent?: TAgentType;
+  checkExpandSide?: boolean;
 }) {
   const { selectedAgent } = useConversationStore();
   const tAI = useTranslations('aiAssistant');
@@ -50,6 +52,7 @@ export function PromptPopup({
                 callbackFn={() => {
                   setOpen(false);
                 }}
+                checkExpandSide={checkExpandSide}
               />
             </div>
             <ScrollBar className="ml-4" />

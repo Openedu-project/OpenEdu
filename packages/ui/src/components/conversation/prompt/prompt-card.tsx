@@ -51,7 +51,7 @@ export const ExpandPromptCard = ({
   };
 
   return (
-    <div className="relative">
+    <div className="relative px-2">
       <div className={cn('invisible hidden lg:flex', 'flex-col items-end whitespace-normal rounded-3xl p-1.5 md:p-3')}>
         <div className="relative w-full">
           <div className="h-[60px]" />
