@@ -76,9 +76,10 @@ export type FormComponent =
   | 'number' // ???
   | 'switch' // TODO
   | 'multipleChoiceGrid' //new
-  | 'checkboxGrid' //new
+  | 'checkboxGrid' //new//chua lam
   | 'multipleChoice' //radio
-  | 'submitButton';
+  | 'submitButton'
+  | 'radio';
 
 export interface FormComponentDefinition {
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
