@@ -1,14 +1,14 @@
-"use client";
-import type { ICourseOutline } from "@oe/api";
-import type { IUser } from "@oe/api";
-import { AUTH_ROUTES } from "@oe/core";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo } from "react";
-import { usePathname } from "#common/navigation";
-import { createCourseUrl } from "#utils/course-url";
-import { useCurrentLesson } from "../_context";
-import { useProgress } from "../_context/progress-context";
-import { getUidByLessonIndex } from "../_utils/utils";
+'use client';
+import type { ICourseOutline } from '@oe/api';
+import type { IUser } from '@oe/api';
+import { AUTH_ROUTES } from '@oe/core';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useMemo } from 'react';
+import { usePathname } from '#common/navigation';
+import { createCourseUrl } from '#utils/course-url';
+import { useCurrentLesson } from '../_context';
+import { useProgress } from '../_context/progress-context';
+import { getUidByLessonIndex } from '../_utils/utils';
 
 interface AuthCheckProps {
   course: ICourseOutline;
@@ -21,9 +21,7 @@ export function AuthCheck({ course, me }: AuthCheckProps) {
   const searchParams = useSearchParams();
 
   const nextPath = useMemo(() => {
-    return searchParams.size > 0
-      ? `${pathname}?${searchParams.toString()}`
-      : pathname;
+    return searchParams.size > 0 ? `${pathname}?${searchParams.toString()}` : pathname;
   }, [pathname, searchParams]);
 
   const {
@@ -35,16 +33,12 @@ export function AuthCheck({ course, me }: AuthCheckProps) {
     if (!me) {
       router.push(`${AUTH_ROUTES.login}?next=${encodeURIComponent(nextPath)}`);
     } else if (!course?.is_enrolled) {
-      router.push(createCourseUrl("detail", { slug: course?.slug }));
+      router.push(createCourseUrl('detail', { slug: course?.slug }));
     }
   }, [course, me, nextPath, router]);
 
   useEffect(() => {
-    if (
-      sectionsProgressData?.length === 0 ||
-      !course?.is_enrolled ||
-      !currentLesson
-    ) {
+    if (sectionsProgressData?.length === 0 || !course?.is_enrolled || !currentLesson) {
       return;
     }
 
@@ -55,7 +49,7 @@ export function AuthCheck({ course, me }: AuthCheckProps) {
         continue;
       }
 
-      const lesson = section.lessons.find((l) => l.uid === currentLesson);
+      const lesson = section.lessons.find(l => l.uid === currentLesson);
       if (lesson) {
         lessonAvailable = lesson.available ?? false;
         break;
@@ -66,7 +60,7 @@ export function AuthCheck({ course, me }: AuthCheckProps) {
       const firstLesson = getUidByLessonIndex(sectionsProgressData, 0);
       if (firstLesson) {
         router.push(
-          createCourseUrl("learning", {
+          createCourseUrl('learning', {
             slug: course?.slug,
             section: firstLesson.sectionUid as string,
             lesson: firstLesson.lessonUid as string,
@@ -74,13 +68,7 @@ export function AuthCheck({ course, me }: AuthCheckProps) {
         );
       }
     }
-  }, [
-    sectionsProgressData,
-    course?.is_enrolled,
-    currentLesson,
-    router,
-    course?.slug,
-  ]);
+  }, [sectionsProgressData, course?.is_enrolled, currentLesson, router, course?.slug]);
 
   return null;
 }

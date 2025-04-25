@@ -1,27 +1,14 @@
-"use client";
+'use client';
 
-import {
-  getLearningProgressesService,
-  updateLearningProgressService,
-} from "@oe/api";
-import type { TLessonContent } from "@oe/api";
-import type { ISectionLearningProgress } from "@oe/api";
-import type { IQuizSubmissionResponse } from "@oe/api";
-import {
-  type ReactNode,
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useReducer,
-} from "react";
-import { toast } from "sonner";
-import {
-  checkCompleteAt,
-  isLessonContentComplete,
-} from "../_utils/learning-progress";
-import { mergeSectionWithProgress } from "../_utils/utils";
-import { useCourse } from "./course-context";
+import { getLearningProgressesService, updateLearningProgressService } from '@oe/api';
+import type { TLessonContent } from '@oe/api';
+import type { ISectionLearningProgress } from '@oe/api';
+import type { IQuizSubmissionResponse } from '@oe/api';
+import { type ReactNode, createContext, useCallback, useContext, useMemo, useReducer } from 'react';
+import { toast } from 'sonner';
+import { checkCompleteAt, isLessonContentComplete } from '../_utils/learning-progress';
+import { mergeSectionWithProgress } from '../_utils/utils';
+import { useCourse } from './course-context';
 
 type ProgressState = {
   sectionsProgressData: ISectionLearningProgress[];
@@ -29,10 +16,10 @@ type ProgressState = {
 };
 
 type ProgressAction =
-  | { type: "SET_PROGRESS_DATA"; payload: ISectionLearningProgress[] }
-  | { type: "SET_IS_NAVIGATING"; payload: boolean }
+  | { type: 'SET_PROGRESS_DATA'; payload: ISectionLearningProgress[] }
+  | { type: 'SET_IS_NAVIGATING'; payload: boolean }
   | {
-      type: "UPDATE_LESSON_STATUS";
+      type: 'UPDATE_LESSON_STATUS';
       payload: { lessonId: string; status: string; progress: number };
     };
 
@@ -44,11 +31,7 @@ type ProgressContextType = {
   isSectionCompleted: (sectionUid: string) => boolean;
   setSectionsProgressData: (data: ISectionLearningProgress[]) => void;
   setIsNavigatingLesson: (isNavigating: boolean) => void;
-  updateLessonStatus: (
-    lessonId: string,
-    status: string,
-    progress: number
-  ) => void;
+  updateLessonStatus: (lessonId: string, status: string, progress: number) => void;
   completeContent: (params: {
     lesson_content_uid: string;
     type: TLessonContent;
@@ -61,31 +44,24 @@ type ProgressContextType = {
   }) => Promise<void>;
 };
 
-const ProgressContext = createContext<ProgressContextType | undefined>(
-  undefined
-);
+const ProgressContext = createContext<ProgressContextType | undefined>(undefined);
 
-const progressReducer = (
-  state: ProgressState,
-  action: ProgressAction
-): ProgressState => {
+const progressReducer = (state: ProgressState, action: ProgressAction): ProgressState => {
   switch (action.type) {
-    case "SET_PROGRESS_DATA":
+    case 'SET_PROGRESS_DATA':
       return {
         ...state,
         sectionsProgressData: action.payload,
       };
-    case "SET_IS_NAVIGATING":
+    case 'SET_IS_NAVIGATING':
       return {
         ...state,
         isNavigating: action.payload,
       };
-    case "UPDATE_LESSON_STATUS": {
+    case 'UPDATE_LESSON_STATUS': {
       const { lessonId, progress } = action.payload;
 
-      const updatedSections = JSON.parse(
-        JSON.stringify(state.sectionsProgressData)
-      ) as ISectionLearningProgress[];
+      const updatedSections = JSON.parse(JSON.stringify(state.sectionsProgressData)) as ISectionLearningProgress[];
 
       // Find and update lesson status
       for (const section of updatedSections) {
@@ -93,9 +69,7 @@ const progressReducer = (
           continue;
         }
 
-        const lessonIndex = section.lessons.findIndex(
-          (l) => l.uid === lessonId
-        );
+        const lessonIndex = section.lessons.findIndex(l => l.uid === lessonId);
         if (lessonIndex >= 0 && section.lessons[lessonIndex]) {
           section.lessons[lessonIndex].completed_percent = progress;
           break;
@@ -152,9 +126,7 @@ export function ProgressProvider({
     const { sectionsProgressData } = state;
 
     return sectionsProgressData.every(
-      (section) =>
-        section.total_lesson > 0 &&
-        section.completed_lesson / section.total_lesson === 1
+      section => section.total_lesson > 0 && section.completed_lesson / section.total_lesson === 1
     );
   }, [state.sectionsProgressData, state]);
 
@@ -163,9 +135,7 @@ export function ProgressProvider({
       const { sectionsProgressData } = state;
 
       for (const section of sectionsProgressData) {
-        const lesson = section.lessons.find(
-          (lesson) => lesson.uid === lesson_uid
-        );
+        const lesson = section.lessons.find(lesson => lesson.uid === lesson_uid);
 
         if (lesson) {
           return lesson.complete_at !== 0;
@@ -181,40 +151,29 @@ export function ProgressProvider({
     (sectionUid: string): boolean => {
       const { sectionsProgressData } = state;
 
-      const section = sectionsProgressData.find(
-        (section) => section.uid === sectionUid
-      );
-      return section
-        ? section.total_lesson > 0 &&
-            section.completed_lesson / section.total_lesson === 1
-        : false;
+      const section = sectionsProgressData.find(section => section.uid === sectionUid);
+      return section ? section.total_lesson > 0 && section.completed_lesson / section.total_lesson === 1 : false;
     },
     [state]
   );
 
   // Update sectionsProgressData
-  const setSectionsProgressData = useCallback(
-    (data: ISectionLearningProgress[]) => {
-      dispatch({ type: "SET_PROGRESS_DATA", payload: data });
-    },
-    []
-  );
+  const setSectionsProgressData = useCallback((data: ISectionLearningProgress[]) => {
+    dispatch({ type: 'SET_PROGRESS_DATA', payload: data });
+  }, []);
 
   // Update the status is changing lessons
   const setIsNavigatingLesson = useCallback((isNavigating: boolean) => {
-    dispatch({ type: "SET_IS_NAVIGATING", payload: isNavigating });
+    dispatch({ type: 'SET_IS_NAVIGATING', payload: isNavigating });
   }, []);
 
   // Update lesson status
-  const updateLessonStatus = useCallback(
-    (lessonId: string, status: string, progress: number) => {
-      dispatch({
-        type: "UPDATE_LESSON_STATUS",
-        payload: { lessonId, status, progress },
-      });
-    },
-    []
-  );
+  const updateLessonStatus = useCallback((lessonId: string, status: string, progress: number) => {
+    dispatch({
+      type: 'UPDATE_LESSON_STATUS',
+      payload: { lessonId, status, progress },
+    });
+  }, []);
 
   const completeContent = useCallback(
     async (params: {
@@ -281,26 +240,20 @@ export function ProgressProvider({
           await updateLearningProgressService(undefined, { payload });
 
           // Lấy dữ liệu tiến độ mới
-          const newLearningProgres = await getLearningProgressesService(
-            undefined,
-            { id: course.slug }
-          );
+          const newLearningProgres = await getLearningProgressesService(undefined, { id: course.slug });
 
           // Cập nhật state với dữ liệu mới
           if (newLearningProgres?.sections) {
-            const data = mergeSectionWithProgress(
-              course.outline,
-              newLearningProgres.sections
-            );
+            const data = mergeSectionWithProgress(course.outline, newLearningProgres.sections);
             setSectionsProgressData(data);
           }
 
           // Hiển thị thông báo nếu hoàn thành
           if (complete_at > 0) {
-            toast.success("Content completed");
+            toast.success('Content completed');
           }
         } catch (error) {
-          console.error("Error completing content:", error);
+          console.error('Error completing content:', error);
         }
       }
     },
@@ -332,18 +285,14 @@ export function ProgressProvider({
     ]
   );
 
-  return (
-    <ProgressContext.Provider value={value}>
-      {children}
-    </ProgressContext.Provider>
-  );
+  return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>;
 }
 
 export function useProgress() {
   const context = useContext(ProgressContext);
 
   if (context === undefined) {
-    throw new Error("useProgress must be used within a ProgressProvider");
+    throw new Error('useProgress must be used within a ProgressProvider');
   }
 
   return context;

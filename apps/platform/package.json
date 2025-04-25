@@ -19,6 +19,7 @@
     "@oe/dashboard": "workspace:*",
     "@oe/i18n": "workspace:*",
     "@oe/ui": "workspace:*",
+    "@tanstack/react-query": "^5.74.4",
     "avail-js-sdk": "^0.4.2",
     "lucide-react": "0.487.0",
     "next": "15.3.1-canary.4",
@@ -29,6 +30,8 @@
     "react-share": "^5.2.2",
     "sonner": "^2.0.3",
     "swr": "^2.3.3",
+    "viem": "2.x",
+    "wagmi": "^2.14.16",
     "zod": "^3.24.2",
     "zustand": "^5.0.3"
   },

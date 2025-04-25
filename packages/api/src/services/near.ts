@@ -163,7 +163,7 @@ export async function getNearTokens(address: string): Promise<NearTokenBalances>
     // Initialize tokens object with default values for all required keys
     const defaultTokens: NearTokenBalances['tokens'] = {
       near: { balance: 0 },
-      ethereum: { balance: 0 },
+      base: { balance: 0 },
       avail: { balance: 0 },
       VND: { balance: 0 },
       USD: { balance: 0 },
@@ -172,6 +172,9 @@ export async function getNearTokens(address: string): Promise<NearTokenBalances>
       USDT: { balance: 0 },
       USDC: { balance: 0 },
       AVAIL: { balance: 0 },
+      ETH: {
+        balance: 0,
+      },
     };
 
     // Update tokens with actual balances
