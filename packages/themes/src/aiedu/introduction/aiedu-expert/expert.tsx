@@ -3,35 +3,43 @@ import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import type { SectionComponent } from '../../../_types/theme-page';
 
-import { Title, type TitleProps } from '../../_components/title';
+import { Title } from '../../_components/title';
 
-import { ExpertCard, type ExpertProps } from '../../_components/expert-card';
+import { Sparkle } from 'lucide-react';
+import { ExpertCard } from '../../_components/expert-card';
 import { AieduLayoutSection } from '../../_components/layout-section';
-
-export interface AieduIntroductionExpertProps extends TitleProps {
-  expert1: ExpertProps;
-  expert2: ExpertProps;
-  expert3: ExpertProps;
-}
 
 const AieduIntroductionExpert: SectionComponent<'introduction', 'aieduExpert'> = ({ props, className }) => {
   const t = useTranslations('themePage.aiedu.introduction.aieduExpert');
-  const experts = [props?.expert1, props?.expert2, props?.expert3];
 
   return (
     <AieduLayoutSection className={cn('space-y-6', className)}>
-      <Title title={t('title')} description={t('description')} className="text-center" />
+      <Title title={t('title')} className="text-center" />
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        {experts?.filter(Boolean)?.map((value, index) => (
-          <ExpertCard
-            key={value?.name ?? index}
-            name={value?.name}
-            role={value?.role}
-            image={value?.image}
-            socialLinks={value?.socialLinks}
-          />
-        ))}
+      <div className="space-y-2">
+        <div className="flex items-center justify-center gap-4">
+          <Sparkle className="text-primary" />
+          <h3 className="text-primary">{t('teacher')}</h3>
+          <Sparkle className="text-primary" />
+        </div>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          {props?.teachers?.filter(Boolean)?.map((value, index) => (
+            <ExpertCard key={value?.name ?? index} name={value?.name} role={value?.role} image={value?.image} />
+          ))}
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <div className="flex items-center justify-center gap-4">
+          <Sparkle className="text-primary" />
+          <h3 className="text-primary">{t('mentor')}</h3>
+          <Sparkle className="text-primary" />
+        </div>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          {props?.mentors?.filter(Boolean)?.map((value, index) => (
+            <ExpertCard key={value?.name ?? index} name={value?.name} role={value?.role} image={value?.image} />
+          ))}
+        </div>
       </div>
     </AieduLayoutSection>
   );

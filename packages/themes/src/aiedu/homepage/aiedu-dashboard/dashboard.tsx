@@ -3,13 +3,11 @@ import { cn } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import type { SectionComponent } from '../../../_types/theme-page';
 
-import { Title, type TitleProps } from '../../_components/title';
-
-import { Sparkle } from 'lucide-react';
 import { AieduButton, type AieduButtonProps } from '../../_components/button';
 import { AieduLayoutSection } from '../../_components/layout-section';
+import StatisticsBanner from '../../_components/statistics-banner';
+import { Title, type TitleProps } from '../../_components/title';
 import { TrophyCard, type TrophyCardProps, type TrophyType } from '../../_components/trophy-card';
-import { formatNumber } from '../../_utils/functions';
 export interface AieduHomepageDashboardProps extends TitleProps {
   totalStats?: {
     registrations?: number;
@@ -55,25 +53,18 @@ const AieduHomepageDashboard: SectionComponent<'homepage', 'aieduDashboard'> = (
       <Title title={t('title')} className="text-center" />
 
       {/* Total Stats Section */}
-      <div className="mb-6 rounded-lg bg-primary p-6 text-background">
-        <div className="space-y-4 md:flex md:items-center md:justify-center md:space-y-0">
-          <div className="px-6 text-center">
-            <div className="mb-2 font-bold text-3xl text-secondary lg:text-5xl">
-              {formatNumber(props?.totalStats?.registrations)}
-            </div>
-            <div className="text-sm">{t('registerCount')}</div>
-          </div>
-
-          <Sparkle className="w-full lg:w-fit" />
-
-          <div className="px-6 text-center">
-            <div className="mb-2 font-bold text-3xl text-warning lg:text-5xl">
-              {formatNumber(props?.totalStats?.certificates)}
-            </div>
-            <div className="text-sm">{t('certCount')}</div>
-          </div>
-        </div>
-      </div>
+      <StatisticsBanner
+        data={{
+          registrations: {
+            count: props?.totalStats?.registrations ?? 0,
+            label: t('registerCount'),
+          },
+          certificates: {
+            count: props?.totalStats?.certificates ?? 0,
+            label: t('certCount'),
+          },
+        }}
+      />
 
       {/* Top Cities Section */}
       <div className="mb-6 space-y-2 lg:flex lg:gap-4 lg:space-y-0">
@@ -99,7 +90,7 @@ const AieduHomepageDashboard: SectionComponent<'homepage', 'aieduDashboard'> = (
           </thead>
           <tbody>
             {props?.otherCities?.map((city, index) => (
-              <tr key={index.toString()} className="border-secondary border-b">
+              <tr key={index.toString()} className="border-secondary border-b hover:bg-primary-foreground">
                 <td className="px-2 py-3 md:px-4">
                   <div className="flex items-center">
                     <div className="mr-2 flex h-6 w-6 items-center justify-center rounded-full bg-primary font-bold text-background text-sm sm:mr-4 sm:h-8 sm:w-8 sm:text-normal">

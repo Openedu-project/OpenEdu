@@ -14,5 +14,9 @@ const pageRender: PageRender = {
 };
 
 export const AieduIntroductionPage: SectionComponent<'introduction', 'theme'> = ({ props }) => {
-  return <ThemePageRenderer pageKey="introduction" pageRenderData={pageRender} props={props} />;
+  return (
+    <>
+      <ThemePageRenderer pageKey="introduction" pageRenderData={pageRender} props={props} />
+    </>
+  );
 };

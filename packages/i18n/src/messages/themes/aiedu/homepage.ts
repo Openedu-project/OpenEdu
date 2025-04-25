@@ -11,18 +11,35 @@ export const aieduHomepage = {
     },
     aieduExpert: {
       title: 'Gặp Gỡ Dàn Cố Vấn Chuyên Môn',
-      description: 'Meet our expert management ream members',
-      expert1: {
-        name: 'Sebastian Doe',
-        role: 'Code Expert',
+      teacher: 'GIẢNG VIÊN',
+      mentor: 'CỐ VẤN',
+      teachers: {
+        teacher1: {
+          name: 'Sebastian Doe',
+          role: 'Code Expert',
+        },
+        teacher2: {
+          name: 'Sebastian Doe',
+          role: 'Code Expert',
+        },
+        teacher3: {
+          name: 'Sebastian Doe',
+          role: 'Code Expert',
+        },
       },
-      expert2: {
-        name: 'John Smith',
-        role: 'Code Expert',
-      },
-      expert3: {
-        name: 'Sarah Corner',
-        role: 'Code Expert',
+      mentors: {
+        mentor1: {
+          name: 'Sebastian Doe',
+          role: 'Code Expert',
+        },
+        mentor2: {
+          name: 'Sebastian Doe',
+          role: 'Code Expert',
+        },
+        mentor3: {
+          name: 'Sebastian Doe',
+          role: 'Code Expert',
+        },
       },
     },
     aieduFeatures: {

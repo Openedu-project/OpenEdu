@@ -23,7 +23,7 @@ const AieduIntroductionMap: SectionComponent<'introduction', 'aieduMap'> = ({ pr
         <AieduButton text={t('button.text')} link={props?.button?.link} />
       </div>
 
-      <div className="-z-10 absolute right-0 hidden md:block">
+      <div className="-z-10 absolute right-0 hidden md:block md:w-full lg:w-1/2">
         <Image
           alt="image"
           src={props?.image?.url}

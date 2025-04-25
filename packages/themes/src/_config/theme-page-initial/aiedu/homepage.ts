@@ -21,37 +21,40 @@ export const createAiEduHomepageConfig = (getThemeTranslation: (path: string[]) 
   aieduExpert: createSection<'homepage', 'aieduExpert'>({
     props: {
       title: getThemeTranslation(['homepage', 'aieduExpert', 'title']),
-      description: getThemeTranslation(['homepage', 'aieduExpert', 'description']),
-      expert1: {
-        name: getThemeTranslation(['homepage', 'aieduExpert', 'expert1.name']),
-        role: getThemeTranslation(['homepage', 'aieduExpert', 'expert1.role']),
-        image: { mime: 'image/png' },
-        socialLinks: {
-          facebook: 'https://',
-          x: 'https://',
-          linkedin: 'https://',
+      teachers: [
+        {
+          name: getThemeTranslation(['homepage', 'aieduExpert', 'teachers.teacher1.name']),
+          role: getThemeTranslation(['homepage', 'aieduExpert', 'teachers.teacher1.role']),
+          image: { mime: 'image/png' },
         },
-      },
-      expert2: {
-        name: getThemeTranslation(['homepage', 'aieduExpert', 'expert2.name']),
-        role: getThemeTranslation(['homepage', 'aieduExpert', 'expert2.role']),
-        image: { mime: 'image/png' },
-        socialLinks: {
-          facebook: 'https://',
-          x: 'https://',
-          linkedin: 'https://',
+        {
+          name: getThemeTranslation(['homepage', 'aieduExpert', 'teachers.teacher2.name']),
+          role: getThemeTranslation(['homepage', 'aieduExpert', 'teachers.teacher2.role']),
+          image: { mime: 'image/png' },
         },
-      },
-      expert3: {
-        name: getThemeTranslation(['homepage', 'aieduExpert', 'expert3.name']),
-        role: getThemeTranslation(['homepage', 'aieduExpert', 'expert3.role']),
-        image: { mime: 'image/png' },
-        socialLinks: {
-          facebook: 'https://www.facebook.com/',
-          x: 'https://',
-          linkedin: 'https://',
+        {
+          name: getThemeTranslation(['homepage', 'aieduExpert', 'teachers.teacher3.name']),
+          role: getThemeTranslation(['homepage', 'aieduExpert', 'teachers.teacher3.role']),
+          image: { mime: 'image/png' },
         },
-      },
+      ],
+      mentors: [
+        {
+          name: getThemeTranslation(['homepage', 'aieduExpert', 'mentors.mentor1.name']),
+          role: getThemeTranslation(['homepage', 'aieduExpert', 'mentors.mentor1.role']),
+          image: { mime: 'image/png' },
+        },
+        {
+          name: getThemeTranslation(['homepage', 'aieduExpert', 'mentors.mentor2.name']),
+          role: getThemeTranslation(['homepage', 'aieduExpert', 'mentors.mentor2.role']),
+          image: { mime: 'image/png' },
+        },
+        {
+          name: getThemeTranslation(['homepage', 'aieduExpert', 'mentors.mentor3.name']),
+          role: getThemeTranslation(['homepage', 'aieduExpert', 'mentors.mentor3.role']),
+          image: { mime: 'image/png' },
+        },
+      ],
     },
     order: 1,
   }),
