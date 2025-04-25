@@ -105,7 +105,7 @@ export function UserTable({ userRole }: { userRole: IBlogUserRole }) {
     <Table<IUser>
       columns={columns}
       ref={tableRef}
-      api={API_ENDPOINT.USERS}
+      api={API_ENDPOINT.USERS_ORG_BLOGS}
       hasNoColumn
       apiQueryParams={{
         page: 1,
