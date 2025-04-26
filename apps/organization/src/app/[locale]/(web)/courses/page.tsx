@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = generateSEO({
   title: 'Courses',
-  keywords: ['course', 'education', 'training', 'online learning'],
+  keywords: ['course', 'education', 'training', 'online learning', 'certificate'],
 });
 
 export default function CoursesPage({
