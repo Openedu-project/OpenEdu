@@ -1,7 +1,12 @@
 import useSWR from 'swr';
 import useSWRInfinite from 'swr/infinite';
 import { getConversationDetail, getListConversation, getMessageData, getPrompts } from '#services/conversation';
-import type { IChatHistoryResponse, IConversationDetails, IPrompSearchParams } from '#types/conversation';
+import type {
+  IChatHistoryResponse,
+  IConversationDetails,
+  IPrompSearchParams,
+  ISearchHistoryParams,
+} from '#types/conversation';
 import type { HTTPResponse } from '#types/fetch';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl, fetchAPI } from '#utils/fetch';
@@ -117,7 +122,7 @@ export function useGetPromps({
   };
 }
 
-export function useGetConversations(params: Record<string, string | number>, shouldFetch = true) {
+export function useGetConversations(params: ISearchHistoryParams, shouldFetch = true) {
   const endpoint = shouldFetch
     ? createAPIUrl({
         endpoint: API_ENDPOINT.COM_CHANNELS,

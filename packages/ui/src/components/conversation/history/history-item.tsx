@@ -1,21 +1,19 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
-
-import type { HTTPResponse } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
-import type { HTTPError } from '@oe/api';
-import { deleteConversation, updateConversationTitle } from '@oe/api';
+import { API_ENDPOINT, createAPIUrl, updateConversationTitle } from '@oe/api';
+import type { HTTPError, ISearchHistoryParams } from '@oe/api';
+import { deleteConversation } from '@oe/api';
 import type { IChatHistory, IChatHistoryResponse } from '@oe/api';
 import { AI_ROUTES } from '@oe/core';
 import { MessageCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import type { RefObject } from 'react';
-import type { SWRInfiniteResponse } from 'swr/infinite';
+import { useEffect, useRef, useState } from 'react';
+import type { Dispatch, RefObject, SetStateAction } from 'react';
+import { type KeyedMutator, useSWRConfig } from 'swr';
 import { Link, useRouter } from '#common/navigation';
 import { toast } from '#shadcn/sonner';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
-import { AI_SIDEBAR } from '../constants';
+import { AI_SIDEBAR, HISTORY_DEFAULT_PARAMS } from '../constants';
 import { MessageInput } from '../message-input/message-input';
 import type { ISendMessageParams } from '../type';
 import { ActionDropdown } from './history-actions-dropdown';
@@ -24,11 +22,13 @@ interface IHistoryItem {
   className?: string;
   item: IChatHistory;
   setSelectItem?: (value: IChatHistory) => void;
-  mutate?: SWRInfiniteResponse<HTTPResponse<IChatHistoryResponse>>['mutate'];
+  mutate?: KeyedMutator<IChatHistoryResponse | null>;
   pauseAddMessage?: () => void;
   pageIndex?: number;
   activeId?: string;
   callbackFn?: () => void;
+  searchParams?: ISearchHistoryParams;
+  setHistoryData?: Dispatch<SetStateAction<IChatHistory[]>>;
 }
 
 export function useClickOutside<T extends HTMLElement>(
@@ -58,12 +58,21 @@ export function useClickOutside<T extends HTMLElement>(
   return ref;
 }
 
-export function AIHistoryItem({ className, item, mutate, pageIndex = 1, activeId, callbackFn }: IHistoryItem) {
+export function AIHistoryItem({
+  className,
+  item,
+  pageIndex = 1,
+  activeId,
+  callbackFn,
+  searchParams = HISTORY_DEFAULT_PARAMS,
+  setHistoryData,
+}: IHistoryItem) {
   const tError = useTranslations('errors');
 
   const [isEdit, setIsEdit] = useState(false);
   const { setIsNewChat, resetStatus } = useConversationStore();
   const router = useRouter();
+  const { mutate: globalMutate } = useSWRConfig();
 
   const agentData = AI_SIDEBAR().find(data => data.agent === item.ai_agent_type);
 
@@ -72,22 +81,25 @@ export function AIHistoryItem({ className, item, mutate, pageIndex = 1, activeId
       title: messageInput ?? '',
     });
     setIsEdit(false);
-    await mutate?.(currentData => {
-      if (!currentData) {
-        return currentData;
-      }
-
-      return currentData.map((page, index) => {
-        if (index === pageIndex - 1 && page) {
-          return {
-            ...page,
-            results: page.data.results.map(chat => (chat.id === item.id ? { ...chat, title: messageInput } : chat)),
-          };
-        }
-        return page;
-      });
+    const initkey = createAPIUrl({
+      endpoint: API_ENDPOINT.COM_CHANNELS,
+      queryParams: { ...searchParams, page: 1 },
     });
-    callbackFn?.();
+    const apikey = createAPIUrl({
+      endpoint: API_ENDPOINT.COM_CHANNELS,
+      queryParams: { ...searchParams, page: pageIndex },
+    });
+    setHistoryData?.(prev =>
+      prev.map(history => {
+        if (history.id !== item.id) {
+          return history;
+        }
+        return { ...history, context: { ...history.context, title: messageInput ?? '' } };
+      })
+    );
+    await globalMutate((key: string) => !!key.includes(apikey) || !!key.includes(initkey), undefined, {
+      revalidate: true,
+    });
   };
 
   const handleDelete = async (onClose?: () => void) => {
@@ -98,24 +110,10 @@ export function AIHistoryItem({ className, item, mutate, pageIndex = 1, activeId
       if (item.id === activeId) {
         router.push(AI_ROUTES.chat);
       }
-
-      await mutate?.(currentData => {
-        if (!currentData) {
-          return currentData;
-        }
-
-        return currentData.map((page, index) => {
-          if (!page || index < pageIndex - 1) {
-            return page;
-          }
-
-          return {
-            ...page,
-            results: page?.data?.results?.filter(chat => chat.id !== item?.id),
-          };
-        });
+      setHistoryData?.(prev => prev.filter(history => history.id !== item.id));
+      await globalMutate((key: string) => !!key.includes(`${API_ENDPOINT.COM_CHANNELS}/`), undefined, {
+        revalidate: true,
       });
-      callbackFn?.();
     } catch (error) {
       console.error(error);
       toast.error(tError((error as HTTPError).message));

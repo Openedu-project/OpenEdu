@@ -10,7 +10,7 @@ import { Button } from '#shadcn/button';
 import { Skeleton } from '#shadcn/skeleton';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
-import { TopLastestHistoryParams } from '../history/top-lastest-history';
+import { HISTORY_DEFAULT_PARAMS } from '../constants';
 import type { ISendMessageParams } from '../type';
 import { GenMessage } from './gen-message';
 import { MessageBox } from './message-box';
@@ -106,7 +106,7 @@ export const MessageContainer = ({
           revalidate: !!key?.includes(
             createAPIUrl({
               endpoint: API_ENDPOINT.COM_CHANNELS,
-              queryParams: TopLastestHistoryParams,
+              queryParams: HISTORY_DEFAULT_PARAMS,
             })
           ),
         });

@@ -4,21 +4,17 @@ import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { Button } from '#shadcn/button';
+import { HISTORY_DEFAULT_PARAMS } from '../constants';
 import { formatDate, getHistoryByDate, getHistoryDates } from '../utils';
 import { AIHistoryModal } from './ai-history';
 import { AIHistoryItem } from './history-item';
 
-export const TopLastestHistoryParams = {
-  page: 1,
-  per_page: 20,
-  sort: 'create_at desc',
-};
 export const TopLastestHistory = memo(() => {
   const tAI = useTranslations('aiAssistant');
   const tGeneral = useTranslations('general');
   const [historyData, setHistoryData] = useState<IChatHistory[]>([]);
   const initLoading = useRef(true);
-  const { history, mutate, isLoading } = useGetConversations(TopLastestHistoryParams);
+  const { history, isLoading } = useGetConversations(HISTORY_DEFAULT_PARAMS);
   const { id } = useParams();
   const datesData = useMemo(() => {
     return getHistoryDates(historyData ?? []);
@@ -54,7 +50,7 @@ export const TopLastestHistory = memo(() => {
           <h5 className="mcaption-semibold14">{formatDate(date)}</h5>
           <div className="pl-2">
             {getHistoryByDate(date, historyData)?.map(item => {
-              return <AIHistoryItem key={item.id} item={item} callbackFn={mutate} activeId={id as string} />;
+              return <AIHistoryItem key={item.id} item={item} activeId={id as string} />;
             })}
           </div>
         </div>

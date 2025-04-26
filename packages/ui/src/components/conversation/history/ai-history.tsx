@@ -1,9 +1,9 @@
 'use client';
-import { useGetListConversation } from '@oe/api';
+import { API_ENDPOINT, type IChatHistory, type ISearchHistoryParams, createAPIUrl, useGetConversations } from '@oe/api';
 import { Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
-import { cloneElement, useMemo, useRef, useState } from 'react';
+import { cloneElement, useEffect, useMemo, useRef, useState } from 'react';
 import type { JSX, KeyboardEvent } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import { useSWRConfig } from 'swr';
@@ -35,25 +35,49 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
 
   const { mutate: globalMutate } = useSWRConfig();
 
-  const [searchParams, setSearchParams] = useState(HISTORY_DEFAULT_PARAMS);
+  const [searchParams, setSearchParams] = useState<ISearchHistoryParams>(HISTORY_DEFAULT_PARAMS);
 
-  const { data, mutate, size, setSize, isLoading, getKey } = useGetListConversation(searchParams, isLogin);
+  const { history, mutate, isLoading } = useGetConversations(searchParams, isLogin);
+  const [historyData, setHistoryData] = useState<IChatHistory[]>([]);
 
-  const historyData = useMemo(
-    () =>
-      data?.flatMap(item =>
-        item?.results?.map(history => ({
-          ...history,
-          page: item.pagination.page ?? 1,
+  useEffect(() => {
+    if (!history) {
+      return;
+    }
+    if (history.pagination?.page === 1) {
+      setHistoryData(
+        history.results.map(item => ({
+          ...item,
+          page: 1,
         }))
-      ) ?? [],
-    [data]
-  );
+      );
+    } else {
+      setHistoryData(prevData => [
+        ...prevData,
+        ...history.results.map(item => ({
+          ...item,
+          page: history.pagination.page,
+        })),
+      ]);
+    }
+  }, [history]);
 
   const handleSearch = async (title?: string, isNextPage?: boolean) => {
-    const pagination = data?.at(-1)?.pagination;
+    const pagination = history?.pagination;
 
-    if (isLoading || (title === undefined && size === pagination?.total_pages)) {
+    if (isLoading || (title === undefined && pagination?.page === pagination?.total_pages)) {
+      return;
+    }
+
+    if (title !== undefined) {
+      const apikey = createAPIUrl({
+        endpoint: API_ENDPOINT.COM_CHANNELS,
+        queryParams: { ...HISTORY_DEFAULT_PARAMS, search_term: title },
+      });
+      await globalMutate((key: string) => !!key.includes(apikey), undefined, { revalidate: true });
+      setSearchParams(prev => {
+        return { ...prev, search_term: title, page: 1 };
+      });
       return;
     }
 
@@ -62,31 +86,13 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
       isLoadingMoreRef.current = true;
     }
 
-    const apiKey = getKey(isNextPage ? size : 0, undefined, {
-      ...searchParams,
-      search_term: title ?? searchParams.search_term,
+    setSearchParams(prev => {
+      return { ...prev, page: prev.page + 1 };
     });
 
-    if (title !== undefined) {
-      await globalMutate(apiKey, undefined, { revalidate: false });
-    }
-
-    if (isNextPage) {
-      void setSize(size + 1);
-    } else {
-      void setSize(1);
-      await new Promise(resolve => {
-        setSearchParams(prev => {
-          resolve(null);
-          return { ...prev, search_term: title ?? '', page: 1 };
-        });
-      });
-    }
-
-    // Reset loading state after search completes
-    if (isNextPage) {
+    setTimeout(() => {
       isLoadingMoreRef.current = false;
-    }
+    }, 500);
   };
 
   const datesData = useMemo(() => {
@@ -112,13 +118,13 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
   // Create a debounced endReached handler
   const handleEndReached = useDebouncedCallback(
     () => {
-      const pagination = data?.at(-1)?.pagination;
+      const pagination = history?.pagination;
 
       if (
         isLoading ||
         isLoadingMoreRef.current ||
         datesData.length === 0 ||
-        (pagination && size >= pagination.total_pages)
+        (pagination && pagination.page >= pagination.total_pages)
       ) {
         return;
       }
@@ -165,6 +171,8 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
                       mutate={mutate}
                       activeId={id as string}
                       callbackFn={callbackFn}
+                      searchParams={searchParams}
+                      setHistoryData={setHistoryData}
                     />
                   );
                 })}
