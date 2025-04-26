@@ -5,7 +5,15 @@ export const componentWithoutLabel = ['submitButton', 'heading', 'paragraph', 's
  */
 export const COMPONENT_TYPES = {
   // Components using options[]
-  OPTION_BASED: new Set(['multipleSelection', 'selectbox', 'tagsInput', 'switch', 'multipleChoice']),
+  OPTION_BASED: new Set([
+    'multipleSelection',
+    'selectbox',
+    'autoComplete',
+    'radio',
+    'tagsInput',
+    'switch',
+    'multipleChoice',
+  ]),
 
   // Components using options[],sub_questions[]
   GRID_BASED: new Set(['multipleChoiceGrid', 'checkboxGrid']),

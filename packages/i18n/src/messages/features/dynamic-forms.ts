@@ -40,6 +40,8 @@ export const dynamicFormsMessages = {
       textarea: 'Textarea',
       selectbox: 'Selectbox',
       multipleChoiceGrid: 'Multiple Choice Grid',
+      radio: 'Radio',
+      autoComplete: 'Auto Complete',
     },
     fieldConfig: {
       title: 'Configuration',

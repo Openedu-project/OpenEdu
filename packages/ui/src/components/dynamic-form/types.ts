@@ -78,8 +78,9 @@ export type FormComponent =
   | 'multipleChoiceGrid' //new
   | 'checkboxGrid' //new//chua lam
   | 'multipleChoice' //radio
-  | 'submitButton'
-  | 'radio';
+  | 'autoComplete'
+  | 'radio'
+  | 'submitButton';
 
 export interface FormComponentDefinition {
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -142,6 +143,7 @@ export type FormFieldType = Partial<Omit<ExtendedImageProps, 'placeholder' | 'bl
   description?: string;
   infoText?: string;
   disabled?: boolean;
+  showSearch?: boolean;
   value?: string | boolean | Date | number | string[] | Record<string, string>;
   setValue?: (value: string | boolean) => void;
   checked?: boolean;

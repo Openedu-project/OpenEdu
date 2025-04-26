@@ -1,7 +1,9 @@
 import {
   AtSign,
   Calendar,
+  CalendarSync,
   CaseSensitive,
+  CircleCheckBig,
   DollarSign,
   EyeOff,
   Grip,
@@ -20,6 +22,7 @@ import {
 } from 'lucide-react';
 import { MultipleChoiceGrid } from '#components/multiple-choice-grid';
 import type { FormComponents } from '../types';
+import { AutoComplete } from './auto-complete';
 import { Checkbox } from './checkbox';
 import { DateTimePicker } from './date-time-picker';
 import { EmailInput } from './email';
@@ -33,6 +36,7 @@ import { InputPhoneNumber } from './input-phonenumber';
 import { InputURL } from './input-url';
 import { MultipleSelection } from './multiple-selection';
 import { Paragraph } from './paragraph';
+import { Radio } from './radio';
 import { Selectbox } from './selectbox';
 import { Space } from './space';
 import { SubmitButton } from './submit-button';
@@ -98,6 +102,14 @@ export const formComponents: FormComponents = {
   checkbox: {
     component: Checkbox,
     icon: SquareCheck,
+  },
+  radio: {
+    component: Radio,
+    icon: CircleCheckBig,
+  },
+  autoComplete: {
+    component: AutoComplete,
+    icon: CalendarSync,
   },
   image: {
     component: FormImage,

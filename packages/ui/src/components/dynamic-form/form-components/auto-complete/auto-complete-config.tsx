@@ -1,22 +1,21 @@
-import type { MultipleSelectionOption } from '#components/multiple-selection';
+import type { SelectboxOption } from '#components/selectbox';
 import { FormDescriptionConfig } from '../../form-config/form-description-config';
 import { FormDisabledConfig } from '../../form-config/form-disabled-config';
 import { FormLabelConfig } from '../../form-config/form-label-config';
 import { FormOptionsConfig } from '../../form-config/form-options-config';
-import { FormOtherOptionConfig } from '../../form-config/form-other-option-config';
 import { FormPlaceholderConfig } from '../../form-config/form-placeholder-config';
 import { FormRequiredConfig } from '../../form-config/form-required-config';
 import { FormTooltipConfig } from '../../form-config/form-tooltip-config';
 import type { FormFieldType } from '../../types';
 
-export function RadioFieldConfig({
+export function AutoCompleteFieldConfig({
   field,
   handleConfigChange,
 }: {
   field: FormFieldType;
-  handleConfigChange: (key: keyof FormFieldType, value: string | number | boolean | MultipleSelectionOption[]) => void;
+  handleConfigChange: (key: keyof FormFieldType, value: string | number | boolean | SelectboxOption[]) => void;
 }) {
-  if (field.fieldType !== 'radio') {
+  if (field.fieldType !== 'autoComplete') {
     return null;
   }
 
@@ -27,10 +26,9 @@ export function RadioFieldConfig({
       <FormPlaceholderConfig field={field} handleConfigChange={handleConfigChange} />
       <FormDescriptionConfig field={field} handleConfigChange={handleConfigChange} />
       <FormTooltipConfig field={field} handleConfigChange={handleConfigChange} />
+      <FormOptionsConfig field={field} handleConfigChange={handleConfigChange} />
       <FormRequiredConfig field={field} handleConfigChange={handleConfigChange} />
       <FormDisabledConfig field={field} handleConfigChange={handleConfigChange} />
-      <FormOptionsConfig field={field} handleConfigChange={handleConfigChange} />
-      <FormOtherOptionConfig field={field} handleConfigChange={handleConfigChange} />
     </div>
   );
 }

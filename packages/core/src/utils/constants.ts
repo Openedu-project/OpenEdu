@@ -51,6 +51,8 @@ export const QUESTION_OBJECT_TYPE = {
   selectbox: 'Select Box',
   multipleChoice: 'Multiple Choice',
   checkboxGrid: 'Checkbox Grid',
+  radio: 'radio',
+  autoComplete: 'Auto Complete',
 };
 
 export const QUESTION_TYPE = {
