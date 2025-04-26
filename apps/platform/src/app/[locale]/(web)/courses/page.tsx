@@ -1,4 +1,11 @@
-import { CoursesListPage } from "@oe/ui";
+import { generateSEO } from '@oe/core';
+import { CoursesListPage } from '@oe/ui';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = generateSEO({
+  title: 'Courses',
+  keywords: ['openedu.net', 'course', 'education', 'training', 'online learning'],
+});
 
 export default function CoursesPage({
   searchParams,
