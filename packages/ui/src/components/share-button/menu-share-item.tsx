@@ -8,7 +8,6 @@ import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { SocialIcon } from '#components/social-icon';
 import { DropdownMenuContent, DropdownMenuItem } from '#shadcn/dropdown-menu';
-import { toast } from '#shadcn/sonner';
 import { cn } from '#utils/cn';
 import { SOCIAL_MEDIA_CONFIG, type ShareButtonComponent, type ShareConfig } from './types';
 
@@ -109,8 +108,7 @@ export const MenuContent = ({ align = 'end', courseData }: MenuContentProps) => 
     //   ? addParamsToUrl(url, additionalParams)
     //   : url;
     const permalinkUrl = shareConfig.url;
-    copyToClipboard(permalinkUrl, tCommonAction('copied'), 2000);
-    toast.success(tCommonAction('copied'));
+    copyToClipboard(permalinkUrl, tCommonAction('copied'));
   };
 
   return (
