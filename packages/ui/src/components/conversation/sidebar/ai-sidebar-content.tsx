@@ -1,18 +1,16 @@
 import { MessageTime } from '@oe/assets';
 import AIMascot from '@oe/assets/images/ai/ai-mascot-2.png';
 import { AI_ROUTES } from '@oe/core';
-import { CircleChevronLeft, CirclePlus } from 'lucide-react';
+import { CircleChevronLeft, CirclePlus, Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
 import { Link, usePathname } from '#common/navigation';
 import { Image } from '#components/image';
 import { Badge } from '#shadcn/badge';
-import { Button } from '#shadcn/button';
 import { Separator } from '#shadcn/separator';
 import { SidebarContent, SidebarTrigger } from '#shadcn/sidebar';
 import { cn } from '#utils/cn';
 import { AI_SIDEBAR } from '../constants';
-import { AIHistoryModal } from '../history/ai-history';
 
 const TopLastestHistory = dynamic(() => import('../history/top-lastest-history').then(mod => mod.TopLastestHistory), {
   ssr: false,
@@ -122,27 +120,25 @@ export function AISidebarContent({
         <div className="flex grow flex-col gap-2">
           <div className="flex w-full items-center justify-between pl-1">
             <p className="mcaption-semibold14 text-foreground">{tAI('history')}</p>
-            <AIHistoryModal isLogin={isLogin} />
+            <Link href={AI_ROUTES.history} activeClassName="">
+              <Search size={16} color="var(--foreground)" />
+            </Link>
           </div>
-          <TopLastestHistory />
+          {isLogin ? <TopLastestHistory /> : <div className="mcaption-regular14 text-center">{tAI('noHistory')}</div>}
         </div>
       ) : (
-        <AIHistoryModal
-          isLogin={isLogin}
-          triggerButton={
-            <div>
-              <Button
-                className={cn(
-                  'm-auto flex rounded-full border border-2 bg-ai-more-feature-gradient hover:border-primary hover:bg-ai-more-feature-gradient'
-                )}
-                size="icon"
-              >
-                <MessageTime color="var(--primary)" width={16} height={16} />
-              </Button>
-              <p className="mcaption-semibold12 mt-1 text-center text-foreground">{tAI('history')}</p>
-            </div>
-          }
-        />
+        <div>
+          <Link
+            href={AI_ROUTES.history}
+            className={cn(
+              'm-auto flex rounded-full border border-2 bg-ai-more-feature-gradient hover:border-primary hover:bg-ai-more-feature-gradient'
+            )}
+            size="icon"
+          >
+            <MessageTime color="var(--primary)" width={16} height={16} />
+          </Link>
+          <p className="mcaption-semibold12 mt-1 text-center text-foreground">{tAI('history')}</p>
+        </div>
       )}
     </SidebarContent>
   );

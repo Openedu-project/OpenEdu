@@ -1,7 +1,9 @@
 'use client';
 import type { IAIModel } from '@oe/api';
 import { type CSSProperties, type ReactNode, useEffect, useState } from 'react';
+import { usePathname } from '#common/navigation';
 import { AIModelDropdown, AISidebar, SIDEBAR_WIDTH, SIDEBAR_WIDTH_ICON } from '#components/conversation';
+import { useLoginRequiredStore } from '#components/login-required-modal';
 import { SidebarProvider } from '#shadcn/sidebar';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
@@ -16,8 +18,14 @@ type Props = {
 export function AISidebarLayout({ children, className, login, AIChatModels }: Props) {
   const [open, setOpen] = useState(true);
   const { setSelectedModel, selectedModel } = useConversationStore();
+  const pathname = usePathname();
+  const { setLoginRequiredModal } = useLoginRequiredStore();
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
+    if (!login) {
+      setLoginRequiredModal(true);
+      return;
+    }
     if (!selectedModel) {
       setSelectedModel(AIChatModels?.[0]);
     }
@@ -42,7 +50,7 @@ export function AISidebarLayout({ children, className, login, AIChatModels }: Pr
           className
         )}
       >
-        {AIChatModels && AIChatModels?.length > 0 && (
+        {!pathname.includes('history') && AIChatModels && AIChatModels?.length > 0 && (
           <AIModelDropdown AIModels={AIChatModels} isLogin={login} className="mx-auto shrink-0" />
         )}
         {children}

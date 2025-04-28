@@ -35,7 +35,7 @@ export const TopLastestHistory = memo(() => {
     initLoading.current = false;
   }, [history]);
 
-  if (isLoading && initLoading.current) {
+  if ((isLoading && initLoading.current) || initLoading.current) {
     return <div className="mcaption-regular14 text-center">{tAI('loadingHistory')}</div>;
   }
 

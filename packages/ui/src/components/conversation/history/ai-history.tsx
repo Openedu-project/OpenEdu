@@ -74,7 +74,9 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
         endpoint: API_ENDPOINT.COM_CHANNELS,
         queryParams: { ...HISTORY_DEFAULT_PARAMS, search_term: title },
       });
-      await globalMutate((key: string) => !!key.includes(apikey), undefined, { revalidate: true });
+      await globalMutate((key: string) => !!key.includes(apikey), undefined, {
+        revalidate: true,
+      });
       setSearchParams(prev => {
         return { ...prev, search_term: title, page: 1 };
       });
