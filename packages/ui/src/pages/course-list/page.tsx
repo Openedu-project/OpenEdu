@@ -24,21 +24,21 @@ export async function CoursesListPage({
     level_id_in = '',
   } = await searchParams;
 
-  const courses = await getCoursesPublishService(undefined, {
-    params: {
-      enable_root: isOpenEdu,
-      page: Number(page),
-      per_page: 12,
-      search_term: search,
-      search_categories: 'name',
-      sort: `create_at ${sort}`,
-      preloads: ['Categories', 'Owner', 'Levels'],
-      category_id_in: category_id_in ? category_id_in.split(',') : '',
-      level_id_in: level_id_in ? level_id_in.split(',') : '',
-      org_id_in: org_id_in ? org_id_in.split(',') : '',
-      complete_status_in: complete_status_in ? complete_status_in.split(',') : '',
-    },
-  });
+  const params = {
+    enable_root: isOpenEdu,
+    page: Number(page),
+    per_page: 12,
+    search_term: search,
+    search_categories: 'name',
+    sort: `create_at ${sort}`,
+    preloads: ['Categories', 'Owner', 'Levels'],
+    category_id_in: category_id_in ? category_id_in.split(',') : '',
+    level_id_in: level_id_in ? level_id_in.split(',') : '',
+    org_id_in: org_id_in ? org_id_in.split(',') : '',
+    complete_status_in: complete_status_in ? complete_status_in.split(',') : '',
+  };
+
+  const courses = await getCoursesPublishService(undefined, { params });
 
   return (
     <div>
@@ -68,7 +68,7 @@ export async function CoursesListPage({
           <p className="mcaption-regular16 lg:mcaption-regular20 w-full text-center">{t('noData.description')}</p>
         </div>
       ) : (
-        <CourseList page={Number(page)} courses={courses} />
+        <CourseList page={Number(page)} courses={courses} fallback={courses} params={params} />
       )}
     </div>
   );
