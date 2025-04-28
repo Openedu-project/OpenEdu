@@ -35,6 +35,8 @@ export async function getBaseTokens(address: string): Promise<BaseTokenBalances>
     token: ETH_TOKEN_CONTRACTS[CURRENCY_SYMBOLS.USDC] as `0x${string}`,
   });
 
+  console.log('usdcBalance', usdcBalance);
+
   const defaultTokens: BaseTokenBalances['tokens'] = {
     near: { balance: 0 },
     base: { balance: 0 },
