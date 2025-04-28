@@ -1,15 +1,16 @@
 'use client';
 import { type IChatHistory, useGetConversations } from '@oe/api';
+import { AI_ROUTES } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
-import { Button } from '#shadcn/button';
+import { Link } from '#common/navigation';
 import { HISTORY_DEFAULT_PARAMS } from '../constants';
 import { formatDate, getHistoryByDate, getHistoryDates } from '../utils';
-import { AIHistoryModal } from './ai-history';
 import { AIHistoryItem } from './history-item';
 
-export const TopLastestHistory = memo(() => {
+export const TopLastestHistory = memo(({ onClickHistory }: { onClickHistory?: () => void }) => {
+  console.log(onClickHistory, 'onclick');
   const tAI = useTranslations('aiAssistant');
   const tGeneral = useTranslations('general');
   const [historyData, setHistoryData] = useState<IChatHistory[]>([]);
@@ -50,20 +51,21 @@ export const TopLastestHistory = memo(() => {
           <h5 className="mcaption-semibold14">{formatDate(date)}</h5>
           <div className="pl-2">
             {getHistoryByDate(date, historyData)?.map(item => {
-              return <AIHistoryItem key={item.id} item={item} activeId={id as string} />;
+              return <AIHistoryItem key={item.id} item={item} activeId={id as string} callbackFn={onClickHistory} />;
             })}
           </div>
         </div>
       ))}
       {(history?.pagination?.total_items ?? 0) > 20 && (
-        <AIHistoryModal
-          isLogin={true}
-          triggerButton={
-            <Button className="mx-auto flex" variant="link">
-              {tGeneral('viewAll')}
-            </Button>
-          }
-        />
+        <Link
+          href={AI_ROUTES.history}
+          className="mx-auto flex"
+          variant="link"
+          activeClassName=""
+          onClick={onClickHistory}
+        >
+          {tGeneral('viewAll')}
+        </Link>
       )}
     </div>
   );

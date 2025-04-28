@@ -20,11 +20,13 @@ export function AISidebarContent({
   open,
   isLogin,
   onClick,
+  handleCloseSidebar,
 }: {
   open?: boolean;
   className?: string;
   isLogin?: boolean;
   onClick?: () => void;
+  handleCloseSidebar?: () => void;
 }) {
   const tAI = useTranslations('aiAssistant');
   const pathname = usePathname();
@@ -39,6 +41,7 @@ export function AISidebarContent({
       <div className={cn('-mt-2 flex flex-wrap items-center justify-center', open && '-mt-6 w-fit justify-start')}>
         <Link
           href={AI_ROUTES.assistant}
+          onClick={handleCloseSidebar}
           className="!p-0 !border-0 relative mr-1 h-10 w-10 rounded-full bg-background md:h-13 md:w-13"
         >
           <Image alt="ai-assistant" src={AIMascot.src} width={48} height={48} className="object-contain" />
@@ -63,6 +66,7 @@ export function AISidebarContent({
               open && 'justify-start'
             )}
             href={AI_ROUTES.chat}
+            onClick={handleCloseSidebar}
           >
             <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-b from-turquoise-500 to-violet-500 md:h-10 md:w-10">
               <CirclePlus size={12} color="white" />
@@ -90,6 +94,7 @@ export function AISidebarContent({
                 '!no-underline h-auto w-full flex-wrap justify-center rounded-3xl p-1 hover:cursor-pointer hover:bg-primary/10',
                 open && 'justify-start'
               )}
+              onClick={handleCloseSidebar}
             >
               <div
                 className={cn(
@@ -120,11 +125,15 @@ export function AISidebarContent({
         <div className="flex grow flex-col gap-2">
           <div className="flex w-full items-center justify-between pl-1">
             <p className="mcaption-semibold14 text-foreground">{tAI('history')}</p>
-            <Link href={AI_ROUTES.history} activeClassName="">
+            <Link href={AI_ROUTES.history} activeClassName="" onClick={handleCloseSidebar}>
               <Search size={16} color="var(--foreground)" />
             </Link>
           </div>
-          {isLogin ? <TopLastestHistory /> : <div className="mcaption-regular14 text-center">{tAI('noHistory')}</div>}
+          {isLogin ? (
+            <TopLastestHistory onClickHistory={handleCloseSidebar} />
+          ) : (
+            <div className="mcaption-regular14 text-center">{tAI('noHistory')}</div>
+          )}
         </div>
       ) : (
         <div>
@@ -134,6 +143,7 @@ export function AISidebarContent({
               'm-auto flex rounded-full border border-2 bg-ai-more-feature-gradient hover:border-primary hover:bg-ai-more-feature-gradient'
             )}
             size="icon"
+            onClick={handleCloseSidebar}
           >
             <MessageTime color="var(--primary)" width={16} height={16} />
           </Link>
