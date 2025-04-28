@@ -1,10 +1,22 @@
+import { generateSEO } from '@oe/core';
 import { BlogDefaultPage } from '@oe/ui';
 import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 
-export const metadata: Metadata = {
-  title: "News Feed",
-  keywords: ["news-feed", "blog", "community"],
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "newsfeedMetadata" });
+
+  return generateSEO({
+    title: {absolute: t("title")},
+    description: t("description"),
+    keywords: ["news-feed", "blog", "community"],
+  });
+}
 
 export default function BlogPage() {
   return <BlogDefaultPage isOpenEdu />;

@@ -1,14 +1,32 @@
+import { generateSEO } from '@oe/core';
 import { AIBanner } from "@oe/ui";
-import { AIFeatureSection } from "./_components/ai-features";
-import { BlogsSection } from "./_components/blogs-section";
-import { CTASection } from "./_components/call-to-action";
-import { LaunchpadSection } from "./_components/course-launchpad";
-import { CreatorsSection } from "./_components/creators";
-import { HeroSection } from "./_components/hero-banner";
-import { LearningPathSection } from "./_components/learning-path";
-import { OrganizationSection } from "./_components/organizations";
-import { PopularCoursesSection } from "./_components/polular-courses";
-import { ReferralProgramSection } from "./_components/referral";
+import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
+import { AIFeatureSection } from './_components/ai-features';
+import { BlogsSection } from './_components/blogs-section';
+import { CTASection } from './_components/call-to-action';
+import { LaunchpadSection } from './_components/course-launchpad';
+import { CreatorsSection } from './_components/creators';
+import { HeroSection } from './_components/hero-banner';
+import { LearningPathSection } from './_components/learning-path';
+import { OrganizationSection } from './_components/organizations';
+import { PopularCoursesSection } from './_components/polular-courses';
+import { ReferralProgramSection } from './_components/referral';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'homepageMetadata' });
+
+  return generateSEO({
+    title: { absolute: t('title') },
+    description: t('description'),
+    keywords: ['e-learning', 'blockchain', 'launchpad', 'AI', 'education'],
+  });
+}
 
 export default function Home() {
   return (

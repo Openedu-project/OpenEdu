@@ -17,6 +17,7 @@ import { homePageMessage } from './home-page';
 import { launchpadDetailPageMessages } from './launchpad-detailpage';
 import { launchpadHomepageMessage } from './launchpad-homepage';
 import { courseLearningMessages } from './learning';
+import { metadataMessage } from './metadata';
 import { myLearningSpaceMessage } from './my-learning-space';
 import { notificationMessage } from './notification';
 import { organizationsMessage } from './organizations';
@@ -59,5 +60,6 @@ export const pageMessages = {
   ...courseManagementMessages,
   ...referralProgramMessages,
   ...scheduleMessage,
-  ...termsAndConditions
+  ...termsAndConditions,
+  ...metadataMessage,
 };

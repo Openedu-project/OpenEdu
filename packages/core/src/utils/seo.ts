@@ -2,7 +2,11 @@ import type { Metadata } from 'next';
 import { extractHtmlToText } from './helpers';
 
 interface SEOProps {
-  title?: string;
+  title?:
+    | string
+    | {
+        absolute: string;
+      };
   description?: string;
   keywords?: string[];
   noindex?: boolean;
@@ -47,11 +51,12 @@ export function generateSEO({
   alternates,
 }: SEOProps): Metadata {
   // Make sure the title does not exceed 60 characters
-  const formattedTitle = title?.substring(0, 60);
+  const formattedTitle = (typeof title === 'string' ? title : title?.absolute) || '';
+  // const formattedTitle = (typeof title === 'string' ? title : title?.absolute)?.substring(0, 60) || '';
   const formattedDescription = extractHtmlToText(description ?? '');
 
   return {
-    title: formattedTitle,
+    title: typeof title === 'string' ? formattedTitle : { absolute: formattedTitle },
     description: formattedDescription,
     keywords: ['openedu.net', ...keywords],
 
@@ -82,7 +87,7 @@ export function generateSEO({
           alt: 'OpenEdu',
         },
       ],
-      locale: openGraph?.locale || 'vi_VN',
+      locale: openGraph?.locale || 'en-US',
       type: openGraph?.type || 'website',
     },
 
