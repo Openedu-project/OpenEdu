@@ -41,51 +41,13 @@ export const useSendMessageHandler = (
       const thinking = useConversationStore.getState().thinking;
       const newId = useConversationStore.getState().newConversationId;
 
-      const messageID = message_id ?? `id_${Date.now()}`;
       resetOpenWebSource();
       const prevMessage = messages;
-      const newMessage: IMessage = {
-        content: messageInput,
-        attachments: files?.filter(f => ['finished', 'completed'].includes(f.status ?? '')),
-        id: messageID,
-        conversation_id: (id as string) ?? 'new-chat',
-        create_at: Date.now(),
-        content_type: 'text',
-        status: (status ?? 'compeleted') as IAIStatus,
-        ai_model: currentSelectedModel ?? model ?? { id: 'id_gpt', name: 'gpt-4o-mini' },
-        is_ai: true,
-        ai_agent_type: type,
-        sender: { role: role ?? 'user' },
-        props: null,
-        reasoning: '',
-      };
-
-      const params: ISendMessageParams = { messageInput, type, files, message_id, role, status };
-
-      const index = messages?.findIndex(msg => msg.id === message_id) ?? -1;
-      if (index === -1) {
-        addMessage(newMessage, () => {
-          setStatus('pending');
-        });
-      } else if (role === 'assistant') {
-        setGenMessage(
-          newMessage,
-          () => {
-            setStatus('pending');
-          },
-          true,
-          index
-        );
-      } else {
-        updateMessages(newMessage, index, () => {
-          setStatus('pending');
-        });
-      }
 
       try {
         if (!id) {
           const data = await postEmptyConversation(undefined, { ai_agent_type: agent });
-          setPendingParams(params);
+          setPendingParams({ messageInput, type, files, message_id, role, status });
           setIsNewChat(true);
           router.push(
             createAPIUrl({
@@ -94,6 +56,43 @@ export const useSendMessageHandler = (
             })
           );
           return;
+        }
+
+        const messageID = message_id ?? `id_${Date.now()}`;
+        const newMessage: IMessage = {
+          content: messageInput,
+          attachments: files?.filter(f => ['finished', 'completed'].includes(f.status ?? '')),
+          id: messageID,
+          conversation_id: (id as string) ?? 'new-chat',
+          create_at: Date.now(),
+          content_type: 'text',
+          status: (status ?? 'compeleted') as IAIStatus,
+          ai_model: currentSelectedModel ?? model ?? { id: 'id_gpt', name: 'gpt-4o-mini' },
+          is_ai: true,
+          ai_agent_type: type,
+          sender: { role: role ?? 'user' },
+          props: null,
+          reasoning: '',
+        };
+
+        const index = messages?.findIndex(msg => msg.id === message_id) ?? -1;
+        if (index === -1) {
+          addMessage(newMessage, () => {
+            setStatus('pending');
+          });
+        } else if (role === 'assistant') {
+          setGenMessage(
+            newMessage,
+            () => {
+              setStatus('pending');
+            },
+            true,
+            index
+          );
+        } else {
+          updateMessages(newMessage, index, () => {
+            setStatus('pending');
+          });
         }
 
         const data = await postConversation(undefined, {
@@ -125,8 +124,10 @@ export const useSendMessageHandler = (
         }
       } catch (error) {
         setStatus('failed');
-        setMessages(prevMessage);
-        resetGenMessage();
+        if (id) {
+          setMessages(prevMessage);
+          resetGenMessage();
+        }
         console.error(error);
         toast.error(tError((error as HTTPError).message));
         if ((error as HTTPError).message.toString() === '32002') {

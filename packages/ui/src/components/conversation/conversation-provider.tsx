@@ -7,13 +7,13 @@ import type React from 'react';
 import { createContext, useMemo } from 'react';
 import { useSocket } from '#hooks/socket';
 
-interface AuthContextType {
+interface ConversationContextType {
   me: IUser | null;
   isLoading: boolean;
   error: HTTPError | null;
 }
 
-const ConversationContext = createContext<AuthContextType | undefined>(undefined);
+const ConversationContext = createContext<ConversationContextType | undefined>(undefined);
 
 export function ConversationProvider({
   id,
@@ -23,7 +23,7 @@ export function ConversationProvider({
   children: React.ReactNode;
 }) {
   const { dataMe, isLoadingMe, errorMe } = useGetMe();
-  const authContextValue = useMemo(
+  const conversationContextValue = useMemo(
     () => ({
       me: dataMe,
       isLoading: isLoadingMe,
@@ -34,5 +34,5 @@ export function ConversationProvider({
   const isAuthenticated = !!dataMe;
   useSocket(isAuthenticated, id);
 
-  return <ConversationContext.Provider value={authContextValue}>{children}</ConversationContext.Provider>;
+  return <ConversationContext.Provider value={conversationContextValue}>{children}</ConversationContext.Provider>;
 }

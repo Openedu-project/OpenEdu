@@ -1,6 +1,6 @@
-import type { ISendMessageParams } from '@/components/conversation/type';
 import type { IAIModel, IAIStatus, IAgenConfigs, IMessage, ISourceProps, TAgentType } from '@oe/api';
 import { createStore } from '@oe/core';
+import type { ISendMessageParams } from '#components/conversation';
 
 export const AGENT_CONFIG: Record<TAgentType, keyof IAgenConfigs> = {
   ai_slide: 'present_creator_enabled',

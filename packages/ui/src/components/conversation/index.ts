@@ -9,6 +9,7 @@ import { InputFrame } from './message-input/input-frame';
 import { PromptCategory } from './prompt/prompt-category';
 import { AIModule } from './sidebar/ai-module';
 import { AISidebar, SIDEBAR_WIDTH, SIDEBAR_WIDTH_ICON } from './sidebar/ai-sidebar';
+import type { ISendMessageParams } from './type';
 
 export {
   AISidebar,
@@ -26,4 +27,5 @@ export {
   SearchHistory,
   AIBanner,
   ConversationProvider,
+  type ISendMessageParams,
 };
