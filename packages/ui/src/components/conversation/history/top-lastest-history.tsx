@@ -21,7 +21,7 @@ export const TopLastestHistory = memo(() => {
   }, [historyData]);
 
   useEffect(() => {
-    if (!history || history?.results?.length === 0) {
+    if (!history?.results) {
       return;
     }
     setHistoryData(

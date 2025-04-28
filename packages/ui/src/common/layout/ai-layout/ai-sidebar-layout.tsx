@@ -1,5 +1,6 @@
 'use client';
 import type { IAIModel } from '@oe/api';
+import { AI_ROUTES } from '@oe/core';
 import { type CSSProperties, type ReactNode, useEffect, useState } from 'react';
 import { usePathname } from '#common/navigation';
 import { AIModelDropdown, AISidebar, SIDEBAR_WIDTH, SIDEBAR_WIDTH_ICON } from '#components/conversation';
@@ -50,7 +51,7 @@ export function AISidebarLayout({ children, className, login, AIChatModels }: Pr
           className
         )}
       >
-        {!pathname.includes('history') && AIChatModels && AIChatModels?.length > 0 && (
+        {!pathname.includes(AI_ROUTES.history) && AIChatModels && AIChatModels?.length > 0 && (
           <AIModelDropdown AIModels={AIChatModels} isLogin={login} className="mx-auto shrink-0" />
         )}
         {children}
