@@ -7,8 +7,10 @@ import { useHeaderHeight } from '../../_hooks';
 const ContentPdf = ({
   url,
   onComplete,
+  isPreview = false,
 }: {
   url: string;
+  isPreview?: boolean;
   onComplete?: () => void;
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -62,7 +64,7 @@ const ContentPdf = ({
         files={url}
         showPerPage
         hasToolbar
-        toolbarStyle={{ top: `${headerHeight}px` }}
+        toolbarStyle={{ top: isPreview ? '0px' : `${headerHeight}px` }}
         onPageChange={handlePageChange}
         onLoadSuccess={handleDocumentLoadSuccess}
       />

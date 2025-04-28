@@ -110,10 +110,12 @@ export const CONTENT_RENDERERS: Record<TLessonContent, ContentRenderer> = {
   },
 
   pdf: {
-    render: ({ data, onCompleteContent }) => {
+    render: ({ data, onCompleteContent, isPreview }) => {
       const url = data?.files?.[0]?.url || '';
 
-      return <ContentPdfLazy url={url} onComplete={() => onCompleteContent?.({ uid: data?.uid })} />;
+      return (
+        <ContentPdfLazy url={url} onComplete={() => onCompleteContent?.({ uid: data?.uid })} isPreview={isPreview} />
+      );
     },
     getClassName: isOnlyContent => getContentClassName(isOnlyContent),
   },
