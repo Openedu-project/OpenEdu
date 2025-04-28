@@ -226,7 +226,7 @@ export const TOKEN_CONTRACTS: TTokenContracts = (() => {
 })();
 
 export const ETH_TOKEN_CONTRACTS = {
-  [CURRENCY_SYMBOLS.USDC]: process.env.NEXT_PUBLIC_ETH_USDC_CONTRACT,
+  [CURRENCY_SYMBOLS.USDC]: process.env.NEXT_PUBLIC_BASE_USDC_CONTRACT,
 };
 
 export const NFT_CONTRACTS = {

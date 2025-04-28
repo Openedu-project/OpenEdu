@@ -175,12 +175,14 @@ export const WithdrawTokenForm = () => {
           return;
         }
 
+        const isBaseWallet = data.network.toLowerCase() === CHAIN.BASE.toLowerCase();
+
         await tokenSubmitWithdrawService(null, walletId, {
           payload: {
             ...data,
             network: data.network.toLowerCase(),
             currency: data.token,
-            is_mainnet: process.env.NODE_ENV === 'production',
+            is_mainnet: process.env.NODE_ENV === 'production' && !isBaseWallet,
           },
         });
         await mutateWallets();
