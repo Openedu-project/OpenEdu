@@ -1,12 +1,12 @@
 'use client';
 import { API_ENDPOINT, createAPIUrl, updateConversationTitle } from '@oe/api';
-import type { HTTPError, ISearchHistoryParams } from '@oe/api';
+import type { HTTPError } from '@oe/api';
 import { deleteConversation } from '@oe/api';
 import type { IChatHistory, IChatHistoryResponse } from '@oe/api';
 import { AI_ROUTES } from '@oe/core';
 import { MessageCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Dispatch, RefObject, SetStateAction } from 'react';
 import { type KeyedMutator, useSWRConfig } from 'swr';
 import { Link, useRouter } from '#common/navigation';
@@ -24,10 +24,8 @@ interface IHistoryItem {
   setSelectItem?: (value: IChatHistory) => void;
   mutate?: KeyedMutator<IChatHistoryResponse | null>;
   pauseAddMessage?: () => void;
-  pageIndex?: number;
   activeId?: string;
   callbackFn?: () => void;
-  searchParams?: ISearchHistoryParams;
   setHistoryData?: Dispatch<SetStateAction<IChatHistory[]>>;
 }
 
@@ -58,15 +56,7 @@ export function useClickOutside<T extends HTMLElement>(
   return ref;
 }
 
-export function AIHistoryItem({
-  className,
-  item,
-  pageIndex = 1,
-  activeId,
-  callbackFn,
-  searchParams = HISTORY_DEFAULT_PARAMS,
-  setHistoryData,
-}: IHistoryItem) {
+export function AIHistoryItem({ className, item, activeId, callbackFn, setHistoryData }: IHistoryItem) {
   const tError = useTranslations('errors');
 
   const [isEdit, setIsEdit] = useState(false);
@@ -76,30 +66,34 @@ export function AIHistoryItem({
 
   const agentData = AI_SIDEBAR().find(data => data.agent === item.ai_agent_type);
 
+  const mutateInitHistory = useCallback(() => {
+    const initkey = createAPIUrl({
+      endpoint: API_ENDPOINT.COM_CHANNELS,
+      queryParams: HISTORY_DEFAULT_PARAMS,
+    });
+    globalMutate((key: string) => key === initkey, undefined, {
+      revalidate: true,
+    });
+  }, [globalMutate]);
+
   const handleEdit = async ({ messageInput }: ISendMessageParams) => {
     await updateConversationTitle(undefined, item.id, {
       title: messageInput ?? '',
     });
     setIsEdit(false);
-    const initkey = createAPIUrl({
-      endpoint: API_ENDPOINT.COM_CHANNELS,
-      queryParams: { ...searchParams, page: 1 },
-    });
-    const apikey = createAPIUrl({
-      endpoint: API_ENDPOINT.COM_CHANNELS,
-      queryParams: { ...searchParams, page: pageIndex },
-    });
+
     setHistoryData?.(prev =>
       prev.map(history => {
         if (history.id !== item.id) {
           return history;
         }
-        return { ...history, context: { ...history.context, title: messageInput ?? '' } };
+        return {
+          ...history,
+          context: { ...history.context, title: messageInput ?? '' },
+        };
       })
     );
-    await globalMutate((key: string) => !!key.includes(apikey) || !!key.includes(initkey), undefined, {
-      revalidate: true,
-    });
+    mutateInitHistory();
   };
 
   const handleDelete = async (onClose?: () => void) => {
@@ -111,9 +105,7 @@ export function AIHistoryItem({
         router.push(AI_ROUTES.chat);
       }
       setHistoryData?.(prev => prev.filter(history => history.id !== item.id));
-      await globalMutate((key: string) => !!key.includes(`${API_ENDPOINT.COM_CHANNELS}/`), undefined, {
-        revalidate: true,
-      });
+      mutateInitHistory();
     } catch (error) {
       console.error(error);
       toast.error(tError((error as HTTPError).message));

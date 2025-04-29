@@ -45,20 +45,9 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
       return;
     }
     if (history.pagination?.page === 1) {
-      setHistoryData(
-        history.results.map(item => ({
-          ...item,
-          page: 1,
-        }))
-      );
+      setHistoryData(history.results);
     } else {
-      setHistoryData(prevData => [
-        ...prevData,
-        ...history.results.map(item => ({
-          ...item,
-          page: history.pagination.page,
-        })),
-      ]);
+      setHistoryData(prevData => [...prevData, ...history.results]);
     }
   }, [history]);
 
@@ -168,16 +157,13 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
               <h5 className="mcaption-semibold14">{formatDate(date)}</h5>
               <div className="pl-2">
                 {getHistoryByDate(date, historyData)?.map(item => {
-                  const { page, ...baseData } = item;
                   return (
                     <AIHistoryItem
                       key={item.id}
-                      item={baseData}
-                      pageIndex={page}
+                      item={item}
                       mutate={mutate}
                       activeId={id as string}
                       callbackFn={callbackFn}
-                      searchParams={searchParams}
                       setHistoryData={setHistoryData}
                     />
                   );
