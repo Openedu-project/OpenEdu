@@ -52,7 +52,7 @@ export function AISidebarContent({
           </Badge>
         </Link>
         <span className={cn('giant-iheading-semibold12 ml-1 text-foreground', open && 'giant-iheading-semibold14')}>
-          {dataMe?.is_free_plan || dataMe?.is_free_plan === undefined ? tAI('freePlan') : tAI('proPlan')}
+          {!dataMe?.pricing_plan || dataMe?.pricing_plan === 'free' ? tAI('freePlan') : tAI('proPlan')}
         </span>
       </div>
 
