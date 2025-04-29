@@ -4,3 +4,5 @@ export * from './aiedu-vision-mission';
 export * from './aiedu-features';
 export * from './aiedu-expert';
 export * from './aiedu-map';
+export * from './aiedu-trend';
+export * from './aiedu-benefit';

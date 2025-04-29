@@ -9,6 +9,52 @@ export const createAiEduIntroductionConfig = (getThemeTranslation: (path: string
     },
     order: 0,
   }),
+  aieduTrend: createSection<'introduction', 'aieduTrend'>({
+    props: {
+      title: getThemeTranslation(['introduction', 'aieduTrend', 'title']),
+      feature1: {
+        color: 'secondary',
+        title: getThemeTranslation(['introduction', 'aieduTrend', 'feature1', 'title']),
+        highlight: getThemeTranslation(['introduction', 'aieduTrend', 'feature1', 'highlight']),
+        desc: getThemeTranslation(['introduction', 'aieduTrend', 'feature1', 'desc']),
+      },
+      feature2: {
+        color: 'warning',
+        title: getThemeTranslation(['introduction', 'aieduTrend', 'feature2', 'title']),
+        highlight: getThemeTranslation(['introduction', 'aieduTrend', 'feature2', 'highlight']),
+        desc: getThemeTranslation(['introduction', 'aieduTrend', 'feature2', 'desc']),
+      },
+      feature3: {
+        color: 'info',
+        title: getThemeTranslation(['introduction', 'aieduTrend', 'feature3', 'title']),
+        highlight: getThemeTranslation(['introduction', 'aieduTrend', 'feature3', 'highlight']),
+        desc: getThemeTranslation(['introduction', 'aieduTrend', 'feature3', 'desc']),
+      },
+    },
+    order: 1,
+  }),
+  aieduBenefit: createSection<'introduction', 'aieduBenefit'>({
+    props: {
+      title: getThemeTranslation(['introduction', 'aieduBenefit', 'title']),
+      benefit1: {
+        percentage: 46,
+        description: getThemeTranslation(['introduction', 'aieduBenefit', 'benefit1', 'description']),
+      },
+      benefit2: {
+        percentage: 68,
+        description: getThemeTranslation(['introduction', 'aieduBenefit', 'benefit2', 'description']),
+      },
+      benefit3: {
+        percentage: 66,
+        description: getThemeTranslation(['introduction', 'aieduBenefit', 'benefit3', 'description']),
+      },
+      benefit4: {
+        percentage: 92,
+        description: getThemeTranslation(['introduction', 'aieduBenefit', 'benefit4', 'description']),
+      },
+    },
+    order: 2,
+  }),
   aieduVisionMission: createSection<'introduction', 'aieduVisionMission'>({
     props: {
       title: getThemeTranslation(['introduction', 'aieduVisionMission', 'title']),
@@ -21,7 +67,7 @@ export const createAiEduIntroductionConfig = (getThemeTranslation: (path: string
         content: getThemeTranslation(['introduction', 'aieduVisionMission', 'mission.content']),
       },
     },
-    order: 1,
+    order: 3,
   }),
   aieduExpert: createSection<'introduction', 'aieduExpert'>({
     props: {
@@ -61,7 +107,7 @@ export const createAiEduIntroductionConfig = (getThemeTranslation: (path: string
         },
       ],
     },
-    order: 2,
+    order: 4,
   }),
   aieduFeatures: createSection<'introduction', 'aieduFeatures'>({
     props: {
@@ -79,7 +125,7 @@ export const createAiEduIntroductionConfig = (getThemeTranslation: (path: string
         getThemeTranslation(['introduction', 'aieduFeatures', 'benefit', `benefit${index + 1}`])
       ),
     },
-    order: 3,
+    order: 5,
   }),
   aieduMap: createSection<'introduction', 'aieduMap'>({
     props: {
@@ -91,6 +137,6 @@ export const createAiEduIntroductionConfig = (getThemeTranslation: (path: string
         link: '/',
       },
     },
-    order: 4,
+    order: 6,
   }),
 });

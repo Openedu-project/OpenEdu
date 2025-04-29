@@ -1,13 +1,13 @@
-import { cn } from '@oe/ui';
-import { useTranslations } from 'next-intl';
+import { cn } from "@oe/ui";
+import { useTranslations } from "next-intl";
 
-import AICourseBg from '@oe/assets/images/theme/aiedu/ai-course.png';
-import type { FileType } from '@oe/ui';
-import { Image } from '@oe/ui';
-import type { SectionComponent } from '../../../_types/theme-page';
-import { AieduButton, type AieduButtonProps } from '../../_components/button';
-import { AieduLayoutSection } from '../../_components/layout-section';
-import { Title, type TitleProps } from '../../_components/title';
+import AICourseBg from "@oe/assets/images/theme/aiedu/ai-course.png";
+import type { FileType } from "@oe/ui";
+import { Image } from "@oe/ui";
+import type { SectionComponent } from "../../../_types/theme-page";
+import { AieduButton, type AieduButtonProps } from "../../_components/button";
+import { AieduLayoutSection } from "../../_components/layout-section";
+import { Title, type TitleProps } from "../../_components/title";
 
 // Theme step 4: create sectionProps
 export interface AieduHomepageFeaturesProps extends TitleProps {
@@ -18,12 +18,15 @@ export interface AieduHomepageFeaturesProps extends TitleProps {
 }
 
 //Theme step 7: back to section - hero.tsx, create your code based on the props
-const AieduHomepageFeatures: SectionComponent<'homepage', 'aieduFeatures'> = ({ className, props }) => {
-  const t = useTranslations('themePage.aiedu.homepage.aieduFeatures');
+const AieduHomepageFeatures: SectionComponent<"homepage", "aieduFeatures"> = ({
+  className,
+  props,
+}) => {
+  const t = useTranslations("themePage.aiedu.homepage.aieduFeatures");
   return (
     <AieduLayoutSection
       background="bg-gradient-to-b from-primary from-50% to-white to-98%"
-      className={cn('space-y-6', className)}
+      className={cn("space-y-6", className)}
     >
       <Image
         src={AICourseBg.src}
@@ -32,14 +35,14 @@ const AieduHomepageFeatures: SectionComponent<'homepage', 'aieduFeatures'> = ({ 
         // fill
         height={AICourseBg?.height ?? 80}
         width={AICourseBg?.width ?? 400}
-        // quality={100}
+        quality={100}
         className="h-full w-full object-contain"
       />
       <div className="space-y-2 md:flex md:justify-between">
         {/* Left side - Title */}
         {/* biome-ignore lint/nursery/useSortedClasses: <explanation> */}
         <div className="md:w-1/2 mb-6 md:mb-0 md:max-w-[400px]">
-          <Title title={t('title')} variant="secondary" />
+          <Title title={t("title")} variant="secondary" />
         </div>
 
         {/* Right side - Bullet points */}
@@ -71,7 +74,9 @@ const AieduHomepageFeatures: SectionComponent<'homepage', 'aieduFeatures'> = ({ 
               <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-secondary font-medium text-primary">
                 0{Number(index) + 1}
               </div>
-              <div className="ml-3 font-medium">{t(`modules.module${index + 1}`)}</div>
+              <div className="ml-3 font-medium">
+                {t(`modules.module${index + 1}`)}
+              </div>
             </div>
           ))}
         </div>
