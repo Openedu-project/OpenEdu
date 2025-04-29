@@ -9,8 +9,10 @@ import type { AieduHomepageGuideProps } from './homepage';
 import type { AieduHomepageSponsorsProps } from './homepage';
 import type { AieduHomepageGalleryProps } from './homepage';
 import type {
+  AieduIntroductionBenefitProps,
   AieduIntroductionGoalProps,
   AieduIntroductionMapProps,
+  AieduIntroductionTrendProps,
   AieduIntroductionVisionMissionProps,
 } from './introduction';
 export type {
@@ -26,4 +28,6 @@ export type {
   AieduIntroductionVisionMissionProps,
   AieduIntroductionMapProps,
   AieduDashboardConfigProps,
+  AieduIntroductionTrendProps,
+  AieduIntroductionBenefitProps,
 };

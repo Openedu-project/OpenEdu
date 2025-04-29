@@ -77,7 +77,9 @@ export type IntroduceSection =
   | 'aieduVisionMission'
   | 'aieduExpert'
   | 'aieduFeatures'
-  | 'aieduMap';
+  | 'aieduMap'
+  | 'aieduTrend'
+  | 'aieduBenefit';
 
 // RANKING
 export type RankingSection = 'theme' | 'aieduDashboard';
