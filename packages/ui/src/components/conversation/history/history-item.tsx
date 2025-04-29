@@ -1,21 +1,19 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
-
-import type { HTTPResponse } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
+import { API_ENDPOINT, createAPIUrl, updateConversationTitle } from '@oe/api';
 import type { HTTPError } from '@oe/api';
-import { deleteConversation, updateConversationTitle } from '@oe/api';
+import { deleteConversation } from '@oe/api';
 import type { IChatHistory, IChatHistoryResponse } from '@oe/api';
 import { AI_ROUTES } from '@oe/core';
 import { MessageCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import type { RefObject } from 'react';
-import type { SWRInfiniteResponse } from 'swr/infinite';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import type { Dispatch, RefObject, SetStateAction } from 'react';
+import { type KeyedMutator, useSWRConfig } from 'swr';
 import { Link, useRouter } from '#common/navigation';
 import { toast } from '#shadcn/sonner';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
-import { AI_SIDEBAR } from '../constants';
+import { AI_SIDEBAR, HISTORY_DEFAULT_PARAMS } from '../constants';
 import { MessageInput } from '../message-input/message-input';
 import type { ISendMessageParams } from '../type';
 import { ActionDropdown } from './history-actions-dropdown';
@@ -24,11 +22,11 @@ interface IHistoryItem {
   className?: string;
   item: IChatHistory;
   setSelectItem?: (value: IChatHistory) => void;
-  mutate?: SWRInfiniteResponse<HTTPResponse<IChatHistoryResponse>>['mutate'];
+  mutate?: KeyedMutator<IChatHistoryResponse | null>;
   pauseAddMessage?: () => void;
-  pageIndex: number;
   activeId?: string;
   callbackFn?: () => void;
+  setHistoryData?: Dispatch<SetStateAction<IChatHistory[]>>;
 }
 
 export function useClickOutside<T extends HTMLElement>(
@@ -58,35 +56,44 @@ export function useClickOutside<T extends HTMLElement>(
   return ref;
 }
 
-export function AIHistoryItem({ className, item, mutate, pageIndex, activeId, callbackFn }: IHistoryItem) {
+export function AIHistoryItem({ className, item, activeId, callbackFn, setHistoryData }: IHistoryItem) {
   const tError = useTranslations('errors');
 
   const [isEdit, setIsEdit] = useState(false);
   const { setIsNewChat, resetStatus } = useConversationStore();
   const router = useRouter();
+  const { mutate: globalMutate } = useSWRConfig();
 
   const agentData = AI_SIDEBAR().find(data => data.agent === item.ai_agent_type);
+
+  const mutateInitHistory = useCallback(() => {
+    const initkey = createAPIUrl({
+      endpoint: API_ENDPOINT.COM_CHANNELS,
+      queryParams: HISTORY_DEFAULT_PARAMS,
+    });
+    globalMutate((key: string) => key === initkey, undefined, {
+      revalidate: true,
+    });
+  }, [globalMutate]);
 
   const handleEdit = async ({ messageInput }: ISendMessageParams) => {
     await updateConversationTitle(undefined, item.id, {
       title: messageInput ?? '',
     });
     setIsEdit(false);
-    await mutate?.(currentData => {
-      if (!currentData) {
-        return currentData;
-      }
 
-      return currentData.map((page, index) => {
-        if (index === pageIndex - 1 && page) {
-          return {
-            ...page,
-            results: page.data.results.map(chat => (chat.id === item.id ? { ...chat, title: messageInput } : chat)),
-          };
+    setHistoryData?.(prev =>
+      prev.map(history => {
+        if (history.id !== item.id) {
+          return history;
         }
-        return page;
-      });
-    });
+        return {
+          ...history,
+          context: { ...history.context, title: messageInput ?? '' },
+        };
+      })
+    );
+    mutateInitHistory();
   };
 
   const handleDelete = async (onClose?: () => void) => {
@@ -97,24 +104,8 @@ export function AIHistoryItem({ className, item, mutate, pageIndex, activeId, ca
       if (item.id === activeId) {
         router.push(AI_ROUTES.chat);
       }
-
-      await mutate?.(currentData => {
-        if (!currentData) {
-          return currentData;
-        }
-
-        return currentData.map((page, index) => {
-          if (!page || index < pageIndex - 1) {
-            return page;
-          }
-
-          return {
-            ...page,
-            results: page?.data?.results?.filter(chat => chat.id !== item?.id),
-          };
-        });
-      });
-      callbackFn?.();
+      setHistoryData?.(prev => prev.filter(history => history.id !== item.id));
+      mutateInitHistory();
     } catch (error) {
       console.error(error);
       toast.error(tError((error as HTTPError).message));
@@ -142,12 +133,12 @@ export function AIHistoryItem({ className, item, mutate, pageIndex, activeId, ca
     <div className={cn('group/history flex items-center rounded-lg pl-2 hover:bg-primary/10', className)}>
       {agentData?.icon ?? <MessageCircle size={16} color="var(--warning-500)" />}
       {activeId === item.id ? (
-        <p className="mcaption-regular14 md:mcaption-regular16 !font-bold w-[calc(100%-20px)] truncate p-2 opacity-50">
+        <p className="mcaption-regular14 !font-bold w-[calc(100%-20px)] truncate p-2 opacity-50">
           {item.context?.title}
         </p>
       ) : (
         <Link
-          className="mcaption-regular14 md:mcaption-regular16 block h-auto w-[calc(100%-20px)] truncate px-2 text-start text-foreground hover:no-underline"
+          className="mcaption-regular14 block h-auto w-[calc(100%-20px)] truncate px-2 text-start text-foreground hover:no-underline"
           href={createAPIUrl({
             endpoint: agentData?.detailHref ?? AI_ROUTES.chatDetail,
             params: { id: item.id },

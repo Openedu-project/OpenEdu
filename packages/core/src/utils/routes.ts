@@ -91,6 +91,7 @@ export const AI_ROUTES = {
   video: '/ai-agent/video',
   slide: '/ai-agent/slide',
   slideDetail: '/ai-agent/slide/:id',
+  history: '/ai-agent/history',
 };
 
 export const AUTH_ROUTES = {

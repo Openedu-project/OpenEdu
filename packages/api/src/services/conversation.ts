@@ -62,11 +62,6 @@ export const deleteConversation = async (url: string | undefined, id: string, in
 };
 
 export const getListConversation = async (url?: string, params?: Record<string, unknown>, init?: FetchOptions) => {
-  const login = await isLogin();
-
-  if (!login) {
-    return null;
-  }
   const endpointKey = url ?? createAPIUrl({ endpoint: API_ENDPOINT.COM_CHANNELS, queryParams: params });
   try {
     const response = await fetchAPI<IChatHistoryResponse>(endpointKey, init);

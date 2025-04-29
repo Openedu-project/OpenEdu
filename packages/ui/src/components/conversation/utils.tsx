@@ -1,4 +1,4 @@
-import { z } from '@oe/api';
+import { type IChatHistory, z } from '@oe/api';
 import React from 'react';
 import { DESKTOP_BREAKPOINT } from './constants';
 
@@ -70,3 +70,18 @@ export const formatDate = (timestamp: number) => {
 
   return `${day}/${month}/${year}`;
 };
+
+export const getHistoryDates = (historyData: IChatHistory[]) => {
+  const uniqueDates = [...new Set(historyData?.map(item => new Date(item.create_at).setHours(0, 0, 0, 0)))];
+
+  return uniqueDates.sort((a, b) => b - a); // Sort dates descending
+};
+
+export const getHistoryByDate = (targetDate: number, historyData: IChatHistory[]) =>
+  historyData
+    ?.filter(item => {
+      const itemDate = new Date(item.create_at).setHours(0, 0, 0, 0);
+
+      return itemDate === targetDate;
+    })
+    .sort((a, b) => b.create_at - a.create_at);

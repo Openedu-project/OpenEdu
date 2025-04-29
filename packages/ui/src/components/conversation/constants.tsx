@@ -1,5 +1,5 @@
 import type { IAgenConfigs, TAgentType } from '@oe/api';
-import { Gallery, Grid3, SearchZoomIn, VideoSquare } from '@oe/assets';
+import { Direct, DocumentText, Gallery, Grid3, SearchZoomIn, VideoSquare } from '@oe/assets';
 import AIChat from '@oe/assets/images/ai/ai-chat.png';
 import AIImage from '@oe/assets/images/ai/ai-image.png';
 import AISlide from '@oe/assets/images/ai/ai-slide.png';
@@ -22,10 +22,11 @@ export const AI_SIDEBAR: (color?: string, size?: number) => AISidebarItem[] = (c
     image: AIChat.src,
     agent: 'ai_search',
     detailHref: AI_ROUTES.chatDetail,
+    hidden: true,
   },
   {
     lableKey: 'presentation',
-    shortLableKey: 'slide',
+    shortLableKey: 'present',
     descKey: 'aiSlideDesc',
     value: 'slide',
     agent: 'ai_slide',
@@ -56,6 +57,7 @@ export const AI_SIDEBAR: (color?: string, size?: number) => AISidebarItem[] = (c
     icon: <VideoSquare width={size} height={size} color={color} />,
     bgColor: 'var(--ai-agent-blue-background)',
     isComming: true,
+    hidden: true,
   },
   {
     lableKey: 'deepResearch',
@@ -64,6 +66,27 @@ export const AI_SIDEBAR: (color?: string, size?: number) => AISidebarItem[] = (c
     value: 'deepResearch',
     href: AI_ROUTES.search,
     icon: <SearchZoomIn width={size} height={size} color={color} />,
+    bgColor: 'var(--ai-agent-orange-background)',
+    isComming: true,
+    hidden: true,
+  },
+  {
+    lableKey: 'project',
+    shortLableKey: 'project',
+    descKey: '',
+    value: 'project',
+    href: AI_ROUTES.search,
+    icon: <DocumentText width={size} height={size} color={color} />,
+    bgColor: 'var(--ai-agent-orange-background)',
+    isComming: true,
+  },
+  {
+    lableKey: 'prompt',
+    shortLableKey: 'prompt',
+    descKey: '',
+    value: 'prompt',
+    href: AI_ROUTES.search,
+    icon: <Direct width={size} height={size} color={color} />,
     bgColor: 'var(--ai-agent-orange-background)',
     isComming: true,
   },

@@ -15,6 +15,7 @@ export interface AISidebarItem {
   agent?: TAgentType;
   detailHref?: string;
   image?: string;
+  hidden?: boolean;
 }
 
 export interface ISendMessageParams {

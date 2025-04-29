@@ -35,6 +35,8 @@ interface IConversationStore {
   setResetPage: (resetPage: boolean) => void;
   newConversationId: string;
   setNewConversationId: (id: string) => void;
+  inputValue?: string;
+  setInputValue: (value?: string) => void;
 }
 
 export const useConversationStore = createStore<IConversationStore>(set => {
@@ -143,6 +145,12 @@ export const useConversationStore = createStore<IConversationStore>(set => {
     setNewConversationId: (newConversationId: string) => {
       set(() => {
         return { newConversationId };
+      });
+    },
+    inputValue: undefined,
+    setInputValue: (inputValue?: string) => {
+      set(() => {
+        return { inputValue };
       });
     },
   };
