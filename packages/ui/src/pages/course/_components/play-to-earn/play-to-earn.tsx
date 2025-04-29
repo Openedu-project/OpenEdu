@@ -4,14 +4,14 @@ import { useGetMe } from '@oe/api';
 import { useGetLearningProgress } from '@oe/api';
 import { getCookie } from 'cookies-next';
 import { useTranslations } from 'next-intl';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import type { ICourseOutline } from '@oe/api';
 import { createAPIUrl } from '@oe/api';
 import availBot from '@oe/assets/images/avail_bot.png';
 import { Image } from '#components/image';
 import { Button } from '#shadcn/button';
-import { cleanUrl, getFormInfo, isLessonCompleted, isSectionCompleted } from './helpers';
+import { cleanUrl, getFormInfo, isLessonCompleted, isLessonStarted, isSectionCompleted } from './helpers';
 import { PlayToEarnWarningModal } from './require-learning-complete';
 
 interface IPlayToEarnProps {
@@ -29,63 +29,88 @@ const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
   });
 
   const formResults = useMemo(() => {
-    if (!courseOutline?.form_relations) {
+    const { form_relations, outline } = courseOutline || {};
+
+    if (form_relations?.length === 0) {
       return [];
     }
 
-    return courseOutline.form_relations
+    return form_relations
       .filter(
         relation =>
           relation.enabled && relation.type === 'notification' && relation?.confirmation_settings?.display_on_detail
       )
       .map(relation => {
-        const formInfo = getFormInfo(relation.start_when, courseOutline.outline);
+        const { start_when } = relation;
+        const formInfo = getFormInfo(start_when, outline || []);
+        const buttonLink = relation.confirmation_settings?.buttons?.find(button =>
+          button?.type?.includes('http')
+        )?.type;
+
+        let segment_name = 'Unknown';
+        if (formInfo.type === 'lesson') {
+          segment_name = `${formInfo?.lesson?.title} of section ${formInfo?.section?.index}`;
+        } else if (formInfo.type === 'section') {
+          segment_name = `Section ${formInfo?.section?.index}: ${formInfo?.section?.title}`;
+        }
 
         return {
-          start_when: relation.start_when,
-          button_link:
-            cleanUrl(
-              relation.confirmation_settings?.buttons?.find(button => button?.type?.includes('http'))?.type ?? ''
-            ) || null,
+          start_when,
+          button_link: buttonLink ? cleanUrl(buttonLink) : null,
           segment_type: formInfo.type,
-          segment_name:
-            formInfo.type === 'lesson'
-              ? `${formInfo?.lesson?.title} of section ${formInfo?.section?.index}`
-              : formInfo.type === 'section'
-                ? `Section ${formInfo?.section?.index}: ${formInfo?.section?.title}`
-                : 'Unknown',
+          segment_state: 'state' in formInfo ? formInfo.state : 'completed',
+          segment_name,
         };
       });
-  }, [courseOutline?.form_relations, courseOutline?.outline]);
+  }, [courseOutline]);
 
   const completionResults = useMemo(() => {
-    if (!dataLearningProgress?.section_by_uid || formResults.length === 0) {
+    const sectionByUid = dataLearningProgress?.section_by_uid;
+
+    if (!sectionByUid || formResults.length === 0) {
       return [];
     }
 
     return formResults.map(result => {
+      const { type, entity_id } = result.start_when;
+
+      let is_completed = false;
+
+      switch (type) {
+        case 'completed_lesson':
+          is_completed = isLessonCompleted(sectionByUid, entity_id);
+          break;
+        case 'completed_section':
+          is_completed = isSectionCompleted(sectionByUid, entity_id);
+          break;
+        case 'started_lesson':
+          is_completed = isLessonStarted(courseOutline, sectionByUid, entity_id);
+          break;
+        default:
+          is_completed = false;
+          break;
+      }
+
       return {
         ...result,
-        is_completed:
-          result.start_when.type === 'completed_lesson'
-            ? isLessonCompleted(dataLearningProgress.section_by_uid, result.start_when.entity_id)
-            : result.start_when.type === 'completed_section'
-              ? isSectionCompleted(dataLearningProgress.section_by_uid, result.start_when.entity_id)
-              : false,
+        is_completed,
       };
     });
-  }, [dataLearningProgress?.section_by_uid, formResults]);
+  }, [dataLearningProgress?.section_by_uid, formResults, courseOutline]);
 
-  const handleOpenLinkGame = () => {
+  const handleOpenLinkGame = useCallback(() => {
     if (completionResults.length === 0) {
       return;
     }
 
-    if (completionResults[0]?.is_completed) {
+    const firstResult = completionResults[0];
+
+    if (firstResult?.is_completed) {
       const accessTokenKey = process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY;
       const accessToken = getCookie(accessTokenKey);
+
       const directLink = createAPIUrl({
-        endpoint: completionResults[0]?.button_link ?? '',
+        endpoint: firstResult.button_link ?? '',
         queryParams: {
           access_token: accessToken,
           course_cuid: courseOutline?.cuid,
@@ -97,7 +122,7 @@ const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
     } else {
       setLearningRequiredModal(true);
     }
-  };
+  }, [completionResults, courseOutline, setLearningRequiredModal]);
 
   return (
     dataMe &&
@@ -127,8 +152,8 @@ const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
 
         {learningRequiredModal && (
           <PlayToEarnWarningModal
-            segment_name={completionResults[0]?.segment_name ?? ''}
-            segment_type={completionResults[0]?.segment_type ?? ''}
+            segmentName={completionResults[0]?.segment_name ?? ''}
+            segmentState={completionResults[0]?.segment_state ?? ''}
             courseOutline={courseOutline}
             isOpen={learningRequiredModal}
             setIsOpen={setLearningRequiredModal}
