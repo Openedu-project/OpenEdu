@@ -459,6 +459,12 @@ export const THEMES_RENDER_CLIENT: ThemeRender = {
       aieduMap: dynamic(() =>
         import('../aiedu/introduction/aiedu-map/map').then(mod => ({ default: mod.AieduIntroductionMap }))
       ),
+      aieduTrend: dynamic(() =>
+        import('../aiedu/introduction/aiedu-trend/trend').then(mod => ({ default: mod.AieduIntroductionTrend }))
+      ),
+      aieduBenefit: dynamic(() =>
+        import('../aiedu/introduction/aiedu-benefit/benefit').then(mod => ({ default: mod.AieduIntroductionBenefit }))
+      ),
     },
     auth: {
       theme: undefined,
