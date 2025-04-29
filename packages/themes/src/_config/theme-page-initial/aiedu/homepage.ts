@@ -140,7 +140,14 @@ export const createAiEduHomepageConfig = (getThemeTranslation: (path: string[]) 
   aieduGallery: createSection<'homepage', 'aieduGallery'>({
     props: {
       title: getThemeTranslation(['homepage', 'aieduGallery', 'title']),
-      image: { mime: 'image/png' },
+      image1: { mime: 'image/png' },
+      image2: { mime: 'image/png' },
+      image3: { mime: 'image/png' },
+      image4: { mime: 'image/png' },
+      image5: { mime: 'image/png' },
+      image6: { mime: 'image/png' },
+      image7: { mime: 'image/png' },
+      image8: { mime: 'image/png' },
     },
     order: 8,
   }),
