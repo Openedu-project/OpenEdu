@@ -1,5 +1,6 @@
 import type { PagesConfig, ThemeName, ThemePageKey } from '../../_types/theme-page/index';
 import { createAcademiaConfig } from './academia';
+import { createAieduConfig } from './aiedu';
 import { createAvailConfig } from './avail';
 import { createFenetConfig } from './fenet';
 import { createScholarConfig } from './scholar';
@@ -17,6 +18,7 @@ export const createThemePageConfig = (t: (key: string) => string): Record<ThemeN
   const vbiT = createTranslationGetter(t, 'vbi');
   const availT = createTranslationGetter(t, 'avail');
   const fenetT = createTranslationGetter(t, 'fenet');
+  const aieduT = createTranslationGetter(t, 'aiedu');
 
   return {
     academia: createAcademiaConfig(t, academiaT),
@@ -24,5 +26,7 @@ export const createThemePageConfig = (t: (key: string) => string): Record<ThemeN
     vbi: createVbiConfig(t, vbiT),
     avail: createAvailConfig(t, availT),
     fenet: createFenetConfig(t, fenetT),
+    // Theme step 14: add to theme config
+    aiedu: createAieduConfig(t, aieduT),
   };
 };

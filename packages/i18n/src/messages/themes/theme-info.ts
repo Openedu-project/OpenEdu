@@ -26,5 +26,11 @@ export const themeInfoMessages = {
       description: 'Make your life easier to manage finances',
       creator: 'Openedu',
     },
+    // Theme step 21 (optional): add translate
+    aiedu: {
+      name: 'AI Education',
+      description: 'Make your life easier to manage finances',
+      creator: 'Openedu',
+    },
   },
 };

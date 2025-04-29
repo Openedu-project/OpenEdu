@@ -86,9 +86,9 @@ const createPageSections = (
     pageKey,
     label,
     pageKey === 'auth'
-      ? [createMenuItem('theme', 'Theme', generatePath(themeName, 'pages', pageKey, 'theme'))]
+      ? [createMenuItem('theme', 'Content', generatePath(themeName, 'pages', pageKey, 'theme'))]
       : [
-          createMenuItem('theme', 'Theme', generatePath(themeName, 'pages', pageKey, 'theme')),
+          createMenuItem('theme', 'Content', generatePath(themeName, 'pages', pageKey, 'theme')),
           createMenuItem('metadata', 'Metadata', generatePath(themeName, 'pages', pageKey, 'metadata')),
         ]
   ),

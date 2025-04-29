@@ -1,0 +1,6 @@
+export * from './aiedu-goal';
+export * from './introduction';
+export * from './aiedu-vision-mission';
+export * from './aiedu-features';
+export * from './aiedu-expert';
+export * from './aiedu-map';

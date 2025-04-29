@@ -1,4 +1,5 @@
 import AcademiaThumbnail from '@oe/assets/images/theme/thumbnail/academia.png';
+import AieduThumbnail from '@oe/assets/images/theme/thumbnail/aiedu.png';
 import AvailThumbnail from '@oe/assets/images/theme/thumbnail/avail.png';
 import FenetThumbnail from '@oe/assets/images/theme/thumbnail/fenet.png';
 import ScholarThumbnail from '@oe/assets/images/theme/thumbnail/scholar.png';
@@ -36,6 +37,13 @@ export const themeInfo = (t: (key: string) => string) => {
       thumbnail: undefined,
       creator: t('themeInfo.fenet.creator'),
     },
+    // Theme step 15.1 (optional): add the describe for the theme
+    aiedu: {
+      name: t('themeInfo.aiedu.name'),
+      description: t('themeInfo.aiedu.description'),
+      thumbnail: undefined,
+      creator: t('themeInfo.aiedu.creator'),
+    },
   };
 };
 
@@ -45,4 +53,6 @@ export const themeInfoThumbnail = {
   academia: AcademiaThumbnail,
   scholar: ScholarThumbnail,
   fenet: FenetThumbnail,
+  // Theme step 15.2 (optional): add the thumbnail
+  aiedu: AieduThumbnail,
 };

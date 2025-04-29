@@ -12,10 +12,10 @@ export const dashboardMessages = {
       email: 'Email',
       notification: 'Notification',
       pages: 'Pages',
-      themes: 'Theme',
+      themes: 'Templates',
       theme: {
-        gallery: 'Theme Gallery',
-        description: 'Pick and config beautiful themes for your organization',
+        gallery: 'Template Gallery',
+        description: 'Pick and config beautiful templates for your organization',
       },
     },
     courses: {

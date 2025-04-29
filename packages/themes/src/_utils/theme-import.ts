@@ -392,4 +392,109 @@ export const THEMES_RENDER_CLIENT: ThemeRender = {
       ),
     },
   },
+  // Theme step 26 : add section at render_client that supports the preview feature
+  aiedu: {
+    homepage: {
+      theme: dynamic(() =>
+        import('../aiedu/homepage/index').then(mod => ({
+          default: mod.AieduHomepage,
+        }))
+      ),
+      aieduHero: dynamic(() =>
+        import('../aiedu/homepage/aiedu-hero/aiedu-hero').then(mod => ({
+          default: mod.AieduHomepageHero,
+        }))
+      ),
+      aieduFeatures: dynamic(() =>
+        import('../aiedu/homepage/aiedu-features/features').then(mod => ({ default: mod.AieduHomepageFeatures }))
+      ),
+      aieduExpert: dynamic(() =>
+        import('../aiedu/homepage/aiedu-expert/expert').then(mod => ({ default: mod.AieduHomepageExpert }))
+      ),
+      aieduDashboard: dynamic(() =>
+        import('../aiedu/homepage/aiedu-dashboard/dashboard-client').then(mod => ({
+          default: mod.AieduHomepageDashboardClient,
+        }))
+      ),
+      aieduBlog: dynamic(() =>
+        import('../aiedu/homepage/aiedu-blog/aiedu-blog-client').then(mod => ({ default: mod.AieduHomepageBlogClient }))
+      ),
+      aieduCert: dynamic(() =>
+        import('../aiedu/homepage/aiedu-cert/cert').then(mod => ({ default: mod.AieduHomepageCert }))
+      ),
+      aieduGuide: dynamic(() =>
+        import('../aiedu/homepage/aiedu-guide/guide').then(mod => ({ default: mod.AieduHomepageGuide }))
+      ),
+      aieduSponsors: dynamic(() =>
+        import('../aiedu/homepage/aiedu-sponsors/sponsors').then(mod => ({ default: mod.AieduHomepageSponsors }))
+      ),
+      aieduGallery: dynamic(() =>
+        import('../aiedu/homepage/aiedu-gallery/gallery').then(mod => ({ default: mod.AieduHomepageGallery }))
+      ),
+    },
+    introduction: {
+      theme: dynamic(() =>
+        import('../aiedu/introduction/index').then(mod => ({
+          default: mod.AieduIntroductionPage,
+        }))
+      ),
+      aieduGoal: dynamic(() =>
+        import('../aiedu/introduction/aiedu-goal/goal').then(mod => ({
+          default: mod.AieduIntroductionGoal,
+        }))
+      ),
+      aieduVisionMission: dynamic(() =>
+        import('../aiedu/introduction/aiedu-vision-mission/vision-mission').then(mod => ({
+          default: mod.AieduIntroductionVisionMission,
+        }))
+      ),
+      aieduFeatures: dynamic(() =>
+        import('../aiedu/introduction/aiedu-features/features').then(mod => ({
+          default: mod.AieduIntroductionFeatures,
+        }))
+      ),
+      aieduExpert: dynamic(() =>
+        import('../aiedu/introduction/aiedu-expert/expert').then(mod => ({ default: mod.AieduIntroductionExpert }))
+      ),
+      aieduMap: dynamic(() =>
+        import('../aiedu/introduction/aiedu-map/map').then(mod => ({ default: mod.AieduIntroductionMap }))
+      ),
+    },
+    auth: {
+      theme: undefined,
+      header: dynamic(() =>
+        import('../auth/header').then(mod => ({
+          default: mod.ThemeHeader,
+        }))
+      ),
+      footer: dynamic(() =>
+        import('../auth/footer').then(mod => ({
+          default: mod.ThemeFooter,
+        }))
+      ),
+      login: dynamic(() =>
+        import('../auth/login').then(mod => ({
+          default: mod.AuthLayoutLogin,
+        }))
+      ),
+      signUp: dynamic(() =>
+        import('../auth/sign-up').then(mod => ({
+          default: mod.AuthLayoutSignUp,
+        }))
+      ),
+    },
+    ranking: {
+      theme: dynamic(() =>
+        import('../aiedu/ranking/index').then(mod => ({
+          default: mod.AieduRankingPage,
+        }))
+      ),
+
+      aieduDashboard: dynamic(() =>
+        import('../aiedu/ranking/aiedu-dashboard/dashboard-client').then(mod => ({
+          default: mod.AieduRankingDashboardClient,
+        }))
+      ),
+    },
+  },
 } as const;

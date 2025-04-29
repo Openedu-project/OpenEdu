@@ -34,4 +34,6 @@ export interface IFilter {
   version?: number;
   progam?: string;
   scope?: string;
+  local_level?: number;
+  parent_id?: string;
 }
