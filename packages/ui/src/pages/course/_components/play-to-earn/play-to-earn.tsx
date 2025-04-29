@@ -67,9 +67,12 @@ const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
   const completionResults = useMemo(() => {
     const sectionByUid = dataLearningProgress?.section_by_uid;
 
-    if (!sectionByUid || formResults.length === 0) {
+    if (formResults.length === 0) {
       return [];
     }
+    // if (!sectionByUid || formResults.length === 0) {
+    //   return [];
+    // }
 
     return formResults.map(result => {
       const { type, entity_id } = result.start_when;
@@ -78,13 +81,13 @@ const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
 
       switch (type) {
         case 'completed_lesson':
-          is_completed = isLessonCompleted(sectionByUid, entity_id);
+          is_completed = isLessonCompleted(entity_id, sectionByUid);
           break;
         case 'completed_section':
-          is_completed = isSectionCompleted(sectionByUid, entity_id);
+          is_completed = isSectionCompleted(entity_id, sectionByUid);
           break;
         case 'started_lesson':
-          is_completed = isLessonStarted(courseOutline, sectionByUid, entity_id);
+          is_completed = isLessonStarted(courseOutline, entity_id, sectionByUid);
           break;
         default:
           is_completed = false;
