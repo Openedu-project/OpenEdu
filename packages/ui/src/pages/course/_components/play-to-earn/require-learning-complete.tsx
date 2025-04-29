@@ -16,16 +16,16 @@ import {
 } from '#shadcn/alert-dialog';
 
 interface IPlayToEarnModalProps {
-  segment_name: string;
-  segment_type?: string;
+  segmentName: string;
+  segmentState?: string;
   courseOutline: ICourseOutline;
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
 }
 
 export const PlayToEarnWarningModal = ({
-  segment_name,
-  // segment_type,
+  segmentName,
+  segmentState,
   courseOutline,
   isOpen,
   setIsOpen,
@@ -60,8 +60,8 @@ export const PlayToEarnWarningModal = ({
             {t('modalTitle')}
           </AlertDialogTitle>
           <AlertDialogDescription className="mbutton-regular16 mt-4 text-center">
-            {t('complete')}
-            <span className="mbutton-semibold16 mx-1 text-foreground">{segment_name}</span>
+            {segmentState === 'completed' ? t('complete') : t('started')}
+            <span className="mbutton-semibold16 mx-1 text-foreground">{segmentName}</span>
             {t('desc')}
           </AlertDialogDescription>
         </AlertDialogHeader>
