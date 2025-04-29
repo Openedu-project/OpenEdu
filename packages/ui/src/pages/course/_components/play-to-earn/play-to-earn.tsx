@@ -122,7 +122,7 @@ const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
     } else {
       setLearningRequiredModal(true);
     }
-  }, [completionResults, courseOutline, setLearningRequiredModal]);
+  }, [completionResults, courseOutline?.cuid, courseOutline?.name, completionResults[0]?.button_link]);
 
   return (
     dataMe &&
