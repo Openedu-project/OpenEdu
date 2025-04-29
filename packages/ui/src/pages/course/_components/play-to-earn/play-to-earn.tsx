@@ -31,7 +31,7 @@ const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
   const formResults = useMemo(() => {
     const { form_relations, outline } = courseOutline || {};
 
-    if (form_relations?.length === 0) {
+    if (!form_relations) {
       return [];
     }
 
@@ -122,7 +122,7 @@ const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
     } else {
       setLearningRequiredModal(true);
     }
-  }, [completionResults, courseOutline, setLearningRequiredModal]);
+  }, [completionResults, courseOutline?.cuid, courseOutline?.name, completionResults[0]?.button_link]);
 
   return (
     dataMe &&
