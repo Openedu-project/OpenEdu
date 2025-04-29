@@ -73,6 +73,7 @@ export const courseOutlineMessages = {
       goToCourse: 'Go to course',
       modalTitle: 'Complete Your Learning Journey First!',
       complete: 'Complete',
+      started: 'Started',
       section: 'section',
       lesson: 'lesson',
       desc: 'to unlock this gaming challenge. Your journey awaits!',
