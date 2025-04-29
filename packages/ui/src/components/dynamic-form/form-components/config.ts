@@ -1,4 +1,5 @@
 import type { FormComponent, FormFieldType } from '../types';
+import { autoCompleteDefaultConfig } from './auto-complete/config';
 import { checkboxDefaultConfig } from './checkbox/config';
 import { dateTimePickerDefaultConfig } from './date-time-picker/config';
 import { emailDefaultConfig } from './email/config';
@@ -13,6 +14,7 @@ import { inputDefaultConfig } from './input/config';
 import { multipleChoiceGridDefaultConfig } from './multiple-choice-grid/config';
 import { multipleSelectionDefaultConfig } from './multiple-selection/config';
 import { paragraphConfig } from './paragraph/config';
+import { radioDefaultConfig } from './radio/config';
 import { selectboxDefaultConfig } from './selectbox/config';
 import { spaceConfig } from './space/config';
 import { submitButtonDefaultConfig } from './submit-button/config';
@@ -36,5 +38,7 @@ export const config: Partial<Record<FormComponent, FormFieldType>> = {
   multipleSelection: multipleSelectionDefaultConfig,
   image: formImageDefaultConfig,
   multipleChoiceGrid: multipleChoiceGridDefaultConfig,
+  radio: radioDefaultConfig,
+  autoComplete: autoCompleteDefaultConfig,
   submitButton: submitButtonDefaultConfig,
 };

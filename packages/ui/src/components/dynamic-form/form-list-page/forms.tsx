@@ -104,7 +104,7 @@ export function Forms() {
   return (
     <Table<IFormResponse>
       api={API_ENDPOINT.FORMS}
-      apiQueryParams={{ is_template: true }}
+      apiQueryParams={{ is_template: true, sort: 'create_at desc' }}
       columns={columns}
       filterOptions={filterOptions}
       hasNoColumn={true}

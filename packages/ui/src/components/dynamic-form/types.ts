@@ -76,8 +76,10 @@ export type FormComponent =
   | 'number' // ???
   | 'switch' // TODO
   | 'multipleChoiceGrid' //new
-  | 'checkboxGrid' //new
+  | 'checkboxGrid' //new//chua lam
   | 'multipleChoice' //radio
+  | 'autoComplete'
+  | 'radio'
   | 'submitButton';
 
 export interface FormComponentDefinition {
@@ -141,6 +143,7 @@ export type FormFieldType = Partial<Omit<ExtendedImageProps, 'placeholder' | 'bl
   description?: string;
   infoText?: string;
   disabled?: boolean;
+  showSearch?: boolean;
   value?: string | boolean | Date | number | string[] | Record<string, string>;
   setValue?: (value: string | boolean) => void;
   checked?: boolean;

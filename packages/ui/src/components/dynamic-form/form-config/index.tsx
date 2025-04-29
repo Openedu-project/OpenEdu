@@ -6,6 +6,7 @@ import type { MultipleChoiceGridOption } from '#components/multiple-choice-grid'
 import type { SelectboxOption } from '#components/selectbox';
 import { Button } from '#shadcn/button';
 import { cn } from '#utils/cn';
+import { AutoCompleteFieldConfig } from '../form-components/auto-complete/auto-complete-config';
 import { CheckboxFieldConfig } from '../form-components/checkbox/checkbox-field-config';
 import { DateTimePickerFieldConfig } from '../form-components/date-time-picker/date-time-picker-field-config';
 import { EmailFieldConfig } from '../form-components/email/email-field-config';
@@ -20,6 +21,7 @@ import { InputFieldConfig } from '../form-components/input/input-field-config';
 import { MultipleChoiceGridFieldConfig } from '../form-components/multiple-choice-grid/multiple-choice-grid';
 import { MultipleSelectionFieldConfig } from '../form-components/multiple-selection/multiple-selection-config';
 import { ParagraphFieldConfig } from '../form-components/paragraph/paragraph-field-config';
+import { RadioFieldConfig } from '../form-components/radio/radio-field-config';
 import { SelectboxFieldConfig } from '../form-components/selectbox/selectbox-config';
 import { SpaceFieldConfig } from '../form-components/space/space-field-config';
 import { SubmitFieldConfig } from '../form-components/submit-button/submit-field-config';
@@ -95,6 +97,8 @@ export function FieldConfig() {
           <SelectboxFieldConfig field={field} handleConfigChange={handleConfigChange} />
           <MultipleSelectionFieldConfig field={field} handleConfigChange={handleConfigChange} />
           <MultipleChoiceGridFieldConfig field={field} handleConfigChange={handleConfigChange} />
+          <RadioFieldConfig field={field} handleConfigChange={handleConfigChange} />
+          <AutoCompleteFieldConfig field={field} handleConfigChange={handleConfigChange} />
           <SubmitFieldConfig field={field} handleConfigChange={handleConfigChange} />
         </div>
       </div>

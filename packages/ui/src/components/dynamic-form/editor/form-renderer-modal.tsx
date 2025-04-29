@@ -128,8 +128,9 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
                         })}
                         {...('text' in rest && { text: rest.text })}
                         {...(rest.disabled && { disabled: rest.disabled })}
-                        {...(fieldType === 'selectbox' && {
+                        {...((fieldType === 'selectbox' || fieldType === 'radio' || fieldType === 'autoComplete') && {
                           options: rest.options,
+                          hasOtherOption: rest?.otherOption ?? false,
                         })}
                         {...(fieldType === 'multipleSelection' && {
                           options: rest.options,

@@ -375,6 +375,12 @@ function processOptionComponent(
         question_id: questionId,
         options: [optionId],
       });
+    } else {
+      // For radio
+      answers.push({
+        question_id: questionId,
+        options: [fieldValue],
+      });
     }
   }
 }

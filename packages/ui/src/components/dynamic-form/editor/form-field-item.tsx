@@ -57,7 +57,10 @@ export function FormFieldItem({
               {...('placeholder' in rest && { placeholder: rest.placeholder })}
               {...('text' in rest && { text: rest.text })}
               {...(rest.disabled && { disabled: rest.disabled })}
-              {...(fieldType === 'selectbox' && { options: rest.options })}
+              {...((fieldType === 'selectbox' || fieldType === 'radio' || fieldType === 'autoComplete') && {
+                options: rest.options,
+                hasOtherOption: rest?.otherOption ?? false,
+              })}
               {...(fieldType === 'multipleSelection' && {
                 options: rest.options,
                 hasOtherOption: rest?.otherOption,
