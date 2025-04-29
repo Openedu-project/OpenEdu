@@ -132,6 +132,11 @@ export const fonts = [
     family: 'Space Grotesk',
     weights: ['300', '400', '500', '600', '700'],
   },
+  // {
+  //   name: 'Plus Jakarta Sans',
+  //   family: 'Plus Jakarta Sans',
+  //   weights: ['300', '400', '500', '600', '700'],
+  // },
 ];
 
 export function interpolateContent(content: string, data?: ICertificateData) {

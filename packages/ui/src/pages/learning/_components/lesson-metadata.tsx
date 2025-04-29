@@ -26,13 +26,14 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, lessonUid, ...props
   const courseHref = createCourseUrl('detail', { slug });
 
   const {
-    state: { sectionsProgressData, isNavigating },
+    state: { mergedProgress, isNavigating },
     getLessonStatus,
+    setIsNavigatingLesson,
   } = useProgress();
   // const { setCurrentLesson } = useCurrentLesson();
 
-  const currentLessonIndex = getLessonGlobalIndex(sectionsProgressData, lessonUid);
-  const totalItems = getTotalLessons(sectionsProgressData);
+  const currentLessonIndex = getLessonGlobalIndex(mergedProgress, lessonUid);
+  const totalItems = getTotalLessons(mergedProgress);
 
   const checkNextLesson = getLessonStatus(currentLessonIndex + 1);
   const checkPreviousLesson = getLessonStatus(currentLessonIndex - 1);
@@ -40,13 +41,15 @@ const LessonMetadata = ({ title, courseName, slug, updateAt, lessonUid, ...props
   const handleNavigateLesson = (direction: 'prev' | 'next') => {
     let newIndex = currentLessonIndex;
 
+    setIsNavigatingLesson(true);
+
     if (direction === 'prev') {
       newIndex = currentLessonIndex > 0 ? currentLessonIndex - 1 : totalItems;
     } else if (direction === 'next') {
       newIndex = currentLessonIndex < totalItems ? currentLessonIndex + 1 : 0;
     }
 
-    const lessonInfo = getUidByLessonIndex(sectionsProgressData, newIndex);
+    const lessonInfo = getUidByLessonIndex(mergedProgress, newIndex);
 
     if (lessonInfo) {
       // setCurrentLesson(lessonInfo.sectionUid, lessonInfo.lessonUid);

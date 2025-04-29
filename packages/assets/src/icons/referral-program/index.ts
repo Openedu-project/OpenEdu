@@ -14,3 +14,4 @@ export * from './icon-sms-edit';
 export * from './icon-timer';
 export * from './icon-user-2';
 export * from './icon-streak-bonus';
+export * from './icon-time-line';

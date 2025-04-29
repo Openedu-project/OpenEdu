@@ -33,7 +33,9 @@ const getAnswer = (answer?: IFormUserResponseAnswerItem) => {
     answer?.question_type === 'selectbox' ||
     answer?.question_type === 'multipleChoice' ||
     answer?.question_type === 'multipleSelection' ||
-    answer?.question_type === 'multipleChoiceGrid'
+    answer?.question_type === 'multipleChoiceGrid' ||
+    answer?.question_type === 'autoComplete' ||
+    answer?.question_type === 'radio'
   ) {
     value = answer?.option_text;
   }

@@ -2,10 +2,12 @@ export const referralProgramMessages = {
   referralProgram: {
     header: {
       refCount: '{count} Ref',
-      pointsEarned: '+{points} points',
-      balancePoints: 'Balance Points: {points}',
+      pointsEarned: '+{points} {suffix}',
+      balancePoint: 'Balance Points',
+      timeline: 'Timeline',
       totalReferrals: 'Total Referrals',
       viewAll: 'View All',
+      points: 'Points',
       totalEarnedPoints: 'Total Earned Points',
     },
     invite: {
@@ -26,11 +28,17 @@ export const referralProgramMessages = {
     },
     inviteFriend: {
       inviteSuccess: 'Invite Success',
+      emailRequired: 'Email is required',
       modal: {
         title: 'Invite Friend',
         yourReferralCode: 'Your Referral Code',
         referralLink: 'Referral Link',
         copied: 'Copied',
+      },
+      successModal: {
+        title: 'You Have Successfully Claimed {point} Points!',
+        description: 'Continue to explore and submit all your mission to get more reward points from OpenEdu!!!',
+        closeButton: 'Back To Referral Dashboard',
       },
     },
     howItWorks: {
@@ -59,9 +67,10 @@ export const referralProgramMessages = {
       subtitle: 'One click to claim! Point will be added to your wallet after claiming.',
       pointsEarned: '+ {points} {suffix} ',
       points: 'Points',
+      claimSuccess: 'Claim Success',
       baseReferrals: {
         title: 'Base Referral Reward',
-        description: '10 successful referrals - {points} points',
+        description: 'Successful referrals - {points} points',
       },
       milestone: {
         title: 'Milestone Achievements',
@@ -115,17 +124,17 @@ export const referralProgramMessages = {
         title: 'Consistency Rewards',
         weeklyStreak: {
           title: 'Weekly Streak',
-          pointsReward: '+ {points}{suffix}',
+          pointsReward: '+ {points} {suffix}',
           daysRemaining: '{days} days remaining',
           progress: '{current}/{total}',
-          points: 'Points',
+          point: 'Points',
         },
         monthlyStreak: {
           title: 'Monthly Streak',
-          pointsReward: '+ {points}{suffix}',
+          pointsReward: '+ {points} {suffix}',
           daysRemaining: '{days} days remaining',
           progress: '{current}/{total}',
-          points: 'Points',
+          point: 'Points',
         },
       },
       timeBasedRewards: {
@@ -139,6 +148,100 @@ export const referralProgramMessages = {
           daysLeft: '{days} days left',
         },
       },
+    },
+    dashboard: {
+      programStatus: {
+        title: 'Program Status',
+        referralProgram: 'Referral Program',
+        description: 'Enable or disable the entire referral program',
+      },
+      basicSettings: {
+        title: 'Basic Settings',
+        startDate: 'Start Date',
+        endDate: 'End Date',
+        referrerReward: 'Referrer Reward',
+        refereeReward: 'Referee Reward',
+        successCriteria: {
+          title: 'Success Criteria',
+          completeRegistration: 'Complete Registration',
+          completeFirstCourse: 'Complete First Course',
+        },
+      },
+      advancedRewards: {
+        title: 'Advanced Reward System',
+        milestones: {
+          title: 'Milestone Rewards',
+          description: 'Set rewards for reaching referral milestones',
+          referralsEquals: 'referrals =',
+          addNew: 'Add New Milestone',
+        },
+        featureDiscovery: {
+          title: 'Feature Discovery Rewards',
+          courseCompletion: 'Course Completion:',
+          fiatWalletDeposit: 'Fiat Wallet Deposit:',
+          tokenWalletDeposit: 'Token Wallet Deposit:',
+        },
+        timeBased: {
+          title: 'Time-based Rewards',
+          timeBasedReward: 'Time-Based Reward:',
+          description:
+            'Applies to referrals made during the first week after program activation. Example: When set to "100% of base", points for first-week referrals are doubled.',
+        },
+        streak: {
+          title: 'Streak Rewards',
+          threshold: 'Threshold',
+          weekly: {
+            title: 'Weekly Streak Settings',
+            enable: 'Enable Weekly Streak:',
+            referralsInWeek: 'referrals in a week',
+          },
+          monthly: {
+            title: 'Monthly Streak Settings',
+            enable: 'Enable Monthly Streak:',
+            referralsInMonth: 'referrals in a month',
+          },
+          note: 'Note: Streak rewards are granted when the referrer reaches the threshold within the specified time period.',
+        },
+      },
+      common: {
+        fixed: 'Fixed',
+        percentage: 'Percentage',
+        value: 'Value',
+        reward: 'Reward',
+      },
+      buttons: {
+        saveChanges: 'Save Changes',
+        cancel: 'Cancel',
+      },
+      toast: {
+        success: 'Success',
+      },
+      errors: {
+        amountRequired: 'Amount is required and must be greater than 0',
+        typeRequired: 'Type is required',
+        countRequired: 'Count must be at least 1',
+        nameRequired: 'Program name is required',
+        dateInvalid: 'Please enter a valid date',
+        milestoneItemsRequired: 'At least one milestone is required',
+        startDateRequired: 'Start date is required',
+        endDateRequired: 'End date is required',
+        rewardAmountRequired: 'Reward amount is required',
+        rewardTypeRequired: 'Reward type is required',
+        timeBasedRewardsRequired: 'Time-based rewards settings are required',
+        rewardRequired: 'Reward is required',
+        weeklyThresholdRequired: 'Weekly threshold is required',
+        weeklyRewardAmountRequired: 'Weekly reward amount is required',
+        weeklyRewardTypeRequired: 'Weekly reward type is required',
+        monthlyThresholdRequired: 'Monthly threshold is required',
+        monthlyRewardAmountRequired: 'Monthly reward amount is required',
+        monthlyRewardTypeRequired: 'Monthly reward type is required',
+        thresholdAndRewardRequired: 'Threshold and reward are required',
+      },
+    },
+    history: {
+      refereeId: 'Referee ID',
+      refDate: 'Referral Date',
+      amount: 'Amount',
     },
   },
 };

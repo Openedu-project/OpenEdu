@@ -405,3 +405,179 @@ export const createVbiAuthLayoutConfig = (getThemeTranslation: (path: string[]) 
     order: 6,
   }),
 });
+
+export const createAieduAuthLayoutConfig = (getThemeTranslation: (path: string[]) => string) => ({
+  login: createSection<'auth', 'login'>({
+    props: {
+      title: getThemeTranslation(['auth', 'login', 'title']),
+      seperate: getThemeTranslation(['auth', 'login', 'seperate']),
+      banner: { mime: 'image/png' },
+      slogan: getThemeTranslation(['auth', 'login', 'slogan']),
+    },
+    order: 0,
+  }),
+  signUp: createSection<'auth', 'signUp'>({
+    props: {
+      title: getThemeTranslation(['auth', 'signup', 'title']),
+      seperate: getThemeTranslation(['auth', 'signup', 'seperate']),
+      banner: { mime: 'image/png' },
+      slogan: getThemeTranslation(['auth', 'signup', 'slogan']),
+    },
+    order: 1,
+  }),
+  forgotPassword: createSection<'auth', 'forgotPassword'>({
+    props: {
+      title: getThemeTranslation(['auth', 'forgotPassword', 'title']),
+      banner: { mime: 'image/png' },
+      slogan: getThemeTranslation(['auth', 'forgotPassword', 'slogan']),
+    },
+    order: 2,
+  }),
+  emailVerify: createSection<'auth', 'emailVerify'>({
+    props: {
+      banner: { mime: 'image/png' },
+      slogan: getThemeTranslation(['auth', 'emailVerify', 'slogan']),
+    },
+    order: 3,
+  }),
+  authConfirm: createSection<'auth', 'authConfirm'>({
+    props: {
+      title: getThemeTranslation(['auth', 'authConfirm', 'title']),
+      banner: { mime: 'image/png' },
+      slogan: getThemeTranslation(['auth', 'authConfirm', 'slogan']),
+    },
+    order: 4,
+  }),
+  header: createSection<'auth', 'header'>({
+    props: {
+      logo: { mime: 'image/png' },
+      sidebarItems: [
+        {
+          id: 'introduction',
+          label: 'Giới thiệu',
+          href: '/introduction',
+          isHighlight: false,
+        },
+        {
+          id: 'ranking',
+          label: 'Bảng xếp hạng',
+          href: '/ranking',
+          isHighlight: false,
+        },
+        {
+          id: 'courses',
+          label: 'Khoá học AI',
+          href: '/courses',
+          isHighlight: false,
+        },
+        { id: 'blog', label: 'Tin tức', href: '/blog', isHighlight: false },
+        { id: 'schedule', label: 'Lịch trình', href: '/schedule', isHighlight: false },
+      ],
+    },
+    order: 5,
+  }),
+  footer: createSection<'auth', 'footer'>({
+    props: {
+      logo: { mime: 'image/png' },
+      description: getThemeTranslation(['auth', 'footer', 'description']),
+      navigationItems: {
+        registration: {
+          label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'registration', 'label']),
+          colSpan: 4,
+          items: [
+            {
+              href: '/introduction',
+              label: getThemeTranslation([
+                'auth',
+                'footer',
+                'navigationItems',
+                'registration',
+                'items',
+                'items-0',
+                'label',
+              ]),
+            },
+            {
+              href: '/ranking',
+              label: getThemeTranslation([
+                'auth',
+                'footer',
+                'navigationItems',
+                'registration',
+                'items',
+                'items-1',
+                'label',
+              ]),
+            },
+            {
+              href: '/courses',
+              label: getThemeTranslation([
+                'auth',
+                'footer',
+                'navigationItems',
+                'registration',
+                'items',
+                'items-2',
+                'label',
+              ]),
+            },
+            {
+              href: '/schedule',
+              label: getThemeTranslation([
+                'auth',
+                'footer',
+                'navigationItems',
+                'registration',
+                'items',
+                'items-3',
+                'label',
+              ]),
+            },
+            {
+              href: '/blog',
+              label: getThemeTranslation([
+                'auth',
+                'footer',
+                'navigationItems',
+                'registration',
+                'items',
+                'items-4',
+                'label',
+              ]),
+            },
+          ],
+        },
+        terms: {
+          label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'label']),
+          colSpan: 4,
+          items: [
+            {
+              href: '/',
+              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'items', 'items-0', 'label']),
+            },
+            {
+              href: '/',
+              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'items', 'items-1', 'label']),
+            },
+            {
+              href: '/',
+              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'items', 'items-2', 'label']),
+            },
+            {
+              href: '/',
+              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'items', 'items-3', 'label']),
+            },
+          ],
+        },
+        // social: {
+        //   label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'social', 'label']),
+        //   colSpan: 2,
+        //   items: [],
+        // },
+      },
+      className: 'bg-primary',
+      variant: 'org',
+    },
+    order: 6,
+  }),
+});

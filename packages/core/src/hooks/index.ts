@@ -6,4 +6,3 @@ export * from './useCounter';
 export * from './useInterval';
 export * from './useScrollPercentage';
 export * from './useMediaQuery';
-

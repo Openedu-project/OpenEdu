@@ -61,7 +61,7 @@ export const PlayToEarnWarningModal = ({
           </AlertDialogTitle>
           <AlertDialogDescription className="mbutton-regular16 mt-4 text-center">
             {t('complete')}
-            <span className="mbutton-semibold16 text-foreground">{segment_name}</span>
+            <span className="mbutton-semibold16 mx-1 text-foreground">{segment_name}</span>
             {t('desc')}
           </AlertDialogDescription>
         </AlertDialogHeader>

@@ -35,8 +35,8 @@ export function IconOpeneduBalance({ width = 40, height = 40, className = '', co
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(20 20) rotate(90) scale(20)"
         >
-          <stop offset="0.19" stop-color="#FFBD04" />
-          <stop offset="1" stop-color="#FFF780" />
+          <stop offset="0.19" stopColor="#FFBD04" />
+          <stop offset="1" stopColor="#FFF780" />
         </radialGradient>
       </defs>
     </svg>

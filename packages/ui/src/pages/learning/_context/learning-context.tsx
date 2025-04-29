@@ -1,11 +1,11 @@
-"use client";
-import type { ICourseOutline } from "@oe/api";
-import type { ISectionLearningProgress } from "@oe/api";
-import type { ReactNode } from "react";
-import { CourseProvider } from "./course-context";
-import { LessonProvider } from "./lesson-context";
-import { ProgressProvider } from "./progress-context";
-import { QuizProvider } from "./quiz-context";
+'use client';
+import type { ICourseOutline } from '@oe/api';
+import type { ReactNode } from 'react';
+import type { IMergedLearningProgress } from '../_type';
+import { CourseProvider } from './course-context';
+import { LessonProvider } from './lesson-context';
+import { ProgressProvider } from './progress-context';
+import { QuizProvider } from './quiz-context';
 
 export function LearningProviders({
   children,
@@ -16,7 +16,7 @@ export function LearningProviders({
 }: {
   children: ReactNode;
   course: ICourseOutline | null;
-  initialProgressData?: ISectionLearningProgress[];
+  initialProgressData?: IMergedLearningProgress;
   initialSection: string;
   initialLesson: string;
 }) {
@@ -24,10 +24,7 @@ export function LearningProviders({
     <CourseProvider course={course}>
       <ProgressProvider initialProgressData={initialProgressData}>
         <QuizProvider>
-          <LessonProvider
-            initialSection={initialSection}
-            initialLesson={initialLesson}
-          >
+          <LessonProvider initialSection={initialSection} initialLesson={initialLesson}>
             {children}
           </LessonProvider>
         </QuizProvider>

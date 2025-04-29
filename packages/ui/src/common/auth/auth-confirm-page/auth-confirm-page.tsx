@@ -59,7 +59,7 @@ export async function AuthConfirmPage({ banner, themeName = 'academia' }: AuthCo
 
       if (response?.require_set_password) {
         try {
-          decodedToken = base64ToJson(response?.token);
+          decodedToken = base64ToJson(decodeURIComponent(response?.token ?? ''));
         } catch {
           decodedToken = null;
         }

@@ -1,38 +1,25 @@
-"use client";
+'use client';
 
-import {
-  getLearningProgressesService,
-  updateLearningProgressService,
-} from "@oe/api";
-import type { TLessonContent } from "@oe/api";
-import type { ISectionLearningProgress } from "@oe/api";
-import type { IQuizSubmissionResponse } from "@oe/api";
-import {
-  type ReactNode,
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useReducer,
-} from "react";
-import { toast } from "sonner";
-import {
-  checkCompleteAt,
-  isLessonContentComplete,
-} from "../_utils/learning-progress";
-import { mergeSectionWithProgress } from "../_utils/utils";
-import { useCourse } from "./course-context";
+import { updateLearningProgressService } from '@oe/api';
+import type { TLessonContent } from '@oe/api';
+import type { IQuizSubmissionResponse } from '@oe/api';
+import { type ReactNode, createContext, useCallback, useContext, useMemo, useReducer } from 'react';
+import { toast } from 'sonner';
+import type { IMergedLearningProgress } from '../_type';
+import { checkCompleteAt, isLessonContentComplete } from '../_utils/learning-progress';
+import { getLessonByIndex, mergeSectionWithProgress } from '../_utils/utils';
+import { useCourse } from './course-context';
 
 type ProgressState = {
-  sectionsProgressData: ISectionLearningProgress[];
+  mergedProgress: IMergedLearningProgress | null;
   isNavigating: boolean;
 };
 
 type ProgressAction =
-  | { type: "SET_PROGRESS_DATA"; payload: ISectionLearningProgress[] }
-  | { type: "SET_IS_NAVIGATING"; payload: boolean }
+  | { type: 'SET_PROGRESS_DATA'; payload: IMergedLearningProgress }
+  | { type: 'SET_IS_NAVIGATING'; payload: boolean }
   | {
-      type: "UPDATE_LESSON_STATUS";
+      type: 'UPDATE_LESSON_STATUS';
       payload: { lessonId: string; status: string; progress: number };
     };
 
@@ -42,13 +29,9 @@ type ProgressContextType = {
   isAllLessonsCompleted: () => boolean;
   isLessonCompleted: (lessonUid: string) => boolean;
   isSectionCompleted: (sectionUid: string) => boolean;
-  setSectionsProgressData: (data: ISectionLearningProgress[]) => void;
+  setMergedProgress: (data: IMergedLearningProgress) => void;
   setIsNavigatingLesson: (isNavigating: boolean) => void;
-  updateLessonStatus: (
-    lessonId: string,
-    status: string,
-    progress: number
-  ) => void;
+  updateLessonStatus: (lessonId: string, status: string, progress: number) => void;
   completeContent: (params: {
     lesson_content_uid: string;
     type: TLessonContent;
@@ -61,50 +44,50 @@ type ProgressContextType = {
   }) => Promise<void>;
 };
 
-const ProgressContext = createContext<ProgressContextType | undefined>(
-  undefined
-);
+const ProgressContext = createContext<ProgressContextType | undefined>(undefined);
 
-const progressReducer = (
-  state: ProgressState,
-  action: ProgressAction
-): ProgressState => {
+const progressReducer = (state: ProgressState, action: ProgressAction): ProgressState => {
   switch (action.type) {
-    case "SET_PROGRESS_DATA":
+    case 'SET_PROGRESS_DATA':
       return {
         ...state,
-        sectionsProgressData: action.payload,
+        mergedProgress: action.payload,
       };
-    case "SET_IS_NAVIGATING":
+    case 'SET_IS_NAVIGATING':
       return {
         ...state,
         isNavigating: action.payload,
       };
-    case "UPDATE_LESSON_STATUS": {
+    case 'UPDATE_LESSON_STATUS': {
       const { lessonId, progress } = action.payload;
 
-      const updatedSections = JSON.parse(
-        JSON.stringify(state.sectionsProgressData)
-      ) as ISectionLearningProgress[];
+      if (!state.mergedProgress) {
+        return state;
+      }
 
-      // Find and update lesson status
-      for (const section of updatedSections) {
-        if (!section.lessons) {
-          continue;
-        }
+      // Tạo bản sao sâu của mergedProgress
+      const updatedMergedProgress = JSON.parse(JSON.stringify(state.mergedProgress)) as IMergedLearningProgress;
 
-        const lessonIndex = section.lessons.findIndex(
-          (l) => l.uid === lessonId
-        );
-        if (lessonIndex >= 0 && section.lessons[lessonIndex]) {
-          section.lessons[lessonIndex].completed_percent = progress;
-          break;
+      // Cập nhật completed_percent cho lesson trong cả section và lesson_by_uid
+      const lesson = updatedMergedProgress.lesson_by_uid[lessonId];
+      if (lesson) {
+        lesson.completed_percent = progress;
+
+        // Cũng cập nhật trong mảng sections để đảm bảo tính nhất quán
+        const sectionUid = lesson.section_uid;
+        const sectionIndex = updatedMergedProgress.sections.findIndex(s => s.uid === sectionUid);
+
+        if (sectionIndex >= 0 && updatedMergedProgress.sections[sectionIndex]?.lessons) {
+          const lessonIndex = updatedMergedProgress.sections[sectionIndex].lessons.findIndex(l => l.uid === lessonId);
+          if (lessonIndex >= 0 && updatedMergedProgress.sections[sectionIndex]?.lessons?.[lessonIndex]) {
+            updatedMergedProgress.sections[sectionIndex].lessons[lessonIndex].completed_percent = progress;
+          }
         }
       }
 
       return {
         ...state,
-        sectionsProgressData: updatedSections,
+        mergedProgress: updatedMergedProgress,
       };
     }
     default:
@@ -117,105 +100,92 @@ export function ProgressProvider({
   initialProgressData,
 }: {
   children: ReactNode;
-  initialProgressData?: ISectionLearningProgress[];
+  initialProgressData?: IMergedLearningProgress;
 }) {
   const [state, dispatch] = useReducer(progressReducer, {
-    sectionsProgressData: initialProgressData || [],
+    mergedProgress: initialProgressData || null,
     isNavigating: false,
   });
 
   const { course } = useCourse();
 
-  // Take a lesson based on index
+  // Lấy trạng thái bài học dựa trên index
   const getLessonStatus = useCallback(
     (lessonIndex: number): boolean | undefined => {
-      const { sectionsProgressData } = state;
-      let totalLessons = 0;
-
-      for (const section of sectionsProgressData) {
-        if (section.lessons) {
-          if (lessonIndex < totalLessons + section.lessons.length) {
-            const lessonIndexInSection = lessonIndex - totalLessons;
-            return section.lessons[lessonIndexInSection]?.available;
-          }
-          totalLessons += section.lessons.length;
-        }
+      const { mergedProgress } = state;
+      if (!mergedProgress) {
+        return undefined;
       }
 
-      return undefined;
-    },
-    [state.sectionsProgressData, state]
-  );
-
-  // Check all the completed lessons yet
-  const isAllLessonsCompleted = useCallback((): boolean => {
-    const { sectionsProgressData } = state;
-
-    return sectionsProgressData.every(
-      (section) =>
-        section.total_lesson > 0 &&
-        section.completed_lesson / section.total_lesson === 1
-    );
-  }, [state.sectionsProgressData, state]);
-
-  const isLessonCompleted = useCallback(
-    (lesson_uid: string) => {
-      const { sectionsProgressData } = state;
-
-      for (const section of sectionsProgressData) {
-        const lesson = section.lessons.find(
-          (lesson) => lesson.uid === lesson_uid
-        );
-
-        if (lesson) {
-          return lesson.complete_at !== 0;
-        }
-      }
-      return false;
+      // Sử dụng helper function để lấy bài học theo index
+      const lesson = getLessonByIndex(mergedProgress, lessonIndex);
+      return lesson?.available;
     },
     [state]
   );
 
-  // Check a completed section yet
+  // Kiểm tra tất cả bài học đã hoàn thành chưa
+  const isAllLessonsCompleted = useCallback((): boolean => {
+    const { mergedProgress } = state;
+    if (!mergedProgress) {
+      return false;
+    }
+
+    // Kiểm tra xem tất cả section đã hoàn thành chưa
+    return mergedProgress.sections.every(
+      section => section.total_lesson > 0 && section.completed_lesson / section.total_lesson === 1
+    );
+  }, [state]);
+
+  // Kiểm tra một bài học đã hoàn thành chưa
+  const isLessonCompleted = useCallback(
+    (lessonUid: string) => {
+      const { mergedProgress } = state;
+      if (!mergedProgress) {
+        return false;
+      }
+
+      // Truy cập trực tiếp vào lesson thông qua key
+      const lesson = mergedProgress.lesson_by_uid[lessonUid];
+      return !!lesson?.complete_at;
+    },
+    [state]
+  );
+
+  // Kiểm tra một section đã hoàn thành chưa
   const isSectionCompleted = useCallback(
     (sectionUid: string): boolean => {
-      const { sectionsProgressData } = state;
+      const { mergedProgress } = state;
+      if (!mergedProgress) {
+        return false;
+      }
 
-      const section = sectionsProgressData.find(
-        (section) => section.uid === sectionUid
-      );
-      return section
-        ? section.total_lesson > 0 &&
-            section.completed_lesson / section.total_lesson === 1
-        : false;
+      // Truy cập trực tiếp vào section thông qua key
+      const section = mergedProgress.section_by_uid[sectionUid];
+      return section ? section.total_lesson > 0 && section.completed_lesson / section.total_lesson === 1 : false;
     },
     [state]
   );
 
-  // Update sectionsProgressData
-  const setSectionsProgressData = useCallback(
-    (data: ISectionLearningProgress[]) => {
-      dispatch({ type: "SET_PROGRESS_DATA", payload: data });
-    },
-    []
-  );
-
-  // Update the status is changing lessons
-  const setIsNavigatingLesson = useCallback((isNavigating: boolean) => {
-    dispatch({ type: "SET_IS_NAVIGATING", payload: isNavigating });
+  // Cập nhật mergedProgress
+  const setMergedProgress = useCallback((data: IMergedLearningProgress) => {
+    dispatch({ type: 'SET_PROGRESS_DATA', payload: data });
   }, []);
 
-  // Update lesson status
-  const updateLessonStatus = useCallback(
-    (lessonId: string, status: string, progress: number) => {
-      dispatch({
-        type: "UPDATE_LESSON_STATUS",
-        payload: { lessonId, status, progress },
-      });
-    },
-    []
-  );
+  // Cập nhật trạng thái đang chuyển bài học
+  const setIsNavigatingLesson = useCallback((isNavigating: boolean) => {
+    dispatch({ type: 'SET_IS_NAVIGATING', payload: isNavigating });
+  }, []);
 
+  // Cập nhật trạng thái bài học
+  const updateLessonStatus = useCallback((lessonId: string, status: string, progress: number) => {
+    dispatch({
+      type: 'UPDATE_LESSON_STATUS',
+      payload: { lessonId, status, progress },
+    });
+  }, []);
+
+  // Hoàn thành nội dung bài học
   const completeContent = useCallback(
     async (params: {
       lesson_content_uid: string;
@@ -227,6 +197,7 @@ export function ProgressProvider({
       quizId?: string;
       quizResult?: IQuizSubmissionResponse;
     }) => {
+      const { mergedProgress } = state;
       const {
         lesson_content_uid,
         type,
@@ -243,8 +214,14 @@ export function ProgressProvider({
         return;
       }
 
+      const pauseAtData =
+        mergedProgress?.section_by_uid[section_uid]?.lesson_by_uid[lesson_uid]?.lesson_content_by_uid?.[
+          lesson_content_uid
+        ]?.pause_at;
+
       const start_at = Date.now();
-      const pause_at = Math.floor(pauseAt);
+      // Nếu giá trị pauseAtData lấy từ API > giá trị pauseAt hiện tại của video, lấy pauseAtData
+      const pause_at = pauseAtData && pauseAtData > Math.floor(pauseAt) ? pauseAtData : Math.floor(pauseAt);
 
       // Tính complete_at dựa trên logic gốc
       const complete_at = checkCompleteAt({
@@ -256,8 +233,9 @@ export function ProgressProvider({
       });
 
       // Kiểm tra xem content đã hoàn thành chưa
+      const sectionsData = state.mergedProgress?.sections || [];
       const hasUpdated = isLessonContentComplete({
-        outline: state.sectionsProgressData,
+        outline: sectionsData,
         section_uid,
         lesson_uid,
         lesson_content_uid,
@@ -278,33 +256,30 @@ export function ProgressProvider({
 
         try {
           // Gọi API cập nhật tiến độ
-          await updateLearningProgressService(undefined, { payload });
-
-          // Lấy dữ liệu tiến độ mới
-          const newLearningProgres = await getLearningProgressesService(
-            undefined,
-            { id: course.slug }
-          );
+          const res = await updateLearningProgressService(undefined, {
+            payload,
+          });
 
           // Cập nhật state với dữ liệu mới
-          if (newLearningProgres?.sections) {
-            const data = mergeSectionWithProgress(
-              course.outline,
-              newLearningProgres.sections
-            );
-            setSectionsProgressData(data);
+          if (res && course.outline) {
+            const mergedData = mergeSectionWithProgress(course.outline, res);
+            setMergedProgress(mergedData);
           }
 
           // Hiển thị thông báo nếu hoàn thành
-          if (complete_at > 0) {
-            toast.success("Content completed");
+          const currentContentState =
+            res?.section_by_uid?.[section_uid]?.lesson_by_uid?.[lesson_uid]?.lesson_content_by_uid?.[lesson_content_uid]
+              ?.complete_at;
+
+          if (currentContentState && currentContentState > 0) {
+            toast.success('Content completed');
           }
         } catch (error) {
-          console.error("Error completing content:", error);
+          console.error('Error completing content:', error);
         }
       }
     },
-    [course, state.sectionsProgressData, setSectionsProgressData]
+    [course, state.mergedProgress, setMergedProgress]
   );
 
   const value = useMemo(
@@ -314,7 +289,7 @@ export function ProgressProvider({
       isAllLessonsCompleted,
       isLessonCompleted,
       isSectionCompleted,
-      setSectionsProgressData,
+      setMergedProgress,
       setIsNavigatingLesson,
       updateLessonStatus,
       completeContent,
@@ -325,25 +300,21 @@ export function ProgressProvider({
       isAllLessonsCompleted,
       isLessonCompleted,
       isSectionCompleted,
-      setSectionsProgressData,
+      setMergedProgress,
       setIsNavigatingLesson,
       updateLessonStatus,
       completeContent,
     ]
   );
 
-  return (
-    <ProgressContext.Provider value={value}>
-      {children}
-    </ProgressContext.Provider>
-  );
+  return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>;
 }
 
 export function useProgress() {
   const context = useContext(ProgressContext);
 
   if (context === undefined) {
-    throw new Error("useProgress must be used within a ProgressProvider");
+    throw new Error('useProgress must be used within a ProgressProvider');
   }
 
   return context;

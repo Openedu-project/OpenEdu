@@ -1,21 +1,13 @@
-"use client";
+'use client';
 
-import type {
-  ILessonLearningProgress,
-  ISectionLearningProgress,
-} from "@oe/api";
-import { type HTMLAttributes, memo, useEffect, useMemo, useRef } from "react";
-import { CircleProgressBar } from "#components/circle-progress-bar";
-import { OutlineLesson } from "#components/outline-lesson";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "#shadcn/accordion";
-import { cn } from "#utils/cn";
-import { useCourse, useCurrentLesson, useProgress } from "../_context";
-import { sortByOrder } from "../_utils/utils";
+import type { ILessonLearningProgress, ISectionLearningProgress } from '@oe/api';
+import { type HTMLAttributes, memo, useEffect, useMemo, useRef } from 'react';
+import { CircleProgressBar } from '#components/circle-progress-bar';
+import { OutlineLesson } from '#components/outline-lesson';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '#shadcn/accordion';
+import { cn } from '#utils/cn';
+import { useCourse, useCurrentLesson, useProgress } from '../_context';
+import { sortByOrder } from '../_utils/utils';
 
 interface ICourseOutlineProps extends HTMLAttributes<HTMLDivElement> {}
 
@@ -36,6 +28,8 @@ const LessonItem = memo(
     isActive: boolean;
   }) => {
     const ref = useRef<HTMLLIElement>(null);
+
+    const { setIsNavigatingLesson } = useProgress();
 
     const completedLesson = lesson?.completed_lesson_content ?? 0;
     const totalLesson = lesson?.total_lesson_content ?? 0;
@@ -60,12 +54,13 @@ const LessonItem = memo(
         lesson={lesson}
         type="learning"
         ref={isActive ? ref : null}
+        setIsNavigating={setIsNavigatingLesson}
       />
     );
   }
 );
 
-LessonItem.displayName = "LessonItem";
+LessonItem.displayName = 'LessonItem';
 
 const SectionItem = memo(
   ({
@@ -81,43 +76,33 @@ const SectionItem = memo(
   }) => {
     const { course } = useCourse();
     const sectionProgress = useMemo(() => {
-      return section.total_lesson > 0
-        ? (section?.completed_lesson / section.total_lesson) * 100
-        : 0;
+      return section.total_lesson > 0 ? (section?.completed_lesson / section.total_lesson) * 100 : 0;
     }, [section]);
 
     const getSectionClassName = () =>
       cn(
-        "gap-1 giant-iheading-semibold14 md:giant-iheading-semibold16 rounded-[4px] border-[0.4px] border-foreground/5 p-3 text-left text-foreground hover:no-underline",
-        isActive ? "bg-primary/10" : "bg-foreground/5"
+        'gap-1 giant-iheading-semibold14 md:giant-iheading-semibold16 rounded-[4px] border-[0.4px] border-foreground/5 p-3 text-left text-foreground hover:no-underline',
+        isActive ? 'bg-primary/10' : 'bg-foreground/5'
       );
 
     return (
-      <AccordionItem
-        className="border-none"
-        key={section.uid}
-        value={`section-${section.uid}`}
-      >
+      <AccordionItem className="border-none" key={section.uid} value={`section-${section.uid}`}>
         <AccordionTrigger className={getSectionClassName()}>
           <CircleProgressBar progress={sectionProgress} size="md" />
-          <span className="flex-1">{`Section ${index + 1}: ${
-            section.title
-          }`}</span>
+          <span className="flex-1">{`Section ${index + 1}: ${section.title}`}</span>
         </AccordionTrigger>
         <AccordionContent>
           <ul className="space-y-2 text-foreground/60">
-            {section.lessons
-              ?.sort(sortByOrder)
-              ?.map((lesson: ILessonLearningProgress, lessonIndex: number) => (
-                <LessonItem
-                  key={lesson.id}
-                  lesson={lesson}
-                  index={lessonIndex}
-                  sectionUid={section.uid}
-                  courseSlug={course?.slug || ""}
-                  isActive={activeLesson === lesson.uid}
-                />
-              ))}
+            {section.lessons?.sort(sortByOrder)?.map((lesson: ILessonLearningProgress, lessonIndex: number) => (
+              <LessonItem
+                key={lesson.id}
+                lesson={lesson}
+                index={lessonIndex}
+                sectionUid={section.uid}
+                courseSlug={course?.slug || ''}
+                isActive={activeLesson === lesson.uid}
+              />
+            ))}
           </ul>
         </AccordionContent>
       </AccordionItem>
@@ -125,21 +110,25 @@ const SectionItem = memo(
   }
 );
 
-SectionItem.displayName = "SectionItem";
+SectionItem.displayName = 'SectionItem';
 
 const CourseOutline = (props: ICourseOutlineProps) => {
   const {
-    state: { sectionsProgressData },
+    state: { mergedProgress },
   } = useProgress();
   const { currentSection, currentLesson } = useCurrentLesson();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const sortedSections = useMemo(() => {
-    return [...sectionsProgressData].sort(sortByOrder);
-  }, [sectionsProgressData]);
+    if (!mergedProgress) {
+      return [];
+    }
+
+    return [...mergedProgress.sections].sort(sortByOrder);
+  }, [mergedProgress]);
 
   useEffect(() => {
-    if (sectionsProgressData?.length === 0) {
+    if (!mergedProgress || sortedSections.length === 0) {
       return;
     }
 
@@ -149,31 +138,25 @@ const CourseOutline = (props: ICourseOutlineProps) => {
         return;
       }
 
-      const container = scrollContainerRef.current.closest(
-        "[data-radix-scroll-area-viewport]"
-      );
+      const container = scrollContainerRef.current.closest('[data-radix-scroll-area-viewport]');
       if (!container) {
         return;
       }
 
-      activeElement.scrollIntoView({ behavior: "smooth", block: "center" });
+      activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
     };
 
     const timeoutId = setTimeout(scrollToActiveLesson, 100);
     return () => clearTimeout(timeoutId);
-  }, [sectionsProgressData, currentLesson, currentSection]);
+  }, [mergedProgress, sortedSections.length, currentLesson, currentSection]);
 
-  if (!sectionsProgressData || sectionsProgressData?.length === 0) {
+  if (!mergedProgress || sortedSections.length === 0) {
     return null;
   }
 
   return (
     <div {...props} ref={scrollContainerRef}>
-      <Accordion
-        type="multiple"
-        defaultValue={[`section-${currentSection}`]}
-        className="w-full"
-      >
+      <Accordion type="multiple" defaultValue={[`section-${currentSection}`]} className="w-full">
         {sortedSections.map((section, index) => (
           <SectionItem
             key={section.uid}

@@ -7,6 +7,7 @@ export interface ISocialCallbackStateData {
   originUrl: string;
   referrer: string;
   verifier?: string;
+  inviteRefCode?: string;
 }
 
 export interface ILoginPayload {
@@ -43,6 +44,7 @@ export interface ISocialLoginPayload {
   code?: string;
   provider: SocialProvider;
   code_verifier?: string | null;
+  ref_code?: string;
 }
 
 export interface IForgotPasswordPayload {

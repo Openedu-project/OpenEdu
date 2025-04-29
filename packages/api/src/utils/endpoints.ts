@@ -110,6 +110,7 @@ export const API_ENDPOINT = {
   USERS: '/api/v1/users',
   USERS_ME: '/api/v1/users/me',
   USERS_ME_BLOGS: '/api/v1/users/me/blogs',
+  USERS_ORG_BLOGS: '/api/v1/users/org-blogs',
   USERS_ME_CHANGE_PASSWORD: '/api/v1/users/me/change-password',
   USERS_ME_PERMISSIONS: '/api/v1/users/me/permissions',
   USERS_ME_ORDERS: '/api/v1/users/me/orders',
@@ -254,6 +255,9 @@ export const API_ENDPOINT = {
   USER_ME_POINT: '/api/v1/users/me/points/:id',
   USER_ME_CLAIM_POINT: '/api/v1/users/me/claim-points',
   OE_REFERRAL_INVITE: '/api/v1/oe-referrals/invites',
+  OE_MY_REFERRAL_HISTORY: '/api/v1/users/me/oe-referrals',
+  OE_REFFERRAL_STATISTICS_AI_EDU: '/api/v1/oe-referrals/statistics/ai-government-campaign',
+  OE_REFFERRAL_LEADER_BOARDS_AI_EDU: '/api/v1/oe-referrals/leader-boards/ai-government-campaign',
 
   // WS
   WEBSOCKET: '/websocket',

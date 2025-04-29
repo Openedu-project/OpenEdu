@@ -1,19 +1,11 @@
 import type { INewPoints } from '@oe/api';
-import {
-  IconAward,
-  IconCategory2,
-  IconGift,
-  IconLogin,
-  IconOpeneduBalance,
-  IconStreakBonus,
-  IconTimer,
-} from '@oe/assets';
+import { IconAward, IconCategory2, IconGift, IconLogin, IconStreakBonus, IconTimer } from '@oe/assets';
 import { getTranslations } from 'next-intl/server';
 import type { ElementType, ReactNode } from 'react';
 import type { JSX } from 'react';
 import { Badge } from '#shadcn/badge';
-import { Button } from '#shadcn/button';
 import { Card, CardContent } from '#shadcn/card';
+import { InviteReferralClaimButton } from './invite-referral-claim-button';
 
 interface RewardBadgeProps {
   children: ReactNode;
@@ -70,15 +62,6 @@ export async function InviteReferralProgramAvailableReward({
   if (!data) {
     return null;
   }
-
-  const totalClaim =
-    Number(data?.referral?.amount ?? 0) +
-    Number(data?.milestone?.amount ?? 0) +
-    Number(data?.featured?.amount ?? 0) +
-    Number(data?.timebase?.amount ?? 0) +
-    Number(data?.weekly_streak?.amount ?? 0) +
-    Number(data?.monthly_streak?.amount ?? 0) +
-    Number(data?.referee?.amount ?? 0);
 
   const rewardData: RewardData[] = [
     {
@@ -158,10 +141,7 @@ export async function InviteReferralProgramAvailableReward({
       <div className="mb-6">
         <div className="mb-2 flex flex-col items-center justify-between md:flex-row">
           <h3 className="mcaption-semibold18 md:mcaption-semibold24 text-center md:text-left">{t('title')}</h3>
-          <Button className="rounded-[24px]" disabled={totalClaim <= 0}>
-            {t('claimButton', { points: totalClaim })}
-            <IconOpeneduBalance className="ml-4 h-7 w-7" />
-          </Button>
+          <InviteReferralClaimButton data={data} />
         </div>
         <p className="mbutton-regular16 mb-4 text-center md:text-left">{t('subtitle')}</p>
       </div>

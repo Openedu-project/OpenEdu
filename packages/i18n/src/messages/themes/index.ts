@@ -1,4 +1,5 @@
 import { academiaMessage } from './academia';
+import { aieduMessage } from './aiedu';
 import { authMessages } from './auth';
 import { availMessage } from './avail';
 import { fenetMessage } from './fenet';
@@ -26,6 +27,9 @@ export const themeMessages = {
       aboutus: 'About Us',
       authLayout: 'Auth / Layout',
       partners: 'Partners',
+      introduction: 'Introduction',
+      ranking: 'Ranking',
+      schedule: 'Schedule',
     },
     ...authMessages,
     ...themeInfoMessages,
@@ -34,6 +38,8 @@ export const themeMessages = {
     ...vbiMessage,
     ...availMessage,
     ...fenetMessage,
+    // Theme step 20 (optional): add translate
+    ...aieduMessage,
   },
   ...themeUIMessage,
   ...themeNotiMessages,

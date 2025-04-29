@@ -26,7 +26,7 @@ const VbiHomepageHero: SectionComponent<'homepage', 'vbiHero'> = ({ props, class
   return (
     <div
       className={cn(
-        'container relative relative mx-auto bg-background px-4 md:px-8 lg:h-[calc(100vh-var(--header-height))] lg:px-12',
+        'container relative mx-auto bg-background px-4 md:px-8 lg:h-[calc(100vh-var(--header-height))] lg:px-12',
         className
       )}
     >

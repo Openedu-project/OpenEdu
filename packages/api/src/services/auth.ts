@@ -84,7 +84,9 @@ export const setPasswordService = async (
 ) => {
   const { event, ...rest } = payload;
   const response = await postAPI<ISetPasswordResponse, ISetPasswordPayload>(
-    (endpoint ?? event === authEvents.setPassword) ? API_ENDPOINT.AUTH_SET_PASSWORD : API_ENDPOINT.AUTH_RESET_PASSWORD,
+    (endpoint ?? event === authEvents.resetPassword)
+      ? API_ENDPOINT.AUTH_RESET_PASSWORD
+      : API_ENDPOINT.AUTH_SET_PASSWORD,
     rest,
     init
   );

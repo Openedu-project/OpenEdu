@@ -200,6 +200,7 @@ export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Prom
     const res = await handleResponse(response);
     return res as HTTPResponse<T>;
   } catch (error) {
+    console.error('--------------API Error--------------------', urlAPIWithLocale);
     console.error('--------------Fetch Error--------------------', (error as Error).message);
 
     // apiLogger.error(error instanceof Error ? error : new Error(String(error)), {

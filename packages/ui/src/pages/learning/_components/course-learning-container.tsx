@@ -11,6 +11,7 @@ import { Button } from '#shadcn/button';
 import { Sheet, SheetContent, SheetTitle } from '#shadcn/sheet';
 import { cn } from '#utils/cn';
 import { useCurrentLesson } from '../_context';
+import { useHeaderHeight } from '../_hooks';
 import { ContentSection } from './content-section';
 import { CourseOutline } from './course-sidebar-section';
 import { CourseTabs } from './course-tabs/course-tabs';
@@ -33,6 +34,8 @@ function CourseLearningInternal({ course, section_uid, lesson_uid, certificate, 
   const [sheetOpen, setSheetOpen] = useState<boolean>(false);
   const isDesktop = useMediaQuery('(min-width: 1024px)');
 
+  const headerHeight = useHeaderHeight('header');
+
   const activeSectionUid = currentSection || section_uid;
   const activeLessonUid = currentLesson || lesson_uid;
 
@@ -46,13 +49,19 @@ function CourseLearningInternal({ course, section_uid, lesson_uid, certificate, 
 
   const renderDesktopTabs = isDesktop && <CourseTabs course_data={course} className="px-3 pb-4" />;
 
+  const sidebarStyle = {
+    top: `${headerHeight}px`,
+    height: `calc(100dvh - ${headerHeight}px)`,
+  };
+
   const renderSidebar = isDesktop && (
     <div
       className={cn(
-        'sticky top-[var(--header-with-sub-item-height)] right-0 z-30',
-        'flex h-[calc(100dvh-var(--header-with-sub-item-height))] flex-col gap-2 overflow-y-auto bg-white py-2 pr-4 pl-3 transition-all duration-300 ease-in-out lg:w-1/3',
+        'sticky right-0 z-30',
+        'flex flex-col gap-2 overflow-y-auto bg-white py-2 pr-4 pl-3 transition-all duration-300 ease-in-out lg:w-1/3',
         sidebarOpen ? 'translate-x-0' : 'hidden translate-x-full'
       )}
+      style={sidebarStyle}
     >
       <div className="flex items-center justify-between shadow-2xs">
         <h3 className="mbutton-semibold16 mb-0">{tLearningPage('courseContent')}</h3>

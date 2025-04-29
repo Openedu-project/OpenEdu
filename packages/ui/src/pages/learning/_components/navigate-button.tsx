@@ -16,7 +16,7 @@ interface NavigationButtonsProps {
 }
 
 const baseStyles = {
-  quiz: '!rounded-full h-10 w-10 px-0 shadow-shadow-5 hover:bg-primary hover:opacity-75 disabled:border disabled:border-neutral-900 disabled:bg-white disabled:opacity-100',
+  quiz: '!rounded-full h-10 w-10 px-0 shadow-shadow-5 hover:bg-primary hover:opacity-75 disabled:border disabled:border-neutral-900 disabled:bg-white',
   lesson: 'w-full mbutton-bold12 !text-sm border border-primary bg-transparent text-primary hover:bg-inherit',
 };
 

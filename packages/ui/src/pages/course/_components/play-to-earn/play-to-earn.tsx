@@ -59,7 +59,7 @@ const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
   }, [courseOutline?.form_relations, courseOutline?.outline]);
 
   const completionResults = useMemo(() => {
-    if (!dataLearningProgress?.sections || formResults.length === 0) {
+    if (!dataLearningProgress?.section_by_uid || formResults.length === 0) {
       return [];
     }
 
@@ -68,13 +68,13 @@ const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
         ...result,
         is_completed:
           result.start_when.type === 'completed_lesson'
-            ? isLessonCompleted(dataLearningProgress.sections, result.start_when.entity_id)
+            ? isLessonCompleted(dataLearningProgress.section_by_uid, result.start_when.entity_id)
             : result.start_when.type === 'completed_section'
-              ? isSectionCompleted(dataLearningProgress.sections, result.start_when.entity_id)
+              ? isSectionCompleted(dataLearningProgress.section_by_uid, result.start_when.entity_id)
               : false,
       };
     });
-  }, [dataLearningProgress?.sections, formResults]);
+  }, [dataLearningProgress?.section_by_uid, formResults]);
 
   const handleOpenLinkGame = () => {
     if (completionResults.length === 0) {

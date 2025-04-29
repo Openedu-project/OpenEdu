@@ -1,6 +1,14 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from '@oe/api';
+import {
+  type HTTPErrorMetadata,
+  type IReferralProgramFormSchema,
+  type IReferralProgramPayload,
+  referralProgramSchema,
+  useGetAllReferralProgramList,
+  usePostReferralCampaign,
+} from '@oe/api';
+import { convertToTimeStamp } from '@oe/core';
 import {
   Button,
   Card,
@@ -11,6 +19,7 @@ import {
   FormFieldWithLabel,
   FormSubmitButton,
   Input,
+  InputNumber,
   Select,
   SelectContent,
   SelectItem,
@@ -20,133 +29,251 @@ import {
   Switch,
   toast,
 } from '@oe/ui';
+import { DateTimePicker } from '@oe/ui';
 import { Plus, Trash2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { Suspense, useCallback, useEffect } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 
-// Define Zod schemas
-const UnitSchema = z.enum(['points', '% of base']);
+interface FeatureRewardFieldProps {
+  label: string;
+  form: ReturnType<typeof useForm<IReferralProgramFormSchema>>;
+  amountField: `setting.${string}.amount`;
+  typeField: `setting.${string}.type`;
+}
 
-const MilestoneSchema = z.object({
-  id: z.number(),
-  count: z.number().int().positive(),
-  value: z.number().positive(),
-  unit: UnitSchema,
-});
-
-const ReferralFormSchema = z.object({
-  // Program status
-  isProgramEnabled: z.boolean(),
-
-  // Basic settings
-  basePoints: z.number().min(0),
-  refereePoints: z.number().min(0),
-
-  // Success criteria
-  requireRegistration: z.boolean(),
-  requireFirstCourse: z.boolean(),
-
-  // Advanced settings sections
-  milestoneEnabled: z.boolean(),
-  featuresEnabled: z.boolean(),
-  timeBasedEnabled: z.boolean(),
-  streakEnabled: z.boolean(),
-
-  // Milestone data
-  milestones: z.array(MilestoneSchema),
-
-  // Feature discovery rewards
-  courseCompletion: z.number().min(0),
-  courseUnit: UnitSchema,
-  fiatDeposit: z.number().min(0),
-  fiatUnit: UnitSchema,
-  tokenDeposit: z.number().min(0),
-  tokenUnit: UnitSchema,
-
-  // Time-based rewards
-  firstWeekMultiplier: z.number().min(0).max(500),
-  firstWeekUnit: UnitSchema,
-
-  // Streak rewards
-  weeklyThreshold: z.number().int().positive(),
-  weeklyReward: z.number().min(0),
-  weeklyUnit: UnitSchema,
-  monthlyThreshold: z.number().int().positive(),
-  monthlyReward: z.number().min(0),
-  monthlyUnit: UnitSchema,
-});
-
-// Infer TypeScript type from the schema
-type ReferralFormValues = z.infer<typeof ReferralFormSchema>;
+interface StreakRewardFieldsProps {
+  form: ReturnType<typeof useForm<IReferralProgramFormSchema>>;
+  thresholdField: string;
+  thresholdLabel: string;
+  amountField: string;
+  typeField: string;
+  isDisabled?: boolean;
+}
 
 export function ProgramManagementSetting() {
-  // Default form values
-  const defaultValues: ReferralFormValues = {
-    isProgramEnabled: true,
-    basePoints: 1,
-    refereePoints: 1,
-    requireRegistration: true,
-    requireFirstCourse: false,
+  const t = useTranslations('referralProgram.dashboard');
+  const tError = useTranslations('errors');
 
-    milestoneEnabled: true,
-    featuresEnabled: false,
-    timeBasedEnabled: false,
-    streakEnabled: false,
-
-    milestones: [
-      { id: 1, count: 5, value: 5, unit: 'points' },
-      { id: 2, count: 10, value: 10, unit: 'points' },
-      { id: 3, count: 20, value: 15, unit: 'points' },
-    ],
-
-    courseCompletion: 1,
-    courseUnit: 'points',
-    fiatDeposit: 2,
-    fiatUnit: 'points',
-    tokenDeposit: 5,
-    tokenUnit: 'points',
-
-    firstWeekMultiplier: 100,
-    firstWeekUnit: '% of base',
-
-    weeklyThreshold: 10,
-    weeklyReward: 3,
-    weeklyUnit: 'points',
-    monthlyThreshold: 50,
-    monthlyReward: 5,
-    monthlyUnit: 'points',
-  };
-
-  // Initialize the form
-  const form = useForm<ReferralFormValues>({
-    resolver: zodResolver(ReferralFormSchema),
-    defaultValues,
+  const { dataAllReferralProgramList } = useGetAllReferralProgramList({
+    queryParams: {
+      progam: 'ref-user',
+      scope: 'global',
+    },
   });
 
-  // Use useFieldArray for milestones
+  const { triggerPostReferralCampaign, isLoadingPostReferralCampaign } = usePostReferralCampaign();
+
+  const form = useForm<IReferralProgramFormSchema>({
+    resolver: zodResolver(referralProgramSchema),
+    defaultValues: {
+      enabled: false,
+      start_date: new Date(),
+      end_date: new Date(),
+      setting: {
+        streak_bonus: false,
+        milestone_bonus: false,
+        time_based: false,
+        featured_discover: false,
+        ref_count_bonus: [],
+        weekly_streak_bonus: {
+          enable: false,
+          threshold: 0,
+          reward: { amount: 0, type: 'fixed' },
+        },
+        monthly_streak_bonus: {
+          enable: false,
+          threshold: 0,
+          reward: { amount: 0, type: 'fixed' },
+        },
+        time_base_rewards: {
+          start_date: new Date(),
+          end_date: new Date(),
+          reward: { amount: 0, type: 'fixed' },
+        },
+        referrer_reward: { amount: 0, type: 'fixed' },
+        referee_reward: { amount: 0, type: 'fixed' },
+        complete_course_bonus: { amount: 0, type: 'fixed' },
+        deposit_fiat_bonus: { amount: 0, type: 'fixed' },
+        deposit_crypto_bonus: { amount: 0, type: 'fixed' },
+        trigger: 'register_account',
+      },
+    },
+  });
+
+  useEffect(() => {
+    if (dataAllReferralProgramList) {
+      const data = dataAllReferralProgramList?.results?.[0];
+      if (!data) {
+        return;
+      }
+      const { setting } = data;
+      form.setValue('id', data.id);
+      form.setValue('program', data.program);
+      form.setValue('name', data.name);
+      form.setValue('scope', data.scope);
+      form.setValue('enabled', data.enabled);
+      form.setValue('start_date', data?.start_date ? new Date(data.start_date) : new Date());
+      form.setValue('end_date', data?.end_date ? new Date(data.end_date) : new Date());
+      form.setValue('setting.featured_discover', setting?.featured_discover ?? false);
+      form.setValue('setting.milestone_bonus', setting?.milestone_bonus ?? false);
+      form.setValue('setting.streak_bonus', setting?.streak_bonus ?? false);
+      form.setValue('setting.time_based', setting?.time_based ?? false);
+      form.setValue('setting.trigger', setting?.trigger ?? 'register_account');
+      form.setValue('setting.complete_course_bonus', {
+        amount: Number(setting?.complete_course_bonus?.amount ?? 0),
+        type: setting?.complete_course_bonus?.type ?? 'fixed',
+      });
+      form.setValue('setting.deposit_crypto_bonus', {
+        amount: Number(setting?.deposit_crypto_bonus?.amount ?? 0),
+        type: setting?.deposit_crypto_bonus?.type ?? 'fixed',
+      });
+      form.setValue('setting.deposit_fiat_bonus', {
+        amount: Number(setting?.deposit_fiat_bonus?.amount ?? 0),
+        type: setting?.deposit_fiat_bonus?.type ?? 'fixed',
+      });
+      form.setValue('setting.monthly_streak_bonus', {
+        enable: setting?.monthly_streak_bonus?.enable ?? false,
+        threshold: setting?.monthly_streak_bonus?.threshold ?? 0,
+        reward: {
+          amount: Number(setting?.monthly_streak_bonus?.reward?.amount ?? 0),
+          type: setting?.monthly_streak_bonus?.reward?.type ?? 'fixed',
+        },
+      });
+      form.setValue(
+        'setting.ref_count_bonus',
+        setting?.ref_count_bonus?.map(item => ({
+          enable: item.enable,
+          order: item.order,
+          reach_count: item.reach_count,
+          reward: {
+            amount: Number(item.reward.amount ?? 0),
+            type: item?.reward?.type ?? 'fixed',
+          },
+        }))
+      );
+      form.setValue('setting.referee_reward', {
+        amount: Number(setting?.referee_reward?.amount ?? 0),
+        type: setting?.referee_reward?.type ?? 'fixed',
+      });
+      form.setValue('setting.referrer_reward', {
+        amount: Number(setting?.referrer_reward?.amount ?? 0),
+        type: setting?.referrer_reward?.type ?? 'fixed',
+      });
+      form.setValue('setting.time_base_rewards', {
+        start_date: setting?.time_base_rewards?.start_date
+          ? new Date(setting.time_base_rewards.start_date)
+          : new Date(),
+        end_date: setting?.time_base_rewards?.end_date ? new Date(setting.time_base_rewards.end_date) : new Date(),
+        reward: {
+          amount: Number(setting?.time_base_rewards?.reward?.amount ?? 0),
+          type: setting?.time_base_rewards?.reward?.type ?? 'fixed',
+        },
+      });
+      form.setValue('setting.weekly_streak_bonus', {
+        enable: setting?.weekly_streak_bonus?.enable ?? false,
+        threshold: setting?.weekly_streak_bonus?.threshold ?? 0,
+        reward: {
+          amount: Number(setting?.weekly_streak_bonus?.reward?.amount ?? 0),
+          type: setting?.weekly_streak_bonus?.reward?.type ?? 'fixed',
+        },
+      });
+    }
+  }, [dataAllReferralProgramList, form]);
+
   const {
     fields: milestones,
     append: appendMilestone,
     remove: removeMilestone,
   } = useFieldArray({
     control: form.control,
-    name: 'milestones',
+    name: 'setting.ref_count_bonus',
   });
 
-  // Form submission handler
-  function onSubmit(data: ReferralFormValues) {
-    console.log('Form submitted:', data);
-    toast.success('Success');
-  }
+  const onSubmit = useCallback(
+    async (data: IReferralProgramFormSchema) => {
+      try {
+        const payload = {
+          ...data,
+          start_date: data.start_date ? convertToTimeStamp(data.start_date as unknown as string) : 0,
+          end_date: data.end_date ? convertToTimeStamp(data.end_date as unknown as string) : 0,
+          setting: {
+            ...data.setting,
+            ref_count_bonus: data?.setting?.ref_count_bonus?.map(item => ({
+              ...item,
+              reward: {
+                ...item.reward,
+                amount: item.reward.amount.toString(),
+              },
+            })),
+            weekly_streak_bonus: {
+              ...data.setting.weekly_streak_bonus,
+              reward: {
+                ...data.setting.weekly_streak_bonus.reward,
+                amount: data?.setting?.weekly_streak_bonus?.reward?.amount?.toString(),
+              },
+            },
+            monthly_streak_bonus: {
+              ...data.setting.monthly_streak_bonus,
+              reward: {
+                ...data.setting.monthly_streak_bonus.reward,
+                amount: data?.setting?.monthly_streak_bonus?.reward?.amount?.toString(),
+              },
+            },
+            time_base_rewards: {
+              ...data.setting.time_base_rewards,
+              start_date: data?.setting?.time_base_rewards?.start_date
+                ? convertToTimeStamp(data.setting.time_base_rewards.start_date as unknown as string)
+                : 0,
+              end_date: data?.setting?.time_base_rewards?.end_date
+                ? convertToTimeStamp(data.setting.time_base_rewards.end_date as unknown as string)
+                : 0,
+              reward: {
+                ...(data?.setting?.time_base_rewards?.reward ?? {}),
+                amount: data?.setting?.time_base_rewards?.reward?.amount?.toString(),
+              },
+            },
+            referrer_reward: {
+              ...data.setting.referrer_reward,
+              amount: data.setting.referrer_reward.amount.toString(),
+            },
+            referee_reward: {
+              ...data.setting.referee_reward,
+              amount: data.setting.referee_reward.amount.toString(),
+            },
+            complete_course_bonus: {
+              ...data.setting.complete_course_bonus,
+              amount: data?.setting?.complete_course_bonus?.amount?.toString(),
+            },
+            deposit_fiat_bonus: {
+              ...data.setting.deposit_fiat_bonus,
+              amount: data?.setting?.deposit_fiat_bonus?.amount?.toString(),
+            },
+            deposit_crypto_bonus: {
+              ...data.setting.deposit_crypto_bonus,
+              amount: data?.setting?.deposit_crypto_bonus?.amount?.toString(),
+            },
+          },
+        } as IReferralProgramPayload;
+        triggerPostReferralCampaign(payload);
+        toast.success('Success');
+      } catch (error) {
+        console.error(error);
+        toast.error(tError((error as HTTPErrorMetadata).code.toString()));
+      }
+    },
+    [triggerPostReferralCampaign, tError]
+  );
 
-  // Milestone management functions
   const addMilestone = () => {
-    const nextCount = milestones.length > 0 ? (milestones[milestones.length - 1]?.count || 0) + 10 : 5;
-
     appendMilestone({
-      id: milestones.length > 0 ? Math.max(...milestones.map(m => m.id)) + 1 : 1,
-      count: nextCount,
-      value: 5,
-      unit: 'points',
+      enable: true,
+      order: milestones.length + 1,
+      reach_count: 0,
+      reward: {
+        amount: 0,
+        type: 'fixed',
+      },
     });
   };
 
@@ -155,13 +282,13 @@ export function ProgramManagementSetting() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <Card className="mb-6">
           <CardHeader>
-            <CardTitle>Program Status</CardTitle>
+            <CardTitle>{t('programStatus.title')}</CardTitle>
           </CardHeader>
           <CardContent>
             <FormFieldWithLabel
-              name="isProgramEnabled"
-              label="Referral Program"
-              description="Enable or disable the entire referral program"
+              name="enabled"
+              label={t('programStatus.referralProgram')}
+              description={t('programStatus.description')}
               form={form}
               isToggleField
               render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} />}
@@ -172,81 +299,144 @@ export function ProgramManagementSetting() {
         {/* Basic Settings */}
         <Card className="mb-6">
           <CardHeader>
-            <CardTitle>Basic Settings</CardTitle>
+            <CardTitle>{t('basicSettings.title')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid gap-6 md:grid-cols-2">
               <FormFieldWithLabel
-                name="basePoints"
-                label="Base Point Reward"
+                name="start_date"
+                label={t('basicSettings.startDate')}
                 form={form}
                 render={({ field }) => (
-                  <div className="flex items-center">
-                    <Input
-                      type="number"
-                      min={0}
-                      step={0.01}
+                  <Suspense>
+                    <DateTimePicker
                       value={field.value}
-                      onChange={e => field.onChange(+e.target.value)}
+                      onChange={date => field.onChange(date)}
+                      disabled={{ before: new Date() }}
                     />
-                    <span className="ml-2 whitespace-nowrap text-gray-500 text-sm">points per referral</span>
-                  </div>
+                  </Suspense>
                 )}
               />
-
               <FormFieldWithLabel
-                name="refereePoints"
-                label="Referee Reward"
+                name="end_date"
+                label={t('basicSettings.endDate')}
                 form={form}
                 render={({ field }) => (
-                  <div className="flex items-center">
-                    <Input
-                      type="number"
-                      min={0}
-                      step={0.01}
+                  <Suspense>
+                    <DateTimePicker
                       value={field.value}
-                      onChange={e => field.onChange(+e.target.value)}
+                      onChange={date => field.onChange(date)}
+                      disabled={{ before: new Date() }}
                     />
-                    <span className="ml-2 whitespace-nowrap text-gray-500 text-sm">points for referee</span>
-                  </div>
+                  </Suspense>
                 )}
               />
+              <div className="flex items-start">
+                <FormFieldWithLabel
+                  name="setting.referrer_reward.amount"
+                  label={t('basicSettings.referrerReward')}
+                  form={form}
+                  render={({ field }) => (
+                    <InputNumber type="number" value={Number(field.value)} onChange={field.onChange} />
+                  )}
+                />
+                <FormFieldWithLabel
+                  name="setting.referrer_reward.type"
+                  form={form}
+                  label=""
+                  className="mt-[22px] ml-2 w-24"
+                  render={({ field }) => (
+                    <Select value={field.value} onValueChange={field.onChange}>
+                      <SelectTrigger className="mb-0">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="fixed">{t('common.fixed')}</SelectItem>
+                        <SelectItem value="percentage">{t('common.percentage')}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+              </div>
+
+              <div className="flex items-start">
+                <FormFieldWithLabel
+                  name="setting.referee_reward.amount"
+                  label={t('basicSettings.refereeReward')}
+                  form={form}
+                  render={({ field }) => (
+                    <InputNumber type="number" value={Number(field.value)} onChange={field.onChange} />
+                  )}
+                />
+                <FormFieldWithLabel
+                  name="setting.referee_reward.type"
+                  form={form}
+                  label=""
+                  className="mt-[22px] ml-2 w-24"
+                  render={({ field }) => (
+                    <Select value={field.value} onValueChange={field.onChange}>
+                      <SelectTrigger className="mb-0">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="fixed">{t('common.fixed')}</SelectItem>
+                        <SelectItem value="percentage">{t('common.percentage')}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+              </div>
             </div>
 
-            <div className="space-y-3">
-              <h4 className="font-medium text-sm">Success Criteria</h4>
+            {/* TODO */}
+            {/* <div className="space-y-3">
+              <h4 className="font-medium text-sm">
+                {t("basicSettings.successCriteria.title")}
+              </h4>
               <div className="flex flex-col space-y-2 md:flex-row md:space-x-6 md:space-y-0">
                 <FormFieldWithLabel
                   name="requireRegistration"
-                  label="Complete Registration"
+                  label={t(
+                    "basicSettings.successCriteria.completeRegistration"
+                  )}
                   form={form}
                   isToggleField
-                  render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} />}
+                  render={({ field }) => (
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  )}
                 />
 
                 <FormFieldWithLabel
                   name="requireFirstCourse"
-                  label="Complete First Course"
+                  label={t("basicSettings.successCriteria.completeFirstCourse")}
                   form={form}
                   isToggleField
-                  render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} />}
+                  render={({ field }) => (
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  )}
                 />
               </div>
-            </div>
+            </div> */}
           </CardContent>
         </Card>
 
         <Card className="mb-6">
           <CardHeader>
-            <CardTitle>Advanced Reward System</CardTitle>
+            <CardTitle>{t('advancedRewards.title')}</CardTitle>
           </CardHeader>
           <CardContent className="p-3">
             {/* Milestone Rewards */}
             <Card className="mb-6">
               <div className="flex items-center justify-between border-b p-4">
-                <h4 className="font-medium text-base">Milestone Rewards</h4>
+                <h4 className="font-medium text-base">{t('advancedRewards.milestones.title')}</h4>
                 <FormFieldWithLabel
-                  name="milestoneEnabled"
+                  name="setting.milestone_bonus"
                   form={form}
                   className="m-0"
                   render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} />}
@@ -254,9 +444,11 @@ export function ProgramManagementSetting() {
               </div>
 
               <CardContent
-                className={`space-y-4 p-4 ${form.watch('milestoneEnabled') ? '' : 'pointer-events-none opacity-50'}`}
+                className={`space-y-4 p-4 ${
+                  form.watch('setting.milestone_bonus') ? '' : 'pointer-events-none opacity-50'
+                }`}
               >
-                <p className="text-gray-500 text-sm">Set rewards for reaching referral milestones</p>
+                <p className="text-gray-500 text-sm">{t('advancedRewards.milestones.description')}</p>
 
                 {milestones.map((field, index) => (
                   <div
@@ -265,7 +457,7 @@ export function ProgramManagementSetting() {
                   >
                     <div className="md:w-1/4">
                       <Controller
-                        name={`milestones.${index}.count`}
+                        name={`setting.ref_count_bonus.${index}.reach_count`}
                         control={form.control}
                         render={({ field }) => (
                           <Input
@@ -279,21 +471,20 @@ export function ProgramManagementSetting() {
                       />
                     </div>
 
-                    <div className="flex justify-center text-gray-500 text-sm md:w-1/6">referrals =</div>
+                    <div className="flex justify-center text-gray-500 text-sm md:w-1/6">
+                      {t('advancedRewards.milestones.referralsEquals')}
+                    </div>
 
                     <div className="md:w-1/4">
                       <Controller
-                        name={`milestones.${index}.value`}
+                        name={`setting.ref_count_bonus.${index}.reward.amount`}
                         control={form.control}
                         render={({ field }) => (
-                          <Input
-                            type="number"
+                          <InputNumber
                             className="w-full"
-                            placeholder="Value"
+                            placeholder={t('common.value')}
                             value={field.value}
-                            onChange={e => field.onChange(Number.parseFloat(e.target.value))}
-                            min="0"
-                            step="0.01"
+                            onChange={field.onChange}
                           />
                         )}
                       />
@@ -301,16 +492,16 @@ export function ProgramManagementSetting() {
 
                     <div className="md:w-1/4">
                       <Controller
-                        name={`milestones.${index}.unit`}
+                        name={`setting.ref_count_bonus.${index}.reward.type`}
                         control={form.control}
                         render={({ field }) => (
                           <Select value={field.value} onValueChange={field.onChange}>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Unit" />
+                            <SelectTrigger className="mb-0">
+                              <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="points">points</SelectItem>
-                              <SelectItem value="% of base">% of base</SelectItem>
+                              <SelectItem value="fixed">{t('common.fixed')}</SelectItem>
+                              <SelectItem value="percentage">{t('common.percentage')}</SelectItem>
                             </SelectContent>
                           </Select>
                         )}
@@ -331,7 +522,7 @@ export function ProgramManagementSetting() {
                   onClick={addMilestone}
                 >
                   <Plus className="mr-2 h-4 w-4" />
-                  Add New Milestone
+                  {t('advancedRewards.milestones.addNew')}
                 </Button>
               </CardContent>
             </Card>
@@ -339,9 +530,9 @@ export function ProgramManagementSetting() {
             {/* Feature Discovery Rewards */}
             <Card className="mb-6">
               <div className="flex items-center justify-between border-b p-4">
-                <h4 className="font-medium text-base">Feature Discovery Rewards</h4>
+                <h4 className="font-medium text-base">{t('advancedRewards.featureDiscovery.title')}</h4>
                 <FormFieldWithLabel
-                  name="featuresEnabled"
+                  name="setting.featured_discover"
                   form={form}
                   className="m-0"
                   render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} />}
@@ -349,28 +540,30 @@ export function ProgramManagementSetting() {
               </div>
 
               <CardContent
-                className={`space-y-4 p-4 ${form.watch('featuresEnabled') ? '' : 'pointer-events-none opacity-50'}`}
+                className={`space-y-4 p-4 ${
+                  form.watch('setting.featured_discover') ? '' : 'pointer-events-none opacity-50'
+                }`}
               >
                 <div className="space-y-3">
                   <FeatureRewardField
-                    label="Course Completion:"
+                    label={t('advancedRewards.featureDiscovery.courseCompletion')}
                     form={form}
-                    valueField="courseCompletion"
-                    unitField="courseUnit"
+                    amountField="setting.complete_course_bonus.amount"
+                    typeField="setting.complete_course_bonus.type"
                   />
 
                   <FeatureRewardField
-                    label="Fiat Wallet Deposit:"
+                    label={t('advancedRewards.featureDiscovery.fiatWalletDeposit')}
                     form={form}
-                    valueField="fiatDeposit"
-                    unitField="fiatUnit"
+                    amountField="setting.deposit_fiat_bonus.amount"
+                    typeField="setting.deposit_fiat_bonus.type"
                   />
 
                   <FeatureRewardField
-                    label="Token Wallet Deposit:"
+                    label={t('advancedRewards.featureDiscovery.tokenWalletDeposit')}
                     form={form}
-                    valueField="tokenDeposit"
-                    unitField="tokenUnit"
+                    amountField="setting.deposit_crypto_bonus.amount"
+                    typeField="setting.deposit_crypto_bonus.type"
                   />
                 </div>
               </CardContent>
@@ -379,9 +572,9 @@ export function ProgramManagementSetting() {
             {/* Time-based Rewards */}
             <Card className="mb-6">
               <div className="flex items-center justify-between border-b p-4">
-                <h4 className="font-medium text-base">Time-based Rewards</h4>
+                <h4 className="font-medium text-base">{t('advancedRewards.timeBased.title')}</h4>
                 <FormFieldWithLabel
-                  name="timeBasedEnabled"
+                  name="setting.time_based"
                   form={form}
                   className="m-0"
                   render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} />}
@@ -389,57 +582,81 @@ export function ProgramManagementSetting() {
               </div>
 
               <CardContent
-                className={`space-y-4 p-4 ${form.watch('timeBasedEnabled') ? '' : 'pointer-events-none opacity-50'}`}
+                className={`space-y-4 p-4 ${form.watch('setting.time_based') ? '' : 'pointer-events-none opacity-50'}`}
               >
-                <div className="flex flex-col space-y-2 md:flex-row md:items-center md:space-y-0">
-                  <span className="font-medium text-sm md:w-1/2">First Week Multiplier:</span>
-                  <div className="flex items-center">
+                <div className="flex flex-col space-y-2 md:space-y-0">
+                  <div className="grid md:grid-cols-2 md:gap-4">
                     <FormFieldWithLabel
-                      name="firstWeekMultiplier"
+                      name="setting.time_base_rewards.start_date"
+                      label={t('basicSettings.startDate')}
                       form={form}
-                      className="m-0"
                       render={({ field }) => (
-                        <Input
-                          type="number"
-                          className="w-20"
-                          value={field.value}
-                          onChange={e => field.onChange(Number.parseInt(e.target.value))}
-                          min="0"
-                          max="500"
+                        <Suspense>
+                          <DateTimePicker
+                            value={field.value}
+                            onChange={date => field.onChange(date)}
+                            disabled={{ before: new Date() }}
+                          />
+                        </Suspense>
+                      )}
+                    />
+                    <FormFieldWithLabel
+                      name="setting.time_base_rewards.end_date"
+                      label={t('basicSettings.endDate')}
+                      form={form}
+                      render={({ field }) => (
+                        <Suspense>
+                          <DateTimePicker
+                            value={field.value}
+                            onChange={date => field.onChange(date)}
+                            disabled={{ before: new Date() }}
+                          />
+                        </Suspense>
+                      )}
+                    />
+                    <div>
+                      <span className="font-medium text-sm md:w-1/2">
+                        {t('advancedRewards.timeBased.timeBasedReward')}
+                      </span>
+                      <div className="flex w-full items-start">
+                        <FormFieldWithLabel
+                          name="setting.time_base_rewards.reward.amount"
+                          form={form}
+                          className="m-0 w-1/2"
+                          render={({ field }) => (
+                            <InputNumber className="w-full" value={field.value} onChange={field.onChange} />
+                          )}
                         />
-                      )}
-                    />
-                    <FormFieldWithLabel
-                      name="firstWeekUnit"
-                      form={form}
-                      className="ml-2"
-                      render={({ field }) => (
-                        <Select value={field.value} onValueChange={field.onChange}>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Unit" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="% of base">% of base</SelectItem>
-                            <SelectItem value="points">point(s)</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      )}
-                    />
+                        <FormFieldWithLabel
+                          name="setting.time_base_rewards.reward.type"
+                          form={form}
+                          className="ml-2 w-1/2"
+                          render={({ field }) => (
+                            <Select value={field.value} onValueChange={field.onChange}>
+                              <SelectTrigger className="mb-0">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="fixed">{t('common.fixed')}</SelectItem>
+                                <SelectItem value="percentage">{t('common.percentage')}</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          )}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <p className="text-gray-500 text-sm">
-                  Applies to referrals made during the first week after program activation. Example: When set to "100%
-                  of base", points for first-week referrals are doubled.
-                </p>
+                <p className="text-gray-500 text-sm">{t('advancedRewards.timeBased.description')}</p>
               </CardContent>
             </Card>
 
             {/* Streak Rewards */}
             <Card className="mb-6">
               <div className="flex items-center justify-between border-b p-4">
-                <h4 className="font-medium text-base">Streak Rewards</h4>
+                <h4 className="font-medium text-base">{t('advancedRewards.streak.title')}</h4>
                 <FormFieldWithLabel
-                  name="streakEnabled"
+                  name="setting.streak_bonus"
                   form={form}
                   className="m-0"
                   render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} />}
@@ -447,34 +664,53 @@ export function ProgramManagementSetting() {
               </div>
 
               <CardContent
-                className={`space-y-6 p-4 ${form.watch('streakEnabled') ? '' : 'pointer-events-none opacity-50'}`}
+                className={`space-y-6 p-4 ${
+                  form.watch('setting.streak_bonus') ? '' : 'pointer-events-none opacity-50'
+                }`}
               >
                 <div className="space-y-4">
-                  <h5 className="font-semibold text-sm">Weekly Streak Settings</h5>
+                  <h5 className="font-semibold text-sm">{t('advancedRewards.streak.weekly.title')}</h5>
+                  <div className="flex items-center justify-between">
+                    <span>{t('advancedRewards.streak.weekly.enable')}</span>
+                    <FormFieldWithLabel
+                      name="setting.weekly_streak_bonus.enable"
+                      form={form}
+                      className="m-0"
+                      render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} />}
+                    />
+                  </div>
                   <StreakRewardFields
                     form={form}
-                    thresholdField="weeklyThreshold"
-                    thresholdLabel="referrals in a week"
-                    rewardField="weeklyReward"
-                    unitField="weeklyUnit"
+                    thresholdField="setting.weekly_streak_bonus.threshold"
+                    thresholdLabel={t('advancedRewards.streak.weekly.referralsInWeek')}
+                    amountField="setting.weekly_streak_bonus.reward.amount"
+                    typeField="setting.weekly_streak_bonus.reward.type"
+                    isDisabled={!form.watch('setting.weekly_streak_bonus.enable')}
                   />
                 </div>
 
                 <Separator />
 
                 <div className="space-y-4">
-                  <h5 className="font-semibold text-sm">Monthly Streak Settings</h5>
+                  <h5 className="font-semibold text-sm">{t('advancedRewards.streak.monthly.title')}</h5>
+                  <div className="flex items-center justify-between">
+                    <span>{t('advancedRewards.streak.monthly.enable')}</span>
+                    <FormFieldWithLabel
+                      name="setting.monthly_streak_bonus.enable"
+                      form={form}
+                      className="m-0"
+                      render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} />}
+                    />
+                  </div>
                   <StreakRewardFields
                     form={form}
-                    thresholdField="monthlyThreshold"
-                    thresholdLabel="referrals in a month"
-                    rewardField="monthlyReward"
-                    unitField="monthlyUnit"
+                    thresholdField="setting.monthly_streak_bonus.threshold"
+                    thresholdLabel={t('advancedRewards.streak.monthly.referralsInMonth')}
+                    amountField="setting.monthly_streak_bonus.reward.amount"
+                    typeField="setting.monthly_streak_bonus.reward.type"
+                    isDisabled={!form.watch('setting.monthly_streak_bonus.enable')}
                   />
-                  <p className="mt-2 text-gray-500 text-xs">
-                    Note: Streak rewards are granted when the referrer reaches the threshold within the specified time
-                    period.
-                  </p>
+                  <p className="mt-2 text-gray-500 text-xs">{t('advancedRewards.streak.note')}</p>
                 </div>
               </CardContent>
             </Card>
@@ -484,14 +720,13 @@ export function ProgramManagementSetting() {
         {/* Form Buttons */}
         <Card className="mb-6">
           <CardContent className="flex flex-col space-y-2 pt-6 md:flex-row md:space-x-4 md:space-y-0">
-            <FormSubmitButton label="Save Changes" className="w-full md:w-auto" />
-            <Button
-              type="button"
-              variant="outline"
+            <FormSubmitButton
+              label={t('buttons.saveChanges')}
               className="w-full md:w-auto"
-              onClick={() => form.reset(defaultValues)}
-            >
-              Cancel
+              loading={isLoadingPostReferralCampaign}
+            />
+            <Button type="button" variant="outline" className="w-full md:w-auto" onClick={() => form.reset()}>
+              {t('buttons.cancel')}
             </Button>
           </CardContent>
         </Card>
@@ -500,46 +735,31 @@ export function ProgramManagementSetting() {
   );
 }
 
-// Helper component for feature rewards
-interface FeatureRewardFieldProps {
-  label: string;
-  form: ReturnType<typeof useForm<ReferralFormValues>>;
-  valueField: keyof ReferralFormValues;
-  unitField: keyof ReferralFormValues;
-}
+function FeatureRewardField({ label, form, amountField, typeField }: FeatureRewardFieldProps) {
+  const t = useTranslations('referralProgram.dashboard');
 
-function FeatureRewardField({ label, form, valueField, unitField }: FeatureRewardFieldProps) {
   return (
     <div className="flex flex-col space-y-2 md:flex-row md:items-center md:space-y-0">
       <span className="font-medium text-sm md:w-1/2">{label}</span>
-      <div className="flex items-center">
+      <div className="flex items-start">
         <FormFieldWithLabel
-          name={valueField}
+          name={amountField}
           form={form}
           className="m-0"
-          render={({ field }) => (
-            <Input
-              type="number"
-              className="w-20"
-              value={field.value}
-              onChange={e => field.onChange(Number.parseFloat(e.target.value))}
-              min="0"
-              step="0.01"
-            />
-          )}
+          render={({ field }) => <InputNumber className="w-24" value={field.value} onChange={field.onChange} />}
         />
         <FormFieldWithLabel
-          name={unitField}
+          name={typeField}
           form={form}
           className="ml-2"
           render={({ field }) => (
             <Select value={field.value} onValueChange={field.onChange}>
-              <SelectTrigger>
-                <SelectValue placeholder="Unit" />
+              <SelectTrigger className="mb-0">
+                <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="points">point(s)</SelectItem>
-                <SelectItem value="% of base">% of base</SelectItem>
+                <SelectItem value="fixed">{t('common.fixed')}</SelectItem>
+                <SelectItem value="percentage">{t('common.percentage')}</SelectItem>
               </SelectContent>
             </Select>
           )}
@@ -549,21 +769,25 @@ function FeatureRewardField({ label, form, valueField, unitField }: FeatureRewar
   );
 }
 
-// Helper component for streak rewards
-interface StreakRewardFieldsProps {
-  form: ReturnType<typeof useForm<ReferralFormValues>>;
-  thresholdField: keyof ReferralFormValues;
-  thresholdLabel: string;
-  rewardField: keyof ReferralFormValues;
-  unitField: keyof ReferralFormValues;
-}
+function StreakRewardFields({
+  form,
+  thresholdField,
+  thresholdLabel,
+  amountField,
+  typeField,
+  isDisabled = false,
+}: StreakRewardFieldsProps) {
+  const t = useTranslations('referralProgram.dashboard');
 
-function StreakRewardFields({ form, thresholdField, thresholdLabel, rewardField, unitField }: StreakRewardFieldsProps) {
   return (
-    <div className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
+    <div
+      className={`space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0 ${
+        isDisabled ? 'pointer-events-none opacity-50' : ''
+      }`}
+    >
       <div className="space-y-2">
         <label htmlFor={`${thresholdField}-input`} className="font-medium text-gray-700 text-xs">
-          Threshold:
+          {t('advancedRewards.streak.threshold')}:
         </label>
         <div className="flex items-center">
           <FormFieldWithLabel
@@ -571,13 +795,12 @@ function StreakRewardFields({ form, thresholdField, thresholdLabel, rewardField,
             form={form}
             className="m-0"
             render={({ field }) => (
-              <Input
+              <InputNumber
                 id={`${thresholdField}-input`}
                 type="number"
                 className="w-full"
                 value={field.value}
-                onChange={e => field.onChange(Number.parseInt(e.target.value))}
-                min="1"
+                onChange={value => field.onChange(Number(value))}
               />
             )}
           />
@@ -586,38 +809,35 @@ function StreakRewardFields({ form, thresholdField, thresholdLabel, rewardField,
       </div>
 
       <div className="space-y-2">
-        <label htmlFor={`${rewardField}-input`} className="font-medium text-gray-700 text-xs">
-          Reward:
+        <label htmlFor={`${amountField}-input`} className="font-medium text-gray-700 text-xs">
+          {t('common.reward')}:
         </label>
-        <div className="flex items-center">
+        <div className="flex items-start">
           <FormFieldWithLabel
-            name={rewardField}
+            name={amountField}
             form={form}
             className="m-0"
             render={({ field }) => (
-              <Input
-                id={`${rewardField}-input`}
-                type="number"
+              <InputNumber
+                id={`${amountField}-input`}
                 className="w-full"
                 value={field.value}
-                onChange={e => field.onChange(Number.parseFloat(e.target.value))}
-                min="0"
-                step="0.01"
+                onChange={field.onChange}
               />
             )}
           />
           <FormFieldWithLabel
-            name={unitField}
+            name={typeField}
             form={form}
             className="ml-2"
             render={({ field }) => (
               <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Unit" />
+                <SelectTrigger className="mb-0">
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="points">point(s)</SelectItem>
-                  <SelectItem value="% of base">% of base</SelectItem>
+                  <SelectItem value="fixed">{t('common.fixed')}</SelectItem>
+                  <SelectItem value="percentage">{t('common.percentage')}</SelectItem>
                 </SelectContent>
               </Select>
             )}

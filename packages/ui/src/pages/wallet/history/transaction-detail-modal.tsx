@@ -73,9 +73,7 @@ export const TransactionDetailModal = ({ transaction, isOpen, onClose }: Transac
 
           <div>
             <p className="text-gray-500 text-sm">{t('historyPage.network')}</p>
-            <p className="font-medium uppercase">
-              {CRYPTO_CURRENCIES[currency as keyof typeof CRYPTO_CURRENCIES]?.name || '-'}
-            </p>
+            <p className="font-medium uppercase">{transaction.network || '-'}</p>
           </div>
 
           <div className="col-span-2">

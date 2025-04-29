@@ -3,10 +3,10 @@ import type { IEnrollCoursePayload } from '@oe/api';
 import { usePostEnrollCourse } from '@oe/api';
 import { createAPIUrl } from '@oe/api';
 import { useGetMe } from '@oe/api';
-import { PLATFORM_ROUTES } from '@oe/core';
+import { AUTH_ROUTES, PLATFORM_ROUTES } from '@oe/core';
 import { getCookieClient, setCookieClient } from '@oe/core';
 import { useTranslations } from 'next-intl';
-import { useParams, useSearchParams } from 'next/navigation';
+import { type ReadonlyURLSearchParams, useParams, useSearchParams } from 'next/navigation';
 import { type MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from '#common/navigation';
 import { useActivedTrigger } from '#components/course-form-trigger';
@@ -35,6 +35,7 @@ interface ActionHandlerParams {
   triggerPostEnrollCourse: (params: IEnrollCoursePayload) => void;
   shouldActiveTrigger?: boolean;
   handleShowTrigger: () => void;
+  searchParams?: ReadonlyURLSearchParams;
 }
 
 type FromSourceType = {
@@ -120,8 +121,17 @@ const handleEnrollCourse = async (params: ActionHandlerParams) => {
 
 const ACTION_HANDLERS: Record<ActionType, ActionHandler> = {
   [ACTION_TYPES.LOGIN_REQUIRED]: {
-    handle: ({ setLoginRequiredModal }) => {
-      setLoginRequiredModal(true);
+    handle: ({ setLoginRequiredModal, isCourseDetail, router, slug, setIsLoading, searchParams }) => {
+      if (isCourseDetail) {
+        const pathname = slug && createCourseUrl('detail', { slug });
+        const nextPath = searchParams && searchParams?.size > 0 ? `${pathname}?${searchParams.toString()}` : pathname;
+        const loginroute = `${AUTH_ROUTES.login}?next=${nextPath}`;
+
+        router.push(loginroute);
+      } else {
+        setLoginRequiredModal(true);
+        setIsLoading?.(false);
+      }
     },
     getText: t => t('loginToEnroll'),
     shouldShowCart: false,
@@ -330,6 +340,7 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false, onClick }
         triggerPostEnrollCourse,
         shouldActiveTrigger,
         handleShowTrigger,
+        searchParams,
       };
 
       void actionHandler.handle(params);
@@ -350,6 +361,7 @@ export const usePaymentButton = ({ courseData, isCourseDetail = false, onClick }
       onClick,
       activedTrigger,
       checkActivedTrigger,
+      searchParams,
     ]
   );
 

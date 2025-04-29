@@ -16,13 +16,20 @@ export async function AuthCallbackPage() {
     redirect(process.env.NEXT_PUBLIC_APP_ORIGIN);
   }
 
-  const { provider, referrer, verifier, originUrl } = JSON.parse(decodeURIComponent(state)) as ISocialCallbackStateData;
+  const { provider, referrer, verifier, originUrl, inviteRefCode } = JSON.parse(
+    decodeURIComponent(state)
+  ) as ISocialCallbackStateData;
   const originUrlObj = new URL(originUrl);
   const nextPath = originUrlObj.searchParams.get('next');
   let newUrl: URL;
   try {
     const result = await socialLoginService(
-      { provider, code, code_verifier: verifier ?? '' },
+      {
+        provider,
+        code,
+        code_verifier: verifier ?? '',
+        ref_code: inviteRefCode ?? '',
+      },
       { origin: originUrlObj.origin, referrer }
     );
     newUrl = new URL(`${originUrlObj.origin}${nextPath ?? ''}`);

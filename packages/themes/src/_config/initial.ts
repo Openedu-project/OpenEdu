@@ -1,6 +1,6 @@
 import type { ThemeName } from '../_types';
 import type { ThemeCollection, ThemeSystem } from '../_types/theme-system-config';
-import { initialThemeGlobal } from './theme-global-initial';
+import { aieduThemeGlobal, initialThemeGlobal } from './theme-global-initial';
 import { themeInfo } from './theme-info';
 import { getMetadata } from './theme-metadata';
 import { createThemePageConfig } from './theme-page-initial/index';
@@ -43,6 +43,14 @@ export const defaultThemeSystemConfig = (t: (key: string) => string): ThemeSyste
         globals: initialThemeGlobal,
         components: undefined,
         info: themeInfo(t).fenet,
+      },
+      // Theme step 16 (optional): add to theme config
+      aiedu: {
+        pages: createThemePageConfig(t).aiedu,
+        metadata: getMetadata(),
+        globals: aieduThemeGlobal,
+        components: undefined,
+        info: themeInfo(t).aiedu,
       },
     },
   };

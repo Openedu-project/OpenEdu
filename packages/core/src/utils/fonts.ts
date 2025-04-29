@@ -22,6 +22,7 @@ import {
   Oswald,
   Pinyon_Script,
   Playfair_Display,
+  Plus_Jakarta_Sans,
   Raleway,
   Roboto_Condensed,
   Roboto_Mono,
@@ -264,6 +265,14 @@ const imperialScript = Imperial_Script({
   weight: '400',
 });
 
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ['latin', 'latin-ext', 'vietnamese'],
+  variable: '--font-plus-jakarta-sans',
+  display: 'swap',
+  adjustFontFallback: false,
+  weight: ['300', '400', '500', '600', '700'],
+});
+
 export const fonts = {
   inter,
   montserrat,
@@ -293,4 +302,5 @@ export const fonts = {
   ebGaramond,
   cormorantGaramond,
   imperialScript,
+  plusJakartaSans,
 };

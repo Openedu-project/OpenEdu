@@ -62,7 +62,7 @@ const DepositModal = () => {
           <div className="w-full">
             <h2 className="font-semibold text-base">{tModal('network')}</h2>
             <span className="flex items-center space-x-2 rounded-lg border border-neutral-100 p-4 text-neutral-900">
-              <p className="uppercase">{CHAIN.ETHEREUM ?? ''}</p>
+              <p className="uppercase">{CHAIN.BASE ?? ''}</p>
             </span>
           </div>
           <div>

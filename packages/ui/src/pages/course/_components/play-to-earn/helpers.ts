@@ -1,22 +1,23 @@
-import type { ILesson, ISection } from '@oe/api';
+import type { ILesson, ISection, ISectionByUid } from '@oe/api';
 import type { IStartWhen } from '@oe/api';
-import type { ISectionProgress } from '@oe/api';
 
 export const cleanUrl = (url: string): string => url?.replaceAll(/^["\\]+|["\\]+$/g, '');
 
-export const isLessonCompleted = (sections: ISectionProgress[], entityId: string): boolean => {
-  for (const section of sections) {
-    const lesson = section.lessons.find(lesson => lesson.lesson_uid === entityId);
+export const isLessonCompleted = (sectionByUid: ISectionByUid, entityId: string): boolean => {
+  for (const sectionUid in sectionByUid) {
+    const section = sectionByUid[sectionUid];
+    const lessonByUid = section?.lesson_by_uid;
 
-    if (lesson) {
-      return lesson.complete_at !== 0;
+    if (lessonByUid?.[entityId]) {
+      return lessonByUid[entityId].complete_at !== 0;
     }
   }
+
   return false;
 };
 
-export const isSectionCompleted = (sections: ISectionProgress[], entityId: string): boolean => {
-  const section = sections.find(section => section.section_uid === entityId);
+export const isSectionCompleted = (sections: ISectionByUid, entityId: string): boolean => {
+  const section = sections?.[entityId];
 
   return section ? section.completed_lesson === section.total_lesson : false;
 };

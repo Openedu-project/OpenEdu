@@ -18,6 +18,7 @@ export default async function Home() {
     return <NotFoundPage />;
   }
 
+  // Theme step 25 : import the homepage to Organization
   return (
     <ThemeWebPage
       selectedPage="homepage"

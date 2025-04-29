@@ -58,6 +58,22 @@ import type {
   ScholarHomepageTeamProps,
   ScholarHomepageTestimonialsProps,
 } from '../../scholar/type';
+
+import type {
+  AieduDashboardConfigProps,
+  AieduHomepageBlogsProps,
+  AieduHomepageCertProps,
+  AieduHomepageExpertProps,
+  AieduHomepageFeaturesProps,
+  AieduHomepageGalleryProps,
+  AieduHomepageGuideProps,
+  AieduHomepageHeroProps,
+  AieduHomepageSponsorsProps,
+  AieduIntroductionGoalProps,
+  AieduIntroductionMapProps,
+  AieduIntroductionVisionMissionProps,
+} from '../../aiedu/type';
+
 import type { PageSectionConfig } from './config';
 
 export interface BaseSectionProps<K extends ThemePageKey> {
@@ -136,4 +152,20 @@ export interface SectionPropsMap<K extends ThemePageKey> {
   fenetExpert: DynamicProps<K, FenetHomepageExpertProps>;
   fenetPrice: DynamicProps<K, FenetHomepagePriceProps>;
   fenetBlog: DynamicProps<K, FenetHomepageBlogProps>;
+
+  //Aiedu
+  //Theme step 6: add the sectionProps to the sectionPropsMap with syntax: ${sectionKey}: DynamicProps<K, ${sectionProps}>
+  aieduHero: DynamicProps<K, AieduHomepageHeroProps>;
+  aieduFeatures: DynamicProps<K, AieduHomepageFeaturesProps>;
+  aieduExpert: DynamicProps<K, AieduHomepageExpertProps>;
+  aieduDashboard: DynamicProps<K, AieduDashboardConfigProps>;
+  aieduBlog: DynamicProps<K, AieduHomepageBlogsProps>;
+  aieduCert: DynamicProps<K, AieduHomepageCertProps>;
+  aieduGuide: DynamicProps<K, AieduHomepageGuideProps>;
+  aieduSponsors: DynamicProps<K, AieduHomepageSponsorsProps>;
+  aieduGallery: DynamicProps<K, AieduHomepageGalleryProps>;
+  // Aiedu introduction
+  aieduGoal: DynamicProps<K, AieduIntroductionGoalProps>;
+  aieduVisionMission: DynamicProps<K, AieduIntroductionVisionMissionProps>;
+  aieduMap: DynamicProps<K, AieduIntroductionMapProps>;
 }

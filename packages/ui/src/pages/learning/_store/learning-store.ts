@@ -48,18 +48,18 @@
 //       return check;
 //     },
 
-    // isLessonCompleted(lesson_uid: string) {
-    //   const { sectionsProgressData } = get();
+// isLessonCompleted(lesson_uid: string) {
+//   const { sectionsProgressData } = get();
 
-    //   for (const section of sectionsProgressData) {
-    //     const lesson = section.lessons.find(lesson => lesson.uid === lesson_uid);
+//   for (const section of sectionsProgressData) {
+//     const lesson = section.lessons.find(lesson => lesson.uid === lesson_uid);
 
-    //     if (lesson) {
-    //       return lesson.complete_at !== 0;
-    //     }
-    //   }
-    //   return false;
-    // },
+//     if (lesson) {
+//       return lesson.complete_at !== 0;
+//     }
+//   }
+//   return false;
+// },
 
 //     isSectionCompleted(sectionUid: string) {
 //       const { sectionsProgressData } = get();

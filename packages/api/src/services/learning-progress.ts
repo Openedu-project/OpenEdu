@@ -35,7 +35,7 @@ export const updateLearningProgressService = async (
   { payload, init }: { payload: ILearningProgressPayload; init?: RequestInit }
 ) => {
   try {
-    const response = await postAPI<HTTPErrorMetadata, ILearningProgressPayload>(
+    const response = await postAPI<ILearningProgress, ILearningProgressPayload>(
       url ?? API_ENDPOINT.LEARNING_PROGRESSES,
       payload,
       init

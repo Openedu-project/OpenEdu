@@ -1,5 +1,14 @@
 import { getLocaleFromPathname } from '@oe/i18n';
-import { type Locale, differenceInDays, format, formatRelative, fromUnixTime } from 'date-fns';
+import {
+  type Locale,
+  differenceInDays,
+  format,
+  formatRelative,
+  fromUnixTime,
+  getDate,
+  getDay,
+  getDaysInMonth,
+} from 'date-fns';
 import { enUS } from 'date-fns/locale';
 
 export const TIME_ZONE = 'Asia/Bangkok';
@@ -237,8 +246,33 @@ export function convertToTimeStamp(dateString: string): number {
 }
 
 export const calculateRemainingDays = (endTimestamp: number) => {
-  const endDate = fromUnixTime(endTimestamp / 1000);
+  const endDate = new Date(endTimestamp);
   const currentDate = new Date();
 
-  return Math.max(differenceInDays(endDate, currentDate), 0);
+  const diffTime = endDate.getTime() - currentDate.getTime();
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+  return Math.max(diffDays, 0);
+};
+
+export const getRemainingDaysInWeek = () => {
+  const currentDate = new Date();
+  const dayOfWeek: number = getDay(currentDate);
+
+  const daysRemaining: number = dayOfWeek === 0 ? 0 : 7 - dayOfWeek;
+
+  return daysRemaining;
+};
+
+export const getRemainingDaysInMonth = () => {
+  const currentDate = new Date();
+
+  const currentDay: number = getDate(currentDate);
+
+  const totalDaysInMonth: number = getDaysInMonth(currentDate);
+
+  // Tính số ngày còn lại trong tháng
+  const daysRemaining: number = totalDaysInMonth - currentDay;
+
+  return daysRemaining;
 };

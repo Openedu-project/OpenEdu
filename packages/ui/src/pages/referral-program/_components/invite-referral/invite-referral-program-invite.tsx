@@ -53,7 +53,8 @@ export async function InviteReferralProgramInvite({
             <span className="mbutton-regular16">{t('requirementRegistration')}</span>
           </div>
 
-          <div className="flex items-center">
+          {/* TODO */}
+          {/* <div className="flex items-center">
             <div className="mr-2 rounded-full bg-positive-600 p-1">
               <svg className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <title>{t('checkmarkAriaLabel')}</title>
@@ -61,7 +62,7 @@ export async function InviteReferralProgramInvite({
               </svg>
             </div>
             <span className="mbutton-regular16">{t('requirementCourse')}</span>
-          </div>
+          </div> */}
         </div>
         <div className="mbutton-regular16 mb-6">
           {t('eachRefereeReceives')}&nbsp;

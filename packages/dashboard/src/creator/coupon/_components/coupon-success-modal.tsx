@@ -21,9 +21,7 @@ export function CouponSuccessModal({ open = true, onClose, startDate, endDate }:
         <Image src={whaleSuccess.src} alt="whale Success" objectFit="contain" priority height={200} width={200} />
       </div>
       <div className="block">
-        <h4 className="giant-iheading-giant-iheading-semibold16 md:giant-iheading-semibold28 text-center">
-          {t('title')}
-        </h4>
+        <h4 className="giant-iheading-semibold16 md:giant-iheading-semibold28 text-center">{t('title')}</h4>
         <p className="text-center">
           {endDate
             ? t.rich('descWithEndTime', {

@@ -65,3 +65,31 @@ export interface IInviteReferrerPayload {
   referral_type: 'ref-user';
   emails: string[];
 }
+
+interface IPointRewardHistory {
+  type: string;
+  amount: string;
+}
+
+export interface IReferralHistory {
+  id: string;
+  create_at: number;
+  update_at: number;
+  delete_at: number;
+  user_id: string;
+  referee_id: string;
+  code: string;
+  ref_code_id: string;
+  campaign_id: string;
+  campaign_type: string;
+  point_reward: IPointRewardHistory;
+  amount: string;
+  referee_reward: IPointRewardHistory;
+  referee_amount: string;
+  trigger: string;
+  user: null;
+  campaign: null;
+  ref_code: null;
+}
+
+export interface IReferralHistoryRes extends HTTPPagination<IReferralHistory> {}

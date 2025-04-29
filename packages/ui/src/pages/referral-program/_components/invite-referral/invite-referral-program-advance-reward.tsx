@@ -1,6 +1,6 @@
-import type { ISettingReferralProgram } from '@oe/api';
+import type { INewPoints, ISettingReferralProgram } from '@oe/api';
 import { IconBitcoinRefresh, IconDollarCircle, IconNote2, IconNote3 } from '@oe/assets';
-import { calculateRemainingDays, formatDate } from '@oe/core';
+import { calculateRemainingDays, formatDateTime, getRemainingDaysInMonth, getRemainingDaysInWeek } from '@oe/core';
 import { getTranslations } from 'next-intl/server';
 import type { ElementType, ReactNode } from 'react';
 import type { JSX } from 'react';
@@ -130,8 +130,10 @@ const TimeBasedCard = ({ icon: Icon, title, description, daysLeft }: TimeBasedCa
 
 export async function InviteReferralProgramAdvanceReward({
   dataSetting,
+  dateNewPoint,
 }: {
   dataSetting: ISettingReferralProgram | undefined;
+  dateNewPoint: INewPoints | undefined;
 }) {
   const t = await getTranslations('referralProgram.advancedReward');
 
@@ -178,16 +180,21 @@ export async function InviteReferralProgramAdvanceReward({
         suffix:
           dataSetting?.weekly_streak_bonus?.reward?.type === 'percentage'
             ? '%'
-            : t('consistencyRewards.weeklyStreak.points'),
+            : t('consistencyRewards.weeklyStreak.point'),
       }),
       description: '',
-      progressPercentage: 60,
+      progressPercentage: Math.min(
+        100,
+        Math.floor(
+          ((dateNewPoint?.weekly_streak?.total_count ?? 0) / (dataSetting?.weekly_streak_bonus?.threshold ?? 1)) * 100
+        )
+      ),
       daysRemaining: t('consistencyRewards.weeklyStreak.daysRemaining', {
-        days: 2,
+        days: getRemainingDaysInWeek(),
       }),
       progress: {
-        current: 6,
-        total: 10,
+        current: dateNewPoint?.weekly_streak?.total_count ?? 0,
+        total: dataSetting?.weekly_streak_bonus?.threshold ?? 0,
       },
       isActive: Boolean(dataSetting?.weekly_streak_bonus?.enable),
     },
@@ -199,16 +206,21 @@ export async function InviteReferralProgramAdvanceReward({
         suffix:
           dataSetting?.monthly_streak_bonus?.reward?.type === 'percentage'
             ? '%'
-            : t('consistencyRewards.weeklyStreak.points'),
+            : t('consistencyRewards.monthlyStreak.point'),
       }),
       description: '',
-      progressPercentage: 60,
+      progressPercentage: Math.min(
+        100,
+        Math.floor(
+          ((dateNewPoint?.monthly_streak?.total_count ?? 0) / (dataSetting?.monthly_streak_bonus?.threshold ?? 1)) * 100
+        )
+      ),
       daysRemaining: t('consistencyRewards.monthlyStreak.daysRemaining', {
-        days: 2,
+        days: getRemainingDaysInMonth(),
       }),
       progress: {
-        current: 6,
-        total: 10,
+        current: dateNewPoint?.monthly_streak?.total_count ?? 0,
+        total: dataSetting?.monthly_streak_bonus?.threshold ?? 0,
       },
       isActive: Boolean(dataSetting?.monthly_streak_bonus?.enable),
     },
@@ -219,9 +231,9 @@ export async function InviteReferralProgramAdvanceReward({
     title: t('timeBasedRewards.limitedTimeOffer.title'),
     description: t.rich('timeBasedRewards.limitedTimeOffer.description', {
       highlight: chunks => <span className="mcaption-semibold14 text-primary">{chunks}</span>,
-      x: String(Number(dataSetting?.time_base_rewards?.reward?.amount) / 100),
-      fromDate: formatDate(dataSetting?.time_base_rewards?.start_date ?? 0),
-      toDate: formatDate(dataSetting?.time_base_rewards?.end_date ?? 0),
+      x: String(((Number(dataSetting?.time_base_rewards?.reward?.amount ?? 0) + 100) / 100).toFixed(2)),
+      fromDate: formatDateTime(dataSetting?.time_base_rewards?.start_date ?? 0),
+      toDate: formatDateTime(dataSetting?.time_base_rewards?.end_date ?? 0),
     }),
     daysLeft: t('timeBasedRewards.limitedTimeOffer.daysLeft', {
       days: calculateRemainingDays(dataSetting?.time_base_rewards?.end_date ?? 0),

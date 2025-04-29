@@ -1,21 +1,14 @@
-"use client";
+'use client';
 
-import type { ICourseOutline } from "@oe/api";
-import { ExpandableText } from "#components/expandable-text";
-import { LastUpdated } from "../../../_components/last-updated";
-import { CourseCreator } from "../../../course/_components/course-creator";
-import { CourseIncludes } from "../../../course/_components/course-includes";
-import { CourseStats } from "../../../course/_components/course-stats";
+import type { ICourseOutline } from '@oe/api';
+import { ExpandableText } from '#components/expandable-text';
+import { LastUpdated } from '../../../_components/last-updated';
+import { CourseCreator } from '../../../course/_components/course-creator';
+import { CourseIncludes } from '../../../course/_components/course-includes';
+import { CourseStats } from '../../../course/_components/course-stats';
 
 const CourseDescription = ({ courseData }: { courseData: ICourseOutline }) => {
-  const {
-    owner,
-    description,
-    update_at,
-    mark_as_completed,
-    learner_count,
-    levels,
-  } = courseData;
+  const { owner, description, update_at, mark_as_completed, learner_count, levels } = courseData;
 
   return (
     <>
@@ -32,16 +25,9 @@ const CourseDescription = ({ courseData }: { courseData: ICourseOutline }) => {
               <LastUpdated update_at={update_at} />
             </div>
 
-            <ExpandableText
-              content={description}
-              className="rounded-xl border border-foreground/20 p-4"
-            />
+            <ExpandableText content={description} className="rounded-xl border border-foreground/20 p-4" />
 
-            <CourseStats
-              learner_count={learner_count}
-              mark_as_completed={mark_as_completed}
-              levels={levels}
-            />
+            <CourseStats learner_count={learner_count} mark_as_completed={mark_as_completed} levels={levels} />
           </div>
           <CourseIncludes courseOutline={courseData} />
           {/* <hr className="my-4" />
