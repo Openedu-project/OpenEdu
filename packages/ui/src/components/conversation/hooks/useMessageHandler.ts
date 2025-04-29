@@ -97,7 +97,7 @@ export const useSendMessageHandler = (
 
         const data = await postConversation(undefined, {
           ai_agent_type: agent,
-          message_ai_agent_type: type,
+          message_ai_agent_type: agent === 'ai_search' ? type : agent,
           ai_model_id: currentSelectedModel?.id,
           content: messageInput,
           content_type: 'text',

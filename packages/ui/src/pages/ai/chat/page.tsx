@@ -2,7 +2,7 @@ import { isLogin } from '@oe/api';
 import type { TAgentType } from '@oe/api';
 import { AUTH_ROUTES } from '@oe/core';
 import { redirect } from 'next/navigation';
-import { ChatWithSource } from '#components/conversation';
+import { ChatWithSource, ConversationProvider } from '#components/conversation';
 
 const getChatMessages = async (id?: string) => {
   if (!id) {
@@ -24,5 +24,12 @@ export async function AIChatPage({
   agent: TAgentType;
 }) {
   await getChatMessages(id);
-  return <ChatWithSource id={id} agent={agent} />;
+  if (!id) {
+    return <ChatWithSource agent={agent} />;
+  }
+  return (
+    <ConversationProvider id={id}>
+      <ChatWithSource id={id} agent={agent} />
+    </ConversationProvider>
+  );
 }

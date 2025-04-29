@@ -56,10 +56,10 @@ export const formatDate = (timestamp: number) => {
   const yesterday = today - 86_400_000; // 24 hours in milliseconds
 
   if (timestamp === today) {
-    return 'Today';
+    return 'today';
   }
   if (timestamp === yesterday) {
-    return 'Yesterday';
+    return 'yesterday';
   }
 
   // Format as dd/mm/yyyy for all other dates

@@ -1,4 +1,4 @@
-import { AIChatPage, ConversationProvider } from "@oe/ui";
+import { AIChatPage } from "@oe/ui";
 
 export default async function AIChatDetails({
   params,
@@ -6,9 +6,5 @@ export default async function AIChatDetails({
   params: { id: string };
 }) {
   const { id } = await params;
-  return (
-    <ConversationProvider id={id}>
-      <AIChatPage id={id} agent="ai_search" />
-    </ConversationProvider>
-  );
+  return <AIChatPage id={id} agent="ai_search" />;
 }
