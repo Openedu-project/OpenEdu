@@ -5,7 +5,6 @@ import { createPortal } from 'react-dom';
 import { Button } from '#shadcn/button';
 
 export const CodeDownloadHydration = ({ id }: { id: string }) => {
-  const [copied, setCopied] = useState(false);
   const [buttonData, setButtonData] = useState<{ code: string; element: HTMLElement }[]>([]);
 
   useEffect(() => {
@@ -28,10 +27,11 @@ export const CodeDownloadHydration = ({ id }: { id: string }) => {
 
   const handleDownload = (e: MouseEvent<HTMLButtonElement>, code: string) => {
     e.preventDefault();
+    const button = e.currentTarget;
     navigator.clipboard.writeText(code).then(() => {
-      setCopied(true);
+      button.dataset.active = 'true';
       setTimeout(() => {
-        setCopied(false);
+        button.dataset.active = 'false';
       }, 2000);
     });
   };
@@ -45,10 +45,13 @@ export const CodeDownloadHydration = ({ id }: { id: string }) => {
         return createPortal(
           <Button
             variant="outline"
-            className="h-auto rounded-md bg-background/50 bg-transparent px-2 text-background hover:bg-background/70"
+            className="group h-auto rounded-md bg-background/50 bg-transparent px-2 text-background hover:bg-background/70"
+            data-active="false"
             onClick={e => handleDownload(e, code)}
           >
-            {copied ? <Check className="h-4 w-4" /> : <Files className="h-4 w-4" />}
+            <Check className="hidden h-4 w-4 group-data-[active=true]:block" />
+
+            <Files className="hidden h-4 w-4 group-data-[active=false]:block" />
           </Button>,
           element
         );
