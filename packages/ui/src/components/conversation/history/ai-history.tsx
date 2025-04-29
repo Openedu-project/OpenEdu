@@ -74,7 +74,7 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
         endpoint: API_ENDPOINT.COM_CHANNELS,
         queryParams: { ...HISTORY_DEFAULT_PARAMS, search_term: title },
       });
-      await globalMutate((key: string) => !!key.includes(apikey), undefined, {
+      await globalMutate((key: string) => key === apikey, undefined, {
         revalidate: true,
       });
       setSearchParams(prev => {
@@ -88,13 +88,18 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
       isLoadingMoreRef.current = true;
     }
 
-    setSearchParams(prev => {
-      return { ...prev, page: prev.page + 1 };
+    const apikey = createAPIUrl({
+      endpoint: API_ENDPOINT.COM_CHANNELS,
+      queryParams: { ...searchParams, page: searchParams.page + 1 },
+    });
+    await globalMutate((key: string) => key === apikey, undefined, {
+      revalidate: true,
     });
 
-    setTimeout(() => {
+    setSearchParams(prev => {
       isLoadingMoreRef.current = false;
-    }, 500);
+      return { ...prev, page: prev.page + 1 };
+    });
   };
 
   const datesData = useMemo(() => {

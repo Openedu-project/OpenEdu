@@ -42,6 +42,7 @@ export interface IUser {
   roles: IUserRoleInOrg[];
   username: string;
   props?: IUserSettingsOption;
+  is_free_plan?: boolean;
 }
 
 export interface IUserRoleInOrg {

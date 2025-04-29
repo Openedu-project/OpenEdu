@@ -1,3 +1,4 @@
+import { useGetMe } from '@oe/api';
 import { MessageTime } from '@oe/assets';
 import AIMascot from '@oe/assets/images/ai/ai-mascot-2.png';
 import { AI_ROUTES } from '@oe/core';
@@ -30,6 +31,7 @@ export function AISidebarContent({
 }) {
   const tAI = useTranslations('aiAssistant');
   const pathname = usePathname();
+  const { dataMe } = useGetMe();
 
   return (
     <SidebarContent className="scrollbar flex h-full flex-col gap-2 overflow-y-auto bg-primary/5 p-2">
@@ -50,7 +52,7 @@ export function AISidebarContent({
           </Badge>
         </Link>
         <span className={cn('giant-iheading-semibold12 ml-1 text-foreground', open && 'giant-iheading-semibold14')}>
-          {tAI('freePlan')}
+          {dataMe?.is_free_plan || dataMe?.is_free_plan === undefined ? tAI('freePlan') : tAI('proPlan')}
         </span>
       </div>
 

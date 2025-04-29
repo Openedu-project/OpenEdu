@@ -57,5 +57,6 @@ export const aiAssistantMessages = {
     present: 'Present',
     menu: 'Menu',
     noPromptWasFound: 'No Prompt Was Found',
+    proPlan: 'Pro Plan',
   },
 };
