@@ -50,5 +50,13 @@ export const aiAssistantMessages = {
     thinking: 'Thinking',
     allPromptingWithName: '{name} - All Prompting',
     workspace: 'Workspace',
+    freePlan: 'Free Plan',
+    project: 'Project',
+    prompt: 'Prompt',
+    soon: 'Soon',
+    present: 'Present',
+    menu: 'Menu',
+    noPromptWasFound: 'No Prompt Was Found',
+    proPlan: 'Pro Plan',
   },
 };

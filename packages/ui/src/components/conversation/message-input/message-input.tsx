@@ -14,7 +14,7 @@ import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { INPUT_BUTTON } from '../constants';
 import type { MessageFormValues, MessageInputProps, TFileResponse } from '../type';
-import { chatSchema, useIsDesktop } from '../utils';
+import { chatSchema } from '../utils';
 import { MessageInputAction } from './message-input-action';
 import { InputField } from './message-input-field';
 import { InputOption } from './message-input-option';
@@ -40,17 +40,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
 
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const { setLoginRequiredModal } = useLoginRequiredStore();
-  const isDesktop = useIsDesktop();
   const isGenerating = useMemo(() => GENERATING_STATUS.includes(status ?? ''), [status]);
-
-  useEffect(() => {
-    if (!(inputRef.current && isDesktop) || document.activeElement === inputRef.current) {
-      return;
-    }
-    inputRef.current.focus();
-    inputRef.current.selectionStart = inputRef.current.value.length;
-    inputRef.current.selectionEnd = inputRef.current.value.length;
-  }, [isDesktop]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -98,6 +88,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
           if (filteredAgents[selectedIndex]) {
             setSelectedAgent(filteredAgents[selectedIndex]);
             setFilteredAgents([]);
+            return;
           }
           break;
         case 'Escape':
@@ -190,7 +181,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
           return (
             <Card
               className={cn(
-                'relative flex flex-col gap-1 rounded-3xl bg-background p-2 pt-2 shadow md:min-h-40 md:p-4',
+                'relative flex flex-col gap-1 rounded-3xl bg-background p-2 pt-2 shadow md:min-h-30 md:p-3',
                 className
               )}
               onClick={() => {

@@ -23,6 +23,7 @@ export * from './dislike-outline';
 export * from './document-attach';
 export * from './document-download';
 export * from './document-fill';
+export * from './document-text';
 export * from './document-upload-icon';
 export * from './drive-logo';
 export * from './edit';

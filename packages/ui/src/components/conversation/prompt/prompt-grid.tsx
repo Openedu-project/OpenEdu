@@ -8,7 +8,6 @@ import { Button } from '#shadcn/button';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { ExpandPromptCard } from './prompt-card';
-// import { PromptPopup } from './prompt-popup';
 
 export const PromptGrid = ({
   categoryId,
@@ -18,6 +17,8 @@ export const PromptGrid = ({
   name,
   className,
   PromptPopup,
+  callbackFn,
+  checkExpandSide,
 }: {
   name?: string;
   categoryId?: string;
@@ -26,12 +27,14 @@ export const PromptGrid = ({
   litmited?: number;
   className?: string;
   PromptPopup?: ElementType;
+  callbackFn?: () => void;
+  checkExpandSide?: boolean;
 }) => {
   const tGeneral = useTranslations('general');
+  const tAI = useTranslations('aiAssistant');
   const [promptData, setPromptData] = useState<IPrompt[]>([]);
   const { selectedAgent } = useConversationStore();
   const [count, setCount] = useState(4);
-  const [disabled, setDisabled] = useState(false);
   const [searchParams, setSearchParams] = useState({
     page: 1,
     per_page: perPage,
@@ -47,7 +50,7 @@ export const PromptGrid = ({
       page: 1,
       per_page: perPage ?? litmited ?? 8,
       ai_agent_type: agent === 'ai_search' ? selectedAgent : agent,
-      category_id: categoryId,
+      category_id: selectedAgent === 'ai_search' ? categoryId : undefined,
     });
     setPromptData([]);
     setCount(4);
@@ -73,16 +76,16 @@ export const PromptGrid = ({
     setCount(prev => prev + 4);
   };
 
-  if (isLoading) {
+  if (isLoading || !prompts) {
     return (
-      <div className="m-auto w-fit">
+      <div className="mx-auto mt-6 w-fit">
         <LoaderCircle className="animate-spin" />
       </div>
     );
   }
 
-  if (!prompts || prompts?.results?.length === 0) {
-    return null;
+  if (prompts?.results?.length === 0) {
+    return <p className="mt-6 text-center">{tAI('noPromptWasFound')}</p>;
   }
 
   return (
@@ -92,12 +95,9 @@ export const PromptGrid = ({
           <ExpandPromptCard
             key={prompt.id}
             text={prompt.text}
-            side={i < 4 ? 'bottom' : 'top'}
-            disabled={disabled}
-            callbackFn={() => {
-              setDisabled(true);
-            }}
+            side={i < 4 && checkExpandSide ? 'bottom' : 'top'}
             agent={agent}
+            callbackFn={callbackFn}
           />
         ))}
       </div>
@@ -110,7 +110,7 @@ export const PromptGrid = ({
           </Button>
         ) : (
           prompts.pagination?.page < prompts.pagination?.total_pages &&
-          PromptPopup && <PromptPopup categoryId={categoryId} name={name} agent={agent} />
+          PromptPopup && <PromptPopup categoryId={categoryId} name={name} agent={agent} checkExpandSide />
         )}
       </div>
     </div>

@@ -21,18 +21,16 @@ export function InputFrame({
   messagesEndRef?: RefObject<HTMLDivElement | null>;
   reset?: boolean;
 }) {
-  const { resetMessages, selectedModel, setSelectedModel, resetStatus, setThinking, setNewConversationId } =
-    useConversationStore();
+  const { resetMessages, selectedModel, resetStatus, setNewConversationId, setSelectedAgent } = useConversationStore();
   const sendMessage = useSendMessageHandler(agent, id, undefined, messagesEndRef);
 
   useEffect(() => {
     if (reset) {
-      setSelectedModel(undefined);
       resetStatus();
-      setThinking(false);
       resetMessages();
+      setSelectedAgent(agent);
     }
-  }, [reset, setSelectedModel, resetStatus, setThinking, resetMessages]);
+  }, [reset, resetStatus, resetMessages, setSelectedAgent, agent]);
 
   const messageType = useMemo(() => {
     if (agent !== 'ai_search') {
@@ -51,7 +49,11 @@ export function InputFrame({
   }, []);
 
   return (
-    <div className={cn('mx-auto w-full max-w-3xl bg-background pt-2 xl:max-w-4xl', className)} ref={inputRef}>
+    <div
+      id="chat_input"
+      className={cn('mx-auto w-full max-w-3xl bg-background pt-2 xl:max-w-4xl', className)}
+      ref={inputRef}
+    >
       <MessageInput
         messageType={messageType}
         sendMessage={sendMessage}

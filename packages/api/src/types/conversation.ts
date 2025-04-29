@@ -219,3 +219,10 @@ export interface IDocumentCancelRequest {
   attachment_id: string;
   conversation_id?: string;
 }
+
+export interface ISearchHistoryParams {
+  search_term: string;
+  page: number;
+  per_page: number;
+  sort: string;
+}

@@ -32,7 +32,7 @@ export function ChatWithSource({ id, initData, agent }: IChatWindowProps) {
   });
 
   return (
-    <div className="flex grow overflow-hidden">
+    <div className="flex grow overflow-y-auto overflow-x-hidden">
       {/* Chat window's width is calculated from the spring value */}
       <AnimatedDiv
         className="grow"
