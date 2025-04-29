@@ -15,7 +15,7 @@ export const aieduHomepage = {
       mentor: 'CỐ VẤN',
       teachers: {
         teacher1: {
-          name: 'Sebastian Doe',
+          name: 'Sebastian 1',
           role: 'Code Expert',
         },
         teacher2: {
@@ -63,27 +63,6 @@ export const aieduHomepage = {
     },
     aieduDashboard: {
       title: 'Thống Kê Chỉ Số Toàn Quốc',
-      topCities: {
-        silver: {
-          name: 'Đà Nẵng',
-        },
-        gold: {
-          name: 'TP Hồ Chí Minh',
-        },
-        bronze: {
-          name: 'Hà Nội',
-        },
-      },
-      otherCities: {
-        city3: { name: 'Bình Dương' },
-        city4: { name: 'Đồng Nai' },
-        city5: { name: 'Phan Thiết' },
-        city6: { name: 'Quảng Trị' },
-        city7: { name: 'Đà Lạt' },
-        city8: { name: 'Vũng Tàu' },
-        city9: { name: 'Nha Trang' },
-        city10: { name: 'Phú Yên' },
-      },
       button: {
         text: 'Xem chi tiết',
       },

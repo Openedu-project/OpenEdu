@@ -1,9 +1,13 @@
+import dynamic from 'next/dynamic';
 import { ThemePageRenderer } from '#components';
 import type { PageRender, SectionComponent } from '#types';
 
 const pageRender: PageRender = {
-  introduction: {
+  ranking: {
     theme: undefined,
+    aieduDashboard: dynamic(() =>
+      import('./aiedu-dashboard/dashboard-server').then(mod => mod.AieduRankingDashboardServer)
+    ),
   },
 };
 

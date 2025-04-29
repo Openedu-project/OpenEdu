@@ -1,22 +1,13 @@
 'use client';
-
+import type { AIEduStatistics } from '@oe/api';
 import { Card } from '@oe/ui';
 import { BookmarkPlus, Sparkle, UserPen } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { formatNumber } from '../_utils/functions';
 
-// Sample data structure for statistics
-const sampleData = {
-  registrations: {
-    count: 1000000,
-    label: 'Số lượng đăng ký',
-  },
-  certificates: {
-    count: 5000000,
-    label: 'Số lượng nhận chứng chỉ',
-  },
-};
+const StatisticsBanner = ({ data }: { data?: AIEduStatistics }) => {
+  const t = useTranslations('themePage.aiedu.homepage.aieduDashboard');
 
-const StatisticsBanner = ({ data = sampleData }) => {
   return (
     <Card className="w-full overflow-hidden border-none bg-primary">
       <div className="relative w-full p-8">
@@ -29,18 +20,18 @@ const StatisticsBanner = ({ data = sampleData }) => {
           ))}
         </div>
 
-        <div className="relative flex flex-col items-center justify-center gap-8 py-6 md:flex-row md:gap-16">
+        <div className="relative flex flex-col items-center justify-center gap-8 py-6 md:flex-row md:gap-2 lg:gap-16">
           {/* Left Circle - Registrations */}
-          <div className="flex h-80 w-80 items-center justify-center rounded-full border-[1px] border-background bg-secondary/10">
+          <div className="flex h-80 w-80 items-center justify-center rounded-full border-[1px] border-secondary bg-secondary/10">
             <div className="relative flex h-64 w-64 items-center justify-center rounded-full bg-secondary/20">
               <div className="flex h-48 w-48 flex-col items-center justify-center rounded-full bg-primary text-center">
                 <UserPen className="mb-2 h-8 w-8 text-background" />
-                <div className="font-bold text-3xl text-background">{formatNumber(data.registrations.count)}</div>
-                <div className="mt-1 text-background text-sm">{data.registrations.label}</div>
+                <div className="font-bold text-3xl text-secondary">{formatNumber(data?.register_count || 0)}</div>
+                <div className="mt-1 text-background text-sm">{t('registerCount')}</div>
               </div>
               {/* Dashed circle border */}
               <div
-                className="absolute inset-0 rounded-full border-4 border-background border-dashed"
+                className="absolute inset-0 rounded-full border-4 border-secondary border-dashed"
                 style={{
                   background: 'transparent',
                   animation: 'rotation 120s linear infinite',
@@ -50,15 +41,15 @@ const StatisticsBanner = ({ data = sampleData }) => {
           </div>
 
           {/* Center Star */}
-          <Sparkle className="h-16 w-16 text-background" />
+          <Sparkle className="block h-16 w-16 text-background md:hidden lg:block" />
 
           {/* Right Circle - Certificates */}
           <div className="flex h-80 w-80 items-center justify-center rounded-full border-[1px] border-background bg-secondary/10">
             <div className="relative flex h-64 w-64 items-center justify-center rounded-full bg-secondary/20">
               <div className="flex h-48 w-48 flex-col items-center justify-center rounded-full bg-primary text-center">
                 <BookmarkPlus className="mb-2 h-8 w-8 text-background" />
-                <div className="font-bold text-3xl text-warning">{formatNumber(data.certificates.count)}</div>
-                <div className="mt-1 text-background text-sm">{data.certificates.label}</div>
+                <div className="font-bold text-3xl text-warning">{formatNumber(data?.cert_count || 0)}</div>
+                <div className="mt-1 text-background text-sm">{t('certCount')}</div>
               </div>
               {/* Dashed circle border */}
               <div

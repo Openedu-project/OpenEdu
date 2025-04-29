@@ -9,7 +9,9 @@ const pageRender: PageRender = {
     aieduHero: dynamic(() => import('./aiedu-hero').then(mod => mod.AieduHomepageHero)),
     aieduFeatures: dynamic(() => import('./aiedu-features').then(mod => mod.AieduHomepageFeatures)),
     aieduExpert: dynamic(() => import('./aiedu-expert').then(mod => mod.AieduHomepageExpert)),
-    aieduDashboard: dynamic(() => import('./aiedu-dashboard').then(mod => mod.AieduHomepageDashboard)),
+    aieduDashboard: dynamic(() =>
+      import('./aiedu-dashboard/dashboard-server').then(mod => mod.AieduHomepageDashboardServer)
+    ),
     aieduBlog: dynamic(() => import('./aiedu-blog/aiedu-blog-server').then(mod => mod.AieduHomepageBlogServer)),
     aieduCert: dynamic(() => import('./aiedu-cert').then(mod => mod.AieduHomepageCert)),
     aieduGuide: dynamic(() => import('./aiedu-guide').then(mod => mod.AieduHomepageGuide)),

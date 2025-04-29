@@ -1,12 +1,14 @@
 import { authMessages } from '../auth';
 import { aieduHomepage } from './homepage';
 import { aieduIntroduction } from './introduction';
+import { aieduRanking } from './ranking';
 // Theme step 19 (optional): add translate
 export const aieduMessage = {
   //Theme step 19.1 Syntax ${themeName}: translate
   aiedu: {
     ...aieduHomepage,
     ...aieduIntroduction,
+    ...aieduRanking,
     auth: {
       ...authMessages.auth,
       footer: {

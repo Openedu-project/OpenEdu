@@ -79,73 +79,10 @@ export const createAiEduHomepageConfig = (getThemeTranslation: (path: string[]) 
   aieduDashboard: createSection<'homepage', 'aieduDashboard'>({
     props: {
       title: getThemeTranslation(['homepage', 'aieduDashboard', 'title']),
-      totalStats: {
-        registrations: 10000000,
-        certificates: 5000000,
-      },
       button: {
         text: getThemeTranslation(['homepage', 'aieduDashboard', 'button', 'text']),
         link: '/',
       },
-      topCities: {
-        silver: {
-          name: getThemeTranslation(['homepage', 'aieduDashboard', 'topCities', 'silver', 'name']),
-          registrations: 1000000,
-          certificates: 600000,
-        },
-        gold: {
-          name: getThemeTranslation(['homepage', 'aieduDashboard', 'topCities', 'gold', 'name']),
-          registrations: 1500000,
-          certificates: 800000,
-        },
-        bronze: {
-          name: getThemeTranslation(['homepage', 'aieduDashboard', 'topCities', 'bronze', 'name']),
-          registrations: 800000,
-          certificates: 500000,
-        },
-      },
-      otherCities: [
-        {
-          name: getThemeTranslation(['homepage', 'aieduDashboard', 'otherCities', 'city3', 'name']),
-          registrations: 800000,
-          certificates: 300000,
-        },
-        {
-          name: getThemeTranslation(['homepage', 'aieduDashboard', 'otherCities', 'city4', 'name']),
-          registrations: 800000,
-          certificates: 300000,
-        },
-        {
-          name: getThemeTranslation(['homepage', 'aieduDashboard', 'otherCities', 'city5', 'name']),
-          registrations: 800000,
-          certificates: 300000,
-        },
-        {
-          name: getThemeTranslation(['homepage', 'aieduDashboard', 'otherCities', 'city6', 'name']),
-          registrations: 800000,
-          certificates: 300000,
-        },
-        {
-          name: getThemeTranslation(['homepage', 'aieduDashboard', 'otherCities', 'city7', 'name']),
-          registrations: 800000,
-          certificates: 300000,
-        },
-        {
-          name: getThemeTranslation(['homepage', 'aieduDashboard', 'otherCities', 'city8', 'name']),
-          registrations: 800000,
-          certificates: 300000,
-        },
-        {
-          name: getThemeTranslation(['homepage', 'aieduDashboard', 'otherCities', 'city9', 'name']),
-          registrations: 800000,
-          certificates: 300000,
-        },
-        {
-          name: getThemeTranslation(['homepage', 'aieduDashboard', 'otherCities', 'city10', 'name']),
-          registrations: 800000,
-          certificates: 300000,
-        },
-      ],
     },
     order: 3,
   }),

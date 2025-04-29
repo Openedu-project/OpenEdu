@@ -3,6 +3,7 @@ import { createAieduAuthLayoutConfig } from '../core/auth';
 import { defaultMetadataAtPage } from '../core/metadata';
 import { createAiEduHomepageConfig } from './homepage';
 import { createAiEduIntroductionConfig } from './introduction';
+import { createAiEduRankingConfig } from './ranking';
 
 // Theme step 11 (optionals): create the org config object
 export const createAieduConfig = (
@@ -28,7 +29,7 @@ export const createAieduConfig = (
   },
   ranking: {
     label: t('labels.ranking'),
-    config: undefined,
+    config: createAiEduRankingConfig(aieduT),
     metadata: defaultMetadataAtPage,
   },
   schedule: {

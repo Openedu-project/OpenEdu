@@ -60,9 +60,9 @@ import type {
 } from '../../scholar/type';
 
 import type {
+  AieduDashboardConfigProps,
   AieduHomepageBlogsProps,
   AieduHomepageCertProps,
-  AieduHomepageDashboardProps,
   AieduHomepageExpertProps,
   AieduHomepageFeaturesProps,
   AieduHomepageGalleryProps,
@@ -158,7 +158,7 @@ export interface SectionPropsMap<K extends ThemePageKey> {
   aieduHero: DynamicProps<K, AieduHomepageHeroProps>;
   aieduFeatures: DynamicProps<K, AieduHomepageFeaturesProps>;
   aieduExpert: DynamicProps<K, AieduHomepageExpertProps>;
-  aieduDashboard: DynamicProps<K, AieduHomepageDashboardProps>;
+  aieduDashboard: DynamicProps<K, AieduDashboardConfigProps>;
   aieduBlog: DynamicProps<K, AieduHomepageBlogsProps>;
   aieduCert: DynamicProps<K, AieduHomepageCertProps>;
   aieduGuide: DynamicProps<K, AieduHomepageGuideProps>;

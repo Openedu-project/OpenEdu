@@ -24,7 +24,12 @@ const AieduIntroductionExpert: SectionComponent<'introduction', 'aieduExpert'> =
         </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {props?.teachers?.filter(Boolean)?.map((value, index) => (
-            <ExpertCard key={value?.name ?? index} name={value?.name} role={value?.role} image={value?.image} />
+            <ExpertCard
+              key={`${value?.name}-${index}-teacher`}
+              name={value?.name}
+              role={value?.role}
+              image={value?.image}
+            />
           ))}
         </div>
       </div>
@@ -37,7 +42,12 @@ const AieduIntroductionExpert: SectionComponent<'introduction', 'aieduExpert'> =
         </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {props?.mentors?.filter(Boolean)?.map((value, index) => (
-            <ExpertCard key={value?.name ?? index} name={value?.name} role={value?.role} image={value?.image} />
+            <ExpertCard
+              key={`${value?.name}-${index}-mentor`}
+              name={value?.name}
+              role={value?.role}
+              image={value?.image}
+            />
           ))}
         </div>
       </div>

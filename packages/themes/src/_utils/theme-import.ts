@@ -412,7 +412,9 @@ export const THEMES_RENDER_CLIENT: ThemeRender = {
         import('../aiedu/homepage/aiedu-expert/expert').then(mod => ({ default: mod.AieduHomepageExpert }))
       ),
       aieduDashboard: dynamic(() =>
-        import('../aiedu/homepage/aiedu-dashboard/dashboard').then(mod => ({ default: mod.AieduHomepageDashboard }))
+        import('../aiedu/homepage/aiedu-dashboard/dashboard-client').then(mod => ({
+          default: mod.AieduHomepageDashboardClient,
+        }))
       ),
       aieduBlog: dynamic(() =>
         import('../aiedu/homepage/aiedu-blog/aiedu-blog-client').then(mod => ({ default: mod.AieduHomepageBlogClient }))
@@ -478,6 +480,19 @@ export const THEMES_RENDER_CLIENT: ThemeRender = {
       signUp: dynamic(() =>
         import('../auth/sign-up').then(mod => ({
           default: mod.AuthLayoutSignUp,
+        }))
+      ),
+    },
+    ranking: {
+      theme: dynamic(() =>
+        import('../aiedu/ranking/index').then(mod => ({
+          default: mod.AieduRankingPage,
+        }))
+      ),
+
+      aieduDashboard: dynamic(() =>
+        import('../aiedu/ranking/aiedu-dashboard/dashboard-client').then(mod => ({
+          default: mod.AieduRankingDashboardClient,
         }))
       ),
     },
