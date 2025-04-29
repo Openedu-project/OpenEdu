@@ -6,7 +6,7 @@ export const cleanUrl = (url: string): string => url?.replaceAll(/^["\\]+|["\\]+
 /**
  * Check whether the lesson has begun or not
  */
-export const isLessonStarted = (course: ICourseOutline, sectionByUid: ISectionByUid, entityId: string): boolean => {
+export const isLessonStarted = (course: ICourseOutline, entityId: string, sectionByUid?: ISectionByUid): boolean => {
   // Early return if the user has not registered the course
   if (!course?.is_enrolled) {
     return false;
@@ -16,11 +16,11 @@ export const isLessonStarted = (course: ICourseOutline, sectionByUid: ISectionBy
   const sortedSections = [...courseOutline].sort((a, b) => a.order - b.order);
 
   const targetSection = sortedSections.find(section => {
-    const sectionProgress = sectionByUid[section.uid];
+    const sectionProgress = sectionByUid?.[section.uid];
     const lessonByUid = sectionProgress?.lesson_by_uid;
     const lessonsOutline = section.lessons;
 
-    if (!(lessonByUid && lessonsOutline)) {
+    if (!lessonsOutline) {
       return false;
     }
 
@@ -44,7 +44,10 @@ export const isLessonStarted = (course: ICourseOutline, sectionByUid: ISectionBy
 /**
  * Check to see if the lesson is completed or not
  */
-export const isLessonCompleted = (sectionByUid: ISectionByUid, entityId: string): boolean => {
+export const isLessonCompleted = (entityId: string, sectionByUid?: ISectionByUid): boolean => {
+  if (!sectionByUid) {
+    return false;
+  }
   return Object.values(sectionByUid).some(section => {
     const lessonProgress = section?.lesson_by_uid?.[entityId];
     return lessonProgress?.complete_at;
@@ -54,8 +57,11 @@ export const isLessonCompleted = (sectionByUid: ISectionByUid, entityId: string)
 /**
  * Check to see if the section is completed or not
  */
-export const isSectionCompleted = (sections: ISectionByUid, entityId: string): boolean => {
-  const section = sections?.[entityId];
+export const isSectionCompleted = (entityId: string, sectionByUid?: ISectionByUid): boolean => {
+  if (!sectionByUid) {
+    return false;
+  }
+  const section = sectionByUid?.[entityId];
   return !!section && section.completed_lesson === section.total_lesson;
 };
 
