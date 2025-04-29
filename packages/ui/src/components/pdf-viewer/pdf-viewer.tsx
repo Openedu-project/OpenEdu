@@ -1,5 +1,5 @@
 import type { PDFDocumentProxy } from 'pdfjs-dist';
-import { type ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { type CSSProperties, type ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import { cn } from '#utils/cn';
 import { useResizeObserver } from './_hooks';
@@ -28,6 +28,7 @@ export interface IPdfViewerProps {
   className?: string;
   showPerPage?: boolean;
   hasToolbar?: boolean;
+  toolbarStyle?: CSSProperties;
   onPageChange?: (page: number) => void;
   onDocumentHeightChange?: (height: number) => void;
   onLoadSuccess?: (pdf: PDFDocumentProxy) => void;
@@ -42,6 +43,7 @@ export function PdfViewer({
   onPageChange,
   onDocumentHeightChange,
   onLoadSuccess,
+  toolbarStyle,
 }: IPdfViewerProps) {
   const [file, setFile] = useState<PDFFile>(files);
   const [numPages, setNumPages] = useState<number>(0);
@@ -107,7 +109,10 @@ export function PdfViewer({
   return (
     <div className={cn('flex max-w-full flex-col items-center gap-4', className)}>
       {hasToolbar && (
-        <div className="sticky top-[calc(var(--header-height))] left-0 z-10 w-full md:top-[calc(var(--header-with-sub-item-height))]">
+        <div
+          className="sticky top-[calc(var(--header-height))] left-0 z-10 w-full md:top-[calc(var(--header-with-sub-item-height))]"
+          style={toolbarStyle}
+        >
           <PdfToolbar
             page={page}
             numPages={numPages}

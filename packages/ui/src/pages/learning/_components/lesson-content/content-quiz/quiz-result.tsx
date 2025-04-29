@@ -11,7 +11,7 @@ import { useRouter } from '#common/navigation';
 import { Button } from '#shadcn/button';
 import { createCourseUrl } from '#utils/course-url';
 import { useCurrentLesson, useProgress } from '../../../_context';
-import { getLessonGlobalIndex, getTotalLessons, getUidByLessonIndex } from '../../../_utils/utils';
+import { getLessonGlobalIndex, getTotalLessons, getUidByLessonIndex } from '../../../_utils';
 import { CompleteCourseNotiModal } from '../../course-noti-modal';
 import { QuizAnsResult } from './quiz-ans-result';
 import { QuizResultGrid } from './quiz-detail-score';
@@ -43,22 +43,22 @@ const QuizResult = ({
   const { answers, passed } = result;
 
   const {
-    state: { sectionsProgressData },
+    state: { mergedProgress },
     getLessonStatus,
   } = useProgress();
   const { currentLesson } = useCurrentLesson();
 
   const lessonUid = currentLesson || (lesson as string);
 
-  const currentLessonIndex = getLessonGlobalIndex(sectionsProgressData, lessonUid);
-  const totalItems = getTotalLessons(sectionsProgressData);
+  const currentLessonIndex = getLessonGlobalIndex(mergedProgress, lessonUid);
+  const totalItems = getTotalLessons(mergedProgress);
   const checkNextLesson = getLessonStatus(currentLessonIndex + 1);
 
   const onFinishQuiz = () => {
     if (triggerFunction) {
       triggerFunction(result);
     } else if (currentLessonIndex < totalItems && result?.passed && checkNextLesson) {
-      const lessonInfo = getUidByLessonIndex(sectionsProgressData, currentLessonIndex + 1);
+      const lessonInfo = getUidByLessonIndex(mergedProgress, currentLessonIndex + 1);
 
       router.push(
         createCourseUrl('learning', {

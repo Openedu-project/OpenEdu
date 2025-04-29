@@ -1,9 +1,8 @@
 'use client';
 import type { ICourseOutline } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
 import type { ILesson } from '@oe/api';
 import { ArrowRight2 } from '@oe/assets';
-import { PLATFORM_ROUTES } from '@oe/core';
+import { PLATFORM_ROUTES, buildUrl } from '@oe/core';
 import type { TFunction } from '@oe/i18n';
 import { Lock } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -25,6 +24,7 @@ interface IOutlineLessonProps {
   ref?: Ref<HTMLLIElement> | undefined;
   type?: 'learning' | 'detail';
   courseData?: ICourseOutline;
+  setIsNavigating?: (isLoading: boolean) => void;
 }
 
 const LESSON_COUNT_TYPES = [
@@ -65,7 +65,7 @@ const LessonCountDisplay = ({
 
 const getButtonStyles = (isActive: boolean, isAvailable: boolean) =>
   cn(
-    'h-fit w-full items-center gap-1 whitespace-normal rounded-2 border-[0.4px] p-2 shadow-shadow-6',
+    'relative h-fit w-full items-center gap-1 whitespace-normal rounded-2 border-[0.4px] p-2 shadow-shadow-6',
     'hover:border-primary focus:border',
     isActive ? 'border-primary' : 'border-foreground/10',
     !isAvailable && 'pointer-events-none'
@@ -82,6 +82,7 @@ export const OutlineLesson = ({
   ref,
   type = 'detail',
   courseData,
+  setIsNavigating,
 }: IOutlineLessonProps) => {
   const tCourse = useTranslations('courseOutline');
   const router = useRouter();
@@ -90,7 +91,10 @@ export const OutlineLesson = ({
   const [openPreviewModal, setOpenPreviewModal] = useState<boolean>(false);
 
   const handleLessonClick = () => {
-    const learningPageUrl = createAPIUrl({
+    if (type === 'learning') {
+      setIsNavigating?.(true);
+    }
+    const learningPageUrl = buildUrl({
       endpoint: PLATFORM_ROUTES.courseLearning,
       params: { slug: courseSlug, section: sectionUid, lesson: uid },
     });

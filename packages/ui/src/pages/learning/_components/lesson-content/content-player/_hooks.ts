@@ -35,12 +35,12 @@ export const usePlayerProgress = (
   const [showNextLessonAlert, setShowNextLessonAlert] = useState(false);
 
   const {
-    state: { sectionsProgressData },
+    state: { mergedProgress },
   } = useProgress();
 
   const { getLessonStatus, setIsNavigatingLesson } = useProgress();
-  const currentLessonIndex = getLessonGlobalIndex(sectionsProgressData, lesson as string);
-  const totalItems = getTotalLessons(sectionsProgressData);
+  const currentLessonIndex = getLessonGlobalIndex(mergedProgress, lesson as string);
+  const totalItems = getTotalLessons(mergedProgress);
 
   const checkNextLesson = getLessonStatus(currentLessonIndex + 1);
 
@@ -48,7 +48,7 @@ export const usePlayerProgress = (
     let newIndex = currentLessonIndex;
     newIndex = currentLessonIndex < totalItems ? currentLessonIndex + 1 : 0;
 
-    const lessonInfo = getUidByLessonIndex(sectionsProgressData, newIndex);
+    const lessonInfo = getUidByLessonIndex(mergedProgress, newIndex);
 
     const learningPageUrl =
       lessonInfo &&
@@ -59,7 +59,7 @@ export const usePlayerProgress = (
       });
 
     return learningPageUrl ? router.push(learningPageUrl) : null;
-  }, [currentLessonIndex, totalItems, sectionsProgressData, slug, router]);
+  }, [currentLessonIndex, totalItems, mergedProgress, slug, router]);
 
   const checkProgress = useCallback(
     (currentTime: number, duration: number) => {
@@ -89,7 +89,7 @@ export const usePlayerProgress = (
           roundedPercentage === VIDEO_CONSTANTS.MAX_PERCENTAGE &&
           Boolean(options?.quizzes) === Boolean(options?.quizResult)
         ) {
-          setIsNavigatingLesson(true);
+          // setIsNavigatingLesson(true);
           setShowNextLessonAlert(true);
         }
 
@@ -109,7 +109,7 @@ export const usePlayerProgress = (
     currentLessonRef.current = lesson;
 
     const nextLessonInfo = getUidByLessonIndex(
-      sectionsProgressData,
+      mergedProgress,
       currentLessonIndex < totalItems ? currentLessonIndex + 1 : 0
     );
     const isOnTargetLesson = lesson === nextLessonInfo?.lessonUid;
@@ -117,7 +117,7 @@ export const usePlayerProgress = (
     if (isOnTargetLesson) {
       setShowNextLessonAlert(false);
     }
-  }, [lesson, sectionsProgressData, currentLessonIndex, totalItems]);
+  }, [lesson, mergedProgress, currentLessonIndex, totalItems]);
 
   return {
     lastCompletedPercentage,

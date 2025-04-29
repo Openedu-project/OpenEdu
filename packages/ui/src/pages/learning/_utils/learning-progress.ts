@@ -1,6 +1,7 @@
 import type { TLessonContent } from '@oe/api';
 import type { ISectionLearningProgress } from '@oe/api';
 import type { IQuizSubmissionResponse } from '@oe/api';
+import type { IMergedLearningProgress } from '../_type';
 
 const CONSTANTS = {
   MIN_WATCHED_PERCENTAGE: 0.8,
@@ -55,7 +56,7 @@ export const checkCompleteAt = ({
 };
 
 interface ILessonContentComplete {
-  outline: ISectionLearningProgress[];
+  outline: ISectionLearningProgress[] | IMergedLearningProgress;
   section_uid: string;
   lesson_uid: string;
   lesson_content_uid?: string;
@@ -67,24 +68,47 @@ export const isLessonContentComplete = ({
   section_uid,
   lesson_uid,
   lesson_content_uid,
-  pause_at,
 }: ILessonContentComplete): boolean => {
-  const section = outline?.find(s => s.uid === section_uid);
-  if (!section?.lessons) {
+  if ('section_by_uid' in outline) {
+    const mergedProgress = outline as IMergedLearningProgress;
+    const section = mergedProgress.section_by_uid[section_uid];
+    if (!section) {
+      return false;
+    }
+
+    const lesson = section.lesson_by_uid[lesson_uid];
+    if (!lesson?.lesson_content_by_uid) {
+      return false;
+    }
+
+    if (!lesson_content_uid) {
+      return false;
+    }
+
+    const content = lesson.lesson_content_by_uid[lesson_content_uid];
+
+    if (!content) {
+      return false;
+    }
+
+    return content.complete_at > 0;
+  }
+
+  const sectionsArray = outline as ISectionLearningProgress[];
+  const section = sectionsArray.find(s => s.uid === section_uid);
+  if (!section) {
     return false;
   }
 
-  const lesson = section.lessons?.find(l => l.uid === lesson_uid);
+  const lesson = section.lessons.find(l => l.uid === lesson_uid);
   if (!lesson) {
     return false;
   }
 
-  const lessonContent = lesson.lesson_contents?.find(lc => lc.lesson_content_uid === lesson_content_uid);
+  const content = lesson.lesson_contents.find(c => c.lesson_content_uid === lesson_content_uid);
+  if (!content) {
+    return false;
+  }
 
-  const isCompleted = lessonContent
-    ? lessonContent.complete_at !== 0 ||
-      (lessonContent.content_type === 'video' && pause_at !== undefined && pause_at < lessonContent.pause_at)
-    : false;
-
-  return isCompleted;
+  return content.complete_at > 0;
 };

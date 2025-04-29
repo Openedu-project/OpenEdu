@@ -8,7 +8,7 @@ import { usePathname } from '#common/navigation';
 import { createCourseUrl } from '#utils/course-url';
 import { useCurrentLesson } from '../_context';
 import { useProgress } from '../_context/progress-context';
-import { getUidByLessonIndex } from '../_utils/utils';
+import { getUidByLessonIndex } from '../_utils';
 
 interface AuthCheckProps {
   course: ICourseOutline;
@@ -25,7 +25,7 @@ export function AuthCheck({ course, me }: AuthCheckProps) {
   }, [pathname, searchParams]);
 
   const {
-    state: { sectionsProgressData },
+    state: { mergedProgress },
   } = useProgress();
   const { currentLesson } = useCurrentLesson();
 
@@ -38,26 +38,15 @@ export function AuthCheck({ course, me }: AuthCheckProps) {
   }, [course, me, nextPath, router]);
 
   useEffect(() => {
-    if (sectionsProgressData?.length === 0 || !course?.is_enrolled || !currentLesson) {
+    if (!(mergedProgress && course?.is_enrolled && currentLesson)) {
       return;
     }
 
-    let lessonAvailable = false;
-
-    for (const section of sectionsProgressData) {
-      if (!section.lessons) {
-        continue;
-      }
-
-      const lesson = section.lessons.find(l => l.uid === currentLesson);
-      if (lesson) {
-        lessonAvailable = lesson.available ?? false;
-        break;
-      }
-    }
+    const lesson = mergedProgress.lesson_by_uid[currentLesson];
+    const lessonAvailable = lesson?.available ?? false;
 
     if (!lessonAvailable) {
-      const firstLesson = getUidByLessonIndex(sectionsProgressData, 0);
+      const firstLesson = getUidByLessonIndex(mergedProgress, 0);
       if (firstLesson) {
         router.push(
           createCourseUrl('learning', {
@@ -68,7 +57,7 @@ export function AuthCheck({ course, me }: AuthCheckProps) {
         );
       }
     }
-  }, [sectionsProgressData, course?.is_enrolled, currentLesson, router, course?.slug]);
+  }, [mergedProgress, course?.is_enrolled, currentLesson, router, course?.slug]);
 
   return null;
 }

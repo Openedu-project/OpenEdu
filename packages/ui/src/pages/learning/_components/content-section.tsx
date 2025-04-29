@@ -3,9 +3,10 @@
 import type { ILesson } from '@oe/api';
 import { ChevronUp } from 'lucide-react';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { Spinner } from '#components/spinner';
 import { Button } from '#shadcn/button';
 import { cn } from '#utils/cn';
-import { useCourse, useCurrentLesson } from '../_context';
+import { useCourse, useCurrentLesson, useProgress } from '../_context';
 import { sortByOrder } from '../_utils/utils';
 import { LessonContentBlocks } from './lesson-content/lesson-content-blocks';
 import { LessonMetadata } from './lesson-metadata';
@@ -20,6 +21,10 @@ interface IContentSectionProps {
 const ContentSection = ({ className, lessonData, showButtonDrawer, onOpenDrawer }: IContentSectionProps) => {
   const { course } = useCourse();
   const { currentSection, currentLesson } = useCurrentLesson();
+  const {
+    state: { isNavigating },
+  } = useProgress();
+
   const contentRef = useRef<HTMLDivElement>(null);
   const lessonMetadataRef = useRef<HTMLDivElement>(null);
   const [reachedEnd, setReachedEnd] = useState(false);
@@ -70,12 +75,16 @@ const ContentSection = ({ className, lessonData, showButtonDrawer, onOpenDrawer 
       className={cn('relative flex h-full min-h-[calc(100dvh-var(--header-with-sub-item-height))] flex-col', className)}
     >
       <div ref={contentRef} className="flex flex-grow flex-col md:px-4">
-        <LessonContentBlocks
-          contents={sortedContents}
-          section_uid={currentSection}
-          lesson_uid={currentLesson}
-          lessonMetadataHeight={lessonMetadataHeight}
-        />
+        {isNavigating ? (
+          <Spinner />
+        ) : (
+          <LessonContentBlocks
+            contents={sortedContents}
+            section_uid={currentSection}
+            lesson_uid={currentLesson}
+            lessonMetadataHeight={lessonMetadataHeight}
+          />
+        )}
       </div>
 
       <div

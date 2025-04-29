@@ -12,6 +12,7 @@ export interface ContentRendererProps {
   isOnlyContent: boolean;
   lessonMetadataHeight?: number;
   onCompleteContent?: (props?: Partial<ICompleteContentProps>) => void;
+  headerHeight?: number;
 }
 
 export interface ContentRenderer {

@@ -14,6 +14,13 @@ export interface IContentProgress {
   start_at: number;
   content_type: string;
   duration: number;
+  text_percent: number;
+  video_percent: number;
+  pdf_current_page: number;
+}
+
+export interface ILessonContentByUid {
+  [key: string]: IContentProgress;
 }
 
 export interface ILessonProgress {
@@ -22,7 +29,11 @@ export interface ILessonProgress {
   completed_lesson_content: number;
   complete_at: number;
   completed_percent: number;
-  lesson_contents: IContentProgress[];
+  lesson_content_by_uid: ILessonContentByUid;
+}
+
+export interface ILessonByUid {
+  [key: string]: ILessonProgress;
 }
 
 export interface ISectionProgress {
@@ -30,7 +41,11 @@ export interface ISectionProgress {
   total_lesson: number;
   completed_lesson: number;
   complete_at: number;
-  lessons: ILessonProgress[];
+  lesson_by_uid: ILessonByUid;
+}
+
+export interface ISectionByUid {
+  [key: string]: ISectionProgress;
 }
 
 export interface ILearningProgress {
@@ -40,7 +55,7 @@ export interface ILearningProgress {
   total_section: number;
   completed_section: number;
   complete_at: number;
-  sections: ISectionProgress[];
+  section_by_uid: ISectionByUid;
 }
 
 export interface ILearningProgressPayload {
@@ -66,16 +81,19 @@ export interface ILatestLessonProgressPayload {
 
 export interface ISectionLearningProgress
   extends Omit<ISection, 'lessons'>,
-    Omit<ISectionProgress, 'section_uid' | 'lessons'> {
+    Omit<ISectionProgress, 'section_uid' | 'lesson_by_uid'> {
   lessons: ILessonLearningProgress[];
 }
 
 export interface ILessonLearningProgress
   extends Omit<ILesson, 'contents'>,
-    Omit<ILessonProgress, 'lesson_uid' | 'lesson_contents'> {
+    Omit<ILessonProgress, 'lesson_uid' | 'lesson_content_by_uid'> {
   contents?: IContentLearningProgress[];
   lesson_contents: IContentProgress[];
+  lesson_content_by_uid?: ILessonContentByUid;
   available?: boolean;
+  section_index?: number;
+  lesson_index?: number;
 }
 
 export interface IContentLearningProgress extends Omit<ILessonContent, 'uid'>, IContentProgress {

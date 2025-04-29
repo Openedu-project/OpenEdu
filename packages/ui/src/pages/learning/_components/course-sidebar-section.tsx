@@ -29,6 +29,8 @@ const LessonItem = memo(
   }) => {
     const ref = useRef<HTMLLIElement>(null);
 
+    const { setIsNavigatingLesson } = useProgress();
+
     const completedLesson = lesson?.completed_lesson_content ?? 0;
     const totalLesson = lesson?.total_lesson_content ?? 0;
     const isCompleted = totalLesson >= 1 ? completedLesson / totalLesson : 0;
@@ -52,6 +54,7 @@ const LessonItem = memo(
         lesson={lesson}
         type="learning"
         ref={isActive ? ref : null}
+        setIsNavigating={setIsNavigatingLesson}
       />
     );
   }
@@ -111,17 +114,21 @@ SectionItem.displayName = 'SectionItem';
 
 const CourseOutline = (props: ICourseOutlineProps) => {
   const {
-    state: { sectionsProgressData },
+    state: { mergedProgress },
   } = useProgress();
   const { currentSection, currentLesson } = useCurrentLesson();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const sortedSections = useMemo(() => {
-    return [...sectionsProgressData].sort(sortByOrder);
-  }, [sectionsProgressData]);
+    if (!mergedProgress) {
+      return [];
+    }
+
+    return [...mergedProgress.sections].sort(sortByOrder);
+  }, [mergedProgress]);
 
   useEffect(() => {
-    if (sectionsProgressData?.length === 0) {
+    if (!mergedProgress || sortedSections.length === 0) {
       return;
     }
 
@@ -141,9 +148,9 @@ const CourseOutline = (props: ICourseOutlineProps) => {
 
     const timeoutId = setTimeout(scrollToActiveLesson, 100);
     return () => clearTimeout(timeoutId);
-  }, [sectionsProgressData, currentLesson, currentSection]);
+  }, [mergedProgress, sortedSections.length, currentLesson, currentSection]);
 
-  if (!sectionsProgressData || sectionsProgressData?.length === 0) {
+  if (!mergedProgress || sortedSections.length === 0) {
     return null;
   }
 

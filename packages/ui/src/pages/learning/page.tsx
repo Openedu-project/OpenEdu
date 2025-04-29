@@ -3,7 +3,7 @@ import { getCertLayerByCourseIdService } from '@oe/api';
 import { getCourseOutlineService } from '@oe/api';
 import { getLearningProgressesService, latestLessonProgressService } from '@oe/api';
 import { getLessonLearnService } from '@oe/api';
-import type { ILatestLessonProgressPayload, ISectionLearningProgress } from '@oe/api';
+import type { ILatestLessonProgressPayload } from '@oe/api';
 import { Suspense } from 'react';
 import { NoDataAvailable } from '#components/no-data-available';
 import { Spinner } from '#components/spinner';
@@ -69,15 +69,13 @@ export async function LearningPage({
   }
 
   const learningData =
-    course && dataLearningProgress
-      ? mergeSectionWithProgress(course.outline, dataLearningProgress.sections)
-      : undefined;
+    course && dataLearningProgress ? mergeSectionWithProgress(course.outline, dataLearningProgress) : undefined;
 
   return (
     course && (
       <LearningProviders
         course={course}
-        initialProgressData={learningData as ISectionLearningProgress[]}
+        initialProgressData={learningData}
         initialSection={section}
         initialLesson={lesson}
       >

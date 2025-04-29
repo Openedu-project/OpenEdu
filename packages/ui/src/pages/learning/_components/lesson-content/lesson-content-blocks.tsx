@@ -8,6 +8,7 @@ import { useActivedTrigger, useLearnerFormTriggerStore } from '#components/cours
 import { NoDataAvailable } from '#components/no-data-available';
 import { cn } from '#utils/cn';
 import { useCourse, useProgress, useQuiz } from '../../_context';
+import { useHeaderHeight } from '../../_hooks';
 import type { ContentRendererProps, LessonContentBlockProps } from './_types/types';
 import { CONTENT_RENDERERS } from './content-render';
 
@@ -54,6 +55,8 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps & { lessonMetadataHe
     const { activedTrigger, checkActivedTrigger } = useActivedTrigger();
     const { setFormData, currentFormId } = useLearnerFormTriggerStore();
     const { dataForm } = useGetForm({ id: currentFormId ?? '' });
+
+    const headerHeight = useHeaderHeight('header');
 
     // Set form data when it changes
     useEffect(() => {
@@ -105,7 +108,7 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps & { lessonMetadataHe
 
     // Check form conditions on state change
     useEffect(() => {
-      if (!state?.sectionsProgressData) {
+      if (!state?.mergedProgress) {
         return;
       }
 
@@ -167,6 +170,7 @@ const LessonContentBlocks: React.FC<LessonContentBlockProps & { lessonMetadataHe
                 onCompleteContent={props =>
                   onCompleteContent(item?.uid ?? '', item?.type, props?.duration, props?.pause_at, props?.quiz_id)
                 }
+                headerHeight={headerHeight}
               />
               <hr />
             </div>
