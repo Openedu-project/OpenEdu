@@ -64,12 +64,12 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
 
   const handleSearch = async (title?: string, isNextPage?: boolean) => {
     const pagination = history?.pagination;
-
     if (isLoading || (title === undefined && pagination?.page === pagination?.total_pages)) {
       return;
     }
 
     if (title !== undefined) {
+      setHistoryData([]);
       const apikey = createAPIUrl({
         endpoint: API_ENDPOINT.COM_CHANNELS,
         queryParams: { ...HISTORY_DEFAULT_PARAMS, search_term: title },
@@ -112,10 +112,9 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
     }
   };
 
-  const debouncedSetSearch = useDebouncedCallback(
-    () => searchRef.current && handleSearch?.(searchRef.current.value ?? ''),
-    300
-  );
+  const debouncedSetSearch = useDebouncedCallback(() => {
+    searchRef.current && handleSearch?.(searchRef.current.value ?? '');
+  }, 300);
 
   // Create a debounced endReached handler
   const handleEndReached = useDebouncedCallback(

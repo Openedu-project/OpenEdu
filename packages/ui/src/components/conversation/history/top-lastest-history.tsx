@@ -10,7 +10,6 @@ import { formatDate, getHistoryByDate, getHistoryDates } from '../utils';
 import { AIHistoryItem } from './history-item';
 
 export const TopLastestHistory = memo(({ onClickHistory }: { onClickHistory?: () => void }) => {
-  console.log(onClickHistory, 'onclick');
   const tAI = useTranslations('aiAssistant');
   const tGeneral = useTranslations('general');
   const [historyData, setHistoryData] = useState<IChatHistory[]>([]);
