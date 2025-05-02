@@ -1,25 +1,22 @@
-import { cn } from "@oe/ui";
+import { cn } from '@oe/ui';
 
-import { useTranslations } from "next-intl";
-import type { SectionComponent } from "../../../_types/theme-page";
+import { useTranslations } from 'next-intl';
+import type { SectionComponent } from '../../../_types/theme-page';
 
-import { Sparkle } from "lucide-react";
-import { ExpertCard, type ExpertProps } from "../../_components/expert-card";
-import { AieduLayoutSection } from "../../_components/layout-section";
-import type { TitleProps } from "../../_components/title";
+import { Sparkle } from 'lucide-react';
+import { ExpertCard, type ExpertProps } from '../../_components/expert-card';
+import { AieduLayoutSection } from '../../_components/layout-section';
+import type { TitleProps } from '../../_components/title';
 export interface AieduHomepageExpertProps extends TitleProps {
   teachers?: ExpertProps[];
   mentors?: ExpertProps[];
 }
 
-const AieduHomepageExpert: SectionComponent<"homepage", "aieduExpert"> = ({
-  props,
-  className,
-}) => {
-  const t = useTranslations("themePage.aiedu.homepage.aieduExpert");
+const AieduHomepageExpert: SectionComponent<'homepage', 'aieduExpert'> = ({ props, className }) => {
+  const t = useTranslations('themePage.aiedu.homepage.aieduExpert');
 
   return (
-    <AieduLayoutSection className={cn("space-y-6", className)}>
+    <AieduLayoutSection className={cn('space-y-6', className)}>
       {/* <Title title={t("title")} className="text-center" /> */}
 
       <div className="space-y-2">
@@ -29,7 +26,7 @@ const AieduHomepageExpert: SectionComponent<"homepage", "aieduExpert"> = ({
             <Sparkle className="text-primary" />
           </div>
 
-          <h3 className="mb-0 text-center text-primary">{t("teacher")}</h3>
+          <h3 className="mb-0 text-center text-primary">{t('teacher')}</h3>
 
           <div className="flex items-center">
             <Sparkle className="translate-x-[1px] text-primary" />
@@ -55,7 +52,7 @@ const AieduHomepageExpert: SectionComponent<"homepage", "aieduExpert"> = ({
             <Sparkle className="text-primary" />
           </div>
 
-          <h3 className="mb-0 text-center text-primary">{t("mentor")}</h3>
+          <h3 className="mb-0 text-center text-primary">{t('mentor')}</h3>
 
           <div className="flex items-center">
             <Sparkle className="translate-x-[1px] text-primary" />
