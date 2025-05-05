@@ -62,11 +62,6 @@ const AieduIntroductionFeatures: SectionComponent<
             { length: props?.subCourse?.benefits?.length ?? 0 },
             (_, i) => t(`subCourse.benefits.benefit${i + 1}`)
           )}
-          image={props?.subCourse?.image}
-          button={{
-            text: t("subCourse.button.text"),
-            link: props?.subCourse?.button?.link,
-          }}
         />
       </div>
     </AieduLayoutSection>
