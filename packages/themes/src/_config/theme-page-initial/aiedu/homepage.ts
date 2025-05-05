@@ -60,19 +60,31 @@ export const createAiEduHomepageConfig = (getThemeTranslation: (path: string[]) 
   }),
   aieduFeatures: createSection<'homepage', 'aieduFeatures'>({
     props: {
-      title: getThemeTranslation(['homepage', 'aieduFeatures', 'title']),
-      images: { mime: 'image/png' },
-      button: {
-        text: getThemeTranslation(['homepage', 'aieduFeatures', 'button', 'text']),
-        link: '/',
+      mainCourse: {
+        title: getThemeTranslation(['homepage', 'aieduFeatures', 'mainCourse', 'title']),
+        button: {
+          text: getThemeTranslation(['homepage', 'aieduFeatures', 'mainCourse', 'button', 'text']),
+          link: '/',
+        },
+        images: { mime: 'image/png' },
+        benefits: new Array(4).map(index =>
+          getThemeTranslation(['homepage', 'aieduFeatures', 'mainCourse', 'benefits', `benefit${index + 1}`])
+        ),
       },
-      partners: new Array(6).fill({ mime: 'image/png' }),
-      modules: new Array(5).map(index =>
-        getThemeTranslation(['homepage', 'aieduFeatures', 'modules', `module${index + 1}`])
-      ),
-      benefits: new Array(4).map(index =>
-        getThemeTranslation(['homepage', 'aieduFeatures', 'benefit', `benefit${index + 1}`])
-      ),
+      subCourse: {
+        title: getThemeTranslation(['homepage', 'aieduFeatures', 'subCourse', 'title']),
+        button: {
+          text: getThemeTranslation(['homepage', 'aieduFeatures', 'subCourse', 'button', 'text']),
+          link: '/',
+        },
+        images: { mime: 'image/png' },
+        benefits: [
+          getThemeTranslation(['homepage', 'aieduFeatures', 'subCourse', 'benefits', 'benefit1']),
+          getThemeTranslation(['homepage', 'aieduFeatures', 'subCourse', 'benefits', 'benefit2']),
+          getThemeTranslation(['homepage', 'aieduFeatures', 'subCourse', 'benefits', 'benefit3']),
+          getThemeTranslation(['homepage', 'aieduFeatures', 'subCourse', 'benefits', 'benefit4']),
+        ],
+      },
     },
     order: 2,
   }),

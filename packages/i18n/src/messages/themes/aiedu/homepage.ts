@@ -43,22 +43,29 @@ export const aieduHomepage = {
       },
     },
     aieduFeatures: {
-      title: 'Khoá học AI Gen dành cho mọi người',
-      button: {
-        text: 'Bắt đầu học ngay',
+      mainCourse: {
+        title: 'Khoá học AI Gen dành cho mọi người',
+        button: {
+          text: 'Bắt đầu học ngay',
+        },
+        benefits: {
+          benefit1: 'Hiểu bản chất AI và ứng dụng thực tiễn',
+          benefit2: 'Thành thạo công cụ AI hỗ trợ học và làm',
+          benefit3: 'Biết cách giao tiếp với AI hiệu quả',
+          benefit4: 'Có chứng chỉ xác nhận năng lực ứng dụng AI',
+        },
       },
-      benefits: {
-        benefit1: 'Hiểu bản chất AI và ứng dụng thực tiễn',
-        benefit2: 'Thành thạo công cụ AI hỗ trợ học và làm',
-        benefit3: 'Biết cách giao tiếp với AI hiệu quả',
-        benefit4: 'Có chứng chỉ xác nhận năng lực ứng dụng AI',
-      },
-      modules: {
-        module1: 'Về AI: Tầm Quan Trọng & Cơ Hội Nghề Nghiệp',
-        module2: 'Giao Tiếp Với AI – Kỹ Năng Prompting Cơ Bản',
-        module3: 'Ứng Dụng AI Trong Học Tập',
-        module4: 'Ứng Dụng AI Trong Công Việc',
-        module5: 'AI Trong Lập Trình Ứng Dụng (SV CNTT)',
+      subCourse: {
+        title: 'Khoá học AI Gen dành cho mọi người',
+        button: {
+          text: 'Bắt đầu học ngay',
+        },
+        benefits: {
+          benefit1: 'Hiểu bản chất AI và ứng dụng thực tiễn',
+          benefit2: 'Thành thạo công cụ AI hỗ trợ học và làm',
+          benefit3: 'Biết cách giao tiếp với AI hiệu quả',
+          benefit4: 'Có chứng chỉ xác nhận năng lực ứng dụng AI',
+        },
       },
     },
     aieduDashboard: {

@@ -6,7 +6,7 @@ const CircularPercentageChart = ({
   size = 80,
   strokeWidth = 10,
   primaryColor = '#1876D2',
-  secondaryColor = '#EFF7FE',
+  secondaryColor = '#B0E9FF',
 }) => {
   const [progress, setProgress] = useState(0);
 

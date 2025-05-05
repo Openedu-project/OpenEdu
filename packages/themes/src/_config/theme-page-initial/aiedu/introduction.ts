@@ -111,19 +111,31 @@ export const createAiEduIntroductionConfig = (getThemeTranslation: (path: string
   }),
   aieduFeatures: createSection<'introduction', 'aieduFeatures'>({
     props: {
-      title: getThemeTranslation(['introduction', 'aieduFeatures', 'title']),
-      images: { mime: 'image/png' },
-      button: {
-        text: getThemeTranslation(['introduction', 'aieduFeatures', 'button', 'text']),
-        link: '/',
+      mainCourse: {
+        title: getThemeTranslation(['introduction', 'aieduFeatures', 'mainCourse', 'title']),
+        button: {
+          text: getThemeTranslation(['introduction', 'aieduFeatures', 'mainCourse', 'button', 'text']),
+          link: '/',
+        },
+        images: { mime: 'image/png' },
+        benefits: new Array(4).map(index =>
+          getThemeTranslation(['introduction', 'aieduFeatures', 'mainCourse', 'benefits', `benefit${index + 1}`])
+        ),
       },
-      partners: new Array(6).fill({ mime: 'image/png' }),
-      modules: new Array(5).map(index =>
-        getThemeTranslation(['introduction', 'aieduFeatures', 'modules', `module${index + 1}`])
-      ),
-      benefits: new Array(4).map(index =>
-        getThemeTranslation(['introduction', 'aieduFeatures', 'benefit', `benefit${index + 1}`])
-      ),
+      subCourse: {
+        title: getThemeTranslation(['introduction', 'aieduFeatures', 'subCourse', 'title']),
+        button: {
+          text: getThemeTranslation(['introduction', 'aieduFeatures', 'subCourse', 'button', 'text']),
+          link: '/',
+        },
+        images: { mime: 'image/png' },
+        benefits: [
+          getThemeTranslation(['introduction', 'aieduFeatures', 'subCourse', 'benefits', 'benefit1']),
+          getThemeTranslation(['introduction', 'aieduFeatures', 'subCourse', 'benefits', 'benefit2']),
+          getThemeTranslation(['introduction', 'aieduFeatures', 'subCourse', 'benefits', 'benefit3']),
+          getThemeTranslation(['introduction', 'aieduFeatures', 'subCourse', 'benefits', 'benefit4']),
+        ],
+      },
     },
     order: 5,
   }),

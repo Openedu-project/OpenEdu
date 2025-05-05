@@ -11,7 +11,7 @@ const AieduButton = ({ link, text, variant = 'default', className }: AieduButton
     <Link
       href={link ? link : '#'}
       className={cn(
-        '!p-0 w-full max-w-[300px] border-none hover:no-underline',
+        '!p-0 h-fit w-full max-w-[300px] border-none hover:no-underline',
         variant === 'outline' && '!text-primary',
         className
       )}
