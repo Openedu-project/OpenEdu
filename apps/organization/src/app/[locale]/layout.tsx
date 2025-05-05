@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { getThemeConfigServer } from "@oe/api";
 import { fonts } from "@oe/core";
 import { ThemeProvider, getMetadata } from "@oe/themes";
@@ -67,6 +68,7 @@ export default async function RootLayout({
           <Toaster />
         </Provider>
       </body>
+      <GoogleAnalytics gaId="G-NEDV7937ZQ" />
     </html>
   );
 }
