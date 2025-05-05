@@ -13,6 +13,8 @@ export const metadataMessage = {
     title: 'OpenEdu News Feed - Technology, Education & Emerging Trends',
     description:
       "Get the latest updates on technology, education, and business trends with OpenEdu's News Feed, featuring insights from experts on our modern educational platform",
+    authorArticles: "{name}'s Articles",
+    byAuthor: 'by {name}',
   },
   launchpadMetadata: {
     title: 'OpenEdu Launchpad - Blockchain Education Sharing Economy',
