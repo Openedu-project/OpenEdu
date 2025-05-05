@@ -1,10 +1,9 @@
-import { type FileType, cn } from '@oe/ui';
+import AiGenerationBg from '@oe/assets/images/theme/aiedu/ai-generation.png';
+import { type FileType, Image } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import type { SectionComponent } from '../../../_types/theme-page';
-import { AieduLayoutSection } from '../../_components/layout-section';
 import { StatsCard, type StatsCardProps } from '../../_components/stats-card';
 import { Title, type TitleProps } from '../../_components/title';
-
 export interface AieduIntroductionBenefitProps extends TitleProps {
   image?: FileType;
   benefit1: StatsCardProps;
@@ -13,7 +12,7 @@ export interface AieduIntroductionBenefitProps extends TitleProps {
   benefit4: StatsCardProps;
 }
 
-const AieduIntroductionBenefit: SectionComponent<'introduction', 'aieduBenefit'> = ({ props, className }) => {
+const AieduIntroductionBenefit: SectionComponent<'introduction', 'aieduBenefit'> = ({ props }) => {
   const t = useTranslations('themePage.aiedu.introduction.aieduBenefit');
   const benefits = [
     {
@@ -35,19 +34,41 @@ const AieduIntroductionBenefit: SectionComponent<'introduction', 'aieduBenefit'>
   ];
 
   return (
-    <AieduLayoutSection className={cn('space-y-8', className)}>
-      <Title title={t('title')} className="mx-auto max-w-3xl text-center" />
-      <div className="space-y-6">
-        {benefits?.map((b, index) => (
-          <StatsCard
-            key={index.toString()}
-            className={index % 2 ? 'sm:ml-8 md:ml-16 lg:ml-20' : 'sm:mr-8 md:mr-16 lg:mr-20'}
-            percentage={b?.percentage ?? 0}
-            description={b?.description}
+    <>
+      <div className="flex items-center justify-between gap-4">
+        <div className="hidden w-[100px] md:block">
+          <Image
+            src={AiGenerationBg.src}
+            alt="logo"
+            height={AiGenerationBg?.height ?? 900}
+            width={AiGenerationBg?.width ?? 100}
+            quality={100}
+            className="h-full w-full object-contain"
           />
-        ))}
+        </div>
+        <div className="container mx-auto max-w-4xl space-y-6 py-12">
+          <Title title={t('title')} className="mx-auto max-w-4xl text-center" />
+          {benefits?.map((b, index) => (
+            <StatsCard
+              key={index.toString()}
+              className={index % 2 ? 'w-full justify-self-end md:w-[90%]' : 'w-full justify-start md:w-[90%]'}
+              percentage={b?.percentage ?? 0}
+              description={b?.description}
+            />
+          ))}
+        </div>
+        <div className="hidden w-[100px] md:block">
+          <Image
+            src={AiGenerationBg.src}
+            alt="logo"
+            height={AiGenerationBg?.height ?? 900}
+            width={AiGenerationBg?.width ?? 100}
+            quality={100}
+            className="h-full w-full object-contain"
+          />
+        </div>
       </div>
-    </AieduLayoutSection>
+    </>
   );
 };
 

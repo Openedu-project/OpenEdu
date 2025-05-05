@@ -20,6 +20,7 @@ export interface AieduHomepageFeaturesProps {
 //Theme step 7: back to section - hero.tsx, create your code based on the props
 const AieduHomepageFeatures: SectionComponent<'homepage', 'aieduFeatures'> = ({ className, props }) => {
   const t = useTranslations('themePage.aiedu.homepage.aieduFeatures');
+
   return (
     <AieduLayoutSection
       background="bg-gradient-to-b from-primary from-50% to-white to-98%"
@@ -39,8 +40,8 @@ const AieduHomepageFeatures: SectionComponent<'homepage', 'aieduFeatures'> = ({ 
         <AieduCourseCard
           key="main"
           title={t('mainCourse.title')}
-          benefits={new Array(props?.mainCourse?.benefits?.length ?? 0)?.map((_b, index) =>
-            t(`mainCourse.benefits.benefit${index + 1}`)
+          benefits={Array.from({ length: props?.subCourse?.benefits?.length ?? 0 }, (_, i) =>
+            t(`mainCourse.benefits.benefit${i + 1}`)
           )}
           image={props?.mainCourse?.image}
           button={{
@@ -51,8 +52,8 @@ const AieduHomepageFeatures: SectionComponent<'homepage', 'aieduFeatures'> = ({ 
         <AieduCourseCard
           key="sub"
           title={t('subCourse.title')}
-          benefits={new Array(props?.subCourse?.benefits?.length ?? 0)?.map((_b, index) =>
-            t(`subCourse.benefits.benefit${index + 1}`)
+          benefits={Array.from({ length: props?.subCourse?.benefits?.length ?? 0 }, (_, i) =>
+            t(`subCourse.benefits.benefit${i + 1}`)
           )}
           image={props?.subCourse?.image}
           button={{

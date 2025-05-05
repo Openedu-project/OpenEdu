@@ -118,9 +118,12 @@ export const createAiEduIntroductionConfig = (getThemeTranslation: (path: string
           link: '/',
         },
         images: { mime: 'image/png' },
-        benefits: new Array(4).map(index =>
-          getThemeTranslation(['introduction', 'aieduFeatures', 'mainCourse', 'benefits', `benefit${index + 1}`])
-        ),
+        benefits: [
+          getThemeTranslation(['introduction', 'aieduFeatures', 'mainCourse', 'benefits', 'benefit1']),
+          getThemeTranslation(['introduction', 'aieduFeatures', 'mainCourse', 'benefits', 'benefit2']),
+          getThemeTranslation(['introduction', 'aieduFeatures', 'mainCourse', 'benefits', 'benefit3']),
+          getThemeTranslation(['introduction', 'aieduFeatures', 'mainCourse', 'benefits', 'benefit4']),
+        ],
       },
       subCourse: {
         title: getThemeTranslation(['introduction', 'aieduFeatures', 'subCourse', 'title']),

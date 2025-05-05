@@ -10,15 +10,15 @@ interface AieduCourseCardProps {
 
 const AieduCourseCard = ({ image, benefits, title, button }: AieduCourseCardProps) => {
   return (
-    <Card className="w-full rounded-lg p-4 md:p-6">
+    <Card className="w-full space-y-2 rounded-lg p-4 shadow-xs transition-shadow duration-300 hover:shadow-md md:space-y-4 md:p-6">
       <Image
         alt="image"
         src={image?.url}
         height={320}
         width={image?.width ?? 460}
-        className="h-full w-full rounded-lg object-contain"
+        className="h-full max-h-[320px] w-full rounded-lg object-cover transition-all duration-300 hover:scale-105"
       />
-      <h3>{title}</h3>
+      <h3 className="text-xl md:text-2xl">{title}</h3>
       <ul className="space-y-2">
         {benefits?.map((benefit, index) => (
           <li key={index.toString()} className="flex items-start">
