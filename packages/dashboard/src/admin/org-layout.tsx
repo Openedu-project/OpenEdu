@@ -7,6 +7,7 @@ import {
   BookOpen,
   BookUp,
   Building,
+  CalendarPlus,
   GitPullRequest,
   GitPullRequestCreateArrow,
   Globe,
@@ -110,6 +111,12 @@ export async function AdminOrgLayout({ children }: { children: ReactNode }) {
             href: ADMIN_ROUTES.creatorManagementInvitations,
           },
         ],
+      },
+      {
+        id: 'schedule',
+        label: tDashboard('schedule.title'),
+        icon: <CalendarPlus className="h-5 w-5" />,
+        href: ADMIN_ROUTES.schedule,
       },
       {
         id: 'referral-program',

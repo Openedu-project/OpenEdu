@@ -13,3 +13,4 @@ export * from './profileSchema';
 export * from './wallet';
 export * from './withdrawSchema';
 export * from './referralProgramSchema';
+export * from './scheduleSchema';

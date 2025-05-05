@@ -258,6 +258,10 @@ export const API_ENDPOINT = {
   OE_MY_REFERRAL_HISTORY: '/api/v1/users/me/oe-referrals',
   OE_REFFERRAL_STATISTICS_AI_EDU: '/api/v1/oe-referrals/statistics/ai-government-campaign',
   OE_REFFERRAL_LEADER_BOARDS_AI_EDU: '/api/v1/oe-referrals/leader-boards/ai-government-campaign',
+  SCHEDULES: '/api/v1/schedules',
+  SCHEDULES_ID: '/api/v1/:id',
+  EVENT_SCHEDULES: '/api/v1/event-schedules',
+  EVENT_SCHEDULES_ID: '/api/v1/event-schedules/:id',
 
   // WS
   WEBSOCKET: '/websocket',

@@ -36,4 +36,8 @@ export interface IFilter {
   scope?: string;
   local_level?: number;
   parent_id?: string;
+  start_at_gte?: number;
+  end_at_lte?: number;
+  start_at_lte?: number;
+  end_at_gte?: number;
 }

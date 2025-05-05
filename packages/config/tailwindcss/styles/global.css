@@ -486,3 +486,100 @@
     cursor: pointer;
   }
 }
+
+.rdrCalendarWrapper {
+  font-size: 14px;
+  width: 100%;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+.rdrMonth {
+  max-width: 304px;
+}
+.rdrMonthAndYearWrapper {
+  background-color: var(--primary);
+  color: white;
+  padding: 0.5rem;
+}
+.rdrMonthAndYearPickers select {
+  color: white;
+  background-color: var(--primary);
+  padding: 10px !important;
+}
+
+.rdrNextPrevButton {
+  background-color: white;
+  margin: 0 4px !important;
+}
+.rdrNextPrevButton i {
+  border-color: white;
+}
+.rdrDayToday .rdrDayNumber span:after {
+  background: var(--primary);
+}
+.rdrDateDisplayWrapper {
+  background-color: transparent;
+}
+.rdrDateDisplay {
+  margin: 0.5rem;
+}
+.rdrDateDisplayItem {
+  border-radius: 0.25rem;
+  background-color: #f3f4f6;
+  box-shadow: none;
+}
+.rdrDateDisplayItem input {
+  color: #374151;
+}
+.rdrDefinedRangesWrapper {
+  display: none !important; /* Force hide immediately */
+  visibility: hidden;
+  opacity: 0;        }
+.rdrDayNumber span {
+  color: #374151;
+  font-weight: 600;
+}
+.rdrDayPassive .rdrDayNumber span {
+  color: #9ca3af;
+}
+.rdrDayToday .rdrDayNumber span {
+  font-weight: bold;
+}
+.rdrYearPicker select,
+.rdrMonthPicker select {
+  color: white !important;
+}
+.rdrMonthName {
+  text-align: center;
+  font-weight: 600;
+  color: #374151;
+  padding: 0.5rem 0;
+}
+.rdrWeekDays {
+  display: flex;
+  justify-content: space-between;
+}
+.rdrWeekDay {
+  color: #6b7280;
+  font-weight: 500;
+}
+.rdrDay {
+  height: 2.5rem;
+}
+.rdrDayStartPreview,
+.rdrDayEndPreview,
+.rdrDayInPreview {
+  border-color: #bfdbfe;
+}
+.rdrDayStartOfMonth .rdrDayNumber span,
+.rdrDayStartOfWeek .rdrDayNumber span {
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+.rdrDayEndOfMonth .rdrDayNumber span,
+.rdrDayEndOfWeek .rdrDayNumber span {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}

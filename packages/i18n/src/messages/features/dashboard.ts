@@ -105,5 +105,8 @@ export const dashboardMessages = {
       referralProgramHistory: 'Referral Program History',
       programManagement: 'Program Management',
     },
+    schedule: {
+      title: 'Schedule',
+    },
   },
 };

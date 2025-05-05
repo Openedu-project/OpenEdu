@@ -7,6 +7,7 @@ import {
   BookOpen,
   BookUp,
   Building,
+  CalendarPlus,
   CircleDollarSign,
   FileLock,
   FileText,
@@ -174,6 +175,12 @@ export async function AdminLayout({ children }: { children: ReactNode }) {
         label: tDashboard('certificate.title'),
         icon: <GraduationCap className="h-5 w-5" />,
         href: ADMIN_ROUTES.certificates,
+      },
+      {
+        id: 'schedule',
+        label: tDashboard('schedule.title'),
+        icon: <CalendarPlus className="h-5 w-5" />,
+        href: ADMIN_ROUTES.schedule,
       },
       {
         id: 'withdraw-request',

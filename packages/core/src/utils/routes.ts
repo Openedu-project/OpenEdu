@@ -138,6 +138,7 @@ export const ADMIN_ROUTES = {
   certificates: '/admin/certificates',
   certificateDetail: '/admin/certificates/:id',
   referralProgramManagement: '/admin/referral-program/program-management',
+  schedule: '/admin/schedule',
 } as const;
 
 export const CREATOR_ROUTES = {

@@ -17,7 +17,7 @@ export function DashboardLayout({
   className?: string;
 }) {
   return (
-    <div className="flex h-dvh flex-col bg-background">
+    <div className="flex min-h-dvh flex-col bg-background">
       <Header sidebarItems={sidebarItems}>
         <Link
           href={PLATFORM_ROUTES.homepage}

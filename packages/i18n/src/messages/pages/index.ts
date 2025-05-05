@@ -21,6 +21,7 @@ import { notificationMessage } from './notification';
 import { organizationsMessage } from './organizations';
 import { permissionMessage } from './permissions';
 import { referralProgramMessages } from './referral-program';
+import { scheduleMessage } from './schedule';
 import { setPasswordMessage } from './set-password';
 import { userAffiliateCampaignMessage } from './user-affiliate-campaign';
 import { userProfileMessages } from './user-profile';
@@ -56,4 +57,5 @@ export const pageMessages = {
   ...launchpadHomepageMessage,
   ...courseManagementMessages,
   ...referralProgramMessages,
+  ...scheduleMessage,
 };
