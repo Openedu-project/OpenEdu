@@ -1,5 +1,5 @@
-import { Card, type FileType, Image } from '@oe/ui';
-import { AieduButton, type AieduButtonProps } from '../_components/button';
+import { Card, type FileType, Image } from "@oe/ui";
+import { AieduButton, type AieduButtonProps } from "../_components/button";
 
 interface AieduCourseCardProps {
   image?: FileType;
@@ -8,7 +8,12 @@ interface AieduCourseCardProps {
   button?: AieduButtonProps;
 }
 
-const AieduCourseCard = ({ image, benefits, title, button }: AieduCourseCardProps) => {
+const AieduCourseCard = ({
+  image,
+  benefits,
+  title,
+  button,
+}: AieduCourseCardProps) => {
   return (
     <Card className="w-full space-y-2 overflow-hidden rounded-3xl p-4 shadow-xs transition-shadow duration-300 hover:shadow-md md:space-y-4 md:p-6">
       <Image
