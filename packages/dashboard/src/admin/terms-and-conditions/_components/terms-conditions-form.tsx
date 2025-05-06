@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   type ISystemConfigKey,
@@ -8,24 +8,14 @@ import {
   updateSystemConfig,
   useGetOrganizationByDomain,
   useSystemConfig,
-} from "@oe/api";
-import { getCookieClient } from "@oe/core";
-import {
-  Button,
-  FormFieldWithLabel,
-  FormWrapper,
-  RichTextEditor,
-  Selectbox,
-} from "@oe/ui";
-import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import { z } from "zod";
-
-export const LANGUAGE: { value: "en" | "vi"; label: string; id: string }[] = [
-  { value: "en", label: "English", id: "en" },
-  { value: "vi", label: "Vietnamese", id: "vi" },
-];
+} from '@oe/api';
+import { getCookieClient } from '@oe/core';
+import { DEFAULT_LOCALES, type LanguageCode, languages } from '@oe/i18n';
+import { Button, FormFieldWithLabel, FormWrapper, RichTextEditor, Selectbox } from '@oe/ui';
+import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
+import { z } from 'zod';
 
 const formSchema = z.object({
   locale: z.string(),
@@ -39,24 +29,21 @@ export function TermsConditionsForm({
 }: {
   pageKey: ISystemConfigKey;
 }) {
-  const tCommonAction = useTranslations("general");
-  const locale =
-    getCookieClient(process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY) ?? "en";
+  const tCommonAction = useTranslations('general');
+  const locale = getCookieClient(process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY) ?? 'en';
+  const localesCookie = getCookieClient(process.env.NEXT_PUBLIC_COOKIE_LOCALES_KEY);
+  const locales = localesCookie ? JSON.parse(localesCookie as string) : DEFAULT_LOCALES;
 
-  const [res, setRes] = useState<ISystemConfigRes<
-    Record<string, string | undefined>
-  > | null>(null);
+  const [res, setRes] = useState<ISystemConfigRes<Record<string, string | undefined>> | null>(null);
   const [defaultValues, setDefaultValues] = useState<TTermsAndConditions>({
     locale,
     content: {},
   });
   const [currentLanguage, setCurrentLanguage] = useState(locale);
-  const [editorContent, setEditorContent] = useState("");
+  const [editorContent, setEditorContent] = useState('');
 
   const { organizationByDomain } = useGetOrganizationByDomain();
-  const { systemConfig, systemConfigMutate } = useSystemConfig<
-    Record<string, string | undefined>
-  >({
+  const { systemConfig, systemConfigMutate } = useSystemConfig<Record<string, string | undefined>>({
     key: pageKey,
   });
 
@@ -72,19 +59,28 @@ export function TermsConditionsForm({
     }
   }, [systemConfig, currentLanguage]);
 
+  if (locales?.length === 0) {
+    return null;
+  }
+
+  const LANGUAGE_OPTIONS = locales.map((locale: LanguageCode) => ({
+    id: locale,
+    value: locale,
+    label: languages[locale],
+  }));
+
   const handleSubmit = async (values: TTermsAndConditions) => {
     try {
       const updatedContent = {
         ...values?.content,
-        [currentLanguage]: values.content[currentLanguage] || "",
+        [currentLanguage]: values.content[currentLanguage] || '',
       };
 
-      const payload: ISystemConfigPayload<Record<string, string | undefined>> =
-        {
-          key: pageKey,
-          org_id: organizationByDomain?.id ?? "",
-          value: updatedContent,
-        };
+      const payload: ISystemConfigPayload<Record<string, string | undefined>> = {
+        key: pageKey,
+        org_id: organizationByDomain?.id ?? '',
+        value: updatedContent,
+      };
 
       await (res
         ? updateSystemConfig(undefined, { id: res?.id, payload })
@@ -92,9 +88,9 @@ export function TermsConditionsForm({
 
       await systemConfigMutate();
 
-      toast.success("Update successfully!");
+      toast.success('Update successfully!');
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error('Error submitting form:', error);
     }
   };
 
@@ -111,25 +107,22 @@ export function TermsConditionsForm({
           <>
             <FormFieldWithLabel label="Language" name="locale">
               <Selectbox
-                options={LANGUAGE.map((type) => ({
-                  label: type.label,
-                  value: type.value,
-                  id: type.id,
-                }))}
-                onChange={(value) => {
+                options={LANGUAGE_OPTIONS}
+                value={currentLanguage}
+                onChange={value => {
                   setCurrentLanguage(value);
                 }}
               />
             </FormFieldWithLabel>
             <RichTextEditor
               value={editorContent}
-              onChange={(value) => {
+              onChange={value => {
                 setEditorContent(value);
                 setValue(`content.${currentLanguage}`, value);
               }}
             />
             <Button type="submit" loading={loading} className="ml-auto w-fit">
-              {tCommonAction("save")}
+              {tCommonAction('save')}
             </Button>
           </>
         );
