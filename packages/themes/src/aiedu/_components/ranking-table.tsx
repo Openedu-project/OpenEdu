@@ -15,10 +15,9 @@ const RankingTable = ({ leaderBoardsData = [] }: RankingTableProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState<AIEduLeaderBoards[]>([]);
 
-  // Initialize the data to display (taking positions 3-11 from the original array)
   useEffect(() => {
     if (leaderBoardsData && leaderBoardsData.length > 2) {
-      setFilteredData(leaderBoardsData.slice(2, 11));
+      setFilteredData(leaderBoardsData.slice(3, 99));
     }
   }, [leaderBoardsData]);
 
@@ -34,8 +33,7 @@ const RankingTable = ({ leaderBoardsData = [] }: RankingTableProps) => {
     }
 
     if (searchTerm.trim() === '') {
-      // If search is empty, reset to default display (positions 3-11)
-      setFilteredData(leaderBoardsData.slice(2, 11));
+      setFilteredData(leaderBoardsData.slice(3, 99));
     } else {
       // Filter data based on display_name containing the search term (case insensitive)
       const filtered = leaderBoardsData.filter(province =>
@@ -100,7 +98,7 @@ const RankingTable = ({ leaderBoardsData = [] }: RankingTableProps) => {
             </thead>
             <tbody>
               {filteredData.length > 0 ? (
-                filteredData.map((province, index) => (
+                filteredData?.filter(Boolean).map((province, index) => (
                   <tr key={index.toString()} className="border-secondary border-b hover:bg-primary-foreground">
                     <td className="px-2 py-3 md:px-4">
                       <div className="flex items-center">
@@ -108,18 +106,14 @@ const RankingTable = ({ leaderBoardsData = [] }: RankingTableProps) => {
                           {/* Calculate position dynamically */}
                           {leaderBoardsData.indexOf(province) + 1}
                         </div>
-                        <span className="max-w-[100px] truncate font-bold text-sm sm:text-normal md:max-w-[300px] ">
+                        <span className="max-w-[100px] truncate font-bold md:max-w-[300px] ">
                           {province?.display_name ?? '-'}
                         </span>
                       </div>
                     </td>
-                    <td className="px-2 py-3 text-center font-bold text-sm sm:text-normal md:px-4">
-                      {province.register_count}
-                    </td>
-                    <td className="px-2 py-3 text-center font-bold text-sm sm:text-normal md:px-4">
-                      {province.cert_count}
-                    </td>
-                    <td className="flex justify-center px-2 py-3 text-center font-bold text-sm sm:text-normal md:px-4">
+                    <td className="px-2 py-3 text-center font-bold md:px-4">{province.register_count}</td>
+                    <td className="px-2 py-3 text-center font-bold md:px-4">{province.cert_count}</td>
+                    <td className="flex justify-center px-2 py-3 text-center font-bold md:px-4">
                       <CircularPercentageChart percentage={Number(province.percent_cert_on_reg) * 100} />
                     </td>
                   </tr>

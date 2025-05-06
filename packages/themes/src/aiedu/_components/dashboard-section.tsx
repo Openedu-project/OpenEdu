@@ -73,29 +73,27 @@ const AieduDashboardSection = ({ leaderBoardsData, type, statisticsData, props, 
           <table className="w-full">
             <thead>
               <tr className="border-secondary border-b">
-                <th className="px-2 py-3 text-left text-sm sm:text-normal md:px-4">{t('province')}</th>
-                <th className="px-2 py-3 text-center text-sm sm:text-normal md:px-4">{t('registerCount')}</th>
-                <th className="px-2 py-3 text-right text-sm sm:text-normal md:px-4">{t('certCount')}</th>
+                <th className="px-2 py-3 text-left md:px-4">{t('province')}</th>
+                <th className="px-2 py-3 text-center md:px-4">{t('registerCount')}</th>
+                <th className="px-2 py-3 text-right md:px-4">{t('certCount')}</th>
               </tr>
             </thead>
             <tbody>
               {leaderBoardsData
-                ?.splice(2, 9)
+                ?.splice(3, 10)
                 ?.filter(Boolean)
                 .map((city, index) => (
                   <tr key={index.toString()} className="border-secondary border-b hover:bg-primary-foreground">
                     <td className="px-2 py-3 md:px-4">
                       <div className="flex items-center">
                         <div className="mr-2 flex h-6 w-6 items-center justify-center rounded-full bg-primary font-bold text-background text-sm sm:mr-4 sm:h-8 sm:w-8 sm:text-normal">
-                          {Number(index) + 3}
+                          {Number(index) + 4}
                         </div>
-                        <span className="font-bold text-sm sm:text-normal ">{city?.display_name ?? '-'}</span>
+                        <span className="font-bold ">{city?.display_name ?? '-'}</span>
                       </div>
                     </td>
-                    <td className="px-2 py-3 text-center font-bold text-sm sm:text-normal md:px-4">
-                      {city.register_count}
-                    </td>
-                    <td className="px-2 py-3 text-right font-bold text-sm sm:text-normal md:px-4">{city.cert_count}</td>
+                    <td className="px-2 py-3 text-center font-bold md:px-4">{city.register_count}</td>
+                    <td className="px-2 py-3 text-right font-bold md:px-4">{city.cert_count}</td>
                   </tr>
                 ))}
             </tbody>

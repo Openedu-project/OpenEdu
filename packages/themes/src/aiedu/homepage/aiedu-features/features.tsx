@@ -36,7 +36,7 @@ const AieduHomepageFeatures: SectionComponent<'homepage', 'aieduFeatures'> = ({ 
         quality={100}
         className="h-full w-full object-contain"
       />
-      <div className="space-y-4 md:flex md:gap-6 md:space-y-0">
+      <div className="space-y-4 md:flex md:gap-12 md:space-y-0">
         <AieduCourseCard
           key="main"
           title={t('mainCourse.title')}

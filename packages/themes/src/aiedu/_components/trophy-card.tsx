@@ -64,14 +64,14 @@ const TrophyCard = ({ type = 'gold', name, registrations, certificates }: Trophy
         <h3 className="mb-2 font-bold text-xl">{name}</h3>
         <div className="flex flex-col items-center gap-2 md:flex-row md:justify-center md:gap-4">
           <div className="space-y-1">
-            <p className="font-bold text-lg">{formatNumber(registrations)}</p>
-            <p className="text-xs">{t('registerCount')}</p>
+            <p className="font-bold text-xl">{formatNumber(registrations)}</p>
+            <p>{t('registerCount')}</p>
           </div>
           <Sparkle />
 
           <div className="space-y-1">
-            <p className="font-bold text-lg">{formatNumber(certificates)}</p>
-            <p className="text-xs">{t('certCount')}</p>
+            <p className="font-bold text-xl">{formatNumber(certificates)}</p>
+            <p>{t('certCount')}</p>
           </div>
         </div>
       </div>

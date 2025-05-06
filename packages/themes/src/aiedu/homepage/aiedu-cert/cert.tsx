@@ -24,7 +24,7 @@ const AieduHomepageCert: SectionComponent<'homepage', 'aieduCert'> = ({ props, c
     <AieduLayoutSection className={cn('space-y-6', className)}>
       <Title title={t('title')} className="text-center" />
       <div className="space-y-4 lg:flex lg:gap-4 lg:space-y-0">
-        <div className="h-full flex-grow rounded-xl bg-primary p-8 text-background">
+        <div className="flex h-auto flex-1 flex-col items-center justify-center rounded-3xl bg-primary p-8 text-background">
           <h2 className="mb-6 text-center font-bold text-xl lg:text-3xl">{t('coursePanel.title')}</h2>
 
           <div className="mb-8 space-y-4">
@@ -51,7 +51,7 @@ const AieduHomepageCert: SectionComponent<'homepage', 'aieduCert'> = ({ props, c
             // aspectRatio="16:9"
             // containerHeight="400px"
             // sizes="(max-width: 400px) 574px, 380px"
-            className="h-full w-full rounded-lg border-2 border-primary object-contain"
+            className="h-full w-full rounded-3xl border-2 border-primary object-contain"
           />
         </div>
       </div>

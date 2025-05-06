@@ -43,7 +43,7 @@ const AieduIntroductionTrend: SectionComponent<'introduction', 'aieduTrend'> = (
   return (
     <AieduLayoutSection
       className={cn('relative z-1 space-y-8 py-0 md:py-0 lg:py-0', className)}
-      background="bg-gradient-to-b from-info from-50% to-white to-98%"
+      background="bg-gradient-to-b from-info/20 from-50% to-white to-98%"
     >
       <div className="-z-1 absolute h-full w-full">
         <Image
