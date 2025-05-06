@@ -19,19 +19,19 @@ export const aieduMessage = {
             label: 'Danh Mục ',
             items: {
               'items-0': {
-                label: 'Giới thiệu',
+                label: 'Giới Thiệu',
               },
               'items-1': {
-                label: 'Bảng xếp hạng',
+                label: 'Bảng Xếp Hạng',
               },
               'items-2': {
-                label: 'Khoá học AI',
+                label: 'Khoá Học AI',
               },
               'items-3': {
-                label: 'Lịch trình',
+                label: 'Lịch Trình',
               },
               'items-4': {
-                label: 'Tin tức',
+                label: 'Tin Tức',
               },
             },
           },
@@ -53,7 +53,15 @@ export const aieduMessage = {
             },
           },
           social: {
-            label: 'QR Code',
+            label: 'Điều Khoản',
+            items: {
+              'items-0': {
+                label: 'Chính Sách Và Bảo Mật',
+              },
+              'items-1': {
+                label: 'Hỏi Đáp',
+              },
+            },
           },
         },
       },

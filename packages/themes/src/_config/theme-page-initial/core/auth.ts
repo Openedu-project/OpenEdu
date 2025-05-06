@@ -483,7 +483,7 @@ export const createAieduAuthLayoutConfig = (getThemeTranslation: (path: string[]
       navigationItems: {
         registration: {
           label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'registration', 'label']),
-          colSpan: 4,
+          colSpan: 3,
           items: [
             {
               href: '/introduction',
@@ -549,7 +549,7 @@ export const createAieduAuthLayoutConfig = (getThemeTranslation: (path: string[]
         },
         terms: {
           label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'label']),
-          colSpan: 4,
+          colSpan: 3,
           items: [
             {
               href: '/',
@@ -569,11 +569,20 @@ export const createAieduAuthLayoutConfig = (getThemeTranslation: (path: string[]
             },
           ],
         },
-        // social: {
-        //   label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'social', 'label']),
-        //   colSpan: 2,
-        //   items: [],
-        // },
+        social: {
+          label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'social', 'label']),
+          colSpan: 3,
+          items: [
+            {
+              href: '/terms',
+              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'social', 'items', 'items-0', 'label']),
+            },
+            {
+              href: '/faq',
+              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'social', 'items', 'items-1', 'label']),
+            },
+          ],
+        },
       },
       className: 'bg-primary',
       variant: 'org',

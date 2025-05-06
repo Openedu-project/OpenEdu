@@ -10,7 +10,7 @@ interface AieduCourseCardProps {
 
 const AieduCourseCard = ({ image, benefits, title, button }: AieduCourseCardProps) => {
   return (
-    <Card className="w-full space-y-2 overflow-hidden rounded-lg p-4 shadow-xs transition-shadow duration-300 hover:shadow-md md:space-y-4 md:p-6">
+    <Card className="w-full space-y-2 overflow-hidden rounded-3xl p-4 shadow-xs transition-shadow duration-300 hover:shadow-md md:space-y-4 md:p-6">
       <Image
         alt="image"
         src={image?.url}
@@ -18,7 +18,7 @@ const AieduCourseCard = ({ image, benefits, title, button }: AieduCourseCardProp
         aspectRatio="16:9"
         containerHeight="auto"
         sizes="(max-width: 768px) 280px, 380px"
-        className="h-full w-full rounded-lg object-cover transition-all duration-300 hover:scale-105"
+        className="h-full w-full rounded-3xl object-cover transition-all duration-300 hover:scale-105"
       />
       <h3 className="text-xl md:text-2xl">{title}</h3>
       <ul className="space-y-2">

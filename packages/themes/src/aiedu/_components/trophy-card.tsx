@@ -58,7 +58,7 @@ const TrophyCard = ({ type = 'gold', name, registrations, certificates }: Trophy
   return (
     <div className="flex w-full flex-col justify-end">
       {trophyImage?.[type]}
-      <div className={cn('w-full rounded-lg px-4 py-6 pt-12 text-center', BG_TROPHY?.[type])}>
+      <div className={cn('w-full rounded-3xl px-4 py-6 pt-12 text-center', BG_TROPHY?.[type])}>
         {/* <Trophy type={city.trophy} /> */}
 
         <h3 className="mb-2 font-bold text-xl">{name}</h3>
