@@ -3,7 +3,10 @@ import { FailoverRpcProvider, JsonRpcProvider } from 'near-api-js/lib/providers'
 import type { TNFTData, TNFTItem } from '#types/wallet';
 import { CHAIN, NFT_CONTRACTS, type TChain, type TCurrencySymbol, TOKEN_CONTRACTS } from '#utils/wallet';
 
-const NEAR_NETWORK_ID = process.env.NODE_ENV === 'development' ? 'testnet' : 'mainnet';
+const NEAR_NETWORK_ID =
+  process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_APP_ORIGIN === 'https://openedu101dev.com'
+    ? 'testnet'
+    : 'mainnet';
 const NEAR_RPC = process.env.NEXT_PUBLIC_NEAR_RPC;
 const NEAR_RPC_FAILOVER = process.env.NEXT_PUBLIC_NEAR_RPC_FAILOVER;
 
