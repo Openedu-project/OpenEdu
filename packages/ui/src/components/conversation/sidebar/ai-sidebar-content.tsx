@@ -42,7 +42,7 @@ export function AISidebarContent({
         <Link
           href={AI_ROUTES.assistant}
           onClick={handleCloseSidebar}
-          className={cn('!p-0 !border-0 relative mr-1 h-10 w-10 rounded-full bg-background', open && 'md:h-12 md:w-12')}
+          className={cn('!p-0 !border-0 relative mr-1 h-12 w-12 rounded-full bg-background')}
         >
           <Image alt="ai-assistant" src={AIMascot.src} width={48} height={48} className="object-contain" />
           <Badge variant="secondary" className="md:-right-1 mbutton-bold10 absolute right-0 bottom-0 px-1 md:bottom-6">
@@ -58,7 +58,7 @@ export function AISidebarContent({
 
       {open ? (
         <>
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-0.5">
             {AI_SIDEBAR('var(--primary)', 14)
               .filter(i => !i.hidden)
               .map(item => (
@@ -70,7 +70,7 @@ export function AISidebarContent({
                   className="!no-underline h-auto flex-wrap justify-start rounded-3xl p-0.5 hover:cursor-pointer hover:bg-primary/10"
                   onClick={handleCloseSidebar}
                 >
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ai-more-feature-gradient">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ai-more-feature-gradient">
                     {item.icon}
                   </div>
                   <p className="giant-iheading-semibold14 ml-2 truncate text-center text-foreground">
@@ -117,7 +117,7 @@ export function AISidebarContent({
                     side: 'right',
                     align: 'start',
                   }}
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ai-more-feature-gradient"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ai-more-feature-gradient"
                 />
               ))}
           </div>
@@ -131,7 +131,7 @@ export function AISidebarContent({
               side: 'right',
               align: 'start',
             }}
-            className="mx-auto flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ai-more-feature-gradient"
+            className="mx-auto flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ai-more-feature-gradient"
           />
         </>
       )}
