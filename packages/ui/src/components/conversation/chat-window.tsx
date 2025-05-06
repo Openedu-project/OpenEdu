@@ -48,6 +48,7 @@ export const ChatWindow = ({ id, agent, className }: IChatWindowProps) => {
     setResetPage,
     pendingParams,
     setPendingParams,
+    setSelectedAgent,
   } = useConversationStore();
 
   const sendMessage = useSendMessageHandler(agent, id);
@@ -69,6 +70,8 @@ export const ChatWindow = ({ id, agent, className }: IChatWindowProps) => {
       resetGenMessage();
       resetStatus();
       resetOpenWebSource();
+      console.log(agent, 'agent');
+      setSelectedAgent(agent);
     }
 
     if (id) {
@@ -137,12 +140,7 @@ export const ChatWindow = ({ id, agent, className }: IChatWindowProps) => {
       ) : (
         <EmptyChat agent={agent} />
       )}
-      <InputFrame
-        id={id}
-        messagesEndRef={messagesEndRef}
-        agent={agent}
-        reset={!id}
-      />
+      <InputFrame id={id} messagesEndRef={messagesEndRef} agent={agent} reset={!id} />
       {!id && (
         <PromptGrid
           className="mx-auto mt-4 max-w-3xl px-2 md:mt-8 xl:max-w-4xl"
