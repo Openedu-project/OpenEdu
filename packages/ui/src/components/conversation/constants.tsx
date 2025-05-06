@@ -22,7 +22,6 @@ export const AI_SIDEBAR: (color?: string, size?: number) => AISidebarItem[] = (c
     image: AIChat.src,
     agent: 'ai_search',
     detailHref: AI_ROUTES.chatDetail,
-    hidden: true,
   },
   {
     lableKey: 'presentation',
