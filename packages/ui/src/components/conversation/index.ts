@@ -1,3 +1,4 @@
+import { AIBanner } from './ai-banner';
 import { AIModelDropdown } from './ai-model-dropdown';
 import { ChatWindow } from './chat-window';
 import { ChatWithSource } from './chat-with-source';
@@ -22,4 +23,5 @@ export {
   SIDEBAR_WIDTH,
   SIDEBAR_WIDTH_ICON,
   SearchHistory,
+  AIBanner,
 };

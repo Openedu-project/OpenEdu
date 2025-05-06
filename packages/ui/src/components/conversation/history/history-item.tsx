@@ -27,6 +27,7 @@ interface IHistoryItem {
   activeId?: string;
   callbackFn?: () => void;
   setHistoryData?: Dispatch<SetStateAction<IChatHistory[]>>;
+  hoverAction?: boolean;
 }
 
 export function useClickOutside<T extends HTMLElement>(
@@ -56,7 +57,14 @@ export function useClickOutside<T extends HTMLElement>(
   return ref;
 }
 
-export function AIHistoryItem({ className, item, activeId, callbackFn, setHistoryData }: IHistoryItem) {
+export function AIHistoryItem({
+  className,
+  item,
+  activeId,
+  callbackFn,
+  setHistoryData,
+  hoverAction = true,
+}: IHistoryItem) {
   const tError = useTranslations('errors');
 
   const [isEdit, setIsEdit] = useState(false);
@@ -152,14 +160,16 @@ export function AIHistoryItem({ className, item, activeId, callbackFn, setHistor
           {item.context?.title}
         </Link>
       )}
-      <ActionDropdown
-        className="focus-hover:opacity-100 group-hover/history:opacity-100 lg:opacity-0"
-        onEdit={() => {
-          setIsEdit(true);
-        }}
-        item={item}
-        onDelete={handleDelete}
-      />
+      {hoverAction && (
+        <ActionDropdown
+          className="focus-hover:opacity-100 group-hover/history:opacity-100 lg:opacity-0"
+          onEdit={() => {
+            setIsEdit(true);
+          }}
+          item={item}
+          onDelete={handleDelete}
+        />
+      )}
     </div>
   );
 }

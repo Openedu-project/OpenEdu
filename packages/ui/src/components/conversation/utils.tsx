@@ -13,11 +13,11 @@ const filesSchema = z
         message: 'formValidation.required',
       })
       .superRefine((val, ctx) => {
-        if (!(val.status && ['finished', 'error', 'completed'].includes(String(val.status)))) {
+        if (val.status && !['finished', 'error', 'completed'].includes(val.status.toString())) {
           ctx.addIssue({
             code: 'custom',
             path: ['status'],
-            message: "status must be 'finished' or 'error'",
+            message: 'upload file is not completed',
           });
         }
       })

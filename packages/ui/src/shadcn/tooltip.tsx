@@ -52,13 +52,14 @@ const Tooltip = ({
 );
 
 interface IProps extends Omit<ComponentPropsWithoutRef<typeof Link>, 'children'> {
-  name: string;
+  name: string | ReactNode;
   href: string;
+  contentProps?: ComponentPropsWithoutRef<typeof TooltipContent>;
 }
 
-function TooltipLink({ name, href, ...props }: IProps) {
+function TooltipLink({ name, href, content, contentProps, ...props }: IProps) {
   return (
-    <Tooltip content={name}>
+    <Tooltip content={content ?? name} contentProps={contentProps}>
       <Link {...props} className={cn('w-full justify-start truncate p-0 underline', props.className)} href={href}>
         {name}
       </Link>

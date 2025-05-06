@@ -12,7 +12,7 @@ import { AISidebarContent } from './ai-sidebar-content';
 export const SIDEBAR_WIDTH = '14rem';
 export const SIDEBAR_WIDTH_ICON = '5rem';
 
-const MobileSideberSheet = ({ isLogin }: { isLogin?: boolean }) => {
+const MobileSidebarSheet = ({ isLogin }: { isLogin?: boolean }) => {
   const [openSheet, setOpenSheet] = useState(false);
   const tAI = useTranslations('aiAssistant');
 
@@ -27,11 +27,7 @@ const MobileSideberSheet = ({ isLogin }: { isLogin?: boolean }) => {
       <SheetTitle hidden />
       <SheetContent side="left" hasCloseButton={false} className="rounded-r-lg p-0">
         <AISidebarContent
-          open={true}
           isLogin={isLogin}
-          onClick={() => {
-            setOpenSheet(false);
-          }}
           handleCloseSidebar={() => {
             setOpenSheet(false);
           }}
@@ -44,16 +40,14 @@ const MobileSideberSheet = ({ isLogin }: { isLogin?: boolean }) => {
 export function AISidebar({
   isLogin,
   className,
-  open,
 }: {
   isLogin?: boolean;
   className?: string;
-  open?: boolean;
 }) {
   const isMobile = useIsMobile();
 
   if (isMobile) {
-    return <MobileSideberSheet isLogin={isLogin} />;
+    return <MobileSidebarSheet isLogin={isLogin} />;
   }
 
   return (
@@ -67,7 +61,7 @@ export function AISidebar({
       }
       collapsible="icon"
     >
-      <AISidebarContent open={open} isLogin={isLogin} />
+      <AISidebarContent isLogin={isLogin} />
     </Sidebar>
   );
 }
