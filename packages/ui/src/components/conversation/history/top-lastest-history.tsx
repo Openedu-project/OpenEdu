@@ -4,7 +4,7 @@ import { AI_ROUTES } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
-import { Link } from '#common/navigation';
+import { Link, usePathname } from '#common/navigation';
 import { HISTORY_DEFAULT_PARAMS } from '../constants';
 import { formatDate, getHistoryByDate, getHistoryDates } from '../utils';
 import { AIHistoryItem } from './history-item';
@@ -16,6 +16,7 @@ export const TopLastestHistory = memo(({ onClickHistory }: { onClickHistory?: ()
   const initLoading = useRef(true);
   const { history, isLoading } = useGetConversations(HISTORY_DEFAULT_PARAMS);
   const { id } = useParams();
+  const pathname = usePathname();
   const datesData = useMemo(() => {
     return getHistoryDates(historyData ?? []);
   }, [historyData]);
@@ -50,7 +51,15 @@ export const TopLastestHistory = memo(({ onClickHistory }: { onClickHistory?: ()
           <h5 className="mcaption-semibold14">{formatDate(date)}</h5>
           <div className="pl-2">
             {getHistoryByDate(date, historyData)?.map(item => {
-              return <AIHistoryItem key={item.id} item={item} activeId={id as string} callbackFn={onClickHistory} />;
+              return (
+                <AIHistoryItem
+                  key={item.id}
+                  item={item}
+                  activeId={id as string}
+                  callbackFn={onClickHistory}
+                  hoverAction={!pathname.includes(AI_ROUTES.history)}
+                />
+              );
             })}
           </div>
         </div>

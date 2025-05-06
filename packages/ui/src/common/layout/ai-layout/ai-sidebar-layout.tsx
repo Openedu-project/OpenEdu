@@ -24,7 +24,7 @@ export function AISidebarLayout({ children, className, login, AIChatModels }: Pr
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!login) {
-      setLoginRequiredModal(true);
+      setLoginRequiredModal(true, false);
       return;
     }
     if (!selectedModel) {
