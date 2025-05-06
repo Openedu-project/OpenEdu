@@ -17,6 +17,7 @@ import {
   RichTextEditor,
   Selectbox,
 } from "@oe/ui";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -38,6 +39,7 @@ export function TermsConditionsForm({
 }: {
   pageKey: ISystemConfigKey;
 }) {
+  const tCommonAction = useTranslations("general");
   const locale =
     getCookieClient(process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY) ?? "en";
 
@@ -49,6 +51,7 @@ export function TermsConditionsForm({
     content: {},
   });
   const [currentLanguage, setCurrentLanguage] = useState(locale);
+  const [editorContent, setEditorContent] = useState("");
 
   const { organizationByDomain } = useGetOrganizationByDomain();
   const { systemConfig, systemConfigMutate } = useSystemConfig<
@@ -64,9 +67,10 @@ export function TermsConditionsForm({
       setRes(data);
       const content = data.value ?? {};
 
+      setEditorContent(content[currentLanguage] ?? '');
       setDefaultValues({ content, locale });
     }
-  }, [systemConfig, locale]);
+  }, [systemConfig, currentLanguage]);
 
   const handleSubmit = async (values: TTermsAndConditions) => {
     try {
@@ -89,7 +93,6 @@ export function TermsConditionsForm({
       await systemConfigMutate();
 
       toast.success("Update successfully!");
-
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -118,15 +121,15 @@ export function TermsConditionsForm({
                 }}
               />
             </FormFieldWithLabel>
-              <RichTextEditor
-                key={currentLanguage}
-                defaultValue={defaultValues?.content[currentLanguage] ?? ""}
-                onChange={(value) =>
-                  setValue(`content.${currentLanguage}`, value)
-                }
-              />
+            <RichTextEditor
+              value={editorContent}
+              onChange={(value) => {
+                setEditorContent(value);
+                setValue(`content.${currentLanguage}`, value);
+              }}
+            />
             <Button type="submit" loading={loading} className="ml-auto w-fit">
-              Submit
+              {tCommonAction("save")}
             </Button>
           </>
         );

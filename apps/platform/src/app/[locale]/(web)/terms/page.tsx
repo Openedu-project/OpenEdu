@@ -22,10 +22,6 @@ export default async function TermAndConditionPage() {
 
   const builderData = data?.[0]?.value?.[currentLang as LanguageCode] ?? '';
 
-  console.log(data, "data");
-
-  console.log(builderData, "builderData");
-
   return (
     <div
       className="mcaption-regular16 tiptap container py-6"
