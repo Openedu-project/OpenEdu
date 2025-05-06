@@ -24,5 +24,6 @@ export const themeMetadataMessages = {
     appleIcon: 'Apple Icon URL',
     preview: 'Preview',
     seoDataDesc: 'Meta description will appear here...',
+    googleVerification: 'Google Verification',
   },
 };

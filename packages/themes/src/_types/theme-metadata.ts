@@ -23,4 +23,7 @@ export type ThemeMetadata = {
     canonical?: string;
   };
   icons?: ThemeMetadataIcons;
+  verification?: {
+    google?: string;
+  };
 };

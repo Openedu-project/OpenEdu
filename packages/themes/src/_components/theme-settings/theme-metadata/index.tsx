@@ -39,7 +39,7 @@ const ThemeConfigMetadata = ({ data, isRoot = false, isSubmitting, onSubmit }: T
   };
 
   const handleNestedInputChange = (
-    parentKey: keyof Pick<ThemeMetadata, 'openGraph' | 'robots' | 'alternates'>,
+    parentKey: keyof Pick<ThemeMetadata, 'openGraph' | 'robots' | 'alternates' | 'verification'>,
     childKey: string,
     value: string | boolean | string[]
   ) => {
@@ -139,6 +139,18 @@ const ThemeConfigMetadata = ({ data, isRoot = false, isSubmitting, onSubmit }: T
                   maxLength={160}
                   placeholder="Enter meta description"
                   className="h-20"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>
+                  {t('googleVerification')}
+                  <span className="text-muted-foreground text-xs">({calculateLength(seoData.title, 60)})</span>
+                </Label>
+                <Input
+                  value={seoData?.verification?.google}
+                  onChange={e => handleNestedInputChange('verification', 'google', e.target.value)}
+                  maxLength={60}
+                  placeholder="Enter key google verification"
                 />
               </div>
 
