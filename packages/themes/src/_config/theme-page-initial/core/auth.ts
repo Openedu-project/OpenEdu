@@ -549,7 +549,7 @@ export const createAieduAuthLayoutConfig = (getThemeTranslation: (path: string[]
         },
         terms: {
           label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'label']),
-          colSpan: 3,
+          colSpan: 2,
           items: [
             {
               href: '/',
