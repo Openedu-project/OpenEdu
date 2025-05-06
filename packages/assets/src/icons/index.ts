@@ -87,6 +87,7 @@ export * from './star-outline';
 export * from './tag-user';
 export * from './task-square';
 export * from './tree-star';
+export * from './cross-star';
 export * from './trigger';
 export * from './types';
 export * from './user';

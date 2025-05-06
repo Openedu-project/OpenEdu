@@ -58,5 +58,6 @@ export const aiAssistantMessages = {
     menu: 'Menu',
     noPromptWasFound: 'No Prompt Was Found',
     proPlan: 'Pro Plan',
+    exploreOpenEdu: 'Explore OpenEdu',
   },
 };
