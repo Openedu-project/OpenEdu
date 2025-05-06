@@ -20,7 +20,11 @@ export default async function TermAndConditionPage() {
     )) as LanguageCode) ?? "en",
   ]);
 
-  const builderData = data?.[0]?.value?.[currentLang as LanguageCode];
+  const builderData = data?.[0]?.value?.[currentLang as LanguageCode] ?? '';
+
+  console.log(data, "data");
+
+  console.log(builderData, "builderData");
 
   return (
     <div

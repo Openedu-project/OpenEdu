@@ -108,5 +108,10 @@ export const dashboardMessages = {
     schedule: {
       title: 'Schedule',
     },
+    termsConditions: {
+      title: 'Terms and Conditions',
+      faq: 'FAQ',
+      termsAndPrivacy: 'Terms and Privacy',
+    },
   },
 };

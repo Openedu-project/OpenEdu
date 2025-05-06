@@ -11,6 +11,7 @@ import { coursePaymentMessages } from './course-payment';
 import { courseListMessages } from './courses-list';
 import { creatorLaunchpadMessages } from './creator-launchpad';
 import { creatorManagementMessage } from './creator-management';
+import { termsAndConditions } from './faq-management';
 import { forgotPasswordMessage } from './forgot-password';
 import { homePageMessage } from './home-page';
 import { launchpadDetailPageMessages } from './launchpad-detailpage';
@@ -58,4 +59,5 @@ export const pageMessages = {
   ...courseManagementMessages,
   ...referralProgramMessages,
   ...scheduleMessage,
+  ...termsAndConditions
 };

@@ -10,6 +10,7 @@ export const systemConfigKeys = {
   i18nTranslations: 'i18n_translations',
   themeSystem: 'theme_system',
   termPage: 'term_page',
+  faqPage: 'faq_page',
   specificThemeSystem: 'theme_system_:themeName',
 } as const;
 
