@@ -8,7 +8,9 @@ const pageRender: PageRender = {
     // Theme step 23 : add section (use the server component)
     aieduHero: dynamic(() => import('./aiedu-hero').then(mod => mod.AieduHomepageHero)),
     aieduFeatures: dynamic(() => import('./aiedu-features').then(mod => mod.AieduHomepageFeatures)),
-    aieduExpert: dynamic(() => import('./aiedu-expert').then(mod => mod.AieduHomepageExpert)),
+    // aieduExpert: dynamic(() => import('./aiedu-expert').then(mod => mod.AieduHomepageExpert)),
+    aieduTeacher: dynamic(() => import('./aiedu-teacher').then(mod => mod.AieduHomepageTeacher)),
+    aieduMentor: dynamic(() => import('./aiedu-mentor').then(mod => mod.AieduHomepageMentor)),
     aieduDashboard: dynamic(() =>
       import('./aiedu-dashboard/dashboard-server').then(mod => mod.AieduHomepageDashboardServer)
     ),

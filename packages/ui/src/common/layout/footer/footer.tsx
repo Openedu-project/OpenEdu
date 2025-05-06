@@ -102,16 +102,19 @@ export function Footer({ logo, navigationItems, description, className, variant 
       <div className="container mx-auto">
         <div className="flex flex-col gap-8 lg:grid lg:grid-cols-12">
           <div className="w-full lg:col-span-4">
-            <Link href="/" className="mb-6 flex items-center gap-2 border-none p-0">
-              <div className="mr-auto w-[115px] md:w-[172px]">
+            <Link href="/" className="mb-6 flex h-auto items-center gap-2 border-none p-0">
+              <div className="mr-auto">
                 {logo ? (
                   <Image
                     src={logo.url}
                     alt="Logo"
                     align="start"
-                    width={logo.width}
-                    height={logo.height}
-                    className="w-[115px] min-w-[115px] md:w-[172px]"
+                    // width={logo.width}
+                    // height={logo.height}
+                    fill
+                    aspectRatio="1:1"
+                    containerHeight="64px"
+                    className="h-full w-full"
                   />
                 ) : (
                   <Image

@@ -18,45 +18,81 @@ export const createAiEduHomepageConfig = (getThemeTranslation: (path: string[]) 
     // Theme step 10: add the order
     order: 0,
   }),
-  aieduExpert: createSection<'homepage', 'aieduExpert'>({
+  aieduTeacher: createSection<'homepage', 'aieduTeacher'>({
     props: {
-      title: getThemeTranslation(['homepage', 'aieduExpert', 'title']),
+      title: getThemeTranslation(['homepage', 'aieduTeacher', 'title']),
       teachers: [
         {
-          name: getThemeTranslation(['homepage', 'aieduExpert', 'teachers.teacher1.name']),
-          role: getThemeTranslation(['homepage', 'aieduExpert', 'teachers.teacher1.role']),
+          name: getThemeTranslation(['homepage', 'aieduTeacher', 'teachers.teacher1.name']),
+          role: getThemeTranslation(['homepage', 'aieduTeacher', 'teachers.teacher1.role']),
           image: { mime: 'image/png' },
         },
         {
-          name: getThemeTranslation(['homepage', 'aieduExpert', 'teachers.teacher2.name']),
-          role: getThemeTranslation(['homepage', 'aieduExpert', 'teachers.teacher2.role']),
+          name: getThemeTranslation(['homepage', 'aieduTeacher', 'teachers.teacher2.name']),
+          role: getThemeTranslation(['homepage', 'aieduTeacher', 'teachers.teacher2.role']),
           image: { mime: 'image/png' },
         },
         {
-          name: getThemeTranslation(['homepage', 'aieduExpert', 'teachers.teacher3.name']),
-          role: getThemeTranslation(['homepage', 'aieduExpert', 'teachers.teacher3.role']),
-          image: { mime: 'image/png' },
-        },
-      ],
-      mentors: [
-        {
-          name: getThemeTranslation(['homepage', 'aieduExpert', 'mentors.mentor1.name']),
-          role: getThemeTranslation(['homepage', 'aieduExpert', 'mentors.mentor1.role']),
+          name: getThemeTranslation(['homepage', 'aieduTeacher', 'teachers.teacher3.name']),
+          role: getThemeTranslation(['homepage', 'aieduTeacher', 'teachers.teacher3.role']),
           image: { mime: 'image/png' },
         },
         {
-          name: getThemeTranslation(['homepage', 'aieduExpert', 'mentors.mentor2.name']),
-          role: getThemeTranslation(['homepage', 'aieduExpert', 'mentors.mentor2.role']),
+          name: getThemeTranslation(['homepage', 'aieduTeacher', 'teachers.teacher4.name']),
+          role: getThemeTranslation(['homepage', 'aieduTeacher', 'teachers.teacher4.role']),
           image: { mime: 'image/png' },
         },
         {
-          name: getThemeTranslation(['homepage', 'aieduExpert', 'mentors.mentor3.name']),
-          role: getThemeTranslation(['homepage', 'aieduExpert', 'mentors.mentor3.role']),
+          name: getThemeTranslation(['homepage', 'aieduTeacher', 'teachers.teacher5.name']),
+          role: getThemeTranslation(['homepage', 'aieduTeacher', 'teachers.teacher5.role']),
+          image: { mime: 'image/png' },
+        },
+        {
+          name: getThemeTranslation(['homepage', 'aieduTeacher', 'teachers.teacher6.name']),
+          role: getThemeTranslation(['homepage', 'aieduTeacher', 'teachers.teacher6.role']),
+          image: { mime: 'image/png' },
+        },
+        {
+          name: getThemeTranslation(['homepage', 'aieduTeacher', 'teachers.teacher7.name']),
+          role: getThemeTranslation(['homepage', 'aieduTeacher', 'teachers.teacher7.role']),
+          image: { mime: 'image/png' },
+        },
+        {
+          name: getThemeTranslation(['homepage', 'aieduTeacher', 'teachers.teacher8.name']),
+          role: getThemeTranslation(['homepage', 'aieduTeacher', 'teachers.teacher8.role']),
+          image: { mime: 'image/png' },
+        },
+        {
+          name: getThemeTranslation(['homepage', 'aieduTeacher', 'teachers.teacher9.name']),
+          role: getThemeTranslation(['homepage', 'aieduTeacher', 'teachers.teacher9.role']),
           image: { mime: 'image/png' },
         },
       ],
     },
     order: 1,
+  }),
+  aieduMentor: createSection<'homepage', 'aieduMentor'>({
+    props: {
+      title: getThemeTranslation(['homepage', 'aieduMentor', 'title']),
+      mentors: [
+        {
+          name: getThemeTranslation(['homepage', 'aieduMentor', 'mentors.mentor1.name']),
+          role: getThemeTranslation(['homepage', 'aieduMentor', 'mentors.mentor1.role']),
+          image: { mime: 'image/png' },
+        },
+        {
+          name: getThemeTranslation(['homepage', 'aieduMentor', 'mentors.mentor2.name']),
+          role: getThemeTranslation(['homepage', 'aieduMentor', 'mentors.mentor2.role']),
+          image: { mime: 'image/png' },
+        },
+        {
+          name: getThemeTranslation(['homepage', 'aieduMentor', 'mentors.mentor3.name']),
+          role: getThemeTranslation(['homepage', 'aieduMentor', 'mentors.mentor3.role']),
+          image: { mime: 'image/png' },
+        },
+      ],
+    },
+    order: 2,
   }),
   aieduFeatures: createSection<'homepage', 'aieduFeatures'>({
     props: {
@@ -66,7 +102,7 @@ export const createAiEduHomepageConfig = (getThemeTranslation: (path: string[]) 
           text: getThemeTranslation(['homepage', 'aieduFeatures', 'mainCourse', 'button', 'text']),
           link: '/',
         },
-        images: { mime: 'image/png' },
+        image: { mime: 'image/png' },
         benefits: [
           getThemeTranslation(['introduction', 'aieduFeatures', 'mainCourse', 'benefits', 'benefit1']),
           getThemeTranslation(['introduction', 'aieduFeatures', 'mainCourse', 'benefits', 'benefit2']),
@@ -80,7 +116,7 @@ export const createAiEduHomepageConfig = (getThemeTranslation: (path: string[]) 
           text: getThemeTranslation(['homepage', 'aieduFeatures', 'subCourse', 'button', 'text']),
           link: '/',
         },
-        images: { mime: 'image/png' },
+        image: { mime: 'image/png' },
         benefits: [
           getThemeTranslation(['homepage', 'aieduFeatures', 'subCourse', 'benefits', 'benefit1']),
           getThemeTranslation(['homepage', 'aieduFeatures', 'subCourse', 'benefits', 'benefit2']),
@@ -89,7 +125,7 @@ export const createAiEduHomepageConfig = (getThemeTranslation: (path: string[]) 
         ],
       },
     },
-    order: 2,
+    order: 3,
   }),
   aieduDashboard: createSection<'homepage', 'aieduDashboard'>({
     props: {
@@ -99,7 +135,7 @@ export const createAiEduHomepageConfig = (getThemeTranslation: (path: string[]) 
         link: '/',
       },
     },
-    order: 3,
+    order: 4,
   }),
   aieduBlog: createSection<'homepage', 'aieduBlog'>({
     props: {
@@ -109,7 +145,7 @@ export const createAiEduHomepageConfig = (getThemeTranslation: (path: string[]) 
         link: '/',
       },
     },
-    order: 4,
+    order: 5,
   }),
   aieduCert: createSection<'homepage', 'aieduCert'>({
     props: {
@@ -118,7 +154,7 @@ export const createAiEduHomepageConfig = (getThemeTranslation: (path: string[]) 
         text: getThemeTranslation(['homepage', 'aieduCert', 'button', 'text']),
         link: '/',
       },
-      banner: { mime: 'image/png' },
+      image: { mime: 'image/png' },
       coursePanel: {
         title: getThemeTranslation(['homepage', 'aieduCert', 'coursePanel', 'title']),
         requirements: [
@@ -128,7 +164,7 @@ export const createAiEduHomepageConfig = (getThemeTranslation: (path: string[]) 
         ],
       },
     },
-    order: 5,
+    order: 6,
   }),
   aieduGuide: createSection<'homepage', 'aieduGuide'>({
     props: {
@@ -140,7 +176,7 @@ export const createAiEduHomepageConfig = (getThemeTranslation: (path: string[]) 
         getThemeTranslation(['homepage', 'aieduGuide', 'steps', 'step3']),
       ],
     },
-    order: 6,
+    order: 7,
   }),
   aieduSponsors: createSection<'homepage', 'aieduSponsors'>({
     props: {
@@ -150,7 +186,7 @@ export const createAiEduHomepageConfig = (getThemeTranslation: (path: string[]) 
       sponsorLabel: getThemeTranslation(['homepage', 'aieduSponsors', 'sponsorLabel']),
       mediaLabel: getThemeTranslation(['homepage', 'aieduSponsors', 'mediaLabel']),
     },
-    order: 7,
+    order: 8,
   }),
   aieduGallery: createSection<'homepage', 'aieduGallery'>({
     props: {
@@ -164,6 +200,6 @@ export const createAiEduHomepageConfig = (getThemeTranslation: (path: string[]) 
       image7: { mime: 'image/png' },
       image8: { mime: 'image/png' },
     },
-    order: 8,
+    order: 9,
   }),
 });

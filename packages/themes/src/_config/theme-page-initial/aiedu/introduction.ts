@@ -69,45 +69,81 @@ export const createAiEduIntroductionConfig = (getThemeTranslation: (path: string
     },
     order: 3,
   }),
-  aieduExpert: createSection<'introduction', 'aieduExpert'>({
+  aieduTeacher: createSection<'introduction', 'aieduTeacher'>({
     props: {
-      title: getThemeTranslation(['introduction', 'aieduExpert', 'title']),
+      title: getThemeTranslation(['introduction', 'aieduTeacher', 'title']),
       teachers: [
         {
-          name: getThemeTranslation(['introduction', 'aieduExpert', 'teachers.teacher1.name']),
-          role: getThemeTranslation(['introduction', 'aieduExpert', 'teachers.teacher1.role']),
+          name: getThemeTranslation(['introduction', 'aieduTeacher', 'teachers.teacher1.name']),
+          role: getThemeTranslation(['introduction', 'aieduTeacher', 'teachers.teacher1.role']),
           image: { mime: 'image/png' },
         },
         {
-          name: getThemeTranslation(['introduction', 'aieduExpert', 'teachers.teacher2.name']),
-          role: getThemeTranslation(['introduction', 'aieduExpert', 'teachers.teacher2.role']),
+          name: getThemeTranslation(['introduction', 'aieduTeacher', 'teachers.teacher2.name']),
+          role: getThemeTranslation(['introduction', 'aieduTeacher', 'teachers.teacher2.role']),
           image: { mime: 'image/png' },
         },
         {
-          name: getThemeTranslation(['introduction', 'aieduExpert', 'teachers.teacher3.name']),
-          role: getThemeTranslation(['introduction', 'aieduExpert', 'teachers.teacher3.role']),
-          image: { mime: 'image/png' },
-        },
-      ],
-      mentors: [
-        {
-          name: getThemeTranslation(['introduction', 'aieduExpert', 'mentors.mentor1.name']),
-          role: getThemeTranslation(['introduction', 'aieduExpert', 'mentors.mentor1.role']),
+          name: getThemeTranslation(['introduction', 'aieduTeacher', 'teachers.teacher3.name']),
+          role: getThemeTranslation(['introduction', 'aieduTeacher', 'teachers.teacher3.role']),
           image: { mime: 'image/png' },
         },
         {
-          name: getThemeTranslation(['introduction', 'aieduExpert', 'mentors.mentor2.name']),
-          role: getThemeTranslation(['introduction', 'aieduExpert', 'mentors.mentor2.role']),
+          name: getThemeTranslation(['introduction', 'aieduTeacher', 'teachers.teacher4.name']),
+          role: getThemeTranslation(['introduction', 'aieduTeacher', 'teachers.teacher4.role']),
           image: { mime: 'image/png' },
         },
         {
-          name: getThemeTranslation(['introduction', 'aieduExpert', 'mentors.mentor3.name']),
-          role: getThemeTranslation(['introduction', 'aieduExpert', 'mentors.mentor3.role']),
+          name: getThemeTranslation(['introduction', 'aieduTeacher', 'teachers.teacher5.name']),
+          role: getThemeTranslation(['introduction', 'aieduTeacher', 'teachers.teacher5.role']),
+          image: { mime: 'image/png' },
+        },
+        {
+          name: getThemeTranslation(['introduction', 'aieduTeacher', 'teachers.teacher6.name']),
+          role: getThemeTranslation(['introduction', 'aieduTeacher', 'teachers.teacher6.role']),
+          image: { mime: 'image/png' },
+        },
+        {
+          name: getThemeTranslation(['introduction', 'aieduTeacher', 'teachers.teacher7.name']),
+          role: getThemeTranslation(['introduction', 'aieduTeacher', 'teachers.teacher7.role']),
+          image: { mime: 'image/png' },
+        },
+        {
+          name: getThemeTranslation(['introduction', 'aieduTeacher', 'teachers.teacher8.name']),
+          role: getThemeTranslation(['introduction', 'aieduTeacher', 'teachers.teacher8.role']),
+          image: { mime: 'image/png' },
+        },
+        {
+          name: getThemeTranslation(['introduction', 'aieduTeacher', 'teachers.teacher9.name']),
+          role: getThemeTranslation(['introduction', 'aieduTeacher', 'teachers.teacher9.role']),
           image: { mime: 'image/png' },
         },
       ],
     },
     order: 4,
+  }),
+  aieduMentor: createSection<'introduction', 'aieduMentor'>({
+    props: {
+      title: getThemeTranslation(['introduction', 'aieduMentor', 'title']),
+      mentors: [
+        {
+          name: getThemeTranslation(['introduction', 'aieduMentor', 'mentors.mentor1.name']),
+          role: getThemeTranslation(['introduction', 'aieduMentor', 'mentors.mentor1.role']),
+          image: { mime: 'image/png' },
+        },
+        {
+          name: getThemeTranslation(['introduction', 'aieduMentor', 'mentors.mentor2.name']),
+          role: getThemeTranslation(['introduction', 'aieduMentor', 'mentors.mentor2.role']),
+          image: { mime: 'image/png' },
+        },
+        {
+          name: getThemeTranslation(['introduction', 'aieduMentor', 'mentors.mentor3.name']),
+          role: getThemeTranslation(['introduction', 'aieduMentor', 'mentors.mentor3.role']),
+          image: { mime: 'image/png' },
+        },
+      ],
+    },
+    order: 5,
   }),
   aieduFeatures: createSection<'introduction', 'aieduFeatures'>({
     props: {
@@ -117,7 +153,7 @@ export const createAiEduIntroductionConfig = (getThemeTranslation: (path: string
           text: getThemeTranslation(['introduction', 'aieduFeatures', 'mainCourse', 'button', 'text']),
           link: '/',
         },
-        images: { mime: 'image/png' },
+        image: { mime: 'image/png' },
         benefits: [
           getThemeTranslation(['introduction', 'aieduFeatures', 'mainCourse', 'benefits', 'benefit1']),
           getThemeTranslation(['introduction', 'aieduFeatures', 'mainCourse', 'benefits', 'benefit2']),
@@ -131,7 +167,7 @@ export const createAiEduIntroductionConfig = (getThemeTranslation: (path: string
           text: getThemeTranslation(['introduction', 'aieduFeatures', 'subCourse', 'button', 'text']),
           link: '/',
         },
-        images: { mime: 'image/png' },
+        image: { mime: 'image/png' },
         benefits: [
           getThemeTranslation(['introduction', 'aieduFeatures', 'subCourse', 'benefits', 'benefit1']),
           getThemeTranslation(['introduction', 'aieduFeatures', 'subCourse', 'benefits', 'benefit2']),
@@ -140,7 +176,7 @@ export const createAiEduIntroductionConfig = (getThemeTranslation: (path: string
         ],
       },
     },
-    order: 5,
+    order: 6,
   }),
   aieduMap: createSection<'introduction', 'aieduMap'>({
     props: {
@@ -152,6 +188,6 @@ export const createAiEduIntroductionConfig = (getThemeTranslation: (path: string
         link: '/',
       },
     },
-    order: 6,
+    order: 7,
   }),
 });

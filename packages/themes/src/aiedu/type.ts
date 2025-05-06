@@ -7,7 +7,7 @@ import type { AieduHomepageBlogsProps } from './homepage';
 import type { AieduHomepageCertProps } from './homepage';
 import type { AieduHomepageGuideProps } from './homepage';
 import type { AieduHomepageSponsorsProps } from './homepage';
-import type { AieduHomepageGalleryProps } from './homepage';
+import type { AieduHomepageGalleryProps, AieduHomepageMentorProps, AieduHomepageTeacherProps } from './homepage';
 import type {
   AieduIntroductionBenefitProps,
   AieduIntroductionGoalProps,
@@ -30,4 +30,6 @@ export type {
   AieduDashboardConfigProps,
   AieduIntroductionTrendProps,
   AieduIntroductionBenefitProps,
+  AieduHomepageTeacherProps,
+  AieduHomepageMentorProps,
 };

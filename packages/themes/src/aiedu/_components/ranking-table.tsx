@@ -68,55 +68,72 @@ const RankingTable = ({ leaderBoardsData = [] }: RankingTableProps) => {
         </Button>
       </div>
 
+      {/* Added a wrapper div with overflow-x-auto to enable horizontal scrolling */}
       <div className="mb-6 overflow-hidden rounded-lg border border-secondary">
-        <table className="w-full">
-          <thead>
-            <tr className="border-secondary border-b">
-              <th className="px-2 py-3 text-left text-sm sm:text-normal md:px-4">{t('province')}</th>
-              <th className="px-2 py-3 text-center text-sm sm:text-normal md:px-4">{t('registerCount')}</th>
-              <th className="px-2 py-3 text-center text-sm sm:text-normal md:px-4">{t('certCount')}</th>
-              <th className="px-2 py-3 text-center text-sm sm:text-normal md:px-4">{t('percent_cert_on_ref')}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredData.length > 0 ? (
-              filteredData.map((province, index) => (
-                // <Link
-                //   key={province.id}
-                //   href={`/ranking/${province.user_id}`}
-                //   className="w-full"
-                // >
-                <tr key={index.toString()} className="border-secondary border-b hover:bg-primary-foreground">
-                  <td className="px-2 py-3 md:px-4">
-                    <div className="flex items-center">
-                      <div className="mr-2 flex h-6 w-6 items-center justify-center rounded-full bg-primary font-bold text-background text-sm sm:mr-4 sm:h-8 sm:w-8 sm:text-normal">
-                        {/* Calculate position dynamically */}
-                        {leaderBoardsData.indexOf(province) + 1}
-                      </div>
-                      <span className="font-bold text-sm sm:text-normal">{province?.display_name ?? '-'}</span>
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[600px]">
+            <thead>
+              <tr className="border-secondary border-b">
+                <th className="px-2 py-3 text-left md:max-w-auto md:px-4">{t('province')}</th>
+                <th className="px-2 py-3 text-center md:px-4">
+                  <p>{t('registerCount')}</p>
+                  <p className="hidden font-medium text-sm sm:text-normal md:block">{t('registerUnit')}</p>
+                </th>
+                <th className="px-2 py-3 text-center md:px-4">
+                  <p> {t('certCount')}</p>
+                  <p className="hidden font-medium text-sm sm:text-normal md:block">{t('certUnit')}</p>
+                </th>
+                <th className="px-2 py-3 text-center md:px-4">
+                  <p>{t('percent_cert_on_ref')}</p>
+                  <div className="flex hidden flex-wrap justify-center gap-2 md:flex">
+                    <div className="flex items-center gap-1">
+                      <div className="h-2 w-2 rounded-full bg-primary" />
+                      <p className="font-medium text-sm sm:text-normal">{t('receivedCert')}</p>
                     </div>
-                  </td>
-                  <td className="px-2 py-3 text-center font-bold text-sm sm:text-normal md:px-4">
-                    {province.register_count}
-                  </td>
-                  <td className="px-2 py-3 text-center font-bold text-sm sm:text-normal md:px-4">
-                    {province.cert_count}
-                  </td>
-                  <td className="flex justify-center px-2 py-3 text-center font-bold text-sm sm:text-normal md:px-4">
-                    <CircularPercentageChart percentage={Number(province.percent_cert_on_reg) * 100} />
+                    <div className="flex items-center gap-1">
+                      <div className="h-2 w-2 rounded-full bg-info" />
+                      <p className="font-medium text-sm sm:text-normal">{t('noCert')}</p>
+                    </div>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredData.length > 0 ? (
+                filteredData.map((province, index) => (
+                  <tr key={index.toString()} className="border-secondary border-b hover:bg-primary-foreground">
+                    <td className="px-2 py-3 md:px-4">
+                      <div className="flex items-center">
+                        <div className="mr-2 flex h-6 w-6 items-center justify-center rounded-full bg-primary font-bold text-background text-sm sm:mr-4 sm:h-8 sm:w-8 sm:text-normal">
+                          {/* Calculate position dynamically */}
+                          {leaderBoardsData.indexOf(province) + 1}
+                        </div>
+                        <span className="max-w-[100px] truncate font-bold text-sm sm:text-normal md:max-w-[300px] ">
+                          {province?.display_name ?? '-'}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="px-2 py-3 text-center font-bold text-sm sm:text-normal md:px-4">
+                      {province.register_count}
+                    </td>
+                    <td className="px-2 py-3 text-center font-bold text-sm sm:text-normal md:px-4">
+                      {province.cert_count}
+                    </td>
+                    <td className="flex justify-center px-2 py-3 text-center font-bold text-sm sm:text-normal md:px-4">
+                      <CircularPercentageChart percentage={Number(province.percent_cert_on_reg) * 100} />
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={4} className="px-4 py-3 text-center">
+                    Không tìm thấy kết quả
                   </td>
                 </tr>
-                // </Link>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={4} className="px-4 py-3 text-center">
-                  Không tìm thấy kết quả
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );

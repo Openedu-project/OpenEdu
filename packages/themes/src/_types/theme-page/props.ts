@@ -68,7 +68,9 @@ import type {
   AieduHomepageGalleryProps,
   AieduHomepageGuideProps,
   AieduHomepageHeroProps,
+  AieduHomepageMentorProps,
   AieduHomepageSponsorsProps,
+  AieduHomepageTeacherProps,
   AieduIntroductionBenefitProps,
   AieduIntroductionGoalProps,
   AieduIntroductionMapProps,
@@ -166,6 +168,8 @@ export interface SectionPropsMap<K extends ThemePageKey> {
   aieduGuide: DynamicProps<K, AieduHomepageGuideProps>;
   aieduSponsors: DynamicProps<K, AieduHomepageSponsorsProps>;
   aieduGallery: DynamicProps<K, AieduHomepageGalleryProps>;
+  aieduTeacher: DynamicProps<K, AieduHomepageTeacherProps>;
+  aieduMentor: DynamicProps<K, AieduHomepageMentorProps>;
   // Aiedu introduction
   aieduGoal: DynamicProps<K, AieduIntroductionGoalProps>;
   aieduVisionMission: DynamicProps<K, AieduIntroductionVisionMissionProps>;

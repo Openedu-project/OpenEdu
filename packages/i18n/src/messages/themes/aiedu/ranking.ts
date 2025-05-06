@@ -6,6 +6,10 @@ export const aieduRanking = {
       certCount: 'Số lượng chứng chỉ',
       province: 'Tỉnh thành',
       percent_cert_on_ref: 'Tỷ lệ nhận chứng chỉ',
+      registerUnit: '(Đơn vị: Lượt đăng ký)',
+      certUnit: '(Đơn vị: Chứng chỉ)',
+      receivedCert: 'Đã nhận chứng chỉ',
+      noCert: 'Chưa nhận chứng chỉ ',
     },
   },
 };

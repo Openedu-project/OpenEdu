@@ -1,5 +1,5 @@
 import type { FileType } from '@oe/ui';
-import { Image } from '@oe/ui';
+import { Image, cn } from '@oe/ui';
 import { Card, CardContent } from '@oe/ui';
 
 interface ExpertProps {
@@ -11,22 +11,30 @@ interface ExpertProps {
     x?: string;
     linkedin?: string;
   };
+  className?: string;
 }
 
-const ExpertCard = ({ name, role, image }: ExpertProps) => {
+const ExpertCard = ({ name, role, image, className }: ExpertProps) => {
   return (
-    <Card className="mx-auto h-full max-w-[320px] overflow-hidden border-none bg-card p-2 shadow-xs transition-shadow duration-300 hover:shadow-md md:mx-0 md:w-full md:max-w-none">
+    <Card
+      className={cn(
+        'h-full overflow-hidden border-none bg-card p-2 shadow-xs transition-shadow duration-300 hover:shadow-md',
+        className
+      )}
+    >
       <Image
         src={image?.url}
-        height={image?.height ?? 300}
-        width={image?.width ?? 300}
         alt="avatar"
-        className="h-full w-full object-cover transition-all duration-300 hover:scale-105"
+        fill
+        rounded="lg"
+        aspectRatio="1:1"
+        sizes="240px"
+        className="h-full w-full rounded-lg object-cover transition-all duration-300 hover:scale-105"
       />
       <CardContent className="space-y-2">
         {/* <div className="space-y-2"> */}
-        <h3 className="mt-1 font-bold text-base text-foreground uppercase tracking-wide sm:mt-2 sm:text-lg">{name}</h3>
-        <p className="text-foreground/80 text-xs sm:text-sm">{role}</p>
+        <h3 className="mt-1 font-bold text-base text-foreground tracking-wide sm:mt-2 sm:text-lg">{name}</h3>
+        <p className="text-muted-foreground text-xs sm:text-sm">{role}</p>
         {/* </div> */}
         {/* <div className="flex justify-center space-x-2 p-3 sm:p-4 md:space-x-4">
           {socialLinks?.facebook && (

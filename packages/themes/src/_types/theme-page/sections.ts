@@ -42,7 +42,9 @@ type AieduHomepageSection =
   | 'aieduCert'
   | 'aieduGuide'
   | 'aieduSponsors'
-  | 'aieduGallery';
+  | 'aieduGallery'
+  | 'aieduTeacher'
+  | 'aieduMentor';
 
 // Theme step 3 (optionals): if the type is new, add to the all HomeSection
 export type HomeSection =
@@ -79,7 +81,9 @@ export type IntroduceSection =
   | 'aieduFeatures'
   | 'aieduMap'
   | 'aieduTrend'
-  | 'aieduBenefit';
+  | 'aieduBenefit'
+  | 'aieduTeacher'
+  | 'aieduMentor';
 
 // RANKING
 export type RankingSection = 'theme' | 'aieduDashboard';

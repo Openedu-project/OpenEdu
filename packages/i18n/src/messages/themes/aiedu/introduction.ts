@@ -84,6 +84,64 @@ export const aieduIntroduction = {
         },
       },
     },
+    aieduTeacher: {
+      title: 'GIẢNG VIÊN',
+      teachers: {
+        teacher1: {
+          name: 'Vũ Việt Anh',
+          role: 'Research Scientist tại TRM Labs. Nhóm Nghiên cứu Bảo mật & An ning mạng tại ĐH Cambridge.',
+        },
+        teacher2: {
+          name: 'Nguyễn Chiến Thắng',
+          role: 'Giám đốc Trung Tâm Phát Triển, Khối Công Nghệ Thông Tin- Ngân hàng Sài Gòn - Hà Nội (SHB)',
+        },
+        teacher3: {
+          name: 'Trương Phước Hưng',
+          role: 'Trưởng phòng nghiên cứu Thị giác Máy tính tại Công ty Data Design Engineering (Hàn Quốc)',
+        },
+        teacher4: {
+          name: 'Nguyễn Khánh Vy',
+          role: 'Nhà khoa học dữ liệu II tại Delta Air Lines. Bằng MSE về Khoa học dữ liệu tại ĐH Pennsylvania.',
+        },
+        teacher5: {
+          name: 'Huỳnh Minh Chương',
+          role: 'Nghiên cứu sinh tiến sĩ ĐH Maryland, College Park, Hoa Kỳ, nghiên cứu lĩnh vực thị giác máy tính và deep learning.',
+        },
+        teacher6: {
+          name: 'Ngô Trung Hiếu',
+          role: 'Senior AI Engineer tại MoMo, nghiên cứu phát triển chatbot cho doanh nghiệp & Gen AI (LLM)',
+        },
+        teacher7: {
+          name: 'Nguyễn Hồ Minh Duy',
+          role: 'Ứng viên Tiến sĩ tại Trường nghiên cứu Max Planck về Hệ thống thông minh (IMPRS-IS) và ĐH Stuttgart, Đức',
+        },
+        teacher8: {
+          name: 'Ngô Hữu Thống',
+          role: 'Viện trưởng Viện AiOV. Người sáng lập cộng đồng “Xoá mù AI”- hệ sinh thái 200.000 member.',
+        },
+        teacher9: {
+          name: 'Võ Đức Minh',
+          role: 'Trưởng nhóm trợ lí nghiên cứu cho trưởng khoa CNTT tại ĐH Monash University, Úc',
+        },
+      },
+    },
+    aieduMentor: {
+      title: 'CỐ VẤN',
+      mentors: {
+        mentor1: {
+          name: 'Sebastian Doe',
+          role: 'Code Expert',
+        },
+        mentor2: {
+          name: 'Sebastian Doe',
+          role: 'Code Expert',
+        },
+        mentor3: {
+          name: 'Sebastian Doe',
+          role: 'Code Expert',
+        },
+      },
+    },
     aieduFeatures: {
       mainCourse: {
         title: 'Khoá học AI Gen dành cho mọi người',
