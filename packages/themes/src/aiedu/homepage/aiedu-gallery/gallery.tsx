@@ -28,35 +28,35 @@ const AieduHomepageGallery: SectionComponent<'homepage', 'aieduGallery'> = ({ pr
           src={props?.image1?.url}
           width={props?.image1?.width ?? 240}
           height={props?.image1?.height ?? 240}
-          className="w-full rounded-[20px] object-contain"
+          className="max-h-[240px] w-full rounded-3xl object-cover transition-all duration-300 hover:scale-105"
         />
         <Image
           alt="image"
           src={props?.image2?.url}
           width={props?.image2?.width ?? 240}
           height={props?.image2?.height ?? 240}
-          className="w-full rounded-[20px] object-contain"
+          className="max-h-[240px] w-full rounded-3xl object-cover transition-all duration-300 hover:scale-105"
         />
         <Image
           alt="image"
           src={props?.image3?.url}
           width={props?.image3?.width ?? 240}
           height={props?.image3?.height ?? 240}
-          className="w-full rounded-[20px] object-contain"
+          className="max-h-[240px] w-full rounded-3xl object-cover transition-all duration-300 hover:scale-105"
         />
         <Image
           alt="image"
           src={props?.image4?.url}
           width={props?.image4?.width ?? 240}
           height={props?.image4?.height ?? 240}
-          className="w-full rounded-[20px] object-contain"
+          className="max-h-[240px] w-full rounded-3xl object-cover transition-all duration-300 hover:scale-105"
         />
         <Image
           alt="image"
           src={props?.image5?.url}
           width={props?.image5?.width ?? 240}
           height={props?.image5?.height ?? 240}
-          className="w-full rounded-[20px] object-contain"
+          className="max-h-[240px] w-full rounded-3xl object-cover transition-all duration-300 hover:scale-105"
         />
       </div>
       <div className="grid-col-1 mb-4 grid gap-4 lg:grid-cols-2">
@@ -65,14 +65,14 @@ const AieduHomepageGallery: SectionComponent<'homepage', 'aieduGallery'> = ({ pr
           src={props?.image6?.url}
           width={props?.image6?.width ?? 630}
           height={props?.image6?.height ?? 280}
-          className="w-full rounded-[20px] object-contain"
+          className="max-h-[280px] w-full rounded-3xl object-cover transition-all duration-300 hover:scale-105"
         />
         <Image
           alt="image"
           src={props?.image7?.url}
           width={props?.image7?.width ?? 630}
           height={props?.image7?.height ?? 280}
-          className="w-full rounded-[20px] object-contain"
+          className="max-h-[280px] w-full rounded-3xl object-cover transition-all duration-300 hover:scale-105"
         />
       </div>
       <div>
@@ -81,7 +81,7 @@ const AieduHomepageGallery: SectionComponent<'homepage', 'aieduGallery'> = ({ pr
           src={props?.image8?.url}
           width={props?.image8?.width ?? 1280}
           height={props?.image8?.height ?? 520}
-          className="w-full rounded-[20px] object-contain"
+          className="max-h-[520px] w-full rounded-3xl object-cover transition-all duration-300 hover:scale-105"
         />
       </div>
     </AieduLayoutSection>

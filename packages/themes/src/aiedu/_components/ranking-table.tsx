@@ -52,10 +52,10 @@ const RankingTable = ({ leaderBoardsData = [] }: RankingTableProps) => {
 
   return (
     <>
-      <div className="relative flex h-10">
+      <div className="relative flex h-auto items-center">
         <Search className="absolute left-2 z-1 h-full w-4 text-forground/60" />
         <Input
-          className="rounded-lg px-8"
+          className="h-auto rounded-3xl px-8 py-3"
           placeholder="Tìm kiếm theo địa phương"
           value={searchTerm}
           onChange={handleSearchChange}
