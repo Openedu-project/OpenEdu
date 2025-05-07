@@ -11,15 +11,15 @@ export const GenMessage = memo(
   ({
     containerRef,
     mutate,
-    scrollToBottom,
     setShowScrollButton,
   }: {
     containerRef: RefObject<HTMLDivElement | null>;
     mutate: KeyedMutator<IConversationDetails>;
-    scrollToBottom?: (behavior: 'auto' | 'smooth') => void;
-    setShowScrollButton: Dispatch<SetStateAction<boolean>>;
+    setShowScrollButton?: Dispatch<SetStateAction<boolean>>;
   }) => {
     const { genMessage } = useConversationStore();
+    const endElement = document.getElementById('end_line');
+    const endPosition = endElement?.getBoundingClientRect();
     const prevScrollPosition = useRef<{ position: number; height: number }>({
       position: 0,
       height: 0,
@@ -27,22 +27,30 @@ export const GenMessage = memo(
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
     useEffect(() => {
-      if (!genMessage?.content) {
+      if (!(genMessage?.content && endPosition)) {
+        return;
+      }
+      if (endPosition.bottom > (window.innerHeight || document.documentElement.clientHeight)) {
+        setShowScrollButton?.(true);
         return;
       }
 
       if (containerRef.current) {
-        const { scrollHeight, scrollTop, clientHeight } = containerRef.current;
+        const { scrollHeight, scrollTop } = containerRef.current;
         const { position } = prevScrollPosition.current;
 
-        if (scrollTop > position - 20) {
-          scrollToBottom?.('auto');
+        if (
+          scrollTop > position - 20 &&
+          endPosition.bottom >= (window.innerHeight || document.documentElement.clientHeight) - 50
+        ) {
+          document.getElementById(genMessage.id)?.scrollIntoView({
+            behavior: 'auto',
+            block: 'end',
+          });
           prevScrollPosition.current = {
             position: scrollTop,
             height: scrollHeight,
           };
-        } else if (scrollTop + clientHeight < scrollHeight) {
-          setShowScrollButton(true);
         }
       }
     }, [genMessage]);

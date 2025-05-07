@@ -113,7 +113,7 @@ export function AISidebarContent({
                   content={item.agent === 'ai_search' ? tAI('newChat') : tAI(item.lableKey)}
                   activeClassName={pathname !== item.href ? '' : undefined}
                   contentProps={{
-                    className: 'rounded-full text-primary border border-primary !mcaption-regular10 p-1',
+                    className: 'rounded-full text-primary border border-primary py-1',
                     side: 'right',
                     align: 'start',
                   }}
@@ -127,7 +127,7 @@ export function AISidebarContent({
             href={AI_ROUTES.history}
             content={tAI('history')}
             contentProps={{
-              className: 'rounded-full text-primary border border-primary !mcaption-regular10 p-1',
+              className: 'rounded-full text-primary border border-primary py-1',
               side: 'right',
               align: 'start',
             }}

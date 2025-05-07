@@ -114,7 +114,7 @@ export const ChatWindow = ({ id, agent, className, isLogin }: IChatWindowProps) 
   );
 
   return (
-    <div className={cn('scrollbar flex h-full flex-col overflow-y-auto', className)}>
+    <div className={cn('flex h-full flex-col pb-1', className)}>
       <MessageContainer
         className="overflow-x-hidden"
         messageType={messageType}

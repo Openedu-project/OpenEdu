@@ -45,11 +45,11 @@ export const MessageContainer = ({
 
   const { messages, status, setMessages, isNewChat, setIsNewChat } = useConversationStore();
   const [shouldGetData, setShouldGetData] = useState<boolean>(false);
-  const [prevScrollHeight, setPrevScrollHeight] = useState(0);
   const [initScrollBottom, setInitScrollBottom] = useState(false);
   const [showScrollButton, setShowScrollButton] = useState(false);
 
   const nextKeyRef = useRef<string>(nextCursorPage);
+  const prevScrollHeight = useRef<number>(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
@@ -81,7 +81,7 @@ export const MessageContainer = ({
     requestAnimationFrame(() => {
       if (containerRef.current) {
         const newScrollHeight = containerRef.current.scrollHeight;
-        const scrollDiff = newScrollHeight - prevScrollHeight - 200;
+        const scrollDiff = newScrollHeight - prevScrollHeight.current - 200;
         containerRef.current.scrollTop = scrollDiff;
       }
     });
@@ -92,6 +92,9 @@ export const MessageContainer = ({
       return;
     }
     handleScrollToBottom(scrollBehavior);
+    setTimeout(() => {
+      setInitScrollBottom(true);
+    }, 1000);
     if (isNewChat) {
       setIsNewChat(false);
 
@@ -113,42 +116,36 @@ export const MessageContainer = ({
     }
   }, [messages.length, initScrollBottom, scrollBehavior, isNewChat, setIsNewChat, globalMutate, cache.keys]);
 
-  const handleScrollToBottom = useCallback(
-    (scrollBehavior?: 'auto' | 'smooth') => {
-      if (!containerRef) {
-        return;
-      }
-      if (messagesEndRef.current) {
-        messagesEndRef.current?.scrollIntoView({
-          behavior: scrollBehavior ?? (isNewChat ? 'auto' : 'smooth'),
-        });
-      }
-    },
-    [isNewChat]
-  );
+  const handleScrollToBottom = useCallback((scrollBehavior?: 'auto' | 'smooth') => {
+    messagesEndRef.current?.scrollIntoView({
+      behavior: scrollBehavior ?? 'smooth',
+      block: 'end',
+    });
+  }, []);
 
-  const handleScroll = () => {
+  const triggerScrollBottomButton = useCallback(() => {
+    const position = messagesEndRef.current?.getBoundingClientRect();
+    if (!position) {
+      return;
+    }
+
+    const showButton = position.bottom > (window.innerHeight || document.documentElement.clientHeight) - 50;
+    setShowScrollButton(showButton);
+  }, []);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  const handleScroll = useCallback(() => {
     if (!containerRef.current) {
       return;
     }
-    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+    const { scrollTop, scrollHeight } = containerRef.current;
     if (scrollTop < 100 && !shouldGetData && initScrollBottom) {
-      setPrevScrollHeight(scrollHeight);
+      prevScrollHeight.current = scrollHeight;
       setShouldGetData(true);
     }
 
-    if (scrollTop + clientHeight > scrollHeight - 50 && !initScrollBottom) {
-      setInitScrollBottom(true);
-    }
-
-    if (scrollTop + clientHeight < scrollHeight - 100) {
-      if (!showScrollButton) {
-        setShowScrollButton(true);
-      }
-    } else if (showScrollButton) {
-      setShowScrollButton(false);
-    }
-  };
+    triggerScrollBottomButton();
+  }, [initScrollBottom, shouldGetData]);
 
   const rewrite = (msg: IMessage) => {
     if (!msg.ai_agent_type || messageType.includes(msg.ai_agent_type)) {
@@ -190,13 +187,8 @@ export const MessageContainer = ({
             />
           );
         })}
-        <GenMessage
-          containerRef={containerRef}
-          mutate={mutate}
-          scrollToBottom={handleScrollToBottom}
-          setShowScrollButton={setShowScrollButton}
-        />
-        <div id="end_line" ref={messagesEndRef} />
+        <GenMessage containerRef={containerRef} mutate={mutate} setShowScrollButton={setShowScrollButton} />
+        <div id="end_line" className="h-10" ref={messagesEndRef} />
       </div>
       <div className={cn('sticky bottom-0 z-50 hidden translate-x-1/2', showScrollButton && 'block')}>
         <Button size="icon" variant="outline" className="rounded-full" onClick={() => handleScrollToBottom('smooth')}>
