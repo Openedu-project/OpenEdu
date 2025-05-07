@@ -19,3 +19,10 @@ export function abbreviateNumber(number: number) {
 
   return scaled.toFixed(1) + suffix;
 }
+
+export const extractHtmlToText = (htmlString: string, maxSize?: number): string => {
+  // Remove all HTML tags using regular expression
+  const textOnly = htmlString.replaceAll(/<[^>]*>/g, '');
+
+  return textOnly.slice(0, maxSize ?? 160);
+};

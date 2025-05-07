@@ -12,9 +12,9 @@ export function CourseCreator({ owner }: { owner: ICourseOwner }) {
       <div className="flex items-center gap-2">
         <div className="mcaption-semibold16 line-clamp-1 flex items-center gap-1">
           <span className="text-foreground/70">{tCourse('creator')}:</span>
-          <h2 className="mcaption-semibold16 mb-0 line-clamp-1 text-primary">
+          <span className="mcaption-semibold16 line-clamp-1 text-primary">
             {owner?.display_name && owner.display_name?.length > 0 ? owner.display_name : owner?.username}
-          </h2>
+          </span>
         </div>
 
         <UserAvatar src={owner?.avatar ?? ''} name={owner?.display_name ?? owner?.username ?? ''} />

@@ -1,3 +1,4 @@
+import { BLOG_ROUTES } from '@oe/core';
 import { createSection } from '../../../_utils/function';
 
 export const createVbiHomepageConfig = (getThemeTranslation: (path: string[]) => string) => ({
@@ -242,7 +243,7 @@ export const createVbiHomepageConfig = (getThemeTranslation: (path: string[]) =>
       titleSub: getThemeTranslation(['homepage', 'vbiBlogs', 'titleSub']),
       button: {
         text: getThemeTranslation(['homepage', 'vbiBlogs', 'button', 'text']),
-        link: '/blog',
+        link: BLOG_ROUTES.blog,
       },
     },
     order: 5,

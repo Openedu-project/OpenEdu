@@ -84,7 +84,7 @@ export const aieduMessage = {
           },
           'sidebarItems-3': {
             id: 'blog',
-            href: '/blog',
+            href: '/news-feed',
             label: 'Tin tức',
           },
           'sidebarItems-4': {
