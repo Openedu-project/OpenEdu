@@ -130,6 +130,7 @@ export function formatDate(timestamp: number): string {
  */
 export function formatDateTime(timestamp: number): string {
   const locale = LocaleManager.getInstance().getLocale();
+  console.log('localelocalelocale', locale);
   return format(fromUnixTime((timestamp ?? 0) / 1000), FORMAT_PATTERNS.DATE_TIME, { locale });
 }
 
