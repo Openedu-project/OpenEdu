@@ -30,6 +30,8 @@ export default async function ScheduleEventList({
     params: eventParams,
   });
 
+  console.log('eventsData', eventsData);
+
   return (
     <>
       <div className="mb-4 flex items-center gap-2">
