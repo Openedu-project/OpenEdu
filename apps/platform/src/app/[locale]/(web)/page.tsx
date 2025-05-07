@@ -1,5 +1,4 @@
-import { generateSEO } from '@oe/core';
-import { AIBanner } from "@oe/ui";
+import { AIBanner, SEOMetadata } from '@oe/ui';
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { AIFeatureSection } from './_components/ai-features';
@@ -21,7 +20,7 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'homepageMetadata' });
 
-  return generateSEO({
+  return SEOMetadata({
     title: { absolute: t('title') },
     description: t('description'),
     keywords: ['e-learning', 'blockchain', 'launchpad', 'AI', 'education'],

@@ -15,4 +15,3 @@ export * from './unique';
 export * from './url';
 export * from './utils';
 export * from './fonts';
-export * from './seo';

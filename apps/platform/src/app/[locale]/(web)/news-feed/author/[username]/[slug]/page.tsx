@@ -1,40 +1,30 @@
 import { getBlogContent, getUserProfileService } from '@oe/api';
-import { generateSEO } from '@oe/core';
-import { BlogDetailsPage } from '@oe/ui';
+import { BlogDetailsPage, SEOMetadata } from '@oe/ui';
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ username: string; slug: string, locale: string }>;
+  params: Promise<{ username: string; slug: string; locale: string }>;
 }): Promise<Metadata> {
   const { username, slug, locale } = await params;
   const [author, newsfeed, t] = await Promise.all([
     getUserProfileService(undefined, { id: username }),
-    getBlogContent(undefined, { slug, type: "personal" }),
-    getTranslations({ locale, namespace: "newsfeedMetadata" }),
+    getBlogContent(undefined, { slug, type: 'personal' }),
+    getTranslations({ locale, namespace: 'newsfeedMetadata' }),
   ]);
 
   const authorName =
-    author?.display_name && author?.display_name?.length > 0
-      ? author?.display_name
-      : author?.username ?? "";
+    author?.display_name && author?.display_name?.length > 0 ? author?.display_name : (author?.username ?? '');
 
-  return generateSEO({
-    title: `${newsfeed?.title} | ${t("byAuthor", { name: authorName })}`,
+  return SEOMetadata({
+    title: `${newsfeed?.title} | ${t('byAuthor', { name: authorName })}`,
     description: newsfeed?.description,
-    keywords: ["news-feed", "blog", "community", "author"],
-    openGraph: {
-      images: [
-        {
-          url: newsfeed?.banner?.url ?? "",
-          alt: newsfeed?.banner?.name,
-        },
-      ],
-    },
-    twitter: {
-      image: newsfeed?.banner?.url,
+    keywords: ['news-feed', 'blog', 'community', 'author'],
+    ogImage: {
+      url: newsfeed?.banner?.url ?? '',
+      alt: newsfeed?.banner?.name,
     },
   });
 }

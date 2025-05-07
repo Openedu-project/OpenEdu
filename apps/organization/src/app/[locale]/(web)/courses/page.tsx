@@ -1,8 +1,7 @@
-import { generateSEO } from '@oe/core';
-import { CoursesListPage } from '@oe/ui';
+import { CoursesListPage, SEOMetadata } from '@oe/ui';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = generateSEO({
+export const metadata: Metadata = SEOMetadata({
   title: 'Courses',
   keywords: ['course', 'education', 'training', 'online learning', 'certificate'],
 });

@@ -1,6 +1,5 @@
 import { getCourseOutlineService } from '@oe/api';
-import { generateSEO } from '@oe/core';
-import { CourseDetailPage } from '@oe/ui';
+import { CourseDetailPage, SEOMetadata } from '@oe/ui';
 import type { Metadata } from 'next';
 
 export async function generateMetadata({
@@ -11,20 +10,13 @@ export async function generateMetadata({
   const { slug } = await params;
   const course = await getCourseOutlineService(undefined, { id: slug });
 
-  return generateSEO({
+  return SEOMetadata({
     title: course?.name ?? '',
     description: course?.description,
     keywords: ['course', 'learning'],
-    openGraph: {
-      images: [
-        {
-          url: course?.thumbnail.url ?? '',
-          alt: course?.name,
-        },
-      ],
-    },
-    twitter: {
-      image: course?.thumbnail.url ?? '',
+    ogImage: {
+      url: course?.thumbnail.url ?? '',
+      alt: course?.name,
     },
   });
 }

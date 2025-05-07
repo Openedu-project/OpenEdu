@@ -20,7 +20,7 @@ export function BlogDetails({
   return (
     <div className={cn('text-foreground', className)}>
       <div className="m-auto w-full p-6 py-10 lg:w-9/12">
-        <h2 className="giant-iheading-semibold24 md:giant-iheading-semibold32 text-center">{data.title}</h2>
+        <h1 className="giant-iheading-semibold24 md:giant-iheading-semibold32 text-center">{data.title}</h1>
         <BlogDetailHeader author={data.author} />
       </div>
 

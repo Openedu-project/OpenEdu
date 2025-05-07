@@ -1,6 +1,5 @@
 import { getBlogContent } from '@oe/api';
-import { generateSEO } from '@oe/core';
-import { BlogDetailsPage } from '@oe/ui';
+import { BlogDetailsPage, SEOMetadata } from '@oe/ui';
 import type { Metadata } from 'next';
 
 export async function generateMetadata({
@@ -11,20 +10,13 @@ export async function generateMetadata({
   const { slug } = await params;
   const blogContent = await getBlogContent(undefined, { slug, type: 'org' });
 
-  return generateSEO({
+  return SEOMetadata({
     title: blogContent?.title,
     description: blogContent?.description,
-    keywords: ["news-feed", "blog", "community"],
-    openGraph: {
-      images: [
-        {
-          url: blogContent?.banner?.url ?? "",
-          alt: blogContent?.banner?.name,
-        },
-      ],
-    },
-    twitter: {
-      image: blogContent?.banner?.url,
+    keywords: ['news-feed', 'blog', 'community'],
+    ogImage: {
+      url: blogContent?.banner?.url ?? '',
+      alt: blogContent?.banner?.name,
     },
   });
 }

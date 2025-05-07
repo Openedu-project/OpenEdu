@@ -1,6 +1,6 @@
 'use client';
 
-import { Content, Header, Item, Root, Trigger } from '@radix-ui/react-accordion';
+import { Content, Item, Root, Trigger } from '@radix-ui/react-accordion';
 import { ChevronDown } from 'lucide-react';
 
 import type { ComponentProps, ComponentPropsWithoutRef } from 'react';
@@ -30,7 +30,8 @@ function AccordionTrigger({
   );
 
   return (
-    <Header className={cn('flex', headerClassName)}>
+    // <Header className={cn("flex", headerClassName)}>
+    <div className={cn('mb-2 flex', headerClassName)}>
       <Trigger
         data-slot="accordion-trigger"
         className={cn(
@@ -41,7 +42,8 @@ function AccordionTrigger({
       >
         {content}
       </Trigger>
-    </Header>
+    </div>
+    // </Header>
   );
 }
 

@@ -1,5 +1,4 @@
-import { generateSEO } from '@oe/core';
-import { AIAssistantPage } from '@oe/ui';
+import { AIAssistantPage, SEOMetadata } from '@oe/ui';
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
@@ -9,13 +8,13 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "aiAgentMetadata" });
+  const t = await getTranslations({ locale, namespace: 'aiAgentMetadata' });
 
-  return generateSEO({
-  title: {absolute: t('title')},
-  description: t('description'),
-  keywords: ['AI', 'AI Agent', 'agent'],
-})
+  return SEOMetadata({
+    title: { absolute: t('title') },
+    description: t('description'),
+    keywords: ['AI', 'AI Agent', 'agent'],
+  });
 }
 
 export default function AIAgent() {
