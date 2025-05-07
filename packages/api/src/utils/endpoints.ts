@@ -262,6 +262,11 @@ export const API_ENDPOINT = {
   EVENT_SCHEDULES: '/api/v1/event-schedules',
   EVENT_SCHEDULES_ID: '/api/v1/event-schedules/:id',
   OE_REFFERRAL_LEADER_BOARDS_ID: '/api/v1/oe-referrals/:id/leader-boards',
+  OE_REFFERRAL_KEY_PROVINCES: '/api/v1/oe-referrals/:key/provinces',
+  OE_REFFERRAL_KEY_STATISTIC_WIDGET: '/api/v1/oe-referrals/:key/statistics/widget',
+  OE_REFFERRAL_KEY_STATISTIC_LEARNER_GROWTH: '/api/v1/oe-referrals/:key/statistics/learner-growth',
+  OE_REFFERRAL_KEY_STATISTIC_SECTION_COMPLETION: '/api/v1/oe-referrals/:key/statistics/section-completion',
+  OE_REFFERRAL_KEY_STATISTIC_PROVINCES: '/api/v1/oe-referrals/:key/statistics/provinces',
 
   // WS
   WEBSOCKET: '/websocket',

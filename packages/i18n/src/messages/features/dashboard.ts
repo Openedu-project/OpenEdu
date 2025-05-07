@@ -47,6 +47,10 @@ export const dashboardMessages = {
       requests: 'Requests',
       organizations: 'Organizations',
     },
+    statistic: {
+      title: 'Statistic',
+      aiCourseStatistic: 'AI Course Statistic',
+    },
     withdrawRequest: 'Withdraw Request',
     blog: {
       title: 'Blog Management',

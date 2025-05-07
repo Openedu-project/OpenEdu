@@ -28,16 +28,73 @@ export interface AIEduLeaderBoards {
   oe_point_campaign: undefined;
 }
 
-interface AIEduCourseItem {
+export interface IAIEduCourseItem {
   course_cuid?: string;
   name: string;
   thumbnail?: IFileResponse;
 }
 export interface AIEduSystemConfig {
   campaign_key: string;
-  courses: AIEduCourseItem[];
+  courses: IAIEduCourseItem[];
   form_event: string;
   org_id: string;
 }
 
 export interface AIEduSystemConfigRes extends ISystemConfigRes<AIEduSystemConfig> {}
+
+export type IAIEduTimeFormat = 'hour' | 'day' | 'month' | 'year';
+
+export interface IAIEduParamsPayload {
+  fromDate: number;
+  toDate: number;
+  groupBy: IAIEduTimeFormat;
+  courseCuids?: string | string[];
+}
+
+export interface IAIEduStatisticWidget {
+  total_registered_users: number;
+  total_enrolled_users: number;
+  total_completed_users: number;
+  completion_rate: number;
+}
+
+export interface IAIEduProvince {
+  id: string;
+  label: string;
+  value: string;
+}
+
+export interface IAIEduStatisticPoint {
+  timestamp: string;
+  time_label: string;
+  value: number;
+  growth_rate: number;
+}
+
+export interface IAIEduStatisticLearningGrowth {
+  group_by: 'hour' | 'day' | 'moneth' | 'year';
+  points: IAIEduStatisticPoint[];
+}
+
+export interface IAIEduModuleItem {
+  section_uid: string;
+  section_name: string;
+  order: number;
+  completed_count: number;
+}
+
+export interface IAIStatisticSectionCompletion {
+  course_cuid: string;
+  course_name: string;
+  module_items: IAIEduModuleItem[];
+}
+
+export interface IAIEduStatisticProvince {
+  province: string;
+  learner_count: number;
+  learner_percent: number;
+  enroll_count: number;
+  completion_count: number;
+  certificate_count: number;
+  cert_on_enroll_percent: number;
+}

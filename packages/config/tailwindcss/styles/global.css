@@ -67,11 +67,75 @@
   --input: hsl(214.3 31.8% 91.4%);
   --ring: hsl(222.2 84% 4.9%);
   --radius: 0.25rem;
-  --chart-1: hsl(12 76% 61%);
-  --chart-2: hsl(173 58% 39%);
-  --chart-3: hsl(197 37% 24%);
-  --chart-4: hsl(43 74% 66%);
-  --chart-5: hsl(27 87% 67%);
+  --chart-1: hsl(210, 75%, 55%);   /* Bright blue */
+  --chart-2: hsl(35, 35%, 45%);   /* Taupe*/
+  --chart-3: hsl(290, 65%, 60%);  /* Purple-pink*/
+  --chart-4: hsl(80, 70%, 50%);   /* Fresh grass*/
+  --chart-5: hsl(0, 70%, 60%);    /* Vibrant red*/
+  --chart-6: hsl(180, 65%, 40%);  /* Teal*/
+  --chart-7: hsl(50, 95%, 60%);   /* Canary yellow*/
+  --chart-8: hsl(270, 65%, 55%);  /* Amethyst*/
+  --chart-9: hsl(120, 60%, 45%);  /* True green*/
+  --chart-10: hsl(330, 75%, 60%); /* Magenta-pink*/
+  --chart-11: hsl(190, 65%, 40%); /* Deep cyan*/
+  --chart-12: hsl(60, 95%, 60%);  /* Sunshine yellow*/
+  --chart-13: hsl(250, 65%, 55%); /* Violet*/
+  --chart-14: hsl(100, 60%, 50%); /* Kelly green*/
+  --chart-15: hsl(350, 80%, 60%); /* Hot pink*/
+  --chart-16: hsl(210, 45%, 35%); /* Steel blue*/
+  --chart-17: hsl(45, 90%, 65%);  /* Golden yellow*/
+  --chart-18: hsl(270, 30%, 30%); /* Eggplant*/
+  --chart-19: hsl(15, 70%, 60%);  /* Coral red*/
+  --chart-20: hsl(170, 60%, 40%); /* Aquamarine*/
+  --chart-21: hsl(310, 65%, 65%); /* Hot magenta*/
+  --chart-22: hsl(65, 75%, 55%);  /* Lime*/
+  --chart-23: hsl(230, 75%, 55%); /* Periwinkle*/
+  --chart-24: hsl(25, 85%, 60%);  /* Pumpkin orange*/
+  --chart-25: hsl(140, 55%, 45%); /* Mint*/
+  --chart-26: hsl(260, 60%, 60%); /* Lavender*/
+  --chart-27: hsl(30, 90%, 65%);  /* Bright orange*/
+  --chart-28: hsl(200, 70%, 50%); /* Azure*/
+  --chart-29: hsl(5, 75%, 55%);   /* Deep red-orange*/
+  --chart-30: hsl(150, 60%, 40%); /* Jade*/
+  --chart-31: hsl(40, 90%, 65%);  /* Amber*/
+  --chart-32: hsl(220, 70%, 50%); /* Royal blue*/
+  --chart-33: hsl(85, 65%, 45%);  /* Leafy green*/
+  --chart-34: hsl(320, 70%, 65%); /* Medium fuchsia*/
+  --chart-35: hsl(130, 55%, 50%); /* Emerald*/
+  --chart-36: hsl(45, 40%, 40%);  /* Saddle brown*/
+  --chart-37: hsl(10, 80%, 65%);  /* Bright vermillion*/
+  --chart-38: hsl(160, 55%, 45%); /* Sea green*/
+  --chart-39: hsl(280, 60%, 60%); /* Orchid*/
+  --chart-40: hsl(70, 80%, 50%);  /* Apple green*/
+  --chart-41: hsl(230, 40%, 30%); /* Navy blue*/
+  --chart-42: hsl(20, 75%, 55%);  /* Rust red*/
+  --chart-43: hsl(120, 55%, 70%); /* Soft mint*/
+  --chart-44: hsl(300, 70%, 60%); /* Magenta*/
+  --chart-45: hsl(75, 75%, 55%);  /* Chartreuse*/
+  --chart-46: hsl(240, 70%, 50%); /* Classic blue*/
+  --chart-47: hsl(25, 40%, 40%);  /* Chocolate*/
+  --chart-48: hsl(185, 60%, 45%); /* Ocean blue*/
+  --chart-49: hsl(55, 90%, 65%);  /* Lemon yellow*/
+  --chart-50: hsl(250, 35%, 35%); /* Dark violet*/
+  --chart-51: hsl(95, 65%, 45%);  /* Forest green*/
+  --chart-52: hsl(340, 70%, 65%); /* Rose pink*/
+  --chart-53: hsl(60, 70%, 75%);  /* Pale yellow*/
+  --chart-54: hsl(195, 60%, 45%); /* Sky blue*/
+  --chart-55: hsl(90, 70%, 50%);  /* Medium green*/
+  --chart-56: hsl(30, 45%, 35%);  /* Coffee brown*/
+  --chart-57: hsl(100, 60%, 75%); /* Mint cream*/
+  --chart-58: hsl(40, 65%, 80%);  /* Cream*/
+  --chart-59: hsl(190, 50%, 30%); /* Deep teal*/
+  --chart-60: hsl(80, 65%, 70%);  /* Light lime*/
+  --chart-61: hsl(20, 60%, 75%);  /* Peach*/
+  --chart-62: hsl(35, 85%, 60%);  /* Tangerine*/
+  --chart-63: hsl(40, 45%, 50%);  /* Camel*/
+  --chart-65: hsl(285, 55%, 40%);  /* Plum purple*/
+  --chart-66: hsl(15, 55%, 40%);   /* Terracotta*/
+  --chart-67: hsl(145, 50%, 60%);  /* Seafoam green*/
+  --chart-68: hsl(205, 40%, 25%);  /* Slate blue*/
+  --chart-69: hsl(335, 65%, 45%);  /* Raspberry*/
+  --chart-70: hsl(105, 40%, 55%);  /* Sage green*/
   --warning: hsl(38 92% 50%);
   --warning-foreground: hsl(32 100% 93%);
   --success: hsl(122 59% 41%);
@@ -234,11 +298,76 @@
   --border: hsl(217.2 32.6% 17.5%);
   --input: hsl(217.2 32.6% 17.5%);
   --ring: hsl(212.7 26.8% 83.9%);
-  --chart-1: hsl(220 70% 50%);
-  --chart-2: hsl(160 60% 45%);
-  --chart-3: hsl(30 80% 55%);
-  --chart-4: hsl(280 65% 60%);
-  --chart-5: hsl(340 75% 55%);
+  --chart-1: hsl(210, 75%, 55%);   /* Bright blue */
+  --chart-2: hsl(35, 35%, 45%);   /* Taupe*/
+  --chart-3: hsl(290, 65%, 60%);  /* Purple-pink*/
+  --chart-4: hsl(80, 70%, 50%);   /* Fresh grass*/
+  --chart-5: hsl(0, 70%, 60%);    /* Vibrant red*/
+  --chart-6: hsl(180, 65%, 40%);  /* Teal*/
+  --chart-7: hsl(50, 95%, 60%);   /* Canary yellow*/
+  --chart-8: hsl(270, 65%, 55%);  /* Amethyst*/
+  --chart-9: hsl(120, 60%, 45%);  /* True green*/
+  --chart-10: hsl(330, 75%, 60%); /* Magenta-pink*/
+  --chart-11: hsl(190, 65%, 40%); /* Deep cyan*/
+  --chart-12: hsl(60, 95%, 60%);  /* Sunshine yellow*/
+  --chart-13: hsl(250, 65%, 55%); /* Violet*/
+  --chart-14: hsl(100, 60%, 50%); /* Kelly green*/
+  --chart-15: hsl(350, 80%, 60%); /* Hot pink*/
+  --chart-16: hsl(210, 45%, 35%); /* Steel blue*/
+  --chart-17: hsl(45, 90%, 65%);  /* Golden yellow*/
+  --chart-18: hsl(270, 30%, 30%); /* Eggplant*/
+  --chart-19: hsl(15, 70%, 60%);  /* Coral red*/
+  --chart-20: hsl(170, 60%, 40%); /* Aquamarine*/
+  --chart-21: hsl(310, 65%, 65%); /* Hot magenta*/
+  --chart-22: hsl(65, 75%, 55%);  /* Lime*/
+  --chart-23: hsl(230, 75%, 55%); /* Periwinkle*/
+  --chart-24: hsl(25, 85%, 60%);  /* Pumpkin orange*/
+  --chart-25: hsl(140, 55%, 45%); /* Mint*/
+  --chart-26: hsl(260, 60%, 60%); /* Lavender*/
+  --chart-27: hsl(30, 90%, 65%);  /* Bright orange*/
+  --chart-28: hsl(200, 70%, 50%); /* Azure*/
+  --chart-29: hsl(5, 75%, 55%);   /* Deep red-orange*/
+  --chart-30: hsl(150, 60%, 40%); /* Jade*/
+  --chart-31: hsl(40, 90%, 65%);  /* Amber*/
+  --chart-32: hsl(220, 70%, 50%); /* Royal blue*/
+  --chart-33: hsl(85, 65%, 45%);  /* Leafy green*/
+  --chart-34: hsl(320, 70%, 65%); /* Medium fuchsia*/
+  --chart-35: hsl(130, 55%, 50%); /* Emerald*/
+  --chart-36: hsl(45, 40%, 40%);  /* Saddle brown*/
+  --chart-37: hsl(10, 80%, 65%);  /* Bright vermillion*/
+  --chart-38: hsl(160, 55%, 45%); /* Sea green*/
+  --chart-39: hsl(280, 60%, 60%); /* Orchid*/
+  --chart-40: hsl(70, 80%, 50%);  /* Apple green*/
+  --chart-41: hsl(230, 40%, 30%); /* Navy blue*/
+  --chart-42: hsl(20, 75%, 55%);  /* Rust red*/
+  --chart-43: hsl(120, 55%, 70%); /* Soft mint*/
+  --chart-44: hsl(300, 70%, 60%); /* Magenta*/
+  --chart-45: hsl(75, 75%, 55%);  /* Chartreuse*/
+  --chart-46: hsl(240, 70%, 50%); /* Classic blue*/
+  --chart-47: hsl(25, 40%, 40%);  /* Chocolate*/
+  --chart-48: hsl(185, 60%, 45%); /* Ocean blue*/
+  --chart-49: hsl(55, 90%, 65%);  /* Lemon yellow*/
+  --chart-50: hsl(250, 35%, 35%); /* Dark violet*/
+  --chart-51: hsl(95, 65%, 45%);  /* Forest green*/
+  --chart-52: hsl(340, 70%, 65%); /* Rose pink*/
+  --chart-53: hsl(60, 70%, 75%);  /* Pale yellow*/
+  --chart-54: hsl(195, 60%, 45%); /* Sky blue*/
+  --chart-55: hsl(90, 70%, 50%);  /* Medium green*/
+  --chart-56: hsl(30, 45%, 35%);  /* Coffee brown*/
+  --chart-57: hsl(100, 60%, 75%); /* Mint cream*/
+  --chart-58: hsl(40, 65%, 80%);  /* Cream*/
+  --chart-59: hsl(190, 50%, 30%); /* Deep teal*/
+  --chart-60: hsl(80, 65%, 70%);  /* Light lime*/
+  --chart-61: hsl(20, 60%, 75%);  /* Peach*/
+  --chart-62: hsl(35, 85%, 60%);  /* Tangerine*/
+  --chart-63: hsl(40, 45%, 50%);  /* Camel*/
+  --chart-64: hsl(175, 75%, 35%);  /* Deep turquoise*/
+  --chart-65: hsl(285, 55%, 40%);  /* Plum purple*/
+  --chart-66: hsl(15, 55%, 40%);   /* Terracotta*/
+  --chart-67: hsl(145, 50%, 60%);  /* Seafoam green*/
+  --chart-68: hsl(205, 40%, 25%);  /* Slate blue*/
+  --chart-69: hsl(335, 65%, 45%);  /* Raspberry*/
+  --chart-70: hsl(105, 40%, 55%);  /* Sage green*/
   --warning: hsl(32 100% 93%);
   --warning-foreground: hsl(38 92% 50%);
   --success: hsl(123 58% 93%);
