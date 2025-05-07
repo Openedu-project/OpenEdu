@@ -4,6 +4,7 @@ import { ChatWindow } from './chat-window';
 import { ChatWithSource } from './chat-with-source';
 import { AI_SIDEBAR, HISTORY_DEFAULT_PARAMS } from './constants';
 import { ConversationProvider } from './conversation-provider';
+import { EmptyChat } from './empty-chat';
 import { AIHistoryModal, SearchHistory } from './history/ai-history';
 import { InputFrame } from './message-input/input-frame';
 import { PromptCategory } from './prompt/prompt-category';
@@ -28,4 +29,5 @@ export {
   AIBanner,
   ConversationProvider,
   type ISendMessageParams,
+  EmptyChat,
 };

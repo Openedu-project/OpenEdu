@@ -2,7 +2,6 @@
 import type { IAgenConfigs } from '@oe/api';
 import { API_ENDPOINT, createAPIUrl, useGetConversationDetails } from '@oe/api';
 import { GENERATING_STATUS } from '@oe/core';
-import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
 import { useEffect, useMemo, useRef } from 'react';
 import { useSWRConfig } from 'swr';
@@ -10,12 +9,8 @@ import { Skeleton } from '#shadcn/skeleton';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { AGENT_OPTIONS } from './constants';
-import { TRANSLATE_AGENT_KEY } from './constants';
-import { EmptyChat } from './empty-chat';
 import { useSendMessageHandler } from './hooks/useMessageHandler';
 import { InputFrame } from './message-input/input-frame';
-import { PromptGrid } from './prompt/prompt-grid';
-import { PromptPopup } from './prompt/prompt-popup';
 import type { IChatWindowProps } from './type';
 
 const MessageContainer = dynamic(() => import('./message/message-container').then(mod => mod.MessageContainer), {
@@ -30,11 +25,8 @@ const MessageContainer = dynamic(() => import('./message/message-container').the
   ),
 });
 
-export const ChatWindow = ({ id, agent, className }: IChatWindowProps) => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+export const ChatWindow = ({ id, agent, className, isLogin }: IChatWindowProps) => {
   const { mutate: globalMutate } = useSWRConfig();
-  const tAI = useTranslations('aiAssistant');
 
   const {
     setMessages,
@@ -56,7 +48,7 @@ export const ChatWindow = ({ id, agent, className }: IChatWindowProps) => {
   const shouldSendPendingMsg = useRef(!!pendingParams);
 
   const { data: messageData, mutate } = useGetConversationDetails({
-    shouldFetch: shouldFetch.current,
+    shouldFetch: shouldFetch.current && isLogin,
     id,
     params: {
       per_page: 10,
@@ -70,22 +62,19 @@ export const ChatWindow = ({ id, agent, className }: IChatWindowProps) => {
       resetGenMessage();
       resetStatus();
       resetOpenWebSource();
-      console.log(agent, 'agent');
       setSelectedAgent(agent);
     }
 
-    if (id) {
-      const apiKey = createAPIUrl({
-        endpoint: API_ENDPOINT.COM_CHANNELS_ID,
-        params: { id },
-      });
+    const apiKey = createAPIUrl({
+      endpoint: API_ENDPOINT.COM_CHANNELS_ID,
+      params: { id },
+    });
 
-      //clear cache all previous conversation details
-      globalMutate((key: string) => !!key?.includes('/api/com-v1/channels/') && !key?.includes(apiKey), undefined, {
-        revalidate: false,
-      });
-    }
-  }, [id, globalMutate, resetGenMessage, resetOpenWebSource, resetStatus, resetMessages]);
+    //clear cache all previous conversation details
+    globalMutate((key: string) => !!key?.includes('/api/com-v1/channels/') && !key?.includes(apiKey), undefined, {
+      revalidate: false,
+    });
+  }, [id, globalMutate, resetGenMessage, resetOpenWebSource, resetStatus, resetMessages, setSelectedAgent, agent]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -126,30 +115,16 @@ export const ChatWindow = ({ id, agent, className }: IChatWindowProps) => {
 
   return (
     <div className={cn('scrollbar flex h-full flex-col overflow-y-auto', className)}>
-      {id ? (
-        <MessageContainer
-          className="overflow-x-hidden"
-          messageType={messageType}
-          nextCursorPage={messageData?.pagination?.next_cursor}
-          id={id ?? ''}
-          sendMessage={sendMessage}
-          containerRef={containerRef}
-          messagesEndRef={messagesEndRef}
-          mutate={mutate}
-        />
-      ) : (
-        <EmptyChat agent={agent} />
-      )}
-      <InputFrame id={id} messagesEndRef={messagesEndRef} agent={agent} reset={!id} />
-      {!id && (
-        <PromptGrid
-          className="mx-auto mt-4 max-w-3xl px-2 md:mt-8 xl:max-w-4xl"
-          name={tAI(TRANSLATE_AGENT_KEY[agent])}
-          agent={agent}
-          litmited={8}
-          PromptPopup={PromptPopup}
-        />
-      )}
+      <MessageContainer
+        className="overflow-x-hidden"
+        messageType={messageType}
+        nextCursorPage={messageData?.pagination?.next_cursor}
+        id={id ?? ''}
+        sendMessage={sendMessage}
+        mutate={mutate}
+      />
+
+      <InputFrame id={id} agent={agent} />
     </div>
   );
 };

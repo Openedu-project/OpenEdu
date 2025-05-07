@@ -4,7 +4,7 @@ import type { IConversationDetails, IMessage, TAgentType } from '@oe/api';
 import { useGetConversationDetails } from '@oe/api';
 import { GENERATING_STATUS } from '@oe/core';
 import { ChevronsDown } from 'lucide-react';
-import { type RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { type KeyedMutator, useSWRConfig } from 'swr';
 import { Button } from '#shadcn/button';
 import { Skeleton } from '#shadcn/skeleton';
@@ -20,8 +20,6 @@ interface IContainerProps {
   nextCursorPage?: string;
   messageType: TAgentType[];
   className?: string;
-  containerRef: RefObject<HTMLDivElement | null>;
-  messagesEndRef: RefObject<HTMLDivElement | null>;
   scrollBehavior?: 'auto' | 'smooth';
   sendMessage: ({
     messageInput,
@@ -39,8 +37,6 @@ export const MessageContainer = ({
   sendMessage,
   nextCursorPage = '',
   messageType,
-  containerRef,
-  messagesEndRef,
   className,
   scrollBehavior,
   mutate,
@@ -54,6 +50,9 @@ export const MessageContainer = ({
   const [showScrollButton, setShowScrollButton] = useState(false);
 
   const nextKeyRef = useRef<string>(nextCursorPage);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
   const { data, isLoading } = useGetConversationDetails({
     shouldFetch: shouldGetData && nextKeyRef.current.length > 0,
     id,
@@ -112,16 +111,7 @@ export const MessageContainer = ({
         });
       }
     }
-  }, [
-    messages.length,
-    initScrollBottom,
-    containerRef,
-    scrollBehavior,
-    isNewChat,
-    setIsNewChat,
-    globalMutate,
-    cache.keys,
-  ]);
+  }, [messages.length, initScrollBottom, scrollBehavior, isNewChat, setIsNewChat, globalMutate, cache.keys]);
 
   const handleScrollToBottom = useCallback(
     (scrollBehavior?: 'auto' | 'smooth') => {
@@ -134,7 +124,7 @@ export const MessageContainer = ({
         });
       }
     },
-    [messagesEndRef, containerRef, isNewChat]
+    [isNewChat]
   );
 
   const handleScroll = () => {

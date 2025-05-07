@@ -5,19 +5,14 @@ import type { IAIModel, IAIStatus, IMessage, TAgentType } from '@oe/api';
 import { revalidateData } from '@oe/api';
 import { AI_ROUTES } from '@oe/core';
 import { useTranslations } from 'next-intl';
-import { type RefObject, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useRouter } from '#common/navigation';
 import { toast } from '#shadcn/sonner';
 import { useConversationStore } from '#store/conversation-store';
 import { AI_SIDEBAR } from '../constants';
 import type { ISendMessageParams } from '../type';
 
-export const useSendMessageHandler = (
-  agent: TAgentType,
-  id?: string,
-  model?: IAIModel,
-  messagesEndRef?: RefObject<HTMLDivElement | null>
-) => {
+export const useSendMessageHandler = (agent: TAgentType, id?: string, model?: IAIModel) => {
   const {
     setMessages,
     setIsNewChat,
@@ -112,14 +107,11 @@ export const useSendMessageHandler = (
         }
 
         if (messageID.includes('id_')) {
-          updateMessages(data.messages?.at(0) as IMessage, undefined, undefined, messageID);
-        }
-
-        if (messagesEndRef?.current) {
+          const userMsg = data.messages?.at(0) as IMessage;
+          updateMessages(userMsg, undefined, undefined, messageID);
           requestAnimationFrame(() => {
-            if (messagesEndRef.current) {
-              messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-            }
+            const userArtical = document.getElementById(userMsg.id);
+            userArtical?.scrollIntoView({ behavior: 'smooth' });
           });
         }
       } catch (error) {
@@ -148,7 +140,6 @@ export const useSendMessageHandler = (
       setStatus,
       tError,
       updateMessages,
-      messagesEndRef,
       resetGenMessage,
       agentData,
       setPendingParams,

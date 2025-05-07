@@ -11,7 +11,7 @@ import { useIsDesktop } from './utils';
 
 const AnimatedDiv = animated('div');
 
-export function ChatWithSource({ id, initData, agent }: IChatWindowProps) {
+export function ChatWithSource({ id, agent, isLogin }: IChatWindowProps) {
   const { openWebSource } = useConversationStore();
   const isDesktop = useIsDesktop();
 
@@ -40,7 +40,7 @@ export function ChatWithSource({ id, initData, agent }: IChatWindowProps) {
           width: isDesktop ? springs.sourcePanelWidth.to(w => `calc(100% - ${w}px`) : '100%',
         }}
       >
-        <ChatWindow id={id} initData={initData} agent={agent} />
+        <ChatWindow id={id} agent={agent} isLogin={isLogin} />
       </AnimatedDiv>
 
       {isDesktop ? (
