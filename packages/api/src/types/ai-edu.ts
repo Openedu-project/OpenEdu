@@ -1,3 +1,5 @@
+import type { IFileResponse } from '#types/file';
+import type { ISystemConfigRes } from './system-config';
 export interface AIEduStatistics {
   register_count: number;
   ref_count: number;
@@ -25,3 +27,17 @@ export interface AIEduLeaderBoards {
   user: undefined;
   oe_point_campaign: undefined;
 }
+
+interface AIEduCourseItem {
+  course_cuid?: string;
+  name: string;
+  thumbnail?: IFileResponse;
+}
+export interface AIEduSystemConfig {
+  campaign_key: string;
+  courses: AIEduCourseItem[];
+  form_event: string;
+  org_id: string;
+}
+
+export interface AIEduSystemConfigRes extends ISystemConfigRes<AIEduSystemConfig> {}

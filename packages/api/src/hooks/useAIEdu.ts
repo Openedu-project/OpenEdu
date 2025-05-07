@@ -1,16 +1,18 @@
 import useSWR from 'swr';
-import { getOeRefferralLeaderBoardsAIEdu, getOeRefferralStatisticsAIEdu } from '#services/index';
+import { getAIEduSystemConfig, getOeRefferralLeaderBoardsAIEdu, getOeRefferralStatisticsAIEdu } from '#services/index';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { createAPIUrl } from '#utils/fetch';
+import { systemConfigQueryByKeys } from '#utils/system-config';
 
-export function useGetOeRefferralStatisticsAIEdu() {
+export function useGetOeRefferralStatisticsAIEdu(id?: string) {
   const endpointKey = createAPIUrl({
-    endpoint: API_ENDPOINT.OE_REFFERRAL_STATISTICS_AI_EDU,
+    endpoint: API_ENDPOINT.OE_REFFERRAL_STATISTICS_ID,
+    params: { id },
   });
 
-  const { data, isLoading, error, mutate } = useSWR(endpointKey, (url: string) =>
-    getOeRefferralStatisticsAIEdu(url, { params: {} })
+  const { data, isLoading, error, mutate } = useSWR(id ? endpointKey : null, (url: string) =>
+    getOeRefferralStatisticsAIEdu(url, { id, params: {} })
   );
 
   return {
@@ -21,13 +23,14 @@ export function useGetOeRefferralStatisticsAIEdu() {
   };
 }
 
-export function useGetOeRefferralLeaderBoardsAIEdu(params?: IFilter) {
+export function useGetOeRefferralLeaderBoardsAIEdu(id?: string, params?: IFilter) {
   const endpointKey = createAPIUrl({
-    endpoint: API_ENDPOINT.OE_REFFERRAL_LEADER_BOARDS_AI_EDU,
+    endpoint: API_ENDPOINT.OE_REFFERRAL_LEADER_BOARDS_ID,
+    params: { id },
   });
 
-  const { data, isLoading, error, mutate } = useSWR(endpointKey, (url: string) =>
-    getOeRefferralLeaderBoardsAIEdu(url, { params: params ?? {} })
+  const { data, isLoading, error, mutate } = useSWR(id ? endpointKey : null, (url: string) =>
+    getOeRefferralLeaderBoardsAIEdu(url, { id, params: params ?? {} })
   );
 
   return {
@@ -35,5 +38,23 @@ export function useGetOeRefferralLeaderBoardsAIEdu(params?: IFilter) {
     isLoadingOeRefferralLeaderBoardsAIEdu: isLoading,
     errorOeRefferralLeaderBoardsAIEdu: error,
     mutateOeRefferralLeaderBoardsAIEdu: mutate,
+  };
+}
+
+export function useGetAIEduSystemConfig(shouldFetch = true) {
+  const endpointKey = createAPIUrl({
+    endpoint: API_ENDPOINT.SYSTEM_CONFIGS,
+    queryParams: { keys: systemConfigQueryByKeys.aiedu },
+  });
+
+  const { data, isLoading, error, mutate } = useSWR(shouldFetch ? endpointKey : null, (endpoint: string) =>
+    getAIEduSystemConfig(endpoint, { keys: systemConfigQueryByKeys.aiedu })
+  );
+
+  return {
+    dataAIEduSystemConfig: data,
+    isLoadingAIEduSystemConfig: isLoading,
+    errorAIEduSystemConfig: error,
+    mutateAIEduSystemConfig: () => mutate,
   };
 }

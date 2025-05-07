@@ -1,16 +1,23 @@
 'use client';
 
-import { useGetOeRefferralLeaderBoardsAIEdu, useGetOeRefferralStatisticsAIEdu } from '@oe/api';
+import { useGetAIEduSystemConfig, useGetOeRefferralLeaderBoardsAIEdu, useGetOeRefferralStatisticsAIEdu } from '@oe/api';
 import type { SectionComponent } from '#types';
 import { AieduDashboardSection } from '../../_components/dashboard-section';
 
 const AieduRankingDashboardClient: SectionComponent<'ranking', 'aieduDashboard'> = ({ props, className }) => {
-  const { dataOeRefferralStatisticsAIEdu } = useGetOeRefferralStatisticsAIEdu();
-  const { dataOeRefferralLeaderBoardsAIEdu } = useGetOeRefferralLeaderBoardsAIEdu({
-    sort: 'percent_cert_on_ref desc',
-    local_level: 1,
-    per_page: 100,
-  });
+  const { dataAIEduSystemConfig } = useGetAIEduSystemConfig();
+
+  const { dataOeRefferralStatisticsAIEdu } = useGetOeRefferralStatisticsAIEdu(
+    dataAIEduSystemConfig?.[0]?.value?.campaign_key
+  );
+  const { dataOeRefferralLeaderBoardsAIEdu } = useGetOeRefferralLeaderBoardsAIEdu(
+    dataAIEduSystemConfig?.[0]?.value?.campaign_key,
+    {
+      sort: 'percent_cert_on_ref desc',
+      local_level: 1,
+      per_page: 100,
+    }
+  );
   return (
     <AieduDashboardSection
       props={props}

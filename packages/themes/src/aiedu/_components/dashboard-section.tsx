@@ -60,7 +60,7 @@ const AieduDashboardSection = ({ leaderBoardsData, type, statisticsData, props, 
             key={city?.type}
             type={city?.type as TrophyType}
             name={city?.name}
-            registrations={city.registrations}
+            registrations={city?.registrations}
             certificates={city?.certificates}
           />
         ))}
