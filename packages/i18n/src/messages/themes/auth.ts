@@ -11,7 +11,7 @@ export const authMessages = {
         },
         'sidebarItems-1': {
           id: 'blog',
-          href: '/blog',
+          href: '/news-feed',
           label: 'Blog',
         },
       },

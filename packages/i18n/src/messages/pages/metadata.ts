@@ -8,6 +8,7 @@ export const metadataMessage = {
     title: 'OpenEdu - Explore Our Diverse Online Course Library',
     description:
       "Browse OpenEdu's wide range of courses from technology to business, all built on our innovative Blockchain & AI educational platform for enhanced learning experiences",
+    courses: 'Courses',
   },
   newsfeedMetadata: {
     title: 'OpenEdu News Feed - Technology, Education & Emerging Trends',
@@ -15,6 +16,7 @@ export const metadataMessage = {
       "Get the latest updates on technology, education, and business trends with OpenEdu's News Feed, featuring insights from experts on our modern educational platform",
     authorArticles: "{name}'s Articles",
     byAuthor: 'by {name}',
+    newsFeed: 'News Feed',
   },
   launchpadMetadata: {
     title: 'OpenEdu Launchpad - Blockchain Education Sharing Economy',
@@ -25,5 +27,11 @@ export const metadataMessage = {
     title: 'OpenEdu AI Agent - Smart Assistant for Learning & Creation',
     description:
       'Access instant answers, generate content, search information, and create images with OpenEdu AI Agent - your intelligent companion on our education platform.',
+  },
+  faqMetadata: {
+    title: 'FAQ',
+  },
+  termsMetadata: {
+    title: 'Terms and Privacy',
   },
 };

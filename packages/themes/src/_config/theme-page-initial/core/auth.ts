@@ -1,3 +1,4 @@
+import { BLOG_ROUTES } from '@oe/core';
 import { createSection } from '../../../_utils/function';
 
 export const createAuthLayoutConfig = (getThemeTranslation: (path: string[]) => string) => ({
@@ -196,7 +197,7 @@ export const createAvailAuthLayoutConfig = (getThemeTranslation: (path: string[]
           href: '/courses',
           isHighlight: false,
         },
-        { id: 'blog', label: 'Blog', href: '/blog', isHighlight: false },
+        { id: 'blog', label: 'Blog', href: BLOG_ROUTES.blog, isHighlight: false },
       ],
     },
     order: 5,
@@ -223,7 +224,7 @@ export const createAvailAuthLayoutConfig = (getThemeTranslation: (path: string[]
               ]),
             },
             {
-              href: '/blog',
+              href: BLOG_ROUTES.blog,
               label: getThemeTranslation([
                 'auth',
                 'footer',
@@ -320,7 +321,7 @@ export const createVbiAuthLayoutConfig = (getThemeTranslation: (path: string[]) 
           href: '/courses',
           isHighlight: false,
         },
-        { id: 'blog', label: 'Blog', href: '/blog', isHighlight: false },
+        { id: 'blog', label: 'Blog', href: BLOG_ROUTES.blog, isHighlight: false },
         { id: 'partners', label: 'Partners', href: '/partners', isHighlight: false },
         { id: 'aboutus', label: 'About Us', href: '/about-us', isHighlight: false },
       ],
@@ -470,7 +471,7 @@ export const createAieduAuthLayoutConfig = (getThemeTranslation: (path: string[]
           href: '/courses',
           isHighlight: false,
         },
-        { id: 'blog', label: 'Tin tức', href: '/blog', isHighlight: false },
+        { id: 'blog', label: 'Tin tức', href: BLOG_ROUTES.blog, isHighlight: false },
         { id: 'schedule', label: 'Lịch trình', href: '/schedule', isHighlight: false },
       ],
     },
@@ -534,7 +535,7 @@ export const createAieduAuthLayoutConfig = (getThemeTranslation: (path: string[]
               ]),
             },
             {
-              href: '/blog',
+              href: BLOG_ROUTES.blog,
               label: getThemeTranslation([
                 'auth',
                 'footer',

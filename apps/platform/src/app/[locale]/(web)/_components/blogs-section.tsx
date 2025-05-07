@@ -3,7 +3,7 @@ import {
   getOrgByDomainService,
   getPopularBlogsServicesAtWebsite,
 } from "@oe/api";
-import { formatDate, getCookie } from "@oe/core";
+import { BLOG_ROUTES, buildUrl, formatDate, getCookie } from "@oe/core";
 import { Link } from "@oe/ui";
 import { Image } from "@oe/ui";
 import { ArrowRight } from "lucide-react";
@@ -37,7 +37,7 @@ export async function BlogsSection() {
         <p className="mcaption-regular16 lg:mcaption-regular24 mx-auto max-w-[950px]">
           {t("description")}
           <Link
-            href="/blog"
+            href={BLOG_ROUTES.blog}
             className="mcaption-regular16 lg:mcaption-bold24 inline-flex items-center gap-1 text-primary hover:underline"
           >
             {t("discoverLink.text")}
@@ -51,7 +51,7 @@ export async function BlogsSection() {
         {/* Featured Post */}
         <div className="rounded-2xl bg-white p-4 shadow-[0px_4px_30px_0px_rgba(175,175,175,0.20)] md:p-6">
           <Link
-            href={`/blog/${featuredPost?.id}`}
+            href={buildUrl({endpoint: BLOG_ROUTES.blogDetail, params: {slug: featuredPost?.id}})}
             className="flex h-full flex-col items-start justify-start gap-6 whitespace-break-spaces p-0 text-black no-underline hover:no-underline"
           >
             <div className="h-[152px] w-full overflow-hidden rounded-2xl md:h-[270px]">
@@ -106,7 +106,7 @@ export async function BlogsSection() {
               className="group rounded-2xl bg-white shadow-[0px_4px_30px_0px_rgba(175,175,175,0.20)] "
             >
               <Link
-                href={`/blog/${post?.id}`}
+                href={buildUrl({endpoint: BLOG_ROUTES.blogDetail, params: {slug: post?.id}})}
                 className="flex h-auto flex-col items-start gap-6 whitespace-break-spaces p-4 text-black no-underline hover:no-underline md:flex-row md:items-center"
               >
                 <div className="h-[152px] w-full overflow-hidden rounded-2xl md:w-[260px]">

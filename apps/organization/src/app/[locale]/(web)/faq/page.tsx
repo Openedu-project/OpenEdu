@@ -1,6 +1,22 @@
 import { getSystemConfigServer, systemConfigKeys } from '@oe/api';
 import { getCookie } from '@oe/core';
 import type { LanguageCode } from '@oe/i18n';
+import { SEOMetadata } from '@oe/ui';
+import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'faqMetadata' });
+
+  return SEOMetadata({
+    title: t('title'),
+  });
+}
 
 export type IBuilderData = {
   [locale in LanguageCode]?: string;
