@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { cn } from '@oe/ui';
+import { cn } from "@oe/ui";
 
 interface StatsCardProps {
   percentage: number;
@@ -10,7 +10,12 @@ interface StatsCardProps {
 
 const StatsCard = ({ percentage, description, className }: StatsCardProps) => {
   return (
-    <div className={cn('relative flex w-full items-center gap-2 md:gap-4', className)}>
+    <div
+      className={cn(
+        "relative flex w-full items-center gap-2 md:gap-4",
+        className
+      )}
+    >
       {/* Circle with percentage */}
       <div className="relative flex-shrink-0">
         {/* Container for positioning */}
@@ -19,12 +24,14 @@ const StatsCard = ({ percentage, description, className }: StatsCardProps) => {
           <div
             className="absolute inset-0 rounded-full border-2 border-primary border-dashed"
             style={{
-              animation: 'rotation 30s linear infinite',
+              animation: "rotation 30s linear infinite",
             }}
           />
           {/* Static content */}
           <div className="flex h-20 w-20 items-center justify-center rounded-full bg-secondary md:h-24 md:w-24">
-            <span className="font-bold text-primary text-xl md:text-3xl">{percentage}%</span>
+            <span className="font-bold text-primary text-xl md:text-3xl">
+              {percentage}%
+            </span>
           </div>
         </div>
       </div>

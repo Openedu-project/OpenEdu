@@ -1,14 +1,9 @@
-import { getOeRefferralLeaderBoardsAIEdu, getOeRefferralStatisticsAIEdu } from '@oe/api';
 import type { SectionComponent } from '#types';
+import { getLeaderBoards, getStatistics } from '../../_actions/dashboard';
 import { AieduDashboardSection } from '../../_components/dashboard-section';
 
 const AieduHomepageDashboardServer: SectionComponent<'homepage', 'aieduDashboard'> = async ({ props, className }) => {
-  const [statisticsData, leaderBoardsData] = await Promise.all([
-    getOeRefferralStatisticsAIEdu(undefined, { params: {} }),
-    getOeRefferralLeaderBoardsAIEdu(undefined, {
-      params: { sort: 'percent_cert_on_ref desc', local_level: 1 },
-    }),
-  ]);
+  const [statisticsData, leaderBoardsData] = await Promise.all([getStatistics(), getLeaderBoards()]);
   return (
     <AieduDashboardSection
       props={props}

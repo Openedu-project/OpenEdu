@@ -36,3 +36,8 @@ export const createThemeSystemConfigKeyClient = (domain?: string): ISystemConfig
     params: { themeName: (domain || host)?.split('.')?.[0] }, //theme_system_vbi
   }) as ISystemConfigKey;
 };
+
+//system-configs?keys={}
+export const systemConfigQueryByKeys = {
+  aiedu: 'ai_gov_vn_2025_campaign',
+};

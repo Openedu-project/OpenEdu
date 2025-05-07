@@ -256,12 +256,12 @@ export const API_ENDPOINT = {
   USER_ME_CLAIM_POINT: '/api/v1/users/me/claim-points',
   OE_REFERRAL_INVITE: '/api/v1/oe-referrals/invites',
   OE_MY_REFERRAL_HISTORY: '/api/v1/users/me/oe-referrals',
-  OE_REFFERRAL_STATISTICS_AI_EDU: '/api/v1/oe-referrals/statistics/ai-government-campaign',
+  OE_REFFERRAL_STATISTICS_ID: '/api/v1/oe-referrals/statistics/:id',
   SCHEDULES: '/api/v1/schedules',
   SCHEDULES_ID: '/api/v1/schedules/:id',
   EVENT_SCHEDULES: '/api/v1/event-schedules',
   EVENT_SCHEDULES_ID: '/api/v1/event-schedules/:id',
-  OE_REFFERRAL_LEADER_BOARDS_AI_EDU: '/api/v1/oe-referrals/ai-government-campaign/leader-boards',
+  OE_REFFERRAL_LEADER_BOARDS_ID: '/api/v1/oe-referrals/:id/leader-boards',
 
   // WS
   WEBSOCKET: '/websocket',
