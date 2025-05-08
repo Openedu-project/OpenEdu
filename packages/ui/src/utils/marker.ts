@@ -164,7 +164,7 @@ export const marked = new Marked({
       }).value;
 
       return `
-<pre><div class="flex justify-between border-b pb-2 opacity-50 code-title-wrapper" 
+<pre><div class="flex justify-between border-b pb-2 opacity-50 code-title-wrapper h-10" 
 data-code="${safeEncodeURIComponent(originalCode)}">
   <p class="uppercase">${language}</p>
 </div>

@@ -12,8 +12,11 @@ import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { HISTORY_DEFAULT_PARAMS } from '../constants';
 import type { ISendMessageParams } from '../type';
+import { CodeDownloadHydration } from './code-download-button';
 import { GenMessage } from './gen-message';
+import { ImageActionHydration } from './image-action';
 import { MessageBox } from './message-box';
+import { LinkPreviewHydration } from './preview-link';
 
 interface IContainerProps {
   id: string;
@@ -188,6 +191,9 @@ export const MessageContainer = ({
           );
         })}
         <GenMessage containerRef={containerRef} mutate={mutate} setShowScrollButton={setShowScrollButton} />
+        <ImageActionHydration />
+        <LinkPreviewHydration />
+        <CodeDownloadHydration />
         <div id="end_line" className="h-10" ref={messagesEndRef} />
       </div>
       <div className={cn('sticky bottom-0 z-50 hidden translate-x-1/2', showScrollButton && 'block')}>

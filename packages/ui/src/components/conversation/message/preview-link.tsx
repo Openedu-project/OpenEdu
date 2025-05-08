@@ -1,7 +1,7 @@
 'use client';
 
 import type React from 'react';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '#shadcn/hover-card';
 import { useConversationStore } from '#store/conversation-store';
@@ -38,7 +38,7 @@ export const LinkPreview = ({ children, href }: LinkPreviewProps) => {
         {children}
       </HoverCardTrigger>
       {metadata && (
-        <HoverCardContent className="w-80 overflow-hidden rounded-xl p-3 shadow-lg">
+        <HoverCardContent className="w-80 overflow-hidden rounded-xl p-2 shadow-lg">
           <SourceCard url={href} title={metadata?.title ?? ''} content={metadata?.content ?? ''} />
         </HoverCardContent>
       )}
@@ -46,17 +46,17 @@ export const LinkPreview = ({ children, href }: LinkPreviewProps) => {
   );
 };
 
-export const LinkPreviewHydration = ({ id }: { id: string }) => {
+export const LinkPreviewHydration = memo(() => {
+  const { messages } = useConversationStore();
   const [previews, setPreviews] = useState<{ href: string; text: string; element: HTMLElement }[]>([]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const container = document?.getElementById(id);
-
-      if (!container) {
+      if (messages.length === 0) {
         return;
       }
-      const wrappers = container?.getElementsByClassName('link-preview-wrapper');
+
+      const wrappers = document?.getElementsByClassName('link-preview-wrapper');
 
       const previewsData = Array.from(wrappers).map(wrapper => {
         const linkElement = wrapper.querySelector('a');
@@ -73,7 +73,7 @@ export const LinkPreviewHydration = ({ id }: { id: string }) => {
       setPreviews(previewsData);
     }, 500);
     return () => clearTimeout(timer);
-  }, [id]);
+  }, [messages]);
 
   return (
     <>
@@ -94,4 +94,4 @@ export const LinkPreviewHydration = ({ id }: { id: string }) => {
       })}
     </>
   );
-};
+});
