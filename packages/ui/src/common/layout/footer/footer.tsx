@@ -113,7 +113,7 @@ export function Footer({ logo, navigationItems, description, className, variant 
                     // height={logo.height}
                     fill
                     aspectRatio="1:1"
-                    containerHeight="64px"
+                    containerHeight="72px"
                     className="h-full w-full"
                   />
                 ) : (
