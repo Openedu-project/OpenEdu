@@ -138,12 +138,14 @@ export const marked = new Marked({
       }
       if (isButton) {
         return `
-          <a href="${href}" 
-             target="_blank" 
-             data-meta-trigger="true"
-             data-meta-href="${href}"
-             class="mcaption-regular10 inline-flex items-center justify-center break-all rounded-full border bg-primary/10 px-2 py-1 hover:border-primary hover:bg-background hover:text-primary"
-             ${title ? `title="${title}"` : ''}>${text.substring(1, text.length - 1)}</a>
+          <span class="link-preview-wrapper">
+            <a href="${href}" 
+              target="_blank" 
+              data-meta-trigger="true"
+              data-meta-href="${href}"
+              class="mcaption-regular10 inline-flex items-center justify-center break-all rounded-full border bg-primary/10 px-2 py-1 hover:border-primary hover:bg-background hover:text-primary"
+              ${title ? `title="${title}"` : ''}>${text.substring(1, text.length - 1)}</a>
+          </span>
         `;
       }
 
@@ -164,7 +166,7 @@ export const marked = new Marked({
       }).value;
 
       return `
-<pre><div class="flex justify-between border-b pb-2 opacity-50 code-title-wrapper h-10" 
+<pre><div class="flex justify-between items-center border-b pb-2 opacity-50 code-title-wrapper h-10" 
 data-code="${safeEncodeURIComponent(originalCode)}">
   <p class="uppercase">${language}</p>
 </div>

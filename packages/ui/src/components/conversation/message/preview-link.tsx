@@ -51,28 +51,25 @@ export const LinkPreviewHydration = memo(() => {
   const [previews, setPreviews] = useState<{ href: string; text: string; element: HTMLElement }[]>([]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (messages.length === 0) {
-        return;
+    if (messages.length === 0) {
+      return;
+    }
+
+    const wrappers = document?.getElementsByClassName('link-preview-wrapper');
+
+    const previewsData = Array.from(wrappers).map(wrapper => {
+      const linkElement = wrapper.querySelector('a');
+      while (wrapper.firstChild) {
+        wrapper.removeChild(wrapper.firstChild);
       }
+      return {
+        href: linkElement?.href ?? '',
+        text: linkElement?.textContent ?? '',
+        element: wrapper as HTMLElement,
+      };
+    });
 
-      const wrappers = document?.getElementsByClassName('link-preview-wrapper');
-
-      const previewsData = Array.from(wrappers).map(wrapper => {
-        const linkElement = wrapper.querySelector('a');
-        while (wrapper.firstChild) {
-          wrapper.removeChild(wrapper.firstChild);
-        }
-        return {
-          href: linkElement?.href ?? '',
-          text: linkElement?.textContent ?? '',
-          element: wrapper as HTMLElement,
-        };
-      });
-
-      setPreviews(previewsData);
-    }, 500);
-    return () => clearTimeout(timer);
+    setPreviews(previewsData);
   }, [messages]);
 
   return (

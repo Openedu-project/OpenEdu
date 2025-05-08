@@ -66,7 +66,7 @@ export const UserMessage = ({ message, loading, sendMessage, messageType }: IMes
   const tAction = useTranslations('general');
 
   return (
-    <div className={cn('group flex w-full items-center justify-end gap-2 pt-2')}>
+    <div className={cn('group flex w-full items-center justify-end gap-2')}>
       {(!message.ai_agent_type || messageType?.includes(message.ai_agent_type)) && !loading && (
         <EditButton
           className={isEdit ? 'hidden' : 'hidden group-hover:flex'}

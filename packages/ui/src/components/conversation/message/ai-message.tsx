@@ -2,7 +2,7 @@
 import AIMascot from '@oe/assets/images/ai/ai-mascot.png';
 import Openedu from '@oe/assets/images/openedu.png';
 import { GENERATING_STATUS } from '@oe/core';
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { Image } from '#components/image';
 import { cn } from '#utils/cn';
 import { marked } from '#utils/marker';
@@ -27,41 +27,6 @@ export const AIMessage = ({
   const contentRef = useRef<HTMLDivElement>(null);
   const sources = message.props?.source_results;
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    if (!contentRef.current) {
-      return;
-    }
-
-    const buttonLinks = contentRef.current.querySelectorAll('a[data-meta-trigger="true"]');
-
-    for (const link of buttonLinks) {
-      const href = link.getAttribute('href');
-      if (!href) {
-        continue;
-      }
-
-      if (link.parentElement?.classList.contains('link-preview-wrapper')) {
-        continue;
-      }
-
-      // Create a wrapper for the link
-      const wrapper = document.createElement('span');
-      wrapper.className = 'link-preview-wrapper';
-
-      const parent = link.parentElement;
-      if (!parent) {
-        continue;
-      }
-
-      const clone = link.cloneNode(true);
-
-      wrapper.appendChild(clone);
-
-      link.insertAdjacentElement('beforebegin', wrapper);
-      link.remove();
-    }
-  }, [html]);
   return (
     <div className={cn('flex gap-2', className)}>
       <Image
