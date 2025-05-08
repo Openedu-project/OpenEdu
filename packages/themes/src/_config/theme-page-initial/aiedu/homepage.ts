@@ -1,3 +1,4 @@
+import { BLOG_ROUTES } from '@oe/core';
 import { createSection } from '../../../_utils/function';
 
 //Theme step 8: add the initial value to config file with syntax
@@ -132,7 +133,7 @@ export const createAiEduHomepageConfig = (getThemeTranslation: (path: string[]) 
       title: getThemeTranslation(['homepage', 'aieduDashboard', 'title']),
       button: {
         text: getThemeTranslation(['homepage', 'aieduDashboard', 'button', 'text']),
-        link: '/',
+        link: '/ranking',
       },
     },
     order: 4,
@@ -142,7 +143,7 @@ export const createAiEduHomepageConfig = (getThemeTranslation: (path: string[]) 
       title: getThemeTranslation(['homepage', 'aieduBlog', 'title']),
       button: {
         text: getThemeTranslation(['homepage', 'aieduBlog', 'button', 'text']),
-        link: '/',
+        link: BLOG_ROUTES.blog,
       },
     },
     order: 5,

@@ -53,13 +53,13 @@ export const aieduMessage = {
             },
           },
           social: {
-            label: 'Điều Khoản',
+            label: 'Chính Sách',
             items: {
               'items-0': {
-                label: 'Chính Sách Và Bảo Mật',
+                label: 'Điều Khoản Bảo Mật',
               },
               'items-1': {
-                label: 'Hỏi Đáp',
+                label: 'Giải Đáp Thăc Mắc',
               },
             },
           },
@@ -75,22 +75,22 @@ export const aieduMessage = {
           'sidebarItems-1': {
             id: 'ranking',
             href: '/ranking',
-            label: 'Bảng xếp hạng',
+            label: 'Bảng Xếp Hạng',
           },
           'sidebarItems-2': {
             id: 'courses',
             href: '/courses',
-            label: 'Khoá học AI',
+            label: 'Khoá Học AI',
           },
           'sidebarItems-3': {
             id: 'blog',
             href: '/news-feed',
-            label: 'Tin tức',
+            label: 'Tin Tức',
           },
           'sidebarItems-4': {
             id: 'schedule',
             href: '/schedule',
-            label: 'Lịch trình',
+            label: 'Lịch Trình',
           },
         },
       },
