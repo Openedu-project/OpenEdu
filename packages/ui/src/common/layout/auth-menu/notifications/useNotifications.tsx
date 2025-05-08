@@ -158,6 +158,28 @@ export function useNotifications() {
           endpoint: PLATFORM_ROUTES.courseDetail,
           params: { slug: notification.props?.course_slug },
         });
+      case 16:
+      case 17:
+      case 18:
+      case 20: {
+        const url = `https://${notification.props.alt_domain || notification.props.domain}${buildUrl({
+          endpoint: PLATFORM_ROUTES.courseLearning,
+          params: {
+            slug: notification.props.course_slug,
+            section: notification.props.next_section_uid,
+            lesson: notification.props.next_lesson_uid,
+          },
+        })}`;
+
+        return url;
+      }
+      case 19: {
+        const url = `https://${
+          notification.props.alt_domain || notification.props.domain
+        }${PLATFORM_ROUTES.courseDetail.replace(':slug', notification.props.course_slug ?? '')}`;
+
+        return url;
+      }
 
       // Blog (100-199)
       case 100:
