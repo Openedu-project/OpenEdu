@@ -78,3 +78,4 @@ export * from './url-generator';
 export * from './user-avatar';
 export * from './webview-handler';
 export * from './wishlist-button';
+export * from './seo-metadata';

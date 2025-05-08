@@ -9,6 +9,7 @@ import {
   getDay,
   getDaysInMonth,
 } from 'date-fns';
+import { toZonedTime } from 'date-fns-tz';
 import { enUS } from 'date-fns/locale';
 
 export const TIME_ZONE = 'Asia/Bangkok';
@@ -130,7 +131,9 @@ export function formatDate(timestamp: number): string {
  */
 export function formatDateTime(timestamp: number): string {
   const locale = LocaleManager.getInstance().getLocale();
-  return format(fromUnixTime((timestamp ?? 0) / 1000), FORMAT_PATTERNS.DATE_TIME, { locale });
+  const date = fromUnixTime((timestamp ?? 0) / 1000);
+  const zonedDate = toZonedTime(date, TIME_ZONE); // Using your defined TIME_ZONE
+  return format(zonedDate, FORMAT_PATTERNS.DATE_TIME, { locale });
 }
 
 /**

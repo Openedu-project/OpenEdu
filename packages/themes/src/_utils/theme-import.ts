@@ -408,8 +408,14 @@ export const THEMES_RENDER_CLIENT: ThemeRender = {
       aieduFeatures: dynamic(() =>
         import('../aiedu/homepage/aiedu-features/features').then(mod => ({ default: mod.AieduHomepageFeatures }))
       ),
-      aieduExpert: dynamic(() =>
-        import('../aiedu/homepage/aiedu-expert/expert').then(mod => ({ default: mod.AieduHomepageExpert }))
+      // aieduExpert: dynamic(() =>
+      //   import('../aiedu/homepage/aiedu-expert/expert').then(mod => ({ default: mod.AieduHomepageExpert }))
+      // ),
+      aieduTeacher: dynamic(() =>
+        import('../aiedu/homepage/aiedu-teacher/teacher').then(mod => ({ default: mod.AieduHomepageTeacher }))
+      ),
+      aieduMentor: dynamic(() =>
+        import('../aiedu/homepage/aiedu-mentor/mentor').then(mod => ({ default: mod.AieduHomepageMentor }))
       ),
       aieduDashboard: dynamic(() =>
         import('../aiedu/homepage/aiedu-dashboard/dashboard-client').then(mod => ({
@@ -453,8 +459,14 @@ export const THEMES_RENDER_CLIENT: ThemeRender = {
           default: mod.AieduIntroductionFeatures,
         }))
       ),
-      aieduExpert: dynamic(() =>
-        import('../aiedu/introduction/aiedu-expert/expert').then(mod => ({ default: mod.AieduIntroductionExpert }))
+      // aieduExpert: dynamic(() =>
+      //   import('../aiedu/introduction/aiedu-expert/expert').then(mod => ({ default: mod.AieduIntroductionExpert }))
+      // ),
+      aieduTeacher: dynamic(() =>
+        import('../aiedu/introduction/aiedu-teacher/teacher').then(mod => ({ default: mod.AieduIntroductionTeacher }))
+      ),
+      aieduMentor: dynamic(() =>
+        import('../aiedu/introduction/aiedu-mentor/mentor').then(mod => ({ default: mod.AieduIntroductionMentor }))
       ),
       aieduMap: dynamic(() =>
         import('../aiedu/introduction/aiedu-map/map').then(mod => ({ default: mod.AieduIntroductionMap }))

@@ -24,7 +24,10 @@ import type { ReactNode } from "react";
 // });
 
 export const metadata: Metadata = {
-  title: "OpenEdu",
+  title: {
+    template: '%s | OpenEdu',
+    default: 'OpenEdu'
+  },
   icons: {
     icon: Favicon.src,
   },

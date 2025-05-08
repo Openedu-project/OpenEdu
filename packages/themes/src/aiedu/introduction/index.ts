@@ -6,3 +6,5 @@ export * from './aiedu-expert';
 export * from './aiedu-map';
 export * from './aiedu-trend';
 export * from './aiedu-benefit';
+export * from './aiedu-teacher';
+export * from './aiedu-mentor';

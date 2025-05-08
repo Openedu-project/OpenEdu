@@ -6,7 +6,7 @@ const CircularPercentageChart = ({
   size = 80,
   strokeWidth = 10,
   primaryColor = '#1876D2',
-  secondaryColor = '#EFF7FE',
+  secondaryColor = '#B0E9FF',
 }) => {
   const [progress, setProgress] = useState(0);
 
@@ -56,7 +56,7 @@ const CircularPercentageChart = ({
 
       {/* Percentage text */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="font-bold text-md">{progress.toFixed(1)}%</span>
+        <span className="font-bold">{progress.toFixed(1)}%</span>
       </div>
     </div>
   );

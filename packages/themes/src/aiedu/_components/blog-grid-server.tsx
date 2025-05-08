@@ -1,4 +1,4 @@
-import { formatDate } from '@oe/core';
+import { BLOG_ROUTES, buildUrl, formatDate } from '@oe/core';
 import { Link } from '@oe/ui';
 import { Image } from '@oe/ui';
 import { getPopularBlogs } from '../_actions/blogs';
@@ -11,7 +11,7 @@ const BlogGridServer = async () => {
       {blogsData?.featuredPost && (
         <div className="rounded-3xl bg-white p-4 shadow-[0px_4px_30px_0px_rgba(175,175,175,0.20)] md:p-6">
           <Link
-            href={`/blog/${blogsData?.featuredPost?.id}`}
+            href={buildUrl({endpoint: BLOG_ROUTES.blogDetail, params: {slug: blogsData?.featuredPost?.id}})}
             className="flex h-full flex-col items-start justify-start gap-6 whitespace-break-spaces p-0 text-black no-underline hover:no-underline"
           >
             <div className="w-full overflow-hidden rounded-3xl">
@@ -59,7 +59,7 @@ const BlogGridServer = async () => {
         {blogsData?.restPost?.map(post => (
           <div key={post.id} className="group rounded-3xl bg-white shadow-[0px_4px_30px_0px_rgba(175,175,175,0.20)] ">
             <Link
-              href={`/blog/${post?.id}`}
+              href={buildUrl({endpoint: BLOG_ROUTES.blogDetail, params: {slug: post?.id}})}
               className="flex h-auto flex-col items-start gap-6 whitespace-break-spaces text-black no-underline hover:no-underline md:flex-row md:items-center"
             >
               <div className="w-full overflow-hidden rounded-2xl md:w-[260px]">

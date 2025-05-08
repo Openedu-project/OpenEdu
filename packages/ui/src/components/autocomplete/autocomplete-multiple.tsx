@@ -27,6 +27,7 @@ export type AutocompleteMultipleProps<T extends OptionType | string> = BaseAutoc
   fixedValue?: OptionValue[];
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement>, handleSelectOptions?: (currentValue: T) => void) => void;
   displayItems?: number;
+  minHeightItem?: number;
 };
 
 export function AutocompeteMultiple<T extends OptionType | string>({
@@ -34,6 +35,7 @@ export function AutocompeteMultiple<T extends OptionType | string>({
   placeholder,
   width = DEFAULT_WIDTH,
   height = DEFAULT_HEIGHT,
+  minHeightItem = ITEM_HEIGHT,
   disabled = false,
   getOptionLabel = (option: T) => (typeof option === 'object' ? option.label : option),
   getOptionValue = (option: T) => (typeof option === 'object' ? option.value : option),
@@ -155,7 +157,7 @@ export function AutocompeteMultiple<T extends OptionType | string>({
           disabled={disabled || isFixed}
           className={cn(isFixed && 'bg-muted opacity-70')}
           style={{
-            height: `${ITEM_HEIGHT}px`,
+            minHeight: `${minHeightItem ?? ITEM_HEIGHT}px`,
           }}
         >
           <Check
@@ -168,7 +170,7 @@ export function AutocompeteMultiple<T extends OptionType | string>({
         </CommandItem>
       );
     },
-    [value, disabled, fixedValue, getOptionValue, getOptionLabel, handleSelectOptions, renderOption]
+    [value, disabled, fixedValue, minHeightItem, getOptionValue, getOptionLabel, handleSelectOptions, renderOption]
   );
 
   const toggleExpand = useCallback((e: React.MouseEvent) => {

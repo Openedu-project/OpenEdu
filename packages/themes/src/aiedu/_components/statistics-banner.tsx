@@ -9,7 +9,7 @@ const StatisticsBanner = ({ data }: { data?: AIEduStatistics }) => {
   const t = useTranslations('themePage.aiedu.homepage.aieduDashboard');
 
   return (
-    <Card className="w-full overflow-hidden border-none bg-primary">
+    <Card className="w-full overflow-hidden rounded-3xl border-none bg-primary">
       <div className="relative w-full p-8">
         {/* Background pattern with + signs */}
         <div className="absolute inset-0 grid grid-cols-8 gap-8 md:grid-cols-16">

@@ -1,10 +1,27 @@
-import { getThemeConfigServer } from "@oe/api";
-import type { FileType, FooterProps } from "@oe/ui";
-import { MainLayout } from "@oe/ui";
-import type { NavigationLink } from "@oe/ui";
-import type { ISidebarItem } from "@oe/ui";
-import { getTranslations } from "next-intl/server";
-import type { ReactNode } from "react";
+import { getThemeConfigServer } from '@oe/api';
+import { getMetadata } from '@oe/themes';
+import type { FileType, FooterProps } from '@oe/ui';
+import { MainLayout } from '@oe/ui';
+import type { NavigationLink } from '@oe/ui';
+import type { ISidebarItem } from '@oe/ui';
+import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
+import type { ReactNode } from 'react';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const [themeSystem] = await Promise.all([getThemeConfigServer()]);
+  const settings = getMetadata(themeSystem?.[0]?.value);
+
+  const newMetadata = {
+    ...settings,
+    title: {
+      template: `%s | ${settings?.title}`,
+      default: settings?.title,
+    },
+  };
+
+  return newMetadata;
+}
 
 export default async function OpeneduLayout({
   children,

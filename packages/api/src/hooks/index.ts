@@ -45,3 +45,4 @@ export * from './useWallet';
 export * from './useReferralProgram';
 export * from './usePoint';
 export * from './useAIEdu';
+export * from './useSchedule';

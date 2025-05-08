@@ -44,18 +44,18 @@ export const PLATFORM_ROUTES = {
 } as const;
 
 export const BLOG_ROUTES = {
-  blog: '/blog',
-  blogDetail: '/blog/:slug',
-  personBlogDetail: '/blog/author/:username/:slug',
-  blogHashtag: '/blog/hashtag/:id',
-  blogCategory: '/blog/category/:id',
-  blogSearchResult: '/blog/search-result',
-  blogManagement: '/blog/me/management',
-  createBlog: '/blog/me/creation',
-  editBlog: '/blog/me/:id/edit',
-  previewBlog: '/blog/me/:id/preview',
-  authorBlog: '/blog/author/:username',
-  searchBlog: '/blog/list',
+  blog: '/news-feed',
+  blogDetail: '/news-feed/:slug',
+  personBlogDetail: '/news-feed/author/:username/:slug',
+  blogHashtag: '/news-feed/hashtag/:id',
+  blogCategory: '/news-feed/category/:id',
+  blogSearchResult: '/news-feed/search-result',
+  blogManagement: '/news-feed/me/management',
+  createBlog: '/news-feed/me/creation',
+  editBlog: '/news-feed/me/:id/edit',
+  previewBlog: '/news-feed/me/:id/preview',
+  authorBlog: '/news-feed/author/:username',
+  searchBlog: '/news-feed/list',
 } as const;
 
 export const BLOG_ADMIN_ROUTES = {
@@ -138,6 +138,10 @@ export const ADMIN_ROUTES = {
   certificates: '/admin/certificates',
   certificateDetail: '/admin/certificates/:id',
   referralProgramManagement: '/admin/referral-program/program-management',
+  schedule: '/admin/schedule',
+  termsAndPrivacy: '/admin/terms-and-conditions/terms-and-privacy',
+  faq: '/admin/terms-and-conditions/faq',
+  aiCourseStatistic: '/admin/statistic/ai-course-statistic',
 } as const;
 
 export const CREATOR_ROUTES = {

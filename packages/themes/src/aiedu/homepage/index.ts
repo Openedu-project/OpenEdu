@@ -8,3 +8,5 @@ export * from './aiedu-cert';
 export * from './aiedu-guide';
 export * from './aiedu-sponsors';
 export * from './aiedu-gallery';
+export * from './aiedu-teacher';
+export * from './aiedu-mentor';

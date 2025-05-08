@@ -19,19 +19,19 @@ export const aieduMessage = {
             label: 'Danh Mục ',
             items: {
               'items-0': {
-                label: 'Giới thiệu',
+                label: 'Giới Thiệu',
               },
               'items-1': {
-                label: 'Bảng xếp hạng',
+                label: 'Bảng Xếp Hạng',
               },
               'items-2': {
-                label: 'Khoá học AI',
+                label: 'Khoá Học AI',
               },
               'items-3': {
-                label: 'Lịch trình',
+                label: 'Lịch Trình',
               },
               'items-4': {
-                label: 'Tin tức',
+                label: 'Tin Tức',
               },
             },
           },
@@ -53,7 +53,15 @@ export const aieduMessage = {
             },
           },
           social: {
-            label: 'QR Code',
+            label: 'Chính Sách',
+            items: {
+              'items-0': {
+                label: 'Điều Khoản Bảo Mật',
+              },
+              'items-1': {
+                label: 'Giải Đáp Thăc Mắc',
+              },
+            },
           },
         },
       },
@@ -67,22 +75,22 @@ export const aieduMessage = {
           'sidebarItems-1': {
             id: 'ranking',
             href: '/ranking',
-            label: 'Bảng xếp hạng',
+            label: 'Bảng Xếp Hạng',
           },
           'sidebarItems-2': {
             id: 'courses',
             href: '/courses',
-            label: 'Khoá học AI',
+            label: 'Khoá Học AI',
           },
           'sidebarItems-3': {
             id: 'blog',
-            href: '/blog',
-            label: 'Tin tức',
+            href: '/news-feed',
+            label: 'Tin Tức',
           },
           'sidebarItems-4': {
             id: 'schedule',
             href: '/schedule',
-            label: 'Lịch trình',
+            label: 'Lịch Trình',
           },
         },
       },

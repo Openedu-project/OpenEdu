@@ -50,3 +50,4 @@ export * from './wallet';
 export * from './referral-program';
 export * from './point';
 export * from './ai-edu';
+export * from './schedule';

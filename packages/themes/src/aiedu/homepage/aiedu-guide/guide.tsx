@@ -25,7 +25,7 @@ const AieduHomepageGuide: SectionComponent<'homepage', 'aieduGuide'> = ({ props,
           {props?.steps?.map((_step, index) => (
             <div
               key={index.toString()}
-              className="flex cursor-pointer items-center justify-between rounded-xl border border-secondary p-4 transition-colors hover:border-primary"
+              className="flex cursor-pointer items-center justify-between rounded-3xl border border-secondary p-4 transition-colors hover:border-primary"
             >
               <div className="flex items-center">
                 <div className="mr-4 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-secondary font-medium text-primary">
@@ -47,7 +47,7 @@ const AieduHomepageGuide: SectionComponent<'homepage', 'aieduGuide'> = ({ props,
             src={props?.image?.url}
             width={props?.image?.width ?? 673}
             height={props?.image?.height ?? 378}
-            className="h-full w-full rounded-lg object-contain"
+            className="h-full w-full rounded-3xl object-contain"
           />
         </div>
       </div>

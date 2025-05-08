@@ -10,6 +10,7 @@ export const systemConfigKeys = {
   i18nTranslations: 'i18n_translations',
   themeSystem: 'theme_system',
   termPage: 'term_page',
+  faqPage: 'faq_page',
   specificThemeSystem: 'theme_system_:themeName',
 } as const;
 
@@ -34,4 +35,9 @@ export const createThemeSystemConfigKeyClient = (domain?: string): ISystemConfig
     endpoint: systemConfigKeys.specificThemeSystem,
     params: { themeName: (domain || host)?.split('.')?.[0] }, //theme_system_vbi
   }) as ISystemConfigKey;
+};
+
+//system-configs?keys={}
+export const systemConfigQueryByKeys = {
+  aiedu: 'ai_gov_vn_2025_campaign',
 };

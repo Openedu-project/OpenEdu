@@ -48,3 +48,4 @@ export * from './base';
 export * from './point';
 export * from './referral-program';
 export * from './ai-edu';
+export * from './schedule';

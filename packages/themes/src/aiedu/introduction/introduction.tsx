@@ -16,8 +16,12 @@ const pageRender: PageRender = {
     aieduFeatures: dynamic(() =>
       import("./aiedu-features").then((mod) => mod.AieduIntroductionFeatures)
     ),
-    aieduExpert: dynamic(() =>
-      import("./aiedu-expert").then((mod) => mod.AieduIntroductionExpert)
+    // aieduExpert: dynamic(() => import('./aiedu-expert').then(mod => mod.AieduIntroductionExpert)),
+    aieduTeacher: dynamic(() =>
+      import("./aiedu-teacher").then((mod) => mod.AieduIntroductionTeacher)
+    ),
+    aieduMentor: dynamic(() =>
+      import("./aiedu-mentor").then((mod) => mod.AieduIntroductionMentor)
     ),
     aieduMap: dynamic(() =>
       import("./aiedu-map").then((mod) => mod.AieduIntroductionMap)

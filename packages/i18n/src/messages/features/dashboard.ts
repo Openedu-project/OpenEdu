@@ -47,6 +47,10 @@ export const dashboardMessages = {
       requests: 'Requests',
       organizations: 'Organizations',
     },
+    statistic: {
+      title: 'Statistic',
+      aiCourseStatistic: 'AI Course Statistic',
+    },
     withdrawRequest: 'Withdraw Request',
     blog: {
       title: 'Blog Management',
@@ -104,6 +108,14 @@ export const dashboardMessages = {
       title: 'Referral Program',
       referralProgramHistory: 'Referral Program History',
       programManagement: 'Program Management',
+    },
+    schedule: {
+      title: 'Schedule',
+    },
+    termsConditions: {
+      title: 'Terms and Conditions',
+      faq: 'FAQ',
+      termsAndPrivacy: 'Terms and Privacy',
     },
   },
 };

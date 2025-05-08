@@ -11,16 +11,19 @@ import { coursePaymentMessages } from './course-payment';
 import { courseListMessages } from './courses-list';
 import { creatorLaunchpadMessages } from './creator-launchpad';
 import { creatorManagementMessage } from './creator-management';
+import { termsAndConditions } from './faq-management';
 import { forgotPasswordMessage } from './forgot-password';
 import { homePageMessage } from './home-page';
 import { launchpadDetailPageMessages } from './launchpad-detailpage';
 import { launchpadHomepageMessage } from './launchpad-homepage';
 import { courseLearningMessages } from './learning';
+import { metadataMessage } from './metadata';
 import { myLearningSpaceMessage } from './my-learning-space';
 import { notificationMessage } from './notification';
 import { organizationsMessage } from './organizations';
 import { permissionMessage } from './permissions';
 import { referralProgramMessages } from './referral-program';
+import { scheduleMessage } from './schedule';
 import { setPasswordMessage } from './set-password';
 import { userAffiliateCampaignMessage } from './user-affiliate-campaign';
 import { userProfileMessages } from './user-profile';
@@ -56,4 +59,7 @@ export const pageMessages = {
   ...launchpadHomepageMessage,
   ...courseManagementMessages,
   ...referralProgramMessages,
+  ...scheduleMessage,
+  ...termsAndConditions,
+  ...metadataMessage,
 };

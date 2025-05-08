@@ -7,3 +7,4 @@ export * from './learning';
 export * from './user';
 export * from './wallet';
 export * from './referral-program';
+export * from './schedule';

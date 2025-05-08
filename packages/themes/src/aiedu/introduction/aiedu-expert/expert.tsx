@@ -1,20 +1,17 @@
-import { cn } from "@oe/ui";
+import { cn } from '@oe/ui';
 
-import { useTranslations } from "next-intl";
-import type { SectionComponent } from "../../../_types/theme-page";
+import { useTranslations } from 'next-intl';
+import type { SectionComponent } from '../../../_types/theme-page';
 
-import { Sparkle } from "lucide-react";
-import { ExpertCard } from "../../_components/expert-card";
-import { AieduLayoutSection } from "../../_components/layout-section";
+import { Sparkle } from 'lucide-react';
+import { ExpertCard } from '../../_components/expert-card';
+import { AieduLayoutSection } from '../../_components/layout-section';
 
-const AieduIntroductionExpert: SectionComponent<
-  "introduction",
-  "aieduExpert"
-> = ({ props, className }) => {
-  const t = useTranslations("themePage.aiedu.introduction.aieduExpert");
+const AieduIntroductionExpert: SectionComponent<'introduction', 'aieduExpert'> = ({ props, className }) => {
+  const t = useTranslations('themePage.aiedu.introduction.aieduExpert');
 
   return (
-    <AieduLayoutSection className={cn("space-y-6", className)}>
+    <AieduLayoutSection className={cn('space-y-6', className)}>
       {/* <Title title={t("title")} className="text-center" /> */}
 
       <div className="space-y-2">
@@ -24,7 +21,7 @@ const AieduIntroductionExpert: SectionComponent<
             <Sparkle className="text-primary" />
           </div>
 
-          <h3 className="mb-0 text-center text-primary">{t("teacher")}</h3>
+          <h3 className="mb-0 text-center text-primary">{t('teacher')}</h3>
 
           <div className="flex items-center">
             <Sparkle className="translate-x-[1px] text-primary" />
@@ -50,7 +47,7 @@ const AieduIntroductionExpert: SectionComponent<
             <Sparkle className="text-primary" />
           </div>
 
-          <h3 className="mb-0 text-center text-primary">{t("mentor")}</h3>
+          <h3 className="mb-0 text-center text-primary">{t('mentor')}</h3>
 
           <div className="flex items-center">
             <Sparkle className="translate-x-[1px] text-primary" />
