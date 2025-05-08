@@ -1,6 +1,5 @@
 import type { ICourseCertCondition } from '@oe/api';
-import { InfoCircle } from '@oe/assets';
-import { CheckCircle } from 'lucide-react';
+import { CircleCheck } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { memo, useMemo } from 'react';
 
@@ -34,8 +33,8 @@ const RequirementsItem = memo(({ type, value }: RequirementProps) => {
   }, [type, value, t]);
 
   return (
-    <div className="mcaption-regular14 flex items-center gap-2 border-success border-l border-l-[2px] bg-foreground/5 px-4 py-2">
-      <InfoCircle color="var(--success)" />
+    <div className="mcaption-regular14 flex items-center gap-2">
+      <CircleCheck color="var(--success)" size={16} />
       <p>{label}</p>
     </div>
   );
@@ -70,11 +69,11 @@ export function CourseCertificateRequirements({
   }
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-4">
-        <CheckCircle />
-        <span className="mcaption-semibold16">{t('requirementsToEarn')}</span>
-      </div>
+    <div className="space-y-3">
+      {/* <div className="flex items-center gap-4">
+        <CheckCircle /> */}
+      <div className="mcaption-semibold16">{t('requirementsToEarn')}</div>
+      {/* </div> */}
 
       <div className="space-y-2">
         {requirementList.map((req, idx) => (

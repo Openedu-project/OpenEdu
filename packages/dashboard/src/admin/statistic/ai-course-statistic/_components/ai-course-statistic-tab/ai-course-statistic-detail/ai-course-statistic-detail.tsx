@@ -11,7 +11,11 @@ interface IAICourseStatisticTabDetailProps {
 }
 export function AICourseStatisticTabDetail({ params, campaignKey }: IAICourseStatisticTabDetailProps) {
   const { fromDate, toDate, courseCuids } = params;
-  const [selectedRegions, setSelectedRegions] = useState<string[]>(['Hà Nội', 'Hồ Chí Minh', 'Đà Nẵng']);
+  const [selectedRegions, setSelectedRegions] = useState<string[]>([
+    'Thành phố Hà Nội',
+    'Thành phố Hồ Chí Minh',
+    'Tự do',
+  ]);
 
   const { dataAIEduProvinces } = useGetAIEduProvinces(campaignKey);
 
@@ -19,6 +23,7 @@ export function AICourseStatisticTabDetail({ params, campaignKey }: IAICourseSta
     from_date: fromDate,
     to_date: toDate,
     course_cuids: courseCuids === 'all' ? undefined : courseCuids,
+    provinces: [...selectedRegions]?.length === 0 ? undefined : [...selectedRegions],
   });
 
   const toggleRegion = useCallback(

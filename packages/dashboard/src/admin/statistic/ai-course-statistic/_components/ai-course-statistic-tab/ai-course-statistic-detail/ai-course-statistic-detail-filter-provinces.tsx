@@ -33,6 +33,15 @@ export function AICourseStatisticTabDetailFilterProvinces({
               {region.label}
             </Badge>
           ))}
+          <Badge
+            variant={selectedRegions.includes('Tự do') ? 'default' : 'outline'}
+            className={`cursor-pointer hover:border-primary ${
+              selectedRegions.includes('Tự do') ? 'bg-primary text-primary-foreground hover:bg-primary-300' : ''
+            }`}
+            onClick={() => toggleRegion('Tự do')}
+          >
+            Tự do
+          </Badge>
         </div>
       </CardContent>
     </Card>

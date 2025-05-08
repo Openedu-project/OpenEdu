@@ -13,7 +13,7 @@ const Title = ({ title, description, variant = 'primary', className }: TitleProp
         {title}
       </h3>
       <p
-        className={`text-[18px] text-foreground leading-tight md:text-[24px] ${
+        className={`relative text-[18px] text-foreground leading-tight md:text-[24px] ${
           variant === 'secondary' && '!text-background'
         }`}
       >

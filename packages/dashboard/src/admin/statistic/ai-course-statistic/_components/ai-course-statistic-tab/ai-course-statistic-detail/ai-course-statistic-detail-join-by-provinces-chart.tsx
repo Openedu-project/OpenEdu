@@ -66,7 +66,7 @@ export function AICourseStatisticTabDetailJoinByProvincesChart({
 }: IAICourseStatisticTabDetailJoinByProvincesChart) {
   const chartData = useMemo<ChartDataItem[]>(() => {
     return dataAIEduStatisticProvinces.map((province, index) => {
-      const formattedPercent = `${(province.learner_percent * 100).toFixed(2)}%`;
+      const formattedPercent = `${province.learner_percent.toFixed(2)}%`;
 
       const defaultColor = '#000000'; // Fallback color
       return {
