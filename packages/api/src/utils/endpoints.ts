@@ -110,7 +110,7 @@ export const API_ENDPOINT = {
   USERS: '/api/v1/users',
   USERS_ME: '/api/v1/users/me',
   USERS_ME_BLOGS: '/api/v1/users/me/blogs',
-  USERS_ORG_BLOGS: '/api/v1/users/org-blogs',
+  USERS_ORG_BLOGS: '/api/v1/users/blog-managers',
   USERS_ME_CHANGE_PASSWORD: '/api/v1/users/me/change-password',
   USERS_ME_PERMISSIONS: '/api/v1/users/me/permissions',
   USERS_ME_ORDERS: '/api/v1/users/me/orders',
