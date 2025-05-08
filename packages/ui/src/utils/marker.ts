@@ -20,7 +20,7 @@ const inlineLatexRule: RegExp[] = [
   /^\\begin\{math\}([\s\S]+?)\\end\{math\}/,
   /^\\begin\{inline\}([\s\S]+?)\\end\{inline\}/,
 ];
-const inlineLatexStart = /^\$|\\\(|\\begin\{/;
+const inlineLatexStart = /\$|\\\(|\\begin\{/;
 const blockLatexStart = /^\$\$|\\\[|\\begin\{/;
 
 function safeEncodeURIComponent(str: string) {
