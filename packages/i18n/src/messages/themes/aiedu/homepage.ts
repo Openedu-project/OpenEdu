@@ -144,7 +144,7 @@ export const aieduHomepage = {
     aieduCert: {
       title: 'Chứng Nhận Từ Chương Trình',
       button: {
-        text: 'Học để nhận chứng chỉ',
+        text: 'Bắt đầu học ngay',
       },
       coursePanel: {
         title: 'Điều kiện nhận chứng chỉ',
@@ -158,9 +158,9 @@ export const aieduHomepage = {
     aieduGuide: {
       title: 'Hướng Dẫn Tham Gia Chương Trình',
       steps: {
-        step1: 'Đăng ký chương trình để thực hiện bước đầu tiên',
-        step2: 'Đăng ký chương trình để thực hiện bước thứ 2',
-        step3: 'Đăng ký chương trình để thực hiện bước thứ 3',
+        step1: 'Bước 1: Đăng ký tài khoản để tham gia chương trình',
+        step2: 'Bước 2: Chọn Video khoá học để có cơ hội nhận chứng chỉ',
+        step3: 'Bước 3: Thực hành sử dụng công cụ AI miễn phí tại openedu.net',
       },
     },
     aieduSponsors: {

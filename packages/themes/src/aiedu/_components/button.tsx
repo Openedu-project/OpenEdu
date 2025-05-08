@@ -54,7 +54,10 @@ const AieduButton = ({ link, text, variant = 'default', className }: AieduButton
           width: '50%',
           height: '100%',
           transform: 'skewX(-25deg)',
-          background: 'linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 100%)',
+          background:
+            variant === 'outline'
+              ? 'transparent'
+              : 'linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 100%)',
         }}
       />
 
