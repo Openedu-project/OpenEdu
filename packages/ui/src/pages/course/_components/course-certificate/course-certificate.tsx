@@ -47,16 +47,16 @@ export function CourseCertificate({
                   </>
                 )}
               </div>
-              <p className="mcaption-regular14">{tCourse('desc')}</p>
+              {/* <p className="mcaption-regular14">{tCourse('desc')}</p> */}
 
               <CourseCertificateRequirements certificateCondition={certificate_condition} />
 
               {mint_cert_nft_settings?.enabled && mint_cert_nft_settings?.gas_fee_payer !== 'learner' && (
-                <div className="flex items-center gap-2 bg-warning/10 p-2">
+                <div className="flex items-center gap-2 rounded-xl bg-warning/10 p-2">
                   <Award color="var(--warning)" />
-                  <span className="mcaption-regular14 flex-1">
+                  <span className="mcaption-regular12 flex-1">
                     {tCourse('nftSponsoredBy')}
-                    <span className="mcaption-semibold14 ml-[3px]">
+                    <span className="mcaption-semibold12 ml-[3px]">
                       {mint_cert_nft_settings?.gas_fee_payer === 'creator' ? owner?.display_name : org?.name}
                     </span>
                     .<span className="ml-[3px]">{tCourse('thisDigital')}</span>
