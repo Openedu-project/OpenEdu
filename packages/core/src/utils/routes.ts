@@ -141,6 +141,7 @@ export const ADMIN_ROUTES = {
   schedule: '/admin/schedule',
   termsAndPrivacy: '/admin/terms-and-conditions/terms-and-privacy',
   faq: '/admin/terms-and-conditions/faq',
+  aiCourseStatistic: '/admin/statistic/ai-course-statistic',
 } as const;
 
 export const CREATOR_ROUTES = {
