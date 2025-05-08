@@ -16,15 +16,9 @@ const InfoSection = ({ title, description, button, className, variant = 'default
     <div className={cn('space-y-2 text-foreground md:space-y-6', className)}>
       <h2 className={`font-bold text-[32px] lg:text-[40px] ${variant === 'outline' && 'text-background'}`}>{title}</h2>
       <p
-        className={`overflow-hidden text-[18px] text-foreground/80 leading-tight md:max-h-[8.4em] md:text-[24px] ${
+        className={`custom-line-clamp-6 text-[18px] text-foreground/80 leading-tight md:max-h-[8.4em] md:overflow-hidden md:text-[24px] ${
           variant === 'outline' && '!text-background'
         }`}
-        style={{
-          display: '-webkit-box',
-          WebkitLineClamp: 6,
-          WebkitBoxOrient: 'vertical',
-          textOverflow: 'ellipsis',
-        }}
       >
         {description}
       </p>

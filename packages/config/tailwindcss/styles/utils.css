@@ -134,3 +134,13 @@
     border: 3px solid #f6f7ed;
   }
 }
+
+@media (min-width: 768px) {
+  .custom-line-clamp-6 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+    text-overflow: ellipsis;
+  }
+}
