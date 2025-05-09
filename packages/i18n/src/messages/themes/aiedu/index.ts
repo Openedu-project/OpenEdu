@@ -59,7 +59,7 @@ export const aieduMessage = {
                 label: 'Điều Khoản Bảo Mật',
               },
               'items-1': {
-                label: 'Giải Đáp Thăc Mắc',
+                label: 'Giải Đáp Thắc Mắc',
               },
             },
           },
