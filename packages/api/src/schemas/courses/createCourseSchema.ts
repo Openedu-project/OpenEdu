@@ -118,12 +118,16 @@ export const courseOutlineSchema = z.object({
   level_id: z.string().optional(),
   language: z.string(),
   duration_type: z.enum(['day', 'week']),
-  duration: z.preprocess(Number, z.number().min(1, 'course.validation.durationMin--min:1')),
+  duration: z.preprocess(
+    Number,
+    z.number().int('course.validation.duration').min(1, 'course.validation.durationMin--min:1')
+  ),
 
   study_load: z.preprocess(
     Number,
     z
       .number()
+      .int('course.validation.studyLoad')
       .min(1, 'course.validation.studyLoadMinMax--min:1--max:24--unit:hours')
       .max(24, 'course.validation.studyLoadMinMax--min:1--max:24--unit:hours')
   ),

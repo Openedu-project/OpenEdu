@@ -125,7 +125,7 @@ export function CourseOutlineForm({
           </CourseFormField>
           <DurationField form={form} />
           <CourseFormField name="study_load" label={tAICourseForm('studyLoad')} required>
-            <InputNumber min={1} />
+            <InputNumber min={1} step={1} />
           </CourseFormField>
           <div className="flex justify-end space-x-4">
             <Button
