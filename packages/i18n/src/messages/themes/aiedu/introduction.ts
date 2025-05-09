@@ -3,7 +3,7 @@ export const aieduIntroduction = {
     aieduGoal: {
       title: 'Mục Đích Chương Trình',
       description:
-        'AI Education Program là chương trình huấn luyện kỹ năng sử dụng trí tuệ nhân tạo dành cho học sinh, sinh viên và thanh niên trên toàn quốc. Với sứ mệnh đưa AI đến gần hơn với cộng đồng, chương trình được phối hợp thực hiện bởi Trung Ương Đoàn, Hội Liên hiệp Thanh niên Việt Nam, VBI Academy, OpenEdu và Hội Tri thức trẻ Việt Nam toàn cầu.',
+        'Phổ Cập AI là chương trình huấn luyện kỹ năng sử dụng trí tuệ nhân tạo dành cho học sinh, sinh viên và thanh niên trên toàn quốc. Với sứ mệnh đưa AI đến gần hơn với cộng đồng, chương trình được phối hợp thực hiện bởi Trung Ương Đoàn, Hội Liên hiệp Thanh niên Việt Nam, VBI Academy, OpenEdu và Hội Tri thức trẻ Việt Nam toàn cầu.',
     },
     aieduTrend: {
       title: 'AI Đang Trở Thành Xu Hướng Toàn Cầu',

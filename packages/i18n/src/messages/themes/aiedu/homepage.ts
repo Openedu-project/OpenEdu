@@ -2,12 +2,14 @@
 export const aieduHomepage = {
   homepage: {
     aieduHero: {
-      title: 'Vì một thế hệ trẻ làm chủ trí tuệ nhân tạo ',
+      title: 'Chương Trình Phổ Cập AI - Khai Phóng Trí Tuệ Việt',
       description:
-        'AI Education Program là chương trình huấn luyện kỹ năng sử dụng trí tuệ nhân tạo dành cho học sinh, sinh viên và thanh niên trên toàn quốc. Với sứ mệnh đưa AI đến gần hơn với cộng đồng, chương trình được phối hợp thực hiện bởi Trung Ương Đoàn, Hội Liên hiệp Thanh niên Việt Nam, VBI Academy, OpenEdu và Hội Tri thức trẻ Việt Nam toàn cầu.',
+        'Phổ Cập AI là chương trình huấn luyện kỹ năng sử dụng trí tuệ nhân tạo dành cho học sinh, sinh viên và thanh niên trên toàn quốc. Với sứ mệnh đưa AI đến gần hơn với cộng đồng, chương trình được phối hợp thực hiện bởi Trung Ương Đoàn, Hội Liên hiệp Thanh niên Việt Nam, VBI Academy, OpenEdu và Hội Tri thức trẻ Việt Nam toàn cầu.',
       button: {
         text: 'Bắt đầu học ngay',
       },
+      org: 'Đơn vị tổ chức:',
+      partner: 'Đơn vị đồng hành:',
     },
     aieduExpert: {
       title: 'Gặp Gỡ Dàn Cố Vấn Chuyên Môn',
@@ -169,7 +171,7 @@ export const aieduHomepage = {
       mediaLabel: 'Đơn vị truyền thông',
     },
     aieduGallery: {
-      title: 'Hình ảnh nội bật từ chương trình',
+      title: 'Hình Ảnh Nổi Bật Từ Chương Trình',
     },
   },
 };

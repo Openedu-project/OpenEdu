@@ -14,7 +14,12 @@ export const createAiEduHomepageConfig = (getThemeTranslation: (path: string[]) 
         link: '/',
       },
       banner: { mime: 'image/png' },
-      partners: new Array(6).fill({ mime: 'image/png' }),
+      // partners: new Array(6).fill({ mime: 'image/png' }),
+      organization1: { mime: 'image/png' },
+      organization2: { mime: 'image/png' },
+      partner1: { mime: 'image/png' },
+      partner2: { mime: 'image/png' },
+      partner3: { mime: 'image/png' },
     },
     // Theme step 10: add the order
     order: 0,

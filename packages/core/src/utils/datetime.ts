@@ -123,7 +123,9 @@ if (typeof window !== 'undefined') {
  */
 export function formatDate(timestamp: number): string {
   const locale = LocaleManager.getInstance().getLocale();
-  return format(fromUnixTime((timestamp ?? 0) / 1000), FORMAT_PATTERNS.DATE, { locale });
+  const date = fromUnixTime((timestamp ?? 0) / 1000);
+  const zonedDate = toZonedTime(date, TIME_ZONE);
+  return format(zonedDate, FORMAT_PATTERNS.DATE, { locale });
 }
 
 /**
@@ -141,7 +143,9 @@ export function formatDateTime(timestamp: number): string {
  */
 export function formatDateHourMinute(timestamp: number): string {
   const locale = LocaleManager.getInstance().getLocale();
-  return format(fromUnixTime((timestamp ?? 0) / 1000), FORMAT_PATTERNS.DATE_HOUR_MINUTE, { locale });
+  const date = fromUnixTime((timestamp ?? 0) / 1000);
+  const zonedDate = toZonedTime(date, TIME_ZONE);
+  return format(zonedDate, FORMAT_PATTERNS.DATE_HOUR_MINUTE, { locale });
 }
 
 /**
@@ -149,17 +153,18 @@ export function formatDateHourMinute(timestamp: number): string {
  */
 export function formatTimeHourMinute(timestamp: number): string {
   const date = fromUnixTime((timestamp ?? 0) / 1000);
-  const now = new Date();
-  const diffDays = differenceInDays(now, date);
+  const zonedDate = toZonedTime(date, TIME_ZONE);
+  const now = toZonedTime(new Date(), TIME_ZONE); // Also convert current time to same timezone
+  const diffDays = differenceInDays(now, zonedDate);
   const locale = LocaleManager.getInstance().getLocale();
 
   if (diffDays === 0) {
-    return format(date, FORMAT_PATTERNS.HOUR_MINUTE, { locale });
+    return format(zonedDate, FORMAT_PATTERNS.HOUR_MINUTE, { locale });
   }
   if (diffDays > 0 && diffDays < 7) {
-    return format(date, FORMAT_PATTERNS.DAY_HOUR_MINUTE, { locale });
+    return format(zonedDate, FORMAT_PATTERNS.DAY_HOUR_MINUTE, { locale });
   }
-  return format(date, FORMAT_PATTERNS.MONTH_DAY_TIME, { locale });
+  return format(zonedDate, FORMAT_PATTERNS.MONTH_DAY_TIME, { locale });
 }
 
 /**
@@ -167,7 +172,9 @@ export function formatTimeHourMinute(timestamp: number): string {
  */
 export function formatDateTimeZone(timestamp: number): string {
   const locale = LocaleManager.getInstance().getLocale();
-  return format(fromUnixTime((timestamp ?? 0) / 1000), FORMAT_PATTERNS.DATE_TIME_ZONE, { locale });
+  const date = fromUnixTime((timestamp ?? 0) / 1000);
+  const zonedDate = toZonedTime(date, TIME_ZONE);
+  return format(zonedDate, FORMAT_PATTERNS.DATE_TIME_ZONE, { locale });
 }
 
 /**

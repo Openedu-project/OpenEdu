@@ -11,7 +11,7 @@ import {
 } from '@oe/api';
 import { formatDate } from '@oe/core';
 import type { FilterOption } from '@oe/ui';
-import { Button, type ColumnDef, Table, type TableRef, toast } from '@oe/ui';
+import { Button, type ColumnDef, Link, Table, type TableRef, toast } from '@oe/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { ScheduleSettingEventActionModal } from './schedule-setting-event-action-modal';
@@ -105,6 +105,15 @@ export function ScheduleSettingEventList({
       {
         header: t('joinLink'),
         accessorKey: 'join_link',
+        cell: item => {
+          const url = item.getValue() as string;
+
+          return (
+            <Link href={url} className="font-bold text-primary underline" target="_blank">
+              {t('link')}
+            </Link>
+          );
+        },
       },
       {
         header: t('action'),

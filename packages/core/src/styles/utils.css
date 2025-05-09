@@ -3,9 +3,9 @@
   padding-inline: 2rem;
 }
 
-@utility scrollbar {
+/* @utility scrollbar {
   @apply scroll-bar:w-2 scroll-bar:h-2 scroll-bar:bg-transparent scroll-bar-track:bg-foreground/5 scroll-bar-thumb:rounded-sm scroll-bar-thumb:bg-foreground/20 scroll-bar-track:rounded-sm;
-}
+} */
 
 @utility animate-accordion-down {
   animation: accordion-down 0.2s ease-out;
@@ -112,22 +112,22 @@
   scrollbar-width: none;
 }
 
+/* @utility scrollbar {
+  @apply scroll-bar:w-2 scroll-bar:h-2 scroll-bar:bg-transparent scroll-bar-track:bg-foreground/5 scroll-bar-thumb:rounded-sm scroll-bar-thumb:bg-foreground/20 scroll-bar-track:rounded-sm;
+} */
+
 /* Change scroll bar color */
 @utility scrollbar {
   &::-webkit-scrollbar {
     width: 10px;
     height: 10px;
   }
-}
 
-@utility scrollbar {
   &::-webkit-scrollbar-track {
     border-radius: 100vh;
     background: #f7f4ed;
   }
-}
 
-@utility scrollbar {
   &::-webkit-scrollbar-thumb {
     background: #e0cbcb;
     border-radius: 100vh;
