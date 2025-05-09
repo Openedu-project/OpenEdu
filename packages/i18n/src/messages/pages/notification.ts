@@ -27,6 +27,15 @@ export const notificationMessage = {
     code13: 'Your course <strong>{course_name}</strong> has been disabled and is currently hidden from the website.',
     code14: 'Course <strong>{course_name}</strong> generated successfully with <strong>{course_ai_tool}</strong> ',
     code15: 'Unable to create with <strong>{course_ai_tool}</strong> . Please try again.',
+    code16:
+      "Congratulations! You've successfully enrolled in <strong>{course_name}</strong>. Start your learning journey today!",
+    code17:
+      "We noticed you've taken a short break from <strong>{course_name}</strong>. Pick up where you left off and keep the momentum going—you're doing great!",
+    code18:
+      "It's been 7 days since your last session in <strong>{course_name}</strong>. Jump back in and keep building your skills—you're closer to your goal than you think!",
+    code19:
+      'New content alert! <strong>{course_name}</strong> has been updated with fresh learning materials. Check it out now!',
+    code20: "Halfway there! You've completed 50% of <strong>{course_name}</strong>. Keep up the great work!",
 
     // Blog (100-199)
     code100: 'Your request to publish the blog <strong>{blog_name}</strong> has been approved!',
@@ -73,5 +82,9 @@ export const notificationMessage = {
       '<strong>{launchpad_name}</strong> by <strong>{user_name}</strong> ready for publishing review - Launchpad completed.',
     code711: '<strong>{launchpad_name}</strong> oting failed - Your refund is available.',
     code712: '<strong>{course_name}</strong> Educator inactive - Claim your investment back.',
+
+    // Log-in/Sign-up (800-899)
+    code800:
+      'Welcome to <strong>{org_name}</strong>! Your account has been successfully created. Start exploring courses now.',
   },
 } as const;

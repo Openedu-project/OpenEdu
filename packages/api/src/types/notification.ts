@@ -12,11 +12,15 @@ export interface INotificationItem {
   target_id: string;
   target_type: string;
   props: {
+    [x: string]: string | IUser | string[] | undefined;
     course_cuid?: string;
     course_id?: string;
     course_name?: string;
     course_slug?: string;
+    alt_domain?: string;
     org_domain?: string;
+    next_section_uid?: string;
+    next_lesson_uid?: string;
     org_id?: string;
     org_name?: string;
     blog_cuid?: string;
