@@ -47,8 +47,10 @@ export const eventScheduleSchema = z
     schedule_id: z.string({ message: 'schedule.settings.event.errors.scheduleIdRequired' }),
   })
   .refine(data => data.end_at > data.start_at, {
-    message: 'schedule.settings.event.errors.endDateMustBeAfterStartDate',
+    message: 'schedule.settings.event.errors.endDateMustBeAfterStartDateTime',
     path: ['end_at'],
   });
 
 export type IEventScheduleSchema = z.infer<typeof eventScheduleSchema>;
+
+Location;

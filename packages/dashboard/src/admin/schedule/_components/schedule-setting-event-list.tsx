@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   API_ENDPOINT,
   type HTTPErrorMetadata,
@@ -8,44 +8,57 @@ import {
   useDeleteScheduleEvent,
   usePostScheduleEvent,
   usePutScheduleEvent,
-} from '@oe/api';
-import { formatDate } from '@oe/core';
-import type { FilterOption } from '@oe/ui';
-import { Button, type ColumnDef, Table, type TableRef, toast } from '@oe/ui';
-import { useTranslations } from 'next-intl';
-import { useCallback, useMemo, useRef, useState } from 'react';
-import { ScheduleSettingEventActionModal } from './schedule-setting-event-action-modal';
-import { ScheduleDeleteEventModal } from './schedule-setting-event-delete-modal';
+} from "@oe/api";
+import { formatDate } from "@oe/core";
+import type { FilterOption } from "@oe/ui";
+import {
+  Button,
+  type ColumnDef,
+  Link,
+  Table,
+  type TableRef,
+  toast,
+} from "@oe/ui";
+import { useTranslations } from "next-intl";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { ScheduleSettingEventActionModal } from "./schedule-setting-event-action-modal";
+import { ScheduleDeleteEventModal } from "./schedule-setting-event-delete-modal";
 
 export function ScheduleSettingEventList({
   scheduleID,
 }: {
   scheduleID?: string;
 }) {
-  const t = useTranslations('schedule.settings.event');
-  const tError = useTranslations('errors');
+  const t = useTranslations("schedule.settings.event");
+  const tError = useTranslations("errors");
   const [isOpenActionModal, setIsOpenActionModal] = useState<boolean>(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState<boolean>(false);
-  const [selectedEvent, setSelectedEvent] = useState<IScheduleEvent | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<IScheduleEvent | null>(
+    null
+  );
 
   const tableRef = useRef<TableRef<IFormUserResponse>>(null);
 
-  const { triggerPostScheduleEvent, isLoadingPostScheduleEvent } = usePostScheduleEvent();
-  const { triggerPutScheduleEvent, isLoadingPutScheduleEvent } = usePutScheduleEvent(selectedEvent?.id || '');
-  const { triggerDeleteScheduleEvent } = useDeleteScheduleEvent(selectedEvent?.id || '');
+  const { triggerPostScheduleEvent, isLoadingPostScheduleEvent } =
+    usePostScheduleEvent();
+  const { triggerPutScheduleEvent, isLoadingPutScheduleEvent } =
+    usePutScheduleEvent(selectedEvent?.id || "");
+  const { triggerDeleteScheduleEvent } = useDeleteScheduleEvent(
+    selectedEvent?.id || ""
+  );
   const filterOptions = useMemo(
     () => [
       {
-        id: 'name',
-        value: 'name',
-        label: t('name'),
-        type: 'search',
+        id: "name",
+        value: "name",
+        label: t("name"),
+        type: "search",
       },
       {
-        id: 'location',
-        value: 'location',
-        label: t('location'),
-        type: 'search',
+        id: "location",
+        value: "location",
+        label: t("location"),
+        type: "search",
       },
     ],
     [t]
@@ -76,49 +89,68 @@ export function ScheduleSettingEventList({
   const columns: ColumnDef<IFormUserResponse>[] = useMemo(
     () => [
       {
-        header: t('name'),
-        accessorKey: 'name',
+        header: t("name"),
+        accessorKey: "name",
         enableSorting: false,
       },
       {
-        header: t('description'),
-        accessorKey: 'description',
+        header: t("description"),
+        accessorKey: "description",
         enableSorting: false,
         size: 250,
       },
       {
-        header: t('location'),
-        accessorKey: 'location',
+        header: t("location"),
+        accessorKey: "location",
         enableSorting: false,
       },
 
       {
-        header: t('startAt'),
-        accessorKey: 'start_at',
-        cell: item => <>{formatDate(Number(item.getValue()))}</>,
+        header: t("startAt"),
+        accessorKey: "start_at",
+        cell: (item) => <>{formatDate(Number(item.getValue()))}</>,
       },
       {
-        header: t('endAt'),
-        accessorKey: 'end_at',
-        cell: item => <>{formatDate(Number(item.getValue()))}</>,
+        header: t("endAt"),
+        accessorKey: "end_at",
+        cell: (item) => <>{formatDate(Number(item.getValue()))}</>,
       },
       {
-        header: t('joinLink'),
-        accessorKey: 'join_link',
+        header: t("joinLink"),
+        accessorKey: "join_link",
+        cell: (item) => {
+          const url = item.getValue() as string;
+
+          return (
+            <Link
+              href={url}
+              className="font-bold text-primary underline"
+              target="_blank"
+            >
+              {t("link")}
+            </Link>
+          );
+        },
       },
       {
-        header: t('action'),
+        header: t("action"),
         size: 220,
         cell: ({ row }) => (
           <div className="flex w-[220px] justify-center gap-2">
-            <Button onClick={() => handleOpenActionModal(row.original as unknown as IScheduleEvent)}>
-              {t('edit')}
+            <Button
+              onClick={() =>
+                handleOpenActionModal(row.original as unknown as IScheduleEvent)
+              }
+            >
+              {t("edit")}
             </Button>
             <Button
               variant="destructive"
-              onClick={() => handleOpenDeleteModal(row.original as unknown as IScheduleEvent)}
+              onClick={() =>
+                handleOpenDeleteModal(row.original as unknown as IScheduleEvent)
+              }
             >
-              {t('delete')}
+              {t("delete")}
             </Button>
           </div>
         ),
@@ -139,7 +171,9 @@ export function ScheduleSettingEventList({
             ...data,
           });
         }
-        toast.success(selectedEvent ? t('updateEventSuccess') : t('createEventSuccess'));
+        toast.success(
+          selectedEvent ? t("updateEventSuccess") : t("createEventSuccess")
+        );
         handleCloseActionModal();
         tableRef.current?.mutateAndClearCache();
       } catch (error) {
@@ -147,13 +181,20 @@ export function ScheduleSettingEventList({
         toast.error(tError((error as HTTPErrorMetadata).code.toString()));
       }
     },
-    [selectedEvent, triggerPostScheduleEvent, triggerPutScheduleEvent, tError, t, handleCloseActionModal]
+    [
+      selectedEvent,
+      triggerPostScheduleEvent,
+      triggerPutScheduleEvent,
+      tError,
+      t,
+      handleCloseActionModal,
+    ]
   );
 
   const handleDeleteEvent = useCallback(async () => {
     try {
       await triggerDeleteScheduleEvent();
-      toast.success(t('deleteEventSuccess'));
+      toast.success(t("deleteEventSuccess"));
       handleCloseDeleteModal();
       tableRef.current?.mutateAndClearCache();
     } catch (error) {
@@ -171,7 +212,7 @@ export function ScheduleSettingEventList({
         apiQueryParams={{
           page: 1,
           per_page: 10,
-          sort: 'create_at desc',
+          sort: "create_at desc",
         }}
         height="100%"
         ref={tableRef}
@@ -182,19 +223,24 @@ export function ScheduleSettingEventList({
         }}
       >
         <Button variant="default" onClick={() => handleOpenActionModal(null)}>
-          {t('addNewEvent')}
+          {t("addNewEvent")}
         </Button>
       </Table>
       {isOpenActionModal && (
         <ScheduleSettingEventActionModal
           data={selectedEvent}
-          scheduleID={scheduleID ?? ''}
+          scheduleID={scheduleID ?? ""}
           loading={isLoadingPostScheduleEvent || isLoadingPutScheduleEvent}
           onSubmit={handleSubmitEvent}
           onClose={handleCloseActionModal}
         />
       )}
-      {isOpenDeleteModal && <ScheduleDeleteEventModal onClose={handleCloseDeleteModal} onSubmit={handleDeleteEvent} />}
+      {isOpenDeleteModal && (
+        <ScheduleDeleteEventModal
+          onClose={handleCloseDeleteModal}
+          onSubmit={handleDeleteEvent}
+        />
+      )}
     </div>
   );
 }
