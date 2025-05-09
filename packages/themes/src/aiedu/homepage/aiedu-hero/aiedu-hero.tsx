@@ -1,10 +1,13 @@
-import { cn } from '@oe/ui';
-import { useTranslations } from 'next-intl';
+import { cn } from "@oe/ui";
+import { useTranslations } from "next-intl";
 
-import type { FileType } from '@oe/ui';
-import { Image } from '@oe/ui';
-import type { SectionComponent } from '../../../_types/theme-page';
-import { InfoSection, type InfoSectionProps } from '../../_components/info-section';
+import type { FileType } from "@oe/ui";
+import { Image } from "@oe/ui";
+import type { SectionComponent } from "../../../_types/theme-page";
+import {
+  InfoSection,
+  type InfoSectionProps,
+} from "../../_components/info-section";
 
 // Theme step 4: create sectionProps
 export interface AieduHomepageHeroProps extends InfoSectionProps {
@@ -17,15 +20,23 @@ export interface AieduHomepageHeroProps extends InfoSectionProps {
 }
 
 //Theme step 7: back to section - hero.tsx, create your code based on the props
-const AieduHomepageHero: SectionComponent<'homepage', 'aieduHero'> = ({ className, props }) => {
-  const t = useTranslations('themePage.aiedu.homepage.aieduHero');
+const AieduHomepageHero: SectionComponent<"homepage", "aieduHero"> = ({
+  className,
+  props,
+}) => {
+  const t = useTranslations("themePage.aiedu.homepage.aieduHero");
   return (
-    <div className={cn('bg-background lg:h-[calc(100vh-var(--header-height))]', className)}>
+    <div
+      className={cn(
+        "bg-background lg:h-[calc(100vh-var(--header-height))]",
+        className
+      )}
+    >
       <div className="container items-center space-y-8 pt-8 lg:flex lg:h-[calc(100vh-var(--header-height)-160px)] lg:gap-12 lg:pt-12">
         <InfoSection
-          title={t('title')}
-          description={t('description')}
-          button={{ text: t?.('button.text'), link: props?.button?.link }}
+          title={t("title")}
+          description={t("description")}
+          button={{ text: t?.("button.text"), link: props?.button?.link }}
           className="flex flex-col justify-center md:basis-1/2 md:px-4"
         />
         <div className="h-full md:flex md:basis-1/2 md:items-center">
@@ -43,7 +54,9 @@ const AieduHomepageHero: SectionComponent<'homepage', 'aieduHero'> = ({ classNam
       <div className="bg-primary-foreground">
         <div className="container flex flex-col items-center justify-center gap-6 py-8 lg:h-[160px] lg:flex-row">
           <div className="flex items-center gap-4">
-            <p className="hidden whitespace-nowrap font-semibold uppercase md:block">{t('org')}</p>
+            <p className="hidden whitespace-nowrap font-semibold uppercase md:block">
+              {t("org")}
+            </p>
             <div className="flex gap-4">
               <Image
                 src={props?.organization1?.url}
@@ -62,7 +75,9 @@ const AieduHomepageHero: SectionComponent<'homepage', 'aieduHero'> = ({ classNam
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <p className="hidden whitespace-nowrap font-semibold uppercase md:block">{t('partner')}</p>
+            <p className="hidden whitespace-nowrap font-semibold uppercase md:block">
+              {t("partner")}
+            </p>
             <div className="flex h-[64px] gap-4">
               <Image
                 src={props?.partner1?.url}

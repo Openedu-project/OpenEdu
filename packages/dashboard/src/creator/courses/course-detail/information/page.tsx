@@ -1,27 +1,27 @@
-'use client';
-import { updateCourseService } from '@oe/api';
-import type { ICourse } from '@oe/api';
-import { useGetCourseById } from '@oe/api';
-import type { IFileResponse } from '@oe/api';
-import { type ICreateCourse, courseFormSchema } from '@oe/api';
-import { FormWrapper } from '@oe/ui';
-import { toast } from '@oe/ui';
-import { useTranslations } from 'next-intl';
-import { useParams } from 'next/navigation';
-import { COURSE_DETAIL_FORM_IDS } from '../_utils/constants';
-import { Category } from './category';
-import { Description } from './description';
-import { Header } from './header';
-import { Level } from './level';
-import { MarkAsCompleted } from './mark-as-completed';
-import { Outcomes } from './outcomes';
-import { PreviewVideos } from './preview-videos';
-import { References } from './references';
-import { SupportChannels } from './support-channels';
-import { Thumbnail } from './thumbnail';
+"use client";
+import { updateCourseService } from "@oe/api";
+import type { ICourse } from "@oe/api";
+import { useGetCourseById } from "@oe/api";
+import type { IFileResponse } from "@oe/api";
+import { type ICreateCourse, courseFormSchema } from "@oe/api";
+import { FormWrapper } from "@oe/ui";
+import { toast } from "@oe/ui";
+import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
+import { COURSE_DETAIL_FORM_IDS } from "../_utils/constants";
+import { Category } from "./category";
+import { Description } from "./description";
+import { Header } from "./header";
+import { Level } from "./level";
+import { MarkAsCompleted } from "./mark-as-completed";
+import { Outcomes } from "./outcomes";
+import { PreviewVideos } from "./preview-videos";
+import { References } from "./references";
+import { SupportChannels } from "./support-channels";
+import { Thumbnail } from "./thumbnail";
 
 export function CourseDetailInformationPage() {
-  const tCourse = useTranslations('course');
+  const tCourse = useTranslations("course");
   const { courseId } = useParams<{ courseId: string }>();
   const { course, mutateCourse } = useGetCourseById(courseId);
 
@@ -29,7 +29,8 @@ export function CourseDetailInformationPage() {
     if (!course) {
       return;
     }
-    const thumbnail = (data.thumbnail as IFileResponse) ?? course.thumbnail ?? null;
+    const thumbnail =
+      (data.thumbnail as IFileResponse) ?? course.thumbnail ?? null;
     await updateCourseService(undefined, {
       ...course,
       ...data,
@@ -38,8 +39,8 @@ export function CourseDetailInformationPage() {
     } as ICourse);
     await mutateCourse();
     toast.success(
-      tCourse('common.toast.updateSuccess', {
-        item: tCourse('common.courseTitle'),
+      tCourse("common.toast.updateSuccess", {
+        item: tCourse("common.courseTitle"),
       })
     );
   };
@@ -55,8 +56,8 @@ export function CourseDetailInformationPage() {
         onSubmit={handleSubmit}
         onError={() => {
           toast.error(
-            tCourse('common.toast.updateError', {
-              item: tCourse('common.courseTitle'),
+            tCourse("common.toast.updateError", {
+              item: tCourse("common.courseTitle"),
             })
           );
         }}
@@ -65,7 +66,7 @@ export function CourseDetailInformationPage() {
         {({ loading }) => (
           <>
             <Header loading={loading} />
-            <div className="scrollbar h-full space-y-4 overflow-auto">
+            <div className="scrollbar h-[calc(100vh-var(--header-course-detail-height))] space-y-4 overflow-auto">
               <Description />
               <Outcomes />
               <Thumbnail />

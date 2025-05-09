@@ -47,6 +47,7 @@
   --header-height: 56px;
   --header-with-sub-item-height: 104px;
   --header-small-height: 56px;
+  --header-course-detail-height: 178px;
   --background: hsl(0 0% 100%);
   --foreground: hsl(222.2 84% 4.9%);
   --card: hsl(0 0% 100%);
@@ -279,6 +280,7 @@
   --header-height: 56px;
   --header-with-sub-item-height: 104px;
   --header-small-height: 56px;
+  --header-course-detail-height: 178px;
   --background: hsl(222.2 84% 4.9%);
   --foreground: hsl(210 40% 98%);
   --card: hsl(222.2 84% 4.9%);

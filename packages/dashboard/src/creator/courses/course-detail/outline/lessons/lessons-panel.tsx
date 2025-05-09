@@ -1,16 +1,16 @@
-'use client';
-import type { ILesson } from '@oe/api';
-import { Button } from '@oe/ui';
-import { DndSortable, DndSortableDragButton } from '@oe/ui';
-import { cn } from '@oe/ui';
-import { PlusIcon } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import type { ReactNode } from 'react';
-import { SegmentBadgeSelect } from '../../../_components/segment-badge-select';
-import { useLessonActions } from '../../_hooks/useLessonActions';
-import { buildOutlineRoute } from '../../_utils/build-outline-route';
+"use client";
+import type { ILesson } from "@oe/api";
+import { Button } from "@oe/ui";
+import { DndSortable, DndSortableDragButton } from "@oe/ui";
+import { cn } from "@oe/ui";
+import { PlusIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import type { ReactNode } from "react";
+import { SegmentBadgeSelect } from "../../../_components/segment-badge-select";
+import { useLessonActions } from "../../_hooks/useLessonActions";
+import { buildOutlineRoute } from "../../_utils/build-outline-route";
 
 export function LessonsPanel({
   className,
@@ -19,8 +19,15 @@ export function LessonsPanel({
   className?: string;
   closeButton?: ReactNode;
 }) {
-  const tCourse = useTranslations('course');
-  const { activeSection, courseId, sectionId, lessonId, handleAddLesson, handleSortLessons } = useLessonActions();
+  const tCourse = useTranslations("course");
+  const {
+    activeSection,
+    courseId,
+    sectionId,
+    lessonId,
+    handleAddLesson,
+    handleSortLessons,
+  } = useLessonActions();
 
   const router = useRouter();
 
@@ -51,7 +58,12 @@ export function LessonsPanel({
   };
 
   return (
-    <div className={cn('flex h-full w-[300px] shrink-0 cursor-pointer flex-col gap-2 overflow-y-auto p-0', className)}>
+    <div
+      className={cn(
+        "flex h-full w-[300px] shrink-0 cursor-pointer flex-col gap-2 overflow-y-auto p-0",
+        className
+      )}
+    >
       <div className="pb-0">
         <Button
           variant="outline"
@@ -62,26 +74,26 @@ export function LessonsPanel({
           title="Add Lesson"
         >
           <PlusIcon className="h-4 w-4" />
-          {tCourse('outline.lesson.actions.addNew')}
+          {tCourse("outline.lesson.actions.addNew")}
         </Button>
         {closeButton}
       </div>
       <DndSortable<ILesson, unknown>
         data={activeSection?.lessons?.sort((a, b) => a.order - b.order) || []}
         dataConfig={{
-          idProp: 'id',
-          type: 'array',
-          direction: 'vertical',
+          idProp: "id",
+          type: "array",
+          direction: "vertical",
         }}
-        className="scrollbar flex flex-col gap-2 overflow-y-auto pt-0"
+        className="scrollbar flex h-[calc(100vh-330px)] flex-col gap-2 overflow-y-auto pt-0"
         loading={sorting}
         renderConfig={{
           renderItem: ({ item }) => (
             <div
               className={cn(
-                'flex items-center gap-2 rounded-md border bg-background p-2 ',
-                item?.original.id === lessonId && 'border-primary',
-                !item?.original.title && 'border-destructive'
+                "flex items-center gap-2 rounded-md border bg-background p-2 ",
+                item?.original.id === lessonId && "border-primary",
+                !item?.original.title && "border-destructive"
               )}
               title={item?.original.title}
               onClick={() => handleSelectLesson(item?.original)}
@@ -90,7 +102,9 @@ export function LessonsPanel({
               }}
             >
               <DndSortableDragButton />
-              <p className="truncate font-medium text-sm">{item?.original.title}</p>
+              <p className="truncate font-medium text-sm">
+                {item?.original.title}
+              </p>
               <SegmentBadgeSelect
                 className="ml-auto"
                 status={item?.original.status}
