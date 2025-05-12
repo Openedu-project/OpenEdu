@@ -1,3 +1,5 @@
+'use client';
+
 import type { TAgentType } from '@oe/api';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';

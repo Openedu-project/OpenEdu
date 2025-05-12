@@ -78,7 +78,7 @@ export const AIMessage = ({
         objectFit="contain"
         containerHeight={40}
       />
-      <div className={cn('flex grow flex-col space-y-6', !message.content && 'basis-full')}>
+      <div className={cn('flex grow flex-col space-y-6 overflow-hidden', !message.content && 'basis-full')}>
         <div className="flex flex-col space-y-2">
           <div className="flex flex-row items-center space-x-2">
             <div>
