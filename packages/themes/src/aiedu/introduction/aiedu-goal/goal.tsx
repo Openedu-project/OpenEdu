@@ -23,6 +23,7 @@ const AieduIntroductionGoal: SectionComponent<'introduction', 'aieduGoal'> = ({ 
         width={props?.image?.width ?? 1280}
         height={props?.image?.height ?? 520}
         className="h-full w-full rounded-lg object-contain"
+        quality={100}
       />
     </AieduLayoutSection>
   );
