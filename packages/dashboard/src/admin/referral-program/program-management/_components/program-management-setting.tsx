@@ -55,7 +55,7 @@ export function ProgramManagementSetting() {
   const t = useTranslations('referralProgram.dashboard');
   const tError = useTranslations('errors');
 
-  const { dataAllReferralProgramList } = useGetAllReferralProgramList({
+  const { dataAllReferralProgramList, mutateAllReferralProgramList } = useGetAllReferralProgramList({
     queryParams: {
       progam: 'ref-user',
       scope: 'global',
@@ -63,7 +63,6 @@ export function ProgramManagementSetting() {
   });
 
   const { triggerPostReferralCampaign, isLoadingPostReferralCampaign } = usePostReferralCampaign();
-
   const form = useForm<IReferralProgramFormSchema>({
     resolver: zodResolver(referralProgramSchema),
     defaultValues: {
@@ -101,6 +100,15 @@ export function ProgramManagementSetting() {
     },
   });
 
+  const {
+    fields: milestones,
+    append: appendMilestone,
+    remove: removeMilestone,
+    replace: replaceMilestones,
+  } = useFieldArray({
+    control: form.control,
+    name: 'setting.ref_count_bonus',
+  });
   useEffect(() => {
     if (dataAllReferralProgramList) {
       const data = dataAllReferralProgramList?.results?.[0];
@@ -108,6 +116,7 @@ export function ProgramManagementSetting() {
         return;
       }
       const { setting } = data;
+
       form.setValue('id', data.id);
       form.setValue('program', data.program);
       form.setValue('name', data.name);
@@ -140,9 +149,10 @@ export function ProgramManagementSetting() {
           type: setting?.monthly_streak_bonus?.reward?.type ?? 'fixed',
         },
       });
-      form.setValue(
-        'setting.ref_count_bonus',
-        setting?.ref_count_bonus?.map(item => ({
+
+      // Chỉ thiết lập ref_count_bonus khi có dữ liệu
+      if (setting?.ref_count_bonus && setting.ref_count_bonus.length > 0) {
+        const formattedMilestones = setting.ref_count_bonus.map(item => ({
           enable: item.enable,
           order: item.order,
           reach_count: item.reach_count,
@@ -150,8 +160,10 @@ export function ProgramManagementSetting() {
             amount: Number(item.reward.amount ?? 0),
             type: item?.reward?.type ?? 'fixed',
           },
-        }))
-      );
+        }));
+        replaceMilestones(formattedMilestones);
+      }
+
       form.setValue('setting.referee_reward', {
         amount: Number(setting?.referee_reward?.amount ?? 0),
         type: setting?.referee_reward?.type ?? 'fixed',
@@ -179,16 +191,7 @@ export function ProgramManagementSetting() {
         },
       });
     }
-  }, [dataAllReferralProgramList, form]);
-
-  const {
-    fields: milestones,
-    append: appendMilestone,
-    remove: removeMilestone,
-  } = useFieldArray({
-    control: form.control,
-    name: 'setting.ref_count_bonus',
-  });
+  }, [dataAllReferralProgramList, form, replaceMilestones, form.setValue]);
 
   const onSubmit = useCallback(
     async (data: IReferralProgramFormSchema) => {
@@ -255,27 +258,30 @@ export function ProgramManagementSetting() {
             },
           },
         } as IReferralProgramPayload;
-        triggerPostReferralCampaign(payload);
+        await triggerPostReferralCampaign(payload);
         toast.success('Success');
+        await mutateAllReferralProgramList();
       } catch (error) {
         console.error(error);
         toast.error(tError((error as HTTPErrorMetadata).code.toString()));
       }
     },
-    [triggerPostReferralCampaign, tError]
+    [mutateAllReferralProgramList, tError, triggerPostReferralCampaign]
   );
 
-  const addMilestone = () => {
+  const addMilestone = useCallback(() => {
+    const currentMilestones = form.getValues('setting.ref_count_bonus') || [];
+
     appendMilestone({
       enable: true,
-      order: milestones.length + 1,
+      order: currentMilestones.length + 1,
       reach_count: 0,
       reward: {
         amount: 0,
         type: 'fixed',
       },
     });
-  };
+  }, [appendMilestone, form]);
 
   return (
     <Form {...form}>

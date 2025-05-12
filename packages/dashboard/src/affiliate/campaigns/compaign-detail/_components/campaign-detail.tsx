@@ -202,7 +202,6 @@ const CampaignDetail = () => {
             }));
         await mutateAffiliateCampaignDetail();
         copyToClipboard(`${generateLink(orgDomain ?? '', courseSlug ?? '', res?.ref_code ?? '')}`, t('copied'));
-        toast.success(t('copied'));
       } catch (error) {
         console.error(error);
         toast.error(tError((error as HTTPErrorMetadata).code.toString()));
