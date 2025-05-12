@@ -102,13 +102,14 @@ export function QuizQuestionModal({
                               className="flex-1"
                               render={({ field }) => (
                                 <Input
+                                  key={`items.${index}`}
                                   placeholder={tCourseQuiz('question.answerPlaceholder')}
                                   {...field}
                                   onChange={e => {
                                     const value = e.target.value;
                                     field.onChange(value);
-                                    onUpdateItem?.(value, 'text', item);
                                   }}
+                                  onBlur={e => onUpdateItem?.(e.target.value, 'text', item)}
                                 />
                               )}
                             />
