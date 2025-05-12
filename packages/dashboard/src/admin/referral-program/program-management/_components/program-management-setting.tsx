@@ -18,7 +18,6 @@ import {
   Form,
   FormFieldWithLabel,
   FormSubmitButton,
-  Input,
   InputNumber,
   Select,
   SelectContent,
@@ -466,11 +465,11 @@ export function ProgramManagementSetting() {
                         name={`setting.ref_count_bonus.${index}.reach_count`}
                         control={form.control}
                         render={({ field }) => (
-                          <Input
+                          <InputNumber
                             type="number"
                             className="w-full"
                             value={field.value}
-                            onChange={e => field.onChange(Number.parseInt(e.target.value))}
+                            onChange={field.onChange}
                             min="1"
                           />
                         )}

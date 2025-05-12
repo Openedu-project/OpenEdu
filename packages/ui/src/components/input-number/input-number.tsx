@@ -12,6 +12,7 @@ export function InputNumber({ value, onChange, ...props }: InputNumberProps) {
       type="number"
       value={Number(value ?? 0)}
       onChange={(e: ChangeEvent<HTMLInputElement>) => onChange?.(Number(e.target.value))}
+      onWheel={e => (e.target as HTMLInputElement).blur()}
       {...props}
     />
   );
