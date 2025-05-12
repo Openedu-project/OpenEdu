@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { logoutAction } from "@oe/api";
-import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import { Button } from "#shadcn/button";
+import { logoutAction } from '@oe/api';
+import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import { Button } from '#shadcn/button';
 
 export function EmailVerifyActions({
   isError,
@@ -16,7 +16,7 @@ export function EmailVerifyActions({
   accessToken: string;
   refreshToken: string;
 }) {
-  const tGeneral = useTranslations("general");
+  const tGeneral = useTranslations('general');
   const router = useRouter();
 
   const handleNavigate = async (path: string) => {
@@ -27,12 +27,8 @@ export function EmailVerifyActions({
   };
 
   return (
-    <Button
-      variant={isError ? "destructive" : "default"}
-      className="w-full"
-      onClick={() => handleNavigate(nextPath)}
-    >
-      {tGeneral("backToPreviousPage")}
+    <Button variant={isError ? 'destructive' : 'default'} className="w-full" onClick={() => handleNavigate(nextPath)}>
+      {tGeneral('backToPreviousPage')}
     </Button>
   );
 }

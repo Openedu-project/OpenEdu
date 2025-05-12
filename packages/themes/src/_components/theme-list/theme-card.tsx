@@ -1,25 +1,19 @@
-"use client";
-import { ADMIN_ROUTES, buildUrl } from "@oe/core";
-import { Badge } from "@oe/ui";
-import { Button } from "@oe/ui";
-import { Link } from "@oe/ui";
-import { Image } from "@oe/ui";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardTitle,
-} from "@oe/ui";
-import { Checkbox } from "@oe/ui";
-import { cn } from "@oe/ui";
-import { Trash2 } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useState } from "react";
-import type { ThemeName } from "#types";
-import { themeInfoThumbnail } from "../../_config/theme-info";
-import type { ThemeInfo } from "../../_types/theme-info";
-import { DeleteThemeModal } from "./delete-theme-modal";
+'use client';
+import { ADMIN_ROUTES, buildUrl } from '@oe/core';
+import { Badge } from '@oe/ui';
+import { Button } from '@oe/ui';
+import { Link } from '@oe/ui';
+import { Image } from '@oe/ui';
+import { Card, CardContent, CardDescription, CardFooter, CardTitle } from '@oe/ui';
+import { Checkbox } from '@oe/ui';
+import { cn } from '@oe/ui';
+import { Trash2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import type { ThemeName } from '#types';
+import { themeInfoThumbnail } from '../../_config/theme-info';
+import type { ThemeInfo } from '../../_types/theme-info';
+import { DeleteThemeModal } from './delete-theme-modal';
 
 interface ThemeCardProps {
   name: ThemeName;
@@ -31,7 +25,7 @@ interface ThemeCardProps {
   // Callback when theme select the checkbox
   onCloneToggle?: (theme: ThemeName, isChecked: boolean) => void;
   // Whether this card is for a template or user's theme
-  variant: "template" | "my-theme";
+  variant: 'template' | 'my-theme';
   onRemove?: (theme: ThemeName) => void;
 }
 
@@ -41,39 +35,33 @@ export const ThemeCard = ({
   isCloned,
   isActived = false,
   onCloneToggle,
-  variant = "my-theme",
+  variant = 'my-theme',
   onRemove,
 }: ThemeCardProps) => {
-  const t = useTranslations("themeList");
+  const t = useTranslations('themeList');
   const [currentCloned, setCurrentCloned] = useState(isCloned ?? false);
   const [openRemoveModal, setOpenRemoveModal] = useState(false);
-  const displayName = (theme?.name || name).replace(/([A-Z])/g, " $1").trim(); // Add spaces before capital letters
+  const displayName = (theme?.name || name).replace(/([A-Z])/g, ' $1').trim(); // Add spaces before capital letters
   const thumbnailSrc = theme?.thumbnail?.url || themeInfoThumbnail?.[name]?.src;
 
   return (
     <>
       <Card
         className={cn(
-          "group relative space-y-4 overflow-hidden transition-all hover:shadow-lg",
-          isActived && "ring-2 ring-primary",
-          isCloned && "cursor-not-allowed bg-muted"
+          'group relative space-y-4 overflow-hidden transition-all hover:shadow-lg',
+          isActived && 'ring-2 ring-primary',
+          isCloned && 'cursor-not-allowed bg-muted'
         )}
       >
         {/* Preview Image */}
-        <Image
-          src={thumbnailSrc}
-          alt={name}
-          height={200}
-          width={400}
-          className="h-[200px] w-full object-contain"
-        />
+        <Image src={thumbnailSrc} alt={name} height={200} width={400} className="h-[200px] w-full object-contain" />
         <CardContent>
           {/* Theme Info */}
           <div className="flex items-start justify-between">
             <CardTitle className="text-xl">{displayName}</CardTitle>
             {theme?.creator && (
               <Badge variant="outline" className="mr-1 text-xs">
-                {t("creator", { creator: theme.creator })}
+                {t('creator', { creator: theme.creator })}
               </Badge>
             )}
           </div>
@@ -84,14 +72,10 @@ export const ThemeCard = ({
           )}
 
           {/* Overlay for selected state */}
-          {variant === "my-theme" && isActived && (
-            <Badge className="absolute top-4 right-4">{t("actived")}</Badge>
-          )}
-          {variant === "template" && isCloned && (
-            <Badge className="absolute top-4 right-4">{t("cloned")}</Badge>
-          )}
+          {variant === 'my-theme' && isActived && <Badge className="absolute top-4 right-4">{t('actived')}</Badge>}
+          {variant === 'template' && isCloned && <Badge className="absolute top-4 right-4">{t('cloned')}</Badge>}
 
-          {variant === "template" && !isCloned && (
+          {variant === 'template' && !isCloned && (
             <div className="absolute top-2 left-2 z-10">
               <Checkbox
                 checked={currentCloned}
@@ -104,7 +88,7 @@ export const ThemeCard = ({
           )}
         </CardContent>
         <CardFooter className="w-full">
-          {variant === "my-theme" && (
+          {variant === 'my-theme' && (
             <div className="flex w-full justify-between gap-2">
               <Button className="w-full">
                 <Link
@@ -112,21 +96,18 @@ export const ThemeCard = ({
                     endpoint: ADMIN_ROUTES.themeConfig,
                     params: {
                       themeName: name,
-                      themeConfig: "pages",
+                      themeConfig: 'pages',
                       groupSettingKey: undefined,
                       itemSettingKey: undefined,
                     },
                   })}
                   className="text-accent hover:no-underline"
                 >
-                  {t("edit")}
+                  {t('edit')}
                 </Link>
               </Button>
               {!isActived && (
-                <Button
-                  variant="destructive"
-                  onClick={() => setOpenRemoveModal(true)}
-                >
+                <Button variant="destructive" onClick={() => setOpenRemoveModal(true)}>
                   <Trash2 className="h-4 w-4" />
                 </Button>
               )}
@@ -134,12 +115,7 @@ export const ThemeCard = ({
           )}
         </CardFooter>
       </Card>
-      {openRemoveModal && (
-        <DeleteThemeModal
-          setOpen={setOpenRemoveModal}
-          onRemove={() => onRemove?.(name)}
-        />
-      )}
+      {openRemoveModal && <DeleteThemeModal setOpen={setOpenRemoveModal} onRemove={() => onRemove?.(name)} />}
     </>
   );
 };

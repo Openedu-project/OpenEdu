@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useAuth } from "#common/providers";
-import { Skeleton } from "#shadcn/skeleton";
+import { useAuth } from '#common/providers';
+import { Skeleton } from '#shadcn/skeleton';
 // import { getMeServiceWithoutError } from '@oe/api';
-import { AuthButtons } from "./auth-buttons";
-import { NotificationButton } from "./notifications/notification-button";
-import { UserMenu } from "./user-menu";
+import { AuthButtons } from './auth-buttons';
+import { NotificationButton } from './notifications/notification-button';
+import { UserMenu } from './user-menu';
 
 export function AuthMenu() {
   // const start = performance.now();
@@ -18,9 +18,7 @@ export function AuthMenu() {
   const { me, isMeLoading } = useAuth();
 
   if (isMeLoading) {
-    return (
-      <Skeleton className="ml-auto flex h-10 w-60 items-center space-x-1" />
-    );
+    return <Skeleton className="ml-auto flex h-10 w-60 items-center space-x-1" />;
   }
 
   return (

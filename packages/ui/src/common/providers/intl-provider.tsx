@@ -1,5 +1,5 @@
-import { NextIntlClientProvider } from "next-intl";
-import type { ReactNode } from "react";
+import { NextIntlClientProvider } from 'next-intl';
+import type { ReactNode } from 'react';
 
 type Props = {
   children: ReactNode;

@@ -1,24 +1,24 @@
-"use client";
-import { useGetMe } from "@oe/api";
-import type { IUserProfile } from "@oe/api";
-import { useFollowUser, useGetUserProfile, useUnfollowUser } from "@oe/api";
-import { BLOG_ROUTES, buildUrl } from "@oe/core";
-import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { CertificateCard } from "#components/certificate";
-import { useLoginRequiredStore } from "#components/login-required-modal";
-import { NoDataAvailable } from "#components/no-data-available";
-import { Spinner } from "#components/spinner";
-import { useUserRoleStore } from "../_store/userProfileStore";
-import { AboutMe } from "./about-me";
-import { BlogCardProfile } from "./blog-profile";
-import { CourseProfile } from "./course-profile";
-import { UserBio } from "./user-bio";
-import { Section } from "./user-section";
+'use client';
+import { useGetMe } from '@oe/api';
+import type { IUserProfile } from '@oe/api';
+import { useFollowUser, useGetUserProfile, useUnfollowUser } from '@oe/api';
+import { BLOG_ROUTES, buildUrl } from '@oe/core';
+import { useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { CertificateCard } from '#components/certificate';
+import { useLoginRequiredStore } from '#components/login-required-modal';
+import { NoDataAvailable } from '#components/no-data-available';
+import { Spinner } from '#components/spinner';
+import { useUserRoleStore } from '../_store/userProfileStore';
+import { AboutMe } from './about-me';
+import { BlogCardProfile } from './blog-profile';
+import { CourseProfile } from './course-profile';
+import { UserBio } from './user-bio';
+import { Section } from './user-section';
 
 export function UserProfileContent() {
-  const tProfile = useTranslations("userProfile.profile");
+  const tProfile = useTranslations('userProfile.profile');
 
   const { user } = useParams();
   const [userProfile, setUserProfile] = useState<IUserProfile>();
@@ -26,11 +26,10 @@ export function UserProfileContent() {
   const { setRoles } = useUserRoleStore();
 
   const { dataMe: me } = useGetMe();
-  const { dataUserProfile, isLoadingUserProfile, mutateUserProfile } =
-    useGetUserProfile(user as string);
+  const { dataUserProfile, isLoadingUserProfile, mutateUserProfile } = useGetUserProfile(user as string);
 
-  const { triggerFollow } = useFollowUser(dataUserProfile?.id ?? "");
-  const { triggerUnfollow } = useUnfollowUser(dataUserProfile?.id ?? "");
+  const { triggerFollow } = useFollowUser(dataUserProfile?.id ?? '');
+  const { triggerUnfollow } = useUnfollowUser(dataUserProfile?.id ?? '');
 
   const { setLoginRequiredModal } = useLoginRequiredStore();
 
@@ -40,7 +39,7 @@ export function UserProfileContent() {
       return;
     }
 
-    if (dataUserProfile?.status === "followed") {
+    if (dataUserProfile?.status === 'followed') {
       try {
         await triggerUnfollow();
 
@@ -57,14 +56,7 @@ export function UserProfileContent() {
         console.error(error);
       }
     }
-  }, [
-    dataUserProfile?.status,
-    me,
-    mutateUserProfile,
-    triggerFollow,
-    triggerUnfollow,
-    setLoginRequiredModal,
-  ]);
+  }, [dataUserProfile?.status, me, mutateUserProfile, triggerFollow, triggerUnfollow, setLoginRequiredModal]);
 
   useEffect(() => {
     if (dataUserProfile) {
@@ -77,48 +69,42 @@ export function UserProfileContent() {
   const sections = useMemo(() => {
     return [
       {
-        title: "about",
+        title: 'about',
         content: userProfile && <AboutMe data={userProfile} />,
         // content: !!userProfile?.about?.length && <p className="text-justify">{userProfile.about}</p>,
       },
       {
         isShow: userProfile?.certificate.is_show,
-        title: `${tProfile("certificates")} (${
-          userProfile?.certificate.count ?? 0
-        })`,
+        title: `${tProfile('certificates')} (${userProfile?.certificate.count ?? 0})`,
         content: (
           <>
-            {userProfile?.certificate?.results?.map((item) => (
-              <CertificateCard
-                key={item.id}
-                certificate={item}
-                username={user as string}
-              />
+            {userProfile?.certificate?.results?.map(item => (
+              <CertificateCard key={item.id} certificate={item} username={user as string} />
             ))}
           </>
         ),
-        url: "",
+        url: '',
         // viewAll: true,
       },
       {
         isShow: userProfile?.course.is_show,
-        title: `${tProfile("courses")} (${userProfile?.course.count ?? 0})`,
+        title: `${tProfile('courses')} (${userProfile?.course.count ?? 0})`,
         content: (
           <>
-            {userProfile?.course?.results?.map((item) => (
+            {userProfile?.course?.results?.map(item => (
               <CourseProfile key={item.id} courseData={item} />
             ))}
           </>
         ),
-        url: "",
+        url: '',
         // viewAll: true,
       },
       {
         isShow: userProfile?.blog.is_show,
-        title: `${tProfile("blogs")} (${userProfile?.blog.count ?? 0})`,
+        title: `${tProfile('blogs')} (${userProfile?.blog.count ?? 0})`,
         content: (
           <>
-            {userProfile?.blog?.results?.map((item) => (
+            {userProfile?.blog?.results?.map(item => (
               <BlogCardProfile key={item.id} blog={item} />
             ))}
           </>
@@ -148,7 +134,7 @@ export function UserProfileContent() {
                 handleFollowUser={handleFollowUser}
               />
 
-              {sections.map((section) => (
+              {sections.map(section => (
                 <Section
                   key={section.title}
                   className="mb-12 px-6 last:mb-0"
@@ -162,7 +148,7 @@ export function UserProfileContent() {
             </div>
           ) : (
             <div className="h-[calc(100vh-var(--header-height))] bg-white">
-              <NoDataAvailable message={tProfile("userNotFound")} />
+              <NoDataAvailable message={tProfile('userNotFound')} />
             </div>
           )}
         </>

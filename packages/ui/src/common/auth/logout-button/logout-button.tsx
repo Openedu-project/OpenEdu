@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { API_ENDPOINT } from "@oe/api";
-import { logoutAction } from "@oe/api";
-import { resetAllStores } from "@oe/core";
-import { LogOut } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { mutate } from "swr";
-import { Button } from "#shadcn/button";
-import { toast } from "#shadcn/sonner";
+import { API_ENDPOINT } from '@oe/api';
+import { logoutAction } from '@oe/api';
+import { resetAllStores } from '@oe/core';
+import { LogOut } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { mutate } from 'swr';
+import { Button } from '#shadcn/button';
+import { toast } from '#shadcn/sonner';
 
 export function LogoutButton() {
-  const tToast = useTranslations("toast");
-  const tAuth = useTranslations("auth");
+  const tToast = useTranslations('toast');
+  const tAuth = useTranslations('auth');
   // const router = useRouter();
   // const searchParams = useSearchParams();
   // const nextPath = searchParams.get("next") ?? "/";
@@ -19,17 +19,14 @@ export function LogoutButton() {
   const handleLogout = async () => {
     try {
       await logoutAction();
-      await Promise.all([
-        mutate(API_ENDPOINT.USERS_ME),
-        mutate(() => true, undefined, { revalidate: false }),
-      ]);
+      await Promise.all([mutate(API_ENDPOINT.USERS_ME), mutate(() => true, undefined, { revalidate: false })]);
       resetAllStores();
-      toast.success(tToast("logoutSuccess"));
+      toast.success(tToast('logoutSuccess'));
       // router.replace(nextPath);
       // router.refresh();
     } catch (error) {
       console.error(error);
-      toast.error(tToast("logoutError"));
+      toast.error(tToast('logoutError'));
     }
   };
 
@@ -41,7 +38,7 @@ export function LogoutButton() {
       onClick={handleLogout}
     >
       <LogOut className="mr-2 h-4 w-4" />
-      <span>{tAuth("logout")}</span>
+      <span>{tAuth('logout')}</span>
     </Button>
   );
 }

@@ -1,23 +1,23 @@
-"use client";
-import type { ICertificateMyProfile } from "@oe/api";
-import image from "@oe/assets/images/blog.png";
-import { PLATFORM_ROUTES, buildUrl } from "@oe/core";
-import { formatDate } from "@oe/core";
-import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import { type HTMLAttributes, useState } from "react";
-import { Image } from "#components/image";
-import { PdfViewer } from "#components/pdf-viewer";
-import { Card, CardContent, CardHeader } from "#shadcn/card";
-import { Checkbox } from "#shadcn/checkbox";
-import { cn } from "#utils/cn";
-import { useShowProfileItemsStore } from "../../pages/user/_store/userProfileStore";
+'use client';
+import type { ICertificateMyProfile } from '@oe/api';
+import image from '@oe/assets/images/blog.png';
+import { PLATFORM_ROUTES, buildUrl } from '@oe/core';
+import { formatDate } from '@oe/core';
+import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import { type HTMLAttributes, useState } from 'react';
+import { Image } from '#components/image';
+import { PdfViewer } from '#components/pdf-viewer';
+import { Card, CardContent, CardHeader } from '#shadcn/card';
+import { Checkbox } from '#shadcn/checkbox';
+import { cn } from '#utils/cn';
+import { useShowProfileItemsStore } from '../../pages/user/_store/userProfileStore';
 
 interface ICertCardProps extends HTMLAttributes<HTMLDivElement> {
   certificate: ICertificateMyProfile;
   username: string;
   isSetting?: boolean;
-  type?: "profile" | "learning_space";
+  type?: 'profile' | 'learning_space';
   hasCompletedOn?: boolean;
 }
 
@@ -26,12 +26,12 @@ export function CertificateCard({
   className,
   username,
   isSetting = false,
-  type = "profile",
+  type = 'profile',
   hasCompletedOn = true,
   children,
   ...props
 }: ICertCardProps) {
-  const t = useTranslations("certificate");
+  const t = useTranslations('certificate');
   const router = useRouter();
 
   const [isShow, setIsShow] = useState<boolean>(certificate?.is_show ?? false);
@@ -39,7 +39,7 @@ export function CertificateCard({
   const { addItem, removeItem, showItemList } = useShowProfileItemsStore();
 
   const handleClick = () => {
-    if (type === "profile") {
+    if (type === 'profile') {
       router.push(
         buildUrl({
           endpoint: PLATFORM_ROUTES.profileCertificateDetail,
@@ -69,9 +69,9 @@ export function CertificateCard({
   return (
     <Card
       className={cn(
-        "!shadow-shadow-1 flex w-full min-w-[234px] max-w-[360px] cursor-pointer flex-col gap-2 border-[3px] border-transparent bg-background p-2 sm:min-w-[284px]",
-        isShow && "border-primary border-solid",
-        !isSetting && "hover:border-primary hover:border-solid",
+        '!shadow-shadow-1 flex w-full min-w-[234px] max-w-[360px] cursor-pointer flex-col gap-2 border-[3px] border-transparent bg-background p-2 sm:min-w-[284px]',
+        isShow && 'border-primary border-solid',
+        !isSetting && 'hover:border-primary hover:border-solid',
         className
       )}
       onClick={isSetting ? handleShowCert : handleClick}
@@ -82,11 +82,11 @@ export function CertificateCard({
           <Checkbox className="!mt-0" checked={isShow} />
         </CardHeader>
       )}
-      <CardContent className={cn("flex basis-full flex-col gap-3 p-0")}>
+      <CardContent className={cn('flex basis-full flex-col gap-3 p-0')}>
         {certificate?.files ? (
           <PdfViewer
             className="max-h-[244px] w-auto [&>div>div>div>div>div>canvas]:min-h-[194px] [&>div>div>div>div>div>canvas]:rounded-[12px] [&>div>div>div>div>div>canvas]:border [&>div>div>div>div>div>canvas]:border-primary [&>div]:px-0"
-            files={certificate?.files[0]?.url ?? ""}
+            files={certificate?.files[0]?.url ?? ''}
           />
         ) : (
           <Image
@@ -97,12 +97,10 @@ export function CertificateCard({
             className="rounded-[12px] border border-primary"
           />
         )}
-        <h2 className="giant-iheading-semibold16 mb-0 line-clamp-2 max-h-10 text-primary">
-          {certificate.course_name}
-        </h2>
+        <h2 className="giant-iheading-semibold16 mb-0 line-clamp-2 max-h-10 text-primary">{certificate.course_name}</h2>
         {hasCompletedOn && (
           <span className="mcaption-regular12 text-foreground/90">
-            {t("completedOn")}
+            {t('completedOn')}
             {formatDate(certificate?.completed_at ?? certificate.create_at)}
           </span>
         )}

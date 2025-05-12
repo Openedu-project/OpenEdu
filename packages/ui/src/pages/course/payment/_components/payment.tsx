@@ -1,37 +1,27 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-"use client";
-import type { ICourseOutline } from "@oe/api";
-import { useGetMe } from "@oe/api";
-import type { IWallet } from "@oe/api";
-import { useGetShareRateByCode } from "@oe/api";
-import { usePostValidateRefCode } from "@oe/api";
-import { useExchangeRates } from "@oe/api";
-import { useNFTTotalAssets, useWallet } from "@oe/api";
-import {
-  ASSET_TYPES,
-  CHAIN,
-  FIAT_CURRENCIES,
-  SUPPORTED_EXCHANGE_RATES,
-} from "@oe/api";
-import type { IOrderRes } from "@oe/api";
-import {
-  useCreateOrder,
-  useOrderChangeMethod,
-  useOrderPaymentStatus,
-  useOrderPaymentSuccess,
-} from "@oe/api";
-import { useGetPaymentMethodList } from "@oe/api";
-import { PLATFORM_ROUTES, buildUrl } from "@oe/core";
-import { getCookieClient } from "@oe/core";
-import { useTranslations } from "next-intl";
-import { useParams, useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { toast } from "sonner";
-import { useSocketStore } from "#store/socket";
-import { PaymentConfirm } from "./payment-confirmation";
-import { PaymentStatus } from "./payment-status";
+'use client';
+import type { ICourseOutline } from '@oe/api';
+import { useGetMe } from '@oe/api';
+import type { IWallet } from '@oe/api';
+import { useGetShareRateByCode } from '@oe/api';
+import { usePostValidateRefCode } from '@oe/api';
+import { useExchangeRates } from '@oe/api';
+import { useNFTTotalAssets, useWallet } from '@oe/api';
+import { ASSET_TYPES, CHAIN, FIAT_CURRENCIES, SUPPORTED_EXCHANGE_RATES } from '@oe/api';
+import type { IOrderRes } from '@oe/api';
+import { useCreateOrder, useOrderChangeMethod, useOrderPaymentStatus, useOrderPaymentSuccess } from '@oe/api';
+import { useGetPaymentMethodList } from '@oe/api';
+import { PLATFORM_ROUTES, buildUrl } from '@oe/core';
+import { getCookieClient } from '@oe/core';
+import { useTranslations } from 'next-intl';
+import { useParams, useRouter } from 'next/navigation';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { toast } from 'sonner';
+import { useSocketStore } from '#store/socket';
+import { PaymentConfirm } from './payment-confirmation';
+import { PaymentStatus } from './payment-status';
 
-export type IPaymentOption = "fiat" | "crypto";
+export type IPaymentOption = 'fiat' | 'crypto';
 export interface IPaymentCryptoWallet {
   id: string;
   native: string;
@@ -48,43 +38,34 @@ type AssetData = {
 
 const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
   const router = useRouter();
-  const t = useTranslations("coursePayment.paymentConfirmation");
+  const t = useTranslations('coursePayment.paymentConfirmation');
   const { slug } = useParams();
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const [orderId, setOrderId] = useState<string>("");
+  const [orderId, setOrderId] = useState<string>('');
   const [amountDue, setAmountDue] = useState<number>(0);
   const [discountAmount, setDiscountAmount] = useState<number>(0);
   const [shareRateAmount, setShareRateAmount] = useState<number>(0);
   const [verifyOrderRes, setVerifyOrderRes] = useState<IOrderRes | null>(null);
-  const [paymentMethodSelected, setPaymentMethodSelected] =
-    useState<string>("");
-  const [paymentOptionSelected, setPaymentOptionSelected] =
-    useState<IPaymentOption>("fiat");
-  const [cryptoCurrency, setCryptoCurrency] = useState<string>("USDT");
-  const [fiatCurrency, setFiatCurrency] = useState<string>("VND");
+  const [paymentMethodSelected, setPaymentMethodSelected] = useState<string>('');
+  const [paymentOptionSelected, setPaymentOptionSelected] = useState<IPaymentOption>('fiat');
+  const [cryptoCurrency, setCryptoCurrency] = useState<string>('USDT');
+  const [fiatCurrency, setFiatCurrency] = useState<string>('VND');
 
   const orderCreationAttempted = useRef(false);
-  const refCodeStorage = getCookieClient(
-    process.env.NEXT_PUBLIC_COOKIE_REF_CODE
-  );
-  const fromSourceStorage = getCookieClient(
-    process.env.NEXT_PUBLIC_COOKIE_FROM_SOURCE
-  );
+  const refCodeStorage = getCookieClient(process.env.NEXT_PUBLIC_COOKIE_REF_CODE);
+  const fromSourceStorage = getCookieClient(process.env.NEXT_PUBLIC_COOKIE_FROM_SOURCE);
 
   const { dataMe: me } = useGetMe();
   const { triggerCreateOrder } = useCreateOrder();
   const { triggerOrderChangeMethod } = useOrderChangeMethod(orderId);
   const { triggerOrderPaymentSuccess } = useOrderPaymentSuccess(orderId);
-  const { triggerPostValidateRefCode, errorPostValidateRefCode } =
-    usePostValidateRefCode(refCodeStorage as string);
+  const { triggerPostValidateRefCode, errorPostValidateRefCode } = usePostValidateRefCode(refCodeStorage as string);
   const { dataPaymentMethodList } = useGetPaymentMethodList({
     per_page: 100,
     page: 1,
   });
   const { paymentData, resetSocketData } = useSocketStore();
-  const { dataShareRateByCode: dataGetShareRateByCode } = useGetShareRateByCode(
-    refCodeStorage as string
-  );
+  const { dataShareRateByCode: dataGetShareRateByCode } = useGetShareRateByCode(refCodeStorage as string);
   // TODO
   // const { wallets, isLoading, tokenBalances } = usePaymentWallet();
   const [usedCoupon, setUsedCoupon] = useState<string | null>(null);
@@ -101,11 +82,8 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
     // const allCurrencies = [...FIAT_CURRENCIES, ...CRYPTO_CURRENCIES];
 
     const processedData = wallets
-      .map((wallet) => {
-        const currencyInfo =
-          SUPPORTED_EXCHANGE_RATES[
-            wallet.currency as keyof typeof SUPPORTED_EXCHANGE_RATES
-          ];
+      .map(wallet => {
+        const currencyInfo = SUPPORTED_EXCHANGE_RATES[wallet.currency as keyof typeof SUPPORTED_EXCHANGE_RATES];
         if (!currencyInfo) {
           return null;
         }
@@ -132,16 +110,10 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
       .filter(Boolean) as unknown as AssetData[];
 
     return processedData.sort((a, b) => {
-      if (
-        a.assetType === ASSET_TYPES.FIAT &&
-        b.assetType !== ASSET_TYPES.FIAT
-      ) {
+      if (a.assetType === ASSET_TYPES.FIAT && b.assetType !== ASSET_TYPES.FIAT) {
         return -1;
       }
-      if (
-        a.assetType !== ASSET_TYPES.FIAT &&
-        b.assetType === ASSET_TYPES.FIAT
-      ) {
+      if (a.assetType !== ASSET_TYPES.FIAT && b.assetType === ASSET_TYPES.FIAT) {
         return 1;
       }
       return 0;
@@ -151,16 +123,16 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
     if (courseData) {
       const { price_settings } = courseData;
 
-      setFiatCurrency(price_settings?.fiat_currency ?? "VND");
-      setCryptoCurrency(price_settings?.crypto_currency ?? "USDT");
+      setFiatCurrency(price_settings?.fiat_currency ?? 'VND');
+      setCryptoCurrency(price_settings?.crypto_currency ?? 'USDT');
     }
   }, [courseData]);
 
   useEffect(() => {
     if (paymentData) {
-      const isSuccess = paymentData?.data?.data?.order_status === "success";
+      const isSuccess = paymentData?.data?.data?.order_status === 'success';
 
-      resetSocketData("payment");
+      resetSocketData('payment');
       if (isSuccess) {
         router.push(
           buildUrl({
@@ -200,17 +172,9 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
   // }, [wallets, tokenBalances]);
 
   const setAllData = useCallback((res: IOrderRes) => {
-    const {
-      id,
-      missing_amount,
-      discount_amount,
-      referral_discount_amount,
-      coupon,
-    } = res.order;
+    const { id, missing_amount, discount_amount, referral_discount_amount, coupon } = res.order;
 
-    setPaymentOptionSelected(
-      res?.payment_method?.service === "sepay" ? "fiat" : "crypto"
-    );
+    setPaymentOptionSelected(res?.payment_method?.service === 'sepay' ? 'fiat' : 'crypto');
     setUsedCoupon(coupon ? coupon.coupon_code : null);
     setOrderId(id);
     setAmountDue(Number(missing_amount));
@@ -221,46 +185,37 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
   const getAPICreateOrder = useCallback(
     async (hasRefCode = false) => {
       try {
-        let source = "";
+        let source = '';
 
         if (fromSourceStorage) {
-          const fromSourceData: { fromSource: string; courseSlug: string }[] =
-            fromSourceStorage
-              ? typeof fromSourceStorage === "string"
-                ? JSON.parse(fromSourceStorage)
-                : fromSourceStorage
-              : [];
+          const fromSourceData: { fromSource: string; courseSlug: string }[] = fromSourceStorage
+            ? typeof fromSourceStorage === 'string'
+              ? JSON.parse(fromSourceStorage)
+              : fromSourceStorage
+            : [];
           const matchingEntries = fromSourceData
-            .filter((entry) => entry.courseSlug === courseData.slug)
-            .sort(
-              (a, b) => fromSourceData.indexOf(b) - fromSourceData.indexOf(a)
-            );
+            .filter(entry => entry.courseSlug === courseData.slug)
+            .sort((a, b) => fromSourceData.indexOf(b) - fromSourceData.indexOf(a));
 
           if (matchingEntries.length > 0) {
-            source = matchingEntries[0]?.fromSource ?? "";
+            source = matchingEntries[0]?.fromSource ?? '';
           }
         }
 
         const res = await triggerCreateOrder({
-          course_id: courseData?.id ?? "",
-          course_cuid: courseData?.cuid ?? "",
-          referral_code: hasRefCode ? (refCodeStorage as string) ?? "" : "",
+          course_id: courseData?.id ?? '',
+          course_cuid: courseData?.cuid ?? '',
+          referral_code: hasRefCode ? ((refCodeStorage as string) ?? '') : '',
           source,
         });
 
         setAllData(res);
       } catch (error) {
-        console.error("error", error);
-        setOrderId("");
+        console.error('error', error);
+        setOrderId('');
       }
     },
-    [
-      courseData,
-      refCodeStorage,
-      fromSourceStorage,
-      setAllData,
-      triggerCreateOrder,
-    ]
+    [courseData, refCodeStorage, fromSourceStorage, setAllData, triggerCreateOrder]
   );
 
   const handleCreateOrder = useCallback(async () => {
@@ -273,21 +228,16 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
       try {
         if (refCodeStorage) {
           await triggerPostValidateRefCode({
-            course_cuid: courseData?.cuid ?? "",
+            course_cuid: courseData?.cuid ?? '',
           });
         }
         await getAPICreateOrder(true);
       } catch (error) {
-        console.error("error", error);
+        console.error('error', error);
         await getAPICreateOrder(false);
       }
     }
-  }, [
-    courseData,
-    getAPICreateOrder,
-    refCodeStorage,
-    triggerPostValidateRefCode,
-  ]);
+  }, [courseData, getAPICreateOrder, refCodeStorage, triggerPostValidateRefCode]);
 
   useEffect(() => {
     (async () => {
@@ -303,7 +253,7 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
       try {
         const res = await triggerOrderChangeMethod({
           payment_method_id: paymentMethod,
-          currency: "VND",
+          currency: 'VND',
         });
 
         setVerifyOrderRes(res);
@@ -311,7 +261,7 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
 
         return true;
       } catch (error) {
-        console.error("error", error);
+        console.error('error', error);
         return false;
       }
     },
@@ -321,13 +271,11 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
   const handleChangeCryptoMethod = useCallback(
     async (paymentOption: IPaymentOption) => {
       setPaymentOptionSelected(paymentOption);
-      const item = dataPaymentMethodList?.results?.filter(
-        (item) => item.payment_type === cryptoCurrency
-      );
+      const item = dataPaymentMethodList?.results?.filter(item => item.payment_type === cryptoCurrency);
       let res: IOrderRes | null = null;
 
       try {
-        if (paymentOption === "crypto") {
+        if (paymentOption === 'crypto') {
           res = await triggerOrderChangeMethod({
             payment_method_id: item?.[0]?.id as string,
           });
@@ -339,23 +287,17 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
 
         return true;
       } catch (error) {
-        console.error("error", error);
+        console.error('error', error);
         return false;
       }
     },
-    [
-      courseData,
-      cryptoCurrency,
-      dataPaymentMethodList?.results,
-      triggerOrderChangeMethod,
-      setAllData,
-    ]
+    [courseData, cryptoCurrency, dataPaymentMethodList?.results, triggerOrderChangeMethod, setAllData]
   );
 
   const handleOrderPaymentSuccess = useCallback(async () => {
     try {
       await triggerOrderPaymentSuccess({
-        payment_method_id: dataPaymentMethodList?.results?.[0]?.id ?? "",
+        payment_method_id: dataPaymentMethodList?.results?.[0]?.id ?? '',
       });
       router.push(
         buildUrl({
@@ -365,19 +307,14 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
       );
       return true;
     } catch (error) {
-      console.error("error", error);
+      console.error('error', error);
       return false;
     }
-  }, [
-    dataPaymentMethodList?.results,
-    router,
-    slug,
-    triggerOrderPaymentSuccess,
-  ]);
+  }, [dataPaymentMethodList?.results, router, slug, triggerOrderPaymentSuccess]);
 
   const handleNextStep = useCallback(async () => {
     if (!paymentMethodSelected) {
-      toast.error(t("choosePaymentMethod"));
+      toast.error(t('choosePaymentMethod'));
       return;
     }
 
@@ -386,7 +323,7 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
     } else {
       const res = await triggerOrderPaymentStatus();
 
-      if (res && res.status === "success") {
+      if (res && res.status === 'success') {
         router.push(
           buildUrl({
             endpoint: PLATFORM_ROUTES.paymentSuccess,
@@ -394,18 +331,10 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
           })
         );
       } else {
-        setCurrentStep((prevStep) => prevStep + 1);
+        setCurrentStep(prevStep => prevStep + 1);
       }
     }
-  }, [
-    amountDue,
-    handleOrderPaymentSuccess,
-    paymentMethodSelected,
-    router,
-    slug,
-    t,
-    triggerOrderPaymentStatus,
-  ]);
+  }, [amountDue, handleOrderPaymentSuccess, paymentMethodSelected, router, slug, t, triggerOrderPaymentStatus]);
 
   const renderStepContent = () => {
     switch (currentStep) {
@@ -419,18 +348,14 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
             dataOrder={verifyOrderRes}
             amountDue={amountDue}
             discountAmount={discountAmount}
-            shareRate={
-              errorPostValidateRefCode
-                ? 0
-                : dataGetShareRateByCode?.share_rate ?? 0
-            }
+            shareRate={errorPostValidateRefCode ? 0 : (dataGetShareRateByCode?.share_rate ?? 0)}
             shareRateAmount={shareRateAmount}
             currentStep={currentStep}
             dataMethods={dataPaymentMethodList?.results ?? []}
             fiatCurrency={fiatCurrency}
             cryptoCurrency={cryptoCurrency}
             cryptoWallet={cryptoWallet as unknown as IPaymentCryptoWallet[]}
-            usedCoupon={usedCoupon ?? ""}
+            usedCoupon={usedCoupon ?? ''}
             onNextStep={handleNextStep}
             setVerifyOrderRes={setVerifyOrderRes}
             handleChangeMethod={handleChangeMethod}
@@ -443,12 +368,7 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
         );
       }
       case 1: {
-        return (
-          <PaymentStatus
-            imageSrc={courseData?.thumbnail?.url ?? ""}
-            title={courseData?.name ?? ""}
-          />
-        );
+        return <PaymentStatus imageSrc={courseData?.thumbnail?.url ?? ''} title={courseData?.name ?? ''} />;
       }
       default: {
         return null;
@@ -458,9 +378,7 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
 
   return (
     <div className="container mx-auto p-0">
-      <div className="lg:max-w[1080px] mx-auto mt-6 w-full md:w-[80%]">
-        {renderStepContent()}
-      </div>
+      <div className="lg:max-w[1080px] mx-auto mt-6 w-full md:w-[80%]">{renderStepContent()}</div>
     </div>
   );
 };

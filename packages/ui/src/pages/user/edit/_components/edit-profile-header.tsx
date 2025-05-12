@@ -1,44 +1,35 @@
-"use client";
+'use client';
 
-import type { IFileResponse } from "@oe/api";
-import type { HTTPErrorMetadata } from "@oe/api";
-import { useGetUserProfile, useUpdateMyProfile } from "@oe/api";
-import {
-  Camera,
-  Lock,
-  Notification,
-  ProfileCircle,
-  Setting2,
-  User,
-} from "@oe/assets";
-import background from "@oe/assets/images/user-background.png";
-import { PLATFORM_ROUTES, buildUrl } from "@oe/core";
-import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
-import { useState } from "react";
-import { toast } from "sonner";
-import { Link } from "#common/navigation";
-import { Image } from "#components/image";
-import { Navigation } from "#components/navigation";
-import { Uploader } from "#components/uploader";
-import { Button } from "#shadcn/button";
+import type { IFileResponse } from '@oe/api';
+import type { HTTPErrorMetadata } from '@oe/api';
+import { useGetUserProfile, useUpdateMyProfile } from '@oe/api';
+import { Camera, Lock, Notification, ProfileCircle, Setting2, User } from '@oe/assets';
+import background from '@oe/assets/images/user-background.png';
+import { PLATFORM_ROUTES, buildUrl } from '@oe/core';
+import { useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
+import { useState } from 'react';
+import { toast } from 'sonner';
+import { Link } from '#common/navigation';
+import { Image } from '#components/image';
+import { Navigation } from '#components/navigation';
+import { Uploader } from '#components/uploader';
+import { Button } from '#shadcn/button';
 
 export function EditProfileHeader() {
-  const tProfile = useTranslations("userProfile.profile");
-  const tError = useTranslations("errors");
+  const tProfile = useTranslations('userProfile.profile');
+  const tError = useTranslations('errors');
 
   const { user } = useParams();
 
   const [file] = useState<IFileResponse>();
 
   const { triggerMyProfile } = useUpdateMyProfile();
-  const { mutateUserProfile, dataUserProfile } = useGetUserProfile(
-    user as string
-  );
+  const { mutateUserProfile, dataUserProfile } = useGetUserProfile(user as string);
 
   const navItems = [
     {
-      title: tProfile("navigations.profile"),
+      title: tProfile('navigations.profile'),
       href: buildUrl({
         endpoint: PLATFORM_ROUTES.editProfileInformation,
         params: { username: user as string },
@@ -46,7 +37,7 @@ export function EditProfileHeader() {
       icon: <User height={16} width={16} />,
     },
     {
-      title: tProfile("navigations.account"),
+      title: tProfile('navigations.account'),
       href: buildUrl({
         endpoint: PLATFORM_ROUTES.editProfileAccount,
         params: { username: user as string },
@@ -54,7 +45,7 @@ export function EditProfileHeader() {
       icon: <ProfileCircle />,
     },
     {
-      title: tProfile("navigations.password"),
+      title: tProfile('navigations.password'),
       href: buildUrl({
         endpoint: PLATFORM_ROUTES.editProfilePassword,
         params: { username: user as string },
@@ -62,7 +53,7 @@ export function EditProfileHeader() {
       icon: <Lock />,
     },
     {
-      title: tProfile("navigations.notifications"),
+      title: tProfile('navigations.notifications'),
       href: buildUrl({
         endpoint: PLATFORM_ROUTES.editProfileNotifications,
         params: { username: user as string },
@@ -70,7 +61,7 @@ export function EditProfileHeader() {
       icon: <Notification />,
     },
     {
-      title: tProfile("navigations.privacy"),
+      title: tProfile('navigations.privacy'),
       href: buildUrl({
         endpoint: PLATFORM_ROUTES.editProfilePrivacy,
         params: { username: user as string },
@@ -80,9 +71,7 @@ export function EditProfileHeader() {
   ];
 
   const coverphoto =
-    dataUserProfile && dataUserProfile?.cover_photo?.length > 0
-      ? dataUserProfile?.cover_photo
-      : background.src;
+    dataUserProfile && dataUserProfile?.cover_photo?.length > 0 ? dataUserProfile?.cover_photo : background.src;
 
   const handleEditCoverPhoto = (file: IFileResponse) => {
     if (file) {
@@ -90,11 +79,11 @@ export function EditProfileHeader() {
 
       triggerMyProfile({ cover_photo })
         .then(() => {
-          toast.success("Update successfully");
+          toast.success('Update successfully');
 
-          mutateUserProfile().catch((error) => console.error(error));
+          mutateUserProfile().catch(error => console.error(error));
         })
-        .catch((error) => {
+        .catch(error => {
           console.error(error);
           toast.error(tError((error as HTTPErrorMetadata).code.toString()));
         });
@@ -106,7 +95,7 @@ export function EditProfileHeader() {
       <Uploader
         accept="image/*"
         value={file}
-        onChange={(file) => handleEditCoverPhoto(file as IFileResponse)}
+        onChange={file => handleEditCoverPhoto(file as IFileResponse)}
         contentClassName="p-0"
         isShowInformation={false}
       >
@@ -128,7 +117,7 @@ export function EditProfileHeader() {
             // onClick={handleEditCoverPhoto}
           >
             <Camera className="mr-2 text-black" color="#000" />
-            {tProfile("editCoverPhoto")}
+            {tProfile('editCoverPhoto')}
           </Button>
         </div>
       </Uploader>
@@ -136,10 +125,7 @@ export function EditProfileHeader() {
       <div className="mb-6 flex w-full flex-col items-start justify-between xl:flex-row">
         <Navigation className="m-2 mb-0" data={navItems} />
 
-        <Button
-          variant="default"
-          className="!mbutton-semibold16 mt-2 mr-6 ml-auto h-auto rounded-2 p-0"
-        >
+        <Button variant="default" className="!mbutton-semibold16 mt-2 mr-6 ml-auto h-auto rounded-2 p-0">
           <Link
             href={buildUrl({
               endpoint: PLATFORM_ROUTES.userProfile,
@@ -147,7 +133,7 @@ export function EditProfileHeader() {
             })}
             className="!text-primary-foreground p-2"
           >
-            {tProfile("backToUserProfile")}
+            {tProfile('backToUserProfile')}
           </Link>
         </Button>
       </div>

@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { useTranslations } from "next-intl";
-import { SWRConfig, type SWRConfiguration } from "swr";
-import { toast } from "#shadcn/sonner";
+import { useTranslations } from 'next-intl';
+import { SWRConfig, type SWRConfiguration } from 'swr';
+import { toast } from '#shadcn/sonner';
 
-import type { HTTPError } from "@oe/api";
-import type { ReactNode } from "react";
+import type { HTTPError } from '@oe/api';
+import type { ReactNode } from 'react';
 
 interface Props extends SWRConfiguration {
   children: ReactNode;
 }
 
 export function SWRProvider({ children, ...rest }: Props) {
-  const t = useTranslations("errors");
+  const t = useTranslations('errors');
 
   return (
     <SWRConfig

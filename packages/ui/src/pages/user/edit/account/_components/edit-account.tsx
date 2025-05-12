@@ -1,28 +1,24 @@
-"use client";
-import type { IMyProfilePayload } from "@oe/api";
-import { useGetUserProfile, useUpdateMyProfile } from "@oe/api";
-import {
-  type IEditAccountFormSchemaType,
-  editAccountFormSchema,
-} from "@oe/api";
-import { Mobile, SmsIcon, TagUser, User } from "@oe/assets";
-import { PLATFORM_ROUTES, buildUrl } from "@oe/core";
-import { useTranslations } from "next-intl";
-import { useParams, useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { FormWrapper } from "#components/form-wrapper";
-import { Spinner } from "#components/spinner";
-import { Button } from "#shadcn/button";
-import { FormFieldWithLabel } from "#shadcn/form";
-import { Input } from "#shadcn/input";
+'use client';
+import type { IMyProfilePayload } from '@oe/api';
+import { useGetUserProfile, useUpdateMyProfile } from '@oe/api';
+import { type IEditAccountFormSchemaType, editAccountFormSchema } from '@oe/api';
+import { Mobile, SmsIcon, TagUser, User } from '@oe/assets';
+import { PLATFORM_ROUTES, buildUrl } from '@oe/core';
+import { useTranslations } from 'next-intl';
+import { useParams, useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { FormWrapper } from '#components/form-wrapper';
+import { Spinner } from '#components/spinner';
+import { Button } from '#shadcn/button';
+import { FormFieldWithLabel } from '#shadcn/form';
+import { Input } from '#shadcn/input';
 
 export function EditAccountContent() {
-  const tAccount = useTranslations("userProfile.account");
+  const tAccount = useTranslations('userProfile.account');
   const { user } = useParams();
   const router = useRouter();
 
-  const { dataUserProfile, isLoadingUserProfile, mutateUserProfile } =
-    useGetUserProfile(user as string);
+  const { dataUserProfile, isLoadingUserProfile, mutateUserProfile } = useGetUserProfile(user as string);
   const { triggerMyProfile } = useUpdateMyProfile();
 
   const handleSubmitForm = async (value: IEditAccountFormSchemaType) => {
@@ -50,14 +46,14 @@ export function EditAccountContent() {
         );
       }
 
-      toast.success(tAccount("updateSuccess"));
+      toast.success(tAccount('updateSuccess'));
     } catch (error) {
       console.error(error);
     }
   };
 
   const handleDeleteAccount = () => {
-    toast.error(tAccount("deleteAccountMessage"));
+    toast.error(tAccount('deleteAccountMessage'));
   };
 
   if (isLoadingUserProfile) {
@@ -76,10 +72,10 @@ export function EditAccountContent() {
           schema={editAccountFormSchema}
           useFormProps={{
             defaultValues: {
-              username: dataUserProfile?.username || "",
-              id: dataUserProfile?.id || "",
-              email: dataUserProfile?.email || "",
-              phone: dataUserProfile?.phone || "",
+              username: dataUserProfile?.username || '',
+              id: dataUserProfile?.id || '',
+              email: dataUserProfile?.email || '',
+              phone: dataUserProfile?.phone || '',
             },
           }}
           onSubmit={handleSubmitForm}
@@ -87,38 +83,21 @@ export function EditAccountContent() {
           {({ setValue }) => (
             <>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                <FormFieldWithLabel
-                  label={tAccount("userName")}
-                  name="username"
-                >
-                  <Input
-                    placeholder={tAccount("userName")}
-                    prefixIcon={<User />}
-                  />
+                <FormFieldWithLabel label={tAccount('userName')} name="username">
+                  <Input placeholder={tAccount('userName')} prefixIcon={<User />} />
                 </FormFieldWithLabel>
 
-                <FormFieldWithLabel label={tAccount("userID")} name="id">
-                  <Input
-                    disabled
-                    placeholder={tAccount("userID")}
-                    prefixIcon={<TagUser />}
-                  />
+                <FormFieldWithLabel label={tAccount('userID')} name="id">
+                  <Input disabled placeholder={tAccount('userID')} prefixIcon={<TagUser />} />
                 </FormFieldWithLabel>
               </div>
 
               <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
                 <FormFieldWithLabel label="Email" name="email">
-                  <Input
-                    disabled
-                    placeholder="Ex: abc@gmail.com"
-                    prefixIcon={<SmsIcon />}
-                  />
+                  <Input disabled placeholder="Ex: abc@gmail.com" prefixIcon={<SmsIcon />} />
                 </FormFieldWithLabel>
 
-                <FormFieldWithLabel
-                  label={tAccount("phoneNUmber")}
-                  name="phone"
-                >
+                <FormFieldWithLabel label={tAccount('phoneNUmber')} name="phone">
                   <Input prefixIcon={<Mobile />} />
                 </FormFieldWithLabel>
               </div>
@@ -129,21 +108,17 @@ export function EditAccountContent() {
                   className="mbutton-bold16"
                   onClick={() => {
                     if (dataUserProfile) {
-                      setValue("username", dataUserProfile.username);
-                      setValue("id", dataUserProfile.id);
-                      setValue("email", dataUserProfile.email);
-                      setValue("phone", dataUserProfile.phone);
+                      setValue('username', dataUserProfile.username);
+                      setValue('id', dataUserProfile.id);
+                      setValue('email', dataUserProfile.email);
+                      setValue('phone', dataUserProfile.phone);
                     }
                   }}
                 >
-                  {tAccount("cancel")}
+                  {tAccount('cancel')}
                 </Button>
-                <Button
-                  variant="default"
-                  className="!mbutton-bold16"
-                  type="submit"
-                >
-                  {tAccount("saveChanges")}
+                <Button variant="default" className="!mbutton-bold16" type="submit">
+                  {tAccount('saveChanges')}
                 </Button>
               </div>
             </>
@@ -152,16 +127,10 @@ export function EditAccountContent() {
       </div>
 
       <div className="mbutton-semibold16 mt-6 flex flex-col rounded-[12px] border p-6">
-        <h4>{tAccount("deleteYourAccount")}</h4>
-        <p className="mbutton-regular16 my-6 text-neutral-800">
-          {tAccount("deleteDescription")}
-        </p>
-        <Button
-          variant="destructive"
-          className="mbutton-semibold16 ml-auto"
-          onClick={handleDeleteAccount}
-        >
-          {tAccount("deleteAccount")}
+        <h4>{tAccount('deleteYourAccount')}</h4>
+        <p className="mbutton-regular16 my-6 text-neutral-800">{tAccount('deleteDescription')}</p>
+        <Button variant="destructive" className="mbutton-semibold16 ml-auto" onClick={handleDeleteAccount}>
+          {tAccount('deleteAccount')}
         </Button>
       </div>
     </div>

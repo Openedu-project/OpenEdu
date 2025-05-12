@@ -87,7 +87,7 @@ export const SearchHistory = ({
       setHistoryData([]);
       const apikey = buildUrl({
         endpoint: API_ENDPOINT.COM_CHANNELS,
-        params: { ...HISTORY_DEFAULT_PARAMS, search_term: title },
+        queryParams: { ...HISTORY_DEFAULT_PARAMS, search_term: title },
       });
       await globalMutate((key: string) => key === apikey, undefined, {
         revalidate: true,
