@@ -40,7 +40,7 @@ const AieduHomepageHero: SectionComponent<'homepage', 'aieduHero'> = ({ classNam
         </div>
       </div>
       {/* Partners */}
-      <div className="relative bg-primary-foreground">
+      <div className="bg-primary-foreground">
         <div className="container flex flex-col items-center justify-center gap-6 py-8 lg:h-[160px] lg:flex-row">
           <div className="flex items-center gap-4">
             <p className="hidden whitespace-nowrap font-semibold uppercase md:block">{t('org')}</p>
