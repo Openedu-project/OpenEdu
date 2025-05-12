@@ -1,29 +1,23 @@
-"use client";
+'use client';
 
-import { SlidersHorizontal, X } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useState } from "react";
-import { Button } from "#shadcn/button";
-import { Separator } from "#shadcn/separator";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetTitle,
-  SheetTrigger,
-} from "#shadcn/sheet";
+import { SlidersHorizontal, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useCallback, useEffect, useState } from 'react';
+import { Button } from '#shadcn/button';
+import { Separator } from '#shadcn/separator';
+import { Sheet, SheetClose, SheetContent, SheetTitle, SheetTrigger } from '#shadcn/sheet';
 
-import type { IOrganization } from "@oe/api";
-import { useGetOrganization, useGetOrganizationByDomain } from "@oe/api";
-import { useCategoriesTree } from "@oe/api";
-import type { ICategoryTree } from "@oe/api";
-import { buildQueryParam } from "@oe/core";
-import { useSearchParams } from "next/navigation";
-import { usePathname, useRouter } from "#common/navigation";
-import { CourseListFilterCategories } from "./course-list-filter-categories";
-import { CourseListFilterCompletedCourses } from "./course-list-filter-completed-courses";
-import { CourseListFilterLevel } from "./course-list-filter-level";
-import { CourseListFilterOrganizations } from "./course-list-filter-organizations";
+import type { IOrganization } from '@oe/api';
+import { useGetOrganization, useGetOrganizationByDomain } from '@oe/api';
+import { useCategoriesTree } from '@oe/api';
+import type { ICategoryTree } from '@oe/api';
+import { buildQueryParam } from '@oe/core';
+import { useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from '#common/navigation';
+import { CourseListFilterCategories } from './course-list-filter-categories';
+import { CourseListFilterCompletedCourses } from './course-list-filter-completed-courses';
+import { CourseListFilterLevel } from './course-list-filter-level';
+import { CourseListFilterOrganizations } from './course-list-filter-organizations';
 
 interface ICourseListFilter {
   categoryIdsSelected: string[];
@@ -38,7 +32,7 @@ export function CourseListFilter({
   orgIdsSelected,
   completeCourseSelected,
 }: ICourseListFilter) {
-  const t = useTranslations("courseList");
+  const t = useTranslations('courseList');
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -47,18 +41,10 @@ export function CourseListFilter({
   const [levels, setLevels] = useState<ICategoryTree[]>([]);
   const [organizations, setOrganizations] = useState<IOrganization[]>([]);
   const [checkboxes, setCheckboxes] = useState<Record<string, boolean>>({});
-  const [checkedCategoryIds, setCheckedCategoryIds] = useState<string[]>(
-    categoryIdsSelected ?? []
-  );
-  const [checkedLevelIds, setCheckedLevelIds] = useState<string[]>(
-    levelIdsSelected ?? []
-  );
-  const [checkedOrgIds, setCheckedOrgIds] = useState<string[]>(
-    orgIdsSelected ?? []
-  );
-  const [checkedCompletedCourse, setCheckedCompletedCourse] = useState<
-    string[]
-  >(completeCourseSelected ?? []);
+  const [checkedCategoryIds, setCheckedCategoryIds] = useState<string[]>(categoryIdsSelected ?? []);
+  const [checkedLevelIds, setCheckedLevelIds] = useState<string[]>(levelIdsSelected ?? []);
+  const [checkedOrgIds, setCheckedOrgIds] = useState<string[]>(orgIdsSelected ?? []);
+  const [checkedCompletedCourse, setCheckedCompletedCourse] = useState<string[]>(completeCourseSelected ?? []);
   const [open, setOpen] = useState(false);
 
   const [openSections, setOpenSections] = useState({
@@ -75,15 +61,15 @@ export function CourseListFilter({
   const { organizationByDomain } = useGetOrganizationByDomain();
   const { categoriesTree: courseCategories } = useCategoriesTree(
     {
-      type: "course",
-      org_id: organizationByDomain?.id ?? "",
+      type: 'course',
+      org_id: organizationByDomain?.id ?? '',
     },
     undefined,
     !!organizationByDomain?.id
   );
   const { categoriesTree: levelCategories } = useCategoriesTree(
     {
-      type: "level",
+      type: 'level',
     },
     undefined,
     !!organizationByDomain?.id
@@ -115,7 +101,7 @@ export function CourseListFilter({
         }
       }
     }
-    const checkedCourseStatus = ["completed", "in-progress"];
+    const checkedCourseStatus = ['completed', 'in-progress'];
     const checkedCourseCheckboxes: Record<string, boolean> = {};
     for (const item of checkedCourseStatus ?? []) {
       if (item) {
@@ -128,52 +114,36 @@ export function CourseListFilter({
       }
     }
 
-    setCheckboxes((prev) => ({
+    setCheckboxes(prev => ({
       ...prev,
       ...levelCheckboxes,
       ...orgCheckboxes,
       ...checkedCourseCheckboxes,
     }));
-  }, [
-    courseCategories,
-    levelCategories,
-    dataListOrganization,
-    checkedLevelIds,
-    checkedOrgIds,
-    checkedCompletedCourse,
-  ]);
+  }, [courseCategories, levelCategories, dataListOrganization, checkedLevelIds, checkedOrgIds, checkedCompletedCourse]);
 
-  const updateCheckedLevelIds = useCallback(
-    (updatedCheckboxes: Record<string, boolean>) => {
-      const checkedIds = Object.entries(updatedCheckboxes)
-        .filter(([key, value]) => value && key.startsWith("level-"))
-        .map(([key]) => key.replace("level-", ""));
+  const updateCheckedLevelIds = useCallback((updatedCheckboxes: Record<string, boolean>) => {
+    const checkedIds = Object.entries(updatedCheckboxes)
+      .filter(([key, value]) => value && key.startsWith('level-'))
+      .map(([key]) => key.replace('level-', ''));
 
-      setCheckedLevelIds(checkedIds);
-    },
-    []
-  );
-  const updateCheckedCompletedCourse = useCallback(
-    (updatedCheckboxes: Record<string, boolean>) => {
-      const checkedIds = Object.entries(updatedCheckboxes)
-        .filter(([key, value]) => value && key.startsWith("status-"))
-        .map(([key]) => key.replace("status-", ""));
+    setCheckedLevelIds(checkedIds);
+  }, []);
+  const updateCheckedCompletedCourse = useCallback((updatedCheckboxes: Record<string, boolean>) => {
+    const checkedIds = Object.entries(updatedCheckboxes)
+      .filter(([key, value]) => value && key.startsWith('status-'))
+      .map(([key]) => key.replace('status-', ''));
 
-      setCheckedCompletedCourse(checkedIds);
-    },
-    []
-  );
+    setCheckedCompletedCourse(checkedIds);
+  }, []);
 
-  const updateCheckedOrgIds = useCallback(
-    (updatedCheckboxes: Record<string, boolean>) => {
-      const checkedIds = Object.entries(updatedCheckboxes)
-        .filter(([key, value]) => value && key.startsWith("org-"))
-        .map(([key]) => key.replace("org-", ""));
+  const updateCheckedOrgIds = useCallback((updatedCheckboxes: Record<string, boolean>) => {
+    const checkedIds = Object.entries(updatedCheckboxes)
+      .filter(([key, value]) => value && key.startsWith('org-'))
+      .map(([key]) => key.replace('org-', ''));
 
-      setCheckedOrgIds(checkedIds);
-    },
-    []
-  );
+    setCheckedOrgIds(checkedIds);
+  }, []);
 
   const handleCheckboxChange = useCallback(
     (id: string) => {
@@ -183,24 +153,19 @@ export function CourseListFilter({
       updatedCheckboxes[id] = newValue;
       setCheckboxes(updatedCheckboxes);
 
-      if (id.startsWith("level-")) {
+      if (id.startsWith('level-')) {
         updateCheckedLevelIds(updatedCheckboxes);
-      } else if (id.startsWith("org-")) {
+      } else if (id.startsWith('org-')) {
         updateCheckedOrgIds(updatedCheckboxes);
-      } else if (id.startsWith("status-")) {
+      } else if (id.startsWith('status-')) {
         updateCheckedCompletedCourse(updatedCheckboxes);
       }
     },
-    [
-      checkboxes,
-      updateCheckedLevelIds,
-      updateCheckedOrgIds,
-      updateCheckedCompletedCourse,
-    ]
+    [checkboxes, updateCheckedLevelIds, updateCheckedOrgIds, updateCheckedCompletedCourse]
   );
 
   const toggleSection = useCallback((section: keyof typeof openSections) => {
-    setOpenSections((prev) => ({
+    setOpenSections(prev => ({
       ...prev,
       [section]: !prev[section],
     }));
@@ -208,7 +173,7 @@ export function CourseListFilter({
 
   const resetSection = useCallback(
     (section: string) => {
-      if (section === "cat") {
+      if (section === 'cat') {
         setCheckedCategoryIds([]);
       } else {
         const updatedCheckboxes = { ...checkboxes };
@@ -219,11 +184,11 @@ export function CourseListFilter({
         }
         setCheckboxes(updatedCheckboxes);
 
-        if (section === "level") {
+        if (section === 'level') {
           setCheckedLevelIds([]);
-        } else if (section === "org") {
+        } else if (section === 'org') {
           setCheckedOrgIds([]);
-        } else if (section === "status") {
+        } else if (section === 'status') {
           setCheckedCompletedCourse([]);
         }
       }
@@ -255,20 +220,20 @@ export function CourseListFilter({
         currentParams: searchParams,
         params: [
           {
-            name: "category_id_in",
-            value: checkedCategoryIds.join(","),
+            name: 'category_id_in',
+            value: checkedCategoryIds.join(','),
           },
           {
-            name: "level_id_in",
-            value: checkedLevelIds.join(","),
+            name: 'level_id_in',
+            value: checkedLevelIds.join(','),
           },
           {
-            name: "org_id_in",
-            value: checkedOrgIds.join(","),
+            name: 'org_id_in',
+            value: checkedOrgIds.join(','),
           },
           {
-            name: "complete_status_in",
-            value: checkedCompletedCourse.join(","),
+            name: 'complete_status_in',
+            value: checkedCompletedCourse.join(','),
           },
         ],
         resetPage: true,
@@ -278,34 +243,23 @@ export function CourseListFilter({
       }
     );
     setOpen(false);
-  }, [
-    checkedCategoryIds,
-    checkedLevelIds,
-    checkedOrgIds,
-    checkedCompletedCourse,
-    router,
-    pathname,
-    searchParams,
-  ]);
+  }, [checkedCategoryIds, checkedLevelIds, checkedOrgIds, checkedCompletedCourse, router, pathname, searchParams]);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button variant="outline">
           <SlidersHorizontal />
-          <span>{t("filter")}</span>
+          <span>{t('filter')}</span>
         </Button>
       </SheetTrigger>
 
-      <SheetContent
-        side="right"
-        className="w-full max-w-md overflow-y-auto rounded-l-lg bg-white p-0"
-      >
+      <SheetContent side="right" className="w-full max-w-md overflow-y-auto rounded-l-lg bg-white p-0">
         <div className="sticky top-0 z-10 flex items-center justify-between border-b bg-white p-4">
           <div className="flex items-center text-primary">
             <span className="mr-2">|</span>
             <SheetTitle className="giant-iheading-semibold16 md:giant-iheading-semibold20 m-0 text-primary">
-              {t("filter")}
+              {t('filter')}
             </SheetTitle>
           </div>
           <SheetClose asChild>
@@ -317,11 +271,11 @@ export function CourseListFilter({
           <div className="min-h-[100dvh] px-4 py-3">
             {/* Categories Section - Now using the updated component */}
             <CourseListFilterCategories
-              title={t("categories")}
+              title={t('categories')}
               isOpen={openSections.categories}
-              toggleSection={() => toggleSection("categories")}
-              resetSection={() => resetSection("cat")}
-              resetLabel={t("resetAll")}
+              toggleSection={() => toggleSection('categories')}
+              resetSection={() => resetSection('cat')}
+              resetLabel={t('resetAll')}
               categories={categories}
               checkedCategoryIds={checkedCategoryIds}
               onCategoryChange={handleCategoryChange}
@@ -331,11 +285,11 @@ export function CourseListFilter({
 
             {/* Level Section */}
             <CourseListFilterLevel
-              title={t("level")}
+              title={t('level')}
               isOpen={openSections.level}
-              toggleSection={() => toggleSection("level")}
-              resetSection={() => resetSection("level")}
-              resetLabel={t("resetAll")}
+              toggleSection={() => toggleSection('level')}
+              resetSection={() => resetSection('level')}
+              resetLabel={t('resetAll')}
               checkboxes={checkboxes}
               handleCheckboxChange={handleCheckboxChange}
               levels={levels}
@@ -345,11 +299,11 @@ export function CourseListFilter({
 
             {/* Organizations Section */}
             <CourseListFilterOrganizations
-              title={t("organizations")}
+              title={t('organizations')}
               isOpen={openSections.organizations}
-              toggleSection={() => toggleSection("organizations")}
-              resetSection={() => resetSection("org")}
-              resetLabel={t("resetAll")}
+              toggleSection={() => toggleSection('organizations')}
+              resetSection={() => resetSection('org')}
+              resetLabel={t('resetAll')}
               checkboxes={checkboxes}
               handleCheckboxChange={handleCheckboxChange}
               organizations={organizations}
@@ -359,25 +313,21 @@ export function CourseListFilter({
 
             {/* Completed Course Section */}
             <CourseListFilterCompletedCourses
-              title={t("completedCourses")}
+              title={t('completedCourses')}
               isOpen={openSections.completedCourse}
-              toggleSection={() => toggleSection("completedCourse")}
-              resetSection={() => resetSection("status")}
-              resetLabel={t("resetAll")}
+              toggleSection={() => toggleSection('completedCourse')}
+              resetSection={() => resetSection('status')}
+              resetLabel={t('resetAll')}
               checkboxes={checkboxes}
               handleCheckboxChange={handleCheckboxChange}
             />
           </div>
           <div className="sticky bottom-0 flex w-full gap-4 border-t bg-white p-4">
-            <Button
-              variant="outline"
-              className="flex-1"
-              onClick={handleResetAll}
-            >
-              {t("resetAll")}
+            <Button variant="outline" className="flex-1" onClick={handleResetAll}>
+              {t('resetAll')}
             </Button>
             <Button className="flex-1" onClick={handleApplyFilter}>
-              {t("apply")}
+              {t('apply')}
             </Button>
           </div>
         </div>
