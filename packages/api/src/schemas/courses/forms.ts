@@ -155,7 +155,7 @@ export const courseFormTriggerSchema = baseEntitySchema
     }
 
     // Confirmation settings validation (common for both types)
-    if (data.confirmation_settings?.enabled) {
+    if (data.confirmation_settings?.enabled || data.type === 'notification') {
       if (!data.confirmation_settings?.title) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
