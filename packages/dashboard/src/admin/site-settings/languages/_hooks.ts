@@ -9,7 +9,8 @@ import { useLanguageStore } from './_store/useLanguageStore';
 import { getUrls } from './_utils';
 
 export const useI18nTranslations = () => {
-  const { translations, locales, updateTranslations, setFiles } = useLanguageStore();
+  const { locales, updateTranslations, setFiles } = useLanguageStore();
+
   const { systemConfig, systemConfigIsLoading } = useSystemConfig<I18nMessage>({
     key: systemConfigKeys.i18nTranslations,
     shouldFetch: (locales?.length ?? 0) > 0,
@@ -17,36 +18,39 @@ export const useI18nTranslations = () => {
 
   const urls = getUrls({ locales, systemConfig });
 
-  const { data } = useSWR(Object.keys(urls).length > 0 ? urls : null, async (urlMap: Record<LanguageCode, string>) => {
-    const promises = Object.entries(urlMap).map(async ([locale, url]) => {
-      try {
-        const data = await fetchTranslationFile(url);
-        return { locale, data } as { locale: LanguageCode; data: I18nMessage | null };
-      } catch (error) {
-        console.error(`Failed to fetch translation for ${locale}:`, error);
-        return { locale, data: null };
-      }
-    });
-
-    const results = await Promise.allSettled(promises);
-
-    return results.reduce(
-      (acc, result) => {
-        if (result.status === 'fulfilled' && result.value.data) {
-          acc[result.value.locale] = result.value.data;
+  const { data: translations } = useSWR(
+    Object.keys(urls).length > 0 ? urls : null,
+    async (urlMap: Record<LanguageCode, string>) => {
+      const promises = Object.entries(urlMap).map(async ([locale, url]) => {
+        try {
+          const data = await fetchTranslationFile(url);
+          return { locale, data } as { locale: LanguageCode; data: I18nMessage | null };
+        } catch (error) {
+          console.error(`Failed to fetch translation for ${locale}:`, error);
+          return { locale, data: null };
         }
-        return acc;
-      },
-      {} as Record<LanguageCode, I18nMessage>
-    );
-  });
+      });
+
+      const results = await Promise.allSettled(promises);
+
+      return results.reduce(
+        (acc, result) => {
+          if (result.status === 'fulfilled' && result.value.data) {
+            acc[result.value.locale] = result.value.data;
+          }
+          return acc;
+        },
+        {} as Record<LanguageCode, I18nMessage>
+      );
+    }
+  );
 
   useEffect(() => {
-    if (!translations && data && urls) {
+    if (translations && urls) {
       setFiles(urls);
-      updateTranslations(data);
+      updateTranslations(translations);
     }
-  }, [translations, data, urls, setFiles, updateTranslations]);
+  }, [translations, urls, setFiles, updateTranslations]);
 
   return {
     isLoading: systemConfigIsLoading,
