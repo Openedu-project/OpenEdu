@@ -34,7 +34,16 @@ const baseContentSchema = z.object({
 
 export const textContentSchema = baseContentSchema.extend({
   type: z.literal('text'),
-  content: z.string().min(1, { message: validationMessages.lesson.content }),
+  content: z.string().refine(
+    value => {
+      // Strip HTML tags and count only text content
+      const plainText = value.replace(/<[^>]*>/g, '');
+      return plainText.length > 0;
+    },
+    {
+      message: validationMessages.lesson.content,
+    }
+  ),
 });
 
 export const videoContentSchema = baseContentSchema.extend({
