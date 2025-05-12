@@ -68,6 +68,9 @@ export const RichTextEditor = ({
       return editor?.getHTML() ?? '';
     },
     setValue: (value: string) => editor?.commands.setContent(value),
+    focus: () => {
+      editor?.chain().focus().run();
+    },
   }));
 
   useEffect(() => {

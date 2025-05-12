@@ -13,7 +13,16 @@ export const courseNameSchema = z.object({
 });
 
 export const createBaseCourseSchema = courseNameSchema.extend({
-  description: z.string().min(20, { message: 'course.validation.minCourseDescription--min:20' }),
+  description: z.string().refine(
+    value => {
+      // Strip HTML tags and count only text content
+      const plainText = value.replace(/<[^>]*>/g, '');
+      return plainText.length >= 20 && plainText.length <= 10000;
+    },
+    {
+      message: 'course.validation.minMaxCourseDescription--min:20--max:10000',
+    }
+  ),
 });
 export interface ICourseNameSchema extends z.infer<typeof courseNameSchema> {}
 export interface ICreateBaseCourse extends z.infer<typeof createBaseCourseSchema> {}
@@ -48,14 +57,16 @@ export const priceSettingsSchema = z.object({
 });
 
 export const courseFormSchema = z.object({
-  description: z
-    .string()
-    .min(20, {
-      message: 'course.validation.minMaxCourseDescription--min:20--max:1000',
-    })
-    .max(10000, {
-      message: 'course.validation.minMaxCourseDescription--min:20--max:1000',
-    }),
+  description: z.string().refine(
+    value => {
+      // Strip HTML tags and count only text content
+      const plainText = value.replace(/<[^>]*>/g, '');
+      return plainText.length >= 20 && plainText.length <= 10000;
+    },
+    {
+      message: 'course.validation.minMaxCourseDescription--min:20--max:10000',
+    }
+  ),
   thumbnail: z.union([z.array(fileResponseSchema), fileResponseSchema]).nullable(),
   levels: z
     .array(
