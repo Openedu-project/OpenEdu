@@ -87,7 +87,8 @@ export function useLessonActions() {
     try {
       await updateSegmentService(undefined, {
         ...data,
-        status: data.status === 'draft' ? 'publish' : data.status === 'preview' ? 'publish' : data.status,
+        // status: data.status === 'draft' ? 'publish' : data.status === 'preview' ? 'publish' : data.status,
+        status: data.status === 'preview' ? 'publish' : data.status,
       });
       await Promise.all([mutateSection(), mutateSections(), mutateCourse()]);
       if (showToast) {
