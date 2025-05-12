@@ -1,6 +1,7 @@
+import { buildUrl } from '@oe/core';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
+import { deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 import type { ICommissionItem, ICommissionListRes, ICommissionPayload } from '../types/commission';
 
 export async function getCommissionListService(
@@ -9,7 +10,7 @@ export async function getCommissionListService(
 ): Promise<ICommissionListRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COMMISSIONS,
       queryParams: {
         ...params,
@@ -31,7 +32,7 @@ export async function getCommissionDetailService(
 ): Promise<ICommissionItem | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COMMISSIONS_ID,
       params: {
         ...params,
@@ -65,7 +66,7 @@ export const putCommissionService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COMMISSIONS_ID,
       params: {
         id: payload.id,
@@ -88,7 +89,7 @@ export const deleteCommissionService = async (
     queryParams.append('ids', id);
   }
   if (endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: endpointKey,
       queryParams: {
         ids: payload.ids.toString(),
@@ -101,6 +102,6 @@ export const deleteCommissionService = async (
     endpointKey = `${API_ENDPOINT.COMMISSIONS}?${queryParams.toString()}`;
   }
 
-  const response = await deleteAPI<void, unknown>(endpointKey, init);
+  const response = await deleteAPI<void, unknown>(endpointKey, undefined, init);
   return response.data;
 };

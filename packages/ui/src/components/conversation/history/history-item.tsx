@@ -1,22 +1,22 @@
-'use client';
-import { API_ENDPOINT, createAPIUrl, updateConversationTitle } from '@oe/api';
-import type { HTTPError } from '@oe/api';
-import { deleteConversation } from '@oe/api';
-import type { IChatHistory, IChatHistoryResponse } from '@oe/api';
-import { AI_ROUTES } from '@oe/core';
-import { MessageCircle } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import type { Dispatch, RefObject, SetStateAction } from 'react';
-import { type KeyedMutator, useSWRConfig } from 'swr';
-import { Link, useRouter } from '#common/navigation';
-import { toast } from '#shadcn/sonner';
-import { useConversationStore } from '#store/conversation-store';
-import { cn } from '#utils/cn';
-import { AI_SIDEBAR, HISTORY_DEFAULT_PARAMS } from '../constants';
-import { MessageInput } from '../message-input/message-input';
-import type { ISendMessageParams } from '../type';
-import { ActionDropdown } from './history-actions-dropdown';
+"use client";
+import { API_ENDPOINT, updateConversationTitle } from "@oe/api";
+import type { HTTPError } from "@oe/api";
+import { deleteConversation } from "@oe/api";
+import type { IChatHistory, IChatHistoryResponse } from "@oe/api";
+import { AI_ROUTES, buildUrl } from "@oe/core";
+import { MessageCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { Dispatch, RefObject, SetStateAction } from "react";
+import { type KeyedMutator, useSWRConfig } from "swr";
+import { Link, useRouter } from "#common/navigation";
+import { toast } from "#shadcn/sonner";
+import { useConversationStore } from "#store/conversation-store";
+import { cn } from "#utils/cn";
+import { AI_SIDEBAR, HISTORY_DEFAULT_PARAMS } from "../constants";
+import { MessageInput } from "../message-input/message-input";
+import type { ISendMessageParams } from "../type";
+import { ActionDropdown } from "./history-actions-dropdown";
 
 interface IHistoryItem {
   className?: string;
@@ -32,7 +32,7 @@ interface IHistoryItem {
 
 export function useClickOutside<T extends HTMLElement>(
   handler: () => void,
-  mouseEvent: 'mousedown' | 'mouseup' = 'mousedown'
+  mouseEvent: "mousedown" | "mouseup" = "mousedown"
 ): RefObject<T | null> {
   const ref = useRef<T>(null);
 
@@ -46,11 +46,11 @@ export function useClickOutside<T extends HTMLElement>(
     };
 
     document.addEventListener(mouseEvent, handleClickOutside);
-    document.addEventListener('touchstart', handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
 
     return () => {
       document.removeEventListener(mouseEvent, handleClickOutside);
-      document.removeEventListener('touchstart', handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
     };
   }, [handler, mouseEvent]);
 
@@ -65,17 +65,19 @@ export function AIHistoryItem({
   setHistoryData,
   hoverAction = true,
 }: IHistoryItem) {
-  const tError = useTranslations('errors');
+  const tError = useTranslations("errors");
 
   const [isEdit, setIsEdit] = useState(false);
   const { setIsNewChat, resetStatus } = useConversationStore();
   const router = useRouter();
   const { mutate: globalMutate } = useSWRConfig();
 
-  const agentData = AI_SIDEBAR().find(data => data.agent === item.ai_agent_type);
+  const agentData = AI_SIDEBAR().find(
+    (data) => data.agent === item.ai_agent_type
+  );
 
   const mutateInitHistory = useCallback(() => {
-    const initkey = createAPIUrl({
+    const initkey = buildUrl({
       endpoint: API_ENDPOINT.COM_CHANNELS,
       queryParams: HISTORY_DEFAULT_PARAMS,
     });
@@ -86,18 +88,18 @@ export function AIHistoryItem({
 
   const handleEdit = async ({ messageInput }: ISendMessageParams) => {
     await updateConversationTitle(undefined, item.id, {
-      title: messageInput ?? '',
+      title: messageInput ?? "",
     });
     setIsEdit(false);
 
-    setHistoryData?.(prev =>
-      prev.map(history => {
+    setHistoryData?.((prev) =>
+      prev.map((history) => {
         if (history.id !== item.id) {
           return history;
         }
         return {
           ...history,
-          context: { ...history.context, title: messageInput ?? '' },
+          context: { ...history.context, title: messageInput ?? "" },
         };
       })
     );
@@ -112,7 +114,9 @@ export function AIHistoryItem({
       if (item.id === activeId) {
         router.push(AI_ROUTES.chat);
       }
-      setHistoryData?.(prev => prev.filter(history => history.id !== item.id));
+      setHistoryData?.((prev) =>
+        prev.filter((history) => history.id !== item.id)
+      );
       mutateInitHistory();
     } catch (error) {
       console.error(error);
@@ -123,8 +127,13 @@ export function AIHistoryItem({
 
   if (isEdit) {
     return (
-      <div ref={editTitleRef} className={cn('flex items-center gap-2 rounded-lg px-2', className)}>
-        {agentData?.icon ?? <MessageCircle size={16} color="var(--warning-500)" />}
+      <div
+        ref={editTitleRef}
+        className={cn("flex items-center gap-2 rounded-lg px-2", className)}
+      >
+        {agentData?.icon ?? (
+          <MessageCircle size={16} color="var(--warning-500)" />
+        )}
         <MessageInput
           initialMessage={item.context?.title}
           sendMessage={handleEdit}
@@ -138,8 +147,15 @@ export function AIHistoryItem({
   }
 
   return (
-    <div className={cn('group/history flex items-center rounded-lg pl-2 hover:bg-primary/10', className)}>
-      {agentData?.icon ?? <MessageCircle size={16} color="var(--warning-500)" />}
+    <div
+      className={cn(
+        "group/history flex items-center rounded-lg pl-2 hover:bg-primary/10",
+        className
+      )}
+    >
+      {agentData?.icon ?? (
+        <MessageCircle size={16} color="var(--warning-500)" />
+      )}
       {activeId === item.id ? (
         <p className="mcaption-regular14 !font-bold w-[calc(100%-20px)] truncate p-2 opacity-50">
           {item.context?.title}
@@ -147,7 +163,7 @@ export function AIHistoryItem({
       ) : (
         <Link
           className="mcaption-regular14 block h-auto w-[calc(100%-20px)] truncate px-2 text-start text-foreground hover:no-underline"
-          href={createAPIUrl({
+          href={buildUrl({
             endpoint: agentData?.detailHref ?? AI_ROUTES.chatDetail,
             params: { id: item.id },
           })}

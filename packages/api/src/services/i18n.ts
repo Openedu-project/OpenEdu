@@ -1,22 +1,36 @@
-import { cookieOptions, deepMerge, deleteNestedValue, getCookies, setNestedValue } from '@oe/core';
+import { buildUrl, cookieOptions, deepMerge, deleteNestedValue, setNestedValue } from '@oe/core';
 import { DEFAULT_LOCALE, DEFAULT_LOCALES } from '@oe/i18n';
 import type { I18nMessage, LanguageCode } from '@oe/i18n';
 import { messages } from '@oe/i18n';
+import { hasLocale } from 'next-intl';
 import createMiddleware from 'next-intl/middleware';
 import type { NextRequest } from 'next/server';
+import { cache } from 'react';
 import type { HTTPResponse } from '#types/fetch';
 import type { I18nConfig } from '#types/i18n';
 import type { ISystemConfigRes } from '#types/system-config';
 import { API_ENDPOINT } from '#utils/endpoints';
+import { fetchAPI } from '#utils/fetch';
+import { getAPIReferrerAndOrigin } from '#utils/referrer-origin';
 import { systemConfigKeys } from '#utils/system-config';
 import { createOrUpdateSystemConfig, getSystemConfigClient, getSystemConfigServer } from './system-config';
 
-export const getI18nConfigServer = async () => {
-  const i18nConfig = await getSystemConfigServer<I18nConfig>({
-    key: systemConfigKeys.i18nConfig,
-  });
-  return i18nConfig;
-};
+export const getI18nConfigServer = cache(async () => {
+  try {
+    const { host } = await getAPIReferrerAndOrigin();
+    const endpointKey = buildUrl({
+      endpoint: API_ENDPOINT.SYSTEM_CONFIGS,
+      queryParams: {
+        keys: systemConfigKeys.i18nConfig,
+        domains: host,
+      },
+    });
+    const res = await fetchAPI<ISystemConfigRes<I18nConfig>[]>(endpointKey);
+    return res?.data?.[0]?.value;
+  } catch {
+    return null;
+  }
+});
 
 export const getI18nConfigClient = async (endpoint?: string) => {
   try {
@@ -186,20 +200,19 @@ export const fetchTranslationFile = async (path: string, fallbackData?: I18nMess
   }
 };
 
-export const getAllTranslations = async (locale: LanguageCode) => {
-  const cookieStore = await getCookies();
-  const localesCookie = cookieStore?.[process.env.NEXT_PUBLIC_COOKIE_LOCALES_KEY];
-  const locales = localesCookie ? JSON.parse(decodeURIComponent(localesCookie)) : DEFAULT_LOCALES;
-  const filesCookie = cookieStore?.[process.env.NEXT_PUBLIC_COOKIE_LOCALE_FILES_KEY];
-  const files = filesCookie ? JSON.parse(decodeURIComponent(filesCookie)) : {};
-  let newlocale = locale ?? cookieStore?.[process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY];
+export const getAllTranslations = cache(async (requestedLocale: LanguageCode) => {
+  const start = performance.now();
+  const i18nConfig = await getI18nConfigServer();
 
-  if (!(newlocale && locales.includes(newlocale as LanguageCode))) {
-    newlocale = DEFAULT_LOCALE as LanguageCode;
-  }
+  const files = i18nConfig?.files;
+  const locale = hasLocale(i18nConfig?.locales ?? [], requestedLocale) ? requestedLocale : DEFAULT_LOCALE;
 
   let translations = messages as I18nMessage | undefined;
   let fallbackTranslations = messages as I18nMessage | undefined;
+
+  if (!files) {
+    return { locale, messages };
+  }
 
   if (locale === DEFAULT_LOCALE) {
     translations = await fetchTranslationFile(files[locale as LanguageCode], messages);
@@ -213,8 +226,10 @@ export const getAllTranslations = async (locale: LanguageCode) => {
 
   const mergedTranslations = deepMerge(fallbackTranslations ?? {}, translations ?? {}) as I18nMessage;
   // console.error('---------------------------------', mergedTranslations.errors);
-  return { locale: newlocale, messages: mergedTranslations };
-};
+  const end = performance.now();
+  console.log(`Time taken for getAllTranslations: ${end - start} milliseconds`);
+  return { locale, messages: mergedTranslations };
+});
 
 // export const getTranslationByKeys = async (keys: string[], locale: LanguageCode) => {
 //   const { messages } = await getAllTranslations(locale);

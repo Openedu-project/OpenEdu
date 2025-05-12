@@ -1,19 +1,19 @@
-'use client';
-
-import { createAPIUrl } from '@oe/api';
-import { useGetCertById } from '@oe/api';
-import { PLATFORM_ROUTES } from '@oe/core';
-import { useTranslations } from 'next-intl';
-import { useParams } from 'next/navigation';
-import { CertificateDetail } from '#components/certificate';
-import { NoDataAvailable } from '#components/no-data-available';
-import { Spinner } from '#components/spinner';
+"use client";
+import { useGetCertById } from "@oe/api";
+import { PLATFORM_ROUTES, buildUrl } from "@oe/core";
+import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
+import { CertificateDetail } from "#components/certificate";
+import { NoDataAvailable } from "#components/no-data-available";
+import { Spinner } from "#components/spinner";
 
 export function Certificate() {
-  const t = useTranslations('certificate');
+  const t = useTranslations("certificate");
   const { certificateId, user } = useParams();
 
-  const { dataCertById, isLoadingCertById } = useGetCertById(certificateId as string);
+  const { dataCertById, isLoadingCertById } = useGetCertById(
+    certificateId as string
+  );
 
   return (
     <div className="container flex min-h-[calc(100vh-var(--header-height))] py-6">
@@ -26,11 +26,11 @@ export function Certificate() {
       ) : (
         <NoDataAvailable
           className="m-auto"
-          navigateLink={createAPIUrl({
+          navigateLink={buildUrl({
             endpoint: PLATFORM_ROUTES.userProfile,
             params: { username: user },
           })}
-          navigateTitle={t('backToUserProfile')}
+          navigateTitle={t("backToUserProfile")}
         />
       )}
     </div>

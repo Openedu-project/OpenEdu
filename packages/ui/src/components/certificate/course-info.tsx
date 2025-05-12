@@ -1,26 +1,26 @@
-import { Layer, Person2User } from '@oe/assets';
-import { useTranslations } from 'next-intl';
+import { Layer, Person2User } from "@oe/assets";
+import { useTranslations } from "next-intl";
 
-import type { ICourse } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
-import { PLATFORM_ROUTES } from '@oe/core';
-import { useMemo } from 'react';
-import { Link } from '#common/navigation';
-import { RatingStars } from '#components/rating-stars';
-import { UserAvatar } from '#components/user-avatar';
-import { Separator } from '#shadcn/separator';
+import type { ICourse } from "@oe/api";
+import { PLATFORM_ROUTES, buildUrl } from "@oe/core";
+import { useMemo } from "react";
+import { Link } from "#common/navigation";
+import { RatingStars } from "#components/rating-stars";
+import { UserAvatar } from "#components/user-avatar";
+import { Separator } from "#shadcn/separator";
 
 export function CourseInfo({ courseData }: { courseData: ICourse }) {
-  const t = useTranslations('courseOutline.certificate');
+  const t = useTranslations("courseOutline.certificate");
 
   const displayName =
-    courseData?.owner?.display_name && courseData?.owner?.display_name?.length > 0
+    courseData?.owner?.display_name &&
+    courseData?.owner?.display_name?.length > 0
       ? courseData?.owner.display_name
-      : (courseData?.owner?.username ?? '');
+      : courseData?.owner?.username ?? "";
 
   const courseUrl = useMemo(
     () =>
-      createAPIUrl({
+      buildUrl({
         endpoint: PLATFORM_ROUTES.courseDetail,
         params: { slug: courseData?.slug },
       }),
@@ -29,16 +29,21 @@ export function CourseInfo({ courseData }: { courseData: ICourse }) {
 
   return (
     <div className="flex flex-col gap-3 rounded-lg bg-white p-4 md:p-6">
-      <Link href={courseUrl} target="_blank" className="giant-iheading-semibold24 line-clamp-2 px-0 text-foreground">
+      <Link
+        href={courseUrl}
+        target="_blank"
+        className="giant-iheading-semibold24 line-clamp-2 px-0 text-foreground"
+      >
         {courseData?.name}
       </Link>
 
       <div className="flex items-center gap-3">
         <div className="flex flex-col gap-[2px]">
           <span className="mbutton-semibold16">
-            {t('creator')}:
+            {t("creator")}:
             <span className="ml-2 text-primary">
-              {courseData?.owner?.display_name && courseData?.owner.display_name?.length > 0
+              {courseData?.owner?.display_name &&
+              courseData?.owner.display_name?.length > 0
                 ? courseData?.owner.display_name
                 : courseData?.owner?.username}
             </span>
@@ -63,7 +68,10 @@ export function CourseInfo({ courseData }: { courseData: ICourse }) {
 
           <Separator orientation="vertical" />
 
-          <RatingStars variant="number-shorten" rating={courseData?.rating ?? 5} />
+          <RatingStars
+            variant="number-shorten"
+            rating={courseData?.rating ?? 5}
+          />
 
           <Separator orientation="vertical" />
 

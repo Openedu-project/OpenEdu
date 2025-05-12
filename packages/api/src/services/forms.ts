@@ -5,7 +5,7 @@ import type { IFormParams, IFormResponse, IRegisterOrgRequest } from '#types/for
 import type { IFormSummary, IFormUserResponse, IFormUserResponseAnswerStatsItem } from '#types/form-user-response';
 import { API_ENDPOINT } from '#utils/endpoints';
 // import { buildUrl } from '#utils/url';
-import { createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
+import { deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 
 export const getFormsService = async (
   url: string | undefined,
@@ -181,7 +181,7 @@ export const postCloneForm = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.FORMS_ID_DUPLICATE,
       params: {
         id: payload,

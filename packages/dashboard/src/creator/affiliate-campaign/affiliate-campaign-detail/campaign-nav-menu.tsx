@@ -1,15 +1,13 @@
 'use client';
 
+import { CREATOR_ROUTES, buildUrl } from '@oe/core';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from '@oe/ui';
 import { ScrollArea, ScrollBar } from '@oe/ui';
+import { Link } from '@oe/ui';
 import { BookOpen, DollarSign, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import React from 'react';
-
-import { createAPIUrl } from '@oe/api';
-import { CREATOR_ROUTES } from '@oe/core';
-import { Link } from '@oe/ui';
 
 export type TAffiliateNavMenu = 'information' | 'course' | 'commission' | 'referrers';
 
@@ -54,7 +52,7 @@ export const AffiliateCampaignNavMenu = ({ id }: { id: string }) => {
           <span>{tAffiliateMenu('course')}</span>
         </>
       ),
-      href: createAPIUrl({
+      href: buildUrl({
         endpoint: CREATOR_ROUTES.campaignDetailCourses,
         params: { id },
       }),
@@ -67,7 +65,7 @@ export const AffiliateCampaignNavMenu = ({ id }: { id: string }) => {
           <span>{tAffiliateMenu('commission')}</span>
         </>
       ),
-      href: createAPIUrl({
+      href: buildUrl({
         endpoint: CREATOR_ROUTES.campaignDetailCommissions,
         params: { id },
       }),
@@ -80,7 +78,7 @@ export const AffiliateCampaignNavMenu = ({ id }: { id: string }) => {
           <span>{tAffiliateMenu('referrers')}</span>
         </>
       ),
-      href: createAPIUrl({
+      href: buildUrl({
         endpoint: CREATOR_ROUTES.campaignDetailReferrers,
         params: { id },
       }),

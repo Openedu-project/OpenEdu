@@ -1,20 +1,23 @@
-'use client';
+"use client";
 
-import type { ICourse } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
-import type { HTTPErrorMetadata } from '@oe/api';
-import type { IOrderRes } from '@oe/api';
-import { useApplyCouponOrder, useOrderDeleteCoupon, useOrderPaymentWithWallet } from '@oe/api';
-import { PLATFORM_ROUTES } from '@oe/core';
-import { formatNumber } from '@oe/core';
-import { useTranslations } from 'next-intl';
-import { useParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
-import { Link } from '#common/navigation';
-import { Button } from '#shadcn/button';
-import { Input } from '#shadcn/input';
-import type { IPaymentCryptoWallet } from './payment';
+import type { ICourse } from "@oe/api";
+import type { HTTPErrorMetadata } from "@oe/api";
+import type { IOrderRes } from "@oe/api";
+import {
+  useApplyCouponOrder,
+  useOrderDeleteCoupon,
+  useOrderPaymentWithWallet,
+} from "@oe/api";
+import { PLATFORM_ROUTES, buildUrl } from "@oe/core";
+import { formatNumber } from "@oe/core";
+import { useTranslations } from "next-intl";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { Link } from "#common/navigation";
+import { Button } from "#shadcn/button";
+import { Input } from "#shadcn/input";
+import type { IPaymentCryptoWallet } from "./payment";
 
 const NumberedCircle = ({ number }: { number: number }) => (
   <div className="mcaption-semibold14 flex h-6 min-h-6 w-6 min-w-6 items-center justify-center rounded-full border border-[#C4C6F2] text-primary ">
@@ -58,20 +61,23 @@ const PaymentCrypto = ({
   setShareRateAmount,
   handleOrderPaymentSuccess,
 }: IPaymentCrypto) => {
-  const t = useTranslations('coursePayment.paymentConfirmation');
-  const tError = useTranslations('errors');
+  const t = useTranslations("coursePayment.paymentConfirmation");
+  const tError = useTranslations("errors");
   const params = useParams();
   const router = useRouter();
 
   const courseSlug = params.courseDetail as string;
 
-  const [hasEnoughInsufficient, setHasEnoughInsufficient] = useState<boolean>(true);
-  const [couponCode, setCouponCode] = useState<string>(usedCoupon ?? '');
-  const [amountWalletByCurrency, setAmountWalletByCurrency] = useState<string>('0');
+  const [hasEnoughInsufficient, setHasEnoughInsufficient] =
+    useState<boolean>(true);
+  const [couponCode, setCouponCode] = useState<string>(usedCoupon ?? "");
+  const [amountWalletByCurrency, setAmountWalletByCurrency] =
+    useState<string>("0");
   const [isApplying, setIsApplying] = useState<boolean>(false);
 
   const { triggerApplyCouponOrder } = useApplyCouponOrder();
-  const { triggerOrderPaymentWithWallet, isLoadingOrderPaymentWithWallet } = useOrderPaymentWithWallet(orderId);
+  const { triggerOrderPaymentWithWallet, isLoadingOrderPaymentWithWallet } =
+    useOrderPaymentWithWallet(orderId);
   const { triggerOrderDeleteCoupon } = useOrderDeleteCoupon(orderId);
 
   useEffect(() => {
@@ -82,10 +88,12 @@ const PaymentCrypto = ({
 
   useEffect(() => {
     const amountWalletByCurrency = cryptoWallet?.filter(
-      item => item.currency_symbol.toLowerCase() === cryptoCurrency.toLowerCase()
+      (item) =>
+        item.currency_symbol.toLowerCase() === cryptoCurrency.toLowerCase()
     )?.[0]?.balance;
-    setAmountWalletByCurrency(amountWalletByCurrency ?? '0');
-    const hasEnoughInsufficient = Number.parseFloat(amountWalletByCurrency ?? '0') >= amountDue;
+    setAmountWalletByCurrency(amountWalletByCurrency ?? "0");
+    const hasEnoughInsufficient =
+      Number.parseFloat(amountWalletByCurrency ?? "0") >= amountDue;
     setHasEnoughInsufficient(hasEnoughInsufficient);
   }, [amountDue, cryptoCurrency, cryptoWallet]);
 
@@ -101,7 +109,8 @@ const PaymentCrypto = ({
 
         setVerifyOrderRes(res);
 
-        const { discount_amount, missing_amount, referral_discount_amount } = res.order;
+        const { discount_amount, missing_amount, referral_discount_amount } =
+          res.order;
 
         setDiscountAmount(Number(discount_amount));
         setAmountDue(Number(missing_amount));
@@ -123,7 +132,8 @@ const PaymentCrypto = ({
 
       setVerifyOrderRes(res);
 
-      const { discount_amount, missing_amount, referral_discount_amount } = res.order;
+      const { discount_amount, missing_amount, referral_discount_amount } =
+        res.order;
 
       setDiscountAmount(Number(discount_amount));
       setAmountDue(Number(missing_amount));
@@ -138,13 +148,15 @@ const PaymentCrypto = ({
 
   const handlePayment = async () => {
     try {
-      const walletID = cryptoWallet?.filter(item => item.currency_symbol === cryptoCurrency)?.[0]?.id;
+      const walletID = cryptoWallet?.filter(
+        (item) => item.currency_symbol === cryptoCurrency
+      )?.[0]?.id;
 
       await triggerOrderPaymentWithWallet({
-        wallet_id: walletID ?? '',
+        wallet_id: walletID ?? "",
       });
       void router.push(
-        createAPIUrl({
+        buildUrl({
           endpoint: PLATFORM_ROUTES.paymentSuccess,
           params: { slug: courseSlug },
         })
@@ -160,17 +172,20 @@ const PaymentCrypto = ({
       <li className="mb-4 md:mb-6">
         <div className="mb-3 flex items-center gap-3">
           <NumberedCircle number={2} />
-          <p className="mcaption-semibold14">{t('step2Title')}</p>
+          <p className="mcaption-semibold14">{t("step2Title")}</p>
         </div>
         <div className=" mx-4 md:mx-10">
           <div className="mb-4 flex flex-col gap-4 md:gap-6">
             {currentStep === 0 && (
               <div className="flex w-full flex-col items-center gap-4 sm:flex-row">
                 <Input
-                  placeholder={t('couponCodePlaceholder')}
+                  placeholder={t("couponCodePlaceholder")}
                   className="w-full flex-basic flex-grow"
-                  onChange={e => {
-                    const sanitizedValue = e.target.value.replaceAll(/[^\p{L}\d]/gu, '');
+                  onChange={(e) => {
+                    const sanitizedValue = e.target.value.replaceAll(
+                      /[^\p{L}\d]/gu,
+                      ""
+                    );
 
                     // Auto convert to uppercase
                     const upperValue = sanitizedValue.toUpperCase();
@@ -183,45 +198,68 @@ const PaymentCrypto = ({
                 <Button
                   className="mt-2 w-full min-w-[140px] sm:mt-0 sm:w-auto"
                   onClick={handleApplyCoupon}
-                  disabled={isApplying || !!(discountAmount && couponCode === usedCoupon)}
+                  disabled={
+                    isApplying ||
+                    !!(discountAmount && couponCode === usedCoupon)
+                  }
                 >
-                  {t('applyButton')}
+                  {t("applyButton")}
                 </Button>
               </div>
             )}
           </div>
           <div className="flex flex-col">
             <div className="mb-4 flex justify-between">
-              <span className="giant-iheading-semibold16 md:giant-iheading-semibold20">{t('orginal')}</span>
+              <span className="giant-iheading-semibold16 md:giant-iheading-semibold20">
+                {t("orginal")}
+              </span>
               <p className="giant-iheading-semibold20">
-                <span>{formatNumber(Number(data?.price_settings?.crypto_price ?? 0))}</span>
+                <span>
+                  {formatNumber(
+                    Number(data?.price_settings?.crypto_price ?? 0)
+                  )}
+                </span>
                 &nbsp;
-                <span className="giant-iheading-semibold12">{cryptoCurrency}</span>
+                <span className="giant-iheading-semibold12">
+                  {cryptoCurrency}
+                </span>
               </p>
             </div>
 
             <div className="mb-4 flex justify-between">
-              <span className="giant-iheading-semibold16 md:giant-iheading-semibold20">{t('couponDiscount')}</span>
+              <span className="giant-iheading-semibold16 md:giant-iheading-semibold20">
+                {t("couponDiscount")}
+              </span>
               <p className="giant-iheading-semibold20 text-positive-600">
                 <span>{formatNumber(discountAmount ?? 0)}</span>&nbsp;
-                <span className="giant-iheading-semibold12">{cryptoCurrency}</span>
+                <span className="giant-iheading-semibold12">
+                  {cryptoCurrency}
+                </span>
               </p>
             </div>
             <div className="mb-4 flex justify-between">
               <span className="giant-iheading-semibold16 md:giant-iheading-semibold20">
-                {t('shareRate')}&nbsp;
-                <span className="font-bold text-primary">{shareRate ? `${shareRate}%` : ''}</span>
+                {t("shareRate")}&nbsp;
+                <span className="font-bold text-primary">
+                  {shareRate ? `${shareRate}%` : ""}
+                </span>
               </span>
               <p className="giant-iheading-semibold20 text-positive-600">
                 <span>{formatNumber(shareRateAmount ?? 0)}</span>&nbsp;
-                <span className="giant-iheading-semibold12">{cryptoCurrency}</span>
+                <span className="giant-iheading-semibold12">
+                  {cryptoCurrency}
+                </span>
               </p>
             </div>
             <div className="flex items-center justify-between rounded-2 rounded-xl bg-primary-20 px-3 py-2">
-              <span className="giant-iheading-semibold16 md:giant-iheading-semibold20">{t('finalPrice')}&nbsp;</span>
+              <span className="giant-iheading-semibold16 md:giant-iheading-semibold20">
+                {t("finalPrice")}&nbsp;
+              </span>
               <span className="giant-iheading-semibold20 md:giant-iheading-semibold28 text-primary">
                 <span>{formatNumber(amountDue ?? 0)}</span>&nbsp;
-                <span className="giant-iheading-semibold12">{cryptoCurrency}</span>
+                <span className="giant-iheading-semibold12">
+                  {cryptoCurrency}
+                </span>
               </span>
             </div>
           </div>
@@ -233,45 +271,58 @@ const PaymentCrypto = ({
         <div className="mb-3 flex items-center gap-3">
           <NumberedCircle number={3} />
           <p className="mcaption-semibold14">
-            {t('step3CryptoTitle')}
+            {t("step3CryptoTitle")}
             <span className="ml-1 text-negative-600">*</span>
           </p>
         </div>
         <div className="mcaption-semibold14 mx-4 flex flex-col gap-4 md:mx-10 md:gap-6">
           <div
             className={`flex flex-col justify-between gap-4 rounded-2 px-3 py-2 ${
-              hasEnoughInsufficient ? 'bg-positive-50' : 'bg-negative-50'
+              hasEnoughInsufficient ? "bg-positive-50" : "bg-negative-50"
             }`}
           >
             <p className="flex items-center justify-between">
               <span className="giant-iheading-semibold16 md:giant-iheading-semibold20">
-                {t('step3CryptoAvailableAmount')}&nbsp;
+                {t("step3CryptoAvailableAmount")}&nbsp;
               </span>
               <span className="giant-iheading-semibold20 md:giant-iheading-semibold28 text-primary">
-                <span>{formatNumber(Number.parseFloat(amountWalletByCurrency ?? '0'))}</span>
+                <span>
+                  {formatNumber(
+                    Number.parseFloat(amountWalletByCurrency ?? "0")
+                  )}
+                </span>
                 &nbsp;
-                <span className="giant-iheading-semibold12">{cryptoCurrency}</span>
+                <span className="giant-iheading-semibold12">
+                  {cryptoCurrency}
+                </span>
               </span>
             </p>
             <p className="flex items-center justify-between">
               <span className="giant-iheading-semibold16 md:giant-iheading-semibold20">
-                {t('step3CryptoPaymentAmount')}&nbsp;
+                {t("step3CryptoPaymentAmount")}&nbsp;
               </span>
               <span className="giant-iheading-semibold20 md:giant-iheading-semibold28 text-primary">
                 <span>{formatNumber(amountDue ?? 0)}</span>&nbsp;
-                <span className="giant-iheading-semibold12">{cryptoCurrency}</span>
+                <span className="giant-iheading-semibold12">
+                  {cryptoCurrency}
+                </span>
               </span>
             </p>
             {!hasEnoughInsufficient && (
               <div className="flex-col justify-between rounded-2 bg-white p-3 md:flex md:flex-row">
                 <span className="text-negative-500">
-                  {t?.rich('step3CryptoInsufficientAmount', {
-                    number: amountDue - Number.parseFloat(amountWalletByCurrency ?? '0'),
-                    currency: cryptoCurrency ?? 'USDT',
+                  {t?.rich("step3CryptoInsufficientAmount", {
+                    number:
+                      amountDue -
+                      Number.parseFloat(amountWalletByCurrency ?? "0"),
+                    currency: cryptoCurrency ?? "USDT",
                   })}
                 </span>
-                <Link href={PLATFORM_ROUTES.wallet} className="mcaption-semibold14 h-auto p-0 text-primary underline">
-                  {t('step3CryptoTopUp')}
+                <Link
+                  href={PLATFORM_ROUTES.wallet}
+                  className="mcaption-semibold14 h-auto p-0 text-primary underline"
+                >
+                  {t("step3CryptoTopUp")}
                 </Link>
               </div>
             )}
@@ -285,17 +336,21 @@ const PaymentCrypto = ({
           <NumberedCircle number={4} />
           <div className="block">
             <p className="mcaption-semibold14">
-              {t('step4CryptoTitle')}
+              {t("step4CryptoTitle")}
               <span className="ml-1 text-negative-600">*</span>
             </p>
-            <p>{t('step4CryptoNote1')}</p>
-            <p>{t('step4CryptoNote2')}</p>
+            <p>{t("step4CryptoNote1")}</p>
+            <p>{t("step4CryptoNote2")}</p>
           </div>
         </div>
         {hasEnoughInsufficient && (
           <div className="mcaption-semibold14 mx-4 flex flex-col gap-4 md:mx-10 md:gap-6">
-            <Button className="w-full" onClick={handlePayment} loading={isLoadingOrderPaymentWithWallet}>
-              {t('step4SubmitBtn')}
+            <Button
+              className="w-full"
+              onClick={handlePayment}
+              loading={isLoadingOrderPaymentWithWallet}
+            >
+              {t("step4SubmitBtn")}
             </Button>
           </div>
         )}

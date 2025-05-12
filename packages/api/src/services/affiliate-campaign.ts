@@ -1,6 +1,7 @@
+import { buildUrl } from '@oe/core';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
+import { deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 import type {
   IAffiliateCampaignItem,
   IAffiliateCampaignListRes,
@@ -15,7 +16,7 @@ export async function getUserAffiliateCampaignListService(
 ): Promise<IUserAffiliateCampaignListRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.USERS_ME_AFFILIATE_CAMPAIGNS,
       queryParams: {
         ...params,
@@ -37,7 +38,7 @@ export async function getAffiliateCampaignListService(
 ): Promise<IAffiliateCampaignListRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.AFFILIATE_CAMPAIGNS,
       queryParams: {
         ...params,
@@ -59,7 +60,7 @@ export async function getAffiliateCampaignDetailService(
 ): Promise<IAffiliateCampaignItem | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.AFFILIATE_CAMPAIGNS_ID,
       params: {
         ...params,
@@ -96,7 +97,7 @@ export const putAffiliateCampaignService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.AFFILIATE_CAMPAIGNS_ID,
       params: {
         id: payload.id,
@@ -114,7 +115,7 @@ export const deleteAffiliateCampaignService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.AFFILIATE_CAMPAIGNS,
       params: {
         ...payload,
@@ -129,7 +130,7 @@ export const postValidateRefCodeService = async (
   endpoint: string | null | undefined,
   { payload, code, init }: { payload: IValidateRefCodePayload; code: string; init?: RequestInit }
 ) => {
-  const url = createAPIUrl({
+  const url = buildUrl({
     endpoint: API_ENDPOINT.VALIDATE_REFERRAL_LINKS_BY_CODE,
     params: {
       code,

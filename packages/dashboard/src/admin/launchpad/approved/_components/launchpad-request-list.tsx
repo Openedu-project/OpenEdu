@@ -1,11 +1,10 @@
 'use client';
 
 import { API_ENDPOINT } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
 import type { IApproval } from '@oe/api';
 import type { ICourseOrganizationRequestProps } from '@oe/api';
 import type { IAdminLaunchpadDetailRes } from '@oe/api';
-import { ADMIN_ROUTES } from '@oe/core';
+import { ADMIN_ROUTES, buildUrl } from '@oe/core';
 import { formatDateHourMinute } from '@oe/core';
 import { type ColumnDef, Table, type TableRef } from '@oe/ui';
 import { Link } from '@oe/ui';
@@ -124,7 +123,7 @@ export function LaunchpadApprovedList() {
           return (
             <Link
               className="p-0"
-              href={createAPIUrl({
+              href={buildUrl({
                 endpoint: ADMIN_ROUTES.launchpadApprovedDetail,
                 params: { id: item?.entity_id },
               })}

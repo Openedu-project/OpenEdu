@@ -1,27 +1,34 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import type { IBlockingUser } from '@oe/api';
-import { useForm } from 'react-hook-form';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { Avatar, AvatarFallback, AvatarImage } from '#shadcn/avatar';
-import { Checkbox as UICheckbox } from '#shadcn/checkbox';
-import { Form, FormControl, FormField, FormItem, FormLabel } from '#shadcn/form';
-
-import { createAPIUrl } from '@oe/api';
-import { type IPrivacyProfileFormSchemaType, privacyProfileFormSchema } from '@oe/api';
-import { PLATFORM_ROUTES } from '@oe/core';
-import { pickCharacters } from '@oe/core';
-import { SearchIcon } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import type React from 'react';
-import { useCallback } from 'react';
-import { useDebouncedCallback } from 'use-debounce';
-import { Link } from '#common/navigation';
-import { Spinner } from '#components/spinner';
-import { Button } from '#shadcn/button';
-import { Input } from '#shadcn/input';
-import { cn } from '#utils/cn';
+import { zodResolver } from "@hookform/resolvers/zod";
+import type { IBlockingUser } from "@oe/api";
+import {
+  type IPrivacyProfileFormSchemaType,
+  privacyProfileFormSchema,
+} from "@oe/api";
+import { PLATFORM_ROUTES, buildUrl } from "@oe/core";
+import { pickCharacters } from "@oe/core";
+import { SearchIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
+import type React from "react";
+import { useCallback } from "react";
+import { useForm } from "react-hook-form";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { useDebouncedCallback } from "use-debounce";
+import { Link } from "#common/navigation";
+import { Spinner } from "#components/spinner";
+import { Avatar, AvatarFallback, AvatarImage } from "#shadcn/avatar";
+import { Button } from "#shadcn/button";
+import { Checkbox as UICheckbox } from "#shadcn/checkbox";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "#shadcn/form";
+import { Input } from "#shadcn/input";
+import { cn } from "#utils/cn";
 
 interface UserListBlockForm {
   data: IBlockingUser[];
@@ -53,11 +60,11 @@ function Search({ onChange, defaultValue, placeholder, className }: ISearch) {
   };
 
   return (
-    <div className={cn('relative md:w-[200px] lg:w-[300px]', className)}>
+    <div className={cn("relative md:w-[200px] lg:w-[300px]", className)}>
       <SearchIcon className="absolute top-[6px] left-[10px] z-[1] stroke-1 stroke-primary" />
       <Input
         className="mbutton-regular16 h-9 border-primary pl-[44px] placeholder:text-[#999999] focus-visible:border-[3px] focus-visible:ring-0 focus-visible:ring-offset-0"
-        placeholder={placeholder ?? 'Search...'}
+        placeholder={placeholder ?? "Search..."}
         onInput={handleSearch}
         defaultValue={defaultValue}
       />
@@ -76,7 +83,7 @@ export function UserListForm({
   onSetPage,
   onClose,
 }: UserListBlockForm) {
-  const tBlocking = useTranslations('userProfile.privacy');
+  const tBlocking = useTranslations("userProfile.privacy");
 
   const form = useForm<IPrivacyProfileFormSchemaType>({
     resolver: zodResolver(privacyProfileFormSchema),
@@ -98,7 +105,7 @@ export function UserListForm({
 
   return (
     <div className="flex flex-1 flex-col gap-6">
-      <Search className="!w-full" onChange={value => setSearchText(value)} />
+      <Search className="!w-full" onChange={(value) => setSearchText(value)} />
       <Form {...form}>
         <form
           id="user_list_form"
@@ -119,16 +126,16 @@ export function UserListForm({
                   scrollableTarget="user_list_form"
                   scrollThreshold="100px"
                 >
-                  {data?.map(user => (
+                  {data?.map((user) => (
                     <div key={user.id} className="mb-3 p-1">
                       <FormItem className="flex items-center gap-2">
                         <FormControl>
                           <UICheckbox
                             checked={field.value.includes(user.id)}
-                            onCheckedChange={checked => {
+                            onCheckedChange={(checked) => {
                               const updatedValue = checked
                                 ? [...field.value, user.id]
-                                : field.value.filter(id => id !== user.id);
+                                : field.value.filter((id) => id !== user.id);
 
                               field.onChange(updatedValue);
                             }}
@@ -146,14 +153,16 @@ export function UserListForm({
                             </Avatar>
 
                             <Link
-                              href={createAPIUrl({
+                              href={buildUrl({
                                 endpoint: PLATFORM_ROUTES.userProfile,
                                 params: { username: user.username },
                               })}
                               target="_blank"
                               className="mbutton-semibold16 p-0 text-foreground"
                             >
-                              {user?.display_name?.length > 0 ? user.display_name : user.username}
+                              {user?.display_name?.length > 0
+                                ? user.display_name
+                                : user.username}
                             </Link>
                           </div>
                         </FormLabel>
@@ -161,17 +170,24 @@ export function UserListForm({
                     </div>
                   ))}
 
-                  {isLoading && <Spinner className="mx-auto h-4 w-4 animate-spin" />}
+                  {isLoading && (
+                    <Spinner className="mx-auto h-4 w-4 animate-spin" />
+                  )}
                 </InfiniteScroll>
               </FormItem>
             )}
           />
           <div className="sticky bottom-0 mt-6 flex justify-end gap-5 bg-white p-4">
-            <Button type="button" variant="outline" className="mbutton-semibold16" onClick={onClose}>
-              {tBlocking('cancel')}
+            <Button
+              type="button"
+              variant="outline"
+              className="mbutton-semibold16"
+              onClick={onClose}
+            >
+              {tBlocking("cancel")}
             </Button>
             <Button type="submit" className="mbutton-semibold16">
-              {tBlocking('block')}
+              {tBlocking("block")}
             </Button>
           </div>
         </form>

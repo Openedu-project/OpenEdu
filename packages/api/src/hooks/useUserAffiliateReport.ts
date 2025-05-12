@@ -1,7 +1,7 @@
+import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 import {
   getUserAffiliateReportDetailService,
   getUserAffiliateReportService,
@@ -10,7 +10,7 @@ import {
 
 export function useGetUserAffiliateReport({ params }: { params: IFilter & { userId: string } }) {
   const endpointKey = params.userId
-    ? createAPIUrl({
+    ? buildUrl({
         endpoint: API_ENDPOINT.REFERRALS_USER_REPORT,
         queryParams: { ...params },
       })
@@ -30,7 +30,7 @@ export function useGetUserAffiliateReport({ params }: { params: IFilter & { user
 
 export function useGetUserAffiliateSummariesReport({ params }: { params: IFilter & { userId: string } }) {
   const endpointKey = params.userId
-    ? createAPIUrl({
+    ? buildUrl({
         endpoint: API_ENDPOINT.USERS_ME_REFERRALS_SUMMARIES,
         queryParams: { ...params },
       })
@@ -49,7 +49,7 @@ export function useGetUserAffiliateSummariesReport({ params }: { params: IFilter
 }
 
 export function useGetUserAffiliateReportDetail({ params }: { params: IFilter }) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.USERS_ME_REFERRALS,
     queryParams: { ...params },
   });

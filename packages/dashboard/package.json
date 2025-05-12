@@ -35,18 +35,19 @@
     "@oe/core": "workspace:*",
     "@oe/i18n": "workspace:*",
     "@oe/ui": "workspace:*",
-    "lucide-react": "0.487.0",
-    "next": "15.3.1-canary.4",
-    "next-intl": "4.0.2",
+    "lucide-react": "0.509.0",
+    "next": "15.4.0-canary.31",
+    "next-intl": "4.1.0",
     "react": "19.1.0",
-    "react-hook-form": "^7.55.0",
-    "recharts": "^2.15.2",
+    "react-dom": "19.1.0",
+    "react-hook-form": "^7.56.3",
+    "recharts": "^2.15.3",
     "swr": "^2.3.3",
     "use-debounce": "^10.0.4"
   },
   "devDependencies": {
     "@oe/config": "workspace:*",
     "@oe/types": "workspace:*",
-    "@types/node": "^22.14.0"
+    "@types/node": "^22.15.17"
   }
 }

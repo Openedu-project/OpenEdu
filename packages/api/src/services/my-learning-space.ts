@@ -1,7 +1,8 @@
+import { buildUrl } from '@oe/core';
 import type { IFilter } from '#types/filter';
 import type { ICoursesCounting, IMyCourseResponse } from '#types/my-learning-space';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI } from '#utils/fetch';
+import { fetchAPI } from '#utils/fetch';
 
 export const getMyCourseLearningService = async (
   url: string | null | undefined,
@@ -9,7 +10,7 @@ export const getMyCourseLearningService = async (
 ): Promise<IMyCourseResponse | null> => {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.USERS_ME_COURSES,
       queryParams: {
         ...params,
@@ -31,7 +32,7 @@ export const getCoursesCountingService = async (
   { init }: { init?: RequestInit }
 ) => {
   const response = await fetchAPI<ICoursesCounting>(
-    endpoint ?? createAPIUrl({ endpoint: API_ENDPOINT.USERS_ME_COURSES_COUNT }),
+    endpoint ?? buildUrl({ endpoint: API_ENDPOINT.USERS_ME_COURSES_COUNT }),
     init
   );
 

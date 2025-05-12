@@ -1,6 +1,6 @@
+import { buildUrl } from '@oe/core';
 import useSWRMutation from 'swr/mutation';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 import {
   deleteCoursesFromAffiliateCampaignService,
   postCoursesToAffiliateCampaignService,
@@ -12,7 +12,7 @@ export const usePostCoursesToAffiliateCampaign = (campaignId: string) => {
     API_ENDPOINT.AFFILIATE_CAMPAIGNS_ID_COURSES,
     async (_endpoint: string, { arg }: { arg: IAddCoursesPayload }): Promise<IAffiliateCampaignCourseListRes> =>
       postCoursesToAffiliateCampaignService(
-        createAPIUrl({
+        buildUrl({
           endpoint: API_ENDPOINT.AFFILIATE_CAMPAIGNS_ID_COURSES,
           params: { id: campaignId },
         }),
@@ -33,7 +33,7 @@ export const usePostCoursesToAffiliateCampaign = (campaignId: string) => {
 };
 
 export const useDeleteCoursesFromAffiliateCampaign = (campaignId: string) => {
-  const url = createAPIUrl({
+  const url = buildUrl({
     endpoint: API_ENDPOINT.AFFILIATE_CAMPAIGNS_ID_COURSES,
     params: { id: campaignId },
   });

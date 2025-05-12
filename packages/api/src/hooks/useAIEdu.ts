@@ -1,3 +1,4 @@
+import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import {
   getAIEduProvinceService,
@@ -13,11 +14,10 @@ import {
 } from '#services/index';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 import { systemConfigQueryByKeys } from '#utils/system-config';
 
 export function useGetOeRefferralStatisticsAIEdu(id?: string) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.OE_REFFERRAL_STATISTICS_ID,
     params: { id },
   });
@@ -35,7 +35,7 @@ export function useGetOeRefferralStatisticsAIEdu(id?: string) {
 }
 
 export function useGetOeRefferralLeaderBoardsAIEdu(id?: string, params?: IFilter) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.OE_REFFERRAL_LEADER_BOARDS_ID,
     params: { id },
   });
@@ -53,7 +53,7 @@ export function useGetOeRefferralLeaderBoardsAIEdu(id?: string, params?: IFilter
 }
 
 export function useGetAIEduSystemConfig(shouldFetch = true) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.SYSTEM_CONFIGS,
     queryParams: { keys: systemConfigQueryByKeys.aiedu },
   });
@@ -71,7 +71,7 @@ export function useGetAIEduSystemConfig(shouldFetch = true) {
 }
 
 export function useGetAIEduProvinces(key: string) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.OE_REFFERRAL_KEY_PROVINCES,
     params: { key },
   });
@@ -89,7 +89,7 @@ export function useGetAIEduProvinces(key: string) {
 }
 
 export function useGetAIEduStatisticWidget(key: string, queryParams?: IFilter) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.OE_REFFERRAL_KEY_STATISTIC_WIDGET,
     params: { key },
     queryParams: { ...queryParams },
@@ -108,7 +108,7 @@ export function useGetAIEduStatisticWidget(key: string, queryParams?: IFilter) {
 }
 
 export function useGetAIEduStatisticLearningGrowth(key: string, queryParams?: IFilter) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.OE_REFFERRAL_KEY_STATISTIC_LEARNER_GROWTH,
     params: { key },
     queryParams: { ...queryParams },
@@ -127,7 +127,7 @@ export function useGetAIEduStatisticLearningGrowth(key: string, queryParams?: IF
 }
 
 export function useGetAIEduStatisticSectionCompletion(key: string, queryParams?: IFilter) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.OE_REFFERRAL_KEY_STATISTIC_SECTION_COMPLETION,
     params: { key },
     queryParams: { ...queryParams },
@@ -146,7 +146,7 @@ export function useGetAIEduStatisticSectionCompletion(key: string, queryParams?:
 }
 
 export function useGetAIEduStatisticProvinces(key: string, queryParams?: IFilter) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.OE_REFFERRAL_KEY_STATISTIC_PROVINCES,
     params: { key },
     queryParams: { ...queryParams },

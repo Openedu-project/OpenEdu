@@ -1,9 +1,9 @@
 import useSWRMutation from 'swr/mutation';
 
+import { buildUrl } from '@oe/core';
 import { postExtendReferralLink, postReferralLink } from '#services/referral-link';
 import type { IReferralLinkPayload, IReferralLinkRes } from '#types/referral-link';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 
 export const usePostReferralLink = () => {
   const { trigger, isMutating, error } = useSWRMutation(
@@ -24,7 +24,7 @@ export const usePostExtendReferralLink = () => {
     API_ENDPOINT.REFERRAL_LINKS_ID_EXTEND,
     async (_endpoint: string, { arg }: { arg: { id: string } }): Promise<IReferralLinkRes> =>
       postExtendReferralLink(
-        createAPIUrl({
+        buildUrl({
           endpoint: API_ENDPOINT.REFERRAL_LINKS_ID_EXTEND,
           params: {
             id: arg.id,

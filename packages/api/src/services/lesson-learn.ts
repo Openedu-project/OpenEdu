@@ -1,6 +1,7 @@
+import { buildUrl } from '@oe/core';
 import type { ILesson } from '#types/course/segment';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI } from '#utils/fetch';
+import { fetchAPI } from '#utils/fetch';
 
 export async function getLessonLearnService(
   url: string | undefined,
@@ -8,7 +9,7 @@ export async function getLessonLearnService(
 ): Promise<ILesson | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.LESSONS_ID_COURSES_CID,
       params: {
         id,

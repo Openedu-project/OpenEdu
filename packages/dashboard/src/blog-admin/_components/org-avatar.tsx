@@ -1,19 +1,12 @@
 import { getOrgByDomainService } from '@oe/api';
 import BannerBg from '@oe/assets/images/blog-creation-bg.png';
 import OpenEdu from '@oe/assets/images/openedu.png';
-import { getCookie } from '@oe/core';
 import { Image } from '@oe/ui';
 import { cn } from '@oe/ui';
 import { getTranslations } from 'next-intl/server';
 
 export async function OrgAvatar({ className }: { className?: string }) {
-  const domain = (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? '';
-  const [tBlogForm, orgData] = await Promise.all([
-    getTranslations('blogForm'),
-    getOrgByDomainService(undefined, {
-      domain,
-    }),
-  ]);
+  const [tBlogForm, orgData] = await Promise.all([getTranslations('blogForm'), getOrgByDomainService()]);
 
   return (
     <div className={cn('relative mb-6 min-h-[120px] w-full p-6', className)}>

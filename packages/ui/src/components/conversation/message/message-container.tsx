@@ -1,29 +1,29 @@
-'use client';
-import { API_ENDPOINT, createAPIUrl } from '@oe/api';
-import type { IConversationDetails, IMessage, TAgentType } from '@oe/api';
-import { useGetConversationDetails } from '@oe/api';
-import { GENERATING_STATUS } from '@oe/core';
-import { ChevronsDown } from 'lucide-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { type KeyedMutator, useSWRConfig } from 'swr';
-import { Button } from '#shadcn/button';
-import { Skeleton } from '#shadcn/skeleton';
-import { useConversationStore } from '#store/conversation-store';
-import { cn } from '#utils/cn';
-import { HISTORY_DEFAULT_PARAMS } from '../constants';
-import type { ISendMessageParams } from '../type';
-import { CodeDownloadHydration } from './code-download-button';
-import { GenMessage } from './gen-message';
-import { ImageActionHydration } from './image-action';
-import { MessageBox } from './message-box';
-import { LinkPreviewHydration } from './preview-link';
+"use client";
+import { API_ENDPOINT } from "@oe/api";
+import type { IConversationDetails, IMessage, TAgentType } from "@oe/api";
+import { useGetConversationDetails } from "@oe/api";
+import { GENERATING_STATUS, buildUrl } from "@oe/core";
+import { ChevronsDown } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { type KeyedMutator, useSWRConfig } from "swr";
+import { Button } from "#shadcn/button";
+import { Skeleton } from "#shadcn/skeleton";
+import { useConversationStore } from "#store/conversation-store";
+import { cn } from "#utils/cn";
+import { HISTORY_DEFAULT_PARAMS } from "../constants";
+import type { ISendMessageParams } from "../type";
+import { CodeDownloadHydration } from "./code-download-button";
+import { GenMessage } from "./gen-message";
+import { ImageActionHydration } from "./image-action";
+import { MessageBox } from "./message-box";
+import { LinkPreviewHydration } from "./preview-link";
 
 interface IContainerProps {
   id: string;
   nextCursorPage?: string;
   messageType: TAgentType[];
   className?: string;
-  scrollBehavior?: 'auto' | 'smooth';
+  scrollBehavior?: "auto" | "smooth";
   sendMessage: ({
     messageInput,
     type,
@@ -38,7 +38,7 @@ interface IContainerProps {
 export const MessageContainer = ({
   id,
   sendMessage,
-  nextCursorPage = '',
+  nextCursorPage = "",
   messageType,
   className,
   scrollBehavior,
@@ -46,7 +46,8 @@ export const MessageContainer = ({
 }: IContainerProps) => {
   const { cache, mutate: globalMutate } = useSWRConfig();
 
-  const { messages, status, setMessages, isNewChat, setIsNewChat } = useConversationStore();
+  const { messages, status, setMessages, isNewChat, setIsNewChat } =
+    useConversationStore();
   const [shouldGetData, setShouldGetData] = useState<boolean>(false);
   const [initScrollBottom, setInitScrollBottom] = useState(false);
   const [showScrollButton, setShowScrollButton] = useState(false);
@@ -61,7 +62,7 @@ export const MessageContainer = ({
     id,
     params: {
       cursor: nextKeyRef.current,
-      sort: 'create_at desc',
+      sort: "create_at desc",
       per_page: 10,
     },
   });
@@ -76,7 +77,7 @@ export const MessageContainer = ({
     if (!data) {
       return;
     }
-    nextKeyRef.current = data?.pagination?.next_cursor ?? '';
+    nextKeyRef.current = data?.pagination?.next_cursor ?? "";
 
     if (data.results?.messages) {
       setMessages([...data.results.messages.reverse(), ...messages]);
@@ -103,13 +104,15 @@ export const MessageContainer = ({
 
       // clear history of conversation
       const keysToReset = Array.from(cache.keys()).filter(
-        key => typeof key === 'string' && key.includes(`${API_ENDPOINT.COM_CHANNELS}?`)
+        (key) =>
+          typeof key === "string" &&
+          key.includes(`${API_ENDPOINT.COM_CHANNELS}?`)
       );
 
       for (const key of keysToReset) {
         globalMutate(key, undefined, {
           revalidate: !!key?.includes(
-            createAPIUrl({
+            buildUrl({
               endpoint: API_ENDPOINT.COM_CHANNELS,
               queryParams: HISTORY_DEFAULT_PARAMS,
             })
@@ -117,14 +120,25 @@ export const MessageContainer = ({
         });
       }
     }
-  }, [messages.length, initScrollBottom, scrollBehavior, isNewChat, setIsNewChat, globalMutate, cache.keys]);
+  }, [
+    messages.length,
+    initScrollBottom,
+    scrollBehavior,
+    isNewChat,
+    setIsNewChat,
+    globalMutate,
+    cache.keys,
+  ]);
 
-  const handleScrollToBottom = useCallback((scrollBehavior?: 'auto' | 'smooth') => {
-    messagesEndRef.current?.scrollIntoView({
-      behavior: scrollBehavior ?? 'smooth',
-      block: 'end',
-    });
-  }, []);
+  const handleScrollToBottom = useCallback(
+    (scrollBehavior?: "auto" | "smooth") => {
+      messagesEndRef.current?.scrollIntoView({
+        behavior: scrollBehavior ?? "smooth",
+        block: "end",
+      });
+    },
+    []
+  );
 
   const triggerScrollBottomButton = useCallback(() => {
     const position = messagesEndRef.current?.getBoundingClientRect();
@@ -132,7 +146,9 @@ export const MessageContainer = ({
       return;
     }
 
-    const showButton = position.bottom > (window.innerHeight || document.documentElement.clientHeight) - 50;
+    const showButton =
+      position.bottom >
+      (window.innerHeight || document.documentElement.clientHeight) - 50;
     setShowScrollButton(showButton);
   }, []);
 
@@ -155,7 +171,7 @@ export const MessageContainer = ({
       void sendMessage({
         message_id: msg.id,
         type: msg.ai_agent_type,
-        status: 'pending',
+        status: "pending",
         role: msg.sender.role,
       });
     }
@@ -164,7 +180,10 @@ export const MessageContainer = ({
   return (
     <div
       ref={containerRef}
-      className={cn('scrollbar relative flex grow flex-col gap-2 overflow-y-auto overflow-x-hidden', className)}
+      className={cn(
+        "scrollbar relative flex grow flex-col gap-2 overflow-y-auto overflow-x-hidden",
+        className
+      )}
       onScroll={handleScroll}
     >
       <div className="mx-auto flex w-full max-w-3xl grow flex-col gap-2 xl:max-w-4xl">
@@ -174,7 +193,7 @@ export const MessageContainer = ({
             <Skeleton className="h-20 w-full rounded-[20px]" />
           </div>
         )}
-        {messages.map(msg => {
+        {messages.map((msg) => {
           if (!msg) {
             return null;
           }
@@ -183,21 +202,39 @@ export const MessageContainer = ({
               key={msg.id}
               id={msg.id}
               message={msg}
-              loading={GENERATING_STATUS.includes(status ?? '')}
-              rewrite={!msg.ai_agent_type || messageType.includes(msg.ai_agent_type) ? () => rewrite(msg) : undefined}
+              loading={GENERATING_STATUS.includes(status ?? "")}
+              rewrite={
+                !msg.ai_agent_type || messageType.includes(msg.ai_agent_type)
+                  ? () => rewrite(msg)
+                  : undefined
+              }
               sendMessage={sendMessage}
               messageType={messageType}
             />
           );
         })}
-        <GenMessage containerRef={containerRef} mutate={mutate} setShowScrollButton={setShowScrollButton} />
+        <GenMessage
+          containerRef={containerRef}
+          mutate={mutate}
+          setShowScrollButton={setShowScrollButton}
+        />
         <ImageActionHydration />
         <LinkPreviewHydration />
         <CodeDownloadHydration />
         <div id="end_line" className="h-10" ref={messagesEndRef} />
       </div>
-      <div className={cn('sticky bottom-0 z-10 hidden translate-x-1/2', showScrollButton && 'block')}>
-        <Button size="icon" variant="outline" className="rounded-full" onClick={() => handleScrollToBottom('smooth')}>
+      <div
+        className={cn(
+          "sticky bottom-0 z-10 hidden translate-x-1/2",
+          showScrollButton && "block"
+        )}
+      >
+        <Button
+          size="icon"
+          variant="outline"
+          className="rounded-full"
+          onClick={() => handleScrollToBottom("smooth")}
+        >
           <ChevronsDown className="h-4 w-4" />
         </Button>
       </div>

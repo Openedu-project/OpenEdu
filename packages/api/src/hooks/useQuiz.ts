@@ -1,3 +1,4 @@
+import { buildUrl } from '@oe/core';
 import useSWRMutation from 'swr/mutation';
 import {
   getCurrentQuestionService,
@@ -13,7 +14,6 @@ import type {
   ISubmitAnswerResponse,
 } from '#types/quiz';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 
 export const usePostQuizSubmission = () => {
   const { trigger, isMutating, error } = useSWRMutation(
@@ -30,7 +30,7 @@ export const usePostQuizSubmission = () => {
 };
 
 export function useGetCurrentQuestion(id: string) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.QUIZ_SUBMISSIONS_ID_QUESTIONS_CURRENT,
     params: { id },
   });
@@ -47,7 +47,7 @@ export function useGetCurrentQuestion(id: string) {
 }
 
 export function useSubmitAnswer(id: string) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.QUIZ_SUBMISSIONS_ID_SUBMIT,
     params: { id },
   });
@@ -67,7 +67,7 @@ export function useSubmitAnswer(id: string) {
 
 // Last question -> submit quizz
 export function useGetQuizSubmissionById(id: string) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.QUIZ_SUBMISSIONS_ID,
     params: { id },
   });

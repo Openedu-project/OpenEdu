@@ -1,5 +1,6 @@
+import { buildUrl } from '@oe/core';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI, putAPI } from '#utils/fetch';
+import { fetchAPI, putAPI } from '#utils/fetch';
 import type { IShareRatePayload, IShareRateRes } from '../types/share-rate';
 
 export async function getShareRateByCodeService(
@@ -8,7 +9,7 @@ export async function getShareRateByCodeService(
 ): Promise<IShareRateRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.REFERRAL_LINKS_BY_CODE_CODE,
       params: {
         code: code,
@@ -30,7 +31,7 @@ export const putShareRateService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.REFERRAL_LINKS_ID,
       params: {
         id: payload.campaignId || '',

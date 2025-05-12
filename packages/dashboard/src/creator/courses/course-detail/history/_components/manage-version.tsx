@@ -2,8 +2,7 @@
 
 import { useGetCourseById, usePutCancelRequestCourse } from '@oe/api';
 import { useGetOrganizationById } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
-import { PLATFORM_ROUTES } from '@oe/core';
+import { PLATFORM_ROUTES, buildUrl } from '@oe/core';
 import { toast } from '@oe/ui';
 import { Button } from '@oe/ui';
 import { Link } from '@oe/ui';
@@ -43,7 +42,7 @@ const ManageVersion = ({ publishedVersion, reviewingVersion }: IProps) => {
     }
 
     return course
-      ? `https://${dataListOrganizationById?.alt_domain || dataListOrganizationById?.domain}${createAPIUrl({
+      ? `https://${dataListOrganizationById?.alt_domain || dataListOrganizationById?.domain}${buildUrl({
           endpoint: PLATFORM_ROUTES.previewCourse,
           params: {
             courseId: course.id,

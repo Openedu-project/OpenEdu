@@ -1,5 +1,5 @@
 {
-  "extends": "@oe/config/tsconfig/ts-build.json",
+  "extends": "@oe/config/tsconfig/react-build.json",
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "dist/types"

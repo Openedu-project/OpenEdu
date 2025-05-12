@@ -1,16 +1,21 @@
 import type { HTTPPagination, HTTPResponse } from '#types/fetch';
 import type { IOrganization, IOrganizationPayload } from '#types/organizations';
 
+import { buildUrl } from '@oe/core';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI, postAPI, putAPI } from '#utils/fetch';
+import { fetchAPI, postAPI, putAPI } from '#utils/fetch';
+import { getAPIReferrerAndOrigin } from '#utils/referrer-origin';
 
 export const organizationsService = async (
   endpoint: string | null | undefined,
   { queryParams, init }: { queryParams: Record<string, unknown>; init?: RequestInit }
 ) => {
   const response = await fetchAPI<HTTPPagination<IOrganization>>(
-    createAPIUrl({ endpoint: endpoint ?? API_ENDPOINT.ADMIN_ORGANIZATIONS, queryParams }),
-    init
+    buildUrl({ endpoint: endpoint ?? API_ENDPOINT.ADMIN_ORGANIZATIONS, queryParams }),
+    {
+      ...init,
+      cache: 'force-cache',
+    }
   );
 
   return response.data;
@@ -27,23 +32,19 @@ export const getOrgByIdService = async (
   return response.results?.[0];
 };
 
-export const getOrgByDomainService = async (
-  endpoint: string | null | undefined,
-  { domain, init }: { domain: string; init?: RequestInit }
-) => {
-  const response = await organizationsService(endpoint, { queryParams: { domain_or_alt_domain: domain }, init });
+export const getOrgByDomainService = async (endpoint?: string | null | undefined, init?: RequestInit) => {
+  const { host } = await getAPIReferrerAndOrigin();
+  const response = await organizationsService(endpoint, { queryParams: { domain_or_alt_domain: host }, init });
 
   return response.results?.[0];
 };
 
-export const checkDomainService = async (
-  endpoint: string | null | undefined,
-  { domain, init }: { domain: string; init?: RequestInit }
-) => {
+export const checkDomainService = async (endpoint?: string | null | undefined, init?: RequestInit) => {
   try {
+    const { host } = await getAPIReferrerAndOrigin();
     const response = await postAPI<HTTPResponse<boolean>, { domain: string }>(
       endpoint ?? API_ENDPOINT.ADMIN_ORGANIZATIONS,
-      { domain },
+      { domain: host },
       init
     );
 

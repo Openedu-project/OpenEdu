@@ -1,258 +1,229 @@
-import { getCookies } from '@oe/core';
-import { DEFAULT_LOCALE } from '@oe/i18n';
-import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
-import { refreshTokenService } from '#services/refresh-token';
-// import { refreshTokenService } from '#services/auth';
+import { Mutex } from 'async-mutex';
+import { cache } from 'react';
 import type { IToken } from '#types/auth';
 import type { HTTPResponse } from '#types/fetch';
+import { getSession } from '../actions';
+import { API_ENDPOINT } from './endpoints';
 import { handleError, handleResponse } from './error-handling';
-import { getReferrerAndOriginForAPIByUserUrl } from './referrer-origin';
-
-interface ICreateAPIUrl {
-  endpoint: string;
-  params?: Record<string, unknown>;
-  queryParams?: Record<string, unknown>;
-  checkEmptyParams?: boolean;
-}
-
+import { getAPIReferrerAndOrigin } from './referrer-origin';
+import { isTokenExpiringSoon } from './session';
 export type FetchOptions = RequestInit & {
   next?: {
     revalidate?: number | false;
     tags?: string[];
   };
-  shouldRefreshToken?: boolean;
   referrer?: string;
   origin?: string;
+  timeout?: number;
 };
 
-export interface RequestInitAPI extends RequestInit {
-  host?: string;
-  token?: string;
-  cookies?: () => ReadonlyRequestCookies;
-  [key: string]: unknown;
-}
+const tokenRenewalMutex = new Mutex();
+const isServer = () => typeof window === 'undefined';
+const MAX_RETRY_ATTEMPTS = 1; // Giới hạn số lần thử lại
+const DEFAULT_TIMEOUT = 30000; // 30 giây
 
-let isRefreshing = false;
-let refreshPromise: Promise<IToken | null> | null = null;
-
-export const createQueryParams = <T extends Record<string, unknown>>(obj: T): string =>
-  Object.entries(obj)
-    .flatMap(([key, value]) => {
-      if (value === null || value === undefined || value === '') {
-        return [];
-      }
-      if (Array.isArray(value)) {
-        return value.map(item => `${encodeURIComponent(key)}=${encodeURIComponent(String(item))}`);
-      }
-      return [`${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`];
-    })
-    .join('&');
-
-export const createAPIUrl = ({ endpoint, params, queryParams, checkEmptyParams = false }: ICreateAPIUrl) => {
-  let url = endpoint;
-
-  if (params) {
-    for (const [key, value] of Object.entries(params)) {
-      // Check empty params turn-of and params was undefined
-      url = checkEmptyParams && !value ? url.replace(`/:${key}`, '') : url.replace(`:${key}`, value as string);
-    }
+const safeDecodeURIComponent = (str: string): string => {
+  try {
+    return decodeURIComponent(str);
+  } catch {
+    return str;
   }
-
-  if (queryParams) {
-    url += `?${createQueryParams(queryParams)}`;
-  }
-
-  return url;
 };
 
-export async function fetchAPI<T>(url: string, options: FetchOptions = {}): Promise<HTTPResponse<T>> {
-  const urlAPI = url.startsWith('https://') ? url : `${process.env.NEXT_PUBLIC_API_ORIGIN}${url}`;
-  const defaultOptions: FetchOptions = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-  const shouldRefreshToken = options.shouldRefreshToken ?? true;
-
-  const cookies = await getCookies();
-  let origin = options.origin;
-  let referrer = options.referrer;
-
-  if (typeof window !== 'undefined') {
-    const urlInfo = getReferrerAndOriginForAPIByUserUrl(window.location.href);
-    origin = origin ?? urlInfo.origin;
-    referrer = referrer ?? urlInfo.referrer;
-  } else {
-    origin = origin ?? cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY];
-    referrer = referrer ?? cookies?.[process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY];
+const refreshToken = async (): Promise<IToken | null> => {
+  if (tokenRenewalMutex.isLocked()) {
+    await tokenRenewalMutex.waitForUnlock();
   }
-  const accessToken = cookies?.[process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY];
-  const locale = cookies?.[process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY];
 
-  const urlAPIWithLocale = new URL(urlAPI);
-  urlAPIWithLocale.searchParams.set('locale', urlAPIWithLocale.searchParams.get('locale') ?? locale ?? DEFAULT_LOCALE);
-  const queryParams = urlAPIWithLocale.searchParams.toString();
-  const tag = `${urlAPIWithLocale.pathname}${queryParams ? `?${queryParams}` : ''}`;
+  const session = await getSession();
+  if (session?.accessToken && !isTokenExpiringSoon(session)) {
+    return {
+      access_token: session.accessToken,
+      refresh_token: session.refreshToken,
+    } as IToken;
+  }
 
-  const headers = {
-    ...defaultOptions.headers,
-    ...options.headers,
-    ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
-    ...(referrer ? { 'X-referrer': decodeURIComponent(referrer) } : {}),
-    ...(origin ? { Origin: decodeURIComponent(origin) } : {}),
-  };
-  const mergedOptions: FetchOptions = {
-    // cache: 'force-cache',
-    next: {
-      ...options.next,
-      tags: [...(options.next?.tags || []), tag],
-    },
-    ...defaultOptions,
-    ...options,
-    headers,
-    referrer: origin,
-  };
-
-  let retryCount = 0;
-  const MAX_RETRIES = 1;
-
-  // const requestStartTime = Date.now();
-  // const requestId = Math.random().toString(36).substring(2, 15);
-
-  // Log request information
-  // apiLogger.info(`Request: ${options.method || 'GET'} ${urlAPIWithLocale.toString()}`, {
-  //   requestId,
-  //   method: options.method || 'GET',
-  //   url: urlAPIWithLocale.toString(),
-  // });
-
-  async function attemptFetch(): Promise<Response> {
-    try {
-      const response = await fetch(urlAPIWithLocale, mergedOptions);
-
-      // Log response status
-      // const requestDuration = Date.now() - requestStartTime;
-
-      if (response.status >= 400) {
-        // apiLogger.error(`HTTP Error: ${response.status} ${response.statusText}`, {
-        //   requestId,
-        //   url: urlAPIWithLocale.toString(),
-        //   status: response.status,
-        //   statusText: response.statusText,
-        //   method: options.method || 'GET',
-        //   duration: requestDuration,
-        // });
-      }
-
-      if (response.status === 401 && shouldRefreshToken && retryCount < MAX_RETRIES) {
-        retryCount++;
-        // apiLogger.warn(`Token expired, attempting refresh (${retryCount}/${MAX_RETRIES})`, {
-        //   requestId,
-        //   url: urlAPIWithLocale.toString(),
-        // });
-
-        if (!isRefreshing) {
-          isRefreshing = true;
-          refreshPromise = refreshTokenService({
-            origin: origin,
-            referrer: referrer,
-            refreshToken: cookies?.[process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY],
-          }).finally(() => {
-            isRefreshing = false;
-            refreshPromise = null;
-          });
-        }
-
-        const token = await refreshPromise;
-        if (token) {
-          // apiLogger.info('Token refreshed successfully, retrying request', {
-          //   requestId,
-          // });
-
-          mergedOptions.headers = {
-            ...mergedOptions.headers,
-            Authorization: `Bearer ${token.access_token}`,
-          };
-        } else {
-          // apiLogger.error('Token refresh failed', {
-          //   requestId,
-          // });
-        }
-        return attemptFetch();
-      }
-
-      return response;
-    } catch (networkError) {
-      // Network errors (không kết nối được đến server)
-      // apiLogger.error(networkError instanceof Error ? networkError : new Error('Network error'), {
-      //   requestId,
-      //   url: urlAPIWithLocale.toString(),
-      //   method: options.method || 'GET',
-      //   duration: Date.now() - requestStartTime,
-      // });
-      // biome-ignore lint/complexity/noUselessCatch: <explanation>
-      throw networkError;
+  const release = await tokenRenewalMutex.acquire();
+  try {
+    const latestSession = await getSession();
+    if (latestSession?.accessToken && !isTokenExpiringSoon(latestSession)) {
+      return {
+        access_token: latestSession.accessToken,
+        refresh_token: latestSession.refreshToken,
+      } as IToken;
     }
+
+    const baseUrl = process.env.NEXT_PUBLIC_APP_ORIGIN;
+    const refreshUrl = baseUrl
+      ? `${baseUrl}${API_ENDPOINT.REFRESH_TOKEN}?ajax=true`
+      : `${API_ENDPOINT.REFRESH_TOKEN}?ajax=true`;
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), DEFAULT_TIMEOUT);
+
+    const response = await fetch(`${refreshUrl}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const tokens = await response.json();
+
+    return tokens;
+  } catch {
+    return null;
+  } finally {
+    release();
   }
+};
+
+/**
+ * Client component fetch with auth
+ */
+async function isomorphicFetch<T>(url: string, options: FetchOptions = {}): Promise<HTTPResponse<T>> {
+  const start = performance.now();
+  const timeout = options.timeout || DEFAULT_TIMEOUT;
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
 
   try {
-    const response = await attemptFetch();
+    // Lấy session data từ client
+    const session = await getSession();
+
+    const headers = {
+      ...options.headers,
+      'Content-Type': 'application/json',
+    } as Record<string, string>;
+
+    if (!(headers?.referrer || headers?.origin)) {
+      const { referrer, origin } = await getAPIReferrerAndOrigin();
+      headers['X-referrer'] = safeDecodeURIComponent(referrer);
+      headers.Origin = safeDecodeURIComponent(origin);
+    }
+
+    if (headers?.origin) {
+      headers.Origin = safeDecodeURIComponent(headers.origin);
+    }
+
+    if (headers?.referrer) {
+      headers['X-referrer'] = safeDecodeURIComponent(headers.referrer);
+    }
+
+    const fetchOptions = {
+      ...options,
+      headers,
+      signal: controller.signal,
+    };
+
+    if (session?.accessToken) {
+      if (isTokenExpiringSoon(session)) {
+        const tokens = await refreshToken();
+
+        fetchOptions.headers = {
+          ...headers,
+          Authorization: `Bearer ${tokens?.access_token || session.accessToken}`,
+        };
+      } else {
+        fetchOptions.headers = {
+          ...headers,
+          Authorization: `Bearer ${session.accessToken}`,
+        };
+      }
+    }
+
+    async function performRequest<T>(retryCount = 0): Promise<Response> {
+      try {
+        const fetchResponse = await fetch(url, fetchOptions);
+
+        if (fetchResponse.status === 401 && session?.refreshToken && retryCount < MAX_RETRY_ATTEMPTS) {
+          const tokens = await refreshToken();
+
+          fetchOptions.headers = {
+            ...headers,
+            Authorization: `Bearer ${tokens?.access_token || session.accessToken}`,
+          };
+
+          return await performRequest<T>(retryCount + 1);
+        }
+
+        return fetchResponse;
+      } catch (error) {
+        if (error instanceof Error && error.name === 'AbortError') {
+          throw new Error(`Request timeout after ${timeout}ms`);
+        }
+        throw error;
+      }
+    }
+
+    const response = await performRequest();
     const res = await handleResponse(response);
     return res as HTTPResponse<T>;
   } catch (error) {
-    console.error('--------------API Error--------------------', urlAPIWithLocale);
-    console.error('--------------Fetch Error--------------------', (error as Error).message);
-
-    // apiLogger.error(error instanceof Error ? error : new Error(String(error)), {
-    //   requestId,
-    //   url: urlAPIWithLocale.toString(),
-    //   method: options.method || 'GET',
-    //   duration: Date.now() - requestStartTime,
-    // });
-
     throw handleError(error);
+  } finally {
+    clearTimeout(timeoutId);
+    const isProduction = process.env.NODE_ENV === 'production';
+    if (!isProduction) {
+      console.log('🚀 - isomorphicFetch total time', url, performance.now() - start);
+    }
   }
 }
 
-export const postAPI = async <Data, Payload>(endpoint: string, payload: Payload, init: FetchOptions = {}) =>
-  await fetchAPI<Data>(endpoint, {
-    cache: 'no-cache',
-    ...init,
+const serverFetch = cache(isomorphicFetch);
+
+export const fetchAPI = async <T>(url: string, options: FetchOptions = {}): Promise<HTTPResponse<T>> => {
+  const fullUrl = `${process.env.NEXT_PUBLIC_API_ORIGIN}${url}`;
+
+  // Sử dụng phương thức fetch phù hợp dựa trên môi trường
+  return isServer() ? await serverFetch(fullUrl, options) : await isomorphicFetch(fullUrl, options);
+};
+export const postAPI = <T, D>(
+  url: string,
+  data?: D,
+  options?: Omit<FetchOptions, 'method' | 'body'>
+): Promise<HTTPResponse<T>> => {
+  const body = JSON.stringify(data);
+  return fetchAPI(url, {
+    ...options,
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      ...init.headers,
+      ...options?.headers,
     },
-    ...(payload && { body: JSON.stringify(payload) }),
+    body,
   });
+};
+export const putAPI = <T, D>(
+  url: string,
+  data?: D,
+  options?: Omit<FetchOptions, 'method' | 'body'>
+): Promise<HTTPResponse<T>> => {
+  const body = JSON.stringify(data);
+  return fetchAPI(url, { ...options, method: 'PUT', body });
+};
 
-export const putAPI = async <Data, Payload>(endpoint: string, payload: Payload, init: FetchOptions = {}) =>
-  await fetchAPI<Data>(endpoint, {
-    cache: 'no-store',
-    ...init,
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      ...init.headers,
-    },
-    ...(payload && { body: JSON.stringify(payload) }),
-  });
-export const patchAPI = async <Data, Payload>(endpoint: string, payload: Payload, init: FetchOptions = {}) =>
-  await fetchAPI<Data>(endpoint, {
-    cache: 'no-store',
-    ...init,
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-      ...init.headers,
-    },
-    ...(payload && { body: JSON.stringify(payload) }),
-  });
+export const patchAPI = <T, D>(
+  url: string,
+  data?: D,
+  options?: Omit<FetchOptions, 'method' | 'body'>
+): Promise<HTTPResponse<T>> => {
+  const body = JSON.stringify(data);
+  return fetchAPI(url, { ...options, method: 'PATCH', body });
+};
 
-export const deleteAPI = async <Data, Payload>(endpoint: string, payload?: Payload, init: FetchOptions = {}) =>
-  await fetchAPI<Data>(endpoint, {
-    cache: 'no-store',
-    ...init,
-    method: 'DELETE',
-    ...(payload && { body: JSON.stringify(payload) }),
-  });
+export const deleteAPI = <T, D>(
+  url: string,
+  data?: D,
+  options?: Omit<FetchOptions, 'method'>
+): Promise<HTTPResponse<T>> => {
+  const body = JSON.stringify(data);
+  return fetchAPI(url, { ...options, method: 'DELETE', body });
+};

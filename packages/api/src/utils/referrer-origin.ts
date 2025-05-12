@@ -5,7 +5,9 @@ const localhostPattern = /localhost(:\d+)?/g;
 export function getReferrerAndOriginForAPIByUserUrl(userUrl: string) {
   const url =
     process.env.NODE_ENV === 'development'
-      ? userUrl.replace(localhostPattern, `${process.env.NEXT_PUBLIC_APP_ROOT_DOMAIN_NAME}`)
+      ? userUrl
+          .replace(localhostPattern, `${process.env.NEXT_PUBLIC_APP_ROOT_DOMAIN_NAME}`)
+          .replace('http://', 'https://')
       : userUrl;
   const { pathname, origin, host } = new URL(url);
   const unlocalizedPathname = getUnlocalizedPathname(pathname);
@@ -17,13 +19,16 @@ export function getReferrerAndOriginForAPIByUserUrl(userUrl: string) {
 }
 
 export async function getAPIReferrerAndOriginServer() {
-  const { cookies } = await import('next/headers');
-  const cookiesList = await cookies();
+  const { headers } = await import('next/headers');
+  const headersList = await headers();
 
-  const origin = cookiesList.get(process.env.NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY)?.value;
-  const referrer = cookiesList.get(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)?.value;
+  // const { host: appHost, href } = new URL(headersList.get('referer') || '');
+  // const xForwardedHost = headersList.get('x-forwarded-host');
+  // const xOriginalHost = headersList.get('x-original-host');
+  // const hostHeader = headersList.get('host');
+  const userUrl = headersList.get('x-user-url');
 
-  return { origin, referrer, host: origin ? new URL(origin).host : '' };
+  return getReferrerAndOriginForAPIByUserUrl(userUrl || '');
 }
 
 export function getAPIReferrerAndOriginClient() {

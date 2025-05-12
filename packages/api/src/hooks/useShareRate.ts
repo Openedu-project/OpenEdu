@@ -1,13 +1,13 @@
+import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { getShareRateByCodeService, putShareRateService } from '#services/share-rate';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 import type { IShareRatePayload, IShareRateRes } from '../types/share-rate';
 
 export function useGetShareRateByCode(code: string) {
   const endpointKey = code
-    ? createAPIUrl({
+    ? buildUrl({
         endpoint: API_ENDPOINT.REFERRAL_LINKS_BY_CODE_CODE,
         params: {
           code: code,
@@ -31,7 +31,7 @@ export const usePutShareRate = (id: string) => {
     API_ENDPOINT.REFERRAL_LINKS_ID,
     async (_endpoint: string, { arg }: { arg: IShareRatePayload }): Promise<IShareRateRes> =>
       putShareRateService(
-        createAPIUrl({
+        buildUrl({
           endpoint: API_ENDPOINT.REFERRAL_LINKS_ID,
           params: { id },
         }),
@@ -51,7 +51,7 @@ export const usePutShareRateById = () => {
     API_ENDPOINT.REFERRAL_LINKS_ID,
     async (_endpoint: string, { arg }: { arg: IShareRatePayload }): Promise<IShareRateRes> =>
       putShareRateService(
-        createAPIUrl({
+        buildUrl({
           endpoint: API_ENDPOINT.REFERRAL_LINKS_ID,
           params: {
             id: arg.campaignId || '',

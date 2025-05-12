@@ -1,20 +1,33 @@
-'use client';
-import { API_ENDPOINT, type IChatHistory, type ISearchHistoryParams, createAPIUrl, useGetConversations } from '@oe/api';
-import { Search } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { useParams } from 'next/navigation';
-import { cloneElement, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { JSX, KeyboardEvent } from 'react';
-import { Virtuoso } from 'react-virtuoso';
-import { useSWRConfig } from 'swr';
-import { useDebouncedCallback } from 'use-debounce';
-import { Modal } from '#components/modal';
-import { Button } from '#shadcn/button';
-import { Input } from '#shadcn/input';
-import { cn } from '#utils/cn';
-import { HISTORY_DEFAULT_PARAMS } from '../constants';
-import { formatDate, getHistoryByDate, getHistoryDates } from '../utils';
-import { AIHistoryItem } from './history-item';
+"use client";
+import {
+  API_ENDPOINT,
+  type IChatHistory,
+  type ISearchHistoryParams,
+  useGetConversations,
+} from "@oe/api";
+import { buildUrl } from "@oe/core";
+import { Search } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
+import {
+  cloneElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import type { JSX, KeyboardEvent } from "react";
+import { Virtuoso } from "react-virtuoso";
+import { useSWRConfig } from "swr";
+import { useDebouncedCallback } from "use-debounce";
+import { Modal } from "#components/modal";
+import { Button } from "#shadcn/button";
+import { Input } from "#shadcn/input";
+import { cn } from "#utils/cn";
+import { HISTORY_DEFAULT_PARAMS } from "../constants";
+import { formatDate, getHistoryByDate, getHistoryDates } from "../utils";
+import { AIHistoryItem } from "./history-item";
 
 interface SearchHistoryProps {
   className?: string;
@@ -24,9 +37,14 @@ interface SearchHistoryProps {
   triggerButton?: JSX.Element;
 }
 
-export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = false }: SearchHistoryProps) => {
-  const tGeneral = useTranslations('general');
-  const tAI = useTranslations('aiAssistant');
+export const SearchHistory = ({
+  className,
+  isLogin,
+  callbackFn,
+  hiddenSearch = false,
+}: SearchHistoryProps) => {
+  const tGeneral = useTranslations("general");
+  const tAI = useTranslations("aiAssistant");
   const { id } = useParams();
 
   const searchRef = useRef<HTMLInputElement | null>(null);
@@ -35,9 +53,14 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
 
   const { mutate: globalMutate } = useSWRConfig();
 
-  const [searchParams, setSearchParams] = useState<ISearchHistoryParams>(HISTORY_DEFAULT_PARAMS);
+  const [searchParams, setSearchParams] = useState<ISearchHistoryParams>(
+    HISTORY_DEFAULT_PARAMS
+  );
 
-  const { history, mutate, isLoading } = useGetConversations(searchParams, isLogin);
+  const { history, mutate, isLoading } = useGetConversations(
+    searchParams,
+    isLogin
+  );
   const [historyData, setHistoryData] = useState<IChatHistory[]>([]);
 
   useEffect(() => {
@@ -47,26 +70,29 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
     if (history.pagination?.page === 1) {
       setHistoryData(history.results);
     } else {
-      setHistoryData(prevData => [...prevData, ...history.results]);
+      setHistoryData((prevData) => [...prevData, ...history.results]);
     }
   }, [history]);
 
   const handleSearch = async (title?: string, isNextPage?: boolean) => {
     const pagination = history?.pagination;
-    if (isLoading || (title === undefined && pagination?.page === pagination?.total_pages)) {
+    if (
+      isLoading ||
+      (title === undefined && pagination?.page === pagination?.total_pages)
+    ) {
       return;
     }
 
     if (title !== undefined) {
       setHistoryData([]);
-      const apikey = createAPIUrl({
+      const apikey = buildUrl({
         endpoint: API_ENDPOINT.COM_CHANNELS,
-        queryParams: { ...HISTORY_DEFAULT_PARAMS, search_term: title },
+        params: { ...HISTORY_DEFAULT_PARAMS, search_term: title },
       });
       await globalMutate((key: string) => key === apikey, undefined, {
         revalidate: true,
       });
-      setSearchParams(prev => {
+      setSearchParams((prev) => {
         return { ...prev, search_term: title, page: 1 };
       });
       return;
@@ -77,7 +103,7 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
       isLoadingMoreRef.current = true;
     }
 
-    const apikey = createAPIUrl({
+    const apikey = buildUrl({
       endpoint: API_ENDPOINT.COM_CHANNELS,
       queryParams: { ...searchParams, page: searchParams.page + 1 },
     });
@@ -85,7 +111,7 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
       revalidate: true,
     });
 
-    setSearchParams(prev => {
+    setSearchParams((prev) => {
       isLoadingMoreRef.current = false;
       return { ...prev, page: prev.page + 1 };
     });
@@ -100,14 +126,14 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
       return;
     }
 
-    if (e.key === 'Enter' && searchRef.current) {
+    if (e.key === "Enter" && searchRef.current) {
       e.preventDefault();
-      handleSearch?.(searchRef.current.value ?? '');
+      handleSearch?.(searchRef.current.value ?? "");
     }
   };
 
   const debouncedSetSearch = useDebouncedCallback(() => {
-    searchRef.current && handleSearch?.(searchRef.current.value ?? '');
+    searchRef.current && handleSearch?.(searchRef.current.value ?? "");
   }, 300);
 
   // Create a debounced endReached handler
@@ -133,7 +159,7 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
   const renderDate = useCallback(
     (date: number) => {
       const resultDate = formatDate(date);
-      if (resultDate.includes('/')) {
+      if (resultDate.includes("/")) {
         return resultDate;
       }
       return tAI(resultDate);
@@ -142,19 +168,26 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
   );
 
   return (
-    <div className={cn('mx-auto flex flex-col gap-2 p-4 text-foreground', className)}>
+    <div
+      className={cn(
+        "mx-auto flex flex-col gap-2 p-4 text-foreground",
+        className
+      )}
+    >
       {!hiddenSearch && (
         <Input
           ref={searchRef}
           prefixIcon={<Search color="#000" width={16} height={16} />}
           className="!rounded-3xl mcaption-regular16 !border-1 w-full bg-gray-50 pl-8"
-          placeholder={tGeneral('search')}
+          placeholder={tGeneral("search")}
           onKeyDown={handleKeyDown}
           onChange={debouncedSetSearch}
         />
       )}
       {!isLoading && historyData?.length === 0 ? (
-        <div className="m-auto p-4 text-center text-foreground">{tAI('noHistory')}</div>
+        <div className="m-auto p-4 text-center text-foreground">
+          {tAI("noHistory")}
+        </div>
       ) : (
         <Virtuoso
           data={datesData}
@@ -167,7 +200,7 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
             <div key={date} className="mt-2 space-y-2">
               <h5 className="mcaption-semibold14">{renderDate(date)}</h5>
               <div className="pl-2">
-                {getHistoryByDate(date, historyData)?.map(item => {
+                {getHistoryByDate(date, historyData)?.map((item) => {
                   return (
                     <AIHistoryItem
                       key={item.id}
@@ -184,7 +217,11 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
           )}
           components={{
             Footer: () =>
-              isLoading ? <div className="p-4 text-center text-foreground">{tAI('loadingHistory')}</div> : null,
+              isLoading ? (
+                <div className="p-4 text-center text-foreground">
+                  {tAI("loadingHistory")}
+                </div>
+              ) : null,
           }}
         />
       )}
@@ -192,7 +229,10 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
   );
 };
 
-export function AIHistoryModal({ isLogin = false, triggerButton }: SearchHistoryProps) {
+export function AIHistoryModal({
+  isLogin = false,
+  triggerButton,
+}: SearchHistoryProps) {
   const [open, setOpen] = useState(false);
   const handleOpenModal = () => {
     setOpen(true);
@@ -225,7 +265,7 @@ export function AIHistoryModal({ isLogin = false, triggerButton }: SearchHistory
           }}
         >
           <SearchHistory
-            className={cn('h-[70dvh]')}
+            className={cn("h-[70dvh]")}
             isLogin={isLogin}
             callbackFn={() => {
               setOpen(false);

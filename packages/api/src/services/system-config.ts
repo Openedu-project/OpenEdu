@@ -1,6 +1,6 @@
-import { getCookie } from '@oe/core';
+import { buildUrl } from '@oe/core';
 import type { LanguageCode } from '@oe/i18n';
-import { createAPIUrl, fetchAPI, postAPI, putAPI } from '#utils/fetch';
+import { fetchAPI, postAPI, putAPI } from '#utils/fetch';
 import {
   getAPIReferrerAndOrigin,
   getAPIReferrerAndOriginClient,
@@ -17,7 +17,7 @@ export const createSystemConfigSWRKey = ({
 }: { key: ISystemConfigKey; locales?: LanguageCode[]; domain?: string }) => {
   const { host } = getAPIReferrerAndOriginClient();
   console.info('host', host, 'domain', domain);
-  return createAPIUrl({
+  return buildUrl({
     endpoint: API_ENDPOINT.SYSTEM_CONFIGS,
     queryParams: {
       keys: key,
@@ -47,21 +47,13 @@ export async function getSystemConfigServer<T>({
   init,
 }: { key: ISystemConfigKey; locales?: LanguageCode[]; init?: RequestInit }) {
   const { host } = await getAPIReferrerAndOriginServer();
-  const domain = (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? '';
-  const [orgData] = await Promise.all([
-    getOrgByDomainService(undefined, {
-      domain: domain?.split('/')?.[0] ?? domain,
-    }),
-  ]);
+  const orgData = await getOrgByDomainService();
 
-  console.info('org', orgData?.domain);
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.SYSTEM_CONFIGS,
     queryParams: {
       keys: key,
       domains: orgData?.domain || host,
-      // domains: host,
-
       ...(locales ? { locales: locales.join(',') } : {}),
     },
   });
@@ -77,12 +69,6 @@ export const createSystemConfig = async <T>(
 ) => {
   const { key, data_type, value, ...rest } = payload;
   const { host } = await getAPIReferrerAndOrigin();
-  // const domain = (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? '';
-  // const [orgData] = await Promise.all([
-  //   getOrgByDomainService(undefined, {
-  //     domain: domain?.split('/')?.[0] ?? domain,
-  //   }),
-  // ]);
 
   return await postAPI<ISystemConfigRes<T>, ISystemConfigPayload<T>>(
     endpoint ?? API_ENDPOINT.ADMIN_SYSTEM_CONFIGS,
@@ -106,7 +92,7 @@ export const updateSystemConfig = async <T>(
   const { host } = await getAPIReferrerAndOrigin();
 
   return await putAPI<ISystemConfigRes<T>, ISystemConfigPayload<T>>(
-    createAPIUrl({
+    buildUrl({
       endpoint: endpoint ?? API_ENDPOINT.ADMIN_SYSTEM_CONFIGS_ID,
       params: {
         id,

@@ -1,4 +1,4 @@
-import { ADMIN_ROUTES, BLOG_ADMIN_ROUTES, CREATOR_ROUTES } from '@oe/core';
+import { ADMIN_ROUTES, BLOG_ADMIN_ROUTES, CREATOR_ROUTES, buildUrl } from '@oe/core';
 import { useMemo } from 'react';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
@@ -19,7 +19,6 @@ import type {
   IPermissionRouteKey,
 } from '#types/permissions';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 
 export const usePermissionRoutes = () => {
   return useMemo<IPermissionGroupedRoutes>(
@@ -46,7 +45,7 @@ export const usePermissionRoutes = () => {
 
 // Page Config
 export function useGetPermissionPageConfig({ params }: { params: IFilter }) {
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.PAGE_CONFIGS, queryParams: { ...params } });
+  const endpointKey = buildUrl({ endpoint: API_ENDPOINT.PAGE_CONFIGS, queryParams: { ...params } });
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
     getPermissionPageConfigService(endpoint, { params })
   );
@@ -60,7 +59,7 @@ export function useGetPermissionPageConfig({ params }: { params: IFilter }) {
 }
 
 export function useGetPermissionPageForPages({ params }: { params: IFilter }) {
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.PAGE_CONFIGS, queryParams: { ...params } });
+  const endpointKey = buildUrl({ endpoint: API_ENDPOINT.PAGE_CONFIGS, queryParams: { ...params } });
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
     getPermissionPageConfigService(endpoint, { params })
   );
@@ -88,7 +87,7 @@ export function useCreatePermissionConfig() {
 
 // Page Access
 export function useGetPermissionPageAccess({ orgId, params }: { orgId: string; params: IFilter }) {
-  const endpointKey = orgId ? createAPIUrl({ endpoint: API_ENDPOINT.PAGE_ACCESSES, queryParams: { ...params } }) : null;
+  const endpointKey = orgId ? buildUrl({ endpoint: API_ENDPOINT.PAGE_ACCESSES, queryParams: { ...params } }) : null;
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
     getPermissionAccessService(endpoint, { params })
   );

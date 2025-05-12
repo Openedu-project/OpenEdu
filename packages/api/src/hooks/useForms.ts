@@ -12,7 +12,6 @@ import {
 } from '#services/forms';
 import type { IFormResponse } from '#types/form';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 
 export function useGetForm({ id }: { id: string }) {
   const endpointKey = buildUrl({ endpoint: API_ENDPOINT.FORMS_ID, params: { id } });
@@ -104,7 +103,7 @@ export const usePostCloneForm = () => {
     API_ENDPOINT.FORMS_ID_DUPLICATE,
     async (_endpoint: string, { arg }: { arg: string }): Promise<IFormResponse> =>
       postCloneForm(
-        createAPIUrl({
+        buildUrl({
           endpoint: API_ENDPOINT.FORMS_ID_DUPLICATE,
           params: {
             id: arg,

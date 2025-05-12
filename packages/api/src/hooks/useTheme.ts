@@ -2,11 +2,11 @@ import useSWR from 'swr';
 import { createOrUpdateThemeConfig, getThemeConfigClient } from '#services/theme';
 import type { ISystemConfigRes } from '#types/system-config';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 import { createThemeSystemConfigKeyClient } from '#utils/system-config';
 
 // import type { ThemeSystem } from '../../../themes/src/_types';
 
+import { buildUrl } from '@oe/core';
 import useSWRMutation from 'swr/mutation';
 import type { IThemeSystemConfigPayload } from '#types/theme';
 import { useGetOrganizationByDomain } from './useOrganization';
@@ -29,7 +29,7 @@ import { useGetOrganizationByDomain } from './useOrganization';
 export function useGetTheme(fallback: ISystemConfigRes<any>[] | undefined = undefined) {
   const { organizationByDomain } = useGetOrganizationByDomain();
 
-  const endpoint = createAPIUrl({
+  const endpoint = buildUrl({
     endpoint: API_ENDPOINT.SYSTEM_CONFIGS,
     queryParams: {
       keys: createThemeSystemConfigKeyClient(organizationByDomain?.domain),

@@ -1,7 +1,7 @@
 import { getBlogsPublishService } from "@oe/api";
 import { getCategoriesTreeService } from "@oe/api";
 import { getOrgByDomainService } from "@oe/api";
-import { getCookie } from "@oe/core";
+// import { BlogBanner } from "./_components/blog-banner";
 import { BlogCateCarousel } from "./_components/blog-cate-carousel";
 import { BlogHeader } from "./_components/blog-header";
 import { BlogOutstanding } from "./_components/blog-outstanding";
@@ -10,12 +10,8 @@ const getOtherOrgBlog = async (isOpenEdu?: boolean) => {
   if (!isOpenEdu) {
     return undefined;
   }
-  const domain =
-    (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? "";
   try {
-    const orgData = await getOrgByDomainService(undefined, {
-      domain,
-    });
+    const orgData = await getOrgByDomainService();
     const orgBlogData = await getBlogsPublishService(undefined, {
       params: {
         page: 1,

@@ -1,3 +1,4 @@
+import { buildUrl } from '@oe/core';
 import type {
   ICertNftFees,
   IEstimatedFee,
@@ -5,7 +6,7 @@ import type {
   ISponsorGasCourseRequest,
 } from '#types/certificate-nft';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI, postAPI } from '#utils/fetch';
+import { fetchAPI, postAPI } from '#utils/fetch';
 
 // Learner
 
@@ -16,7 +17,7 @@ export async function getCertNFTFeesService(
   let endpointKey = url;
 
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.CERTIFICATES_ID_NFT_FEES,
       params: { id },
     });
@@ -38,7 +39,7 @@ export async function postMintCertNFTService(
   let endpointKey = url;
 
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.CERTIFICATES_ID_NFT_FEES,
       params: { id },
     });
@@ -58,7 +59,7 @@ export async function getEstimatedFeeService(
   let endpointKey = url;
 
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COURSES_ID_NFT_FEES,
       params: { id },
     });
@@ -80,7 +81,7 @@ export async function postDepositSponsorGasService(
   let endpointKey = url;
 
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COURSES_ID_NFT_FEES_DEPOSIT,
       params: { id },
     });
@@ -98,7 +99,7 @@ export async function postWithdrawSponsorGasService(
   let endpointKey = url;
 
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COURSES_ID_NFT_FEES_WITHDRAW,
       params: { id },
     });

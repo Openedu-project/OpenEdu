@@ -2,19 +2,12 @@ import {
   getOrgByDomainService,
   getPopularCoursesServicesAtWebsite,
 } from "@oe/api";
-import { getCookie } from "@oe/core";
 import { Carousel } from "@oe/ui";
 import { getTranslations } from "next-intl/server";
 import { CarouselWrapper } from "./popular-course-carousel";
 
 export async function PopularCoursesSection() {
-  const domain =
-    (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? "";
-  const [orgData] = await Promise.all([
-    getOrgByDomainService(undefined, {
-      domain: domain?.split("/")?.[0] ?? domain,
-    }),
-  ]);
+  const orgData = await getOrgByDomainService();
   const [t, dataPopularCourses] = await Promise.all([
     getTranslations("homePageLayout.popularCoursesSection"),
     getPopularCoursesServicesAtWebsite(undefined, {

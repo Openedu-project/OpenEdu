@@ -1,4 +1,4 @@
-import { getCookie } from '@oe/core';
+import { buildUrl, getCookie } from '@oe/core';
 import type { IBlog } from '#types/blog';
 import type { ICourse } from '#types/course/course';
 import type {
@@ -9,13 +9,13 @@ import type {
 } from '#types/featured-contents';
 import type { IOrganization } from '#types/organizations';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI, postAPI } from '#utils/fetch';
+import { fetchAPI, postAPI } from '#utils/fetch';
 
 export async function getPopularCoursesServices(
   url: string | undefined,
   { init }: { init?: RequestInit }
 ): Promise<IFeaturedContentResponse<undefined> | undefined> {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: url || API_ENDPOINT.FEATURED_CONTENT,
   });
 
@@ -32,7 +32,7 @@ export async function getPopularCoursesServicesAtWebsite(
   url: string | undefined,
   { params, init }: { params: Pick<FeaturedContentParams, 'org_id'>; init?: RequestInit }
 ): Promise<IFeaturedContent<ICourse>[] | undefined> {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: url || API_ENDPOINT.FEATURED_CONTENT_BY_TYPES,
     queryParams: {
       org_id: params.org_id,
@@ -54,7 +54,7 @@ export async function getPopularBlogsServices(
   url: string | undefined,
   { init }: { init?: RequestInit }
 ): Promise<IFeaturedContentResponse<undefined> | undefined> {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: url || API_ENDPOINT.FEATURED_CONTENT,
   });
 
@@ -71,7 +71,7 @@ export async function getPopularBlogsServicesAtWebsite(
   url: string | undefined,
   { params, init }: { params: Pick<FeaturedContentParams, 'org_id'>; init?: RequestInit }
 ): Promise<IFeaturedContent<IBlog>[] | undefined> {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: url || API_ENDPOINT.FEATURED_CONTENT_BY_TYPES,
     queryParams: {
       org_id: params.org_id,
@@ -93,7 +93,7 @@ export async function getPopularContentsServicesAtWebsite<T>(
   url: string | undefined,
   { params, init }: { params: Pick<FeaturedContentParams, 'org_id' | 'entity_type'>; init?: RequestInit }
 ): Promise<IFeaturedContent<T>[] | undefined> {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: url || API_ENDPOINT.FEATURED_CONTENT_BY_TYPES,
     queryParams: {
       org_id: params.org_id,
@@ -115,7 +115,7 @@ export async function getFeaturedOrgServicesAtWebsite(
   url: string | undefined,
   { params, init }: { params: Pick<FeaturedContentParams, 'org_id'>; init?: RequestInit }
 ): Promise<IFeaturedContent<IOrganization>[] | undefined> {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: url || API_ENDPOINT.FEATURED_CONTENT_BY_TYPES,
     queryParams: {
       org_id: params.org_id,
@@ -139,7 +139,7 @@ export const updateFeaturedContent = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.FEATURED_CONTENT,
     });
   }

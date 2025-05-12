@@ -1,3 +1,4 @@
+import { buildUrl } from '@oe/core';
 import type {
   AIEduLeaderBoards,
   AIEduStatistics,
@@ -13,7 +14,7 @@ import type {
 import type { HTTPPagination } from '#types/fetch';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI } from '#utils/fetch';
+import { fetchAPI } from '#utils/fetch';
 import { systemConfigQueryByKeys } from '#utils/system-config';
 
 export const getOeRefferralStatisticsAIEdu = async (
@@ -22,7 +23,7 @@ export const getOeRefferralStatisticsAIEdu = async (
 ) => {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.OE_REFFERRAL_STATISTICS_ID,
       params: { id },
       queryParams: {
@@ -45,7 +46,7 @@ export const getOeRefferralLeaderBoardsAIEdu = async (
 ) => {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.OE_REFFERRAL_LEADER_BOARDS_ID,
       params: { id },
       queryParams: {
@@ -68,7 +69,7 @@ export async function getAIEduSystemConfig(
 ): Promise<AIEduSystemConfigRes[] | undefined> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.SYSTEM_CONFIGS,
       queryParams: {
         keys: keys || systemConfigQueryByKeys.aiedu,
@@ -91,7 +92,7 @@ export async function getAIEduProvinceService(
 ): Promise<IAIEduProvince[] | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.OE_REFFERRAL_KEY_PROVINCES,
       params: {
         key,
@@ -113,7 +114,7 @@ export async function getAIEduStatisticWidgetService(
 ): Promise<IAIEduStatisticWidget | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.OE_REFFERRAL_KEY_STATISTIC_WIDGET,
       params: {
         key,
@@ -138,7 +139,7 @@ export async function getAIEduStatisticLearningGrowthService(
 ): Promise<IAIEduStatisticLearningGrowth | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.OE_REFFERRAL_KEY_STATISTIC_LEARNER_GROWTH,
       params: {
         key,
@@ -162,7 +163,7 @@ export async function getAIEduStatisticSectionCompletionService(
 ): Promise<IAIStatisticSectionCompletion[] | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.OE_REFFERRAL_KEY_STATISTIC_SECTION_COMPLETION,
       params: {
         key,
@@ -186,7 +187,7 @@ export async function getAIEduStatisticProvincesService(
 ): Promise<IAIEduStatisticProvince[] | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.OE_REFFERRAL_KEY_STATISTIC_PROVINCES,
       params: {
         key,

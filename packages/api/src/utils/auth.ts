@@ -1,4 +1,4 @@
-import { type CookieOptions, getCookie } from '@oe/core';
+import { getSession } from '../actions/session';
 
 export const authEvents = {
   resetPassword: 'RESET_PASSWORD',
@@ -42,8 +42,8 @@ export const authEvents = {
 
 export type AuthEvent = keyof typeof authEvents;
 export type AuthEventName = (typeof authEvents)[AuthEvent];
-export const isLogin = async (options?: CookieOptions) => {
-  const accessToken = await getCookie(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY, options);
+export const isLogin = async () => {
+  const session = await getSession();
 
-  return !!accessToken;
+  return !!session?.accessToken;
 };

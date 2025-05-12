@@ -1,5 +1,5 @@
 {
-  "extends": "@oe/config/tsconfig/base.json",
+  "extends": "@oe/config/tsconfig/react.json",
   "compilerOptions": {
     "baseUrl": ".",
     "types": ["node", "@oe/types/global.d.ts"],

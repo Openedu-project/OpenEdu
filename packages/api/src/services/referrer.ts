@@ -1,6 +1,7 @@
+import { buildUrl } from '@oe/core';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, deleteAPI, fetchAPI, postAPI } from '#utils/fetch';
+import { deleteAPI, fetchAPI, postAPI } from '#utils/fetch';
 import type { ICreateReferrersPayload, IReferrerListRes } from '../types/referrer';
 
 export async function getReferrerListService(
@@ -9,7 +10,7 @@ export async function getReferrerListService(
 ): Promise<IReferrerListRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.AFFILIATE_CAMPAIGNS_ID_REFERRERS,
       params: {
         id,
@@ -47,7 +48,7 @@ export const deleteReferrerService = async (
     queryParams.append('ids', id);
   }
   if (endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: endpointKey,
       queryParams: {
         ids: payload.ids.toString(),
@@ -60,6 +61,6 @@ export const deleteReferrerService = async (
     endpointKey = `${API_ENDPOINT.REFERRERS}?${queryParams.toString()}`;
   }
 
-  const response = await deleteAPI<void, unknown>(endpointKey, init);
+  const response = await deleteAPI<void, unknown>(endpointKey, undefined, init);
   return response.data;
 };

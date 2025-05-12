@@ -1,6 +1,7 @@
+import { buildUrl } from '@oe/core';
 import type { ICurrencyListResponse } from '#types/currency';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI } from '#utils/fetch';
+import { fetchAPI } from '#utils/fetch';
 
 export async function getCurrencyService(
   url: string,
@@ -8,7 +9,7 @@ export async function getCurrencyService(
 ): Promise<ICurrencyListResponse[] | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.SYSTEM_CONFIGS,
       queryParams: {
         keys,

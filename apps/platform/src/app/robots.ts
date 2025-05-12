@@ -1,14 +1,8 @@
-import { organizationsService } from '@oe/api';
 import { AUTH_ROUTES, PROTECTED_ROUTES } from '@oe/core';
 import type { MetadataRoute } from 'next';
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
   const isProduction = process.env.NODE_ENV === 'production';
-
-  const organizationsPagination = await organizationsService(null, {
-    queryParams: { isActive: true, per_page: 99999 },
-  });
-  const organizations = organizationsPagination.results;
 
   const rules: MetadataRoute.Robots['rules'] = [
     {
@@ -26,6 +20,6 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
 
   return {
     rules,
-    sitemap: isProduction ? [...organizations.map(organization => `https://${organization.domain}/sitemap.xml`)] : [],
+    sitemap: isProduction ? `${process.env.NEXT_PUBLIC_APP_ORIGIN}/sitemap.xml` : '',
   };
 }

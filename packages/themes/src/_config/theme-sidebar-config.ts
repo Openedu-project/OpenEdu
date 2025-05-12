@@ -1,5 +1,4 @@
-import { createAPIUrl } from '@oe/api';
-import { ADMIN_ROUTES } from '@oe/core';
+import { ADMIN_ROUTES, buildUrl } from '@oe/core';
 
 import type {
   AllGroupSidebarKeys,
@@ -54,7 +53,7 @@ const generatePath = (
   pageKey?: ThemePageKey | ThemeFeaturedContentKey,
   settingKey?: AllSidebarKeys
 ): string => {
-  const baseUrl = createAPIUrl({ endpoint: ADMIN_ROUTES.themeDetail, params: { themeName } });
+  const baseUrl = buildUrl({ endpoint: ADMIN_ROUTES.themeDetail, params: { themeName } });
   return [baseUrl, configKey, pageKey, settingKey].filter(Boolean).join('/');
 };
 

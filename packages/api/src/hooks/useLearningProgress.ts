@@ -1,12 +1,12 @@
+import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { getLearningProgressesService, updateLearningProgressService } from '#services/learning-progress';
 import type { ILearningProgressPayload } from '#types/course/learning-progress';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 
 export function useGetLearningProgress({ id }: { id?: string }) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.LEARNING_PROGRESSES_COURSES_ID,
     params: { id },
   });

@@ -1,13 +1,12 @@
 'use client';
 import { API_ENDPOINT } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
 import type { HTTPErrorMetadata } from '@oe/api';
 import type { IRejectFormRegisterCreatorPayload } from '@oe/api';
 import type { ICreatorPayload } from '@oe/api';
 import { useCreateCreator } from '@oe/api';
 import { useGetFormRegisterCreator, useRejectRegisterCreator } from '@oe/api';
 import type { ICreatorAnswerItem, ICreatorRequest } from '@oe/api';
-import { formatDate } from '@oe/core';
+import { buildUrl, formatDate } from '@oe/core';
 import { toast } from '@oe/ui';
 import type { FilterOption } from '@oe/ui';
 import { type ColumnDef, Table, type TableRef } from '@oe/ui';
@@ -179,7 +178,7 @@ export function CreatorRequestMngmList() {
         columns={columns}
         api={
           formRegister?.id
-            ? createAPIUrl({
+            ? buildUrl({
                 endpoint: API_ENDPOINT.FORMS_ID_SESSIONS,
                 params: { id: formRegister?.id },
               })

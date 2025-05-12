@@ -14,6 +14,7 @@ declare global {
   // biome-ignore lint/style/noNamespace: <explanation>
   namespace NodeJS {
     interface ProcessEnv {
+      AUTH_SECRET: string;
       NEXT_PUBLIC_APP_ROOT_DOMAIN_NAME: string;
       NEXT_PUBLIC_APP_COOKIE_DOMAIN: string;
 
@@ -33,6 +34,9 @@ declare global {
       NEXT_PUBLIC_MEDIA_S3_HOST: string;
       NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY: string;
       NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY: string;
+      NEXT_PUBLIC_COOKIE_AUTH_CALLBACK_URL_KEY: string;
+      NEXT_PUBLIC_COOKIE_CSRF_TOKEN_KEY: string;
+      NEXT_PUBLIC_COOKIE_SESSION_KEY: string;
       NEXT_PUBLIC_COOKIE_LOCALE_KEY: string;
       NEXT_PUBLIC_COOKIE_LOCALES_KEY: string;
       NEXT_PUBLIC_COOKIE_LOCALE_FILES_KEY: string;

@@ -1,7 +1,8 @@
+import { buildUrl } from '@oe/core';
 import type { HTTPPagination } from '#types/fetch';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
+import { deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 import type {
   ICertificate,
   ICertificateData,
@@ -20,7 +21,7 @@ export async function getCertLayersService(
   let endpointKey = url;
 
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COURSES_ID_HTML_TEMPLATES,
       params: { id: params.courseId },
       queryParams: { ...params },
@@ -42,7 +43,7 @@ export async function getTemplatesService(
   let endpointKey = url;
 
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.HTML_TEMPLATES,
       queryParams: { ...params },
     });
@@ -64,7 +65,7 @@ export async function selectTemplateService(
   let endpointKey = endpoint;
 
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COURSES_ID_CERTIFICATES_ENABLE,
       params: { id: payload.courseId },
     });
@@ -95,7 +96,7 @@ export async function getTemplateByIdService(
   let endpointKey = endpoint;
 
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.HTML_TEMPLATES_ID,
       params: { id: params.id },
     });
@@ -113,7 +114,7 @@ export async function updateCertHtmlTemplateService(
   let endpointKey = endpoint;
 
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.HTML_TEMPLATES_ID,
       params: { id: payload.id },
     });
@@ -144,7 +145,7 @@ export async function getCertByUserIdService(
   let endpointKey = url;
 
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.CERTIFICATES,
       queryParams: { ...params },
     });
@@ -166,12 +167,12 @@ export async function removeCertLayerService(
   let endpointKey = endpoint;
 
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: `${API_ENDPOINT.HTML_TEMPLATES}/${params.id}`,
     });
   }
 
-  const response = await deleteAPI(endpointKey, init);
+  const response = await deleteAPI(endpointKey, undefined, init);
 
   return response.data;
 }
@@ -183,7 +184,7 @@ export async function getCertLayerByCourseIdService(
   let endpointKey = url;
 
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COURSES_ID_CERTIFICATES,
       params: { id: params.courseId },
     });
@@ -205,7 +206,7 @@ export async function getCertByIdService(
   let endpointKey = url;
 
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.CERTIFICATES_ID,
       params: { id: params.id },
     });
@@ -227,7 +228,7 @@ export async function updateCertEnableService(
   let endpointKey = endpoint;
 
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.HTML_TEMPLATES_ID_ENABLE,
       params: { id: payload.id },
     });
@@ -249,7 +250,7 @@ export async function updateCourseCertTemplateService(
   let endpointKey = url;
 
   if (!endpointKey && params.courseId && params.templateId) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COURSES_ID_HTML_TEMPLATES_ID,
       params: { id: params.courseId, template_id: params.templateId },
     });

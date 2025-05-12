@@ -1,3 +1,4 @@
+import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import {
@@ -21,10 +22,9 @@ import type {
 import type { IFilter } from '#types/filter';
 import type { ICreateLaunchpadRequest } from '#types/launchpad';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 
 export function useGetAdminLaunchpads(id: string, queryParams: IFilter) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.LAUNCHPADS,
     queryParams: { ...queryParams },
   });
@@ -42,7 +42,7 @@ export function useGetAdminLaunchpads(id: string, queryParams: IFilter) {
 }
 
 export function useGetAdminLaunchpadDetail(id: string, queryParams: IFilter = {}) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.LAUNCHPADS_ID,
     params: { id },
   });
@@ -60,7 +60,7 @@ export function useGetAdminLaunchpadDetail(id: string, queryParams: IFilter = {}
 }
 
 export function useGetAdminLaunchpadInvestment(id: string) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.LAUNCHPADS_ID,
     params: { id },
   });
@@ -78,7 +78,7 @@ export function useGetAdminLaunchpadInvestment(id: string) {
 }
 
 export const usePostAdminPublishLaunchpads = (id: string) => {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.LAUNCHPADS_PUBLISH_LAUNCHPAD_ID,
     params: { id },
   });
@@ -97,7 +97,7 @@ export const usePostAdminPublishLaunchpads = (id: string) => {
 };
 
 export const usePostAdminCancelLaunchpads = (id: string) => {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.LAUNCHPADS_CANCEL_LAUNCHPAD_ID,
     params: { id },
   });
@@ -116,7 +116,7 @@ export const usePostAdminCancelLaunchpads = (id: string) => {
 };
 
 export const usePostAdminStartVotingLaunchpads = (id: string, milestoneId: string) => {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.LAUNCHPADS_START_VOTING_ID,
     params: { id, milestone_id: milestoneId },
   });
@@ -135,7 +135,7 @@ export const usePostAdminStartVotingLaunchpads = (id: string, milestoneId: strin
 };
 
 export const usePutAdminCancelPublishLaunchpads = (id: string) => {
-  const url = createAPIUrl({
+  const url = buildUrl({
     endpoint: API_ENDPOINT.LAUNCHPADS_PUBLISH_LAUNCHPAD_ID,
     params: {
       id,
@@ -156,7 +156,7 @@ export const usePutAdminCancelPublishLaunchpads = (id: string) => {
 };
 
 export const usePatchLaunchpadDetail = (id: string) => {
-  const url = createAPIUrl({
+  const url = buildUrl({
     endpoint: API_ENDPOINT.LAUNCHPADS_ID,
     params: {
       id,
@@ -177,7 +177,7 @@ export const usePatchLaunchpadDetail = (id: string) => {
 };
 
 export const usePutAdminStartFundingTimeLaunchpad = (id: string) => {
-  const url = createAPIUrl({
+  const url = buildUrl({
     endpoint: API_ENDPOINT.LAUNCHPADS_FUNDING_TIME_ID,
     params: {
       id,
@@ -198,7 +198,7 @@ export const usePutAdminStartFundingTimeLaunchpad = (id: string) => {
 };
 
 export const usePutAdminDecideVotingLaunchpad = (id: string) => {
-  const url = createAPIUrl({
+  const url = buildUrl({
     endpoint: API_ENDPOINT.LAUNCHPADS_DECIDE_VOTING_ID,
     params: {
       id,

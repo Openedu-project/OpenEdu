@@ -1,5 +1,6 @@
 import useSWRMutation from 'swr/mutation';
 
+import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import { deleteBlog, getBlogListService, getRewriteData, publishBlog, unpublishBlog } from '#services/blog';
 import {
@@ -14,7 +15,6 @@ import type { IAIBlogRequest, IAIBlogResponse, IRewriteResponse } from '#types/b
 import type { IBlog, IBlogRequest, IBlogsResponse, IPublishBlogType } from '#types/blog';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 import type { HTTPError } from '#utils/http-error';
 
 export const usePostAIBlog = () => {
@@ -37,7 +37,7 @@ export const usePostBlog = () => {
 };
 
 export const useUpdateBlog = (type: 'org' | 'personal', id: string) => {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: type === 'org' ? API_ENDPOINT.ADMIN_BLOGS_ID : API_ENDPOINT.BLOGS_ID,
     params: { id },
   });
@@ -52,7 +52,7 @@ export const useUpdateBlog = (type: 'org' | 'personal', id: string) => {
 };
 
 export const usePublishBlog = (id: string) => {
-  const url = createAPIUrl({ endpoint: API_ENDPOINT.BLOGS_ID_PUBLISH, params: { id } });
+  const url = buildUrl({ endpoint: API_ENDPOINT.BLOGS_ID_PUBLISH, params: { id } });
   const { trigger, isMutating, error } = useSWRMutation(
     url,
     async (endpoint: string, { arg }: { arg: Record<string, string> }): Promise<{ message: string }> =>
@@ -63,7 +63,7 @@ export const usePublishBlog = (id: string) => {
 };
 
 export const useUnpublishBlog = (type: 'org' | 'personal', id: string) => {
-  const url = createAPIUrl({
+  const url = buildUrl({
     endpoint: type === 'org' ? API_ENDPOINT.BLOGS_ID_PUBLISH_ORG : API_ENDPOINT.BLOGS_ID_PUBLISH_PERSON,
     params: { id },
   });
@@ -75,7 +75,7 @@ export const useUnpublishBlog = (type: 'org' | 'personal', id: string) => {
 };
 
 export const useDeleteBlog = (id: string) => {
-  const url = createAPIUrl({ endpoint: API_ENDPOINT.BLOGS_ID, params: { id } });
+  const url = buildUrl({ endpoint: API_ENDPOINT.BLOGS_ID, params: { id } });
   const { trigger, isMutating, error } = useSWRMutation(
     url,
     async (endpoint: string): Promise<{ message: string }> => deleteBlog(endpoint, id)
@@ -85,7 +85,7 @@ export const useDeleteBlog = (id: string) => {
 };
 
 export function useGetRewriteData(id: string, shouldFetch = true) {
-  const url = createAPIUrl({ endpoint: API_ENDPOINT.BLOG_AI_ID_REWRITE, params: { id } });
+  const url = buildUrl({ endpoint: API_ENDPOINT.BLOG_AI_ID_REWRITE, params: { id } });
   const { data, isLoading, error } = useSWR<IRewriteResponse, HTTPError>(id && shouldFetch ? url : null, () =>
     getRewriteData(url)
   );
@@ -98,7 +98,7 @@ export function useGetRewriteData(id: string, shouldFetch = true) {
 }
 
 export function useGetListBlogs({ params }: { params: IFilter }) {
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.BLOGS, queryParams: { ...params } });
+  const endpointKey = buildUrl({ endpoint: API_ENDPOINT.BLOGS, queryParams: { ...params } });
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
     getBlogListService(endpoint, { params })
   );
@@ -128,7 +128,7 @@ const publishServiceFunction: Record<
 };
 
 export function useGetBlogsPublish(type: IPublishBlogType, params: IFilter, id = '', fallback?: IBlogsResponse) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: publishEndpoint[type],
     queryParams: {
       ...params,

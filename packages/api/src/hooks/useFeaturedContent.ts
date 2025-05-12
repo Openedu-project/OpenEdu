@@ -1,3 +1,4 @@
+import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import {
@@ -11,10 +12,9 @@ import type { IBlog } from '#types/blog';
 import type { ICourse } from '#types/course/course';
 import type { FeaturedContentParams, IFeaturedContent, IFeaturedContentRequest } from '#types/featured-contents';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 
 export function useGetPopularCourses({ params }: { params: Pick<FeaturedContentParams, 'org_id'> }) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.FEATURED_CONTENT,
     queryParams: {
       ...params,
@@ -35,7 +35,7 @@ export function useGetPopularCourses({ params }: { params: Pick<FeaturedContentP
 }
 
 export const useUpdateFeaturedContent = () => {
-  const endpoint = createAPIUrl({ endpoint: API_ENDPOINT.FEATURED_CONTENT });
+  const endpoint = buildUrl({ endpoint: API_ENDPOINT.FEATURED_CONTENT });
 
   const { trigger, error, isMutating } = useSWRMutation(
     endpoint,
@@ -59,7 +59,7 @@ export function useGetPopularCoursesAtWebsite({
   params: Pick<FeaturedContentParams, 'org_id'>;
   fallback?: IFeaturedContent<ICourse>[];
 }) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.FEATURED_CONTENT_BY_TYPES,
   });
 
@@ -84,7 +84,7 @@ export function useGetPopularCoursesAtWebsite({
 }
 
 export function useGetPopularBlogs({ params }: { params: Pick<FeaturedContentParams, 'org_id'> }) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.FEATURED_CONTENT,
     queryParams: {
       ...params,
@@ -109,7 +109,7 @@ export function useGetPopularBlogsAtWebsite({
 }: {
   params: Pick<FeaturedContentParams, 'org_id'>;
 }) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.FEATURED_CONTENT_BY_TYPES,
   });
 
@@ -134,7 +134,7 @@ export function useGetPopularContentsAtWebsite<T>({
 }: {
   params: Pick<FeaturedContentParams, 'org_id' | 'entity_type'>;
 }) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.FEATURED_CONTENT_BY_TYPES,
   });
 

@@ -7,7 +7,7 @@ import { ThemeProvider, getMetadata } from "@oe/themes";
 import { Provider } from "@oe/ui";
 import { Toaster } from "@oe/ui";
 import { WebViewHandler } from "@oe/ui";
-import { getLocale, getMessages } from "next-intl/server";
+import { getLocale } from "next-intl/server";
 import Script from "next/script";
 import type { ReactNode } from "react";
 // const geistSans = localFont({
@@ -32,9 +32,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
-  const [locale, messages, themeSystem] = await Promise.all([
+  const [locale, themeSystem] = await Promise.all([
     getLocale(),
-    getMessages(),
     getThemeConfigServer(),
   ]);
   const themeName = themeSystem?.[0]?.value?.activedTheme ?? "vbi";
@@ -57,7 +56,7 @@ export default async function RootLayout({
         </Script>
       </head>
       <body className="scrollbar font-primary antialiased">
-        <Provider messages={messages ?? {}} locale={locale}>
+        <Provider>
           <WebViewHandler />
 
           <ThemeProvider

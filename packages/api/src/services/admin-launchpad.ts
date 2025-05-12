@@ -1,3 +1,4 @@
+import { buildUrl } from '@oe/core';
 import type {
   IAdminLaunchpadDetailRes,
   IAdminLaunchpadInvestmentRes,
@@ -10,7 +11,7 @@ import type {
 import type { IFilter } from '#types/filter';
 import type { ICreateLaunchpadRequest } from '#types/launchpad';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI, patchAPI, postAPI, putAPI } from '#utils/fetch';
+import { fetchAPI, patchAPI, postAPI, putAPI } from '#utils/fetch';
 
 export async function getAdminLaunchpadsService(
   url: string | null,
@@ -18,7 +19,7 @@ export async function getAdminLaunchpadsService(
 ): Promise<IAdminLaunchpadsListRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.LAUNCHPADS,
       queryParams: { ...params },
     });
@@ -37,7 +38,7 @@ export async function getAdminLaunchpadDetailService(
 ): Promise<IAdminLaunchpadDetailRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.LAUNCHPADS_ID,
       params: {
         id: params.id,
@@ -59,7 +60,7 @@ export async function getAdminLaunchpadInvestmentService(
 ): Promise<IAdminLaunchpadInvestmentRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.LAUNCHPADS_ID_INVESTMENTS,
       params: {
         id: params.id,
@@ -82,7 +83,7 @@ export const postAdminPublishLaunchpadsService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.LAUNCHPADS_PUBLISH_LAUNCHPAD_ID,
       params: {
         id: payload.id,
@@ -104,7 +105,7 @@ export const postAdminCancelLaunchpadsService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.LAUNCHPADS_CANCEL_LAUNCHPAD_ID,
       params: {
         id: payload.id,
@@ -126,7 +127,7 @@ export const postAdminStartVotingLaunchpadsService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.LAUNCHPADS_START_VOTING_ID,
       params: {
         id: payload.id,
@@ -149,7 +150,7 @@ export const putAdminCancelPublishLaunchpadsService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.LAUNCHPADS_PUBLISH_LAUNCHPAD_ID,
       params: {
         id: payload.id,
@@ -167,7 +168,7 @@ export async function patchLaunchpadDetailService(
 ): Promise<IAdminLaunchpadDetailRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.LAUNCHPADS_ID,
       params: {
         id: params.id,
@@ -190,7 +191,7 @@ export const putAdminStartFundingTimeLaunchpadsService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.LAUNCHPADS_FUNDING_TIME_ID,
       params: {
         id: payload.id,
@@ -208,7 +209,7 @@ export const postAdminDecideVotingLaunchpadsService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.LAUNCHPADS_DECIDE_VOTING_ID,
       params: {
         id: payload.id,

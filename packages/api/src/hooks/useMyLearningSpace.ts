@@ -1,11 +1,11 @@
+import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import { getMyCourseLearningService } from '#services/my-learning-space';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 
 export function useGetMyCoursesLearning(params: IFilter, revalidateOnMount?: boolean) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.USERS_ME_COURSES,
     queryParams: { ...params },
   });

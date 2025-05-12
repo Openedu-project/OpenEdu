@@ -10,7 +10,7 @@ import { useParams } from 'next/navigation';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { API_ENDPOINT } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
+import { buildUrl } from '@oe/core';
 import { toast } from '@oe/ui';
 import { RoleButton } from '@oe/ui';
 import { AffiliateDeleteReferrerModal } from './referrers-detele-modal';
@@ -135,7 +135,7 @@ export function ReferrerList() {
       </div>
 
       <Table
-        api={createAPIUrl({
+        api={buildUrl({
           endpoint: API_ENDPOINT.AFFILIATE_CAMPAIGNS_ID_REFERRERS,
           params: { id: campaignId },
         })}

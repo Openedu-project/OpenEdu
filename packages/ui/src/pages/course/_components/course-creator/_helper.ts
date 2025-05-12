@@ -1,7 +1,6 @@
-import { createAPIUrl } from '@oe/api';
 import type { IUserRoleInOrg } from '@oe/api';
 import type { IUserProfileRole } from '@oe/api';
-import { PLATFORM_ROUTES } from '@oe/core';
+import { PLATFORM_ROUTES, buildUrl } from '@oe/core';
 
 export const filterUserData = (roles: IUserRoleInOrg[]) => {
   const orgMap: { [key: string]: IUserProfileRole } = {};
@@ -53,7 +52,7 @@ export const roleMappings: RoleMapping[] = [
 
 export const userProfileUrl = (username: string) =>
   username && username?.length > 0
-    ? createAPIUrl({
+    ? buildUrl({
         endpoint: PLATFORM_ROUTES.userProfile,
         params: { username: username },
       })

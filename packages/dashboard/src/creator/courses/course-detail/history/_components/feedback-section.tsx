@@ -1,8 +1,8 @@
 'use client';
 
 import { useGetCourseById, usePutRelyFeedback } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
 import { useGetMe } from '@oe/api';
+import { buildUrl } from '@oe/core';
 import { toast } from '@oe/ui';
 import { usePathname, useRouter } from '@oe/ui';
 import { useTranslations } from 'next-intl';
@@ -47,7 +47,7 @@ const FeedbackSection = ({ showFeedback }: { showFeedback: boolean }) => {
         pathParts[currentIdIndex] = newId;
         const newPath = pathParts.join('/');
         // Add query params '?feedback=true' to open the feedback section when redirecting with new courseID
-        router.push(createAPIUrl({ endpoint: newPath, queryParams: { feedback: true } }));
+        router.push(buildUrl({ endpoint: newPath, queryParams: { feedback: true } }));
       }
     },
     [pathName, course?.id, router]

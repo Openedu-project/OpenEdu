@@ -1,12 +1,12 @@
-import { PLATFORM_ROUTES, base64ToJson, cookieOptions, isProtectedRoute } from '@oe/core';
-import { DEFAULT_LOCALE, getLocaleFromPathname } from '@oe/i18n';
+import { PLATFORM_ROUTES, base64ToJson, cookieOptions } from '@oe/core';
+import { DEFAULT_LOCALE } from '@oe/i18n';
 import { NextRequest, NextResponse } from 'next/server';
-import { meMiddlewareService } from '#services/auth';
+// import { meMiddlewareService } from '#services/auth';
 import { getI18nResponseMiddleware } from '#services/i18n';
 import { getOrganizationByHostMiddleware } from '#services/organizations';
-import { refreshTokenMiddlewareService } from '#services/refresh-token';
+// import { refreshTokenMiddlewareService } from '#services/refresh-token';
 import type { IToken } from '#types/auth';
-import { isTokenExpired } from './jwt';
+// import { isTokenExpired } from './jwt';
 import { getReferrerAndOriginForAPIByUserUrl } from './referrer-origin';
 
 export async function baseMiddleware(request: NextRequest, host?: string | null) {
@@ -40,7 +40,7 @@ export async function baseMiddleware(request: NextRequest, host?: string | null)
     return response;
   }
 
-  let i18nResponse = await getI18nResponseMiddleware(referrer, origin, request);
+  const i18nResponse = await getI18nResponseMiddleware(referrer, origin, request);
   i18nResponse.cookies.set({
     name: process.env.NEXT_PUBLIC_COOKIE_API_ORIGIN_KEY,
     value: origin,
@@ -54,7 +54,7 @@ export async function baseMiddleware(request: NextRequest, host?: string | null)
     maxAge: 60 * 60 * 24 * 365, // 1 year
   });
 
-  i18nResponse.headers.set('x-url', request.nextUrl.toString());
+  i18nResponse.headers.set('x-user-url', request.nextUrl.toString());
 
   // OpenEdu no need to check
   if (new URL(origin).host !== process.env.NEXT_PUBLIC_APP_ROOT_DOMAIN_NAME) {
@@ -66,34 +66,23 @@ export async function baseMiddleware(request: NextRequest, host?: string | null)
     }
   }
 
-  let accessToken = request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY)?.value;
-  const isAccessTokenExpired = isTokenExpired(accessToken);
+  const accessToken = request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY)?.value;
+  // const isAccessTokenExpired = isTokenExpired(accessToken);
   console.info(
     '================accessToken==============',
     accessToken,
     request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY)?.value
   );
-  console.info('================isAccessTokenExpired==============', isAccessTokenExpired);
-  if (accessToken && isAccessTokenExpired) {
-    const { response, ...rest } = await refreshTokenMiddlewareService({
-      referrer,
-      origin,
-      req: request,
-      res: i18nResponse,
-    });
-    i18nResponse = response;
+  // console.info('================isAccessTokenExpired==============', isAccessTokenExpired);
 
-    accessToken = (rest as IToken).access_token;
-  }
-
-  const isProtected = isProtectedRoute(request.nextUrl.pathname);
-  if (isProtected) {
-    const me = await meMiddlewareService({ referrer, origin, accessToken, req: request, res: i18nResponse });
-    if (!me) {
-      const locale = getLocaleFromPathname(request.nextUrl.pathname);
-      return NextResponse.rewrite(new URL(`/${locale}${PLATFORM_ROUTES.unauthorized}`, appUrl));
-    }
-  }
+  // const isProtected = isProtectedRoute(request.nextUrl.pathname);
+  // if (isProtected) {
+  //   const me = await meMiddlewareService({ referrer, origin, accessToken, req: request, res: i18nResponse });
+  //   if (!me) {
+  //     const locale = getLocaleFromPathname(request.nextUrl.pathname);
+  //     return NextResponse.rewrite(new URL(`/${locale}${PLATFORM_ROUTES.unauthorized}`, appUrl));
+  //   }
+  // }
 
   return i18nResponse;
 }

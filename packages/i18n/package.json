@@ -30,12 +30,14 @@
     "clean:build": "rm -rf .turbo && rm -rf dist"
   },
   "dependencies": {
-    "next": "15.3.1-canary.4",
-    "next-intl": "4.0.2"
+    "next": "15.4.0-canary.31",
+    "next-intl": "4.1.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
   },
   "devDependencies": {
     "@oe/config": "workspace:*",
     "@oe/types": "workspace:*",
-    "@types/node": "^22.14.0"
+    "@types/node": "^22.15.17"
   }
 }

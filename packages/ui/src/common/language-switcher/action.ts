@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 export async function changeLanguage(locale: string) {
   const headersList = await headers();
   const currentLocale = await getLocale();
-  const headerUrl = headersList.get('x-url') ?? '/';
+  const headerUrl = headersList.get('x-user-url') ?? '/';
   // const url = new URL(headerUrl);
   // const segments = url.pathname.split('/').filter(Boolean);
 

@@ -24,14 +24,14 @@
     "clean:build": "rm -rf .turbo && rm -rf dist"
   },
   "dependencies": {
-    "tailwindcss": "^4.1.3",
+    "tailwindcss": "^4.1.6",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "next": "^15.3.1-canary.4",
-    "@next/bundle-analyzer": "15.3.1-canary.4",
+    "@next/bundle-analyzer": "15.3.2",
     "@oe/types": "workspace:*",
-    "@tailwindcss/postcss": "^4.1.3",
-    "@types/node": "^22.14.0"
+    "@tailwindcss/postcss": "^4.1.6",
+    "@types/node": "^22.15.17",
+    "next": "15.4.0-canary.31"
   }
 }

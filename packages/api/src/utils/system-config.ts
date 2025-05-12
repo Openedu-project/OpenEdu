@@ -1,4 +1,4 @@
-import { buildUrl, getCookie } from '@oe/core';
+import { buildUrl } from '@oe/core';
 import { getOrgByDomainService } from '#services/organizations';
 import type { ISystemConfigKey } from '#types/system-config';
 import { getAPIReferrerAndOriginClient } from './referrer-origin';
@@ -15,12 +15,7 @@ export const systemConfigKeys = {
 } as const;
 
 export const createThemeSystemConfigKeyServer = async (): Promise<ISystemConfigKey> => {
-  const domain = (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? '';
-  const [orgData] = await Promise.all([
-    getOrgByDomainService(undefined, {
-      domain: domain?.split('/')?.[0] ?? '',
-    }),
-  ]);
+  const orgData = await getOrgByDomainService();
 
   return buildUrl({
     endpoint: systemConfigKeys.specificThemeSystem,

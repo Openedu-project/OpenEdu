@@ -1,10 +1,8 @@
 'use client';
-
-import { createAPIUrl } from '@oe/api';
 import type { HTTPErrorMetadata } from '@oe/api';
 import type { ILaunchpad } from '@oe/api';
 import { CREATE_LAUNCHPAD_TABS, LAUNCHPAD_STATUS } from '@oe/api';
-import { CREATOR_ROUTES, LAUNCHPAD_ROUTES } from '@oe/core';
+import { CREATOR_ROUTES, LAUNCHPAD_ROUTES, buildUrl } from '@oe/core';
 import { toast } from '@oe/ui';
 import { useRouter } from '@oe/ui';
 import { Breadcrumb } from '@oe/ui';
@@ -62,7 +60,7 @@ export function CreateLaunchpadLayout() {
     if (id) {
       if (finalItem) {
         breadcrumbs.push({
-          href: createAPIUrl({
+          href: buildUrl({
             endpoint: `${CREATOR_ROUTES.creatorCreateLaunchpadDetail}/${finalItem}`,
             params: { id },
           }),

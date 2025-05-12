@@ -25,6 +25,15 @@ export interface IToken {
   };
 }
 
+export interface INextAuthToken {
+  id?: string;
+  accessToken?: string;
+  refreshToken?: string;
+  accessTokenExp?: number;
+  refreshTokenExp?: number;
+  origin?: string;
+  referrer?: string;
+}
 export interface ISignUpPayload {
   display_name: string;
   email: string;
