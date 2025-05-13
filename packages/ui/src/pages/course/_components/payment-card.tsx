@@ -4,6 +4,7 @@ import { formatCurrency } from '@oe/core';
 import { useTranslations } from 'next-intl';
 // import { formatCurrency } from '#components/input-currency';
 import { PaymentButton } from '#components/payment-button';
+import { ShareButton } from '#components/share-button';
 import { WishlistButton } from '#components/wishlist-button';
 import { Card, CardContent, CardFooter } from '#shadcn/card';
 import { cn } from '#utils/cn';
@@ -93,36 +94,17 @@ const PaymentCard = () => {
         {!isPaidOrEnrolled && <PriceRow priceSettings={price_settings} />}
       </CardContent>
       <CardFooter className="p-0">
-        <div className="flex w-full items-center space-x-4">
+        <div className="flex w-full items-center space-x-3">
           <PaymentButton className="mbutton-regular16 h-fit flex-grow" courseData={courseData} isCourseDetail />
           <WishlistButton
             bookmarkId={bookmark?.id ?? ''}
             entityId={cuid}
             entityType="course"
             isWishlist={courseData?.is_wishlist}
-            className="shrink-0 border-foreground/20"
+            className="h-6 w-6 shrink-0 border-primary md:h-8 md:w-8"
             onSuccess={updateWishlistStatus}
           />
-          {/* <WishlistButton
-            bookmarkId={courseDataStore.bookmark?.id}
-            entityId={cuid}
-            entityType="course"
-            isWishlist={courseDataStore.is_wishlist}
-            className="shrink-0 border-foreground/20 "
-            onClick={async () => {
-              const courseData = await getCourseOutlineService(undefined, {
-                id: slug,
-              });
-
-              if (courseData) {
-                setCourseOutline({
-                  ...courseData,
-                  bookmark: courseData.bookmark,
-                  is_wishlist: courseData.is_wishlist,
-                });
-              }
-            }}
-          /> */}
+          <ShareButton courseData={courseData} />
         </div>
       </CardFooter>
     </Card>

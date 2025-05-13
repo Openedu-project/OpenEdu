@@ -65,7 +65,7 @@ export const courseOutlineMessages = {
     courseStats: {
       learners: '{learnerCount} learners',
       learner: '{learnerCount} learner',
-      contentCompleted: 'Content Completed',
+      contentCompleted: 'Completed',
     },
 
     playToEarn: {
@@ -79,7 +79,7 @@ export const courseOutlineMessages = {
       desc: 'to unlock this gaming challenge. Your journey awaits!',
     },
 
-    shareToEarn: 'Share To Earn',
+    shareToEarn: 'Share Referral To Earn',
 
     lastUpdated: 'Last updated {updateAt}',
     markAsComplete: 'Mark as complete',
@@ -91,5 +91,7 @@ export const courseOutlineMessages = {
     embedCount: '{count} embedded',
     lesson: 'Lesson {index}',
     joinCourseToAccess: "You're in preview mode. To take the quiz, enroll in the course or start learning now!",
+
+    detailsToKnow: 'Details to know',
   },
 };

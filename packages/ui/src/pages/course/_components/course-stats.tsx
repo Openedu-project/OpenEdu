@@ -1,8 +1,6 @@
 import type { ILevel } from '@oe/api';
-import { SendSquare } from '@oe/assets';
 import { abbreviateNumber } from '@oe/core';
 import { Layers, Users } from 'lucide-react';
-import { useTranslations } from 'next-intl';
 
 interface ICourseStats {
   learner_count: number;
@@ -10,11 +8,9 @@ interface ICourseStats {
   mark_as_completed: boolean;
 }
 
-export function CourseStats({ learner_count, levels, mark_as_completed }: ICourseStats) {
-  const tCourse = useTranslations('courseOutline.courseStats');
-
+export function CourseStats({ learner_count, levels }: ICourseStats) {
   return (
-    <div className="flex flex-col flex-wrap gap-4 md:flex-row md:items-center">
+    <div className="flex flex-col flex-wrap gap-4 text-white md:flex-row md:items-center">
       <div className="flex items-center gap-4">
         {!!learner_count && learner_count > 0 && (
           <div className="flex items-center gap-2">
@@ -39,14 +35,14 @@ export function CourseStats({ learner_count, levels, mark_as_completed }: ICours
 
       {/* <RatingStar variant="with-number" rating={rating ?? 5} /> */}
 
-      {mark_as_completed && (
+      {/* {mark_as_completed && (
         <div className="flex items-center gap-2">
           <div className="grid h-6 w-6 items-center justify-center rounded-full bg-success">
             <SendSquare />
           </div>
           <span className="mcaption-semibold14 text-success">{tCourse('contentCompleted')}</span>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

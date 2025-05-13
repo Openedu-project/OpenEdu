@@ -11,8 +11,8 @@ export function CourseCreator({ owner }: { owner: ICourseOwner }) {
     <Link href={userProfileUrl(owner?.username)} className="max-w-fit flex-1 p-0 hover:no-underline">
       <div className="flex items-center gap-2">
         <div className="mcaption-semibold16 line-clamp-1 flex items-center gap-1">
-          <span className="text-foreground/70">{tCourse('creator')}:</span>
-          <span className="mcaption-semibold16 line-clamp-1 text-primary">
+          <span className="text-white">{tCourse('creator')}:</span>
+          <span className="mcaption-semibold16 line-clamp-1 text-secondary underline">
             {owner?.display_name && owner.display_name?.length > 0 ? owner.display_name : owner?.username}
           </span>
         </div>

@@ -30,7 +30,7 @@ const ShareToEarn = ({ courseData }: { courseData: ICourseOutline }) => {
   return dataUserAffiliateCampaignList && dataUserAffiliateCampaignList?.results?.length > 0 ? (
     <Link
       href={href}
-      className={cn('mbutton-semibold16 gradient-bg-3 mt-4 w-full hover:text-primary hover:no-underline')}
+      className={cn('mbutton-semibold16 gradient-bg-3 mt-4 h-fit w-full hover:text-primary hover:no-underline')}
     >
       {t('shareToEarn')}
     </Link>
