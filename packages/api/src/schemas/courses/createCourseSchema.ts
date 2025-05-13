@@ -43,18 +43,36 @@ export const createYoutubeCourseSchema = z.object({
 
 export interface ICreateYoutubeCourse extends z.infer<typeof createYoutubeCourseSchema> {}
 
-export const priceSettingsSchema = z.object({
-  is_pay: z.boolean().default(false),
-  fiat_currency: z.string().default('VND'),
-  fiat_price: z.string().default('0'),
-  fiat_discount_price: z.string().default('0'),
-  fiat_unit_cost: z.string().default('0'),
-  crypto_payment_enabled: z.boolean().default(false),
-  crypto_currency: z.string().default('USDT'),
-  crypto_price: z.string().default('0'),
-  crypto_discount_price: z.string().default('0'),
-  crypto_unit_cost: z.string().default('0'),
-});
+export const priceSettingsSchema = z
+  .object({
+    is_pay: z.boolean().default(false),
+    fiat_currency: z.string().default('VND'),
+    fiat_price: z.string().default('0'),
+    fiat_discount_price: z.string().default('0'),
+    fiat_unit_cost: z.string().default('0'),
+    crypto_payment_enabled: z.boolean().default(false),
+    crypto_currency: z.string().default('USDT'),
+    crypto_price: z.string().default('0'),
+    crypto_discount_price: z.string().default('0'),
+    crypto_unit_cost: z.string().default('0'),
+  })
+  .superRefine((val, ctx) => {
+    if (!!val?.is_pay && Number(val.fiat_price) <= 0) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['fiat_price'],
+        message: 'course.validation.finalPriceLargeZero',
+      });
+    }
+
+    if (!!val?.is_pay && Number(val.fiat_discount_price) > Number(val.fiat_unit_cost)) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['fiat_discount_price'],
+        message: 'course.validation.discountPriceLessUnitCost',
+      });
+    }
+  });
 
 export const courseFormSchema = z.object({
   description: z.string().refine(
