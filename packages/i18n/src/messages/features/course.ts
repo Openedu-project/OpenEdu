@@ -316,6 +316,7 @@ export const courseMessages = {
         videoRequired: 'Video content is required',
         pdfRequired: 'PDF content is required',
         embeddedRequired: 'Embedded content is required',
+        textRequired: 'Text content is required',
       },
 
       quiz: {
