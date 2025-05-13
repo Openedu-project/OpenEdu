@@ -1,5 +1,4 @@
 import { z } from '#utils/zod';
-import { courseFormSchema } from './createCourseSchema';
 
 export const courseTriggerConditionSchema = z.enum([
   // 'enrolled_course',
@@ -62,27 +61,27 @@ export const courseQuestionSchema = z.object({
   settings: courseQuestionSettingsSchema,
 });
 
-// export const courseFormSchema = z.object({
-//   id: z.string(),
-//   create_at: z.number(),
-//   update_at: z.number(),
-//   delete_at: z.number(),
-//   uid: z.string(),
-//   latest: z.boolean(),
-//   title: z.string(),
-//   description: z.string(),
-//   slug: z.string(),
-//   event: z.string(),
-//   type: z.string(),
-//   status: z.string(),
-//   start_date: z.number(),
-//   end_date: z.number(),
-//   org_id: z.string(),
-//   creator_id: z.string(),
-//   questions: z.array(courseQuestionSchema),
-//   auth_required: z.boolean(),
-//   is_template: z.boolean(),
-// });
+const courseFormSchema = z.object({
+  id: z.string(),
+  create_at: z.number(),
+  update_at: z.number(),
+  delete_at: z.number(),
+  uid: z.string(),
+  latest: z.boolean(),
+  title: z.string(),
+  description: z.string(),
+  slug: z.string(),
+  event: z.string(),
+  type: z.string(),
+  status: z.string(),
+  start_date: z.number(),
+  end_date: z.number(),
+  org_id: z.string(),
+  creator_id: z.string(),
+  questions: z.array(courseQuestionSchema),
+  auth_required: z.boolean(),
+  is_template: z.boolean(),
+});
 
 export const courseTriggerStartWhenSchema = z.object({
   type: courseTriggerConditionSchema,
