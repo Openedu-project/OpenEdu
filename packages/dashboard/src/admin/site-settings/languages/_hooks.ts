@@ -18,43 +18,41 @@ export const useI18nTranslations = () => {
 
   const urls = getUrls({ locales, systemConfig });
 
-  const { data: translations } = useSWR(
-    Object.keys(urls).length > 0 ? urls : null,
-    async (urlMap: Record<LanguageCode, string>) => {
-      const promises = Object.entries(urlMap).map(async ([locale, url]) => {
-        try {
-          const data = await fetchTranslationFile(url);
-          return { locale, data } as { locale: LanguageCode; data: I18nMessage | null };
-        } catch (error) {
-          console.error(`Failed to fetch translation for ${locale}:`, error);
-          return { locale, data: null };
+  const { data } = useSWR(Object.keys(urls).length > 0 ? urls : null, async (urlMap: Record<LanguageCode, string>) => {
+    const promises = Object.entries(urlMap).map(async ([locale, url]) => {
+      try {
+        const data = await fetchTranslationFile(url);
+        return { locale, data } as { locale: LanguageCode; data: I18nMessage | null };
+      } catch (error) {
+        console.error(`Failed to fetch translation for ${locale}:`, error);
+        return { locale, data: null };
+      }
+    });
+
+    const results = await Promise.allSettled(promises);
+
+    return results.reduce(
+      (acc, result) => {
+        if (result.status === 'fulfilled' && result.value.data) {
+          acc[result.value.locale] = result.value.data;
         }
-      });
+        return acc;
+      },
+      {} as Record<LanguageCode, I18nMessage>
+    );
+  });
 
-      const results = await Promise.allSettled(promises);
-
-      return results.reduce(
-        (acc, result) => {
-          if (result.status === 'fulfilled' && result.value.data) {
-            acc[result.value.locale] = result.value.data;
-          }
-          return acc;
-        },
-        {} as Record<LanguageCode, I18nMessage>
-      );
-    }
-  );
-
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (translations && urls) {
+    if (data && urls) {
       setFiles(urls);
-      updateTranslations(translations);
+      updateTranslations(data);
     }
-  }, [translations, urls, setFiles, updateTranslations]);
+  }, [data]);
 
   return {
     isLoading: systemConfigIsLoading,
     systemConfig,
-    translationMessages: translations,
+    translationMessages: data,
   };
 };
