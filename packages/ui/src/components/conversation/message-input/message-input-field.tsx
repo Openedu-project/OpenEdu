@@ -20,7 +20,9 @@ export const InputField = ({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    form?.reset();
+    if (form?.getValues('message') === '@') {
+      form?.setValue('message', '');
+    }
   }, [type]);
 
   switch (type) {
