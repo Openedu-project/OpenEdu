@@ -1,6 +1,6 @@
 import { getOrgByDomainService, getSchedulesService } from '@oe/api';
 import { Timer } from '@oe/assets';
-import { formatDate, getCookie } from '@oe/core';
+import { formatDateSlash, getCookie } from '@oe/core';
 import { Sparkle } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import ScheduleEventList from './_components/schedule-event-list';
@@ -46,9 +46,9 @@ export async function Schedule({
             &nbsp;
             <span className="flex items-center">{t('timePeriod')}:</span>
             <span className="flex items-center text-primary">
-              {formatDate(Number(currentScheduleData?.start_at ?? Date.now()))}
+              {formatDateSlash(Number(currentScheduleData?.start_at ?? Date.now()))}
               &nbsp; -&nbsp;
-              {formatDate(Number(currentScheduleData?.end_at ?? Date.now()))}
+              {formatDateSlash(Number(currentScheduleData?.end_at ?? Date.now()))}
               &nbsp;
             </span>
           </h2>
