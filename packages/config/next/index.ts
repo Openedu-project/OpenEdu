@@ -122,10 +122,6 @@ export function getNextConfig(config: NextConfig = {}): NextConfig {
     // outputFileTracingRoot: join(__dirname, '../../'),
     experimental: {
       ppr: 'incremental',
-      serverActions: {
-        allowedOrigins: ['openedu.com', '*.openedu.com'],
-        bodySizeLimit: '4mb',
-      },
       optimizePackageImports: [
         ...internalPackages,
         ...externalPackages,

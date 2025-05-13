@@ -3,12 +3,12 @@ import type { IOrganization, IOrganizationPayload } from '#types/organizations';
 
 import { buildUrl } from '@oe/core';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { fetchAPI, postAPI, putAPI } from '#utils/fetch';
+import { type FetchOptions, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 import { getAPIReferrerAndOrigin } from '#utils/referrer-origin';
 
 export const organizationsService = async (
   endpoint: string | null | undefined,
-  { queryParams, init }: { queryParams: Record<string, unknown>; init?: RequestInit }
+  { queryParams, init }: { queryParams: Record<string, unknown>; init?: FetchOptions }
 ) => {
   const response = await fetchAPI<HTTPPagination<IOrganization>>(
     buildUrl({ endpoint: endpoint ?? API_ENDPOINT.ADMIN_ORGANIZATIONS, queryParams }),
@@ -23,7 +23,7 @@ export const organizationsService = async (
 
 export const getOrgByIdService = async (
   endpoint: string | null | undefined,
-  { id, init }: { id: string; init?: RequestInit }
+  { id, init }: { id: string; init?: FetchOptions }
 ) => {
   const endpointKey = endpoint ?? `${API_ENDPOINT.ADMIN_ORGANIZATIONS}/${id}`;
 
@@ -32,14 +32,14 @@ export const getOrgByIdService = async (
   return response.results?.[0];
 };
 
-export const getOrgByDomainService = async (endpoint?: string | null | undefined, init?: RequestInit) => {
+export const getOrgByDomainService = async (endpoint?: string | null | undefined, init?: FetchOptions) => {
   const { host } = await getAPIReferrerAndOrigin();
   const response = await organizationsService(endpoint, { queryParams: { domain_or_alt_domain: host }, init });
 
   return response.results?.[0];
 };
 
-export const checkDomainService = async (endpoint?: string | null | undefined, init?: RequestInit) => {
+export const checkDomainService = async (endpoint?: string | null | undefined, init?: FetchOptions) => {
   try {
     const { host } = await getAPIReferrerAndOrigin();
     const response = await postAPI<HTTPResponse<boolean>, { domain: string }>(
@@ -76,7 +76,7 @@ export const getOrganizationByHostMiddleware = async (referrer: string, origin: 
 
 export const postCreateOrganizationService = async (
   endpoint: string | null | undefined,
-  { payload, init }: { payload: IOrganizationPayload; init?: RequestInit }
+  { payload, init }: { payload: IOrganizationPayload; init?: FetchOptions }
 ) => {
   const response = await postAPI<IOrganization, IOrganizationPayload>(
     endpoint ?? API_ENDPOINT.ADMIN_ORGANIZATIONS,
@@ -88,7 +88,7 @@ export const postCreateOrganizationService = async (
 };
 export const putUpdateOrganizationService = async (
   endpoint: string | null | undefined,
-  { payload, init }: { payload: IOrganizationPayload; init?: RequestInit }
+  { payload, init }: { payload: IOrganizationPayload; init?: FetchOptions }
 ) => {
   const response = await putAPI<IOrganization, IOrganizationPayload>(
     endpoint ?? API_ENDPOINT.ADMIN_ORGANIZATIONS,

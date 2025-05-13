@@ -1,4 +1,4 @@
-import { buildUrl, getCookie } from '@oe/core';
+import { buildUrl } from '@oe/core';
 import type { IBlog } from '#types/blog';
 import type { ICourse } from '#types/course/course';
 import type {
@@ -10,6 +10,7 @@ import type {
 import type { IOrganization } from '#types/organizations';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { fetchAPI, postAPI } from '#utils/fetch';
+import { getAPIReferrerAndOrigin } from '#utils/referrer-origin';
 
 export async function getPopularCoursesServices(
   url: string | undefined,
@@ -150,10 +151,10 @@ export const updateFeaturedContent = async (
 };
 
 export const getFeaturedOrgs = async () => {
-  const domain = (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? '';
+  const { host } = await getAPIReferrerAndOrigin();
   try {
     const featuredOrgs = await getFeaturedOrgServicesAtWebsite(undefined, {
-      params: { org_id: domain ?? '' },
+      params: { org_id: host ?? '' },
     });
 
     const organizations = featuredOrgs?.reduce<IOrganization[]>((acc, item) => {

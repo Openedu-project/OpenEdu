@@ -1,12 +1,13 @@
-'use client';
-
-import { cookieOptions, getCookieClient, setCookieClient } from '@oe/core';
-import { type LanguageCode, languages } from '@oe/i18n';
-import { DEFAULT_LOCALES } from '@oe/i18n';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { Selectbox } from '#components/selectbox';
-import { cn } from '#utils/cn';
+"use client";
+import { useGetI18nConfig } from "@oe/api";
+import { languages } from "@oe/i18n";
+import { usePathname, useRouter } from "@oe/i18n";
+import { useLocale } from "next-intl";
+import { useParams } from "next/navigation";
+import { useTransition } from "react";
+import { Selectbox } from "#components/selectbox";
+import { Skeleton } from "#shadcn/skeleton";
+import { cn } from "#utils/cn";
 
 type LanguageSwitcherProps = {
   className?: string;
@@ -14,64 +15,48 @@ type LanguageSwitcherProps = {
 
 export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
   const router = useRouter();
-  const localesCookie = getCookieClient(process.env.NEXT_PUBLIC_COOKIE_LOCALES_KEY);
-  const locales = localesCookie ? JSON.parse(localesCookie as string) : DEFAULT_LOCALES;
-
-  const [currentLang, setCurrentLang] = useState<LanguageCode>('en');
-
-  useEffect(() => {
-    const savedLang = getCookieClient(process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY) as LanguageCode;
-    if (savedLang) {
-      setCurrentLang(savedLang);
-    }
-  }, []);
-
-  if (locales?.length === 0) {
-    return null;
-  }
-
-  const options = locales.map((locale: LanguageCode) => ({
-    id: locale,
-    value: locale,
-    label: languages[locale],
-  }));
+  const locale = useLocale();
+  const [isPending, startTransition] = useTransition();
+  const pathname = usePathname();
+  const params = useParams();
+  const { dataI18nConfig, isLoadingI18nConfig } = useGetI18nConfig();
 
   const handleChangeLanguage = (locale: string) => {
-    setCookieClient(process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY, locale, {
-      ...cookieOptions(),
-      maxAge: 3600 * 24 * 365,
+    startTransition(() => {
+      router.replace(
+        // @ts-expect-error -- TypeScript will validate that only known `params`
+        // are used in combination with a given `pathname`. Since the two will
+        // always match for the current route, we can skip runtime checks.
+        { pathname, params },
+        { locale }
+      );
     });
-    setCurrentLang(locale as LanguageCode);
-
-    // Sử dụng router.replace để cập nhật URL mà không cần refresh toàn bộ trang
-    const currentPath = typeof window !== 'undefined' ? window.location.pathname : '';
-    const segments = currentPath.split('/');
-
-    if (segments.length > 1 && locales.includes(segments[1])) {
-      segments[1] = locale;
-      router.replace(segments.join('/'));
-    } else if (segments[1] === '') {
-      router.replace(`/${locale}`);
-    } else {
-      router.replace(`/${locale}${currentPath}`);
-    }
   };
   if (options.length === 1) {
     return null;
   }
 
+  if (isLoadingI18nConfig) {
+    return <Skeleton className="h-8 w-8 rounded-full" />;
+  }
+
   return (
     <Selectbox
-      options={options}
-      value={currentLang}
+      options={(dataI18nConfig?.locales ?? []).map((locale) => ({
+        id: locale,
+        value: locale,
+        label: languages[locale],
+      }))}
+      value={locale}
       onChange={handleChangeLanguage}
       className={cn(
-        'flex aspect-square h-8 w-8 items-center justify-center rounded-full border-background bg-transparent p-1 text-background capitalize outline-hidden ring-0 ring-offset-0 hover:bg-background/10 hover:text-background focus:border focus:border-background focus:outline-hidden focus:ring-0 focus:ring-offset-0 focus-visible:outline-hidden focus-visible:ring-0 focus-visible:ring-offset-0',
+        "flex aspect-square h-8 w-8 items-center justify-center rounded-full border-background bg-transparent p-1 text-background capitalize outline-hidden ring-0 ring-offset-0 hover:bg-background/10 hover:text-background focus:border focus:border-background focus:outline-hidden focus:ring-0 focus:ring-offset-0 focus-visible:outline-hidden focus-visible:ring-0 focus-visible:ring-offset-0",
         className
       )}
       hasIcon={false}
-      displayValue={value => value}
+      displayValue={(value) => value}
       valueClassName="text-sm"
+      disabled={isPending}
     />
   );
 }

@@ -1,3 +1,4 @@
+import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import type { IEventScheduleSchema, IScheduleSchema } from '#schemas/scheduleSchema';
@@ -13,10 +14,9 @@ import {
 import type { IFilter } from '#types/filter';
 import type { ISchedule, IScheduleEvent } from '#types/schedule';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 
 export function useGetSchedules(orgID: string) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.SCHEDULES,
     queryParams: {
       preloads: 'EventSchedule',
@@ -51,7 +51,7 @@ export const usePostSchedule = () => {
 };
 
 export const usePutSchedule = (id: string) => {
-  const url = createAPIUrl({
+  const url = buildUrl({
     endpoint: API_ENDPOINT.SCHEDULES_ID,
     params: {
       id,
@@ -72,7 +72,7 @@ export const usePutSchedule = (id: string) => {
 };
 
 export function useGetSchedulesEvent(queryParams: IFilter) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.EVENT_SCHEDULES,
     queryParams: { ...queryParams },
   });
@@ -104,7 +104,7 @@ export const usePostScheduleEvent = () => {
 };
 
 export const usePutScheduleEvent = (id: string) => {
-  const url = createAPIUrl({
+  const url = buildUrl({
     endpoint: API_ENDPOINT.EVENT_SCHEDULES_ID,
     params: {
       id,
@@ -125,7 +125,7 @@ export const usePutScheduleEvent = (id: string) => {
 };
 
 export const useDeleteScheduleEvent = (id: string) => {
-  const url = createAPIUrl({
+  const url = buildUrl({
     endpoint: API_ENDPOINT.EVENT_SCHEDULES_ID,
     params: {
       id,

@@ -2,7 +2,7 @@ import { Mutex } from 'async-mutex';
 import { cache } from 'react';
 import type { IToken } from '#types/auth';
 import type { HTTPResponse } from '#types/fetch';
-import { getSession } from '../actions';
+import { getSession } from '../actions/session';
 import { API_ENDPOINT } from './endpoints';
 import { handleError, handleResponse } from './error-handling';
 import { getAPIReferrerAndOrigin } from './referrer-origin';
@@ -116,6 +116,8 @@ async function isomorphicFetch<T>(url: string, options: FetchOptions = {}): Prom
     if (headers?.referrer) {
       headers['X-referrer'] = safeDecodeURIComponent(headers.referrer);
     }
+
+    console.log('=======================headers isomorphicFetch===================', headers, url);
 
     const fetchOptions = {
       ...options,

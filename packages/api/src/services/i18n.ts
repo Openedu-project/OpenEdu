@@ -15,7 +15,7 @@ import { getAPIReferrerAndOrigin } from '#utils/referrer-origin';
 import { systemConfigKeys } from '#utils/system-config';
 import { createOrUpdateSystemConfig, getSystemConfigClient, getSystemConfigServer } from './system-config';
 
-export const getI18nConfigServer = cache(async () => {
+export const getI18nConfig = cache(async () => {
   try {
     const { host } = await getAPIReferrerAndOrigin();
     const endpointKey = buildUrl({
@@ -202,7 +202,7 @@ export const fetchTranslationFile = async (path: string, fallbackData?: I18nMess
 
 export const getAllTranslations = cache(async (requestedLocale: LanguageCode) => {
   const start = performance.now();
-  const i18nConfig = await getI18nConfigServer();
+  const i18nConfig = await getI18nConfig();
 
   const files = i18nConfig?.files;
   const locale = hasLocale(i18nConfig?.locales ?? [], requestedLocale) ? requestedLocale : DEFAULT_LOCALE;

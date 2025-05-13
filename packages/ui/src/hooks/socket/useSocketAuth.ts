@@ -1,4 +1,4 @@
-import { getCookie } from '@oe/core';
+import { getSession } from '@oe/api';
 import { useEffect, useState } from 'react';
 
 export const useSocketAuth = (isAuthenticated: boolean) => {
@@ -12,14 +12,11 @@ export const useSocketAuth = (isAuthenticated: boolean) => {
     const initSocketAuth = async () => {
       try {
         if (isAuthenticated) {
-          const [token, ref] = await Promise.all([
-            getCookie(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY),
-            getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY),
-          ]);
+          const token = await getSession();
 
           setSocketAuth({
-            accessToken: token ?? '',
-            referrer: ref ?? '',
+            accessToken: token?.accessToken ?? '',
+            referrer: token?.referrer ?? '',
             error: null,
           });
         } else {

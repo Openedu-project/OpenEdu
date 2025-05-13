@@ -1,8 +1,9 @@
+import { buildUrl } from '@oe/core';
 import type { IEventScheduleSchema, IScheduleSchema } from '#schemas/scheduleSchema';
 import type { IFilter } from '#types/filter';
 import type { ISchedule, IScheduleEvent, IScheduleEventRes } from '#types/schedule';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
+import { deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 
 export async function getSchedulesService(
   url: string | null | undefined,
@@ -10,7 +11,7 @@ export async function getSchedulesService(
 ): Promise<ISchedule[] | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.SCHEDULES,
       queryParams: {
         preloads: 'EventSchedule',
@@ -46,7 +47,7 @@ export const putScheduleService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.SCHEDULES_ID,
       params: {
         id: id,
@@ -64,7 +65,7 @@ export async function getSchedulesEventService(
 ): Promise<IScheduleEventRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.EVENT_SCHEDULES,
       queryParams: { ...params },
     });
@@ -97,7 +98,7 @@ export const putScheduleEventService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.EVENT_SCHEDULES_ID,
       params: {
         id: id,
@@ -115,7 +116,7 @@ export const deleteScheduleEventService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.EVENT_SCHEDULES_ID,
       params: {
         id: id,

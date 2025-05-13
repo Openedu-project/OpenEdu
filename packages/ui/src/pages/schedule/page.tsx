@@ -1,30 +1,28 @@
-import { getOrgByDomainService, getSchedulesService } from '@oe/api';
-import { Timer } from '@oe/assets';
-import { formatDateSlash, getCookie } from '@oe/core';
-import { Sparkle } from 'lucide-react';
-import { getTranslations } from 'next-intl/server';
-import ScheduleEventList from './_components/schedule-event-list';
-import ScheduleDateRangeFilter from './_components/schedule-filter';
-import ScheduleSearch from './_components/schedule-search';
+import { getOrgByDomainService, getSchedulesService } from "@oe/api";
+import { Timer } from "@oe/assets";
+import { formatDateSlash } from "@oe/core";
+import { Sparkle } from "lucide-react";
+import { getTranslations } from "next-intl/server";
+import ScheduleEventList from "./_components/schedule-event-list";
+import ScheduleDateRangeFilter from "./_components/schedule-filter";
+import ScheduleSearch from "./_components/schedule-search";
 
 export async function Schedule({
   searchParams,
 }: {
   searchParams: { [key: string]: string | undefined };
 }) {
-  const domain = (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? '';
-  const { search = '' } = await searchParams;
+  // const { search = "" } = await searchParams;
 
-  const [orgData, t] = await Promise.all([
-    getOrgByDomainService(undefined, {
-      domain,
-    }),
-    getTranslations('schedule.website'),
+  const [{ search }, orgData, t] = await Promise.all([
+    searchParams,
+    getOrgByDomainService(),
+    getTranslations("schedule.website"),
   ]);
   const orgId = orgData?.id;
 
   const scheduleRes = await getSchedulesService(undefined, {
-    orgID: orgId ?? '',
+    orgID: orgId ?? "",
   });
 
   const currentScheduleData = scheduleRes?.[0];
@@ -32,7 +30,7 @@ export async function Schedule({
   return (
     <div className="container space-y-4 py-12 text-center">
       <h1 className="giant-iheading-bold20 lg:giant-iheading-bold40 mb-5 md:mb-7 lg:mb-10">
-        {currentScheduleData?.name ?? ''}
+        {currentScheduleData?.name ?? ""}
       </h1>
       <div className="mb-4 flex flex-col items-center justify-center rounded-[16px] border border-primary py-6 md:mb-6">
         <div className="mb-4 flex items-center justify-center gap-4">
@@ -46,11 +44,17 @@ export async function Schedule({
               <Timer className="mx-auto" />
               &nbsp;
             </div>
-            <span className="flex items-center justify-center lg:justify-start">{t('timePeriod')}:</span>
+            <span className="flex items-center justify-center lg:justify-start">
+              {t("timePeriod")}:
+            </span>
             <span className="flex items-center justify-center text-primary lg:justify-start">
-              {formatDateSlash(Number(currentScheduleData?.start_at ?? Date.now()))}
+              {formatDateSlash(
+                Number(currentScheduleData?.start_at ?? Date.now())
+              )}
               &nbsp; -&nbsp;
-              {formatDateSlash(Number(currentScheduleData?.end_at ?? Date.now()))}
+              {formatDateSlash(
+                Number(currentScheduleData?.end_at ?? Date.now())
+              )}
               &nbsp;
             </span>
           </h2>
@@ -61,7 +65,9 @@ export async function Schedule({
           </div>
         </div>
 
-        <p className="mcaption-semibold16 px-5">{currentScheduleData?.description ?? ''}</p>
+        <p className="mcaption-semibold16 px-5">
+          {currentScheduleData?.description ?? ""}
+        </p>
       </div>
       <ScheduleSearch searchValue={search} />
       <div className="gird-cols-1 grid gap-10 xl:grid-cols-4">

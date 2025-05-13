@@ -16,7 +16,6 @@ export const createSystemConfigSWRKey = ({
   domain,
 }: { key: ISystemConfigKey; locales?: LanguageCode[]; domain?: string }) => {
   const { host } = getAPIReferrerAndOriginClient();
-  console.info('host', host, 'domain', domain);
   return buildUrl({
     endpoint: API_ENDPOINT.SYSTEM_CONFIGS,
     queryParams: {

@@ -1,6 +1,6 @@
-import bannerOpenEdu from '@oe/assets/images/openedu-homepage/hero-banner/hero-banner.png';
-import { extractHtmlToText } from '@oe/core';
-import type { Metadata } from 'next';
+import bannerOpenEdu from "@oe/assets/images/openedu-homepage/hero-banner/hero-banner.png";
+import { extractHtmlToText } from "@oe/core";
+import type { Metadata } from "next";
 
 export interface SEOProps {
   title?: string | { absolute: string };
@@ -17,7 +17,7 @@ export interface SEOProps {
     height?: number;
     alt?: string;
   };
-  twitterCard?: 'summary' | 'summary_large_image' | 'app' | 'player';
+  twitterCard?: "summary" | "summary_large_image" | "app" | "player";
   twitterSite?: string;
   favicon?: string;
   robots?: {
@@ -34,16 +34,16 @@ export interface SEOProps {
 export function SEOMetadata(props: SEOProps = {}): Metadata {
   const {
     title,
-    description = '',
+    description = "",
     keywords,
     author,
-    canonicalUrl = 'https://openedu.net',
-    path = '',
+    canonicalUrl = "https://openedu.net",
+    path = "",
     ogTitle,
     ogDescription,
     ogImage,
-    twitterCard = 'summary_large_image',
-    twitterSite = '@openedu',
+    twitterCard = "summary_large_image",
+    twitterSite = "@openedu",
     favicon,
     robots,
     noindex = false,
@@ -51,16 +51,18 @@ export function SEOMetadata(props: SEOProps = {}): Metadata {
   } = props;
 
   // Format title
-  const baseTitle = typeof title === 'string' ? title : title?.absolute;
-  const formattedTitle = baseTitle?.substring(0, 60) || 'OpenEdu';
+  const baseTitle = typeof title === "string" ? title : title?.absolute;
+  const formattedTitle = baseTitle?.substring(0, 60) || "OpenEdu";
 
   // Format description
   const formattedDescription = extractHtmlToText(description);
 
   // Keywords
   const keywordsList = [
-    'openedu.net',
-    ...(typeof keywords === 'string' ? keywords.split(',').map(k => k.trim()) : keywords || []),
+    "openedu.net",
+    ...(typeof keywords === "string"
+      ? keywords.split(",").map((k) => k.trim())
+      : keywords || []),
   ];
 
   // Robots
@@ -68,8 +70,8 @@ export function SEOMetadata(props: SEOProps = {}): Metadata {
   const shouldFollow = robots?.follow ?? !nofollow;
 
   // Canonical URL
-  const fullPath = path.startsWith('/') ? path : `/${path}`;
-  const fullUrl = `${canonicalUrl}${path ? fullPath : ''}`;
+  const fullPath = path.startsWith("/") ? path : `/${path}`;
+  const fullUrl = `${canonicalUrl}${path ? fullPath : ""}`;
 
   // Open Graph Image
   const resolvedOGImage = ogImage?.url
@@ -87,7 +89,8 @@ export function SEOMetadata(props: SEOProps = {}): Metadata {
       };
 
   return {
-    title: typeof title === 'string' ? formattedTitle : { absolute: formattedTitle },
+    title:
+      typeof title === "string" ? formattedTitle : { absolute: formattedTitle },
     description: formattedDescription,
     keywords: keywordsList,
 
@@ -99,9 +102,9 @@ export function SEOMetadata(props: SEOProps = {}): Metadata {
       googleBot: {
         index: shouldIndex,
         follow: shouldFollow,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
-        'max-video-preview': -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
       },
     },
 
@@ -109,10 +112,10 @@ export function SEOMetadata(props: SEOProps = {}): Metadata {
       title: ogTitle || formattedTitle,
       description: ogDescription || formattedDescription,
       url: fullUrl,
-      siteName: 'OpenEdu',
+      siteName: "OpenEdu",
       images: [resolvedOGImage],
-      locale: 'vi_VN',
-      type: 'website',
+      locale: "vi_VN",
+      type: "website",
     },
 
     twitter: {
@@ -128,8 +131,8 @@ export function SEOMetadata(props: SEOProps = {}): Metadata {
     alternates: {
       canonical: fullUrl,
       languages: {
-        'vi-VN': '/vi',
-        'en-US': '/en',
+        "vi-VN": "/vi",
+        "en-US": "/en",
       },
     },
 
@@ -140,10 +143,10 @@ export function SEOMetadata(props: SEOProps = {}): Metadata {
       },
     }),
 
-    viewport: {
-      width: 'device-width',
-      initialScale: 1,
-      maximumScale: 5,
-    },
+    // viewport: {
+    //   width: 'device-width',
+    //   initialScale: 1,
+    //   maximumScale: 5,
+    // },
   };
 }
