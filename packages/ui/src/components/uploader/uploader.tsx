@@ -225,9 +225,10 @@ export const Uploader = (props: UploaderProps) => {
   );
 
   const handleRemove = useCallback(
-    (file: FileType) => {
+    async (file: FileType) => {
       const updated = files.filter(f => f.fileId !== file.fileId);
-      onChange?.(multiple ? (updated as IFileResponse[]) : (updated[0] as IFileResponse));
+      await Promise.resolve(onChange?.(multiple ? (updated as IFileResponse[]) : (updated[0] as IFileResponse)));
+
       setFiles(updated); // update files
 
       trigger.current?.clearInput();
