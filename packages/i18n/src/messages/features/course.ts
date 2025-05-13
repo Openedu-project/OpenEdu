@@ -327,6 +327,8 @@ export const courseMessages = {
         questionRequired: 'Must have at least 1 question',
         correctAnswerRequired: 'Must select at least one correct answer',
       },
+      finalPriceLargeZero: 'The final price must be more than zero.',
+      discountPriceLessUnitCost: 'Discount price must be less than unit cost.',
     },
 
     // Course information section
