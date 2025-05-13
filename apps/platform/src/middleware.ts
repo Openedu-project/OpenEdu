@@ -1,15 +1,15 @@
-import { decodeJWT, isTokenExpiringSoon } from '@oe/api';
 import { i18nMiddleware } from '@oe/i18n';
-import { type NextRequest, NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
+// biome-ignore lint/suspicious/useAwait: <explanation>
 export async function middleware(request: NextRequest) {
-  const session = request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY)?.value;
-  if (session) {
-    const decodedSession = await decodeJWT(session);
-    if (isTokenExpiringSoon(decodedSession)) {
-      return NextResponse.redirect(new URL(`/api/auth/refresh-token?redirectUrl=${request.url}`, request.url));
-    }
-  }
+  // const session = request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY)?.value;
+  // if (session) {
+  //   const decodedSession = await decodeJWT(session);
+  //   if (isTokenExpiringSoon(decodedSession)) {
+  //     return NextResponse.redirect(new URL(`/api/auth/refresh-token?redirectUrl=${request.url}`, request.url));
+  //   }
+  // }
 
   const headersList = request.headers;
   const { host: appHost, href } = request.nextUrl;

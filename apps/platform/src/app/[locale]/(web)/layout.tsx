@@ -80,3 +80,5 @@ export default async function OpeneduLayout({
     </MainLayout>
   );
 }
+
+// export default withLocale(OpeneduLayout);

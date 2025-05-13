@@ -1,31 +1,30 @@
 import { fonts } from "@oe/core";
 import "@oe/config/tailwindcss/global.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { getI18nConfigServer } from "@oe/api";
+import { getI18nConfig } from "@oe/api";
 import Favicon from "@oe/assets/images/favicon.png";
-import { DEFAULT_LOCALE, redirect } from "@oe/i18n";
+// import { DEFAULT_LOCALE } from "@oe/i18n";
 import { Provider, Toaster } from "@oe/ui";
 import type { Metadata } from "next";
-import { hasLocale } from "next-intl";
 import Script from "next/script";
 import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | OpenEdu',
-    default: 'OpenEdu'
+    template: "%s | OpenEdu",
+    default: "OpenEdu",
   },
   icons: {
     icon: Favicon.src,
   },
 };
 
-export async function generateStaticParams() {
-  const i18nConfig = await getI18nConfigServer();
-  return (i18nConfig?.locales ?? [DEFAULT_LOCALE])?.map((locale) => ({
-    locale,
-  }));
-}
+// export async function generateStaticParams() {
+//   const i18nConfig = await getI18nConfig();
+//   return (i18nConfig?.locales ?? [DEFAULT_LOCALE])?.map((locale) => ({
+//     locale,
+//   }));
+// }
 
 export default async function RootLayout({
   children,
@@ -34,14 +33,17 @@ export default async function RootLayout({
   children: ReactNode;
   params: Promise<{ locale: string }>;
 }>) {
-  const [{ locale }, i18nConfig] = await Promise.all([
-    params,
-    getI18nConfigServer(),
-  ]);
+  const [{ locale }, i18nConfig] = await Promise.all([params, getI18nConfig()]);
 
-  if (!hasLocale(i18nConfig?.locales ?? [], locale)) {
-    redirect({ href: "/", locale: DEFAULT_LOCALE });
-  }
+  console.log(
+    "=======================i18nConfig===================",
+    i18nConfig,
+    locale
+  );
+
+  // if (!hasLocale(i18nConfig?.locales ?? [], locale)) {
+  //   redirect({ href: "/", locale: DEFAULT_LOCALE });
+  // }
 
   const fontVariables = Object.values(fonts)
     .map((font) => font.variable)

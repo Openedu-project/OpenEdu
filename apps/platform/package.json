@@ -4,12 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "node .next/standalone/apps/platform/server.mjs",
-    "typecheck": "tsc --noEmit",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",
-    "clean:build": "rm -rf .turbo && rm -rf .next"
+    "clean:build": "rm -rf .turbo && rm -rf .next",
+    "dev": "next dev --turbopack",
+    "start": "node .next/standalone/apps/platform/server.js",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@next/third-parties": "^15.3.2",
@@ -29,9 +29,11 @@
     "react-hook-form": "^7.56.3",
     "react-share": "^5.2.2",
     "sonner": "^2.0.3",
+    "sst": "3.14.16",
     "swr": "^2.3.3",
     "zod": "^3.24.4",
-    "zustand": "^5.0.4"
+    "zustand": "^5.0.4",
+    "sharp": "^0.34.1"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "15.3.2",
