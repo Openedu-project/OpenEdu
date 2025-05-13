@@ -22,6 +22,7 @@ const FORMAT_PATTERNS = {
   DAY_HOUR_MINUTE: 'eeee p', // e.g., "Monday 12:00 PM"
   MONTH_DAY_TIME: 'MMM d p', // e.g., "Apr 29 12:00 PM"
   DATE_TIME_ZONE: 'PPppxx', // e.g., "Apr 29, 2023, 12:00 PM GMT+07:00"
+  DATE_SLASH: 'dd/MM/yyyy', // e.g., "29/04/2023"
 };
 
 /**
@@ -146,6 +147,16 @@ export function formatDateHourMinute(timestamp: number): string {
   const date = fromUnixTime((timestamp ?? 0) / 1000);
   const zonedDate = toZonedTime(date, TIME_ZONE);
   return format(zonedDate, FORMAT_PATTERNS.DATE_HOUR_MINUTE, { locale });
+}
+
+/**
+ * Formats a Unix timestamp into a date string with slash separators: 30/04/2025
+ */
+export function formatDateSlash(timestamp: number): string {
+  const locale = LocaleManager.getInstance().getLocale();
+  const date = fromUnixTime((timestamp ?? 0) / 1000);
+  const zonedDate = toZonedTime(date, TIME_ZONE);
+  return format(zonedDate, FORMAT_PATTERNS.DATE_SLASH, { locale });
 }
 
 /**

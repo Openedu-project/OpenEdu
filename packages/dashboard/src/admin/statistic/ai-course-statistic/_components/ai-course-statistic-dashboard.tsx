@@ -82,6 +82,8 @@ export function AICourseStatisticDashboard() {
         endDate={endDate}
         setStartDate={setStartDate}
         setEndDate={setEndDate}
+        params={params}
+        campaignKey={campaignKey ?? ''}
       />
       <AICourseStatisticTabs params={params} campaignKey={campaignKey ?? ''} />
     </div>

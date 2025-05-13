@@ -10,14 +10,13 @@ import { TabsTrigger } from '@radix-ui/react-tabs';
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as dateFnsLocales from 'date-fns/locale';
 import { CalendarDays } from 'lucide-react';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { usePathname, useRouter } from '#common/navigation';
 import { Tabs, TabsList } from '#shadcn/tabs';
 
 export default function ScheduleDateRangeFilter() {
   const t = useTranslations('schedule.website');
-  const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -177,7 +176,9 @@ export default function ScheduleDateRangeFilter() {
           months={1}
           ranges={state}
           direction="vertical"
-          locale={dateFnsLocales[locale as keyof typeof dateFnsLocales]}
+          // TODO
+          // locale={dateFnsLocales[locale as keyof typeof dateFnsLocales]}
+          locale={dateFnsLocales['vi' as keyof typeof dateFnsLocales]}
           weekStartsOn={1}
           className="max-w-[296px]"
         />
