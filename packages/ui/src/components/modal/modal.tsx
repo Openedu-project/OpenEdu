@@ -215,6 +215,10 @@ export const Modal = <TSchema extends z.ZodType>({
 
   const modalContent = (
     <DialogContent
+      onEscapeKeyDown={e => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
       onPointerDownOutside={e => e.preventDefault()}
       className={`flex max-w-[90vw] flex-col gap-0 overflow-hidden p-0 md:max-w-lg ${
         !hasCloseIcon && '[&>button]:hidden'

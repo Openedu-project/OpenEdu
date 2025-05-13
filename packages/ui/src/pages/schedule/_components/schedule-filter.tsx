@@ -32,13 +32,18 @@ export default function ScheduleDateRangeFilter() {
 
   const handleRouter = useCallback(
     (startDate: string, endDate: string) => {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
       router.push(
         `${pathname}?${buildQueryParam({
           currentParams: searchParams,
           params: [
             {
               name: 'start_date',
-              value: startDate ? convertToTimeStamp(startDate).toString() : Date.now().toString(),
+              value: startDate
+                ? convertToTimeStamp(startDate).toString()
+                : convertToTimeStamp(today.toString()).toString(),
             },
             {
               name: 'end_date',
@@ -57,6 +62,7 @@ export default function ScheduleDateRangeFilter() {
     (value: string) => {
       setActiveTab(value);
       const today = new Date();
+      today.setHours(0, 0, 0, 0);
 
       if (value === 'today') {
         setState([

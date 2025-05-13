@@ -45,6 +45,7 @@ export function CourseListFilter({
   const [checkedLevelIds, setCheckedLevelIds] = useState<string[]>(levelIdsSelected ?? []);
   const [checkedOrgIds, setCheckedOrgIds] = useState<string[]>(orgIdsSelected ?? []);
   const [checkedCompletedCourse, setCheckedCompletedCourse] = useState<string[]>(completeCourseSelected ?? []);
+  const [open, setOpen] = useState(false);
 
   const [openSections, setOpenSections] = useState({
     categories: true,
@@ -210,6 +211,7 @@ export function CourseListFilter({
     }
     setCheckboxes(updatedCheckboxes);
     router.push(pathname);
+    setOpen(false);
   }, [router, pathname, checkboxes]);
 
   const handleApplyFilter = useCallback(() => {
@@ -240,10 +242,11 @@ export function CourseListFilter({
         scroll: true,
       }
     );
+    setOpen(false);
   }, [checkedCategoryIds, checkedLevelIds, checkedOrgIds, checkedCompletedCourse, router, pathname, searchParams]);
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button variant="outline">
           <SlidersHorizontal />

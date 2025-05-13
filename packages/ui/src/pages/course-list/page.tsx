@@ -14,6 +14,7 @@ export async function CoursesListPage({
   searchParams: { [key: string]: string | undefined };
 }) {
   const t = await getTranslations('courseList');
+
   const {
     search = '',
     sort = 'desc',

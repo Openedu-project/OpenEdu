@@ -189,6 +189,39 @@ data-code="${safeEncodeURIComponent(originalCode)}">
       </div>
       `;
     },
+    table(this: Renderer, token: Tokens.Table) {
+      // Build the header row
+      let header = '';
+
+      // header
+      let cell = '';
+      for (const headerCell of token.header) {
+        cell += this.tablecell(headerCell);
+      }
+      header += this.tablerow({ text: cell });
+
+      let body = '';
+      for (const row of token.rows ?? []) {
+        cell = '';
+        for (const cellContent of row ?? []) {
+          cell += this.tablecell(cellContent);
+        }
+
+        body += this.tablerow({ text: cell });
+      }
+      if (body) {
+        body = `<tbody>${body}</tbody>`;
+      }
+
+      return `
+        <div class="scrollbar table-container w-full overflow-x-auto my-2">
+          <table class="min-w-full !w-auto">
+            ${header}
+            ${body}
+          </table>
+        </div>
+      `;
+    },
   },
 });
 

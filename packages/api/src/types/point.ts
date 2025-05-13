@@ -87,6 +87,7 @@ export interface IMyPointProfileRes {
   ref_code: IRefcodeProgram;
   new_points: INewPoints;
   point_wallets: IPointwallet[];
+  total_reward: number;
 }
 
 export interface IClaimPointPayload {

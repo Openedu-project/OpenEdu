@@ -21,7 +21,7 @@ export default async function InviteReferralProgramList() {
         id={data?.id ?? ''}
         data={data?.setting?.ref_count_bonus ?? []}
         milestones={myPointProfileRes?.new_points?.milestone?.milestones ?? []}
-        totalReferrals={data?.total_reward ?? 0}
+        totalReferrals={myPointProfileRes?.total_reward ?? 0}
         totalEarnedPoints={Number(myPointProfileRes?.point?.amount) ?? 0}
         totalBalance={myPointProfileRes?.point_wallets?.[0]?.available_balance ?? '0'}
         startDate={data?.start_date ?? 0}
