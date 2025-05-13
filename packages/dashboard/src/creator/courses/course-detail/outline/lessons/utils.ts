@@ -36,7 +36,13 @@ export const validateForm = (lesson: ILessonSchema, tCourse: TFunction) => {
             contentErrors.push(tCourse(`validation.content.${content.type}Required`));
           }
           break;
-        case 'text':
+        case 'text': {
+          const plainText = content.content.replace(/<[^>]*>/g, '');
+          if ((plainText?.length ?? 0) === 0) {
+            contentErrors.push(tCourse(`validation.content.${content.type}Required`));
+          }
+          break;
+        }
         case 'embedded':
           if (!content.content) {
             contentErrors.push(tCourse('validation.content.required'));
