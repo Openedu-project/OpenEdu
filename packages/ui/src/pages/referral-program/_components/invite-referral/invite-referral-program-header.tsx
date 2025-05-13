@@ -27,7 +27,6 @@ export async function InviteReferralProgramHeader({
   endDate: number;
 }) {
   const t = await getTranslations('referralProgram.header');
-
   const sortedByReachCount = [...data].sort((a, b) => a.reach_count - b.reach_count);
 
   const result = sortedByReachCount.map(item => {
@@ -37,11 +36,48 @@ export async function InviteReferralProgramHeader({
       reached: hasReached,
     };
   });
-  const latestReachedCount = milestones?.[milestones?.length - 1]?.milestone_reached;
+  const calculateProgressPercentage = (currentReferrals: number) => {
+    if (!sortedByReachCount || sortedByReachCount.length === 0) {
+      return 0;
+    }
 
-  const reachedMilestones = result.filter(item => item.reached).length;
-  const totalMilestones = result.length;
-  const progressPercentage = (reachedMilestones / totalMilestones) * 100;
+    const tiers = [0, ...sortedByReachCount.map(item => item.reach_count)];
+
+    const lastTier = tiers[tiers.length - 1];
+    if (lastTier !== undefined && currentReferrals >= lastTier) {
+      return 100;
+    }
+
+    let currentIndex = 0;
+    for (let i = 1; i < tiers.length; i++) {
+      const currentTier = tiers[i];
+      if (currentTier !== undefined && currentReferrals < currentTier) {
+        currentIndex = i - 1;
+        break;
+      }
+      if (i === tiers.length - 1) {
+        currentIndex = i - 1;
+      }
+    }
+
+    const lowerTier = tiers[currentIndex] ?? 0;
+    const upperTier = tiers[currentIndex + 1] ?? 0;
+
+    const percentages: number[] = [];
+    for (let i = 0; i < tiers.length; i++) {
+      const percentage = (i / (tiers.length - 1)) * 100;
+      percentages.push(percentage);
+    }
+
+    const lowerPercentage = percentages[currentIndex];
+    const upperPercentage = percentages[currentIndex + 1] ?? lowerPercentage;
+
+    const progress = (currentReferrals - lowerTier) / (upperTier - lowerTier);
+
+    return (lowerPercentage ?? 0) + progress * ((upperPercentage ?? 0) - (lowerPercentage ?? 0));
+  };
+
+  const progressPercentage = calculateProgressPercentage(totalReferrals);
 
   return (
     <section className="block">
@@ -90,7 +126,7 @@ export async function InviteReferralProgramHeader({
             </div>
           </div>
           <p className="mcaption-regular10 mt-4 text-center text-neutral-300">
-            {latestReachedCount ?? 0}/{sortedByReachCount?.[sortedByReachCount?.length - 1]?.reach_count ?? 0}
+            {totalReferrals ?? 0}/{sortedByReachCount?.[sortedByReachCount?.length - 1]?.reach_count ?? 0}
           </p>
         </div>
       </div>

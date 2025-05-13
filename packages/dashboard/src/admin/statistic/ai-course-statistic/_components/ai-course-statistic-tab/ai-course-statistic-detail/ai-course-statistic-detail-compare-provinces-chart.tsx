@@ -191,10 +191,10 @@ export function AICourseStatisticTabDetailCompareProvincesChart({
 }: IAICourseStatisticTabDetailCompareProvincesChartProps) {
   // Transform the original data to match the chart format
   const chartData = useMemo<ChartDataItem[]>(() => {
-    // Filter provinces with learner_count > 0 and exclude "Tự do" (which is not a real province)
+    // Filter provinces with learner_count > 0
     return (
       dataAIEduStatisticProvinces
-        .filter(province => province.learner_count > 0 && province.province !== 'Tự do')
+        .filter(province => province.learner_count > 0)
         .map(province => ({
           name: province.province,
           totalStudents: province.learner_count,

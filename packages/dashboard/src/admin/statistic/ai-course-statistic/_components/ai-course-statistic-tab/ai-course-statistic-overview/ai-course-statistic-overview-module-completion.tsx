@@ -3,7 +3,7 @@
 import type { IAIStatisticSectionCompletion } from '@oe/api';
 import { Card, CardContent, ChartContainer, ChartTooltip } from '@oe/ui';
 import { type JSX, useMemo } from 'react';
-import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, XAxis, YAxis } from 'recharts';
+import { Bar, BarChart, CartesianGrid, Legend, XAxis, YAxis } from 'recharts';
 
 interface ModuleData {
   module: string;
@@ -127,38 +127,36 @@ export function AiCourseStatisticModuleCompletionChart({
     <Card>
       <CardContent>
         <ChartContainer config={chartConfig} className="h-96 w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={chartData} margin={CHART_MARGIN}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="module" />
-              <YAxis domain={[0, 'auto']} tickCount={5} />
+          <BarChart data={chartData} margin={CHART_MARGIN}>
+            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+            <XAxis dataKey="module" />
+            <YAxis domain={[0, 'auto']} tickCount={5} />
 
-              {/* Map courses to Bar components */}
-              {dataAIEduStatisticSectionCompletion.map((course, index) => (
-                <Bar
-                  key={course.course_cuid}
-                  dataKey={course.course_cuid}
-                  radius={[4, 4, 0, 0]}
-                  barSize={BAR_SIZE}
-                  name={course.course_name}
-                  fill={`var(--chart-${index + 1})`}
-                  activeBar={{
-                    fill: `var(--chart-${index + 1})`,
-                    fillOpacity: 0.6,
-                  }}
-                />
-              ))}
-
-              <ChartTooltip content={<CustomTooltipContent />} cursor={{ fill: '#f8f9fa', opacity: 0.6 }} />
-              <Legend
-                verticalAlign="bottom"
-                height={45}
-                iconType="square"
-                iconSize={10}
-                wrapperStyle={{ paddingTop: '20px' }}
+            {/* Map courses to Bar components */}
+            {dataAIEduStatisticSectionCompletion.map((course, index) => (
+              <Bar
+                key={course.course_cuid}
+                dataKey={course.course_cuid}
+                radius={[4, 4, 0, 0]}
+                barSize={BAR_SIZE}
+                name={course.course_name}
+                fill={`var(--chart-${index + 1})`}
+                activeBar={{
+                  fill: `var(--chart-${index + 1})`,
+                  fillOpacity: 0.6,
+                }}
               />
-            </BarChart>
-          </ResponsiveContainer>
+            ))}
+
+            <ChartTooltip content={<CustomTooltipContent />} cursor={{ fill: '#f8f9fa', opacity: 0.6 }} />
+            <Legend
+              verticalAlign="bottom"
+              height={45}
+              iconType="square"
+              iconSize={10}
+              wrapperStyle={{ paddingTop: '20px' }}
+            />
+          </BarChart>
         </ChartContainer>
       </CardContent>
     </Card>
