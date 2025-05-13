@@ -8,7 +8,7 @@ const RankingDetailOutline = async ({ id }: { id: string }) => {
     getOeRefferralStatisticsAIEdu(undefined, { params: {} }),
     getOeRefferralLeaderBoardsAIEdu(undefined, {
       params: {
-        sort: "percent_cert_on_ref desc",
+        sort: "percent_cert_on_reg desc",
         local_level: 2,
         parent_id: id,
         per_page: 100,
