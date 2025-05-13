@@ -52,15 +52,17 @@ export function VirtualizedCommandBase<T>({
           }}
           className="p-0"
         >
-          <Virtuoso
-            style={{ height: `${listHeight}px` }}
-            totalCount={options.length}
-            itemSize={() => ITEM_HEIGHT}
-            overscan={5}
-            data={options}
-            itemContent={(_, option) => renderItem(option)}
-            className="scrollbar"
-          />
+          <div onWheel={e => e.stopPropagation()} onTouchMove={e => e.stopPropagation()} style={{ height: '100%' }}>
+            <Virtuoso
+              style={{ height: `${listHeight}px` }}
+              totalCount={options.length}
+              itemSize={() => ITEM_HEIGHT}
+              overscan={5}
+              data={options}
+              itemContent={(_, option) => renderItem(option)}
+              className="scrollbar"
+            />
+          </div>
         </CommandGroup>
       </CommandList>
     </Command>
