@@ -2,7 +2,7 @@
 import type { ICourseOutline } from '@oe/api';
 import type { IFileResponse } from '@oe/api';
 import type { ICoursePreviewVideo } from '@oe/api';
-import { CirclePlayIcon, EyeIcon } from 'lucide-react';
+import { EyeIcon, Play } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Image } from '#components/image';
@@ -45,23 +45,21 @@ const PreviewOverlay = ({ totalMedias }: PreviewOverlayProps) => {
   const t = useTranslations('courseOutline.coursePreview');
 
   return (
-    <div className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 flex w-full flex-col items-center">
-      <div className="mb-2 grid h-8 w-8 items-center justify-center rounded-full bg-primary-foreground shadow-shadow-2">
-        {/* <PlayFilled color="var(--primary)" /> */}
-        <CirclePlayIcon className="h-6 w-6 text-primary" />
+    <>
+      <div className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 mb-2 flex grid h-10 w-10 items-center justify-center rounded-full bg-white shadow-shadow-2">
+        <Play color="var(--primary)" className="fill-primary" />
       </div>
-      <div className="flex items-center gap-2 rounded-[32px] bg-primary-foreground px-2 py-1 lg:rounded-[40px] lg:px-3 lg:py-2">
-        <EyeIcon className="h-5 w-5 text-primary" />
-        <p className="giant-iheading-semibold14 text-primary">{t('previewLesson', { total: totalMedias })}</p>
+      <div className="absolute bottom-0 left-0 flex w-full items-center justify-center gap-2 rounded-b-lg bg-gradient-5 py-1 lg:py-[10px]">
+        <EyeIcon className="h-5 w-5 text-white" />
+        <p className="giant-iheading-semibold14 text-white">{t('previewLesson', { total: totalMedias })}</p>
       </div>
-    </div>
+    </>
   );
 };
 
 const ThumbnailImage = ({
   url,
   name,
-  hasOverlay = false,
 }: {
   url: string;
   name: string;
@@ -73,9 +71,10 @@ const ThumbnailImage = ({
     aspectRatio="16:9"
     fill
     containerHeight="auto"
-    className={cn('w-full rounded-lg bg-transparent', hasOverlay && 'opacity-75')}
+    className={cn('w-full rounded-lg bg-transparent')}
     rounded="lg"
     priority
+    wrapClassNames="border-none"
   />
 );
 

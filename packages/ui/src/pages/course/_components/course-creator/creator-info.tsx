@@ -1,14 +1,11 @@
 import type { IUserProfile } from '@oe/api';
-import { Global } from '@oe/assets';
 import { abbreviateNumber } from '@oe/core';
-import { Link } from '#common/navigation';
-import { SocialIcon, getFilteredSocialProps } from '#components/social-icon';
 
-const HTTP_REGEX = /^(https?:\/\/)/;
-const HTTP_PREFIX = 'https://';
+// const HTTP_REGEX = /^(https?:\/\/)/;
+// const HTTP_PREFIX = 'https://';
 
 export function CreatorInfor({ creatorData }: { creatorData: IUserProfile }) {
-  const props = getFilteredSocialProps(creatorData?.props as unknown as Record<string, string>);
+  // const props = getFilteredSocialProps(creatorData?.props as unknown as Record<string, string>);
 
   const stats = [
     {
@@ -27,7 +24,7 @@ export function CreatorInfor({ creatorData }: { creatorData: IUserProfile }) {
 
   return (
     <>
-      <p className="mcaption-semibold14 lg:mcaption-semibold16 line-clamp-2">{creatorData?.headline}</p>
+      {/* <p className="mcaption-semibold14 lg:mcaption-semibold16 line-clamp-2">{creatorData?.headline}</p> */}
 
       <div className="mcaption-regular16 text-primary">
         {stats.map((stat, index) => (
@@ -39,7 +36,7 @@ export function CreatorInfor({ creatorData }: { creatorData: IUserProfile }) {
         ))}
       </div>
 
-      <div className="mcaption-regular16 flex flex-wrap gap-x-4 gap-y-2">
+      {/* <div className="mcaption-regular16 flex flex-wrap gap-x-4 gap-y-2">
         {Object.entries(props).map(([key, value]) => {
           const hasHttp = HTTP_REGEX.test(value);
           if (value) {
@@ -62,7 +59,7 @@ export function CreatorInfor({ creatorData }: { creatorData: IUserProfile }) {
           }
           return null;
         })}
-      </div>
+      </div> */}
     </>
   );
 }

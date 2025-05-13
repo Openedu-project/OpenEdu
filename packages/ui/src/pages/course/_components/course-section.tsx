@@ -6,13 +6,14 @@ interface IProps {
   title: string;
   titleClass?: string;
   containerClass?: string;
+  childrenClass?: string;
 }
 
-export const CourseSection = ({ children, title, titleClass, containerClass }: IProps) => {
+export const CourseSection = ({ children, title, titleClass, containerClass, childrenClass }: IProps) => {
   return (
     <div className={cn('flex flex-col gap-1', containerClass)}>
       <h2 className={cn('mcaption-semibold18 capitalize', titleClass)}>{title}</h2>
-      {children}
+      <div className={cn('rounded-lg border border-primary/20 p-4 shadow-7 lg:p-6', childrenClass)}>{children}</div>
     </div>
   );
 };

@@ -202,6 +202,8 @@
   --gradient-1: linear-gradient(255deg, #B8F4F8 6.18%, #EDE3FE 70.53%);
   --gradient-3: linear-gradient(180deg, #F9F9FF 0%, #EDEDF2 100%);
   --gradient-4: linear-gradient(180deg, #F7FFF8 0%, #D3F9D6 100%);
+  --gradient-5: linear-gradient(1deg, rgba(47, 42, 84, 0.35) 29.53%, rgba(13, 0, 63, 0.56) 111.77%);
+  --gradient-bg-3: linear-gradient(6deg, rgba(255, 213, 242, 0.50) 6.56%, rgba(226, 161, 253, 0.50) 41.61%, rgba(160, 244, 249, 0.70) 99.08%);
 
   --primary-20: hsl(243 100% 98%);
   --primary-50: hsl(238 47% 86%);

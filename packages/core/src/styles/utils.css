@@ -95,6 +95,14 @@
   background-image: var(--gradient-4);
 }
 
+@utility bg-gradient-5 {
+  background-image: var(--gradient-5);
+}
+
+@utility gradient-bg-3 {
+  background-image: var(--gradient-bg-3);
+}
+
 @utility bg-base-cool {
   background-color: var(--base-cool);
 }
