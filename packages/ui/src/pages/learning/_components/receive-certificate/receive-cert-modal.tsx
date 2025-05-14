@@ -15,6 +15,7 @@ import { useUploadCertificate } from '#components/pdf-certificate';
 import { Button } from '#shadcn/button';
 import { Label } from '#shadcn/label';
 import { useSocketStore } from '#store/socket';
+import { useProgress } from '../../_context';
 
 interface IProps {
   certificate: ICertificate;
@@ -24,6 +25,10 @@ const ReceiveCertificateModal = ({ certificate }: IProps) => {
   const tReceiveCertModal = useTranslations('receiveCertificateModal');
   const { certificateData } = useSocketStore();
   const { dataMe } = useGetMe();
+
+  const {
+    state: { isNavigating },
+  } = useProgress();
 
   const [learnerName, setLearnerName] = useState<string | undefined>();
   const [projectName, setProjectName] = useState<string | undefined>();
@@ -185,7 +190,7 @@ const ReceiveCertificateModal = ({ certificate }: IProps) => {
   };
 
   useEffect(() => {
-    if (certificateData?.data?.can_receive && !certificateData.data.is_received) {
+    if (!isNavigating && certificateData?.data?.can_receive && !certificateData.data.is_received) {
       setIsOpen(true);
     } else {
       setIsOpen(false);
@@ -198,7 +203,7 @@ const ReceiveCertificateModal = ({ certificate }: IProps) => {
     }
   }, [dataMe]);
 
-  return (
+  return isOpen ? (
     <Modal
       title={step === 1 ? tReceiveCertModal('congratulations') : tReceiveCertModal('yourCert')}
       open={isOpen}
@@ -217,7 +222,7 @@ const ReceiveCertificateModal = ({ certificate }: IProps) => {
       {step === 1 ? renderStep1() : renderStep2()}
       {renderFooter()}
     </Modal>
-  );
+  ) : null;
 };
 
 export { ReceiveCertificateModal };
