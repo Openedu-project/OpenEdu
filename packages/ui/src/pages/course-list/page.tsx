@@ -45,6 +45,7 @@ export async function CoursesListPage({
     <div>
       <CourseListSearch searchValue={search} />
       <CourseListHeader
+        isOpenEdu={isOpenEdu}
         totalResult={courses?.pagination?.total_items ?? 0}
         sortValue={sort}
         categoryIdsSelected={category_id_in.split(',') ?? []}
