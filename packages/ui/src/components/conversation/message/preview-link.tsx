@@ -59,9 +59,10 @@ export const LinkPreviewHydration = memo(() => {
 
     const previewsData = Array.from(wrappers).map(wrapper => {
       const linkElement = wrapper.querySelector('a');
-      while (wrapper.firstChild) {
-        wrapper.removeChild(wrapper.firstChild);
+      if (linkElement) {
+        linkElement.style.cssText = 'display: none';
       }
+
       return {
         href: linkElement?.href ?? '',
         text: linkElement?.textContent ?? '',
