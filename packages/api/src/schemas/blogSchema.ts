@@ -7,9 +7,14 @@ export const blogSchema = z.object({
   }),
   locale: z.string(),
   thumbnail: z.preprocess(
-    val => (val === undefined || (Array.isArray(val) && val.length === 0) ? null : val),
+    val =>
+      val === undefined ||
+      (Array.isArray(val) && val.length === 0) ||
+      !Object.keys(val as { id: string }).includes('id')
+        ? null
+        : val,
     z
-      .union([z.array(fileResponseSchema), fileResponseSchema])
+      .union([z.array(fileResponseSchema), fileResponseSchema], { message: 'blogForm.isRequiredThumbnail' })
       .nullable()
       .refine(data => data !== null, {
         message: 'blogForm.isRequiredThumbnail',
