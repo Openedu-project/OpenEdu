@@ -24,7 +24,7 @@ export default async function TermAndConditionPage() {
 
   return (
     <div
-      className="mcaption-regular16 tiptap container py-6"
+      className="mcaption-regular16 rich-text container py-6"
       // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
       dangerouslySetInnerHTML={{ __html: builderData as string | TrustedHTML }}
     />
