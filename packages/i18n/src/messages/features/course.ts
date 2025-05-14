@@ -336,6 +336,12 @@ export const courseMessages = {
       title: 'Course Information',
 
       sections: {
+        short_desc: {
+          title: "Short Description",
+          subtitle: "The short description is used to describe the course",
+          placeholder: "Write short description here",
+          characters: "characters",
+        },
         description: {
           title: 'Description',
           subtitle: 'The description is used to describe the course',

@@ -28,7 +28,7 @@ export function CreatorColabs() {
         <div className="flex-1 space-y-3">
           <Link
             href={userProfileUrl(creatorData?.username)}
-            className="giant-iheading-bold16 lg:giant-iheading-semibold20 h-fit p-0 text-current hover:no-underline"
+            className="!giant-iheading-semibold16 lg:giant-iheading-semibold20 h-fit p-0 text-current hover:no-underline"
           >
             {userName}
           </Link>

@@ -101,10 +101,10 @@ const PaymentCard = () => {
             entityId={cuid}
             entityType="course"
             isWishlist={courseData?.is_wishlist}
-            className="h-6 w-6 shrink-0 border-primary md:h-8 md:w-8"
+            className="h-8 w-8 shrink-0 border-primary"
             onSuccess={updateWishlistStatus}
           />
-          <ShareButton courseData={courseData} />
+          <ShareButton courseData={courseData} className="h-8 w-8" />
         </div>
       </CardFooter>
     </Card>

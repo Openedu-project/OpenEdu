@@ -26,10 +26,10 @@ export function CreatorInfor({ creatorData }: { creatorData: IUserProfile }) {
     <>
       {/* <p className="mcaption-semibold14 lg:mcaption-semibold16 line-clamp-2">{creatorData?.headline}</p> */}
 
-      <div className="mcaption-regular16 text-primary">
+      <div className="mcaption-regular14 lg:mcaption-regular16 flex flex-wrap text-primary">
         {stats.map((stat, index) => (
           <span key={index} className={index < stats.length - 1 ? 'mr-3' : ''}>
-            <span className="mcaption-semibold16">{abbreviateNumber(stat.value)}</span>
+            <span className="mcaption-semibold14 lg:mcaption-semibold16">{abbreviateNumber(stat.value)}</span>
             &nbsp;
             {stat.label}
           </span>

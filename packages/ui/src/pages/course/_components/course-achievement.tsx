@@ -15,7 +15,10 @@ export function CourseAchievements({
   return (
     <>
       {achievements?.length > 0 ? (
-        <CourseSection title={tCourse('courseAchivements')} childrenClass="gap-2 grid grid-cols-1 lg:grid-cols-2">
+        <CourseSection
+          title={tCourse('courseAchivements')}
+          childrenClass="gap-2 gap-x-8 grid grid-cols-1 lg:grid-cols-2"
+        >
           {achievements
             ?.filter(item => item?.length > 0)
             ?.map((achievement, index) => {
