@@ -135,9 +135,6 @@ Partial<ModalProps<any>> & { formData?: IFormResponse }) {
                         {...(fieldType === 'multipleSelection' && {
                           options: rest.options,
                           hasOtherOption: rest?.otherOption,
-                          // onAddOtherOption: (val: string) => {
-                          //   rest?.onChange?.(val);
-                          // },
                         })}
                         {...((fieldType === 'checkbox' || fieldType === 'switch') && {
                           checked: field.value ?? false,
