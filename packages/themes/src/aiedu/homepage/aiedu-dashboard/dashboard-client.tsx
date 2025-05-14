@@ -12,7 +12,7 @@ const AieduHomepageDashboardClient: SectionComponent<'homepage', 'aieduDashboard
   const { dataOeRefferralLeaderBoardsAIEdu } = useGetOeRefferralLeaderBoardsAIEdu(
     dataAIEduSystemConfig?.[0]?.value?.campaign_key,
     {
-      sort: 'percent_cert_on_reg desc',
+      // sort: 'percent_cert_on_reg desc',
       local_level: 1,
     }
   );

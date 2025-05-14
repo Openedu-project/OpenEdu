@@ -553,20 +553,8 @@ export const createAieduAuthLayoutConfig = (getThemeTranslation: (path: string[]
           colSpan: 2,
           items: [
             {
-              href: '/',
+              href: 'https://t.me/phocapungdungai',
               label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'items', 'items-0', 'label']),
-            },
-            {
-              href: '/',
-              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'items', 'items-1', 'label']),
-            },
-            {
-              href: '/',
-              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'items', 'items-2', 'label']),
-            },
-            {
-              href: '/',
-              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'items', 'items-3', 'label']),
             },
           ],
         },
