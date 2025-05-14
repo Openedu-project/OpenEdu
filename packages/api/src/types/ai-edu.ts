@@ -1,4 +1,5 @@
 import type { IFileResponse } from '#types/file';
+import type { HTTPPagination } from './fetch';
 import type { ISystemConfigRes } from './system-config';
 export interface AIEduStatistics {
   register_count: number;
@@ -97,4 +98,49 @@ export interface IAIEduStatisticProvince {
   completion_count: number;
   certificate_count: number;
   cert_on_enroll_percent: number;
+}
+export interface IAIEduStatisticProvinceDetailSection {
+  section_uid: string;
+  section_name: string;
+  order: number;
+  completed_count: number;
+}
+
+export interface IAIEduStatisticProvinceDetailCourse {
+  name: string;
+  active_section: number;
+  sections: IAIEduStatisticProvinceDetailSection[];
+}
+
+export interface IAIEduStatisticProvinceDetail {
+  province: string;
+  register_count: number;
+  enroll_count: number;
+  complete_count: number;
+  completion_rate: number;
+  courses: IAIEduStatisticProvinceDetailCourse[];
+}
+
+export interface IAIEduStatisticLearnersCourse {
+  name: string;
+  active_section: number;
+  enroll_date: number;
+  number_of_completed_section: number;
+  can_claim_cert: boolean;
+  claim_cert_date: number;
+}
+
+export interface IAIEduStatisticLearners {
+  id: string;
+  full_name: string;
+  job: string;
+  age_group: string;
+  email: string;
+  school: string;
+  province: string;
+  source: string;
+  courses: IAIEduStatisticLearnersCourse[];
+}
+export interface IAIEduStatisticLearnersRes extends HTTPPagination<IAIEduStatisticLearners> {
+  length: number;
 }
