@@ -1,15 +1,18 @@
 'use client';
 
-import type { IAIEduCourseItem } from '@oe/api';
+import type { IAIEduCourseItem, IAIEduParamsPayload } from '@oe/api';
 import { convertToTimeStamp } from '@oe/core';
 import { AutocompeteMultiple, Card, CardContent } from '@oe/ui';
 import { DateTimePicker } from 'node_modules/@oe/ui/src/components/date-time-picker/date-time-picker';
+import { AICourseStatisticExportButton } from './ai-course-statistic-export';
 
 interface IAICourseStatisticFilterProps {
   startDate: number;
   endDate: number;
   courseList: IAIEduCourseItem[];
   courseCuid: string | string[];
+  campaignKey: string;
+  params: IAIEduParamsPayload;
   setStartDate: (date: number) => void;
   setEndDate: (date: number) => void;
   setCourseCuid: (value: string | string[]) => void;
@@ -19,6 +22,8 @@ export function AICourseStatisticFilter({
   endDate,
   courseList,
   courseCuid,
+  params,
+  campaignKey,
   setStartDate,
   setEndDate,
   setCourseCuid,
@@ -108,10 +113,7 @@ export function AICourseStatisticFilter({
               </Select> */}
             </div>
           </div>
-          {/* TODO */}
-          {/* <div className="flex h-full justify-end self-end">
-            <Button className="bg-indigo-600 hover:bg-indigo-700">Export Data</Button>
-          </div> */}
+          <AICourseStatisticExportButton params={params} campaignKey={campaignKey} />
         </div>
       </CardContent>
     </Card>

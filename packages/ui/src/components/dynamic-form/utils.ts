@@ -50,10 +50,10 @@ export const generateZodSchema = (formFields: FormFieldOrGroup[]): z.ZodObject<R
         fieldSchema = z.coerce
           .number()
           .gte(field.min ?? 0, {
-            message: `formValidation.too_small.number.inclusive--type:${field.name}--minimum:${field.min}`,
+            message: `formValidation.too_small.number.inclusive--type:${field.label}--minimum:${field.min}`,
           })
           .lte(field.max ?? 100, {
-            message: `formValidation.too_big.number.inclusive--type:${field.name}--maximum:${field.max}`,
+            message: `formValidation.too_big.number.inclusive--type:${field.label}--maximum:${field.max}`,
           });
         break;
       case 'tagsInput':
@@ -72,12 +72,12 @@ export const generateZodSchema = (formFields: FormFieldOrGroup[]): z.ZodObject<R
 
     if (field.min !== undefined && 'min' in fieldSchema) {
       fieldSchema = (fieldSchema as z.ZodNumber).min(field.min, {
-        message: `formValidation.too_small.string.inclusive--type:${field.name}--minimum:${field.min}`,
+        message: `formValidation.too_small.string.inclusive--type:${field.label}--minimum:${field.min}`,
       });
     }
     if (field.max !== undefined && 'max' in fieldSchema) {
       fieldSchema = (fieldSchema as z.ZodNumber).max(field.max, {
-        message: `formValidation.too_big.string.inclusive--type:${field.name}--maximum:${field.max}`,
+        message: `formValidation.too_big.string.inclusive--type:${field.label}--maximum:${field.max}`,
       });
     }
 

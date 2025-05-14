@@ -20,6 +20,7 @@ import { CourseListFilterLevel } from './course-list-filter-level';
 import { CourseListFilterOrganizations } from './course-list-filter-organizations';
 
 interface ICourseListFilter {
+  isOpenEdu: boolean;
   categoryIdsSelected: string[];
   levelIdsSelected: string[];
   orgIdsSelected: string[];
@@ -27,6 +28,7 @@ interface ICourseListFilter {
 }
 
 export function CourseListFilter({
+  isOpenEdu = false,
   categoryIdsSelected,
   levelIdsSelected,
   orgIdsSelected,
@@ -298,18 +300,22 @@ export function CourseListFilter({
             <Separator className="my-4" />
 
             {/* Organizations Section */}
-            <CourseListFilterOrganizations
-              title={t('organizations')}
-              isOpen={openSections.organizations}
-              toggleSection={() => toggleSection('organizations')}
-              resetSection={() => resetSection('org')}
-              resetLabel={t('resetAll')}
-              checkboxes={checkboxes}
-              handleCheckboxChange={handleCheckboxChange}
-              organizations={organizations}
-            />
+            {isOpenEdu && (
+              <>
+                <CourseListFilterOrganizations
+                  title={t('organizations')}
+                  isOpen={openSections.organizations}
+                  toggleSection={() => toggleSection('organizations')}
+                  resetSection={() => resetSection('org')}
+                  resetLabel={t('resetAll')}
+                  checkboxes={checkboxes}
+                  handleCheckboxChange={handleCheckboxChange}
+                  organizations={organizations}
+                />
 
-            <Separator className="my-4" />
+                <Separator className="my-4" />
+              </>
+            )}
 
             {/* Completed Course Section */}
             <CourseListFilterCompletedCourses

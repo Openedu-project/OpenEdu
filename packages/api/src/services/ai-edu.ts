@@ -3,8 +3,10 @@ import type {
   AIEduStatistics,
   AIEduSystemConfigRes,
   IAIEduProvince,
+  IAIEduStatisticLearnersRes,
   IAIEduStatisticLearningGrowth,
   IAIEduStatisticProvince,
+  IAIEduStatisticProvinceDetail,
   IAIEduStatisticWidget,
   IAIStatisticSectionCompletion,
 } from '#types/ai-edu';
@@ -197,6 +199,56 @@ export async function getAIEduStatisticProvincesService(
 
   try {
     const response = await fetchAPI<IAIEduStatisticProvince[]>(endpointKey, init);
+    return response.data;
+  } catch {
+    return null;
+  }
+}
+
+export async function getAIEduStatisticProvincesDetailService(
+  url: string | null | undefined,
+  { key, queryParams, init }: { key: string; queryParams?: IFilter; init?: RequestInit }
+): Promise<IAIEduStatisticProvinceDetail[] | null> {
+  let endpointKey = url;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.OE_REFFERRAL_KEY_STATISTIC_PROVINCES_DETAIL,
+      params: {
+        key,
+      },
+      queryParams: {
+        ...queryParams,
+      },
+    });
+  }
+
+  try {
+    const response = await fetchAPI<IAIEduStatisticProvinceDetail[]>(endpointKey, init);
+    return response.data;
+  } catch {
+    return null;
+  }
+}
+
+export async function getAIEduStatisticLearnersService(
+  url: string | null | undefined,
+  { key, queryParams, init }: { key: string; queryParams?: IFilter; init?: RequestInit }
+): Promise<IAIEduStatisticLearnersRes | null> {
+  let endpointKey = url;
+  if (!endpointKey) {
+    endpointKey = createAPIUrl({
+      endpoint: API_ENDPOINT.OE_REFFERRAL_KEY_LEARNERS,
+      params: {
+        key,
+      },
+      queryParams: {
+        ...queryParams,
+      },
+    });
+  }
+
+  try {
+    const response = await fetchAPI<IAIEduStatisticLearnersRes>(endpointKey, init);
     return response.data;
   } catch {
     return null;

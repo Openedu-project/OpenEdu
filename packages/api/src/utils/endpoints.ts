@@ -267,6 +267,8 @@ export const API_ENDPOINT = {
   OE_REFFERRAL_KEY_STATISTIC_LEARNER_GROWTH: '/api/v1/oe-referrals/:key/statistics/learner-growth',
   OE_REFFERRAL_KEY_STATISTIC_SECTION_COMPLETION: '/api/v1/oe-referrals/:key/statistics/section-completion',
   OE_REFFERRAL_KEY_STATISTIC_PROVINCES: '/api/v1/oe-referrals/:key/statistics/provinces',
+  OE_REFFERRAL_KEY_STATISTIC_PROVINCES_DETAIL: '/api/v1/oe-referrals/:key/statistics/provinces/details',
+  OE_REFFERRAL_KEY_LEARNERS: '/api/v1/oe-referrals/:key/learners',
 
   // WS
   WEBSOCKET: '/websocket',

@@ -9,6 +9,7 @@ import { Button } from '#shadcn/button';
 import { CourseListFilter } from './course-list-filter';
 
 interface ICourseListHeader {
+  isOpenEdu: boolean;
   categoryIdsSelected: string[];
   levelIdsSelected: string[];
   orgIdsSelected: string[];
@@ -18,6 +19,7 @@ interface ICourseListHeader {
 }
 
 export function CourseListHeader({
+  isOpenEdu = false,
   sortValue = 'desc',
   totalResult = 0,
   categoryIdsSelected,
@@ -59,6 +61,7 @@ export function CourseListHeader({
       </p>
       <div className="flex items-center gap-3">
         <CourseListFilter
+          isOpenEdu={isOpenEdu}
           categoryIdsSelected={categoryIdsSelected}
           levelIdsSelected={levelIdsSelected}
           orgIdsSelected={orgIdsSelected}

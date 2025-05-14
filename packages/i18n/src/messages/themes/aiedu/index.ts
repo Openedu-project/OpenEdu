@@ -39,16 +39,7 @@ export const aieduMessage = {
             label: 'Hỗ Trợ',
             items: {
               'items-0': {
-                label: 'Facebook',
-              },
-              'items-1': {
-                label: 'Zalo Group',
-              },
-              'items-2': {
-                label: 'X',
-              },
-              'items-3': {
-                label: 'Email',
+                label: 'Telegram',
               },
             },
           },

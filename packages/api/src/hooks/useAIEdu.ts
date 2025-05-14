@@ -1,7 +1,9 @@
 import useSWR from 'swr';
 import {
   getAIEduProvinceService,
+  getAIEduStatisticLearnersService,
   getAIEduStatisticLearningGrowthService,
+  getAIEduStatisticProvincesDetailService,
   getAIEduStatisticProvincesService,
   getAIEduStatisticSectionCompletionService,
   getAIEduStatisticWidgetService,
@@ -159,5 +161,43 @@ export function useGetAIEduStatisticProvinces(key: string, queryParams?: IFilter
     isLoadingAIEduStatisticProvinces: isLoading,
     errorAIEduStatisticProvinces: error,
     mutateAIEduStatisticProvinces: mutate,
+  };
+}
+
+export function useGetAIEduStatisticProvincesDetail(key: string, queryParams?: IFilter) {
+  const endpointKey = createAPIUrl({
+    endpoint: API_ENDPOINT.OE_REFFERRAL_KEY_STATISTIC_PROVINCES_DETAIL,
+    params: { key },
+    queryParams: { ...queryParams },
+  });
+
+  const { data, isLoading, error, mutate } = useSWR(key ? endpointKey : null, (url: string) =>
+    getAIEduStatisticProvincesDetailService(url, { key, queryParams })
+  );
+
+  return {
+    dataAIEduStatisticProvincesDetail: data,
+    isLoadingAIEduStatisticProvincesDetail: isLoading,
+    errorAIEduStatisticProvincesDetail: error,
+    mutateAIEduStatisticProvincesDetail: mutate,
+  };
+}
+
+export function useGetAIEduStatisticLearners(key: string, queryParams?: IFilter) {
+  const endpointKey = createAPIUrl({
+    endpoint: API_ENDPOINT.OE_REFFERRAL_KEY_LEARNERS,
+    params: { key },
+    queryParams: { ...queryParams },
+  });
+
+  const { data, isLoading, error, mutate } = useSWR(key ? endpointKey : null, (url: string) =>
+    getAIEduStatisticLearnersService(url, { key, queryParams })
+  );
+
+  return {
+    dataAIEduStatisticLearners: data,
+    isLoadingAIEduStatisticLearners: isLoading,
+    errorAIEduStatisticLearners: error,
+    mutateAIEduStatisticLearners: mutate,
   };
 }

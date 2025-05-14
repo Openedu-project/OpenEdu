@@ -12,46 +12,46 @@ export const formValidationMessages = {
     },
     too_small: {
       array: {
-        exact: '{type} must contain exactly {minimum, plural, =1 {1 element} other {# elements}}',
-        inclusive: '{type} must contain at least {minimum, plural, =1 {1 element} other {# elements}}',
+        exact: '{type} - must contain exactly {minimum, plural, =1 {1 element} other {# elements}}',
+        inclusive: '{type} - must contain at least {minimum, plural, =1 {1 element} other {# elements}}',
       },
       string: {
-        exact: '{type} must contain exactly {minimum, plural, =1 {1 character} other {# characters}}',
-        inclusive: '{type} must contain at least {minimum, plural, =1 {1 character} other {# characters}}',
+        exact: '{type} - must contain exactly {minimum, plural, =1 {1 character} other {# characters}}',
+        inclusive: '{type} - must contain at least {minimum, plural, =1 {1 character} other {# characters}}',
       },
       number: {
-        exact: '{type} must be equal to {minimum}',
-        inclusive: '{type} must be greater than or equal to {minimum}',
+        exact: '{type} - must be equal to {minimum}',
+        inclusive: '{type} - must be greater than or equal to {minimum}',
       },
       set: {
-        exact: '{type} must contain exactly {minimum, plural, =1 {1 element} other {# elements}}',
-        inclusive: '{type} must contain at least {minimum, plural, =1 {1 element} other {# elements}}',
+        exact: '{type} - must contain exactly {minimum, plural, =1 {1 element} other {# elements}}',
+        inclusive: '{type} - must contain at least {minimum, plural, =1 {1 element} other {# elements}}',
       },
       date: {
-        exact: '{type} must be {minimum}',
-        inclusive: '{type} must be greater than or equal to {minimum}',
+        exact: '{type} - must be {minimum}',
+        inclusive: '{type} - must be greater than or equal to {minimum}',
       },
     },
     too_big: {
       array: {
-        exact: '{type} must contain exactly {maximum, plural, =1 {1 element} other {# elements}}',
-        inclusive: '{type} must contain at most {maximum, plural, =1 {1 element} other {# elements}}',
+        exact: '{type} - must contain exactly {maximum, plural, =1 {1 element} other {# elements}}',
+        inclusive: '{type} - must contain at most {maximum, plural, =1 {1 element} other {# elements}}',
       },
       string: {
         exact: 'String must contain exactly {maximum, plural, =1 {1 character} other {# characters}}',
         inclusive: 'String must contain at most {maximum, plural, =1 {1 character} other {# characters}}',
       },
       number: {
-        exact: '{type} must be equal to {maximum}',
-        inclusive: '{type} must be less than or equal to {maximum}',
+        exact: '{type} - must be equal to {maximum}',
+        inclusive: '{type} - must be less than or equal to {maximum}',
       },
       set: {
-        exact: '{type} must contain exactly {maximum, plural, =1 {1 element} other {# elements}}',
-        inclusive: '{type} must contain at most {maximum, plural, =1 {1 element} other {# elements}}',
+        exact: '{type} - must contain exactly {maximum, plural, =1 {1 element} other {# elements}}',
+        inclusive: '{type} - must contain at most {maximum, plural, =1 {1 element} other {# elements}}',
       },
       date: {
-        exact: '{type} must be {maximum}',
-        inclusive: '{type} must be less than or equal to {maximum}',
+        exact: '{type} - must be {maximum}',
+        inclusive: '{type} - must be less than or equal to {maximum}',
       },
     },
     urlLabel: 'URL',

@@ -21,19 +21,14 @@ export function AICourseStatisticTabs({ campaignKey, params }: IAICourseStatisti
           <TabsTrigger value="detailed" className="data-[state=active]:bg-primary data-[state=active]:text-white">
             Phân tích chi tiết
           </TabsTrigger>
-          {/* TODO */}
-          {/* <TabsTrigger
-            value="data"
-            className="data-[state=active]:bg-primary data-[state=active]:text-white"
-          >
+
+          <TabsTrigger value="data" className="data-[state=active]:bg-primary data-[state=active]:text-white">
             Số liệu theo tỉnh
           </TabsTrigger>
-          <TabsTrigger
-            value="students"
-            className="data-[state=active]:bg-primary data-[state=active]:text-white"
-          >
+          {/* TODO */}
+          <TabsTrigger value="students" className="data-[state=active]:bg-primary data-[state=active]:text-white">
             Danh sách học viên
-          </TabsTrigger> */}
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="overview">
           <AICourseStatisticTabOverview params={params} campaignKey={campaignKey} />
@@ -42,10 +37,10 @@ export function AICourseStatisticTabs({ campaignKey, params }: IAICourseStatisti
           <AICourseStatisticTabDetail params={params} campaignKey={campaignKey} />
         </TabsContent>
         <TabsContent value="data">
-          <AICourseStatisticTabData />
+          <AICourseStatisticTabData params={params} campaignKey={campaignKey} />
         </TabsContent>
         <TabsContent value="students">
-          <AICourseStatisticTabStudents />
+          <AICourseStatisticTabStudents params={params} campaignKey={campaignKey} />
         </TabsContent>
       </Tabs>
     </div>
