@@ -80,8 +80,8 @@ export const initialThemeGlobalColors: ThemeGlobalColorConfig = {
 
 export const initialThemeGlobalFonts: ThemeGlobalFontConfig = {
   primary: 'var(--font-inter)',
-  secondary: 'var(--font-montserrat)',
-  sub: 'var(--font-roboto-mono)',
+  secondary: 'var(--font-inter)',
+  sub: 'var(--font-inter)',
 };
 
 export const initialThemeGlobalRadius: ThemeGlobalRadiusConfig = {

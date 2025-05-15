@@ -24,6 +24,7 @@ export function AiCourseStatisticStudentGrowthChart({
   return (
     <Card>
       <CardContent className="pb-10">
+        <h2 className="mb-6 font-semibold text-xl">Số lượng và tốc độ tăng trưởng học viên theo thời gian</h2>
         <ChartContainer config={chartConfig} className="max-h-[600px] w-full">
           <ComposedChart data={dataAIEduStatisticLearningGrowth} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} height={90} />
