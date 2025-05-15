@@ -45,4 +45,5 @@ export interface IFilter {
   start_at_lte?: number;
   end_at_gte?: number;
   group_by?: string;
+  timezone?: string;
 }

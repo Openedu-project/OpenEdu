@@ -24,6 +24,7 @@ export function AICourseStatisticTabOverview({ params, campaignKey }: IAICourseS
     to_date: toDate,
     course_cuids: courseCuids === 'all' ? undefined : courseCuids,
     group_by: groupBy,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   });
 
   const { dataAIEduStatisticSectionCompletion } = useGetAIEduStatisticSectionCompletion(campaignKey, {

@@ -85,8 +85,8 @@ export function AiCourseStatisticModuleCompletionChart({
       new Set(dataAIEduStatisticSectionCompletion.flatMap(course => course.module_items.map(module => module.order)))
     ).sort((a, b) => a - b) as number[];
 
-    const formattedData = moduleOrders.map(order => {
-      const moduleData: ModuleData = { module: `Module ${order}` };
+    const formattedData = moduleOrders.map((order, index) => {
+      const moduleData: ModuleData = { module: `Module ${index + 1}` };
 
       for (const { module_items, course_cuid } of dataAIEduStatisticSectionCompletion) {
         const moduleItem = module_items.find(item => item.order === order);
@@ -126,6 +126,7 @@ export function AiCourseStatisticModuleCompletionChart({
   return (
     <Card>
       <CardContent>
+        <h2 className="mb-6 font-semibold text-xl">Tiến độ hoàn thành các module khóa học</h2>
         <ChartContainer config={chartConfig} className="h-96 w-full">
           <BarChart data={chartData} margin={CHART_MARGIN}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
