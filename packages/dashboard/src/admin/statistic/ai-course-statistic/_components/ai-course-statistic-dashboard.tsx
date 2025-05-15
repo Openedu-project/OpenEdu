@@ -34,11 +34,11 @@ const getTimeFormat = (startDate: number | Date, endDate: number | Date): IAIEdu
 };
 
 export function AICourseStatisticDashboard() {
-  const [startDate, setStartDate] = useState<number>(Date.now());
+  const [startDate, setStartDate] = useState<number>(Date.now() - 7 * 24 * 60 * 60 * 1000);
   const [endDate, setEndDate] = useState<number>(Date.now());
   const [courseCuid, setCourseCuid] = useState<string | string[]>('all');
   const [params, setParams] = useState<IAIEduParamsPayload>({
-    fromDate: Date.now(),
+    fromDate: Date.now() - 7 * 24 * 60 * 60 * 1000,
     toDate: Date.now(),
     groupBy: 'hour',
     courseCuids: courseCuid === 'all' ? undefined : courseCuid,
