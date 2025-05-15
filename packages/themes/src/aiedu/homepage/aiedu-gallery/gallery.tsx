@@ -82,6 +82,7 @@ const AieduHomepageGallery: SectionComponent<'homepage', 'aieduGallery'> = ({ pr
           width={props?.image8?.width ?? 1280}
           height={props?.image8?.height ?? 520}
           className="max-h-[520px] w-full rounded-3xl object-cover transition-all duration-300 hover:scale-105"
+          quality={100}
         />
       </div>
     </AieduLayoutSection>

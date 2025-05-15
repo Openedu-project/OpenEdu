@@ -1,9 +1,10 @@
 export const aieduIntroduction = {
   introduction: {
     aieduGoal: {
-      title: 'Mục Đích Chương Trình',
+      title: 'Chương Trình Phổ Cập AI',
+      subTitle: 'Nâng Cao Kỹ Năng Số Cho Thanh Niên Việt Nam',
       description:
-        'Phổ Cập AI là chương trình huấn luyện kỹ năng sử dụng trí tuệ nhân tạo dành cho học sinh, sinh viên và thanh niên trên toàn quốc. Với sứ mệnh đưa AI đến gần hơn với cộng đồng, chương trình được phối hợp thực hiện bởi Trung Ương Đoàn, Hội Liên hiệp Thanh niên Việt Nam, VBI Academy, OpenEdu và Hội Tri thức trẻ Việt Nam toàn cầu.',
+        'Phổ Cập AI là chương trình huấn luyện tư duy, kiến thức, và kỹ năng sử dụng GenAI dành cho cán bộ đoàn hội, học sinh, sinh viên và thanh niên trên toàn quốc. Từ đó, chương trình giúp thúc đẩy kỹ năng số và nâng cao chất lượng nguồn nhân lực trẻ của Việt Nam, với mong muốn góp phần thúc đẩy sự phát triển của đất nước trong kỷ nguyên vươn mình của dân tộc. Chương trình được phối hợp thực hiện bởi Trí Thức Trẻ Việt Nam Toàn Cấu, Trung Ương Đoàn, Hội LHTN Việt Nam, OpenEdu và VBI Academy.',
     },
     aieduTrend: {
       title: 'AI Đang Trở Thành Xu Hướng Toàn Cầu',
