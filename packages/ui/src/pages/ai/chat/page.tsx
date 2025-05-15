@@ -9,6 +9,7 @@ export async function AIChatDetailPage({
   agent: TAgentType;
 }) {
   const login = await isLogin();
+
   return (
     <ConversationProvider id={id}>
       <ChatWithSource id={id} agent={agent} isLogin={login} />

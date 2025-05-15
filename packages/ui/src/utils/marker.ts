@@ -149,11 +149,10 @@ export const marked = new Marked({
         `;
       }
 
-      // Regular links don't get tooltip trigger attributes
       return `<a 
         href="${href}" 
         target="_blank" 
-        class="text-primary break-all underline" 
+        class="text-primary break-words underline" 
         ${title ? `title="${title}"` : ''}
       >${text}</a>`;
     },

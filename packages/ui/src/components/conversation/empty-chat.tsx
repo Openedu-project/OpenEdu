@@ -18,7 +18,7 @@ export function EmptyChat({
   const tAI = useTranslations('aiAssistant');
   const agentData = AI_SIDEBAR()?.find(data => data.agent === agent);
   return (
-    <div className={cn('scrollbar flex h-full flex-col overflow-y-auto', className)}>
+    <div className={cn('scrollbar flex h-full flex-col overflow-y-auto p-2 md:p-1', className)}>
       <div className="mx-auto flex w-full max-w-3xl flex-col items-center justify-start p-4 lg:justify-center lg:pt-[6vh] xl:max-w-4xl">
         <div className="h-24 w-24 md:h-40 md:w-40">
           <Image src={agentData?.image ?? AIChat.src} alt="ai-agent" objectFit="contain" width={40} height={40} />
