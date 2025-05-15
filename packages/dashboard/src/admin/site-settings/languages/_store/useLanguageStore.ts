@@ -191,7 +191,10 @@ const calculateLanguageStats = (translations: TranslationItem[], locales: Langua
   return Array.from(stats.values());
 };
 
-const defaultLocales = DEFAULT_LOCALES.map(locale => ({ value: locale, label: languages[locale] }));
+const defaultLocales = DEFAULT_LOCALES.map(locale => ({
+  value: locale,
+  label: languages[locale as LanguageCode],
+})) as LanguageOption[];
 
 export const useLanguageStore = createStore<LanguageState & LanguageActions>((set, get) => ({
   id: undefined,

@@ -2,6 +2,7 @@ import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import {
+  getFeaturedOrgs,
   getPopularBlogsServices,
   getPopularContentsServicesAtWebsite,
   getPopularCoursesServices,
@@ -151,5 +152,20 @@ export function useGetPopularContentsAtWebsite<T>({
     errorBlogs: error,
     mutatePopularBlogs: mutate,
     isLoadingBlogs: isLoading,
+  };
+}
+
+export function useGetFeaturedOrgs() {
+  const endpointKey = buildUrl({
+    endpoint: API_ENDPOINT.FEATURED_CONTENT_BY_TYPES,
+  });
+
+  const { data, isLoading, error, mutate } = useSWR(endpointKey, () => getFeaturedOrgs());
+
+  return {
+    dataFeaturedOrgs: data,
+    errorFeaturedOrgs: error,
+    mutateFeaturedOrgs: mutate,
+    isLoadingFeaturedOrgs: isLoading,
   };
 }

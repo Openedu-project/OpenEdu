@@ -43,12 +43,12 @@
     "rollup-plugin-import-css": "^3.5.8",
     "rollup-plugin-preserve-directives": "^0.4.0",
     "sherif": "^1.5.0",
+    "sst": "^3.14.24",
     "tsx": "^4.19.4",
     "turbo": "^2.5.3",
-    "typescript": "^5.8.3",
-    "sst": "^3.14.16"
+    "typescript": "^5.8.3"
   },
-  "packageManager": "pnpm@10.10.0",
+  "packageManager": "pnpm@10.11.0",
   "engines": {
     "node": ">=20"
   }

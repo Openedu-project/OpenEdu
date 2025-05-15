@@ -1,4 +1,5 @@
-import { isLogin } from "@oe/api";
+"use client";
+import { useSession } from "@oe/api";
 import Ref1 from "@oe/assets/images/openedu-homepage/referral/ref-1.png";
 import Ref2 from "@oe/assets/images/openedu-homepage/referral/ref-2.png";
 import Ref3 from "@oe/assets/images/openedu-homepage/referral/ref-3.png";
@@ -7,11 +8,11 @@ import { PROTECTED_ROUTES } from "@oe/core";
 import { Link } from "@oe/ui";
 import { Image } from "@oe/ui";
 import { MoveRight } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 
-export async function ReferralProgramSection() {
-  const t = await getTranslations("homePageLayout.referralSection");
-  const login = await isLogin();
+export function ReferralProgramSection() {
+  const t = useTranslations("homePageLayout.referralSection");
+  const { session } = useSession();
   return (
     <section className="container relative mx-auto px-0 py-5 md:px-4 md:py-10">
       <div className="flex flex-col items-center justify-center">
@@ -24,7 +25,7 @@ export async function ReferralProgramSection() {
             <Link
               href={PROTECTED_ROUTES.referralProgram}
               className="mcaption-regular16 lg:mcaption-regular24 mb-6 ml-1 inline-flex gap-1 p-0 lg:mb-10"
-              disabled={!login}
+              disabled={!session}
             >
               {t("discoverReferralProgram")}
               <MoveRight />

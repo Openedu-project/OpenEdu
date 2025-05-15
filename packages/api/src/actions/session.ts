@@ -17,7 +17,7 @@ export type SessionPayload = {
 
 // Bí mật để ký JWT - nên lưu trong biến môi trường
 const AUTH_SECRET = process.env.AUTH_SECRET;
-
+console.log('🚀 ~ AUTH_SECRET:', AUTH_SECRET);
 // Chuyển đổi secret string thành Uint8Array (yêu cầu cho jose)
 const secretKey = new TextEncoder().encode(AUTH_SECRET);
 
@@ -65,7 +65,10 @@ export async function setSessionCookie(payload: SessionPayload): Promise<void> {
       secure: process.env.NODE_ENV === 'production', // Chỉ gửi qua HTTPS trong môi trường production
       sameSite: 'strict', // Bảo vệ khỏi tấn công CSRF
       maxAge: payload.refreshTokenExpiry ? payload.refreshTokenExpiry / 1000 : refreshTokenExpiresIn,
-      path: '/', // Cookie khả dụng cho toàn bộ trang web
+      path: '/', // Cookie khả dụng cho toàn bộ trang web,
+      ...(process.env.NODE_ENV === 'development'
+        ? { domain: undefined }
+        : { domain: process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN }),
     });
   } catch (error) {
     console.error('Error setting session cookie:', error);

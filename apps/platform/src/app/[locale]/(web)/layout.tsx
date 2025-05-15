@@ -6,17 +6,23 @@ import {
   PLATFORM_ROUTES,
 } from "@oe/core";
 import { MainLayout } from "@oe/ui";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import type { ReactNode } from "react";
+
+export const experimental_ppr = true;
 
 export default async function OpeneduLayout({
   children,
   hasFooter,
+  params,
 }: {
   children: ReactNode;
   hasFooter?: boolean;
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations("headerMenu");
   const sidebarItems = [
     {
@@ -80,5 +86,3 @@ export default async function OpeneduLayout({
     </MainLayout>
   );
 }
-
-// export default withLocale(OpeneduLayout);

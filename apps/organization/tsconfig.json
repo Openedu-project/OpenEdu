@@ -18,5 +18,5 @@
     "types": ["node", "@oe/types/global.d.ts", "next/image-types/global"]
   },
   "include": ["next-env.d.ts", "src", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", ".next"]
+  "exclude": ["node_modules", ".next","sst.config.ts"]
 }

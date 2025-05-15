@@ -1,17 +1,16 @@
-import type { TFormTriggerConfirmationSettings } from '@oe/api';
-import type { ICourseOutline } from '@oe/api';
-import { getCookieClient } from '@oe/core';
-import { buildUrl } from '@oe/core';
-import type { VariantProps } from 'class-variance-authority';
-import { Link } from '#common/navigation';
-import { Modal } from '#components/modal';
-import { Button, buttonVariants } from '#shadcn/button';
-import { cn } from '#utils/cn';
-import { useTriggerModalStore } from './_store';
-import { MODAL_ID } from './_utils';
+import { type TFormTriggerConfirmationSettings, useSession } from "@oe/api";
+import type { ICourseOutline } from "@oe/api";
+import { buildUrl } from "@oe/core";
+import type { VariantProps } from "class-variance-authority";
+import { Link } from "#common/navigation";
+import { Modal } from "#components/modal";
+import { Button, buttonVariants } from "#shadcn/button";
+import { cn } from "#utils/cn";
+import { useTriggerModalStore } from "./_store";
+import { MODAL_ID } from "./_utils";
 
 type ButtonVariantProps = VariantProps<typeof buttonVariants>;
-type ButtonVariant = ButtonVariantProps['variant'];
+type ButtonVariant = ButtonVariantProps["variant"];
 
 interface IConfirmationModal {
   isTriggerForm?: boolean;
@@ -22,24 +21,29 @@ interface IConfirmationModal {
 
 const getButtonVariant = (variant: string) =>
   buttonVariants({
-    variant: (variant as ButtonVariant) ?? 'default',
+    variant: (variant as ButtonVariant) ?? "default",
   });
 
-const ConfirmationModal = ({ settings, onButtonClick, course, isTriggerForm = false }: IConfirmationModal) => {
+const ConfirmationModal = ({
+  settings,
+  onButtonClick,
+  course,
+  isTriggerForm = false,
+}: IConfirmationModal) => {
+  const { session } = useSession();
   const { setOpenTriggerModal, modals } = useTriggerModalStore();
 
   if (!(settings?.enabled || settings)) {
     return null;
   }
 
-  const accessTokenKey = process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY;
-  const accessToken = getCookieClient(accessTokenKey);
-
   return (
     <Modal
       open={modals[MODAL_ID.afterSubmitFormTrigger]}
-      onClose={() => setOpenTriggerModal(MODAL_ID.afterSubmitFormTrigger, false)}
-      title={settings?.title || ''}
+      onClose={() =>
+        setOpenTriggerModal(MODAL_ID.afterSubmitFormTrigger, false)
+      }
+      title={settings?.title || ""}
       hasCancelButton={false}
       hasCloseIcon
     >
@@ -47,13 +51,13 @@ const ConfirmationModal = ({ settings, onButtonClick, course, isTriggerForm = fa
 
       <div className="flex justify-end gap-3 pb-4">
         {settings?.buttons?.map((btn, idx) => {
-          if (btn?.type?.includes('http')) {
+          if (btn?.type?.includes("http")) {
             const href = isTriggerForm
-              ? btn?.type || ''
+              ? btn?.type || ""
               : buildUrl({
-                  endpoint: btn?.type || '',
+                  endpoint: btn?.type || "",
                   queryParams: {
-                    access_token: accessToken,
+                    access_token: session?.accessToken,
                     course_cuid: course?.cuid,
                     course_name: course?.name,
                   },
@@ -64,7 +68,10 @@ const ConfirmationModal = ({ settings, onButtonClick, course, isTriggerForm = fa
                 target="_blank"
                 href={href}
                 key={`confirm_settings_btn_${idx}`}
-                className={cn(getButtonVariant(btn?.variant), 'hover:no-underline')}
+                className={cn(
+                  getButtonVariant(btn?.variant),
+                  "hover:no-underline"
+                )}
               >
                 {btn?.text}
               </Link>
@@ -78,7 +85,7 @@ const ConfirmationModal = ({ settings, onButtonClick, course, isTriggerForm = fa
               key={`confirm_settings_btn_${idx}`}
               onClick={onButtonClick}
             >
-              {btn?.text || 'Close'}
+              {btn?.text || "Close"}
             </Button>
           );
         })}
@@ -87,5 +94,5 @@ const ConfirmationModal = ({ settings, onButtonClick, course, isTriggerForm = fa
   );
 };
 
-ConfirmationModal.displayName = 'ConfirmationModal';
+ConfirmationModal.displayName = "ConfirmationModal";
 export { ConfirmationModal };

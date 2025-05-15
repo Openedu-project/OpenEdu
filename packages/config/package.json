@@ -31,7 +31,7 @@
     "@next/bundle-analyzer": "15.3.2",
     "@oe/types": "workspace:*",
     "@tailwindcss/postcss": "^4.1.6",
-    "@types/node": "^22.15.17",
-    "next": "15.4.0-canary.31"
+    "@types/node": "^22.15.18",
+    "next": "15.4.0-canary.34"
   }
 }

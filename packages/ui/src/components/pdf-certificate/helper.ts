@@ -1,29 +1,27 @@
 'use client';
-import { API_ENDPOINT } from '@oe/api';
+import { API_ENDPOINT, getSession } from '@oe/api';
 import type { IFileResponse } from '@oe/api';
 import type { HTTPResponse } from '@oe/api';
-import { getAPIReferrerAndOrigin } from '@oe/api';
-import { getCookie } from '@oe/core';
 import { ERROR_MESSAGES } from './constant';
 
 export const handleBlobUpload = async (file: Blob, fileName: string): Promise<IFileResponse> => {
-  const [{ referrer }, accessToken] = await Promise.all([
-    getAPIReferrerAndOrigin(),
-    getCookie(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY),
-  ]);
+  const session = await getSession();
 
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     const formData = new FormData();
     formData.append('files', file, fileName);
 
-    xhr.open('POST', `${process.env.NEXT_PUBLIC_API_ORIGIN}${API_ENDPOINT.UPLOADS}`);
+    xhr.open('POST', `${process.env.NEXT_PUBLIC_API_UPLOAD_ORIGIN}${API_ENDPOINT.UPLOADS}`);
 
-    if (accessToken) {
-      xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
+    if (session?.accessToken) {
+      xhr.setRequestHeader('Authorization', `Bearer ${session.accessToken}`);
     }
-    if (referrer) {
-      xhr.setRequestHeader('X-referrer', referrer);
+    if (session?.referrer) {
+      xhr.setRequestHeader('X-referrer', session.referrer);
+    }
+    if (session?.origin) {
+      xhr.setRequestHeader('Origin', session.origin);
     }
 
     xhr.addEventListener('readystatechange', () => {

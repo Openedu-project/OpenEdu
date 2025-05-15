@@ -3,7 +3,7 @@
 export default $config({
   app(input) {
     return {
-      name: 'platform',
+      name: 'org',
       removal: input?.stage === 'production' ? 'retain' : 'remove',
       // protect: ['production'].includes(input?.stage),
       home: 'aws',
@@ -11,12 +11,11 @@ export default $config({
   },
   // biome-ignore lint/suspicious/useAwait: <explanation>
   async run() {
-    new sst.aws.Nextjs('oe', {
+    new sst.aws.Nextjs('oeorgtestnet', {
       domain: {
-        name: 'openedutest.net',
-        redirects: ['www.openedutest.net'],
+        name: '*.openedutest.net',
         dns: sst.aws.dns({
-          zone: 'Z03666423OXCSCHYUQUDV',
+          zone: 'Z07568562XMI3MLBSO1HH',
         }),
       },
       regions: ['ap-southeast-1'],

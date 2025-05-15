@@ -1,6 +1,5 @@
 export * from './ajax-upload';
 export * from './auth';
-export * from './base-middleware';
 export * from './endpoints';
 export * from './error-handling';
 export * from './fetch';

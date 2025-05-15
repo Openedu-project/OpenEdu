@@ -1,27 +1,31 @@
+"use client";
 import type { IBlog } from "@oe/api";
 import {
-  getOrgByDomainService,
-  getPopularBlogsServicesAtWebsite,
+  useGetOrganizationByDomain,
+  useGetPopularBlogsAtWebsite,
 } from "@oe/api";
 import { BLOG_ROUTES, buildUrl, formatDate } from "@oe/core";
 import { Link } from "@oe/ui";
 import { Image } from "@oe/ui";
 import { ArrowRight } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 
-export async function BlogsSection() {
-  const orgData = await getOrgByDomainService();
-  const [t, blogsData] = await Promise.all([
-    await getTranslations("homePageLayout.blogsSection"),
-    getPopularBlogsServicesAtWebsite(undefined, {
-      params: { org_id: orgData?.domain ?? orgData?.alt_domain ?? "" },
-    }),
-  ]);
+export function BlogsSection() {
+  const t = useTranslations("homePageLayout.blogsSection");
+  const { organizationByDomain } = useGetOrganizationByDomain();
+  const { dataPopularBlogs } = useGetPopularBlogsAtWebsite({
+    params: {
+      org_id:
+        organizationByDomain?.domain ?? organizationByDomain?.alt_domain ?? "",
+    },
+  });
 
-  const featuredPost = blogsData?.[0]?.entity as IBlog;
-  const restPost = blogsData?.splice(1, 3)?.map((b) => b?.entity) as IBlog[];
+  const featuredPost = dataPopularBlogs?.[0]?.entity as IBlog;
+  const restPost = dataPopularBlogs
+    ?.splice(1, 3)
+    ?.map((b) => b?.entity) as IBlog[];
 
-  return (blogsData?.length ?? 0) > 0 ? (
+  return (dataPopularBlogs?.length ?? 0) > 0 ? (
     <section className="container mx-auto px-0 md:px-4">
       {/* Header */}
       <div className="mb-4 text-center lg:mb-10">

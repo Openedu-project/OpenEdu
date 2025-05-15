@@ -1,11 +1,13 @@
 import { fonts } from "@oe/core";
 import "@oe/config/tailwindcss/global.css";
-import { GoogleAnalytics } from "@next/third-parties/google";
+// import { GoogleAnalytics } from "@next/third-parties/google";
 import { getI18nConfig } from "@oe/api";
 import Favicon from "@oe/assets/images/favicon.png";
-// import { DEFAULT_LOCALE } from "@oe/i18n";
+import { DEFAULT_LOCALE, DEFAULT_LOCALES, redirect } from "@oe/i18n";
 import { Provider, Toaster } from "@oe/ui";
 import type { Metadata } from "next";
+import { hasLocale } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
 import Script from "next/script";
 import type { ReactNode } from "react";
 
@@ -19,12 +21,12 @@ export const metadata: Metadata = {
   },
 };
 
-// export async function generateStaticParams() {
-//   const i18nConfig = await getI18nConfig();
-//   return (i18nConfig?.locales ?? [DEFAULT_LOCALE])?.map((locale) => ({
-//     locale,
-//   }));
-// }
+export async function generateStaticParams() {
+  const i18nConfig = await getI18nConfig();
+  return (i18nConfig?.locales ?? [DEFAULT_LOCALE])?.map((locale) => ({
+    locale,
+  }));
+}
 
 export default async function RootLayout({
   children,
@@ -41,9 +43,11 @@ export default async function RootLayout({
     locale
   );
 
-  // if (!hasLocale(i18nConfig?.locales ?? [], locale)) {
-  //   redirect({ href: "/", locale: DEFAULT_LOCALE });
-  // }
+  if (!hasLocale(i18nConfig?.locales ?? DEFAULT_LOCALES, locale)) {
+    redirect({ href: "/", locale: DEFAULT_LOCALE });
+  }
+
+  setRequestLocale(locale);
 
   const fontVariables = Object.values(fonts)
     .map((font) => font.variable)
@@ -55,21 +59,29 @@ export default async function RootLayout({
       suppressHydrationWarning
       className={fontVariables}
     >
-      <head>
-        <Script id="microsoft-clarity">
-          {`(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","qpk1sozolu");`}
-        </Script>
-      </head>
       <body className="scrollbar font-primary antialiased">
         <Provider>
           {/* <WebViewHandler /> */}
           {children}
           <Toaster />
         </Provider>
+        <Script id="microsoft-clarity" strategy="lazyOnload">
+          {`(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","qpk1sozolu");`}
+        </Script>
+        <Script
+          id="google-analytics"
+          strategy="lazyOnload"
+          src="https://www.googletagmanager.com/gtag/js?id=G-NEDV7937ZQ"
+        />
+        <Script id="google-analytics-script" strategy="lazyOnload">
+          {`window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+ 
+  gtag('config', 'G-NEDV7937ZQ');`}
+        </Script>
       </body>
-      <GoogleAnalytics gaId="G-NEDV7937ZQ" />
+      {/* <GoogleAnalytics gaId="G-NEDV7937ZQ" /> */}
     </html>
   );
 }
-
-// export default withLocale(RootLayout);

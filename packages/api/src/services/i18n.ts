@@ -1,12 +1,9 @@
-import { buildUrl, cookieOptions, deepMerge, deleteNestedValue, setNestedValue } from '@oe/core';
+import { buildUrl, deepMerge, deleteNestedValue, setNestedValue } from '@oe/core';
 import { DEFAULT_LOCALE, DEFAULT_LOCALES } from '@oe/i18n';
 import type { I18nMessage, LanguageCode } from '@oe/i18n';
 import { messages } from '@oe/i18n';
 import { hasLocale } from 'next-intl';
-import createMiddleware from 'next-intl/middleware';
-import type { NextRequest } from 'next/server';
 import { cache } from 'react';
-import type { HTTPResponse } from '#types/fetch';
 import type { I18nConfig } from '#types/i18n';
 import type { ISystemConfigRes } from '#types/system-config';
 import { API_ENDPOINT } from '#utils/endpoints';
@@ -105,86 +102,6 @@ export const createOrUpdateTranslations = async ({
   return response?.data;
 };
 
-const i18nCookieConfig = {
-  ...cookieOptions(),
-  maxAge: 3600 * 24 * 365, // 1 year
-};
-
-export const getI18nResponseMiddleware = async (referrer: string, origin: string, request: NextRequest) => {
-  // const cookiesLocales = request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_LOCALES_KEY)?.value;
-  // const cookiesLocale = request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY)?.value;
-  // const cookiesLocaleFiles = request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_LOCALE_FILES_KEY)?.value;
-  // const files = cookiesLocaleFiles ? JSON.parse(decodeURIComponent(cookiesLocaleFiles)) : null;
-
-  // if (cookiesLocales && cookiesLocale && files) {
-  //   const locales = JSON.parse(decodeURIComponent(cookiesLocales));
-  //   const response = createMiddleware({
-  //     locales,
-  //     defaultLocale: cookiesLocale,
-  //     localeCookie: {
-  //       name: process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY,
-  //       ...i18nCookieConfig,
-  //     },
-  //   })(request);
-
-  //   return response;
-  // }
-
-  let i18nLocales = DEFAULT_LOCALES;
-  let i18nLocale = DEFAULT_LOCALE;
-  let i18nFiles = null as Record<LanguageCode, string> | null;
-
-  try {
-    const domain = new URL(origin).hostname;
-    const endpoint = `${API_ENDPOINT.SYSTEM_CONFIGS}?keys=${systemConfigKeys.i18nConfig}&domains=${domain}`;
-    const apiURL = `${process.env.NEXT_PUBLIC_API_ORIGIN}${endpoint}`;
-    const i18nConfigResponse = await fetch(apiURL, {
-      headers: {
-        'X-referrer': referrer,
-        Origin: origin,
-      },
-    });
-    const i18nConfig = (await i18nConfigResponse.json()) as HTTPResponse<ISystemConfigRes<I18nConfig>[]>;
-    const data = i18nConfig?.data?.[0]?.value;
-    i18nLocales = data?.locales ?? DEFAULT_LOCALES;
-    i18nLocale = data?.locale ?? DEFAULT_LOCALE;
-    i18nFiles = data?.files ?? null;
-  } catch {
-    // Use default values set above
-  }
-  const host = request.nextUrl.host;
-  const isAIOrg = host.includes('aigov') || host.includes('phocap.ai');
-
-  const response = createMiddleware({
-    locales: isAIOrg ? ['vi'] : i18nLocales,
-    defaultLocale: isAIOrg ? 'vi' : i18nLocale,
-    localeCookie: {
-      name: process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY,
-      ...i18nCookieConfig,
-      domain: new URL(origin).host,
-    },
-    localeDetection: !isAIOrg,
-  })(request);
-
-  response.cookies.set({
-    name: process.env.NEXT_PUBLIC_COOKIE_LOCALES_KEY,
-    value: JSON.stringify(isAIOrg ? ['vi'] : i18nLocales),
-    ...i18nCookieConfig,
-    domain: new URL(origin).host,
-  });
-
-  if (i18nFiles) {
-    response.cookies.set({
-      name: process.env.NEXT_PUBLIC_COOKIE_LOCALE_FILES_KEY,
-      value: JSON.stringify(i18nFiles),
-      ...i18nCookieConfig,
-      domain: new URL(origin).host,
-    });
-  }
-
-  return response;
-};
-
 export const fetchTranslationFile = async (path: string, fallbackData?: I18nMessage) => {
   if (!path) {
     return fallbackData;
@@ -195,7 +112,11 @@ export const fetchTranslationFile = async (path: string, fallbackData?: I18nMess
     const response = await fetch(url);
     return (await response.json()) as I18nMessage;
   } catch (error) {
-    console.error('Error fetching translation file:', error);
+    console.error(
+      'Error fetching translation file:',
+      error,
+      `https://${process.env.NEXT_PUBLIC_MEDIA_S3_HOST}/configs/${path}`
+    );
     return fallbackData;
   }
 };

@@ -7,7 +7,9 @@
   "main": "dist/cjs/index.cjs",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "development": "./src/index.ts",
@@ -35,8 +37,8 @@
     "@oe/core": "workspace:*",
     "@oe/i18n": "workspace:*",
     "@oe/ui": "workspace:*",
-    "lucide-react": "0.509.0",
-    "next": "15.4.0-canary.31",
+    "lucide-react": "0.510.0",
+    "next": "15.4.0-canary.34",
     "next-intl": "4.1.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
@@ -48,6 +50,6 @@
   "devDependencies": {
     "@oe/config": "workspace:*",
     "@oe/types": "workspace:*",
-    "@types/node": "^22.15.17"
+    "@types/node": "^22.15.18"
   }
 }

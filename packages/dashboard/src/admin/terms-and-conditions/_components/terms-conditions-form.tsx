@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   type ISystemConfigKey,
@@ -6,16 +6,22 @@ import {
   type ISystemConfigRes,
   createSystemConfig,
   updateSystemConfig,
+  useGetI18nConfig,
   useGetOrganizationByDomain,
   useSystemConfig,
-} from '@oe/api';
-import { getCookieClient } from '@oe/core';
-import { DEFAULT_LOCALES, type LanguageCode, languages } from '@oe/i18n';
-import { Button, FormFieldWithLabel, FormWrapper, RichTextEditor, Selectbox } from '@oe/ui';
-import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
-import { z } from 'zod';
+} from "@oe/api";
+import { type LanguageCode, languages } from "@oe/i18n";
+import {
+  Button,
+  FormFieldWithLabel,
+  FormWrapper,
+  RichTextEditor,
+  Selectbox,
+} from "@oe/ui";
+import { useLocale, useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { z } from "zod";
 
 const formSchema = z.object({
   locale: z.string(),
@@ -29,21 +35,25 @@ export function TermsConditionsForm({
 }: {
   pageKey: ISystemConfigKey;
 }) {
-  const tCommonAction = useTranslations('general');
-  const locale = getCookieClient(process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY) ?? 'en';
-  const localesCookie = getCookieClient(process.env.NEXT_PUBLIC_COOKIE_LOCALES_KEY);
-  const locales = localesCookie ? JSON.parse(localesCookie as string) : DEFAULT_LOCALES;
+  const tCommonAction = useTranslations("general");
+  const locale = useLocale();
 
-  const [res, setRes] = useState<ISystemConfigRes<Record<string, string | undefined>> | null>(null);
+  const { dataI18nConfig } = useGetI18nConfig();
+
+  const [res, setRes] = useState<ISystemConfigRes<
+    Record<string, string | undefined>
+  > | null>(null);
   const [defaultValues, setDefaultValues] = useState<TTermsAndConditions>({
     locale,
     content: {},
   });
   const [currentLanguage, setCurrentLanguage] = useState(locale);
-  const [editorContent, setEditorContent] = useState('');
+  const [editorContent, setEditorContent] = useState("");
 
   const { organizationByDomain } = useGetOrganizationByDomain();
-  const { systemConfig, systemConfigMutate } = useSystemConfig<Record<string, string | undefined>>({
+  const { systemConfig, systemConfigMutate } = useSystemConfig<
+    Record<string, string | undefined>
+  >({
     key: pageKey,
   });
 
@@ -54,33 +64,35 @@ export function TermsConditionsForm({
       setRes(data);
       const content = data.value ?? {};
 
-      setEditorContent(content[currentLanguage] ?? '');
+      setEditorContent(content[currentLanguage] ?? "");
       setDefaultValues({ content, locale });
     }
   }, [systemConfig, currentLanguage]);
 
-  if (locales?.length === 0) {
+  if (dataI18nConfig?.locales?.length === 0) {
     return null;
   }
 
-  const LANGUAGE_OPTIONS = locales.map((locale: LanguageCode) => ({
-    id: locale,
-    value: locale,
-    label: languages[locale],
-  }));
+  const LANGUAGE_OPTIONS =
+    dataI18nConfig?.locales?.map((locale: LanguageCode) => ({
+      id: locale,
+      value: locale,
+      label: languages[locale],
+    })) ?? [];
 
   const handleSubmit = async (values: TTermsAndConditions) => {
     try {
       const updatedContent = {
         ...values?.content,
-        [currentLanguage]: values.content[currentLanguage] || '',
+        [currentLanguage]: values.content[currentLanguage] || "",
       };
 
-      const payload: ISystemConfigPayload<Record<string, string | undefined>> = {
-        key: pageKey,
-        org_id: organizationByDomain?.id ?? '',
-        value: updatedContent,
-      };
+      const payload: ISystemConfigPayload<Record<string, string | undefined>> =
+        {
+          key: pageKey,
+          org_id: organizationByDomain?.id ?? "",
+          value: updatedContent,
+        };
 
       await (res
         ? updateSystemConfig(undefined, { id: res?.id, payload })
@@ -88,9 +100,9 @@ export function TermsConditionsForm({
 
       await systemConfigMutate();
 
-      toast.success('Update successfully!');
+      toast.success("Update successfully!");
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error("Error submitting form:", error);
     }
   };
 
@@ -109,20 +121,20 @@ export function TermsConditionsForm({
               <Selectbox
                 options={LANGUAGE_OPTIONS}
                 value={currentLanguage}
-                onChange={value => {
+                onChange={(value) => {
                   setCurrentLanguage(value);
                 }}
               />
             </FormFieldWithLabel>
             <RichTextEditor
               value={editorContent}
-              onChange={value => {
+              onChange={(value) => {
                 setEditorContent(value);
                 setValue(`content.${currentLanguage}`, value);
               }}
             />
             <Button type="submit" loading={loading} className="ml-auto w-fit">
-              {tCommonAction('save')}
+              {tCommonAction("save")}
             </Button>
           </>
         );

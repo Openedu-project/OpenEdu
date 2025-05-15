@@ -5,11 +5,13 @@ import OpeneduLayout from "../../(web)/layout";
 
 export default function AIAssistantLayout({
   children,
+  params,
 }: {
   children: ReactNode;
+  params: Promise<{ locale: string }>;
 }) {
   return (
-    <OpeneduLayout hasFooter={false}>
+    <OpeneduLayout hasFooter={false} params={params}>
       <AILayout>{children}</AILayout>
     </OpeneduLayout>
   );

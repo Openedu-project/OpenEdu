@@ -1,31 +1,37 @@
-'use client';
+"use client";
 
-import { useGetMe } from '@oe/api';
-import { useGetLearningProgress } from '@oe/api';
-import { getCookie } from 'cookies-next';
-import { useTranslations } from 'next-intl';
-import { useCallback, useMemo, useState } from 'react';
+import { useGetMe, useSession } from "@oe/api";
+import { useGetLearningProgress } from "@oe/api";
+import { useTranslations } from "next-intl";
+import { useCallback, useMemo, useState } from "react";
 
-import type { ICourseOutline } from '@oe/api';
-import availBot from '@oe/assets/images/avail_bot.png';
-import { buildUrl } from '@oe/core';
-import { Image } from '#components/image';
-import { Button } from '#shadcn/button';
-import { cleanUrl, getFormInfo, isLessonCompleted, isLessonStarted, isSectionCompleted } from './helpers';
-import { PlayToEarnWarningModal } from './require-learning-complete';
+import type { ICourseOutline } from "@oe/api";
+import availBot from "@oe/assets/images/avail_bot.png";
+import { buildUrl } from "@oe/core";
+import { Image } from "#components/image";
+import { Button } from "#shadcn/button";
+import {
+  cleanUrl,
+  getFormInfo,
+  isLessonCompleted,
+  isLessonStarted,
+  isSectionCompleted,
+} from "./helpers";
+import { PlayToEarnWarningModal } from "./require-learning-complete";
 
 interface IPlayToEarnProps {
   courseOutline: ICourseOutline;
 }
 
 const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
-  const t = useTranslations('courseOutline.playToEarn');
-
-  const [learningRequiredModal, setLearningRequiredModal] = useState<boolean>(false);
+  const t = useTranslations("courseOutline.playToEarn");
+  const { session } = useSession();
+  const [learningRequiredModal, setLearningRequiredModal] =
+    useState<boolean>(false);
 
   const { dataMe } = useGetMe();
   const { dataLearningProgress } = useGetLearningProgress({
-    id: dataMe && courseOutline ? courseOutline?.slug : '',
+    id: dataMe && courseOutline ? courseOutline?.slug : "",
   });
 
   const formResults = useMemo(() => {
@@ -37,20 +43,22 @@ const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
 
     return form_relations
       .filter(
-        relation =>
-          relation.enabled && relation.type === 'notification' && relation?.confirmation_settings?.display_on_detail
+        (relation) =>
+          relation.enabled &&
+          relation.type === "notification" &&
+          relation?.confirmation_settings?.display_on_detail
       )
-      .map(relation => {
+      .map((relation) => {
         const { start_when } = relation;
         const formInfo = getFormInfo(start_when, outline || []);
-        const buttonLink = relation.confirmation_settings?.buttons?.find(button =>
-          button?.type?.includes('http')
+        const buttonLink = relation.confirmation_settings?.buttons?.find(
+          (button) => button?.type?.includes("http")
         )?.type;
 
-        let segment_name = 'Unknown';
-        if (formInfo.type === 'lesson') {
+        let segment_name = "Unknown";
+        if (formInfo.type === "lesson") {
           segment_name = `${formInfo?.lesson?.title} of section ${formInfo?.section?.index}`;
-        } else if (formInfo.type === 'section') {
+        } else if (formInfo.type === "section") {
           segment_name = `Section ${formInfo?.section?.index}: ${formInfo?.section?.title}`;
         }
 
@@ -58,7 +66,7 @@ const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
           start_when,
           button_link: buttonLink ? cleanUrl(buttonLink) : null,
           segment_type: formInfo.type,
-          segment_state: 'state' in formInfo ? formInfo.state : 'completed',
+          segment_state: "state" in formInfo ? formInfo.state : "completed",
           segment_name,
         };
       });
@@ -74,20 +82,24 @@ const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
     //   return [];
     // }
 
-    return formResults.map(result => {
+    return formResults.map((result) => {
       const { type, entity_id } = result.start_when;
 
       let is_completed = false;
 
       switch (type) {
-        case 'completed_lesson':
+        case "completed_lesson":
           is_completed = isLessonCompleted(entity_id, sectionByUid);
           break;
-        case 'completed_section':
+        case "completed_section":
           is_completed = isSectionCompleted(entity_id, sectionByUid);
           break;
-        case 'started_lesson':
-          is_completed = isLessonStarted(courseOutline, entity_id, sectionByUid);
+        case "started_lesson":
+          is_completed = isLessonStarted(
+            courseOutline,
+            entity_id,
+            sectionByUid
+          );
           break;
         default:
           is_completed = false;
@@ -109,23 +121,25 @@ const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
     const firstResult = completionResults[0];
 
     if (firstResult?.is_completed) {
-      const accessTokenKey = process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY;
-      const accessToken = getCookie(accessTokenKey);
-
       const directLink = buildUrl({
-        endpoint: firstResult.button_link ?? '',
+        endpoint: firstResult.button_link ?? "",
         queryParams: {
-          access_token: accessToken,
+          access_token: session?.accessToken,
           course_cuid: courseOutline?.cuid,
           course_name: courseOutline?.name,
         },
       });
 
-      window.open(directLink, '_blank');
+      window.open(directLink, "_blank");
     } else {
       setLearningRequiredModal(true);
     }
-  }, [completionResults, courseOutline?.cuid, courseOutline?.name, completionResults[0]?.button_link]);
+  }, [
+    completionResults,
+    courseOutline?.cuid,
+    courseOutline?.name,
+    completionResults[0]?.button_link,
+  ]);
 
   return (
     dataMe &&
@@ -150,13 +164,13 @@ const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
             <div className="h-full w-1/5 max-w-5 rounded-full bg-white" />
           </div>
           <div className="absolute top-0 left-0 h-[90%] w-[98%] rounded-md bg-[#72EC60]" />
-          <span className="z-40 w-full">{t('button')}</span>
+          <span className="z-40 w-full">{t("button")}</span>
         </Button>
 
         {learningRequiredModal && (
           <PlayToEarnWarningModal
-            segmentName={completionResults[0]?.segment_name ?? ''}
-            segmentState={completionResults[0]?.segment_state ?? ''}
+            segmentName={completionResults[0]?.segment_name ?? ""}
+            segmentState={completionResults[0]?.segment_state ?? ""}
             courseOutline={courseOutline}
             isOpen={learningRequiredModal}
             setIsOpen={setLearningRequiredModal}

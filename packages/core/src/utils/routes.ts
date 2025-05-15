@@ -1,4 +1,5 @@
 import { getUnlocalizedPathname } from '@oe/i18n';
+import { pathToRegexp } from 'path-to-regexp';
 
 export const DYNAMIC_FORMS_ROUTES = {
   formList: '/forms',
@@ -197,6 +198,14 @@ export const PROTECTED_ROUTES = {
   referralProgram: '/referral-program',
   referralProgramHistory: '/referral-program/history',
   wallet: '/wallet',
+  // aiAgent: '/ai-agent',
+  courseLearning: '/courses/:slug/:section/:lesson',
+  payment: '/courses/:slug/payment',
+  paymentSuccess: '/courses/:slug/payment/payment-success',
+  paymentFailed: '/courses/:slug/payment/payment-failed',
+  userEdit: '/user/:username/edit',
+  myLaunchpad: '/launchpad/my-launchpad',
+  newsFeedMe: '/news-feed/me',
 } as const;
 
 export const ZONE_ROUTES = {
@@ -270,7 +279,11 @@ export const SITEMAP_ROUTES = [
 
 export function isProtectedRoute(pathname: string) {
   const unlocalizedPathname = getUnlocalizedPathname(pathname);
-  return Object.entries(PROTECTED_ROUTES).some(([_, path]) => unlocalizedPathname.startsWith(path));
+
+  return Object.values(PROTECTED_ROUTES).some(protectedPath => {
+    const { regexp } = pathToRegexp(protectedPath);
+    return regexp.test(unlocalizedPathname);
+  });
 }
 
 export function isZoneRoute(pathname: string, zone: IZoneRoutes) {

@@ -117,8 +117,6 @@ async function isomorphicFetch<T>(url: string, options: FetchOptions = {}): Prom
       headers['X-referrer'] = safeDecodeURIComponent(headers.referrer);
     }
 
-    console.log('=======================headers isomorphicFetch===================', headers, url);
-
     const fetchOptions = {
       ...options,
       headers,
@@ -174,7 +172,7 @@ async function isomorphicFetch<T>(url: string, options: FetchOptions = {}): Prom
     clearTimeout(timeoutId);
     const isProduction = process.env.NODE_ENV === 'production';
     if (!isProduction) {
-      console.log('🚀 - isomorphicFetch total time', url, performance.now() - start);
+      console.info('🚀 - isomorphicFetch total time', url, performance.now() - start);
     }
   }
 }

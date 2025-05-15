@@ -120,6 +120,7 @@ export async function GET(request: NextRequest) {
   const session = cookieStore.get(process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY)?.value;
 
   if (!session) {
+    cookieStore.delete(process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY);
     return createErrorResponse({
       isAjax,
       errorMessage: 'Session not found',
@@ -133,6 +134,7 @@ export async function GET(request: NextRequest) {
   const { refreshToken, origin, referrer } = sessionPayload as SessionPayload;
 
   if (!(refreshToken || origin || referrer)) {
+    cookieStore.delete(process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY);
     return createErrorResponse({
       isAjax,
       errorMessage: 'Unauthorized',
@@ -202,7 +204,7 @@ export async function GET(request: NextRequest) {
     return response;
   } catch (error) {
     console.error('Error refreshing token:', error);
-
+    cookieStore.delete(process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY);
     return createErrorResponse({
       isAjax,
       errorMessage: 'Refresh failed',

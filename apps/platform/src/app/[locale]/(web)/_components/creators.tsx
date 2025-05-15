@@ -1,3 +1,4 @@
+"use client";
 import CreatorImage from "@oe/assets/images/openedu-homepage/banner-creators.png";
 import { Button } from "@oe/ui";
 import { Image } from "@oe/ui";

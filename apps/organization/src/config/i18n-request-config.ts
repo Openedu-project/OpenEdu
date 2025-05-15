@@ -3,6 +3,7 @@ import type { LanguageCode } from '@oe/i18n';
 import { getRequestConfig } from 'next-intl/server';
 
 export default getRequestConfig(async ({ requestLocale }) => {
-  const locale = await requestLocale;
-  return getAllTranslations(locale as LanguageCode);
+  const requestedLocale = await requestLocale;
+  const requestConfig = await getAllTranslations(requestedLocale as LanguageCode);
+  return requestConfig;
 });
