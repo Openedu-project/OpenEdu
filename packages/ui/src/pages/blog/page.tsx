@@ -1,17 +1,17 @@
-import { getBlogsPublishService } from '@oe/api';
-import { getCategoriesTreeService } from '@oe/api';
-import { getOrgByDomainService } from '@oe/api';
-import { getCookie } from '@oe/core';
-import { BlogBanner } from './_components/blog-banner';
-import { BlogCateCarousel } from './_components/blog-cate-carousel';
-import { BlogHeader } from './_components/blog-header';
-import { BlogOutstanding } from './_components/blog-outstanding';
+import { getBlogsPublishService } from "@oe/api";
+import { getCategoriesTreeService } from "@oe/api";
+import { getOrgByDomainService } from "@oe/api";
+import { getCookie } from "@oe/core";
+import { BlogCateCarousel } from "./_components/blog-cate-carousel";
+import { BlogHeader } from "./_components/blog-header";
+import { BlogOutstanding } from "./_components/blog-outstanding";
 
 const getOtherOrgBlog = async (isOpenEdu?: boolean) => {
   if (!isOpenEdu) {
     return undefined;
   }
-  const domain = (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? '';
+  const domain =
+    (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? "";
   try {
     const orgData = await getOrgByDomainService(undefined, {
       domain,
@@ -20,7 +20,7 @@ const getOtherOrgBlog = async (isOpenEdu?: boolean) => {
       params: {
         page: 1,
         per_page: 10,
-        sort: 'update_at desc',
+        sort: "update_at desc",
         not_org_id: orgData?.id,
       },
     });
@@ -37,11 +37,11 @@ export async function BlogDefaultPage({ isOpenEdu }: { isOpenEdu?: boolean }) {
       params: {
         page: 1,
         per_page: 14,
-        sort: 'update_at desc',
+        sort: "update_at desc",
       },
     }),
     getCategoriesTreeService(undefined, {
-      queryParams: { active: true, type: 'blog' },
+      queryParams: { active: true, type: "blog" },
     }),
     getOtherOrgBlog(isOpenEdu),
   ]);
@@ -58,8 +58,8 @@ export async function BlogDefaultPage({ isOpenEdu }: { isOpenEdu?: boolean }) {
             orgBlogs={orgBlogData}
           />
         )}
-        <BlogBanner />
-        {categories?.map(cate => (
+        {/* <BlogBanner /> */}
+        {categories?.map((cate) => (
           <BlogCateCarousel key={cate.id} id={cate.id} name={cate.name} />
         ))}
       </div>
