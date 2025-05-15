@@ -1,5 +1,5 @@
 
-  .sst/platform/sst.config.1747289088916.mjs ────────────────────────────────────── 707.6kb ─ 100.0%
+  .sst/platform/sst.config.1747289935457.mjs ────────────────────────────────────── 707.5kb ─ 100.0%
    ├ .sst/platform/src/components/aws/router.ts ──────────────────────────────────── 34.4kb ─── 4.9%
    │  └ .sst/platform/src/components/aws/index.ts
    │     └ .sst/platform/src/components/index.ts
@@ -669,8 +669,6 @@
    │     └ .sst/platform/src/components/index.ts
    │        └ sst.config.ts
    │           └ eval.ts
-   ├ <define:$cli> ────────────────────────────────────────────────────────────────── 375b ──── 0.1%
-   │  └ eval.ts
    ├ .sst/platform/src/components/aws/step-functions/fail.ts ──────────────────────── 326b ──── 0.0%
    │  └ .sst/platform/src/components/aws/step-functions.ts
    │     └ .sst/platform/src/components/aws/index.ts
@@ -739,6 +737,8 @@
    │        └ .sst/platform/src/components/index.ts
    │           └ sst.config.ts
    │              └ eval.ts
+   ├ <define:$cli> ────────────────────────────────────────────────────────────────── 268b ──── 0.0%
+   │  └ eval.ts
    ├ .sst/platform/src/components/aws/providers/kv-keys.ts ────────────────────────── 223b ──── 0.0%
    │  └ .sst/platform/src/components/aws/static-site.ts
    │     └ .sst/platform/src/components/aws/index.ts

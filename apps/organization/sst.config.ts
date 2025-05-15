@@ -13,11 +13,11 @@ export default $config({
   async run() {
     new sst.aws.Nextjs('oeorgtestnet', {
       domain: {
-        name: 'openedutest.net',
+        name: 'vbi.openedutest.net',
         aliases: ['*.openedutest.net'],
-        dns: sst.aws.dns({
-          zone: 'Z03666423OXCSCHYUQUDV',
-        }),
+        // dns: sst.aws.dns({
+        //   zone: 'Z03666423OXCSCHYUQUDV',
+        // }),
       },
       regions: ['ap-southeast-1'],
       imageOptimization: {

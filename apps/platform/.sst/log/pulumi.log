@@ -1,326 +1,320 @@
 Updating (production):
 @ updating.....
 
-@ updating.............
+@ updating..........
  ++ command:local:Command oeBuilder creating replacement (0s) [diff: ]
-@ updating........
- ++ command:local:Command oeBuilder creating replacement (4s) [diff: ]; Monorepo detected at /root/home/oe
- ++ command:local:Command oeBuilder creating replacement (4s) [diff: ]; Next.js version : 15.4.0
- ++ command:local:Command oeBuilder creating replacement (4s) [diff: ]; OpenNext v3.6.1
- ++ command:local:Command oeBuilder creating replacement (4s) [diff: ]; 
- ++ command:local:Command oeBuilder creating replacement (4s) [diff: ]; ┌─────────────────────────────────┐
- ++ command:local:Command oeBuilder creating replacement (4s) [diff: ]; │ OpenNext — Building Next.js app │
- ++ command:local:Command oeBuilder creating replacement (4s) [diff: ]; └─────────────────────────────────┘
- ++ command:local:Command oeBuilder creating replacement (4s) [diff: ]; 
- ++ command:local:Command oeBuilder creating replacement (5s) [diff: ]; 
- ++ command:local:Command oeBuilder creating replacement (5s) [diff: ]; > platform@0.1.0 build /root/home/oe/apps/platform
- ++ command:local:Command oeBuilder creating replacement (5s) [diff: ]; > next build
- ++ command:local:Command oeBuilder creating replacement (5s) [diff: ]; 
 @ updating.....
- ++ command:local:Command oeBuilder creating replacement (6s) [diff: ];    ▲ Next.js 15.4.0-canary.34
- ++ command:local:Command oeBuilder creating replacement (6s) [diff: ];    - Environments: .env.local, .env.production
- ++ command:local:Command oeBuilder creating replacement (6s) [diff: ];    - Experiments (use with caution):
- ++ command:local:Command oeBuilder creating replacement (6s) [diff: ];      · ppr
- ++ command:local:Command oeBuilder creating replacement (6s) [diff: ];      ✓ inlineCss
- ++ command:local:Command oeBuilder creating replacement (6s) [diff: ];      ✓ reactCompiler
- ++ command:local:Command oeBuilder creating replacement (6s) [diff: ]; 
- ++ command:local:Command oeBuilder creating replacement (6s) [diff: ];    Creating an optimized production build ...
-@ updating...................................................................................................................................................
- ++ command:local:Command oeBuilder creating replacement (150s) [diff: ];  ✓ Compiled successfully in 2.4min
- ++ command:local:Command oeBuilder creating replacement (150s) [diff: ];    Skipping validation of types
- ++ command:local:Command oeBuilder creating replacement (150s) [diff: ];    Skipping linting
+ ++ command:local:Command oeBuilder creating replacement (2s) [diff: ]; Monorepo detected at /root/home/oe
+ ++ command:local:Command oeBuilder creating replacement (2s) [diff: ]; Next.js version : 15.4.0
+ ++ command:local:Command oeBuilder creating replacement (2s) [diff: ]; OpenNext v3.6.1
+ ++ command:local:Command oeBuilder creating replacement (2s) [diff: ]; 
+ ++ command:local:Command oeBuilder creating replacement (2s) [diff: ]; ┌─────────────────────────────────┐
+ ++ command:local:Command oeBuilder creating replacement (2s) [diff: ]; │ OpenNext — Building Next.js app │
+ ++ command:local:Command oeBuilder creating replacement (2s) [diff: ]; └─────────────────────────────────┘
+ ++ command:local:Command oeBuilder creating replacement (2s) [diff: ]; 
+ ++ command:local:Command oeBuilder creating replacement (2s) [diff: ]; 
+ ++ command:local:Command oeBuilder creating replacement (2s) [diff: ]; > platform@0.1.0 build /root/home/oe/apps/platform
+ ++ command:local:Command oeBuilder creating replacement (2s) [diff: ]; > next build
+ ++ command:local:Command oeBuilder creating replacement (2s) [diff: ]; 
 @ updating....
- ++ command:local:Command oeBuilder creating replacement (151s) [diff: ];    Collecting page data ...
+ ++ command:local:Command oeBuilder creating replacement (3s) [diff: ];    ▲ Next.js 15.4.0-canary.34
+ ++ command:local:Command oeBuilder creating replacement (3s) [diff: ];    - Environments: .env.local, .env.production
+ ++ command:local:Command oeBuilder creating replacement (3s) [diff: ];    - Experiments (use with caution):
+ ++ command:local:Command oeBuilder creating replacement (3s) [diff: ];      · ppr
+ ++ command:local:Command oeBuilder creating replacement (3s) [diff: ];      ✓ inlineCss
+ ++ command:local:Command oeBuilder creating replacement (3s) [diff: ];      ✓ reactCompiler
+ ++ command:local:Command oeBuilder creating replacement (3s) [diff: ]; 
+@ updating....
+ ++ command:local:Command oeBuilder creating replacement (4s) [diff: ];    Creating an optimized production build ...
+@ updating.....................................................................................................................
+ ++ command:local:Command oeBuilder creating replacement (118s) [diff: ];  ✓ Compiled successfully in 113s
+ ++ command:local:Command oeBuilder creating replacement (118s) [diff: ];    Skipping validation of types
+ ++ command:local:Command oeBuilder creating replacement (118s) [diff: ];    Skipping linting
+ ++ command:local:Command oeBuilder creating replacement (118s) [diff: ];    Collecting page data ...
 @ updating.....
- ++ command:local:Command oeBuilder creating replacement (154s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
- ++ command:local:Command oeBuilder creating replacement (154s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
- ++ command:local:Command oeBuilder creating replacement (154s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ ++ command:local:Command oeBuilder creating replacement (120s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ ++ command:local:Command oeBuilder creating replacement (120s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ ++ command:local:Command oeBuilder creating replacement (120s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ ++ command:local:Command oeBuilder creating replacement (120s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ ++ command:local:Command oeBuilder creating replacement (120s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ ++ command:local:Command oeBuilder creating replacement (120s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ ++ command:local:Command oeBuilder creating replacement (120s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ ++ command:local:Command oeBuilder creating replacement (120s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ ++ command:local:Command oeBuilder creating replacement (120s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ ++ command:local:Command oeBuilder creating replacement (120s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ ++ command:local:Command oeBuilder creating replacement (120s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ ++ command:local:Command oeBuilder creating replacement (120s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ ++ command:local:Command oeBuilder creating replacement (120s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ ++ command:local:Command oeBuilder creating replacement (120s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
 @ updating....
- ++ command:local:Command oeBuilder creating replacement (154s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
- ++ command:local:Command oeBuilder creating replacement (154s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
- ++ command:local:Command oeBuilder creating replacement (154s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
- ++ command:local:Command oeBuilder creating replacement (154s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
- ++ command:local:Command oeBuilder creating replacement (154s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
- ++ command:local:Command oeBuilder creating replacement (154s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
- ++ command:local:Command oeBuilder creating replacement (154s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
- ++ command:local:Command oeBuilder creating replacement (154s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
- ++ command:local:Command oeBuilder creating replacement (155s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
- ++ command:local:Command oeBuilder creating replacement (155s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
- ++ command:local:Command oeBuilder creating replacement (155s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
- ++ command:local:Command oeBuilder creating replacement (155s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
-@ updating............
- ++ command:local:Command oeBuilder creating replacement (164s) [diff: ];    Generating static pages (0/8) ...
-@ updating.....
- ++ command:local:Command oeBuilder creating replacement (165s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
- ++ command:local:Command oeBuilder creating replacement (165s) [diff: ];    Generating static pages (2/8) 
- ++ command:local:Command oeBuilder creating replacement (165s) [diff: ];    Generating static pages (4/8) 
- ++ command:local:Command oeBuilder creating replacement (165s) [diff: ];    Generating static pages (6/8) 
- ++ command:local:Command oeBuilder creating replacement (165s) [diff: ];  ✓ Generating static pages (8/8)
-@ updating.......
- ++ command:local:Command oeBuilder creating replacement (170s) [diff: ];    Finalizing page optimization ...
- ++ command:local:Command oeBuilder creating replacement (170s) [diff: ];    Collecting build traces ...
-@ updating.........................................................
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; 
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; Route (app)                                                                 Size  First Load JS
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ┌ ○ /_not-found                                                          1.01 kB         114 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]                                                            3.12 kB         469 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/[...rest]                                                    184 B         113 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/about-us                                                     184 B         113 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin                                                        146 B         146 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/certificates                                           13 kB         561 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/certificates/[id]                                     102 kB        1.66 MB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/course/categories                                      217 B         412 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/course/course-management                               12 kB         379 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/course/reviewing                                     5.71 kB         414 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/creator-management                                     217 B         414 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/creator-management/creators                            216 B         414 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/creator-management/invitations                        1.4 kB         377 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/creator-management/requests                          2.99 kB         412 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/launchpad/approved                                   8.44 kB         375 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/launchpad/approved/[id]                              7.83 kB         350 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/launchpad/requests                                   1.55 kB         412 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/launchpad/requests/[id]                               2.3 kB         388 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/organizations/organization-requests                  2.85 kB         412 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/organizations/organizations-management               11.4 kB         444 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/permissions                                            216 B         411 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/permissions/actions                                    216 B         411 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/permissions/pages                                    2.73 kB         356 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/permissions/roles                                    3.14 kB         356 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/referral-program/program-management                  19.6 kB         387 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/schedule                                             13.2 kB         414 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/site-settings/emails                                   184 B         113 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/site-settings/featured-contents                      29.5 kB         408 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/site-settings/general                                  206 B         350 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/site-settings/languages                                16 kB         295 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/site-settings/languages/translations                 8.21 kB         309 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/site-settings/pages                                    184 B         113 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/statistic/ai-course-statistic                         311 kB         827 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/terms-and-conditions/faq                             5.84 kB         981 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/terms-and-conditions/terms-and-privacy               5.84 kB         981 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/admin/withdraw-request                                     20.1 kB         464 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/affiliate                                                    147 B         146 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/affiliate/campaigns                                        3.87 kB         411 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/affiliate/campaigns/[campaignId]                            6.1 kB         355 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/affiliate/report                                           10.3 kB         377 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/affiliate/report/report-detail                             9.14 kB         376 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/ai-agent                                                   1.19 kB         467 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/ai-agent/chat                                                327 B         466 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/ai-agent/chat/[id]                                           327 B         466 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/ai-agent/history                                             327 B         466 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/ai-agent/image-generator                                     327 B         466 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/ai-agent/image-generator/[id]                                327 B         466 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/ai-agent/slide                                               327 B         466 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/ai-agent/slide/[id]                                          327 B         466 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/auth-confirm                                               4.24 kB         252 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/blog-admin/[id]/edit                                       1.26 kB         999 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/blog-admin/[id]/preview                                      332 B         998 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/blog-admin/blog-category                                     217 B         412 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/blog-admin/creation                                        1.26 kB         999 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/blog-admin/editor-management                                 218 B         421 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/blog-admin/invitation-management                           1.42 kB         377 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/blog-admin/invitation-management/editor                    1.42 kB         377 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/blog-admin/my-blog                                           461 B         998 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/blog-admin/org-blog                                          216 B         413 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/blog-admin/request                                         25.8 kB         822 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/blog-admin/user-blog                                         216 B         413 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/blog-admin/writer-management                                 218 B         421 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/callback                                                     184 B         113 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/contact-us                                                   184 B         113 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/courses                                                    30.7 kB         226 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/courses/[slug]                                               823 B         390 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/courses/[slug]/[section]/[lesson]                           118 kB        1.24 MB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/courses/[slug]/payment                                       26 kB         460 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/courses/[slug]/payment/payment-failed                      1.54 kB         178 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/courses/[slug]/payment/payment-success                     1.44 kB         178 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/courses/preview/[courseId]/[orgId]                           256 B         389 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator                                                      146 B         146 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/affiliate-campaigns                                  218 B         417 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/affiliate-campaigns/[campaignId]                   6.94 kB         307 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/affiliate-campaigns/[campaignId]/campaign-courses  6.94 kB         307 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/affiliate-campaigns/[campaignId]/commissions       20.9 kB         317 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/affiliate-campaigns/[campaignId]/referrers         6.77 kB         295 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/affiliate-campaigns/campaigns                        217 B         417 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/affiliate-campaigns/report                         7.37 kB         408 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/coupon                                             28.2 kB         432 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/course/categories                                    217 B         412 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/courses                                            27.2 kB        1.02 MB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/courses/[courseId]/[sectionId]/[lessonId]          44.3 kB         929 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/courses/[courseId]/certificate                     30.4 kB        1.12 MB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/courses/[courseId]/collaborators                   14.3 kB         301 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/courses/[courseId]/history                           16 kB         306 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/courses/[courseId]/learners                        6.93 kB         247 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/courses/[courseId]/price                             21 kB         279 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/courses/[courseId]/settings                        49.4 kB         906 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/courses/[courseId]/trigger-form                    16.9 kB         313 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/courses/ai                                           207 B         365 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/courses/ai/[id]                                      207 B         365 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/courses/ai/[id]/general-information                15.6 kB         260 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/create-launchpads/[launchpadId]                    50.1 kB         566 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/forms                                                235 B         504 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/forms/[id]                                           235 B         504 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/forms/create                                         235 B         504 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/launchpad                                          13.3 kB         223 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/creator/launchpad/[id]                                     15.1 kB         494 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/demo                                                       25.5 kB         280 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/email-verify                                               7.97 kB         187 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/faq                                                          685 B         128 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/forgot-password                                            3.05 kB         248 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/launchpad                                                  17.3 kB         226 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/launchpad/[id]                                             3.38 kB         154 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/launchpad/[id]/pledge                                      20.7 kB         259 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/launchpad/[id]/vote                                        10.6 kB         206 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/launchpad/my-launchpad                                     12.6 kB         170 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/learner                                                    7.15 kB         271 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/learner/my-certificates                                    14.4 kB         259 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/learner/my-courses                                         6.05 kB         201 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/learner/my-courses/completed                                 166 B         195 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/learner/my-courses/in-progress                               167 B         195 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/learner/my-courses/not-started                               167 B         195 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/learner/wishlist                                             167 B         195 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/login                                                      9.32 kB         239 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/news-feed                                                  9.09 kB         224 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/news-feed/[slug]                                           4.54 kB           1 MB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/news-feed/author/[username]                                19.6 kB         197 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/news-feed/author/[username]/[slug]                          4.6 kB           1 MB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/news-feed/category/[id]                                      264 B         215 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/news-feed/hashtag/[id]                                       264 B         215 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/news-feed/list                                               265 B         215 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/news-feed/me/[id]/edit                                     1.04 kB         998 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/news-feed/me/[id]/preview                                    332 B         998 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/news-feed/me/creation                                      1.04 kB         998 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/news-feed/me/management                                    16.3 kB         330 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/org-not-found                                                551 B         156 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/referral-program                                           12.9 kB         234 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/referral-program/history                                    4.9 kB         440 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/schedule                                                     66 kB         217 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/signup                                                     5.32 kB         250 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/social-login                                                 184 B         113 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/terms                                                        184 B         113 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/terms/[terms]                                                184 B         113 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/unauthorized                                                 551 B         156 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/user/[user]                                                19.1 kB         243 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/user/[user]/certificate/[certificateId]                    7.72 kB         250 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/user/[user]/edit/account                                   14.8 kB         295 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/user/[user]/edit/notifications                              9.4 kB         273 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/user/[user]/edit/password                                  13.5 kB         294 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/user/[user]/edit/privacy                                   21.9 kB         302 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/user/[user]/edit/profile                                   15.6 kB         308 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/user/[user]/edit/profile/blogs                             4.29 kB         318 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/user/[user]/edit/profile/certificates                      4.29 kB         318 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/user/[user]/edit/profile/courses                           4.31 kB         318 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/wallet                                                     16.6 kB         512 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/wallet/bank-accounts                                       9.88 kB         292 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/wallet/earning                                             11.7 kB         464 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/wallet/history                                               21 kB         317 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/wallet/nft                                                 4.24 kB         417 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /[locale]/wallet/withdraw                                            14.6 kB         465 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ƒ /api/auth/refresh-token                                                184 B         113 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ○ /manifest.webmanifest                                                  184 B         113 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ├ ○ /robots.txt                                                            184 B         113 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; └ ○ /sitemap.xml                                                           184 B         113 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; + First Load JS shared by all                                             113 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ];   ├ chunks/4838-b1bc20c97994ac4f.js                                      45.2 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ];   ├ chunks/ce56524f-f167382db49cb6d8.js                                  63.7 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ];   └ other shared chunks (total)                                          4.06 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; 
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; 
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ƒ Middleware                                                             54.2 kB
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; 
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ○  (Static)   prerendered as static content
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; ƒ  (Dynamic)  server-rendered on demand
- ++ command:local:Command oeBuilder creating replacement (223s) [diff: ]; 
-@ updating....
- ++ command:local:Command oeBuilder creating replacement (225s) [diff: ]; 
- ++ command:local:Command oeBuilder creating replacement (225s) [diff: ]; ┌──────────────────────────────┐
- ++ command:local:Command oeBuilder creating replacement (225s) [diff: ]; │ OpenNext — Generating bundle │
- ++ command:local:Command oeBuilder creating replacement (225s) [diff: ]; └──────────────────────────────┘
- ++ command:local:Command oeBuilder creating replacement (225s) [diff: ]; 
-@ updating.....
- ++ command:local:Command oeBuilder creating replacement (227s) [diff: ]; Bundling middleware function...
- ++ command:local:Command oeBuilder creating replacement (227s) [diff: ]; Bundling static assets...
-@ updating....
- ++ command:local:Command oeBuilder creating replacement (228s) [diff: ]; Bundling cache assets...
+ ++ command:local:Command oeBuilder creating replacement (120s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+@ updating..........
+ ++ command:local:Command oeBuilder creating replacement (128s) [diff: ];    Generating static pages (0/8) ...
 @ updating......
- ++ command:local:Command oeBuilder creating replacement (231s) [diff: ]; Building server function: default...
-@ updating.........
- ++ command:local:Command oeBuilder creating replacement (237s) [diff: ]; Applying code patches: 4.949s
+ ++ command:local:Command oeBuilder creating replacement (131s) [diff: ]; 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ ++ command:local:Command oeBuilder creating replacement (131s) [diff: ];    Generating static pages (2/8) 
+ ++ command:local:Command oeBuilder creating replacement (131s) [diff: ];    Generating static pages (4/8) 
+ ++ command:local:Command oeBuilder creating replacement (131s) [diff: ];    Generating static pages (6/8) 
+ ++ command:local:Command oeBuilder creating replacement (131s) [diff: ];  ✓ Generating static pages (8/8)
+@ updating......
+ ++ command:local:Command oeBuilder creating replacement (134s) [diff: ];    Finalizing page optimization ...
+ ++ command:local:Command oeBuilder creating replacement (134s) [diff: ];    Collecting build traces ...
+@ updating....................................
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; 
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; Route (app)                                                                 Size  First Load JS
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ┌ ○ /_not-found                                                          1.01 kB         114 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]                                                            3.12 kB         469 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/[...rest]                                                    184 B         113 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/about-us                                                     184 B         113 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin                                                        146 B         146 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/certificates                                           13 kB         561 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/certificates/[id]                                     102 kB        1.66 MB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/course/categories                                      217 B         412 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/course/course-management                               12 kB         379 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/course/reviewing                                     5.71 kB         414 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/creator-management                                     217 B         414 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/creator-management/creators                            216 B         414 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/creator-management/invitations                        1.4 kB         377 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/creator-management/requests                          2.99 kB         412 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/launchpad/approved                                   8.44 kB         375 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/launchpad/approved/[id]                              7.83 kB         350 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/launchpad/requests                                   1.55 kB         412 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/launchpad/requests/[id]                               2.3 kB         388 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/organizations/organization-requests                  2.85 kB         412 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/organizations/organizations-management               11.4 kB         444 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/permissions                                            216 B         411 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/permissions/actions                                    216 B         411 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/permissions/pages                                    2.73 kB         356 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/permissions/roles                                    3.14 kB         356 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/referral-program/program-management                  19.6 kB         387 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/schedule                                             13.2 kB         414 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/site-settings/emails                                   184 B         113 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/site-settings/featured-contents                      29.5 kB         408 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/site-settings/general                                  206 B         350 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/site-settings/languages                                16 kB         295 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/site-settings/languages/translations                 8.21 kB         309 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/site-settings/pages                                    184 B         113 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/statistic/ai-course-statistic                         311 kB         827 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/terms-and-conditions/faq                             5.84 kB         981 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/terms-and-conditions/terms-and-privacy               5.84 kB         981 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/admin/withdraw-request                                     20.1 kB         464 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/affiliate                                                    147 B         146 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/affiliate/campaigns                                        3.87 kB         411 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/affiliate/campaigns/[campaignId]                            6.1 kB         355 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/affiliate/report                                           10.3 kB         377 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/affiliate/report/report-detail                             9.14 kB         376 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/ai-agent                                                   1.19 kB         467 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/ai-agent/chat                                                327 B         466 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/ai-agent/chat/[id]                                           327 B         466 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/ai-agent/history                                             327 B         466 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/ai-agent/image-generator                                     327 B         466 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/ai-agent/image-generator/[id]                                327 B         466 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/ai-agent/slide                                               327 B         466 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/ai-agent/slide/[id]                                          327 B         466 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/auth-confirm                                               4.24 kB         252 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/blog-admin/[id]/edit                                       1.26 kB         999 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/blog-admin/[id]/preview                                      332 B         998 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/blog-admin/blog-category                                     217 B         412 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/blog-admin/creation                                        1.26 kB         999 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/blog-admin/editor-management                                 218 B         421 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/blog-admin/invitation-management                           1.42 kB         377 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/blog-admin/invitation-management/editor                    1.42 kB         377 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/blog-admin/my-blog                                           461 B         998 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/blog-admin/org-blog                                          216 B         413 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/blog-admin/request                                         25.8 kB         822 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/blog-admin/user-blog                                         216 B         413 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/blog-admin/writer-management                                 218 B         421 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/callback                                                     184 B         113 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/contact-us                                                   184 B         113 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/courses                                                    30.7 kB         226 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/courses/[slug]                                               823 B         390 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/courses/[slug]/[section]/[lesson]                           118 kB        1.24 MB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/courses/[slug]/payment                                       26 kB         460 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/courses/[slug]/payment/payment-failed                      1.54 kB         178 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/courses/[slug]/payment/payment-success                     1.44 kB         178 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/courses/preview/[courseId]/[orgId]                           256 B         389 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator                                                      146 B         146 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/affiliate-campaigns                                  218 B         417 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/affiliate-campaigns/[campaignId]                   6.94 kB         307 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/affiliate-campaigns/[campaignId]/campaign-courses  6.94 kB         307 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/affiliate-campaigns/[campaignId]/commissions       20.9 kB         317 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/affiliate-campaigns/[campaignId]/referrers         6.77 kB         295 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/affiliate-campaigns/campaigns                        217 B         417 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/affiliate-campaigns/report                         7.37 kB         408 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/coupon                                             28.2 kB         432 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/course/categories                                    217 B         412 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/courses                                            27.2 kB        1.02 MB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/courses/[courseId]/[sectionId]/[lessonId]          44.3 kB         929 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/courses/[courseId]/certificate                     30.4 kB        1.12 MB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/courses/[courseId]/collaborators                   14.3 kB         301 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/courses/[courseId]/history                           16 kB         306 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/courses/[courseId]/learners                        6.93 kB         247 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/courses/[courseId]/price                             21 kB         279 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/courses/[courseId]/settings                        49.4 kB         906 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/courses/[courseId]/trigger-form                    16.9 kB         313 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/courses/ai                                           207 B         365 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/courses/ai/[id]                                      207 B         365 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/courses/ai/[id]/general-information                15.6 kB         260 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/create-launchpads/[launchpadId]                    50.1 kB         566 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/forms                                                235 B         504 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/forms/[id]                                           235 B         504 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/forms/create                                         235 B         504 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/launchpad                                          13.3 kB         223 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/creator/launchpad/[id]                                     15.1 kB         494 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/demo                                                       25.5 kB         280 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/email-verify                                               4.17 kB         181 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/faq                                                          685 B         128 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/forgot-password                                            3.05 kB         248 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/launchpad                                                  17.3 kB         226 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/launchpad/[id]                                             3.38 kB         154 kB
 @ updating....
- ++ command:local:Command oeBuilder creating replacement (237s) [diff: ]; Bundling revalidation function...
- ++ command:local:Command oeBuilder creating replacement (238s) [diff: ]; Bundling image optimization function...
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/launchpad/[id]/pledge                                      20.7 kB         259 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/launchpad/[id]/vote                                        10.6 kB         206 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/launchpad/my-launchpad                                     12.6 kB         170 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/learner                                                    7.15 kB         271 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/learner/my-certificates                                    14.4 kB         259 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/learner/my-courses                                         6.05 kB         201 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/learner/my-courses/completed                                 166 B         195 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/learner/my-courses/in-progress                               167 B         195 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/learner/my-courses/not-started                               167 B         195 kB
+ ++ command:local:Command oeBuilder creating replacement (167s) [diff: ]; ├ ƒ /[locale]/learner/wishlist                                             167 B         195 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/login                                                      9.32 kB         239 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/news-feed                                                  9.09 kB         224 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/news-feed/[slug]                                           4.54 kB           1 MB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/news-feed/author/[username]                                19.6 kB         197 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/news-feed/author/[username]/[slug]                          4.6 kB           1 MB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/news-feed/category/[id]                                      264 B         215 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/news-feed/hashtag/[id]                                       264 B         215 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/news-feed/list                                               265 B         215 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/news-feed/me/[id]/edit                                     1.04 kB         998 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/news-feed/me/[id]/preview                                    332 B         998 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/news-feed/me/creation                                      1.04 kB         998 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/news-feed/me/management                                    16.3 kB         330 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/org-not-found                                                551 B         156 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/referral-program                                           12.9 kB         234 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/referral-program/history                                    4.9 kB         440 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/schedule                                                     66 kB         217 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/signup                                                     5.32 kB         250 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/social-login                                                 184 B         113 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/terms                                                        184 B         113 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/terms/[terms]                                                184 B         113 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/unauthorized                                                 551 B         156 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/user/[user]                                                19.1 kB         243 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/user/[user]/certificate/[certificateId]                    7.72 kB         250 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/user/[user]/edit/account                                   14.8 kB         295 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/user/[user]/edit/notifications                              9.4 kB         273 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/user/[user]/edit/password                                  13.5 kB         294 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/user/[user]/edit/privacy                                   21.9 kB         302 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/user/[user]/edit/profile                                   15.6 kB         308 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/user/[user]/edit/profile/blogs                             4.29 kB         318 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/user/[user]/edit/profile/certificates                      4.29 kB         318 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/user/[user]/edit/profile/courses                           4.31 kB         318 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/wallet                                                     16.6 kB         512 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/wallet/bank-accounts                                       9.88 kB         292 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/wallet/earning                                             11.7 kB         464 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/wallet/history                                               21 kB         317 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/wallet/nft                                                 4.24 kB         417 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /[locale]/wallet/withdraw                                            14.6 kB         465 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ƒ /api/auth/refresh-token                                                184 B         113 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ○ /manifest.webmanifest                                                  184 B         113 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ├ ○ /robots.txt                                                            184 B         113 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; └ ○ /sitemap.xml                                                           184 B         113 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; + First Load JS shared by all                                             113 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ];   ├ chunks/4838-b1bc20c97994ac4f.js                                      45.2 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ];   ├ chunks/ce56524f-f167382db49cb6d8.js                                  63.7 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ];   └ other shared chunks (total)                                          4.06 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; 
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; 
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ƒ Middleware                                                             54.2 kB
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; 
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ○  (Static)   prerendered as static content
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ƒ  (Dynamic)  server-rendered on demand
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; 
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; 
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; ┌──────────────────────────────┐
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; │ OpenNext — Generating bundle │
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; └──────────────────────────────┘
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; 
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; Bundling middleware function...
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; Bundling static assets...
+ ++ command:local:Command oeBuilder creating replacement (168s) [diff: ]; Bundling cache assets...
 @ updating....
- ++ command:local:Command oeBuilder creating replacement (239s) [diff: ]; Installing dependencies for image-optimization-function...
-@ updating...........
- ++ command:local:Command oeBuilder creating replacement (248s) [diff: ]; Dependencies installed for image-optimization-function
- ++ command:local:Command oeBuilder creating replacement (248s) [diff: ]; Bundling warmer function...
- ++ command:local:Command oeBuilder creating replacement (248s) [diff: ]; OpenNext build complete.
- ++ command:local:Command oeBuilder created replacement (249s) [diff: ]; OpenNext build complete.
+ ++ command:local:Command oeBuilder creating replacement (169s) [diff: ]; Building server function: default...
+@ updating........
+ ++ command:local:Command oeBuilder creating replacement (174s) [diff: ]; Applying code patches: 4.645s
 @ updating....
+ ++ command:local:Command oeBuilder creating replacement (175s) [diff: ]; Bundling revalidation function...
+ ++ command:local:Command oeBuilder creating replacement (175s) [diff: ]; Bundling image optimization function...
+@ updating....
+ ++ command:local:Command oeBuilder creating replacement (176s) [diff: ]; Installing dependencies for image-optimization-function...
+@ updating.......
+ ++ command:local:Command oeBuilder creating replacement (180s) [diff: ]; Dependencies installed for image-optimization-function
+ ++ command:local:Command oeBuilder creating replacement (180s) [diff: ]; Bundling warmer function...
+ ++ command:local:Command oeBuilder creating replacement (180s) [diff: ]; OpenNext build complete.
+ ++ command:local:Command oeBuilder created replacement (180s) [diff: ]; OpenNext build complete.
  +- command:local:Command oeBuilder replacing (0s) [diff: ]; OpenNext build complete.
  +- command:local:Command oeBuilder replaced (0.00s) [diff: ]; OpenNext build complete.
-@ updating........
+@ updating......
  ++ aws:s3:BucketObjectv2 oeRevalidationSeederCode creating replacement (0s) [diff: ~key,source]
-@ updating....
- ++ aws:s3:BucketObjectv2 oeRevalidationSeederCode created replacement (0.46s) [diff: ~key,source]
+ ~  pulumi-nodejs:dynamic:Resource oeAssetFiles.sst.aws.BucketFiles updating (0s) [diff: ~files]
+ ++ aws:s3:BucketObjectv2 oeRevalidationSeederCode created replacement (0.40s) [diff: ~key,source]
  +- aws:s3:BucketObjectv2 oeRevalidationSeederCode replacing (0s) [diff: ~key,source]
  +- aws:s3:BucketObjectv2 oeRevalidationSeederCode replaced (0.00s) [diff: ~key,source]
- ~  pulumi-nodejs:dynamic:Resource oeAssetFiles.sst.aws.BucketFiles updating (0s) [diff: ~files]
  ~  aws:lambda:Function oeRevalidationSeederFunction updating (0s) [diff: ~s3Key]
 @ updating....
  ++ aws:s3:BucketObjectv2 oeRevalidationEventsSubscriberUexmznFunctionCode creating replacement (0s) [diff: ~key,source]
- ++ aws:s3:BucketObjectv2 oeRevalidationEventsSubscriberUexmznFunctionCode created replacement (0.26s) [diff: ~key,source]
+ ++ aws:s3:BucketObjectv2 oeRevalidationEventsSubscriberUexmznFunctionCode created replacement (0.21s) [diff: ~key,source]
  +- aws:s3:BucketObjectv2 oeRevalidationEventsSubscriberUexmznFunctionCode replacing (0s) [diff: ~key,source]
  +- aws:s3:BucketObjectv2 oeRevalidationEventsSubscriberUexmznFunctionCode replaced (0.00s) [diff: ~key,source]
  ~  aws:lambda:Function oeRevalidationEventsSubscriberUexmznFunctionFunction updating (0s) [diff: ~s3Key]
-@ updating.......
+@ updating......
  ++ aws:s3:BucketObjectv2 oeImageOptimizerCode creating replacement (0s) [diff: ~key,source]
-@ updating....
- ~  aws:lambda:Function oeRevalidationSeederFunction updated (6s) [diff: ~s3Key]
- ++ aws:lambda:Invocation oeRevalidationSeed creating replacement (0s) [diff: ~triggers]
-@ updating....
+@ updating.....
+ ~  pulumi-nodejs:dynamic:Resource oeAssetFiles.sst.aws.BucketFiles updated (5s) [diff: ~files]
  ++ aws:s3:BucketObjectv2 oeImageOptimizerCode created replacement (1s) [diff: ~key,source]
  +- aws:s3:BucketObjectv2 oeImageOptimizerCode replacing (0s) [diff: ~key,source]
  +- aws:s3:BucketObjectv2 oeImageOptimizerCode replaced (0.00s) [diff: ~key,source]
  ~  aws:lambda:Function oeImageOptimizerFunction updating (0s) [diff: ~s3Key]
+@ updating....
+ ~  aws:lambda:Function oeRevalidationSeederFunction updated (6s) [diff: ~s3Key]
+ ++ aws:lambda:Invocation oeRevalidationSeed creating replacement (0s) [diff: ~triggers]
  ~  aws:lambda:Function oeRevalidationEventsSubscriberUexmznFunctionFunction updated (5s) [diff: ~s3Key]
- ~  pulumi-nodejs:dynamic:Resource oeAssetFiles.sst.aws.BucketFiles updated (6s) [diff: ~files]
+ ++ aws:s3:BucketObjectv2 oeServerApsoutheast1Code creating replacement (0s) [diff: ~key,source]
 @ updating....
  ++ aws:lambda:Invocation oeRevalidationSeed created replacement (1s) [diff: ~triggers]
  +- aws:lambda:Invocation oeRevalidationSeed replacing (0s) [diff: ~triggers]
  +- aws:lambda:Invocation oeRevalidationSeed replaced (0.00s) [diff: ~triggers]
-@ updating....
- ++ aws:s3:BucketObjectv2 oeServerApsoutheast1Code creating replacement (0s) [diff: ~key,source]
-@ updating......
+@ updating.....
  ++ aws:s3:BucketObjectv2 oeServerApsoutheast1Code created replacement (2s) [diff: ~key,source]
  +- aws:s3:BucketObjectv2 oeServerApsoutheast1Code replacing (0s) [diff: ~key,source]
  +- aws:s3:BucketObjectv2 oeServerApsoutheast1Code replaced (0.00s) [diff: ~key,source]
  ~  aws:lambda:Function oeServerApsoutheast1Function updating (0s) [diff: ~s3Key]
-@ updating....
+@ updating.....
  ~  aws:lambda:Function oeImageOptimizerFunction updated (6s) [diff: ~s3Key]
-@ updating..........
+@ updating........
  ~  aws:lambda:Function oeServerApsoutheast1Function updated (7s) [diff: ~s3Key]
  ~  pulumi-nodejs:dynamic:Resource oeInvalidation.sst.aws.DistributionInvalidation updating (0s) [diff: ~version]
-@ updating....
  ++ aws:lambda:Invocation oePrewarmApsoutheast1 creating replacement (0s) [diff: ~triggers]
- ++ aws:lambda:Invocation oePrewarmApsoutheast1 created replacement (0.71s) [diff: ~triggers]
+@ updating....
+ ++ aws:lambda:Invocation oePrewarmApsoutheast1 created replacement (0.86s) [diff: ~triggers]
  +- aws:lambda:Invocation oePrewarmApsoutheast1 replacing (0s) [diff: ~triggers]
  +- aws:lambda:Invocation oePrewarmApsoutheast1 replaced (0.00s) [diff: ~triggers]
-@ updating...........................
- ~  pulumi-nodejs:dynamic:Resource oeInvalidation.sst.aws.DistributionInvalidation updated (25s) [diff: ~version]
-@ updating.......
+@ updating.........................
+ ~  pulumi-nodejs:dynamic:Resource oeInvalidation.sst.aws.DistributionInvalidation updated (22s) [diff: ~version]
  -- aws:lambda:Invocation oePrewarmApsoutheast1 deleting original (0s) [diff: ~triggers]
- -- aws:lambda:Invocation oePrewarmApsoutheast1 deleted original (0.04s) [diff: ~triggers]
- -- aws:lambda:Invocation oeRevalidationSeed deleting original (0s) [diff: ~triggers]
+ -- aws:lambda:Invocation oePrewarmApsoutheast1 deleted original (0.03s) [diff: ~triggers]
  -- aws:s3:BucketObjectv2 oeServerApsoutheast1Code deleting original (0s) [diff: ~key,source]
  -- aws:s3:BucketObjectv2 oeRevalidationEventsSubscriberUexmznFunctionCode deleting original (0s) [diff: ~key,source]
- -- aws:s3:BucketObjectv2 oeImageOptimizerCode deleting original (0s) [diff: ~key,source]
+ -- aws:lambda:Invocation oeRevalidationSeed deleting original (0s) [diff: ~triggers]
  -- aws:s3:BucketObjectv2 oeRevalidationSeederCode deleting original (0s) [diff: ~key,source]
+ -- aws:s3:BucketObjectv2 oeImageOptimizerCode deleting original (0s) [diff: ~key,source]
  -- command:local:Command oeBuilder deleting original (0s) [diff: ]; OpenNext build complete.
- -- aws:lambda:Invocation oeRevalidationSeed deleted original (0.05s) [diff: ~triggers]
- -- command:local:Command oeBuilder deleted original (0.26s) [diff: ]; OpenNext build complete.
- -- aws:s3:BucketObjectv2 oeImageOptimizerCode deleted original (0.33s) [diff: ~key,source]
- -- aws:s3:BucketObjectv2 oeRevalidationEventsSubscriberUexmznFunctionCode deleted original (0.35s) [diff: ~key,source]
- -- aws:s3:BucketObjectv2 oeRevalidationSeederCode deleted original (0.36s) [diff: ~key,source]
- -- aws:s3:BucketObjectv2 oeServerApsoutheast1Code deleted original (0.37s) [diff: ~key,source]
+ -- aws:lambda:Invocation oeRevalidationSeed deleted original (0.10s) [diff: ~triggers]
+ -- command:local:Command oeBuilder deleted original (0.21s) [diff: ]; OpenNext build complete.
+ -- aws:s3:BucketObjectv2 oeRevalidationEventsSubscriberUexmznFunctionCode deleted original (0.27s) [diff: ~key,source]
+ -- aws:s3:BucketObjectv2 oeServerApsoutheast1Code deleted original (0.29s) [diff: ~key,source]
+ -- aws:s3:BucketObjectv2 oeRevalidationSeederCode deleted original (0.29s) [diff: ~key,source]
+ -- aws:s3:BucketObjectv2 oeImageOptimizerCode deleted original (0.31s) [diff: ~key,source]
     pulumi:pulumi:Stack platform-production  
 Outputs:
     _protect: false
@@ -330,5 +324,5 @@ Resources:
     +-7 replaced
     13 changes. 67 unchanged
 
-Duration: 5m16s
+Duration: 3m51s
 

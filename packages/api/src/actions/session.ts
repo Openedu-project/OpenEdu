@@ -109,7 +109,7 @@ export async function setSessionPayload(accessToken: string, refreshToken: strin
   const { origin, referrer } = await getAPIReferrerAndOrigin();
   const { accessTokenExpiry, refreshTokenExpiry } = getTokenExpiry();
   const decodedAccessToken = parseJwt(accessToken);
-  return {
+  const sessionPayload: SessionPayload = {
     id: decodedAccessToken?.sub || decodedAccessToken?.id,
     origin: origin,
     referrer: referrer,
@@ -119,4 +119,6 @@ export async function setSessionPayload(accessToken: string, refreshToken: strin
     refreshTokenExpiry: refreshTokenExpiry,
     nextPath: decodedAccessToken.next_path,
   };
+  await setSessionCookie(sessionPayload);
+  return sessionPayload;
 }

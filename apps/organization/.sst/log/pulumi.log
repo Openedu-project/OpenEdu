@@ -1,41 +1,439 @@
-Destroying (production):
+Updating (production):
 
-@ destroying.....
- -  aws:s3:BucketPolicy oeorgtestnetAssetsPolicy deleting (0s) 
-@ destroying....
- -  aws:s3:BucketPolicy oeorgtestnetAssetsPolicy deleted (0.71s) 
- -  aws:s3:BucketPublicAccessBlock oeorgtestnetAssetsPublicAccessBlock deleting (0s) 
- -  aws:acm:Certificate oeorgtestnetCdnSslCertificate deleting (0s) 
- -  aws:s3:BucketCorsConfigurationV2 oeorgtestnetAssetsCors deleting (0s) 
- -  aws:s3:BucketPublicAccessBlock oeorgtestnetAssetsPublicAccessBlock deleted (0.48s) 
- -  aws:s3:BucketCorsConfigurationV2 oeorgtestnetAssetsCors deleted (0.59s) 
-@ destroying....
- -  aws:acm:Certificate oeorgtestnetCdnSslCertificate deleted (1s) 
- -  sst:aws:Certificate oeorgtestnetCdnSsl deleting (0s) 
- -  aws:s3:BucketV2 oeorgtestnetAssetsBucket deleting (0s) 
-@ destroying....
- -  aws:s3:BucketV2 oeorgtestnetAssetsBucket deleted (0.56s) 
- -  sst:aws:CDN oeorgtestnetCdn deleting (0s) 
- -  sst:aws:Bucket oeorgtestnetAssets deleting (0s) 
- -  aws:cloudfront:KeyValueStore oeorgtestnetKvStore deleting (0s) 
- -  aws:cloudfront:CachePolicy oeorgtestnetServerCachePolicy deleting (0s) 
-@ destroying....
- -  aws:cloudfront:CachePolicy oeorgtestnetServerCachePolicy deleted (1s) 
-@ destroying....
- -  aws:cloudfront:KeyValueStore oeorgtestnetKvStore deleted (2s) 
- -  sst:aws:Nextjs oeorgtestnet deleting (0s) 
- -  pulumi:providers:aws AwsProvider.sst.us-east-1 deleting (0s) 
- -  sst:sst:LinkRef oeorgtestnetLinkRef deleting (0s) 
- -  pulumi:providers:aws AwsProvider.sst.us-east-1 deleted (0.02s) 
- -  pulumi:pulumi:Stack org-production deleting (0s) 
- -  pulumi:pulumi:Stack org-production deleted (0.00s) 
-Outputs:
-  - _protect: false
+@ updating....
+ +  pulumi:pulumi:Stack org-production creating (0s) 
+@ updating....
+ +  sst:aws:Nextjs oeorgtestnet creating (0s) 
+ +  sst:sst:LinkRef oeorgtestnetLinkRef creating (0s) 
+@ updating......
+ +  pulumi:providers:aws AwsProvider.sst.us-east-1 creating (0s) 
+ +  pulumi:providers:aws AwsProvider.sst.us-east-1 created (0.00s) 
+ +  sst:aws:CDN oeorgtestnetCdn creating (0s) 
+ +  sst:aws:Bucket oeorgtestnetAssets creating (0s) 
+@ updating....
+ +  sst:aws:Certificate oeorgtestnetCdnSsl creating (0s) 
+ +  aws:cloudfront:CachePolicy oeorgtestnetServerCachePolicy creating (0s) 
+ +  aws:cloudfront:KeyValueStore oeorgtestnetKvStore creating (0s) 
+@ updating....
+ +  aws:acm:Certificate oeorgtestnetCdnSslCertificate creating (0s) 
+ +  aws:s3:BucketV2 oeorgtestnetAssetsBucket creating (0s) 
+ +  command:local:Command oeorgtestnetBuilder creating (0s) 
+@ updating....
+ +  aws:cloudfront:CachePolicy oeorgtestnetServerCachePolicy created (1s) 
+@ updating....
+ +  aws:s3:BucketV2 oeorgtestnetAssetsBucket created (2s) 
+ +  aws:s3:BucketCorsConfigurationV2 oeorgtestnetAssetsCors creating (0s) 
+ +  aws:s3:BucketPublicAccessBlock oeorgtestnetAssetsPublicAccessBlock creating (0s) 
+@ updating....
+ +  aws:s3:BucketPublicAccessBlock oeorgtestnetAssetsPublicAccessBlock created (0.30s) 
+ +  aws:s3:BucketPolicy oeorgtestnetAssetsPolicy creating (0s) 
+ +  command:local:Command oeorgtestnetBuilder creating (3s) Monorepo detected at /root/home/oe
+ +  command:local:Command oeorgtestnetBuilder creating (3s) Next.js version : 15.4.0
+ +  command:local:Command oeorgtestnetBuilder creating (3s) OpenNext v3.6.1
+ +  command:local:Command oeorgtestnetBuilder creating (3s) 
+ +  command:local:Command oeorgtestnetBuilder creating (3s) ┌─────────────────────────────────┐
+ +  command:local:Command oeorgtestnetBuilder creating (3s) │ OpenNext — Building Next.js app │
+ +  command:local:Command oeorgtestnetBuilder creating (3s) └─────────────────────────────────┘
+ +  command:local:Command oeorgtestnetBuilder creating (3s) 
+ +  aws:s3:BucketCorsConfigurationV2 oeorgtestnetAssetsCors created (0.57s) 
+ +  aws:s3:BucketPolicy oeorgtestnetAssetsPolicy created (0.54s) 
+ +  command:local:Command oeorgtestnetBuilder creating (3s) 
+ +  command:local:Command oeorgtestnetBuilder creating (3s) > org@0.1.0 build /root/home/oe/apps/organization
+ +  command:local:Command oeorgtestnetBuilder creating (3s) > next build
+ +  command:local:Command oeorgtestnetBuilder creating (3s) 
+@ updating.....
+ +  command:local:Command oeorgtestnetBuilder creating (4s)    ▲ Next.js 15.4.0-canary.34
+ +  command:local:Command oeorgtestnetBuilder creating (4s)    - Environments: .env.production
+ +  command:local:Command oeorgtestnetBuilder creating (4s)    - Experiments (use with caution):
+ +  command:local:Command oeorgtestnetBuilder creating (4s)      · ppr
+ +  command:local:Command oeorgtestnetBuilder creating (4s)      ✓ inlineCss
+ +  command:local:Command oeorgtestnetBuilder creating (4s)      ✓ reactCompiler
+ +  command:local:Command oeorgtestnetBuilder creating (4s) 
+ +  command:local:Command oeorgtestnetBuilder creating (5s)    Creating an optimized production build ...
+@ updating....
+ +  aws:acm:Certificate oeorgtestnetCdnSslCertificate created (6s) 
+ +  pulumi-nodejs:dynamic:Resource oeorgtestnetCdnSslCNAMEZoneLookup70149c41b7187f063aad7256a33375fdvbiopenedutestnet.sst.aws.HostedZoneLookup creating (0s) 
+ +  pulumi-nodejs:dynamic:Resource oeorgtestnetCdnSslCNAMEZoneLookup400d1ea94b5630558ee69cfae0d72afeopenedutestnet.sst.aws.HostedZoneLookup creating (0s) 
+@ updating....
+ +  pulumi-nodejs:dynamic:Resource oeorgtestnetCdnSslCNAMEZoneLookup70149c41b7187f063aad7256a33375fdvbiopenedutestnet.sst.aws.HostedZoneLookup created (1s) 
+ +  aws:route53:Record oeorgtestnetCdnSslCNAMERecord70149c41b7187f063aad7256a33375fdvbiopenedutestnet creating (0s) 
+@ updating....
+ +  pulumi-nodejs:dynamic:Resource oeorgtestnetCdnSslCNAMEZoneLookup400d1ea94b5630558ee69cfae0d72afeopenedutestnet.sst.aws.HostedZoneLookup created (2s) 
+ +  aws:route53:Record oeorgtestnetCdnSslCNAMERecord400d1ea94b5630558ee69cfae0d72afeopenedutestnet creating (0s) 
+@ updating.......
+ +  aws:cloudfront:KeyValueStore oeorgtestnetKvStore created (12s) 
+ +  aws:cloudfront:Function oeorgtestnetCloudfrontFunctionRequest creating (0s) 
+@ updating.......
+ +  aws:cloudfront:Function oeorgtestnetCloudfrontFunctionRequest created (4s) 
+@ updating...................
+ +  aws:route53:Record oeorgtestnetCdnSslCNAMERecord400d1ea94b5630558ee69cfae0d72afeopenedutestnet created (23s) 
+@ updating...........
+ +  aws:route53:Record oeorgtestnetCdnSslCNAMERecord70149c41b7187f063aad7256a33375fdvbiopenedutestnet created (33s) 
+ +  aws:acm:CertificateValidation oeorgtestnetCdnSslValidation creating (0s) 
+@ updating..........................
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) Retrying 1/3...
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) Retrying 1/3...
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) Retrying 1/3...
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) Retrying 1/3...
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) Retrying 1/3...
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) Retrying 1/3...
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) Retrying 1/3...
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) Retrying 1/3...
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) Retrying 1/3...
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) Retrying 1/3...
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) Retrying 1/3...
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) 
+ +  command:local:Command oeorgtestnetBuilder creating (63s) Retrying 1/3...
+@ updating............................................
+ +  command:local:Command oeorgtestnetBuilder creating (104s)  ✓ Compiled successfully in 98s
+ +  command:local:Command oeorgtestnetBuilder creating (104s)    Skipping validation of types
+ +  command:local:Command oeorgtestnetBuilder creating (104s)    Skipping linting
+@ updating....
+ +  command:local:Command oeorgtestnetBuilder creating (105s)    Collecting page data ...
+@ updating....
+ +  command:local:Command oeorgtestnetBuilder creating (106s) 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ +  command:local:Command oeorgtestnetBuilder creating (106s) 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ +  command:local:Command oeorgtestnetBuilder creating (106s) 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ +  command:local:Command oeorgtestnetBuilder creating (106s) 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ +  command:local:Command oeorgtestnetBuilder creating (106s) 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ +  command:local:Command oeorgtestnetBuilder creating (106s) 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ +  command:local:Command oeorgtestnetBuilder creating (106s) 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ +  command:local:Command oeorgtestnetBuilder creating (106s) 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ +  command:local:Command oeorgtestnetBuilder creating (106s) 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+@ updating....
+ +  command:local:Command oeorgtestnetBuilder creating (107s) 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ +  command:local:Command oeorgtestnetBuilder creating (107s) 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ +  command:local:Command oeorgtestnetBuilder creating (107s) 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ +  command:local:Command oeorgtestnetBuilder creating (107s) 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ +  command:local:Command oeorgtestnetBuilder creating (107s) 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ +  command:local:Command oeorgtestnetBuilder creating (107s) 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+@ updating...........
+ +  command:local:Command oeorgtestnetBuilder creating (115s)    Generating static pages (0/7) ...
+@ updating.....
+ +  command:local:Command oeorgtestnetBuilder creating (117s) 🚀 ~ AUTH_SECRET: RpZLdlJdur9gBl5+TUxtkDlVkYyahFJXpX3zJpDolmU=
+ +  command:local:Command oeorgtestnetBuilder creating (117s)    Generating static pages (1/7) 
+ +  command:local:Command oeorgtestnetBuilder creating (117s)    Generating static pages (3/7) 
+ +  command:local:Command oeorgtestnetBuilder creating (117s)    Generating static pages (5/7) 
+ +  command:local:Command oeorgtestnetBuilder creating (117s)  ✓ Generating static pages (7/7)
+@ updating......
+ +  command:local:Command oeorgtestnetBuilder creating (120s)    Finalizing page optimization ...
+ +  command:local:Command oeorgtestnetBuilder creating (120s)    Collecting build traces ...
+@ updating...................................
+ +  command:local:Command oeorgtestnetBuilder creating (152s) 
+ +  command:local:Command oeorgtestnetBuilder creating (152s) Route (app)                                                                 Size  First Load JS
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ┌ ○ /_not-found                                                          1.01 kB         115 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]                                                              233 B         523 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/about-us                                                     233 B         523 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin                                                        150 B         147 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/certificates                                         12.3 kB         546 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/certificates/[id]                                    90.6 kB        1.63 MB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/course/course-management                             7.39 kB         371 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/course/reviewing                                     4.99 kB         402 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/creator-management                                   4.16 kB         401 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/creator-management/creators                          4.16 kB         401 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/creator-management/invitations                       4.09 kB         368 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/creator-management/requests                          2.61 kB         400 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/permissions                                            214 B         399 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/permissions/actions                                    214 B         399 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/permissions/pages                                    7.24 kB         348 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/permissions/roles                                    8.27 kB         349 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/reviewing                                            4.99 kB         402 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/schedule                                             12.1 kB         401 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/site-settings/emails                                   205 B         114 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/site-settings/general                                2.65 kB         344 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/site-settings/languages                              14.5 kB         294 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/site-settings/languages/translations                 6.37 kB         308 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/site-settings/pages                                    205 B         114 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/site-settings/themes                                 8.01 kB         548 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/statistic/ai-course-statistic                         307 kB         810 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/terms-and-conditions/faq                               237 B         961 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/terms-and-conditions/terms-and-privacy                 235 B         961 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/themes/[themeName]                                     205 B         114 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/themes/[themeName]/components                          205 B         114 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/themes/[themeName]/components/[componentName]          944 B         123 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/themes/[themeName]/features/popular                    205 B         114 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/themes/[themeName]/features/popular/blog               221 B         393 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/themes/[themeName]/features/popular/course             220 B         393 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/themes/[themeName]/globals                             205 B         114 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/themes/[themeName]/globals/[settingKey]              15.6 kB         217 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/themes/[themeName]/metadata                            205 B         114 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/themes/[themeName]/metadata/[settingKey]             12.4 kB         252 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/themes/[themeName]/pages                               205 B         114 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/themes/[themeName]/pages/[themePageKey]                205 B         114 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/themes/[themeName]/pages/[themePageKey]/metadata       219 B         431 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/admin/themes/[themeName]/pages/[themePageKey]/theme          219 B         431 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/affiliate                                                    151 B         147 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/affiliate/campaigns                                          11 kB         400 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/affiliate/campaigns/[campaignId]                           7.34 kB         348 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/affiliate/report                                           4.47 kB         368 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/affiliate/report/report-detail                             3.71 kB         367 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/ai-agent                                                     908 B         447 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/ai-agent/chat                                                324 B         447 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/ai-agent/chat/[id]                                           324 B         447 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/ai-agent/history                                             324 B         447 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/ai-agent/image-generator                                     324 B         447 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/ai-agent/image-generator/[id]                                324 B         447 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/ai-agent/slide                                               324 B         447 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/ai-agent/slide/[id]                                          324 B         447 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/auth-confirm                                               11.7 kB         247 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/blog-admin/[id]/edit                                       1.26 kB         978 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/blog-admin/[id]/preview                                      336 B         977 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/blog-admin/blog-category                                   10.1 kB         399 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/blog-admin/creation                                        1.26 kB         978 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/blog-admin/editor-management                                 217 B         407 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/blog-admin/invitation-management                           4.09 kB         368 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/blog-admin/invitation-management/editor                    4.09 kB         368 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/blog-admin/my-blog                                           336 B         977 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/blog-admin/org-blog                                          215 B         401 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/blog-admin/request                                         26.5 kB         807 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/blog-admin/user-blog                                         215 B         401 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/blog-admin/writer-management                                 217 B         407 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/callback                                                     205 B         114 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/contact-us                                                   205 B         114 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/courses                                                    29.1 kB         219 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/courses/[slug]                                               824 B         368 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/courses/[slug]/[section]/[lesson]                           115 kB        1.21 MB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/courses/[slug]/payment                                     23.7 kB         451 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/courses/[slug]/payment/payment-failed                      1.03 kB         178 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/courses/[slug]/payment/payment-success                     1.02 kB         178 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/courses/preview/[courseId]/[orgId]                           257 B         368 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator                                                      150 B         147 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/affiliate-campaigns                                  216 B         404 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/affiliate-campaigns/[campaignId]                   6.87 kB         300 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/affiliate-campaigns/[campaignId]/campaign-courses  6.87 kB         300 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/affiliate-campaigns/[campaignId]/commissions       19.6 kB         308 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/affiliate-campaigns/[campaignId]/referrers         6.21 kB         288 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/affiliate-campaigns/campaigns                        215 B         404 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/affiliate-campaigns/report                         7.97 kB         397 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/coupon                                             25.2 kB         418 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/courses                                            13.9 kB         991 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/courses/[courseId]/[sectionId]/[lessonId]            38 kB         903 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/courses/[courseId]/certificate                     24.7 kB         1.1 MB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/courses/[courseId]/collaborators                   17.9 kB         294 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/courses/[courseId]/history                         14.4 kB         300 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/courses/[courseId]/learners                        5.19 kB         245 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/courses/[courseId]/price                           13.4 kB         273 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/courses/[courseId]/settings                        47.9 kB         890 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/courses/[courseId]/trigger-form                    15.4 kB         305 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/courses/ai                                           208 B         356 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/courses/ai/[id]                                      208 B         356 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/courses/ai/[id]/general-information                9.96 kB         255 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/create-launchpads/[launchpadId]                    38.2 kB         545 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/forms                                                232 B         477 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/forms/[id]                                           232 B         477 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/forms/create                                         232 B         477 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/launchpad                                          13.4 kB         219 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/creator/launchpad/[id]                                     6.07 kB         482 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/email-verify                                               17.1 kB         180 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/faq                                                          689 B         129 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/forgot-password                                            21.6 kB         243 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/introduction                                                 233 B         523 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/learner                                                    12.1 kB         263 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/learner/my-certificates                                    14.2 kB         253 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/learner/my-courses                                         6.08 kB         196 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/learner/my-courses/completed                                 170 B         191 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/learner/my-courses/in-progress                               171 B         191 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/learner/my-courses/not-started                               171 B         191 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/learner/wishlist                                             170 B         191 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/login                                                      17.1 kB         235 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/news-feed                                                  7.65 kB         219 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/news-feed/[slug]                                           3.44 kB         980 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/news-feed/author/[username]                                  16 kB         195 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/news-feed/author/[username]/[slug]                          3.5 kB         980 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/news-feed/category/[id]                                      264 B         210 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/news-feed/hashtag/[id]                                       264 B         210 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/news-feed/list                                               266 B         210 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/news-feed/me/[id]/edit                                     1.04 kB         978 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/news-feed/me/[id]/preview                                    336 B         977 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/news-feed/me/creation                                      1.04 kB         978 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/news-feed/me/management                                    16.1 kB         318 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/org-not-found                                                155 B         156 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/partners                                                     233 B         523 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/ranking                                                      233 B         523 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/ranking/[slug]                                               155 B         156 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/schedule                                                     64 kB         216 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/signup                                                       11 kB         245 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/social-login                                                 205 B         114 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/terms                                                        689 B         129 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/terms/[terms]                                                205 B         114 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/unauthorized                                                 156 B         156 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/user/[user]                                                14.9 kB         236 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/user/[user]/certificate/[certificateId]                    9.41 kB         246 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/user/[user]/edit/account                                   4.16 kB         286 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/user/[user]/edit/notifications                              1.3 kB         266 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/user/[user]/edit/password                                  2.84 kB         285 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/user/[user]/edit/privacy                                   12.6 kB         291 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/user/[user]/edit/profile                                   14.6 kB         297 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/user/[user]/edit/profile/blogs                             8.57 kB         307 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/user/[user]/edit/profile/certificates                      8.56 kB         307 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/user/[user]/edit/profile/courses                           8.59 kB         307 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/wallet                                                       18 kB         503 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/wallet/bank-accounts                                         11 kB         286 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/wallet/earning                                             8.79 kB         458 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/wallet/history                                               13 kB         305 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/wallet/nft                                                 3.61 kB         415 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /[locale]/wallet/withdraw                                            13.9 kB         459 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ƒ /api/auth/refresh-token                                                205 B         114 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ○ /manifest.webmanifest                                                  205 B         114 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ├ ○ /robots.txt                                                            205 B         114 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) └ ○ /sitemap.xml                                                           205 B         114 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) + First Load JS shared by all                                             114 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s)   ├ chunks/4838-b1bc20c97994ac4f.js                                      45.2 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s)   ├ chunks/ce56524f-f167382db49cb6d8.js                                  63.7 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s)   └ other shared chunks (total)                                          5.11 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) 
+ +  command:local:Command oeorgtestnetBuilder creating (152s) 
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ƒ Middleware                                                             54.3 kB
+ +  command:local:Command oeorgtestnetBuilder creating (152s) 
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ○  (Static)   prerendered as static content
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ƒ  (Dynamic)  server-rendered on demand
+ +  command:local:Command oeorgtestnetBuilder creating (152s) 
+ +  command:local:Command oeorgtestnetBuilder creating (152s) 
+ +  command:local:Command oeorgtestnetBuilder creating (152s) ┌──────────────────────────────┐
+ +  command:local:Command oeorgtestnetBuilder creating (152s) │ OpenNext — Generating bundle │
+ +  command:local:Command oeorgtestnetBuilder creating (152s) └──────────────────────────────┘
+ +  command:local:Command oeorgtestnetBuilder creating (152s) 
+@ updating....
+ +  command:local:Command oeorgtestnetBuilder creating (153s) Bundling middleware function...
+ +  command:local:Command oeorgtestnetBuilder creating (153s) Bundling static assets...
+ +  command:local:Command oeorgtestnetBuilder creating (153s) Bundling cache assets...
+@ updating....
+ +  command:local:Command oeorgtestnetBuilder creating (154s) Building server function: default...
+@ updating........
+ +  command:local:Command oeorgtestnetBuilder creating (159s) Applying code patches: 4.633s
+@ updating....
+ +  command:local:Command oeorgtestnetBuilder creating (159s) Bundling revalidation function...
+ +  command:local:Command oeorgtestnetBuilder creating (160s) Bundling image optimization function...
+ +  command:local:Command oeorgtestnetBuilder creating (160s) Installing dependencies for image-optimization-function...
+@ updating.........
+ +  command:local:Command oeorgtestnetBuilder creating (166s) Dependencies installed for image-optimization-function
+ +  command:local:Command oeorgtestnetBuilder creating (166s) Bundling warmer function...
+ +  command:local:Command oeorgtestnetBuilder creating (166s) OpenNext build complete.
+ +  command:local:Command oeorgtestnetBuilder created (166s) OpenNext build complete.
+@ updating....
+ +  sst:aws:Queue oeorgtestnetRevalidationEvents creating (0s) 
+ +  sst:aws:Function oeorgtestnetRevalidationSeeder creating (0s) 
+ +  random:index:RandomBytes LambdaEncryptionKey creating (0s) 
+ +  aws:dynamodb:Table oeorgtestnetRevalidationTable creating (0s) 
+ +  aws:sqs:Queue oeorgtestnetRevalidationEventsQueue creating (0s) 
+ +  random:index:RandomBytes LambdaEncryptionKey created (0.01s) 
+ +  aws:cloudwatch:LogGroup oeorgtestnetRevalidationSeederLogGroup creating (0s) 
+@ updating....
+ +  aws:cloudwatch:LogGroup oeorgtestnetRevalidationSeederLogGroup created (0.65s) 
+ +  aws:s3:BucketObjectv2 oeorgtestnetRevalidationSeederCode creating (0s) 
+ +  aws:s3:BucketObjectv2 oeorgtestnetRevalidationSeederCode created (0.31s) 
+@ updating............................
+ +  aws:sqs:Queue oeorgtestnetRevalidationEventsQueue created (25s) 
+ +  sst:aws:QueueLambdaSubscriber oeorgtestnetRevalidationEventsSubscriberBnrshd creating (0s) 
+ +  sst:aws:Function oeorgtestnetRevalidationEventsSubscriberBnrshdFunction creating (0s) 
+ +  aws:cloudwatch:LogGroup oeorgtestnetRevalidationEventsSubscriberBnrshdFunctionLogGroup creating (0s) 
+ +  aws:iam:Role oeorgtestnetRevalidationEventsSubscriberBnrshdFunctionRole creating (0s) 
+ +  aws:cloudwatch:LogGroup oeorgtestnetRevalidationEventsSubscriberBnrshdFunctionLogGroup created (0.46s) 
+ +  aws:s3:BucketObjectv2 oeorgtestnetRevalidationEventsSubscriberBnrshdFunctionCode creating (0s) 
+@ updating....
+ +  aws:s3:BucketObjectv2 oeorgtestnetRevalidationEventsSubscriberBnrshdFunctionCode created (0.45s) 
+@ updating....
+ +  aws:dynamodb:Table oeorgtestnetRevalidationTable created (27s) 
+@ updating....
+ +  aws:iam:Role oeorgtestnetRevalidationEventsSubscriberBnrshdFunctionRole created (3s) 
+ +  sst:aws:Function oeorgtestnetImageOptimizer creating (0s) 
+ +  pulumi:providers:aws AwsProvider.sst.ap-southeast-1 creating (0s) 
+ +  aws:iam:Role oeorgtestnetRevalidationSeederRole creating (0s) 
+ +  aws:lambda:Function oeorgtestnetRevalidationEventsSubscriberBnrshdFunctionFunction creating (0s) 
+ +  pulumi:providers:aws AwsProvider.sst.ap-southeast-1 created (0.01s) 
+ +  aws:cloudwatch:LogGroup oeorgtestnetImageOptimizerLogGroup creating (0s) 
+ +  pulumi-nodejs:dynamic:Resource oeorgtestnetAssetFiles.sst.aws.BucketFiles creating (0s) 
+ +  sst:aws:Function oeorgtestnetServerApsoutheast1 creating (0s) 
+ +  sst:aws:Cron oeorgtestnetWarmerApsoutheast1 creating (0s) 
+ +  aws:iam:Role oeorgtestnetImageOptimizerRole creating (0s) 
+@ updating....
+ +  aws:cloudwatch:LogGroup oeorgtestnetServerApsoutheast1LogGroup creating (0s) 
+ +  aws:cloudwatch:EventRule oeorgtestnetWarmerApsoutheast1Rule creating (0s) 
+ +  aws:iam:Role oeorgtestnetServerApsoutheast1Role creating (0s) 
+ +  aws:cloudwatch:LogGroup oeorgtestnetImageOptimizerLogGroup created (0.22s) 
+ +  aws:cloudwatch:LogGroup oeorgtestnetServerApsoutheast1LogGroup created (0.44s) 
+ +  aws:cloudwatch:EventRule oeorgtestnetWarmerApsoutheast1Rule created (0.58s) 
+@ updating.....
+ +  aws:iam:Role oeorgtestnetRevalidationSeederRole created (2s) 
+ +  aws:lambda:Function oeorgtestnetRevalidationSeederFunction creating (0s) 
+ +  aws:iam:Role oeorgtestnetImageOptimizerRole created (2s) 
+@ updating....
+ +  aws:iam:Role oeorgtestnetServerApsoutheast1Role created (2s) 
+@ updating....
+ +  aws:s3:BucketObjectv2 oeorgtestnetImageOptimizerCode creating (0s) 
+@ updating.....
+ +  pulumi-nodejs:dynamic:Resource oeorgtestnetAssetFiles.sst.aws.BucketFiles created (6s) 
+ +  aws:s3:BucketObjectv2 oeorgtestnetImageOptimizerCode created (1s) 
+ +  aws:lambda:Function oeorgtestnetImageOptimizerFunction creating (0s) 
+@ updating....
+ +  aws:s3:BucketObjectv2 oeorgtestnetServerApsoutheast1Code creating (0s) 
+@ updating.....
+ +  aws:s3:BucketObjectv2 oeorgtestnetServerApsoutheast1Code created (1s) 
+ +  aws:lambda:Function oeorgtestnetServerApsoutheast1Function creating (0s) 
+@ updating.......
+ +  aws:lambda:Function oeorgtestnetImageOptimizerFunction created (7s) 
+ +  aws:lambda:FunctionUrl oeorgtestnetImageOptimizerUrl creating (0s) 
+@ updating....
+ +  aws:lambda:FunctionUrl oeorgtestnetImageOptimizerUrl created (0.38s) 
+ +  aws:lambda:Function oeorgtestnetRevalidationEventsSubscriberBnrshdFunctionFunction created (14s) 
+ +  aws:lambda:EventSourceMapping oeorgtestnetRevalidationEventsSubscriberBnrshdEventSourceMapping creating (0s) 
+@ updating....
+ +  aws:lambda:Function oeorgtestnetServerApsoutheast1Function created (6s) 
+@ updating....
+ +  sst:aws:Function oeorgtestnetWarmerApsoutheast1Handler creating (0s) 
+ +  aws:lambda:FunctionUrl oeorgtestnetServerApsoutheast1Url creating (0s) 
+ +  aws:cloudwatch:LogGroup oeorgtestnetWarmerApsoutheast1HandlerLogGroup creating (0s) 
+ +  aws:iam:Role oeorgtestnetWarmerApsoutheast1HandlerRole creating (0s) 
+ +  aws:lambda:FunctionUrl oeorgtestnetServerApsoutheast1Url created (0.49s) 
+ +  pulumi-nodejs:dynamic:Resource oeorgtestnetKvKeys.sst.aws.KvKeys creating (0s) 
+ +  aws:lambda:Function oeorgtestnetRevalidationSeederFunction created (14s) 
+ +  aws:cloudwatch:LogGroup oeorgtestnetWarmerApsoutheast1HandlerLogGroup created (0.48s) 
+ +  aws:lambda:Invocation oeorgtestnetRevalidationSeed creating (0s) 
+ +  aws:s3:BucketObjectv2 oeorgtestnetWarmerApsoutheast1HandlerCode creating (0s) 
+@ updating....
+ +  aws:s3:BucketObjectv2 oeorgtestnetWarmerApsoutheast1HandlerCode created (0.61s) 
+ +  pulumi-nodejs:dynamic:Resource oeorgtestnetKvKeys.sst.aws.KvKeys created (1s) 
+@ updating....
+ +  aws:iam:Role oeorgtestnetWarmerApsoutheast1HandlerRole created (2s) 
+ +  aws:lambda:Function oeorgtestnetWarmerApsoutheast1HandlerFunction creating (0s) 
+ +  aws:lambda:Invocation oeorgtestnetRevalidationSeed created (1s) 
+@ updating.................
+ +  aws:lambda:Function oeorgtestnetWarmerApsoutheast1HandlerFunction created (14s) 
+ +  aws:lambda:Invocation oeorgtestnetPrewarmApsoutheast1 creating (0s) 
+ +  aws:lambda:Permission oeorgtestnetWarmerApsoutheast1Permission creating (0s) 
+ +  aws:cloudwatch:EventTarget oeorgtestnetWarmerApsoutheast1Target creating (0s) 
+@ updating....
+ +  aws:lambda:Permission oeorgtestnetWarmerApsoutheast1Permission created (0.22s) 
+ +  aws:cloudwatch:EventTarget oeorgtestnetWarmerApsoutheast1Target created (0.43s) 
+@ updating....
+ +  aws:lambda:Invocation oeorgtestnetPrewarmApsoutheast1 created (1s) 
+@ updating.......
+ +  aws:lambda:EventSourceMapping oeorgtestnetRevalidationEventsSubscriberBnrshdEventSourceMapping created (23s) 
+@ updating................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+^C received; cancelling. If you would like to terminate immediately, press ^C again.
+Note that terminating immediately may lead to orphaned resources and other inconsistencies.
 
-Resources:
-    - 14 deleted
-
-Duration: 8s
-
-The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained. 
-If you want to remove the stack completely, run `pulumi stack rm production`.
+@ updating.....................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
