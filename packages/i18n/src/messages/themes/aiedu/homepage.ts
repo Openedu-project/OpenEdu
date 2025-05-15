@@ -105,27 +105,27 @@ export const aieduHomepage = {
     },
     aieduFeatures: {
       mainCourse: {
-        title: 'Khoá học AI Gen dành cho mọi người',
+        title: 'Tập Huấn Kỹ Năng GenAI Cho Cán Bộ Đoàn Hội',
         button: {
           text: 'Bắt đầu học ngay',
         },
         benefits: {
-          benefit1: 'Hiểu bản chất AI và ứng dụng thực tiễn',
-          benefit2: 'Thành thạo công cụ AI hỗ trợ học và làm',
-          benefit3: 'Biết cách giao tiếp với AI hiệu quả',
-          benefit4: 'Có chứng chỉ xác nhận năng lực ứng dụng AI',
+          benefit1: 'Nắm vững kiến thức căn bản công nghệ AI và ứng dụng vào hoạt động đoàn thể',
+          benefit2: 'Sử dụng thành thạo các công cụ AI nâng cao hiệu suất trong công tác đoàn hội',
+          benefit3: 'Phát triển kỹ năng hướng dẫn, tổ chức các hoạt động đào tạo AI cho đoàn viên thanh niên',
+          benefit4: 'Nhận chứng chỉ kỹ năng ứng dụng AI được công nhận bởi Trung ương Đoàn',
         },
       },
       subCourse: {
-        title: 'Khoá học AI Gen dành cho mọi người',
+        title: '	Khóa Học GenAI Dành Cho Mọi Người',
         button: {
           text: 'Bắt đầu học ngay',
         },
         benefits: {
-          benefit1: 'Hiểu bản chất AI và ứng dụng thực tiễn',
-          benefit2: 'Thành thạo công cụ AI hỗ trợ học và làm',
-          benefit3: 'Biết cách giao tiếp với AI hiệu quả',
-          benefit4: 'Có chứng chỉ xác nhận năng lực ứng dụng AI',
+          benefit1: 'Làm quen với AI từ kiến thức căn bản đến ứng dụng thực tế',
+          benefit2: 'Sử dụng các công cụ AI phổ biến để nâng cao hiệu quả trong công việc và học tập',
+          benefit3: 'Tham gia cộng đồng chia sẻ kiến thức và ứng dụng AI trong cuộc sống hàng ngày',
+          benefit4: 'Nhận chứng chỉ kỹ năng ứng dụng AI được công nhận bởi Trung ương Đoàn',
         },
       },
     },
