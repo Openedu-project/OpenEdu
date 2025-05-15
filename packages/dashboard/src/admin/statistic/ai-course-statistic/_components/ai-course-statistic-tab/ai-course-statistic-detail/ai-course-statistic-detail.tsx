@@ -43,6 +43,7 @@ export function AICourseStatisticTabDetail({ params, campaignKey }: IAICourseSta
         selectedRegions={selectedRegions}
         dataAIEduProvinces={dataAIEduProvinces ?? []}
         toggleRegion={toggleRegion}
+        setSelectedRegions={setSelectedRegions}
       />
       <AICourseStatisticTabDetailJoinByProvincesChart
         selectedRegions={selectedRegions}
