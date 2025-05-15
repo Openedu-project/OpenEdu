@@ -9,7 +9,11 @@ interface TitleProps {
 const Title = ({ title, description, variant = 'primary', className }: TitleProps) => {
   return description ? (
     <div className={cn('space-y-2', variant === 'secondary' && 'text-background', className)}>
-      <h3 className={`font-bold text-[32px] capitalize lg:text-[40px] ${variant === 'secondary' && 'text-background'}`}>
+      <h3
+        className={`font-bold text-[32px] capitalize leading-tight lg:text-[40px] ${
+          variant === 'secondary' && 'text-background'
+        }`}
+      >
         {title}
       </h3>
       <p
