@@ -52,9 +52,9 @@ const AieduHomepageHero: SectionComponent<'homepage', 'aieduHero'> = ({ classNam
       </div>
       {/* Partners */}
       <div className="bg-primary-foreground">
-        <div className="container flex flex-col items-center justify-center gap-6 py-8 lg:h-[160px] lg:flex-row">
-          <div className="flex items-center gap-4">
-            <p className="hidden whitespace-nowrap font-semibold uppercase md:block">{t('org')}</p>
+        <div className="container flex flex-wrap items-center justify-evenly gap-6 py-8 lg:h-[160px]">
+          <div className="space-y-2">
+            <p className="whitespace-nowrap text-center font-semibold uppercase md:block">{t('org')}</p>
             <div className="flex gap-4">
               <Image
                 src={props?.organization1?.url}
@@ -72,8 +72,8 @@ const AieduHomepageHero: SectionComponent<'homepage', 'aieduHero'> = ({ classNam
               />
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <p className="hidden whitespace-nowrap font-semibold uppercase md:block">{t('partner')}</p>
+          <div className="space-y-2">
+            <p className="whitespace-nowrap text-center font-semibold uppercase md:block">{t('partner')}</p>
             <div className="flex h-[64px] gap-4">
               <Image
                 src={props?.partner1?.url}
