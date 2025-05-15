@@ -24,7 +24,8 @@ export const getI18nConfig = cache(async () => {
     });
     const res = await fetchAPI<ISystemConfigRes<I18nConfig>[]>(endpointKey);
     return res?.data?.[0]?.value;
-  } catch {
+  } catch (error) {
+    console.error('Error fetching i18n config:', error);
     return null;
   }
 });

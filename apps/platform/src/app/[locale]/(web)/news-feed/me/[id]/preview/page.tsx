@@ -1,5 +1,5 @@
 import { BlogPreviewPage } from "@oe/ui";
-
+export const dynamic = "force-dynamic";
 export default async function PreviewPersonalBlog({
   params,
 }: {

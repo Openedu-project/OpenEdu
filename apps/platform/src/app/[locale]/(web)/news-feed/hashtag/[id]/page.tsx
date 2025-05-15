@@ -1,5 +1,5 @@
 import { HashtagBlogPage } from "@oe/ui";
-
+export const dynamic = "force-dynamic";
 export default async function HashtagBlog({
   params,
 }: {

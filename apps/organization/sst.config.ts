@@ -13,7 +13,8 @@ export default $config({
   async run() {
     new sst.aws.Nextjs('oeorgtestnet', {
       domain: {
-        name: '*.openedutest.net',
+        name: 'openedutest.net',
+        aliases: ['*.openedutest.net'],
         dns: sst.aws.dns({
           zone: 'Z07568562XMI3MLBSO1HH',
         }),
