@@ -126,6 +126,7 @@ export function AiCourseStatisticModuleCompletionChart({
   return (
     <Card>
       <CardContent>
+        <h2 className="mb-6 font-semibold text-xl">Tiến độ hoàn thành các module khóa học</h2>
         <ChartContainer config={chartConfig} className="h-96 w-full">
           <BarChart data={chartData} margin={CHART_MARGIN}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
