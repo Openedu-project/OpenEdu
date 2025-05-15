@@ -56,6 +56,9 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
       router.replace(`/${locale}${currentPath}`);
     }
   };
+  if (options.length === 1) {
+    return null;
+  }
 
   return (
     <Selectbox

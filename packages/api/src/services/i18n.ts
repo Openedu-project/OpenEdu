@@ -138,20 +138,23 @@ export const getI18nResponseMiddleware = async (referrer: string, origin: string
   } catch {
     // Use default values set above
   }
+  const host = request.nextUrl.host;
+  const isAIOrg = host.includes('aigov') || host.includes('phocap.ai');
 
   const response = createMiddleware({
-    locales: i18nLocales,
-    defaultLocale: i18nLocale,
+    locales: isAIOrg ? ['vi'] : i18nLocales,
+    defaultLocale: isAIOrg ? 'vi' : i18nLocale,
     localeCookie: {
       name: process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY,
       ...i18nCookieConfig,
       domain: new URL(origin).host,
     },
+    localeDetection: !isAIOrg,
   })(request);
 
   response.cookies.set({
     name: process.env.NEXT_PUBLIC_COOKIE_LOCALES_KEY,
-    value: JSON.stringify(i18nLocales),
+    value: JSON.stringify(isAIOrg ? ['vi'] : i18nLocales),
     ...i18nCookieConfig,
     domain: new URL(origin).host,
   });
