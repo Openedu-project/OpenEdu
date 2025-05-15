@@ -337,10 +337,10 @@ export const courseMessages = {
 
       sections: {
         short_desc: {
-          title: "Short Description",
-          subtitle: "The short description is used to describe the course",
-          placeholder: "Write short description here",
-          characters: "characters",
+          title: 'Short Description',
+          subtitle: 'The short description is used to describe the course',
+          placeholder: 'Write short description here',
+          characters: 'characters',
         },
         description: {
           title: 'Description',
@@ -593,6 +593,7 @@ export const courseMessages = {
         name: 'Name',
         description: 'Description',
         quizType: 'Quiz Type',
+        short_desc: 'Short Description',
       },
     },
 
