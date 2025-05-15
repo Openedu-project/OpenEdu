@@ -1,10 +1,8 @@
 "use client";
 
-import { API_ENDPOINT, logoutAction } from "@oe/api";
-import { resetAllStores } from "@oe/core";
+import { setSessionPayload } from "@oe/api";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { mutate } from "swr";
 import { Button } from "#shadcn/button";
 
 export function EmailVerifyActions({
@@ -23,12 +21,7 @@ export function EmailVerifyActions({
 
   const handleNavigate = async (path: string) => {
     if (!isError && accessToken && refreshToken) {
-      await logoutAction();
-      await Promise.all([
-        mutate(API_ENDPOINT.USERS_ME),
-        mutate(() => true, undefined, { revalidate: false }),
-      ]);
-      resetAllStores();
+      await setSessionPayload(accessToken, refreshToken);
       router.replace(path);
     }
   };

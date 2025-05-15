@@ -2,7 +2,7 @@ import { getBlogContent } from "@oe/api";
 import { BlogDetailsPage, SEOMetadata } from "@oe/ui";
 import type { Metadata } from "next";
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,

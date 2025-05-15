@@ -2,7 +2,7 @@ import { BlogDefaultPage, SEOMetadata } from "@oe/ui";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,

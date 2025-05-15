@@ -7,7 +7,6 @@ import { DEFAULT_LOCALE, DEFAULT_LOCALES, redirect } from "@oe/i18n";
 import { Provider, Toaster } from "@oe/ui";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
 import Script from "next/script";
 import type { ReactNode } from "react";
 
@@ -21,12 +20,12 @@ export const metadata: Metadata = {
   },
 };
 
-export async function generateStaticParams() {
-  const i18nConfig = await getI18nConfig();
-  return (i18nConfig?.locales ?? [DEFAULT_LOCALE])?.map((locale) => ({
-    locale,
-  }));
-}
+// export async function generateStaticParams() {
+//   const i18nConfig = await getI18nConfig();
+//   return (i18nConfig?.locales ?? [DEFAULT_LOCALE])?.map((locale) => ({
+//     locale,
+//   }));
+// }
 
 export default async function RootLayout({
   children,
@@ -47,7 +46,7 @@ export default async function RootLayout({
     redirect({ href: "/", locale: DEFAULT_LOCALE });
   }
 
-  setRequestLocale(locale);
+  // setRequestLocale(locale);
 
   const fontVariables = Object.values(fonts)
     .map((font) => font.variable)

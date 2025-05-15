@@ -6,23 +6,23 @@ import {
   PLATFORM_ROUTES,
 } from "@oe/core";
 import { MainLayout } from "@oe/ui";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 
 import type { ReactNode } from "react";
 
-export const experimental_ppr = true;
+// export const experimental_ppr = true;
 
 export default async function OpeneduLayout({
   children,
   hasFooter,
-  params,
-}: {
+}: // params,
+{
   children: ReactNode;
   hasFooter?: boolean;
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-  setRequestLocale(locale);
+  // const { locale } = await params;
+  // setRequestLocale(locale);
   const t = await getTranslations("headerMenu");
   const sidebarItems = [
     {

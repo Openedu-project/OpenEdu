@@ -8,7 +8,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
-export const experimental_ppr = true;
+// export const experimental_ppr = true;
 
 export async function generateMetadata(): Promise<Metadata> {
   const [themeSystem] = await Promise.all([getThemeConfigServer()]);

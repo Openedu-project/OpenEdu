@@ -1,7 +1,8 @@
 'use server';
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
-import { refreshTokenExpiresIn } from '#utils/session';
+import { getAPIReferrerAndOrigin } from '#utils/referrer-origin';
+import { getTokenExpiry, parseJwt, refreshTokenExpiresIn } from '#utils/session';
 
 // Định nghĩa interface cho SessionPayload
 export type SessionPayload = {
@@ -102,4 +103,20 @@ export async function clearSession(): Promise<void> {
     maxAge: 0,
     path: '/',
   });
+}
+
+export async function setSessionPayload(accessToken: string, refreshToken: string): Promise<SessionPayload | null> {
+  const { origin, referrer } = await getAPIReferrerAndOrigin();
+  const { accessTokenExpiry, refreshTokenExpiry } = getTokenExpiry();
+  const decodedAccessToken = parseJwt(accessToken);
+  return {
+    id: decodedAccessToken?.sub || decodedAccessToken?.id,
+    origin: origin,
+    referrer: referrer,
+    accessToken: accessToken,
+    refreshToken: refreshToken,
+    accessTokenExpiry: accessTokenExpiry,
+    refreshTokenExpiry: refreshTokenExpiry,
+    nextPath: decodedAccessToken.next_path,
+  };
 }

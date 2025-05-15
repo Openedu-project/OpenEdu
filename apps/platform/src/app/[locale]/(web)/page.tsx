@@ -1,10 +1,10 @@
 import { AIBanner, SEOMetadata } from "@oe/ui";
 import type { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { HeroSection } from "./_components/hero-banner";
 import { LazySections } from "./_components/lazy-sections";
 
-export const experimental_ppr = false;
+// export const experimental_ppr = false;
 
 export async function generateMetadata({
   params,
@@ -21,13 +21,9 @@ export async function generateMetadata({
   });
 }
 
-export default async function Home({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
-  setRequestLocale(locale);
+export default function Home() {
+  // const { locale } = await params;
+  // setRequestLocale(locale);
   return (
     <div className="container mx-auto flex max-w-[1440px] flex-col gap-[60px] px-4 py-0 md:px-6 lg:px-8">
       <AIBanner />
