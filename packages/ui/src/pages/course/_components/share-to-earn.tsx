@@ -1,6 +1,7 @@
 import type { ICourseOutline } from '@oe/api';
 import { useGetMe } from '@oe/api';
 import { useGetUserAffiliateCampaignListWithoutAuth } from '@oe/api';
+import { OEPoint } from '@oe/assets';
 import { AFFILIATE_ROUTES } from '@oe/core';
 import { buildUrl } from '@oe/core';
 import { useTranslations } from 'next-intl';
@@ -30,9 +31,10 @@ const ShareToEarn = ({ courseData }: { courseData: ICourseOutline }) => {
   return dataUserAffiliateCampaignList && dataUserAffiliateCampaignList?.results?.length > 0 ? (
     <Link
       href={href}
-      className={cn('mbutton-semibold16 gradient-bg-3 mt-4 h-fit w-full hover:text-primary hover:no-underline')}
+      className={cn('mbutton-semibold16 gradient-bg-3 mt-4 h-fit w-full gap-3 hover:text-primary hover:no-underline')}
     >
       {t('shareToEarn')}
+      <OEPoint width={24} height={24}/>
     </Link>
   ) : null;
 };

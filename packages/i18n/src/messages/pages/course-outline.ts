@@ -63,8 +63,8 @@ export const courseOutlineMessages = {
     },
 
     courseStats: {
-      learners: '{learnerCount} learners',
-      learner: '{learnerCount} learner',
+      learners: '{learnerCount} Learners',
+      learner: '{learnerCount} Learner',
       contentCompleted: 'Completed',
     },
 

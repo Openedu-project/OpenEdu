@@ -7,7 +7,6 @@ import { CourseHeader } from './course-header';
 import { CourseStats } from './course-stats';
 
 export const CourseInfo = ({ courseData }: { courseData: ICourseOutline }) => {
-  // console.log("courseData - CourseInfo", courseData);
   const { owner, update_at, mark_as_completed, learner_count, levels, short_desc } = courseData;
 
   return (
@@ -15,11 +14,11 @@ export const CourseInfo = ({ courseData }: { courseData: ICourseOutline }) => {
       <div className="sticky z-40 flex flex-col gap-4">
         <CourseHeader />
 
-        {short_desc?.length > 0 && <p className="mcaption-semibold16 text-white">{short_desc}</p>}
+        {short_desc?.length > 0 && <p className="mcaption-semibold16 text-primary-foreground">{short_desc}</p>}
 
         <CourseStats learner_count={learner_count} mark_as_completed={mark_as_completed} levels={levels} />
 
-        <div className="flex flex-col gap-1 text-white lg:flex-row lg:items-center lg:gap-4">
+        <div className="flex flex-col gap-1 text-primary-foreground lg:flex-row lg:items-center lg:gap-4">
           {owner && (
             <>
               <CourseCreator owner={owner} />
