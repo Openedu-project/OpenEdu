@@ -27,11 +27,13 @@ const AieduHomepageHero: SectionComponent<'homepage', 'aieduHero'> = ({ classNam
     <div className={cn('bg-background lg:h-[calc(100vh-var(--header-height))]', className)}>
       <div className="container items-center space-y-8 pt-8 lg:flex lg:h-[calc(100vh-var(--header-height)-160px)] lg:gap-12 lg:pt-12">
         <div className="flex flex-col justify-center md:basis-1/2 md:px-4">
-          <h2 className="mb-4 whitespace-nowrap font-bold text-[32px] lg:text-[40px]">{t('title')}</h2>
-          <p className="mb-6 whitespace-normal font-bold text-[20px] leading-tight md:text-[28px] xl:whitespace-nowrap">
+          <h2 className="mb-2 whitespace-normal text-center font-bold text-[28px] leading-tight sm:text-start md:mb-4 md:whitespace-nowrap lg:text-[40px]">
+            {t('title')}
+          </h2>
+          <p className="mb-3 whitespace-normal text-center font-bold text-[20px] leading-tight sm:text-start md:mb-6 md:mb-6 md:text-[28px] xl:whitespace-nowrap">
             {t('subTitle')}
           </p>
-          <p className="custom-line-clamp-6 mb-6 text-[16px] text-foreground/80 leading-tight md:text-[24px]">
+          <p className="custom-line-clamp-6 mb-6 text-center text-[16px] text-foreground/80 leading-tight sm:text-start md:text-[24px]">
             {t('description')}
           </p>
 
