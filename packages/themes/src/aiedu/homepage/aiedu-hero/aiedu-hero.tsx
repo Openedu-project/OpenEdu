@@ -4,16 +4,20 @@ import { useTranslations } from 'next-intl';
 import type { FileType } from '@oe/ui';
 import { Image } from '@oe/ui';
 import type { SectionComponent } from '../../../_types/theme-page';
-import { InfoSection, type InfoSectionProps } from '../../_components/info-section';
+import { AieduButton, type AieduButtonProps } from '../../_components/button';
 
 // Theme step 4: create sectionProps
-export interface AieduHomepageHeroProps extends InfoSectionProps {
+export interface AieduHomepageHeroProps {
+  title?: string;
+  subTitle?: string;
+  description?: string;
   banner?: FileType;
   organization1?: FileType;
   organization2?: FileType;
   partner1?: FileType;
   partner2?: FileType;
   partner3?: FileType;
+  button?: AieduButtonProps;
 }
 
 //Theme step 7: back to section - hero.tsx, create your code based on the props
@@ -22,12 +26,17 @@ const AieduHomepageHero: SectionComponent<'homepage', 'aieduHero'> = ({ classNam
   return (
     <div className={cn('bg-background lg:h-[calc(100vh-var(--header-height))]', className)}>
       <div className="container items-center space-y-8 pt-8 lg:flex lg:h-[calc(100vh-var(--header-height)-160px)] lg:gap-12 lg:pt-12">
-        <InfoSection
-          title={t('title')}
-          description={t('description')}
-          button={{ text: t?.('button.text'), link: props?.button?.link }}
-          className="flex flex-col justify-center md:basis-1/2 md:px-4"
-        />
+        <div className="flex flex-col justify-center md:basis-1/2 md:px-4">
+          <h2 className="mb-4 whitespace-nowrap font-bold text-[32px] lg:text-[40px]">{t('title')}</h2>
+          <p className="mb-6 whitespace-normal font-bold text-[20px] leading-tight md:text-[28px] xl:whitespace-nowrap">
+            {t('subTitle')}
+          </p>
+          <p className="custom-line-clamp-6 mb-6 text-[16px] text-foreground/80 leading-tight md:text-[24px]">
+            {t('description')}
+          </p>
+
+          <AieduButton link={props?.button?.link} text={t?.('button.text')} />
+        </div>
         <div className="h-full md:flex md:basis-1/2 md:items-center">
           <Image
             alt="banner"
