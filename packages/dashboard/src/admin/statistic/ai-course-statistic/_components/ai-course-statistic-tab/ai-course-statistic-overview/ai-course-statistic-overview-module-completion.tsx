@@ -85,8 +85,8 @@ export function AiCourseStatisticModuleCompletionChart({
       new Set(dataAIEduStatisticSectionCompletion.flatMap(course => course.module_items.map(module => module.order)))
     ).sort((a, b) => a - b) as number[];
 
-    const formattedData = moduleOrders.map(order => {
-      const moduleData: ModuleData = { module: `Module ${order}` };
+    const formattedData = moduleOrders.map((order, index) => {
+      const moduleData: ModuleData = { module: `Module ${index + 1}` };
 
       for (const { module_items, course_cuid } of dataAIEduStatisticSectionCompletion) {
         const moduleItem = module_items.find(item => item.order === order);
