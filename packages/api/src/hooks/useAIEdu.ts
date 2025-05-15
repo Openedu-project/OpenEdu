@@ -165,7 +165,7 @@ export function useGetAIEduStatisticProvinces(key: string, queryParams?: IFilter
 }
 
 export function useGetAIEduStatisticProvincesDetail(key: string, queryParams?: IFilter) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.OE_REFFERRAL_KEY_STATISTIC_PROVINCES_DETAIL,
     params: { key },
     queryParams: { ...queryParams },
@@ -184,7 +184,7 @@ export function useGetAIEduStatisticProvincesDetail(key: string, queryParams?: I
 }
 
 export function useGetAIEduStatisticLearners(key: string, queryParams?: IFilter) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.OE_REFFERRAL_KEY_LEARNERS,
     params: { key },
     queryParams: { ...queryParams },

@@ -212,7 +212,7 @@ export async function getAIEduStatisticProvincesDetailService(
 ): Promise<IAIEduStatisticProvinceDetail[] | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.OE_REFFERRAL_KEY_STATISTIC_PROVINCES_DETAIL,
       params: {
         key,
@@ -237,7 +237,7 @@ export async function getAIEduStatisticLearnersService(
 ): Promise<IAIEduStatisticLearnersRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.OE_REFFERRAL_KEY_LEARNERS,
       params: {
         key,
