@@ -57,7 +57,11 @@ export function FieldConfig() {
     rows?: MultipleChoiceGridOption[],
     columns?: MultipleChoiceGridOption[]
   ) => {
-    updateField(field?.name, { [key]: value, rows: rows, columns: columns });
+    if (rows || columns) {
+      updateField(field?.name, { [key]: value, rows: rows, columns: columns });
+    } else {
+      updateField(field?.name, { [key]: value });
+    }
   };
 
   return (
