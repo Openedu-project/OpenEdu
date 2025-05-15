@@ -7,7 +7,7 @@ import { usePathname } from './usePathname';
 export function useHref() {
   const currentLocale = useLocale();
   const pathname = usePathname();
-
+  console.log('currentLocale', currentLocale);
   const getFinalLocale = useCallback((locale?: LanguageCode) => locale ?? currentLocale, [currentLocale]);
 
   const getCurrentZone = useCallback(() => {
