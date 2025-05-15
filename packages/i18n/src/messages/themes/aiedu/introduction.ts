@@ -170,9 +170,9 @@ export const aieduIntroduction = {
       },
     },
     aieduMap: {
-      title: 'AI không chỉ là công nghệ – mà là một bước chuyển của cả thời đại',
+      title: 'AI Không Chỉ Là Công Nghệ - Mà Là Tương Lai Của Thế Hệ Trẻ Việt Nam',
       description:
-        'Với sứ mệnh đưa AI đến gần hơn với cộng đồng, chương trình được phối hợp thực hiện bởi Trung Ương Đoàn, Hội Liên hiệp Thanh niên Việt Nam, VBI Academy, OpenEdu và Hội Tri thức trẻ Việt Nam toàn cầu.',
+        'Chương trình Phổ Cập AI được phối hợp triển khai bởi Trung Ương Đoàn, Hội Liên hiệp Thanh niên Việt Nam, VBI Academy, OpenEdu và Hội Trí thức trẻ Việt Nam toàn cầu. Với sứ mệnh nâng cao năng lực số cho thanh niên Việt Nam, chúng tôi cam kết đào tạo thế hệ trẻ làm chủ công nghệ AI, góp phần hiện thực hóa mục tiêu quốc gia trong kỷ nguyên vươn mình của dân tộc.',
       button: {
         text: 'Bắt đầu học ngay',
       },
