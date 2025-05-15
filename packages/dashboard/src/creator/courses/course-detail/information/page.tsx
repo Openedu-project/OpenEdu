@@ -22,16 +22,20 @@ import { SupportChannels } from './support-channels';
 import { Thumbnail } from './thumbnail';
 
 export function CourseDetailInformationPage() {
-  const tCourse = useTranslations("course");
+  const tCourse = useTranslations('course');
   const { courseId } = useParams<{ courseId: string }>();
   const { course, mutateCourse } = useGetCourseById(courseId);
+
+  const priceSettings = course?.price_settings;
+  const fiatCost = Number(priceSettings?.fiat_discount_price) + Number(priceSettings?.fiat_price);
+  const cryptoCost = Number(priceSettings?.crypto_discount_price) + Number(priceSettings?.crypto_price);
 
   const handleSubmit = async (data: ICreateCourse) => {
     if (!course) {
       return;
     }
-    const thumbnail =
-      (data.thumbnail as IFileResponse) ?? course.thumbnail ?? null;
+
+    const thumbnail = (data.thumbnail as IFileResponse) ?? course.thumbnail ?? null;
     await updateCourseService(undefined, {
       ...course,
       ...data,
@@ -40,8 +44,8 @@ export function CourseDetailInformationPage() {
     } as ICourse);
     await mutateCourse();
     toast.success(
-      tCourse("common.toast.updateSuccess", {
-        item: tCourse("common.courseTitle"),
+      tCourse('common.toast.updateSuccess', {
+        item: tCourse('common.courseTitle'),
       })
     );
   };
@@ -52,13 +56,20 @@ export function CourseDetailInformationPage() {
         id={COURSE_DETAIL_FORM_IDS.information}
         schema={courseFormSchema}
         useFormProps={{
-          defaultValues: course as ICreateCourse,
+          defaultValues: {
+            ...course,
+            price_settings: {
+              ...course?.price_settings,
+              fiat_unit_cost: fiatCost.toString(),
+              crypto_unit_cost: cryptoCost.toString(),
+            },
+          } as ICreateCourse,
         }}
         onSubmit={handleSubmit}
         onError={() => {
           toast.error(
-            tCourse("common.toast.updateError", {
-              item: tCourse("common.courseTitle"),
+            tCourse('common.toast.updateError', {
+              item: tCourse('common.courseTitle'),
             })
           );
         }}

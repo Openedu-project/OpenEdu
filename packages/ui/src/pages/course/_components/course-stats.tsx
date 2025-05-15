@@ -2,6 +2,7 @@ import type { ILevel } from '@oe/api';
 import { abbreviateNumber } from '@oe/core';
 import { Layers, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { Separator } from '#shadcn/separator';
 
 interface ICourseStats {
   learner_count: number;
@@ -10,7 +11,7 @@ interface ICourseStats {
 }
 
 export function CourseStats({ learner_count, levels }: ICourseStats) {
-  const tCourse = useTranslations("courseOutline.courseStats");
+  const tCourse = useTranslations('courseOutline.courseStats');
 
   return (
     <div className="flex flex-col flex-wrap gap-4 text-white md:flex-row md:items-center">
@@ -24,6 +25,8 @@ export function CourseStats({ learner_count, levels }: ICourseStats) {
           </div>
         )}
 
+        <Separator orientation="vertical" />
+
         {!!learner_count && learner_count > 0 && (
           <div className="flex items-center gap-2">
             <Users className="h-4 w-4" />
@@ -36,7 +39,6 @@ export function CourseStats({ learner_count, levels }: ICourseStats) {
           </div>
         )}
       </div>
-
     </div>
   );
 }

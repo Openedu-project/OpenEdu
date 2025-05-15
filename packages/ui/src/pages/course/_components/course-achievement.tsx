@@ -10,7 +10,7 @@ export function CourseAchievements({
 }) {
   const tCourse = useTranslations('courseOutline');
 
-  const achievements = courseOutline?.props?.achievements;
+  const achievements = courseOutline?.props?.achievements?.filter(item => item?.length > 0);
 
   return (
     <>
