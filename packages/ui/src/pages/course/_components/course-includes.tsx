@@ -75,7 +75,11 @@ export function CourseIncludes({
   return (
     <>
       <hr className="mb-6 md:hidden" />
-      <CourseSection title={tCourse('title')} containerClass={cn(className)}>
+      <CourseSection
+        title={tCourse('title')}
+        containerClass={cn(className)}
+        childrenClass="border-none !shadow-none p-0 lg:p-0"
+      >
         <div className="mcaption-regular14 grid grid-cols-1 gap-1">
           {courseFeatures?.map(
             feature =>

@@ -15,14 +15,14 @@ const CourseContent = ({
 
   return outline?.length > 0 ? (
     <>
-      <CourseSection title={t('courseContent')}>
+      <CourseSection title={t('courseContent')} childrenClass="border-none p-0 lg:p-0 !shadow-none">
         {outline?.length > 0 && (
           <Accordion type="single" collapsible defaultValue={`section-${outline[0]?.id}`} className="w-full">
             {(outline ?? [])
               ?.sort((a, b) => a.order - b.order)
               ?.map((section, index) => (
                 <AccordionItem className="border-none" key={section.id} value={`section-${section.id}`}>
-                  <AccordionTrigger className="giant-iheading-semibold16 rounded-[4px] border-[0.4px] border-foreground/5 bg-foreground/5 p-3 text-left hover:no-underline data-[state=open]:bg-muted">
+                  <AccordionTrigger className="giant-iheading-semibold16 rounded-[4px] border-[0.4px] border-primary/10 bg-primary/10 p-3 text-left hover:no-underline data-[state=open]:bg-muted">
                     {`Section ${index + 1}: ${section.title}`}
                   </AccordionTrigger>
                   <AccordionContent>

@@ -77,3 +77,5 @@ export const COURSE_DETAIL_FORM_IDS = {
   sectionTitle: 'sectionTitle',
   certificate: 'certificate',
 };
+
+export const MAX_CHARACTERS = 200;

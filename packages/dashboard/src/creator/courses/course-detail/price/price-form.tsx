@@ -19,11 +19,22 @@ export function PriceForm({ loading }: { loading: boolean }) {
   const isPay = useWatch({ name: 'is_pay' });
   const fiatUnitCost = useWatch({ name: 'fiat_unit_cost' });
   const fiatDiscountPrice = useWatch({ name: 'fiat_discount_price' });
+  const fiatPrice = useWatch({ name: 'fiat_price' });
+
   const cryptoEnabled = useWatch({ name: 'crypto_payment_enabled' });
   const cryptoUnitCost = useWatch({ name: 'crypto_unit_cost' });
   const cryptoDiscountPrice = useWatch({ name: 'crypto_discount_price' });
+  const cryptoPrice = useWatch({ name: 'crypto_price' });
   const fiatCurrency = form.watch('fiat_currency');
   const cryptoCurrency = form.watch('crypto_currency');
+
+  useEffect(() => {
+    const fiatCost = Math.floor(Number(fiatDiscountPrice) + Number(fiatPrice)) || 0;
+    form.setValue('fiat_unit_cost', fiatCost.toString());
+
+    const cryptoCost = Math.floor(Number(cryptoDiscountPrice) + Number(cryptoPrice)) || 0;
+    form.setValue('crypto_unit_cost', cryptoCost.toString());
+  }, []);
 
   useEffect(() => {
     const cost = Math.floor(Number(fiatUnitCost)) || 0;

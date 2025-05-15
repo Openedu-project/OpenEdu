@@ -40,6 +40,7 @@ export interface ICourse {
 
   name: string;
   slug: string;
+  short_desc: string; // new field
   description: string;
   thumbnail_id: string;
   status: TCourseStatus;

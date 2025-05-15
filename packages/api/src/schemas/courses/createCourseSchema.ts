@@ -13,14 +13,14 @@ export const courseNameSchema = z.object({
 });
 
 export const createBaseCourseSchema = courseNameSchema.extend({
-  description: z.string().refine(
+  short_desc: z.string().refine(
     value => {
       // Strip HTML tags and count only text content
       const plainText = value.replace(/<[^>]*>/g, '');
-      return plainText.length >= 20 && plainText.length <= 10000;
+      return plainText.length >= 20 && plainText.length <= 200;
     },
     {
-      message: 'course.validation.minMaxCourseDescription--min:20--max:10000',
+      message: 'course.validation.minMaxCourseDescription--min:20--max:200',
     }
   ),
 });
@@ -75,6 +75,16 @@ export const priceSettingsSchema = z
   });
 
 export const courseFormSchema = z.object({
+  short_desc: z.string().refine(
+    value => {
+      // Strip HTML tags and count only text content
+      const plainText = value.replace(/<[^>]*>/g, '');
+      return plainText.length >= 20 && plainText.length <= 200;
+    },
+    {
+      message: 'course.validation.minMaxCourseDescription--min:20--max:200',
+    }
+  ),
   description: z.string().refine(
     value => {
       // Strip HTML tags and count only text content
