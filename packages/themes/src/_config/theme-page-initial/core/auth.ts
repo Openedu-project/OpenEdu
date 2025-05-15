@@ -556,6 +556,10 @@ export const createAieduAuthLayoutConfig = (getThemeTranslation: (path: string[]
               href: 'https://t.me/phocapungdungai',
               label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'items', 'items-0', 'label']),
             },
+            {
+              href: 'https://www.facebook.com/groups/phocapungdungai',
+              label: getThemeTranslation(['auth', 'footer', 'navigationItems', 'terms', 'items', 'items-1', 'label']),
+            },
           ],
         },
         social: {

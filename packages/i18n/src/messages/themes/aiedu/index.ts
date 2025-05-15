@@ -41,6 +41,9 @@ export const aieduMessage = {
               'items-0': {
                 label: 'Telegram',
               },
+              'items-1': {
+                label: 'Facebook',
+              },
             },
           },
           social: {

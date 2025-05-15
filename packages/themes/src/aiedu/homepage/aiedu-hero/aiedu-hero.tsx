@@ -4,16 +4,20 @@ import { useTranslations } from 'next-intl';
 import type { FileType } from '@oe/ui';
 import { Image } from '@oe/ui';
 import type { SectionComponent } from '../../../_types/theme-page';
-import { InfoSection, type InfoSectionProps } from '../../_components/info-section';
+import { AieduButton, type AieduButtonProps } from '../../_components/button';
 
 // Theme step 4: create sectionProps
-export interface AieduHomepageHeroProps extends InfoSectionProps {
+export interface AieduHomepageHeroProps {
+  title?: string;
+  subTitle?: string;
+  description?: string;
   banner?: FileType;
   organization1?: FileType;
   organization2?: FileType;
   partner1?: FileType;
   partner2?: FileType;
   partner3?: FileType;
+  button?: AieduButtonProps;
 }
 
 //Theme step 7: back to section - hero.tsx, create your code based on the props
@@ -22,12 +26,19 @@ const AieduHomepageHero: SectionComponent<'homepage', 'aieduHero'> = ({ classNam
   return (
     <div className={cn('bg-background lg:h-[calc(100vh-var(--header-height))]', className)}>
       <div className="container items-center space-y-8 pt-8 lg:flex lg:h-[calc(100vh-var(--header-height)-160px)] lg:gap-12 lg:pt-12">
-        <InfoSection
-          title={t('title')}
-          description={t('description')}
-          button={{ text: t?.('button.text'), link: props?.button?.link }}
-          className="flex flex-col justify-center md:basis-1/2 md:px-4"
-        />
+        <div className="flex flex-col justify-center md:basis-1/2 md:px-4">
+          <h2 className="mb-2 whitespace-normal text-center font-bold text-[28px] leading-tight sm:text-start md:mb-4 md:whitespace-nowrap lg:text-[40px]">
+            {t('title')}
+          </h2>
+          <p className="mb-3 whitespace-normal text-center font-bold text-[20px] leading-tight sm:text-start md:mb-6 md:mb-6 md:text-[28px] xl:whitespace-nowrap">
+            {t('subTitle')}
+          </p>
+          <p className="custom-line-clamp-6 mb-6 text-center text-[16px] text-foreground/80 leading-tight sm:text-start md:text-[24px]">
+            {t('description')}
+          </p>
+
+          <AieduButton link={props?.button?.link} text={t?.('button.text')} />
+        </div>
         <div className="h-full md:flex md:basis-1/2 md:items-center">
           <Image
             alt="banner"
@@ -41,9 +52,9 @@ const AieduHomepageHero: SectionComponent<'homepage', 'aieduHero'> = ({ classNam
       </div>
       {/* Partners */}
       <div className="bg-primary-foreground">
-        <div className="container flex flex-col items-center justify-center gap-6 py-8 lg:h-[160px] lg:flex-row">
-          <div className="flex items-center gap-4">
-            <p className="hidden whitespace-nowrap font-semibold uppercase md:block">{t('org')}</p>
+        <div className="container flex flex-wrap items-center justify-evenly gap-6 py-8 lg:h-[160px]">
+          <div className="space-y-2">
+            <p className="whitespace-nowrap text-center font-semibold uppercase md:block">{t('org')}</p>
             <div className="flex gap-4">
               <Image
                 src={props?.organization1?.url}
@@ -61,8 +72,8 @@ const AieduHomepageHero: SectionComponent<'homepage', 'aieduHero'> = ({ classNam
               />
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <p className="hidden whitespace-nowrap font-semibold uppercase md:block">{t('partner')}</p>
+          <div className="space-y-2">
+            <p className="whitespace-nowrap text-center font-semibold uppercase md:block">{t('partner')}</p>
             <div className="flex h-[64px] gap-4">
               <Image
                 src={props?.partner1?.url}

@@ -44,12 +44,12 @@ export function CourseHoverContent({ courseData, mutate, isExternal, href }: Cou
           </div>
         )}
 
-        {courseData?.description && (
+        {courseData?.short_desc?.length > 0 && (
           <div
             className="mcaption-regular14 rich-text !m-0 !min-h-0 line-clamp-3 w-full whitespace-break-spaces text-foreground"
             // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
             dangerouslySetInnerHTML={{
-              __html: courseData?.description,
+              __html: courseData?.short_desc,
             }}
           />
         )}

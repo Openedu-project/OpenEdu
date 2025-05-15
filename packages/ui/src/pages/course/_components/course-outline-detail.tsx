@@ -4,6 +4,7 @@ import { CourseAchievements } from './course-achievement';
 import { CourseCertificate } from './course-certificate';
 import { CourseContent } from './course-content';
 import { CreatorColabs } from './course-creator';
+import { DetailsToKnow } from './course-description';
 import { SupportingChannels } from './course-support-channels';
 
 export function CourseOutlineDetails({
@@ -16,6 +17,7 @@ export function CourseOutlineDetails({
   return (
     <div className={cn('flex flex-col gap-6', className)}>
       <CourseAchievements courseOutline={courseData} />
+      <DetailsToKnow description={courseData?.description} />
       <CreatorColabs />
       <CourseContent courseOutline={courseData} />
       <SupportingChannels courseOutline={courseData} />

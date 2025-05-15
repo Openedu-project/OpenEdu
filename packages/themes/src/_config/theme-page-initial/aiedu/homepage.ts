@@ -8,6 +8,7 @@ export const createAiEduHomepageConfig = (getThemeTranslation: (path: string[]) 
     // Theme step 9: add the props
     props: {
       title: getThemeTranslation(['homepage', 'aieduHero', 'title']),
+      subTitle: getThemeTranslation(['homepage', 'aieduHero', 'subTitle']),
       description: getThemeTranslation(['homepage', 'aieduHero', 'description']),
       button: {
         text: getThemeTranslation(['homepage', 'aieduHero', 'button', 'text']),

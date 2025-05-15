@@ -4,6 +4,7 @@ export const createAiEduIntroductionConfig = (getThemeTranslation: (path: string
   aieduGoal: createSection<'introduction', 'aieduGoal'>({
     props: {
       title: getThemeTranslation(['introduction', 'aieduGoal', 'title']),
+      subTitle: getThemeTranslation(['introduction', 'aieduGoal', 'subTitle']),
       description: getThemeTranslation(['introduction', 'aieduGoal', 'description']),
       image: { mime: 'image/png' },
     },

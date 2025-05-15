@@ -145,7 +145,7 @@ const PlayToEarn = ({ courseOutline }: IPlayToEarnProps) => {
             className="-top-2 !h-10 absolute left-2 z-40 w-auto max-w-10"
           />
 
-          <div className="absolute top-[2px] right-2 z-50 flex h-[3px] w-full max-w-[calc(100%-68px)] gap-4">
+          <div className="absolute top-[2px] right-2 z-40 flex h-[3px] w-full max-w-[calc(100%-68px)] gap-4">
             <div className="h-full w-4/5 rounded-full bg-[#C7FABF]" />
             <div className="h-full w-1/5 max-w-5 rounded-full bg-white" />
           </div>
