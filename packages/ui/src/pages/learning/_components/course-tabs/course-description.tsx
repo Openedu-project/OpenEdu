@@ -18,7 +18,7 @@ const CourseDescription = ({ courseData }: { courseData: ICourseOutline }) => {
             <div className="flex flex-col gap-1 text-foreground/40 lg:flex-row lg:items-center lg:gap-4">
               {owner && (
                 <>
-                  <CourseCreator owner={owner} />
+                  <CourseCreator owner={owner} type="learning" />
                   <span className="hidden lg:block">|</span>
                 </>
               )}

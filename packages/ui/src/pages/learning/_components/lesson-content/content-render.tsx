@@ -149,7 +149,7 @@ export const CONTENT_RENDERERS: Record<TLessonContent, ContentRenderer> = {
       const maxHeight = useMemo(() => calculateMaxHeight(lessonMetadataHeight, 'quiz'), [lessonMetadataHeight]);
 
       return (
-        <ContentWrapper maxHeight={maxHeight} fullHeight className="md:!h-full md:!aspect-video">
+        <ContentWrapper maxHeight={maxHeight} fullHeight className="md:!h-full md:!aspect-video mx-auto">
           <ContentQuiz
             quiz={quiz}
             course_data={courseData}
