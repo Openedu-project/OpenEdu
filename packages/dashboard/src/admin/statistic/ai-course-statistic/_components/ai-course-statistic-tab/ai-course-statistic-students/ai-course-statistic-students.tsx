@@ -24,7 +24,7 @@ export function AICourseStatisticTabStudents({ params, campaignKey }: IAICourseS
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const { dataAIEduProvinces } = useGetAIEduProvinces(campaignKey);
-  const [selectedRegions, setSelectedRegions] = useState<string | string[]>(['all']);
+  const [selectedRegions, setSelectedRegions] = useState<string | string[]>('all');
 
   const options = useMemo(() => {
     return [
