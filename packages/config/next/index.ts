@@ -101,7 +101,7 @@ export function getNextConfig(config: NextConfig = {}): NextConfig {
     ...config,
     output: 'standalone' as const,
     poweredByHeader: false,
-    transpilePackages: [...internalPackages, ...(config.transpilePackages ?? [])],
+    transpilePackages: [...(config.transpilePackages ?? [])],
     // headers: async () => [
     //   {
     //     source: '/(.*)',
