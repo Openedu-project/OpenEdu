@@ -1,21 +1,22 @@
 'use client';
 import { Download, Eye } from 'lucide-react';
-import { type MouseEvent, useEffect, useState } from 'react';
+import { type MouseEvent, memo, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link } from '#common/navigation';
 import { Button } from '#shadcn/button';
+import { useConversationStore } from '#store/conversation-store';
 
-export const ImageAction = ({ id }: { id: string }) => {
+export const ImageActionHydration = memo(() => {
+  const { messages } = useConversationStore();
+
   const [imageData, setImageData] = useState<{ src: string; text?: string; element: HTMLElement }[]>([]);
 
   useEffect(() => {
-    const container = document?.getElementById(id);
-
-    if (!container) {
+    if (messages.length === 0) {
       return;
     }
-    const wrappers = container?.getElementsByClassName('image-preview');
 
+    const wrappers = document.getElementsByClassName('image-preview');
     const previewsData = Array.from(wrappers).map(wrapper => {
       const imageElement = wrapper.querySelector('img');
       if (!imageElement) {
@@ -27,7 +28,7 @@ export const ImageAction = ({ id }: { id: string }) => {
       };
     });
     setImageData(previewsData);
-  }, [id]);
+  }, [messages]);
 
   const handleDownload = (e: MouseEvent<HTMLButtonElement>, src: string, text?: string) => {
     e.preventDefault();
@@ -77,4 +78,4 @@ export const ImageAction = ({ id }: { id: string }) => {
       })}
     </>
   );
-};
+});

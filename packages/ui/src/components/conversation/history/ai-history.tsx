@@ -3,7 +3,7 @@ import { API_ENDPOINT, type IChatHistory, type ISearchHistoryParams, createAPIUr
 import { Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
-import { cloneElement, useEffect, useMemo, useRef, useState } from 'react';
+import { cloneElement, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { JSX, KeyboardEvent } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import { useSWRConfig } from 'swr';
@@ -130,6 +130,17 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
     { leading: true, trailing: false }
   );
 
+  const renderDate = useCallback(
+    (date: number) => {
+      const resultDate = formatDate(date);
+      if (resultDate.includes('/')) {
+        return resultDate;
+      }
+      return tAI(resultDate);
+    },
+    [tAI]
+  );
+
   return (
     <div className={cn('mx-auto flex flex-col gap-2 p-4 text-foreground', className)}>
       {!hiddenSearch && (
@@ -154,7 +165,7 @@ export const SearchHistory = ({ className, isLogin, callbackFn, hiddenSearch = f
           endReached={handleEndReached}
           itemContent={(_, date: number) => (
             <div key={date} className="mt-2 space-y-2">
-              <h5 className="mcaption-semibold14">{formatDate(date)}</h5>
+              <h5 className="mcaption-semibold14">{renderDate(date)}</h5>
               <div className="pl-2">
                 {getHistoryByDate(date, historyData)?.map(item => {
                   return (

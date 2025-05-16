@@ -1,7 +1,7 @@
 'use client';
 
 import type { IAgenConfigs, TAgentType } from '@oe/api';
-import { type RefObject, useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useConversationStore } from '#store/conversation-store';
 import { cn } from '#utils/cn';
 import { AGENT_OPTIONS } from '../constants';
@@ -12,17 +12,15 @@ export function InputFrame({
   className,
   id,
   agent = 'ai_search',
-  messagesEndRef,
   reset = false,
 }: {
   className?: string;
   id?: string;
   agent?: TAgentType;
-  messagesEndRef?: RefObject<HTMLDivElement | null>;
   reset?: boolean;
 }) {
   const { resetMessages, selectedModel, resetStatus, setNewConversationId, setSelectedAgent } = useConversationStore();
-  const sendMessage = useSendMessageHandler(agent, id, undefined, messagesEndRef);
+  const sendMessage = useSendMessageHandler(agent, id, undefined);
 
   useEffect(() => {
     if (reset) {

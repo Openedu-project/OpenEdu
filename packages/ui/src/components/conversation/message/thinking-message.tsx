@@ -1,9 +1,16 @@
 'use client';
+import { marked } from 'marked';
 import { useTranslations } from 'next-intl';
 import { memo, useEffect, useState } from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '#shadcn/accordion';
 
-function PureThinkingMessage({ thinking, isGenerating }: { thinking: string; isGenerating?: boolean }) {
+function PureThinkingMessage({
+  thinking,
+  isGenerating,
+}: {
+  thinking: string;
+  isGenerating?: boolean;
+}) {
   const tAI = useTranslations('aiAssistant');
   const [value, setValue] = useState('');
 
@@ -21,7 +28,13 @@ function PureThinkingMessage({ thinking, isGenerating }: { thinking: string; isG
         <AccordionTrigger headerClassName="m-0" className="mcaption-bold14 p-4">
           {tAI('thinking')} {isGenerating && '...'}
         </AccordionTrigger>
-        <AccordionContent className="mcaption-regular14 p-4 pt-0 text-neutral-500">{thinking}</AccordionContent>
+        <AccordionContent className="mcaption-regular14 p-4 pt-0 text-neutral-500">
+          <div
+            className="rich-text !m-0"
+            // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+            dangerouslySetInnerHTML={{ __html: marked.parse(thinking) }}
+          />
+        </AccordionContent>
       </AccordionItem>
     </Accordion>
   );

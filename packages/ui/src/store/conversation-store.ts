@@ -1,5 +1,6 @@
 import type { IAIModel, IAIStatus, IAgenConfigs, IMessage, ISourceProps, TAgentType } from '@oe/api';
 import { createStore } from '@oe/core';
+import type { ISendMessageParams } from '#components/conversation';
 
 export const AGENT_CONFIG: Record<TAgentType, keyof IAgenConfigs> = {
   ai_slide: 'present_creator_enabled',
@@ -37,6 +38,8 @@ interface IConversationStore {
   setNewConversationId: (id: string) => void;
   inputValue?: string;
   setInputValue: (value?: string) => void;
+  pendingParams?: ISendMessageParams;
+  setPendingParams: (pendingParams?: ISendMessageParams) => void;
 }
 
 export const useConversationStore = createStore<IConversationStore>(set => {
@@ -153,5 +156,10 @@ export const useConversationStore = createStore<IConversationStore>(set => {
         return { inputValue };
       });
     },
+    pendingParams: undefined,
+    setPendingParams: (pendingParams?: ISendMessageParams) =>
+      set(() => {
+        return { pendingParams };
+      }),
   };
 });

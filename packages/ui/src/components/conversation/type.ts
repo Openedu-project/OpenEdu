@@ -1,6 +1,6 @@
 import type { IFileResponse } from '@oe/api';
-import type { IAIModel, IConversationDetails, IMessage, IRole, TAgentType } from '@oe/api';
-import type { ChangeEvent, KeyboardEventHandler, ReactNode, Ref, RefObject } from 'react';
+import type { IMessage, IRole, TAgentType } from '@oe/api';
+import type { ChangeEvent, KeyboardEventHandler, ReactNode, RefObject } from 'react';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
 
 export interface AISidebarItem {
@@ -99,12 +99,10 @@ export interface IAIMessageProps {
 }
 
 export interface IChatWindowProps {
-  id?: string;
-  aiModels?: IAIModel[];
-  initData?: IConversationDetails;
+  id: string;
   agent: TAgentType;
   className?: string;
-  inputRef?: Ref<HTMLDivElement>;
+  isLogin?: boolean;
 }
 export type TFileStatus = 'error' | 'finished' | 'generating' | 'completed';
 export type TFileResponse = IFileResponse & { status?: TFileStatus; fileId?: string; progress?: number };

@@ -1,19 +1,20 @@
 'use client';
 import { Check, Files } from 'lucide-react';
-import { type MouseEvent, useEffect, useState } from 'react';
+import { type MouseEvent, memo, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Button } from '#shadcn/button';
+import { useConversationStore } from '#store/conversation-store';
 
-export const CodeDownloadHydration = ({ id }: { id: string }) => {
+export const CodeDownloadHydration = memo(() => {
+  const { messages } = useConversationStore();
+
   const [buttonData, setButtonData] = useState<{ code: string; element: HTMLElement }[]>([]);
 
   useEffect(() => {
-    const container = document?.getElementById(id);
-
-    if (!container) {
+    if (messages.length === 0) {
       return;
     }
-    const wrappers = container?.getElementsByClassName('code-title-wrapper');
+    const wrappers = document?.getElementsByClassName('code-title-wrapper');
 
     const previewsData = Array.from(wrappers).map(wrapper => {
       const codeData = wrapper.getAttribute('data-code');
@@ -23,7 +24,7 @@ export const CodeDownloadHydration = ({ id }: { id: string }) => {
       };
     });
     setButtonData(previewsData);
-  }, [id]);
+  }, [messages]);
 
   const handleDownload = (e: MouseEvent<HTMLButtonElement>, code: string) => {
     e.preventDefault();
@@ -58,4 +59,4 @@ export const CodeDownloadHydration = ({ id }: { id: string }) => {
       })}
     </>
   );
-};
+});

@@ -11,7 +11,7 @@ import { useIsDesktop } from './utils';
 
 const AnimatedDiv = animated('div');
 
-export function ChatWithSource({ id, initData, agent }: IChatWindowProps) {
+export function ChatWithSource({ id, agent, isLogin }: IChatWindowProps) {
   const { openWebSource } = useConversationStore();
   const isDesktop = useIsDesktop();
 
@@ -32,20 +32,20 @@ export function ChatWithSource({ id, initData, agent }: IChatWindowProps) {
   });
 
   return (
-    <div className="flex grow overflow-y-auto overflow-x-hidden">
+    <div className="flex h-[calc(100%-50px)] gap-2">
       {/* Chat window's width is calculated from the spring value */}
       <AnimatedDiv
-        className="grow"
+        className="h-full"
         style={{
           width: isDesktop ? springs.sourcePanelWidth.to(w => `calc(100% - ${w}px`) : '100%',
         }}
       >
-        <ChatWindow id={id} initData={initData} agent={agent} />
+        <ChatWindow id={id} agent={agent} isLogin={isLogin} />
       </AnimatedDiv>
 
       {isDesktop ? (
         <AnimatedDiv
-          className={cn('relative flex h-full shrink-0 overflow-visible', openWebSource.isOpen && 'pl-4')}
+          className={cn('relative flex h-full shrink-0 overflow-visible', openWebSource.isOpen && 'pr-4')}
           style={{
             width: springs.sourcePanelWidth,
             opacity: springs.sourceOpacity,

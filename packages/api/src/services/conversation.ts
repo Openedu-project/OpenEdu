@@ -9,6 +9,7 @@ import type {
   IMessage,
   IPromptsResponse,
   IUpdateConversationPayload,
+  TAgentType,
 } from '#types/conversation';
 import { isLogin } from '#utils/auth';
 import { API_ENDPOINT } from '#utils/endpoints';
@@ -41,7 +42,7 @@ export const getConversationDetail = async (
 };
 
 export const postConversation = async (url: string | undefined, payload: IConversationRequest) => {
-  const endpointKey = url ?? API_ENDPOINT.COM_CHANNELS;
+  const endpointKey = url ?? API_ENDPOINT.COM_CHANNELS_CHAT;
   const response = await postAPI<IConversation, IConversationRequest>(endpointKey, payload);
 
   return response.data;
@@ -142,6 +143,13 @@ export const cancelEmbedDocument = async (url: string | undefined, payload: IDoc
     url ?? API_ENDPOINT.COM_CHANNELS_DOCUMENTS_CANCEL,
     payload
   );
+
+  return response.data;
+};
+
+export const postEmptyConversation = async (url: string | undefined, payload: { ai_agent_type: TAgentType }) => {
+  const endpointKey = url ?? API_ENDPOINT.COM_CHANNELS;
+  const response = await postAPI<IConversation, { ai_agent_type: TAgentType }>(endpointKey, payload);
 
   return response.data;
 };
