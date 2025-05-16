@@ -12,12 +12,19 @@ export default $config({
   // biome-ignore lint/suspicious/useAwait: <explanation>
   async run() {
     new sst.aws.Nextjs('oeorgtestnet', {
+      // path: 'apps/organization',
+      // router: {
+      //   instance: oeTestnetRouter,
+      //   domain: '*.openedutest.net',
+      // },
       domain: {
-        name: 'vbi.openedutest.net',
-        aliases: ['*.openedutest.net'],
+        name: '*.openedutest.net',
+        // aliases: ['*.openedutest.net'],
         // dns: sst.aws.dns({
         //   zone: 'Z03666423OXCSCHYUQUDV',
         // }),
+        dns: false,
+        cert: process.env.DOMAIN_CERT || '',
       },
       regions: ['ap-southeast-1'],
       imageOptimization: {

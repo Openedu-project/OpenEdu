@@ -4,27 +4,28 @@
   "type": "module",
   "scripts": {
     "build": "turbo run build",
+    "analyze": "turbo run analyze",
     "build-all": "pnpm run build-packages && pnpm run build",
-    "build-packages": "pnpm run build-core && pnpm run build-api && pnpm run build-assets && pnpm run build-i18n && pnpm run build-ui && pnpm run build-dashboard",
-    "build-core": "turbo run build --filter=@oe/core",
     "build-api": "turbo run build --filter=@oe/api",
-    "build-themes": "turbo run build --filter=@oe/themes",
     "build-assets": "turbo run build --filter=@oe/assets",
-    "build-i18n": "turbo run build --filter=@oe/i18n",
-    "build-ui": "turbo run build --filter=@oe/ui",
+    "build-core": "turbo run build --filter=@oe/core",
     "build-dashboard": "turbo run build --filter=@oe/dashboard",
     "build-deploy": "turbo run build --filter=platform...",
-    "dev": "turbo run dev",
-    "dev:builder": "turbo run dev:builder",
-    "start": "turbo run start",
-    "typecheck": "turbo run typecheck",
-    "lint": "biome check .",
-    "lint:fix": "biome check . --write",
+    "build-i18n": "turbo run build --filter=@oe/i18n",
+    "build-packages": "pnpm run build-core && pnpm run build-api && pnpm run build-assets && pnpm run build-i18n && pnpm run build-ui && pnpm run build-dashboard",
+    "build-themes": "turbo run build --filter=@oe/themes",
+    "build-ui": "turbo run build --filter=@oe/ui",
+    "clean": "turbo run clean && rm -rf .turbo && rm -rf node_modules && rm -rf dist && rm pnpm-lock.yaml",
+    "clean:build": "turbo run clean && rm -rf .turbo && turbo run clean:build",
     "deps": "sherif",
     "deps:fix": "sherif --fix --no-install",
-    "ui": "pnpm run --filter @oe/ui ui",
-    "clean": "turbo run clean && rm -rf .turbo && rm -rf node_modules && rm -rf dist && rm pnpm-lock.yaml",
-    "clean:build": "turbo run clean && rm -rf .turbo && turbo run clean:build"
+    "dev": "turbo run dev",
+    "dev:builder": "turbo run dev:builder",
+    "lint": "biome check .",
+    "lint:fix": "biome check . --write",
+    "start": "turbo run start",
+    "typecheck": "turbo run typecheck",
+    "ui": "pnpm run --filter @oe/ui ui"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
@@ -34,6 +35,7 @@
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-replace": "^6.0.2",
+    "@types/aws-lambda": "8.10.149",
     "dotenv": "^16.5.0",
     "execa": "^9.5.3",
     "fast-glob": "^3.3.3",
@@ -51,5 +53,8 @@
   "packageManager": "pnpm@10.11.0",
   "engines": {
     "node": ">=20"
+  },
+  "dependencies": {
+    "sst": "3.14.24"
   }
 }

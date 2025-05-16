@@ -8,4 +8,5 @@ export const routing = defineRouting({
     name: process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY,
     maxAge: 60 * 60 * 24 * 365,
   },
+  localeDetection: false,
 });

@@ -280,9 +280,16 @@ export const SITEMAP_ROUTES = [
 export function isProtectedRoute(pathname: string) {
   const unlocalizedPathname = getUnlocalizedPathname(pathname);
 
+  // Kiểm tra nếu đường dẫn bắt đầu bằng bất kỳ protected route nào
   return Object.values(PROTECTED_ROUTES).some(protectedPath => {
-    const { regexp } = pathToRegexp(protectedPath);
-    return regexp.test(unlocalizedPathname);
+    // Xử lý các đường dẫn động với tham số
+    if (protectedPath.includes(':')) {
+      const { regexp } = pathToRegexp(protectedPath);
+      return regexp.test(unlocalizedPathname);
+    }
+
+    // Kiểm tra nếu đường dẫn bắt đầu bằng protected route
+    return unlocalizedPathname === protectedPath || unlocalizedPathname.startsWith(`${protectedPath}/`);
   });
 }
 

@@ -15,6 +15,8 @@ declare global {
   namespace NodeJS {
     interface ProcessEnv {
       AUTH_SECRET: string;
+      DOMAIN_CERT: string;
+
       NEXT_PUBLIC_APP_ROOT_DOMAIN_NAME: string;
       NEXT_PUBLIC_APP_COOKIE_DOMAIN: string;
 

@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      sst:
+        specifier: 3.14.24
+        version: 3.14.24
     devDependencies:
       '@biomejs/biome':
         specifier: 1.9.4
@@ -29,6 +33,9 @@ importers:
       '@rollup/plugin-replace':
         specifier: ^6.0.2
         version: 6.0.2(rollup@4.40.2)
+      '@types/aws-lambda':
+        specifier: 8.10.149
+        version: 8.10.149
       dotenv:
         specifier: ^16.5.0
         version: 16.5.0
@@ -56,9 +63,6 @@ importers:
       sherif:
         specifier: ^1.5.0
         version: 1.5.0
-      sst:
-        specifier: ^3.14.24
-        version: 3.14.24
       tsx:
         specifier: ^4.19.4
         version: 4.19.4
@@ -253,6 +257,9 @@ importers:
       '@types/react-dom':
         specifier: 19.1.5
         version: 19.1.5(@types/react@19.1.4)
+      cross-env:
+        specifier: ^7.0.3
+        version: 7.0.3
       postcss:
         specifier: ^8.5.3
         version: 8.5.3
@@ -3028,6 +3035,9 @@ packages:
   '@tsconfig/bun@1.0.7':
     resolution: {integrity: sha512-udGrGJBNQdXGVulehc1aWT73wkR9wdaGBtB6yL70RJsqwW/yJhIg6ZbRlPOfIUiFNrnBuYLBi9CSmMKfDC7dvA==}
 
+  '@types/aws-lambda@8.10.149':
+    resolution: {integrity: sha512-NXSZIhfJjnXqJgtS7IwutqIF/SOy1Wz5Px4gUY1RWITp3AYTyuJS4xaXr/bIJY1v15XMzrJ5soGnPM+7uigZjA==}
+
   '@types/bn.js@5.1.6':
     resolution: {integrity: sha512-Xh8vSwUeMKeYYrj3cX4lGQgFSF/N03r+tv4AiLl1SucqV+uTQpxRcnM8AkXKHwYP9ZPXOYXRr2KPXpVlIvqh9w==}
 
@@ -3512,6 +3522,11 @@ packages:
 
   crelt@1.0.6:
     resolution: {integrity: sha512-VQ2MBenTq1fWZUH9DJNGti7kKv6EeAuYr3cLwxUWhIu1baTaXh4Ib5W2CqHVqib4/MqbYGJqiL3Zb8GJZr3l4g==}
+
+  cross-env@7.0.3:
+    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
+    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
+    hasBin: true
 
   cross-fetch@3.2.0:
     resolution: {integrity: sha512-Q+xVJLoGOeIMXZmbUK4HYk+69cQH6LudR0Vu/pRm2YlU/hDV9CiS0gKUMaWY5f2NeUH9C1nV3bsTlCo0FsTV1Q==}
@@ -8781,6 +8796,8 @@ snapshots:
 
   '@tsconfig/bun@1.0.7': {}
 
+  '@types/aws-lambda@8.10.149': {}
+
   '@types/bn.js@5.1.6':
     dependencies:
       '@types/node': 22.15.18
@@ -9737,6 +9754,10 @@ snapshots:
   crc-32@1.2.2: {}
 
   crelt@1.0.6: {}
+
+  cross-env@7.0.3:
+    dependencies:
+      cross-spawn: 7.0.6
 
   cross-fetch@3.2.0:
     dependencies:

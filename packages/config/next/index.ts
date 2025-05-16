@@ -101,7 +101,7 @@ export function getNextConfig(config: NextConfig = {}): NextConfig {
     ...config,
     output: 'standalone' as const,
     poweredByHeader: false,
-    transpilePackages: [...(config.transpilePackages ?? [])],
+    transpilePackages: [...internalPackages, ...(config.transpilePackages ?? [])],
     // headers: async () => [
     //   {
     //     source: '/(.*)',
@@ -127,7 +127,7 @@ export function getNextConfig(config: NextConfig = {}): NextConfig {
         ...externalPackages,
         ...(config.experimental?.optimizePackageImports ?? []),
       ],
-      optimizeServerReact: true,
+      // optimizeServerReact: true,
       inlineCss: true,
       reactCompiler: true,
       ...config.experimental,

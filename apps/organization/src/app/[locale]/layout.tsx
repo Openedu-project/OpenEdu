@@ -6,6 +6,7 @@ import { Provider } from "@oe/ui";
 import { Toaster } from "@oe/ui";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
+import { NextIntlClientProvider } from "next-intl";
 // import { WebViewHandler } from "@oe/ui";
 import { getLocale } from "next-intl/server";
 import Script from "next/script";
@@ -65,16 +66,18 @@ export default async function RootLayout({
       className={fontVariables}
     >
       <body className="scrollbar font-primary antialiased">
-        <Provider>
-          {/* <WebViewHandler /> */}
+        <NextIntlClientProvider>
+          <Provider>
+            {/* <WebViewHandler /> */}
 
-          <ThemeProvider
-            theme={themeSystem?.[0]?.value?.availableThemes?.[themeName]}
-          >
-            {children}
-          </ThemeProvider>
-          <Toaster />
-        </Provider>
+            <ThemeProvider
+              theme={themeSystem?.[0]?.value?.availableThemes?.[themeName]}
+            >
+              {children}
+            </ThemeProvider>
+            <Toaster />
+          </Provider>
+        </NextIntlClientProvider>
         <Script id="microsoft-clarity" strategy="lazyOnload">
           {` (function(c,l,a,r,i,t,y){ c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)}; t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i; y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y); })(window, document, "clarity", "script", "qpk1sozolu"); `}
         </Script>

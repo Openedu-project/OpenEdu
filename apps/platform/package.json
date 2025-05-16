@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "next build",
+    "analyze": "cross-env ANALYZE=true next build",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",
     "clean:build": "rm -rf .turbo && rm -rf .next",
     "dev": "next dev --turbopack",
@@ -47,7 +48,8 @@
     "postcss": "^8.5.3",
     "tailwindcss": "^4.1.6",
     "tw-animate-css": "^1.2.9",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "cross-env": "^7.0.3"
   },
   "packageManager": "pnpm@10.11.0"
 }

@@ -1,5 +1,6 @@
 'use server';
 import { SignJWT, jwtVerify } from 'jose';
+import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { getAPIReferrerAndOrigin } from '#utils/referrer-origin';
 import { getTokenExpiry, parseJwt, refreshTokenExpiresIn } from '#utils/session';
@@ -120,5 +121,6 @@ export async function setSessionPayload(accessToken: string, refreshToken: strin
     nextPath: decodedAccessToken.next_path,
   };
   await setSessionCookie(sessionPayload);
+  revalidatePath('/');
   return sessionPayload;
 }

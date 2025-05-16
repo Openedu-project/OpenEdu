@@ -1,19 +1,29 @@
-import { decodeJWT, isTokenExpiringSoon } from '@oe/api';
+import { API_ENDPOINT, decodeJWT, isTokenExpiringSoon } from '@oe/api';
 import { isProtectedRoute } from '@oe/core';
 import { i18nMiddleware } from '@oe/i18n';
 import { type NextRequest, NextResponse } from 'next/server';
 
+let isRefreshingToken = false;
+
 export async function middleware(request: NextRequest) {
   const session = request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY)?.value;
+  console.log(
+    '🚀 ~ middleware ~ session pathname:',
+    request.nextUrl.pathname,
+    isProtectedRoute(request.nextUrl.pathname)
+  );
   if (session) {
     const decodedSession = await decodeJWT(session);
-    console.info('🚀 ~ middleware ~ decodedSession:', decodedSession);
-    if (isTokenExpiringSoon(decodedSession)) {
-      return NextResponse.redirect(new URL(`/api/auth/refresh-token?redirectUrl=${request.url}`, request.url));
+    console.info('🚀 ~ middleware ~ decodedSession:', decodedSession, isRefreshingToken);
+    if (isTokenExpiringSoon(decodedSession) && !isRefreshingToken) {
+      isRefreshingToken = true;
+      return NextResponse.redirect(new URL(`${API_ENDPOINT.REFRESH_TOKEN}?redirectUrl=${request.url}`, request.url));
     }
   } else if (!session && isProtectedRoute(request.nextUrl.pathname)) {
     request.nextUrl.pathname = '/unauthorized';
   }
+
+  isRefreshingToken = false;
 
   const headersList = request.headers;
   const { host: appHost, href } = request.nextUrl;

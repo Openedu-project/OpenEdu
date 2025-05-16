@@ -1,88 +1,3 @@
-// // import { encode } from 'next-auth/jwt';
-// import { type IToken, type SessionPayload, encodeJWT, getSession, getTokenExpiry, handleResponse } from '@oe/api';
-// import { API_ENDPOINT } from '@oe/api';
-// import { type NextRequest, NextResponse } from 'next/server';
-
-// // Biến toàn cục để theo dõi refresh đang diễn ra
-// // let refreshTokenPromise: Promise<Response> | null = null;
-
-// // exportNextRequest,  const POST = auth(handlePOST) as any;
-
-// export async function GET(request: NextRequest) {
-//   const redirectUrl = new URL(request.url).searchParams.get('redirectUrl');
-
-//   // Lấy session hiện tại
-//   const session = await getSession();
-
-//   if (!session?.refreshToken) {
-//     // Không có refresh token, chuyển hướng đến trang đăng nhập
-//     return NextResponse.redirect(new URL('/', request.url));
-//   }
-
-//   try {
-//     const tokenResponse = await refreshAccessToken(session.refreshToken, session.origin, session.referrer);
-//     // Tính thời gian hết hạn mới
-//     const { accessTokenExpiry, refreshTokenExpiry } = getTokenExpiry();
-
-//     // Tạo session mới với token đã làm mới
-//     const sessionPayload: SessionPayload = {
-//       id: session.id,
-//       origin: session.origin,
-//       referrer: session.referrer,
-//       accessToken: tokenResponse?.access_token,
-//       refreshToken: tokenResponse?.refresh_token || session.refreshToken,
-//       accessTokenExpiry,
-//       refreshTokenExpiry,
-//     };
-
-//     // Mã hóa session mới
-//     const newSessionToken = await encodeJWT(sessionPayload);
-
-//     // Tạo response chuyển hướng và cài đặt cookie mới
-//     const response = NextResponse.redirect(redirectUrl ?? '/');
-//     response.cookies.set(process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY, newSessionToken, {
-//       httpOnly: true,
-//       secure: process.env.NODE_ENV === 'production',
-//       maxAge: refreshTokenExpiry / 1000, // Chuyển đổi từ milliseconds sang seconds
-//       path: '/',
-//       sameSite: 'strict',
-//     });
-
-//     return response;
-//   } catch (error) {
-//     console.error('Lỗi khi làm mới token:', error);
-//     // Chuyển hướng đến trang đăng nhập khi có lỗi
-//     return NextResponse.redirect(new URL('/', request.url));
-//   }
-// }
-
-// async function refreshAccessToken(refreshToken: string, origin?: string, referrer?: string): Promise<IToken | null> {
-//   try {
-//     console.info('[Auth.js] Refreshing token', refreshToken, origin, referrer);
-//     const response = await fetch(`${process.env.NEXT_PUBLIC_API_ORIGIN}${API_ENDPOINT.AUTH_REFRESH_TOKEN}`, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'X-referrer': referrer || '',
-//         Origin: origin || '',
-//       },
-//       body: JSON.stringify({
-//         refresh_token: refreshToken,
-//       }),
-//       cache: 'no-store',
-//     });
-
-//     const { data } = await handleResponse<IToken>(response);
-//     console.info('[Auth.js] Token refreshed successfully', data);
-
-//     return data;
-//   } catch (error) {
-//     console.error('[Auth.js] Token refresh failed', error);
-//     // throw handleError(error);
-//     return null;
-//   }
-// }
-
 import {
   API_ENDPOINT,
   type HTTPResponse,
@@ -93,54 +8,54 @@ import {
   getTokenExpiry,
   parseJwt,
 } from '@oe/api';
-import { cookies } from 'next/headers';
+import { revalidatePath } from 'next/cache';
 import { type NextRequest, NextResponse } from 'next/server';
-// import { jwtVerify, SignJWT } from 'jose';
 
-const createErrorResponse = ({
-  isAjax,
-  errorMessage,
-  statusCode,
-  redirectPath,
-  baseUrl,
-}: { isAjax: boolean; errorMessage: string; statusCode: number; redirectPath: string; baseUrl: string }) => {
-  return isAjax
-    ? NextResponse.json({ error: errorMessage }, { status: statusCode })
-    : NextResponse.redirect(new URL(redirectPath, baseUrl));
+type ErrorResponseParams = {
+  redirectUrl: string | null;
+  errorMessage: string;
+  statusCode: number;
+  redirectPath: string;
+  baseUrl: string;
 };
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const redirectUrl = searchParams.get('redirectUrl') || '/';
-  const isAjax = searchParams.get('ajax') === 'true';
+const createErrorResponse = ({ redirectUrl, errorMessage, statusCode, redirectPath, baseUrl }: ErrorResponseParams) => {
+  const response = redirectUrl
+    ? NextResponse.redirect(new URL(redirectPath, baseUrl))
+    : NextResponse.json({ error: errorMessage }, { status: statusCode });
+  console.log('--------------------Error refresh token response--------------------', statusCode, response);
+  response.cookies.delete({
+    name: process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY,
+    domain: process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN : undefined,
+  });
+  revalidatePath('/');
+  return response;
+};
 
-  const cookieStore = await cookies();
+type RefreshParams = {
+  refreshToken: string;
+  origin?: string;
+  referrer?: string;
+  redirectUrl: string | null;
+  baseUrl: string;
+  sessionId?: string;
+};
 
-  // Lấy refresh token từ cookie
-  const session = cookieStore.get(process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY)?.value;
-
-  if (!session) {
-    cookieStore.delete(process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY);
+const handleTokenRefresh = async ({
+  refreshToken,
+  origin,
+  referrer,
+  redirectUrl,
+  baseUrl,
+  sessionId,
+}: RefreshParams) => {
+  if (!refreshToken) {
     return createErrorResponse({
-      isAjax,
-      errorMessage: 'Session not found',
-      statusCode: 404,
+      redirectUrl,
+      errorMessage: 'Refresh token not provided',
+      statusCode: 400,
       redirectPath: '/',
-      baseUrl: request.url,
-    });
-  }
-
-  const sessionPayload = await decodeJWT(session);
-  const { refreshToken, origin, referrer } = sessionPayload as SessionPayload;
-
-  if (!(refreshToken || origin || referrer)) {
-    cookieStore.delete(process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY);
-    return createErrorResponse({
-      isAjax,
-      errorMessage: 'Unauthorized',
-      statusCode: 401,
-      redirectPath: '/',
-      baseUrl: request.url,
+      baseUrl,
     });
   }
 
@@ -148,48 +63,55 @@ export async function GET(request: NextRequest) {
     // Gọi API backend để refresh token
     const refreshResponse = await fetch(`${process.env.NEXT_PUBLIC_API_ORIGIN}${API_ENDPOINT.AUTH_REFRESH_TOKEN}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-referrer': referrer as string, Origin: origin as string },
+      headers: {
+        'Content-Type': 'application/json',
+        'X-referrer': referrer || '',
+        Origin: origin || '',
+      },
       body: JSON.stringify({ refresh_token: refreshToken }),
     });
 
     if (!refreshResponse.ok) {
-      // Xóa cookie và redirect đến login
-      cookieStore.delete(process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY);
-
       return createErrorResponse({
-        isAjax,
+        redirectUrl,
         errorMessage: 'Refresh failed',
         statusCode: 401,
         redirectPath: '/',
-        baseUrl: request.url,
+        baseUrl,
       });
     }
 
     const { data } = (await refreshResponse.json()) as HTTPResponse<IToken>;
-    const access_token = data?.access_token;
-    const refresh_token = data?.refresh_token;
+    const accessToken = data?.access_token;
+    const newRefreshToken = data?.refresh_token;
 
-    console.log('===============Refresh token================', data);
+    if (!(accessToken && newRefreshToken)) {
+      return createErrorResponse({
+        redirectUrl,
+        errorMessage: 'Invalid token data received',
+        statusCode: 500,
+        redirectPath: '/',
+        baseUrl,
+      });
+    }
 
     // Phân tích JWT để lấy expiration
-    const accessTokenPayload = parseJwt(access_token);
-    // const maxAge = accessTokenPayload.exp ? accessTokenPayload.exp - Math.floor(Date.now() / 1000) : 0;
-
-    // Tạo response
-    const response = isAjax ? NextResponse.json(data, { status: 200 }) : NextResponse.redirect(redirectUrl);
+    const accessTokenPayload = parseJwt(accessToken);
+    const response = redirectUrl ? NextResponse.redirect(redirectUrl) : NextResponse.json(data, { status: 200 });
 
     const { accessTokenExpiry, refreshTokenExpiry } = getTokenExpiry();
     const newSessionPayload: SessionPayload = {
-      id: accessTokenPayload?.sub || sessionPayload?.id,
-      origin: sessionPayload?.origin,
-      referrer: sessionPayload?.referrer,
-      accessToken: access_token,
-      refreshToken: refresh_token,
+      id: accessTokenPayload?.sub || sessionId,
+      origin,
+      referrer,
+      accessToken,
+      refreshToken: newRefreshToken,
       accessTokenExpiry,
       refreshTokenExpiry,
     };
 
     const newSessionToken = await encodeJWT(newSessionPayload);
+
     // Set cookie mới
     response.cookies.set({
       name: process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY,
@@ -199,18 +121,75 @@ export async function GET(request: NextRequest) {
       sameSite: 'strict',
       path: '/',
       maxAge: refreshTokenExpiry / 1000,
+      domain: process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN : undefined,
     });
 
     return response;
   } catch (error) {
     console.error('Error refreshing token:', error);
-    cookieStore.delete(process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY);
     return createErrorResponse({
-      isAjax,
+      redirectUrl,
       errorMessage: 'Refresh failed',
       statusCode: 500,
+      redirectPath: '/',
+      baseUrl,
+    });
+  }
+};
+
+const processRequest = async (request: NextRequest) => {
+  const { searchParams } = new URL(request.url);
+  const redirectUrl = searchParams.get('redirectUrl');
+  const session = request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY)?.value;
+
+  if (!session) {
+    return createErrorResponse({
+      redirectUrl,
+      errorMessage: 'Session not found',
+      statusCode: 404,
       redirectPath: '/',
       baseUrl: request.url,
     });
   }
+
+  try {
+    const sessionPayload = (await decodeJWT(session)) as SessionPayload;
+    const { refreshToken, origin, referrer, id } = sessionPayload;
+
+    if (!refreshToken) {
+      return createErrorResponse({
+        redirectUrl,
+        errorMessage: 'Unauthorized',
+        statusCode: 401,
+        redirectPath: '/',
+        baseUrl: request.url,
+      });
+    }
+
+    return handleTokenRefresh({
+      refreshToken,
+      origin,
+      referrer,
+      redirectUrl,
+      baseUrl: request.url,
+      sessionId: id,
+    });
+  } catch (error) {
+    console.error('Error processing session:', error);
+    return createErrorResponse({
+      redirectUrl,
+      errorMessage: 'Invalid session',
+      statusCode: 401,
+      redirectPath: '/',
+      baseUrl: request.url,
+    });
+  }
+};
+
+export async function GET(request: NextRequest) {
+  return await processRequest(request);
+}
+
+export async function POST(request: NextRequest) {
+  return await processRequest(request);
 }

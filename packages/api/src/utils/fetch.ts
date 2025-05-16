@@ -54,9 +54,7 @@ const refreshToken = async (): Promise<IToken | null> => {
     }
 
     const baseUrl = process.env.NEXT_PUBLIC_APP_ORIGIN;
-    const refreshUrl = baseUrl
-      ? `${baseUrl}${API_ENDPOINT.REFRESH_TOKEN}?ajax=true`
-      : `${API_ENDPOINT.REFRESH_TOKEN}?ajax=true`;
+    const refreshUrl = baseUrl ? `${baseUrl}${API_ENDPOINT.REFRESH_TOKEN}` : `${API_ENDPOINT.REFRESH_TOKEN}`;
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), DEFAULT_TIMEOUT);

@@ -1,6 +1,6 @@
 export const languages = {
   // bn: 'Bangla',
-  zh: 'Chinese',
+  // zh: 'Chinese',
   // cs: 'Czech',
   // da: 'Danish',
 
@@ -12,9 +12,9 @@ export const languages = {
 
   // fil: 'Filipino',
 
-  fr: 'French',
+  // fr: 'French',
 
-  de: 'German',
+  // de: 'German',
   // el: 'Greek',
 
   // hi: 'Hindi',
@@ -23,11 +23,11 @@ export const languages = {
 
   // id: 'Indonesian',
 
-  it: 'Italian',
+  // it: 'Italian',
 
-  ja: 'Japanese',
+  // ja: 'Japanese',
 
-  ko: 'Korean',
+  // ko: 'Korean',
 
   // ms: 'Malay',
 
@@ -35,13 +35,13 @@ export const languages = {
 
   // pl: 'Polish',
 
-  pt: 'Portuguese',
+  // pt: 'Portuguese',
 
   // ro: 'Romanian',
 
-  ru: 'Russian',
+  // ru: 'Russian',
 
-  es: 'Spanish',
+  // es: 'Spanish',
 
   // sv: 'Swedish',
 
