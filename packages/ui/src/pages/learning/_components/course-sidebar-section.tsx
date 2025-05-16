@@ -1,6 +1,7 @@
 'use client';
 
 import type { ILessonLearningProgress, ISectionLearningProgress } from '@oe/api';
+import { useTranslations } from 'next-intl';
 import { type HTMLAttributes, memo, useEffect, useMemo, useRef } from 'react';
 import { CircleProgressBar } from '#components/circle-progress-bar';
 import { OutlineLesson } from '#components/outline-lesson';
@@ -74,6 +75,7 @@ const SectionItem = memo(
     isActive: boolean;
     activeLesson: string;
   }) => {
+    const tCourse = useTranslations('courseOutline');
     const { course } = useCourse();
     const sectionProgress = useMemo(() => {
       return section.total_lesson > 0 ? (section?.completed_lesson / section.total_lesson) * 100 : 0;
@@ -89,7 +91,7 @@ const SectionItem = memo(
       <AccordionItem className="border-none" key={section.uid} value={`section-${section.uid}`}>
         <AccordionTrigger className={getSectionClassName()}>
           <CircleProgressBar progress={sectionProgress} size="md" />
-          <span className="flex-1">{`Section ${index + 1}: ${section.title}`}</span>
+          <span className="flex-1">{`${tCourse('section')} ${index + 1}: ${section.title}`}</span>
         </AccordionTrigger>
         <AccordionContent>
           <ul className="space-y-2 text-foreground/60">
