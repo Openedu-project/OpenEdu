@@ -2,6 +2,7 @@
 
 import type { ICourseOutline } from '@oe/api';
 import { InfoCircle, Note } from '@oe/assets';
+import { useTranslations } from 'next-intl';
 import { CustomTabs } from '#components/custom-tabs';
 import { cn } from '#utils/cn';
 import { CourseOutline } from '../course-sidebar-section';
@@ -15,17 +16,18 @@ interface ICourseTabsProps {
 }
 
 const CourseTabs = ({ course_data, className }: ICourseTabsProps) => {
+  const tCourse = useTranslations('courseOutline.courseTabs');
   const tabItems = course_data && [
     {
       value: 'content',
-      label: 'Course Content',
+      label: tCourse('courseContent'),
       icon: <Note />,
       content: <CourseOutline />,
       className: 'lg:hidden',
     },
     {
       value: 'description',
-      label: 'Description',
+      label: tCourse('description'),
       icon: <InfoCircle />,
       content: <CourseDescription courseData={course_data} />,
     },

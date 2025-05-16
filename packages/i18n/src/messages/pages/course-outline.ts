@@ -16,7 +16,10 @@ export const courseOutlineMessages = {
       post: 'Post',
       posts: 'Posts',
     },
-
+    courseTabs: {
+      description: 'Description',
+      courseContent: 'Course content',
+    },
     thisCourseIncludes: {
       title: 'This Course Includes:',
       completionCertificate: 'Completion certificate',
