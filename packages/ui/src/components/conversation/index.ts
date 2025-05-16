@@ -3,11 +3,14 @@ import { AIModelDropdown } from './ai-model-dropdown';
 import { ChatWindow } from './chat-window';
 import { ChatWithSource } from './chat-with-source';
 import { AI_SIDEBAR, HISTORY_DEFAULT_PARAMS } from './constants';
+import { ConversationProvider } from './conversation-provider';
+import { EmptyChat } from './empty-chat';
 import { AIHistoryModal, SearchHistory } from './history/ai-history';
 import { InputFrame } from './message-input/input-frame';
 import { PromptCategory } from './prompt/prompt-category';
 import { AIModule } from './sidebar/ai-module';
 import { AISidebar, SIDEBAR_WIDTH, SIDEBAR_WIDTH_ICON } from './sidebar/ai-sidebar';
+import type { ISendMessageParams } from './type';
 
 export {
   AISidebar,
@@ -24,4 +27,7 @@ export {
   SIDEBAR_WIDTH_ICON,
   SearchHistory,
   AIBanner,
+  ConversationProvider,
+  type ISendMessageParams,
+  EmptyChat,
 };

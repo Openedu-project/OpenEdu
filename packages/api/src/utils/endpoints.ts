@@ -284,6 +284,7 @@ export const API_ENDPOINT = {
   COM_CHANNELS_ID_MESSAGES_ID: '/api/com-v1/channels/:channelId/messages/:messageId',
   COM_CHANNELS_DOCUMENTS: '/api/com-v1/channels/documents',
   COM_CHANNELS_DOCUMENTS_CANCEL: '/api/com-v1/channels/documents/cancel',
+  COM_CHANNELS_CHAT: '/api/com-v1/channels/chat',
 } as const;
 
 export type API_ENDPOINT_KEY = keyof typeof API_ENDPOINT;

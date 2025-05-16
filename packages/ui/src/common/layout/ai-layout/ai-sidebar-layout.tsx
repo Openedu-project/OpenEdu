@@ -42,14 +42,11 @@ export function AISidebarLayout({ children, className, login, AIChatModels }: Pr
       }
     >
       <AISidebar isLogin={login} />
-      <main
-        className={cn(
-          'flex h-[calc(100dvh-var(--header-small-height))] grow flex-col gap-4 overflow-hidden p-2 md:h-[calc(100dvh-var(--header-height))]',
-          className
-        )}
-      >
+      <main className={cn('flex h-[calc(100dvh-var(--header-height))] w-full flex-col', className)}>
         {!pathname.includes(AI_ROUTES.history) && AIChatModels && AIChatModels?.length > 0 && (
-          <AIModelDropdown AIModels={AIChatModels} isLogin={login} className="mx-auto shrink-0" />
+          <div className="flex justify-center py-1">
+            <AIModelDropdown AIModels={AIChatModels} isLogin={login} />
+          </div>
         )}
         {children}
       </main>

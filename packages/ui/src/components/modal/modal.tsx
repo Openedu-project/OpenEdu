@@ -225,7 +225,7 @@ export const Modal = <TSchema extends z.ZodType>({
       } ${className}`}
     >
       <DialogHeader className={cn('p-4', hasTitleOrDescription ? '' : 'hidden')}>
-        <DialogTitle className="mb-0">{title}</DialogTitle>
+        <DialogTitle className={cn('mb-0', hasCloseIcon && 'pr-5')}>{title}</DialogTitle>
         <DialogDescription className={description ? '' : 'hidden'}>{description}</DialogDescription>
       </DialogHeader>
       {content}

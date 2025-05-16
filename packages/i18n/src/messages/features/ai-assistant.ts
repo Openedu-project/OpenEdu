@@ -59,5 +59,7 @@ export const aiAssistantMessages = {
     noPromptWasFound: 'No Prompt Was Found',
     proPlan: 'Pro Plan',
     exploreOpenEdu: 'Explore OpenEdu',
+    today: 'Today',
+    yesterday: 'Yesterday',
   },
 };
