@@ -1,90 +1,92 @@
-time=2025-05-16T06:06:53.613Z level=INFO msg="checking for pulumi" path=/root/.config/sst/bin/pulumi
-time=2025-05-16T06:06:53.925Z level=INFO msg="checking for bun" path=/root/.config/sst/bin/bun
-time=2025-05-16T06:06:53.928Z level=INFO msg="initializing project" version=3.14.25
-time=2025-05-16T06:06:53.928Z level=INFO msg="esbuild building" out=/root/home/oe/apps/platform/.sst/platform/sst.config.1747375613928.mjs
-time=2025-05-16T06:06:53.933Z level=INFO msg="esbuild built" outfile=/root/home/oe/apps/platform/.sst/platform/sst.config.1747375613928.mjs
-time=2025-05-16T06:06:53.933Z level=INFO msg="evaluating config"
-time=2025-05-16T06:06:53.963Z level=INFO msg="config evaluated"
-time=2025-05-16T06:06:53.963Z level=INFO msg="checking platform"
-time=2025-05-16T06:06:53.963Z level=INFO msg="loading home"
-time=2025-05-16T06:06:53.964Z level=INFO msg="aws credentials found" region=ap-southeast-1 profile=""
-time=2025-05-16T06:06:53.964Z level=INFO msg="fetching bootstrap"
-time=2025-05-16T06:06:54.260Z level=INFO msg="found existing bootstrap" data="{\"version\":5,\"asset\":\"sst-asset-awkrzfkechwv\",\"assetEcrRegistryId\":\"613124242970\",\"assetEcrUrl\":\"613124242970.dkr.ecr.ap-southeast-1.amazonaws.com/sst-asset\",\"state\":\"sst-state-awkrzfkechwv\",\"appsyncHttp\":\"\",\"appsyncRealtime\":\"\"}"
-time=2025-05-16T06:06:54.260Z level=INFO msg="loaded config" app=oe stage=production
-time=2025-05-16T06:06:54.261Z level=INFO msg="initializing ui" isTTY=true
-time=2025-05-16T06:06:54.261Z level=INFO msg="server port assigned" port=13557
-time=2025-05-16T06:06:54.261Z level=INFO msg="running stack command" service=project.run cmd=deploy
-time=2025-05-16T06:06:54.262Z level=INFO msg="INFO locking app=oe stage=production"
-time=2025-05-16T06:06:54.262Z level=INFO msg="INFO getting data key=lock app=oe stage=production"
-time=2025-05-16T06:06:54.262Z level=INFO msg=starting service=server
-time=2025-05-16T06:06:54.263Z level=INFO msg=server service=server addr=0.0.0.0:13557
-time=2025-05-16T06:06:54.617Z level=INFO msg="INFO putting update app=oe stage=production"
-time=2025-05-16T06:06:54.766Z level=INFO msg="INFO getting passphrase app=oe stage=production"
-time=2025-05-16T06:06:54.999Z level=INFO msg="INFO pulling state app=oe stage=production out=/root/home/oe/apps/platform/.sst/pulumi/fe69284c16c9822b7fb6fe75/.pulumi/stacks/oe/production.json"
-time=2025-05-16T06:06:57.059Z level=INFO msg="got previous deployment" service=project.run updateID=fe69284c16c9822b7fb6fe75
-time=2025-05-16T06:06:57.059Z level=INFO msg="esbuild building" out=/root/home/oe/apps/platform/.sst/platform/sst.config.1747375614998.mjs
-time=2025-05-16T06:06:57.123Z level=INFO msg="esbuild built" outfile=/root/home/oe/apps/platform/.sst/platform/sst.config.1747375614998.mjs
-time=2025-05-16T06:06:57.130Z level=INFO msg="built sst.config.ts" service=project.run updateID=fe69284c16c9822b7fb6fe75 to=/root/home/oe/apps/platform/.sst/platform/sst.config.1747375614998.mjs
-time=2025-05-16T06:06:57.134Z level=INFO msg="tracked files" service=project.run updateID=fe69284c16c9822b7fb6fe75
-time=2025-05-16T06:06:57.134Z level=INFO msg="INFO getting data key=secret app=oe stage=_fallback"
-time=2025-05-16T06:06:57.134Z level=INFO msg="INFO getting data key=secret app=oe stage=production"
-time=2025-05-16T06:06:57.320Z level=INFO msg="starting pulumi" service=project.run updateID=fe69284c16c9822b7fb6fe75 args="[/root/.config/sst/bin/pulumi up --yes -f --stack organization/oe/production --non-interactive --event-log /root/home/oe/apps/platform/.sst/pulumi/fe69284c16c9822b7fb6fe75/eventlog.json --config aws:defaultTags={\"tags\":{\"sst:app\":\"oe\",\"sst:stage\":\"production\"}} --config aws:region=ap-southeast-1]"
-time=2025-05-16T06:07:02.324Z level=INFO msg="INFO pushing partial state updateID=fe69284c16c9822b7fb6fe75"
-time=2025-05-16T06:07:05.506Z level=INFO msg="INFO pushing partial state updateID=fe69284c16c9822b7fb6fe75"
-time=2025-05-16T06:10:50.583Z level=INFO msg="INFO pushing partial state updateID=fe69284c16c9822b7fb6fe75"
-time=2025-05-16T06:10:50.743Z level=INFO msg="rpc request" method=POST url=/rpc
-time=2025-05-16T06:10:51.605Z level=INFO msg="rpc request" method=POST url=/rpc
-time=2025-05-16T06:10:51.606Z level=INFO msg="building function" runtime=nodejs20.x functionID=oeRevalidationSeeder
-time=2025-05-16T06:10:51.606Z level=INFO msg="function built" runtime=nodejs20.x functionID=oeRevalidationSeeder
-time=2025-05-16T06:10:51.871Z level=INFO msg="rpc request" method=POST url=/rpc
-time=2025-05-16T06:10:51.872Z level=INFO msg="rpc request" method=POST url=/rpc
-time=2025-05-16T06:10:53.021Z level=INFO msg="rpc request" method=POST url=/rpc
-time=2025-05-16T06:10:53.712Z level=INFO msg="rpc request" method=POST url=/rpc
-time=2025-05-16T06:10:53.712Z level=INFO msg="building function" runtime=nodejs20.x functionID=oeImageOptimizer
-time=2025-05-16T06:10:53.712Z level=INFO msg="function built" runtime=nodejs20.x functionID=oeImageOptimizer
-time=2025-05-16T06:10:53.915Z level=INFO msg="rpc request" method=POST url=/rpc
-time=2025-05-16T06:10:54.018Z level=INFO msg="INFO pushing partial state updateID=fe69284c16c9822b7fb6fe75"
-time=2025-05-16T06:10:54.028Z level=INFO msg="rpc request" method=POST url=/rpc
-time=2025-05-16T06:10:54.028Z level=INFO msg="building function" runtime=nodejs20.x functionID=oeServerApsoutheast1
-time=2025-05-16T06:10:54.029Z level=INFO msg="function built" runtime=nodejs20.x functionID=oeServerApsoutheast1
-time=2025-05-16T06:10:54.107Z level=INFO msg="rpc request" method=POST url=/rpc
-time=2025-05-16T06:10:54.107Z level=INFO msg="building function" runtime=nodejs20.x functionID=oeRevalidationEventsSubscriberCtfzuxFunction
-time=2025-05-16T06:10:54.107Z level=INFO msg="function built" runtime=nodejs20.x functionID=oeRevalidationEventsSubscriberCtfzuxFunction
-time=2025-05-16T06:10:54.159Z level=INFO msg="rpc request" method=POST url=/rpc
-time=2025-05-16T06:10:54.313Z level=INFO msg="rpc request" method=POST url=/rpc
-time=2025-05-16T06:10:54.642Z level=INFO msg="INFO pushing partial state updateID=fe69284c16c9822b7fb6fe75"
-time=2025-05-16T06:10:55.812Z level=INFO msg="INFO pushing partial state updateID=fe69284c16c9822b7fb6fe75"
-time=2025-05-16T06:10:58.154Z level=INFO msg="rpc request" method=POST url=/rpc
-time=2025-05-16T06:11:00.470Z level=INFO msg="INFO pushing partial state updateID=fe69284c16c9822b7fb6fe75"
-time=2025-05-16T06:11:01.257Z level=INFO msg="rpc request" method=POST url=/rpc
-time=2025-05-16T06:11:01.362Z level=INFO msg="INFO pushing partial state updateID=fe69284c16c9822b7fb6fe75"
-time=2025-05-16T06:11:01.931Z level=INFO msg="INFO pushing partial state updateID=fe69284c16c9822b7fb6fe75"
-time=2025-05-16T06:11:03.506Z level=INFO msg="INFO pushing partial state updateID=fe69284c16c9822b7fb6fe75"
-time=2025-05-16T06:11:05.925Z level=INFO msg="INFO pushing partial state updateID=fe69284c16c9822b7fb6fe75"
-time=2025-05-16T06:11:07.639Z level=INFO msg="INFO pushing partial state updateID=fe69284c16c9822b7fb6fe75"
-time=2025-05-16T06:11:12.997Z level=INFO msg="INFO pushing partial state updateID=fe69284c16c9822b7fb6fe75"
-time=2025-05-16T06:11:13.035Z level=INFO msg="rpc request" method=POST url=/rpc
-time=2025-05-16T06:11:13.037Z level=INFO msg="rpc request" method=POST url=/rpc
-time=2025-05-16T06:11:13.037Z level=INFO msg="building function" runtime=nodejs20.x functionID=oeWarmerApsoutheast1Handler
-time=2025-05-16T06:11:13.037Z level=INFO msg="function built" runtime=nodejs20.x functionID=oeWarmerApsoutheast1Handler
-time=2025-05-16T06:11:13.102Z level=INFO msg="rpc request" method=POST url=/rpc
-time=2025-05-16T06:11:13.147Z level=INFO msg="rpc request" method=POST url=/rpc
-time=2025-05-16T06:11:13.596Z level=INFO msg="INFO pushing partial state updateID=fe69284c16c9822b7fb6fe75"
-time=2025-05-16T06:11:14.723Z level=INFO msg="INFO pushing partial state updateID=fe69284c16c9822b7fb6fe75"
-time=2025-05-16T06:11:35.107Z level=INFO msg="INFO pushing partial state updateID=fe69284c16c9822b7fb6fe75"
-time=2025-05-16T06:11:35.726Z level=INFO msg="pulumi exited" service=project.run updateID=fe69284c16c9822b7fb6fe75 err=<nil>
-time=2025-05-16T06:11:35.726Z level=INFO msg="eof and exited" service=project.run updateID=fe69284c16c9822b7fb6fe75 eofs=0
-time=2025-05-16T06:11:35.726Z level=INFO msg="eof and exited" service=project.run updateID=fe69284c16c9822b7fb6fe75 eofs=1
-time=2025-05-16T06:11:35.726Z level=INFO msg="breaking out of tail loop" service=project.run updateID=fe69284c16c9822b7fb6fe75
-time=2025-05-16T06:11:35.726Z level=INFO msg="parsing state" service=project.run updateID=fe69284c16c9822b7fb6fe75
-time=2025-05-16T06:11:35.846Z level=INFO msg="INFO pushing partial state updateID=fe69284c16c9822b7fb6fe75"
-time=2025-05-16T06:11:36.579Z level=INFO msg="generating types" root=/root/home/oe/apps/platform
-time=2025-05-16T06:11:36.583Z level=INFO msg="canceling partial" service=project.run updateID=fe69284c16c9822b7fb6fe75
-time=2025-05-16T06:11:36.583Z level=INFO msg="waiting for partial to exit" service=project.run updateID=fe69284c16c9822b7fb6fe75
-time=2025-05-16T06:11:36.584Z level=INFO msg="INFO pushing eventlog updateID=fe69284c16c9822b7fb6fe75"
-time=2025-05-16T06:11:36.584Z level=INFO msg="INFO pushing snapshot updateID=fe69284c16c9822b7fb6fe75"
-time=2025-05-16T06:11:37.292Z level=INFO msg="INFO putting update app=oe stage=production"
-time=2025-05-16T06:11:37.422Z level=INFO msg="done running stack command" service=project.run updateID=fe69284c16c9822b7fb6fe75 resources=62
-time=2025-05-16T06:11:37.425Z level=INFO msg="INFO unlocking app=oe stage=production"
-time=2025-05-16T06:11:37.579Z level=INFO msg="shutting down server" service=server
-time=2025-05-16T06:11:37.580Z level=INFO msg="server done" service=server
+time=2025-05-16T07:23:19.018Z level=INFO msg="checking for pulumi" path=/root/.config/sst/bin/pulumi
+time=2025-05-16T07:23:19.555Z level=INFO msg="checking for bun" path=/root/.config/sst/bin/bun
+time=2025-05-16T07:23:19.588Z level=INFO msg="initializing project" version=3.14.25
+time=2025-05-16T07:23:19.589Z level=INFO msg="esbuild building" out=/root/home/oe/apps/platform/.sst/platform/sst.config.1747380199588.mjs
+time=2025-05-16T07:23:19.602Z level=INFO msg="esbuild built" outfile=/root/home/oe/apps/platform/.sst/platform/sst.config.1747380199588.mjs
+time=2025-05-16T07:23:19.602Z level=INFO msg="evaluating config"
+time=2025-05-16T07:23:19.632Z level=INFO msg="config evaluated"
+time=2025-05-16T07:23:19.633Z level=INFO msg="checking platform"
+time=2025-05-16T07:23:19.634Z level=INFO msg="loading home"
+time=2025-05-16T07:23:19.638Z level=INFO msg="aws credentials found" region=ap-southeast-1 profile=""
+time=2025-05-16T07:23:19.638Z level=INFO msg="fetching bootstrap"
+time=2025-05-16T07:23:20.265Z level=INFO msg="found existing bootstrap" data="{\"version\":5,\"asset\":\"sst-asset-awkrzfkechwv\",\"assetEcrRegistryId\":\"613124242970\",\"assetEcrUrl\":\"613124242970.dkr.ecr.ap-southeast-1.amazonaws.com/sst-asset\",\"state\":\"sst-state-awkrzfkechwv\",\"appsyncHttp\":\"\",\"appsyncRealtime\":\"\"}"
+time=2025-05-16T07:23:20.265Z level=INFO msg="loaded config" app=oe stage=production
+time=2025-05-16T07:23:20.267Z level=INFO msg="initializing ui" isTTY=true
+time=2025-05-16T07:23:20.269Z level=INFO msg="server port assigned" port=13557
+time=2025-05-16T07:23:20.269Z level=INFO msg="running stack command" service=project.run cmd=deploy
+time=2025-05-16T07:23:20.269Z level=INFO msg="INFO locking app=oe stage=production"
+time=2025-05-16T07:23:20.269Z level=INFO msg="INFO getting data key=lock app=oe stage=production"
+time=2025-05-16T07:23:20.269Z level=INFO msg=starting service=server
+time=2025-05-16T07:23:20.270Z level=INFO msg=server service=server addr=0.0.0.0:13557
+time=2025-05-16T07:23:20.890Z level=INFO msg="INFO putting update app=oe stage=production"
+time=2025-05-16T07:23:21.042Z level=INFO msg="INFO getting passphrase app=oe stage=production"
+time=2025-05-16T07:23:21.554Z level=INFO msg="INFO pulling state app=oe stage=production out=/root/home/oe/apps/platform/.sst/pulumi/fe6928061cb2f14d5cb6e934/.pulumi/stacks/oe/production.json"
+time=2025-05-16T07:23:23.224Z level=INFO msg="got previous deployment" service=project.run updateID=fe6928061cb2f14d5cb6e934
+time=2025-05-16T07:23:23.224Z level=INFO msg="esbuild building" out=/root/home/oe/apps/platform/.sst/platform/sst.config.1747380201553.mjs
+time=2025-05-16T07:23:23.294Z level=INFO msg="esbuild built" outfile=/root/home/oe/apps/platform/.sst/platform/sst.config.1747380201553.mjs
+time=2025-05-16T07:23:23.301Z level=INFO msg="built sst.config.ts" service=project.run updateID=fe6928061cb2f14d5cb6e934 to=/root/home/oe/apps/platform/.sst/platform/sst.config.1747380201553.mjs
+time=2025-05-16T07:23:23.305Z level=INFO msg="tracked files" service=project.run updateID=fe6928061cb2f14d5cb6e934
+time=2025-05-16T07:23:23.305Z level=INFO msg="INFO getting data key=secret app=oe stage=_fallback"
+time=2025-05-16T07:23:23.305Z level=INFO msg="INFO getting data key=secret app=oe stage=production"
+time=2025-05-16T07:23:23.446Z level=INFO msg="starting pulumi" service=project.run updateID=fe6928061cb2f14d5cb6e934 args="[/root/.config/sst/bin/pulumi up --yes -f --stack organization/oe/production --non-interactive --event-log /root/home/oe/apps/platform/.sst/pulumi/fe6928061cb2f14d5cb6e934/eventlog.json --config aws:defaultTags={\"tags\":{\"sst:app\":\"oe\",\"sst:stage\":\"production\"}} --config aws:region=ap-southeast-1]"
+time=2025-05-16T07:23:28.450Z level=INFO msg="INFO pushing partial state updateID=fe6928061cb2f14d5cb6e934"
+time=2025-05-16T07:23:33.158Z level=INFO msg="INFO pushing partial state updateID=fe6928061cb2f14d5cb6e934"
+time=2025-05-16T07:27:04.184Z level=INFO msg="INFO pushing partial state updateID=fe6928061cb2f14d5cb6e934"
+time=2025-05-16T07:27:04.477Z level=INFO msg="rpc request" method=POST url=/rpc
+time=2025-05-16T07:27:05.959Z level=INFO msg="rpc request" method=POST url=/rpc
+time=2025-05-16T07:27:05.959Z level=INFO msg="building function" runtime=nodejs20.x functionID=oeRevalidationSeeder
+time=2025-05-16T07:27:05.961Z level=INFO msg="function built" runtime=nodejs20.x functionID=oeRevalidationSeeder
+time=2025-05-16T07:27:06.146Z level=INFO msg="rpc request" method=POST url=/rpc
+time=2025-05-16T07:27:06.146Z level=INFO msg="rpc request" method=POST url=/rpc
+time=2025-05-16T07:27:07.097Z level=INFO msg="rpc request" method=POST url=/rpc
+time=2025-05-16T07:27:08.142Z level=INFO msg="rpc request" method=POST url=/rpc
+time=2025-05-16T07:27:08.142Z level=INFO msg="building function" runtime=nodejs20.x functionID=oeImageOptimizer
+time=2025-05-16T07:27:08.142Z level=INFO msg="function built" runtime=nodejs20.x functionID=oeImageOptimizer
+time=2025-05-16T07:27:08.215Z level=INFO msg="INFO pushing partial state updateID=fe6928061cb2f14d5cb6e934"
+time=2025-05-16T07:27:08.445Z level=INFO msg="rpc request" method=POST url=/rpc
+time=2025-05-16T07:27:08.446Z level=INFO msg="building function" runtime=nodejs20.x functionID=oeRevalidationEventsSubscriberCtfzuxFunction
+time=2025-05-16T07:27:08.446Z level=INFO msg="function built" runtime=nodejs20.x functionID=oeRevalidationEventsSubscriberCtfzuxFunction
+time=2025-05-16T07:27:08.477Z level=INFO msg="rpc request" method=POST url=/rpc
+time=2025-05-16T07:27:08.524Z level=INFO msg="rpc request" method=POST url=/rpc
+time=2025-05-16T07:27:08.524Z level=INFO msg="building function" runtime=nodejs20.x functionID=oeServerApsoutheast1
+time=2025-05-16T07:27:08.525Z level=INFO msg="function built" runtime=nodejs20.x functionID=oeServerApsoutheast1
+time=2025-05-16T07:27:08.608Z level=INFO msg="rpc request" method=POST url=/rpc
+time=2025-05-16T07:27:08.622Z level=INFO msg="rpc request" method=POST url=/rpc
+time=2025-05-16T07:27:08.689Z level=INFO msg="INFO pushing partial state updateID=fe6928061cb2f14d5cb6e934"
+time=2025-05-16T07:27:09.809Z level=INFO msg="INFO pushing partial state updateID=fe6928061cb2f14d5cb6e934"
+time=2025-05-16T07:27:14.060Z level=INFO msg="rpc request" method=POST url=/rpc
+time=2025-05-16T07:27:14.634Z level=INFO msg="INFO pushing partial state updateID=fe6928061cb2f14d5cb6e934"
+time=2025-05-16T07:27:16.274Z level=INFO msg="INFO pushing partial state updateID=fe6928061cb2f14d5cb6e934"
+time=2025-05-16T07:27:16.988Z level=INFO msg="INFO pushing partial state updateID=fe6928061cb2f14d5cb6e934"
+time=2025-05-16T07:27:18.378Z level=INFO msg="rpc request" method=POST url=/rpc
+time=2025-05-16T07:27:20.376Z level=INFO msg="INFO pushing partial state updateID=fe6928061cb2f14d5cb6e934"
+time=2025-05-16T07:27:21.659Z level=INFO msg="INFO pushing partial state updateID=fe6928061cb2f14d5cb6e934"
+time=2025-05-16T07:27:26.826Z level=INFO msg="INFO pushing partial state updateID=fe6928061cb2f14d5cb6e934"
+time=2025-05-16T07:27:29.544Z level=INFO msg="INFO pushing partial state updateID=fe6928061cb2f14d5cb6e934"
+time=2025-05-16T07:27:36.793Z level=INFO msg="INFO pushing partial state updateID=fe6928061cb2f14d5cb6e934"
+time=2025-05-16T07:27:36.876Z level=INFO msg="rpc request" method=POST url=/rpc
+time=2025-05-16T07:27:36.887Z level=INFO msg="rpc request" method=POST url=/rpc
+time=2025-05-16T07:27:36.888Z level=INFO msg="building function" runtime=nodejs20.x functionID=oeWarmerApsoutheast1Handler
+time=2025-05-16T07:27:36.889Z level=INFO msg="function built" runtime=nodejs20.x functionID=oeWarmerApsoutheast1Handler
+time=2025-05-16T07:27:36.967Z level=INFO msg="rpc request" method=POST url=/rpc
+time=2025-05-16T07:27:37.067Z level=INFO msg="rpc request" method=POST url=/rpc
+time=2025-05-16T07:27:37.316Z level=INFO msg="INFO pushing partial state updateID=fe6928061cb2f14d5cb6e934"
+time=2025-05-16T07:27:38.008Z level=INFO msg="INFO pushing partial state updateID=fe6928061cb2f14d5cb6e934"
+time=2025-05-16T07:29:06.610Z level=INFO msg="INFO pushing partial state updateID=fe6928061cb2f14d5cb6e934"
+time=2025-05-16T07:29:07.134Z level=INFO msg="INFO pushing partial state updateID=fe6928061cb2f14d5cb6e934"
+time=2025-05-16T07:29:07.359Z level=INFO msg="pulumi exited" service=project.run updateID=fe6928061cb2f14d5cb6e934 err=<nil>
+time=2025-05-16T07:29:07.360Z level=INFO msg="eof and exited" service=project.run updateID=fe6928061cb2f14d5cb6e934 eofs=0
+time=2025-05-16T07:29:07.360Z level=INFO msg="eof and exited" service=project.run updateID=fe6928061cb2f14d5cb6e934 eofs=1
+time=2025-05-16T07:29:07.360Z level=INFO msg="breaking out of tail loop" service=project.run updateID=fe6928061cb2f14d5cb6e934
+time=2025-05-16T07:29:07.360Z level=INFO msg="parsing state" service=project.run updateID=fe6928061cb2f14d5cb6e934
+time=2025-05-16T07:29:07.945Z level=INFO msg="INFO pushing partial state updateID=fe6928061cb2f14d5cb6e934"
+time=2025-05-16T07:29:08.454Z level=INFO msg="generating types" root=/root/home/oe/apps/platform
+time=2025-05-16T07:29:08.459Z level=INFO msg="canceling partial" service=project.run updateID=fe6928061cb2f14d5cb6e934
+time=2025-05-16T07:29:08.459Z level=INFO msg="waiting for partial to exit" service=project.run updateID=fe6928061cb2f14d5cb6e934
+time=2025-05-16T07:29:08.555Z level=INFO msg="INFO pushing eventlog updateID=fe6928061cb2f14d5cb6e934"
+time=2025-05-16T07:29:08.555Z level=INFO msg="INFO pushing snapshot updateID=fe6928061cb2f14d5cb6e934"
+time=2025-05-16T07:29:09.198Z level=INFO msg="INFO putting update app=oe stage=production"
+time=2025-05-16T07:29:09.322Z level=INFO msg="done running stack command" service=project.run updateID=fe6928061cb2f14d5cb6e934 resources=62
+time=2025-05-16T07:29:09.327Z level=INFO msg="INFO unlocking app=oe stage=production"
+time=2025-05-16T07:29:09.470Z level=INFO msg="shutting down server" service=server
+time=2025-05-16T07:29:09.470Z level=INFO msg="server done" service=server

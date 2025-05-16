@@ -1,6 +1,7 @@
 import type { SessionPayload } from '#actions/session';
 
-export const accessTokenExpiresIn = 90; // 90 seconds để test - buffer time 60s
+// export const accessTokenExpiresIn = 90; // 90 seconds để test - buffer time 60s
+export const accessTokenExpiresIn = 24 * 60 * 60; // 1 day
 export const refreshTokenExpiresIn = 7 * 24 * 60 * 60; // 7 days
 
 export interface JWT {

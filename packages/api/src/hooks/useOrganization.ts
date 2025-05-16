@@ -44,7 +44,7 @@ export function useGetOrganizationById({ id, init = undefined }: { id?: string; 
 export function useGetOrganizationByDomain(init?: RequestInit) {
   const { host } = getAPIReferrerAndOriginClient();
   const endpointKey = buildUrl({ endpoint: API_ENDPOINT.ADMIN_ORGANIZATIONS, queryParams: { domain: host } });
-  const { data, isLoading, error, mutate } = useSWR(endpointKey, () => getOrgByDomainService(endpointKey, init));
+  const { data, isLoading, error, mutate } = useSWR(endpointKey, () => getOrgByDomainService(undefined, init));
 
   return {
     organizationByDomain: data,
