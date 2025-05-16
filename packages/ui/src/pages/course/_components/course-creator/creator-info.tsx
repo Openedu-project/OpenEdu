@@ -1,24 +1,26 @@
 import type { IUserProfile } from '@oe/api';
 import { abbreviateNumber } from '@oe/core';
+import { useTranslations } from 'next-intl';
 
 // const HTTP_REGEX = /^(https?:\/\/)/;
 // const HTTP_PREFIX = 'https://';
 
 export function CreatorInfor({ creatorData }: { creatorData: IUserProfile }) {
   // const props = getFilteredSocialProps(creatorData?.props as unknown as Record<string, string>);
+  const tCourse = useTranslations('courseOutline.creatorAndColabs');
 
   const stats = [
     {
       value: creatorData.followers,
-      label: creatorData.followers === 1 ? 'Follower' : 'Followers',
+      label: creatorData.followers <= 1 ? tCourse('follower') : tCourse('followers'),
     },
     {
       value: creatorData.total_courses,
-      label: creatorData.total_courses === 1 ? 'Course' : 'Courses',
+      label: creatorData.total_courses <= 1 ? tCourse('course') : tCourse('courses'),
     },
     {
       value: creatorData.total_blogs,
-      label: 'Blog',
+      label: creatorData.total_blogs <= 1 ? tCourse('post') : tCourse('posts'),
     },
   ];
 
@@ -28,7 +30,7 @@ export function CreatorInfor({ creatorData }: { creatorData: IUserProfile }) {
 
       <div className="mcaption-regular14 lg:mcaption-regular16 flex flex-wrap text-primary">
         {stats.map((stat, index) => (
-          <span key={index} className={index < stats.length - 1 ? 'mr-3' : ''}>
+          <span key={`${stat.label}${index}`} className={index < stats.length - 1 ? 'mr-3' : ''}>
             <span className="mcaption-semibold14 lg:mcaption-semibold16">{abbreviateNumber(stat.value)}</span>
             &nbsp;
             {stat.label}

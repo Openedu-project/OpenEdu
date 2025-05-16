@@ -42,10 +42,12 @@ export async function Schedule({
           </div>
 
           <h2 className="mcaption-semibold18 md:mcaption-semibold24 mb-0 flex flex-col justify-center gap-2 align-center align-center lg:flex-row">
-            <Timer className="mx-auto" />
-            &nbsp;
-            <span className="flex items-center">{t('timePeriod')}:</span>
-            <span className="flex items-center text-primary">
+            <div className="flex">
+              <Timer className="mx-auto" />
+              &nbsp;
+            </div>
+            <span className="flex items-center justify-center lg:justify-start">{t('timePeriod')}:</span>
+            <span className="flex items-center justify-center text-primary lg:justify-start">
               {formatDateSlash(Number(currentScheduleData?.start_at ?? Date.now()))}
               &nbsp; -&nbsp;
               {formatDateSlash(Number(currentScheduleData?.end_at ?? Date.now()))}
