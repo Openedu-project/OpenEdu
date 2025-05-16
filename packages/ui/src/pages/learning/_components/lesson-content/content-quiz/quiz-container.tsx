@@ -62,9 +62,9 @@ const QuizContainer = ({
     [QUIZ_STATES.START]: () => (
       <QuizLayout background={background.src} className="flex flex-col">
         <div className="z-10 m-auto flex h-2/3 flex-col items-center justify-between">
-          <h3 className="giant-iheading-bold18 sm:giant-iheading-bold24 lg:giant-iheading-bold44 text-primary uppercase">
+          <div className="giant-iheading-bold18 sm:giant-iheading-bold24 lg:giant-iheading-bold40 text-center text-primary uppercase">
             {tContentQuiz('quizTime')}
-          </h3>
+          </div>
           <Button onClick={onStartQuiz}>{tContentQuiz('start')}</Button>
         </div>
       </QuizLayout>
