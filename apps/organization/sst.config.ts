@@ -3,7 +3,7 @@
 export default $config({
   app(input) {
     return {
-      name: 'org',
+      name: 'orgproduction',
       removal: input?.stage === 'production' ? 'retain' : 'remove',
       // protect: ['production'].includes(input?.stage),
       home: 'aws',
@@ -11,7 +11,7 @@ export default $config({
   },
   // biome-ignore lint/suspicious/useAwait: <explanation>
   async run() {
-    new sst.aws.Nextjs('oeorgtestnet', {
+    new sst.aws.Nextjs('orgproduction', {
       // path: 'apps/organization',
       // router: {
       //   instance: oeTestnetRouter,
