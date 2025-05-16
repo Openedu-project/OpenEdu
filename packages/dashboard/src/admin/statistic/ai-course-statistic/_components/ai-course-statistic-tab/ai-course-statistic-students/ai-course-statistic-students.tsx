@@ -4,10 +4,11 @@ import {
   type IAIEduParamsPayload,
   type IAIEduStatisticLearners,
   type IAIEduStatisticLearnersCourse,
+  useGetAIEduProvinces,
   useGetAIEduStatisticLearners,
 } from '@oe/api';
 import { formatDateSlash } from '@oe/core';
-import { Card, CardContent } from '@oe/ui';
+import { AutocompeteMultiple, Card, CardContent } from '@oe/ui';
 import { Table, Tooltip } from '@oe/ui';
 import type { ColumnDef, Row, TableRef } from '@oe/ui';
 import { useCallback, useMemo, useRef, useState } from 'react';
@@ -22,6 +23,18 @@ export function AICourseStatisticTabStudents({ params, campaignKey }: IAICourseS
   const tableRef = useRef<TableRef<IAIEduStatisticLearners>>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
+  const { dataAIEduProvinces } = useGetAIEduProvinces(campaignKey);
+  const [selectedRegions, setSelectedRegions] = useState<string | string[]>('all');
+
+  const options = useMemo(() => {
+    return [
+      { label: 'Tất cả tỉnh/thành phố', value: 'all' },
+      ...(dataAIEduProvinces?.map(province => ({
+        label: province.label,
+        value: province.label,
+      })) ?? []),
+    ];
+  }, [dataAIEduProvinces]);
 
   const { dataAIEduStatisticLearners } = useGetAIEduStatisticLearners(campaignKey, {
     from_date: fromDate,
@@ -29,6 +42,7 @@ export function AICourseStatisticTabStudents({ params, campaignKey }: IAICourseS
     course_cuids: courseCuids,
     page: currentPage,
     per_page: pageSize,
+    provinces: selectedRegions === 'all' ? undefined : selectedRegions,
   });
 
   const uniqueCourseNames = useMemo(() => {
@@ -119,6 +133,14 @@ export function AICourseStatisticTabStudents({ params, campaignKey }: IAICourseS
           );
         },
       },
+      {
+        header: 'TỈNH/THÀNH PHỐ',
+        accessorKey: 'province',
+        size: 190,
+        className: 'font-medium py-4',
+        enableSorting: true,
+        cell: ({ row }) => row.original.province || '-',
+      },
     ];
 
     const courseColumns = uniqueCourseNames.map((courseName, index) => {
@@ -167,7 +189,30 @@ export function AICourseStatisticTabStudents({ params, campaignKey }: IAICourseS
 
   return (
     <Card>
-      <CardContent className="p-6">
+      <CardContent className="flex flex-col gap-6 p-6">
+        <AutocompeteMultiple
+          options={options}
+          value={options.filter(option =>
+            Array.isArray(selectedRegions) ? selectedRegions.includes(option.value) : option.value === selectedRegions
+          )}
+          minHeightItem={50}
+          onChange={value => {
+            const result: string[] = [];
+            value.map(item => {
+              if (item.value === 'all') {
+                result.push('all');
+              } else {
+                result.push(item.value);
+              }
+            });
+            if (result.includes('all')) {
+              setSelectedRegions('all');
+              return;
+            }
+            setSelectedRegions(result);
+          }}
+        />
+
         <Table
           data={dataAIEduStatisticLearners?.results ?? []}
           columns={columns}
