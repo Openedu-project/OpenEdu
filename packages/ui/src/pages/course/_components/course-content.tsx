@@ -23,7 +23,7 @@ const CourseContent = ({
               ?.map((section, index) => (
                 <AccordionItem className="border-none" key={section.id} value={`section-${section.id}`}>
                   <AccordionTrigger className="giant-iheading-semibold16 rounded-[4px] border-[0.4px] border-primary/10 bg-primary/10 p-3 text-left hover:no-underline data-[state=open]:bg-muted">
-                    {`Section ${index + 1}: ${section.title}`}
+                    {`${t('section')} ${index + 1}: ${section.title}`}
                   </AccordionTrigger>
                   <AccordionContent>
                     <ul className="mcaption-semibold14 space-y-2 text-foreground/60">

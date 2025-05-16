@@ -3,12 +3,18 @@ export const courseOutlineMessages = {
     title: 'Courses',
     lastUpdate: 'Last updated',
     creator: 'Educator',
-
+    section: 'Section',
     courseAchivements: 'What You Will Get From This Course',
     courseContent: 'Course content',
     supportingChannels: 'Supporting channels',
     creatorAndColabs: {
       title: 'Educator & Collabs',
+      follower: 'Follower',
+      followers: 'Followers',
+      course: 'Course',
+      courses: 'Courses',
+      post: 'Post',
+      posts: 'Posts',
     },
 
     thisCourseIncludes: {
