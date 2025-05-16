@@ -3,8 +3,8 @@
 import type { LoginSchemaType } from '#schemas/authSchema';
 import type { IToken } from '#types/auth';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { handleError } from '#utils/error-handling';
 import { postAPI } from '#utils/fetch';
+import type { HTTPError } from '#utils/http-error';
 import { getAPIReferrerAndOriginServer } from '#utils/referrer-origin';
 import { type JWT, getTokenExpiry, parseJwt } from '#utils/session';
 import { type SessionPayload, clearSession, setSessionCookie } from './session';
@@ -39,7 +39,12 @@ export async function loginAction(payload: LoginSchemaType) {
     return data;
   } catch (error) {
     console.error('[Auth.js] Login failed', error);
-    throw handleError(error);
+    return {
+      success: false,
+      error: {
+        message: (error as HTTPError).message,
+      },
+    };
   }
 }
 
