@@ -1,13 +1,13 @@
-"use client";
-import { useGetI18nConfig } from "@oe/api";
-import { languages } from "@oe/i18n";
-import { usePathname, useRouter } from "@oe/i18n";
-import { useLocale } from "next-intl";
-import { useParams } from "next/navigation";
-import { useTransition } from "react";
-import { Selectbox } from "#components/selectbox";
-import { Skeleton } from "#shadcn/skeleton";
-import { cn } from "#utils/cn";
+'use client';
+import { useGetI18nConfig } from '@oe/api';
+import { languages } from '@oe/i18n';
+import { usePathname, useRouter } from '@oe/i18n';
+import { useLocale } from 'next-intl';
+import { useParams } from 'next/navigation';
+import { useTransition } from 'react';
+import { Selectbox } from '#components/selectbox';
+import { Skeleton } from '#shadcn/skeleton';
+import { cn } from '#utils/cn';
 
 type LanguageSwitcherProps = {
   className?: string;
@@ -32,7 +32,7 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
       );
     });
   };
-  if (options.length === 1) {
+  if ((dataI18nConfig?.locales ?? []).length === 1) {
     return null;
   }
 
@@ -42,7 +42,7 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
 
   return (
     <Selectbox
-      options={(dataI18nConfig?.locales ?? []).map((locale) => ({
+      options={(dataI18nConfig?.locales ?? []).map(locale => ({
         id: locale,
         value: locale,
         label: languages[locale],
@@ -50,11 +50,11 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
       value={locale}
       onChange={handleChangeLanguage}
       className={cn(
-        "flex aspect-square h-8 w-8 items-center justify-center rounded-full border-background bg-transparent p-1 text-background capitalize outline-hidden ring-0 ring-offset-0 hover:bg-background/10 hover:text-background focus:border focus:border-background focus:outline-hidden focus:ring-0 focus:ring-offset-0 focus-visible:outline-hidden focus-visible:ring-0 focus-visible:ring-offset-0",
+        'flex aspect-square h-8 w-8 items-center justify-center rounded-full border-background bg-transparent p-1 text-background capitalize outline-hidden ring-0 ring-offset-0 hover:bg-background/10 hover:text-background focus:border focus:border-background focus:outline-hidden focus:ring-0 focus:ring-offset-0 focus-visible:outline-hidden focus-visible:ring-0 focus-visible:ring-offset-0',
         className
       )}
       hasIcon={false}
-      displayValue={(value) => value}
+      displayValue={value => value}
       valueClassName="text-sm"
       disabled={isPending}
     />
