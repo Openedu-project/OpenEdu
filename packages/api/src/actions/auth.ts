@@ -3,38 +3,44 @@
 import type { LoginSchemaType } from '#schemas/authSchema';
 import type { IToken } from '#types/auth';
 import { API_ENDPOINT } from '#utils/endpoints';
+import { handleError } from '#utils/error-handling';
 import { postAPI } from '#utils/fetch';
 import { getAPIReferrerAndOriginServer } from '#utils/referrer-origin';
 import { type JWT, getTokenExpiry, parseJwt } from '#utils/session';
 import { type SessionPayload, clearSession, setSessionCookie } from './session';
 
 export async function loginAction(payload: LoginSchemaType) {
-  const { origin, referrer } = await getAPIReferrerAndOriginServer();
-  const response = await postAPI<IToken, LoginSchemaType>(API_ENDPOINT.AUTH_LOGIN, payload, {
-    headers: {
+  try {
+    const { origin, referrer } = await getAPIReferrerAndOriginServer();
+    const response = await postAPI<IToken, LoginSchemaType>(API_ENDPOINT.AUTH_LOGIN, payload, {
+      headers: {
+        origin,
+        referrer,
+      },
+    });
+    const data = response.data;
+
+    const { accessTokenExpiry, refreshTokenExpiry } = getTokenExpiry();
+    const accessTokenPayload = parseJwt(data.access_token);
+
+    const sessionPayload: SessionPayload = {
+      id: accessTokenPayload.sub,
       origin,
       referrer,
-    },
-  });
-  const data = response.data;
+      accessToken: data.access_token,
+      refreshToken: data.refresh_token,
+      accessTokenExpiry,
+      refreshTokenExpiry,
+      nextPath: payload.next_path,
+    };
 
-  const { accessTokenExpiry, refreshTokenExpiry } = getTokenExpiry();
-  const accessTokenPayload = parseJwt(data.access_token);
+    await setSessionCookie(sessionPayload);
 
-  const sessionPayload: SessionPayload = {
-    id: accessTokenPayload.sub,
-    origin,
-    referrer,
-    accessToken: data.access_token,
-    refreshToken: data.refresh_token,
-    accessTokenExpiry,
-    refreshTokenExpiry,
-    nextPath: payload.next_path,
-  };
-
-  await setSessionCookie(sessionPayload);
-
-  return data;
+    return data;
+  } catch (error) {
+    console.error('[Auth.js] Login failed', error);
+    throw handleError(error);
+  }
 }
 
 export async function logoutAction() {
