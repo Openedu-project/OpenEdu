@@ -1,20 +1,16 @@
-import { fonts } from '@oe/core';
-import '@oe/config/tailwindcss/global.css';
-// import { GoogleAnalytics } from "@next/third-parties/google";
-import { getI18nConfig } from '@oe/api';
-import Favicon from '@oe/assets/images/favicon.png';
-import { DEFAULT_LOCALE, DEFAULT_LOCALES, redirect } from '@oe/i18n';
-import { Provider, Toaster } from '@oe/ui';
-import type { Metadata } from 'next';
-import { hasLocale } from 'next-intl';
-import { NextIntlClientProvider } from 'next-intl';
-import Script from 'next/script';
-import type { ReactNode } from 'react';
+import { fonts } from "@oe/core";
+import "@oe/config/tailwindcss/global.css";
+import Favicon from "@oe/assets/images/favicon.png";
+import { Provider, Toaster } from "@oe/ui";
+import type { Metadata } from "next";
+import { NextIntlClientProvider } from "next-intl";
+import Script from "next/script";
+import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | OpenEdu',
-    default: 'OpenEdu',
+    template: "%s | OpenEdu",
+    default: "OpenEdu",
   },
   icons: {
     icon: Favicon.src,
@@ -35,22 +31,26 @@ export default async function RootLayout({
   children: ReactNode;
   params: Promise<{ locale: string }>;
 }>) {
-  const [{ locale }, i18nConfig] = await Promise.all([params, getI18nConfig()]);
+  const [{ locale }] = await Promise.all([params]);
 
-  console.log('=======================i18nConfig===================', i18nConfig, locale);
+  // console.log('=======================i18nConfig===================', i18nConfig, locale);
 
-  if (!hasLocale(i18nConfig?.locales ?? DEFAULT_LOCALES, locale)) {
-    redirect({ href: '/', locale: DEFAULT_LOCALE });
-  }
+  // if (!hasLocale(i18nConfig?.locales ?? DEFAULT_LOCALES, locale)) {
+  //   redirect({ href: '/', locale: DEFAULT_LOCALE });
+  // }
 
   // setRequestLocale(locale);
 
   const fontVariables = Object.values(fonts)
-    .map(font => font.variable)
-    .join(' ');
+    .map((font) => font.variable)
+    .join(" ");
 
   return (
-    <html lang={locale ?? 'en'} suppressHydrationWarning className={fontVariables}>
+    <html
+      lang={locale ?? "en"}
+      suppressHydrationWarning
+      className={fontVariables}
+    >
       <body className="scrollbar font-primary antialiased">
         <NextIntlClientProvider>
           <Provider>
