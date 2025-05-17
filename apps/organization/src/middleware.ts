@@ -53,7 +53,7 @@ export async function middleware(request: NextRequest) {
         ? { domain: undefined }
         : { domain: process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN }),
     });
-
+    response.headers.set('x-user-url', userUrl);
     return response;
   }
 
