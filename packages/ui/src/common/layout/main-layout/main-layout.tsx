@@ -48,7 +48,7 @@ export async function MainLayout({
                 )}
                 variant="ghost"
                 activeClassName="border-0"
-                prefetch={!item?.href?.includes('news-feed')}
+                prefetch
               >
                 {item.label}
                 {item.version && (
