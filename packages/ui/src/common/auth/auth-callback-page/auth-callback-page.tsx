@@ -48,11 +48,11 @@ export async function AuthCallbackPage() {
     const oauthToken = await encodeJWT(sessionPayload);
     newUrl = new URL(`${originUrlObj.origin}${nextPath ?? ''}`);
     newUrl.searchParams.set('oauth_token', oauthToken);
-    console.log('newUrlnewUrl', newUrl.toString());
   } catch (error) {
     console.error('Social login error:', error);
     newUrl = new URL(`${originUrlObj.origin}/${AUTH_ROUTES.login}?error=socialLoginFailed&next=${nextPath}`);
   }
+  console.log('newUrlnewUrl', newUrl.toString());
   if (newUrl) {
     redirect(newUrl.toString());
   }
