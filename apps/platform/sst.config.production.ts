@@ -34,7 +34,7 @@ export default $config({
       server: {
         architecture: 'arm64',
         memory: '2048 MB',
-        timeout: '30 seconds',
+        timeout: '60 seconds',
         install: ['sharp'],
       },
       assets: {

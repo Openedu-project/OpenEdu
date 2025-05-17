@@ -1,14 +1,5 @@
-import {
-  API_ENDPOINT,
-  type IToken,
-  type SessionPayload,
-  decodeJWT,
-  getReferrerAndOriginForAPIByUserUrl,
-  getTokenExpiry,
-  isTokenExpiringSoon,
-  parseJwt,
-} from '@oe/api';
-import { base64ToJson, isProtectedRoute } from '@oe/core';
+import { API_ENDPOINT, decodeJWT, isTokenExpiringSoon } from '@oe/api';
+import { isProtectedRoute } from '@oe/core';
 import { i18nMiddleware } from '@oe/i18n';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -40,34 +31,19 @@ export async function middleware(request: NextRequest) {
 
   const oauthToken = request.nextUrl.searchParams.get('oauth_token');
   if (oauthToken) {
-    const authToken = base64ToJson(oauthToken);
-    const { access_token, refresh_token } = authToken as unknown as IToken;
     request.nextUrl.pathname = new URL(request.nextUrl).pathname;
     request.nextUrl.searchParams.delete('oauth_token');
     const newRequest = new NextRequest(request.nextUrl, request.clone());
     const response = NextResponse.redirect(newRequest.nextUrl.toString());
-
-    const { origin, referrer } = getReferrerAndOriginForAPIByUserUrl(userUrl);
-    const { accessTokenExpiry, refreshTokenExpiry } = getTokenExpiry();
-    const decodedAccessToken = parseJwt(access_token);
-    const sessionPayload: SessionPayload = {
-      id: decodedAccessToken?.sub || decodedAccessToken?.id,
-      origin: origin,
-      referrer: referrer,
-      accessToken: access_token,
-      refreshToken: refresh_token,
-      accessTokenExpiry: accessTokenExpiry,
-      refreshTokenExpiry: refreshTokenExpiry,
-      nextPath: decodedAccessToken.next_path,
-    };
+    const decodedSession = await decodeJWT(oauthToken);
 
     response.cookies.set({
       name: process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY,
-      value: JSON.stringify(sessionPayload),
+      value: oauthToken,
       httpOnly: true, // Cookie không thể truy cập bằng JavaScript
       secure: process.env.NODE_ENV === 'production', // Chỉ gửi qua HTTPS trong môi trường production
       sameSite: 'strict', // Bảo vệ khỏi tấn công CSRF
-      maxAge: refreshTokenExpiry / 1000,
+      maxAge: (decodedSession?.refreshTokenExpiry ?? 0) / 1000,
       path: '/', // Cookie khả dụng cho toàn bộ trang web,
       ...(process.env.NODE_ENV === 'development'
         ? { domain: undefined }
