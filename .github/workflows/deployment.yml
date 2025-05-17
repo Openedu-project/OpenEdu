@@ -113,10 +113,10 @@ jobs:
           ENV_NAME="${{ env.STAGE_NAME }}"
           
           if [ -f "${{ env.PROJECT_DIR }}/.env.$ENV_NAME" ]; then
-            cp ${{ env.PROJECT_DIR }}/.env.$ENV_NAME ${{ env.PROJECT_DIR }}/.env.production
+            cp ${{ env.PROJECT_DIR }}/.env.$ENV_NAME ${{ env.PROJECT_DIR }}/.env
             
             # Thêm các biến môi trường mật
-            echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> ${{ env.PROJECT_DIR }}/.env.production
+            echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> ${{ env.PROJECT_DIR }}/.env
             echo "DOMAIN_CERT=${{ secrets.DOMAIN_CERT }}" >> ${{ env.PROJECT_DIR }}/.env
           else
             echo "Không tìm thấy file môi trường cho $ENV_NAME trong ${{ env.PROJECT_DIR }}"
@@ -125,5 +125,7 @@ jobs:
 
       - name: Deploy với SST
         working-directory: ${{ env.PROJECT_DIR }}
+        env:
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
         run: |
           pnpm dlx sst deploy --stage ${{ env.STAGE_NAME }} --config sst.config.${{ env.STAGE_NAME }}.ts

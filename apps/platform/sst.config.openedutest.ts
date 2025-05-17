@@ -12,7 +12,7 @@ export default $config({
   // biome-ignore lint/suspicious/useAwait: <explanation>
   async run() {
     const AUTH_SECRET = process.env.AUTH_SECRET || '';
-    console.log('AUTH_SECRET in sst.config.openedutest.ts', AUTH_SECRET);
+    console.log('AUTH_SECRET in sst.config.openedutest.ts', AUTH_SECRET?.length);
     new sst.aws.Nextjs('openedutest', {
       // path: 'apps/platform',
       // router: {
