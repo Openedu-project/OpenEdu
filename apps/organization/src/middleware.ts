@@ -1,6 +1,7 @@
 import { API_ENDPOINT, decodeJWT, isTokenExpiringSoon } from '@oe/api';
 import { isProtectedRoute } from '@oe/core';
 import { i18nMiddleware } from '@oe/i18n';
+import createMiddleware from 'next-intl/middleware';
 import { type NextRequest, NextResponse } from 'next/server';
 
 let isRefreshingToken = false;
@@ -29,8 +30,19 @@ export async function middleware(request: NextRequest) {
   const xOriginalHost = headersList.get('x-original-host');
   const hostHeader = headersList.get('host');
   const userUrl = href.replace(appHost, xForwardedHost || xOriginalHost || hostHeader || '');
-  console.info('🚀 ~ middleware ~ userUrl:', userUrl);
-  const response = i18nMiddleware(request);
+  const isAiOrg = appHost.includes('aigov') || appHost.includes('phocap.ai');
+  console.info('🚀 ~ middleware ~ userUrl:', userUrl, isAiOrg);
+  const response = isAiOrg
+    ? createMiddleware({
+        locales: ['vi'],
+        defaultLocale: 'vi',
+        localeCookie: {
+          name: process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY,
+          maxAge: 60 * 60 * 24 * 365,
+        },
+        localeDetection: false,
+      })(request)
+    : i18nMiddleware(request);
   response.headers.set('x-user-url', userUrl);
 
   return response;

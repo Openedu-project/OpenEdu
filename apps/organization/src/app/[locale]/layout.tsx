@@ -1,4 +1,8 @@
-import { getI18nConfig, getThemeConfigServer } from "@oe/api";
+import {
+  getAPIReferrerAndOrigin,
+  getI18nConfig,
+  getThemeConfigServer,
+} from "@oe/api";
 import { fonts } from "@oe/core";
 import { DEFAULT_LOCALE, DEFAULT_LOCALES, redirect } from "@oe/i18n";
 import { ThemeProvider, getMetadata } from "@oe/themes";
@@ -40,15 +44,21 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
-  const [locale, themeSystem, i18nConfig] = await Promise.all([
-    getLocale(),
+  const [themeSystem, i18nConfig, { host }] = await Promise.all([
     getThemeConfigServer(),
     getI18nConfig(),
+    getAPIReferrerAndOrigin(),
   ]);
   const themeName = themeSystem?.[0]?.value?.activedTheme ?? "vbi";
-  
-  if (!hasLocale(i18nConfig?.locales ?? DEFAULT_LOCALES, locale)) {
-    redirect({ href: "/", locale: DEFAULT_LOCALE });
+  const isAiOrg = host?.includes("aigov") || host?.includes("phocap.ai");
+  const locale = isAiOrg ? "vi" : await getLocale();
+  if (
+    !hasLocale(
+      isAiOrg ? ["vi"] : i18nConfig?.locales ?? DEFAULT_LOCALES,
+      locale
+    )
+  ) {
+    redirect({ href: "/", locale: isAiOrg ? "vi" : DEFAULT_LOCALE });
   }
 
   // setRequestLocale(locale);

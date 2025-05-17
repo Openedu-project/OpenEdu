@@ -122,12 +122,14 @@ export const fetchTranslationFile = async (path: string, fallbackData?: I18nMess
   }
 };
 
-export const getAllTranslations = cache(async (requestedLocale: LanguageCode) => {
+export const getAllTranslations = cache(async (requestedLocale: LanguageCode, isAiOrg?: boolean) => {
   const start = performance.now();
   const i18nConfig = await getI18nConfig();
 
   const files = i18nConfig?.files;
-  const locale = hasLocale(i18nConfig?.locales ?? [], requestedLocale) ? requestedLocale : DEFAULT_LOCALE;
+  const locale = hasLocale(isAiOrg ? ['vi'] : (i18nConfig?.locales ?? []), requestedLocale)
+    ? requestedLocale
+    : DEFAULT_LOCALE;
 
   let translations = messages as I18nMessage | undefined;
   let fallbackTranslations = messages as I18nMessage | undefined;
@@ -136,7 +138,7 @@ export const getAllTranslations = cache(async (requestedLocale: LanguageCode) =>
     return { locale, messages };
   }
 
-  if (locale === DEFAULT_LOCALE) {
+  if (locale === (isAiOrg ? 'vi' : DEFAULT_LOCALE)) {
     translations = await fetchTranslationFile(files[locale as LanguageCode], messages);
   } else {
     [translations, fallbackTranslations] = await Promise.all([

@@ -32,7 +32,9 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
       );
     });
   };
-  if ((dataI18nConfig?.locales ?? []).length === 1) {
+  const host = typeof window !== 'undefined' ? window.location.host : '';
+  const isAiOrg = host?.includes('aigov') || host?.includes('phocap.ai');
+  if ((dataI18nConfig?.locales ?? []).length === 1 || isAiOrg) {
     return null;
   }
 

@@ -17,6 +17,7 @@ const Logo = ({ logo }: { logo?: FileType }) => {
       className="w-[57px] min-w-[57px] p-0 hover:bg-transparent md:w-[172px]"
       variant="ghost"
       activeClassName="border-0"
+      prefetch
     >
       <Image
         src={logo?.url ? logo?.url : mobile ? OpeneduLogoMobile?.src : OpeneduLogo?.src}
