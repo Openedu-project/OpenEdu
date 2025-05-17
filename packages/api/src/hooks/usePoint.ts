@@ -1,12 +1,12 @@
+import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { getMyPointProfileService, postClaimNewPointService } from '#services/point';
 import type { IClaimPointPayload, IMyPointProfileRes } from '#types/point';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 
 export function useGetMyPointProfile(id: string) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.USER_ME_POINT,
     params: { id },
   });

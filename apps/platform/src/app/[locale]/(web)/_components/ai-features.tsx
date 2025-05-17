@@ -1,3 +1,4 @@
+"use client";
 import FeatureBg from "@oe/assets/images/openedu-homepage/ai-features/bg-feature.png";
 import IconChat from "@oe/assets/images/openedu-homepage/ai-features/icon-ai-chat.png";
 import IconSearchEngine from "@oe/assets/images/openedu-homepage/ai-features/icon-ai-search-engine.png";
@@ -9,10 +10,10 @@ import { AI_ROUTES } from "@oe/core";
 import { Link } from "@oe/ui";
 import { Image } from "@oe/ui";
 import { MoveRight } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 
-export async function AIFeatureSection() {
-  const t = await getTranslations("homePageLayout.aiFeatureSection");
+export function AIFeatureSection() {
+  const t = useTranslations("homePageLayout.aiFeatureSection");
   const features = [
     {
       icon: IconChat.src,

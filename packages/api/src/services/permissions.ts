@@ -1,3 +1,4 @@
+import { buildUrl } from '@oe/core';
 import type { IFilter } from '#types/filter';
 import type {
   IPermissionAccessPayload,
@@ -7,7 +8,7 @@ import type {
   IPermissionMyAccessRes,
 } from '#types/permissions';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI, postAPI } from '#utils/fetch';
+import { fetchAPI, postAPI } from '#utils/fetch';
 
 // Permission Page Config
 export async function getPermissionPageConfigService(
@@ -16,7 +17,7 @@ export async function getPermissionPageConfigService(
 ): Promise<IPermissionConfigRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.PAGE_CONFIGS,
       queryParams: {
         ...params,
@@ -53,7 +54,7 @@ export async function getPermissionAccessService(
 ): Promise<IPermissionAccessRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.PAGE_ACCESSES,
       queryParams: {
         ...params,
@@ -75,7 +76,7 @@ export async function getPermissionMyAccessService(
 ): Promise<IPermissionMyAccessRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.USERS_ME_PERMISSIONS,
       queryParams: {
         ...params,

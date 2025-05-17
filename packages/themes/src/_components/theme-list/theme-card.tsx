@@ -1,6 +1,5 @@
 'use client';
-import { createAPIUrl } from '@oe/api';
-import { ADMIN_ROUTES } from '@oe/core';
+import { ADMIN_ROUTES, buildUrl } from '@oe/core';
 import { Badge } from '@oe/ui';
 import { Button } from '@oe/ui';
 import { Link } from '@oe/ui';
@@ -93,7 +92,7 @@ export const ThemeCard = ({
             <div className="flex w-full justify-between gap-2">
               <Button className="w-full">
                 <Link
-                  href={createAPIUrl({
+                  href={buildUrl({
                     endpoint: ADMIN_ROUTES.themeConfig,
                     params: {
                       themeName: name,
@@ -101,7 +100,6 @@ export const ThemeCard = ({
                       groupSettingKey: undefined,
                       itemSettingKey: undefined,
                     },
-                    checkEmptyParams: true,
                   })}
                   className="text-accent hover:no-underline"
                 >

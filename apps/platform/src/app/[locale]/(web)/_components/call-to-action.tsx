@@ -1,3 +1,4 @@
+"use client";
 import BannerJouney from "@oe/assets/images/openedu-homepage/banner-journey.png";
 import { PLATFORM_ROUTES } from "@oe/core";
 import { Button } from "@oe/ui";

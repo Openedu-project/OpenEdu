@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import type { IAIEduCourseItem, IAIEduParamsPayload } from '@oe/api';
-import { convertToTimeStamp } from '@oe/core';
-import { AutocompeteMultiple, Card, CardContent } from '@oe/ui';
-import { DateTimePicker } from 'node_modules/@oe/ui/src/components/date-time-picker/date-time-picker';
-import { AICourseStatisticExportButton } from './ai-course-statistic-export';
+import type { IAIEduCourseItem, IAIEduParamsPayload } from "@oe/api";
+import { convertToTimeStamp } from "@oe/core";
+import { AutocompeteMultiple, Card, CardContent } from "@oe/ui";
+import { DateTimePicker } from "@oe/ui";
+import { AICourseStatisticExportButton } from "./ai-course-statistic-export";
 
 interface IAICourseStatisticFilterProps {
   startDate: number;
@@ -29,10 +29,10 @@ export function AICourseStatisticFilter({
   setCourseCuid,
 }: IAICourseStatisticFilterProps) {
   const options = [
-    { label: 'Tất cả khóa học', value: 'all' },
-    ...courseList.map(course => ({
+    { label: "Tất cả khóa học", value: "all" },
+    ...courseList.map((course) => ({
       label: course.name,
-      value: course.course_cuid ?? '',
+      value: course.course_cuid ?? "",
     })),
   ];
   return (
@@ -47,7 +47,9 @@ export function AICourseStatisticFilter({
                 </label>
                 <DateTimePicker
                   value={new Date(startDate)}
-                  onChange={date => setStartDate(convertToTimeStamp(date.toString()))}
+                  onChange={(date) =>
+                    setStartDate(convertToTimeStamp(date.toString()))
+                  }
                 />
               </div>
               <div className="space-y-2">
@@ -56,7 +58,9 @@ export function AICourseStatisticFilter({
                 </label>
                 <DateTimePicker
                   value={new Date(endDate)}
-                  onChange={date => setEndDate(convertToTimeStamp(date.toString()))}
+                  onChange={(date) =>
+                    setEndDate(convertToTimeStamp(date.toString()))
+                  }
                 />
               </div>
             </div>
@@ -66,21 +70,23 @@ export function AICourseStatisticFilter({
               </label>
               <AutocompeteMultiple
                 options={options}
-                value={options.filter(option =>
-                  Array.isArray(courseCuid) ? courseCuid.includes(option.value) : option.value === courseCuid
+                value={options.filter((option) =>
+                  Array.isArray(courseCuid)
+                    ? courseCuid.includes(option.value)
+                    : option.value === courseCuid
                 )}
                 minHeightItem={50}
-                onChange={value => {
+                onChange={(value) => {
                   const result: string[] = [];
-                  value.map(item => {
-                    if (item.value === 'all') {
-                      result.push('all');
+                  value.map((item) => {
+                    if (item.value === "all") {
+                      result.push("all");
                     } else {
                       result.push(item.value);
                     }
                   });
-                  if (result.includes('all')) {
-                    setCourseCuid('all');
+                  if (result.includes("all")) {
+                    setCourseCuid("all");
                     return;
                   }
                   setCourseCuid(result);
@@ -113,7 +119,10 @@ export function AICourseStatisticFilter({
               </Select> */}
             </div>
           </div>
-          <AICourseStatisticExportButton params={params} campaignKey={campaignKey} />
+          <AICourseStatisticExportButton
+            params={params}
+            campaignKey={campaignKey}
+          />
         </div>
       </CardContent>
     </Card>

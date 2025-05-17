@@ -1,33 +1,31 @@
+"use client";
 import type { IBlog } from "@oe/api";
 import {
-  getOrgByDomainService,
-  getPopularBlogsServicesAtWebsite,
+  useGetOrganizationByDomain,
+  useGetPopularBlogsAtWebsite,
 } from "@oe/api";
-import { BLOG_ROUTES, buildUrl, formatDate, getCookie } from "@oe/core";
+import { BLOG_ROUTES, buildUrl, formatDate } from "@oe/core";
 import { Link } from "@oe/ui";
 import { Image } from "@oe/ui";
 import { ArrowRight } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 
-export async function BlogsSection() {
-  const domain =
-    (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? "";
-  const [orgData] = await Promise.all([
-    getOrgByDomainService(undefined, {
-      domain: domain?.split("/")?.[0] ?? domain,
-    }),
-  ]);
-  const [t, blogsData] = await Promise.all([
-    await getTranslations("homePageLayout.blogsSection"),
-    getPopularBlogsServicesAtWebsite(undefined, {
-      params: { org_id: orgData?.domain ?? orgData?.alt_domain ?? "" },
-    }),
-  ]);
+export function BlogsSection() {
+  const t = useTranslations("homePageLayout.blogsSection");
+  const { organizationByDomain } = useGetOrganizationByDomain();
+  const { dataPopularBlogs } = useGetPopularBlogsAtWebsite({
+    params: {
+      org_id:
+        organizationByDomain?.domain ?? organizationByDomain?.alt_domain ?? "",
+    },
+  });
 
-  const featuredPost = blogsData?.[0]?.entity as IBlog;
-  const restPost = blogsData?.splice(1, 3)?.map((b) => b?.entity) as IBlog[];
+  const featuredPost = dataPopularBlogs?.[0]?.entity as IBlog;
+  const restPost = dataPopularBlogs
+    ?.splice(1, 3)
+    ?.map((b) => b?.entity) as IBlog[];
 
-  return (blogsData?.length ?? 0) > 0 ? (
+  return (dataPopularBlogs?.length ?? 0) > 0 ? (
     <section className="container mx-auto px-0 md:px-4">
       {/* Header */}
       <div className="mb-4 text-center lg:mb-10">
@@ -51,7 +49,10 @@ export async function BlogsSection() {
         {/* Featured Post */}
         <div className="rounded-2xl bg-white p-4 shadow-[0px_4px_30px_0px_rgba(175,175,175,0.20)] md:p-6">
           <Link
-            href={buildUrl({endpoint: BLOG_ROUTES.blogDetail, params: {slug: featuredPost?.id}})}
+            href={buildUrl({
+              endpoint: BLOG_ROUTES.blogDetail,
+              params: { slug: featuredPost?.id },
+            })}
             className="flex h-full flex-col items-start justify-start gap-6 whitespace-break-spaces p-0 text-black no-underline hover:no-underline"
           >
             <div className="h-[152px] w-full overflow-hidden rounded-2xl md:h-[270px]">
@@ -106,7 +107,10 @@ export async function BlogsSection() {
               className="group rounded-2xl bg-white shadow-[0px_4px_30px_0px_rgba(175,175,175,0.20)] "
             >
               <Link
-                href={buildUrl({endpoint: BLOG_ROUTES.blogDetail, params: {slug: post?.id}})}
+                href={buildUrl({
+                  endpoint: BLOG_ROUTES.blogDetail,
+                  params: { slug: post?.id },
+                })}
                 className="flex h-auto flex-col items-start gap-6 whitespace-break-spaces p-4 text-black no-underline hover:no-underline md:flex-row md:items-center"
               >
                 <div className="h-[152px] w-full overflow-hidden rounded-2xl md:w-[260px]">

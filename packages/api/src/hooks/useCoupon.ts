@@ -1,3 +1,4 @@
+import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import {
@@ -12,10 +13,9 @@ import {
 import type { ICouponItemRes, ICouponPayload, IUseCouponPayload } from '#types/coupon';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 
 export function useGetPlatformCouponList({ params }: { params: IFilter }) {
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.COUPONS, queryParams: { ...params } });
+  const endpointKey = buildUrl({ endpoint: API_ENDPOINT.COUPONS, queryParams: { ...params } });
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
     getPlatformCouponListService(endpoint, { params })
   );
@@ -29,7 +29,7 @@ export function useGetPlatformCouponList({ params }: { params: IFilter }) {
 }
 
 export function useGetAdminCouponList({ params }: { params: IFilter }) {
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.ADMIN_COUPONS, queryParams: { ...params } });
+  const endpointKey = buildUrl({ endpoint: API_ENDPOINT.ADMIN_COUPONS, queryParams: { ...params } });
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
     getAdminCouponListService(endpoint, { params })
   );
@@ -43,7 +43,7 @@ export function useGetAdminCouponList({ params }: { params: IFilter }) {
 }
 
 export function useGetCouponDetail({ params }: { params: { id: string } }) {
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.COUPONS_ID, params: { ...params } });
+  const endpointKey = buildUrl({ endpoint: API_ENDPOINT.COUPONS_ID, params: { ...params } });
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
     getCouponDetailService(endpoint, { params })
   );
@@ -71,7 +71,7 @@ export const usePutCoupon = () => {
     API_ENDPOINT.COUPONS_ID,
     async (_endpoint: string, { arg }: { arg: ICouponPayload }): Promise<ICouponItemRes> =>
       putCouponService(
-        createAPIUrl({
+        buildUrl({
           endpoint: API_ENDPOINT.COUPONS_ID,
           params: {
             id: arg.id,

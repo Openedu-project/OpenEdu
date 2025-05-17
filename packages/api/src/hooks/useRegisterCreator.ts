@@ -1,10 +1,10 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
+import { buildUrl } from '@oe/core';
 import { getFormRegisterCreatorService, putRejectRegisterCreatorService } from '#services/register-creator';
 import type { IRejectFormRegisterCreatorPayload, IRejectFormRegisterCreatorRes } from '#types/form';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 
 export function useGetFormRegisterCreator() {
   const { data, isLoading, error, mutate } = useSWR(API_ENDPOINT.FORMS_REGISTER_CREATOR, (endpoint: string) =>
@@ -20,7 +20,7 @@ export function useGetFormRegisterCreator() {
 }
 
 export function useRejectRegisterCreator(id: string) {
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.FORM_SESSIONS_ID_REJECT, params: { id } });
+  const endpointKey = buildUrl({ endpoint: API_ENDPOINT.FORM_SESSIONS_ID_REJECT, params: { id } });
   const { trigger, isMutating, error } = useSWRMutation(
     endpointKey,
     async (

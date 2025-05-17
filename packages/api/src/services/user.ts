@@ -1,7 +1,8 @@
+import { buildUrl } from '@oe/core';
 import type { IFilter } from '#types/filter';
 import type { IListUserProfileRes, IUserProfile } from '#types/user-profile';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { type FetchOptions, createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
+import { type FetchOptions, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 import type {
   IAcceptUserInvitePayload,
   IAcceptUserInviteRes,
@@ -19,7 +20,7 @@ export async function getUserProfileService(
 ): Promise<IUserProfile | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.USERS_ID,
       params: {
         id,
@@ -40,7 +41,7 @@ export async function getListUserService(
 ): Promise<IUsersRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.USERS,
       queryParams: {
         ...params,
@@ -102,7 +103,7 @@ export async function getTopAuthorService(
 ): Promise<IListUserProfileRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.USERS_TOP_BLOG_VIEWED,
       queryParams: {
         ...params,
@@ -124,7 +125,7 @@ export async function getUserInvitationsListService(
 ): Promise<IUserInvitationRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.USER_INVITATIONS,
       queryParams: {
         ...params,
@@ -173,8 +174,9 @@ export const followUserService = async (
   id?: string,
   { payload, init }: { payload?: Record<string, unknown>; init?: RequestInit } = {}
 ) => {
-  const endpointKey = endpoint ?? createAPIUrl({ endpoint: API_ENDPOINT.USERS_ID_FOLLOW, params: { id } });
-  const response = type === 'follow' ? await postAPI(endpointKey, payload, init) : await deleteAPI(endpointKey, init);
+  const endpointKey = endpoint ?? buildUrl({ endpoint: API_ENDPOINT.USERS_ID_FOLLOW, params: { id } });
+  const response =
+    type === 'follow' ? await postAPI(endpointKey, payload, init) : await deleteAPI(endpointKey, undefined, init);
 
   return response.data;
 };

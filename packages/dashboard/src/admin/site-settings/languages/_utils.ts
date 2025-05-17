@@ -102,9 +102,7 @@ export const handleSaveI18nConfig = async ({
   });
 
   setId(response?.id);
-  setCookie(process.env.NEXT_PUBLIC_COOKIE_LOCALES_KEY, localeValues);
   setCookie(process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY, locale);
-  setCookie(process.env.NEXT_PUBLIC_COOKIE_LOCALE_FILES_KEY, JSON.stringify(files));
 };
 
 export const getUrls = ({

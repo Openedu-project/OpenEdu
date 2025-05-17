@@ -1,9 +1,8 @@
 'use client';
 import type { IEnrollCoursePayload } from '@oe/api';
 import { usePostEnrollCourse } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
 import { useGetMe } from '@oe/api';
-import { AUTH_ROUTES, PLATFORM_ROUTES } from '@oe/core';
+import { AUTH_ROUTES, PLATFORM_ROUTES, buildUrl } from '@oe/core';
 import { getCookieClient, setCookieClient } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { type ReadonlyURLSearchParams, useParams, useSearchParams } from 'next/navigation';
@@ -138,7 +137,7 @@ const ACTION_HANDLERS: Record<ActionType, ActionHandler> = {
   },
   [ACTION_TYPES.PAY_NOT_PAID]: {
     handle: ({ courseData, isExternalDomain, domain, router }) => {
-      const paymentUrl = createAPIUrl({
+      const paymentUrl = buildUrl({
         endpoint: PLATFORM_ROUTES.payment,
         params: { slug: courseData.slug ?? '' },
       });

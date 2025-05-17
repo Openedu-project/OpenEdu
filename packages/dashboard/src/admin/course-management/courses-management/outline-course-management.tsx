@@ -6,9 +6,8 @@ import type { ICoursePublished, IEnableCourseRequest } from '@oe/api';
 import { usePutEnableCourse } from '@oe/api';
 import { useGetOrganizationByDomain } from '@oe/api';
 import type { IPagination } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
 import type { HTTPErrorMetadata } from '@oe/api';
-import { formatDateHourMinute } from '@oe/core';
+import { buildUrl, formatDateHourMinute } from '@oe/core';
 import { PLATFORM_ROUTES } from '@oe/core';
 import { formatPrice } from '@oe/core';
 import { toast } from '@oe/ui';
@@ -76,7 +75,7 @@ export function OutlineCourseManagement({ isOpenEdu }: { isOpenEdu: boolean }) {
 
           return (
             <Link
-              href={`https://${item.org_domain}${createAPIUrl({
+              href={`https://${item.org_domain}${buildUrl({
                 endpoint: PLATFORM_ROUTES.previewCourse,
                 params: {
                   courseId: item.course_id,
@@ -100,7 +99,7 @@ export function OutlineCourseManagement({ isOpenEdu }: { isOpenEdu: boolean }) {
           return (
             <BadgeCourseVerion
               version={item.version}
-              link={`https://${item.org_domain}${createAPIUrl({
+              link={`https://${item.org_domain}${buildUrl({
                 endpoint: PLATFORM_ROUTES.previewCourse,
                 params: {
                   courseId: item.course_id,

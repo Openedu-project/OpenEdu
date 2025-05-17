@@ -1,5 +1,4 @@
-import { createAPIUrl } from '@oe/api';
-import { CREATOR_ROUTES } from '@oe/core';
+import { CREATOR_ROUTES, buildUrl } from '@oe/core';
 import { Link } from '@oe/ui';
 import { Image } from '@oe/ui';
 import { Card, CardContent } from '@oe/ui';
@@ -18,7 +17,7 @@ export const CreatorLaunchpadCard = ({ id, title, creator, date, thumbnail }: Cr
   return (
     <Link
       className="block h-full p-0 hover:no-underline"
-      href={createAPIUrl({
+      href={buildUrl({
         endpoint: CREATOR_ROUTES.creatorLaunchpadDetail,
         params: { id },
       })}

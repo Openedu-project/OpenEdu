@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation';
 
 export async function AuthCallbackPage() {
   const headersList = await headers();
-  const url = headersList.get('x-url');
+  const url = headersList.get('x-user-url');
   const queryParams = url ? new URL(url).searchParams : null;
   const state = queryParams?.get('state');
   const code = queryParams?.get('code');

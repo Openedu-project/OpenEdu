@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 import type { ICourseOutline } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
 import { useGetMe } from '@oe/api';
 import type { IWallet } from '@oe/api';
 import { useGetShareRateByCode } from '@oe/api';
@@ -12,7 +11,7 @@ import { ASSET_TYPES, CHAIN, FIAT_CURRENCIES, SUPPORTED_EXCHANGE_RATES } from '@
 import type { IOrderRes } from '@oe/api';
 import { useCreateOrder, useOrderChangeMethod, useOrderPaymentStatus, useOrderPaymentSuccess } from '@oe/api';
 import { useGetPaymentMethodList } from '@oe/api';
-import { PLATFORM_ROUTES } from '@oe/core';
+import { PLATFORM_ROUTES, buildUrl } from '@oe/core';
 import { getCookieClient } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useParams, useRouter } from 'next/navigation';
@@ -136,14 +135,14 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
       resetSocketData('payment');
       if (isSuccess) {
         router.push(
-          createAPIUrl({
+          buildUrl({
             endpoint: PLATFORM_ROUTES.paymentSuccess,
             params: { slug },
           })
         );
       } else {
         router.push(
-          createAPIUrl({
+          buildUrl({
             endpoint: PLATFORM_ROUTES.paymentFailed,
             params: { slug },
           })
@@ -301,7 +300,7 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
         payment_method_id: dataPaymentMethodList?.results?.[0]?.id ?? '',
       });
       router.push(
-        createAPIUrl({
+        buildUrl({
           endpoint: PLATFORM_ROUTES.paymentSuccess,
           params: { slug },
         })
@@ -326,7 +325,7 @@ const PaymentPage = ({ courseData }: { courseData: ICourseOutline }) => {
 
       if (res && res.status === 'success') {
         router.push(
-          createAPIUrl({
+          buildUrl({
             endpoint: PLATFORM_ROUTES.paymentSuccess,
             params: { slug },
           })

@@ -122,16 +122,14 @@ export function getNextConfig(config: NextConfig = {}): NextConfig {
     // outputFileTracingRoot: join(__dirname, '../../'),
     experimental: {
       ppr: 'incremental',
-      serverActions: {
-        allowedOrigins: ['openedu.com', '*.openedu.com'],
-        bodySizeLimit: '4mb',
-      },
       optimizePackageImports: [
         ...internalPackages,
         ...externalPackages,
         ...(config.experimental?.optimizePackageImports ?? []),
       ],
-      optimizeServerReact: true,
+      // optimizeServerReact: true,
+      inlineCss: true,
+      reactCompiler: true,
       ...config.experimental,
     },
     serverExternalPackages: ['sharp'],
@@ -155,7 +153,7 @@ export function getNextConfig(config: NextConfig = {}): NextConfig {
         },
         ...imageRemotePatterns,
       ],
-      minimumCacheTTL: 86400, // 1 day
+      minimumCacheTTL: 31536000,
       deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
       imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
       ...config.images,

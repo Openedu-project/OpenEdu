@@ -10,7 +10,6 @@ export * from './certificate';
 export * from './certificate-nft';
 export * from './commission';
 export * from './conversation';
-export * from './cookies';
 export * from './coupon';
 export * from './course';
 export * from './course-campaign';

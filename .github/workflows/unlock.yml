@@ -1,0 +1,78 @@
+# .github/workflows/unlock.yml
+name: Unlock SST Resources
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: 'Chọn môi trường cần unlock'
+        required: true
+        options:
+          - openedu101dev
+          - org_openedu101dev
+          - openedudev
+          - org_openedudev
+          - openedutest
+          - org_openedutest
+          - production
+          - org_production
+
+run-name: Unlock SST resources for ${{ inputs.environment }}
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  Unlock:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Thiết lập thư mục dự án
+        run: |
+          if [[ "${{ github.event.inputs.environment }}" == org_* ]]; then
+            echo "PROJECT_DIR=apps/organization" >> $GITHUB_ENV
+          else
+            echo "PROJECT_DIR=apps/platform" >> $GITHUB_ENV
+          fi
+
+      - name: Thiết lập tên stage
+        run: |
+          ENV_NAME="${{ github.event.inputs.environment }}"
+          if [[ "$ENV_NAME" == org_* ]]; then
+            STAGE_NAME="${ENV_NAME#org_}"
+          else
+            STAGE_NAME="$ENV_NAME"
+          fi
+          echo "STAGE_NAME=$STAGE_NAME" >> $GITHUB_ENV
+
+      - name: Cấu hình AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME_ARN }}
+          role-session-name: ${{ github.run_id }}
+
+      - name: Cài đặt Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: pnpm/action-setup@v4
+        name: Cài đặt pnpm
+        with:
+          run_install: false
+
+      - name: Cài đặt dependencies
+        run: pnpm install
+
+      - name: Unlock SST resources
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          pnpm dlx sst unlock --stage ${{ env.STAGE_NAME }} --config sst.config.${{ env.STAGE_NAME }}.ts

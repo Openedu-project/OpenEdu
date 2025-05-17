@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 
 export async function SocialLoginPage() {
   const headersList = await headers();
-  const url = headersList.get('x-url');
+  const url = headersList.get('x-user-url');
   const queryParams = url ? new URL(url).searchParams : null;
   const referrer = queryParams?.get('referrer');
   const provider = queryParams?.get('provider');

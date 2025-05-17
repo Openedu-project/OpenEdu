@@ -1,6 +1,7 @@
+import { buildUrl } from '@oe/core';
 import type { IBookmark, IBookmarkRequest } from '#types/bookmark';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, deleteAPI, postAPI } from '#utils/fetch';
+import { deleteAPI, postAPI } from '#utils/fetch';
 
 export const postBookmarkService = async (
   endpoint: string | null | undefined,
@@ -8,7 +9,7 @@ export const postBookmarkService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.BOOKMARKS,
     });
   }
@@ -24,14 +25,14 @@ export const removeBookmarkService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.BOOKMARKS_ID,
       params: {
         id: payload.id,
       },
     });
   }
-  const response = await deleteAPI(endpointKey, init);
+  const response = await deleteAPI(endpointKey, undefined, init);
 
   return response.data;
 };

@@ -6,10 +6,9 @@ import { Badge } from '@oe/ui';
 
 import { API_ENDPOINT } from '@oe/api';
 import type { ICourse } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
 import type { HTTPErrorMetadata } from '@oe/api';
 import type { ICourseOrganizationRequestProps } from '@oe/api';
-import { PLATFORM_ROUTES } from '@oe/core';
+import { PLATFORM_ROUTES, buildUrl } from '@oe/core';
 import { formatDate } from '@oe/core';
 import { toast } from '@oe/ui';
 import { Link } from '@oe/ui';
@@ -109,7 +108,7 @@ export function CourseRequests() {
           const item = row.original;
           return (
             <Link
-              href={`https://${item?.org?.domain}${createAPIUrl({
+              href={`https://${item?.org?.domain}${buildUrl({
                 endpoint: PLATFORM_ROUTES.previewCourse,
                 params: {
                   courseId: item.entity_id,
@@ -144,7 +143,7 @@ export function CourseRequests() {
               version={item?.props?.pre_version}
               link={
                 item?.props?.pre_id
-                  ? `https://${item?.org?.domain}${createAPIUrl({
+                  ? `https://${item?.org?.domain}${buildUrl({
                       endpoint: PLATFORM_ROUTES.previewCourse,
                       params: {
                         courseId: item.props?.pre_id,
@@ -165,7 +164,7 @@ export function CourseRequests() {
           return (
             <BadgeCourseVerion
               version={item?.entity?.version}
-              link={`https://${item?.org?.domain}${createAPIUrl({
+              link={`https://${item?.org?.domain}${buildUrl({
                 endpoint: PLATFORM_ROUTES.previewCourse,
                 params: {
                   courseId: item.entity_id,

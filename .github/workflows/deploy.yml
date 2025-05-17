@@ -11,6 +11,7 @@ on:
           - openedu101dev
           - org_openedu101dev
           - openedudev
+          - org_openedudev
           - openedutest
           - org_openedutest
           - production

@@ -1,3 +1,4 @@
+import { buildUrl } from '@oe/core';
 import type {
   IAcceptInvitePayload,
   ICreator,
@@ -10,7 +11,7 @@ import type {
 } from '#types/creators';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, deleteAPI, fetchAPI, postAPI } from '#utils/fetch';
+import { deleteAPI, fetchAPI, postAPI } from '#utils/fetch';
 
 export async function getListCreatorService(
   url: string,
@@ -18,7 +19,7 @@ export async function getListCreatorService(
 ): Promise<ICreatorListResponse | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.ADMIN_CREATORS,
       queryParams: {
         ...params,
@@ -76,7 +77,7 @@ export async function deleteCreatorService(
 ): Promise<ICreatorResponse | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.ADMIN_CREATORS,
       queryParams: {
         ...payload,

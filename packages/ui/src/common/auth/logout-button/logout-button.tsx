@@ -1,45 +1,29 @@
 'use client';
 
-import { LogOut } from 'lucide-react';
-import { mutate } from 'swr';
-
-import { setCookiesService } from '@oe/api';
+import { API_ENDPOINT } from '@oe/api';
+import { logoutAction } from '@oe/api';
 import { resetAllStores } from '@oe/core';
+import { LogOut } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { mutate } from 'swr';
 import { Button } from '#shadcn/button';
 import { toast } from '#shadcn/sonner';
 
 export function LogoutButton() {
   const tToast = useTranslations('toast');
   const tAuth = useTranslations('auth');
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const nextPath = searchParams.get('next') ?? '/';
+  // const router = useRouter();
+  // const searchParams = useSearchParams();
+  // const nextPath = searchParams.get("next") ?? "/";
 
   const handleLogout = async () => {
     try {
+      await logoutAction();
+      await Promise.all([mutate(API_ENDPOINT.USERS_ME), mutate(() => true, undefined, { revalidate: false })]);
       resetAllStores();
       toast.success(tToast('logoutSuccess'));
-      await mutate(() => true, undefined, { revalidate: false });
-      await setCookiesService(typeof window !== 'undefined' ? window.location.origin : '', [
-        {
-          key: process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY,
-          value: '',
-          options: {
-            maxAge: 0,
-          },
-        },
-        {
-          key: process.env.NEXT_PUBLIC_COOKIE_REFRESH_TOKEN_KEY,
-          value: '',
-          options: {
-            maxAge: 0,
-          },
-        },
-      ]);
-      router.replace(nextPath);
-      router.refresh();
+      // router.replace(nextPath);
+      // router.refresh();
     } catch (error) {
       console.error(error);
       toast.error(tToast('logoutError'));

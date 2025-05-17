@@ -1,24 +1,23 @@
-'use client';
-import { createAICourseService } from '@oe/api';
-import type { ICourse } from '@oe/api';
-import { type ICreateAICourseOutline, courseOutlineSchema } from '@oe/api';
-import { CREATOR_ROUTES } from '@oe/core';
-import { getCookieClient } from '@oe/core';
-import { buildUrl } from '@oe/core';
-import { GENERATING_STATUS } from '@oe/core';
-import { toast } from '@oe/ui';
-import { Uploader } from '@oe/ui';
-import { Button } from '@oe/ui';
-import { useRouter } from '@oe/ui';
-import { FormWrapper } from '@oe/ui';
-import { InputNumber } from '@oe/ui';
-import { SelectLanguage } from '@oe/ui';
-import { Textarea } from '@oe/ui';
-import { useTranslations } from 'next-intl';
-import { useMemo } from 'react';
-import { DurationField } from './form-field/duration-field';
-import { CourseFormField } from './form-field/form-field';
-import { LevelField } from './form-field/level-field';
+"use client";
+import { createAICourseService } from "@oe/api";
+import type { ICourse } from "@oe/api";
+import { type ICreateAICourseOutline, courseOutlineSchema } from "@oe/api";
+import { CREATOR_ROUTES } from "@oe/core";
+import { buildUrl } from "@oe/core";
+import { GENERATING_STATUS } from "@oe/core";
+import { toast } from "@oe/ui";
+import { Uploader } from "@oe/ui";
+import { Button } from "@oe/ui";
+import { useRouter } from "@oe/ui";
+import { FormWrapper } from "@oe/ui";
+import { InputNumber } from "@oe/ui";
+import { SelectLanguage } from "@oe/ui";
+import { Textarea } from "@oe/ui";
+import { useLocale, useTranslations } from "next-intl";
+import { useMemo } from "react";
+import { DurationField } from "./form-field/duration-field";
+import { CourseFormField } from "./form-field/form-field";
+import { LevelField } from "./form-field/level-field";
 
 export function CourseOutlineForm({
   className,
@@ -27,40 +26,43 @@ export function CourseOutlineForm({
   className?: string;
   course: ICourse | null;
 }) {
-  const tAICourseForm = useTranslations('course.aiCourse');
-  const tGeneral = useTranslations('general');
+  const tAICourseForm = useTranslations("course.aiCourse");
+  const tGeneral = useTranslations("general");
+  const locale = useLocale();
 
   const router = useRouter();
 
-  const generating = useMemo(() => GENERATING_STATUS.includes(course?.ai_course?.general_info_status ?? ''), [course]);
+  const generating = useMemo(
+    () =>
+      GENERATING_STATUS.includes(course?.ai_course?.general_info_status ?? ""),
+    [course]
+  );
 
   const defaultValues = useMemo(() => {
-    const locale = getCookieClient(process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY) ?? 'en';
-
     if (course) {
       const { ai_course } = course;
       return {
-        learner_info: ai_course?.learner_info ?? '',
-        content_info: ai_course?.content_info ?? '',
-        level_id: ai_course?.level_id ?? '',
+        learner_info: ai_course?.learner_info ?? "",
+        content_info: ai_course?.content_info ?? "",
+        level_id: ai_course?.level_id ?? "",
         language: ai_course?.language ?? locale,
         duration: ai_course?.duration ?? 1,
-        duration_type: ai_course?.duration_type ?? 'day',
+        duration_type: ai_course?.duration_type ?? "day",
         study_load: ai_course?.study_load ?? 1,
         material_file: ai_course?.material,
       };
     }
 
     return {
-      learner_info: '',
-      content_info: '',
-      level_id: '',
+      learner_info: "",
+      content_info: "",
+      level_id: "",
       language: locale,
       duration: 1,
-      duration_type: 'day' as ICreateAICourseOutline['duration_type'],
+      duration_type: "day" as ICreateAICourseOutline["duration_type"],
       study_load: 1,
     };
-  }, [course]);
+  }, [course, locale]);
 
   const onSubmit = async (data: ICreateAICourseOutline) => {
     const { material_file, ...base } = data;
@@ -70,8 +72,8 @@ export function CourseOutlineForm({
         ...base,
         course_cuid: course?.ai_course?.course_cuid,
         material_id: material_file?.id,
-        current_step: 'learner_description_generate',
-        type: 'learner_description',
+        current_step: "learner_description_generate",
+        type: "learner_description",
       });
       router.push(
         buildUrl({
@@ -80,7 +82,7 @@ export function CourseOutlineForm({
         })
       );
     } catch {
-      toast.error(tAICourseForm('aiCreateError'));
+      toast.error(tAICourseForm("aiCreateError"));
     }
   };
 
@@ -94,17 +96,25 @@ export function CourseOutlineForm({
     >
       {({ form }) => (
         <>
-          <CourseFormField name="learner_info" label={tAICourseForm('learnerInfo')} required>
+          <CourseFormField
+            name="learner_info"
+            label={tAICourseForm("learnerInfo")}
+            required
+          >
             <Textarea rows={8} className="scrollbar" />
           </CourseFormField>
 
-          <CourseFormField name="content_info" label={tAICourseForm('courseContent')} required>
+          <CourseFormField
+            name="content_info"
+            label={tAICourseForm("courseContent")}
+            required
+          >
             <Textarea rows={8} className="scrollbar" />
           </CourseFormField>
 
           <CourseFormField
             name="material_file"
-            label={tAICourseForm('materialContent')}
+            label={tAICourseForm("materialContent")}
             render={({ field }) => {
               const { onChange, value } = field;
 
@@ -120,11 +130,15 @@ export function CourseOutlineForm({
             }}
           />
           <LevelField />
-          <CourseFormField name="language" label={tAICourseForm('language')}>
+          <CourseFormField name="language" label={tAICourseForm("language")}>
             <SelectLanguage />
           </CourseFormField>
           <DurationField form={form} />
-          <CourseFormField name="study_load" label={tAICourseForm('studyLoad')} required>
+          <CourseFormField
+            name="study_load"
+            label={tAICourseForm("studyLoad")}
+            required
+          >
             <InputNumber min={1} step={1} />
           </CourseFormField>
           <div className="flex justify-end space-x-4">
@@ -136,14 +150,16 @@ export function CourseOutlineForm({
                 form.reset();
               }}
             >
-              {tGeneral('reset')}
+              {tGeneral("reset")}
             </Button>
             <Button
               type="submit"
               disabled={!!course?.id || generating}
               loading={form.formState.isSubmitting || generating}
             >
-              {form.formState.isSubmitting || generating ? tGeneral('generating') : tGeneral('generate')}
+              {form.formState.isSubmitting || generating
+                ? tGeneral("generating")
+                : tGeneral("generate")}
             </Button>
           </div>
         </>

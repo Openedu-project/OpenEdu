@@ -19,7 +19,7 @@ import type { IBulkSegments, ILessonContent, ISegment, ISegmentParams } from '#t
 import type { HTTPPagination } from '#types/fetch';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { type FetchOptions, createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
+import { type FetchOptions, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 
 export async function getCoursesService(
   url: string | undefined,
@@ -27,7 +27,7 @@ export async function getCoursesService(
 ): Promise<ICourseResponse | undefined> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COURSES,
       queryParams: {
         ...params,
@@ -50,7 +50,7 @@ export async function getCourseByIdService(
 ): Promise<ICourse | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COURSES_ID,
       params: { id },
     });
@@ -67,7 +67,7 @@ export async function getCoursesPublishService(
 ): Promise<ICourseResponse | undefined> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COURSES_PUBLISH,
       queryParams: {
         ...params,
@@ -90,7 +90,7 @@ export async function getCourseOutlineService(
 ): Promise<ICourseOutline | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COURSES_ID_OUTLINE,
       params: {
         id,
@@ -129,7 +129,7 @@ export const getLevelsService = async (
   url?: string,
   init?: FetchOptions & { queryParams?: Record<string, string | boolean> }
 ) => {
-  const defaultUrl = createAPIUrl({ endpoint: API_ENDPOINT.CATEGORIES_TREE, queryParams: init?.queryParams });
+  const defaultUrl = buildUrl({ endpoint: API_ENDPOINT.CATEGORIES_TREE, queryParams: init?.queryParams });
   const response = await fetchAPI<ICourseCategory[]>(url ?? defaultUrl, init);
 
   return response.data;
@@ -187,7 +187,7 @@ export const putEnableCourseService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COURSES_ID_STAGE,
       params: {
         id: payload?.id,
@@ -265,7 +265,7 @@ export const getPublishedCourseByAdminService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COURSES_PUBLISH,
       queryParams: {
         ...payload,
@@ -312,7 +312,7 @@ export const getPreviewCourseByIdService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COURSES_ID_PREVIEW_ORG_ID,
       params: {
         id: payload?.courseId,
@@ -359,7 +359,7 @@ export const getSectionsHaveLessonsByCourseIdService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.SEGMENTS,
       queryParams: {
         ...params,
@@ -463,7 +463,7 @@ export const putCancelRequestCourseService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COURSES_ID_PUBLISH,
       params: {
         id: payload,
@@ -482,7 +482,7 @@ export const putReplyFeedbackCourseService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COURSES_ID_REPLY_FEEDBACK,
       params: {
         id: payload,

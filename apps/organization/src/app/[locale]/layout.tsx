@@ -1,13 +1,18 @@
-import type { Metadata } from "next";
-
-import { GoogleAnalytics } from "@next/third-parties/google";
-import { getThemeConfigServer } from "@oe/api";
+import {
+  getAPIReferrerAndOrigin,
+  getI18nConfig,
+  getThemeConfigServer,
+} from "@oe/api";
 import { fonts } from "@oe/core";
+import { DEFAULT_LOCALE, DEFAULT_LOCALES, redirect } from "@oe/i18n";
 import { ThemeProvider, getMetadata } from "@oe/themes";
 import { Provider } from "@oe/ui";
 import { Toaster } from "@oe/ui";
-import { WebViewHandler } from "@oe/ui";
-import { getLocale, getMessages } from "next-intl/server";
+import type { Metadata } from "next";
+import { hasLocale } from "next-intl";
+import { NextIntlClientProvider } from "next-intl";
+// import { WebViewHandler } from "@oe/ui";
+import { getLocale } from "next-intl/server";
 import Script from "next/script";
 import type { ReactNode } from "react";
 // const geistSans = localFont({
@@ -27,17 +32,36 @@ export async function generateMetadata(): Promise<Metadata> {
   return getMetadata(themeSystem?.[0]?.value);
 }
 
+// export async function generateStaticParams() {
+//   const i18nConfig = await getI18nConfig();
+//   return (i18nConfig?.locales ?? [DEFAULT_LOCALE])?.map((locale) => ({
+//     locale,
+//   }));
+// }
+
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: ReactNode;
 }>) {
-  const [locale, messages, themeSystem] = await Promise.all([
-    getLocale(),
-    getMessages(),
+  const [themeSystem, i18nConfig, { host }] = await Promise.all([
     getThemeConfigServer(),
+    getI18nConfig(),
+    getAPIReferrerAndOrigin(),
   ]);
   const themeName = themeSystem?.[0]?.value?.activedTheme ?? "vbi";
+  const isAiOrg = host?.includes("aigov") || host?.includes("phocap.ai");
+  const locale = isAiOrg ? "vi" : await getLocale();
+  if (
+    !hasLocale(
+      isAiOrg ? ["vi"] : i18nConfig?.locales ?? DEFAULT_LOCALES,
+      locale
+    )
+  ) {
+    redirect({ href: "/", locale: isAiOrg ? "vi" : DEFAULT_LOCALE });
+  }
+
+  // setRequestLocale(locale);
 
   // console.log("-------------------messages", messages, locale, themeSystem);
 
@@ -51,24 +75,36 @@ export default async function RootLayout({
       suppressHydrationWarning
       className={fontVariables}
     >
-      <head>
-        <Script id="microsoft-clarity">
+      <body className="scrollbar font-primary antialiased">
+        <NextIntlClientProvider>
+          <Provider>
+            {/* <WebViewHandler /> */}
+
+            <ThemeProvider
+              theme={themeSystem?.[0]?.value?.availableThemes?.[themeName]}
+            >
+              {children}
+            </ThemeProvider>
+            <Toaster />
+          </Provider>
+        </NextIntlClientProvider>
+        <Script id="microsoft-clarity" strategy="lazyOnload">
           {` (function(c,l,a,r,i,t,y){ c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)}; t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i; y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y); })(window, document, "clarity", "script", "qpk1sozolu"); `}
         </Script>
-      </head>
-      <body className="scrollbar font-primary antialiased">
-        <Provider messages={messages ?? {}} locale={locale}>
-          <WebViewHandler />
-
-          <ThemeProvider
-            theme={themeSystem?.[0]?.value?.availableThemes?.[themeName]}
-          >
-            {children}
-          </ThemeProvider>
-          <Toaster />
-        </Provider>
+        <Script
+          id="google-analytics"
+          strategy="lazyOnload"
+          src="https://www.googletagmanager.com/gtag/js?id=G-C0EQH698Y5"
+        />
+        <Script id="google-analytics-script" strategy="lazyOnload">
+          {`window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+ 
+  gtag('config', 'G-C0EQH698Y5');`}
+        </Script>
       </body>
-      <GoogleAnalytics gaId="G-C0EQH698Y5" />
+      {/* <GoogleAnalytics gaId="G-C0EQH698Y5" /> */}
     </html>
   );
 }

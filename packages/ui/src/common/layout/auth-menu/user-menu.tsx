@@ -1,12 +1,12 @@
-import { getOrgByDomainService } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
+'use client';
+import { useGetOrganizationByDomain } from '@oe/api';
 import type { IUser } from '@oe/api';
 import { ProfileCircle } from '@oe/assets';
-import { getCookie } from '@oe/core';
+import { buildUrl } from '@oe/core';
 import { PLATFORM_ROUTES } from '@oe/core';
 import { DropdownMenuSeparator } from '@radix-ui/react-dropdown-menu';
 import { ChevronDown } from 'lucide-react';
-import { getTranslations } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
 import { Fragment } from 'react';
 import { LogoutButton } from '#common/auth/logout-button';
 import { Link } from '#common/navigation';
@@ -15,24 +15,11 @@ import { Button } from '#shadcn/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '#shadcn/dropdown-menu';
 import { MENU_ITEMS } from './constants';
 
-const extractDomain = (fullDomain: string) => {
-  if (!fullDomain) {
-    return '';
-  }
-  return fullDomain.split('/')[0];
-};
+export function UserMenu({ me }: { me: IUser }) {
+  const { organizationByDomain } = useGetOrganizationByDomain();
+  const t = useTranslations('userMenu');
 
-export async function UserMenu({ me }: { me: IUser }) {
-  const domain = (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? '';
-
-  const [t, orgData] = await Promise.all([
-    getTranslations('userMenu'),
-    getOrgByDomainService(undefined, {
-      domain: extractDomain(domain) ?? '',
-    }),
-  ]);
-
-  const userRolesForOrg = me.roles.filter(role => role.org_id === orgData?.id).map(role => role.role_id);
+  const userRolesForOrg = me.roles.filter(role => role.org_id === organizationByDomain?.id).map(role => role.role_id);
 
   const hasAccess = (requiredRoles: string[]) => requiredRoles.some(role => userRolesForOrg.includes(role));
 
@@ -55,7 +42,7 @@ export async function UserMenu({ me }: { me: IUser }) {
       <DropdownMenuContent align="end">
         <DropdownMenuItem key="myProfile" className="p-0">
           <Link
-            href={createAPIUrl({
+            href={buildUrl({
               endpoint: PLATFORM_ROUTES.userProfile,
               params: { username: me.username },
             })}

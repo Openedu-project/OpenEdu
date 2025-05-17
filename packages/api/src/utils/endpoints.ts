@@ -1,5 +1,5 @@
 export const API_ENDPOINT = {
-  SET_COOKIE: '/api/set-cookie',
+  REFRESH_TOKEN: '/api/auth/refresh-token',
   ADMIN_ORGANIZATIONS: '/api/v1/admin/organizations',
   ADMIN_ORGANIZATIONS_ID: '/api/v1/admin/organizations/:id',
   ORGANIZATIONS_VALIDATE: '/api/v1/organizations/validate',
@@ -289,3 +289,119 @@ export const API_ENDPOINT = {
 
 export type API_ENDPOINT_KEY = keyof typeof API_ENDPOINT;
 export type API_ENDPOINT_VALUE = (typeof API_ENDPOINT)[API_ENDPOINT_KEY];
+
+export const API_PUBLIC_ENDPOINT = {
+  // Auth
+  AUTH: '/api/v1/auth',
+  AUTH_LOGIN: '/api/v1/auth/login',
+  AUTH_REGISTER: '/api/v1/auth/register',
+  AUTH_REFRESH_TOKEN: '/api/v1/auth/refresh-token',
+  AUTH_RESEND_MAIL: '/api/v1/auth/resend-mail',
+  AUTH_FORGOT_PASSWORD: '/api/v1/auth/forgot-password',
+  AUTH_RESET_PASSWORD: '/api/v1/auth/reset-password',
+  AUTH_VERIFY: '/api/v1/auth/verify',
+  AUTH_EXTERNAL_REGISTER: '/api/v1/auth/external-register',
+  AUTH_SET_PASSWORD: '/api/v1/auth/set-password',
+  AUTH_VERIFY_OTP: '/api/v1/auth/verify-otp',
+  AUTH_RESEND_OTP: '/api/v1/auth/resend-otp',
+
+  // Upload
+  UPLOADS: '/api/v1/uploads',
+  UPLOADS_VIDEOS_ID_STATUS: '/api/v1/uploads/videos/:id/status',
+
+  // Organization
+  ADMIN_ORGANIZATIONS: '/api/v1/admin/organizations',
+  ORGANIZATIONS_VALIDATE: '/api/v1/organizations/validate',
+
+  // Config
+  CONFIGS: '/api/v1/configs',
+
+  // Course
+  COURSES_PUBLISH: '/api/v1/courses/publish',
+  COURSES_ID: '/api/v1/courses/:id',
+  COURSES_ID_PARTNERS: '/api/v1/courses/:id/partners',
+  COURSES_ID_OUTLINE: '/api/v1/courses/:id/outline',
+
+  // Quiz
+  QUIZZES_ID_LEADERBOARDS: '/api/v1/quizzes/:id/leaderboards',
+
+  // Category
+  CATEGORIES: '/api/v1/categories',
+  CATEGORIES_TREE: '/api/v1/categories/tree',
+
+  // Hashtag
+  HASHTAGS: '/api/v1/hashtags',
+
+  // Form
+  FORMS_ID: '/api/v1/forms/:id',
+  FORMS_REGISTER_ORGANIZATION: '/api/v1/forms/register-organization',
+  FORMS_REGISTER_CREATOR: '/api/v1/forms/register-creator',
+  FORMS_REGISTER_WRITER: '/api/v1/forms/register-writer',
+  FORMS_ID_SUBMIT: '/api/v1/forms/:id/submit',
+
+  // System config
+  SYSTEM_CONFIGS: '/api/v1/system-configs',
+  SYSTEM_CONFIGS_ID: '/api/v1/system-configs/:id',
+
+  // Creator
+  CREATORS_ACCEPT: '/api/v1/creators/accept',
+  USERS_ACCEPT: '/api/v1/users/accept',
+
+  // User Agency
+  AFFILIATE_CAMPAIGNS_ID_PUBLISH_COURSES: '/api/v1/affiliate-campaigns/:id/publish-courses',
+
+  // Blog
+  BLOGS_HASHTAGS: '/api/v1/blogs/hashtags',
+  BLOGS_TOP_VIEWED: '/api/v1/blogs/top-viewed',
+  USERS_TOP_BLOG_VIEWED: '/api/v1/users/top-blog-viewed',
+  USERS_ID_ORG_BLOGS: '/api/v1/users/:id/org-blogs',
+  BLOGS_HASHTAGS_RECOMMEND: '/api/v1/blogs/hashtags/recommend',
+  BLOGS_CATEGORIES: '/api/v1/blogs/categories',
+  BLOGS_CATEGORIES_ID: '/api/v1/blogs/categories/:id',
+  BLOGS_CATEGORIES_RECOMMEND: '/api/v1/blogs/categories/recommend',
+  BLOGS_ID_PERSONAL: '/api/v1/blogs/:id/personal',
+  BLOGS_ID_ORG: '/api/v1/blogs/:id/org',
+  BLOGS: '/api/v1/blogs',
+  USERS_ID_PERSON_BLOGS: '/api/v1/users/:id/person-blogs',
+
+  // User
+  USERS_ID: '/api/v1/users/:id',
+
+  // Referral links
+  REFERRAL_LINKS_BY_CODE_CODE: '/api/v1/referral-links/by-code/:code',
+  VALIDATE_REFERRAL_LINKS_BY_CODE: '/api/v1/referral-links/by-code/:code/validate',
+
+  // Certificate
+  CERTIFICATES_ID: '/api/v1/certificates/:id',
+
+  // Pricing Plans
+  PLANS_ID: '/api/v1/plans/:id',
+  PLANS_ALL: '/api/v1/plans/all',
+
+  // AI
+  AI_MODELS: '/api/v1/ai/models',
+  AI_PROMPTS: '/api/v1/ai/prompts',
+
+  // Featured content
+  FEATURED_CONTENT_BY_TYPES: '/api/v1/featured-contents/by-types',
+
+  // Launchpad
+  LAUNCHPADS: '/api/v1/launchpads',
+  LAUNCHPADS_ID: '/api/v1/launchpads/:id',
+
+  // Html-template
+  HTML_TEMPLATES_ID: '/api/v1/html-templates/:id',
+} as const;
+
+export type API_PUBLIC_ENDPOINT_KEY = keyof typeof API_PUBLIC_ENDPOINT;
+export type API_PUBLIC_ENDPOINT_VALUE = (typeof API_PUBLIC_ENDPOINT)[API_PUBLIC_ENDPOINT_KEY];
+
+export const API_PRIVATE_ENDPOINT = Object.fromEntries(
+  Object.entries(API_ENDPOINT).filter(
+    ([key, value]) =>
+      !(key in API_PUBLIC_ENDPOINT && API_PUBLIC_ENDPOINT[key as keyof typeof API_PUBLIC_ENDPOINT] === value)
+  )
+) as Record<API_ENDPOINT_KEY, API_ENDPOINT_VALUE>;
+
+export type API_PRIVATE_ENDPOINT_KEY = keyof typeof API_PRIVATE_ENDPOINT;
+export type API_PRIVATE_ENDPOINT_VALUE = (typeof API_PRIVATE_ENDPOINT)[API_PRIVATE_ENDPOINT_KEY];

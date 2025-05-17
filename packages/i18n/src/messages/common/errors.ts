@@ -1,6 +1,7 @@
 export const errorMessages = {
   errors: {
     tryAgain: 'Try again',
+    timeoutError: 'Timeout error',
     unknown: {
       title: 'Something went wrong.',
       description: 'We are maintaining this page. Please try again in a few minutes.',

@@ -1,13 +1,13 @@
+import { buildUrl } from '@oe/core';
 import type { ICategoriesResponse, ICategoryBulkUpsert, ICategoryTree } from '#types/categories';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { fetchAPI, postAPI } from '#utils/fetch';
-import { createAPIUrl } from '#utils/fetch';
 
 export const getCategoriesTreeService = async (
   url?: string,
   init?: RequestInit & { queryParams?: Record<string, string | boolean> }
 ) => {
-  const defaultUrl = createAPIUrl({ endpoint: API_ENDPOINT.CATEGORIES_TREE, queryParams: init?.queryParams });
+  const defaultUrl = buildUrl({ endpoint: API_ENDPOINT.CATEGORIES_TREE, queryParams: init?.queryParams });
   const response = await fetchAPI<ICategoryTree[]>(url ?? defaultUrl, init);
   return response.data;
 };
@@ -36,7 +36,7 @@ export const getCategoriesService = async (
   url?: string,
   init?: RequestInit & { queryParams?: Record<string, string> }
 ) => {
-  const defaultUrl = createAPIUrl({
+  const defaultUrl = buildUrl({
     endpoint: API_ENDPOINT.CATEGORIES,
     queryParams: init?.queryParams,
   });

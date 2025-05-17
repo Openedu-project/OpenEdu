@@ -1,37 +1,36 @@
-'use client';
-import { API_ENDPOINT } from '@oe/api';
-import type { IBlog, IBlogRequest } from '@oe/api';
-import { postBlog, updateBlog } from '@oe/api';
-import type { IFileResponse } from '@oe/api';
-import type { HTTPError } from '@oe/api';
-import { type IBlogFormType, blogSchema } from '@oe/api';
-import type { ICategoryTree } from '@oe/api';
-import type { IHashtag } from '@oe/api';
-import { BLOG_ADMIN_ROUTES, BLOG_ROUTES } from '@oe/core';
-import { getCookieClient } from '@oe/core';
-import type { LanguageCode } from '@oe/i18n';
-import { useTranslations } from 'next-intl';
-import { useMemo } from 'react';
-import { mutate } from 'swr';
-import { useRouter } from '#common/navigation';
-import { FormWrapper } from '#components/form-wrapper';
-import { RichTextEditor } from '#components/rich-text';
-import { SelectLanguage } from '#components/select-language';
-import { Uploader } from '#components/uploader';
-import { Button } from '#shadcn/button';
-import { FormFieldWithLabel } from '#shadcn/form';
-import { Input } from '#shadcn/input';
-import { toast } from '#shadcn/sonner';
-import { Textarea } from '#shadcn/textarea';
-import { cn } from '#utils/cn';
-import { marked } from '#utils/marker';
-import { CategoryField } from './category-field';
-import { HashtagField } from './hashtag-field';
+"use client";
+import { API_ENDPOINT } from "@oe/api";
+import type { IBlog, IBlogRequest } from "@oe/api";
+import { postBlog, updateBlog } from "@oe/api";
+import type { IFileResponse } from "@oe/api";
+import type { HTTPError } from "@oe/api";
+import { type IBlogFormType, blogSchema } from "@oe/api";
+import type { ICategoryTree } from "@oe/api";
+import type { IHashtag } from "@oe/api";
+import { BLOG_ADMIN_ROUTES, BLOG_ROUTES } from "@oe/core";
+import type { LanguageCode } from "@oe/i18n";
+import { useLocale, useTranslations } from "next-intl";
+import { useMemo } from "react";
+import { mutate } from "swr";
+import { useRouter } from "#common/navigation";
+import { FormWrapper } from "#components/form-wrapper";
+import { RichTextEditor } from "#components/rich-text";
+import { SelectLanguage } from "#components/select-language";
+import { Uploader } from "#components/uploader";
+import { Button } from "#shadcn/button";
+import { FormFieldWithLabel } from "#shadcn/form";
+import { Input } from "#shadcn/input";
+import { toast } from "#shadcn/sonner";
+import { Textarea } from "#shadcn/textarea";
+import { cn } from "#utils/cn";
+import { marked } from "#utils/marker";
+import { CategoryField } from "./category-field";
+import { HashtagField } from "./hashtag-field";
 
-export type BlogType = 'org' | 'personal';
-export type IFormAction = 'update' | 'create';
+export type BlogType = "org" | "personal";
+export type IFormAction = "update" | "create";
 interface IActionStatus {
-  status: 'SUCCESS' | 'ERROR';
+  status: "SUCCESS" | "ERROR";
   message: string;
 }
 interface IBlogFormAction {
@@ -68,54 +67,71 @@ const blogFormAction = async ({
       ...baseData,
       is_publish: isPublish,
       blog_type: blogType,
-      banner_id: Array.isArray(thumbnail) ? ((thumbnail as IFileResponse[])[0]?.id ?? '') : thumbnail.id,
-      category_ids: category_ids?.map(obj => {
+      banner_id: Array.isArray(thumbnail)
+        ? (thumbnail as IFileResponse[])[0]?.id ?? ""
+        : thumbnail.id,
+      category_ids: category_ids?.map((obj) => {
         return { id: obj.id };
       }),
-      hashtag_names: hashtag_names?.map(name => {
+      hashtag_names: hashtag_names?.map((name) => {
         return { name };
       }),
     };
 
-    action === 'update'
+    action === "update"
       ? await updateBlog(blogType, undefined, id, { payload })
       : await postBlog(undefined, { payload });
 
-    mutate((key: string) => !!key?.includes(API_ENDPOINT.USERS_ME_BLOGS), undefined, { revalidate: false });
-    return { status: 'SUCCESS', message: `${action}Success` };
+    mutate(
+      (key: string) => !!key?.includes(API_ENDPOINT.USERS_ME_BLOGS),
+      undefined,
+      { revalidate: false }
+    );
+    return { status: "SUCCESS", message: `${action}Success` };
   } catch (error) {
-    return { status: 'ERROR', message: (error as HTTPError).message };
+    return { status: "ERROR", message: (error as HTTPError).message };
   }
 };
 
-export function BlogForm({ blogType, action = 'create', data, onSuccess, onError, className }: IBlogCreationFormProps) {
-  const tBlogs = useTranslations('blogForm');
-  const tGeneral = useTranslations('general');
-  const tErrors = useTranslations('errors');
+export function BlogForm({
+  blogType,
+  action = "create",
+  data,
+  onSuccess,
+  onError,
+  className,
+}: IBlogCreationFormProps) {
+  const tBlogs = useTranslations("blogForm");
+  const tGeneral = useTranslations("general");
+  const tErrors = useTranslations("errors");
   const router = useRouter();
+  const locale = useLocale();
 
-  const defaultValues: IBlogFormType | { locale: string; is_ai_generated: boolean; content: '' } = useMemo(() => {
-    if (!data) {
-      const locale = getCookieClient(process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY) ?? 'en';
+  const defaultValues:
+    | IBlogFormType
+    | { locale: string; is_ai_generated: boolean; content: "" } =
+    useMemo(() => {
+      if (!data) {
+        return { locale, is_ai_generated: false, content: "" };
+      }
 
-      return { locale, is_ai_generated: false, content: '' };
-    }
-
-    return {
-      locale: data.locale,
-      title: data.title,
-      description: data.description,
-      content: data?.is_ai_generated ? marked.parse(data?.content, { async: false }) : (data?.content ?? ''),
-      image_description: data.image_description,
-      thumbnail: data.banner,
-      category_ids: data.categories?.map(cate => ({
-        id: cate.id,
-        name: cate.name,
-      })),
-      hashtag_names: data.hashtag?.map(hashtag => hashtag.name),
-      is_ai_generated: data.is_ai_generated,
-    };
-  }, [data]);
+      return {
+        locale: data.locale,
+        title: data.title,
+        description: data.description,
+        content: data?.is_ai_generated
+          ? marked.parse(data?.content, { async: false })
+          : data?.content ?? "",
+        image_description: data.image_description,
+        thumbnail: data.banner,
+        category_ids: data.categories?.map((cate) => ({
+          id: cate.id,
+          name: cate.name,
+        })),
+        hashtag_names: data.hashtag?.map((hashtag) => hashtag.name),
+        is_ai_generated: data.is_ai_generated,
+      };
+    }, [data, locale]);
 
   const handleSubmitDraft = async (blogData: IBlogFormType) => {
     const res = await blogFormAction({
@@ -124,12 +140,16 @@ export function BlogForm({ blogType, action = 'create', data, onSuccess, onError
       action,
       id: data?.id,
     });
-    if (res.status === 'SUCCESS') {
+    if (res.status === "SUCCESS") {
       toast.success(tBlogs(res.message));
       onSuccess?.();
-      router.push(blogType === 'org' ? BLOG_ADMIN_ROUTES.myBlog : BLOG_ROUTES.blogManagement);
+      router.push(
+        blogType === "org"
+          ? BLOG_ADMIN_ROUTES.myBlog
+          : BLOG_ROUTES.blogManagement
+      );
     } else {
-      toast.error(tErrors(res.message ?? 'unknown.title'));
+      toast.error(tErrors(res.message ?? "unknown.title"));
       onError?.();
     }
   };
@@ -142,12 +162,16 @@ export function BlogForm({ blogType, action = 'create', data, onSuccess, onError
       isPublish: true,
       id: data?.id,
     });
-    if (res.status === 'SUCCESS') {
-      toast.success(tBlogs('publishSuccess'));
+    if (res.status === "SUCCESS") {
+      toast.success(tBlogs("publishSuccess"));
       onSuccess?.();
-      router.push(blogType === 'org' ? BLOG_ADMIN_ROUTES.myBlog : BLOG_ROUTES.blogManagement);
+      router.push(
+        blogType === "org"
+          ? BLOG_ADMIN_ROUTES.myBlog
+          : BLOG_ROUTES.blogManagement
+      );
     } else {
-      toast.error(tErrors(res.message ?? 'unknown.title'));
+      toast.error(tErrors(res.message ?? "unknown.title"));
       onError?.();
     }
   };
@@ -156,20 +180,27 @@ export function BlogForm({ blogType, action = 'create', data, onSuccess, onError
     <FormWrapper
       id="blog_form"
       schema={blogSchema}
-      className={cn('grid grid-cols-1 gap-4 space-y-0 bg-background py-6 md:grid-cols-3 lg:grid-cols-4', className)}
+      className={cn(
+        "grid grid-cols-1 gap-4 space-y-0 bg-background py-6 md:grid-cols-3 lg:grid-cols-4",
+        className
+      )}
       resetOnSuccess
       useFormProps={{
         defaultValues,
-        mode: 'all',
+        mode: "all",
       }}
     >
       {({ loading, form }) => (
         <>
-          <div className={cn('col-span-full flex w-full flex-wrap justify-between gap-4 py-2')}>
+          <div
+            className={cn(
+              "col-span-full flex w-full flex-wrap justify-between gap-4 py-2"
+            )}
+          >
             <FormFieldWithLabel name="title" className="flex-1" required>
               <Input
                 className="giant-iheading-semibold16 rounded-none border-0 border-b-2 p-2 focus:border-b-2 focus-visible:ring-0"
-                placeholder={`${tBlogs('nameOfArticle')}...`}
+                placeholder={`${tBlogs("nameOfArticle")}...`}
               />
             </FormFieldWithLabel>
 
@@ -181,22 +212,32 @@ export function BlogForm({ blogType, action = 'create', data, onSuccess, onError
                 className="px-4"
                 onClick={form.handleSubmit(handleSubmitDraft)}
               >
-                {tGeneral('save')}
+                {tGeneral("save")}
               </Button>
 
-              <Button loading={loading} type="submit" className="px-4" onClick={form.handleSubmit(handleSubmitPublish)}>
-                {tGeneral('publish')}
+              <Button
+                loading={loading}
+                type="submit"
+                className="px-4"
+                onClick={form.handleSubmit(handleSubmitPublish)}
+              >
+                {tGeneral("publish")}
               </Button>
             </div>
           </div>
           <div className="h-fit rounded-lg md:order-1">
-            <div className={cn('mb-4 flex flex-col gap-4', blogType === 'personal' && 'hidden')}>
+            <div
+              className={cn(
+                "mb-4 flex flex-col gap-4",
+                blogType === "personal" && "hidden"
+              )}
+            >
               <CategoryField />
               <HashtagField />
             </div>
             <FormFieldWithLabel
               name="locale"
-              label={tBlogs('language')}
+              label={tBlogs("language")}
               labelClassName="giant-iheading-semibold16"
               className="mb-4 space-y-4"
             >
@@ -204,10 +245,12 @@ export function BlogForm({ blogType, action = 'create', data, onSuccess, onError
             </FormFieldWithLabel>
 
             <div className="flex flex-col gap-4">
-              <p className="giant-iheading-semibold16 text-foreground">{tBlogs('thumbnail')}</p>
+              <p className="giant-iheading-semibold16 text-foreground">
+                {tBlogs("thumbnail")}
+              </p>
               <FormFieldWithLabel
                 required
-                label={tBlogs('image')}
+                label={tBlogs("image")}
                 name="thumbnail"
                 render={({ field }) => {
                   const { onChange, value } = field;
@@ -225,34 +268,40 @@ export function BlogForm({ blogType, action = 'create', data, onSuccess, onError
                 }}
               />
 
-              <FormFieldWithLabel label={tBlogs('imageDesc')} name="image_description" className="mt-4">
-                <Input placeholder={tBlogs('desc')} />
+              <FormFieldWithLabel
+                label={tBlogs("imageDesc")}
+                name="image_description"
+                className="mt-4"
+              >
+                <Input placeholder={tBlogs("desc")} />
               </FormFieldWithLabel>
             </div>
           </div>
 
-          <div className={cn('flex flex-col gap-4 md:col-span-2 lg:col-span-3')}>
+          <div
+            className={cn("flex flex-col gap-4 md:col-span-2 lg:col-span-3")}
+          >
             <FormFieldWithLabel
-              label={tBlogs('desc')}
+              label={tBlogs("desc")}
               name="description"
               className="rounded"
               labelClassName="giant-iheading-semibold16 mb-4"
             >
-              <Textarea rows={5} placeholder={tBlogs('placeholderDesc')} />
+              <Textarea rows={5} placeholder={tBlogs("placeholderDesc")} />
             </FormFieldWithLabel>
 
             <FormFieldWithLabel
               required
-              label={tBlogs('write')}
+              label={tBlogs("write")}
               name="content"
               className="rounded"
               labelClassName="giant-iheading-semibold16 mb-4"
             >
               <RichTextEditor
                 className="md:h-[calc(100dvh-150px)]"
-                defaultValue={defaultValues?.content ?? ''}
-                aiParams={{ blog_cuid: data?.cuid ?? '' }}
-                aiButton={blogType === 'org'}
+                defaultValue={defaultValues?.content ?? ""}
+                aiParams={{ blog_cuid: data?.cuid ?? "" }}
+                aiButton={blogType === "org"}
               />
             </FormFieldWithLabel>
           </div>
@@ -265,11 +314,16 @@ export function BlogForm({ blogType, action = 'create', data, onSuccess, onError
               className="px-4"
               onClick={form.handleSubmit(handleSubmitDraft)}
             >
-              {tGeneral('save')}
+              {tGeneral("save")}
             </Button>
 
-            <Button loading={loading} type="submit" className="px-4" onClick={form.handleSubmit(handleSubmitPublish)}>
-              {tGeneral('publish')}
+            <Button
+              loading={loading}
+              type="submit"
+              className="px-4"
+              onClick={form.handleSubmit(handleSubmitPublish)}
+            >
+              {tGeneral("publish")}
             </Button>
           </div>
         </>

@@ -9,9 +9,8 @@ import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { API_ENDPOINT } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
 import type { HTTPErrorMetadata } from '@oe/api';
-import { CREATOR_ROUTES } from '@oe/core';
+import { CREATOR_ROUTES, buildUrl } from '@oe/core';
 import { formatDateTime } from '@oe/core';
 import { toast } from '@oe/ui';
 import type { FilterOption } from '@oe/ui';
@@ -102,7 +101,7 @@ export function AffiliateCampaignList() {
           const item = row.original;
           return (
             <Link
-              href={createAPIUrl({
+              href={buildUrl({
                 endpoint: CREATOR_ROUTES.campaignDetailCourses,
                 params: { id: item?.id },
               })}

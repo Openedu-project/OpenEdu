@@ -1,10 +1,8 @@
 'use client';
-
-import { createAPIUrl } from '@oe/api';
 import type { IUserProfileRole } from '@oe/api';
 import { useGetUserProfile } from '@oe/api';
 import { DocumentAttach, Pencil, PersonCircle, School } from '@oe/assets';
-import { PLATFORM_ROUTES } from '@oe/core';
+import { PLATFORM_ROUTES, buildUrl } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
@@ -24,7 +22,7 @@ export function ProfileHeader() {
     const items = [
       {
         title: tProfile('profileNavigations.information'),
-        href: createAPIUrl({
+        href: buildUrl({
           endpoint: PLATFORM_ROUTES.editProfileInformation,
           params: { username: user as string },
         }),
@@ -32,7 +30,7 @@ export function ProfileHeader() {
       },
       {
         title: tProfile('profileNavigations.certificates'),
-        href: createAPIUrl({
+        href: buildUrl({
           endpoint: PLATFORM_ROUTES.editProfileCertificates,
           params: { username: user as string },
         }),
@@ -40,7 +38,7 @@ export function ProfileHeader() {
       },
       {
         title: tProfile('profileNavigations.blogs'),
-        href: createAPIUrl({
+        href: buildUrl({
           endpoint: PLATFORM_ROUTES.editProfileBlogs,
           params: { username: user as string },
         }),
@@ -51,7 +49,7 @@ export function ProfileHeader() {
     if (roles.some(item => item.role_id === 'partner')) {
       items.splice(2, 0, {
         title: tProfile('profileNavigations.courses'),
-        href: createAPIUrl({
+        href: buildUrl({
           endpoint: PLATFORM_ROUTES.editProfileCourses,
           params: { username: user as string },
         }),

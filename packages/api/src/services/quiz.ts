@@ -1,3 +1,4 @@
+import { buildUrl } from '@oe/core';
 import type {
   ICreateQuizSubmissionPayload,
   ICreateQuizSubmissionResponse,
@@ -7,7 +8,7 @@ import type {
   ISubmitAnswerResponse,
 } from '#types/quiz';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI, postAPI } from '#utils/fetch';
+import { fetchAPI, postAPI } from '#utils/fetch';
 
 // Start quizz
 export const postQuizSubmissionService = async (
@@ -29,7 +30,7 @@ export async function getCurrentQuestionService(
 ): Promise<ICurrentQuestion | null> {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.QUIZ_SUBMISSIONS_ID_QUESTIONS_CURRENT,
       params: { id },
     });
@@ -50,7 +51,7 @@ export async function submitAnswerService(
 ) {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.QUIZ_SUBMISSIONS_ID_QUESTIONS_CURRENT,
       params: { id },
     });
@@ -68,7 +69,7 @@ export async function getQuizzSubmissionService(
 ) {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.QUIZ_SUBMISSIONS_ID_QUESTIONS_CURRENT,
       params: { id },
     });

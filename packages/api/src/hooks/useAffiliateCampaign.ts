@@ -1,3 +1,4 @@
+import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import {
@@ -11,7 +12,6 @@ import {
 } from '#services/affiliate-campaign';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 import type {
   IAffiliateCampaignItem,
   IAffiliateCampaignPayload,
@@ -19,7 +19,7 @@ import type {
 } from '../types/affiliate-campaign';
 
 export function useGetUserAffiliateCampaignList({ params }: { params: IFilter }) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.USERS_ME_AFFILIATE_CAMPAIGNS,
     queryParams: { ...params },
   });
@@ -37,7 +37,7 @@ export function useGetUserAffiliateCampaignList({ params }: { params: IFilter })
 }
 
 export function useGetUserAffiliateCampaignListWithoutAuth({ isAuth, params }: { isAuth: boolean; params: IFilter }) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.USERS_ME_AFFILIATE_CAMPAIGNS,
     queryParams: { ...params },
   });
@@ -55,7 +55,7 @@ export function useGetUserAffiliateCampaignListWithoutAuth({ isAuth, params }: {
 }
 
 export function useGetAffiliateCampaignList({ params }: { params: IFilter }) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.AFFILIATE_CAMPAIGNS,
     queryParams: { ...params },
   });
@@ -73,7 +73,7 @@ export function useGetAffiliateCampaignList({ params }: { params: IFilter }) {
 }
 
 export function useGetAffiliateCampaignDetail({ params }: { params: { id: string; queryParams: IFilter } }) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.AFFILIATE_CAMPAIGNS_ID,
     params: { ...params },
     queryParams: { ...params.queryParams },
@@ -106,7 +106,7 @@ export const usePostAffiliateCampaign = () => {
 };
 
 export const usePutAffiliateCampaign = (id: string) => {
-  const url = createAPIUrl({
+  const url = buildUrl({
     endpoint: API_ENDPOINT.AFFILIATE_CAMPAIGNS_ID,
     params: {
       id,
@@ -127,7 +127,7 @@ export const usePutAffiliateCampaign = (id: string) => {
 };
 
 export const useDeleteAffiliateCampaign = (id: string) => {
-  const url = createAPIUrl({
+  const url = buildUrl({
     endpoint: API_ENDPOINT.AFFILIATE_CAMPAIGNS_ID,
     params: {
       id,
@@ -148,7 +148,7 @@ export const useDeleteAffiliateCampaign = (id: string) => {
 };
 
 export const usePostValidateRefCode = (code: string) => {
-  const url = createAPIUrl({
+  const url = buildUrl({
     endpoint: API_ENDPOINT.VALIDATE_REFERRAL_LINKS_BY_CODE,
     params: {
       code,

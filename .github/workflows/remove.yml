@@ -1,0 +1,96 @@
+# .github/workflows/remove.yml
+name: Remove SST Resources
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: 'Chọn môi trường cần xóa'
+        required: true
+        options:
+          - openedu101dev
+          - org_openedu101dev
+          - openedudev
+          - org_openedudev
+          - openedutest
+          - org_openedutest
+          - production
+          - org_production
+
+run-name: Remove SST resources for ${{ inputs.environment }}
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  Remove:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Thiết lập thư mục dự án
+        run: |
+          if [[ "${{ github.event.inputs.environment }}" == org_* ]]; then
+            echo "PROJECT_DIR=apps/organization" >> $GITHUB_ENV
+          else
+            echo "PROJECT_DIR=apps/platform" >> $GITHUB_ENV
+          fi
+
+      - name: Thiết lập tên stage
+        run: |
+          ENV_NAME="${{ github.event.inputs.environment }}"
+          if [[ "$ENV_NAME" == org_* ]]; then
+            STAGE_NAME="${ENV_NAME#org_}"
+          else
+            STAGE_NAME="$ENV_NAME"
+          fi
+          echo "STAGE_NAME=$STAGE_NAME" >> $GITHUB_ENV
+
+      - name: Kiểm tra xác nhận cho môi trường production
+        if: ${{ contains(github.event.inputs.environment, 'production') }}
+        run: |
+          echo "⚠️ CẢNH BÁO: Bạn đang chuẩn bị XÓA môi trường PRODUCTION!"
+          echo "Để xác nhận, hãy thêm issue với tiêu đề '[PRODUCTION_REMOVAL] Xác nhận xóa ${{ github.event.inputs.environment }}'"
+          
+          CONFIRM_ISSUE=$(gh issue list --repo ${{ github.repository }} --search "[PRODUCTION_REMOVAL] Xác nhận xóa ${{ github.event.inputs.environment }}" --state open --json number --jq '.[0].number')
+          
+          if [ -z "$CONFIRM_ISSUE" ]
+          then
+            echo "❌ Không tìm thấy issue xác nhận. Hủy quá trình xóa."
+            exit 1
+          fi
+          
+          echo "✅ Đã xác nhận. Tiếp tục xóa resources."
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cấu hình AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME_ARN }}
+          role-session-name: ${{ github.run_id }}
+
+      - name: Cài đặt Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: pnpm/action-setup@v4
+        name: Cài đặt pnpm
+        with:
+          run_install: false
+
+      - name: Cài đặt dependencies
+        run: pnpm install
+
+      - name: Remove SST resources
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          pnpm dlx sst remove --stage ${{ env.STAGE_NAME }} --config sst.config.${{ env.STAGE_NAME }}.ts

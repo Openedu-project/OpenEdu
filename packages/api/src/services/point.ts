@@ -1,13 +1,14 @@
+import { buildUrl } from '@oe/core';
 import type { IClaimPointPayload, IMyPointProfileRes } from '#types/point';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { postAPI } from '#utils/fetch';
-import { createAPIUrl, fetchAPI } from '#utils/fetch';
+import { fetchAPI } from '#utils/fetch';
 
 export const getMyPointProfileService = async (
   endpoint: string | null | undefined,
   { id, init }: { id: string; init?: RequestInit }
 ) => {
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.USER_ME_POINT, params: { id } });
+  const endpointKey = buildUrl({ endpoint: API_ENDPOINT.USER_ME_POINT, params: { id } });
   const response = await fetchAPI<IMyPointProfileRes>(endpointKey ?? endpoint, init);
 
   return response.data;

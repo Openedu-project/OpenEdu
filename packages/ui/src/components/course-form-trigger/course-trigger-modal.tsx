@@ -1,57 +1,64 @@
-'use client';
+"use client";
 
-import { useParams } from 'next/navigation';
-import { useCallback } from 'react';
+import { useParams } from "next/navigation";
+import { useCallback } from "react";
 
-import { useGetCourseOutline } from '@oe/api';
-import type { IAnswerParams } from '@oe/api';
-import { postSubmitForm } from '@oe/api';
-import { getCookieClient } from '@oe/core';
-import { buildUrl } from '@oe/core';
-import { toast } from 'sonner';
-import { FormRendererModal } from '../dynamic-form/editor/form-renderer-modal';
-import { useNotiTrigger } from './_hooks';
-import { useLearnerFormTriggerStore, useTriggerModalStore } from './_store';
-import { MODAL_ID } from './_utils';
-import { ConfirmationModal } from './confirmation-modal';
+import { useGetCourseOutline, useSession } from "@oe/api";
+import type { IAnswerParams } from "@oe/api";
+import { postSubmitForm } from "@oe/api";
+import { getCookieClient } from "@oe/core";
+import { buildUrl } from "@oe/core";
+import { toast } from "sonner";
+import { FormRendererModal } from "../dynamic-form/editor/form-renderer-modal";
+import { useNotiTrigger } from "./_hooks";
+import { useLearnerFormTriggerStore, useTriggerModalStore } from "./_store";
+import { MODAL_ID } from "./_utils";
+import { ConfirmationModal } from "./confirmation-modal";
 
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 interface IProps {
-  type?: 'page' | 'slide';
+  type?: "page" | "slide";
   mutate?: () => void;
 }
 
 const CourseFormTriggerModal = ({ mutate }: IProps) => {
-  const t = useTranslations('courseTriggerModal');
+  const t = useTranslations("courseTriggerModal");
   const { slug } = useParams();
 
   const { setOpenTriggerModal, modals } = useTriggerModalStore();
-  const { formData, currentConfirmationSettings, triggerType, activedTriggerId, currentFormId } =
-    useLearnerFormTriggerStore();
+  const {
+    formData,
+    currentConfirmationSettings,
+    triggerType,
+    activedTriggerId,
+    currentFormId,
+  } = useLearnerFormTriggerStore();
 
-  const accessTokenKey = process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY;
-  const accessToken = getCookieClient(accessTokenKey);
+  const { session } = useSession();
 
   const { handleShowFormAfterSubmission } = useNotiTrigger();
 
   const { course } = useGetCourseOutline(slug as string);
 
-  let source = '';
-  const fromSourceStorage = getCookieClient(String(process.env.NEXT_PUBLIC_COOKIE_FROM_SOURCE));
+  let source = "";
+  const fromSourceStorage = getCookieClient(
+    String(process.env.NEXT_PUBLIC_COOKIE_FROM_SOURCE)
+  );
 
   if (fromSourceStorage) {
-    const fromSourceData: { fromSource: string; courseSlug: string }[] = fromSourceStorage
-      ? typeof fromSourceStorage === 'string'
-        ? JSON.parse(fromSourceStorage)
-        : fromSourceStorage
-      : [];
+    const fromSourceData: { fromSource: string; courseSlug: string }[] =
+      fromSourceStorage
+        ? typeof fromSourceStorage === "string"
+          ? JSON.parse(fromSourceStorage)
+          : fromSourceStorage
+        : [];
     // Filter entries with matching courseSlug and sort by most recent (assuming they're added in order)
     const matchingEntries = fromSourceData
-      ?.filter(entry => entry?.courseSlug === slug)
+      ?.filter((entry) => entry?.courseSlug === slug)
       ?.sort((a, b) => fromSourceData?.indexOf(b) - fromSourceData?.indexOf(a));
 
     if (matchingEntries?.length > 0) {
-      source = matchingEntries[0]?.fromSource ?? '';
+      source = matchingEntries[0]?.fromSource ?? "";
     }
   }
 
@@ -59,21 +66,21 @@ const CourseFormTriggerModal = ({ mutate }: IProps) => {
     // If the noti trigger has link that was redirected with accessToken, cuid params
     if (currentConfirmationSettings?.buttons?.[0]?.type) {
       const directLink = buildUrl({
-        endpoint: currentConfirmationSettings?.buttons?.[0]?.type ?? '',
+        endpoint: currentConfirmationSettings?.buttons?.[0]?.type ?? "",
         queryParams: {
-          access_token: accessToken,
+          access_token: session?.accessToken,
           course_cuid: course?.cuid,
           course_name: course?.name,
         },
       });
 
-      window.open(directLink, '_blank');
+      window.open(directLink, "_blank");
     }
 
     // If the noti trigger have type (link), keep open modal
     setOpenTriggerModal(
       MODAL_ID.afterSubmitFormTrigger,
-      currentConfirmationSettings?.buttons?.[0]?.type?.trim() !== ''
+      currentConfirmationSettings?.buttons?.[0]?.type?.trim() !== ""
     );
   };
 
@@ -91,31 +98,41 @@ const CourseFormTriggerModal = ({ mutate }: IProps) => {
           });
 
           if (!res) {
-            toast.success(t('submitError'));
+            toast.success(t("submitError"));
             return;
           }
 
-          toast.success(t('submitSuccess'));
+          toast.success(t("submitSuccess"));
 
           handleShowFormAfterSubmission(currentConfirmationSettings);
 
           mutate?.();
         } catch (error) {
           console.error(error);
-          toast.error(t('submitError'));
+          toast.error(t("submitError"));
         }
       } else {
-        toast.error(t('formNotFound'));
+        toast.error(t("formNotFound"));
       }
     },
-    [currentConfirmationSettings, activedTriggerId, currentFormId, mutate, source, handleShowFormAfterSubmission, t]
+    [
+      currentConfirmationSettings,
+      activedTriggerId,
+      currentFormId,
+      mutate,
+      source,
+      handleShowFormAfterSubmission,
+      t,
+    ]
   );
 
-  return triggerType === 'form' && formData ? (
+  return triggerType === "form" && formData ? (
     <>
       <FormRendererModal
         open={modals[MODAL_ID.learnerCourseFormTrigger]}
-        onClose={() => setOpenTriggerModal(MODAL_ID.learnerCourseFormTrigger, false)}
+        onClose={() =>
+          setOpenTriggerModal(MODAL_ID.learnerCourseFormTrigger, false)
+        }
         formData={formData}
         onSubmit={handleSubmit}
         hasCancelButton={false}
@@ -130,7 +147,7 @@ const CourseFormTriggerModal = ({ mutate }: IProps) => {
       )}
     </>
   ) : (
-    currentConfirmationSettings && triggerType === 'notification' && (
+    currentConfirmationSettings && triggerType === "notification" && (
       <ConfirmationModal
         settings={currentConfirmationSettings}
         onButtonClick={handleCloseFormAfterModal}
@@ -140,5 +157,5 @@ const CourseFormTriggerModal = ({ mutate }: IProps) => {
   );
 };
 
-CourseFormTriggerModal.displayName = 'CourseFormTriggerModal';
+CourseFormTriggerModal.displayName = "CourseFormTriggerModal";
 export { CourseFormTriggerModal };

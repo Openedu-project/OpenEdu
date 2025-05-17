@@ -46,3 +46,4 @@ export * from './useReferralProgram';
 export * from './usePoint';
 export * from './useAIEdu';
 export * from './useSchedule';
+export * from './useI18n';

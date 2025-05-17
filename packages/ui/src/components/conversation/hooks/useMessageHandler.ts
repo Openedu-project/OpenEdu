@@ -1,9 +1,9 @@
-import { createAPIUrl, postEmptyConversation } from '@oe/api';
+import { postEmptyConversation } from '@oe/api';
 import type { HTTPError } from '@oe/api';
 import { postConversation } from '@oe/api';
 import type { IAIModel, IAIStatus, IMessage, TAgentType } from '@oe/api';
 import { revalidateData } from '@oe/api';
-import { AI_ROUTES } from '@oe/core';
+import { AI_ROUTES, buildUrl } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 import { useRouter } from '#common/navigation';
@@ -45,7 +45,7 @@ export const useSendMessageHandler = (agent: TAgentType, id?: string, model?: IA
           setPendingParams({ messageInput, type, files, message_id, role, status });
           setIsNewChat(true);
           router.push(
-            createAPIUrl({
+            buildUrl({
               endpoint: agentData?.detailHref ?? AI_ROUTES.chatDetail,
               params: { id: data.id },
             })

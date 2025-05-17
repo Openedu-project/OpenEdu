@@ -1,11 +1,10 @@
 'use client';
 
 import type { ICourse } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
 import type { HTTPErrorMetadata } from '@oe/api';
 import { LAUNCHPAD_STATUS } from '@oe/api';
 import { usePostCreateLaunchpad } from '@oe/api';
-import { CREATOR_ROUTES } from '@oe/core';
+import { CREATOR_ROUTES, buildUrl } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
 import { toast } from 'sonner';
@@ -45,7 +44,7 @@ const SelectCreateCourse = ({
     try {
       const res = await triggerPostCreateLaunchpad(params);
       if (res) {
-        const launchpadURL = createAPIUrl({
+        const launchpadURL = buildUrl({
           endpoint: CREATOR_ROUTES.creatorCreateLaunchpadDetail,
           params: { id: res.id },
         });

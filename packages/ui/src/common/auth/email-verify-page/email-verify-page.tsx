@@ -1,16 +1,16 @@
-import { verifyEmailService } from '@oe/api';
-import loginBanner from '@oe/assets/images/login-banner.png';
-import { PLATFORM_ROUTES } from '@oe/core';
-import { base64ToJson } from '@oe/core';
-import { getTranslations } from 'next-intl/server';
-import { headers } from 'next/headers';
-import { redirect } from 'next/navigation';
-import type { FileType } from '#components/uploader';
-import { cn } from '#utils/cn';
-import { AuthLayout } from '../auth-layout';
-import { EmailVerifyActions } from './email-verify-actions';
+import { verifyEmailService } from "@oe/api";
+import loginBanner from "@oe/assets/images/login-banner.png";
+import { PLATFORM_ROUTES } from "@oe/core";
+import { base64ToJson } from "@oe/core";
+import { getTranslations } from "next-intl/server";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import type { FileType } from "#components/uploader";
+import { cn } from "#utils/cn";
+import { AuthLayout } from "../auth-layout";
+import { EmailVerifyActions } from "./email-verify-actions";
 
-export const dynamic = 'force-static';
+// export const dynamic = 'force-static';
 
 interface EmailVerifyProps {
   themeName?: string;
@@ -20,39 +20,39 @@ interface EmailVerifyProps {
 export async function EmailVerifyPage({ themeName, banner }: EmailVerifyProps) {
   const tThemeAuth = await getTranslations(`themePage.${themeName}.auth`);
 
-  const tAuth = await getTranslations('auth');
-  const tErrors = await getTranslations('errors');
+  const tAuth = await getTranslations("auth");
+  const tErrors = await getTranslations("errors");
   const headersList = await headers();
-  const url = headersList.get('x-url');
+  const url = headersList.get("x-user-url");
   const queryParams = url ? new URL(url).searchParams : null;
-  const token = queryParams?.get('token');
-  const nextPath = queryParams?.get('next_path') || PLATFORM_ROUTES.homepage;
+  const token = queryParams?.get("token");
+  const nextPath = queryParams?.get("next_path") || PLATFORM_ROUTES.homepage;
 
   if (!token) {
     redirect(PLATFORM_ROUTES.homepage);
   }
 
-  let title = '';
-  let description = '';
+  let title = "";
+  let description = "";
   let isError = false;
-  let accessToken = '';
-  let refreshToken = '';
+  let accessToken = "";
+  let refreshToken = "";
 
   try {
     const decodedToken = base64ToJson(token);
     const response = await verifyEmailService(undefined, {
       token: decodedToken.token,
-      init: { cache: 'force-cache' },
+      init: { cache: "force-cache" },
     });
 
     isError = false;
     accessToken = response.access_token;
     refreshToken = response.refresh_token;
 
-    title = tAuth('emailVerify.successTitle');
-    description = tAuth('emailVerify.successDescription');
+    title = tAuth("emailVerify.successTitle");
+    description = tAuth("emailVerify.successDescription");
   } catch (error) {
-    title = tAuth('emailVerify.failedTitle');
+    title = tAuth("emailVerify.failedTitle");
     description = tErrors((error as Error).message);
     isError = true;
   }
@@ -61,14 +61,30 @@ export async function EmailVerifyPage({ themeName, banner }: EmailVerifyProps) {
     <AuthLayout
       banner={{
         src: banner?.url ?? loginBanner.src,
-        alt: 'verify email background',
+        alt: "verify email background",
       }}
-      slogan={tThemeAuth('emailVerify.slogan')}
-      className={cn(isError ? 'text-destructive' : '')}
+      slogan={tThemeAuth("emailVerify.slogan")}
+      className={cn(isError ? "text-destructive" : "")}
     >
       <div className="flex flex-col gap-y-4">
-        {title && <h3 className={cn('giant-iheading-semibold20', isError ? 'text-destructive' : '')}>{title}</h3>}
-        <p className={cn('text-muted-foreground text-sm', isError ? 'text-destructive' : '')}>{description}</p>
+        {title && (
+          <h3
+            className={cn(
+              "giant-iheading-semibold20",
+              isError ? "text-destructive" : ""
+            )}
+          >
+            {title}
+          </h3>
+        )}
+        <p
+          className={cn(
+            "text-muted-foreground text-sm",
+            isError ? "text-destructive" : ""
+          )}
+        >
+          {description}
+        </p>
         <EmailVerifyActions
           isError={isError}
           nextPath={nextPath}

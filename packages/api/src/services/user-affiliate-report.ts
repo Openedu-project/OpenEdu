@@ -1,6 +1,7 @@
+import { buildUrl } from '@oe/core';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI } from '#utils/fetch';
+import { fetchAPI } from '#utils/fetch';
 import type {
   IUserAffiliateReportDetailRes,
   IUserAffiliateReportRes,
@@ -13,7 +14,7 @@ export async function getUserAffiliateReportService(
 ): Promise<IUserAffiliateReportRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.REFERRALS_USER_REPORT,
       queryParams: {
         ...params,
@@ -35,7 +36,7 @@ export async function getUserAffiliateSummariesReportService(
 ): Promise<IUserAffiliateSummariesReportRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.USERS_ME_REFERRALS_SUMMARIES,
       queryParams: {
         ...params,
@@ -57,7 +58,7 @@ export async function getUserAffiliateReportDetailService(
 ): Promise<IUserAffiliateReportDetailRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.USERS_ME_REFERRALS,
       queryParams: {
         ...params,

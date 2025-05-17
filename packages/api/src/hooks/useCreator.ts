@@ -1,6 +1,7 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
+import { buildUrl } from '@oe/core';
 import {
   deleteCreatorService,
   getListCreatorService,
@@ -19,7 +20,6 @@ import type {
 } from '#types/creators';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 
 export function useInviteCreators() {
   const { trigger, isMutating, error } = useSWRMutation(
@@ -48,7 +48,7 @@ export function useAcceptInvitation() {
 }
 
 export function useGetListCreator({ params }: { params: IFilter }) {
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.ADMIN_CREATORS, queryParams: { ...params } });
+  const endpointKey = buildUrl({ endpoint: API_ENDPOINT.ADMIN_CREATORS, queryParams: { ...params } });
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
     getListCreatorService(endpoint, { params })
   );
@@ -79,7 +79,7 @@ export function useDeleteCreator(params: IDeleteCreatorsPayload) {
 
   // if (params.org_id) queryString.append('org_id', params.org_id);
   // for (const id of params.creator_ids) queryString.append('creator_ids', id);
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.ADMIN_CREATORS, queryParams: { ...params } });
+  const endpointKey = buildUrl({ endpoint: API_ENDPOINT.ADMIN_CREATORS, queryParams: { ...params } });
 
   const { trigger, isMutating, error } = useSWRMutation(
     endpointKey,

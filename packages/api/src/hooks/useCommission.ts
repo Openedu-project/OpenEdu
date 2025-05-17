@@ -1,8 +1,8 @@
+import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 import {
   deleteCommissionService,
   getCommissionDetailService,
@@ -13,7 +13,7 @@ import {
 import type { ICommissionItem, ICommissionPayload } from '../types/commission';
 
 export function useGetCommissionList({ params }: { params: IFilter }) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.COMMISSIONS,
     queryParams: { ...params },
   });
@@ -31,7 +31,7 @@ export function useGetCommissionList({ params }: { params: IFilter }) {
 }
 
 export function useGetCommissionDetail({ params }: { params: { id: string } }) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.COMMISSIONS_ID,
     params: { ...params },
   });
@@ -67,7 +67,7 @@ export const usePutCommission = () => {
     API_ENDPOINT.COMMISSIONS_ID,
     async (_endpoint: string, { arg }: { arg: ICommissionPayload }): Promise<ICommissionItem> =>
       putCommissionService(
-        createAPIUrl({
+        buildUrl({
           endpoint: API_ENDPOINT.COMMISSIONS_ID,
           params: {
             id: arg.id,

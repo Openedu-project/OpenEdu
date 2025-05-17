@@ -1,7 +1,8 @@
+import { buildUrl } from '@oe/core';
 import type { IFilter } from '#types/filter';
 import type { IPaymentMethodRes } from '#types/payment';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI } from '#utils/fetch';
+import { fetchAPI } from '#utils/fetch';
 
 export async function getPaymentMethodListService(
   url: string,
@@ -9,7 +10,7 @@ export async function getPaymentMethodListService(
 ): Promise<IPaymentMethodRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.PAYMENT_METHODS,
       queryParams: {
         ...params,

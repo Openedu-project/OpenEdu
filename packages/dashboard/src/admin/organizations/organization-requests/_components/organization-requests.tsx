@@ -2,12 +2,11 @@
 import type { IOrganizationPayload } from '@oe/api';
 import { API_ENDPOINT } from '@oe/api';
 import { useCreateOrganization } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
 import type { HTTPErrorMetadata } from '@oe/api';
 import type { IRejectFormRegisterOrgPayload } from '@oe/api';
 import { useGetFormRegisterOrg, useRejectRegisterOrg } from '@oe/api';
 import type { IFormUserResponse, IFormUserResponseAnswerItem } from '@oe/api';
-import { formatDate } from '@oe/core';
+import { buildUrl, formatDate } from '@oe/core';
 import { toast } from '@oe/ui';
 import type { FilterOption } from '@oe/ui';
 import { type ColumnDef, Table, type TableRef } from '@oe/ui';
@@ -197,7 +196,7 @@ export function OrganizationRequest() {
         columns={columns}
         api={
           dataFormRegister?.id
-            ? createAPIUrl({
+            ? buildUrl({
                 endpoint: API_ENDPOINT.FORMS_ID_SESSIONS,
                 params: { id: dataFormRegister?.id },
               })

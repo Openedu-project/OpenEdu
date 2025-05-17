@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import type { HTTPError } from '@oe/api';
-import { useGetMe } from '@oe/api';
-import type { IUser } from '@oe/api';
-import type React from 'react';
-import { createContext, useContext, useMemo } from 'react';
-import { useSocket } from '#hooks/socket';
+import type { HTTPError } from "@oe/api";
+import { useGetMe } from "@oe/api";
+import type { IUser } from "@oe/api";
+import type React from "react";
+import { createContext, useContext, useMemo } from "react";
+import { useSocket } from "#hooks/socket";
 
 interface AuthContextType {
   me: IUser | null;
-  isLoading: boolean;
-  error: HTTPError | null;
+  isMeLoading: boolean;
+  meError: HTTPError | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -20,21 +20,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const authContextValue = useMemo(
     () => ({
       me: dataMe,
-      isLoading: isLoadingMe,
-      error: errorMe,
+      isMeLoading: isLoadingMe,
+      meError: errorMe,
     }),
     [dataMe, isLoadingMe, errorMe]
   );
   const isAuthenticated = !!dataMe;
   useSocket(isAuthenticated);
 
-  return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={authContextValue}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within a AuthProvider');
+    throw new Error("useAuth must be used within a AuthProvider");
   }
   return context;
 }

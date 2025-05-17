@@ -10,13 +10,19 @@ import { getTranslations } from "next-intl/server";
 
 import type { ReactNode } from "react";
 
+// export const experimental_ppr = true;
+
 export default async function OpeneduLayout({
   children,
   hasFooter,
-}: {
+}: // params,
+{
   children: ReactNode;
   hasFooter?: boolean;
+  params: Promise<{ locale: string }>;
 }) {
+  // const { locale } = await params;
+  // setRequestLocale(locale);
   const t = await getTranslations("headerMenu");
   const sidebarItems = [
     {

@@ -1,8 +1,8 @@
+import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 import {
   createCertHtmlTemplateService,
   getCertByIdService,
@@ -24,7 +24,7 @@ import type {
 } from '../types/certificate';
 
 export function useGetCertLayers({ courseId, params }: { courseId: string; params?: IFilter }) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.COURSES_ID_HTML_TEMPLATES,
     params: { id: courseId },
     queryParams: { ...params },
@@ -43,7 +43,7 @@ export function useGetCertLayers({ courseId, params }: { courseId: string; param
 }
 
 export function useGetCertTemplateById(id: string) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.HTML_TEMPLATES_ID,
     params: { id },
   });
@@ -61,7 +61,7 @@ export function useGetCertTemplateById(id: string) {
 }
 
 export function useGetCertTemplates(params?: IFilter) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.HTML_TEMPLATES,
     queryParams: { ...params },
   });
@@ -78,7 +78,7 @@ export function useGetCertTemplates(params?: IFilter) {
 
 export function useSelectHtmlTemplate(courseId: string) {
   const { trigger, isMutating, error } = useSWRMutation(
-    createAPIUrl({
+    buildUrl({
       endpoint: API_ENDPOINT.COURSES_ID_CERTIFICATES_ENABLE,
       params: { id: courseId },
     }),
@@ -108,7 +108,7 @@ export function useCreateCertLayer() {
 
 export function useUpdateCertLayer(id: string) {
   const { trigger, isMutating, error } = useSWRMutation(
-    createAPIUrl({
+    buildUrl({
       endpoint: API_ENDPOINT.HTML_TEMPLATES_ID,
       params: { id },
     }),
@@ -136,7 +136,7 @@ export function useReceiveCertificate() {
 }
 
 export function useGetCertByUserId(user_id: string, params?: IFilter) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.CERTIFICATES,
     queryParams: { ...params, user_id },
   });
@@ -167,7 +167,7 @@ export function useRemoveCertLayer() {
 }
 
 export function useGetCertLayerByCourseId(courseId: string) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.COURSES_ID_CERTIFICATES,
     params: { id: courseId },
   });
@@ -186,7 +186,7 @@ export function useGetCertLayerByCourseId(courseId: string) {
 
 export function useGetCertById(id: string) {
   const endpointKey = id
-    ? createAPIUrl({
+    ? buildUrl({
         endpoint: API_ENDPOINT.CERTIFICATES_ID,
         params: { id },
       })

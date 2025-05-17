@@ -1,10 +1,9 @@
 'use client';
-import { createAPIUrl } from '@oe/api';
 import type { IMyProfilePayload } from '@oe/api';
 import { useGetUserProfile, useUpdateMyProfile } from '@oe/api';
 import { type IEditAccountFormSchemaType, editAccountFormSchema } from '@oe/api';
 import { Mobile, SmsIcon, TagUser, User } from '@oe/assets';
-import { PLATFORM_ROUTES } from '@oe/core';
+import { PLATFORM_ROUTES, buildUrl } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'sonner';
@@ -38,7 +37,7 @@ export function EditAccountContent() {
         await mutateUserProfile();
       } else {
         router.push(
-          createAPIUrl({
+          buildUrl({
             endpoint: PLATFORM_ROUTES.editProfileAccount,
             params: {
               username: value.username,

@@ -1,3 +1,4 @@
+import { buildUrl } from '@oe/core';
 import type {
   IOrderChangeMethodPayload,
   IOrderPayload,
@@ -8,7 +9,7 @@ import type {
   IOrderStatusRes,
 } from '#types/order';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
+import { deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 
 export const postOrderService = async (
   endpoint: string | null | undefined,
@@ -25,7 +26,7 @@ export const putOrderChangeMethodService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.ORDERS_ID_PAYMENT,
       params: {
         id: payload.orderId,
@@ -44,7 +45,7 @@ export const postOrderPaymentWithWalletService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.ORDERS_ID_PAYMENT,
       params: {
         id: payload.orderId,
@@ -67,7 +68,7 @@ export const deleteOrderCouponService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.ORDERS_ID_COUPONS,
       params: {
         id: payload.orderId,
@@ -86,7 +87,7 @@ export const postApplyCouponOrderService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.ORDERS_ID_COUPONS_CODE,
       params: {
         id: payload.orderId,
@@ -106,7 +107,7 @@ export const postOrderPaymentSuccessService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.ORDERS_ID_SUCCESS,
       params: {
         id: payload.orderId,
@@ -125,7 +126,7 @@ export const getOrderPaymentStatusService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.ORDERS_ID_STATUS,
       params: {
         id: payload.orderId,

@@ -1,13 +1,12 @@
-import { getFeaturedOrgs } from "@oe/api";
+"use client";
+import { useGetFeaturedOrgs } from "@oe/api";
 import { Link } from "@oe/ui";
 import { Image } from "@oe/ui";
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 
-export async function OrganizationSection() {
-  const [t, organizations] = await Promise.all([
-    getTranslations("homePageLayout.organizationSection"),
-    getFeaturedOrgs(),
-  ]);
+export function OrganizationSection() {
+  const t = useTranslations("homePageLayout.organizationSection");
+  const { dataFeaturedOrgs } = useGetFeaturedOrgs();
 
   return (
     <section className="">
@@ -17,7 +16,7 @@ export async function OrganizationSection() {
         </h2>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-          {organizations?.map((org) => (
+          {dataFeaturedOrgs?.map((org) => (
             <Link
               href={`https://${
                 org?.alt_domain?.length > 0 ? org?.alt_domain : org?.domain

@@ -1,14 +1,15 @@
+import { buildUrl } from '@oe/core';
 import type { IFilter } from '#types/filter';
 import type { INotificationDeletePayload, INotificationReadPayload, INotificationRes } from '#types/notification';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, deleteAPI, fetchAPI, putAPI } from '#utils/fetch';
+import { deleteAPI, fetchAPI, putAPI } from '#utils/fetch';
 
 export const getNotificationService = async (
   endpoint: string | null | undefined,
   { queryParams, init }: { queryParams: IFilter; init?: RequestInit }
 ) => {
   const response = await fetchAPI<INotificationRes>(
-    endpoint ?? createAPIUrl({ endpoint: API_ENDPOINT.COM_NOTIFICATIONS, queryParams: { ...queryParams } }),
+    endpoint ?? buildUrl({ endpoint: API_ENDPOINT.COM_NOTIFICATIONS, queryParams: { ...queryParams } }),
     init
   );
 

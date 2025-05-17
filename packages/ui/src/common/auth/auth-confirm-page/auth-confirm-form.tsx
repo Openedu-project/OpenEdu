@@ -1,7 +1,7 @@
 'use client';
 
 import type { HTTPError } from '@oe/api';
-import { loginService, setPasswordService } from '@oe/api';
+import { loginAction, setPasswordService } from '@oe/api';
 import { type SetPasswordSchemaType, setPasswordSchema } from '@oe/api';
 import type { AuthEventName } from '@oe/api';
 import { useTranslations } from 'next-intl';
@@ -39,8 +39,10 @@ export function AuthConfirmForm({
       await setPasswordService(null, {
         payload: { event, token, email, password },
       });
-      await loginService(undefined, {
-        payload: { email, password, next_path: nextPath },
+      await loginAction({
+        email,
+        password,
+        next_path: nextPath,
       });
       mutate(() => true, undefined, { revalidate: true });
       setOpen(true);

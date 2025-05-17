@@ -2,8 +2,7 @@ import { Layer, Person2User } from '@oe/assets';
 import { useTranslations } from 'next-intl';
 
 import type { ICourse } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
-import { PLATFORM_ROUTES } from '@oe/core';
+import { PLATFORM_ROUTES, buildUrl } from '@oe/core';
 import { useMemo } from 'react';
 import { Link } from '#common/navigation';
 import { RatingStars } from '#components/rating-stars';
@@ -20,7 +19,7 @@ export function CourseInfo({ courseData }: { courseData: ICourse }) {
 
   const courseUrl = useMemo(
     () =>
-      createAPIUrl({
+      buildUrl({
         endpoint: PLATFORM_ROUTES.courseDetail,
         params: { slug: courseData?.slug },
       }),

@@ -1,6 +1,7 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
+import { buildUrl } from '@oe/core';
 import {
   followUserService,
   getListUserService,
@@ -22,10 +23,9 @@ import type {
   IUserRoleAction,
 } from '#types/user';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 
 // export function useGetUserProfile(id: string, shouldFetch = true) {
-//   const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.USERS_ID, params: { id } });
+//   const endpointKey = buildUrl({ endpoint: API_ENDPOINT.USERS_ID, params: { id } });
 //   const { data, isLoading, error, mutate } = useSWR(shouldFetch ? endpointKey : null, (endpoint: string) =>
 //     getUserProfileService(endpoint, { id })
 //   );
@@ -39,7 +39,7 @@ import { createAPIUrl } from '#utils/fetch';
 // }
 
 export const useGetListUser = (params: IFilter) => {
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.USERS, queryParams: { ...params } });
+  const endpointKey = buildUrl({ endpoint: API_ENDPOINT.USERS, queryParams: { ...params } });
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
     getListUserService(endpoint, { params })
   );
@@ -100,7 +100,7 @@ export function usePostUserRoles() {
 }
 
 export const useGetTopAuthor = (params: IFilter) => {
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.USERS_TOP_BLOG_VIEWED, queryParams: { ...params } });
+  const endpointKey = buildUrl({ endpoint: API_ENDPOINT.USERS_TOP_BLOG_VIEWED, queryParams: { ...params } });
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
     getTopAuthorService(endpoint, { params })
   );
@@ -113,7 +113,7 @@ export const useGetTopAuthor = (params: IFilter) => {
   };
 };
 export const useGetUserInvitationsList = ({ params }: { params: IFilter }) => {
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.USER_INVITATIONS, queryParams: { ...params } });
+  const endpointKey = buildUrl({ endpoint: API_ENDPOINT.USER_INVITATIONS, queryParams: { ...params } });
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
     getUserInvitationsListService(endpoint, { params })
   );
@@ -153,7 +153,7 @@ export function usePostUserEmail() {
 }
 
 export function useTriggerFollowUser(type: 'follow' | 'unfollow', id: string) {
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.USERS_ID_FOLLOW, params: { id } });
+  const endpointKey = buildUrl({ endpoint: API_ENDPOINT.USERS_ID_FOLLOW, params: { id } });
   const { trigger, isMutating, error } = useSWRMutation(endpointKey, (url: string) => followUserService(type, url));
   return {
     loading: isMutating,

@@ -1,8 +1,7 @@
-import { getCookie } from '@oe/core';
+import { getSession } from '../actions/session';
 import type { HTTPResponse } from '../types/fetch';
 import type { IFileResponse } from '../types/file';
 import { API_ENDPOINT } from './endpoints';
-import { getAPIReferrerAndOrigin } from './referrer-origin';
 
 export interface ErrorStatus {
   type: 'timeout' | 'server_error' | 'xhr_error';
@@ -84,17 +83,18 @@ export async function ajaxUpload(options: Options) {
     }
   }
 
-  const [{ referrer }, accessToken] = await Promise.all([
-    getAPIReferrerAndOrigin(),
-    getCookie(process.env.NEXT_PUBLIC_COOKIE_ACCESS_TOKEN_KEY),
-  ]);
+  const session = await getSession();
 
-  if (accessToken) {
-    xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
+  if (session?.accessToken) {
+    xhr.setRequestHeader('Authorization', `Bearer ${session.accessToken}`);
   }
 
-  if (referrer) {
-    xhr.setRequestHeader('X-referrer', referrer);
+  if (session?.referrer) {
+    xhr.setRequestHeader('X-referrer', session.referrer);
+  }
+
+  if (session?.origin) {
+    xhr.setRequestHeader('Origin', session.origin);
   }
 
   for (const key of Object.keys(headers)) {
@@ -102,10 +102,6 @@ export async function ajaxUpload(options: Options) {
       xhr.setRequestHeader(key, headers[key] as string);
     }
   }
-
-  // if (headers['X-Requested-With'] !== null) {
-  //   xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  // }
 
   if (timeout) {
     xhr.timeout = timeout;

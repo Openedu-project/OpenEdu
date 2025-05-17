@@ -3,8 +3,8 @@ import LogoOpenEdu from "@oe/assets/images/openedu-homepage/hero-banner/logo-ope
 import { PLATFORM_ROUTES } from "@oe/core";
 import { Button } from "@oe/ui";
 import { Link } from "@oe/ui";
-import { Image } from "@oe/ui";
 import { getTranslations } from "next-intl/server";
+import Image from "next/image";
 import { Suspense } from "react";
 import { PartnerSection } from "./partners";
 
@@ -73,15 +73,18 @@ export async function HeroSection() {
 
         <div className="relative w-full lg:w-2/3">
           <div className="relative mx-auto w-full max-w-[800px]">
-            <Image
-              src={HeroBanner.src}
-              alt={t("hero.banner.alt")}
-              width={1080}
-              height={573}
-              priority
-              className="relative z-10 object-contain"
-              sizes="(max-width: 768px) 100vw, (max-width: 1440px) 50vw, 720px"
-            />
+            <Suspense>
+              <Image
+                src={HeroBanner.src}
+                alt={t("hero.banner.alt")}
+                width={1080}
+                height={573}
+                priority
+                className="relative z-10 object-contain"
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 90vw, (max-width: 1024px) 70vw, (max-width: 1440px) 50vw, 800px"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWEREiMxUf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+              />
+            </Suspense>
           </div>
         </div>
       </div>

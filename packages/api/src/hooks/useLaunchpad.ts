@@ -1,3 +1,4 @@
+import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import {
@@ -18,10 +19,9 @@ import type {
   IPledgeLaunchpadPayload,
 } from '#types/launchpad';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 
 // export function useGetAdminLaunchpads(id: string, queryParams: IFilter) {
-//   const endpointKey = createAPIUrl({
+//   const endpointKey = buildUrl({
 //     endpoint: API_ENDPOINT.LAUNCHPADS,
 //     queryParams: { ...queryParams },
 //   });
@@ -39,7 +39,7 @@ import { createAPIUrl } from '#utils/fetch';
 // }
 
 // export function useGetAdminLaunchpadDetail(id: string, queryParams: IFilter = {}) {
-//   const endpointKey = createAPIUrl({
+//   const endpointKey = buildUrl({
 //     endpoint: API_ENDPOINT.LAUNCHPADS_ID,
 //     params: { id },
 //     queryParams: { ...queryParams },
@@ -58,7 +58,7 @@ import { createAPIUrl } from '#utils/fetch';
 // }
 
 // export function useGetAdminLaunchpadInvestment(id: string) {
-//   const endpointKey = createAPIUrl({
+//   const endpointKey = buildUrl({
 //     endpoint: API_ENDPOINT.LAUNCHPADS_ID,
 //     params: { id },
 //   });
@@ -76,7 +76,7 @@ import { createAPIUrl } from '#utils/fetch';
 // }
 
 // export const usePostAdminPublishLaunchpads = (id: string) => {
-//   const endpointKey = createAPIUrl({
+//   const endpointKey = buildUrl({
 //     endpoint: API_ENDPOINT.LAUNCHPADS_PUBLISH_LAUNCHPAD_ID,
 //     params: { id },
 //   });
@@ -95,7 +95,7 @@ import { createAPIUrl } from '#utils/fetch';
 // };
 
 // export const usePostAdminCancelLaunchpads = (id: string) => {
-//   const endpointKey = createAPIUrl({
+//   const endpointKey = buildUrl({
 //     endpoint: API_ENDPOINT.LAUNCHPADS_CANCEL_LAUNCHPAD_ID,
 //     params: { id },
 //   });
@@ -114,7 +114,7 @@ import { createAPIUrl } from '#utils/fetch';
 // };
 
 // export const usePostAdminStartVotingLaunchpads = (id: string, milestoneId: string) => {
-//   const endpointKey = createAPIUrl({
+//   const endpointKey = buildUrl({
 //     endpoint: API_ENDPOINT.LAUNCHPADS_START_VOTING_ID,
 //     params: { id, milestone_id: milestoneId },
 //   });
@@ -133,7 +133,7 @@ import { createAPIUrl } from '#utils/fetch';
 // };
 
 // export const usePutAdminCancelPublishLaunchpads = (id: string) => {
-//   const url = createAPIUrl({
+//   const url = buildUrl({
 //     endpoint: API_ENDPOINT.LAUNCHPADS_PUBLISH_LAUNCHPAD_ID,
 //     params: {
 //       id,
@@ -154,7 +154,7 @@ import { createAPIUrl } from '#utils/fetch';
 // };
 
 // export const usePutAdminStartFundingTimeLaunchpad = (id: string) => {
-//   const url = createAPIUrl({
+//   const url = buildUrl({
 //     endpoint: API_ENDPOINT.LAUNCHPADS_FUNDING_TIME_ID,
 //     params: {
 //       id,
@@ -175,7 +175,7 @@ import { createAPIUrl } from '#utils/fetch';
 // };
 
 // export const usePutAdminDecideVotingLaunchpad = (id: string) => {
-//   const url = createAPIUrl({
+//   const url = buildUrl({
 //     endpoint: API_ENDPOINT.LAUNCHPADS_DECIDE_VOTING_ID,
 //     params: {
 //       id,
@@ -209,7 +209,7 @@ export function usePostCreateLaunchpad() {
 }
 
 export const useGetLaunchpadMinPledgeOptions = () => {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.SYSTEM_CONFIGS,
     queryParams: { keys: ['course_launchpad_min_pledge_options'] },
   });
@@ -229,7 +229,7 @@ export const useGetLaunchpadMinPledgeOptions = () => {
 };
 
 export const useGetLaunchpadVotingPhaseRule = () => {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.SYSTEM_CONFIGS,
     queryParams: { keys: ['course_launchpad_voting_phase_rule'] },
   });
@@ -249,7 +249,7 @@ export const useGetLaunchpadVotingPhaseRule = () => {
 };
 
 export const useGetLaunchpadMinApprovalPercentage = () => {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.SYSTEM_CONFIGS,
     queryParams: { keys: ['course_launchpad_min_approval_percentage'] },
   });
@@ -269,7 +269,7 @@ export const useGetLaunchpadMinApprovalPercentage = () => {
 };
 
 export const useGetLaunchpadMinSections = () => {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.SYSTEM_CONFIGS,
     queryParams: { keys: ['course_launchpad_min_sections'] },
   });
@@ -289,7 +289,7 @@ export const useGetLaunchpadMinSections = () => {
 };
 
 export const usePostInitPool = (id: string, wallet_id: string) => {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.LAUNCHPADS_POOLS_ID,
     params: { id },
   });

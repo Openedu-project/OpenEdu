@@ -1,11 +1,11 @@
 import useSWR from 'swr';
 
+import { buildUrl } from '@oe/core';
 import { getCurrencyService } from '#services/currency';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 
 export function useGetCurrencyList(shouldFetch = true) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.SYSTEM_CONFIGS,
     queryParams: { keys: 'currency' },
   });

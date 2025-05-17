@@ -1,26 +1,28 @@
+"use client";
 import {
-  getOrgByDomainService,
-  getPopularCoursesServicesAtWebsite,
+  useGetOrganizationByDomain,
+  useGetPopularCoursesAtWebsite,
 } from "@oe/api";
-import { getCookie } from "@oe/core";
 import { Carousel } from "@oe/ui";
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 import { CarouselWrapper } from "./popular-course-carousel";
 
-export async function PopularCoursesSection() {
-  const domain =
-    (await getCookie(process.env.NEXT_PUBLIC_COOKIE_API_REFERRER_KEY)) ?? "";
-  const [orgData] = await Promise.all([
-    getOrgByDomainService(undefined, {
-      domain: domain?.split("/")?.[0] ?? domain,
-    }),
-  ]);
-  const [t, dataPopularCourses] = await Promise.all([
-    getTranslations("homePageLayout.popularCoursesSection"),
-    getPopularCoursesServicesAtWebsite(undefined, {
-      params: { org_id: orgData?.domain ?? orgData?.alt_domain ?? "" },
-    }),
-  ]);
+export function PopularCoursesSection() {
+  const t = useTranslations("homePageLayout.popularCoursesSection");
+  const { organizationByDomain } = useGetOrganizationByDomain();
+  const { dataPopularCourses } = useGetPopularCoursesAtWebsite({
+    params: {
+      org_id:
+        organizationByDomain?.alt_domain ?? organizationByDomain?.domain ?? "",
+    },
+  });
+  // const orgData = await getOrgByDomainService();
+  // const [t, dataPopularCourses] = await Promise.all([
+  //   getTranslations("homePageLayout.popularCoursesSection"),
+  //   getPopularCoursesServicesAtWebsite(undefined, {
+  //     params: { org_id: orgData?.domain ?? orgData?.alt_domain ?? "" },
+  //   }),
+  // ]);
 
   // const courses = coursesData?.results || [];
   // const hasMultipleSlides = courses.length > 8;
@@ -44,7 +46,12 @@ export async function PopularCoursesSection() {
           // hasMultipleSlides={hasMultipleSlides}
           viewAllText={t("viewAll")}
           title={t("title")}
-          params={{ org_id: orgData?.domain ?? orgData?.alt_domain ?? "" }}
+          params={{
+            org_id:
+              organizationByDomain?.alt_domain ??
+              organizationByDomain?.domain ??
+              "",
+          }}
         />
       </Carousel>
     </section>

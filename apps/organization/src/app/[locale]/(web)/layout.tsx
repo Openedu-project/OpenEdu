@@ -1,12 +1,14 @@
-import { getThemeConfigServer } from '@oe/api';
-import { getMetadata } from '@oe/themes';
-import type { FileType, FooterProps } from '@oe/ui';
-import { MainLayout } from '@oe/ui';
-import type { NavigationLink } from '@oe/ui';
-import type { ISidebarItem } from '@oe/ui';
-import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
-import type { ReactNode } from 'react';
+import { getThemeConfigServer } from "@oe/api";
+import { getMetadata } from "@oe/themes";
+import type { FileType, FooterProps } from "@oe/ui";
+import { MainLayout } from "@oe/ui";
+import type { NavigationLink } from "@oe/ui";
+import type { ISidebarItem } from "@oe/ui";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import type { ReactNode } from "react";
+
+// export const experimental_ppr = true;
 
 export async function generateMetadata(): Promise<Metadata> {
   const [themeSystem] = await Promise.all([getThemeConfigServer()]);

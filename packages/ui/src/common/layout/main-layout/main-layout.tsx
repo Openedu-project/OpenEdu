@@ -1,12 +1,12 @@
 import { isLogin } from '@oe/api';
 import type { ReactNode } from 'react';
 import { Link } from '#common/navigation';
-import { LoginWarningModal } from '#components/login-required-modal';
-import { NewUserSignInTriggerModal } from '#components/new-user-signin-trigger-modal';
+import { LoginWarningModalLazy } from '#components/login-required-modal';
+import { NewUserSignInTriggerModalLazy } from '#components/new-user-signin-trigger-modal';
 import type { FileType } from '#components/uploader';
 import { Badge } from '#shadcn/badge';
 import { cn } from '#utils/cn';
-import { Footer, type FooterProps } from '../footer';
+import { FooterLazy, type FooterProps } from '../footer';
 import { Header } from '../header';
 import type { ISidebarItem } from '../sidebar';
 import { Logo } from './logo';
@@ -48,6 +48,7 @@ export async function MainLayout({
                 )}
                 variant="ghost"
                 activeClassName="border-0"
+                prefetch
               >
                 {item.label}
                 {item.version && (
@@ -61,10 +62,10 @@ export async function MainLayout({
         </ul>
       </Header>
       {children}
-      <LoginWarningModal />
-      <NewUserSignInTriggerModal />
+      <LoginWarningModalLazy />
+      <NewUserSignInTriggerModalLazy />
       {hasFooter && (
-        <Footer
+        <FooterLazy
           logo={footerProps?.logo}
           description={footerProps?.description}
           navigationItems={footerProps?.navigationItems}

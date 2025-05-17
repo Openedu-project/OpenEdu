@@ -1,3 +1,4 @@
+import { buildUrl } from '@oe/core';
 import type {
   IAIBlogRequest,
   IAIBlogResponse,
@@ -9,7 +10,7 @@ import type {
 } from '#types/blog';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { type FetchOptions, createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
+import { type FetchOptions, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 
 export const getBlogListService = async (
   url: string | undefined,
@@ -17,7 +18,7 @@ export const getBlogListService = async (
 ) => {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.BLOGS,
       queryParams: {
         ...params,
@@ -47,7 +48,7 @@ export const publishBlog = async (
   id: string | undefined,
   { payload, init }: { payload?: Record<string, string>; init?: RequestInit }
 ) => {
-  const endpointKey = endpoint ?? createAPIUrl({ endpoint: API_ENDPOINT.BLOGS_ID_PUBLISH, params: { id } });
+  const endpointKey = endpoint ?? buildUrl({ endpoint: API_ENDPOINT.BLOGS_ID_PUBLISH, params: { id } });
   const response = await postAPI<{ message: string }, Record<string, string> | undefined>(endpointKey, payload, init);
 
   return response.data;
@@ -61,18 +62,18 @@ export const unpublishBlog = async (
 ) => {
   const endpointKey =
     endpoint ??
-    createAPIUrl({
+    buildUrl({
       endpoint: type === 'org' ? API_ENDPOINT.BLOGS_ID_PUBLISH_ORG : API_ENDPOINT.BLOGS_ID_PUBLISH_PERSON,
       params: { id },
     });
-  const response = await deleteAPI<{ message: string }, RequestInit>(endpointKey, init);
+  const response = await deleteAPI<{ message: string }, RequestInit>(endpointKey, undefined, init);
 
   return response.data;
 };
 
 export const deleteBlog = async (endpoint: string | null | undefined, id: string | undefined, init?: RequestInit) => {
-  const endpointKey = endpoint ?? createAPIUrl({ endpoint: API_ENDPOINT.BLOGS_ID, params: { id } });
-  const response = await deleteAPI<{ message: string }, RequestInit>(endpointKey, init);
+  const endpointKey = endpoint ?? buildUrl({ endpoint: API_ENDPOINT.BLOGS_ID, params: { id } });
+  const response = await deleteAPI<{ message: string }, RequestInit>(endpointKey, undefined, init);
 
   return response.data;
 };
@@ -94,7 +95,7 @@ export const getUserBlogService = async (
 ): Promise<IBlogsResponse | null> => {
   const key =
     url ??
-    createAPIUrl({
+    buildUrl({
       endpoint: type === 'personal' ? API_ENDPOINT.USERS_ID_PERSON_BLOGS : API_ENDPOINT.USERS_ID_ORG_BLOGS,
       params: { id },
       queryParams: { ...params },
@@ -110,7 +111,7 @@ export const updateBlog = async (
   id: string | undefined,
   { payload, init }: { payload: IBlogRequest; init?: RequestInit }
 ) => {
-  const url = createAPIUrl({
+  const url = buildUrl({
     endpoint: type === 'org' ? API_ENDPOINT.ADMIN_BLOGS_ID : API_ENDPOINT.BLOGS_ID,
     params: { id },
   });
@@ -124,7 +125,7 @@ export const getBlogDraftContent = async (
   payload?: { id: string; queryParams?: Record<string, string> },
   init?: FetchOptions
 ) => {
-  const defaultUrl = createAPIUrl({
+  const defaultUrl = buildUrl({
     endpoint: API_ENDPOINT.BLOGS_ID_EDIT,
     params: { id: payload?.id },
     queryParams: payload?.queryParams,
@@ -139,7 +140,7 @@ export const getBlogContent = async (
   payload?: { type: 'org' | 'personal'; slug: string; queryParams?: Record<string, string> },
   init?: FetchOptions
 ) => {
-  const defaultUrl = createAPIUrl({
+  const defaultUrl = buildUrl({
     endpoint: payload?.type === 'org' ? API_ENDPOINT.BLOGS_ID_ORG : API_ENDPOINT.BLOGS_ID_PERSONAL,
     params: { id: payload?.slug },
     queryParams: payload?.queryParams,
@@ -155,7 +156,7 @@ export const getRewriteData = async (
   queryParams?: Record<string, string>,
   init?: RequestInit
 ) => {
-  const endpointKey = url ?? createAPIUrl({ endpoint: API_ENDPOINT.BLOG_AI_ID_REWRITE, params, queryParams });
+  const endpointKey = url ?? buildUrl({ endpoint: API_ENDPOINT.BLOG_AI_ID_REWRITE, params, queryParams });
   const response = await fetchAPI<IRewriteResponse>(endpointKey, init);
 
   return response.data;
@@ -166,7 +167,7 @@ export async function getBlogsPublishService(
 ): Promise<IBlogsResponse | undefined> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.BLOGS,
       queryParams: {
         ...params,
@@ -191,7 +192,7 @@ export async function getBlogsByCategoryService(
   let endpointKey = url;
   if (!endpointKey) {
     const { id, ...filterParams } = params;
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.BLOGS_CATEGORIES,
       queryParams: {
         category_id: id,
@@ -218,7 +219,7 @@ export async function getBlogsByHashtagService(
   if (!endpointKey) {
     const { id, ...filterParams } = params;
 
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.BLOGS_HASHTAGS,
       queryParams: {
         hashtag_id: id,

@@ -1,3 +1,4 @@
+import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import {
@@ -8,10 +9,9 @@ import {
 import type { IFilter } from '#types/filter';
 import type { IInviteReferrerPayload, IReferralProgramPayload, IReferralProgramRes } from '#types/referral-program';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 
 export function useGetAllReferralProgramList({ queryParams }: { queryParams: IFilter }) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.POINT_CAMPAIGNS,
 
     queryParams: { ...queryParams },

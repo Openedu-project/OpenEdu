@@ -1,9 +1,8 @@
-import { getSystemConfigServer, systemConfigKeys } from '@oe/api';
-import { getCookie } from '@oe/core';
-import type { LanguageCode } from '@oe/i18n';
-import { SEOMetadata } from '@oe/ui';
-import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getSystemConfigServer, systemConfigKeys } from "@oe/api";
+import type { LanguageCode } from "@oe/i18n";
+import { SEOMetadata } from "@oe/ui";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 export type IBuilderData = {
   [locale in LanguageCode]?: string;
@@ -15,22 +14,26 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'termsMetadata' });
+  const t = await getTranslations({ locale, namespace: "termsMetadata" });
 
   return SEOMetadata({
-    title: t('title'),
+    title: t("title"),
   });
 }
 
-export default async function TermsOfServicePage() {
-  const [data, currentLang] = await Promise.all([
+export default async function TermsOfServicePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const [data, { locale: currentLang }] = await Promise.all([
     await getSystemConfigServer<IBuilderData>({
       key: systemConfigKeys.termPage,
     }),
-    ((await getCookie(process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY)) as LanguageCode) ?? 'en',
+    await params,
   ]);
 
-  const builderData = data?.[0]?.value?.[currentLang as LanguageCode] ?? '';
+  const builderData = data?.[0]?.value?.[currentLang as LanguageCode] ?? "";
 
   return (
     <div

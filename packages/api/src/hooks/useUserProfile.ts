@@ -1,9 +1,9 @@
+import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { getUserProfileService } from '#services/user';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 import {
   addUserToBlockService,
   changeMyPasswordService,
@@ -24,7 +24,7 @@ import type {
 } from '../types/user-profile';
 
 export function useGetUserProfile(userId?: string) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.USERS_ID,
     params: { id: userId },
   });
@@ -42,7 +42,7 @@ export function useGetUserProfile(userId?: string) {
 }
 
 export function useGetMeSettings<T>(params: IFilter) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.USERS_ME_SETTINGS,
     queryParams: { ...params },
   });
@@ -99,7 +99,7 @@ export function useChangeMyPassword() {
 }
 
 export function useGetListUserAction<T>(params: IFilter) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.USERS_ME_ACTIONS,
     queryParams: { ...params },
   });
@@ -130,7 +130,7 @@ export function useAddUserToBlock() {
 }
 
 export function useUnblockUser(id: string) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.USERS_ID_BLOCK,
     params: { id },
   });
@@ -147,7 +147,7 @@ export function useUnblockUser(id: string) {
 }
 
 export function useFollowUser(id: string) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.USERS_ID_FOLLOW,
     params: { id },
   });
@@ -164,7 +164,7 @@ export function useFollowUser(id: string) {
 }
 
 export function useUnfollowUser(id: string) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.USERS_ID_FOLLOW,
     params: { id },
   });

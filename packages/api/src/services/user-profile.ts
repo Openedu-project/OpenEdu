@@ -1,8 +1,8 @@
+import { buildUrl } from '@oe/core';
 import type { HTTPPagination } from '#types/fetch';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
-import { createAPIUrl } from '#utils/fetch';
 import type {
   IAddUserToBlockPayload,
   IChangeMyPswPayload,
@@ -18,7 +18,7 @@ import type {
 // ): Promise<IUserProfile | null> {
 //   let endpointKey = url;
 //   if (!endpointKey) {
-//     endpointKey = createAPIUrl({
+//     endpointKey = buildUrl({
 //       endpoint: API_ENDPOINT.USERS_ID,
 //       params: { ...params },
 //     });
@@ -38,7 +38,7 @@ export async function getMeSettingsService<T>(
 ): Promise<IMeSettings<T> | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.USERS_ME_SETTINGS,
       queryParams: { ...params },
     });
@@ -95,7 +95,7 @@ export async function getListUserActionService<T>(
 ): Promise<HTTPPagination<T> | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.USERS_ME_ACTIONS,
       queryParams: { ...params },
     });
@@ -128,13 +128,13 @@ export async function unblockUserService(
 ) {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.USERS_ID_BLOCK,
       params: { ...params },
     });
   }
 
-  const response = await deleteAPI(endpointKey, init);
+  const response = await deleteAPI(endpointKey, undefined, init);
   return response.data;
 }
 
@@ -144,7 +144,7 @@ export async function followUserProfileService(
 ) {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.USERS_ID_FOLLOW,
       params: { ...params },
     });
@@ -160,12 +160,12 @@ export async function unfollowUserService(
 ) {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.USERS_ID_FOLLOW,
       params: { ...params },
     });
   }
 
-  const response = await deleteAPI(endpointKey, init);
+  const response = await deleteAPI(endpointKey, undefined, init);
   return response.data;
 }

@@ -1,0 +1,131 @@
+name: Deploy SST to AWS
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: 'Chọn môi trường'
+        required: true
+        options:
+          - openedu101dev
+          - org_openedu101dev
+          - openedudev
+          - org_openedudev
+          - openedutest
+          - org_openedutest
+          - production
+          - org_production
+
+run-name: Deploy SST to ${{ inputs.environment }}
+
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Thiết lập thư mục dự án
+        run: |
+          if [[ "${{ github.event.inputs.environment }}" == org_* ]]; then
+            echo "PROJECT_DIR=apps/organization" >> $GITHUB_ENV
+          else
+            echo "PROJECT_DIR=apps/platform" >> $GITHUB_ENV
+          fi
+
+      - name: Kiểm tra điều kiện triển khai
+        run: |
+          if [ "${{ github.event.inputs.environment }}" = "production" ] || [ "${{ github.event.inputs.environment }}" = "org_production" ]; then
+            if [ "${{ github.ref_name }}" != "main" ]; then
+              echo "Lỗi: Môi trường production chỉ có thể được triển khai từ nhánh main."
+              exit 1
+            fi
+          fi
+
+      - name: Thiết lập tên stage
+        run: |
+          ENV_NAME="${{ github.event.inputs.environment }}"
+          if [[ "$ENV_NAME" == org_* ]]; then
+            STAGE_NAME="${ENV_NAME#org_}"
+          else
+            STAGE_NAME="$ENV_NAME"
+          fi
+          echo "STAGE_NAME=$STAGE_NAME" >> $GITHUB_ENV
+
+      - name: Cấu hình AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME_ARN }}
+          role-session-name: ${{ github.run_id }}
+
+      - name: Cache turbo build setup
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      - name: Cài đặt Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: pnpm/action-setup@v4
+        name: Cài đặt pnpm
+        with:
+          run_install: false
+
+      - name: Lấy thư mục store của pnpm
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        name: Cấu hình cache của pnpm
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Cài đặt dependencies
+        run: pnpm install
+
+      - name: Build packages
+        run: pnpm build-packages
+
+      - name: Thiết lập file môi trường
+        run: |
+          ENV_NAME="${{ env.STAGE_NAME }}"
+          
+          if [ -f "${{ env.PROJECT_DIR }}/.env.$ENV_NAME" ]; then
+            cp ${{ env.PROJECT_DIR }}/.env.$ENV_NAME ${{ env.PROJECT_DIR }}/.env.production.local
+            
+            # Thêm các biến môi trường mật
+            echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> ${{ env.PROJECT_DIR }}/.env.production.local
+            echo "DOMAIN_CERT=${{ secrets.DOMAIN_CERT }}" >> ${{ env.PROJECT_DIR }}/.env
+          else
+            echo "Không tìm thấy file môi trường cho $ENV_NAME trong ${{ env.PROJECT_DIR }}"
+            exit 1
+          fi
+
+      - name: Deploy với SST
+        working-directory: ${{ env.PROJECT_DIR }}
+        env:
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+        run: |
+          pnpm dlx sst deploy --stage ${{ env.STAGE_NAME }} --config sst.config.${{ env.STAGE_NAME }}.ts

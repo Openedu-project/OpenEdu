@@ -17,7 +17,7 @@ export async function handleResponse<T>(response: Response): Promise<HTTPRespons
       metadata = undefined;
     }
 
-    console.log('-------Fetch metadata-------', metadata);
+    console.log('-------Fetch metadata-------', metadata, response.url);
 
     const error = new HTTPError({
       status: response.status,
@@ -35,10 +35,25 @@ export function handleError(error: unknown) {
   if (isHTTPError(error)) {
     return error;
   }
-  if (isNetworkError(error)) {
-    return new HTTPError({ message: HTTPErrorCodeMessages.NETWORK_ERROR });
+
+  if (error instanceof Error && error.name === 'AbortError') {
+    return new HTTPError({
+      message: HTTPErrorCodeMessages.TIMEOUT_ERROR,
+      originalError: error,
+    });
   }
-  return new HTTPError({ message: HTTPErrorCodeMessages.UNKNOWN });
+
+  if (isNetworkError(error)) {
+    return new HTTPError({
+      message: HTTPErrorCodeMessages.NETWORK_ERROR,
+      originalError: error instanceof Error ? error : undefined,
+    });
+  }
+
+  return new HTTPError({
+    message: HTTPErrorCodeMessages.UNKNOWN,
+    originalError: error instanceof Error ? error : undefined,
+  });
 }
 
 export function getErrorCodeFromStatus(status: number): HTTPErrorCode {

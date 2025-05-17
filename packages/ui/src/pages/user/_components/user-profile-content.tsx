@@ -2,12 +2,10 @@
 import { useGetMe } from '@oe/api';
 import type { IUserProfile } from '@oe/api';
 import { useFollowUser, useGetUserProfile, useUnfollowUser } from '@oe/api';
+import { BLOG_ROUTES, buildUrl } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-
-import { createAPIUrl } from '@oe/api';
-import { BLOG_ROUTES } from '@oe/core';
 import { CertificateCard } from '#components/certificate';
 import { useLoginRequiredStore } from '#components/login-required-modal';
 import { NoDataAvailable } from '#components/no-data-available';
@@ -111,7 +109,7 @@ export function UserProfileContent() {
             ))}
           </>
         ),
-        url: createAPIUrl({
+        url: buildUrl({
           endpoint: BLOG_ROUTES.authorBlog,
           params: { username: userProfile?.username },
         }),

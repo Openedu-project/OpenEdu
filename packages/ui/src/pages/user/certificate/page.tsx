@@ -1,8 +1,6 @@
 'use client';
-
-import { createAPIUrl } from '@oe/api';
 import { useGetCertById } from '@oe/api';
-import { PLATFORM_ROUTES } from '@oe/core';
+import { PLATFORM_ROUTES, buildUrl } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { CertificateDetail } from '#components/certificate';
@@ -26,7 +24,7 @@ export function Certificate() {
       ) : (
         <NoDataAvailable
           className="m-auto"
-          navigateLink={createAPIUrl({
+          navigateLink={buildUrl({
             endpoint: PLATFORM_ROUTES.userProfile,
             params: { username: user },
           })}

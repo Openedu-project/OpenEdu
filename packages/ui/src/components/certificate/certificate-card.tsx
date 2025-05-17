@@ -1,17 +1,15 @@
 'use client';
 import type { ICertificateMyProfile } from '@oe/api';
-import { useRouter } from 'next/navigation';
-import { type HTMLAttributes, useState } from 'react';
-import { Card, CardContent, CardHeader } from '#shadcn/card';
-import { Checkbox } from '#shadcn/checkbox';
-
-import { createAPIUrl } from '@oe/api';
 import image from '@oe/assets/images/blog.png';
-import { PLATFORM_ROUTES } from '@oe/core';
+import { PLATFORM_ROUTES, buildUrl } from '@oe/core';
 import { formatDate } from '@oe/core';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import { type HTMLAttributes, useState } from 'react';
 import { Image } from '#components/image';
 import { PdfViewer } from '#components/pdf-viewer';
+import { Card, CardContent, CardHeader } from '#shadcn/card';
+import { Checkbox } from '#shadcn/checkbox';
 import { cn } from '#utils/cn';
 import { useShowProfileItemsStore } from '../../pages/user/_store/userProfileStore';
 
@@ -43,14 +41,14 @@ export function CertificateCard({
   const handleClick = () => {
     if (type === 'profile') {
       router.push(
-        createAPIUrl({
+        buildUrl({
           endpoint: PLATFORM_ROUTES.profileCertificateDetail,
           params: { username, certId: certificate.id },
         })
       );
     } else {
       router.push(
-        createAPIUrl({
+        buildUrl({
           endpoint: PLATFORM_ROUTES.learnerMyCertificates,
           queryParams: { certificate: certificate.id },
         })

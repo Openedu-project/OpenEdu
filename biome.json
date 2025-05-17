@@ -29,7 +29,7 @@
       "attributePosition": "auto",
       "bracketSpacing": true
     },
-    "globals": []
+    "globals": ["sst", "$config"]
   },
   "json": {
     "formatter": {

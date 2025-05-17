@@ -1,10 +1,11 @@
+import { buildUrl } from '@oe/core';
 import type {
   ILatestLessonProgressPayload,
   ILearningProgress,
   ILearningProgressPayload,
 } from '#types/course/learning-progress';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI, postAPI } from '#utils/fetch';
+import { fetchAPI, postAPI } from '#utils/fetch';
 import type { HTTPErrorMetadata } from '#utils/http-error';
 
 export async function getLearningProgressesService(
@@ -13,7 +14,7 @@ export async function getLearningProgressesService(
 ): Promise<ILearningProgress | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.LEARNING_PROGRESSES_COURSES_ID,
       params: {
         id,

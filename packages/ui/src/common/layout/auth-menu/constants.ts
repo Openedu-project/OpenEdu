@@ -1,4 +1,3 @@
-import { createAPIUrl } from '@oe/api';
 import type { IUser } from '@oe/api';
 import {
   ADMIN_ROUTES,
@@ -8,6 +7,7 @@ import {
   CREATOR_ROUTES,
   LEARNER_ROUTES,
   PROTECTED_ROUTES,
+  buildUrl,
 } from '@oe/core';
 import { ROLE_LIST } from '@oe/core';
 import {
@@ -54,7 +54,7 @@ export const MENU_ITEMS = (user: IUser) =>
       key: 'myPost',
       icon: FileText,
       requiredRoles: [ROLE_LIST.LEARNER],
-      href: createAPIUrl({ endpoint: BLOG_ROUTES.authorBlog, params: { username: user.username } }),
+      href: buildUrl({ endpoint: BLOG_ROUTES.authorBlog, params: { username: user.username } }),
       hasSepratePage: true,
     },
     {

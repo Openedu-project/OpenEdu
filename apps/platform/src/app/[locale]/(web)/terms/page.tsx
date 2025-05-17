@@ -1,6 +1,5 @@
 import { getSystemConfigServer } from "@oe/api";
 import { systemConfigKeys } from "@oe/api";
-import { getCookie } from "@oe/core";
 import type { LanguageCode } from "@oe/i18n";
 import type { Metadata } from "next";
 
@@ -10,17 +9,19 @@ export const metadata: Metadata = {
 export type IBuilderData = {
   [locale in LanguageCode]?: string;
 };
-export default async function TermAndConditionPage() {
-  const [data, currentLang] = await Promise.all([
+export default async function TermAndConditionPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const [data, { locale: currentLang }] = await Promise.all([
     await getSystemConfigServer<IBuilderData>({
       key: systemConfigKeys.termPage,
     }),
-    ((await getCookie(
-      process.env.NEXT_PUBLIC_COOKIE_LOCALE_KEY
-    )) as LanguageCode) ?? "en",
+    await params,
   ]);
 
-  const builderData = data?.[0]?.value?.[currentLang as LanguageCode] ?? '';
+  const builderData = data?.[0]?.value?.[currentLang as LanguageCode] ?? "";
 
   return (
     <div

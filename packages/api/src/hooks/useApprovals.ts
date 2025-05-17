@@ -1,6 +1,7 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
+import { buildUrl } from '@oe/core';
 import {
   getListApprovalByAdminService,
   getListApprovalService,
@@ -13,7 +14,6 @@ import type { ICourse } from '#types/course/course';
 import type { ICourseOrganizationRequestProps } from '#types/course/org-request';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 import type {
   IApproval,
   IApprovalPayload,
@@ -24,7 +24,7 @@ import type {
 } from '../types/approvals';
 
 export function useGetListApprovals({ params }: { params: IFilter }) {
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.APPROVALS, queryParams: { ...params } });
+  const endpointKey = buildUrl({ endpoint: API_ENDPOINT.APPROVALS, queryParams: { ...params } });
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
     getListApprovalService(endpoint, { params })
   );
@@ -38,7 +38,7 @@ export function useGetListApprovals({ params }: { params: IFilter }) {
 }
 
 export function useGetListUserApprovals({ params }: { params: IFilter }) {
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.USERS_ME_APPROVALS, queryParams: { ...params } });
+  const endpointKey = buildUrl({ endpoint: API_ENDPOINT.USERS_ME_APPROVALS, queryParams: { ...params } });
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
     getListUserApprovalService(endpoint, { params })
   );
@@ -52,7 +52,7 @@ export function useGetListUserApprovals({ params }: { params: IFilter }) {
 }
 
 export function useGetListApprovalByAdmin({ params }: { params: IFilter }) {
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.ADMIN_APPROVALS, queryParams: { ...params } });
+  const endpointKey = buildUrl({ endpoint: API_ENDPOINT.ADMIN_APPROVALS, queryParams: { ...params } });
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) =>
     getListApprovalByAdminService(endpoint, { params })
   );
@@ -66,7 +66,7 @@ export function useGetListApprovalByAdmin({ params }: { params: IFilter }) {
 }
 
 export function useReject(id: string) {
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.APPROVALS_ID_REJECT, params: { id } });
+  const endpointKey = buildUrl({ endpoint: API_ENDPOINT.APPROVALS_ID_REJECT, params: { id } });
 
   const { trigger, isMutating, error } = useSWRMutation(
     endpointKey,
@@ -81,7 +81,7 @@ export function useReject(id: string) {
 }
 
 export function useApprove(id: string) {
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.APPROVALS_ID_APPROVE, params: { id } });
+  const endpointKey = buildUrl({ endpoint: API_ENDPOINT.APPROVALS_ID_APPROVE, params: { id } });
 
   const { trigger, isMutating, error } = useSWRMutation(
     endpointKey,
@@ -96,7 +96,7 @@ export function useApprove(id: string) {
 }
 
 export function useAdminFeedback(id: string) {
-  const endpointKey = createAPIUrl({ endpoint: API_ENDPOINT.APPROVALS_ID_FEEDBACK, params: { id } });
+  const endpointKey = buildUrl({ endpoint: API_ENDPOINT.APPROVALS_ID_FEEDBACK, params: { id } });
 
   const { trigger, isMutating, error } = useSWRMutation(
     endpointKey,

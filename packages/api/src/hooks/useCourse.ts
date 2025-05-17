@@ -31,10 +31,9 @@ import type { ICoursePartnersParams } from '#types/course/partner';
 import type { ISegmentParams } from '#types/course/segment';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 
 export function useGetCourses({ params }: { params: IFilter }) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.COURSES,
     queryParams: { ...params },
   });
@@ -53,7 +52,7 @@ export function useGetCourses({ params }: { params: IFilter }) {
 export function useGetCourseById(id: string, fallback: ICourse | undefined = undefined) {
   const { data, isLoading, error, mutate } = useSWR(
     id
-      ? createAPIUrl({ endpoint: API_ENDPOINT.COURSES_ID, params: { id }, queryParams: { preloads: ['segments'] } })
+      ? buildUrl({ endpoint: API_ENDPOINT.COURSES_ID, params: { id }, queryParams: { preloads: ['segments'] } })
       : null,
     (endpoint: string) => getCourseByIdService(endpoint, { id }),
     {
@@ -70,7 +69,7 @@ export function useGetCourseById(id: string, fallback: ICourse | undefined = und
 }
 
 export function useGetCourseOutline(id: string, fallback: ICourseOutline | null = null) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.COURSES_ID_OUTLINE,
     params: { id },
     queryParams: {
@@ -94,7 +93,7 @@ export function useGetCourseOutline(id: string, fallback: ICourseOutline | null 
 }
 
 export function useGetLevels(params: Record<string, string | boolean>) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.CATEGORIES_TREE,
     queryParams: { ...params },
   });
@@ -111,7 +110,7 @@ export function useGetLevels(params: Record<string, string | boolean>) {
 }
 
 export function useGetCoursesPublish(params: IFilter, fallback?: ICourseResponse) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.COURSES_PUBLISH,
     queryParams: { ...params },
   });
@@ -132,7 +131,7 @@ export function useGetCoursesPublish(params: IFilter, fallback?: ICourseResponse
 }
 
 export const usePostEnrollCourse = (id: string) => {
-  const endpoint = createAPIUrl({ endpoint: API_ENDPOINT.COURSES_ID_ENROLL, params: { id } });
+  const endpoint = buildUrl({ endpoint: API_ENDPOINT.COURSES_ID_ENROLL, params: { id } });
 
   const { trigger, error, isMutating } = useSWRMutation(
     id ? endpoint : null,
@@ -190,7 +189,7 @@ export const usePutEnableCourse = () => {
     API_ENDPOINT.COURSES_ID_STAGE,
     async (_endpoint: string, { arg }: { arg: IEnableCourseRequest }): Promise<ICourse> =>
       putEnableCourseService(
-        createAPIUrl({
+        buildUrl({
           endpoint: API_ENDPOINT.COURSES_ID_STAGE,
           params: {
             id: arg?.id,
@@ -216,7 +215,7 @@ export const useGetPublishedCourseByAdmin = ({
   params?: IFilter;
   org_id_not?: string;
 }) => {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.COURSES_PUBLISH,
     queryParams: {
       ...params,
@@ -236,7 +235,7 @@ export const useGetPublishedCourseByAdmin = ({
 };
 
 export const useGetPreviewCourseById = ({ courseId, orgId }: { courseId?: string; orgId?: string }) => {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.COURSES_ID_PREVIEW_ORG_ID,
     params: {
       id: courseId,
@@ -258,7 +257,7 @@ export const useGetPreviewCourseById = ({ courseId, orgId }: { courseId?: string
 };
 
 export const useGetSectionsHaveLessonsByCourseId = (params?: ISegmentParams) => {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.SEGMENTS,
     queryParams: {
       ...params,
@@ -283,7 +282,7 @@ export const useGetSectionsHaveLessonsByCourseId = (params?: ISegmentParams) => 
 };
 
 export const useGetCoursePartners = (id: string, params?: IFilter) => {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.COURSES_ID_PARTNERS,
     params: { id },
     queryParams: {
@@ -302,7 +301,7 @@ export const useGetCoursePartners = (id: string, params?: IFilter) => {
 };
 
 export const useSearchPartnersByEmail = (shouldFetch?: boolean, params?: ICoursePartnersParams) => {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.USERS,
     queryParams: params,
   });
@@ -322,7 +321,7 @@ export const usePutCancelRequestCourse = () => {
     API_ENDPOINT.COURSES_ID_PUBLISH,
     async (_endpoint: string, { arg }: { arg: string }): Promise<ICourse> =>
       putCancelRequestCourseService(
-        createAPIUrl({
+        buildUrl({
           endpoint: API_ENDPOINT.COURSES_ID_PUBLISH,
           params: {
             id: arg,
@@ -343,7 +342,7 @@ export const usePutRelyFeedback = (courseId?: string) => {
     courseId ? API_ENDPOINT.COURSES_ID_REPLY_FEEDBACK : '',
     async (_endpoint: string, { arg }: { arg: IDiscussionRequest }): Promise<ICourse> =>
       putReplyFeedbackCourseService(
-        createAPIUrl({
+        buildUrl({
           endpoint: API_ENDPOINT.COURSES_ID_REPLY_FEEDBACK,
           params: {
             id: courseId,

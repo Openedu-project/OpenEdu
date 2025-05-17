@@ -1,18 +1,16 @@
 'use client';
 
 import { useGetCourseOutline } from '@oe/api';
+import Icon from '@oe/assets/images/payment/icon-payment-failed.svg';
+import { PLATFORM_ROUTES, buildUrl } from '@oe/core';
 import { LifeBuoy } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams, useRouter } from 'next/navigation';
-import { buttonVariants } from '#shadcn/button';
-import { Card, CardContent } from '#shadcn/card';
-
-import { createAPIUrl } from '@oe/api';
-import Icon from '@oe/assets/images/payment/icon-payment-failed.svg';
-import { PLATFORM_ROUTES } from '@oe/core';
 import type React from 'react';
 import { Link } from '#common/navigation';
 import { Image } from '#components/image';
+import { buttonVariants } from '#shadcn/button';
+import { Card, CardContent } from '#shadcn/card';
 import { cn } from '#utils/cn';
 
 export function PaymentFailed() {
@@ -25,7 +23,7 @@ export function PaymentFailed() {
     e.preventDefault();
 
     router.push(
-      createAPIUrl({
+      buildUrl({
         endpoint: PLATFORM_ROUTES.payment,
         params: { slug },
       })

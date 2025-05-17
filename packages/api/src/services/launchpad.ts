@@ -1,6 +1,7 @@
+import { buildUrl } from '@oe/core';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, deleteAPI, fetchAPI, postAPI } from '#utils/fetch';
+import { deleteAPI, fetchAPI, postAPI } from '#utils/fetch';
 import type {
   IBackerData,
   ICreateLaunchpadRequest,
@@ -16,7 +17,7 @@ export const getLaunchpadsService = async (
 ): Promise<ILaunchpadResponse | undefined> => {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.LAUNCHPADS,
       queryParams: {
         ...params,
@@ -38,7 +39,7 @@ export async function getLaunchpadService(
 ): Promise<ILaunchpad | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.LAUNCHPADS_ID,
       params: {
         id,
@@ -65,7 +66,7 @@ export async function getBackerService(
   let endpointKey = url;
 
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.LAUNCHPADS_ID_INVESTMENTS,
       params: {
         id,
@@ -91,7 +92,7 @@ export async function getLaunchpadConfigService<T>(
 ): Promise<T | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.LAUNCHPADS_CREATE,
       queryParams: {
         keys,
@@ -115,7 +116,7 @@ export async function getMyLaunchpadService({
   init?: RequestInit;
   params: IFilter & { status?: string };
 }): Promise<IMyLaunchpadResponse | null> {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.LAUNCHPADS_MY_LAUNCHPAD,
     queryParams: {
       ...params,
@@ -155,7 +156,7 @@ export const postInitPoolLaunchpadService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.LAUNCHPADS_POOLS_ID,
       params: {
         id: payload.id,
@@ -178,7 +179,7 @@ export const postLaunchpadVote = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.LAUNCHPADS_VOTE_ID,
       params: {
         milestone_id: milestone_id,
@@ -201,7 +202,7 @@ export const postBookmarkLaunchpadService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.LAUNCHPADS_BOOKMARK_ID,
       params: { id: payload.id },
     });
@@ -218,14 +219,14 @@ export const removeBookmarkLaunchpadService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.LAUNCHPADS_BOOKMARK_ID,
       params: {
         id: payload.id,
       },
     });
   }
-  const response = await deleteAPI(endpointKey, init);
+  const response = await deleteAPI(endpointKey, undefined, init);
 
   return response.data;
 };

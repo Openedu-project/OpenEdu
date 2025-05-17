@@ -4,7 +4,7 @@ import type { ICryptoWithdrawPayload, IFiatWithdrawPayload } from '#schemas/with
 import type { HTTPPagination } from '#types/fetch';
 import type { IBankAccount, IWallet, TRequestWithdrawHistory } from '#types/wallet';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { type FetchOptions, createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
+import { type FetchOptions, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 
 // export async function postWithdrawCryptoService(
 //   endpoint: string | null | undefined,
@@ -12,7 +12,7 @@ import { type FetchOptions, createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI }
 //   { payload, init }: { payload: IWithdrawCryptoPayload; init?: RequestInit }
 // ) {
 //   const response = await postAPI(
-//     endpoint ?? createAPIUrl({ endpoint: API_ENDPOINT.USERS_ME_WALLETS_ID_WITHDRAW_CRYPTO, params: { id: walletId } }),
+//     endpoint ?? buildUrl({ endpoint: API_ENDPOINT.USERS_ME_WALLETS_ID_WITHDRAW_CRYPTO, params: { id: walletId } }),
 //     payload,
 //     init
 //   );
@@ -23,7 +23,7 @@ import { type FetchOptions, createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI }
 export async function getWalletSevice(endpoint?: string | null | undefined, params?: Record<string, unknown>) {
   const response = await fetchAPI(
     endpoint ??
-      createAPIUrl({
+      buildUrl({
         endpoint: API_ENDPOINT.USERS_ME_WALLETS,
         queryParams: params,
       })
@@ -34,7 +34,7 @@ export async function getWalletSevice(endpoint?: string | null | undefined, para
 export async function getBankAccountsService(endpoint: string | null | undefined, params?: Record<string, unknown>) {
   const response = await fetchAPI(
     endpoint ??
-      createAPIUrl({
+      buildUrl({
         endpoint: API_ENDPOINT.USER_SETTINGS,
         queryParams: params,
       })
@@ -50,7 +50,7 @@ export async function tokenSubmitWithdrawService(
 ) {
   const response = await postAPI(
     endpoint ??
-      createAPIUrl({
+      buildUrl({
         endpoint: API_ENDPOINT.USERS_ME_WALLETS_ID_WITHDRAW_CRYPTO,
         params: { id: walletId },
       }),
@@ -68,7 +68,7 @@ export async function fiatSubmitWithdrawService(
 ) {
   const response = await postAPI(
     endpoint ??
-      createAPIUrl({
+      buildUrl({
         endpoint: API_ENDPOINT.USERS_ME_WALLETS_ID_WITHDRAW,
         params: { id: walletId },
       }),
@@ -114,6 +114,7 @@ export const updateBankAccount = async (
 export const deleteBankAccount = async (url: string | null | undefined, ids: string, init: FetchOptions = {}) => {
   const response = await deleteAPI(
     url ?? buildUrl({ endpoint: API_ENDPOINT.USER_SETTINGS, queryParams: { ids } }),
+    undefined,
     init
   );
 

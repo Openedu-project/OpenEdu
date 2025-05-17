@@ -1,14 +1,14 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
+import { buildUrl } from '@oe/core';
 import { deleteNotificationService, getNotificationService, putNotification } from '#services/notification';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 import type { INotificationDeletePayload, INotificationReadPayload, INotificationRes } from '../types/notification';
 
 export function useGetNotification(params: IFilter) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.COM_NOTIFICATIONS,
     queryParams: { ...params },
   });

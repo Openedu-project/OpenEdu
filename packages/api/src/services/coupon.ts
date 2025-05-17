@@ -1,7 +1,8 @@
+import { buildUrl } from '@oe/core';
 import type { ICouponItemRes, ICouponListRes, ICouponPayload, IUseCouponPayload } from '#types/coupon';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
+import { deleteAPI, fetchAPI, postAPI, putAPI } from '#utils/fetch';
 
 export async function getPlatformCouponListService(
   url: string,
@@ -9,7 +10,7 @@ export async function getPlatformCouponListService(
 ): Promise<ICouponListRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COUPONS,
       queryParams: {
         ...params,
@@ -32,7 +33,7 @@ export async function getAdminCouponListService(
 ): Promise<ICouponListRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.ADMIN_COUPONS,
       queryParams: {
         ...params,
@@ -55,7 +56,7 @@ export async function getCouponDetailService(
 ): Promise<ICouponItemRes | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COUPONS_ID,
       params: {
         ...params,
@@ -87,7 +88,7 @@ export const putCouponService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COUPONS_ID,
       params: {
         id: payload.id,
@@ -106,7 +107,7 @@ export const deleteCouponService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.COUPONS,
       params: {
         ...payload,

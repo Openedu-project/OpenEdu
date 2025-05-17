@@ -2,24 +2,22 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { IBlockingUser } from '@oe/api';
-import { useForm } from 'react-hook-form';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { Avatar, AvatarFallback, AvatarImage } from '#shadcn/avatar';
-import { Checkbox as UICheckbox } from '#shadcn/checkbox';
-import { Form, FormControl, FormField, FormItem, FormLabel } from '#shadcn/form';
-
-import { createAPIUrl } from '@oe/api';
 import { type IPrivacyProfileFormSchemaType, privacyProfileFormSchema } from '@oe/api';
-import { PLATFORM_ROUTES } from '@oe/core';
+import { PLATFORM_ROUTES, buildUrl } from '@oe/core';
 import { pickCharacters } from '@oe/core';
 import { SearchIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type React from 'react';
 import { useCallback } from 'react';
+import { useForm } from 'react-hook-form';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { useDebouncedCallback } from 'use-debounce';
 import { Link } from '#common/navigation';
 import { Spinner } from '#components/spinner';
+import { Avatar, AvatarFallback, AvatarImage } from '#shadcn/avatar';
 import { Button } from '#shadcn/button';
+import { Checkbox as UICheckbox } from '#shadcn/checkbox';
+import { Form, FormControl, FormField, FormItem, FormLabel } from '#shadcn/form';
 import { Input } from '#shadcn/input';
 import { cn } from '#utils/cn';
 
@@ -146,7 +144,7 @@ export function UserListForm({
                             </Avatar>
 
                             <Link
-                              href={createAPIUrl({
+                              href={buildUrl({
                                 endpoint: PLATFORM_ROUTES.userProfile,
                                 params: { username: user.username },
                               })}

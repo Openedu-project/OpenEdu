@@ -1,23 +1,21 @@
 'use client';
 
 import type { IUserProfile } from '@oe/api';
+// import orgAvatarDark from '@/assets/images/org-ava-dark.png';
+import background from '@oe/assets/images/user-background.png';
+import { PLATFORM_ROUTES, buildUrl } from '@oe/core';
 // import { Flag } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 import { Link } from '#common/navigation';
+// import { pickCharacters } from "@oe/core";
+import { Image } from '#components/image';
+import { UserAvatar } from '#components/user-avatar';
 // import Newletter from '@oe/icons/newletter';
 // import ShareSocial from '@oe/icons/share-social';
 // import { Avatar, AvatarFallback, AvatarImage } from "#shadcn/avatar";
 import { Button } from '#shadcn/button';
 import { cn } from '#utils/cn';
-
-import { createAPIUrl } from '@oe/api';
-// import orgAvatarDark from '@/assets/images/org-ava-dark.png';
-import background from '@oe/assets/images/user-background.png';
-import { PLATFORM_ROUTES } from '@oe/core';
-// import { pickCharacters } from "@oe/core";
-import { Image } from '#components/image';
-import { UserAvatar } from '#components/user-avatar';
 import { useUserRoleStore } from '../_store/userProfileStore';
 
 interface IUserBioProps {
@@ -164,7 +162,7 @@ export function UserBio({ data, isMe, handleFollowUser }: IUserBioProps) {
         {isMe ? (
           <div className="absolute top-3 right-3 flex flex-col justify-end gap-2 md:top-6 lg:flex-row-reverse lg:gap-3">
             <Link
-              href={createAPIUrl({
+              href={buildUrl({
                 endpoint: PLATFORM_ROUTES.editProfileInformation,
                 params: { username },
               })}

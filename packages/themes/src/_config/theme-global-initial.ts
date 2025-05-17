@@ -173,8 +173,8 @@ export const aieduThemeGlobal: ThemeGlobal = {
   },
   fonts: {
     primary: 'var(--font-plus-jakarta-sans)',
-    secondary: 'var(--font-montserrat)',
-    sub: 'var(--font-roboto-mono)',
+    secondary: 'var(--font-plus-jakarta-sans)',
+    sub: 'var(--font-plus-jakarta-sans)',
   },
   radius: {
     default: 0.25,

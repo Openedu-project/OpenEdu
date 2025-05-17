@@ -9,9 +9,8 @@ import { useParams } from 'next/navigation';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { API_ENDPOINT } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
 import type { HTTPErrorMetadata } from '@oe/api';
-import { formatPrice } from '@oe/core';
+import { buildUrl, formatPrice } from '@oe/core';
 import { toast } from '@oe/ui';
 import { RoleButton } from '@oe/ui';
 import { DeleteAffiliateCampaignCourseModal } from './campaign-course-detele-modal';
@@ -147,7 +146,7 @@ export function AffiliateCampaignCoursesList() {
       </div>
 
       <Table
-        api={createAPIUrl({
+        api={buildUrl({
           endpoint: API_ENDPOINT.AFFILIATE_CAMPAIGNS_ID_COURSES,
           params: { id: campaignId },
         })}

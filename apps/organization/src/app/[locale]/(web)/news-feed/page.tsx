@@ -1,6 +1,8 @@
-import { BlogDefaultPage, SEOMetadata } from '@oe/ui';
-import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { BlogDefaultPage, SEOMetadata } from "@oe/ui";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+
+// export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
@@ -8,11 +10,11 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'newsfeedMetadata' });
+  const t = await getTranslations({ locale, namespace: "newsfeedMetadata" });
 
   return SEOMetadata({
-    title: t('newsFeed'),
-    keywords: ['news-feed', 'blog', 'community'],
+    title: t("newsFeed"),
+    keywords: ["news-feed", "blog", "community"],
   });
 }
 

@@ -1,12 +1,10 @@
+import { PLATFORM_ROUTES, buildUrl } from '@oe/core';
+import { copyToClipboard } from '@oe/core';
 import { Copy } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { Modal } from '#components/modal';
-
-import { createAPIUrl } from '@oe/api';
-import { PLATFORM_ROUTES } from '@oe/core';
-import { copyToClipboard } from '@oe/core';
 import { useMemo } from 'react';
 import { toast } from 'sonner';
+import { Modal } from '#components/modal';
 
 interface IShareCertProps {
   username: string;
@@ -20,7 +18,7 @@ export function ShareCertModal({ onClose, username, certId }: IShareCertProps) {
 
   const url = useMemo(
     () =>
-      createAPIUrl({
+      buildUrl({
         endpoint: PLATFORM_ROUTES.profileCertificateDetail,
         params: { username, certId },
       }),

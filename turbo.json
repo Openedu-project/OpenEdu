@@ -12,6 +12,12 @@
       "outputs": [".next/**", "!.next/cache/**", "dist/**", ".open-next/**"],
       "cache": true
     },
+    "analyze": {
+      "dependsOn": ["^build"],
+      "inputs": ["src/**", "public/**", "package.json", "next.config.js", "tsconfig.json", ".env*"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**", ".open-next/**"],
+      "cache": true
+    },
     "@oe/assets#build": {
       "dependsOn": [],
       "outputs": ["dist/**"],

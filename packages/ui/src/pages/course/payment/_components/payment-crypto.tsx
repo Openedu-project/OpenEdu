@@ -1,11 +1,10 @@
 'use client';
 
 import type { ICourse } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
 import type { HTTPErrorMetadata } from '@oe/api';
 import type { IOrderRes } from '@oe/api';
 import { useApplyCouponOrder, useOrderDeleteCoupon, useOrderPaymentWithWallet } from '@oe/api';
-import { PLATFORM_ROUTES } from '@oe/core';
+import { PLATFORM_ROUTES, buildUrl } from '@oe/core';
 import { formatNumber } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useParams, useRouter } from 'next/navigation';
@@ -144,7 +143,7 @@ const PaymentCrypto = ({
         wallet_id: walletID ?? '',
       });
       void router.push(
-        createAPIUrl({
+        buildUrl({
           endpoint: PLATFORM_ROUTES.paymentSuccess,
           params: { slug: courseSlug },
         })

@@ -1,8 +1,7 @@
 'use client';
 import { API_ENDPOINT } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
 import type { IUserAffiliateCampaignItem } from '@oe/api';
-import { AFFILIATE_ROUTES } from '@oe/core';
+import { AFFILIATE_ROUTES, buildUrl } from '@oe/core';
 import { formatNumber } from '@oe/core';
 import type { FilterOption } from '@oe/ui';
 import { type ColumnDef, Table, type TableRef } from '@oe/ui';
@@ -214,16 +213,20 @@ export function AffiliateManagementContent() {
                   buttonVariants({ variant: 'secondary' }),
                   'cursor-pointer truncate px-2 py-1 text-primary'
                 )}
-                href={`${createAPIUrl({
+                href={`${buildUrl({
                   endpoint: AFFILIATE_ROUTES.campaignDetail,
                   params: { id: item?.id },
-                })}?campaign_name=${item?.name}&course_name=${
-                  item?.course_name
-                }&org_domain=${item?.org_domain}&course_slug=${
-                  item?.course_slug
-                }&course_price=${item?.price}&currency=${
-                  item?.currency
-                }&start_date=${item?.start_date}&end_date=${item?.end_date}`}
+                  queryParams: {
+                    campaign_name: item?.name,
+                    course_name: item?.course_name,
+                    org_domain: item?.org_domain,
+                    course_slug: item?.course_slug,
+                    course_price: item?.price,
+                    currency: item?.currency,
+                    start_date: item?.start_date,
+                    end_date: item?.end_date,
+                  },
+                })}`}
               >
                 {t('detailBtn')}
               </Link>

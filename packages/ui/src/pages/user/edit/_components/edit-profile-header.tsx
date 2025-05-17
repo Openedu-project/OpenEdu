@@ -1,12 +1,11 @@
 'use client';
 
 import type { IFileResponse } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
 import type { HTTPErrorMetadata } from '@oe/api';
 import { useGetUserProfile, useUpdateMyProfile } from '@oe/api';
 import { Camera, Lock, Notification, ProfileCircle, Setting2, User } from '@oe/assets';
 import background from '@oe/assets/images/user-background.png';
-import { PLATFORM_ROUTES } from '@oe/core';
+import { PLATFORM_ROUTES, buildUrl } from '@oe/core';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
@@ -31,7 +30,7 @@ export function EditProfileHeader() {
   const navItems = [
     {
       title: tProfile('navigations.profile'),
-      href: createAPIUrl({
+      href: buildUrl({
         endpoint: PLATFORM_ROUTES.editProfileInformation,
         params: { username: user as string },
       }),
@@ -39,7 +38,7 @@ export function EditProfileHeader() {
     },
     {
       title: tProfile('navigations.account'),
-      href: createAPIUrl({
+      href: buildUrl({
         endpoint: PLATFORM_ROUTES.editProfileAccount,
         params: { username: user as string },
       }),
@@ -47,7 +46,7 @@ export function EditProfileHeader() {
     },
     {
       title: tProfile('navigations.password'),
-      href: createAPIUrl({
+      href: buildUrl({
         endpoint: PLATFORM_ROUTES.editProfilePassword,
         params: { username: user as string },
       }),
@@ -55,7 +54,7 @@ export function EditProfileHeader() {
     },
     {
       title: tProfile('navigations.notifications'),
-      href: createAPIUrl({
+      href: buildUrl({
         endpoint: PLATFORM_ROUTES.editProfileNotifications,
         params: { username: user as string },
       }),
@@ -63,7 +62,7 @@ export function EditProfileHeader() {
     },
     {
       title: tProfile('navigations.privacy'),
-      href: createAPIUrl({
+      href: buildUrl({
         endpoint: PLATFORM_ROUTES.editProfilePrivacy,
         params: { username: user as string },
       }),
@@ -128,7 +127,7 @@ export function EditProfileHeader() {
 
         <Button variant="default" className="!mbutton-semibold16 mt-2 mr-6 ml-auto h-auto rounded-2 p-0">
           <Link
-            href={createAPIUrl({
+            href={buildUrl({
               endpoint: PLATFORM_ROUTES.userProfile,
               params: { username: user as string },
             })}

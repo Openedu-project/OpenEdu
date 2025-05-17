@@ -1,3 +1,4 @@
+import { buildUrl } from '@oe/core';
 import useSWRMutation from 'swr/mutation';
 import {
   deleteOrderCouponService,
@@ -18,7 +19,6 @@ import type {
   IOrderStatusRes,
 } from '#types/order';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 
 export const useCreateOrder = () => {
   const { trigger, isMutating, error } = useSWRMutation(
@@ -39,7 +39,7 @@ export const useApplyCouponOrder = () => {
     API_ENDPOINT.ORDERS_ID_COUPONS_CODE,
     async (_endpoint: string, { arg }: { arg: { orderId: string; code: string } }): Promise<IOrderRes> =>
       postApplyCouponOrderService(
-        createAPIUrl({
+        buildUrl({
           endpoint: API_ENDPOINT.ORDERS_ID_COUPONS_CODE,
           params: {
             id: arg.orderId,
@@ -67,7 +67,7 @@ export const useOrderChangeMethod = (orderId: string) => {
     API_ENDPOINT.ORDERS_ID_PAYMENT,
     async (_endpoint: string, { arg }: { arg: IOrderChangeMethodPayload }): Promise<IOrderRes> =>
       putOrderChangeMethodService(
-        createAPIUrl({
+        buildUrl({
           endpoint: API_ENDPOINT.ORDERS_ID_PAYMENT,
           params: {
             id: orderId,
@@ -89,7 +89,7 @@ export const useOrderPaymentStatus = (orderId: string) => {
     API_ENDPOINT.ORDERS_ID_STATUS,
     async (_endpoint: string): Promise<IOrderStatusRes | null> =>
       getOrderPaymentStatusService(
-        createAPIUrl({
+        buildUrl({
           endpoint: API_ENDPOINT.ORDERS_ID_STATUS,
           params: {
             id: orderId,
@@ -111,7 +111,7 @@ export const useOrderPaymentSuccess = (orderId: string) => {
     API_ENDPOINT.ORDERS_ID_SUCCESS,
     async (_endpoint: string, { arg }: { arg: IOrderPaymentSuccessPayload }): Promise<IOrderRes> =>
       postOrderPaymentSuccessService(
-        createAPIUrl({
+        buildUrl({
           endpoint: API_ENDPOINT.ORDERS_ID_SUCCESS,
           params: {
             id: orderId,
@@ -133,7 +133,7 @@ export const useOrderPaymentWithWallet = (orderId: string) => {
     API_ENDPOINT.ORDERS_ID_PAYMENT,
     async (_endpoint: string, { arg }: { arg: IOrderPaymentWithWalletPayload }): Promise<IOrderPaymentWithWalletRes> =>
       postOrderPaymentWithWalletService(
-        createAPIUrl({
+        buildUrl({
           endpoint: API_ENDPOINT.ORDERS_ID_PAYMENT,
           params: {
             id: orderId,
@@ -155,7 +155,7 @@ export const useOrderDeleteCoupon = (orderId: string) => {
     API_ENDPOINT.ORDERS_ID_COUPONS,
     async (_endpoint: string): Promise<IOrderRes> =>
       deleteOrderCouponService(
-        createAPIUrl({
+        buildUrl({
           endpoint: API_ENDPOINT.ORDERS_ID_COUPONS,
           params: {
             id: orderId,

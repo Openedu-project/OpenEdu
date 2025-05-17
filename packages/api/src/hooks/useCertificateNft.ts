@@ -1,12 +1,12 @@
+import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { getCertNFTFeesService, getEstimatedFeeService, postMintCertNFTService } from '#services/certificate-nft';
 import type { IMintCertNftRequest } from '#types/certificate-nft';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 
 export function useGetCertNFTFees(id?: string) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.CERTIFICATES_ID_NFT_FEES,
     params: { id },
   });
@@ -24,7 +24,7 @@ export function useGetCertNFTFees(id?: string) {
 }
 
 export function useMintCertNft(id: string) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.CERTIFICATES_ID_NFT,
     params: { id },
   });
@@ -42,7 +42,7 @@ export function useMintCertNft(id: string) {
 }
 
 export function useGetEstimatedFee(id: string) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.COURSES_ID_NFT_FEES,
     params: { id },
   });

@@ -1,3 +1,4 @@
+import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import useSWRInfinite from 'swr/infinite';
 import { getConversationDetail, getListConversation, getMessageData, getPrompts } from '#services/conversation';
@@ -9,7 +10,7 @@ import type {
 } from '#types/conversation';
 import type { HTTPResponse } from '#types/fetch';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI } from '#utils/fetch';
+import { fetchAPI } from '#utils/fetch';
 
 export function useGetConversationDetails({
   shouldFetch = true,
@@ -22,7 +23,7 @@ export function useGetConversationDetails({
   params: { cursor?: string } & Record<string, string | number>;
   fallback?: IConversationDetails;
 }) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.COM_CHANNELS_ID,
     params: { id },
     queryParams: { ...params },
@@ -65,7 +66,7 @@ export function useGetListConversation(params: Record<string, string | number>, 
           page: pageIndex + 1,
         };
 
-    return createAPIUrl({ endpoint: API_ENDPOINT.COM_CHANNELS, queryParams: { ...searchParams } });
+    return buildUrl({ endpoint: API_ENDPOINT.COM_CHANNELS, queryParams: { ...searchParams } });
   };
   const {
     data: res,
@@ -95,7 +96,7 @@ export function useGetMessageData({
 }: { params: { channelId?: string; messageId?: string }; shouldFetch?: boolean }) {
   const endpointKey =
     shouldFetch && params.channelId && params.messageId
-      ? createAPIUrl({ endpoint: API_ENDPOINT.COM_CHANNELS_ID_MESSAGES_ID, params })
+      ? buildUrl({ endpoint: API_ENDPOINT.COM_CHANNELS_ID_MESSAGES_ID, params })
       : null;
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) => getMessageData(endpoint));
 
@@ -111,7 +112,7 @@ export function useGetPromps({
   queryParams,
   shouldFetch = true,
 }: { queryParams?: IPrompSearchParams; shouldFetch?: boolean }) {
-  const endpointKey = shouldFetch ? createAPIUrl({ endpoint: API_ENDPOINT.AI_PROMPTS, queryParams }) : null;
+  const endpointKey = shouldFetch ? buildUrl({ endpoint: API_ENDPOINT.AI_PROMPTS, queryParams }) : null;
   const { data, isLoading, error, mutate } = useSWR(endpointKey, (endpoint: string) => getPrompts(endpoint));
 
   return {
@@ -124,7 +125,7 @@ export function useGetPromps({
 
 export function useGetConversations(params: ISearchHistoryParams, shouldFetch = true) {
   const endpoint = shouldFetch
-    ? createAPIUrl({
+    ? buildUrl({
         endpoint: API_ENDPOINT.COM_CHANNELS,
         queryParams: { ...params },
       })

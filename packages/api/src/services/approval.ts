@@ -1,8 +1,9 @@
+import { buildUrl } from '@oe/core';
 import type { ICourse } from '#types/course/course';
 import type { ICourseOrganizationRequestProps } from '#types/course/org-request';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI, postAPI } from '#utils/fetch';
+import { fetchAPI, postAPI } from '#utils/fetch';
 import type { IApproval, IApprovalPayload, IFeedbackPayload, IListApproval, IRejectPayload } from '../types/approvals';
 
 export async function getListApprovalService<T, R>(
@@ -11,7 +12,7 @@ export async function getListApprovalService<T, R>(
 ): Promise<IListApproval<T, R> | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.APPROVALS,
       queryParams: {
         ...params,
@@ -34,7 +35,7 @@ export async function getListUserApprovalService<T, R>(
 ): Promise<IListApproval<T, R> | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.USERS_ME_APPROVALS,
       queryParams: {
         ...params,
@@ -57,7 +58,7 @@ export async function getListApprovalByAdminService<T, R>(
 ): Promise<IListApproval<T, R> | null> {
   let endpointKey = url;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.ADMIN_APPROVALS,
       queryParams: {
         ...params,

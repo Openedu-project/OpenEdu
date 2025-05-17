@@ -1,15 +1,16 @@
+"use client";
+
 import IconCourseLaunchpad from "@oe/assets/images/openedu-homepage/icon-course-launchpad.png";
 import { Image } from "@oe/ui";
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 
 interface Feature {
   id: number;
   title: string;
   description: string;
 }
-
-export async function LaunchpadSection() {
-  const t = await getTranslations("homePageLayout.launchpadSection");
+export function LaunchpadSection() {
+  const t = useTranslations("homePageLayout.launchpadSection");
 
   // Split features into left and right columns
   const leftFeatures: Feature[] = [

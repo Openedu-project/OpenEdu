@@ -10,7 +10,7 @@ import { getBankAccountsService, getWalletRequestWithdraw } from '#services/wall
 import type { HTTPPagination, HTTPResponse } from '#types/fetch';
 import type { IBankAccount, IWallet, TRequestWithdrawHistory, TTokenBalances } from '#types/wallet';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, fetchAPI } from '#utils/fetch';
+import { fetchAPI } from '#utils/fetch';
 import {
   ASSET_TYPES,
   CHAIN,
@@ -240,7 +240,7 @@ export const useNFTTotalAssets = () => {
 };
 
 export function useGetBankAccounts(params?: Record<string, unknown>) {
-  const url = createAPIUrl({
+  const url = buildUrl({
     endpoint: API_ENDPOINT.USER_SETTINGS,
     queryParams: params,
   });

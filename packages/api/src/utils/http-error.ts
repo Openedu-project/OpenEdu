@@ -7,6 +7,7 @@ export const HTTPErrorCodeMessages = {
   NOT_FOUND: 'apiNotFound',
   RATE_LIMIT_ERROR: 'rateLimitError',
   SERVER_ERROR: 'serverError.title',
+  TIMEOUT_ERROR: 'timeoutError',
 } as const;
 
 export type HTTPErrorCodeKey = keyof typeof HTTPErrorCodeMessages;
@@ -25,12 +26,15 @@ export interface IErrorDetails {
   message: string | HTTPErrorCode;
   stack?: string;
   metadata?: HTTPErrorMetadata;
+  originalError?: Error;
 }
 
 export class HTTPError extends Error {
   status?: number;
   metadata?: HTTPErrorMetadata;
   message: string | HTTPErrorCode;
+  originalError?: Error;
+  code: string | HTTPErrorCode;
 
   constructor(details: IErrorDetails) {
     super(details.message);
@@ -38,6 +42,12 @@ export class HTTPError extends Error {
     this.name = 'HTTPError';
     this.status = details.status;
     this.metadata = details.metadata;
+    this.originalError = details.originalError;
+
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    this.code = Object.values(HTTPErrorCodeMessages).includes(details.message as any)
+      ? (details.message as HTTPErrorCode)
+      : HTTPErrorCodeMessages.UNKNOWN;
 
     if (details.stack) {
       this.stack = details.stack;

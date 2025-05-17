@@ -1,7 +1,6 @@
-import { type ReactNode, Suspense } from 'react';
+import type { ReactNode } from 'react';
 import { LanguageSwitcher } from '#common/language-switcher';
 import { Link } from '#common/navigation';
-import { Skeleton } from '#shadcn/skeleton';
 import { cn } from '#utils/cn';
 import { AuthMenu } from '../auth-menu';
 import { type ISidebarItem, LayoutSidebar } from '../sidebar';
@@ -46,11 +45,7 @@ export function Header({
           />
         )}
         {children}
-        {!isHideAuthMenu && (
-          <Suspense fallback={<Skeleton className="h-10 w-10" />}>
-            <AuthMenu />
-          </Suspense>
-        )}
+        {!isHideAuthMenu && <AuthMenu />}
         <LanguageSwitcher className="md:ml-2" />
       </div>
     </header>

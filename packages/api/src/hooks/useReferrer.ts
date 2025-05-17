@@ -1,13 +1,13 @@
+import { buildUrl } from '@oe/core';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { deleteReferrerService, getReferrerListService, postReferrerService } from '#services/referrer';
 import type { IFilter } from '#types/filter';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl } from '#utils/fetch';
 import type { ICreateReferrersPayload } from '../types/referrer';
 
 export function useGetReferrerList({ params, id }: { params: IFilter; id: string }) {
-  const endpointKey = createAPIUrl({
+  const endpointKey = buildUrl({
     endpoint: API_ENDPOINT.AFFILIATE_CAMPAIGNS_ID_REFERRERS,
     params: {
       id,

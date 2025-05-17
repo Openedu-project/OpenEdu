@@ -1,12 +1,11 @@
 'use client';
 import { API_ENDPOINT } from '@oe/api';
-import { createAPIUrl } from '@oe/api';
 import type { HTTPErrorMetadata } from '@oe/api';
 import { useApprove, useReject } from '@oe/api';
 import type { IApproval, IApprovalPayload, IRejectPayload } from '@oe/api';
 import type { ICourseOrganizationRequestProps } from '@oe/api';
 import type { IAdminLaunchpadDetailRes } from '@oe/api';
-import { ADMIN_ROUTES } from '@oe/core';
+import { ADMIN_ROUTES, buildUrl } from '@oe/core';
 import { formatDateHourMinute } from '@oe/core';
 import { toast } from '@oe/ui';
 import { type ColumnDef, Table, type TableRef } from '@oe/ui';
@@ -104,7 +103,7 @@ export function LaunchpadRequestsList() {
           return (
             <Link
               className="p-0"
-              href={createAPIUrl({
+              href={buildUrl({
                 endpoint: ADMIN_ROUTES.launchpadRequestsDetail,
                 params: { id: item?.entity_id },
                 queryParams: { orderId: item?.id },

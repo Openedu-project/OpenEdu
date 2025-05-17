@@ -1,5 +1,6 @@
+import { buildUrl } from '@oe/core';
 import { API_ENDPOINT } from '#utils/endpoints';
-import { createAPIUrl, deleteAPI, postAPI } from '#utils/fetch';
+import { deleteAPI, postAPI } from '#utils/fetch';
 import type { IAddCoursesPayload, IAffiliateCampaignCourseListRes } from '../types/campaign-course';
 
 export const postCoursesToAffiliateCampaignService = async (
@@ -16,7 +17,7 @@ export const postCoursesToAffiliateCampaignService = async (
 ) => {
   let endpointKey = endpoint;
   if (!endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.AFFILIATE_CAMPAIGNS_ID_COURSES,
       params: {
         id: params.campaignId,
@@ -47,14 +48,14 @@ export const deleteCoursesFromAffiliateCampaignService = async (
   }
 
   if (endpointKey) {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: endpointKey,
       queryParams: {
         ids: payload.courseIds.toString(),
       },
     });
   } else {
-    endpointKey = createAPIUrl({
+    endpointKey = buildUrl({
       endpoint: API_ENDPOINT.AFFILIATE_CAMPAIGNS_ID_COURSES,
       params: {
         id: params.campaignId,
@@ -63,6 +64,6 @@ export const deleteCoursesFromAffiliateCampaignService = async (
     });
   }
 
-  const response = await deleteAPI<void, RequestInit>(endpointKey, init);
+  const response = await deleteAPI<void, RequestInit>(endpointKey, undefined, init);
   return response.data;
 };
