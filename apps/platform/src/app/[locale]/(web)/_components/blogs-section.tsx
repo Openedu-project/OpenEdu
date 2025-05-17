@@ -23,7 +23,8 @@ export function BlogsSection() {
   const featuredPost = dataPopularBlogs?.[0]?.entity as IBlog;
   const restPost = dataPopularBlogs
     ?.splice(1, 3)
-    ?.map((b) => b?.entity) as IBlog[];
+    ?.map((b) => b?.entity)
+    ?.filter(Boolean) as IBlog[];
 
   return (dataPopularBlogs?.length ?? 0) > 0 ? (
     <section className="container mx-auto px-0 md:px-4">
@@ -47,57 +48,59 @@ export function BlogsSection() {
       {/* Blog Grid */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8">
         {/* Featured Post */}
-        <div className="rounded-2xl bg-white p-4 shadow-[0px_4px_30px_0px_rgba(175,175,175,0.20)] md:p-6">
-          <Link
-            href={buildUrl({
-              endpoint: BLOG_ROUTES.blogDetail,
-              params: { slug: featuredPost?.id },
-            })}
-            className="flex h-full flex-col items-start justify-start gap-6 whitespace-break-spaces p-0 text-black no-underline hover:no-underline"
-          >
-            <div className="h-[152px] w-full overflow-hidden rounded-2xl md:h-[270px]">
-              <Image
-                src={featuredPost?.banner?.url}
-                alt={featuredPost?.title}
-                width={600}
-                height={270}
-                className="h-[152px] w-full object-cover md:h-[270px]"
-              />
-            </div>
-            <div className="flex w-full flex-col">
-              <div className="mcaption-regular14">
-                {formatDate(featuredPost?.create_at)}
+        {featuredPost && (
+          <div className="rounded-2xl bg-white p-4 shadow-[0px_4px_30px_0px_rgba(175,175,175,0.20)] md:p-6">
+            <Link
+              href={buildUrl({
+                endpoint: BLOG_ROUTES.blogDetail,
+                params: { slug: featuredPost?.id },
+              })}
+              className="flex h-full flex-col items-start justify-start gap-6 whitespace-break-spaces p-0 text-black no-underline hover:no-underline"
+            >
+              <div className="h-[152px] w-full overflow-hidden rounded-2xl md:h-[270px]">
+                <Image
+                  src={featuredPost?.banner?.url}
+                  alt={featuredPost?.title}
+                  width={600}
+                  height={270}
+                  className="h-[152px] w-full object-cover md:h-[270px]"
+                />
               </div>
-
-              <h3 className="giant-iheading-semibold20 md:giant-iheading-semibold24 hover:text-primary">
-                {featuredPost?.title}
-              </h3>
-
-              <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center rounded-2xl">
-                  <Image
-                    src={featuredPost?.author?.avatar}
-                    alt={featuredPost?.author?.display_name}
-                    width={24}
-                    height={24}
-                    className="h-[28px] w-[28px] rounded-2xl"
-                  />
+              <div className="flex w-full flex-col">
+                <div className="mcaption-regular14">
+                  {formatDate(featuredPost?.create_at)}
                 </div>
-                <span className="mbutton-semibold16">
-                  {featuredPost?.author?.display_name}
-                </span>
-              </div>
 
-              <div
-                className="mcaption-regular14 line-clamp-5"
-                // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-                dangerouslySetInnerHTML={{
-                  __html: featuredPost?.content,
-                }}
-              />
-            </div>
-          </Link>
-        </div>
+                <h3 className="giant-iheading-semibold20 md:giant-iheading-semibold24 hover:text-primary">
+                  {featuredPost?.title}
+                </h3>
+
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-center rounded-2xl">
+                    <Image
+                      src={featuredPost?.author?.avatar}
+                      alt={featuredPost?.author?.display_name}
+                      width={24}
+                      height={24}
+                      className="h-[28px] w-[28px] rounded-2xl"
+                    />
+                  </div>
+                  <span className="mbutton-semibold16">
+                    {featuredPost?.author?.display_name}
+                  </span>
+                </div>
+
+                <div
+                  className="mcaption-regular14 line-clamp-5"
+                  // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+                  dangerouslySetInnerHTML={{
+                    __html: featuredPost?.content,
+                  }}
+                />
+              </div>
+            </Link>
+          </div>
+        )}
 
         {/* Other Posts */}
         <div className="space-y-4 lg:w-full lg:space-y-6">
