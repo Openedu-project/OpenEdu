@@ -33,7 +33,7 @@ export default $config({
       warm: 2,
       server: {
         architecture: 'arm64',
-        memory: '1024 MB',
+        memory: '2048 MB',
         timeout: '30 seconds',
         install: ['sharp'],
       },
