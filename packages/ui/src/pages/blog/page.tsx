@@ -1,10 +1,10 @@
-import { getBlogsPublishService } from "@oe/api";
-import { getCategoriesTreeService } from "@oe/api";
-import { getOrgByDomainService } from "@oe/api";
+import { getBlogsPublishService } from '@oe/api';
+import { getCategoriesTreeService } from '@oe/api';
+import { getOrgByDomainService } from '@oe/api';
 // import { BlogBanner } from "./_components/blog-banner";
-import { BlogCateCarousel } from "./_components/blog-cate-carousel";
-import { BlogHeader } from "./_components/blog-header";
-import { BlogOutstanding } from "./_components/blog-outstanding";
+import { BlogCateCarousel } from './_components/blog-cate-carousel';
+import { BlogHeader } from './_components/blog-header';
+import { BlogOutstanding } from './_components/blog-outstanding';
 
 const getOtherOrgBlog = async (isOpenEdu?: boolean) => {
   if (!isOpenEdu) {
@@ -16,7 +16,7 @@ const getOtherOrgBlog = async (isOpenEdu?: boolean) => {
       params: {
         page: 1,
         per_page: 10,
-        sort: "update_at desc",
+        sort: 'update_at desc',
         not_org_id: orgData?.id,
       },
     });
@@ -33,11 +33,11 @@ export async function BlogDefaultPage({ isOpenEdu }: { isOpenEdu?: boolean }) {
       params: {
         page: 1,
         per_page: 14,
-        sort: "update_at desc",
+        sort: 'update_at desc',
       },
     }),
     getCategoriesTreeService(undefined, {
-      queryParams: { active: true, type: "blog" },
+      queryParams: { active: true, type: 'blog' },
     }),
     getOtherOrgBlog(isOpenEdu),
   ]);
@@ -46,16 +46,16 @@ export async function BlogDefaultPage({ isOpenEdu }: { isOpenEdu?: boolean }) {
     <>
       <BlogHeader />
       <div className="container flex w-full flex-col gap-10 p-4 md:gap-20 md:p-8 lg:px-24">
-        {(blogsData?.results.length ?? 0) > 0 && (
+        {(blogsData?.results?.length ?? 0) > 0 && (
           <BlogOutstanding
             className="lg:-mx-16"
-            defaultBlogs={blogsData?.results.slice(0, 4) ?? []}
-            scrollBlogs={blogsData?.results.slice(4, 14) ?? []}
+            defaultBlogs={blogsData?.results?.slice(0, 4) ?? []}
+            scrollBlogs={blogsData?.results?.slice(4, 14) ?? []}
             orgBlogs={orgBlogData}
           />
         )}
         {/* <BlogBanner /> */}
-        {categories?.map((cate) => (
+        {categories?.map(cate => (
           <BlogCateCarousel key={cate.id} id={cate.id} name={cate.name} />
         ))}
       </div>
