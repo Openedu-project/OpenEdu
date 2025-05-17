@@ -53,8 +53,5 @@
   "packageManager": "pnpm@10.11.0",
   "engines": {
     "node": ">=20"
-  },
-  "dependencies": {
-    "sst": "3.14.24"
   }
 }
