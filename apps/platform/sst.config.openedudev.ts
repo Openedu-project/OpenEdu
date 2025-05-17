@@ -19,7 +19,7 @@ export default $config({
       // },
       domain: {
         name: 'openedudev.net',
-        // redirects: ['www.openedutest.net'],
+        redirects: ['www.openedudev.net'],
         // dns: sst.aws.dns({
         //   zone: 'Z03666423OXCSCHYUQUDV',
         // }),

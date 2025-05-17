@@ -113,10 +113,10 @@ jobs:
           ENV_NAME="${{ env.STAGE_NAME }}"
           
           if [ -f "${{ env.PROJECT_DIR }}/.env.$ENV_NAME" ]; then
-            cp ${{ env.PROJECT_DIR }}/.env.$ENV_NAME ${{ env.PROJECT_DIR }}/.env
+            cp ${{ env.PROJECT_DIR }}/.env.$ENV_NAME ${{ env.PROJECT_DIR }}/.env.production
             
             # Thêm các biến môi trường mật
-            echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> ${{ env.PROJECT_DIR }}/.env
+            echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> ${{ env.PROJECT_DIR }}/.env.production
             echo "DOMAIN_CERT=${{ secrets.DOMAIN_CERT }}" >> ${{ env.PROJECT_DIR }}/.env
           else
             echo "Không tìm thấy file môi trường cho $ENV_NAME trong ${{ env.PROJECT_DIR }}"
