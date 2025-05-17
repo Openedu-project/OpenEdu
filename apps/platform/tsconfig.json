@@ -15,5 +15,5 @@
     }
   },
   "include": ["next-env.d.ts", "src", ".next/types/**/*.ts", "../../packages/api/src/*"],
-  "exclude": ["node_modules", ".next","sst.config.ts"]
+  "exclude": ["node_modules", ".next", "sst.config.production.ts"]
 }
