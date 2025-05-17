@@ -27,7 +27,7 @@ export async function MainLayout({
   hasFooter?: boolean;
 }) {
   const isLoggedIn = await isLogin();
-
+  console.log('sidebarItems', sidebarItems);
   return (
     <>
       <Header
@@ -48,7 +48,7 @@ export async function MainLayout({
                 )}
                 variant="ghost"
                 activeClassName="border-0"
-                prefetch
+                prefetch={!item?.href?.includes('news-feed')}
               >
                 {item.label}
                 {item.version && (
