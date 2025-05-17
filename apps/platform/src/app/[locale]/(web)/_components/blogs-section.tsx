@@ -101,7 +101,7 @@ export function BlogsSection() {
 
         {/* Other Posts */}
         <div className="space-y-4 lg:w-full lg:space-y-6">
-          {restPost.map((post) => (
+          {restPost?.map((post) => (
             <div
               key={post.id}
               className="group rounded-2xl bg-white shadow-[0px_4px_30px_0px_rgba(175,175,175,0.20)] "
