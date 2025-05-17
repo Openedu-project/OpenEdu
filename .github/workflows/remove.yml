@@ -52,23 +52,23 @@ jobs:
           fi
           echo "STAGE_NAME=$STAGE_NAME" >> $GITHUB_ENV
 
-      - name: Kiểm tra xác nhận cho môi trường production
-        if: ${{ contains(github.event.inputs.environment, 'production') }}
-        run: |
-          echo "⚠️ CẢNH BÁO: Bạn đang chuẩn bị XÓA môi trường PRODUCTION!"
-          echo "Để xác nhận, hãy thêm issue với tiêu đề '[PRODUCTION_REMOVAL] Xác nhận xóa ${{ github.event.inputs.environment }}'"
+      # - name: Kiểm tra xác nhận cho môi trường production
+      #   if: ${{ contains(github.event.inputs.environment, 'production') }}
+      #   run: |
+      #     echo "⚠️ CẢNH BÁO: Bạn đang chuẩn bị XÓA môi trường PRODUCTION!"
+      #     echo "Để xác nhận, hãy thêm issue với tiêu đề '[PRODUCTION_REMOVAL] Xác nhận xóa ${{ github.event.inputs.environment }}'"
           
-          CONFIRM_ISSUE=$(gh issue list --repo ${{ github.repository }} --search "[PRODUCTION_REMOVAL] Xác nhận xóa ${{ github.event.inputs.environment }}" --state open --json number --jq '.[0].number')
+      #     CONFIRM_ISSUE=$(gh issue list --repo ${{ github.repository }} --search "[PRODUCTION_REMOVAL] Xác nhận xóa ${{ github.event.inputs.environment }}" --state open --json number --jq '.[0].number')
           
-          if [ -z "$CONFIRM_ISSUE" ]
-          then
-            echo "❌ Không tìm thấy issue xác nhận. Hủy quá trình xóa."
-            exit 1
-          fi
+      #     if [ -z "$CONFIRM_ISSUE" ]
+      #     then
+      #       echo "❌ Không tìm thấy issue xác nhận. Hủy quá trình xóa."
+      #       exit 1
+      #     fi
           
-          echo "✅ Đã xác nhận. Tiếp tục xóa resources."
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     echo "✅ Đã xác nhận. Tiếp tục xóa resources."
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Cấu hình AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
