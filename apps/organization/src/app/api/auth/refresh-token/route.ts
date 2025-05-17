@@ -8,6 +8,7 @@ import {
   getTokenExpiry,
   parseJwt,
 } from '@oe/api';
+import { revalidatePath } from 'next/cache';
 import { type NextRequest, NextResponse } from 'next/server';
 
 type ErrorResponseParams = {
@@ -16,17 +17,26 @@ type ErrorResponseParams = {
   statusCode: number;
   redirectPath: string;
   baseUrl: string;
+  domain?: string;
 };
 
-const createErrorResponse = ({ redirectUrl, errorMessage, statusCode, redirectPath, baseUrl }: ErrorResponseParams) => {
+const createErrorResponse = ({
+  redirectUrl,
+  errorMessage,
+  statusCode,
+  redirectPath,
+  baseUrl,
+  domain,
+}: ErrorResponseParams) => {
   const response = redirectUrl
     ? NextResponse.redirect(new URL(redirectPath, baseUrl))
     : NextResponse.json({ error: errorMessage }, { status: statusCode });
-  console.log('--------------------Error refresh token response--------------------', response);
+  console.log('--------------------Error refresh token response--------------------', statusCode, response);
   response.cookies.delete({
     name: process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY,
-    domain: process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN : undefined,
+    domain: process.env.NODE_ENV === 'production' ? domain : undefined,
   });
+  revalidatePath('/');
   return response;
 };
 
@@ -37,6 +47,7 @@ type RefreshParams = {
   redirectUrl: string | null;
   baseUrl: string;
   sessionId?: string;
+  domain?: string;
 };
 
 const handleTokenRefresh = async ({
@@ -46,6 +57,7 @@ const handleTokenRefresh = async ({
   redirectUrl,
   baseUrl,
   sessionId,
+  domain,
 }: RefreshParams) => {
   if (!refreshToken) {
     return createErrorResponse({
@@ -54,6 +66,7 @@ const handleTokenRefresh = async ({
       statusCode: 400,
       redirectPath: '/',
       baseUrl,
+      domain,
     });
   }
 
@@ -76,6 +89,7 @@ const handleTokenRefresh = async ({
         statusCode: 401,
         redirectPath: '/',
         baseUrl,
+        domain,
       });
     }
 
@@ -90,6 +104,7 @@ const handleTokenRefresh = async ({
         statusCode: 500,
         redirectPath: '/',
         baseUrl,
+        domain,
       });
     }
 
@@ -119,7 +134,7 @@ const handleTokenRefresh = async ({
       sameSite: 'strict',
       path: '/',
       maxAge: refreshTokenExpiry / 1000,
-      domain: process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN : undefined,
+      domain: process.env.NODE_ENV === 'production' ? domain : undefined,
     });
 
     return response;
@@ -131,6 +146,7 @@ const handleTokenRefresh = async ({
       statusCode: 500,
       redirectPath: '/',
       baseUrl,
+      domain,
     });
   }
 };
@@ -139,6 +155,8 @@ const processRequest = async (request: NextRequest) => {
   const { searchParams } = new URL(request.url);
   const redirectUrl = searchParams.get('redirectUrl');
   const session = request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY)?.value;
+  const userUrl = request.headers.get('x-user-url');
+  const domain = userUrl ? new URL(userUrl).host : undefined;
 
   if (!session) {
     return createErrorResponse({
@@ -147,6 +165,7 @@ const processRequest = async (request: NextRequest) => {
       statusCode: 404,
       redirectPath: '/',
       baseUrl: request.url,
+      domain,
     });
   }
 
@@ -161,6 +180,7 @@ const processRequest = async (request: NextRequest) => {
         statusCode: 401,
         redirectPath: '/',
         baseUrl: request.url,
+        domain,
       });
     }
 
@@ -171,6 +191,7 @@ const processRequest = async (request: NextRequest) => {
       redirectUrl,
       baseUrl: request.url,
       sessionId: id,
+      domain,
     });
   } catch (error) {
     console.error('Error processing session:', error);
@@ -180,6 +201,7 @@ const processRequest = async (request: NextRequest) => {
       statusCode: 401,
       redirectPath: '/',
       baseUrl: request.url,
+      domain,
     });
   }
 };

@@ -49,9 +49,7 @@ export async function middleware(request: NextRequest) {
       sameSite: 'strict', // Bảo vệ khỏi tấn công CSRF
       maxAge: (decodedSession?.refreshTokenExpiry ?? 0) / 1000,
       path: '/', // Cookie khả dụng cho toàn bộ trang web,
-      ...(process.env.NODE_ENV === 'development'
-        ? { domain: undefined }
-        : { domain: process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN }),
+      ...(process.env.NODE_ENV === 'development' ? { domain: undefined } : { domain: actualHost }),
     });
     response.headers.set('x-user-url', userUrl);
     return response;

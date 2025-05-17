@@ -59,8 +59,8 @@ export async function decodeJWT(token: string): Promise<SessionPayload | null> {
  */
 export async function setSessionCookie(payload: SessionPayload): Promise<void> {
   try {
-    const token = await encodeJWT(payload);
-    const cookiesStore = await cookies();
+    const [token, cookiesStore] = await Promise.all([encodeJWT(payload), cookies()]);
+    const domain = payload.origin ? new URL(payload.origin).host : undefined;
     // Thiết lập cookie với các tùy chọn bảo mật
     cookiesStore.set(process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY, token, {
       httpOnly: true, // Cookie không thể truy cập bằng JavaScript
@@ -68,9 +68,7 @@ export async function setSessionCookie(payload: SessionPayload): Promise<void> {
       sameSite: 'strict', // Bảo vệ khỏi tấn công CSRF
       maxAge: payload.refreshTokenExpiry ? payload.refreshTokenExpiry / 1000 : refreshTokenExpiresIn,
       path: '/', // Cookie khả dụng cho toàn bộ trang web,
-      ...(process.env.NODE_ENV === 'development'
-        ? { domain: undefined }
-        : { domain: process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN }),
+      ...(process.env.NODE_ENV === 'development' ? { domain: undefined } : { domain: domain }),
     });
   } catch (error) {
     console.error('Error setting session cookie:', error);

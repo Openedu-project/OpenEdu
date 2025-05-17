@@ -29,7 +29,7 @@ export async function AuthCallbackPage() {
         code_verifier: verifier ?? '',
         ref_code: inviteRefCode ?? '',
       },
-      { origin: originUrlObj.origin, referrer }
+      { headers: { origin: originUrlObj.origin, referrer } }
     );
     const { access_token, refresh_token } = result?.data ?? {};
     const { accessTokenExpiry, refreshTokenExpiry } = getTokenExpiry();
@@ -52,7 +52,9 @@ export async function AuthCallbackPage() {
     console.error('Social login error:', error);
     newUrl = new URL(`${originUrlObj.origin}/${AUTH_ROUTES.login}?error=socialLoginFailed&next=${nextPath}`);
   }
-  redirect(newUrl.toString());
+  if (newUrl) {
+    redirect(newUrl.toString());
+  }
 
   return null;
 }

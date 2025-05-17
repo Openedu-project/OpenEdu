@@ -12,8 +12,8 @@ export type FetchOptions = RequestInit & {
     revalidate?: number | false;
     tags?: string[];
   };
-  referrer?: string;
-  origin?: string;
+  // referrer?: string;
+  // origin?: string;
   timeout?: number;
 };
 
