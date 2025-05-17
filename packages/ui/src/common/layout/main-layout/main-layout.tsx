@@ -27,7 +27,7 @@ export async function MainLayout({
   hasFooter?: boolean;
 }) {
   const isLoggedIn = await isLogin();
-  console.log('sidebarItems', sidebarItems);
+
   return (
     <>
       <Header

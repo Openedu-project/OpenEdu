@@ -19,7 +19,7 @@ export type SessionPayload = {
 
 // Bí mật để ký JWT - nên lưu trong biến môi trường
 const AUTH_SECRET = process.env.AUTH_SECRET;
-console.log('🚀 ~ AUTH_SECRET:', !!AUTH_SECRET, AUTH_SECRET?.length);
+console.info('🚀 ~ AUTH_SECRET:', !!AUTH_SECRET, AUTH_SECRET?.length);
 // Chuyển đổi secret string thành Uint8Array (yêu cầu cho jose)
 const secretKey = new TextEncoder().encode(AUTH_SECRET);
 
