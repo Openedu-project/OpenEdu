@@ -1,7 +1,8 @@
-import { buildUrl, deleteNestedValue, setNestedValue } from '@oe/core';
+import { buildUrl, deepMerge, deleteNestedValue, setNestedValue } from '@oe/core';
 import { DEFAULT_LOCALE, DEFAULT_LOCALES } from '@oe/i18n';
 import type { I18nMessage, LanguageCode } from '@oe/i18n';
 import { messages } from '@oe/i18n';
+import { hasLocale } from 'next-intl';
 import { cache } from 'react';
 import type { I18nConfig } from '#types/i18n';
 import type { ISystemConfigRes } from '#types/system-config';
@@ -121,37 +122,35 @@ export const fetchTranslationFile = async (path: string, fallbackData?: I18nMess
   }
 };
 
-// biome-ignore lint/correctness/noUnusedVariables: <explanation>
-// biome-ignore lint/suspicious/useAwait: <explanation>
-export const getAllTranslations = cache(async (_: LanguageCode) => {
-  // const start = performance.now();
-  // const i18nConfig = await getI18nConfig();
+export const getAllTranslations = cache(async (requestedLocale: LanguageCode) => {
+  const start = performance.now();
+  const i18nConfig = await getI18nConfig();
 
-  // const files = i18nConfig?.files;
-  // const locale = hasLocale(i18nConfig?.locales ?? [], requestedLocale) ? requestedLocale : DEFAULT_LOCALE;
+  const files = i18nConfig?.files;
+  const locale = hasLocale(i18nConfig?.locales ?? [], requestedLocale) ? requestedLocale : DEFAULT_LOCALE;
 
-  // let translations = messages as I18nMessage | undefined;
-  // let fallbackTranslations = messages as I18nMessage | undefined;
+  let translations = messages as I18nMessage | undefined;
+  let fallbackTranslations = messages as I18nMessage | undefined;
 
-  // if (!files) {
-  //   return { locale, messages };
-  // }
+  if (!files) {
+    return { locale, messages };
+  }
 
-  // if (locale === DEFAULT_LOCALE) {
-  //   translations = await fetchTranslationFile(files[locale as LanguageCode], messages);
-  // } else {
-  //   [translations, fallbackTranslations] = await Promise.all([
-  //     fetchTranslationFile(files[locale as LanguageCode], messages),
-  //     fetchTranslationFile(files[DEFAULT_LOCALE as LanguageCode], messages),
-  //   ]);
-  //   fallbackTranslations = deepMerge(messages, fallbackTranslations ?? {}) as I18nMessage;
-  // }
+  if (locale === DEFAULT_LOCALE) {
+    translations = await fetchTranslationFile(files[locale as LanguageCode], messages);
+  } else {
+    [translations, fallbackTranslations] = await Promise.all([
+      fetchTranslationFile(files[locale as LanguageCode], messages),
+      fetchTranslationFile(files[DEFAULT_LOCALE as LanguageCode], messages),
+    ]);
+    fallbackTranslations = deepMerge(messages, fallbackTranslations ?? {}) as I18nMessage;
+  }
 
-  // const mergedTranslations = deepMerge(fallbackTranslations ?? {}, translations ?? {}) as I18nMessage;
+  const mergedTranslations = deepMerge(fallbackTranslations ?? {}, translations ?? {}) as I18nMessage;
   // console.error('---------------------------------', mergedTranslations.errors);
-  // const end = performance.now();
-  // console.log(`Time taken for getAllTranslations: ${end - start} milliseconds`);
-  return { locale: DEFAULT_LOCALE, messages };
+  const end = performance.now();
+  console.log(`Time taken for getAllTranslations: ${end - start} milliseconds`);
+  return { locale, messages: mergedTranslations };
 });
 
 // export const getTranslationByKeys = async (keys: string[], locale: LanguageCode) => {

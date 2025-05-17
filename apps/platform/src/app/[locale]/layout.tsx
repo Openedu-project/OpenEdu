@@ -1,8 +1,12 @@
 import { fonts } from "@oe/core";
 import "@oe/config/tailwindcss/global.css";
+// import { GoogleAnalytics } from "@next/third-parties/google";
+import { getI18nConfig } from "@oe/api";
 import Favicon from "@oe/assets/images/favicon.png";
+import { DEFAULT_LOCALE, DEFAULT_LOCALES, redirect } from "@oe/i18n";
 import { Provider, Toaster } from "@oe/ui";
 import type { Metadata } from "next";
+import { hasLocale } from "next-intl";
 import { NextIntlClientProvider } from "next-intl";
 import Script from "next/script";
 import type { ReactNode } from "react";
@@ -31,13 +35,17 @@ export default async function RootLayout({
   children: ReactNode;
   params: Promise<{ locale: string }>;
 }>) {
-  const [{ locale }] = await Promise.all([params]);
+  const [{ locale }, i18nConfig] = await Promise.all([params, getI18nConfig()]);
 
-  // console.log('=======================i18nConfig===================', i18nConfig, locale);
+  console.log(
+    "=======================i18nConfig===================",
+    i18nConfig,
+    locale
+  );
 
-  // if (!hasLocale(i18nConfig?.locales ?? DEFAULT_LOCALES, locale)) {
-  //   redirect({ href: '/', locale: DEFAULT_LOCALE });
-  // }
+  if (!hasLocale(i18nConfig?.locales ?? DEFAULT_LOCALES, locale)) {
+    redirect({ href: "/", locale: DEFAULT_LOCALE });
+  }
 
   // setRequestLocale(locale);
 
