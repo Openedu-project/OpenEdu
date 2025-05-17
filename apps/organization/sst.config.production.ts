@@ -18,7 +18,7 @@ export default $config({
       //   domain: '*.openedutest.net',
       // },
       domain: {
-        name: '*.openedutest.net',
+        name: '*.openedu.net',
         // aliases: ['*.openedutest.net'],
         // dns: sst.aws.dns({
         //   zone: 'Z03666423OXCSCHYUQUDV',
