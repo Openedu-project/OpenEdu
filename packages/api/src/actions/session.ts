@@ -94,13 +94,11 @@ export async function getSession(): Promise<SessionPayload | null> {
  * Xóa cookie phiên đăng nhập
  */
 export async function clearSession(): Promise<void> {
-  const cookiesStore = await cookies();
-  cookiesStore.set(process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY, '', {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
-    maxAge: 0,
-    path: '/',
+  const [{ origin }, cookiesStore] = await Promise.all([getAPIReferrerAndOrigin(), cookies()]);
+  const domain = origin ? new URL(origin).host : undefined;
+  cookiesStore.delete({
+    name: process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY,
+    domain: process.env.NODE_ENV === 'production' ? domain : undefined,
   });
 }
 
