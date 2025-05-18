@@ -26,15 +26,6 @@ export async function handleGETAuthCallback(request: NextRequest, successCallbac
   const nextPath = originUrlObj.searchParams.get('next');
 
   try {
-    console.log(
-      '--------------------socialLoginService--------------------',
-      provider,
-      code,
-      verifier,
-      inviteRefCode,
-      originUrlObj.origin,
-      referrer
-    );
     const result = await socialLoginService(
       {
         provider,

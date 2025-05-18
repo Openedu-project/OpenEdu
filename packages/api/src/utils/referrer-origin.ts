@@ -32,7 +32,7 @@ export async function getAPIReferrerAndOriginServer() {
   // const hostHeader = headersList.get('host');
   const userUrl = headersList.get('x-user-url') ?? new URL(process.env.NEXT_PUBLIC_APP_ORIGIN).href;
 
-  console.log('=======================userUrl getAPIReferrerAndOriginServer===================', userUrl);
+  console.info('=======================userUrl getAPIReferrerAndOriginServer===================', userUrl);
 
   return getReferrerAndOriginForAPIByUserUrl(userUrl || '');
 }
