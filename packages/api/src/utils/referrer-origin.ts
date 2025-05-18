@@ -19,7 +19,7 @@ export function getReferrerAndOriginForAPIByUserUrl(userUrl?: string) {
   const dashboard = REFERRER_ROUTES[segment1 as IReferrerRoutes];
   const referrer = dashboard ? `${host}${dashboard}` : host;
 
-  return { referrer, origin, host };
+  return { referrer, origin, host, url };
 }
 
 export async function getAPIReferrerAndOriginServer() {

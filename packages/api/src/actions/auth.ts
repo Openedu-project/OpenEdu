@@ -53,14 +53,17 @@ export async function loginAction(payload: LoginSchemaType) {
 }
 
 export async function socialLoginAction(provider: SocialProvider) {
-  const [{ referrer, origin }, cookieStore] = await Promise.all([getAPIReferrerAndOriginServer(), cookies()]);
+  const [{ referrer, url: originUrl, origin }, cookieStore] = await Promise.all([
+    getAPIReferrerAndOriginServer(),
+    cookies(),
+  ]);
   const inviteRefCode = cookieStore.get(process.env.NEXT_PUBLIC_COOKIE_INVITE_REF_CODE)?.value;
 
   if (provider === PROVIDERS.facebook) {
-    const url = await createFacebookAuthorizeUrl(referrer, origin, inviteRefCode ?? '');
+    const url = await createFacebookAuthorizeUrl(referrer, originUrl ?? origin, inviteRefCode ?? '');
     redirect(url);
   } else if (provider === PROVIDERS.google) {
-    const url = createGoogleAuthorizeUrl(referrer, origin, inviteRefCode ?? '');
+    const url = createGoogleAuthorizeUrl(referrer, originUrl ?? origin, inviteRefCode ?? '');
     redirect(url);
   }
 
