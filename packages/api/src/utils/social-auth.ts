@@ -1,4 +1,5 @@
 import type { SocialProvider } from '#types/auth';
+import { API_ENDPOINT } from './endpoints';
 
 export const PROVIDERS: Record<SocialProvider, SocialProvider> = {
   google: 'google',
@@ -56,15 +57,24 @@ const createSocialAuthorizeUrl = ({
   provider: SocialProvider;
   referrer: string;
   originUrl: string;
-  inviteRefCode: string;
+  inviteRefCode?: string;
   verifier?: string;
   socialOptions: Record<string, string>;
 }) => {
   const authorizeUrl = AUTHORIZE_ENDPOINT[provider];
   const url = new URL(authorizeUrl);
 
-  url.searchParams.set('state', JSON.stringify({ referrer, provider, originUrl, verifier, inviteRefCode }));
-  url.searchParams.set('redirect_uri', `${process.env.NEXT_PUBLIC_APP_ORIGIN}/callback`);
+  url.searchParams.set(
+    'state',
+    JSON.stringify({
+      referrer,
+      provider,
+      originUrl: process.env.NODE_ENV === 'development' ? process.env.NEXT_PUBLIC_APP_ORIGIN : originUrl,
+      verifier,
+      inviteRefCode,
+    })
+  );
+  url.searchParams.set('redirect_uri', `${process.env.NEXT_PUBLIC_APP_ORIGIN}${API_ENDPOINT.AUTH_CALLBACK}`);
   url.searchParams.set('response_type', 'code');
   for (const [key, value] of Object.entries(socialOptions)) {
     if (value) {

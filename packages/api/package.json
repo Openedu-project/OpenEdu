@@ -7,9 +7,7 @@
   "main": "dist/cjs/index.cjs",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "imports": {
     "#actions/*": "./src/actions/*.ts",
     "#services/*": "./src/services/*.ts",

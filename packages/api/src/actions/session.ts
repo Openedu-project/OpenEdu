@@ -1,20 +1,21 @@
 'use server';
+import { cookieOptions, getCookieDomain } from '@oe/core';
 import { SignJWT, jwtVerify } from 'jose';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { getAPIReferrerAndOrigin } from '#utils/referrer-origin';
-import { getTokenExpiry, parseJwt, refreshTokenExpiresIn } from '#utils/session';
+import { getTokenExpiry, refreshTokenExpiresIn } from '#utils/session';
 
 // Định nghĩa interface cho SessionPayload
 export type SessionPayload = {
-  id?: string;
-  origin?: string;
-  referrer?: string;
+  // id?: string;
+  // origin?: string;
+  // referrer?: string;
   accessToken?: string;
   refreshToken?: string;
   accessTokenExpiry?: number;
   refreshTokenExpiry?: number;
-  nextPath?: string;
+  // nextPath?: string;
 };
 
 // Bí mật để ký JWT - nên lưu trong biến môi trường
@@ -28,7 +29,8 @@ const secretKey = new TextEncoder().encode(AUTH_SECRET);
  */
 export async function encodeJWT(payload: SessionPayload): Promise<string> {
   try {
-    return await new SignJWT(payload)
+    const { accessTokenExpiry, refreshTokenExpiry } = getTokenExpiry();
+    return await new SignJWT({ ...payload, accessTokenExpiry, refreshTokenExpiry })
       .setProtectedHeader({ alg: 'HS256' }) // Sử dụng thuật toán HS256
       .setIssuedAt() // Thời gian tạo token
       .setExpirationTime('7d') // Token hết hạn sau 1 giờ - có thể điều chỉnh
@@ -59,17 +61,23 @@ export async function decodeJWT(token: string): Promise<SessionPayload | null> {
  */
 export async function setSessionCookie(payload: SessionPayload): Promise<void> {
   try {
-    const [token, cookiesStore] = await Promise.all([encodeJWT(payload), cookies()]);
-    const domain = payload.origin ? new URL(payload.origin).host : undefined;
-    // Thiết lập cookie với các tùy chọn bảo mật
-    cookiesStore.set(process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY, token, {
-      httpOnly: true, // Cookie không thể truy cập bằng JavaScript
-      secure: process.env.NODE_ENV === 'production', // Chỉ gửi qua HTTPS trong môi trường production
-      sameSite: 'strict', // Bảo vệ khỏi tấn công CSRF
-      maxAge: payload.refreshTokenExpiry ? payload.refreshTokenExpiry / 1000 : refreshTokenExpiresIn,
-      path: '/', // Cookie khả dụng cho toàn bộ trang web,
-      ...(process.env.NODE_ENV === 'development' ? { domain: undefined } : { domain: domain }),
-    });
+    const [token, cookiesStore, { host }] = await Promise.all([
+      encodeJWT(payload),
+      cookies(),
+      getAPIReferrerAndOrigin(),
+    ]);
+    cookiesStore.set(
+      process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY,
+      token,
+      cookieOptions({
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: refreshTokenExpiresIn,
+        path: '/',
+        domain: host,
+      })
+    );
   } catch (error) {
     console.error('Error setting session cookie:', error);
     throw new Error('Failed to save session');
@@ -94,29 +102,16 @@ export async function getSession(): Promise<SessionPayload | null> {
  * Xóa cookie phiên đăng nhập
  */
 export async function clearSession(): Promise<void> {
-  const [{ origin }, cookiesStore] = await Promise.all([getAPIReferrerAndOrigin(), cookies()]);
-  const domain = origin ? new URL(origin).host : undefined;
+  const [{ host }, cookiesStore] = await Promise.all([getAPIReferrerAndOrigin(), cookies()]);
+  const domain = getCookieDomain(host);
   cookiesStore.delete({
     name: process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY,
-    domain: process.env.NODE_ENV === 'production' ? domain : undefined,
+    domain,
   });
 }
 
-export async function setSessionPayload(accessToken: string, refreshToken: string): Promise<SessionPayload | null> {
-  const { origin, referrer } = await getAPIReferrerAndOrigin();
-  const { accessTokenExpiry, refreshTokenExpiry } = getTokenExpiry();
-  const decodedAccessToken = parseJwt(accessToken);
-  const sessionPayload: SessionPayload = {
-    id: decodedAccessToken?.sub || decodedAccessToken?.id,
-    origin: origin,
-    referrer: referrer,
-    accessToken: accessToken,
-    refreshToken: refreshToken,
-    accessTokenExpiry: accessTokenExpiry,
-    refreshTokenExpiry: refreshTokenExpiry,
-    nextPath: decodedAccessToken.next_path,
-  };
-  await setSessionCookie(sessionPayload);
+export async function setSessionRevalidatePath(payload: SessionPayload): Promise<SessionPayload | null> {
+  await setSessionCookie(payload);
   revalidatePath('/');
-  return sessionPayload;
+  return payload;
 }

@@ -30,7 +30,7 @@ const safeDecodeURIComponent = (str: string): string => {
   }
 };
 
-const refreshToken = async (): Promise<IToken | null> => {
+const handleRefreshToken = async (baseUrl?: string): Promise<IToken | null> => {
   if (tokenRenewalMutex.isLocked()) {
     await tokenRenewalMutex.waitForUnlock();
   }
@@ -53,8 +53,12 @@ const refreshToken = async (): Promise<IToken | null> => {
       } as IToken;
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_APP_ORIGIN;
-    const refreshUrl = baseUrl ? `${baseUrl}${API_ENDPOINT.REFRESH_TOKEN}` : `${API_ENDPOINT.REFRESH_TOKEN}`;
+    // const baseUrl = process.env.NEXT_PUBLIC_APP_ORIGIN;
+    const isServer = typeof window === 'undefined';
+    const isProduction = process.env.NODE_ENV === 'production';
+    const refreshUrl = isServer
+      ? `${isProduction ? (baseUrl ?? process.env.NEXT_PUBLIC_API_ORIGIN) : process.env.NEXT_PUBLIC_API_ORIGIN}${API_ENDPOINT.REFRESH_TOKEN}`
+      : `${API_ENDPOINT.REFRESH_TOKEN}`;
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), DEFAULT_TIMEOUT);
@@ -123,7 +127,7 @@ async function isomorphicFetch<T>(url: string, options: FetchOptions = {}): Prom
 
     if (session?.accessToken) {
       if (isTokenExpiringSoon(session)) {
-        const tokens = await refreshToken();
+        const tokens = await handleRefreshToken(headers.origin);
 
         fetchOptions.headers = {
           ...headers,
@@ -142,7 +146,7 @@ async function isomorphicFetch<T>(url: string, options: FetchOptions = {}): Prom
         const fetchResponse = await fetch(url, fetchOptions);
 
         if (fetchResponse.status === 401 && session?.refreshToken && retryCount < MAX_RETRY_ATTEMPTS) {
-          const tokens = await refreshToken();
+          const tokens = await handleRefreshToken(headers.origin);
 
           fetchOptions.headers = {
             ...headers,

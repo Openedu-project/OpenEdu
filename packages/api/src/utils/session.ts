@@ -31,14 +31,14 @@ export function getTokenExpiry() {
 }
 
 export const isTokenExpiringSoon = (session: SessionPayload | null): boolean => {
-  if (!session) {
+  if (!(session?.accessTokenExpiry && session.refreshTokenExpiry)) {
     return false;
   }
   // Thêm một khoảng thời gian đệm (60 giây) để tránh trường hợp token hết hạn trong quá trình request
   const bufferTime = 60 * 1000;
   return !!(
-    Date.now() >= (session.accessTokenExpiry ?? 0) - bufferTime &&
+    Date.now() >= session.accessTokenExpiry - bufferTime &&
     session.refreshToken &&
-    Date.now() < (session.refreshTokenExpiry ?? 0)
+    Date.now() < session.refreshTokenExpiry
   );
 };
