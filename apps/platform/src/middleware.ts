@@ -31,7 +31,6 @@ export async function middleware(request: NextRequest) {
 
   const oauthToken = request.nextUrl.searchParams.get('oauth_token');
   if (oauthToken) {
-    console.log('oauthTokenoauthTokenoauthTokenoauthToken', oauthToken);
     request.nextUrl.pathname = new URL(request.nextUrl).pathname;
     request.nextUrl.searchParams.delete('oauth_token');
     const newRequest = new NextRequest(request.nextUrl, request.clone());

@@ -52,7 +52,6 @@ export async function AuthCallbackPage() {
     console.error('Social login error:', error);
     newUrl = new URL(`${originUrlObj.origin}/${AUTH_ROUTES.login}?error=socialLoginFailed&next=${nextPath}`);
   }
-  console.log('newUrlnewUrl', newUrl.toString());
   if (newUrl) {
     redirect(newUrl.toString());
   }

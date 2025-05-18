@@ -24,7 +24,10 @@ export const getPopularBlogs = async (): Promise<PopularBlogsResult | undefined>
 
     return {
       featuredPost: dataPopularBlogs[0]?.entity as IBlogResult,
-      restPost: dataPopularBlogs.slice(1, 4)?.map(v => v?.entity) as IBlogResult[],
+      restPost: dataPopularBlogs
+        .slice(1, 4)
+        .map(v => v.entity)
+        .filter(Boolean) as IBlogResult[],
     };
   } catch (error) {
     console.error(error);
