@@ -72,7 +72,7 @@ export async function setSessionCookie(payload: SessionPayload): Promise<void> {
       cookieOptions({
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        sameSite: 'lax',
         maxAge: refreshTokenExpiresIn,
         path: '/',
         domain: host,

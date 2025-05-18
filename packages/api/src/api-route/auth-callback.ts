@@ -43,18 +43,14 @@ export async function handleGETAuthCallback(request: NextRequest, successCallbac
     const sessionToken = await encodeJWT(sessionPayload);
     const domain = getCookieDomain(originUrlObj.host);
     console.info('🚀 ~ handleGETAuthCallback ~ sessionToken:', sessionToken, originUrlObj, domain);
-    const response = NextResponse.redirect(originUrlObj, {
-      headers: {
-        'Set-Cookie': `sessionToken=${sessionToken}; httpOnly=true; secure=true; sameSite=strict; maxAge=${refreshTokenExpiresIn}; path=/; ${domain ? `domain=${domain}` : ''}`,
-      },
-    });
+    const response = NextResponse.redirect(originUrlObj);
     response.cookies.set({
       name: process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY,
       value: sessionToken,
       ...cookieOptions({
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        sameSite: 'lax',
         maxAge: refreshTokenExpiresIn,
         path: '/',
         domain,
