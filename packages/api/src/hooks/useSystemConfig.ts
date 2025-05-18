@@ -10,7 +10,11 @@ export const useSystemConfig = <T>({
   shouldFetch = true,
 }: { key: ISystemConfigKey; locales?: LanguageCode[]; shouldFetch?: boolean }) => {
   const { organizationByDomain } = useGetOrganizationByDomain();
-  const endpointKey = createSystemConfigSWRKey({ key, locales, domain: organizationByDomain?.domain });
+  const endpointKey = createSystemConfigSWRKey({
+    key,
+    locales,
+    domain: organizationByDomain?.alt_domain ?? organizationByDomain?.domain,
+  });
 
   const { data, isLoading, error, mutate } = useSWR(shouldFetch ? endpointKey : null, (endpoint: string) =>
     getSystemConfigClient<T>(endpoint, { key })
