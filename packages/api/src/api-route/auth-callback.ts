@@ -41,7 +41,13 @@ export async function handleGETAuthCallback(request: NextRequest, successCallbac
       refreshToken: refresh_token,
     };
     const sessionToken = await encodeJWT(sessionPayload);
-    const response = NextResponse.redirect(originUrlObj);
+    const domain = getCookieDomain(originUrlObj.host);
+    console.info('🚀 ~ handleGETAuthCallback ~ sessionToken:', sessionToken, originUrlObj, domain);
+    const response = NextResponse.redirect(originUrlObj, {
+      headers: {
+        'Set-Cookie': `sessionToken=${sessionToken}; httpOnly=true; secure=true; sameSite=strict; maxAge=${refreshTokenExpiresIn}; path=/; ${domain ? `domain=${domain}` : ''}`,
+      },
+    });
     response.cookies.set({
       name: process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY,
       value: sessionToken,
@@ -51,7 +57,7 @@ export async function handleGETAuthCallback(request: NextRequest, successCallbac
         sameSite: 'strict',
         maxAge: refreshTokenExpiresIn,
         path: '/',
-        domain: getCookieDomain(originUrlObj.host),
+        domain,
       }),
     });
     successCallback();
