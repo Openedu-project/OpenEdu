@@ -115,3 +115,10 @@ export async function setSessionRevalidatePath(payload: SessionPayload): Promise
   revalidatePath('/');
   return payload;
 }
+
+export async function setSessionCookieFromToken(token: string): Promise<void> {
+  const payload = await decodeJWT(token);
+  if (payload) {
+    await setSessionCookie(payload);
+  }
+}

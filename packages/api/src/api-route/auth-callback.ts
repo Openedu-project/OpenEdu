@@ -43,6 +43,10 @@ export async function handleGETAuthCallback(request: NextRequest, successCallbac
     const sessionToken = await encodeJWT(sessionPayload);
     const domain = getCookieDomain(originUrlObj.host);
     console.info('🚀 ~ handleGETAuthCallback ~ sessionToken:', sessionToken, originUrlObj, domain);
+    if (!originUrlObj.host.includes(process.env.NEXT_PUBLIC_APP_ROOT_DOMAIN_NAME)) {
+      originUrlObj.hash = `token=${sessionToken}`;
+      return NextResponse.redirect(originUrlObj);
+    }
     const response = NextResponse.redirect(originUrlObj);
     response.cookies.set({
       name: process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY,
@@ -57,6 +61,7 @@ export async function handleGETAuthCallback(request: NextRequest, successCallbac
       }),
     });
     successCallback();
+
     return response;
   } catch (error) {
     console.error('Social login error:', error);
