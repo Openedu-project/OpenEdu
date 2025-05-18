@@ -1,12 +1,16 @@
 'use server';
 
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import type { LoginSchemaType } from '#schemas/authSchema';
-import type { IToken } from '#types/auth';
+import type { IToken, SocialProvider } from '#types/auth';
 import { API_ENDPOINT } from '#utils/endpoints';
 import { postAPI } from '#utils/fetch';
 import type { HTTPError } from '#utils/http-error';
 import { getAPIReferrerAndOriginServer } from '#utils/referrer-origin';
-import { type JWT, getTokenExpiry, parseJwt } from '#utils/session';
+import type { JWT } from '#utils/session';
+import { createFacebookAuthorizeUrl, createGoogleAuthorizeUrl } from '#utils/social-auth';
+import { PROVIDERS } from '#utils/social-auth';
 import { type SessionPayload, clearSession, setSessionCookie } from './session';
 
 export async function loginAction(payload: LoginSchemaType) {
@@ -20,18 +24,18 @@ export async function loginAction(payload: LoginSchemaType) {
     });
     const data = response.data;
 
-    const { accessTokenExpiry, refreshTokenExpiry } = getTokenExpiry();
-    const accessTokenPayload = parseJwt(data.access_token);
+    // const { accessTokenExpiry, refreshTokenExpiry } = getTokenExpiry();
+    // const accessTokenPayload = parseJwt(data.access_token);
 
     const sessionPayload: SessionPayload = {
-      id: accessTokenPayload.sub,
-      origin,
-      referrer,
+      // id: accessTokenPayload.sub,
+      // origin,
+      // referrer,
       accessToken: data.access_token,
       refreshToken: data.refresh_token,
-      accessTokenExpiry,
-      refreshTokenExpiry,
-      nextPath: payload.next_path,
+      // accessTokenExpiry,
+      // refreshTokenExpiry,
+      // nextPath: payload.next_path,
     };
 
     await setSessionCookie(sessionPayload);
@@ -46,6 +50,21 @@ export async function loginAction(payload: LoginSchemaType) {
       },
     };
   }
+}
+
+export async function socialLoginAction(provider: SocialProvider) {
+  const [{ referrer, origin }, cookieStore] = await Promise.all([getAPIReferrerAndOriginServer(), cookies()]);
+  const inviteRefCode = cookieStore.get(process.env.NEXT_PUBLIC_COOKIE_INVITE_REF_CODE)?.value;
+
+  if (provider === PROVIDERS.facebook) {
+    const url = await createFacebookAuthorizeUrl(referrer, origin, inviteRefCode ?? '');
+    redirect(url);
+  } else if (provider === PROVIDERS.google) {
+    const url = createGoogleAuthorizeUrl(referrer, origin, inviteRefCode ?? '');
+    redirect(url);
+  }
+
+  return null;
 }
 
 export async function logoutAction() {
@@ -93,15 +112,15 @@ export async function refreshAccessTokenAction(token: JWT): Promise<JWT | null> 
   console.info('[Auth.js] Token refreshed successfully');
 
   // const accessTokenPayload = parseJwt(data.access_token);
-  const { accessTokenExpiry, refreshTokenExpiry } = getTokenExpiry();
+  // const { accessTokenExpiry, refreshTokenExpiry } = getTokenExpiry();
 
   const updatedToken = {
     ...token,
     // id: accessTokenPayload.sub,
     accessToken: data.access_token,
     refreshToken: data.refresh_token ?? token.refreshToken,
-    accessTokenExpiry,
-    refreshTokenExpiry,
+    // accessTokenExpiry,
+    // refreshTokenExpiry,
   };
 
   // Cập nhật session với token mới

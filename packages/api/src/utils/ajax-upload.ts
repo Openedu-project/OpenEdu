@@ -2,6 +2,7 @@ import { getSession } from '../actions/session';
 import type { HTTPResponse } from '../types/fetch';
 import type { IFileResponse } from '../types/file';
 import { API_ENDPOINT } from './endpoints';
+import { getAPIReferrerAndOrigin } from './referrer-origin';
 
 export interface ErrorStatus {
   type: 'timeout' | 'server_error' | 'xhr_error';
@@ -83,18 +84,18 @@ export async function ajaxUpload(options: Options) {
     }
   }
 
-  const session = await getSession();
+  const [session, { referrer, origin }] = await Promise.all([getSession(), getAPIReferrerAndOrigin()]);
 
   if (session?.accessToken) {
     xhr.setRequestHeader('Authorization', `Bearer ${session.accessToken}`);
   }
 
-  if (session?.referrer) {
-    xhr.setRequestHeader('X-referrer', session.referrer);
+  if (referrer) {
+    xhr.setRequestHeader('X-referrer', referrer);
   }
 
-  if (session?.origin) {
-    xhr.setRequestHeader('Origin', session.origin);
+  if (origin) {
+    xhr.setRequestHeader('Origin', origin);
   }
 
   for (const key of Object.keys(headers)) {

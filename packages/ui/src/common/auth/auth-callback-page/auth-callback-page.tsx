@@ -1,4 +1,4 @@
-import { encodeJWT, getTokenExpiry, parseJwt, socialLoginService } from '@oe/api';
+import { encodeJWT, socialLoginService } from '@oe/api';
 import type { ISocialCallbackStateData, SessionPayload } from '@oe/api';
 import { AUTH_ROUTES } from '@oe/core';
 import { headers } from 'next/headers';
@@ -11,7 +11,7 @@ export async function AuthCallbackPage() {
   const state = queryParams?.get('state');
   const code = queryParams?.get('code');
 
-  if (!(state && code && url)) {
+  if (!(state && code)) {
     redirect(process.env.NEXT_PUBLIC_APP_ORIGIN);
   }
 
@@ -32,18 +32,18 @@ export async function AuthCallbackPage() {
       { headers: { origin: originUrlObj.origin, referrer } }
     );
     const { access_token, refresh_token } = result?.data ?? {};
-    const { accessTokenExpiry, refreshTokenExpiry } = getTokenExpiry();
-    const decodedAccessToken = parseJwt(access_token);
+    // const { accessTokenExpiry, refreshTokenExpiry } = getTokenExpiry();
+    // const decodedAccessToken = parseJwt(access_token);
     // const { origin, referrer } = getReferrerAndOriginForAPIByUserUrl(url);
     const sessionPayload: SessionPayload = {
-      id: decodedAccessToken?.sub || decodedAccessToken?.id,
-      origin: originUrlObj.origin,
-      referrer: referrer,
+      // id: decodedAccessToken?.sub || decodedAccessToken?.id,
+      // origin: originUrlObj.origin,
+      // referrer: referrer,
       accessToken: access_token,
       refreshToken: refresh_token,
-      accessTokenExpiry: accessTokenExpiry,
-      refreshTokenExpiry: refreshTokenExpiry,
-      nextPath: decodedAccessToken.next_path,
+      // accessTokenExpiry: accessTokenExpiry,
+      // refreshTokenExpiry: refreshTokenExpiry,
+      // nextPath: decodedAccessToken.next_path,
     };
     const oauthToken = await encodeJWT(sessionPayload);
     newUrl = new URL(`${originUrlObj.origin}${nextPath ?? ''}`);

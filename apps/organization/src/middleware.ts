@@ -2,7 +2,7 @@ import { API_ENDPOINT, decodeJWT, isTokenExpiringSoon } from '@oe/api';
 import { isProtectedRoute } from '@oe/core';
 import { i18nMiddleware } from '@oe/i18n';
 import createMiddleware from 'next-intl/middleware';
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
 let isRefreshingToken = false;
 
@@ -32,28 +32,6 @@ export async function middleware(request: NextRequest) {
     actualHost,
     userUrl,
   });
-
-  const oauthToken = request.nextUrl.searchParams.get('oauth_token');
-  if (oauthToken) {
-    request.nextUrl.pathname = new URL(request.nextUrl).pathname;
-    request.nextUrl.searchParams.delete('oauth_token');
-    const newRequest = new NextRequest(request.nextUrl, request.clone());
-    const response = NextResponse.redirect(newRequest.nextUrl.toString());
-    const decodedSession = await decodeJWT(oauthToken);
-
-    response.cookies.set({
-      name: process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY,
-      value: oauthToken,
-      httpOnly: true, // Cookie không thể truy cập bằng JavaScript
-      secure: process.env.NODE_ENV === 'production', // Chỉ gửi qua HTTPS trong môi trường production
-      sameSite: 'strict', // Bảo vệ khỏi tấn công CSRF
-      maxAge: (decodedSession?.refreshTokenExpiry ?? 0) / 1000,
-      path: '/', // Cookie khả dụng cho toàn bộ trang web,
-      ...(process.env.NODE_ENV === 'development' ? { domain: undefined } : { domain: actualHost }),
-    });
-    response.headers.set('x-user-url', userUrl);
-    return response;
-  }
 
   const session = request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_SESSION_KEY)?.value;
   if (session) {

@@ -1,5 +1,6 @@
 export const API_ENDPOINT = {
   REFRESH_TOKEN: '/api/auth/refresh-token',
+  AUTH_CALLBACK: '/api/auth/callback',
   ADMIN_ORGANIZATIONS: '/api/v1/admin/organizations',
   ADMIN_ORGANIZATIONS_ID: '/api/v1/admin/organizations/:id',
   ORGANIZATIONS_VALIDATE: '/api/v1/organizations/validate',

@@ -8,7 +8,8 @@
       "#types/*": ["./src/types/*.ts"],
       "#store": ["./src/store/index.ts"],
       "#hooks/*": ["./src/hooks/*.ts"]
-    }
+    },
+    "types": ["node", "@oe/types/global.d.ts"]
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

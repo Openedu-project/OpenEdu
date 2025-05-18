@@ -151,6 +151,10 @@ export function getNextConfig(config: NextConfig = {}): NextConfig {
           hostname: 'qr.sepay.vn',
           pathname: '/**',
         },
+        {
+          protocol: 'https',
+          hostname: '**.googleusercontent.com',
+        },
         ...imageRemotePatterns,
       ],
       minimumCacheTTL: 31536000,

@@ -32,7 +32,7 @@ export async function getAPIReferrerAndOriginServer() {
   // const hostHeader = headersList.get('host');
   const userUrl = headersList.get('x-user-url') ?? new URL(process.env.NEXT_PUBLIC_APP_ORIGIN).href;
 
-  console.log('=======================userUrl getAPIReferrerAndOriginServer===================', userUrl);
+  console.info('=======================userUrl getAPIReferrerAndOriginServer===================', userUrl);
 
   return getReferrerAndOriginForAPIByUserUrl(userUrl || '');
 }
@@ -50,3 +50,16 @@ export async function getAPIReferrerAndOrigin() {
   }
   return getReferrerAndOriginForAPIByUserUrl(window.location.href);
 }
+
+// export const getCookieDomain = async (): Promise<string | undefined> => {
+//   const { origin } = await getAPIReferrerAndOrigin();
+//   const domain = origin ? new URL(origin).host : undefined;
+
+//   if (process.env.NODE_ENV === 'production' && domain) {
+//     return domain.includes(process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN)
+//       ? process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN
+//       : domain;
+//   }
+
+//   return undefined;
+// };

@@ -32,6 +32,20 @@ export interface CookieOptions {
 
 export const defaultExpiredTime = 7 * 86400; // 7 days for refresh token expired
 // export const defaultExpiredTime = 40; // 40s
+
+export const getCookieDomain = (domain?: string): string | undefined => {
+  if (process.env.NODE_ENV === 'production') {
+    if (domain) {
+      return domain.includes(process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN)
+        ? process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN
+        : domain;
+    }
+    return process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN;
+  }
+
+  return undefined;
+};
+
 export const cookieOptions = (options?: CookieOptions): CookieOptions => {
   return {
     // secure: process.env.NODE_ENV !== 'development',
@@ -40,9 +54,7 @@ export const cookieOptions = (options?: CookieOptions): CookieOptions => {
     path: '/',
     maxAge: defaultExpiredTime,
     ...options,
-    ...(process.env.NODE_ENV === 'development'
-      ? { domain: options?.domain ? options?.domain?.split(':')[0] : undefined }
-      : { domain: options?.domain ?? process.env.NEXT_PUBLIC_APP_COOKIE_DOMAIN }),
+    ...{ domain: getCookieDomain(options?.domain) },
   };
 };
 

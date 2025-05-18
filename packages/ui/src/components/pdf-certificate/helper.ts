@@ -1,11 +1,11 @@
 'use client';
-import { API_ENDPOINT, getSession } from '@oe/api';
+import { API_ENDPOINT, getAPIReferrerAndOrigin, getSession } from '@oe/api';
 import type { IFileResponse } from '@oe/api';
 import type { HTTPResponse } from '@oe/api';
 import { ERROR_MESSAGES } from './constant';
 
 export const handleBlobUpload = async (file: Blob, fileName: string): Promise<IFileResponse> => {
-  const session = await getSession();
+  const [session, { referrer, origin }] = await Promise.all([getSession(), getAPIReferrerAndOrigin()]);
 
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -17,11 +17,11 @@ export const handleBlobUpload = async (file: Blob, fileName: string): Promise<IF
     if (session?.accessToken) {
       xhr.setRequestHeader('Authorization', `Bearer ${session.accessToken}`);
     }
-    if (session?.referrer) {
-      xhr.setRequestHeader('X-referrer', session.referrer);
+    if (referrer) {
+      xhr.setRequestHeader('X-referrer', referrer);
     }
-    if (session?.origin) {
-      xhr.setRequestHeader('Origin', session.origin);
+    if (origin) {
+      xhr.setRequestHeader('Origin', origin);
     }
 
     xhr.addEventListener('readystatechange', () => {

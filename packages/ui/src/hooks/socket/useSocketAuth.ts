@@ -1,4 +1,4 @@
-import { getSession } from '@oe/api';
+import { getAPIReferrerAndOrigin, getSession } from '@oe/api';
 import { useEffect, useState } from 'react';
 
 export const useSocketAuth = (isAuthenticated: boolean) => {
@@ -12,11 +12,11 @@ export const useSocketAuth = (isAuthenticated: boolean) => {
     const initSocketAuth = async () => {
       try {
         if (isAuthenticated) {
-          const token = await getSession();
+          const [token, { referrer }] = await Promise.all([getSession(), getAPIReferrerAndOrigin()]);
 
           setSocketAuth({
             accessToken: token?.accessToken ?? '',
-            referrer: token?.referrer ?? '',
+            referrer,
             error: null,
           });
         } else {
